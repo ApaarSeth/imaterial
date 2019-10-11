@@ -1,39 +1,24 @@
-import {
-  BrowserModule,
-  BrowserTransferStateModule
-} from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PluginLoaderService } from './services/plugin-loader/plugin-loader.service';
-import { ClientPluginLoaderService } from './services/plugin-loader/client-plugin-loader.service';
-import { PluginsConfigProvider } from './services/plugins-config.provider';
-import { TransferStateService } from './services/transfer-state.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DashboardModule } from './features/dashboard/dashboard.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
-    HttpClientModule,
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    BrowserTransferStateModule
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    DashboardModule
   ],
-  providers: [
-    { provide: PluginLoaderService, useClass: ClientPluginLoaderService },
-    PluginsConfigProvider,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (provider: PluginsConfigProvider) => () =>
-        provider
-          .loadConfig()
-          .toPromise()
-          .then(config => (provider.config = config)),
-      multi: true,
-      deps: [PluginsConfigProvider]
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  constructor(transferStateService: TransferStateService) {}
-}
+export class AppModule { }
