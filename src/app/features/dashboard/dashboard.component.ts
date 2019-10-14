@@ -9,7 +9,7 @@ import {
     styleUrls: ['../../../assets/scss/main.scss']
   })
   export class DashboardComponent implements OnInit {
-    isNavbarCollapsed=true;
+    
     constructor(
     ) {}
   

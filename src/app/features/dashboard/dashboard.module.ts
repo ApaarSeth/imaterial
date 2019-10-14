@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from './dashboard.component';
 import { MaterialModule } from 'src/app/shared/material-modules';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LayoutModule } from 'src/app/shared/layout/layout-module';
 
 @NgModule({
     imports: [
         MaterialModule,
-        NgbModule
+        LayoutModule
     ] ,
     providers:[],
     declarations: [ 
