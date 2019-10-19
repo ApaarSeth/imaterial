@@ -16,10 +16,14 @@ import { ProjectService } from '../../shared/services/projectDashboard/project.s
     ) {}
   
     ngOnInit() {
-      this.getProjects(this.userId);
+      this.getProjects();
     }
-    getProjects(id: number){
 
+    getProjects(){
+      this.projectService.getProjects(1).then(res => {
+        res.data;
+        console.log("wefrgthyjhgff" +res);
+    });
     }
   }
   

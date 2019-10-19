@@ -30,8 +30,8 @@ export class DataService {
     getRequest(url: string, params: HttpParams = new HttpParams(), reqOptions: DataServiceOptions = null): ResolveData {
 
         let headers = new HttpHeaders();
-        // headers = headers.append('Access-Control-Allow-Origin', '*');
-        // headers = headers.append('accept', '*/*');
+         headers = headers.append('Access-Control-Allow-Origin', '*');
+         headers = headers.append('accept', '*/*');
 
         if (reqOptions) {
             if (reqOptions.skipLoader) {
