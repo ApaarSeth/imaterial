@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import { HeaderLayoutModule } from './header/header.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MaterialModule } from 'src/app/shared/material-modules';
+import { SidenavListComponent } from './header/sidenav-list.component';
 
 
 
@@ -12,10 +13,12 @@ import { MaterialModule } from 'src/app/shared/material-modules';
     ] ,
     providers:[],
     exports:[
-        HeaderLayoutModule
+        HeaderLayoutModule,
+        SidenavListComponent
     ],
     declarations: [ 
-        HeaderLayoutModule
+        HeaderLayoutModule,
+        SidenavListComponent
     ]
   })
 export class LayoutModule {}

@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorProviders } from './shared/http-interceptors/http-interceptor-providers';
 import { TokenService } from './shared/services/token.service';
 import { GlobalLoaderService } from './shared/services/global-loader.service';
+import { LayoutModule } from './shared/layout/layout-module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { GlobalLoaderService } from './shared/services/global-loader.service';
     MaterialModule,
     FlexLayoutModule,
     DashboardModule,
-    HttpClientModule
+    HttpClientModule,
+    LayoutModule
   ],
   providers: [
     HttpInterceptorProviders,

@@ -1,38 +1,25 @@
-<!-- to do -->
-<div>
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>Responsive Navigation</span>
-      <span class="menu-spacer"></span>
-      <div fxShow="true" fxHide.lt-md>
-        <a href="#" mat-button>Menu Item 1</a>
-        <a href="#" mat-button>Menu Item 2</a>
-        <a href="#" mat-button>Menu Item 3</a>
-        <a href="#" mat-button>Menu Item 4</a>
-        <a href="#" mat-button>Menu Item 5</a>
-        <a href="#" mat-button>Menu Item 6</a>
-      </div>
-    </mat-toolbar-row>
-  </mat-toolbar>
 
-  <mat-sidenav-container fxFlexFill>
-    <mat-sidenav #sidenav>
-      <mat-nav-list>
-        <a (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
-        <a href="#" mat-list-item>Menu Item 1</a>
-        <a href="#" mat-list-item>Menu Item 2</a>
-        <a href="#" mat-list-item>Menu Item 3</a>
-        <a href="#" mat-list-item>Menu Item 4</a>
-        <a href="#" mat-list-item>Menu Item 5</a>
-        <a href="#"mat-list-item>Menu Item 6</a>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content fxFlexFill>
+<mat-sidenav-container>
+  <mat-sidenav class="sidenav" #sidenav [fixedInViewport]="true" [mode]="'over'">
+
+    <button class="menu-close" (click)="sidenav.close()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <app-sidenav-list></app-sidenav-list>
+
+
+</mat-sidenav>
+  <mat-sidenav-content>
+      <!-- <app-global-loader></app-global-loader> -->
+
+      
+      <app-header (sidenavToggle)="sidenav.toggle()" [menu]="sidenav"></app-header>
+      
       <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
-<!-- <router-outlet></router-outlet> -->
+
+      <!-- <ng-snotify></ng-snotify> -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- <app-footer></app-footer> -->

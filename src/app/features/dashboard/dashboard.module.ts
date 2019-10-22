@@ -13,4 +13,4 @@ import { LayoutModule } from 'src/app/shared/layout/layout-module';
         DashboardComponent,
     ]
   })
-  export class DashboardModule { }
+  export class DashboardModule { } 
