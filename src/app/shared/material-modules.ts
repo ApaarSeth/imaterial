@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule, MatTableModule, MatExpansionModule, MatMenuModule, MatInputModule, MatDialogModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 
 @NgModule({
@@ -13,7 +13,15 @@ import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, Mat
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTableModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatInputModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
  ]
 })
 export class MaterialModule {}
