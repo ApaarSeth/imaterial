@@ -12,6 +12,7 @@ import { MatSidenav } from '@angular/material';
 
     @Output() public sidenavToggle = new EventEmitter();
     @Input('menu') menu: MatSidenav;
+    public buttonName: string = 'projectStore';
     
     constructor(
     ) {}
@@ -23,6 +24,9 @@ import { MatSidenav } from '@angular/material';
 
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
+  }
+  setButtonName(name: string){
+    this.buttonName = name;
   }
 
   }

@@ -1,0 +1,22 @@
+$alert-color: #FF5353;
+
+.example-form-field {
+    width: 400px;
+  }
+
+  .mat-form-field-suffix{
+    margin-left: -32px;
+  }
+
+  .border-container{
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 5px;
+  }
+
+  .border-right{
+    border-right: 2px solid rgba(0,0,0,0.5) !important;
+  }
+
+  .border-container-txt{
+    color: $alert-color;
+  }
