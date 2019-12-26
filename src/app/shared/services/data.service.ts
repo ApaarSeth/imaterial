@@ -7,9 +7,9 @@ import { isUndefined } from 'util';
 //import { StaticText } from '../constants/static-text';
 //import { LoggerService } from './logger.service';
 //import { TokenService } from './token.service';
-import { DataServiceOptions } from '../models/data-service-options';
 import { ConfigurationConstants } from '../constants/configuration-constants';
 import { ResolveData, Router } from '@angular/router';
+import { DataServiceOptions } from '../models/data-service-options';
 //import { NotificationService } from './notification-service';
 
 @Injectable({
@@ -32,6 +32,7 @@ export class DataService {
         let headers = new HttpHeaders();
          headers = headers.append('Access-Control-Allow-Origin', '*');
          headers = headers.append('accept', '*/*');
+         headers = headers.append( 'Authorization', 'admin');
 
         if (reqOptions) {
             if (reqOptions.skipLoader) {

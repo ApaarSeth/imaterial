@@ -6,7 +6,7 @@ import {
   } from '@angular/core';
 import { ProjectService } from '../../shared/services/projectDashboard/project.service';
 import {  MatDialog } from '@angular/material';
-import { DialogOverviewExampleDialog } from 'src/app/shared/models/add-project/dialog-overview-example-dialog.component';
+import { AddProjectComponent } from 'src/app/shared/dialogs/add-project/add-project.component';
 
 
 // export interface DialogData {
@@ -23,7 +23,6 @@ import { DialogOverviewExampleDialog } from 'src/app/shared/models/add-project/d
     value = '';
     animal: string;
     name: string;
-    //@ViewChild('dialogOverviewExampleDialog') public dialogOverviewExampleDialog: DialogOverviewExampleDialog;
     constructor(
       private projectService: ProjectService,
       public dialog: MatDialog
@@ -57,7 +56,7 @@ import { DialogOverviewExampleDialog } from 'src/app/shared/models/add-project/d
 
     // modal function
     openDialog(): void {
-      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      const dialogRef = this.dialog.open(AddProjectComponent, {
         width: '700px',
         data: {name: 'asdfgh', animal: 'werty'}
       });
@@ -68,49 +67,3 @@ import { DialogOverviewExampleDialog } from 'src/app/shared/models/add-project/d
       });
     }
   }
-
-//  const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-//  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-//  const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-//  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-//  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-  
-// function createNewUser(id: number): UserData {
-//   const name =
-//       NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-//       NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-//   return {
-//     id: id.toString(),
-//     name: name,
-//     progress: Math.round(Math.random() * 100).toString(),
-//     color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-//   };
-// }
-
-
-
-// export interface UserData {
-//   id: string;
-//   name: string;
-//   progress: string;
-//   color: string;
-// }
-
-
-
-// @Component({
-//   selector: 'dialog-overview-example-dialog',
-//   templateUrl: 'dialog-overview-example-dialog.html',
-// })
-// export class DialogOverviewExampleDialog {
-
-//   constructor(
-//     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-//     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-//   onNoClick(): void {
-//     this.dialogRef.close();
-//   }
-
-// }
