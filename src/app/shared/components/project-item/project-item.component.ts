@@ -2,25 +2,25 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angu
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ProjectDetails } from '../../models/project-details';
 
 @Component({
     selector: 'card-layout',
-    templateUrl: 'card-layout-template.html'
+    templateUrl: 'project-item.component.html'
 })
-export class CardLayoutComponent implements OnInit {
+export class ProjectItemComponent implements OnInit {
 
-    @Output('submitForm') submitForm = new EventEmitter();
-    @Input('isNonProfile') isNonProfile: boolean; // if address type is not billing or delivery 
-
-    @Output('onCancel') onCancel = new EventEmitter();
-
-    @Input('addressType') addressType: string;
-
-
-
+    
+    @Output('onEdit') onEdit = new EventEmitter<number>();
+    @Input('projectDetails') projectDetails: ProjectDetails;
     ngOnInit(): void {
 
-        
+    }
+
+
+    edit(proId:number){
+
+        this.onEdit.emit(proId);
 
     }
 

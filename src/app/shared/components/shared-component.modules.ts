@@ -3,11 +3,10 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material-modules';
-import { CardLayoutComponent } from './card-layout/card-layout-component';
-
+import { ProjectItemComponent } from './project-item/project-item.component';
 
 const components = [
-    CardLayoutComponent,
+    ProjectItemComponent,
 ];
 
 @NgModule({

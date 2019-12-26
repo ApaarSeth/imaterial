@@ -12,6 +12,7 @@ import { HttpInterceptorProviders } from './shared/http-interceptors/http-interc
 import { TokenService } from './shared/services/token.service';
 import { GlobalLoaderService } from './shared/services/global-loader.service';
 import { LayoutModule } from './shared/layout/layout-module';
+import { DashBoardResolver } from './features/dashboard/resolver/dashboard.resolver';
 // import { DialogOverviewExampleDialog } from './shared/models/add-project/dialog-overview-example-dialog.component';
 // import { CommonModule } from '@angular/common';
 // import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -37,7 +38,8 @@ import { LayoutModule } from './shared/layout/layout-module';
   providers: [
     HttpInterceptorProviders,
     TokenService,
-    GlobalLoaderService
+    GlobalLoaderService,
+    DashBoardResolver
   ],
   bootstrap: [AppComponent]
 })

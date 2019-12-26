@@ -7,6 +7,8 @@ import {
 import { ProjectService } from '../../shared/services/projectDashboard/project.service';
 import {  MatDialog } from '@angular/material';
 import { AddProjectComponent } from 'src/app/shared/dialogs/add-project/add-project.component';
+import { ActivatedRoute } from '@angular/router';
+import { ProjectDetails, ProjetPopupData } from 'src/app/shared/models/project-details';
 
 
 // export interface DialogData {
@@ -15,7 +17,7 @@ import { AddProjectComponent } from 'src/app/shared/dialogs/add-project/add-proj
 // }
   @Component({
     selector: 'dashboard',
-    templateUrl: './dashboard.html',
+    templateUrl: './dashboard.component.html',
     styleUrls: ['../../../assets/scss/main.scss']
   })
   export class DashboardComponent implements OnInit {
@@ -23,9 +25,13 @@ import { AddProjectComponent } from 'src/app/shared/dialogs/add-project/add-proj
     value = '';
     animal: string;
     name: string;
+
+    allProjects: ProjectDetails[];
+
     constructor(
       private projectService: ProjectService,
-      public dialog: MatDialog
+      public dialog: MatDialog,
+      private activatedRoute: ActivatedRoute  
     ) {
       //const users: UserData[] = [];
      
@@ -41,7 +47,8 @@ import { AddProjectComponent } from 'src/app/shared/dialogs/add-project/add-proj
     }
   
     ngOnInit() {
-      this.getProjects();
+      // this.getProjects();
+      this.allProjects = this.activatedRoute.snapshot.data.dashBoardData
     }
 
     //displayedColumns = ['id', 'name', 'progress', 'color'];
@@ -54,11 +61,34 @@ import { AddProjectComponent } from 'src/app/shared/dialogs/add-project/add-proj
     });
     }
 
+
+    editProject(projectId: number){
+      console.log(projectId);
+
+      const data: ProjetPopupData = {
+        isEdit:true,
+        detail:this.allProjects.find(pro => pro.projectId === projectId)
+      }
+
+      this.openDialog(data);
+
+    }
+
+    addProject(){
+
+      this.openDialog({
+        isEdit:false,
+      } as ProjetPopupData);
+
+
+    }
+
+
     // modal function
-    openDialog(): void {
+    openDialog(data:ProjetPopupData ): void {
       const dialogRef = this.dialog.open(AddProjectComponent, {
         width: '700px',
-        data: {name: 'asdfgh', animal: 'werty'}
+        data 
       });
   
       dialogRef.afterClosed().toPromise().then(result => {

@@ -12,11 +12,14 @@
       </mat-form-field>
 </div>
 <div class="text-right col-xs-6">
-  <button mat-raised-button class="main-background-color main-button color-white" (click)="openDialog()">+ Add Project</button>
+  <button mat-raised-button class="main-background-color main-button color-white" (click)="addProject()">+ Add Project</button>
 </div>
 </div>
 <!-- end fix part -->
-<mat-card>
+<ng-container *ngFor="let projDetails of allProjects" >
+  <card-layout (onEdit)="editProject($event)"  [projectDetails]="projDetails"></card-layout>
+</ng-container>  
+<!-- <mat-card>
     <mat-card-content class="mat-card-content">
         <div class="row">
             <div class="col-md-2 col-xs-12" style="height: 150px;">
@@ -80,7 +83,7 @@
             </div>
         </div>
     </mat-card-content>
-</mat-card>
+</mat-card> -->
 
 <!-- table structure -->
   

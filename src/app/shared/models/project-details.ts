@@ -1,4 +1,4 @@
-export class ProjectDetails {
+export interface ProjectDetails {
     addressLine1: string;
     addressLine2: string;
     area: string;
@@ -11,4 +11,11 @@ export class ProjectDetails {
     projectId: number;
     projectName: string;
     userId: number;
+}
+
+
+export interface ProjetPopupData {
+
+    isEdit: boolean;
+    detail?:ProjectDetails
 }
