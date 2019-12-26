@@ -3,17 +3,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { ProjectDetails, ProjetPopupData } from '../../models/project-details';
 
-export interface DialogData {
-    animal: string;
-    name: string;
-    address1: string;
-    address2: string;
-    pinCode: number;
-    state: string;
-    projectArea: string;
-    constructionCost: number;
-  }
+ 
 
   export interface City {
     value: string;
@@ -33,18 +25,21 @@ export interface DialogData {
     startDate = new Date(1990, 0, 1);
     endDate = new Date(2021, 0, 1);
 
+    projectDetails: ProjectDetails;
     constructor(
       private dialogRef: MatDialogRef<AddProjectComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: DialogData,
+      @Inject(MAT_DIALOG_DATA) public data : ProjetPopupData,
       private formBuilder: FormBuilder
       ) {}
   
-    onNoClick(): void {
-      this.dialogRef.close();
-    }
+    
 
     ngOnInit(){
       this.initForm(); 
+    }
+
+    close(){
+      this.dialogRef.close();
     }
 
     cities: City[] = [
@@ -55,17 +50,17 @@ export interface DialogData {
 
     initForm(){
 
-      this.form = this.formBuilder.group({
+      this.projectDetails = this.data.isEdit ?  this.data.detail: {} as ProjectDetails;
 
-        name:[this.data.name, Validators.required],
-        address1:[this.data.address1, Validators.required],
-        address2:[this.data.address2],
-        pinCode:[this.data.pinCode, Validators.required],
-        state:[this.data.state, Validators.required],
-        projectArea:[this.data.projectArea],
-        constructionCost:[this.data.constructionCost, Validators.required],
-        animal:[ this.data.animal, Validators.required]
-
+      this.form = this.formBuilder.group( {
+        name:[  this.data.isEdit ? this.data.detail.projectName : '', Validators.required],
+        address1:[this.data.isEdit ? this.data.detail.addressLine1 : '', Validators.required],
+        address2:[this.data.isEdit ? this.data.detail.addressLine2  : ''],
+        pinCode:[this.data.isEdit ? this.data.detail.pinCode  : '', Validators.required],
+        state:[this.data.isEdit ? this.data.detail.state  : '', Validators.required],
+        city:[this.data.isEdit ? this.data.detail.city  : '', Validators.required],
+        projectArea:[this.data.isEdit ? this.data.detail.area  : ''],
+        constructionCost:[this.data.isEdit ? this.data.detail.cost  : '', Validators.required],
       });
 
     }

@@ -13,8 +13,8 @@ export class ProjectService {
     private dataService: DataService
   ) { }
 
-  getProjects(id) {
-    return this.dataService.getRequest(API.PROJECTS(id)).then(res => {
+  getProjects(userId:Number) {
+    return this.dataService.getRequest(API.PROJECTS(userId)).then(res => {
         return res;
     });
 }
