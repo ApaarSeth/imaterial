@@ -4,7 +4,7 @@ import { MaterialModule } from 'src/app/shared/material-modules';
 import { LayoutModule } from 'src/app/shared/layout/layout-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DialogOverviewExampleDialog } from 'src/app/shared/models/add-project/dialog-overview-example-dialog.component';
+import { AppSharedModule } from 'src/app/shared/app-shared-module';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import { DialogOverviewExampleDialog } from 'src/app/shared/models/add-project/d
     providers:[],
     declarations: [ 
         DashboardComponent,
-        DialogOverviewExampleDialog
+        AppSharedModule
     ]
   })
   export class DashboardModule { } 

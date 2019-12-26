@@ -4,7 +4,7 @@ export const ConfigurationConstants = {
 };
 export const API = {
 
-    PROJECTS: (userId) => `getProjects/${userId}`
+    PROJECTS: (userId) => `projects/${userId}`
     //STATE: 'account/api/permitted/address/states',
     
 }
