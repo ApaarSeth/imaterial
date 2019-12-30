@@ -18,11 +18,7 @@ import { BomModule } from "./features/bom/bom.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
-  declarations: [
-    AppComponent
-    // BomComponent
-    // DialogOverviewExampleDialog
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,10 +28,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     DashboardModule,
     HttpClientModule,
     LayoutModule,
-    BomModule,
-    // CommonModule,
-    FormsModule,
-    ReactiveFormsModule
+    BomModule
   ],
   providers: [
     HttpInterceptorProviders,
