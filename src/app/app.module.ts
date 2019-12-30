@@ -20,7 +20,6 @@ import { DashBoardResolver } from './features/dashboard/resolver/dashboard.resol
 @NgModule({
   declarations: [
     AppComponent
-    // DialogOverviewExampleDialog
   ],
   imports: [
     BrowserModule,
@@ -31,9 +30,6 @@ import { DashBoardResolver } from './features/dashboard/resolver/dashboard.resol
     DashboardModule,
     HttpClientModule,
     LayoutModule
-    // CommonModule,
-    // FormsModule,
-    // ReactiveFormsModule
   ],
   providers: [
     HttpInterceptorProviders,
