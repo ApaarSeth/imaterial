@@ -1,122 +1,141 @@
 // Basic color css
 $main-color: #f47721;
 $blue-color: #192135;
-$white-color: #FFFFFF;
-$icon-color-gray: #B8B8B8;
+$white-color: #ffffff;
+$icon-color-gray: #b8b8b8;
 $black-color: #000000;
-$alert-color: #FF5353;
+$alert-color: #ff5353;
 
-.background-white-color{
-    background-color: $white-color;
+.background-white-color {
+  background-color: $white-color;
 }
 
-.color-white{
-    color: $white-color;
+.color-white {
+  color: $white-color;
 }
 
-.color-black{
-    color: $black-color;
+.color-black {
+  color: $black-color;
 }
 
-.main-color{
-    color:$main-color;
+.main-color {
+  color: $main-color;
 }
 
-.main-background-color{
-    background-color: $main-color;
+.main-background-color {
+  background-color: $main-color;
 }
 
-.blue-color{
-    color: $blue-color;
+.blue-color {
+  color: $blue-color;
 }
 
-.blue-background-color{
-    background-color: $blue-color;
+.blue-background-color {
+  background-color: $blue-color;
 }
 
-.gray-color{
-    color: $icon-color-gray;
+.gray-color {
+  color: $icon-color-gray;
 }
 button:focus {
-    outline: 0px;
-    outline: 0px;
+  outline: 0px;
+  outline: 0px;
 }
-
+.page-start-point {
+  padding-top: 122px !important;
+  height: 100%;
+}
 .mat-form-field-appearance-legacy .mat-form-field-underline {
-    display: none;
+  display: none;
 }
 
-input{
-    background: $white-color;
-    padding: 10px;
-    border-radius: 5px;
+input {
+  background: $white-color;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.display-flex{
-    display: flex;
+.display-flex {
+  display: flex;
 }
 
-.mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button .mat-icon{
-    font-size: 30px !important;
-    color: $icon-color-gray;
-    line-height: 0.5;
+.mat-form-field-appearance-legacy
+  .mat-form-field-suffix
+  .mat-icon-button
+  .mat-icon {
+  font-size: 30px !important;
+  color: $icon-color-gray;
+  line-height: 0.5;
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-label {
-    padding: 8px;
+  padding: 8px;
 }
 
 .mat-form-field-infix {
-    border-top: 0em solid transparent;
+  border-top: 0em solid transparent;
 }
 // .mat-form-field-appearance-legacy .mat-form-field-wrapper{
 //     padding-bottom: 0px;
 // }
 
-.main-button.mat-button-base{
-    border: 2px solid $main-color !important;
-    min-width: 120px;
-    border-radius: 25px;
-    padding: 0px 18px;
-    font-weight: 600;
+.main-button.mat-button-base {
+  border: 2px solid $main-color !important;
+  min-width: 120px;
+  border-radius: 25px;
+  padding: 0px 18px;
+  font-weight: 600;
 }
 
-.text-bold{
-    font-weight: 800;
+.text-bold {
+  font-weight: 800;
 }
 
-.font-size14{
-    font-size: 14px;
+.font-size14 {
+  font-size: 14px;
 }
 
-.font-size10{
-    font-size: 10px;
+.font-size10 {
+  font-size: 10px;
 }
 
-.font-size20{
-    font-size: 20px;
+.font-size20 {
+  font-size: 20px;
 }
 
-.width50Percent{
-    width: 50%;
+.width50Percent {
+  width: 50%;
 }
 
 .border-input input,
-.border-select .mat-form-field-flex{
-    border-bottom: 2px solid $icon-color-gray;
-    border-radius: 0px;
-    padding: 5px;
+.border-select .mat-form-field-flex {
+  border-bottom: 2px solid $icon-color-gray;
+  border-radius: 0px;
+  padding: 5px;
 }
 
 .border-input.mat-form-field.mat-focused input,
-.border-select.mat-form-field.mat-focused .mat-form-field-flex{
-    border-bottom: 2px solid $main-color;
+.border-select.mat-form-field.mat-focused .mat-form-field-flex {
+  border-bottom: 2px solid $main-color;
 }
 
-.mat-form-field.mat-focused .mat-form-field-label{
-    color: $main-color;
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: $main-color;
 }
 
-.border-input mat-datepicker-toggle .mat-button-wrapper{
-    float: left;
+.border-input mat-datepicker-toggle .mat-button-wrapper {
+  float: left;
+}
+
+.min-height {
+  min-height: calc(100vh - 122px);
+}
+
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: $main-color !important;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked,
+.mat-primary .mat-pseudo-checkbox-indeterminate {
+  background: $main-color !important;
 }

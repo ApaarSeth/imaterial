@@ -1,25 +1,40 @@
 <!-- <fix-header></fix-header> -->
-
-<div class="p-20"> 
-<!-- fix part -->
-<div class="row p-b-10">
-<div class="col-xs-6">
-    <mat-form-field class="example-form-field">
-        <input matInput type="search" placeholder="Search Projects" [(ngModel)]="value">
-        <button mat-button matSuffix mat-icon-button>
-          <mat-icon>search</mat-icon>
+<div class="page-start-point">
+  <div class="p-l-20 p-r-20 p-b-20 min">
+    <!-- fix part -->
+    <div class="row p-b-10">
+      <div class="col-xs-6">
+        <mat-form-field class="example-form-field">
+          <input
+            matInput
+            type="search"
+            placeholder="Search Projects"
+            [(ngModel)]="value"
+          />
+          <button mat-button matSuffix mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="text-right col-xs-6">
+        <button
+          mat-raised-button
+          class="main-background-color main-button color-white"
+          (click)="addProject()"
+        >
+          + Add Project
         </button>
-      </mat-form-field>
-</div>
-<div class="text-right col-xs-6">
-  <button mat-raised-button class="main-background-color main-button color-white" (click)="addProject()">+ Add Project</button>
-</div>
-</div>
-<!-- end fix part -->
-<ng-container *ngFor="let projDetails of allProjects" >
-  <card-layout (onEdit)="editProject($event)"  [projectDetails]="projDetails"></card-layout>
-</ng-container>  
-<!-- <mat-card>
+      </div>
+    </div>
+    <!-- end fix part -->
+    <ng-container *ngFor="let projDetails of allProjects">
+      <card-layout
+        (onEdit)="editProject($event)"
+        [projectDetails]="projDetails"
+      ></card-layout>
+    </ng-container>
+
+    <!-- <mat-card>
     <mat-card-content class="mat-card-content">
         <div class="row">
             <div class="col-md-2 col-xs-12" style="height: 150px;">
@@ -85,9 +100,9 @@
     </mat-card-content>
 </mat-card> -->
 
-<!-- table structure -->
-  
-  <!-- <div class="example-container mat-elevation-z8">
+    <!-- table structure -->
+
+    <!-- <div class="example-container mat-elevation-z8">
   
     <mat-table [dataSource]="dataSource">
   
@@ -116,9 +131,8 @@
       </mat-row>
     </mat-table>
   </div> -->
-  
 
-<!-- <mat-accordion>
+    <!-- <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -131,5 +145,5 @@
   asdfgh asdsfghj  asdfdghhm dsfghhm sdfgnhm sfdgfhgnmb fgbnm 
     </mat-expansion-panel>
   </mat-accordion> -->
+  </div>
 </div>
-
