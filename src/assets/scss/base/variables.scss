@@ -42,7 +42,7 @@ button:focus {
   outline: 0px;
 }
 .page-start-point {
-  padding-top: 122px !important;
+  padding-top: 105px !important;
   height: 100%;
 }
 .mat-form-field-appearance-legacy .mat-form-field-underline {
@@ -132,7 +132,7 @@ input {
 }
 
 .min-height {
-  min-height: calc(100vh - 122px);
+  min-height: calc(100vh - 110px);
 }
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
@@ -142,4 +142,24 @@ input {
 .mat-primary .mat-pseudo-checkbox-checked,
 .mat-primary .mat-pseudo-checkbox-indeterminate {
   background: $main-color !important;
+}
+
+.parent {
+  position: relative;
+}
+
+.center-element {
+  position: absolute;
+  float: left;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pull-right{
+  float: right;
+}
+
+.pull-left{
+  float: left;
 }
