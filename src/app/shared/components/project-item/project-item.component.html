@@ -1,70 +1,116 @@
 <mat-card class="m-t-5 m-b-10">
-    <mat-card-content class="mat-card-content">
+  <mat-card-content class="mat-card-content">
+    <div class="row">
+      <div class="col-md-2 col-xs-12" style="height: 150px;">
+        <img
+          class="radius-10"
+          style="height: 100%;"
+          src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+          alt="Photo of a Shiba Inu"
+        />
+      </div>
+      <div class="col-md-10 col-xs-12">
         <div class="row">
-            <div class="col-md-2 col-xs-12" style="height: 150px;">
-                <img class="radius-10" style="height: 100%;" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <div class="col-xs-10">
+            <div class="text-bold">
+              <a class="main-color font-size14" href="">{{
+                projectDetails.projectName
+              }}</a>
             </div>
-            <div class="col-md-10 col-xs-12">
-              <div class="row">
-                <div class="col-xs-10">
-                <div class="text-bold"><a class="main-color font-size14" href="">{{projectDetails.projectName}}</a></div>
-                    <div class="row">
-                      <div class=" col-xs-8 display-flex">
-                      <div class="font-size10 gray-color text-left width50Percent"><i class="material-icons font-size10 gray-color">room</i> <span>{{projectDetails.addressLine1}}</span></div>
-                      <div class="font-size10 gray-color text-left width50Percent"><i class="material-icons font-size10 gray-color">format_shapes</i> <span>Project Area: {{projectDetails.area}}</span></div>
-                      </div>    
-                    </div>
-                    <div class="row">
-                      <div class=" col-xs-8 display-flex">
-                          <div class="font-size10 gray-color text-left width50Percent"><i class="material-icons font-size10 gray-color">today</i> <span>September 13, 2019</span> to <span>September 13, 2019</span></div>
-                          <div class="font-size10 gray-color text-left width50Percent"><span>₹ Construction Cost: {{projectDetails.cost}}</span></div>
-                      </div>    
-                    </div>
-                    <!-- <div class="row">
+            <div class="row">
+              <div class=" col-xs-8 display-flex">
+                <div class="font-size10 gray-color text-left width50Percent">
+                  <i class="material-icons font-size10 gray-color">room</i>
+                  <span>{{ projectDetails.addressLine1 }}</span>
+                </div>
+                <div class="font-size10 gray-color text-left width50Percent">
+                  <i class="material-icons font-size10 gray-color"
+                    >format_shapes</i
+                  >
+                  <span>Project Area: {{ projectDetails.area }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-xs-8 display-flex">
+                <div class="font-size10 gray-color text-left width50Percent">
+                  <i class="material-icons font-size10 gray-color">today</i>
+                  <span>September 13, 2019</span> to
+                  <span>September 13, 2019</span>
+                </div>
+                <div class="font-size10 gray-color text-left width50Percent">
+                  <span>₹ Construction Cost: {{ projectDetails.cost }}</span>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="row">
                       <div class=" col-xs-6 display-flex">
                           <div class="font-size10 gray-color text-left width50Percent"><i class="material-icons font-size10 gray-color">room</i> <span>{{projectDetails.addressLine2}}</span></div>
                       </div>    
                     </div> -->
-                    
-                </div>
-                <div class="col-xs-2 text-right">
-                    <a href=""><i class="material-icons main-color">file_copy</i></a>
-                    <a href="" class="p-l-10 p-r-10"><i class="material-icons main-color">delete</i></a>
-                    <a href="javascript:void(0)" (click)="edit(projectDetails.projectId)"><i class="material-icons main-color">edit</i></a>
+          </div>
+          <div class="col-xs-2 text-right">
+            <a href=""><i class="material-icons main-color">file_copy</i></a>
+            <a href="" class="p-l-10 p-r-10"
+              ><i class="material-icons main-color">delete</i></a
+            >
+            <a
+              href="javascript:void(0)"
+              (click)="edit(projectDetails.projectId)"
+              ><i class="material-icons main-color">edit</i></a
+            >
+          </div>
+        </div>
+        <div class="row m-t-20">
+          <div class="col-xs-8">
+            <div class="border-container display-flex p-l-5 p-r-5">
+              <div
+                class="col-sm-2 border-right border-container-txt p-t-10 p-b-10 display-flex"
+              >
+                <div class="font-size20 text-bold">23</div>
+                <div class="font-size10 p-l-15">Low Stock Material</div>
+              </div>
+              <div
+                class="col-sm-3 border-right gray-color p-t-10 p-b-10 p-l-30 display-flex"
+              >
+                <div class="font-size20 text-bold">45</div>
+                <div class="font-size10 p-l-15">
+                  All<br />
+                  Material
                 </div>
               </div>
-              <div class="row m-t-20">
-                  <div class="col-xs-8">
-                    <div class="border-container display-flex p-l-5 p-r-5">
-                      <div class="col-sm-2 border-right border-container-txt p-t-10 p-b-10 display-flex">
-                        <div class="font-size20 text-bold">23</div>
-                        <div class="font-size10 p-l-15">Low Stock Material</div>
-                      </div>
-                      <div class="col-sm-3 border-right gray-color p-t-10 p-b-10 p-l-30 display-flex">
-                        <div class="font-size20 text-bold">45</div>
-                        <div class="font-size10 p-l-15">All<br> Material</div>
-                      </div>
-                      <div class="col-sm-3 border-right gray-color p-t-10 p-b-10 p-l-30 display-flex">
-                        <div class="font-size20 text-bold">11</div>
-                        <div class="font-size10 p-l-15">Open<br> Indents</div>
-                      </div>
-                      <div class="col-sm-4 p-t-10 p-b-10 p-l-30 display-flex">
-                        <div class="font-size20 gray-color text-bold">06</div>
-                        <div class="font-size10 gray-color p-l-15">Purchase<br> Order</div>
-                        <div class="font-size10 text-right p-l-25 m-t-15">₹2344 Cr</div> 
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <div class="col-xs-4 text-right">
-                      <button mat-raised-button class="background-white-color main-button main-color">View Project</button>
-                  </div> -->
-              </div>
-              <div class="row m-t-10">
-                <div class="col-xs-12 text-right">
-                  <div class="font-size10 gray-color">Created : Thursday, November 15, 2018 By Rahul Singh (Site Enginer)</div>
+              <div
+                class="col-sm-3 border-right gray-color p-t-10 p-b-10 p-l-30 display-flex"
+              >
+                <div class="font-size20 text-bold">11</div>
+                <div class="font-size10 p-l-15">
+                  Open<br />
+                  Indents
                 </div>
+              </div>
+              <div class="col-sm-4 p-t-10 p-b-10 p-l-30 display-flex">
+                <div class="font-size20 gray-color text-bold">06</div>
+                <div class="font-size10 gray-color p-l-15">
+                  Purchase<br />
+                  Order
+                </div>
+                <div class="font-size10 text-right p-l-25 m-t-15">₹2344 Cr</div>
               </div>
             </div>
+          </div>
+          <!-- <div class="col-xs-4 text-right">
+                      <button mat-raised-button class="background-white-color main-button main-color">View Project</button>
+                  </div> -->
         </div>
-    </mat-card-content>
+        <div class="row m-t-10">
+          <div class="col-xs-12 text-right">
+            <div class="font-size10 gray-color">
+              Created : Thursday, November 15, 2018 By Rahul Singh (Site
+              Enginer)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
 </mat-card>

@@ -1,0 +1,28 @@
+<mat-accordion>
+  <div *ngFor="let category of selectedCategory">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ category.label }}
+        </mat-panel-title>
+        <mat-panel-description>
+          Estimated Quantity
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ng-container *ngIf="category.subcategory != null">
+        <div class="row">
+          <div class="col-xs-6">
+            {{ category.subcategory.label }}
+          </div>
+          <div class="col-xs-6">
+            <mat-form-field>
+              <input class="border-input" placeholder="eg. 1500" />
+            </mat-form-field>
+            MT
+          </div>
+        </div>
+      </ng-container>
+      <!-- <div *ngIf="category.subcategory.length"></div> -->
+    </mat-expansion-panel>
+  </div>
+</mat-accordion>
