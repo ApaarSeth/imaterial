@@ -96,8 +96,22 @@
   </div>
 </div>
 <div mat-dialog-actions>
-  <button type="button" mat-button (click)="close()">No Thanks</button>
-  <button type="submit" mat-button  >Ok</button>
+  <div class="col-sm-6">
+    <button
+      mat-raised-button
+      class="main-background-color main-button color-white pull-left" (click)="close()">
+      Ok
+    </button>
+  </div> 
+  <div class="col-sm-6">
+    <button
+      mat-raised-button
+      class="main-background-color main-button color-white pull-right">
+      Add
+    </button>
+  </div>
+  <!-- <button type="button" mat-button (click)="close()">No Thanks</button>
+  <button type="submit" mat-button  >Ok</button> -->
 </div>
 
 </form> 
