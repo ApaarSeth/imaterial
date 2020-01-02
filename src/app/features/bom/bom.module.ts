@@ -5,6 +5,7 @@ import { BomComponent } from "./bom.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material-modules";
 import { LayoutModule } from "src/app/shared/layout/layout-module";
+import { AppSharedModule } from 'src/app/shared/app-shared-module';
 
 @NgModule({
   declarations: [BomComponent],
@@ -14,7 +15,8 @@ import { LayoutModule } from "src/app/shared/layout/layout-module";
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    LayoutModule
+    LayoutModule,
+    AppSharedModule
   ]
 })
 export class BomModule {}

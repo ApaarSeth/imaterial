@@ -13,6 +13,7 @@ export class BomComponent implements OnInit {
   selectedCategory = [];
   value = "";
   projectId: number;
+  searchText: string = null;
   // categories: any;
   constructor(private activatedRoute: ActivatedRoute) {}
 
