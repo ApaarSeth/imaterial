@@ -1,0 +1,13 @@
+.shortWidth {
+  width: 7rem;
+}
+
+.mat-expansion-panel-header.mat-expanded:focus,
+.mat-expansion-panel-header.mat-expanded:hover {
+  background: $background-color-grey !important;
+}
+
+.widthZero .mat-form-field-infix {
+  min-width: 0;
+  width: auto !important;
+}

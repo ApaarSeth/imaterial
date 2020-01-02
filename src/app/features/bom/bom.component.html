@@ -1,45 +1,52 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <div class="row display-flex">
-      <div class="m-b-10 m-r-10" *ngFor="let category of selectedCategory">
-        <mat-card class="p-10"
-          >{{ category }}
-          <button mat-button matSuffix mat-icon-button>
-            <mat-icon class="font-size18">clear</mat-icon>
-          </button>
-        </mat-card>
-      </div>
-    </div>
-    <div class="center-element">
-      <mat-form-field class="border-select">
-        <mat-select [formControl]="categories" multiple>
-          <div class="display-flex">
-            <input
-              class="p-l-10 p-b-5"
-              matInput
-              placeholder="Search Category Name"
-            />
+    <div *ngIf="!showTable">
+      <div class="row display-flex">
+        <div class="m-b-10 m-r-10" *ngFor="let category of selectedCategory">
+          <mat-card class="p-10"
+            >{{ category.label }}
             <button mat-button matSuffix mat-icon-button>
-              <mat-icon>search</mat-icon>
+              <mat-icon class="font-size18">clear</mat-icon>
             </button>
-          </div>
-          <mat-option
-            *ngFor="let category of categoryList"
-            [value]="category"
-            (click)="demo()"
-            >category
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div class="align-center">
-        <button
-          *ngIf="selectedCategory.length"
-          mat-raised-button
-          class="main-background-color main-button color-white"
-        >
-          Next
-        </button>
+          </mat-card>
+        </div>
+      </div>
+      <div class="center-element">
+        <mat-form-field class="border-select">
+          <mat-select [formControl]="categories" multiple>
+            <div class="display-flex">
+              <input
+                class="p-l-10 p-b-5"
+                matInput
+                placeholder="Search Category Name"
+              />
+              <button mat-button matSuffix mat-icon-button>
+                <mat-icon>search</mat-icon>
+              </button>
+            </div>
+            <mat-option
+              *ngFor="let category of Object.keys(fullCategoryList)"
+              [value]="fullCategoryList[category]"
+              (click)="demo()"
+              >{{ fullCategoryList[category].label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="align-center">
+          <button
+            *ngIf="selectedCategory.length"
+            mat-raised-button
+            class="main-background-color main-button color-white"
+            (click)="finalisedCategory()"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
+    <app-bom-preview
+      *ngIf="showTable"
+      [selectedCategory]="selectedCategory"
+    ></app-bom-preview>
   </div>
 </div>

@@ -5,9 +5,21 @@ $white-color: #ffffff;
 $icon-color-gray: #b8b8b8;
 $black-color: #000000;
 $alert-color: #ff5353;
+$background-color-grey: #979797;
+
+.background-color-grey {
+  background-color: $background-color-grey;
+}
 
 .background-white-color {
   background-color: $white-color;
+}
+.full-border.mat-form-field.mat-focused input {
+  border: 2px solid $main-color;
+}
+
+.full-border.mat-form-field input {
+  border: 2px solid $icon-color-gray;
 }
 
 .color-white {
@@ -156,11 +168,11 @@ input {
   transform: translate(-50%, -50%);
 }
 
-.pull-right{
+.pull-right {
   float: right;
 }
 
-.pull-left{
+.pull-left {
   float: left;
 }
 
@@ -169,9 +181,9 @@ a:hover {
   text-decoration: none;
 }
 
-.box-shadow:hover mat-card{
-  -webkit-box-shadow:0 0 11px rgba(33,33,33,.2);
-  -moz-box-shadow:0 0 11px rgba(33,33,33,.2);
-  -o-box-shadow:0 0 11px rgba(33,33,33,.2);
-  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+.box-shadow:hover mat-card {
+  -webkit-box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  -moz-box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  -o-box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
