@@ -39,6 +39,7 @@
     <ng-container *ngFor="let projDetails of allProjects">
       <card-layout
         (onEdit)="editProject($event)"
+        (onDelete)="deleteProject($event)"
         [projectDetails]="projDetails"
       ></card-layout>
     </ng-container>

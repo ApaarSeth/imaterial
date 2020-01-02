@@ -15,7 +15,7 @@ export interface ProjectDetails {
 
 
 export interface ProjetPopupData {
-
+    isDelete?: boolean;
     isEdit: boolean;
     detail?:ProjectDetails
 }

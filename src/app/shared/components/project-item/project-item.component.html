@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-xs-2 text-right">
                     <a href="javascript:void(0)"><i class="material-icons main-color">file_copy</i></a>
-                    <a href="javascript:void(0)" class="p-l-10 p-r-10"><i class="material-icons main-color">delete</i></a>
+                    <a href="javascript:void(0)" (click)="delete(projectDetails.projectId,$event)" class="p-l-10 p-r-10"><i class="material-icons main-color">delete</i></a>
                     <a href="javascript:void(0)" (click)="edit(projectDetails.projectId,$event)"><i class="material-icons main-color">edit</i></a>
                 </div>
               </div>
