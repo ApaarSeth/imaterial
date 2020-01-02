@@ -10,7 +10,7 @@ const routes: Routes = [
     resolve: { dashBoardData: DashBoardResolver }
   },
   {
-    path: "bom",
+    path: "bom/:id",
     loadChildren: () =>
       import("./features/bom/bom.module").then(m => m.BomModule)
   }

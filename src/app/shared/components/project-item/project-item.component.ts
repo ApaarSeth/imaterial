@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,8 +9,11 @@ import { ProjectDetails } from '../../models/project-details';
     templateUrl: 'project-item.component.html'
 })
 export class ProjectItemComponent implements OnInit {
+    constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute  
+      ) {}
 
-    
     @Output('onEdit') onEdit = new EventEmitter<number>();
     @Input('projectDetails') projectDetails: ProjectDetails;
     ngOnInit(): void {
@@ -18,13 +21,16 @@ export class ProjectItemComponent implements OnInit {
     }
 
 
-    edit(proId:number){
-
+    edit(proId:number,$event){
         this.onEdit.emit(proId);
-
+        $event.stopPropagation();
     }
 
-
+    navigationToBOM(text:string,id: number){
+        if(text == 'bom'){
+          this.router.navigate(['/bom/'+id]);
+        }
+    }
     startSubscriptions() {
         // this.subscriptions.push(
         //     this._activatedRout.params.subscribe(params => {

@@ -163,3 +163,15 @@ input {
 .pull-left{
   float: left;
 }
+
+a:hover {
+  color: transparent;
+  text-decoration: none;
+}
+
+.box-shadow:hover mat-card{
+  -webkit-box-shadow:0 0 11px rgba(33,33,33,.2);
+  -moz-box-shadow:0 0 11px rgba(33,33,33,.2);
+  -o-box-shadow:0 0 11px rgba(33,33,33,.2);
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
