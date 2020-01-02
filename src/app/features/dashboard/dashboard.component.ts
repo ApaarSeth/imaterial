@@ -47,19 +47,18 @@ import { ProjectDetails, ProjetPopupData } from 'src/app/shared/models/project-d
     }
   
     ngOnInit() {
-      // this.getProjects();
       this.allProjects = this.activatedRoute.snapshot.data.dashBoardData
     }
 
     //displayedColumns = ['id', 'name', 'progress', 'color'];
     //dataSource: MatTableDataSource<UserData>;
 
-    getProjects(){
-      this.projectService.getProjects(1).then(res => {
-        res.data;
-        console.log("wefrgthyjhgff" +res);
-    });
-    }
+    // getProjects(){
+    //   this.projectService.getProjects(1).then(res => {
+    //     res.data;
+    //     console.log("wefrgthyjhgff" +res);
+    // });
+    // }
 
 
     editProject(projectId: number){

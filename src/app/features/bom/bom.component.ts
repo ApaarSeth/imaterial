@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-bom",
@@ -51,10 +52,14 @@ export class BomComponent implements OnInit {
     }
   };
 
-  constructor() {}
+  projectId: number;
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.categories = new FormControl([]);
+    this.activatedRoute.params.subscribe(params => {
+      this.projectId = params["id"];
+    });
   }
 
   demo() {
