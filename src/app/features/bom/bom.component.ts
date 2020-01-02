@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-bom",
@@ -8,10 +8,50 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ["../../../assets/scss/pages/bom.scss"]
 })
 export class BomComponent implements OnInit {
-  categoryList = ["category", "category", "category", "category", "category"];
+  Object = Object;
+  showTable = false;
   categories: FormControl;
   selectedCategory = [];
   value = "";
+  fullCategoryList = {
+    "0": {
+      label: "category",
+      estimatedQty: null,
+      subcategory: {
+        label: "subCategoryName",
+        estimatedQty: null,
+        material: [
+          {
+            label: "material1",
+            estryqty: null
+          },
+          {
+            label: "material1",
+            estryqty: null
+          }
+        ]
+      }
+    },
+    "1": {
+      label: "category",
+      estimatedQty: null,
+      subcategory: {
+        label: "subCategoryName",
+        estimatedQty: null,
+        material: [
+          {
+            label: "material1",
+            estryqty: null
+          },
+          {
+            label: "material1",
+            estryqty: null
+          }
+        ]
+      }
+    }
+  };
+
   projectId: number;
   searchText: string = null;
   // categories: any;
@@ -20,12 +60,17 @@ export class BomComponent implements OnInit {
   ngOnInit() {
     this.categories = new FormControl([]);
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
-     })
+      this.projectId = params["id"];
+    });
   }
 
   demo() {
     this.selectedCategory = [...this.categories.value];
     console.log(this.categories.value);
+  }
+
+  finalisedCategory() {
+    this.showTable = true;
+    console.log(this.showTable);
   }
 }
