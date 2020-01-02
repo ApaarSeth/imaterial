@@ -44,9 +44,9 @@
         </div>
       </div>
     </div>
-    <app-bom-table
-      [selectedCategory]="selectedCategory"
+    <app-bom-preview
       *ngIf="showTable"
-    ></app-bom-table>
+      [selectedCategory]="selectedCategory"
+    ></app-bom-preview>
   </div>
 </div>

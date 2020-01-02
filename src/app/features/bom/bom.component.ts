@@ -9,6 +9,9 @@ import { FormControl } from "@angular/forms";
 export class BomComponent implements OnInit {
   Object = Object;
   showTable = false;
+  categories: FormControl;
+  selectedCategory = [];
+  value = "";
   fullCategoryList = {
     "0": {
       label: "category",
@@ -18,14 +21,12 @@ export class BomComponent implements OnInit {
         estimatedQty: null,
         material: [
           {
-            0: {
-              label: "material1",
-              estryqty: null
-            },
-            1: {
-              label: "material1",
-              estryqty: null
-            }
+            label: "material1",
+            estryqty: null
+          },
+          {
+            label: "material1",
+            estryqty: null
           }
         ]
       }
@@ -38,24 +39,18 @@ export class BomComponent implements OnInit {
         estimatedQty: null,
         material: [
           {
-            0: {
-              label: "material1",
-              estryqty: null
-            },
-            1: {
-              label: "material1",
-              estryqty: null
-            }
+            label: "material1",
+            estryqty: null
+          },
+          {
+            label: "material1",
+            estryqty: null
           }
         ]
       }
     }
   };
-  categoryList = this.fullCategoryList[0];
-  categories: FormControl;
-  selectedCategory = [];
-  value = "";
-  // categories: any;
+
   constructor() {}
 
   ngOnInit() {

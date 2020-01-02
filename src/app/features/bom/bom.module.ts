@@ -5,10 +5,10 @@ import { BomComponent } from "./bom.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material-modules";
 import { LayoutModule } from "src/app/shared/layout/layout-module";
-import { BomTableComponent } from './bom-table/bom-table.component';
+import { BomPreviewComponent } from "./bom-preview/bom-preview.component";
 
 @NgModule({
-  declarations: [BomComponent, BomTableComponent],
+  declarations: [BomComponent, BomPreviewComponent],
   imports: [
     CommonModule,
     BomRoutingModule,
