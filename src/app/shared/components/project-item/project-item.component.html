@@ -1,4 +1,5 @@
-<mat-card class="m-t-5 m-b-10">
+<a class="box-shadow" (click)="navigationToBOM('bom',projectDetails.projectId)">
+  <mat-card class="m-t-5 m-b-10">
     <mat-card-content class="mat-card-content">
         <div class="row">
             <div class="col-md-2 col-xs-12" style="height: 150px;">
@@ -28,9 +29,9 @@
                     
                 </div>
                 <div class="col-xs-2 text-right">
-                    <a href=""><i class="material-icons main-color">file_copy</i></a>
-                    <a href="" class="p-l-10 p-r-10"><i class="material-icons main-color">delete</i></a>
-                    <a href="javascript:void(0)" (click)="edit(projectDetails.projectId)"><i class="material-icons main-color">edit</i></a>
+                    <a href="javascript:void(0)"><i class="material-icons main-color">file_copy</i></a>
+                    <a href="javascript:void(0)" class="p-l-10 p-r-10"><i class="material-icons main-color">delete</i></a>
+                    <a href="javascript:void(0)" (click)="edit(projectDetails.projectId,$event)"><i class="material-icons main-color">edit</i></a>
                 </div>
               </div>
               <div class="row m-t-20">
@@ -67,4 +68,5 @@
             </div>
         </div>
     </mat-card-content>
-</mat-card>
+  </mat-card>
+</a>

@@ -7,6 +7,7 @@ import { CommonModule } from "@angular/common";
 import { AppSharedModule } from "src/app/shared/app-shared-module";
 import { ProjectItemComponent } from "src/app/shared/components/project-item/project-item.component";
 import { MatInputModule } from "@angular/material/input";
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { MatInputModule } from "@angular/material/input";
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    RouterModule
   ],
   providers: [],
   declarations: [DashboardComponent, AppSharedModule, ProjectItemComponent]
