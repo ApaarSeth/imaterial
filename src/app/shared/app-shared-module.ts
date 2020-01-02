@@ -6,6 +6,7 @@ import { SharedComponentsModule } from "./components/shared-component.modules";
 import { SharedDialogs } from "./dialogs/shared-dialog";
 import { MaterialModule } from "./material-modules";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { SearchPipe } from './pipes/searchPipe';
 
 @NgModule({
   imports: [
@@ -16,8 +17,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     ReactiveFormsModule
   ],
   providers: [DataService],
-  declarations: [...SharedDialogs],
-  exports: [...SharedDialogs],
+  declarations: [...SharedDialogs,SearchPipe],
+  exports: [...SharedDialogs,SearchPipe],
   entryComponents: [...SharedDialogs]
 })
 export class AppSharedModule {}

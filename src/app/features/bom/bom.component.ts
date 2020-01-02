@@ -53,6 +53,8 @@ export class BomComponent implements OnInit {
   };
 
   projectId: number;
+  searchText: string = null;
+  // categories: any;
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {

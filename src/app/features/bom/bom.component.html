@@ -18,14 +18,14 @@
               <input
                 class="p-l-10 p-b-5"
                 matInput
-                placeholder="Search Category Name"
+                placeholder="Search Category Name" [(ngModel)]="searchText"
               />
               <button mat-button matSuffix mat-icon-button>
                 <mat-icon>search</mat-icon>
               </button>
             </div>
             <mat-option
-              *ngFor="let category of Object.keys(fullCategoryList)"
+              *ngFor="let category of Object.keys(fullCategoryList) | SearchPipe:searchText"
               [value]="fullCategoryList[category]"
               (click)="demo()"
               >{{ fullCategoryList[category].label }}
