@@ -1,6 +1,11 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <div *ngIf="!showTable">
+    <card-layout
+        (onEdit)="editProject($event)"
+        (onDelete)="deleteProject($event)"
+        [projectDetails]="product"
+      ></card-layout>
+    <div class="p-t-10" *ngIf="!showTable">
       <div class="row display-flex">
         <div class="m-b-10 m-r-10" *ngFor="let category of selectedCategory">
           <mat-card class="p-10"

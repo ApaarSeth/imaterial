@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
+import { Location }from "@angular/common";
 
 @Component({
   selector: "app-bom",
@@ -54,23 +55,30 @@ export class BomComponent implements OnInit {
 
   projectId: number;
   searchText: string = null;
-  // categories: any;
-  constructor(private activatedRoute: ActivatedRoute) {}
+  product: any;
+  constructor(private activatedRoute: ActivatedRoute,private location :Location) {}
 
   ngOnInit() {
     this.categories = new FormControl([]);
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params["id"];
     });
+    this.product = history.state.projectDetails;
   }
 
   demo() {
     this.selectedCategory = [...this.categories.value];
-    console.log(this.categories.value);
+    //console.log(this.categories.value);
   }
 
   finalisedCategory() {
     this.showTable = true;
-    console.log(this.showTable);
+    //console.log(this.showTable);
+  }
+
+  editProject(projectId: number){
+  }
+
+  deleteProject(){
   }
 }
