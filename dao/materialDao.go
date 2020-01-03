@@ -49,6 +49,7 @@ func (self *materialDao) AddMaterial(materialsList []*model.Material) ([]model.M
 
 	sqlStr := `INSERT INTO materials (pid,material_code,material_group,discription,material_name,base_price,gst,created_at,created_by,last_updated_by,last_updated_at) VALUES %s`
 	sqlStr = ReplaceSQL(sqlStr, "(?,?,?,?,?,?,?,?,?,?,?)", len(materialsList))
+	// fmt.Println(sqlStr)
 	//Prepare and execute the statement
 	stmt, _ := db.Prepare(sqlStr)
 	res, _ := stmt.Exec(vals...)
