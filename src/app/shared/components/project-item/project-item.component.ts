@@ -32,10 +32,8 @@ export class ProjectItemComponent implements OnInit {
         $event.stopPropagation();
     }
 
-    navigationToBOM(text:string,id: number){
-        if(text == 'bom'){
-          this.router.navigate(['/bom/'+id]);
-        }
+    navigationToBOM(id: number,projectDetails: ProjectDetails){
+          this.router.navigate(['/bom/'+id],{ state:  {projectDetails}});
     }
     startSubscriptions() {
         // this.subscriptions.push(

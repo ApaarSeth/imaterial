@@ -7,9 +7,10 @@ import { MaterialModule } from "src/app/shared/material-modules";
 import { LayoutModule } from "src/app/shared/layout/layout-module";
 import { AppSharedModule } from 'src/app/shared/app-shared-module';
 import { BomPreviewComponent } from "./bom-preview/bom-preview.component";
+import { ProjectItemComponent } from 'src/app/shared/components/project-item/project-item.component';
 
 @NgModule({
-  declarations: [BomComponent, BomPreviewComponent],
+  declarations: [BomComponent, BomPreviewComponent,ProjectItemComponent],
   imports: [
     CommonModule,
     BomRoutingModule,

@@ -20,6 +20,12 @@ export class ProjectService {
     });
   }
 
+  // getProjectById(organizationId:Number,userId:Number,id:number) {
+  //   return this.dataService.getRequest(API.PROJECTS(organizationId,userId),id).then(res => {
+  //       return res;
+  //   });
+  // }
+
   addProjects(organizationId:Number,userId:Number,projectData: ProjectDetails) {
     return this.dataService.sendPostRequest(API.ADDPROJECT(organizationId,userId), projectData).then(res => {
         return res;
