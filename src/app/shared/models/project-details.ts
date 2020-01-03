@@ -11,6 +11,23 @@ export interface ProjectDetails {
     projectId: number;
     projectName: string;
     userId: number;
+    organizationId: number;
+    addressShortname: string;
+    addressType: string;
+    createdAt: Date;
+    createdBy: string;
+    endDate: Date;
+    gstNo: string;
+    lowStockMaterialCount: string;
+    materialCount: number;
+    openIndentCount: number;
+    pincode: string;
+    primaryAddress: number;
+    projectAddressId: number;
+    purchaseOrderCost: string;
+    purchaseOrderCount: string;
+    startDate: Date;
+
 }
 
 

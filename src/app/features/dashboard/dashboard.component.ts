@@ -23,9 +23,7 @@ import { DoubleConfirmationComponent } from 'src/app/shared/dialogs/double-confi
   })
   export class DashboardComponent implements OnInit {
     userId : 1;
-    value = '';
-    animal: string;
-    name: string;
+    searchText: string = null;
 
     allProjects: ProjectDetails[];
 
@@ -113,7 +111,7 @@ import { DoubleConfirmationComponent } from 'src/app/shared/dialogs/double-confi
       });
     }else if(data.isDelete == true){
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
-        width: '700px',
+        width: '500px',
         data 
       });
   
