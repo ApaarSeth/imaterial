@@ -11,7 +11,7 @@ import { ProjectDetails } from '../../models/project-details';
 export class ProjectItemComponent implements OnInit {
     constructor(
         private router: Router,
-        private activatedRoute: ActivatedRoute  
+        private activatedRoute: ActivatedRoute
       ) {}
 
     @Output('onEdit') onEdit = new EventEmitter<number>();

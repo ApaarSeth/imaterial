@@ -41,7 +41,7 @@
         </mat-form-field>
         <!-- state value -->
         <mat-form-field class="border-input">
-          <input matInput type="number" placeholder="State" formControlName="state">
+          <input matInput type="string" placeholder="State" formControlName="state">
           <mat-error>State is Required</mat-error>
         </mat-form-field> 
     </div>
@@ -50,23 +50,20 @@
       <mat-form-field class="border-input">
         <input matInput [matDatepicker]="startDate" placeholder="Project Start Date">
         <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-        <mat-datepicker #startDate startView="year" [startAt]="startDate"></mat-datepicker>
+        <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
       </mat-form-field>
       <!-- end date -->
       <mat-form-field class="border-input">
         <input matInput [matDatepicker]="endDate" placeholder="Project End Date">
         <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-        <mat-datepicker #endDate startView="year" [startAt]="endDate"></mat-datepicker>
+        <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
       </mat-form-field>
       <!-- project Type -->
       <mat-form-field class="border-select"> 
         <mat-label>Project Type</mat-label>
         <mat-select>
-          <mat-option [value]="'abc'">
-            abc
-          </mat-option>
-          <mat-option [value]="'qwe'">
-            qwe
+          <mat-option *ngFor="let projectType of projectTypes" [value]="projectType.type">
+            {{projectType.type}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -79,11 +76,8 @@
       <mat-form-field class="border-select"> 
         <mat-label>Project Unit</mat-label>
         <mat-select>
-          <mat-option [value]="'sqr'">
-            sqr
-          </mat-option>
-          <mat-option [value]="'unit'">
-            unit
+          <mat-option *ngFor="let unit of units" [value]="unit.value">
+            {{unit.value}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -96,22 +90,13 @@
   </div>
 </div>
 <div mat-dialog-actions>
-  <div class="col-sm-6">
-    <button
-      mat-raised-button
-      class="main-background-color main-button color-white pull-left" (click)="close()">
-      Ok
-    </button>
-  </div> 
-  <div class="col-sm-6">
+  <div class="col-sm-12">
     <button
       mat-raised-button
       class="main-background-color main-button color-white pull-right">
       Add
     </button>
   </div>
-  <!-- <button type="button" mat-button (click)="close()">No Thanks</button>
-  <button type="submit" mat-button  >Ok</button> -->
 </div>
 
 </form> 

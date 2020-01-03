@@ -52,10 +52,9 @@ import { DoubleConfirmationComponent } from 'src/app/shared/dialogs/double-confi
     //displayedColumns = ['id', 'name', 'progress', 'color'];
     //dataSource: MatTableDataSource<UserData>;
 
-    // getProjects(){
-    //   this.projectService.getProjects(1).then(res => {
+    // addProjects(projectData: ProjectDetails){
+    //   this.projectService.addProjects(1,1,projectData).then(res => {
     //     res.data;
-    //     console.log("wefrgthyjhgff" +res);
     // });
     // }
 
