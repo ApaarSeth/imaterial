@@ -17,7 +17,8 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
-    RouterModule
+    RouterModule,
+    AppSharedModule
   ],
   providers: [],
   declarations: [DashboardComponent, AppSharedModule, ProjectItemComponent]

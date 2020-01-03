@@ -9,6 +9,7 @@ import {  MatDialog } from '@angular/material';
 import { AddProjectComponent } from 'src/app/shared/dialogs/add-project/add-project.component';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectDetails, ProjetPopupData } from 'src/app/shared/models/project-details';
+import { DoubleConfirmationComponent } from 'src/app/shared/dialogs/double-confirmation/double-confirmation.component';
 
 
 // export interface DialogData {
@@ -22,9 +23,7 @@ import { ProjectDetails, ProjetPopupData } from 'src/app/shared/models/project-d
   })
   export class DashboardComponent implements OnInit {
     userId : 1;
-    value = '';
-    animal: string;
-    name: string;
+    searchText: string = null;
 
     allProjects: ProjectDetails[];
 
@@ -66,6 +65,7 @@ import { ProjectDetails, ProjetPopupData } from 'src/app/shared/models/project-d
 
       const data: ProjetPopupData = {
         isEdit:true,
+        isDelete:false,
         detail:this.allProjects.find(pro => pro.projectId === projectId)
       }
 
@@ -77,7 +77,21 @@ import { ProjectDetails, ProjetPopupData } from 'src/app/shared/models/project-d
 
       this.openDialog({
         isEdit:false,
+        isDelete:false,
       } as ProjetPopupData);
+
+
+    }
+
+    deleteProject(projectId: number){
+
+      const data: ProjetPopupData = {
+        isEdit:false,
+        isDelete:true,
+        detail:this.allProjects.find(pro => pro.projectId === projectId)
+      }
+
+      this.openDialog(data);
 
 
     }
@@ -85,14 +99,28 @@ import { ProjectDetails, ProjetPopupData } from 'src/app/shared/models/project-d
 
     // modal function
     openDialog(data:ProjetPopupData ): void {
+      if(data.isDelete == false){
       const dialogRef = this.dialog.open(AddProjectComponent, {
         width: '700px',
         data 
       });
   
       dialogRef.afterClosed().toPromise().then(result => {
-        console.log('The dialog was closed');
-        this.animal = result;
+        //console.log('The dialog was closed');
+        //this.animal = result;
       });
+    }else if(data.isDelete == true){
+      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
+        width: '500px',
+        data 
+      });
+  
+      dialogRef.afterClosed().toPromise().then(result => {
+        //console.log('The dialog was closed');
+        //this.animal = result;
+      });
+    }
+
+
     }
   }

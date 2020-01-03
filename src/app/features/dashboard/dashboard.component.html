@@ -16,9 +16,9 @@
         <mat-form-field class="example-form-field">
           <input
             matInput
-            type="search"
             placeholder="Search Projects"
-            [(ngModel)]="value"
+            type="search"
+            [(ngModel)]="searchText"
           />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
@@ -36,12 +36,13 @@
       </div>
     </div>
     <!-- end fix part -->
-    <ng-container *ngFor="let projDetails of allProjects">
+    <div *ngFor="let projDetails of allProjects | SearchPipe:searchText: 'projectName'">
       <card-layout
         (onEdit)="editProject($event)"
+        (onDelete)="deleteProject($event)"
         [projectDetails]="projDetails"
       ></card-layout>
-    </ng-container>
+    </div>
 
     <!-- <mat-card>
     <mat-card-content class="mat-card-content">

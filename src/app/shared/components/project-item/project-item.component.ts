@@ -15,6 +15,7 @@ export class ProjectItemComponent implements OnInit {
       ) {}
 
     @Output('onEdit') onEdit = new EventEmitter<number>();
+    @Output('onDelete') onDelete = new EventEmitter<number>();
     @Input('projectDetails') projectDetails: ProjectDetails;
     ngOnInit(): void {
 
@@ -23,6 +24,11 @@ export class ProjectItemComponent implements OnInit {
 
     edit(proId:number,$event){
         this.onEdit.emit(proId);
+        $event.stopPropagation();
+    }
+
+    delete(proId:number,$event){
+        this.onDelete.emit(proId);
         $event.stopPropagation();
     }
 
