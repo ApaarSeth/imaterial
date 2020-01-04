@@ -75,20 +75,24 @@ import { ProjectService } from '../../services/projectDashboard/project.service'
       this.projectDetails = this.data.isEdit ?  this.data.detail: {} as ProjectDetails;
 
       this.form = this.formBuilder.group( {
-        name:[  this.data.isEdit ? this.data.detail.projectName : '', Validators.required],
-        address1:[this.data.isEdit ? this.data.detail.addressLine1 : '', Validators.required],
-        address2:[this.data.isEdit ? this.data.detail.addressLine2  : ''],
+        projectName:[  this.data.isEdit ? this.data.detail.projectName : '', Validators.required],
+        addressLine1:[this.data.isEdit ? this.data.detail.addressLine1 : '', Validators.required],
+        addressLine2:[this.data.isEdit ? this.data.detail.addressLine2  : ''],
         pinCode:[this.data.isEdit ? this.data.detail.pinCode  : '', Validators.required],
         state:[this.data.isEdit ? this.data.detail.state  : '', Validators.required],
         city:[this.data.isEdit ? this.data.detail.city  : '', Validators.required],
-        projectArea:[this.data.isEdit ? this.data.detail.area  : ''],
-        constructionCost:[this.data.isEdit ? this.data.detail.cost  : '', Validators.required],
+        area:[this.data.isEdit ? this.data.detail.area  : ''],
+        startDate:[this.data.isEdit ? this.data.detail.startDate : '',Validators.required],
+        endDate:[this.data.isEdit ? this.data.detail.endDate : '',Validators.required],
+        cost:[this.data.isEdit ? this.data.detail.cost  : '', Validators.required],
+        type:[this.data.isEdit ? this.data.detail.type  : '', Validators.required],
+        unit:[this.data.isEdit ? this.data.detail.unit  : '', Validators.required],
       });
 
     }
 
     addProjects(projectDetails: ProjectDetails){
-      this.projectService.addProjects(1,1,projectDetails).then(res => {
+      this.projectService.addProjects(projectDetails).then(res => {
         //res.data;
     });
     }
