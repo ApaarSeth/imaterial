@@ -26,13 +26,11 @@ export class ProjectService {
   //   });
   // }
 
-  addProjects(
-    organizationId: Number,
-    userId: Number,
-    projectData: ProjectDetails
-  ) {
+  addProjects(projectData: ProjectDetails) {
+    projectData.userId = 1;
+    projectData.organizationId = 1;
     return this.dataService
-      .sendPostRequest(API.ADDPROJECT(organizationId, userId), projectData)
+      .sendPostRequest(API.ADDPROJECT, projectData)
       .then(res => {
         return res;
       });

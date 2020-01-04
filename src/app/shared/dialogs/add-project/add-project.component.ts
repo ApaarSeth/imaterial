@@ -72,15 +72,15 @@ export class AddProjectComponent implements OnInit {
       : ({} as ProjectDetails);
 
     this.form = this.formBuilder.group({
-      name: [
+      projectName: [
         this.data.isEdit ? this.data.detail.projectName : "",
         Validators.required
       ],
-      address1: [
+      addressLine1: [
         this.data.isEdit ? this.data.detail.addressLine1 : "",
         Validators.required
       ],
-      address2: [this.data.isEdit ? this.data.detail.addressLine2 : ""],
+      addressLine2: [this.data.isEdit ? this.data.detail.addressLine2 : ""],
       pinCode: [
         this.data.isEdit ? this.data.detail.pinCode : "",
         Validators.required
@@ -93,16 +93,29 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.city : "",
         Validators.required
       ],
-      projectArea: [this.data.isEdit ? this.data.detail.area : ""],
-      constructionCost: [
+      area: [this.data.isEdit ? this.data.detail.area : ""],
+      startDate: [
+        this.data.isEdit ? this.data.detail.startDate : "",
+        Validators.required
+      ],
+      endDate: [
+        this.data.isEdit ? this.data.detail.endDate : "",
+        Validators.required
+      ],
+      cost: [
         this.data.isEdit ? this.data.detail.cost : "",
         Validators.required
-      ]
+      ],
+      type: [
+        this.data.isEdit ? this.data.detail.type : "",
+        Validators.required
+      ],
+      unit: [this.data.isEdit ? this.data.detail.unit : "", Validators.required]
     });
   }
 
   addProjects(projectDetails: ProjectDetails) {
-    this.projectService.addProjects(1, 1, projectDetails).then(res => {
+    this.projectService.addProjects(projectDetails).then(res => {
       //res.data;
     });
   }

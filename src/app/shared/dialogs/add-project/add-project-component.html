@@ -25,7 +25,7 @@
             matInput
             type="text"
             placeholder="Project Name"
-            formControlName="name"
+            formControlName="projectName"
           />
           <mat-error>Project Name is Required</mat-error>
         </mat-form-field>
@@ -35,7 +35,7 @@
             matInput
             type="text"
             placeholder="Address 1"
-            formControlName="address1"
+            formControlName="addressLine1"
           />
           <mat-error>Address is Required</mat-error>
         </mat-form-field>
@@ -45,7 +45,7 @@
             matInput
             type="text"
             placeholder="Address 2"
-            formControlName="address2"
+            formControlName="addressLine2"
           />
           <mat-error>Address is Required</mat-error>
         </mat-form-field>
@@ -53,7 +53,7 @@
         <mat-form-field class="border-input">
           <input
             matInput
-            type="number"
+            type="text"
             placeholder="PinCode"
             formControlName="pinCode"
           />
@@ -62,7 +62,7 @@
         <!-- city -->
         <mat-form-field class="border-select">
           <mat-label>City</mat-label>
-          <mat-select>
+          <mat-select formControlName="city">
             <mat-option *ngFor="let city of cities" [value]="city.value">
               {{city.viewValue}}
             </mat-option>
@@ -86,6 +86,7 @@
             matInput
             [matDatepicker]="startDate"
             placeholder="Project Start Date"
+            formControlName="startDate"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -103,6 +104,7 @@
             matInput
             [matDatepicker]="endDate"
             placeholder="Project End Date"
+            formControlName="endDate"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -117,7 +119,7 @@
         <!-- project Type -->
         <mat-form-field class="border-select">
           <mat-label>Project Type</mat-label>
-          <mat-select>
+          <mat-select formControlName="type">
             <mat-option
               *ngFor="let projectType of projectTypes"
               [value]="projectType.type"
@@ -130,16 +132,16 @@
         <mat-form-field class="border-input">
           <input
             matInput
-            type="text"
+            type="number"
             placeholder="Project Area"
-            formControlName="projectArea"
+            formControlName="area"
           />
           <mat-error>ProjectArea is Required</mat-error>
         </mat-form-field>
         <!-- project unit -->
         <mat-form-field class="border-select">
           <mat-label>Project Unit</mat-label>
-          <mat-select>
+          <mat-select formControlName="unit">
             <mat-option *ngFor="let unit of units" [value]="unit.value">
               {{unit.value}}
             </mat-option>
@@ -151,7 +153,7 @@
             matInput
             type="number"
             placeholder="Construction Cost"
-            formControlName="constructionCost"
+            formControlName="cost"
           />
           <mat-error>Construction Cost is Required</mat-error>
         </mat-form-field>
