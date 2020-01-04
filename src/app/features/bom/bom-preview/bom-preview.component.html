@@ -1,10 +1,15 @@
-<button
-  mat-raised-button
-  class="main-background-color main-button color-white center-element"
-  (click)="saveCategory()"
->
-  SAVE
-</button>
+<div class="row p-t-10 p-b-10">
+  <div class="col-sm-8"></div>
+  <div class="col-sm-4">
+    <button
+      mat-raised-button
+      class="main-background-color main-button color-white pull-right"
+      (click)="saveCategory()"
+    >
+      SAVE
+    </button>
+  </div>
+</div>
 <mat-accordion>
   <div #myele *ngFor="let category of selectedCategory">
     <mat-expansion-panel class="m-b-5 m-t-5">
