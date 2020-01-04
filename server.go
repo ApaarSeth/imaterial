@@ -1,10 +1,10 @@
 package main
 
 import (
-	"material-master/common"
-	"material-master/db"
-	"material-master/log"
-	route "material-master/routes"
+	"genMaterials/common"
+	"genMaterials/db"
+	"genMaterials/log"
+	route "genMaterials/routes"
 
 	"github.com/casbin/casbin"
 	"github.com/labstack/echo"
@@ -69,7 +69,7 @@ func main() {
 
 func (e *Enforcer) Enforce(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		user, _, _ := c.Request().BasicAuth()
+		user := c.Request().Header.Get("Authorization")
 		method := c.Request().Method
 		path := c.Request().URL.Path
 

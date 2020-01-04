@@ -5,8 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"material-master/log"
-	"material-master/services"
+	"genMaterials/log"
+	"genMaterials/model"
+	"genMaterials/services"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -59,6 +60,31 @@ func GetMaterial(c echo.Context) error {
 func GetMaterialOnGroup(c echo.Context) error {
 	groupCode := c.Param("groupCode")
 	materialsList, ServiceError := services.GetMaterialsOnGroup(groupCode)
+	if ServiceError != nil {
+		return c.JSON(http.StatusInternalServerError, ServiceError.Error())
+	}
+
+	return c.JSON(http.StatusOK, materialsList)
+}
+
+func GetMaterialGroups(c echo.Context) error {
+	// groupCode := c.Param("groupCode")
+	materialsList, ServiceError := services.GetMaterialGroups()
+	if ServiceError != nil {
+		return c.JSON(http.StatusInternalServerError, ServiceError.Error())
+	}
+
+	return c.JSON(http.StatusOK, materialsList)
+}
+
+func GetNestedMaterials(c echo.Context) error {
+	groupNames := new(model.Pids)
+	err := c.Bind(groupNames)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	// groupCode := c.Param("groupCode")
+	materialsList, ServiceError := services.GetNestedMaterials(groupNames)
 	if ServiceError != nil {
 		return c.JSON(http.StatusInternalServerError, ServiceError.Error())
 	}

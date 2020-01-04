@@ -1,4 +1,4 @@
-module material-master
+module genMaterials
 
 go 1.13
 
