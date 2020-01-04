@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../data.service';
 import { API } from '../../constants/configuration-constants';
+import { ProjectDetails } from '../../models/project-details';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,21 @@ export class ProjectService {
     private dataService: DataService
   ) { }
 
-  getProjects(userId:Number) {
-    return this.dataService.getRequest(API.PROJECTS(userId)).then(res => {
+  getProjects(organizationId:Number,userId:Number) {
+    return this.dataService.getRequest(API.PROJECTS(organizationId,userId)).then(res => {
         return res;
     });
-}
+  }
+
+  // getProjectById(organizationId:Number,userId:Number,id:number) {
+  //   return this.dataService.getRequest(API.PROJECTS(organizationId,userId),id).then(res => {
+  //       return res;
+  //   });
+  // }
+
+  addProjects(organizationId:Number,userId:Number,projectData: ProjectDetails) {
+    return this.dataService.sendPostRequest(API.ADDPROJECT(organizationId,userId), projectData).then(res => {
+        return res;
+    });
+  }
 }

@@ -4,12 +4,21 @@ import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { ProjectDetails, ProjetPopupData } from '../../models/project-details';
+import { ProjectService } from '../../services/projectDashboard/project.service';
 
  
 
   export interface City {
     value: string;
     viewValue: string;
+  }
+
+  export interface ProjectType {
+    type: string;
+  }
+
+  export interface Unit{
+    value: string;
   }
 
 @Component({
@@ -27,6 +36,7 @@ import { ProjectDetails, ProjetPopupData } from '../../models/project-details';
 
     projectDetails: ProjectDetails;
     constructor(
+      private projectService: ProjectService, 
       private dialogRef: MatDialogRef<AddProjectComponent>,
       @Inject(MAT_DIALOG_DATA) public data : ProjetPopupData,
       private formBuilder: FormBuilder
@@ -48,6 +58,18 @@ import { ProjectDetails, ProjetPopupData } from '../../models/project-details';
       {value: 'Karnal-2', viewValue: 'Karnal'}
     ];
 
+    projectTypes: ProjectType[] = [
+      {type: 'aaaa'},
+      {type: 'bbbb'},
+      {type: 'cccc'}
+    ];
+
+    units: Unit[] = [
+      {value: 'sqr'},
+      {value: 'br'},
+      {value: 'cr'}
+    ];
+
     initForm(){
 
       this.projectDetails = this.data.isEdit ?  this.data.detail: {} as ProjectDetails;
@@ -65,9 +87,15 @@ import { ProjectDetails, ProjetPopupData } from '../../models/project-details';
 
     }
 
+    addProjects(projectDetails: ProjectDetails){
+      this.projectService.addProjects(1,1,projectDetails).then(res => {
+        //res.data;
+    });
+    }
+
     submit(){
       console.log(this.form.value);
-      this.dialogRef.close(this.form.value);
+      this.dialogRef.close(this.addProjects(this.form.value));
     }
   
   }

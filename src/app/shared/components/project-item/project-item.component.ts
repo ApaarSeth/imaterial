@@ -11,10 +11,11 @@ import { ProjectDetails } from '../../models/project-details';
 export class ProjectItemComponent implements OnInit {
     constructor(
         private router: Router,
-        private activatedRoute: ActivatedRoute  
+        private activatedRoute: ActivatedRoute
       ) {}
 
     @Output('onEdit') onEdit = new EventEmitter<number>();
+    @Output('onDelete') onDelete = new EventEmitter<number>();
     @Input('projectDetails') projectDetails: ProjectDetails;
     ngOnInit(): void {
 
@@ -26,10 +27,13 @@ export class ProjectItemComponent implements OnInit {
         $event.stopPropagation();
     }
 
-    navigationToBOM(text:string,id: number){
-        if(text == 'bom'){
-          this.router.navigate(['/bom/'+id]);
-        }
+    delete(proId:number,$event){
+        this.onDelete.emit(proId);
+        $event.stopPropagation();
+    }
+
+    navigationToBOM(id: number,projectDetails: ProjectDetails){
+          this.router.navigate(['/bom/'+id],{ state:  {projectDetails}});
     }
     startSubscriptions() {
         // this.subscriptions.push(

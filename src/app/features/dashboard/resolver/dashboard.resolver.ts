@@ -12,7 +12,7 @@ export class DashBoardResolver implements Resolve<any> {
 
     resolve(){
 
-        return this.projectService.getProjects(1).then(data => {
+        return this.projectService.getProjects(1,1).then(data => {
             console.log("wefrgthyjhgff" , data.message);
            return data.message;
         });
