@@ -1,7 +1,7 @@
 export interface ProjectDetails {
     addressLine1: string;
     addressLine2: string;
-    area: string;
+    area: number;
     city: string;
     cost: number;
     country: string;
