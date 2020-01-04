@@ -1,3 +1,10 @@
+<button
+  mat-raised-button
+  class="main-background-color main-button color-white center-element"
+  (click)="saveCategory()"
+>
+  SAVE
+</button>
 <mat-accordion>
   <div #myele *ngFor="let category of selectedCategory">
     <mat-expansion-panel class="m-b-5 m-t-5">

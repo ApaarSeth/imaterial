@@ -9,7 +9,7 @@ import {
 import { Observable, of } from "rxjs";
 import { DataSource } from "@angular/cdk/table";
 import { MatTableDataSource } from "@angular/material/table";
-import { Data } from "@angular/router";
+import { Data, ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-bom-table",
@@ -30,6 +30,8 @@ import { Data } from "@angular/router";
   ]
 })
 export class BomTableComponent implements OnInit {
+  productId: number;
+  product: any;
   subcategoryData: Subcategory[] = [];
   columnsToDisplay = [
     "name",
@@ -49,9 +51,17 @@ export class BomTableComponent implements OnInit {
   dataSource: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.productId = params["id"];
+    });
+    this.product = history.state.projectDetails;
     SUBCATEGORIES.forEach(subcategory => {
       if (
         subcategory.materials &&
@@ -84,6 +94,13 @@ export class BomTableComponent implements OnInit {
     //       Address
     //     >).sort = this.innerSort.toArray()[index])
     // );
+  }
+
+  raiseIndent() {
+    let projectDetails = this.product;
+    this.router.navigate(["/indent/" + this.productId], {
+      state: { projectDetails }
+    });
   }
 }
 
