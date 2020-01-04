@@ -5,11 +5,12 @@ import { BomComponent } from "./bom.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material-modules";
 import { LayoutModule } from "src/app/shared/layout/layout-module";
-import { AppSharedModule } from 'src/app/shared/app-shared-module';
+import { AppSharedModule } from "src/app/shared/app-shared-module";
 import { BomPreviewComponent } from "./bom-preview/bom-preview.component";
+import { BomTableComponent } from "./bom-table/bom-table.component";
 
 @NgModule({
-  declarations: [BomComponent, BomPreviewComponent],
+  declarations: [BomComponent, BomPreviewComponent, BomTableComponent],
   imports: [
     CommonModule,
     BomRoutingModule,
