@@ -5,7 +5,7 @@ export interface ProjectDetails {
     city: string;
     cost: number;
     country: string;
-    pinCode: number;
+    pinCode: string;
     state: string;
     type: string;
     projectId: number;
@@ -27,6 +27,7 @@ export interface ProjectDetails {
     purchaseOrderCost: string;
     purchaseOrderCount: string;
     startDate: Date;
+    unit: string;
 
 }
 

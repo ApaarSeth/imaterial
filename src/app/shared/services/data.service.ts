@@ -59,6 +59,9 @@ export class DataService {
 
     sendPostRequest(url: string, params: any, reqOptions: DataServiceOptions = null): Promise<any> {
         let headers = new HttpHeaders();
+        headers = headers.append('Access-Control-Allow-Origin', '*');
+         headers = headers.append('accept', '*/*');
+         headers = headers.append( 'Authorization', 'admin');
 
         if (reqOptions) {
             if (reqOptions.skipLoader) {

@@ -12,28 +12,28 @@
     <div class="col-sm-5">
       <!-- project Name -->
         <mat-form-field class="border-input">
-          <input matInput type="text" placeholder="Project Name" formControlName="name">
+          <input matInput type="text" placeholder="Project Name" formControlName="projectName">
           <mat-error>Project Name is Required</mat-error>
         </mat-form-field>
         <!-- address 1 -->
         <mat-form-field class="border-input">
-          <input matInput type="text" placeholder="Address 1" formControlName="address1">
+          <input matInput type="text" placeholder="Address 1" formControlName="addressLine1">
           <mat-error>Address is Required</mat-error>
         </mat-form-field>
         <!-- address 2 -->
         <mat-form-field class="border-input">
-          <input matInput type="text" placeholder="Address 2" formControlName="address2">
+          <input matInput type="text" placeholder="Address 2" formControlName="addressLine2">
           <mat-error>Address is Required</mat-error>
         </mat-form-field>
         <!-- PinCode -->
         <mat-form-field class="border-input">
-          <input matInput type="number" placeholder="PinCode" formControlName="pinCode">
+          <input matInput type="text" placeholder="PinCode" formControlName="pinCode">
           <mat-error>PinCode is Required</mat-error>
         </mat-form-field>
         <!-- city -->
         <mat-form-field class="border-select"> 
           <mat-label>City</mat-label>
-          <mat-select>
+          <mat-select formControlName="city">
             <mat-option *ngFor="let city of cities" [value]="city.value">
               {{city.viewValue}}
             </mat-option>
@@ -48,20 +48,20 @@
     <div class="col-sm-4">
       <!-- start date -->
       <mat-form-field class="border-input">
-        <input matInput [matDatepicker]="startDate" placeholder="Project Start Date">
+        <input matInput [matDatepicker]="startDate" placeholder="Project Start Date" formControlName="startDate">
         <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
         <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
       </mat-form-field>
       <!-- end date -->
       <mat-form-field class="border-input">
-        <input matInput [matDatepicker]="endDate" placeholder="Project End Date">
+        <input matInput [matDatepicker]="endDate" placeholder="Project End Date" formControlName="endDate">
         <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
         <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
       </mat-form-field>
       <!-- project Type -->
       <mat-form-field class="border-select"> 
         <mat-label>Project Type</mat-label>
-        <mat-select>
+        <mat-select formControlName="type">
           <mat-option *ngFor="let projectType of projectTypes" [value]="projectType.type">
             {{projectType.type}}
           </mat-option>
@@ -69,13 +69,13 @@
       </mat-form-field>
       <!-- project area -->
       <mat-form-field class="border-input">
-        <input matInput type="text" placeholder="Project Area" formControlName="projectArea">
+        <input matInput type="text" placeholder="Project Area" formControlName="area">
         <mat-error>ProjectArea is Required</mat-error>
       </mat-form-field>
       <!-- project unit -->
       <mat-form-field class="border-select"> 
         <mat-label>Project Unit</mat-label>
-        <mat-select>
+        <mat-select formControlName="unit">
           <mat-option *ngFor="let unit of units" [value]="unit.value">
             {{unit.value}}
           </mat-option>
@@ -83,7 +83,7 @@
       </mat-form-field>
       <!-- construction cost -->
       <mat-form-field class="border-input">
-        <input matInput type="number" placeholder="Construction Cost" formControlName="constructionCost">
+        <input matInput type="number" placeholder="Construction Cost" formControlName="cost">
         <mat-error>Construction Cost is Required</mat-error>
       </mat-form-field>
     </div>

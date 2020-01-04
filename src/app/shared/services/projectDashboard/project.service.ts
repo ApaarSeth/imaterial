@@ -26,8 +26,10 @@ export class ProjectService {
   //   });
   // }
 
-  addProjects(organizationId:Number,userId:Number,projectData: ProjectDetails) {
-    return this.dataService.sendPostRequest(API.ADDPROJECT(organizationId,userId), projectData).then(res => {
+  addProjects(projectData: ProjectDetails) {
+    projectData.userId = 1;
+    projectData.organizationId = 1;
+    return this.dataService.sendPostRequest(API.ADDPROJECT, projectData).then(res => {
         return res;
     });
   }
