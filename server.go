@@ -72,7 +72,6 @@ func (e *Enforcer) Enforce(next echo.HandlerFunc) echo.HandlerFunc {
 		user := c.Request().Header.Get("Authorization")
 		method := c.Request().Method
 		path := c.Request().URL.Path
-
 		result := e.enforcer.Enforce(user, path, method)
 
 		if result {
