@@ -16,6 +16,7 @@ import { BomModule } from "./features/bom/bom.module";
 // import { DialogOverviewExampleDialog } from './shared/models/add-project/dialog-overview-example-dialog.component';
 // import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { IndentDashboardModule } from './features/indent/indent-dashboard.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     DashboardModule,
     HttpClientModule,
     LayoutModule,
-    BomModule
+    BomModule,
+    IndentDashboardModule
   ],
   providers: [
     HttpInterceptorProviders,
