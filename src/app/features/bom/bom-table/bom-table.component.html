@@ -1,5 +1,22 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+    <card-layout
+      (onEdit)="editProject($event)"
+      (onDelete)="deleteProject($event)"
+      [projectDetails]="product"
+    ></card-layout>
+    <div class="row p-t-10 p-b-10">
+      <div class="col-sm-12">
+        <button
+          mat-raised-button
+          class="main-background-color main-button color-white pull-right"
+          (click)="raiseIndent()"
+        >
+          Raise Indent
+        </button>
+      </div>
+    </div>
+
     <div class="row">
       <table
         mat-table
