@@ -13,11 +13,13 @@ const routes: Routes = [
     path: "bom/:id",
     loadChildren: () =>
       import("./features/bom/bom.module").then(m => m.BomModule)
-  }, 
+  },
   {
     path: "indent/:id",
     loadChildren: () =>
-      import("./features/indent/indent-dashboard.module").then(m => m.IndentDashboardModule)
+      import("./features/indent/indent-dashboard.module").then(
+        m => m.IndentDashboardModule
+      )
   }
 ];
 
