@@ -1,8 +1,8 @@
 package common
 
 import (
+	"genMaterials/log"
 	e "github.com/labstack/echo"
-	"material-master/log"
 )
 
 var traceLog *log.AppLogger

@@ -3,8 +3,8 @@ package services
 import (
 	"encoding/csv"
 	"fmt"
-	"material-master/dao"
-	"material-master/model"
+	"genMaterials/dao"
+	"genMaterials/model"
 	"io"
 	"io/ioutil"
 	"log"
@@ -15,7 +15,7 @@ import (
 
 func Uploadcsvfile(fileNameWithPath string) {
 
-	// b, err := ioutil.ReadFile("/home/rohit/material-master_Documents/db.csv") // just pass the file name
+	// b, err := ioutil.ReadFile("/home/rohit/GenMaterials_Documents/db.csv") // just pass the file name
 	b, err := ioutil.ReadFile(fileNameWithPath) // just pass the file name
 	if err != nil {
 		fmt.Print(err)
@@ -44,15 +44,14 @@ func Uploadcsvfile(fileNameWithPath string) {
 		// material.
 		// materialsData = append(materialsData, record)
 		// fmt.Println(record)
-		material.Pid, _ = strconv.Atoi(record[0])
+		material.Pid = record[0]
 		material.MaterialCode = record[1]
-		material.MaterialGroup = record[2]
+		material.MaterialGroupName = record[2]
 		material.MaterialName = record[3]
 		material.Alias = record[4]
 		material.Discription = record[5]
 		material.MaterialUnit = record[6]
 		material.Gst, _ = strconv.Atoi(record[7])
-		// i, _ := strconv.ParseUint(record[9], 0, 8)
 		material.BasePrice, _ = strconv.ParseFloat(record[8], 64)
 		material.CreatedAt = time.Now()
 		material.LastUpdatedAt = time.Now()
@@ -76,6 +75,20 @@ func GetAllMaterials() ([]model.Material, error) {
 func GetMaterialsOnGroup(groupCode string) ([]model.Material, error) {
 
 	getAllMaterials, getMaterialErr := dao.MaterialDao().GetMaterialsOnGroup(groupCode)
+	//fmt.Println(materialList)\
+	return getAllMaterials, getMaterialErr
+}
+
+func GetMaterialGroups() ([]model.Material, error) {
+
+	getAllMaterials, getMaterialErr := dao.MaterialDao().GetMaterialGroups()
+	//fmt.Println(materialList)\
+	return getAllMaterials, getMaterialErr
+}
+
+func GetNestedMaterials(groupName *model.Pids) ([]model.MaterialsObj, error) {
+
+	getAllMaterials, getMaterialErr := dao.MaterialDao().GetNestedMaterials(groupName)
 	//fmt.Println(materialList)\
 	return getAllMaterials, getMaterialErr
 }

@@ -2,9 +2,9 @@ package dao
 
 import (
 	"fmt"
-	"material-master/db"
-	"material-master/log"
-	"material-master/model"
+	"genMaterials/db"
+	"genMaterials/log"
+	"genMaterials/model"
 	"strconv"
 	"strings"
 )
@@ -17,6 +17,8 @@ type MaterialDaoIF interface {
 	AddMaterial(newMaterial []*model.Material) ([]model.Material, error)
 	GetAllMaterials() ([]model.Material, error)
 	GetMaterialsOnGroup(groupCode string) ([]model.Material, error)
+	GetMaterialGroups() ([]model.Material, error)
+	GetNestedMaterials(pid *model.Pids) ([]model.MaterialsObj, error)
 }
 
 func MaterialDao() MaterialDaoIF {
@@ -44,12 +46,11 @@ func (self *materialDao) AddMaterial(materialsList []*model.Material) ([]model.M
 	// }
 	vals := []interface{}{}
 	for _, row := range materialsList {
-		vals = append(vals, row.Pid, row.MaterialCode, row.MaterialGroup, row.Discription, row.MaterialName, row.BasePrice, row.Gst, row.CreatedAt, row.CreatedBy, row.LastUpdatedBy, row.LastUpdatedAt)
+		vals = append(vals, row.Pid, row.MaterialCode, row.MaterialGroupName, row.Discription, row.MaterialName, row.BasePrice, row.Gst, row.CreatedAt, row.CreatedBy, row.LastUpdatedBy, row.LastUpdatedAt)
 	}
 
 	sqlStr := `INSERT INTO materials (pid,material_code,material_group,discription,material_name,base_price,gst,created_at,created_by,last_updated_by,last_updated_at) VALUES %s`
 	sqlStr = ReplaceSQL(sqlStr, "(?,?,?,?,?,?,?,?,?,?,?)", len(materialsList))
-	// fmt.Println(sqlStr)
 	//Prepare and execute the statement
 	stmt, _ := db.Prepare(sqlStr)
 	res, _ := stmt.Exec(vals...)
@@ -96,7 +97,7 @@ func (self *materialDao) GetMaterialsOnGroup(groupCode string) ([]model.Material
 	sqlStatement := `SELECT
 					*	
 				     FROM
-				     materials where material_group=$1
+				     materials where pid=$1
 				`
 	selectQueryError := db.Select(&materials, sqlStatement, groupCode)
 
@@ -106,6 +107,62 @@ func (self *materialDao) GetMaterialsOnGroup(groupCode string) ([]model.Material
 	}
 
 	return materials, selectQueryError
+}
+
+func (self *materialDao) GetMaterialGroups() ([]model.Material, error) {
+	appLog.Info("GetMaterialGroups is Called")
+
+	materials := []model.Material{}
+	// db, errs := db.DBConnect()
+	db, connectionErrors := db.SqlxConnect()
+	if connectionErrors != nil {
+		fmt.Println(connectionErrors)
+		return nil, connectionErrors
+	}
+	sqlStatement := `select DISTINCT pid,material_group from materials order by pid`
+	selectQueryError := db.Select(&materials, sqlStatement)
+
+	if selectQueryError != nil {
+		fmt.Printf("The error is: ", selectQueryError)
+		return nil, selectQueryError
+	}
+
+	return materials, selectQueryError
+}
+
+func (self *materialDao) GetNestedMaterials(pids *model.Pids) ([]model.MaterialsObj, error) {
+	appLog.Info("GetNestedMaterials is Called")
+	var materialObjList = []model.MaterialsObj{}
+
+	// db, errs := db.DBConnect()
+	db, connectionErrors := db.SqlxConnect()
+	if connectionErrors != nil {
+		fmt.Println(connectionErrors)
+		return materialObjList, connectionErrors
+	}
+	for _, groupName := range pids.Pid {
+		var materialObj = model.MaterialsObj{}
+		materials := []*model.Material{}
+		materialObj.MaterialGroupName = groupName
+		var pidList []string
+		sqlStatement1 := `select pid from materials where material_group=$1`
+		selectQueryError1 := db.Select(&pidList, sqlStatement1, groupName)
+		materialObj.Pid = pidList[0]
+		if selectQueryError1 != nil {
+			fmt.Printf("The error is: ", selectQueryError1)
+			return materialObjList, selectQueryError1
+		}
+		sqlStatement2 := `select * from materials where material_group=$1`
+		selectQueryError2 := db.Select(&materials, sqlStatement2, groupName)
+		if selectQueryError2 != nil {
+			fmt.Printf("The error is: ", selectQueryError2)
+			return materialObjList, selectQueryError2
+		}
+		materialObj.Child = materials
+		materialObjList = append(materialObjList, materialObj)
+	}
+
+	return materialObjList, connectionErrors
 }
 
 func ReplaceSQL(stmt, pattern string, len int) string {
