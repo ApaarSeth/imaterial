@@ -3,8 +3,13 @@ import { FormControl } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { ProjectDetails } from "src/app/shared/models/project-details";
-
+import {
+  ProjectDetails,
+  ProjetPopupData
+} from "src/app/shared/models/project-details";
+import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
+import { MatDialog } from "@angular/material";
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -62,7 +67,8 @@ export class BomComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -90,7 +96,56 @@ export class BomComponent implements OnInit {
     //console.log(this.showTable);
   }
 
-  editProject(projectId: number) {}
+  // dialog function
 
-  deleteProject() {}
+  editProject() {
+    const data: ProjetPopupData = {
+      isEdit: true,
+      isDelete: false,
+      detail: this.product
+    };
+
+    this.openDialog(data);
+  }
+
+  deleteProject() {
+    const data: ProjetPopupData = {
+      isEdit: false,
+      isDelete: true,
+      detail: this.product
+    };
+
+    this.openDialog(data);
+  }
+
+  // modal function
+  openDialog(data: ProjetPopupData): void {
+    if (data.isDelete == false) {
+      const dialogRef = this.dialog.open(AddProjectComponent, {
+        width: "700px",
+        data
+      });
+
+      dialogRef
+        .afterClosed()
+        .toPromise()
+        .then(result => {
+          //console.log('The dialog was closed');
+          //this.animal = result;
+        });
+    } else if (data.isDelete == true) {
+      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
+        width: "500px",
+        data
+      });
+
+      dialogRef
+        .afterClosed()
+        .toPromise()
+        .then(result => {
+          //console.log('The dialog was closed');
+          //this.animal = result;
+        });
+    }
+  }
 }
