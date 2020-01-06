@@ -12,6 +12,6 @@ func MaterialRouteService(e *echo.Echo) {
 	e.GET("/material/listall", controllers.GetMaterial)
 	e.GET("/material/groupList/:groupCode", controllers.GetMaterialOnGroup)
 	e.GET("/material/groups", controllers.GetMaterialGroups)
-	e.GET("/material/nestedMaterials", controllers.GetNestedMaterials)
+	e.GET("/material/materialsSpecs", controllers.GetNestedMaterials)
 
 }
