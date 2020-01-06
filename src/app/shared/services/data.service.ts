@@ -18,13 +18,15 @@ import { DataServiceOptions } from '../models/data-service-options';
 export class DataService {
 
     private baseUrl: string;
+    private masterUrl: string;
 
     constructor(private http: HttpClient,
         //private notifier: NotificationService,
-        //private token: TokenService,
+        //private token:environment TokenService,
         private router: Router,
     ) {
         this.baseUrl = environment.url + '/';
+        this.masterUrl =  environment.masterUrl+'/'
     }
 
     getRequest(url: string, params: HttpParams = new HttpParams(), reqOptions: DataServiceOptions = null): ResolveData {
@@ -119,6 +121,33 @@ export class DataService {
             .then(res => res as any, err => this.handleError(err, ((reqOptions) && (reqOptions.skipLoader === true))));
     }
 
+    getRequestMaster(url: string, params: HttpParams = new HttpParams(), reqOptions: DataServiceOptions = null): ResolveData {
+
+        let headers = new HttpHeaders();
+         headers = headers.append('Access-Control-Allow-Origin', '*');
+         headers = headers.append('accept', '*/*');
+         headers = headers.append( 'Authorization', 'admin');
+
+        if (reqOptions) {
+            if (reqOptions.skipLoader) {
+                headers = headers.append(ConfigurationConstants.HEADER_SKIP_LOADER, '1');
+            }
+            if (reqOptions.cache) {
+                headers = headers.append(ConfigurationConstants.HEADER_CACHE_REQUEST, '1');
+            }
+            if (reqOptions.headers) {
+                const hdrs = reqOptions.headers.split(',');
+
+                headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+            }
+        }
+
+        const requestUrl = (reqOptions && reqOptions.requestURL) ? reqOptions.requestURL : this.masterUrl;
+        const options = { params, headers };
+
+        return this.http.get(requestUrl + url, options).toPromise().then(res => res, err => this.handleError(err, ((reqOptions) && (reqOptions.skipLoader === true))))
+
+    }
 
     private handleError(err: HttpErrorResponse, skipErrorNotify = false) {
 
