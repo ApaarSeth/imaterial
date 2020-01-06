@@ -22,8 +22,16 @@ export class ProjectService {
 
   getCategory() {
     return this.dataService.getRequestMaster(API.GETCATERGORY).then(res => {
-        return res;
+      return res;
     });
+  }
+
+  getMaterialsWithSpecs(categoryList) {
+    return this.dataService
+      .getRequestMaster(API.GETMATERIALSWITHSPECS, categoryList)
+      .then(res => {
+        return res;
+      });
   }
 
   // getProjectById(organizationId:Number,userId:Number,id:number) {

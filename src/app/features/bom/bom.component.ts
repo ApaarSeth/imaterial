@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { Location }from "@angular/common";
+import { Location } from "@angular/common";
+import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
 
 @Component({
   selector: "app-bom",
@@ -13,6 +14,7 @@ export class BomComponent implements OnInit {
   showTable = false;
   categories: FormControl;
   selectedCategory = [];
+  catergoryData;
   value = "";
   // fullCategoryList = {
   //   "0": {
@@ -57,11 +59,15 @@ export class BomComponent implements OnInit {
   searchText: string = null;
   product: any;
   fullCategoryList: any;
-  constructor(private activatedRoute: ActivatedRoute,private location :Location) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private location: Location,
+    private projectService: ProjectService
+  ) {}
 
   ngOnInit() {
     this.categories = new FormControl([]);
-    this.fullCategoryList = this.activatedRoute.snapshot.data.bomCategory
+    this.fullCategoryList = this.activatedRoute.snapshot.data.bomCategory;
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params["id"];
     });
@@ -70,18 +76,19 @@ export class BomComponent implements OnInit {
 
   demo() {
     this.selectedCategory = [...this.categories.value];
-    console.log(this.selectedCategory)
+    console.log(this.selectedCategory);
     //console.log(this.categories.value);
   }
 
   finalisedCategory() {
     this.showTable = true;
-    //console.log(this.showTable);
+    this.catergoryData = this.projectService.getMaterialsWithSpecs(
+      this.selectedCategory
+    );
+    console.log(this.catergoryData);
   }
 
-  editProject(projectId: number){
-  }
+  editProject(projectId: number) {}
 
-  deleteProject(){
-  }
+  deleteProject() {}
 }

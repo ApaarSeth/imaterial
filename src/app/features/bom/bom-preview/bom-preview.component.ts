@@ -17,10 +17,12 @@ export class BomPreviewComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.product = history.state.projectDetails;
+    console.log("selectedCategory");
     console.log(this.selectedCategory);
   }
 
   getMaterialLength(cat) {
+    console.log(cat);
     if (cat.subcategory.material.length) {
       console.log(cat);
       return true;
