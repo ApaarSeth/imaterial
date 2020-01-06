@@ -6,6 +6,12 @@ $icon-color-gray: #b8b8b8;
 $black-color: #000000;
 $alert-color: #ff5353;
 $background-color-grey: #979797;
+$green-color: #7ed321;
+
+a:hover {
+  color: $main-color !important;
+  text-decoration: none;
+}
 
 .background-color-grey {
   background-color: $background-color-grey;
@@ -148,12 +154,12 @@ input {
 }
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
-  color: $main-color !important;
+  color: $black-color !important;
 }
 
 .mat-primary .mat-pseudo-checkbox-checked,
 .mat-primary .mat-pseudo-checkbox-indeterminate {
-  background: $main-color !important;
+  background: $green-color !important;
 }
 
 .parent {
