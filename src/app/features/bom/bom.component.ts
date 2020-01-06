@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { Location }from "@angular/common";
+import { Location } from "@angular/common";
+import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
+import { ProjectDetails } from "src/app/shared/models/project-details";
 
 @Component({
   selector: "app-bom",
@@ -55,23 +57,32 @@ export class BomComponent implements OnInit {
 
   projectId: number;
   searchText: string = null;
-  product: any;
+  product: ProjectDetails;
   fullCategoryList: any;
-  constructor(private activatedRoute: ActivatedRoute,private location :Location) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private location: Location,
+    private projectService: ProjectService
+  ) {}
 
   ngOnInit() {
     this.categories = new FormControl([]);
-    this.fullCategoryList = this.activatedRoute.snapshot.data.bomCategory
+    this.fullCategoryList = this.activatedRoute.snapshot.data.bomCategory;
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.product = history.state.projectDetails;
+    this.getProject(this.projectId);
   }
 
   demo() {
     this.selectedCategory = [...this.categories.value];
-    console.log(this.selectedCategory)
+    console.log(this.selectedCategory);
     //console.log(this.categories.value);
+  }
+  getProject(id: number) {
+    this.projectService.getProject(1, id).then(data => {
+      this.product = data.message;
+    });
   }
 
   finalisedCategory() {
@@ -79,9 +90,7 @@ export class BomComponent implements OnInit {
     //console.log(this.showTable);
   }
 
-  editProject(projectId: number){
-  }
+  editProject(projectId: number) {}
 
-  deleteProject(){
-  }
+  deleteProject() {}
 }

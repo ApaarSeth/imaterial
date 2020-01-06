@@ -5,6 +5,7 @@ export const ConfigurationConstants = {
 export const API = {
 
     PROJECTS: (organizationId,userId) => `projects/${organizationId}/${userId}`,
+    GETPROJECT: (organizationId,projectId) => `project/${organizationId}/${projectId}`,
     GETCATERGORY:`material/groups`,
     ADDPROJECT: `addProject`
     //STATE: 'account/api/permitted/address/states',

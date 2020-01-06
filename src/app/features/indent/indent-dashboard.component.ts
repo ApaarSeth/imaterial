@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
+import { ProjectDetails } from "src/app/shared/models/project-details";
 
 export interface PeriodicElement {
   materialName: string;
@@ -81,7 +83,7 @@ export class IndentDashboardComponent implements OnInit {
   userId: 1;
   searchText: string = null;
   projectId: number;
-  product: any;
+  product: ProjectDetails;
   displayedColumns: string[] = [
     "Material Name",
     "Estimated Quantity",
@@ -90,23 +92,28 @@ export class IndentDashboardComponent implements OnInit {
   ];
   dataSource = ELEMENT_DATA;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private projectService: ProjectService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.product = history.state.projectDetails;
-    console.log("product" + this.product);
+    //this.product = history.state.projectDetails;
+    this.getProject(this.projectId);
   }
 
   editProject(projectId: number) {}
   deleteProject() {}
-  showIndent() {
-    let product = this.product;
-    console.log("product" + product);
-    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"], {
-      state: { product }
+  getProject(id: number) {
+    this.projectService.getProject(1, id).then(data => {
+      this.product = data.message;
     });
+  }
+  showIndent() {
+    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
   }
 }

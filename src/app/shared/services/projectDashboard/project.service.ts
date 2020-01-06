@@ -20,6 +20,14 @@ export class ProjectService {
       });
   }
 
+  getProject(organizationId: Number, projectId: Number) {
+    return this.dataService
+      .getRequest(API.GETPROJECT(organizationId, projectId))
+      .then(res => {
+        return res;
+      });
+  }
+
   getCategory() {
     return this.dataService.getRequestMaster(API.GETCATERGORY).then(res => {
         return res;

@@ -1,6 +1,6 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <card-layout
+    <card-layout *ngIf="product"
       (onEdit)="editProject($event)"
       (onDelete)="deleteProject($event)"
       [projectDetails]="product"
