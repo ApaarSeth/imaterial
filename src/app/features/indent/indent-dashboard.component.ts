@@ -1,9 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import {
-  ProjectDetails,
-  ProjetPopupData
-} from "src/app/shared/models/project-details";
 
 export interface PeriodicElement {
   materialName: string;
@@ -74,6 +70,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     requiredDate: 22 / 2 / 2020
   }
 ];
+
 @Component({
   selector: "dashboard",
   templateUrl: "./indent-dashboard.component.html",
@@ -100,11 +97,16 @@ export class IndentDashboardComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.product = history.state.projectDetails;
+    console.log("product" + this.product);
   }
 
   editProject(projectId: number) {}
   deleteProject() {}
   showIndent() {
-    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
+    let product = this.product;
+    console.log("product" + product);
+    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"], {
+      state: { product }
+    });
   }
 }
