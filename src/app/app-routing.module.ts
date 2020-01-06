@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { DashboardComponent } from "./features/dashboard/dashboard.component";
 import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resolver";
+import { BomResolver } from './features/bom/bom.resolver';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
   },
   {
     path: "bom/:id",
+    resolve: { bomCategory: BomResolver },
     loadChildren: () =>
       import("./features/bom/bom.module").then(m => m.BomModule)
   }, 

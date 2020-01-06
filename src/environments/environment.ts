@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url: "http://admin:@localhost:1323",
+  url: "http://localhost:1323",
+  masterUrl: "http://localhost:1333"
 };
 
 /*

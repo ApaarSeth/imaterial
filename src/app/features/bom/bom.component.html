@@ -9,7 +9,7 @@
       <div class="row display-flex">
         <div class="m-b-10 m-r-10" *ngFor="let category of selectedCategory">
           <mat-card class="p-10"
-            >{{ category.label }}
+            >{{ category.materialGroup }}
             <button mat-button matSuffix mat-icon-button>
               <mat-icon class="font-size18">clear</mat-icon>
             </button>
@@ -31,10 +31,10 @@
               </button>
             </div>
             <mat-option
-              *ngFor="let category of Object.keys(fullCategoryList) | SearchPipe:searchText"
-              [value]="fullCategoryList[category]"
+              *ngFor="let category of fullCategoryList | SearchPipe:searchText"
+              [value]="category"
               (click)="demo()"
-              >{{ fullCategoryList[category].label }}
+              >{{ category.materialGroup }}
             </mat-option>
           </mat-select>
         </mat-form-field>

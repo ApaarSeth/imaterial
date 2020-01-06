@@ -9,6 +9,7 @@ import { AppSharedModule } from "src/app/shared/app-shared-module";
 import { BomPreviewComponent } from "./bom-preview/bom-preview.component";
 import { BomTableComponent } from "./bom-table/bom-table.component";
 import { ProjectItemComponent } from "src/app/shared/components/project-item/project-item.component";
+import { BomResolver } from './bom.resolver';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,9 @@ import { ProjectItemComponent } from "src/app/shared/components/project-item/pro
     MaterialModule,
     LayoutModule,
     AppSharedModule
+  ],
+  providers: [
+    BomResolver
   ]
 })
 export class BomModule {}
