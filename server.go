@@ -8,6 +8,7 @@ import (
 
 	"github.com/casbin/casbin"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 )
@@ -54,6 +55,7 @@ func main() {
 	}
 
 	e := echo.New()
+	e.Use(middleware.CORS())
 	cE := casbin.NewEnforcer("model.conf", "policy.csv")
 	enforcer := Enforcer{enforcer: *cE}
 	e.Use(enforcer.Enforce)

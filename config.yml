@@ -1,6 +1,6 @@
 mode: "dev"
 echo:
-  port: ":1323"
+  port: ":1333"
   static: "public"
 
 fluent:
