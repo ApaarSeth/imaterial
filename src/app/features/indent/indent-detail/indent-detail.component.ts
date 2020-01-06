@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
+import { ProjectDetails } from "src/app/shared/models/project-details";
 
 export interface IndentData {
   indentName: string;
@@ -88,7 +90,7 @@ const ELEMENT_DATA: IndentData[] = [
   styleUrls: ["./indent-detail.component.scss"]
 })
 export class IndentDetailComponent implements OnInit {
-  product: any;
+  product: ProjectDetails;
   projectId: number;
   displayedColumns: string[] = [
     "Indent Name",
@@ -98,13 +100,23 @@ export class IndentDetailComponent implements OnInit {
     "Date"
   ];
   dataSource = ELEMENT_DATA;
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private projectService: ProjectService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.product = history.state.product;
-    console.log(this.product);
+    this.getProject(this.projectId);
   }
+  getProject(id: number) {
+    this.projectService.getProject(1, id).then(data => {
+      this.product = data.message;
+    });
+  }
+  editProject() {}
+  deleteProject() {}
 }

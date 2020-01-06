@@ -10,6 +10,8 @@ import { Observable, of } from "rxjs";
 import { DataSource } from "@angular/cdk/table";
 import { MatTableDataSource } from "@angular/material/table";
 import { Data, ActivatedRoute, Router } from "@angular/router";
+import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
+import { ProjectDetails } from "src/app/shared/models/project-details";
 
 @Component({
   selector: "app-bom-table",
@@ -31,7 +33,7 @@ import { Data, ActivatedRoute, Router } from "@angular/router";
 })
 export class BomTableComponent implements OnInit {
   productId: number;
-  product: any;
+  product: ProjectDetails;
   subcategoryData: Subcategory[] = [];
   columnsToDisplay = [
     "name",
@@ -54,14 +56,17 @@ export class BomTableComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private projectService: ProjectService
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.productId = params["id"];
     });
-    this.product = history.state.projectDetails;
+    //this.product = history.state.projectDetails;
+    this.getProject(this.productId);
+
     SUBCATEGORIES.forEach(subcategory => {
       if (
         subcategory.materials &&
@@ -96,11 +101,17 @@ export class BomTableComponent implements OnInit {
     // );
   }
 
+  getProject(id: number) {
+    this.projectService.getProject(1, id).then(data => {
+      this.product = data.message;
+    });
+  }
+
+  editProject() {}
+  deleteProject() {}
   raiseIndent() {
     let projectDetails = this.product;
-    this.router.navigate(["/indent/" + this.productId], {
-      state: { projectDetails }
-    });
+    this.router.navigate(["/indent/" + this.productId]);
   }
 }
 

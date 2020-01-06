@@ -28,6 +28,7 @@ export interface ProjectDetails {
     purchaseOrderCount: string;
     startDate: Date;
     unit: string;
+    matCount: number;
 
 }
 
