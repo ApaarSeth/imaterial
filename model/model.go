@@ -14,15 +14,16 @@ type Base struct {
 
 type Material struct {
 	Base
-	Pid               string  `json:"pid"    db:"pid"`
-	MaterialCode      string  `json:"materialCode"    db:"material_code"`
-	Discription       string  `json:"discription"       db:"discription"`
-	MaterialName      string  `json:"materialName"    db:"material_name"`
-	MaterialGroupName string  `json:"materialGroup"    db:"material_group"`
-	MaterialUnit      string  `json:"materialUnit"      db:"material_unit"`
-	BasePrice         float64 `json:"basePrice"     db:"base_price"`
-	Gst               int     `json:"gst"  db:"gst"`
-	Alias             string  `json:"alias"    db:"alias"`
+	Pid               string   `json:"pid"    db:"pid"`
+	MaterialCode      string   `json:"materialCode"    db:"material_code"`
+	Discription       string   `json:"discription"       db:"discription"`
+	MaterialName      string   `json:"materialName"    db:"material_name"`
+	MaterialGroupName string   `json:"materialGroup"    db:"material_group"`
+	MaterialUnit      string   `json:"materialUnit"      db:"material_unit"`
+	BasePrice         float64  `json:"basePrice"     db:"base_price"`
+	Gst               int      `json:"gst"  db:"gst"`
+	Alias             string   `json:"alias"    db:"alias"`
+	Specs             []string `json:"Specs"    db:"specs"`
 }
 
 type MaterialResultJson struct {
