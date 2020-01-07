@@ -8,74 +8,82 @@ import {
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { MatDialog } from "@angular/material";
+import { IndentVO } from "src/app/shared/models/indent";
+import { IndentService } from "src/app/shared/services/indent/indent.service";
 
 export interface PeriodicElement {
   materialName: string;
   estimatedQty: number;
-  requiredQty: number;
-  requiredDate: number;
+  quantity: number;
+  dueDate: Date;
+  materialId: number;
+  materialUnit: string;
+  projectId: number;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {
     materialName: "Steelbar 15MM",
     estimatedQty: 200,
-    requiredQty: 1.0079,
-    requiredDate: 22 / 2 / 2020
+    quantity: null,
+    dueDate: null,
+    materialId: 1,
+    materialUnit: "MT",
+    projectId: 8
   },
   {
     materialName: "Steelbar 15MM",
     estimatedQty: 200,
-    requiredQty: 4.0026,
-    requiredDate: 22 / 2 / 2020
+    quantity: null,
+    dueDate: null,
+    materialId: 2,
+    materialUnit: "MT",
+    projectId: 8
   },
   {
     materialName: "Steelbar 15MM",
     estimatedQty: 200,
-    requiredQty: 6.941,
-    requiredDate: 22 / 2 / 2020
+    quantity: null,
+    dueDate: null,
+    materialId: 3,
+    materialUnit: "MT",
+    projectId: 8
   },
   {
     materialName: "Steelbar 15MM",
     estimatedQty: 200,
-    requiredQty: 9.0122,
-    requiredDate: 22 / 2 / 2020
+    quantity: null,
+    dueDate: null,
+    materialId: 4,
+    materialUnit: "MT",
+    projectId: 8
   },
   {
     materialName: "Steelbar 15MM",
     estimatedQty: 200,
-    requiredQty: 10.811,
-    requiredDate: 22 / 2 / 2020
+    quantity: null,
+    dueDate: null,
+    materialId: 5,
+    materialUnit: "MT",
+    projectId: 8
   },
   {
     materialName: "Steelbar 15MM",
     estimatedQty: 200,
-    requiredQty: 12.0107,
-    requiredDate: 22 / 2 / 2020
+    quantity: null,
+    dueDate: null,
+    materialId: 6,
+    materialUnit: "MT",
+    projectId: 8
   },
   {
     materialName: "Steelbar 15MM",
     estimatedQty: 200,
-    requiredQty: 14.0067,
-    requiredDate: 22 / 2 / 2020
-  },
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    requiredQty: 15.9994,
-    requiredDate: 22 / 2 / 2020
-  },
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    requiredQty: 18.9984,
-    requiredDate: 22 / 2 / 2020
-  },
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    requiredQty: 20.1797,
-    requiredDate: 22 / 2 / 2020
+    quantity: null,
+    dueDate: null,
+    materialId: 7,
+    materialUnit: "MT",
+    projectId: 8
   }
 ];
 
@@ -85,7 +93,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ["../../../assets/scss/main.scss"]
 })
 export class IndentDashboardComponent implements OnInit {
-  requiredDate = new Date(1990, 0, 1);
+  dueDate = new Date(1990, 0, 1);
   userId: 1;
   searchText: string = null;
   projectId: number;
@@ -102,6 +110,7 @@ export class IndentDashboardComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private projectService: ProjectService,
+    private indentService: IndentService,
     private dialog: MatDialog
   ) {}
 
@@ -117,8 +126,17 @@ export class IndentDashboardComponent implements OnInit {
       this.product = data.data;
     });
   }
-  showIndent() {
+  showIndent(dataSource) {
+    console.log("qwerty", dataSource);
     this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
+    this.raiseIndent(dataSource);
+  }
+
+  raiseIndent(indentVO: IndentVO[]) {
+    console.log("qwertyuio", indentVO);
+    this.indentService.raiseIndent(this.projectId, indentVO).then(res => {
+      console.log(res);
+    });
   }
 
   // dialog function

@@ -13,7 +13,7 @@
     <div class="row p-t-10 p-b-10">
       <div class="col-sm-12">
         <button
-          (click)="showIndent()"
+          (click)="showIndent(dataSource)"
           mat-raised-button
           class="main-background-color main-button color-white pull-right"
         >
@@ -42,7 +42,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="Estimated Quantity">
           <th mat-header-cell *matHeaderCellDef>Estimated Quantity</th>
-          <td mat-cell *matCellDef="let element">{{ element.estimatedQty }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.estimatedQty }} {{element.materialUnit}}</td>
         </ng-container>
 
         <!-- Weight Column -->
@@ -50,8 +50,8 @@
           <th mat-header-cell *matHeaderCellDef>Required Quantity</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field class="border-input">
-              <input matInput type="number" placeholder="Required Quantity" />
-            </mat-form-field>
+              <input matInput type="number" placeholder="Required Quantity" [(ngModel)]="element.quantity" />
+            </mat-form-field> {{element.materialUnit}}
           </td>
         </ng-container>
 
@@ -63,6 +63,7 @@
               <input
                 matInput
                 [matDatepicker]="startDate"
+                [(ngModel)]="element.dueDate"
                 placeholder="Required Date"
               />
               <mat-datepicker-toggle
@@ -72,7 +73,7 @@
               <mat-datepicker
                 #startDate
                 startView="month"
-                [startAt]="requiredDate"
+                [startAt]="dueDate"
               ></mat-datepicker>
             </mat-form-field>
           </td>

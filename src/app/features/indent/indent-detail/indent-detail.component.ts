@@ -8,6 +8,7 @@ import {
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { MatDialog } from "@angular/material";
+import { AllIndentListVO, IndentVO } from "src/app/shared/models/indent";
 
 export interface IndentData {
   indentName: string;
@@ -17,78 +18,78 @@ export interface IndentData {
   date: number;
 }
 
-const ELEMENT_DATA: IndentData[] = [
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  },
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  },
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  },
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  },
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  },
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  },
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  },
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  },
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  },
-  {
-    indentName: "Steelbar 15MM",
-    requestedDate: 22 / 2 / 2020,
-    totalNoOfMaterial: 43,
-    createdBy: "Rahul Singh",
-    date: 22 / 2 / 2020
-  }
-];
+// const ELEMENT_DATA: IndentData[] = [
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   },
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   },
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   },
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   },
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   },
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   },
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   },
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   },
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   },
+//   {
+//     indentName: "Steelbar 15MM",
+//     requestedDate: 22 / 2 / 2020,
+//     totalNoOfMaterial: 43,
+//     createdBy: "Rahul Singh",
+//     date: 22 / 2 / 2020
+//   }
+// ];
 
 @Component({
   selector: "app-indent-detail",
@@ -105,7 +106,9 @@ export class IndentDetailComponent implements OnInit {
     "Created By",
     "Date"
   ];
-  dataSource = ELEMENT_DATA;
+  allIndents: AllIndentListVO;
+  dataSource1: IndentVO[];
+  dataSource2: IndentVO[];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -118,7 +121,11 @@ export class IndentDetailComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.getProject(this.projectId);
+    this.allIndents = this.route.snapshot.data.indentList;
+    this.dataSource1 = this.allIndents.ongoingIndentList;
+    this.dataSource2 = this.allIndents.completedIndentList;
   }
+
   getProject(id: number) {
     this.projectService.getProject(1, id).then(data => {
       this.product = data.data;

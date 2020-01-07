@@ -24,12 +24,12 @@
               </div>
               <div class="row">
                 <div class=" col-xs-8 display-flex">
-                  <div class="font-size10 gray-color text-left width50Percent">
-                    <i class="material-icons font-size10 gray-color">room</i>
+                  <div class="font-size12 gray-color text-left width50Percent">
+                    <i class="material-icons font-size12 gray-color">room</i>
                     <span>{{ projectDetails.addressLine1 }}</span>
                   </div>
-                  <div class="font-size10 gray-color text-left width50Percent">
-                    <i class="material-icons font-size10 gray-color"
+                  <div class="font-size12 gray-color text-left width50Percent">
+                    <i class="material-icons font-size12 gray-color"
                       >format_shapes</i
                     >
                     <span>Project Area: {{ projectDetails.area }}</span>
@@ -38,19 +38,19 @@
               </div>
               <div class="row">
                 <div class=" col-xs-8 display-flex">
-                  <div class="font-size10 gray-color text-left width50Percent">
-                    <i class="material-icons font-size10 gray-color">today</i>
+                  <div class="font-size12 gray-color text-left width50Percent">
+                    <i class="material-icons font-size12 gray-color">today</i>
                     <span>{{ projectDetails.startDate | date }}</span> to
                     <span>{{ projectDetails.endDate | date }}</span>
                   </div>
-                  <div class="font-size10 gray-color text-left width50Percent">
+                  <div class="font-size12 gray-color text-left width50Percent">
                     <span>₹ Construction Cost: {{ projectDetails.cost }}</span>
                   </div>
                 </div>
               </div>
               <!-- <div class="row">
                       <div class=" col-xs-6 display-flex">
-                          <div class="font-size10 gray-color text-left width50Percent"><i class="material-icons font-size10 gray-color">room</i> <span>{{projectDetails.addressLine2}}</span></div>
+                          <div class="font-size12 gray-color text-left width50Percent"><i class="material-icons font-size12 gray-color">room</i> <span>{{projectDetails.addressLine2}}</span></div>
                       </div>    
                     </div> -->
             </div>
@@ -80,7 +80,7 @@
                   <div class="font-size20 text-bold">
                     {{ projectDetails.lowStockMaterialCount }}
                   </div>
-                  <div class="font-size10 p-l-15">Low Stock Material</div>
+                  <div class="font-size12 p-l-15">Low Stock Material</div>
                 </div>
                 <div
                   class="col-sm-3 border-right gray-color p-t-10 p-b-10 p-l-30 display-flex"
@@ -88,7 +88,7 @@
                   <div class="font-size20 text-bold">
                     {{ projectDetails.matCount }}
                   </div>
-                  <div class="font-size10 p-l-15">
+                  <div class="font-size12 p-l-15">
                     All<br />
                     Material
                   </div>
@@ -99,7 +99,7 @@
                   <div class="font-size20 text-bold">
                     {{ projectDetails.openIndentCount }}
                   </div>
-                  <div class="font-size10 p-l-15">
+                  <div class="font-size12 p-l-15">
                     Open<br />
                     Indents
                   </div>
@@ -108,11 +108,11 @@
                   <div class="font-size20 gray-color text-bold">
                     {{ projectDetails.purchaseOrderCount }}
                   </div>
-                  <div class="font-size10 gray-color p-l-15">
+                  <div class="font-size12 gray-color p-l-15">
                     Purchase<br />
                     Order
                   </div>
-                  <div class="font-size10 text-right p-l-25 m-t-15">
+                  <div class="font-size12 text-right p-l-25 m-t-15">
                     ₹{{ projectDetails.purchaseOrderCost }} Cr
                   </div>
                 </div>
@@ -124,7 +124,7 @@
           </div>
           <div class="row m-t-10">
             <div class="col-xs-12 text-right">
-              <div class="font-size10 gray-color">
+              <div class="font-size12 gray-color">
                 Created : {{ projectDetails.createdAt | date: "fullDate" }} By
                 {{ projectDetails.createdBy }} (Site Enginer)
               </div>
