@@ -42,20 +42,21 @@ export class BomTableComponent implements OnInit {
   projectId: number;
   product: ProjectDetails;
   subcategoryData: Subcategory[] = [];
+  subcategories: Subcategory[] = [];
   columnsToDisplay = [
-    "name",
-    "estimatedQuantity",
-    "requestedMaterial",
-    "issuedToProject",
-    "availableInStock"
+    "materialName",
+    "estimatedQty",
+    "requestedQuantity",
+    "issueToProject",
+    "availableStock"
   ];
 
   innerDisplayedColumns = [
-    "name",
-    "estimatedQuantity",
-    "requestedMaterial",
-    "issuedToProject",
-    "availableInStock"
+    "materialName",
+    "estimatedQty",
+    "requestedQuantity",
+    "issueToProject",
+    "availableStock"
   ];
   dataSource: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -74,34 +75,36 @@ export class BomTableComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.bomService.getMaterialWithQuantity(1, this.projectId).then(res => {
-      console.log(res);
+      this.subcategories = [...res.data];
+      console.log(this.subcategories);
+      this.subcategories.forEach(subcategory => {
+        if (
+          subcategory.materialSpecs &&
+          Array.isArray(subcategory.materialSpecs) &&
+          subcategory.materialSpecs.length
+        ) {
+          this.subcategoryData = [
+            ...this.subcategoryData,
+            {
+              ...subcategory,
+              materialSpecs: new MatTableDataSource(subcategory.materialSpecs)
+            }
+          ];
+        } else {
+          this.subcategoryData = [...this.subcategoryData, subcategory];
+        }
+      });
+      this.dataSource = new MatTableDataSource(this.subcategoryData);
+      console.log(this.dataSource);
     });
 
     //this.product = history.state.projectDetails;
     this.getProject(this.projectId);
-
-    SUBCATEGORIES.forEach(subcategory => {
-      if (
-        subcategory.materials &&
-        Array.isArray(subcategory.materials) &&
-        subcategory.materials.length
-      ) {
-        this.subcategoryData = [
-          ...this.subcategoryData,
-          {
-            ...subcategory,
-            materials: new MatTableDataSource(subcategory.materials)
-          }
-        ];
-      } else {
-        this.subcategoryData = [...this.subcategoryData, subcategory];
-      }
-    });
-    this.dataSource = new MatTableDataSource(this.subcategoryData);
   }
+
   toggleRow(element: Subcategory) {
-    element.materials &&
-    (element.materials as MatTableDataSource<Materials>).data.length
+    element.materialSpecs &&
+    (element.materialSpecs as MatTableDataSource<Materials>).data.length
       ? (this.expandedElement =
           this.expandedElement === element ? null : element)
       : null;
@@ -173,43 +176,66 @@ export class BomTableComponent implements OnInit {
 }
 
 export interface Subcategory {
-  name: string;
-  estimatedQuantity: number;
-  requestedMaterial: number;
-  issuedToProject: number;
-  availableInStock: number;
-  materials?: Materials[] | MatTableDataSource<Materials>;
+  materialID: number;
+  materialCode: string;
+  projectID: number;
+  materialName: string;
+  materialGroup: string;
+  materialUnit: string;
+  estimatedQty: number;
+  estimatedRate: number;
+  materialCustomFlag: number;
+  materialCustomID: number;
+  materialSubGroup: string;
+  materialSpecs?: Materials[] | MatTableDataSource<Materials>;
+  sum: number;
+  requestedQuantity: number;
+  issueToProject: number;
+  availableStock: number;
+
+  // materials?: Materials[] | MatTableDataSource<Materials>;
 }
 
 export interface Materials {
-  name: string;
-  estimatedQuantity: number;
-  requestedMaterial: number;
-  issuedToProject: number;
-  availableInStock: number;
+  materialID: number;
+  materialCode: string;
+  projectID: number;
+  materialName: string;
+  materialGroup: string;
+  materialUnit: string;
+  estimatedQty: number;
+  estimatedRate: number;
+  materialCustomFlag: number;
+  materialCustomID: number;
+  materialSubGroup: string;
+  materialSpecs?: Materials[] | MatTableDataSource<Materials>;
+  sum: number;
+  requestedQuantity: number;
+  issueToProject: number;
+  availableStock: number;
 }
-const SUBCATEGORIES: Subcategory[] = [
-  {
-    name: "steelbar",
-    estimatedQuantity: 1500,
-    requestedMaterial: null,
-    issuedToProject: null,
-    availableInStock: null,
-    materials: [
-      {
-        name: "Steelbar 15mm",
-        estimatedQuantity: 1500,
-        requestedMaterial: 600,
-        issuedToProject: 600,
-        availableInStock: 300
-      },
-      {
-        name: "Steelbar 15mm",
-        estimatedQuantity: 1500,
-        requestedMaterial: 600,
-        issuedToProject: 600,
-        availableInStock: 300
-      }
-    ]
-  }
-];
+// const SUBCATEGORIES: Subcategory[] = [
+//   {
+//     name: "steelbar",
+//     estimatedQuantity: 1500,
+//     requestedMaterial: null,
+//     issuedToProject: null,
+//     availableInStock: null,
+//     materials: [
+//       {
+//         name: "Steelbar 15mm",
+//         estimatedQuantity: 1500,
+//         requestedMaterial: 600,
+//         issuedToProject: 600,
+//         availableInStock: 300
+//       },
+//       {
+//         name: "Steelbar 15mm",
+//         estimatedQuantity: 1500,
+//         requestedMaterial: 600,
+//         issuedToProject: 600,
+//         availableInStock: 300
+//       }
+//     ]
+//   }
+// ];
