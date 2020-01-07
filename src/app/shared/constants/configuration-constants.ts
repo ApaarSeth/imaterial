@@ -9,7 +9,7 @@ export const API = {
   GETCATERGORY: `material/groups`,
   GETMATERIALSWITHSPECS: `material/materialsSpecs`,
   GETMATERIALSWITHQUANTITY: (organizationId, projectId) =>
-    `material/${organizationId}/${projectId}`,
+    `materials/${organizationId}/${projectId}`,
   ADDPROJECT: `addProject`
   //STATE: 'account/api/permitted/address/states',
 };

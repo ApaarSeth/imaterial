@@ -73,7 +73,7 @@ export class BomTableComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.bomService.getMaterialWithQuantity(this.projectId, 51).then(res => {
+    this.bomService.getMaterialWithQuantity(1, this.projectId).then(res => {
       console.log(res);
     });
 

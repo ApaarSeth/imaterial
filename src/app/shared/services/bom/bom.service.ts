@@ -15,7 +15,7 @@ export class BomService {
     );
   }
   getMaterialWithQuantity(organizationId: Number, projectId: Number) {
-    return this.dataService.getRequestMaster(
+    return this.dataService.getRequest(
       API.GETMATERIALSWITHQUANTITY(organizationId, projectId)
     );
   }
