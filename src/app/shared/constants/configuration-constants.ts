@@ -10,6 +10,9 @@ export const API = {
   ADDPROJECT: `addProject`,
   RAISEINDENT: projectId => `indent/${projectId}`,
   DELETE: (organizationId, projectId) =>
-    `deleteProject/${organizationId}/${projectId}`
+    `deleteProject/${organizationId}/${projectId}`,
+  GETMATERIALSWITHSPECS: `material/materialsSpecs`,
+  GETMATERIALSWITHQUANTITY: (organizationId, projectId) =>
+    `materials/${organizationId}/${projectId}`
   //STATE: 'account/api/permitted/address/states',
 };

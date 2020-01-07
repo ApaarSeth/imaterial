@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
 import {
@@ -10,6 +10,7 @@ import {
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { MatDialog } from "@angular/material";
+import { BomService } from "src/app/shared/services/bom/bom.service";
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -19,7 +20,9 @@ export class BomComponent implements OnInit {
   Object = Object;
   showTable = false;
   categories: FormControl;
+  categoryList = [];
   selectedCategory = [];
+  categoryData = [];
   value = "";
   // fullCategoryList = {
   //   "0": {
@@ -68,7 +71,9 @@ export class BomComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private projectService: ProjectService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    private bomService: BomService
   ) {}
 
   ngOnInit() {
@@ -80,9 +85,11 @@ export class BomComponent implements OnInit {
     this.getProject(this.projectId);
   }
 
-  demo() {
+  demo(groupName) {
+    if (!this.categoryList.includes(groupName)) {
+      this.categoryList.push(groupName);
+    }
     this.selectedCategory = [...this.categories.value];
-    console.log(this.selectedCategory);
     //console.log(this.categories.value);
   }
   getProject(id: number) {
@@ -93,7 +100,18 @@ export class BomComponent implements OnInit {
 
   finalisedCategory() {
     this.showTable = true;
-    //console.log(this.showTable);
+    this.bomService
+      .getMaterialsWithSpecs({
+        pid: this.categoryList
+      })
+      .then(res => {
+        this.categoryData = [...res];
+        console.log(this.categoryData);
+      });
+  }
+
+  saveCategory() {
+    this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
   }
 
   // dialog function
