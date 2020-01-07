@@ -29,9 +29,6 @@ export interface Unit {
   templateUrl: "add-project-component.html"
 })
 export class AddProjectComponent implements OnInit {
-  //@Input('name') name: string;
-  //@Input('animal') animal: string;
-
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
@@ -53,18 +50,29 @@ export class AddProjectComponent implements OnInit {
   }
 
   cities: City[] = [
-    { value: "Gurgaon-0", viewValue: "Gurgaon" },
-    { value: "Delhi-1", viewValue: "Delhi" },
-    { value: "Karnal-2", viewValue: "Karnal" }
+    { value: "Gurgaon", viewValue: "Gurgaon" },
+    { value: "Delhi", viewValue: "Delhi" },
+    { value: "Karnal", viewValue: "Karnal" }
   ];
 
   projectTypes: ProjectType[] = [
-    { type: "aaaa" },
-    { type: "bbbb" },
-    { type: "cccc" }
+    { type: "RESI HIGH RISE" },
+    { type: "MEDICAL HEALTH CARE" },
+    { type: "INDUSTRIAL" },
+    { type: "RESI LOW RISE" },
+    { type: "HOSPITALITY" },
+    { type: "RESIDENTIAL HIGH RISE" },
+    { type: "RESIDENTIAL LOW RISE" },
+    { type: "COMMERCIAL HIGH RISE" },
+    { type: "ROADS AND HIGHWAYS" },
+    { type: "INTERIOR AND FITOUT" },
+    { type: "COMMERCIAL RETAIL" },
+    { type: "COMMERCIAL OFFICE" },
+    { type: "WAREHOUSE" },
+    { type: "FACTORY" }
   ];
 
-  units: Unit[] = [{ value: "sqr" }, { value: "br" }, { value: "cr" }];
+  units: Unit[] = [{ value: "sqm" }, { value: "acres" }];
 
   initForm() {
     this.projectDetails = this.data.isEdit
@@ -93,7 +101,10 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.city : "",
         Validators.required
       ],
-      area: [this.data.isEdit ? this.data.detail.area : ""],
+      area: [
+        this.data.isEdit ? this.data.detail.area : "",
+        Validators.required
+      ],
       startDate: [
         this.data.isEdit ? this.data.detail.startDate : "",
         Validators.required
