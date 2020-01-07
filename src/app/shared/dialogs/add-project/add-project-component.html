@@ -10,17 +10,21 @@
           />
         </div>
         <div class="text-left">
-          <button
+          <!-- <button
             mat-raised-button
             class="background-white-color main-button main-color"
           >
             Upload
-          </button>
+          </button> -->
         </div>
       </div>
-      <div class="col-sm-5">
-        <!-- project Name -->
-        <mat-form-field class="border-input">
+      <!-- new structure -->
+      <div class="col-sm-9">
+        <!-- first row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- project Name -->
+          <mat-form-field class="border-input">
           <input
             matInput
             type="text"
@@ -29,58 +33,26 @@
           />
           <mat-error>Project Name is Required</mat-error>
         </mat-form-field>
-        <!-- address 1 -->
-        <mat-form-field class="border-input">
-          <input
-            matInput
-            type="text"
-            placeholder="Address 1"
-            formControlName="addressLine1"
-          />
-          <mat-error>Address is Required</mat-error>
-        </mat-form-field>
-        <!-- address 2 -->
-        <mat-form-field class="border-input">
-          <input
-            matInput
-            type="text"
-            placeholder="Address 2"
-            formControlName="addressLine2"
-          />
-          <mat-error>Address is Required</mat-error>
-        </mat-form-field>
-        <!-- PinCode -->
-        <mat-form-field class="border-input">
-          <input
-            matInput
-            type="text"
-            placeholder="PinCode"
-            formControlName="pinCode"
-          />
-          <mat-error>PinCode is Required</mat-error>
-        </mat-form-field>
-        <!-- city -->
+          </div>
+          <div class="col-sm-6">
+            <!-- project Type -->
         <mat-form-field class="border-select">
-          <mat-label>City</mat-label>
-          <mat-select formControlName="city">
-            <mat-option *ngFor="let city of cities" [value]="city.value">
-              {{city.viewValue}}
+          <mat-label>Project Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option
+              *ngFor="let projectType of projectTypes"
+              [value]="projectType.type"
+            >
+              {{projectType.type}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <!-- state value -->
-        <mat-form-field class="border-input">
-          <input
-            matInput
-            type="string"
-            placeholder="State"
-            formControlName="state"
-          />
-          <mat-error>State is Required</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-sm-4">
-        <!-- start date -->
+          </div>
+        </div>
+        <!-- second row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- start date -->
         <mat-form-field class="border-input">
           <input
             matInput
@@ -98,7 +70,9 @@
             [startAt]="startDate"
           ></mat-datepicker>
         </mat-form-field>
-        <!-- end date -->
+          </div>
+          <div class="col-sm-6">
+            <!-- end date -->
         <mat-form-field class="border-input">
           <input
             matInput
@@ -116,19 +90,77 @@
             [startAt]="endDate"
           ></mat-datepicker>
         </mat-form-field>
-        <!-- project Type -->
+          </div>
+        </div>
+        <!-- third row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- address 1 -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="Address 1"
+            formControlName="addressLine1"
+          />
+          <mat-error>Address is Required</mat-error>
+        </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+        <!-- address 2 -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="Address 2"
+            formControlName="addressLine2"
+          />
+          <mat-error>Address is Required</mat-error>
+        </mat-form-field>
+          </div>
+        </div>
+        <!-- fourth row -->
+        <div class="row">
+          <div class="col-sm-6">
+           <!-- city -->
         <mat-form-field class="border-select">
-          <mat-label>Project Type</mat-label>
-          <mat-select formControlName="type">
-            <mat-option
-              *ngFor="let projectType of projectTypes"
-              [value]="projectType.type"
-            >
-              {{projectType.type}}
+          <mat-label>City</mat-label>
+          <mat-select formControlName="city">
+            <mat-option *ngFor="let city of cities" [value]="city.value">
+              {{city.viewValue}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <!-- project area -->
+          </div>
+          <div class="col-sm-6">
+         <!-- state value -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="string"
+            placeholder="State"
+            formControlName="state"
+          />
+          <mat-error>State is Required</mat-error>
+        </mat-form-field>
+          </div>
+        </div>
+        <!-- fifth row -->
+        <div class="row">
+          <div class="col-sm-6">
+           <!-- PinCode -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="PinCode"
+            formControlName="pinCode"
+          />
+          <mat-error>PinCode is Required</mat-error>
+        </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+         <!-- project area -->
         <mat-form-field class="border-input">
           <input
             matInput
@@ -138,7 +170,12 @@
           />
           <mat-error>ProjectArea is Required</mat-error>
         </mat-form-field>
-        <!-- project unit -->
+          </div>
+        </div>
+         <!-- sixth row -->
+         <div class="row">
+          <div class="col-sm-6">
+           <!-- project unit -->
         <mat-form-field class="border-select">
           <mat-label>Project Unit</mat-label>
           <mat-select formControlName="unit">
@@ -147,7 +184,9 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <!-- construction cost -->
+          </div>
+          <div class="col-sm-6">
+         <!-- construction cost -->
         <mat-form-field class="border-input">
           <input
             matInput
@@ -157,13 +196,16 @@
           />
           <mat-error>Construction Cost is Required</mat-error>
         </mat-form-field>
+          </div>
+        </div>
       </div>
+      <!-- end structure -->
     </div>
   </div>
   <div mat-dialog-actions>
     <div class="col-sm-12">
       <button
-        mat-raised-button
+        mat-raised-button [disabled]="!form.valid"
         class="main-background-color main-button color-white pull-right"
       >
         Add

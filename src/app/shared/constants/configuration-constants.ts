@@ -7,9 +7,12 @@ export const API = {
   GETPROJECT: (organizationId, projectId) =>
     `project/${organizationId}/${projectId}`,
   GETCATERGORY: `material/groups`,
+  ADDPROJECT: `addProject`,
+  RAISEINDENT: projectId => `indent/${projectId}`,
+  DELETE: (organizationId, projectId) =>
+    `deleteProject/${organizationId}/${projectId}`,
   GETMATERIALSWITHSPECS: `material/materialsSpecs`,
   GETMATERIALSWITHQUANTITY: (organizationId, projectId) =>
-    `materials/${organizationId}/${projectId}`,
-  ADDPROJECT: `addProject`
+    `materials/${organizationId}/${projectId}`
   //STATE: 'account/api/permitted/address/states',
 };

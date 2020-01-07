@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
 import { ProjectDetails } from "../../models/project-details";
+import { IndentVO } from "../../models/indent";
 
 @Injectable({
   providedIn: "root"
@@ -39,6 +40,14 @@ export class ProjectService {
     projectData.organizationId = 1;
     return this.dataService
       .sendPostRequest(API.ADDPROJECT, projectData)
+      .then(res => {
+        return res;
+      });
+  }
+
+  delete(organizationId: Number, projectId: Number) {
+    return this.dataService
+      .sendPostRequest(API.DELETE(organizationId, projectId), "")
       .then(res => {
         return res;
       });

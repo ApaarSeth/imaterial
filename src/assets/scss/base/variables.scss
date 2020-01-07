@@ -85,6 +85,11 @@ input {
   color: $icon-color-gray;
   line-height: 0.5;
 }
+.mat-raised-button[disabled][disabled] {
+  background-color: $main-color !important;
+  opacity: 0.7;
+  color: $white-color;
+}
 
 .mat-form-field-appearance-legacy .mat-form-field-label {
   padding: 8px;

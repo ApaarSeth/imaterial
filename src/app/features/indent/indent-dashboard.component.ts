@@ -8,6 +8,8 @@ import {
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { MatDialog } from "@angular/material";
+import { IndentVO } from "src/app/shared/models/indent";
+import { IndentService } from "src/app/shared/services/indent/indent.service";
 
 export interface PeriodicElement {
   materialName: string;
@@ -102,6 +104,7 @@ export class IndentDashboardComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private projectService: ProjectService,
+    private indentService: IndentService,
     private dialog: MatDialog
   ) {}
 
@@ -119,6 +122,12 @@ export class IndentDashboardComponent implements OnInit {
   }
   showIndent() {
     this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
+  }
+
+  raiseIndent(indentVO: IndentVO) {
+    this.indentService.raiseIndent(this.projectId, indentVO).then(res => {
+      //res.data;
+    });
   }
 
   // dialog function
