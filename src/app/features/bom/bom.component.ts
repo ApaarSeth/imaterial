@@ -87,7 +87,7 @@ export class BomComponent implements OnInit {
   }
   getProject(id: number) {
     this.projectService.getProject(1, id).then(data => {
-      this.product = data.message;
+      this.product = data.data;
     });
   }
 
