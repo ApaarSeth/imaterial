@@ -9,7 +9,8 @@ import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { IndentDashboardComponent } from "./indent-dashboard.component";
 import { IndentRoutingModule } from "./indent-dashboard-routing.module";
-import { IndentDetailComponent } from './indent-detail/indent-detail.component';
+import { IndentDetailComponent } from "./indent-detail/indent-detail.component";
+import { IndentResolver } from "./resolver/indent.resolver";
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { IndentDetailComponent } from './indent-detail/indent-detail.component';
     AppSharedModule,
     IndentRoutingModule
   ],
-  providers: [],
+  providers: [IndentResolver],
   declarations: [
     IndentDashboardComponent,
     AppSharedModule,

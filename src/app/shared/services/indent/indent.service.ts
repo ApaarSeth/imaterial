@@ -13,11 +13,14 @@ import { IndentVO } from "../../models/indent";
 export class IndentService {
   constructor(private dataService: DataService) {}
 
-  raiseIndent(projectId: Number, indentData: IndentVO) {
-    return this.dataService
-      .sendPostRequest(API.RAISEINDENT(projectId), indentData)
-      .then(res => {
-        return res;
-      });
+  raiseIndent(projectId: Number, indentData: IndentVO[]) {
+    return this.dataService.sendPostRequest(
+      API.RAISEINDENT(projectId),
+      indentData
+    );
+  }
+
+  getIndentList(projectId: Number) {
+    return this.dataService.getRequest(API.GETINDENTLIST(projectId));
   }
 }

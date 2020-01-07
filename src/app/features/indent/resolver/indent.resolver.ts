@@ -1,15 +1,25 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  ActivatedRoute,
+  RouterStateSnapshot
+} from "@angular/router";
+import { IndentService } from "src/app/shared/services/indent/indent.service";
 
 @Injectable()
 export class IndentResolver implements Resolve<any> {
-  constructor() //private projectService: ProjectService
-  {}
+  projectId: number;
+  constructor(
+    private indentService: IndentService,
+    private route: ActivatedRoute //private projectService: ProjectService
+  ) {}
 
-  resolve() {
-    // return this.projectService.getProjects(1,1).then(data => {
-    //     console.log("wefrgthyjhgff" , data.message);
-    //    return data.message;
-    // });
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    this.projectId = route.params["id"];
+    return this.indentService.getIndentList(this.projectId).then(data => {
+      console.log("wefrgthyjhgff", data.data);
+      return data.data;
+    });
   }
 }
