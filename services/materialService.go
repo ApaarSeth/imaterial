@@ -89,6 +89,6 @@ func GetMaterialGroups() ([]model.Material, error) {
 func GetNestedMaterials(groupName *model.Pids) ([]model.MaterialsObj, error) {
 
 	getAllMaterials, getMaterialErr := dao.MaterialDao().GetNestedMaterials(groupName)
-	//fmt.Println(materialList)\
+	// fmt.Println(getAllMaterials)
 	return getAllMaterials, getMaterialErr
 }

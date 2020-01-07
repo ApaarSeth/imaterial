@@ -35,15 +35,7 @@ func (self *materialDao) AddMaterial(materialsList []*model.Material) ([]model.M
 		return nil, ConnectionErrs
 	}
 	var err error
-	// for _, m := range materialsList {
 
-	// 	sqlStatement := `INSERT INTO materials (pid,material_code,material_group,discription,material_name,base_price,gst,created_at,created_by,last_updated_by,last_updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`
-
-	// 	_, err := db.Query(sqlStatement, m.Pid, m.MaterialCode, m.MaterialGroup, m.Discription, m.MaterialName, m.BasePrice, m.Gst, m.CreatedAt, m.CreatedBy, m.LastUpdatedBy, m.LastUpdatedAt)
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 	}
-	// }
 	vals := []interface{}{}
 	for _, row := range materialsList {
 		vals = append(vals, row.Pid, row.MaterialCode, row.MaterialGroupName, row.Discription, row.MaterialName, row.BasePrice, row.Gst, row.CreatedAt, row.CreatedBy, row.LastUpdatedBy, row.LastUpdatedAt)
@@ -56,6 +48,7 @@ func (self *materialDao) AddMaterial(materialsList []*model.Material) ([]model.M
 	res, _ := stmt.Exec(vals...)
 	ro, _ := res.RowsAffected()
 	appLog.Info("Number of reows Insterd" + string(ro))
+	defer db.Close()
 	return materials, err
 }
 
@@ -80,7 +73,7 @@ func (self *materialDao) GetAllMaterials() ([]model.Material, error) {
 		fmt.Printf("The error is: ", err)
 		return nil, err
 	}
-
+	defer db.Close()
 	return materials, err
 }
 
@@ -105,7 +98,7 @@ func (self *materialDao) GetMaterialsOnGroup(groupCode string) ([]model.Material
 		fmt.Printf("The error is: ", selectQueryError)
 		return nil, selectQueryError
 	}
-
+	defer db.Close()
 	return materials, selectQueryError
 }
 
@@ -126,7 +119,7 @@ func (self *materialDao) GetMaterialGroups() ([]model.Material, error) {
 		fmt.Printf("The error is: ", selectQueryError)
 		return nil, selectQueryError
 	}
-
+	defer db.Close()
 	return materials, selectQueryError
 }
 
@@ -161,7 +154,7 @@ func (self *materialDao) GetNestedMaterials(pids *model.Pids) ([]model.Materials
 		materialObj.Child = materials
 		materialObjList = append(materialObjList, materialObj)
 	}
-
+	defer db.Close()
 	return materialObjList, connectionErrors
 }
 
