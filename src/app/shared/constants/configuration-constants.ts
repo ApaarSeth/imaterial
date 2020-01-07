@@ -4,8 +4,12 @@ export const ConfigurationConstants = {
 };
 export const API = {
   PROJECTS: (organizationId, userId) => `projects/${organizationId}/${userId}`,
+  GETPROJECT: (organizationId, projectId) =>
+    `project/${organizationId}/${projectId}`,
   GETCATERGORY: `material/groups`,
-  GETMATERIALSWITHSPECS: `material/MaterialsSpecs`,
+  GETMATERIALSWITHSPECS: `material/materialsSpecs`,
+  GETMATERIALSWITHQUANTITY: (organizationId, projectId) =>
+    `material/${organizationId}/${projectId}`,
   ADDPROJECT: `addProject`
   //STATE: 'account/api/permitted/address/states',
 };

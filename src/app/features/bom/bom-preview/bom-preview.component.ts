@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ProjectDetails } from "src/app/shared/models/project-details";
 
 @Component({
   selector: "app-bom-preview",
@@ -10,15 +9,15 @@ import { ProjectDetails } from "src/app/shared/models/project-details";
 export class BomPreviewComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
   projectId: number;
-  product: any;
+  // product: ProjectDetails;
   @Input("selectedCategory") selectedCategory;
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.product = history.state.projectDetails;
     console.log("selectedCategory");
-    console.log(this.selectedCategory);
+    // console.log(this.selectedCategory);
+    //this.getProject(this.projectId);
   }
 
   getMaterialLength(cat) {
@@ -29,10 +28,14 @@ export class BomPreviewComponent implements OnInit {
     }
     return false;
   }
+
+  // getProject(id: number){
+  //   this.projectService.getProject(1,id).then(data => {
+  //     this.product = data.message;
+  // });
+  // }
+
   saveCategory() {
-    let projectDetails = this.product;
-    this.router.navigate(["/bom/" + this.projectId + "/bom-detail"], {
-      state: { projectDetails }
-    });
+    this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
   }
 }

@@ -1,5 +1,13 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
+import {
+  ProjectDetails,
+  ProjetPopupData
+} from "src/app/shared/models/project-details";
+import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
+import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
+import { MatDialog } from "@angular/material";
 
 export interface PeriodicElement {
   materialName: string;
@@ -81,7 +89,7 @@ export class IndentDashboardComponent implements OnInit {
   userId: 1;
   searchText: string = null;
   projectId: number;
-  product: any;
+  product: ProjectDetails;
   displayedColumns: string[] = [
     "Material Name",
     "Estimated Quantity",
@@ -90,23 +98,79 @@ export class IndentDashboardComponent implements OnInit {
   ];
   dataSource = ELEMENT_DATA;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private projectService: ProjectService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.product = history.state.projectDetails;
-    console.log("product" + this.product);
+    //this.product = history.state.projectDetails;
+    this.getProject(this.projectId);
+  }
+  getProject(id: number) {
+    this.projectService.getProject(1, id).then(data => {
+      this.product = data.message;
+    });
+  }
+  showIndent() {
+    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
   }
 
-  editProject(projectId: number) {}
-  deleteProject() {}
-  showIndent() {
-    let product = this.product;
-    console.log("product" + product);
-    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"], {
-      state: { product }
-    });
+  // dialog function
+
+  editProject() {
+    const data: ProjetPopupData = {
+      isEdit: true,
+      isDelete: false,
+      detail: this.product
+    };
+
+    this.openDialog(data);
+  }
+
+  deleteProject() {
+    const data: ProjetPopupData = {
+      isEdit: false,
+      isDelete: true,
+      detail: this.product
+    };
+
+    this.openDialog(data);
+  }
+
+  // modal function
+  openDialog(data: ProjetPopupData): void {
+    if (data.isDelete == false) {
+      const dialogRef = this.dialog.open(AddProjectComponent, {
+        width: "700px",
+        data
+      });
+
+      dialogRef
+        .afterClosed()
+        .toPromise()
+        .then(result => {
+          //console.log('The dialog was closed');
+          //this.animal = result;
+        });
+    } else if (data.isDelete == true) {
+      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
+        width: "500px",
+        data
+      });
+
+      dialogRef
+        .afterClosed()
+        .toPromise()
+        .then(result => {
+          //console.log('The dialog was closed');
+          //this.animal = result;
+        });
+    }
   }
 }

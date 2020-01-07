@@ -20,15 +20,9 @@ export class ProjectService {
       });
   }
 
-  getCategory() {
-    return this.dataService.getRequestMaster(API.GETCATERGORY).then(res => {
-      return res;
-    });
-  }
-
-  getMaterialsWithSpecs(categoryList) {
+  getProject(organizationId: Number, projectId: Number) {
     return this.dataService
-      .getRequestMaster(API.GETMATERIALSWITHSPECS, categoryList)
+      .getRequest(API.GETPROJECT(organizationId, projectId))
       .then(res => {
         return res;
       });

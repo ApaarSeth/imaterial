@@ -1,6 +1,7 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <card-layout
+      *ngIf="product"
       (onEdit)="editProject($event)"
       (onDelete)="deleteProject($event)"
       [projectDetails]="product"
@@ -34,7 +35,7 @@
             <mat-option
               *ngFor="let category of fullCategoryList | SearchPipe: searchText"
               [value]="category"
-              (click)="demo()"
+              (click)="demo(category.materialGroup)"
               >{{ category.materialGroup }}
             </mat-option>
           </mat-select>
@@ -51,9 +52,22 @@
         </div>
       </div>
     </div>
-    <app-bom-preview
-      *ngIf="showTable"
-      [selectedCategory]="catergoryData"
-    ></app-bom-preview>
+    <div *ngIf="showTable">
+      <div class="row p-t-10 p-b-10">
+        <div class="col-sm-8"></div>
+        <div class="col-sm-4">
+          <button
+            mat-raised-button
+            class="main-background-color main-button color-white pull-right"
+            (click)="saveCategory()"
+          >
+            SAVE
+          </button>
+        </div>
+      </div>
+      <div *ngFor="let data of categoryData">
+        <app-bom-preview [selectedCategory]="data"></app-bom-preview>
+      </div>
+    </div>
   </div>
 </div>
