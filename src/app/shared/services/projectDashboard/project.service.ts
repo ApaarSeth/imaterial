@@ -28,12 +28,6 @@ export class ProjectService {
       });
   }
 
-  getCategory() {
-    return this.dataService.getRequestMaster(API.GETCATERGORY).then(res => {
-        return res;
-    });
-  }
-
   // getProjectById(organizationId:Number,userId:Number,id:number) {
   //   return this.dataService.getRequest(API.PROJECTS(organizationId,userId),id).then(res => {
   //       return res;

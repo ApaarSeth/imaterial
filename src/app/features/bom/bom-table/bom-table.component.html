@@ -1,6 +1,7 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <card-layout *ngIf="product"
+    <card-layout
+      *ngIf="product"
       (onEdit)="editProject($event)"
       (onDelete)="deleteProject($event)"
       [projectDetails]="product"
@@ -22,7 +23,16 @@
         mat-table
         [dataSource]="dataSource"
         multiTemplateDataRows
-        class="mat-elevation-z8 col-sm-12"
+        class="mat-eHigh performance, minimalist Go web framework
+        https://echo.labstack.com
+        ____________________________________O/_______
+                                            O\
+        ⇨ http server started on [::]:1323
+        ^Csignal: interrupt
+        apaar@mystic:~/Desktop/angular/erpMaterial/material-master$ git pull upstream master
+        fatal: 'upstream' does not appear to be a git repository
+        fatal: Could not read from remote repository.
+        q ulevation-z8 col-sm-12"
         matSort
       >
         <ng-container
@@ -32,7 +42,9 @@
           <th *matHeaderCellDef mat-sort-header>
             {{ column }}
           </th>
-          <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+          <td class="text-left" mat-cell *matCellDef="let element">
+            {{ element[column] }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="expandedDetail">
@@ -71,6 +83,7 @@
                     </td>
                   </ng-container>
                   <tr
+                    style="opacity: 0;height: 0px;"
                     mat-header-row
                     *matHeaderRowDef="innerDisplayedColumns"
                   ></tr>

@@ -18,6 +18,7 @@ import {
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { MatDialog } from "@angular/material";
+import { BomService } from "src/app/shared/services/bom/bom.service";
 
 @Component({
   selector: "app-bom-table",
@@ -38,7 +39,7 @@ import { MatDialog } from "@angular/material";
   ]
 })
 export class BomTableComponent implements OnInit {
-  productId: number;
+  projectId: number;
   product: ProjectDetails;
   subcategoryData: Subcategory[] = [];
   columnsToDisplay = [
@@ -64,15 +65,20 @@ export class BomTableComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private projectService: ProjectService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private bomService: BomService
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.productId = params["id"];
+      this.projectId = params["id"];
     });
+    this.bomService.getMaterialWithQuantity(1, this.projectId).then(res => {
+      console.log(res);
+    });
+
     //this.product = history.state.projectDetails;
-    this.getProject(this.productId);
+    this.getProject(this.projectId);
 
     SUBCATEGORIES.forEach(subcategory => {
       if (
@@ -100,12 +106,6 @@ export class BomTableComponent implements OnInit {
           this.expandedElement === element ? null : element)
       : null;
     this.cd.detectChanges();
-    // this.innerTables.forEach(
-    //   (table, index) =>
-    //     ((table.dataSource as MatTableDataSource<
-    //       Address
-    //     >).sort = this.innerSort.toArray()[index])
-    // );
   }
 
   getProject(id: number) {
@@ -115,7 +115,7 @@ export class BomTableComponent implements OnInit {
   }
   raiseIndent() {
     let projectDetails = this.product;
-    this.router.navigate(["/indent/" + this.productId]);
+    this.router.navigate(["/indent/" + this.projectId]);
   }
 
   // dialog function

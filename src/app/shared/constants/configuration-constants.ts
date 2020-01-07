@@ -1,13 +1,15 @@
 export const ConfigurationConstants = {
-    HEADER_SKIP_LOADER: 'Skip-Loader',
-    HEADER_CACHE_REQUEST: 'Cache-Request'
+  HEADER_SKIP_LOADER: "Skip-Loader",
+  HEADER_CACHE_REQUEST: "Cache-Request"
 };
 export const API = {
-
-    PROJECTS: (organizationId,userId) => `projects/${organizationId}/${userId}`,
-    GETPROJECT: (organizationId,projectId) => `project/${organizationId}/${projectId}`,
-    GETCATERGORY:`material/groups`,
-    ADDPROJECT: `addProject`
-    //STATE: 'account/api/permitted/address/states',
-    
-}
+  PROJECTS: (organizationId, userId) => `projects/${organizationId}/${userId}`,
+  GETPROJECT: (organizationId, projectId) =>
+    `project/${organizationId}/${projectId}`,
+  GETCATERGORY: `material/groups`,
+  GETMATERIALSWITHSPECS: `material/materialsSpecs`,
+  GETMATERIALSWITHQUANTITY: (organizationId, projectId) =>
+    `materials/${organizationId}/${projectId}`,
+  ADDPROJECT: `addProject`
+  //STATE: 'account/api/permitted/address/states',
+};
