@@ -19,6 +19,10 @@ import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-proj
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { MatDialog } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
+import {
+  Subcategory,
+  Materials
+} from "src/app/shared/models/subcategory-materials";
 
 @Component({
   selector: "app-bom-table",
@@ -118,7 +122,17 @@ export class BomTableComponent implements OnInit {
   }
   raiseIndent() {
     let projectDetails = this.product;
-    this.router.navigate(["/indent/" + this.projectId]);
+    let checkedSubcategory = this.subcategoryData.filter(sub => {
+      if (sub.checked === true) {
+        return sub;
+      }
+    });
+    this.router.navigate(["/indent/" + this.projectId], {
+      state: { checkedSubcategory }
+    });
+
+    console.log(this.dataSource);
+    // this.router.navigate(["/indent/" + this.projectId]);
   }
 
   // dialog function
@@ -175,45 +189,6 @@ export class BomTableComponent implements OnInit {
   }
 }
 
-export interface Subcategory {
-  materialID: number;
-  materialCode: string;
-  projectID: number;
-  materialName: string;
-  materialGroup: string;
-  materialUnit: string;
-  estimatedQty: number;
-  estimatedRate: number;
-  materialCustomFlag: number;
-  materialCustomID: number;
-  materialSubGroup: string;
-  materialSpecs?: Materials[] | MatTableDataSource<Materials>;
-  sum: number;
-  requestedQuantity: number;
-  issueToProject: number;
-  availableStock: number;
-
-  // materials?: Materials[] | MatTableDataSource<Materials>;
-}
-
-export interface Materials {
-  materialID: number;
-  materialCode: string;
-  projectID: number;
-  materialName: string;
-  materialGroup: string;
-  materialUnit: string;
-  estimatedQty: number;
-  estimatedRate: number;
-  materialCustomFlag: number;
-  materialCustomID: number;
-  materialSubGroup: string;
-  materialSpecs?: Materials[] | MatTableDataSource<Materials>;
-  sum: number;
-  requestedQuantity: number;
-  issueToProject: number;
-  availableStock: number;
-}
 // const SUBCATEGORIES: Subcategory[] = [
 //   {
 //     name: "steelbar",

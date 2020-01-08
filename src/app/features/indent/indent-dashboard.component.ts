@@ -10,6 +10,7 @@ import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-proj
 import { MatDialog } from "@angular/material";
 import { IndentVO } from "src/app/shared/models/indent";
 import { IndentService } from "src/app/shared/services/indent/indent.service";
+import { Subcategory } from "src/app/shared/models/subcategory-materials";
 
 export interface PeriodicElement {
   materialName: string;
@@ -94,6 +95,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class IndentDashboardComponent implements OnInit {
   dueDate = new Date(1990, 0, 1);
+  subcategory: Subcategory[];
   userId: 1;
   searchText: string = null;
   projectId: number;
@@ -118,7 +120,9 @@ export class IndentDashboardComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    //this.product = history.state.projectDetails;
+    this.subcategory = history.state.checkedSubcategory;
+    console.log("this.subcategory");
+    console.log(this.subcategory);
     this.getProject(this.projectId);
   }
   getProject(id: number) {
