@@ -22,71 +22,71 @@ export interface PeriodicElement {
   projectId: number;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    quantity: null,
-    dueDate: null,
-    materialId: 1,
-    materialUnit: "MT",
-    projectId: 8
-  },
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    quantity: null,
-    dueDate: null,
-    materialId: 2,
-    materialUnit: "MT",
-    projectId: 8
-  },
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    quantity: null,
-    dueDate: null,
-    materialId: 3,
-    materialUnit: "MT",
-    projectId: 8
-  },
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    quantity: null,
-    dueDate: null,
-    materialId: 4,
-    materialUnit: "MT",
-    projectId: 8
-  },
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    quantity: null,
-    dueDate: null,
-    materialId: 5,
-    materialUnit: "MT",
-    projectId: 8
-  },
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    quantity: null,
-    dueDate: null,
-    materialId: 6,
-    materialUnit: "MT",
-    projectId: 8
-  },
-  {
-    materialName: "Steelbar 15MM",
-    estimatedQty: 200,
-    quantity: null,
-    dueDate: null,
-    materialId: 7,
-    materialUnit: "MT",
-    projectId: 8
-  }
-];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {
+//     materialName: "Steelbar 15MM",
+//     estimatedQty: 200,
+//     quantity: null,
+//     dueDate: null,
+//     materialId: 1,
+//     materialUnit: "MT",
+//     projectId: 8
+//   },
+//   {
+//     materialName: "Steelbar 15MM",
+//     estimatedQty: 200,
+//     quantity: null,
+//     dueDate: null,
+//     materialId: 2,
+//     materialUnit: "MT",
+//     projectId: 8
+//   },
+//   {
+//     materialName: "Steelbar 15MM",
+//     estimatedQty: 200,
+//     quantity: null,
+//     dueDate: null,
+//     materialId: 3,
+//     materialUnit: "MT",
+//     projectId: 8
+//   },
+//   {
+//     materialName: "Steelbar 15MM",
+//     estimatedQty: 200,
+//     quantity: null,
+//     dueDate: null,
+//     materialId: 4,
+//     materialUnit: "MT",
+//     projectId: 8
+//   },
+//   {
+//     materialName: "Steelbar 15MM",
+//     estimatedQty: 200,
+//     quantity: null,
+//     dueDate: null,
+//     materialId: 5,
+//     materialUnit: "MT",
+//     projectId: 8
+//   },
+//   {
+//     materialName: "Steelbar 15MM",
+//     estimatedQty: 200,
+//     quantity: null,
+//     dueDate: null,
+//     materialId: 6,
+//     materialUnit: "MT",
+//     projectId: 8
+//   },
+//   {
+//     materialName: "Steelbar 15MM",
+//     estimatedQty: 200,
+//     quantity: null,
+//     dueDate: null,
+//     materialId: 7,
+//     materialUnit: "MT",
+//     projectId: 8
+//   }
+// ];
 
 @Component({
   selector: "dashboard",
@@ -106,7 +106,7 @@ export class IndentDashboardComponent implements OnInit {
     "Required Quantity",
     "Required Date"
   ];
-  dataSource = ELEMENT_DATA;
+  //dataSource = this.subcategory;
 
   constructor(
     private route: ActivatedRoute,
@@ -121,8 +121,6 @@ export class IndentDashboardComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.subcategory = history.state.checkedSubcategory;
-    console.log("this.subcategory");
-    console.log(this.subcategory);
     this.getProject(this.projectId);
   }
   getProject(id: number) {
