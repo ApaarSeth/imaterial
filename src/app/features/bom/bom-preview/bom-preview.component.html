@@ -26,6 +26,8 @@
               ><mat-form-field class="full-border widthZero">
                 <input
                   matInput
+                  (input)="getData(subcategory)"
+                  [(ngModel)]="subcategory['estimatedQty']"
                   class="p-b-5 shortWidth"
                   placeholder="eg. 1500"
                 /><span class="p-b-15 p-l-5">MT</span>
