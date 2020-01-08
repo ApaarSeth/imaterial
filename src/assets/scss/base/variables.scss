@@ -206,3 +206,8 @@ a:hover {
 .mat-header-cell{
   color: $white-color !important;
 }
+
+.mat-form-field-appearance-legacy .mat-form-field-wrapper{
+  padding-top: 15px !important;
+  padding-bottom: 0px !important;
+}

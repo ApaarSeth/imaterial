@@ -92,10 +92,10 @@ export class DashboardComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          console.log("The dialog was closed");
           // to do
-          this.allProjects = this.activatedRoute.snapshot.data.dashBoardData;
-          //this.animal = result;
+          this.projectService.getProjects(1, 1).then(data => {
+            this.allProjects = data.data;
+          });
         });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
@@ -107,9 +107,9 @@ export class DashboardComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          this.allProjects = this.activatedRoute.snapshot.data.dashBoardData;
-          //console.log('The dialog was closed');
-          //this.animal = result;
+          this.projectService.getProjects(1, 1).then(data => {
+            this.allProjects = data.data;
+          });
         });
     }
   }
