@@ -130,16 +130,20 @@ export class IndentDashboardComponent implements OnInit {
   }
   showIndent(dataSource) {
     console.log("qwerty", dataSource);
-    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
-    this.raiseIndent(dataSource);
-  }
-
-  raiseIndent(indentVO: IndentVO[]) {
-    console.log("qwertyuio", indentVO);
-    this.indentService.raiseIndent(this.projectId, indentVO).then(res => {
-      console.log(res);
+    this.indentService.raiseIndent(this.projectId, dataSource).then(res => {
+      this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
     });
   }
+
+  // raiseIndent(indentVO: IndentVO[]) {
+  //   console.log("qwertyuio", indentVO);
+  //   return this.indentService
+  //     .raiseIndent(this.projectId, indentVO)
+  //     .then(res => {
+  //       console.log(res);
+  //       return;
+  //     });
+  // }
 
   // dialog function
 
