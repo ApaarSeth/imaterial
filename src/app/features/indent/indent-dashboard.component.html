@@ -13,7 +13,7 @@
     <div class="row p-t-10 p-b-10">
       <div class="col-sm-12">
         <button
-          (click)="showIndent(dataSource)"
+          (click)="showIndent(subcategory)"
           mat-raised-button
           class="main-background-color main-button color-white pull-right"
         >
@@ -22,12 +22,12 @@
       </div>
     </div>
     <!-- first table structure -->
-    <div class="row">
+    <div class="row" *ngIf="subcategory">
       <!-- <div class="col-sm-12"> -->
       <!-- table structure -->
       <table
         mat-table
-        [dataSource]="dataSource"
+        [dataSource]="subcategory"
         class="mat-elevation-z8 col-sm-12"
       >
         <!--- Note that these columns can be defined in any order.

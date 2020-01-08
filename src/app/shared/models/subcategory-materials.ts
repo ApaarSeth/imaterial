@@ -18,6 +18,8 @@ export interface Subcategory {
   checked: boolean;
   issueToProject: number;
   availableStock: number;
+  quantity: number;
+  dueDate: Date;
 
   // materials?: Materials[] | MatTableDataSource<Materials>;
 }
