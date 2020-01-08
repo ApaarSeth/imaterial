@@ -52,4 +52,19 @@ export class ProjectService {
         return res;
       });
   }
+
+  updateProjects(
+    organizationId: Number,
+    projectId: Number,
+    projectData: ProjectDetails
+  ) {
+    return this.dataService
+      .sendPostRequest(
+        API.UPDATEPROJECT(organizationId, projectId),
+        projectData
+      )
+      .then(res => {
+        return res;
+      });
+  }
 }
