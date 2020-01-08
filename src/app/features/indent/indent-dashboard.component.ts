@@ -11,6 +11,13 @@ import { MatDialog } from "@angular/material";
 import { IndentVO } from "src/app/shared/models/indent";
 import { IndentService } from "src/app/shared/services/indent/indent.service";
 import { Subcategory } from "src/app/shared/models/subcategory-materials";
+import {
+  FormBuilder,
+  FormArray,
+  FormGroup,
+  Validators,
+  FormControl
+} from "@angular/forms";
 
 export interface PeriodicElement {
   materialName: string;
@@ -21,72 +28,6 @@ export interface PeriodicElement {
   materialUnit: string;
   projectId: number;
 }
-
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {
-//     materialName: "Steelbar 15MM",
-//     estimatedQty: 200,
-//     quantity: null,
-//     dueDate: null,
-//     materialId: 1,
-//     materialUnit: "MT",
-//     projectId: 8
-//   },
-//   {
-//     materialName: "Steelbar 15MM",
-//     estimatedQty: 200,
-//     quantity: null,
-//     dueDate: null,
-//     materialId: 2,
-//     materialUnit: "MT",
-//     projectId: 8
-//   },
-//   {
-//     materialName: "Steelbar 15MM",
-//     estimatedQty: 200,
-//     quantity: null,
-//     dueDate: null,
-//     materialId: 3,
-//     materialUnit: "MT",
-//     projectId: 8
-//   },
-//   {
-//     materialName: "Steelbar 15MM",
-//     estimatedQty: 200,
-//     quantity: null,
-//     dueDate: null,
-//     materialId: 4,
-//     materialUnit: "MT",
-//     projectId: 8
-//   },
-//   {
-//     materialName: "Steelbar 15MM",
-//     estimatedQty: 200,
-//     quantity: null,
-//     dueDate: null,
-//     materialId: 5,
-//     materialUnit: "MT",
-//     projectId: 8
-//   },
-//   {
-//     materialName: "Steelbar 15MM",
-//     estimatedQty: 200,
-//     quantity: null,
-//     dueDate: null,
-//     materialId: 6,
-//     materialUnit: "MT",
-//     projectId: 8
-//   },
-//   {
-//     materialName: "Steelbar 15MM",
-//     estimatedQty: 200,
-//     quantity: null,
-//     dueDate: null,
-//     materialId: 7,
-//     materialUnit: "MT",
-//     projectId: 8
-//   }
-// ];
 
 @Component({
   selector: "dashboard",
@@ -106,14 +47,16 @@ export class IndentDashboardComponent implements OnInit {
     "Required Quantity",
     "Required Date"
   ];
-  //dataSource = this.subcategory;
+
+  materialForms: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private projectService: ProjectService,
     private indentService: IndentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -122,14 +65,35 @@ export class IndentDashboardComponent implements OnInit {
     });
     this.subcategory = history.state.checkedSubcategory;
     this.getProject(this.projectId);
+    this.formsInit();
   }
+
+  formsInit() {
+    const frmArr = this.subcategory.map(subCat => {
+      return new FormGroup({
+        dueDate: new FormControl("", Validators.required),
+        quantity: new FormControl("", Validators.required)
+      });
+    });
+
+    this.materialForms = this.formBuilder.group({
+      forms: new FormArray(frmArr)
+    });
+
+    console.log(this.materialForms);
+  }
+
   getProject(id: number) {
     this.projectService.getProject(1, id).then(data => {
       this.product = data.data;
     });
   }
-  showIndent(dataSource) {
-    console.log("qwerty", dataSource);
+  showIndent() {
+    const formValues = this.materialForms.value.forms;
+
+    const dataSource = this.subcategory.map((cat, i) => {
+      return { ...cat, ...formValues[i] };
+    });
     this.indentService.raiseIndent(this.projectId, dataSource).then(res => {
       this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
     });
@@ -178,10 +142,7 @@ export class IndentDashboardComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {
-          //console.log('The dialog was closed');
-          //this.animal = result;
-        });
+        .then(result => {});
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -191,10 +152,7 @@ export class IndentDashboardComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {
-          //console.log('The dialog was closed');
-          //this.animal = result;
-        });
+        .then(result => {});
     }
   }
 }
