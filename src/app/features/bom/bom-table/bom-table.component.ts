@@ -134,6 +134,9 @@ export class BomTableComponent implements OnInit {
     console.log(this.dataSource);
     // this.router.navigate(["/indent/" + this.projectId]);
   }
+  viewIndent() {
+    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
+  }
 
   // dialog function
 
