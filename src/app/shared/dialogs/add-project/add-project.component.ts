@@ -51,7 +51,7 @@ export class AddProjectComponent implements OnInit {
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
-    { value: "Delhi", viewValue: "Delhi" },
+    { value: "Delhi-1", viewValue: "Delhi" },
     { value: "Karnal", viewValue: "Karnal" }
   ];
 
@@ -78,7 +78,6 @@ export class AddProjectComponent implements OnInit {
     this.projectDetails = this.data.isEdit
       ? this.data.detail
       : ({} as ProjectDetails);
-
     this.form = this.formBuilder.group({
       projectName: [
         this.data.isEdit ? this.data.detail.projectName : "",
