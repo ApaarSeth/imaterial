@@ -131,8 +131,24 @@ export class AddProjectComponent implements OnInit {
     });
   }
 
+  updateProjects(projectDetails: ProjectDetails) {
+    if (projectDetails) {
+      let projectId = this.data.detail.projectId;
+      let organizationId = this.data.detail.organizationId;
+      this.projectService
+        .updateProjects(organizationId, projectId, projectDetails)
+        .then(res => {
+          res.data;
+        });
+    }
+  }
+
   submit() {
     console.log(this.form.value);
-    this.dialogRef.close(this.addProjects(this.form.value));
+    if (this.data.isEdit) {
+      this.dialogRef.close(this.updateProjects(this.form.value));
+    } else {
+      this.dialogRef.close(this.addProjects(this.form.value));
+    }
   }
 }

@@ -198,3 +198,11 @@ a:hover {
   -o-box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
+
+.mat-table thead{
+  background-color: $blue-color;
+  color: $white-color;
+}
+.mat-header-cell{
+  color: $white-color !important;
+}
