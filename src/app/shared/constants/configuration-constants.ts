@@ -16,6 +16,8 @@ export const API = {
   GETMATERIALSWITHSPECS: `material/materialsSpecs`,
   GETMATERIALSWITHQUANTITY: (organizationId, projectId) =>
     `materials/${organizationId}/${projectId}`,
-  GETINDENTLIST: projectId => `indent/list/${projectId}`
+  GETINDENTLIST: projectId => `indent/list/${projectId}`,
+  POSTMATERIALSQUANTITY: (userId, projectId) =>
+    `materials/${userId}/${projectId}`
   //STATE: 'account/api/permitted/address/states',
 };

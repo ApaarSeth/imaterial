@@ -8,13 +8,24 @@
     ></card-layout>
     <div class="row p-t-10 p-b-10">
       <div class="col-sm-12">
-        <button
-          mat-raised-button
-          class="main-background-color main-button color-white pull-right"
-          (click)="raiseIndent()"
-        >
-          Raise Indent
-        </button>
+        <span>
+          <button
+            mat-raised-button
+            class="main-background-color main-button color-white pull-right"
+            (click)="raiseIndent()"
+          >
+            Raise Indent
+          </button>
+        </span>
+        <span class="p-r-5 pull-right">
+          <button
+            mat-raised-button
+            class="main-background-color main-button color-white pull-right "
+            (click)="viewIndent()"
+          >
+            View Indent
+          </button>
+        </span>
       </div>
     </div>
 

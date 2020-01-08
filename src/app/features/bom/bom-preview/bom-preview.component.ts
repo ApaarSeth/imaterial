@@ -16,6 +16,7 @@ export class BomPreviewComponent implements OnInit {
       this.projectId = params["id"];
     });
     console.log("selectedCategory");
+    console.log(this.selectedCategory);
     // console.log(this.selectedCategory);
     //this.getProject(this.projectId);
   }
@@ -27,6 +28,29 @@ export class BomPreviewComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  getData() {
+    const data = this.selectedCategory.Child.map(child => {
+      const {
+        materialCode,
+        materialName,
+        materialGroup,
+        materialUnit,
+        estimatedQty,
+        estimatedRate
+      } = child;
+
+      return {
+        materialCode,
+        materialName,
+        materialGroup,
+        materialUnit,
+        estimatedQty: Number(estimatedQty),
+        estimatedRate
+      };
+    }).filter(inputData => inputData.estimatedQty);
+    return data;
   }
 
   // getProject(id: number){

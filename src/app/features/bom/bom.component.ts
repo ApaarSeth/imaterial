@@ -1,4 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  QueryList,
+  ViewChildren
+} from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Location } from "@angular/common";
@@ -11,6 +17,7 @@ import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-proj
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { MatDialog } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
+import { BomPreviewComponent } from "./bom-preview/bom-preview.component";
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -67,6 +74,9 @@ export class BomComponent implements OnInit {
   searchText: string = null;
   product: ProjectDetails;
   fullCategoryList: any;
+
+  @ViewChildren("preview") previews: QueryList<BomPreviewComponent>;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
@@ -111,7 +121,14 @@ export class BomComponent implements OnInit {
   }
 
   saveCategory() {
+    console.log(this.categoryData);
+    const categoriesInputData = this.previews
+      .map(preview => preview.getData())
+      .flat();
+    this.bomService.sumbitCategory(1, this.projectId, categoriesInputData);
     this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+
+    console.log(categoriesInputData);
   }
 
   // dialog function

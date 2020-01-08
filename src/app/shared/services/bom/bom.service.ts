@@ -24,4 +24,10 @@ export class BomService {
       return res;
     });
   }
+  sumbitCategory(userId: number, projectId: number, materialsQuantity) {
+    return this.dataService.sendPostRequest(
+      API.POSTMATERIALSQUANTITY(userId, projectId),
+      materialsQuantity
+    );
+  }
 }
