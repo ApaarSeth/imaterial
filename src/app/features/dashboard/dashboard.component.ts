@@ -107,6 +107,7 @@ export class DashboardComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
+          this.allProjects = this.activatedRoute.snapshot.data.dashBoardData;
           //console.log('The dialog was closed');
           //this.animal = result;
         });

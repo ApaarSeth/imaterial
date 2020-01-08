@@ -41,7 +41,7 @@ export class DoubleConfirmationComponent implements OnInit {
       .delete(this.projectDetails.organizationId, this.projectDetails.projectId)
       .then(res => {
         res.data;
-        console.log("asdfghjkl", res.data);
+        this.close();
       });
   }
 }
