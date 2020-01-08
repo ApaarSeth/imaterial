@@ -49,7 +49,7 @@
         <ng-container matColumnDef="Required Quantity">
           <th mat-header-cell *matHeaderCellDef>Required Quantity</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field class="border-input">
+            <mat-form-field class="border-input table-input">
               <input matInput type="number" placeholder="Required Quantity" [(ngModel)]="element.quantity" />
             </mat-form-field> {{element.materialUnit}}
           </td>
