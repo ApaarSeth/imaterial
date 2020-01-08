@@ -8,6 +8,8 @@ export const API = {
     `project/${organizationId}/${projectId}`,
   GETCATERGORY: `material/groups`,
   ADDPROJECT: `addProject`,
+  UPDATEPROJECT: (organizationId, projectId) =>
+    `updateProjectDetails/${organizationId}/${projectId}`,
   RAISEINDENT: projectId => `indent/${projectId}`,
   DELETE: (organizationId, projectId) =>
     `deleteProject/${organizationId}/${projectId}`,

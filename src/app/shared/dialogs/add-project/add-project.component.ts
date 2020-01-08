@@ -51,7 +51,7 @@ export class AddProjectComponent implements OnInit {
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
-    { value: "Delhi", viewValue: "Delhi" },
+    { value: "Delhi-1", viewValue: "Delhi" },
     { value: "Karnal", viewValue: "Karnal" }
   ];
 
@@ -78,7 +78,6 @@ export class AddProjectComponent implements OnInit {
     this.projectDetails = this.data.isEdit
       ? this.data.detail
       : ({} as ProjectDetails);
-
     this.form = this.formBuilder.group({
       projectName: [
         this.data.isEdit ? this.data.detail.projectName : "",
@@ -131,8 +130,24 @@ export class AddProjectComponent implements OnInit {
     });
   }
 
+  updateProjects(projectDetails: ProjectDetails) {
+    if (projectDetails) {
+      let projectId = this.data.detail.projectId;
+      let organizationId = this.data.detail.organizationId;
+      this.projectService
+        .updateProjects(organizationId, projectId, projectDetails)
+        .then(res => {
+          res.data;
+        });
+    }
+  }
+
   submit() {
     console.log(this.form.value);
-    this.dialogRef.close(this.addProjects(this.form.value));
+    if (this.data.isEdit) {
+      this.dialogRef.close(this.updateProjects(this.form.value));
+    } else {
+      this.dialogRef.close(this.addProjects(this.form.value));
+    }
   }
 }
