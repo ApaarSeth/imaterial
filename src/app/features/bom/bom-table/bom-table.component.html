@@ -40,7 +40,12 @@
             Name
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
-            {{ element.materialName }}
+            <!-- <input type="checkbox" /> -->
+            <mat-checkbox
+              (change)="element.checked = !element.checked"
+              [checked]="element.checked"
+              >{{ element.materialName }}
+            </mat-checkbox>
           </td>
         </ng-container>
         <ng-container matColumnDef="estimatedQty">
