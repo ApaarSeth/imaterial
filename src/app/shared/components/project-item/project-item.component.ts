@@ -40,7 +40,12 @@ export class ProjectItemComponent implements OnInit {
   }
 
   navigationToBOM(id: number, projectDetails: ProjectDetails) {
-    this.router.navigate(["/bom/" + id], { state: { projectDetails } });
+    this;
+    if (projectDetails.matCount > 0) {
+      this.router.navigate(["/bom/" + id + "/bom-detail"]);
+    } else {
+      this.router.navigate(["/bom/" + id], { state: { projectDetails } });
+    }
   }
   startSubscriptions() {
     // this.subscriptions.push(
