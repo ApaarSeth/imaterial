@@ -93,13 +93,21 @@ export class BomComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.getProject(this.projectId);
+    this.bomService.getMaterialWithQuantity(1, this.projectId).then(res => {
+      console.log(res.data);
+      let alreadySelected = res.data.map(cat => cat.materialGroup);
+      this.selectedCategory = [...this.selectedCategory, ...alreadySelected];
+    });
   }
 
   demo(groupName) {
     if (!this.categoryList.includes(groupName)) {
       this.categoryList.push(groupName);
     }
-    this.selectedCategory = [...this.categories.value];
+    this.selectedCategory = [
+      ...this.selectedCategory,
+      ...this.categories.value
+    ];
     //console.log(this.categories.value);
   }
   getProject(id: number) {
@@ -127,7 +135,6 @@ export class BomComponent implements OnInit {
       .flat();
     this.bomService.sumbitCategory(1, this.projectId, categoriesInputData);
     this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
-
     console.log(categoriesInputData);
   }
 

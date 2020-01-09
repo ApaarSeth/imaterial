@@ -190,6 +190,9 @@ export class BomTableComponent implements OnInit {
         });
     }
   }
+  addMaterial() {
+    this.router.navigate(["/bom/" + this.projectId]);
+  }
 }
 
 // const SUBCATEGORIES: Subcategory[] = [

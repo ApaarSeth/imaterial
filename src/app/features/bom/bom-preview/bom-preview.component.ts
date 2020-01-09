@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
+import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
 
 @Component({
   selector: "app-bom-preview",
@@ -7,7 +8,11 @@ import { Router, ActivatedRoute } from "@angular/router";
   styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class BomPreviewComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private projectService: ProjectService
+  ) {}
   projectId: number;
   // product: ProjectDetails;
   @Input("selectedCategory") selectedCategory;
@@ -19,6 +24,10 @@ export class BomPreviewComponent implements OnInit {
     console.log(this.selectedCategory);
     // console.log(this.selectedCategory);
     //this.getProject(this.projectId);
+    this.projectService.getProject(1, this.projectId).then(data => {
+      console.log(data);
+      //     this.product = data.message;
+    });
   }
 
   getMaterialLength(cat) {
@@ -45,6 +54,7 @@ export class BomPreviewComponent implements OnInit {
         materialCode,
         materialName,
         materialGroup,
+        materialSubGroup: materialName,
         materialUnit,
         estimatedQty: Number(estimatedQty),
         estimatedRate
