@@ -1,5 +1,5 @@
 <div class="page-start-point ">
-  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+  <div class="p-l-20 p-r-20 p-b-20 min-height">
     <card-layout
       *ngIf="product"
       (onEdit)="editProject($event)"
@@ -7,18 +7,24 @@
       [projectDetails]="product"
     ></card-layout>
     <div class="p-t-10" *ngIf="!showTable">
-      <div class="row display-flex">
-        <div class="m-b-10 m-r-10" *ngFor="let category of selectedCategory">
-          <mat-card class="p-10"
-            >{{ category.materialGroup }}
-            <button mat-button matSuffix mat-icon-button>
-              <mat-icon class="font-size18">clear</mat-icon>
-            </button>
-          </mat-card>
+      <mat-card class="parent">
+        <div class="row">
+          <div class="col-sm-12 text-left">
+            <p>Please select categories to add materials in BOM</p>
+          </div>
         </div>
-      </div>
-      <div class="center-element">
-        <mat-form-field class="border-select">
+        <div class="row display-flex m-b-20">
+          <div class="m-b-10 m-r-10" *ngFor="let category of selectedCategory">
+            <mat-card class="p-10"
+              >{{ category.materialGroup }}
+              <button mat-button matSuffix mat-icon-button>
+                <mat-icon class="font-size18">clear</mat-icon>
+              </button>
+            </mat-card>
+          </div>
+        </div>  
+      <div class="col-sm-12">
+        <mat-form-field class="border-select center-element">
           <mat-select [formControl]="categories" multiple>
             <div class="display-flex">
               <input
@@ -40,17 +46,18 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="align-center">
-          <button
-            *ngIf="selectedCategory.length"
-            mat-raised-button
-            class="main-background-color main-button color-white"
-            (click)="finalisedCategory()"
-          >
-            Next
-          </button>
-        </div>
       </div>
+      <div class="col-sm-12 text-right m-t-40">
+        <button
+          *ngIf="selectedCategory.length"
+          mat-raised-button
+          class="main-background-color main-button color-white"
+          (click)="finalisedCategory()"
+        >
+          Next
+        </button>
+      </div>
+    </mat-card>
     </div>
     <div *ngIf="showTable">
       <div class="row p-t-10 p-b-10">
