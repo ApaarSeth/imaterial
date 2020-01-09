@@ -43,7 +43,9 @@ export class ProjectItemComponent implements OnInit {
     this;
     if (projectDetails.matCount > 0) {
       this.router.navigate(["/bom/" + id + "/bom-detail"]);
-    } else this.router.navigate(["/bom/" + id], { state: { projectDetails } });
+    } else {
+      this.router.navigate(["/bom/" + id], { state: { projectDetails } });
+    }
   }
   startSubscriptions() {
     // this.subscriptions.push(
