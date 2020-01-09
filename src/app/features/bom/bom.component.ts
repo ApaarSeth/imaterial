@@ -74,7 +74,7 @@ export class BomComponent implements OnInit {
   searchText: string = null;
   product: ProjectDetails;
   fullCategoryList: any;
-
+  selectedCats;
   @ViewChildren("preview") previews: QueryList<BomPreviewComponent>;
 
   constructor(
@@ -89,14 +89,21 @@ export class BomComponent implements OnInit {
   ngOnInit() {
     this.categories = new FormControl([]);
     this.fullCategoryList = this.activatedRoute.snapshot.data.bomCategory;
+
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params["id"];
     });
     this.getProject(this.projectId);
     this.bomService.getMaterialWithQuantity(1, this.projectId).then(res => {
       console.log(res.data);
-      let alreadySelected = res.data.map(cat => cat.materialGroup);
-      this.selectedCategory = [...this.selectedCategory, ...alreadySelected];
+      this.categoryList = [...new Set(res.data.map(cat => cat.materialGroup))];
+      // this.selectedCategory = [...this.selectedCategory, ...this.categoryList];
+      this.fullCategoryList.forEach(category => {
+        category.checked =
+          this.categoryList.indexOf(category.materialGroup) != -1;
+      });
+      this.selectedCats = this.fullCategoryList.filter(opt => opt.checked);
+      console.log(this.fullCategoryList);
     });
   }
 
@@ -158,6 +165,13 @@ export class BomComponent implements OnInit {
     };
 
     this.openDialog(data);
+  }
+  clearSelectedCategory(category) {
+    console.log(category);
+    console.log(this.selectedCats);
+    this.selectedCats = this.selectedCats.filter(
+      cats => cats.materialGroup !== category.materialGroup
+    );
   }
 
   // modal function
