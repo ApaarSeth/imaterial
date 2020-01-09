@@ -10,6 +10,11 @@ export class BomPreviewComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
   projectId: number;
   // product: ProjectDetails;
+  step = 0;
+
+  setStep(index: number) {
+    this.step = index;
+  }
   @Input("selectedCategory") selectedCategory;
   ngOnInit() {
     this.route.params.subscribe(params => {
