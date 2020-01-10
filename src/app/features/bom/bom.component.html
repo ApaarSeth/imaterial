@@ -51,7 +51,6 @@
                   let category of fullCategoryList | SearchPipe: searchText
                 "
                 [value]="category"
-                (click)="demo(category.materialGroup); category.checked = true"
                 >{{ category.materialGroup }}
               </mat-option>
             </mat-select>
@@ -59,7 +58,7 @@
         </div>
         <div class="col-sm-12 text-right m-t-40">
           <button
-            *ngIf="selectedCategory.length"
+            *ngIf="getSelectedCategoriesLength()"
             mat-raised-button
             class="main-background-color main-button color-white"
             (click)="finalisedCategory()"

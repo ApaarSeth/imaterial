@@ -18,6 +18,10 @@ import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confi
 import { MatDialog } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import { BomPreviewComponent } from "./bom-preview/bom-preview.component";
+import {
+  categoryLevel,
+  categoryNestedLevel
+} from "src/app/shared/models/category";
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -27,48 +31,10 @@ export class BomComponent implements OnInit {
   Object = Object;
   showTable = false;
   categories: FormControl;
-  categoryList = [];
-  selectedCategory = [];
-  categoryData = [];
+  categoryList: string[] = [];
+  selectedCategory: categoryLevel[] = [];
+  categoryData: categoryNestedLevel[] = [];
   value = "";
-  // fullCategoryList = {
-  //   "0": {
-  //     label: "category",
-  //     estimatedQty: null,
-  //     subcategory: {
-  //       label: "subCategoryName",
-  //       estimatedQty: null,
-  //       material: [
-  //         {
-  //           label: "material1",
-  //           estryqty: null
-  //         },
-  //         {
-  //           label: "material1",
-  //           estryqty: null
-  //         }
-  //       ]
-  //     }
-  //   },
-  //   "1": {
-  //     label: "category",
-  //     estimatedQty: null,
-  //     subcategory: {
-  //       label: "subCategoryName",
-  //       estimatedQty: null,
-  //       material: [
-  //         {
-  //           label: "material1",
-  //           estryqty: null
-  //         },
-  //         {
-  //           label: "material1",
-  //           estryqty: null
-  //         }
-  //       ]
-  //     }
-  //   }
-  // };
 
   projectId: number;
   searchText: string = null;
@@ -95,28 +61,17 @@ export class BomComponent implements OnInit {
     });
     this.getProject(this.projectId);
     this.bomService.getMaterialWithQuantity(1, this.projectId).then(res => {
-      console.log(res.data);
-      this.categoryList = [...new Set(res.data.map(cat => cat.materialGroup))];
-      // this.selectedCategory = [...this.selectedCategory, ...this.categoryList];
+      this.categoryList = [
+        ...new Set(res.data.map(cat => cat.materialGroup))
+      ] as string[];
       this.fullCategoryList.forEach(category => {
         category.checked =
           this.categoryList.indexOf(category.materialGroup) != -1;
       });
       this.selectedCats = this.fullCategoryList.filter(opt => opt.checked);
-      console.log(this.fullCategoryList);
     });
   }
 
-  demo(groupName) {
-    if (!this.categoryList.includes(groupName)) {
-      this.categoryList.push(groupName);
-    }
-    this.selectedCategory = [
-      ...this.selectedCategory,
-      ...this.categories.value
-    ];
-    //console.log(this.categories.value);
-  }
   getProject(id: number) {
     this.projectService.getProject(1, id).then(data => {
       this.product = data.data;
@@ -127,10 +82,13 @@ export class BomComponent implements OnInit {
     this.showTable = true;
     this.bomService
       .getMaterialsWithSpecs({
-        pid: this.categoryList
+        pid: this.categories.value.map(
+          selectedCategory => selectedCategory.materialGroup
+        )
       })
       .then(res => {
         this.categoryData = [...res];
+        console.log("this.categoryData");
         console.log(this.categoryData);
       });
   }
@@ -140,8 +98,12 @@ export class BomComponent implements OnInit {
     const categoriesInputData = this.previews
       .map(preview => preview.getData())
       .flat();
-    this.bomService.sumbitCategory(1, this.projectId, categoriesInputData);
-    this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+    this.bomService
+      .sumbitCategory(1, this.projectId, categoriesInputData)
+      .then(res => {
+        this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+      });
+
     console.log(categoriesInputData);
   }
 
@@ -172,6 +134,9 @@ export class BomComponent implements OnInit {
     this.selectedCats = this.selectedCats.filter(
       cats => cats.materialGroup !== category.materialGroup
     );
+  }
+  getSelectedCategoriesLength() {
+    if (this.categories.value) return this.categories.value.length;
   }
 
   // modal function

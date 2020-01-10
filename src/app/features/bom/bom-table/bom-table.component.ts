@@ -127,10 +127,11 @@ export class BomTableComponent implements OnInit {
         return sub;
       }
     });
-    this.router.navigate(["/indent/" + this.projectId], {
-      state: { checkedSubcategory }
-    });
-
+    if (checkedSubcategory.length) {
+      this.router.navigate(["/indent/" + this.projectId], {
+        state: { checkedSubcategory }
+      });
+    }
     console.log(this.dataSource);
     // this.router.navigate(["/indent/" + this.projectId]);
   }
