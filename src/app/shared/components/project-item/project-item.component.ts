@@ -40,7 +40,6 @@ export class ProjectItemComponent implements OnInit {
   }
 
   navigationToBOM(id: number, projectDetails: ProjectDetails) {
-    this;
     if (projectDetails.matCount > 0) {
       this.router.navigate(["/bom/" + id + "/bom-detail"]);
     } else {

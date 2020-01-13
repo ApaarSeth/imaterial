@@ -37,9 +37,18 @@ export interface Materials {
   materialCustomID: number;
   materialSubGroup: string;
   materialSpecs?: Materials[] | MatTableDataSource<Materials>;
-  sum: number;
+  sum?: number;
   requestedQuantity: number;
   checked: boolean;
   issueToProject: number;
   availableStock: number;
+}
+
+export interface QtyData {
+  estimatedQty: number;
+  materialCode: string;
+  materialName: string;
+  materialGroup: string;
+  materialUnit: string;
+  estimatedRate: null;
 }
