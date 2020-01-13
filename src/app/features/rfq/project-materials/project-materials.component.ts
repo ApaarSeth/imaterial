@@ -1,8 +1,14 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
-import { ProjectDetails } from "src/app/shared/models/project-details";
+import {
+  ProjectDetails,
+  ProjectIds
+} from "src/app/shared/models/project-details";
 import { FormControl } from "@angular/forms";
+import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { stringify } from "querystring";
+import { RfqMaterialResponse } from "src/app/shared/models/rfq-details";
 
 @Component({
   selector: "rfq",
@@ -17,10 +23,20 @@ export class RFQProjectMaterialsComponent implements OnInit {
   buttonName: string = "projectMaterials";
   projects: FormControl;
   selectedProjects = [];
+  ProjectIds: ProjectIds;
+  rfqDetails: RfqMaterialResponse[];
+
+  displayedColumns: string[] = [
+    "Material Name",
+    "Required Date",
+    "Requested Quantity",
+    "Estimated Quantity"
+  ];
 
   constructor(
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private rfqService: RFQService
   ) {}
 
   ngOnInit() {
@@ -33,13 +49,19 @@ export class RFQProjectMaterialsComponent implements OnInit {
   }
   setSelectedProjectList() {
     console.log("list", this.projects.value);
-    console.log(this.selectedProjects);
+    console.log(
+      this.selectedProjects.map(selectedProject => selectedProject.projectId)
+    );
+    this.ProjectIds = this.selectedProjects.map(
+      selectedProject => selectedProject.projectId
+    ) as ProjectIds;
+    this.rfqMaterials(this.ProjectIds);
   }
-  // demo(groupName) {
-  //   // if (!this.categoryList.includes(groupName)) {
-  //   //   this.categoryList.push(groupName);
-  //   // }
-  //   this.selectedProjects = [...this.selectedProjects, ...this.projects.value];
-  //   console.log(this.projects.value);
-  // }
+
+  rfqMaterials(projectIds: ProjectIds) {
+    this.rfqService.rfqMaterials(projectIds).then(res => {
+      this.rfqDetails = res.data;
+      console.log("qwertyuio", this.rfqDetails);
+    });
+  }
 }
