@@ -8,6 +8,7 @@ import {
 import { FormControl } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { stringify } from "querystring";
+import { RfqMaterialResponse } from "src/app/shared/models/rfq-details";
 
 @Component({
   selector: "rfq",
@@ -23,6 +24,14 @@ export class RFQProjectMaterialsComponent implements OnInit {
   projects: FormControl;
   selectedProjects = [];
   ProjectIds: ProjectIds;
+  rfqDetails: RfqMaterialResponse[];
+
+  displayedColumns: string[] = [
+    "Material Name",
+    "Required Date",
+    "Requested Quantity",
+    "Estimated Quantity"
+  ];
 
   constructor(
     public dialog: MatDialog,
@@ -51,15 +60,8 @@ export class RFQProjectMaterialsComponent implements OnInit {
 
   rfqMaterials(projectIds: ProjectIds) {
     this.rfqService.rfqMaterials(projectIds).then(res => {
-      res.data;
-      console.log("qwertyuio", res.data);
+      this.rfqDetails = res.data;
+      console.log("qwertyuio", this.rfqDetails);
     });
   }
-  // demo(groupName) {
-  //   // if (!this.categoryList.includes(groupName)) {
-  //   //   this.categoryList.push(groupName);
-  //   // }
-  //   this.selectedProjects = [...this.selectedProjects, ...this.projects.value];
-  //   console.log(this.projects.value);
-  // }
 }
