@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { NgModule } from "@angular/core";
 import { MatSidenav } from "@angular/material";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-header",
@@ -12,7 +13,7 @@ export class HeaderLayoutModule implements OnInit {
   @Input("menu") menu: MatSidenav;
   public buttonName: string = "projectStore";
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
@@ -21,5 +22,10 @@ export class HeaderLayoutModule implements OnInit {
   };
   setButtonName(name: string) {
     this.buttonName = name;
+    if (name == "projectStore") {
+      this.router.navigate(["/"]);
+    } else if (name == "globalStore") {
+      this.router.navigate(["rfq/project-materials"]);
+    }
   }
 }
