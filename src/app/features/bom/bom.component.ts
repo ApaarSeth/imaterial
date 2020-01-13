@@ -22,6 +22,7 @@ import {
   categoryLevel,
   categoryNestedLevel
 } from "src/app/shared/models/category";
+import { QtyData } from "src/app/shared/models/subcategory-materials";
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -42,6 +43,9 @@ export class BomComponent implements OnInit {
   fullCategoryList: any;
   selectedCats;
   @ViewChildren("preview") previews: QueryList<BomPreviewComponent>;
+  categoriesInputData: QtyData[];
+  quantityPresent: boolean = true;
+  isAllFormsValid: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -88,25 +92,44 @@ export class BomComponent implements OnInit {
       })
       .then(res => {
         this.categoryData = [...res];
-        console.log("this.categoryData");
-        console.log(this.categoryData);
       });
+  }
+
+  checkValidations(): void {
+    console.log(
+      this.previews.map(
+        (preview: BomPreviewComponent) => preview.quantityForms.valid
+      )
+    );
+
+    this.isAllFormsValid = this.previews
+      .map((preview: BomPreviewComponent) => preview.quantityForms.valid)
+      .every(Boolean);
   }
 
   saveCategory() {
-    console.log(this.categoryData);
-    const categoriesInputData = this.previews
-      .map(preview => preview.getData())
+    this.categoriesInputData = this.previews
+      .map(preview => {
+        return preview.getData();
+      })
       .flat();
+    for (let data of this.categoriesInputData) {
+      if (data.estimatedQty > 0) {
+        this.quantityPresent = false;
+      }
+    }
     this.bomService
-      .sumbitCategory(1, this.projectId, categoriesInputData)
+      .sumbitCategory(1, this.projectId, this.categoriesInputData)
       .then(res => {
         this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
       });
-
-    console.log(categoriesInputData);
+    console.log("this.categoriesInputData");
+    console.log(this.categoriesInputData);
   }
 
+  qtyEntered(eve) {
+    console.log(eve);
+  }
   // dialog function
 
   editProject() {

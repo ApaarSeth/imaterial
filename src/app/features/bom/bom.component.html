@@ -33,6 +33,7 @@
               [formControl]="categories"
               [(ngModel)]="selectedCats"
               multiple
+              floatlLabel="never"
             >
               <div class="display-flex">
                 <input
@@ -46,6 +47,9 @@
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
+              <mat-select-trigger
+                ><mat-label>Choose an option</mat-label></mat-select-trigger
+              >
               <mat-option
                 *ngFor="
                   let category of fullCategoryList | SearchPipe: searchText
@@ -76,13 +80,18 @@
             mat-raised-button
             class="main-background-color main-button color-white pull-right"
             (click)="saveCategory()"
+            [disabled]="!isAllFormsValid"
           >
             SAVE
           </button>
         </div>
       </div>
       <div *ngFor="let data of categoryData">
-        <app-bom-preview #preview [selectedCategory]="data"></app-bom-preview>
+        <app-bom-preview
+          #preview
+          [selectedCategory]="data"
+          (inputEntered)="checkValidations($event)"
+        ></app-bom-preview>
       </div>
     </div>
   </div>

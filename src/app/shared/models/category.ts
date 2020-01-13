@@ -33,10 +33,12 @@ export interface material {
   gst: number;
   alias: string;
   Specs: null;
+  estimatedQty?: number;
+  estimatedRate?: number;
 }
 
 export interface categoryNestedLevel {
   pid: string;
   materialGroup: string;
-  child: material[];
+  Child: material[];
 }
