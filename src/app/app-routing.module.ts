@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { DashboardComponent } from "./features/dashboard/dashboard.component";
 import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resolver";
 import { BomResolver } from "./features/bom/bom.resolver";
+import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
       import("./features/indent/indent-dashboard.module").then(
         m => m.IndentDashboardModule
       )
+  },
+  {
+    path: "rfq",
+    loadChildren: () =>
+      import("./features/rfq/rfq.module").then(m => m.RFQModule)
   }
 ];
 

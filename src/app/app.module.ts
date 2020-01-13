@@ -16,7 +16,8 @@ import { BomModule } from "./features/bom/bom.module";
 // import { DialogOverviewExampleDialog } from './shared/models/add-project/dialog-overview-example-dialog.component';
 // import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { IndentDashboardModule } from './features/indent/indent-dashboard.module';
+import { IndentDashboardModule } from "./features/indent/indent-dashboard.module";
+import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +37,8 @@ import { IndentDashboardModule } from './features/indent/indent-dashboard.module
     HttpInterceptorProviders,
     TokenService,
     GlobalLoaderService,
-    DashBoardResolver
+    DashBoardResolver,
+    RFQResolver
   ],
   bootstrap: [AppComponent]
 })
