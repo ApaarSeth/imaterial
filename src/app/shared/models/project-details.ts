@@ -37,3 +37,7 @@ export interface ProjetPopupData {
   isEdit: boolean;
   detail?: ProjectDetails;
 }
+
+export interface ProjectIds {
+  projectIds?: Array<Number>;
+}
