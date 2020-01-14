@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material";
+import { SuppliersDialogComponent } from "./suppliers-dialog.component";
 
 export interface Supplier {
   supplierName: string;
@@ -58,6 +60,18 @@ export class SuppliersComponent implements OnInit {
   ];
 
   dataSource = SUPPLIER_DATA;
+
+  constructor(public dialog: MatDialog) {}
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(SuppliersDialogComponent, {
+      width: "1200px"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("The dialog was closed");
+    });
+  }
 
   ngOnInit() {}
 }

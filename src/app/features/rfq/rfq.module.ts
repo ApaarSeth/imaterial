@@ -10,8 +10,12 @@ import { RFQProjectMaterialsComponent } from "./project-materials/project-materi
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQRoutingModule } from "./rfq-routing.module";
 import { SuppliersComponent } from "./suppliers/suppliers.component";
+import { SuppliersDialogComponent } from "./suppliers/suppliers-dialog.component";
 import { MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   imports: [
@@ -25,9 +29,17 @@ import { MatIconModule } from "@angular/material/icon";
     AppSharedModule,
     RFQRoutingModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatCheckboxModule,
+    MatGridListModule,
+    MatDialogModule
   ],
   providers: [RFQResolver],
-  declarations: [RFQProjectMaterialsComponent, SuppliersComponent]
+  declarations: [
+    RFQProjectMaterialsComponent,
+    SuppliersComponent,
+    SuppliersDialogComponent
+  ],
+  entryComponents: [SuppliersDialogComponent]
 })
 export class RFQModule {}
