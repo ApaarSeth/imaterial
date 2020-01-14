@@ -4,7 +4,6 @@ import { LayoutModule } from "src/app/shared/layout/layout-module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { AppSharedModule } from "src/app/shared/app-shared-module";
-import { ProjectItemComponent } from "src/app/shared/components/project-item/project-item.component";
 import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { IndentDashboardComponent } from "./indent-dashboard.component";
@@ -25,11 +24,6 @@ import { IndentResolver } from "./resolver/indent.resolver";
     IndentRoutingModule
   ],
   providers: [IndentResolver],
-  declarations: [
-    IndentDashboardComponent,
-    AppSharedModule,
-    ProjectItemComponent,
-    IndentDetailComponent
-  ]
+  declarations: [IndentDashboardComponent, IndentDetailComponent]
 })
 export class IndentDashboardModule {}

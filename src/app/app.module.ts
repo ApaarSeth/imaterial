@@ -13,12 +13,8 @@ import { GlobalLoaderService } from "./shared/services/global-loader.service";
 import { LayoutModule } from "./shared/layout/layout-module";
 import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resolver";
 import { BomModule } from "./features/bom/bom.module";
-// import { DialogOverviewExampleDialog } from './shared/models/add-project/dialog-overview-example-dialog.component';
-// import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { IndentDashboardModule } from "./features/indent/indent-dashboard.module";
-import { GlobalStoreResolver } from "./features/global-store/Resolver/global-store.resolver";
 import { BomResolver } from "./features/bom/bom.resolver";
+import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,13 +26,14 @@ import { BomResolver } from "./features/bom/bom.resolver";
     FlexLayoutModule,
     HttpClientModule,
     LayoutModule,
-    BomModule
+    DashboardModule
   ],
   providers: [
     HttpInterceptorProviders,
     TokenService,
     GlobalLoaderService,
     DashBoardResolver,
+    RFQResolver,
     BomResolver
   ],
   bootstrap: [AppComponent]
