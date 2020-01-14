@@ -10,7 +10,7 @@ type DB struct {
 }
 
 func DBConnect() (*DB, error) {
-	db, err := sqlx.Open("postgres", "host=localhost port=5432 user=postgres password=postgres dbname=materials sslmode=disable")
+	db, err := sqlx.Open("postgres", "host=localhost port=5432 user=postgres password=password dbname=materialmaster sslmode=disable")
 
 	if err != nil {
 		log.Fatalln(err)
