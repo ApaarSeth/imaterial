@@ -5,9 +5,8 @@ import { LayoutModule } from "src/app/shared/layout/layout-module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { AppSharedModule } from "src/app/shared/app-shared-module";
-import { ProjectItemComponent } from "src/app/shared/components/project-item/project-item.component";
 import { MatInputModule } from "@angular/material/input";
-import { RouterModule } from '@angular/router';
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   imports: [
@@ -21,6 +20,6 @@ import { RouterModule } from '@angular/router';
     AppSharedModule
   ],
   providers: [],
-  declarations: [DashboardComponent, AppSharedModule, ProjectItemComponent]
+  declarations: [DashboardComponent]
 })
 export class DashboardModule {}

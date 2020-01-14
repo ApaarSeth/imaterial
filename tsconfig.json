@@ -15,7 +15,6 @@
     "lib": ["es2019", "es2018", "dom"]
   },
   "angularCompilerOptions": {
-    "debug": true,
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
   }

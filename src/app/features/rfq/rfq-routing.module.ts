@@ -13,7 +13,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [RFQProjectMaterialsComponent],
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
 export class RFQRoutingModule {}

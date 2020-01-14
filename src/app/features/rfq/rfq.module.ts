@@ -23,6 +23,6 @@ import { RFQRoutingModule } from "./rfq-routing.module";
     RFQRoutingModule
   ],
   providers: [RFQResolver],
-  declarations: [RFQProjectMaterialsComponent, AppSharedModule]
+  declarations: [RFQProjectMaterialsComponent]
 })
 export class RFQModule {}
