@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { DashboardComponent } from "./features/dashboard/dashboard.component";
 import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resolver";
 import { BomResolver } from "./features/bom/bom.resolver";
+import { GlobalStoreResolver } from "./features/global-store/Resolver/global-store.resolver";
 
 const routes: Routes = [
   {
@@ -21,6 +22,13 @@ const routes: Routes = [
     loadChildren: () =>
       import("./features/indent/indent-dashboard.module").then(
         m => m.IndentDashboardModule
+      )
+  },
+  {
+    path: "globalStore/:id",
+    loadChildren: () =>
+      import("./features/global-store/global-store.module").then(
+        m => m.GlobalStoreModule
       )
   }
 ];

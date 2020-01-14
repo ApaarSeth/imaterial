@@ -18,6 +18,8 @@ export const API = {
     `materials/${organizationId}/${projectId}`,
   GETINDENTLIST: projectId => `indent/list/${projectId}`,
   POSTMATERIALSQUANTITY: (userId, projectId) =>
-    `materials/${userId}/${projectId}`
+    `materials/${userId}/${projectId}`,
+  GETMATERIALWISE: organizationId => `global/materials/${organizationId}`,
+  GETPROJECTWISE: organizationId => `global/projects/${organizationId}`
   //STATE: 'account/api/permitted/address/states',
 };

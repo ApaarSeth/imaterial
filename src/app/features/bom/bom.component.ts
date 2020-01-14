@@ -26,7 +26,7 @@ import { QtyData } from "src/app/shared/models/subcategory-materials";
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
-  styleUrls: ["../../../assets/scss/pages/bom.scss"]
+  styleUrls: ["../../../assets/scss/main.scss"]
 })
 export class BomComponent implements OnInit {
   Object = Object;
