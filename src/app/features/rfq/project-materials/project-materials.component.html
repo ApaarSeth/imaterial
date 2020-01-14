@@ -63,6 +63,7 @@
       <div class="text-right col-xs-2">
         <button
           mat-raised-button
+          (click)="raiseIndent()"
           class="main-background-color main-button color-white"
         >
           Next
@@ -107,16 +108,14 @@
       </div>
     </div>
     <!-- table structure -->
-    <mat-accordion>
+    <mat-accordion class="accordion-padding-zero">
      <ng-template ngFor let-material [ngForOf]="rfqDetails" let-i="index">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{material.projectName}}
+            <a href="javascript:void(0)" class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a>
           </mat-panel-title>
-          <mat-panel-description>
-            Type your name and age gfhh 
-          </mat-panel-description>
         </mat-expansion-panel-header>
         <!-- table part -->
         <table
@@ -130,7 +129,13 @@
         <!-- Position Column -->
         <ng-container matColumnDef="Material Name">
         <th mat-header-cell *matHeaderCellDef>Material Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.materialName }}</td>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox
+            (change)="element.checked = !element.checked"
+            [checked]="element.checked"
+            >{{ element.materialName }}
+          </mat-checkbox>
+        </td>
         </ng-container>
 
 

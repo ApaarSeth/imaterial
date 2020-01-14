@@ -215,3 +215,7 @@ a:hover {
 .input-search-padding-zero.mat-form-field-appearance-legacy .mat-form-field-wrapper{
   padding-top: 0px !important;
 }
+
+.accordion-padding-zero .mat-expansion-panel-body {
+  padding: 0 0px 16px;
+}

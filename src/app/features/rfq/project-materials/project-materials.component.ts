@@ -1,14 +1,20 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   ProjectDetails,
   ProjectIds
 } from "src/app/shared/models/project-details";
-import { FormControl } from "@angular/forms";
+import {
+  FormBuilder,
+  FormArray,
+  FormGroup,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { stringify } from "querystring";
-import { RfqMaterialResponse } from "src/app/shared/models/rfq-details";
+import { RfqMaterialResponse, RfqMat } from "src/app/shared/models/rfq-details";
 
 @Component({
   selector: "rfq",
@@ -25,6 +31,7 @@ export class RFQProjectMaterialsComponent implements OnInit {
   selectedProjects = [];
   ProjectIds: ProjectIds;
   rfqDetails: RfqMaterialResponse[];
+  materialForms: FormGroup;
 
   displayedColumns: string[] = [
     "Material Name",
@@ -36,7 +43,9 @@ export class RFQProjectMaterialsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService
+    private rfqService: RFQService,
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -63,5 +72,40 @@ export class RFQProjectMaterialsComponent implements OnInit {
       this.rfqDetails = res.data;
       console.log("qwertyuio", this.rfqDetails);
     });
+  }
+
+  checkedMAterialFlag: boolean = false;
+  // flag(material: RfqMat) {
+  //   if (material.checked === true) {
+  //     this.checkedMAterialFlag = true;
+  //   } else {
+  //     this.checkedMAterialFlag = false;
+  //   }
+  //   console.log(this.checkedMAterialFlag);
+  // }
+
+  raiseIndent() {
+    let projectMaterial = null;
+    let checkedMaterial = this.rfqDetails.filter(sub => {
+      return sub.projectMaterialList != null;
+    });
+    let checkedMaterials = checkedMaterial
+      .map(sub => {
+        projectMaterial = sub.projectMaterialList.filter(mat => {
+          return mat.checked === true;
+        });
+        return { ...sub, projectMaterialList: projectMaterial };
+      })
+      .filter(sub => {
+        return sub.projectMaterialList.length != 0;
+      });
+
+    if (checkedMaterials.length) {
+      this.router.navigate(["/indent/"], {
+        state: { checkedMaterials }
+      });
+    }
+    console.log(checkedMaterials);
+    // this.router.navigate(["/indent/" + this.projectId]);
   }
 }
