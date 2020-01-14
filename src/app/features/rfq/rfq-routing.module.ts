@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQProjectMaterialsComponent } from "./project-materials/project-materials.component";
-import { SuppliersComponent } from './suppliers/suppliers.component';
+import { SuppliersComponent } from "./suppliers/suppliers.component";
 
 const routes: Routes = [
   {
@@ -18,7 +18,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [RFQProjectMaterialsComponent, SuppliersComponent],
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
-export class RFQRoutingModule { }
+export class RFQRoutingModule {}

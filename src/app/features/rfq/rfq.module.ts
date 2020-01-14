@@ -28,10 +28,6 @@ import { MatIconModule } from "@angular/material/icon";
     MatIconModule
   ],
   providers: [RFQResolver],
-  declarations: [
-    RFQProjectMaterialsComponent,
-    AppSharedModule,
-    SuppliersComponent
-  ]
+  declarations: [RFQProjectMaterialsComponent, SuppliersComponent]
 })
 export class RFQModule {}

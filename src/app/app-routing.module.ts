@@ -25,6 +25,13 @@ const routes: Routes = [
       )
   },
   {
+    path: "globalStore/:id",
+    loadChildren: () =>
+      import("./features/global-store/global-store.module").then(
+        m => m.GlobalStoreModule
+      )
+  },
+  {
     path: "rfq",
     loadChildren: () =>
       import("./features/rfq/rfq.module").then(m => m.RFQModule)

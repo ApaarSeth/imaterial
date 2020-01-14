@@ -19,6 +19,8 @@ export const API = {
   GETINDENTLIST: projectId => `indent/list/${projectId}`,
   POSTMATERIALSQUANTITY: (userId, projectId) =>
     `materials/${userId}/${projectId}`,
+  GETMATERIALWISE: organizationId => `global/materials/${organizationId}`,
+  GETPROJECTWISE: organizationId => `global/projects/${organizationId}`,
   RFQMATERIALS: `rfqMaterials`
   //STATE: 'account/api/permitted/address/states',
 };
