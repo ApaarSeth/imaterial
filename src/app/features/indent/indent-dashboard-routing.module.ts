@@ -15,7 +15,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [IndentDashboardComponent],
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
 export class IndentRoutingModule {}

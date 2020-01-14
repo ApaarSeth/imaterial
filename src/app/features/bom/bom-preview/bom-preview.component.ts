@@ -95,7 +95,10 @@ export class BomPreviewComponent implements OnInit {
         estimatedRate: [subcategory.estimatedRate]
       });
     });
-    this.quantityForms = this.formBuilder.group({}, {});
+    this.quantityForms = this.formBuilder.group(
+      {},
+      { validators: [this.getMaterialLength] }
+    );
     this.quantityForms.addControl("forms", new FormArray(frmArr));
 
     this.quantityForms.valueChanges.subscribe(changes => {
@@ -109,13 +112,22 @@ export class BomPreviewComponent implements OnInit {
       this.inputEntered.emit(true);
     }
   }
-  getMaterialLength(cat): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
-      if (control.value.estimatedQty) {
-        return { nameIsForbidden: true };
+  getMaterialLength(control: AbstractControl) {
+    if (!control.touched) {
+      return null;
+    }
+
+    if (!Object.keys(control.value).length) {
+      return { inValid: true };
+    } else {
+      const isAllEmpty = control.value.forms.every(cat => !cat.estimatedQty);
+
+      if (isAllEmpty) {
+        return { inValid: true };
+      } else {
         return null;
       }
-    };
+    }
   }
 
   getData() {
