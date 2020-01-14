@@ -9,6 +9,9 @@ import { RouterModule } from "@angular/router";
 import { RFQProjectMaterialsComponent } from "./project-materials/project-materials.component";
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQRoutingModule } from "./rfq-routing.module";
+import { SuppliersComponent } from "./suppliers/suppliers.component";
+import { MatTableModule } from "@angular/material/table";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
   imports: [
@@ -20,9 +23,15 @@ import { RFQRoutingModule } from "./rfq-routing.module";
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    RFQRoutingModule
+    RFQRoutingModule,
+    MatTableModule,
+    MatIconModule
   ],
   providers: [RFQResolver],
-  declarations: [RFQProjectMaterialsComponent, AppSharedModule]
+  declarations: [
+    RFQProjectMaterialsComponent,
+    AppSharedModule,
+    SuppliersComponent
+  ]
 })
 export class RFQModule {}
