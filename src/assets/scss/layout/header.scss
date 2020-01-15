@@ -1,0 +1,33 @@
+// $main-color: #f47721;
+// $blue-color: #192135;
+// $white-color: #FFFFFF;
+.header-fixed {
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+}
+
+.menu-spacer {
+  flex: 1 1 auto;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+.mat-toolbar {
+  background: $white-color;
+}
+
+button.active {
+  border-bottom: 2px solid $main-color;
+  border-radius: 0px;
+  font-weight: 600;
+}
+
+.mat-menu-content:not(:empty) {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.mat-menu-panel {
+  background: $white-color !important;
+}

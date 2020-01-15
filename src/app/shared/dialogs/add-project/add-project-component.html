@@ -1,0 +1,215 @@
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
+  <h1 mat-dialog-title>Add Project</h1>
+  <div mat-dialog-content>
+    <div class="col-sm-12 display-flex m-t-20">
+      <div class="col-sm-3">
+        <div style="width: 105px;height: 90px;">
+          <img
+            src="../../../../assets/images/2020-01-08.jpg"
+            style="width: 100%;"
+          />
+        </div>
+        <div class="text-left">
+          <!-- <button
+            mat-raised-button
+            class="background-white-color main-button main-color"
+          >
+            Upload
+          </button> -->
+        </div>
+      </div>
+      <!-- new structure -->
+      <div class="col-sm-9">
+        <!-- first row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- project Name -->
+          <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="Project Name"
+            formControlName="projectName"
+          />
+          <mat-error>Project Name is Required</mat-error>
+        </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <!-- project Type -->
+        <mat-form-field class="border-select">
+          <mat-label>Project Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option
+              *ngFor="let projectType of projectTypes"
+              [value]="projectType.type"
+            >
+              {{projectType.type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          </div>
+        </div>
+        <!-- second row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- start date -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            [matDatepicker]="startDate"
+            placeholder="Project Start Date"
+            formControlName="startDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="startDate"
+          ></mat-datepicker-toggle>
+          <mat-datepicker
+            #startDate
+            startView="month"
+            [startAt]="startDate"
+          ></mat-datepicker>
+        </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <!-- end date -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            [matDatepicker]="endDate"
+            placeholder="Project End Date"
+            formControlName="endDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="endDate"
+          ></mat-datepicker-toggle>
+          <mat-datepicker
+            #endDate
+            startView="month"
+            [startAt]="endDate"
+          ></mat-datepicker>
+        </mat-form-field>
+          </div>
+        </div>
+        <!-- third row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- address 1 -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="Address 1"
+            formControlName="addressLine1"
+          />
+          <mat-error>Address is Required</mat-error>
+        </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+        <!-- address 2 -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="Address 2"
+            formControlName="addressLine2"
+          />
+          <mat-error>Address is Required</mat-error>
+        </mat-form-field>
+          </div>
+        </div>
+        <!-- fourth row -->
+        <div class="row">
+          <div class="col-sm-6">
+           <!-- city -->
+        <mat-form-field class="border-select">
+          <mat-label>City</mat-label>
+          <mat-select formControlName=city>
+            <mat-option *ngFor="let city of cities" [value]="city.value">
+              {{city.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+         <!-- state value -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="string"
+            placeholder="State"
+            formControlName="state"
+          />
+          <mat-error>State is Required</mat-error>
+        </mat-form-field>
+          </div>
+        </div>
+        <!-- fifth row -->
+        <div class="row">
+          <div class="col-sm-6">
+           <!-- PinCode -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="PinCode"
+            formControlName="pinCode"
+          />
+          <mat-error>PinCode is Required</mat-error>
+        </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+         <!-- project area -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="number"
+            placeholder="Project Area"
+            formControlName="area"
+          />
+          <mat-error>ProjectArea is Required</mat-error>
+        </mat-form-field>
+          </div>
+        </div>
+         <!-- sixth row -->
+         <div class="row">
+          <div class="col-sm-6">
+           <!-- project unit -->
+        <mat-form-field class="border-select">
+          <mat-label>Project Unit</mat-label>
+          <mat-select formControlName="unit">
+            <mat-option *ngFor="let unit of units" [value]="unit.value">
+              {{unit.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+         <!-- construction cost -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="number"
+            placeholder="Construction Cost (Cr)"
+            formControlName="cost"
+          />
+          <mat-error>Construction Cost is Required</mat-error>
+        </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <!-- end structure -->
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <div class="col-sm-12">
+      <button
+        mat-raised-button [disabled]="!form.valid"
+        class="main-background-color main-button color-white pull-right"
+      >
+        Add
+      </button>
+    </div>
+  </div>
+</form>
