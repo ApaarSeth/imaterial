@@ -17,7 +17,9 @@
       <span class="mat-cell">{{ material.GlobalMaterial.materialName }}</span>
       <span class="mat-cell">{{ material.GlobalMaterial.estimatedQty }}</span>
       <span class="mat-cell">{{ material.GlobalMaterial.sum }}</span>
-      <span class="mat-cell">{{ material.GlobalMaterial.nearDueDate }}</span>
+      <span class="mat-cell">{{
+        material.GlobalMaterial.nearDueDate | date: mediumDate
+      }}</span>
       <span class="mat-cell"></span>
     </mat-expansion-panel-header>
     <mat-expansion-panel *ngFor="let project of material.GlobalProject">
@@ -25,7 +27,9 @@
         <span class="mat-cell">{{ project.Projects.projectName }}</span>
         <span class="mat-cell">{{ project.Projects.estimatedQty }}</span>
         <span class="mat-cell">{{ project.Projects.sum }}</span>
-        <span class="mat-cell">{{ project.Projects.nearDueDate }}</span>
+        <span class="mat-cell">{{
+          project.Projects.nearDueDate | date: mediumDate
+        }}</span>
         <span class="mat-cell">{{ project.Projects.availableQty }}</span>
       </mat-expansion-panel-header>
       <div *ngFor="let material of project.Projects.indentMaterials">
@@ -33,7 +37,9 @@
           <span class="mat-cell"></span>
           <span class="mat-cell"></span>
           <span class="mat-cell">{{ material.quantity }}</span>
-          <span class="mat-cell">{{ material.dueDate }}</span>
+          <span class="mat-cell">{{
+            material.dueDate | date: mediumDate
+          }}</span>
           <span class="mat-cell"></span>
         </mat-expansion-panel-header>
       </div>

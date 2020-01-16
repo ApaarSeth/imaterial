@@ -23,7 +23,7 @@ export interface Subcategory {
 }
 
 export interface Materials {
-  materialID: number;
+  materialId: number;
   materialCode: string;
   projectID: number;
   materialName: string;
