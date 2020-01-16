@@ -118,6 +118,7 @@ export class BomComponent implements OnInit {
         this.quantityPresent = false;
       }
     }
+    console.log(this.categoriesInputData);
     this.bomService
       .sumbitCategory(1, this.projectId, this.categoriesInputData)
       .then(res => {

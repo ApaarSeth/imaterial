@@ -24,61 +24,52 @@ export class MaterialWiseComponent implements OnInit {
   mappingMaterialData() {
     this.newMaterialData = this.materialData.map(
       (material: GlobalStoreMaterial) => {
-        let projects: GlobalProject[] = [];
-        let recentDateProject: Date;
-        let totalSum = 0;
-        for (let project of material.GlobalProject) {
-          let sum = 0;
-          let nearDueDate: Date;
-          if (project.IndentMaterial) {
-            for (let indent of project.IndentMaterial) {
-              if (!nearDueDate) {
-                nearDueDate = new Date(indent.dueDate);
-              } else {
-                if (
-                  new Date(indent.dueDate).getTime() > nearDueDate.getTime()
-                ) {
-                  nearDueDate = new Date(indent.dueDate);
-                }
-              }
-              sum += indent.quantity;
-            }
-          }
-          project = {
-            ...project,
-            Projects: {
-              ...project.Projects,
-              sum: sum,
-              nearDueDate: nearDueDate.toDateString(),
-              indentMaterials: project.IndentMaterial
-            }
-          };
-          projects.push(project);
-        }
-        for (let proj of projects) {
-          totalSum += proj.Projects.sum;
-          if (!recentDateProject) {
-            recentDateProject = new Date(proj.Projects.nearDueDate);
-          } else {
-            if (
-              proj.Projects.nearDueDate &&
-              new Date(proj.Projects.nearDueDate).getTime() >
-                recentDateProject.getTime()
-            ) {
-              recentDateProject = new Date(proj.Projects.nearDueDate);
-            }
-          }
-        }
-        return {
-          GlobalMaterial: {
-            ...material.GlobalMaterial,
-            sum: totalSum,
-            nearDueDate: recentDateProject,
-            availableQuantity: null
-          },
-          GlobalProject: projects
-        };
+        this.mappingIndentToProject(material);
+        this.mappingProjectToMaterial(material);
+        return material;
       }
     );
+  }
+
+  mappingProjectToMaterial(material: GlobalStoreMaterial) {
+    let recentDateProject: string;
+    let totalSum = 0;
+    for (let proj of material.GlobalProject) {
+      totalSum += proj.Projects.sum;
+      if (!recentDateProject) {
+        recentDateProject = proj.Projects.nearDueDate;
+      } else {
+        if (
+          proj.Projects.nearDueDate &&
+          new Date(proj.Projects.nearDueDate) > new Date(recentDateProject)
+        ) {
+          recentDateProject = proj.Projects.nearDueDate;
+        }
+      }
+    }
+    material.GlobalMaterial.sum = totalSum;
+    material.GlobalMaterial.nearDueDate = recentDateProject;
+  }
+
+  mappingIndentToProject(material: GlobalStoreMaterial) {
+    for (let project of material.GlobalProject) {
+      let sum = 0;
+      let nearDueDate: string;
+      if (project.IndentMaterial) {
+        for (let indent of project.IndentMaterial) {
+          if (!nearDueDate) {
+            nearDueDate = indent.dueDate;
+          } else {
+            if (new Date(indent.dueDate) > new Date(nearDueDate)) {
+              nearDueDate = indent.dueDate;
+            }
+          }
+          sum += indent.quantity;
+        }
+      }
+      project.Projects.sum = sum;
+      project.Projects.nearDueDate = nearDueDate;
+      project.Projects.indentMaterials = project.IndentMaterial;
+    }
   }
 }
