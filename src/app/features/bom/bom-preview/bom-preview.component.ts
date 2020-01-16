@@ -72,6 +72,7 @@ export class BomPreviewComponent implements OnInit {
                 data.estimatedQty > 0
               ) {
                 subcategory.estimatedQty = data.estimatedQty;
+                subcategory.materialId = data.materialID;
               }
             }
             return subcategory;
@@ -87,6 +88,7 @@ export class BomPreviewComponent implements OnInit {
   formInit() {
     const frmArr: FormGroup[] = this.selectedCategory.Child.map(subcategory => {
       return this.formBuilder.group({
+        materialId: [subcategory.materialId],
         estimatedQty: [subcategory.estimatedQty],
         materialCode: [subcategory.materialCode],
         materialName: [subcategory.materialName],

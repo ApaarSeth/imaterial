@@ -25,7 +25,7 @@ export class HeaderLayoutModule implements OnInit {
     if (name == "projectStore") {
       this.router.navigate(["/"]);
     } else if (name == "globalStore") {
-      this.router.navigate(["rfq/project-materials"]);
+      this.router.navigate(["globalStore/1"]);
     }
   }
 }
