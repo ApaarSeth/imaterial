@@ -199,19 +199,24 @@ a:hover {
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
-.mat-table thead{
+.mat-table thead {
   background-color: $blue-color;
   color: $white-color;
 }
-.mat-header-cell{
+.mat-header-cell {
   color: $white-color !important;
 }
 
-.mat-form-field-appearance-legacy .mat-form-field-wrapper{
+.mat-form-field-appearance-legacy .mat-form-field-wrapper {
   padding-top: 15px !important;
   padding-bottom: 0px !important;
 }
 
-.input-search-padding-zero.mat-form-field-appearance-legacy .mat-form-field-wrapper{
+.input-search-padding-zero.mat-form-field-appearance-legacy
+  .mat-form-field-wrapper {
   padding-top: 0px !important;
+}
+
+.right-pipe {
+  border-right: 1px solid black;
 }
