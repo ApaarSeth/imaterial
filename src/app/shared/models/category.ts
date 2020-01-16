@@ -14,7 +14,7 @@ export interface categoryLevel {
   gst: number;
   alias: string;
   Specs: null;
-  checked: boolean;
+  checked?: boolean;
 }
 
 export interface material {
@@ -35,6 +35,7 @@ export interface material {
   Specs: null;
   estimatedQty?: number;
   estimatedRate?: number;
+  materialId?: number;
 }
 
 export interface categoryNestedLevel {

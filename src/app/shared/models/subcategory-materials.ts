@@ -20,8 +20,6 @@ export interface Subcategory {
   availableStock: number;
   quantity: number;
   dueDate: Date;
-
-  // materials?: Materials[] | MatTableDataSource<Materials>;
 }
 
 export interface Materials {
