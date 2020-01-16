@@ -10,7 +10,7 @@ import { RFQProjectMaterialsComponent } from "./project-materials/project-materi
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQRoutingModule } from "./rfq-routing.module";
 import { SuppliersComponent } from "./suppliers/suppliers.component";
-import { SuppliersDialogComponent } from "./suppliers/suppliers-dialog.component";
+import { SuppliersDialogComponent } from "../../shared/dialogs/add-supplier/suppliers-dialog.component";
 import { MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCheckboxModule } from "@angular/material/checkbox";

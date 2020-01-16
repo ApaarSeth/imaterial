@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
-import { SuppliersDialogComponent } from "./suppliers-dialog.component";
+import { SuppliersDialogComponent } from "../../../shared/dialogs/add-supplier/suppliers-dialog.component";
 
 export interface Supplier {
   supplierName: string;
