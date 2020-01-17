@@ -4,6 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQProjectMaterialsComponent } from "./project-materials/project-materials.component";
 import { SuppliersComponent } from "./suppliers/suppliers.component";
+import { DocumentsComponent } from "./documents/documents.component";
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: "suppliers",
     component: SuppliersComponent
+  },
+  {
+    path: "documents",
+    component: DocumentsComponent
   }
 ];
 

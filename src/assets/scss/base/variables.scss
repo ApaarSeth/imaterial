@@ -223,3 +223,27 @@ a:hover {
   border-radius: 50%;
   align-self: center;
 }
+
+.scroll-box {
+  overflow: auto;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.grey-border {
+  border-bottom: 2px solid $icon-color-gray;
+}
+
+.h-290 {
+  height: 290px;
+}
+
+.grey-dotted-border {
+  border: 2px dotted $icon-color-gray;
+}
+
+.pmm {
+  padding: 125px 345px 0 35px;
+}

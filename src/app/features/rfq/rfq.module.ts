@@ -16,6 +16,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDialogModule } from "@angular/material/dialog";
+import { DocumentsComponent } from "./documents/documents.component";
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { MatDialogModule } from "@angular/material/dialog";
   declarations: [
     RFQProjectMaterialsComponent,
     SuppliersComponent,
-    SuppliersDialogComponent
+    SuppliersDialogComponent,
+    DocumentsComponent
   ],
   entryComponents: [SuppliersDialogComponent]
 })
