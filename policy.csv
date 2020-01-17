@@ -1,0 +1,3 @@
+p, guest, /materials/*, GET
+p, admin, /*, *
+p, some, /materials/:id/:oid, GET
