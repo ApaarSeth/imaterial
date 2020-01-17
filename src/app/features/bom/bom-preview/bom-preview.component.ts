@@ -61,6 +61,7 @@ export class BomPreviewComponent implements OnInit {
     this.bomService
       .getMaterialWithQuantity(1, this.projectId)
       .then(res => {
+        console.log("res.data");
         console.log(res.data);
         this.dataQty = res.data;
         this.selectedCategory.Child = this.selectedCategory.Child.map(
@@ -72,12 +73,14 @@ export class BomPreviewComponent implements OnInit {
                 data.estimatedQty > 0
               ) {
                 subcategory.estimatedQty = data.estimatedQty;
-                subcategory.materialId = data.materialID;
+                subcategory.materialId = data.materialId;
               }
             }
             return subcategory;
           }
         );
+        console.log("this.selectedCategory.Child");
+        console.log(this.selectedCategory.Child);
         this.formInit();
       })
       .catch(err => {

@@ -1,9 +1,9 @@
 export interface GlobalStoreMaterial {
-  GlobalMaterial: MaterialWise;
+  GlobalMaterial: GlobalMaterial;
   GlobalProject: GlobalProject[];
 }
 
-export interface MaterialWise {
+export interface GlobalMaterial {
   id: number;
   status: 0;
   created_by: string;
@@ -25,6 +25,9 @@ export interface MaterialWise {
   estimatedQty: number;
   estimatedPrice: null;
   matCount: number;
+  sum?: number;
+  nearDueDate?: string;
+  availableQuantity?: null;
 }
 export interface GlobalProject {
   IndentMaterial: IndentMaterial[];
