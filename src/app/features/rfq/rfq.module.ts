@@ -17,6 +17,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDialogModule } from "@angular/material/dialog";
 import { DocumentsComponent } from "./documents/documents.component";
+import { ReviewComponent } from "./review/review.component";
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { DocumentsComponent } from "./documents/documents.component";
     RFQProjectMaterialsComponent,
     SuppliersComponent,
     SuppliersDialogComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    ReviewComponent
   ],
   entryComponents: [SuppliersDialogComponent]
 })

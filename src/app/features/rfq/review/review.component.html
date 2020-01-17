@@ -1,0 +1,284 @@
+<!-- <fix-header></fix-header> -->
+<div class="page-start-point">
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+    <div class="row m-b-10 p-l-80 p-r-80">
+      <div class="col-md-12">
+        <!-- first row -->
+        <div class="row m-b-10">
+          <div class="col-md-3">
+            <mat-form-field class="border-input">
+              <input
+                class="p-b-8"
+                matInput
+                type="text"
+                placeholder="RFQ Name"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            RFQ End Date & Time
+            <mat-form-field class="border-input">
+              <input
+                matInput
+                class="p-b-8"
+                type="text"
+                disabled="true"
+                placeholder="12:09:2019  12:30 am"
+              />
+            </mat-form-field>
+            <mat-icon>calendar_today</mat-icon>
+          </div>
+          <div class="col-md-2 p-t-20 p-l-115 main-color">
+            <label for="comment">comment</label>
+          </div>
+          <div class="col-md-3 p-t-20 main-color">
+            <label for="view">View Terms & Conditions/Documents</label>
+          </div>
+        </div>
+
+        <!-- second row -->
+        <div class="row m-b-10">
+          <div class="col-md-3">
+            <mat-card>
+              <div class="col-md-12 text-bold">
+                <label for="company ">Ravi Supplier Pvt. Ltd.</label>
+              </div>
+              <div class="col-md-12">
+                <label for="email">ravi.contractor@gmail.com</label>
+              </div>
+              <div class="col-md-12">
+                <label for="phoneNumber">9813893764</label>
+              </div>
+            </mat-card>
+          </div>
+          <div class="col-md-3">
+            <mat-card>
+              <div class="col-md-12 text-bold">
+                <label for="company">Ravi Supplier Pvt. Ltd.</label>
+              </div>
+              <div class="col-md-12">
+                <label for="email">ravi.contractor@gmail.com</label>
+              </div>
+              <div class="col-md-12">
+                <label for="phoneNumber">9813893764</label>
+              </div>
+            </mat-card>
+          </div>
+          <div class="col-md-3">
+            <mat-card>
+              <div class="col-md-12 text-bold">
+                <label for="company">Ravi Supplier Pvt. Ltd.</label>
+              </div>
+              <div class="col-md-12">
+                <label for="email">ravi.contractor@gmail.com</label>
+              </div>
+              <div class="col-md-12">
+                <label for="phoneNumber">9813893764</label>
+              </div>
+            </mat-card>
+          </div>
+          <div class="col-md-3">
+            <mat-card>
+              <div class="col-md-12 text-bold">
+                <label for="company">Ravi Supplier Pvt. Ltd.</label>
+              </div>
+              <div class="col-md-12">
+                <label for="email">ravi.contractor@gmail.com</label>
+              </div>
+              <div class="col-md-12">
+                <label for="phoneNumber">9813893764</label>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accordion/ Collapsible -->
+    <mat-accordion>
+      <!-- first Project -->
+      <mat-expansion-panel class="myPanel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Project Name 1
+          </mat-panel-title>
+          <mat-panel-description>
+            Sector 43, Gurgaon, Haryana
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- table -->
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8 col-sm-12"
+        >
+          <!-- Material Name Column -->
+          <ng-container matColumnDef="Material Name">
+            <th mat-header-cell *matHeaderCellDef>Material Name</th>
+            <td mat-cell *matCellDef="let element" class="dark-gray-color">
+              {{ element.materialName }}
+            </td>
+          </ng-container>
+
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="Quantity">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.quantity }}
+            </td>
+          </ng-container>
+
+          <!-- Makes Column -->
+          <ng-container matColumnDef="Makes">
+            <th mat-header-cell *matHeaderCellDef>Makes</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.makes[0] }} {{ element.makes[1] }}
+              {{ element.makes[2] }} {{ element.makes[3] }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-expansion-panel>
+
+      <!-- first Project -->
+      <mat-expansion-panel class="myPanel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Project Name 1
+          </mat-panel-title>
+          <mat-panel-description>
+            Sector 43, Gurgaon, Haryana
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- table -->
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8 col-sm-12"
+        >
+          <!-- Material Name Column -->
+          <ng-container matColumnDef="Material Name">
+            <th mat-header-cell *matHeaderCellDef>Material Name</th>
+            <td mat-cell *matCellDef="let element" class="dark-gray-color">
+              {{ element.materialName }}
+            </td>
+          </ng-container>
+
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="Quantity">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+          </ng-container>
+
+          <!-- Makes Column -->
+          <ng-container matColumnDef="Makes">
+            <th mat-header-cell *matHeaderCellDef>Makes</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.makes[0] }} {{ element.makes[1] }}
+              {{ element.makes[2] }} {{ element.makes[3] }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-expansion-panel>
+
+      <!-- first Project -->
+      <mat-expansion-panel class="myPanel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Project Name 1
+          </mat-panel-title>
+          <mat-panel-description>
+            Sector 43, Gurgaon, Haryana
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- table -->
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8 col-sm-12"
+        >
+          <!-- Material Name Column -->
+          <ng-container matColumnDef="Material Name">
+            <th mat-header-cell *matHeaderCellDef>Material Name</th>
+            <td mat-cell *matCellDef="let element" class="dark-gray-color">
+              {{ element.materialName }}
+            </td>
+          </ng-container>
+
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="Quantity">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+          </ng-container>
+
+          <!-- Makes Column -->
+          <ng-container matColumnDef="Makes">
+            <th mat-header-cell *matHeaderCellDef>Makes</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.makes[0] }} {{ element.makes[1] }}
+              {{ element.makes[2] }} {{ element.makes[3] }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-expansion-panel>
+
+      <!-- first Project -->
+      <mat-expansion-panel class="myPanel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Project Name 1
+          </mat-panel-title>
+          <mat-panel-description>
+            Sector 43, Gurgaon, Haryana
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- table -->
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8 col-sm-12"
+        >
+          <!-- Material Name Column -->
+          <ng-container matColumnDef="Material Name">
+            <th mat-header-cell *matHeaderCellDef>Material Name</th>
+            <td mat-cell *matCellDef="let element" class="dark-gray-color">
+              {{ element.materialName }}
+            </td>
+          </ng-container>
+
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="Quantity">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.quantity }} MM
+            </td>
+          </ng-container>
+
+          <!-- Makes Column -->
+          <ng-container matColumnDef="Makes">
+            <th mat-header-cell *matHeaderCellDef>Makes</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.makes[0] }} {{ element.makes[1] }}
+              {{ element.makes[2] }} {{ element.makes[3] }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

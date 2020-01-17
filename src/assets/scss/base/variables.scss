@@ -228,10 +228,6 @@ a:hover {
   overflow: auto;
 }
 
-.flex-row {
-  flex-direction: row;
-}
-
 .grey-border {
   border-bottom: 2px solid $icon-color-gray;
 }
@@ -244,6 +240,10 @@ a:hover {
   border: 2px dotted $icon-color-gray;
 }
 
-.pmm {
-  padding: 125px 345px 0 35px;
+.myPanel .mat-expansion-panel-body {
+  padding: 0;
+}
+
+.dark-gray-color {
+  color: $background-color-grey;
 }

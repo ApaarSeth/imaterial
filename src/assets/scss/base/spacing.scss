@@ -1,5 +1,6 @@
 $spaceamounts: (
   5,
+  8,
   10,
   15,
   20,
@@ -7,9 +8,12 @@ $spaceamounts: (
   30,
   35,
   40,
+  80,
   90,
   115,
+  125,
   190,
+  345,
   350
 ); // Adjust this to include the pixel amounts you need.
 $sides: (top, bottom, left, right); // Leave this variable alone
