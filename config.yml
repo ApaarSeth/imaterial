@@ -1,8 +1,0 @@
-mode: "dev"
-echo:
-  port: ":1333"
-  static: "public"
-
-fluent:
-  path: "./fluent.log"
-  rotate: 1
