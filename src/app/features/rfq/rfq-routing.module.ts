@@ -5,6 +5,9 @@ import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQProjectMaterialsComponent } from "./project-materials/project-materials.component";
 import { RefDetailComponent } from "./ref-detail/ref-detail.component";
 import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
+import { SuppliersComponent } from "./suppliers/suppliers.component";
+import { DocumentsComponent } from "./documents/documents.component";
+import { ReviewComponent } from "./review/review.component";
 
 const routes: Routes = [
   {
@@ -19,6 +22,18 @@ const routes: Routes = [
   {
     path: "rfq-bid",
     component: RfqBidsComponent
+  },
+  {
+    path: "suppliers",
+    component: SuppliersComponent
+  },
+  {
+    path: "documents",
+    component: DocumentsComponent
+  },
+  {
+    path: "review",
+    component: ReviewComponent
   }
 ];
 

@@ -11,6 +11,15 @@ import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQRoutingModule } from "./rfq-routing.module";
 import { RefDetailComponent } from "./ref-detail/ref-detail.component";
 import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
+import { SuppliersComponent } from "./suppliers/suppliers.component";
+import { SuppliersDialogComponent } from "../../shared/dialogs/add-supplier/suppliers-dialog.component";
+import { MatTableModule } from "@angular/material/table";
+import { MatIconModule } from "@angular/material/icon";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatDialogModule } from "@angular/material/dialog";
+import { DocumentsComponent } from "./documents/documents.component";
+import { ReviewComponent } from "./review/review.component";
 
 @NgModule({
   imports: [
@@ -22,13 +31,23 @@ import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    RFQRoutingModule
+    RFQRoutingModule,
+    MatTableModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatGridListModule,
+    MatDialogModule
   ],
   providers: [RFQResolver],
   declarations: [
     RFQProjectMaterialsComponent,
     RefDetailComponent,
-    RfqBidsComponent
-  ]
+    RfqBidsComponent,
+    SuppliersComponent,
+    SuppliersDialogComponent,
+    DocumentsComponent,
+    ReviewComponent
+  ],
+  entryComponents: [SuppliersDialogComponent]
 })
 export class RFQModule {}
