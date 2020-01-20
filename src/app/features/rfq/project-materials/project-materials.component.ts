@@ -8,7 +8,7 @@ import {
 import { FormControl } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { stringify } from "querystring";
-import { RfqMaterialResponse } from "src/app/shared/models/rfq-details";
+import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 
 @Component({
   selector: "rfq",

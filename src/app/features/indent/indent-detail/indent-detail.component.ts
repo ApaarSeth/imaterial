@@ -27,12 +27,14 @@ export class IndentDetailComponent implements OnInit {
   product: ProjectDetails;
   projectId: number;
   displayedColumns: string[] = [
-    "Indent Name",
-    "Requested Date",
-    "Total No Of Material",
-    "Created By",
-    "Date"
+    "RFQ Name",
+    "Raised Date",
+    "End Date",
+    "Project",
+    "Total Material",
+    "Total Supplier"
   ];
+
   allIndents: AllIndentListVO;
   dataSource1: IndentVO[];
   dataSource2: IndentVO[];
