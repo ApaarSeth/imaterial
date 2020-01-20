@@ -2,7 +2,7 @@
   <form [formGroup]="quantityForms">
     <div #myele>
       <mat-expansion-panel class="m-b-5 m-t-5">
-        <mat-expansion-panel-header class="background-color-grey row ">
+        <mat-expansion-panel-header class="background-color-grey row">
           <div class="col-xs-6">
             <mat-panel-title class="pull-left">
               {{ selectedCategory.materialGroup }}
@@ -16,25 +16,16 @@
         </mat-expansion-panel-header>
 
         <ng-container formArrayName="forms" *ngIf="selectedCategory.Child">
-          <div
-            class="row"
-            *ngFor="let subcategory of selectedCategory.Child; let i = index"
-            formGroupName="{{ i }}"
-          >
+          <div class="row" *ngFor="let subcategory of selectedCategory.Child; let i = index" formGroupName="{{ i }}">
             <div class="col-xs-6">
               <span class="pull-left p-l-10 p-t-5">{{
                 subcategory.materialName
               }}</span>
             </div>
             <div class="col-xs-6">
-              <span class="pull-right"
-                ><mat-form-field class="full-border widthZero">
-                  <input
-                    matInput
-                    formControlName="estimatedQty"
-                    class="p-b-5 shortWidth"
-                    placeholder="eg. 1500"
-                  />
+              <span class="pull-right">
+                <mat-form-field class="full-border widthZero">
+                  <input matInput formControlName="estimatedQty" class="p-b-5 shortWidth" placeholder="eg. 1500" />
                   <span class="p-b-15 p-l-5">MT</span>
                 </mat-form-field>
               </span>
@@ -45,13 +36,10 @@
                   <span class="pull-left p-l-30 ">{{ material.label }}</span>
                 </div>
                 <div class="col-xs-6">
-                  <span class="pull-right"
-                    ><mat-form-field class="full-border widthZero">
-                      <input
-                        matInput
-                        class="p-b-5 shortWidth"
-                        placeholder="eg. 1500"
-                      /><span class="p-b-15 p-l-5">MT</span>
+                  <span class="pull-right">
+                    <mat-form-field class="full-border widthZero">
+                      <input matInput class="p-b-5 shortWidth" placeholder="eg. 1500" /><span
+                        class="p-b-15 p-l-5">MT</span>
                     </mat-form-field>
                   </span>
                 </div>

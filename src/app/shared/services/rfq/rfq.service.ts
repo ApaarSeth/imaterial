@@ -17,4 +17,10 @@ export class RFQService {
       projectIds: ProjectIds
     });
   }
+  rfqDetail(organizationId: number) {
+    return this.dataService.getRequest(API.RFQDETAIL(organizationId));
+  }
+  rfqPo(organizationId: number, rfqId: number) {
+    return this.dataService.getRequest(API.RFQPO(organizationId, rfqId));
+  }
 }

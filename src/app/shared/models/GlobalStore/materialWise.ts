@@ -32,6 +32,7 @@ export interface GlobalMaterial {
 export interface GlobalProject {
   IndentMaterial: IndentMaterial[];
   Projects: Projects;
+  ProjectEstimatedQnt: number;
 }
 
 export interface IndentMaterial {

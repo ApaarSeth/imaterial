@@ -26,3 +26,15 @@ export interface Address {
   gstNo?: string;
   addressType?: string;
 }
+
+export interface RfqList {
+  rfqId: number;
+  rfqName: string;
+  rfqDueDate: Date;
+  projectCount: number;
+  supplierCount: number;
+  materialCount: number;
+  rfqStatus: number;
+  supplierList: null;
+  createdAt: Date;
+}

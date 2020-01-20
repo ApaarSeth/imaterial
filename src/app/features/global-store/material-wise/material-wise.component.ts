@@ -16,7 +16,7 @@ export class MaterialWiseComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.materialData);
+    console.log("mappingMaterialData");
     this.mappingMaterialData();
     console.log(this.newMaterialData);
   }

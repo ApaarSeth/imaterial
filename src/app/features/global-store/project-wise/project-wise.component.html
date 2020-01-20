@@ -22,7 +22,7 @@
         <span class="mat-cell">{{ material.GlobalMaterial.estimatedQty }}</span>
         <span class="mat-cell">{{ material.GlobalMaterial.sum }}</span>
         <span class="mat-cell">{{
-          material.GlobalMaterial.nearDueDate | date: mediumDate
+          material.GlobalMaterial.nearDueDate | date: "dd MMM yyy"
         }}</span>
         <span class="mat-cell">{{ material.GlobalMaterial.availableQty }}</span>
       </mat-expansion-panel-header>
@@ -33,7 +33,7 @@
             <span class="mat-cell"></span>
             <span class="mat-cell">{{ indent.quantity }}</span>
             <span class="mat-cell">{{
-              indent.dueDate | date: mediumDate
+              indent.dueDate | date: "dd MMM yyy"
             }}</span>
             <span class="mat-cell"></span>
           </mat-expansion-panel-header>

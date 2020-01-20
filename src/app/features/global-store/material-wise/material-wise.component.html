@@ -1,16 +1,10 @@
 <mat-accordion displayMode="flat" multi class="mat-table">
   <section matSort class="mat-elevation-z2 mat-header-row">
     <span class="mat-header-cell" mat-sort-header="vesselName">Name</span>
-    <span class="mat-header-cell" mat-sort-header="vesselId"
-      >Estimated Quantity</span
-    >
-    <span class="mat-header-cell" mat-sort-header="vesselStatus"
-      >Requested Quantity</span
-    >
+    <span class="mat-header-cell" mat-sort-header="vesselId">Estimated Quantity</span>
+    <span class="mat-header-cell" mat-sort-header="vesselStatus">Requested Quantity</span>
     <span class="mat-header-cell" mat-sort-header="ircs">Required Date</span>
-    <span class="mat-header-cell" mat-sort-header="ircs"
-      >Available quantity in project</span
-    >
+    <span class="mat-header-cell" mat-sort-header="ircs">Available quantity in project</span>
   </section>
   <mat-expansion-panel *ngFor="let material of newMaterialData">
     <mat-expansion-panel-header class="mat-row">
@@ -18,17 +12,17 @@
       <span class="mat-cell">{{ material.GlobalMaterial.estimatedQty }}</span>
       <span class="mat-cell">{{ material.GlobalMaterial.sum }}</span>
       <span class="mat-cell">{{
-        material.GlobalMaterial.nearDueDate | date: mediumDate
+        material.GlobalMaterial.nearDueDate | date: "dd MMM yyy"
       }}</span>
       <span class="mat-cell"></span>
     </mat-expansion-panel-header>
     <mat-expansion-panel *ngFor="let project of material.GlobalProject">
       <mat-expansion-panel-header class="mat-row">
         <span class="mat-cell">{{ project.Projects.projectName }}</span>
-        <span class="mat-cell">{{ project.Projects.estimatedQty }}</span>
+        <span class="mat-cell">{{ project.ProjectEstimatedQnt }}</span>
         <span class="mat-cell">{{ project.Projects.sum }}</span>
         <span class="mat-cell">{{
-          project.Projects.nearDueDate | date: mediumDate
+          project.Projects.nearDueDate | date: "dd MMM yyy"
         }}</span>
         <span class="mat-cell">{{ project.Projects.availableQty }}</span>
       </mat-expansion-panel-header>
@@ -38,7 +32,7 @@
           <span class="mat-cell"></span>
           <span class="mat-cell">{{ material.quantity }}</span>
           <span class="mat-cell">{{
-            material.dueDate | date: mediumDate
+            material.dueDate | date: "dd MMM yyy"
           }}</span>
           <span class="mat-cell"></span>
         </mat-expansion-panel-header>

@@ -9,6 +9,8 @@ import { RouterModule } from "@angular/router";
 import { RFQProjectMaterialsComponent } from "./project-materials/project-materials.component";
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQRoutingModule } from "./rfq-routing.module";
+import { RefDetailComponent } from "./ref-detail/ref-detail.component";
+import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
 
 @NgModule({
   imports: [
@@ -23,6 +25,10 @@ import { RFQRoutingModule } from "./rfq-routing.module";
     RFQRoutingModule
   ],
   providers: [RFQResolver],
-  declarations: [RFQProjectMaterialsComponent]
+  declarations: [
+    RFQProjectMaterialsComponent,
+    RefDetailComponent,
+    RfqBidsComponent
+  ]
 })
 export class RFQModule {}
