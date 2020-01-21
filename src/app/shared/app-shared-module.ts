@@ -7,6 +7,7 @@ import { SharedDialogs } from "./dialogs/shared-dialog";
 import { MaterialModule } from "./material-modules";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SearchPipe } from "./pipes/searchPipe";
+import { DndDirective } from "./services/drag-drop-service";
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { SearchPipe } from "./pipes/searchPipe";
     ReactiveFormsModule
   ],
   providers: [DataService],
-  declarations: [...SharedDialogs, SearchPipe],
+  declarations: [...SharedDialogs, SearchPipe, DndDirective],
   exports: [...SharedDialogs, SearchPipe, SharedComponentsModule],
   entryComponents: [...SharedDialogs]
 })

@@ -244,8 +244,12 @@ a:hover {
   height: 290px;
 }
 
-.h200 {
+.h-200 {
   height: 200px;
+}
+
+.h-250 {
+  height: 250px;
 }
 
 .grey-dotted-border {
@@ -270,4 +274,13 @@ a:hover {
 
 .mat-form-field textarea {
   border: 1px solid $icon-color-gray;
+}
+
+.drag-and-drop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
