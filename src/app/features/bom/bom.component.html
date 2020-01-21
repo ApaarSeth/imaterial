@@ -10,11 +10,11 @@
       <mat-card class="parent">
         <div class="row">
           <div class="col-sm-12 text-left">
-            <p>select categories to add materials in BOM</p>
+            <p>Please select categories to add materials in BOM</p>
           </div>
         </div>
         <div class="row display-flex m-b-20">
-          <div class="m-b-10 m-r-10" *ngFor="let category of selectedCats">
+          <div class="m-b-10 m-r-10" *ngFor="let category of selectedCategory">
             <mat-card class="p-10"
               >{{ category.materialGroup }}
               <button mat-button matSuffix mat-icon-button>
@@ -31,7 +31,7 @@
           <mat-form-field class="border-select center-element">
             <mat-select
               [formControl]="categories"
-              [(ngModel)]="selectedCats"
+              [(ngModel)]="selectedCategory"
               multiple
               floatlLabel="never"
             >

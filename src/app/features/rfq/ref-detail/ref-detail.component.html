@@ -1,0 +1,151 @@
+<div class="page-start-point">
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Bided RFQ
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <table
+            mat-table
+            [dataSource]="openRfqList"
+            class="mat-elevation-z8 col-sm-12"
+          >
+            <ng-container matColumnDef="RFQ Name">
+              <th mat-header-cell *matHeaderCellDef>RFQ Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Raised Date">
+              <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.createdAt | date: "dd MMM yyy" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="End Date">
+              <th mat-header-cell *matHeaderCellDef>End Date</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.rfqDueDate | date: "dd MMM yyy" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Projects">
+              <th mat-header-cell *matHeaderCellDef>Projects</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.projectCount }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Total Material">
+              <th mat-header-cell *matHeaderCellDef>Total Material</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.materialCount }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Total Supplier">
+              <th mat-header-cell *matHeaderCellDef>Total Supplier</th>
+              <td mat-cell *matCellDef="let element">
+                {{
+                  element.supplierList != null
+                    ? element.supplierList.length
+                    : ""
+                }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="action1">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <a [routerLink]="['../rfq-bid']">View RFQ</a>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="action2">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <a [routerLink]="['../rfq-bid']">View Bids</a>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Non-Bided RFQ
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <table
+            mat-table
+            [dataSource]="closedRfqList"
+            class="mat-elevation-z8 col-sm-12"
+          >
+            <ng-container matColumnDef="RFQ Name">
+              <th mat-header-cell *matHeaderCellDef>RFQ Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Raised Date">
+              <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.createdAt | date: "dd MMM yyy" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="End Date">
+              <th mat-header-cell *matHeaderCellDef>End Date</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.rfqDueDate | date: "dd MMM yyy" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Projects">
+              <th mat-header-cell *matHeaderCellDef>Projects</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.projectCount }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Total Material">
+              <th mat-header-cell *matHeaderCellDef>Total Material</th>
+              <td mat-cell *matCellDef="let row">
+                {{ element.materialCount }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Total Supplier">
+              <th mat-header-cell *matHeaderCellDef>Total Supplier</th>
+              <td mat-cell *matCellDef="let element">
+                {{
+                  element.supplierList != null
+                    ? element.supplierList.length
+                    : ""
+                }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="action1">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                hello
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="action2">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                hello
+              </mat-cell>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

@@ -1,1 +1,59 @@
+<div class="page-start-point ">
+  <div class="p-l-20 p-r-20 p-b-20 min-height">
+    <a href="javascript:void(0)" (click)="setButtonName('materialWise')">
+      <button
+        [class.active]="buttonName == 'materialWise'"
+        class="color-black"
+        mat-button
+      >
+        Material Wise
+      </button>
+    </a>
 
+    <a href="javascript:void(0)" (click)="setButtonName('projectWise')">
+      <button
+        [class.active]="buttonName == 'projectWise'"
+        class="color-black"
+        mat-button
+      >
+        Project Wise
+      </button>
+    </a>
+
+    <mat-card>
+      <div class="row">
+        <div class="right-pipe" style="width: 20%;">
+          <span class="p-l-30 p-r-20 pull-left">23</span>
+          <span class="pull-left">Low Stock Material</span>
+        </div>
+        <div class="right-pipe" style="width: 20%;">
+          <span class="p-l-10 p-r-20 pull-left">23</span>
+          <span class="pull-left">Low Stock Material</span>
+        </div>
+        <div class="right-pipe" style="width: 20%;">
+          <span class="p-l-10 p-r-20 pull-left">23</span>
+          <span class="pull-left">Low Stock Material</span>
+        </div>
+        <div class="right-pipe" style="width: 20%;">
+          <span class="p-l-10 p-r-20 pull-left">23</span>
+          <span class="pull-left">Low Stock Material</span>
+        </div>
+        <div class="right-pipe" style="width: 20%;">
+          <span class="p-l-10 p-r-20 pull-left">23</span>
+          <span class="pull-left">Low Stock Material</span>
+        </div>
+      </div>
+    </mat-card>
+
+    <div *ngIf="buttonName === 'materialWise'; else elseBlock">
+      <app-material-wise
+        [materialData]="globalStoreData[0].data"
+      ></app-material-wise>
+    </div>
+    <ng-template #elseBlock
+      ><app-project-wise
+        [projectData]="globalStoreData[1].data"
+      ></app-project-wise
+    ></ng-template>
+  </div>
+</div>

@@ -33,6 +33,7 @@ export class IndentDetailComponent implements OnInit {
     "Created By",
     "Date"
   ];
+
   allIndents: AllIndentListVO;
   dataSource1: IndentVO[];
   dataSource2: IndentVO[];

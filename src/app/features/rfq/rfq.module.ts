@@ -10,6 +10,18 @@ import { RFQProjectMaterialsComponent } from "./project-materials/project-materi
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQRoutingModule } from "./rfq-routing.module";
 import { RFQQuantityMakesComponent } from "./quantity-makes/quantity-makes.component";
+import { RefDetailComponent } from "./ref-detail/ref-detail.component";
+import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
+import { SuppliersComponent } from "./suppliers/suppliers.component";
+import { MatTableModule } from "@angular/material/table";
+import { MatIconModule } from "@angular/material/icon";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatDialogModule } from "@angular/material/dialog";
+import { DocumentsComponent } from "./documents/documents.component";
+import { ReviewComponent } from "./review/review.component";
+import { PurchaseOrderComponent } from "./purchase-order/purchase-order.component";
+import { DndDirective } from "./documents/drag-and-drop";
 
 @NgModule({
   imports: [
@@ -21,9 +33,24 @@ import { RFQQuantityMakesComponent } from "./quantity-makes/quantity-makes.compo
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    RFQRoutingModule
+    RFQRoutingModule,
+    MatTableModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatGridListModule,
+    MatDialogModule
   ],
   providers: [RFQResolver],
-  declarations: [RFQProjectMaterialsComponent, RFQQuantityMakesComponent]
+  declarations: [
+    RFQProjectMaterialsComponent,
+    RFQQuantityMakesComponent,
+    RefDetailComponent,
+    RfqBidsComponent,
+    SuppliersComponent,
+    DocumentsComponent,
+    ReviewComponent,
+    PurchaseOrderComponent,
+    DndDirective
+  ]
 })
 export class RFQModule {}

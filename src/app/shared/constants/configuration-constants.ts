@@ -21,6 +21,8 @@ export const API = {
     `materials/${userId}/${projectId}`,
   GETMATERIALWISE: organizationId => `global/materials/${organizationId}`,
   GETPROJECTWISE: organizationId => `global/projects/${organizationId}`,
-  RFQMATERIALS: `rfqMaterials`
+  RFQMATERIALS: `rfqMaterials`,
+  RFQDETAIL: organizationId => `rfq/list/1`,
+  RFQPO: (organizationId, rfqId) => `rfq/details/${organizationId}/${rfqId}`
   //STATE: 'account/api/permitted/address/states',
 };

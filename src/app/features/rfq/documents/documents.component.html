@@ -1,0 +1,136 @@
+<!-- <fix-header></fix-header> -->
+<div class="page-start-point">
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+    <!-- fix part -->
+    <div class="row p-t-15 p-b-10">
+      <div class="col-xs-2">
+        <a
+          href="javascript:void(0)"
+          (click)="setButtonName('projectMaterials')"
+        >
+          <button
+            [class.active]="buttonName == 'projectMaterials'"
+            class="color-black"
+            mat-button
+          >
+            Project & Material
+          </button>
+        </a>
+      </div>
+      <div class="col-xs-2">
+        <a href="javascript:void(0)" (click)="setButtonName('addQueryMakes')">
+          <button
+            [class.active]="buttonName == 'addQueryMakes'"
+            class="color-black"
+            mat-button
+          >
+            Add Query & Makes
+          </button>
+        </a>
+      </div>
+      <div class="col-xs-2">
+        <a href="javascript:void(0)" (click)="setButtonName('selectSupplier')">
+          <button
+            [class.active]="buttonName == 'selectSupplier'"
+            class="color-black"
+            mat-button
+          >
+            Select Supplier
+          </button>
+        </a>
+      </div>
+      <div class="col-xs-2">
+        <a href="javascript:void(0)" (click)="setButtonName('uploadDocuments')">
+          <button
+            [class.active]="buttonName == 'uploadDocuments'"
+            class="color-black"
+            mat-button
+          >
+            Upload Documents & Terms
+          </button>
+        </a>
+      </div>
+
+      <div class="text-right col-xs-3">
+        <button
+          mat-raised-button
+          class="main-background-color main-button color-white"
+        >
+          Preview
+        </button>
+      </div>
+    </div>
+
+    <!-- first row: select and upload -->
+
+    <div class="row ">
+      <!-- first column: Select Document -->
+      <div class="col-md-6 col-xs-12">
+        <div class="row p-t-40 p-l-350 m-r-40">
+          <div class="col-xs-12">
+            <label for="select-document">Select Document</label>
+          </div>
+
+          <div class="col-xs-12 h-290 scroll-box">
+            <!-- Document line begins -->
+
+            <div *ngFor="let file of files; let i = index">
+              <div class="row p-b-10 p-t-15 grey-border">
+                <div class="col-xs-2 m-l-10">
+                  <mat-checkbox></mat-checkbox
+                  ><mat-icon class="m-l-20">descriptions</mat-icon>
+                </div>
+                <div class="col-xs-5">{{ file?.name }}</div>
+                <div class="col-xs-3">{{ formatBytes(file?.size) }}</div>
+                <div class="col-xs-1">
+                  <mat-icon>delete_outline</mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- second column: Upload Document -->
+      <div class="col-md-6 col-xs-12">
+        <div class="row p-t-100 p-r-300 p-l-35">
+          <div class="col-xs-12 p-l-180">
+            <label for="upload-document">
+              Upload Document
+            </label>
+          </div>
+
+          <!-- Upload Documents  -->
+          <div
+            class=" container col-xs-12 grey-dotted-border p-t-90 p-r-110 p-l-110 parent"
+            appDnd
+            (fileDropped)="onFileDropped($event)"
+          >
+            <input
+              type="file"
+              #fileDropRef
+              id="fileDropRef"
+              class="drag-and-drop"
+              multiple
+              (change)="fileBrowseHandler($event.target.files)"
+            />
+            <label
+              >Drag and drop or
+              <label for="fileDropRef" class="main-color">Browse</label> files
+              to upload</label
+            >
+          </div>
+
+          <div *ngIf="files.length">
+            <label>
+              {{ files[files.length - 1].name }} has been successfully
+              uploaded.</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- second row: terms and conditions -->
+  </div>
+</div>

@@ -33,15 +33,14 @@ export class BomComponent implements OnInit {
   showTable = false;
   categories: FormControl;
   categoryList: string[] = [];
-  selectedCategory: categoryLevel[] = [];
   categoryData: categoryNestedLevel[] = [];
   value = "";
 
   projectId: number;
   searchText: string = null;
   product: ProjectDetails;
-  fullCategoryList: any;
-  selectedCats;
+  fullCategoryList: categoryLevel[];
+  selectedCategory: categoryLevel[] = [];
   @ViewChildren("preview") previews: QueryList<BomPreviewComponent>;
   categoriesInputData: QtyData[];
   quantityPresent: boolean = true;
@@ -59,6 +58,7 @@ export class BomComponent implements OnInit {
   ngOnInit() {
     this.categories = new FormControl([]);
     this.fullCategoryList = this.activatedRoute.snapshot.data.bomCategory;
+    console.log(this.fullCategoryList);
 
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params["id"];
@@ -72,7 +72,7 @@ export class BomComponent implements OnInit {
         category.checked =
           this.categoryList.indexOf(category.materialGroup) != -1;
       });
-      this.selectedCats = this.fullCategoryList.filter(opt => opt.checked);
+      this.selectedCategory = this.fullCategoryList.filter(opt => opt.checked);
     });
   }
 
@@ -118,6 +118,7 @@ export class BomComponent implements OnInit {
         this.quantityPresent = false;
       }
     }
+    console.log(this.categoriesInputData);
     this.bomService
       .sumbitCategory(1, this.projectId, this.categoriesInputData)
       .then(res => {
@@ -153,8 +154,8 @@ export class BomComponent implements OnInit {
   }
   clearSelectedCategory(category) {
     console.log(category);
-    console.log(this.selectedCats);
-    this.selectedCats = this.selectedCats.filter(
+    console.log(this.selectedCategory);
+    this.selectedCategory = this.selectedCategory.filter(
       cats => cats.materialGroup !== category.materialGroup
     );
   }

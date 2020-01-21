@@ -14,8 +14,11 @@ import {
 } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { stringify } from "querystring";
-import { RfqMaterialResponse, RfqMat } from "src/app/shared/models/rfq-details";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import {
+  RfqMat,
+  RfqMaterialResponse
+} from "src/app/shared/models/RFQ/rfq-details";
 
 // chip static data
 export interface Fruit {
