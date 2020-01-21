@@ -54,6 +54,8 @@ const PO_DATA: PO[] = [
 export class PurchaseOrderComponent implements OnInit {
   dataSource = PO_DATA;
 
+  POStatus = ["DRAFTED PO", "AWARDED PO", "ACCEPTED PO", "REJECTED PO"];
+
   displayedColumns = ["PO Name", "Raised Date", "Total Material", "PO Amount"];
 
   ngOnInit() {}
