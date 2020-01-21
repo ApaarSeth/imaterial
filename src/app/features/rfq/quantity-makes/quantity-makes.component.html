@@ -63,57 +63,22 @@
       <div class="text-right col-xs-2">
         <button
           mat-raised-button
-          (click)="raiseIndent()"
+          (click)="showIndent()"
+          [disabled]="!materialForms.valid"
           class="main-background-color main-button color-white"
         >
           Next
         </button>
       </div>
     </div>
-    <div class="row p-b-10">
-      <div class="col-sm-12">
-        <button [disabled]="!projects.value.length"
-          mat-raised-button (click)="setSelectedProjectList()"
-          class="main-background-color main-button color-white pull-right m-t-15"
-        > 
-          Add
-        </button>
-        <mat-form-field class="border-select pull-right m-r-25">
-          <mat-select
-            [formControl]="projects"
-            [(ngModel)]="selectedProjects"
-            multiple
-          >
-            <div class="display-flex">
-              <input
-                class="p-l-10 p-b-5"
-                matInput
-                type="search"
-                placeholder="Search project Name"
-                [(ngModel)]="searchText"
-              />
-              <button mat-button matSuffix mat-icon-button>
-                <mat-icon>search</mat-icon>
-              </button>
-            </div>
-            <mat-option
-              *ngFor="
-                let project of allProjects | SearchPipe: searchText:'projectName'
-              "
-              [value]="project"
-              >{{ project.projectName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
     <!-- table structure -->
-    <mat-accordion class="accordion-padding-zero">
-     <ng-template ngFor let-material [ngForOf]="rfqDetails" let-i="index">
+    <form [formGroup]="materialForms">
+    <mat-accordion class="accordion-padding-zero" formArrayName="forms">
+     <ng-template ngFor let-material [ngForOf]="checkedMaterialsList" let-mati="index">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{material.projectName}}
+            {{material.projectName}}----{{mati}}
             <a href="javascript:void(0)" class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a>
           </mat-panel-title>
         </mat-expansion-panel-header>
@@ -130,11 +95,7 @@
         <ng-container matColumnDef="Material Name">
         <th mat-header-cell *matHeaderCellDef>Material Name</th>
         <td mat-cell *matCellDef="let element">
-          <mat-checkbox
-            (change)="element.checked = !element.checked"
-            [checked]="element.checked"
-            >{{ element.materialName }}
-          </mat-checkbox>
+          {{ element.materialName }}
         </td>
         </ng-container>
 
@@ -155,6 +116,32 @@
           <th mat-header-cell *matHeaderCellDef>Estimated Quantity</th>
         <td mat-cell *matCellDef="let element">{{ element.estimatedQty }}</td>
         </ng-container>
+        <!-- estimated rate -->
+        <ng-container matColumnDef="Estimated Rate">
+          <th mat-header-cell *matHeaderCellDef>Estimated Rate</th>
+        <td mat-cell *matCellDef="let element; let i = index" >
+          <mat-form-field [formGroupName]="(i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0))" class="border-input table-input">
+          {{i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0) }}<input matInput formControlName="estimatedRate" type="number" placeholder="Estimated Rate" />
+          </mat-form-field>
+        </td>
+        </ng-container>
+        <!-- quantity -->
+        <ng-container matColumnDef="Quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let element; let  i= index">
+          <mat-form-field [formGroupName]="(i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0))" class="border-input table-input">
+            {{i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0) }} <input matInput formControlName="quantity" type="number" placeholder="Quantity" />
+          </mat-form-field>
+        </td>
+        </ng-container>
+        <!-- makes -->
+        <ng-container matColumnDef="Makes">
+          <th mat-header-cell *matHeaderCellDef>Makes</th>
+        <td mat-cell *matCellDef="let element; let  i= index">
+          <!-- <mat-form-field [formGroupName]="(i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0))" class="example-chip-list"> -->
+            <app-chip (onUpdate)="makesUpdate($event, (i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0)))" ></app-chip>
+        </td>
+        </ng-container>
 
         <!-- Symbol Column -->
 
@@ -166,6 +153,7 @@
       </mat-expansion-panel>
      </ng-template>
     </mat-accordion>
+    </form>
     <!-- end table structure -->
     <!-- end fix part -->
   </div>

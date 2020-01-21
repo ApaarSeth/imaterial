@@ -4,6 +4,7 @@ export interface RfqMaterialResponse {
   defaultAddress?: Address;
   projectMaterialList?: RfqMat[];
   projectAddressList?: Address[];
+  prevMatListLength?: number;
 }
 export interface RfqMat {
   projectId?: number;
@@ -13,6 +14,9 @@ export interface RfqMat {
   estimatedQty?: number;
   dueDate?: Date;
   checked?: boolean;
+  quantity?: number;
+  estimatedRate?: number;
+  makes?: string[];
 }
 export interface Address {
   projectId?: number;

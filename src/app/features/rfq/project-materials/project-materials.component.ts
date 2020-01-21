@@ -99,9 +99,9 @@ export class RFQProjectMaterialsComponent implements OnInit {
       .filter(sub => {
         return sub.projectMaterialList.length != 0;
       });
-
+    //to do new page path add
     if (checkedMaterials.length) {
-      this.router.navigate(["/indent/"], {
+      this.router.navigate(["/rfq/quantity-makes"], {
         state: { checkedMaterials }
       });
     }
