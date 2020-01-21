@@ -20,6 +20,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { DocumentsComponent } from "./documents/documents.component";
 import { ReviewComponent } from "./review/review.component";
 import { PurchaseOrderComponent } from "./purchase-order/purchase-order.component";
+import { DndDirective } from "./documents/drag-and-drop";
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { PurchaseOrderComponent } from "./purchase-order/purchase-order.componen
     SuppliersComponent,
     DocumentsComponent,
     ReviewComponent,
-    PurchaseOrderComponent
+    PurchaseOrderComponent,
+    DndDirective
   ]
 })
 export class RFQModule {}
