@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQProjectMaterialsComponent } from "./project-materials/project-materials.component";
+import { RFQQuantityMakesComponent } from "./quantity-makes/quantity-makes.component";
 import { RefDetailComponent } from "./ref-detail/ref-detail.component";
 import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
 import { SuppliersComponent } from "./suppliers/suppliers.component";
@@ -15,6 +16,10 @@ const routes: Routes = [
     path: "project-materials",
     resolve: { rfq: RFQResolver },
     component: RFQProjectMaterialsComponent
+  },
+  {
+    path: "quantity-makes",
+    component: RFQQuantityMakesComponent
   },
   {
     path: "rfq-detail",

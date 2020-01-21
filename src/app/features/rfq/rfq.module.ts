@@ -9,6 +9,7 @@ import { RouterModule } from "@angular/router";
 import { RFQProjectMaterialsComponent } from "./project-materials/project-materials.component";
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQRoutingModule } from "./rfq-routing.module";
+import { RFQQuantityMakesComponent } from "./quantity-makes/quantity-makes.component";
 import { RefDetailComponent } from "./ref-detail/ref-detail.component";
 import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
 import { SuppliersComponent } from "./suppliers/suppliers.component";
@@ -42,6 +43,7 @@ import { DndDirective } from "./documents/drag-and-drop";
   providers: [RFQResolver],
   declarations: [
     RFQProjectMaterialsComponent,
+    RFQQuantityMakesComponent,
     RefDetailComponent,
     RfqBidsComponent,
     SuppliersComponent,
