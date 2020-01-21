@@ -12,7 +12,6 @@ import { RFQRoutingModule } from "./rfq-routing.module";
 import { RefDetailComponent } from "./ref-detail/ref-detail.component";
 import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
 import { SuppliersComponent } from "./suppliers/suppliers.component";
-import { SuppliersDialogComponent } from "../../shared/dialogs/add-supplier/suppliers-dialog.component";
 import { MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCheckboxModule } from "@angular/material/checkbox";
@@ -20,6 +19,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDialogModule } from "@angular/material/dialog";
 import { DocumentsComponent } from "./documents/documents.component";
 import { ReviewComponent } from "./review/review.component";
+import { PurchaseOrderComponent } from "./purchase-order/purchase-order.component";
 
 @NgModule({
   imports: [
@@ -44,10 +44,9 @@ import { ReviewComponent } from "./review/review.component";
     RefDetailComponent,
     RfqBidsComponent,
     SuppliersComponent,
-    SuppliersDialogComponent,
     DocumentsComponent,
-    ReviewComponent
-  ],
-  entryComponents: [SuppliersDialogComponent]
+    ReviewComponent,
+    PurchaseOrderComponent
+  ]
 })
 export class RFQModule {}

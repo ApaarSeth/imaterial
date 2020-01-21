@@ -9,7 +9,7 @@
               mat-raised-button
               class="main-background-color main-button color-white pull-right"
             >
-              Flot RFQ
+              Float RFQ
             </button>
           </div>
         </div>
@@ -39,10 +39,14 @@
             <mat-icon>calendar_today</mat-icon>
           </div>
           <div class="col-md-2 p-t-20 p-l-115 main-color">
-            <label for="comment">comment</label>
+            <button mat-button (click)="openDialog1()">
+              comment
+            </button>
           </div>
           <div class="col-md-3 p-t-20 main-color">
-            <label for="view">View Terms & Conditions/Documents</label>
+            <button mat-button (click)="openDialog2()">
+              View Terms & Conditions/Documents
+            </button>
           </div>
         </div>
 
