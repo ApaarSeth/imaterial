@@ -59,6 +59,7 @@ export class RFQQuantityMakesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    //this.checkedMaterialsList = this.activatedRoute.snapshot.data.quantityMakes;
     this.checkedMaterialsList = history.state.checkedMaterials;
     console.log("projectList", this.checkedMaterialsList);
     if (this.checkedMaterialsList) {
@@ -172,34 +173,15 @@ export class RFQQuantityMakesComponent implements OnInit {
         });
       });
     });
+    let checkedMaterials = this.checkedMaterialsList;
+    if (checkedMaterials) {
+      this.router.navigate(["/rfq/suppliers"], {
+        state: { checkedMaterials }
+      });
+    }
 
     console.log("asdfghjk", this.checkedMaterialsList);
   }
-
-  // calcuateFormgroupname(project: any, projectIndex: number, index: number) {
-  //   if (projectIndex == 0) {
-  //     this.tempProject = project;
-  //     this.currentProject = project;
-  //   } else {
-  //     this.currentProject = project;
-  //     this.count += this.tempProject.projectMaterialList.length;
-  //     this.tempProject = this.currentProject;
-  //   }
-  //   console.log("count", this.count);
-  //   return index + (projectIndex != 0 ? this.count : 0);
-  // }
-
-  // dataSource(material: any) {
-  //   material.forEach((subCat, i) => {
-  //     if (i == 0) {
-  //       subCat.counter = 0;
-  //       return subCat.counter;
-  //     } else {
-  //       subCat.counter += subCat.projectMaterialList.length;
-  //       return subCat.counter;
-  //     }
-  //   });
-  // }
 
   makesUpdate(data: string[], grpIndex: number) {
     console.log(data, grpIndex);

@@ -9,6 +9,8 @@ import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
 import { SuppliersComponent } from "./suppliers/suppliers.component";
 import { DocumentsComponent } from "./documents/documents.component";
 import { ReviewComponent } from "./review/review.component";
+import { RFQSuppliersResolver } from "./suppliers/supplier-resolver";
+import { QuantityMakesResolver } from "./quantity-makes/quantity-makes-resolver";
 
 const routes: Routes = [
   {
@@ -18,6 +20,7 @@ const routes: Routes = [
   },
   {
     path: "quantity-makes",
+    // resolve: { quantityMakes: QuantityMakesResolver },
     component: RFQQuantityMakesComponent
   },
   {
@@ -30,6 +33,7 @@ const routes: Routes = [
   },
   {
     path: "suppliers",
+    resolve: { supplier: RFQSuppliersResolver },
     component: SuppliersComponent
   },
   {

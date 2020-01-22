@@ -3,13 +3,16 @@ import { Component, OnInit } from "@angular/core";
 @Component({
   selector: "documents",
   templateUrl: "./documents.component.html",
-  styles: ["../../../../assets/scss/main.scss"]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class DocumentsComponent implements OnInit {
   searchText: string = null;
   buttonName: string = "uploadDocuments";
   files: any[] = [];
 
+  setButtonName(name: string) {
+    this.buttonName = name;
+  }
   /**
    * on file drop handler
    */

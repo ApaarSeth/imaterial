@@ -24,6 +24,8 @@ export const API = {
   RFQMATERIALS: `rfqMaterials`,
   RFQDETAIL: organizationId => `rfq/list/1`,
   RFQPO: (organizationId, rfqId) => `rfq/details/${organizationId}/${rfqId}`,
+  GETSUPPLIERS: organizationId => `projects/getsuppliers/${organizationId}`,
+  ADDSUPPLIER: organizationId => `projects/addSuppliers/${organizationId}`,
   GETPODETAILLIST: organizationId => `po/detail/list/${organizationId}`
   //STATE: 'account/api/permitted/address/states',
 };

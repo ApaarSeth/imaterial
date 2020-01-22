@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
 import { ProjectIds } from "../../models/project-details";
+import { Suppliers } from "../../models/RFQ/suppliers";
 
 @Injectable({
   providedIn: "root"
@@ -22,5 +23,16 @@ export class RFQService {
   }
   rfqPo(organizationId: number, rfqId: number) {
     return this.dataService.getRequest(API.RFQPO(organizationId, rfqId));
+  }
+  getSuppliers(organizationId: number) {
+    return this.dataService.getRequest(API.GETSUPPLIERS(organizationId));
+  }
+
+  addNewSupplier(organizationId: number, supplier: Suppliers) {
+    return this.dataService
+      .sendPostRequest(API.ADDSUPPLIER(organizationId), supplier)
+      .then(res => {
+        return res;
+      });
   }
 }
