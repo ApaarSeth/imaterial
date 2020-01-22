@@ -1,6 +1,8 @@
 import { NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatRadioModule } from "@angular/material/radio";
+
 import {
   MatToolbarModule,
   MatSidenavModule,
@@ -37,7 +39,8 @@ import {
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    MatChipsModule
+    MatChipsModule,
+    MatRadioModule
   ]
 })
 export class MaterialModule {}
