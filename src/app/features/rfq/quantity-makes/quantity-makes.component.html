@@ -88,13 +88,12 @@
               <mat-panel-title>
                 {{ material.projectName }}----{{ mati }}
 
-                <div class="col-md-2 p-t-20 p-l-110 main-color">
-                  <button mat-button (click)="openDialog()">
-                    {{ material.defaultAddress.addressLine1 }}
-                  </button>
-                </div>
-
-                <!-- <a href="javascript:void(0)" class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a> -->
+                <a
+                  href="javascript:void(0)"
+                  (click)="openDialog()"
+                  class="main-color p-l-15"
+                  >{{ material.defaultAddress.addressLine1 }}</a
+                >
               </mat-panel-title>
             </mat-expansion-panel-header>
             <!-- table part -->
