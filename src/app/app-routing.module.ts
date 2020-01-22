@@ -35,6 +35,13 @@ const routes: Routes = [
     path: "rfq",
     loadChildren: () =>
       import("./features/rfq/rfq.module").then(m => m.RFQModule)
+  },
+  {
+    path: "poDetails",
+    loadChildren: () =>
+      import("./features/po-details/po-details.module").then(
+        m => m.PODetailsModule
+      )
   }
 ];
 
