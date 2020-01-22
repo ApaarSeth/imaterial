@@ -1,7 +1,7 @@
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <!-- Topmost Status -->
-    <mat-card>
+    <mat-card class="m-t-40 m-b-20">
       <div class="row">
         <div class="right-pipe" style="width: 20%;">
           <span class="p-l-30 p-r-20 pull-left">23</span>
@@ -25,7 +25,7 @@
     <!-- Accordion for PO Lists -->
     <mat-accordion>
       <div *ngIf="poDetails.draftedPOList">
-        <mat-expansion-panel>
+        <mat-expansion-panel class="myPanel">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Drafted PO
@@ -71,7 +71,7 @@
       </div>
 
       <div *ngIf="poDetails.awardedPOList">
-        <mat-expansion-panel>
+        <mat-expansion-panel class="myPanel">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Awarded PO
@@ -117,7 +117,7 @@
       </div>
 
       <div *ngIf="poDetails.acceptedPOList">
-        <mat-expansion-panel>
+        <mat-expansion-panel class="myPanel">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Accepted PO
@@ -163,7 +163,7 @@
       </div>
 
       <div *ngIf="poDetails.rejectedPOList">
-        <mat-expansion-panel>
+        <mat-expansion-panel class="myPanel">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Rejected PO

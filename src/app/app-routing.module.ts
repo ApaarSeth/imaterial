@@ -4,7 +4,6 @@ import { DashboardComponent } from "./features/dashboard/dashboard.component";
 import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resolver";
 import { BomResolver } from "./features/bom/bom.resolver";
 import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
-import { PODetailListResolver } from "./features/po-details/po-detail-list/po-detail-list-resolver";
 
 const routes: Routes = [
   {
@@ -39,7 +38,6 @@ const routes: Routes = [
   },
   {
     path: "poDetails",
-    resolve: { poDetailList: PODetailListResolver },
     loadChildren: () =>
       import("./features/po-details/po-details.module").then(
         m => m.PODetailsModule
