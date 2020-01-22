@@ -217,6 +217,9 @@ a:hover {
   padding-top: 0px !important;
 }
 
+.accordion-padding-zero .mat-expansion-panel-body {
+  padding: 0 0px 16px;
+}
 .right-pipe {
   border-right: 1px solid black;
 }
