@@ -8,7 +8,6 @@ import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
 import { SuppliersComponent } from "./suppliers/suppliers.component";
 import { DocumentsComponent } from "./documents/documents.component";
 import { ReviewComponent } from "./review/review.component";
-import { PurchaseOrderComponent } from "./purchase-order/purchase-order.component";
 
 const routes: Routes = [
   {
@@ -35,10 +34,6 @@ const routes: Routes = [
   {
     path: "review",
     component: ReviewComponent
-  },
-  {
-    path: "purchase-order",
-    component: PurchaseOrderComponent
   }
 ];
 

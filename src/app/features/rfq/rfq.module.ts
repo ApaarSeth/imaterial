@@ -19,7 +19,6 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDialogModule } from "@angular/material/dialog";
 import { DocumentsComponent } from "./documents/documents.component";
 import { ReviewComponent } from "./review/review.component";
-import { PurchaseOrderComponent } from "./purchase-order/purchase-order.component";
 import { DndDirective } from "./documents/drag-and-drop";
 
 @NgModule({
@@ -47,7 +46,6 @@ import { DndDirective } from "./documents/drag-and-drop";
     SuppliersComponent,
     DocumentsComponent,
     ReviewComponent,
-    PurchaseOrderComponent,
     DndDirective
   ]
 })
