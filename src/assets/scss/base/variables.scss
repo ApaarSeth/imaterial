@@ -217,6 +217,73 @@ a:hover {
   padding-top: 0px !important;
 }
 
+.accordion-padding-zero .mat-expansion-panel-body {
+  padding: 0 0px 16px;
+}
 .right-pipe {
   border-right: 1px solid black;
+}
+
+//Muskaan's edit
+.round-button {
+  border: none;
+  border-radius: 50%;
+  align-self: center;
+}
+
+.scroll-box {
+  overflow: auto;
+}
+
+.grey-border {
+  border-bottom: 2px solid $icon-color-gray;
+}
+
+.grey-full-border {
+  border: 2px solid $icon-color-gray;
+}
+
+.h-290 {
+  height: 290px;
+}
+
+.h-200 {
+  height: 200px;
+}
+
+.h-250 {
+  height: 250px;
+}
+
+.grey-dotted-border {
+  border: 2px dotted $icon-color-gray;
+}
+
+.myPanel .mat-expansion-panel-body {
+  padding: 0;
+}
+
+.dark-gray-color {
+  color: $background-color-grey;
+}
+
+.width100Percent {
+  width: 100%;
+}
+
+.width96Percent {
+  width: 96%;
+}
+
+.mat-form-field textarea {
+  border: 1px solid $icon-color-gray;
+}
+
+.drag-and-drop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
