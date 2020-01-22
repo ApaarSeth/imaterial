@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { SuppliersDialogComponent } from "../../../shared/dialogs/add-supplier/suppliers-dialog.component";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
@@ -30,7 +30,8 @@ export class SuppliersComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService
+    private rfqService: RFQService,
+    private router: Router
   ) {}
   ngOnInit() {
     this.allSuppliers = this.activatedRoute.snapshot.data.supplier;
@@ -50,6 +51,12 @@ export class SuppliersComponent implements OnInit {
     if (isOneEnabled) {
       this.selectedSupplierFlag = true;
     }
+  }
+  nevigateToUploadPage() {
+    let checkedMaterialsList = this.checkedMaterialsList;
+    this.router.navigate(["/rfq/documents"], {
+      state: { checkedMaterialsList }
+    });
   }
 
   openDialog(): void {

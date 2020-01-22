@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 
 @Component({
   selector: "documents",
@@ -9,6 +10,12 @@ export class DocumentsComponent implements OnInit {
   searchText: string = null;
   buttonName: string = "uploadDocuments";
   files: any[] = [];
+  checkedMaterialsList: RfqMaterialResponse[];
+
+  ngOnInit() {
+    this.checkedMaterialsList = history.state.checkedMaterialsList;
+    console.log("checkedMaterialsList", this.checkedMaterialsList);
+  }
 
   setButtonName(name: string) {
     this.buttonName = name;
@@ -86,6 +93,4 @@ export class DocumentsComponent implements OnInit {
   fileSuccess() {
     return this.files[0].name;
   }
-
-  ngOnInit() {}
 }
