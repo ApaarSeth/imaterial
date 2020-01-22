@@ -1,15 +1,16 @@
-@import "./base/variables.scss";
+    @import "./base/variables.scss";
 
-@import "./base/grid.scss";
+    @import "./base/grid.scss";
 
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+    @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
-@import "./base/reset.scss";
+    @import "./base/reset.scss";
 
-@import "./layout/header.scss";
+    @import "./layout/header.scss";
 
-@import "./base/spacing.scss";
+    @import "./base/spacing.scss";
 
-@import "./pages/dashboard.scss";
-@import "./pages/bom-preview.scss";
-@import "./pages/global-store.component.scss";
+    @import "./pages/dashboard.scss";
+    @import "./pages/bom-preview.scss";
+    @import "./pages/global-store.component.scss";
+    @import "./pages/rfq-bids.component.scss";
