@@ -42,6 +42,16 @@ const routes: Routes = [
       import("./features/po-details/po-details.module").then(
         m => m.PODetailsModule
       )
+  },
+  {
+    path: "signup",
+    loadChildren: () =>
+      import("./features/signup/signup.module").then(m => m.SignupModule)
+  },
+  {
+    path: "login",
+    loadChildren: () =>
+      import("./features/login/login.module").then(m => m.LoginModule)
   }
 ];
 
