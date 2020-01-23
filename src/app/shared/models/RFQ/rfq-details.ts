@@ -44,3 +44,25 @@ export interface RfqList {
   supplierList: null;
   createdAt: Date;
 }
+
+export interface AddRFQ {
+  rfq_name: string;
+  due_date: Date;
+  rfq_status: string;
+  suppliers_id: number[];
+  project_address_id: number;
+  rfqProjectsList: RfqMaterialResponse[];
+  documentsList: DocumentDetails[];
+  terms: Terms;
+}
+
+export interface DocumentDetails {
+  documentType: string;
+  documentDesc: string;
+  documentUrl: string;
+}
+
+export interface Terms {
+  termsDesc: string;
+  termsType: "RFQ";
+}

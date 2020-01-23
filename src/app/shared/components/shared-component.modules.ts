@@ -5,8 +5,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "../material-modules";
 import { ProjectItemComponent } from "./project-item/project-item.component";
 import { ChipComponent } from "./chip/chip.component";
+import { UploadComponent } from "./upload/upload.component";
 
-const components = [ProjectItemComponent, ChipComponent];
+const components = [ProjectItemComponent, ChipComponent, UploadComponent];
 
 @NgModule({
   imports: [
