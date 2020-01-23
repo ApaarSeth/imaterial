@@ -3,40 +3,8 @@ import { MatDialog } from "@angular/material";
 import { AddCommentDialogComponent } from "src/app/shared/dialogs/add-comment/comment-dialog.component";
 import { ViewDocumentsDialogComponent } from "src/app/shared/dialogs/view-documents/view-documents-dialog.component";
 import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
-
-export interface Project {
-  materialName: string;
-  quantity: number;
-  makes: string[];
-}
-
-const Project_DATA: Project[] = [
-  {
-    materialName: "Steel 43 MM",
-    quantity: 1500,
-    makes: ["Brand Name", "Brand Name", "Brand Name", "Brand Name"]
-  },
-  {
-    materialName: "Steel 43 MM",
-    quantity: 1500,
-    makes: ["Brand Name", "Brand Name", "Brand Name", "Brand Name"]
-  },
-  {
-    materialName: "Steel 43 MM",
-    quantity: 1500,
-    makes: ["Brand Name", "Brand Name", "Brand Name", "Brand Name"]
-  },
-  {
-    materialName: "Steel 43 MM",
-    quantity: 1500,
-    makes: ["Brand Name", "Brand Name", "Brand Name", "Brand Name"]
-  },
-  {
-    materialName: "Steel 43 MM",
-    quantity: 1500,
-    makes: ["Brand Name", "Brand Name", "Brand Name", "Brand Name"]
-  }
-];
+import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "review",
@@ -45,11 +13,33 @@ const Project_DATA: Project[] = [
 })
 export class ReviewComponent implements OnInit {
   displayedColumns: string[] = ["Material Name", "Quantity", "Makes"];
-
-  dataSource = Project_DATA;
   checkedMaterialsList: RfqMaterialResponse[];
+  selectedSuppliersList: Suppliers[];
+  form: FormGroup;
+  supplierIds: number[];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder) {}
+
+  ngOnInit() {
+    this.checkedMaterialsList = history.state.checkedMaterialsList;
+    this.selectedSuppliersList = history.state.selectedSuppliersList;
+    this.supplierIds = this.selectedSuppliersList.map(x => x.supplierId);
+    console.log("supplierIds", this.supplierIds);
+    console.log("checkedMaterialsList", this.checkedMaterialsList);
+    console.log("selectedSuppliersList", this.selectedSuppliersList);
+    this.initForm();
+  }
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      rfqName: ["", Validators.required],
+      dueDate: ["", Validators.required]
+    });
+  }
+
+  submit() {
+    console.log("form", this.form.value);
+  }
 
   openDialog1(): void {
     if (AddCommentDialogComponent) {
@@ -70,10 +60,5 @@ export class ReviewComponent implements OnInit {
         console.log("The dialog was closed");
       });
     }
-  }
-
-  ngOnInit() {
-    this.checkedMaterialsList = history.state.checkedMaterialsList;
-    console.log("checkedMaterialsList", this.checkedMaterialsList);
   }
 }

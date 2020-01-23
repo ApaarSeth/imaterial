@@ -24,6 +24,7 @@ export class SuppliersComponent implements OnInit {
   ];
 
   allSuppliers: Suppliers[];
+  selectedSuppliersList: Suppliers[];
   selectedSupplierFlag: boolean = false;
   checkedMaterialsList: RfqMaterialResponse[];
 
@@ -51,11 +52,14 @@ export class SuppliersComponent implements OnInit {
     if (isOneEnabled) {
       this.selectedSupplierFlag = true;
     }
+    this.selectedSuppliersList = this.allSuppliers.filter(x => x.checked);
+    console.log("selectedSupplier", this.selectedSuppliersList);
   }
   nevigateToUploadPage() {
     let checkedMaterialsList = this.checkedMaterialsList;
+    let selectedSuppliersList = this.selectedSuppliersList;
     this.router.navigate(["/rfq/documents"], {
-      state: { checkedMaterialsList }
+      state: { checkedMaterialsList, selectedSuppliersList }
     });
   }
 
