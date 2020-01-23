@@ -39,7 +39,7 @@ export class SuppliersDialogComponent {
 
   submit() {
     console.log("form", this.form.value);
-    this.dialogRef.close(this.addSuppliers(1, this.form.value));
+    this.dialogRef.close(this.addSuppliers(4, this.form.value));
     // if (this.data.isEdit) {
     //   this.dialogRef.close(this.updateProjects(this.form.value));
     // } else {
