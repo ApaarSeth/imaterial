@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
+import {
+  RfqMaterialResponse,
+  AddRFQ
+} from "src/app/shared/models/RFQ/rfq-details";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "documents",
@@ -9,8 +13,11 @@ import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 export class DocumentsComponent implements OnInit {
   searchText: string = null;
   buttonName: string = "uploadDocuments";
-  files: any[] = [];
   checkedMaterialsList: RfqMaterialResponse[];
+  docs: FileList;
+  rfqDetails: AddRFQ;
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;
@@ -20,77 +27,39 @@ export class DocumentsComponent implements OnInit {
   setButtonName(name: string) {
     this.buttonName = name;
   }
-  /**
-   * on file drop handler
-   */
-  onFileDropped($event) {
-    this.prepareFilesList($event);
+
+  fileUpdate(files: FileList) {
+    this.docs = files;
+    console.log("docs", this.docs);
+    this.uploadDocs();
   }
 
-  /**
-   * handle file from browsing
-   */
-  fileBrowseHandler(files) {
-    this.prepareFilesList(files);
-  }
+  uploadDocs() {
+    if (this.docs && this.docs.length) {
+      const data = new FormData();
 
-  /**
-   * Delete file from files list
-   * @param index (File index)
-   */
-  deleteFile(index: number) {
-    this.files.splice(index, 1);
-  }
+      const fileArr: File[] = [];
 
-  /**
-   * Simulate the upload process
-   */
-  uploadFilesSimulator(index: number) {
-    setTimeout(() => {
-      if (index === this.files.length) {
-        return;
-      } else {
-        const progressInterval = setInterval(() => {
-          if (this.files[index].progress === 100) {
-            clearInterval(progressInterval);
-            this.uploadFilesSimulator(index + 1);
-          } else {
-            this.files[index].progress += 5;
-          }
-        }, 200);
+      for (let key in Object.keys(this.docs)) {
+        fileArr.push(this.docs[key]);
+        data.append(`files[${key}]`, this.docs[key]);
       }
-    }, 1000);
-  }
-
-  /**
-   * Convert Files list to normal array list
-   * @param files (Files List)
-   */
-  prepareFilesList(files: Array<any>) {
-    for (const item of files) {
-      item.progress = 0;
-      this.files.push(item);
+      // data.append(`files`, fileArr);
+      data.append("fileUploadType", "RFQ");
+      console.log("asdxfcgvhbjnk", data);
+      //data.append('parentId', this.item.itemForm.value.locationQtyList[0].attachId);
+      // return this.commonService.docUpload(data).then(res => {
+      //   return res;
+      // });
     }
-    this.uploadFilesSimulator(0);
+    // else {
+    //   of().toPromise();
+    // }
   }
-
-  /**
-   * format bytes
-   * @param bytes (File size in bytes)
-   * @param decimals (Decimals point)
-   */
-  formatBytes(bytes, decimals) {
-    if (bytes === 0) {
-      return "0 Bytes";
-    }
-    const k = 1024;
-    const dm = decimals <= 0 ? 0 : decimals || 2;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-  }
-
-  fileSuccess() {
-    return this.files[0].name;
+  navigateToReviewRFQ() {
+    let checkedMaterialsList = this.checkedMaterialsList;
+    this.router.navigate(["/rfq/review"], {
+      state: { checkedMaterialsList }
+    });
   }
 }
