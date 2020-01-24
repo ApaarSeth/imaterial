@@ -1,43 +1,74 @@
 <div class="page-start-point">
-    <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-        <div *ngFor="let project of rfqProjects">
-            <mat-accordion displayMode="flat" multi class="mat-table">
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header class="background-color-grey row">
-                        <section matSort class="mat-elevation-z2 mat-header-row">
-                            <span class="mat-header-cell"
-                                mat-sort-header="vesselName">{{project.projectName}}{{project.addressLine1}}</span>
-                        </section>
-                    </mat-expansion-panel-header>
-                    <div>
-                        <section class="mat-elevation-z2 mat-header-row">
-                            <span class="mat-header-cell">Material Name</span>
-                            <span class="mat-header-cell">Quantity</span>
-                            <span class="mat-header-cell">Makes & Rates</span>
-                        </section>
-                    </div>
-                    <mat-expansion-panel *ngFor="let material of project.materialList">
-                        <mat-expansion-panel-header class="mat-row">
-                            <span class="mat-cell">{{material.materialName}} </span>
-                            <span class="mat-cell"> {{material.materialQty}} </span>
-                            <span class="mat-cell" *ngFor="let brand of material.brandList">
-                                {{brand}}
-                            </span>
-                        </mat-expansion-panel-header>
-                        <div class="mat-row" *ngFor="let supplier of material.supplierList">
-                            <span class="mat-cell">{{supplier.supplierName}} </span>
-                            <span class="mat-cell" *ngFor="let brandInfo of supplier.brandDetailList">
-                                <span *ngIf="brandInfo!=null">
-                                    <input matInput placeholder="quantity" class="m-r-5">
-                                    <span
-                                        *ngIf="brandInfo.materialUnitPrice!=null">{{brandInfo.materialUnitPrice}}</span>
-
-                                </span>
-                            </span>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+    <div class="row p-t-10 p-b-10">
+      <div class="col-sm-12">
+        <span>
+          <button mat-raised-button class="main-background-color main-button color-white pull-right"
+            (click)="allocateQuantity()">
+            Allocate Quantity
+          </button>
+        </span>
+      </div>
     </div>
+    <form *ngIf="rfqForms" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
+      <div formArrayName="forms">
+        <div>
+          <div *ngFor="let project of rfqProjects; let p = index" [formGroupName]="p">
+            <mat-accordion displayMode="flat" multi class="mat-table">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header class="background-color-grey row">
+                  <section matSort class="mat-elevation-z2 mat-header-row">
+                    <span class="mat-header-cell"
+                      mat-sort-header="vesselName">{{ project.projectName }}{{ project.addressLine1 }}</span>
+                  </section>
+                </mat-expansion-panel-header>
+                <div>
+                  <section class="mat-elevation-z2 mat-header-row">
+                    <span class="col-xs-2">Material Name</span>
+                    <span class="col-xs-2">Quantity</span>
+                    <span class="col-xs-8">Makes & Rates</span>
+                  </section>
+                </div>
+                <ng-container formArrayName="materialList">
+                  <mat-expansion-panel *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
+                    <mat-expansion-panel-header class="mat-row">
+                      <span class="col-xs-2">{{ material.materialName }} </span>
+                      <span class="col-xs-2"> {{ material.materialQty }} </span>
+                      <span class="col-xs-1" *ngFor="let brand of material.brandList">
+                        {{ brand }}
+                      </span>
+                    </mat-expansion-panel-header>
+                    <span formArrayName="supplierList">
+                      <div class="mat-row" *ngFor="
+                          let supplier of material.supplierList;
+                          let s = index
+                        " [formGroupName]="s">
+                        <span class="col-xs-2">{{ supplier.supplierName }}
+                        </span>
+                        <span class="col-xs-2"></span>
+                        <span formArrayName="brandGroup">
+                          <span class="col-xs-1" *ngFor="
+                              let brandInfo of supplier.brandDetailList;
+                              let i = index
+                            " [formGroupName]="i">
+                            <span *ngIf="brandInfo != null">
+                              <mat-form-field class="border-input">
+                                <input matInput formControlName="quantity" matInput placeholder="quantity"
+                                  class="m-r-5" />
+                              </mat-form-field>
+                              <span *ngIf="brandInfo.materialUnitPrice != null">{{ brandInfo.materialUnitPrice }}</span>
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                    </span>
+                  </mat-expansion-panel>
+                </ng-container>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

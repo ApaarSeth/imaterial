@@ -15,11 +15,12 @@ import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resol
 import { BomModule } from "./features/bom/bom.module";
 import { BomResolver } from "./features/bom/bom.resolver";
 import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
-import { PODetailListResolver } from "./features/po-details/po-detail-list/po-detail-list-resolver";
+import { PODetailListResolver } from "./features/po/resolver/po-detail-list-resolver";
+import { PoComponent } from "./features/po/po.component";
 import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

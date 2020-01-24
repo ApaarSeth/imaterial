@@ -2,6 +2,24 @@ export interface RfqProjects {
   rfqProjects: RfqProject[];
 }
 
+export interface RfqProjectSubmit {
+  projectId: number;
+  projectName: string;
+  projectAddressId: number;
+  addressId: number;
+  supplierId: number;
+  supplierAddressId: number;
+  supplierName: string;
+  rfqId: number;
+  materialList: MaterialListSubmit[];
+}
+
+export interface MaterialListSubmit {
+  materialId: number;
+  materialQty: number;
+  brandName: string;
+  materialUnitPrice: number;
+}
 export interface RfqProject {
   projectId: number;
   userId: number;

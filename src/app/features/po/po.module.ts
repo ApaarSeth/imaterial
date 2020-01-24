@@ -7,8 +7,8 @@ import { AppSharedModule } from "src/app/shared/app-shared-module";
 import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
-import { PODetailsRoutingModule } from "./po-details-routing.module";
-import { PODetailListResolver } from "./po-detail-list/po-detail-list-resolver";
+import { PORoutingModule } from "./po-routing.module";
+import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
 
 @NgModule({
   imports: [
@@ -20,9 +20,9 @@ import { PODetailListResolver } from "./po-detail-list/po-detail-list-resolver";
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    PODetailsRoutingModule
+    PORoutingModule
   ],
   providers: [PODetailListResolver],
   declarations: [PODetailComponent]
 })
-export class PODetailsModule {}
+export class POModule {}
