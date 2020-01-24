@@ -64,6 +64,6 @@ export interface DocumentDetails {
 
 export interface Terms {
   // to do --- binding pending
-  termsDesc: "qwert hjk ghgjhkj vhj hhv jh";
-  termsType: "RFQ";
+  termsDesc: string;
+  termsType: string;
 }

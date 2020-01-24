@@ -6,6 +6,7 @@ import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
 import { ProjectIds } from "../../models/project-details";
 import { Suppliers } from "../../models/RFQ/suppliers";
+import { AddRFQ } from "../../models/RFQ/rfq-details";
 
 @Injectable({
   providedIn: "root"
@@ -34,5 +35,11 @@ export class RFQService {
       .then(res => {
         return res;
       });
+  }
+
+  addRFQ(rfqDetail: AddRFQ) {
+    return this.dataService.sendPostRequest(API.ADDRFQ, rfqDetail).then(res => {
+      return res;
+    });
   }
 }

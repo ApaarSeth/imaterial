@@ -2,9 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { AddCommentDialogComponent } from "src/app/shared/dialogs/add-comment/comment-dialog.component";
 import { ViewDocumentsDialogComponent } from "src/app/shared/dialogs/view-documents/view-documents-dialog.component";
-import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
+import {
+  RfqMaterialResponse,
+  AddRFQ
+} from "src/app/shared/models/RFQ/rfq-details";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { AddRFQConfirmationComponent } from "src/app/shared/dialogs/add-rfq-confirmation/add-rfq-double-confirmation.component";
 
 @Component({
   selector: "review",
@@ -17,6 +22,7 @@ export class ReviewComponent implements OnInit {
   selectedSuppliersList: Suppliers[];
   form: FormGroup;
   supplierIds: number[];
+  rfqDetails: AddRFQ = {} as AddRFQ;
 
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder) {}
 
@@ -39,6 +45,24 @@ export class ReviewComponent implements OnInit {
 
   submit() {
     console.log("form", this.form.value);
+    this.setRFQDetailsValue();
+  }
+
+  setRFQDetailsValue() {
+    if (this.form.value) {
+      this.rfqDetails.rfqName = this.form.value.rfqName;
+      this.rfqDetails.dueDate = this.form.value.dueDate;
+    }
+    this.rfqDetails.rfqProjectsList = this.checkedMaterialsList;
+    this.rfqDetails.supplierId = this.supplierIds;
+    this.rfqDetails.documentsList = [];
+    this.rfqDetails.terms = {
+      termsDesc: "qwert hjk ghgjhkj vhj hhv jh",
+      termsType: "RFQ"
+    };
+    console.log("rfqDetails", this.rfqDetails);
+    this.openDialog3(this.rfqDetails);
+    //this.addRFQ(this.rfqDetails);
   }
 
   openDialog1(): void {
@@ -55,6 +79,21 @@ export class ReviewComponent implements OnInit {
     if (ViewDocumentsDialogComponent) {
       const dialogRef = this.dialog.open(ViewDocumentsDialogComponent, {
         width: "1200px"
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("The dialog was closed");
+      });
+    }
+  }
+
+  openDialog3(data): void {
+    console.log("sdfghjk", data);
+    if (AddRFQConfirmationComponent) {
+      const dialogRef = this.dialog.open(AddRFQConfirmationComponent, {
+        width: "500px",
+        data: {
+          dataKey: data
+        }
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log("The dialog was closed");
