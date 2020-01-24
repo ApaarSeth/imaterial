@@ -37,11 +37,8 @@ const routes: Routes = [
       import("./features/rfq/rfq.module").then(m => m.RFQModule)
   },
   {
-    path: "poDetails",
-    loadChildren: () =>
-      import("./features/po-details/po-details.module").then(
-        m => m.PODetailsModule
-      )
+    path: "po",
+    loadChildren: () => import("./features/po/po.module").then(m => m.POModule)
   },
   {
     path: "signup",
