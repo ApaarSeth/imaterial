@@ -135,6 +135,7 @@ input {
 }
 
 .border-input input,
+.border-input select,
 .border-select .mat-form-field-flex {
   border-bottom: 2px solid $icon-color-gray;
   border-radius: 0px;
@@ -251,10 +252,6 @@ a:hover {
   height: 200px;
 }
 
-.h-250 {
-  height: 250px;
-}
-
 .grey-dotted-border {
   border: 2px dotted $icon-color-gray;
 }
@@ -275,7 +272,8 @@ a:hover {
   width: 96%;
 }
 
-.mat-form-field textarea {
+.mat-form-field textarea,
+.gray-border {
   border: 1px solid $icon-color-gray;
 }
 

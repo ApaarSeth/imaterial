@@ -1,70 +1,28 @@
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
 <h1 mat-dialog-title>Add Supplier</h1>
 
 <div mat-dialog-content>
-  <!--  -->
+  
   <div class="row p-t-15 p-b-10">
     <!--  -->
     <div class="col-xs-4 display-flex">
       <mat-form-field class="border-input">
-        <input
-          type="text"
-          disabled="true"
-          matInput
-          placeholder="Ravi Supplier"
-        />
+        <input matInput type="text" formControlName="supplier_name" placeholder="Supplier Name" />
       </mat-form-field>
     </div>
 
     <!--  -->
     <div class="col-xs-4 display-flex">
       <mat-form-field class="border-input">
-        <input
-          matInput
-          type="email"
-          disabled="true"
-          placeholder="ravi.singh@gmail.com"
-        />
+        <input matInput type="email" formControlName="email" placeholder="Email" />
       </mat-form-field>
     </div>
 
     <!--  -->
     <div class="col-xs-4 display-flex">
       <mat-form-field class="border-input">
-        <input
-          matInput
-          type="number"
-          disabled="true"
-          placeholder="9876543456"
-        />
+        <input matInput type="text" formControlName="contact_no" placeholder="Phone No." />
       </mat-form-field>
-    </div>
-  </div>
-
-  <div class="row p-t-15 p-b-10">
-    <!--  -->
-    <div class="col-xs-4 display-flex">
-      <mat-form-field class="border-input">
-        <input matInput type="text" placeholder="Supplier Name" />
-      </mat-form-field>
-    </div>
-
-    <!--  -->
-    <div class="col-xs-4 display-flex">
-      <mat-form-field class="border-input">
-        <input matInput type="email" placeholder="Email" />
-      </mat-form-field>
-    </div>
-
-    <!--  -->
-    <div class="col-xs-4 display-flex">
-      <mat-form-field class="border-input">
-        <input matInput type="number" placeholder="Phone No." />
-      </mat-form-field>
-      <button
-        class="main-background-color round-button full-border m-l-40 m-t-5"
-      >
-        <mat-icon class="color-white m-t-5">add</mat-icon>
-      </button>
     </div>
   </div>
 </div>
@@ -72,10 +30,10 @@
 <div mat-dialog-actions class="pull-right">
   <button
     mat-raised-button
+    [disabled]="!form.valid"
     class="main-background-color main-button color-white m-b-5"
-    [mat-dialog-close]=""
-    cdkFocusInitial
   >
-    Next
+    Add
   </button>
 </div>
+</form>

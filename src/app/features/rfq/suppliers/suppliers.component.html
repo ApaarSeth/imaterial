@@ -66,25 +66,32 @@
 
       <div class="text-right col-xs-2">
         <button
+        class="main-background-color round-button full-border m-t-5 m-r-15" (click)="openDialog()"
+      >
+        <mat-icon class="color-white m-t-5">add</mat-icon>
+      </button>
+        <button
           mat-raised-button
+          [disabled]="!selectedSupplierFlag"
+          (click)="nevigateToUploadPage()"
           class="main-background-color main-button color-white"
-          (click)="openDialog()"
         >
-          + Add New Supplier
+          Next
         </button>
       </div>
     </div>
 
     <table
       mat-table
-      [dataSource]="dataSource"
+      [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'"
       class="mat-elevation-z8 col-sm-12"
     >
       <!-- Supplier Name Column -->
       <ng-container matColumnDef="Supplier Name">
         <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
         <td mat-cell *matCellDef="let element">
-          <mat-checkbox></mat-checkbox> {{ element.supplierName }}
+          <mat-checkbox (change)="valueChange(element)"
+          [checked]="element.checked"></mat-checkbox> {{ element.supplier_name }}
         </td>
       </ng-container>
 
@@ -97,21 +104,21 @@
       <!-- Phone No. Column -->
       <ng-container matColumnDef="Phone No.">
         <th mat-header-cell *matHeaderCellDef>Phone No.</th>
-        <td mat-cell *matCellDef="let element">{{ element.phoneNumber }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.contact_no }}</td>
       </ng-container>
 
       <!-- PAN No. Column -->
       <ng-container matColumnDef="PAN No.">
         <th mat-header-cell *matHeaderCellDef>PAN No.</th>
-        <td mat-cell *matCellDef="let element">{{ element.panNumber }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.pan }}</td>
       </ng-container>
 
       <!-- Delete icon Column -->
       <ng-container matColumnDef="customColumn">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button mat-button class="display-flex pull-right">
-            <mat-icon>delete_outline</mat-icon>
+          <button mat-button class="display-flex pull-right ">
+            <mat-icon class="main-color">delete_outline</mat-icon>
           </button>
         </td>
       </ng-container>

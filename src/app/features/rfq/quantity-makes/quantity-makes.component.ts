@@ -19,6 +19,7 @@ import {
   RfqMat,
   RfqMaterialResponse
 } from "src/app/shared/models/RFQ/rfq-details";
+import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 
 // chip static data
 export interface Fruit {
@@ -57,6 +58,7 @@ export class RFQQuantityMakesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    //this.checkedMaterialsList = this.activatedRoute.snapshot.data.quantityMakes;
     this.checkedMaterialsList = history.state.checkedMaterials;
     console.log("projectList", this.checkedMaterialsList);
     if (this.checkedMaterialsList) {
@@ -164,6 +166,12 @@ export class RFQQuantityMakesComponent implements OnInit {
         });
       });
     });
+    let checkedMaterials = this.checkedMaterialsList;
+    if (checkedMaterials) {
+      this.router.navigate(["/rfq/suppliers"], {
+        state: { checkedMaterials }
+      });
+    }
 
     console.log("asdfghjk", this.checkedMaterialsList);
   }
@@ -175,5 +183,16 @@ export class RFQQuantityMakesComponent implements OnInit {
     forms.controls[grpIndex].get("makes").setValue(data);
 
     console.log(this.materialForms);
+  }
+
+  openDialog(): void {
+    if (AddAddressDialogComponent) {
+      const dialogRef = this.dialog.open(AddAddressDialogComponent, {
+        width: "1200px"
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("The dialog was closed");
+      });
+    }
   }
 }

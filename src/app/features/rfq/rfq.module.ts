@@ -20,8 +20,9 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDialogModule } from "@angular/material/dialog";
 import { DocumentsComponent } from "./documents/documents.component";
 import { ReviewComponent } from "./review/review.component";
-import { PurchaseOrderComponent } from "./purchase-order/purchase-order.component";
 import { DndDirective } from "./documents/drag-and-drop";
+import { RFQSuppliersResolver } from "./suppliers/supplier-resolver";
+import { QuantityMakesResolver } from "./quantity-makes/quantity-makes-resolver";
 
 @NgModule({
   imports: [
@@ -40,7 +41,11 @@ import { DndDirective } from "./documents/drag-and-drop";
     MatGridListModule,
     MatDialogModule
   ],
-  providers: [RFQResolver],
+  providers: [
+    RFQResolver,
+    RFQSuppliersResolver
+    // QuantityMakesResolver
+  ],
   declarations: [
     RFQProjectMaterialsComponent,
     RFQQuantityMakesComponent,
@@ -49,7 +54,6 @@ import { DndDirective } from "./documents/drag-and-drop";
     SuppliersComponent,
     DocumentsComponent,
     ReviewComponent,
-    PurchaseOrderComponent,
     DndDirective
   ]
 })

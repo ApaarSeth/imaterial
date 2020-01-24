@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { AddCommentDialogComponent } from "src/app/shared/dialogs/add-comment/comment-dialog.component";
 import { ViewDocumentsDialogComponent } from "src/app/shared/dialogs/view-documents/view-documents-dialog.component";
+import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 
 export interface Project {
   materialName: string;
@@ -40,12 +41,13 @@ const Project_DATA: Project[] = [
 @Component({
   selector: "review",
   templateUrl: "./review.component.html",
-  styles: ["../../../../assets/scss/main.scss"]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class ReviewComponent implements OnInit {
   displayedColumns: string[] = ["Material Name", "Quantity", "Makes"];
 
   dataSource = Project_DATA;
+  checkedMaterialsList: RfqMaterialResponse[];
 
   constructor(public dialog: MatDialog) {}
 
@@ -70,5 +72,8 @@ export class ReviewComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.checkedMaterialsList = history.state.checkedMaterialsList;
+    console.log("checkedMaterialsList", this.checkedMaterialsList);
+  }
 }

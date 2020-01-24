@@ -1,51 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { SuppliersDialogComponent } from "../../../shared/dialogs/add-supplier/suppliers-dialog.component";
-
-export interface Supplier {
-  supplierName: string;
-  email: string;
-  phoneNumber: number;
-  panNumber: number;
-}
-
-const SUPPLIER_DATA: Supplier[] = [
-  {
-    supplierName: "Ravi Supplier Pvt. Ltd.",
-    email: "ravi.supplier@gmail.com",
-    phoneNumber: 9813893025,
-    panNumber: 9813893025
-  },
-  {
-    supplierName: "Ravi Supplier Pvt. Ltd.",
-    email: "ravi.supplier@gmail.com",
-    phoneNumber: 9813893025,
-    panNumber: 9813893025
-  },
-  {
-    supplierName: "Ravi Supplier Pvt. Ltd.",
-    email: "ravi.supplier@gmail.com",
-    phoneNumber: 9813893025,
-    panNumber: 9813893025
-  },
-  {
-    supplierName: "Ravi Supplier Pvt. Ltd.",
-    email: "ravi.supplier@gmail.com",
-    phoneNumber: 9813893025,
-    panNumber: 9813893025
-  },
-  {
-    supplierName: "Ravi Supplier Pvt. Ltd.",
-    email: "ravi.supplier@gmail.com",
-    phoneNumber: 9813893025,
-    panNumber: 9813893025
-  }
-];
+import { ActivatedRoute, Router } from "@angular/router";
+import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
+import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
+import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 
 @Component({
   selector: "suppliers",
   templateUrl: "./suppliers.component.html",
-  styles: ["../../../../assets/scss/main.scss"]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class SuppliersComponent implements OnInit {
   searchText: string = null;
@@ -59,19 +23,56 @@ export class SuppliersComponent implements OnInit {
     "customColumn"
   ];
 
-  dataSource = SUPPLIER_DATA;
+  allSuppliers: Suppliers[];
+  selectedSupplierFlag: boolean = false;
+  checkedMaterialsList: RfqMaterialResponse[];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private rfqService: RFQService,
+    private router: Router
+  ) {}
+  ngOnInit() {
+    this.allSuppliers = this.activatedRoute.snapshot.data.supplier;
+    this.checkedMaterialsList = history.state.checkedMaterials;
+    console.log("suppliers", this.allSuppliers);
+    console.log("checkedMaterialsList", this.checkedMaterialsList);
+  }
+
+  setButtonName(name: string) {
+    this.buttonName = name;
+  }
+
+  valueChange(supplier: Suppliers) {
+    supplier.checked = !supplier.checked;
+    let isOneEnabled = this.allSuppliers.find(x => x.checked);
+    this.selectedSupplierFlag = false;
+    if (isOneEnabled) {
+      this.selectedSupplierFlag = true;
+    }
+  }
+  nevigateToUploadPage() {
+    let checkedMaterialsList = this.checkedMaterialsList;
+    this.router.navigate(["/rfq/documents"], {
+      state: { checkedMaterialsList }
+    });
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "1200px"
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
-    });
+    dialogRef
+      .afterClosed()
+      .toPromise()
+      .then(result => {
+        // to do
+        this.rfqService.getSuppliers(1).then(data => {
+          console.log("wefrgthyjhgff", data.data);
+          return data.data;
+        });
+      });
   }
-
-  ngOnInit() {}
 }
