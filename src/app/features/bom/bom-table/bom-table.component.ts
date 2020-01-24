@@ -23,6 +23,7 @@ import {
   Subcategory,
   Materials
 } from "src/app/shared/models/subcategory-materials";
+import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
 
 @Component({
   selector: "app-bom-table",
@@ -52,7 +53,8 @@ export class BomTableComponent implements OnInit {
     "estimatedQty",
     "requestedQuantity",
     "issueToProject",
-    "availableStock"
+    "availableStock",
+    "customColumn"
   ];
 
   innerDisplayedColumns = [
@@ -60,7 +62,8 @@ export class BomTableComponent implements OnInit {
     "estimatedQty",
     "requestedQuantity",
     "issueToProject",
-    "availableStock"
+    "availableStock",
+    "customColumn"
   ];
   dataSource: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -193,6 +196,17 @@ export class BomTableComponent implements OnInit {
   }
   addMaterial() {
     this.router.navigate(["/bom/" + this.projectId]);
+  }
+
+  openDialog1(): void {
+    if (IssueToIndentDialogComponent) {
+      const dialogRef = this.dialog.open(IssueToIndentDialogComponent, {
+        width: "1200px"
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("The dialog was closed");
+      });
+    }
   }
 }
 

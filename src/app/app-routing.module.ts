@@ -44,14 +44,9 @@ const routes: Routes = [
       )
   },
   {
-    path: "signup",
+    path: "auth",
     loadChildren: () =>
-      import("./features/signup/signup.module").then(m => m.SignupModule)
-  },
-  {
-    path: "login",
-    loadChildren: () =>
-      import("./features/login/login.module").then(m => m.LoginModule)
+      import("./features/auth/auth.module").then(m => m.AuthModule)
   }
 ];
 

@@ -8,7 +8,11 @@ import { Router } from "@angular/router";
 @Component({
   selector: "documents",
   templateUrl: "./documents.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  styleUrls: [
+    "../../../../assets/scss/main.scss",
+    "../../../../../node_modules/froala-editor/css/froala_editor.pkgd.min.css",
+    "../../../../../node_modules/froala-editor/css/froala_style.min.css"
+  ]
 })
 export class DocumentsComponent implements OnInit {
   searchText: string = null;

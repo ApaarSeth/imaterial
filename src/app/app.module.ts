@@ -16,6 +16,7 @@ import { BomModule } from "./features/bom/bom.module";
 import { BomResolver } from "./features/bom/bom.resolver";
 import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
 import { PODetailListResolver } from "./features/po-details/po-detail-list/po-detail-list-resolver";
+import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,9 @@ import { PODetailListResolver } from "./features/po-details/po-detail-list/po-de
     FlexLayoutModule,
     HttpClientModule,
     LayoutModule,
-    DashboardModule
+    DashboardModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ],
   providers: [
     HttpInterceptorProviders,

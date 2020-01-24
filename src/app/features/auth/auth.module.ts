@@ -6,8 +6,12 @@ import { CommonModule } from "@angular/common";
 import { AppSharedModule } from "src/app/shared/app-shared-module";
 import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
-import { SignupComponent } from "./signup.component";
-import { SignupRoutingModule } from "./signup-routing.module";
+import { SignupComponent } from "./signup/signup.component";
+import { SigninComponent } from "./sign-in/sign-in.component";
+import { AuthRoutingModule } from "./auth-routing.module";
+import { OTPComponent } from "./otp/otp.component";
+import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 
 @NgModule({
   imports: [
@@ -19,8 +23,14 @@ import { SignupRoutingModule } from "./signup-routing.module";
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    SignupRoutingModule
+    AuthRoutingModule
   ],
-  declarations: [SignupComponent]
+  declarations: [
+    SignupComponent,
+    SigninComponent,
+    OTPComponent,
+    ForgotPasswordComponent,
+    ChangePasswordComponent
+  ]
 })
-export class SignupModule {}
+export class AuthModule {}
