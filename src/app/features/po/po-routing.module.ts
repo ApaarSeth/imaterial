@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
-import { PODetailListResolver } from "./po-detail-list/po-detail-list-resolver";
+import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
 
 const routes: Routes = [
   {
