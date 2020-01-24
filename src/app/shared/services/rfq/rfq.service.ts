@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
 import { ProjectIds } from "../../models/project-details";
+import { RfqProjectSubmit } from "../../models/RFQ/rfqBids";
 
 @Injectable({
   providedIn: "root"
@@ -22,5 +23,9 @@ export class RFQService {
   }
   rfqPo(organizationId: number, rfqId: number) {
     return this.dataService.getRequest(API.RFQPO(organizationId, rfqId));
+  }
+  rfqAddPo(bidData: RfqProjectSubmit[]) {
+    console.log("bidData", bidData);
+    return this.dataService.sendPostRequest(API.RFQADDPO, bidData);
   }
 }

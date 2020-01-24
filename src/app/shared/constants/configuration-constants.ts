@@ -23,6 +23,7 @@ export const API = {
   GETPROJECTWISE: organizationId => `global/projects/${organizationId}`,
   RFQMATERIALS: `rfqMaterials`,
   RFQDETAIL: organizationId => `rfq/list/1`,
-  RFQPO: (organizationId, rfqId) => `rfq/details/${organizationId}/${rfqId}`
+  RFQPO: (organizationId, rfqId) => `rfq/details/${organizationId}/${rfqId}`,
+  RFQADDPO: `po/addPO`
   //STATE: 'account/api/permitted/address/states',
 };

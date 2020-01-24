@@ -38,7 +38,6 @@ export class RFQQuantityMakesComponent implements OnInit {
   checkedMaterialsList: RfqMaterialResponse[];
   materialForms: FormGroup;
   rfqMat: RfqMat;
-
   displayedColumns: string[] = [
     "Material Name",
     "Required Date",
@@ -125,23 +124,17 @@ export class RFQQuantityMakesComponent implements OnInit {
             i - 1
           ].projectMaterialList.length;
         }
-
         return subCat.projectMaterialList.map(item => {
-          let tempoo = item.projectId + item.materialId;
           return this.formBuilder.group({
             estimatedRate: [item.estimatedRate, Validators.required],
             quantity: [item.quantity, Validators.required],
             makes: [],
-            // [item.makes, Validators.required],
             projId: [item.projectId],
             matId: [item.materialId]
           });
         });
       })
       .flat();
-    // this.materialForms = this.formBuilder.group({
-    //   forms: new FormArray(frmArr)
-    // });
     this.materialForms = this.formBuilder.group({});
     this.materialForms.addControl("forms", new FormArray(frmArr));
     console.log("form array", frmArr);
@@ -174,31 +167,6 @@ export class RFQQuantityMakesComponent implements OnInit {
 
     console.log("asdfghjk", this.checkedMaterialsList);
   }
-
-  // calcuateFormgroupname(project: any, projectIndex: number, index: number) {
-  //   if (projectIndex == 0) {
-  //     this.tempProject = project;
-  //     this.currentProject = project;
-  //   } else {
-  //     this.currentProject = project;
-  //     this.count += this.tempProject.projectMaterialList.length;
-  //     this.tempProject = this.currentProject;
-  //   }
-  //   console.log("count", this.count);
-  //   return index + (projectIndex != 0 ? this.count : 0);
-  // }
-
-  // dataSource(material: any) {
-  //   material.forEach((subCat, i) => {
-  //     if (i == 0) {
-  //       subCat.counter = 0;
-  //       return subCat.counter;
-  //     } else {
-  //       subCat.counter += subCat.projectMaterialList.length;
-  //       return subCat.counter;
-  //     }
-  //   });
-  // }
 
   makesUpdate(data: string[], grpIndex: number) {
     console.log(data, grpIndex);

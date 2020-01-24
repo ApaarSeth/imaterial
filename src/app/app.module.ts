@@ -15,9 +15,10 @@ import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resol
 import { BomModule } from "./features/bom/bom.module";
 import { BomResolver } from "./features/bom/bom.resolver";
 import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
+import { PoComponent } from './features/po/po.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
