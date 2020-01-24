@@ -4,6 +4,7 @@ import {
   AddRFQ
 } from "src/app/shared/models/RFQ/rfq-details";
 import { Router } from "@angular/router";
+import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 
 @Component({
   selector: "documents",
@@ -14,6 +15,7 @@ export class DocumentsComponent implements OnInit {
   searchText: string = null;
   buttonName: string = "uploadDocuments";
   checkedMaterialsList: RfqMaterialResponse[];
+  selectedSuppliersList: Suppliers[];
   docs: FileList;
   rfqDetails: AddRFQ;
 
@@ -21,7 +23,9 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;
+    this.selectedSuppliersList = history.state.selectedSuppliersList;
     console.log("checkedMaterialsList", this.checkedMaterialsList);
+    console.log("selectedSuppliersList", this.selectedSuppliersList);
   }
 
   setButtonName(name: string) {
@@ -58,8 +62,9 @@ export class DocumentsComponent implements OnInit {
   }
   navigateToReviewRFQ() {
     let checkedMaterialsList = this.checkedMaterialsList;
+    let selectedSuppliersList = this.selectedSuppliersList;
     this.router.navigate(["/rfq/review"], {
-      state: { checkedMaterialsList }
+      state: { checkedMaterialsList, selectedSuppliersList }
     });
   }
 }

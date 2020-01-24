@@ -74,45 +74,6 @@ export class RFQQuantityMakesComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruits: Fruit[] = [{ name: "Lemon" }, { name: "Lime" }, { name: "Apple" }];
-
-  add(event: MatChipInputEvent, index: number): void {
-    const input = event.input;
-    const value = event.value;
-    console.log("value", value);
-    this.materialForms.get("forms");
-    // if ((value || '').trim() && this.SubjectsArray.length < 5) {
-    //   this.SubjectsArray.push({ name: value.trim() })
-    // }
-    // Add our fruit
-    let frmArray = this.materialForms.get("forms") as FormArray;
-
-    frmArray.value[index].makes.push(
-      this.formBuilder.group({
-        make: value
-      })
-    );
-    console.log(`frmArray`, frmArray);
-    if ((value || "").trim()) {
-      this.rfqMat.makes.push(value.trim());
-    }
-    // if ((value || "").trim()) {
-    //   this.rfqMat.makes.push(value.trim());
-    // }
-
-    // Reset the input value
-    if (input) {
-      input.value = "";
-    }
-  }
-
-  remove(fruit: Fruit): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.rfqMat.makes.splice(index, 1);
-    }
-  }
 
   // form functions
   formsInit() {

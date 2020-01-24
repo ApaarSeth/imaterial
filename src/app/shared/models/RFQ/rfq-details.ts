@@ -16,6 +16,7 @@ export interface RfqMat {
   checked?: boolean;
   quantity?: number;
   estimatedRate?: number;
+  // to do change name makes to brands
   makes?: string[];
 }
 export interface Address {
@@ -31,6 +32,7 @@ export interface Address {
   country?: string;
   gstNo?: string;
   addressType?: string;
+  projectAddressId: number;
 }
 
 export interface RfqList {
@@ -46,11 +48,9 @@ export interface RfqList {
 }
 
 export interface AddRFQ {
-  rfq_name: string;
-  due_date: Date;
-  rfq_status: string;
-  suppliers_id: number[];
-  project_address_id: number;
+  rfqName: string;
+  dueDate: Date;
+  supplierId: number[];
   rfqProjectsList: RfqMaterialResponse[];
   documentsList: DocumentDetails[];
   terms: Terms;
@@ -63,6 +63,7 @@ export interface DocumentDetails {
 }
 
 export interface Terms {
+  // to do --- binding pending
   termsDesc: string;
-  termsType: "RFQ";
+  termsType: string;
 }
