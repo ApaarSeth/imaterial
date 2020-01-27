@@ -1,16 +1,15 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
-import { SignupComponent } from "./signup.component";
-
+import { RFQIndentDetailComponent } from "./rfq-indent-detail/rfq-indent-detail.component";
 const routes: Routes = [
   {
-    path: "",
-    component: SignupComponent
+    path: "template",
+    component: RFQIndentDetailComponent
   }
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
-export class SignupRoutingModule {}
+export class RFQIndentDetailRoutingModule {}
