@@ -5,7 +5,7 @@ import { RfqList } from "src/app/shared/models/RFQ/rfq-details";
 @Component({
   selector: "app-ref-detail",
   templateUrl: "./ref-detail.component.html",
-  styleUrls: ["./ref-detail.component.scss"]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class RefDetailComponent implements OnInit {
   constructor(private rfqService: RFQService) {}

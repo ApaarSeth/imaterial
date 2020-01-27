@@ -1,3 +1,7 @@
+<mat-radio-group aria-label="Select an option">
+  <mat-radio-button value="1" class="p-r-5">IGST</mat-radio-button>
+  <mat-radio-button value="2">CGST & SGST</mat-radio-button>
+</mat-radio-group>
 <form *ngIf="poTableData" [formGroup]="poForms" (ngSubmit)="sumbit()">
   <mat-accordion
     displayMode="flat"
@@ -21,11 +25,11 @@
         >Total Amount with GST</span
       >
     </section>
-    <mat-expansion-panel
+    <div
       *ngFor="let material of poTableData; let m = index"
       [formGroupName]="m"
     >
-      <mat-expansion-panel-header class="mat-row">
+      <div class="mat-row">
         <span class="mat-cell">{{ m }}</span>
         <span class="mat-cell">{{ material.materialName }}</span>
         <span class="mat-cell"></span>
@@ -34,7 +38,7 @@
         <span class="mat-cell"></span>
         <span class="mat-cell"></span>
         <span class="mat-cell"></span>
-      </mat-expansion-panel-header>
+      </div>
       <ng-container formArrayName="purchaseOrderDetailList">
         <div
           class="mat-row"
@@ -47,7 +51,6 @@
           <span class="mat-cell"></span>
           <span class="mat-cell"></span>
           <span class="mat-cell">{{ purchaseOrder.materialBrand }}</span>
-
           <span class="mat-cell m-r-15">
             <mat-form-field class="border-input">
               <input
@@ -82,7 +85,7 @@
           <span class="mat-cell"></span>
         </div>
       </ng-container>
-    </mat-expansion-panel>
+    </div>
   </mat-accordion>
   <button>Button</button>
 </form>
