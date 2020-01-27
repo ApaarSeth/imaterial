@@ -26,6 +26,8 @@ export class HeaderLayoutModule implements OnInit {
       this.router.navigate(["/"]);
     } else if (name == "globalStore") {
       this.router.navigate(["globalStore/1"]);
+    } else if (name === "requestForQuotation") {
+      this.router.navigate(["rfq/rfq-detail"]);
     }
   }
 }
