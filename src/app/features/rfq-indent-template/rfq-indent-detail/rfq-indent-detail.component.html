@@ -3,33 +3,106 @@
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row">
       <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-3">
-            <label for="validity">Quote Valid till</label>
+        <div class="row p-b-10">
+          <div class="col-md-1 p-t-30">
+            <label for="validity" class="pull-right">Quote Valid till</label>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <mat-form-field class="border-input">
               <input matInput type="text" placeholder="27-01-2020" />
             </mat-form-field>
             <mat-icon>calendar_today</mat-icon>
           </div>
-          <div class="col-md-3">
-            <label for="bidCompletion">Bid Completion:</label>
-
+          <div class="col-md-4"></div>
+          <div class="col-md-1 p-t-30">
+            <label for="bidCompletion" class="pull-right">Bid Completion:</label>
+          </div>
+          <div class="col-md-1">
             <mat-form-field>
               <input matInput type="text" placeholder="6/12" />
             </mat-form-field>
           </div>
-          <div class="col-md-3">
-            <button
-              mat-raised-button
-              class="main-background-color main-button color-white"
-            >
+          <div class="col-md-3 p-t-20 p-r-30">
+            <button mat-raised-button class="main-background-color main-button color-white pull-right">
               Submit
             </button>
           </div>
         </div>
+
+
+        <div displayMode="flat" multi class="mat-table">
+
+          <!-- Project Name Header -->
+          <section matSort class="mat-header-row main-background-color">
+            <div class="mat-header-cell col-xs-2 font-size18" mat-sort-header="projectName">Project Name 1</div>
+            <div class="mat-header-cell col-xs-2 font-size14" mat-sort-header="address">Sector 43, Gurgaon, Haryana
+            </div>
+            <div class="col-xs-8">
+              <mat-radio-group aria-label="Select GST" class="pull-right">
+                <mat-radio-button class="p-r-20" value="IGST">IGST</mat-radio-button>
+                <mat-radio-button value="CGST-SGST">CGST & SGST</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </section>
+
+          <!-- Material Info -->
+          <section matSort class="mat-header-row">
+            <div class="mat-header-cell font-size18" mat-sort-header="material">Steelbar - 43 MM Steel</div>
+            <div class="mat-header-cell font-size14" mat-sort-header="qty">Requested Quantity: 1500 MT</div>
+            <div class="mat-header-cell border-input" mat-sort-header="gst">
+              <input matInput type="number" placeholder="GST %">
+            </div>
+          </section>
+
+          <!-- Brand Header -->
+          <section matSort class="mat-header-row main-background-color">
+            <div class="mat-header-cell font-size14" mat-sort-header="brandName">Brand Name</div>
+            <div class="mat-header-cell font-size14" mat-sort-header="rate">Rate</div>
+            <div class="mat-header-cell font-size14" mat-sort-header="totalAmt">Total Amount (Rs)</div>
+            <div class="mat-header-cell font-size14" mat-sort-header="GSTAmt">GST Amount (Rs)</div>
+          </section>
+
+          <!-- Brand-wise details -->
+          <div class="mat-row">
+            <div class="mat-cell">Brand Name</div>
+            <div class="mat-cell border-input">
+              Rs. <input matInput type="number" placeholder="Rate">
+            </div>
+            <div class="mat-cell">2456.00</div>
+            <div class="mat-cell">200.00</div>
+          </div>
+
+          <div class="mat-row">
+            <div class="mat-cell">Brand Name</div>
+            <div class="mat-cell border-input">
+              Rs. <input matInput type="number" placeholder="Rate">
+            </div>
+            <div class="mat-cell">2456.00</div>
+            <div class="mat-cell">200.00</div>
+          </div>
+
+          <div class="mat-row">
+            <div class="mat-cell">Brand Name</div>
+            <div class="mat-cell border-input">
+              Rs. <input matInput type="number" placeholder="Rate">
+            </div>
+            <div class="mat-cell">2456.00</div>
+            <div class="mat-cell">200.00</div>
+          </div>
+
+          <div class="mat-row">
+            <div class="mat-cell">Brand Name</div>
+            <div class="mat-cell border-input">
+              Rs. <input matInput type="number" placeholder="Rate">
+            </div>
+            <div class="mat-cell">2456.00</div>
+            <div class="mat-cell">200.00</div>
+          </div>
+
+
+        </div>
       </div>
     </div>
+
   </div>
 </div>
