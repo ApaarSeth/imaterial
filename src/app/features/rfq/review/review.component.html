@@ -1,4 +1,5 @@
 <!-- <fix-header></fix-header> -->
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row m-b-10 ">
@@ -8,6 +9,7 @@
             <button
               mat-raised-button
               class="main-background-color main-button color-white pull-right m-r-30"
+              [disabled]="!form.valid"
             >
               Float RFQ
             </button>
@@ -21,6 +23,7 @@
                 class="p-b-10"
                 matInput
                 type="text"
+                formControlName="rfqName" 
                 placeholder="RFQ Name"
               />
             </mat-form-field>
@@ -30,13 +33,30 @@
             <mat-form-field class="border-input">
               <input
                 matInput
+                [matDatepicker]="dueDate"
+                placeholder="Project Start Date"
+                formControlName="dueDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dueDate"
+              ></mat-datepicker-toggle>
+              <mat-datepicker
+                #dueDate
+                startView="month"
+                [startAt]="dueDate"
+              ></mat-datepicker>
+            </mat-form-field>
+            <!-- <mat-form-field class="border-input">
+              <input
+                matInput
                 class="p-b-10"
                 type="text"
                 disabled="true"
                 placeholder="12:09:2019  12:30 am"
               />
             </mat-form-field>
-            <mat-icon>calendar_today</mat-icon>
+            <mat-icon>calendar_today</mat-icon> -->
           </div>
           <div class="col-md-2 p-t-20 main-color">
             <button mat-button class="pull-right" (click)="openDialog1()">
@@ -52,55 +72,16 @@
 
         <!-- second row -->
         <div class="row m-b-10">
-          <div class="col-md-3">
+          <div class="col-md-3" *ngFor="let supplier of selectedSuppliersList">
             <mat-card>
               <div class="col-md-12 text-bold">
-                <label for="company ">Ravi Supplier Pvt. Ltd.</label>
+              <label for="company ">{{supplier.supplier_name}}</label>
               </div>
               <div class="col-md-12">
-                <label for="email">ravi.contractor@gmail.com</label>
+              <label for="email">{{supplier.email}}</label>
               </div>
               <div class="col-md-12">
-                <label for="phoneNumber">9813893764</label>
-              </div>
-            </mat-card>
-          </div>
-          <div class="col-md-3">
-            <mat-card>
-              <div class="col-md-12 text-bold">
-                <label for="company">Ravi Supplier Pvt. Ltd.</label>
-              </div>
-              <div class="col-md-12">
-                <label for="email">ravi.contractor@gmail.com</label>
-              </div>
-              <div class="col-md-12">
-                <label for="phoneNumber">9813893764</label>
-              </div>
-            </mat-card>
-          </div>
-          <div class="col-md-3">
-            <mat-card>
-              <div class="col-md-12 text-bold">
-                <label for="company">Ravi Supplier Pvt. Ltd.</label>
-              </div>
-              <div class="col-md-12">
-                <label for="email">ravi.contractor@gmail.com</label>
-              </div>
-              <div class="col-md-12">
-                <label for="phoneNumber">9813893764</label>
-              </div>
-            </mat-card>
-          </div>
-          <div class="col-md-3">
-            <mat-card>
-              <div class="col-md-12 text-bold">
-                <label for="company">Ravi Supplier Pvt. Ltd.</label>
-              </div>
-              <div class="col-md-12">
-                <label for="email">ravi.contractor@gmail.com</label>
-              </div>
-              <div class="col-md-12">
-                <label for="phoneNumber">9813893764</label>
+              <label for="phoneNumber">{{supplier.contact_no}}</label>
               </div>
             </mat-card>
           </div>
@@ -111,20 +92,21 @@
     <!-- Accordion/ Collapsible -->
     <mat-accordion>
       <!-- first Project -->
+      <ng-template ngFor let-project [ngForOf]="checkedMaterialsList" let-i="index">
       <mat-expansion-panel class="myPanel">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Project Name 1
+            {{project.projectName}}
           </mat-panel-title>
           <mat-panel-description>
-            Sector 43, Gurgaon, Haryana
+            {{project.defaultAddress.addressLine1}}
           </mat-panel-description>
         </mat-expansion-panel-header>
 
         <!-- table -->
         <table
           mat-table
-          [dataSource]="dataSource"
+          [dataSource]="project.projectMaterialList"
           class="mat-elevation-z8 col-sm-12"
         >
           <!-- Material Name Column -->
@@ -147,8 +129,9 @@
           <ng-container matColumnDef="Makes">
             <th mat-header-cell *matHeaderCellDef>Makes</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.makes[0] }} {{ element.makes[1] }}
-              {{ element.makes[2] }} {{ element.makes[3] }}
+              <span *ngFor="let make of element.makes">
+                {{make}}
+              </span>
             </td>
           </ng-container>
 
@@ -156,143 +139,8 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
       </mat-expansion-panel>
-
-      <!-- first Project -->
-      <mat-expansion-panel class="myPanel">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Project Name 1
-          </mat-panel-title>
-          <mat-panel-description>
-            Sector 43, Gurgaon, Haryana
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <!-- table -->
-        <table
-          mat-table
-          [dataSource]="dataSource"
-          class="mat-elevation-z8 col-sm-12"
-        >
-          <!-- Material Name Column -->
-          <ng-container matColumnDef="Material Name">
-            <th mat-header-cell *matHeaderCellDef>Material Name</th>
-            <td mat-cell *matCellDef="let element" class="dark-gray-color">
-              {{ element.materialName }}
-            </td>
-          </ng-container>
-
-          <!-- Quantity Column -->
-          <ng-container matColumnDef="Quantity">
-            <th mat-header-cell *matHeaderCellDef>Quantity</th>
-            <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
-          </ng-container>
-
-          <!-- Makes Column -->
-          <ng-container matColumnDef="Makes">
-            <th mat-header-cell *matHeaderCellDef>Makes</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.makes[0] }} {{ element.makes[1] }}
-              {{ element.makes[2] }} {{ element.makes[3] }}
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </mat-expansion-panel>
-
-      <!-- first Project -->
-      <mat-expansion-panel class="myPanel">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Project Name 1
-          </mat-panel-title>
-          <mat-panel-description>
-            Sector 43, Gurgaon, Haryana
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <!-- table -->
-        <table
-          mat-table
-          [dataSource]="dataSource"
-          class="mat-elevation-z8 col-sm-12"
-        >
-          <!-- Material Name Column -->
-          <ng-container matColumnDef="Material Name">
-            <th mat-header-cell *matHeaderCellDef>Material Name</th>
-            <td mat-cell *matCellDef="let element" class="dark-gray-color">
-              {{ element.materialName }}
-            </td>
-          </ng-container>
-
-          <!-- Quantity Column -->
-          <ng-container matColumnDef="Quantity">
-            <th mat-header-cell *matHeaderCellDef>Quantity</th>
-            <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
-          </ng-container>
-
-          <!-- Makes Column -->
-          <ng-container matColumnDef="Makes">
-            <th mat-header-cell *matHeaderCellDef>Makes</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.makes[0] }} {{ element.makes[1] }}
-              {{ element.makes[2] }} {{ element.makes[3] }}
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </mat-expansion-panel>
-
-      <!-- first Project -->
-      <mat-expansion-panel class="myPanel">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Project Name 1
-          </mat-panel-title>
-          <mat-panel-description>
-            Sector 43, Gurgaon, Haryana
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <!-- table -->
-        <table
-          mat-table
-          [dataSource]="dataSource"
-          class="mat-elevation-z8 col-sm-12"
-        >
-          <!-- Material Name Column -->
-          <ng-container matColumnDef="Material Name">
-            <th mat-header-cell *matHeaderCellDef>Material Name</th>
-            <td mat-cell *matCellDef="let element" class="dark-gray-color">
-              {{ element.materialName }}
-            </td>
-          </ng-container>
-
-          <!-- Quantity Column -->
-          <ng-container matColumnDef="Quantity">
-            <th mat-header-cell *matHeaderCellDef>Quantity</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.quantity }} MM
-            </td>
-          </ng-container>
-
-          <!-- Makes Column -->
-          <ng-container matColumnDef="Makes">
-            <th mat-header-cell *matHeaderCellDef>Makes</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.makes[0] }} {{ element.makes[1] }}
-              {{ element.makes[2] }} {{ element.makes[3] }}
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </mat-expansion-panel>
+      </ng-template>
     </mat-accordion>
   </div>
 </div>
+</form>

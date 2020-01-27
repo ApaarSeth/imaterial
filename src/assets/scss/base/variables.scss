@@ -68,7 +68,7 @@ button:focus {
 }
 
 input {
-  background: $white-color;
+  // background: $white-color;
   padding: 10px;
   border-radius: 5px;
 }
@@ -284,4 +284,17 @@ a:hover {
   width: 100%;
   height: 100%;
   opacity: 0;
+}
+
+.password-eye {
+  float: left;
+  position: absolute;
+  right: 10px;
+}
+
+.icon-inverse {
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
 }

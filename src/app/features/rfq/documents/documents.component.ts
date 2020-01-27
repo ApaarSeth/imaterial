@@ -4,24 +4,32 @@ import {
   AddRFQ
 } from "src/app/shared/models/RFQ/rfq-details";
 import { Router } from "@angular/router";
+import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 
 @Component({
   selector: "documents",
   templateUrl: "./documents.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  styleUrls: [
+    "../../../../assets/scss/main.scss",
+    // "../../../../../node_modules/froala-editor/css/froala_editor.pkgd.min.css",
+    // "../../../../../node_modules/froala-editor/css/froala_style.min.css"
+  ]
 })
 export class DocumentsComponent implements OnInit {
   searchText: string = null;
   buttonName: string = "uploadDocuments";
   checkedMaterialsList: RfqMaterialResponse[];
+  selectedSuppliersList: Suppliers[];
   docs: FileList;
   rfqDetails: AddRFQ;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;
+    this.selectedSuppliersList = history.state.selectedSuppliersList;
     console.log("checkedMaterialsList", this.checkedMaterialsList);
+    console.log("selectedSuppliersList", this.selectedSuppliersList);
   }
 
   setButtonName(name: string) {
@@ -58,8 +66,9 @@ export class DocumentsComponent implements OnInit {
   }
   navigateToReviewRFQ() {
     let checkedMaterialsList = this.checkedMaterialsList;
+    let selectedSuppliersList = this.selectedSuppliersList;
     this.router.navigate(["/rfq/review"], {
-      state: { checkedMaterialsList }
+      state: { checkedMaterialsList, selectedSuppliersList }
     });
   }
 }

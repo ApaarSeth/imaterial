@@ -66,9 +66,15 @@
 
     <div class="row ">
       <!-- first column: Select Document -->
-      <app-upload #uploadRef class="col-xs-12" (onFileUpdate)="fileUpdate($event)"></app-upload>
+      <app-upload
+        #uploadRef
+        class="col-xs-12"
+        (onFileUpdate)="fileUpdate($event)"
+      ></app-upload>
     </div>
 
     <!-- second row: terms and conditions -->
+    <!-- <div [froalaEditor]>Hello, Froala!</div> -->
+    <!-- <froala></froala> -->
   </div>
 </div>

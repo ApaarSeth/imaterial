@@ -1,3 +1,5 @@
+@import "../base/variables.scss";
+
 .mat-expansion-panel-header.mat-expanded:focus,
 .mat-expansion-panel-header.mat-expanded:hover {
     background: $background-color-grey !important;
@@ -52,4 +54,8 @@ $mat-row-horizontal-padding: 24px;
     overflow: hidden;
     word-wrap: break-word;
     color: black !important;
+}
+
+input.quantity {
+    width: 4rem;
 }

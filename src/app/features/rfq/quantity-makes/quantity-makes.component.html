@@ -4,20 +4,8 @@
     <!-- fix part -->
     <div class="row p-t-15 p-b-10">
       <div class="col-xs-2">
-<<<<<<< HEAD
         <a href="javascript:void(0)" (click)="setButtonName('projectMaterials')">
           <button [class.active]="buttonName == 'projectMaterials'" class="color-black" mat-button>
-=======
-        <a
-          href="javascript:void(0)"
-          (click)="setButtonName('projectMaterials')"
-        >
-          <button
-            [class.active]="buttonName == 'projectMaterials'"
-            class="color-black"
-            mat-button
-          >
->>>>>>> 9dcad3e309a671afb9f90eef44862cf15762355c
             Project & Material
           </button>
         </a>
@@ -61,13 +49,12 @@
     <!-- table structure -->
     <form [formGroup]="materialForms">
       <mat-accordion class="accordion-padding-zero" formArrayName="forms">
-<<<<<<< HEAD
         <ng-template ngFor let-material [ngForOf]="checkedMaterialsList" let-mati="index">
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{material.projectName}}----{{mati}}
-                <a href="javascript:void(0)" class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a>
+                {{material.projectName}}
+                <a href="javascript:void(0)" (click)="openDialog()" class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <!-- table part -->
@@ -82,44 +69,7 @@
                   {{ element.materialName }}
                 </td>
               </ng-container>
-=======
-        <ng-template
-          ngFor
-          let-material
-          [ngForOf]="checkedMaterialsList"
-          let-mati="index"
-        >
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{ material.projectName }}----{{ mati }}
-
-                <a
-                  href="javascript:void(0)"
-                  (click)="openDialog()"
-                  class="main-color p-l-15"
-                  >{{ material.defaultAddress.addressLine1 }}</a
-                >
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <!-- table part -->
-            <table
-              mat-table
-              [dataSource]="material.projectMaterialList"
-              class="mat-elevation-z8 col-sm-12"
-            >
-              <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
->>>>>>> 9dcad3e309a671afb9f90eef44862cf15762355c
-
-              <!-- Position Column -->
-              <ng-container matColumnDef="Material Name">
-                <th mat-header-cell *matHeaderCellDef>Material Name</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.materialName }}
-                </td>
-              </ng-container>
-
+              
               <ng-container matColumnDef="Required Date">
                 <th mat-header-cell *matHeaderCellDef>Required Date</th>
                 <td mat-cell *matCellDef="let element; let i = index">
@@ -129,103 +79,40 @@
               <!-- Name Column -->
               <ng-container matColumnDef="Requested Quantity">
                 <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
-<<<<<<< HEAD
                 <td mat-cell *matCellDef="let element">{{ element.requestedQty }}</td>
-=======
-                <td mat-cell *matCellDef="let element">
-                  {{ element.requestedQty }}
-                </td>
->>>>>>> 9dcad3e309a671afb9f90eef44862cf15762355c
               </ng-container>
               <!-- Name Column -->
               <ng-container matColumnDef="Estimated Quantity">
                 <th mat-header-cell *matHeaderCellDef>Estimated Quantity</th>
-<<<<<<< HEAD
                 <td mat-cell *matCellDef="let element">{{ element.estimatedQty }}</td>
-=======
-                <td mat-cell *matCellDef="let element">
-                  {{ element.estimatedQty }}
-                </td>
->>>>>>> 9dcad3e309a671afb9f90eef44862cf15762355c
               </ng-container>
               <!-- estimated rate -->
               <ng-container matColumnDef="Estimated Rate">
                 <th mat-header-cell *matHeaderCellDef>Estimated Rate</th>
                 <td mat-cell *matCellDef="let element; let i = index">
-<<<<<<< HEAD
                   <mat-form-field [formGroupName]="(i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0))"
                     class="border-input table-input">
-                    {{i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0) }}<input matInput
-                      formControlName="estimatedRate" type="number" placeholder="Estimated Rate" />
-=======
-                  <mat-form-field
-                    [formGroupName]="
-                      i +
-                      (mati ? checkedMaterialsList[mati].prevMatListLength : 0)
-                    "
-                    class="border-input table-input"
-                  >
-                    <input
-                      matInput
-                      formControlName="estimatedRate"
-                      type="number"
-                      placeholder="Estimated Rate"
-                    />
->>>>>>> 9dcad3e309a671afb9f90eef44862cf15762355c
+                    <input matInput formControlName="estimatedRate" type="number" placeholder="Estimated Rate" />
                   </mat-form-field>
                 </td>
               </ng-container>
               <!-- quantity -->
               <ng-container matColumnDef="Quantity">
                 <th mat-header-cell *matHeaderCellDef>Quantity</th>
-<<<<<<< HEAD
                 <td mat-cell *matCellDef="let element; let  i= index">
                   <mat-form-field [formGroupName]="(i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0))"
                     class="border-input table-input">
-                    {{i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0) }} <input matInput
-                      formControlName="quantity" type="number" placeholder="Quantity" />
-=======
-                <td mat-cell *matCellDef="let element; let i = index">
-                  <mat-form-field
-                    [formGroupName]="
-                      i +
-                      (mati ? checkedMaterialsList[mati].prevMatListLength : 0)
-                    "
-                    class="border-input table-input"
-                  >
-                    <input
-                      matInput
-                      formControlName="quantity"
-                      type="number"
-                      placeholder="Quantity"
-                    />
->>>>>>> 9dcad3e309a671afb9f90eef44862cf15762355c
+                    <input matInput formControlName="quantity" type="number" placeholder="Quantity" />
                   </mat-form-field>
                 </td>
               </ng-container>
               <!-- makes -->
               <ng-container matColumnDef="Makes">
                 <th mat-header-cell *matHeaderCellDef>Makes</th>
-<<<<<<< HEAD
                 <td mat-cell *matCellDef="let element; let  i= index">
                   <app-chip
                     (onUpdate)="makesUpdate($event, (i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0)))">
                   </app-chip>
-=======
-                <td mat-cell *matCellDef="let element; let i = index">
-                  <!-- <mat-form-field [formGroupName]="(i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0))" class="example-chip-list"> -->
-                  <app-chip
-                    (onUpdate)="
-                      makesUpdate(
-                        $event,
-                        i +
-                          (mati
-                            ? checkedMaterialsList[mati].prevMatListLength
-                            : 0)
-                      )
-                    "
-                  ></app-chip>
->>>>>>> 9dcad3e309a671afb9f90eef44862cf15762355c
                 </td>
               </ng-container>
 
@@ -235,12 +122,6 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
 
-<<<<<<< HEAD
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
-=======
->>>>>>> 9dcad3e309a671afb9f90eef44862cf15762355c
             <!-- end table part -->
           </mat-expansion-panel>
         </ng-template>
