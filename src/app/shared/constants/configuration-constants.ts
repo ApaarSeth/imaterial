@@ -28,6 +28,8 @@ export const API = {
   GETSUPPLIERS: organizationId => `projects/getsuppliers/${organizationId}`,
   ADDSUPPLIER: organizationId => `projects/addSuppliers/${organizationId}`,
   GETPODETAILLIST: organizationId => `po/detail/list/${organizationId}`,
-  ADDRFQ: `rfq/addrfq`
+  ADDRFQ: `rfq/addrfq`,
+  GETRFQDETAILSUPPLIER: (rfqId, supplierId) =>
+    `rfq/details/supplier/${rfqId}/${supplierId}`
   //STATE: 'account/api/permitted/address/states',
 };
