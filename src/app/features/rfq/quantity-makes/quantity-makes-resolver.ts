@@ -4,17 +4,18 @@ import { ProjectService } from "src/app/shared/services/projectDashboard/project
 
 @Injectable()
 export class QuantityMakesResolver implements Resolve<any> {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private projectService: ProjectService) {}
 
   resolve() {
-    if (!history.state.checkedMaterials) {
-      this.router.navigate(["/rfq/project-materials"]);
-    } else {
-      this.router.navigate(["/rfq/quantity-makes"]);
-    }
-    // return this.projectService.getProjects(1, 1).then(data => {
+    // if (!history.state.checkedMaterials) {
+    //   this.router.navigate(["/rfq/project-materials"]);
+    // } else {
+    //   this.router.navigate(["/rfq/quantity-makes"]);
+    // }
+    //   return this.projectService.getProjects(1, 1).then(data => {
     //     console.log("wefrgthyjhgff", data.data);
     //     return data.data;
-    // });
+    //   });
+    // }
   }
 }

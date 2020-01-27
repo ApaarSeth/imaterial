@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: "quantity-makes",
-    // resolve: { quantityMakes: QuantityMakesResolver },
+    //resolve: { quantityMakes: QuantityMakesResolver },
     component: RFQQuantityMakesComponent
   },
   {
