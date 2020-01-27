@@ -41,14 +41,16 @@ const routes: Routes = [
     loadChildren: () => import("./features/po/po.module").then(m => m.POModule)
   },
   {
-    path: "signup",
+    path: "auth",
     loadChildren: () =>
-      import("./features/signup/signup.module").then(m => m.SignupModule)
+      import("./features/auth/auth.module").then(m => m.AuthModule)
   },
   {
-    path: "login",
+    path: "rfq-indent-detail",
     loadChildren: () =>
-      import("./features/login/login.module").then(m => m.LoginModule)
+      import(
+        "./features/rfq-indent-template/rfq-indent-detail-template.module"
+      ).then(m => m.RFQIndentDetailTemplateModule)
   }
 ];
 

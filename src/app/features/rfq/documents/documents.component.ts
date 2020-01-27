@@ -9,7 +9,11 @@ import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 @Component({
   selector: "documents",
   templateUrl: "./documents.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  styleUrls: [
+    "../../../../assets/scss/main.scss",
+    // "../../../../../node_modules/froala-editor/css/froala_editor.pkgd.min.css",
+    // "../../../../../node_modules/froala-editor/css/froala_style.min.css"
+  ]
 })
 export class DocumentsComponent implements OnInit {
   searchText: string = null;
@@ -19,7 +23,7 @@ export class DocumentsComponent implements OnInit {
   docs: FileList;
   rfqDetails: AddRFQ;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;
