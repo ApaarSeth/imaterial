@@ -1,0 +1,54 @@
+<form *ngIf="poTableData" [formGroup]="poForms" (ngSubmit)="sumbit()">
+    <mat-accordion displayMode="flat" multi class="mat-table" formArrayName="forms">
+        <section matSort class="mat-elevation-z2 mat-header-row">
+            <span class="mat-header-cell" mat-sort-header="vesselName">S.No</span>
+            <span class="mat-header-cell" mat-sort-header="vesselId">Material Name</span>
+            <span class="mat-header-cell" mat-sort-header="vesselStatus">Makes</span>
+            <span class="mat-header-cell" mat-sort-header="ircs">Supplier Rate</span>
+            <span class="mat-header-cell" mat-sort-header="ircs">Awarded quantity</span>
+            <span class="mat-header-cell" mat-sort-header="ircs">Amount</span>
+            <span class="mat-header-cell" mat-sort-header="ircs">GST %</span>
+            <span class="mat-header-cell" mat-sort-header="ircs">Total Amount with GST</span>
+
+        </section>
+        <mat-expansion-panel *ngFor="let material of poTableData;let m=index" [formGroupName]="m">
+
+            <mat-expansion-panel-header class="mat-row">
+                <span class="mat-cell">{{ m}}</span>
+                <span class="mat-cell">{{ material.materialName }}</span>
+                <span class="mat-cell"></span>
+                <span class="mat-cell"></span>
+                <span class="mat-cell"></span>
+                <span class="mat-cell"></span>
+                <span class="mat-cell"></span>
+                <span class="mat-cell"></span>
+            </mat-expansion-panel-header>
+            <ng-container formArrayName="purchaseOrderDetailList">
+                <div class="mat-row" *ngFor="let purchaseOrder of material.purchaseOrderDetailList;let p=index"
+                    [formGroupName]="p">
+                    <span class="mat-cell"></span>
+                    <span class="mat-cell"></span>
+                    <span class="mat-cell">{{purchaseOrder.materialBrand}}</span>
+                    <span class="mat-cell m-r-15">
+                        <mat-form-field class="border-input">
+                            <input matInput #rate formControlName="materialQuantity" placeholder="rate" />
+                        </mat-form-field>
+                    </span>
+                    <span class="mat-cell m-r-15">
+                        <mat-form-field class="border-input">
+                            <input matInput #quantity formControlName="materialUnitPrice" placeholder="quantity" />
+                        </mat-form-field>
+                    </span>
+                    <span class="mat-cell m-r-15">{{rate.value*quantity.value}}</span>
+                    <span class="mat-cell">
+                        <mat-form-field class="border-input">
+                            <input matInput formControlName="gst" placeholder="GST%" class="m-r-5" />
+                        </mat-form-field>
+                    </span>
+                    <span class="mat-cell"></span>
+                </div>
+            </ng-container>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <button>Button</button>
+</form>

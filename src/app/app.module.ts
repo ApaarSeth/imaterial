@@ -19,7 +19,7 @@ import { PODetailListResolver } from "./features/po/resolver/po-detail-list-reso
 import { PoComponent } from "./features/po/po.component";
 
 @NgModule({
-  declarations: [AppComponent, PoComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

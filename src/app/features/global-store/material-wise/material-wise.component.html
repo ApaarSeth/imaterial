@@ -24,7 +24,7 @@
         <span class="mat-cell">{{
           project.Projects.nearDueDate | date: "dd MMM yyy"
         }}</span>
-        <span class="mat-cell">{{ project.Projects.availableQty }}</span>
+        <span class="mat-cell">{{ project.Projects.sum }}</span>
       </mat-expansion-panel-header>
       <div *ngFor="let material of project.Projects.indentMaterials">
         <mat-expansion-panel-header class="mat-row">
