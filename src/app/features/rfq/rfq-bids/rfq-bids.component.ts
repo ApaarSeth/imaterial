@@ -15,7 +15,10 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 @Component({
   selector: "app-rfq-bids",
   templateUrl: "./rfq-bids.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  styleUrls: [
+    "../../../../assets/scss/main.scss",
+    "../../../../assets/scss/pages/rfq-bids.component.scss"
+  ]
 })
 export class RfqBidsComponent implements OnInit {
   constructor(

@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
-import { PODetailService } from "src/app/shared/services/po-detail/po-detail.service";
+import { POService } from "src/app/shared/services/po/po.service";
 
 @Injectable()
 export class PODetailListResolver implements Resolve<any> {
-  constructor(private poDetailService: PODetailService) {}
+  constructor(private poDetailService: POService) {}
 
   resolve() {
     return this.poDetailService.getPODetails(1).then(data => {
