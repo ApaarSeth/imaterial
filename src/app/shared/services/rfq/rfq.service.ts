@@ -47,4 +47,10 @@ export class RFQService {
       return res;
     });
   }
+
+  getRFQDetailSupplier(rfqId: number, supplierId: number) {
+    return this.dataService.getRequest(
+      API.GETRFQDETAILSUPPLIER(rfqId, supplierId)
+    );
+  }
 }
