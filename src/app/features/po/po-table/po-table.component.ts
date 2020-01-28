@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { PoMaterial, PurchaseOrder } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
+import { ignoreElements } from "rxjs/operators";
 
 @Component({
   selector: "app-po-table",
@@ -10,7 +11,7 @@ import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 export class PoTableComponent implements OnInit {
   @Input("poTableData") poTableData: PoMaterial[];
   @Input("viewMode") viewMode: boolean;
-
+  gst: string;
   constructor(private formBuilder: FormBuilder) {}
   poForms: FormGroup;
   ngOnInit() {
@@ -77,9 +78,22 @@ export class PoTableComponent implements OnInit {
     console.log(this.poForms);
   }
   sumbit() {
+    this.getData();
     console.log(this.poForms.value.forms);
   }
-  getData() {
-    return this.poForms.value.forms;
+
+  getData(): PoMaterial[] {
+    return this.poForms.value.forms.map(material => {
+      material.purchaseOrderDetailList.map(purchaseOrderList => {
+        if (this.gst === "IGST") {
+          purchaseOrderList.materialIgst = purchaseOrderList.gst;
+        } else {
+          purchaseOrderList.materialSgst = purchaseOrderList.gst / 2;
+          purchaseOrderList.materialCgst = purchaseOrderList.gst / 2;
+        }
+        return purchaseOrderList;
+      });
+      return material;
+    });
   }
 }

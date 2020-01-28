@@ -1,0 +1,14 @@
+<div>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+        [(ngModel)]="selectedApprover">
+        <div *ngFor="let approver of approverData">
+            <mat-radio-button class="example-radio-button" [value]="approver">
+                {{approver.firstName}}{{approver.lastName}}
+            </mat-radio-button>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-radio-group>
+    <button mat-raised-button class="main-background-color main-button color-white center-element" (click)="sendPo()">
+        Send
+    </button>
+</div>
