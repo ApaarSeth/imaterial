@@ -8,6 +8,7 @@ import { ProjectIds } from "../../models/project-details";
 import { RfqProjectSubmit } from "../../models/RFQ/rfqBids";
 import { Suppliers } from "../../models/RFQ/suppliers";
 import { AddRFQ } from "../../models/RFQ/rfq-details";
+import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
 
 @Injectable({
   providedIn: "root"
@@ -52,5 +53,16 @@ export class RFQService {
     return this.dataService.getRequest(
       API.GETRFQDETAILSUPPLIER(rfqId, supplierId)
     );
+  }
+
+  postRFQDetailSupplier(supplierId: number, rfqSupplierDetails: SendRfqObj) {
+    return this.dataService
+      .sendPostRequest(
+        API.POSTRFQDETAILSUPPLIER(supplierId),
+        rfqSupplierDetails
+      )
+      .then(res => {
+        return res;
+      });
   }
 }

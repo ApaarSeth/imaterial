@@ -6,6 +6,7 @@ $icon-color-gray: #b8b8b8;
 $black-color: #000000;
 $alert-color: #ff5353;
 $background-color-grey: #979797;
+$background-table-color-grey: #ECECEC;
 $green-color: #7ed321;
 
 a:hover {
@@ -29,7 +30,7 @@ a:hover {
 }
 
 .color-white {
-  color: $white-color;
+  color: $white-color !important;
 }
 
 .color-black {
@@ -55,6 +56,11 @@ a:hover {
 .gray-color {
   color: $icon-color-gray;
 }
+
+.table-gray-background-color {
+  background-color: $background-table-color-grey;
+}
+
 button:focus {
   outline: 0px;
   outline: 0px;
@@ -112,6 +118,10 @@ input {
 
 .text-bold {
   font-weight: 800;
+}
+
+.text-semi-bold {
+  font-weight: 500;
 }
 
 .font-size14 {
@@ -223,6 +233,14 @@ a:hover {
 }
 .right-pipe {
   border-right: 1px solid black;
+}
+
+.mat-radio-outer-circle {
+  border-color: $white-color;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color:$main-color;
 }
 
 //Muskaan's edit

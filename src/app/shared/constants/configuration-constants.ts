@@ -32,6 +32,7 @@ export const API = {
   SENDPODATA: `po/updatePO`,
   ADDRFQ: `rfq/addrfq`,
   GETRFQDETAILSUPPLIER: (rfqId, supplierId) =>
-    `rfq/details/supplier/${rfqId}/${supplierId}`
+    `rfq/details/supplier/${rfqId}/${supplierId}`,
+  POSTRFQDETAILSUPPLIER: supplierId => `rfq/addSupplierDetail/${supplierId}`
   //STATE: 'account/api/permitted/address/states',
 };
