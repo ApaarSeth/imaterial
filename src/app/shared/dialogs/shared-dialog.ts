@@ -6,7 +6,7 @@ import { AddCommentDialogComponent } from "./add-comment/comment-dialog.componen
 import { AddAddressDialogComponent } from "./add-address/address-dialog.component";
 import { IssueToIndentDialogComponent } from "./issue-to-indent/issue-to-indent-dialog.component";
 import { AddRFQConfirmationComponent } from "./add-rfq-confirmation/add-rfq-double-confirmation.component";
-import { SelectApproverComponent } from "./selectApprover/selectApprover.component";
+import { SelectApproverComponent } from "./selectPoApprover/selectPo.component";
 
 export const SharedDialogs = [
   AddProjectComponent,

@@ -28,7 +28,7 @@ const routes: Routes = [
     component: RefDetailComponent
   },
   {
-    path: "rfq-bid",
+    path: "rfq-bid/:id",
     component: RfqBidsComponent
   },
   {

@@ -4,7 +4,7 @@ import { POData, PoMaterial, CardData } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
 import { MatDialog } from "@angular/material";
-import { SelectApproverComponent } from "src/app/shared/dialogs/selectApprover/selectApprover.component";
+import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 
 @Component({
   selector: "app-po",
