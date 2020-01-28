@@ -11,6 +11,7 @@ import {
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { map } from "rxjs/operators";
 import { Materials } from "src/app/shared/models/subcategory-materials";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-rfq-bids",
@@ -23,7 +24,8 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 export class RfqBidsComponent implements OnInit {
   constructor(
     private rfqService: RFQService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {}
   rfqProjects: RfqProject[];
   rfqForms: FormGroup;
@@ -31,6 +33,9 @@ export class RfqBidsComponent implements OnInit {
     this.rfqService.rfqPo(1, 1).then(res => {
       this.rfqProjects = res.data;
       console.log(this.rfqProjects);
+      this.route.params.subscribe(rfqId => {
+        console.log(rfqId);
+      });
       this.formInit();
     });
   }
