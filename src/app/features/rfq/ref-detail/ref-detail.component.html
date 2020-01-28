@@ -60,7 +60,7 @@
             <ng-container matColumnDef="action2">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element;let i=index">
-                <a [routerLink]="['../rfq-bid/',i]">View Bids</a>
+                <a [routerLink]="['../rfq-bid/',element.rfqId]">View Bids</a>
               </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
