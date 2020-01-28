@@ -29,13 +29,17 @@ export class RfqBidsComponent implements OnInit {
   ) {}
   rfqProjects: RfqProject[];
   rfqForms: FormGroup;
+  rfqId: number;
   ngOnInit() {
-    this.rfqService.rfqPo(1, 1).then(res => {
+    this.route.params.subscribe(rfqId => {
+      console.log("rfq", rfqId);
+      this.rfqId = Number(rfqId.id);
+    });
+    this.rfqService.rfqPo(1, this.rfqId).then(res => {
+      console.log(res);
       this.rfqProjects = res.data;
       console.log(this.rfqProjects);
-      this.route.params.subscribe(rfqId => {
-        console.log(rfqId);
-      });
+
       this.formInit();
     });
   }
