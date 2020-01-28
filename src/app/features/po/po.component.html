@@ -1,18 +1,16 @@
 <div class="page-start-point">
-  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <app-po-card
-      #poCard
-      *ngIf="tableData.length"
-      [cardData]="cardData"
-      [viewMode]="viewMode"
-    ></app-po-card>
-    <app-po-table
-      #poTable
-      *ngIf="tableData.length"
-      [poTableData]="tableData"
-      [viewMode]="viewMode"
-    ></app-po-table>
-    <button (click)="collateResults()">Button</button>
-    <button (click)="viewModes()">viewMode</button>
-  </div>
+    <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+        <div class="row">
+            <div class="col-sm-12 m-t-5 text-right">
+                <button mat-raised-button class="main-background-color main-button color-white "
+                    (click)="selectApprover()">
+                    Send For Approval
+                </button>
+            </div>
+        </div>
+        <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData" [viewMode]="viewMode"></app-po-card>
+        <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData" [viewMode]="viewMode">
+        </app-po-table>
+        <button (click)="viewModes()">viewMode</button>
+    </div>
 </div>

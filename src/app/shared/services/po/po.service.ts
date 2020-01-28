@@ -18,4 +18,9 @@ export class POService {
   sendPoData(poData) {
     return this.dataService.sendPostRequest(API.SENDPODATA, poData);
   }
+  getApproverData(organizationId: number, projectId: number) {
+    return this.dataService.getRequest(
+      API.GETAPPROVER(organizationId, projectId)
+    );
+  }
 }

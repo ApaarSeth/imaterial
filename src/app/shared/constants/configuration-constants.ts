@@ -32,6 +32,8 @@ export const API = {
   SENDPODATA: `po/updatePO`,
   ADDRFQ: `rfq/addrfq`,
   GETRFQDETAILSUPPLIER: (rfqId, supplierId) =>
-    `rfq/details/supplier/${rfqId}/${supplierId}`
+    `rfq/details/supplier/${rfqId}/${supplierId}`,
+  GETAPPROVER: (organizationId, projectId) =>
+    `po/users/${organizationId}/${projectId}`
   //STATE: 'account/api/permitted/address/states',
 };

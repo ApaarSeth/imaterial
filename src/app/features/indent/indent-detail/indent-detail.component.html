@@ -2,11 +2,8 @@
   <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row">
       <div class="col-sm-12">
-        <card-layout *ngIf="product"
-          (onEdit)="editProject($event)"
-          (onDelete)="deleteProject($event)"
-          [projectDetails]="product"
-        ></card-layout>
+        <card-layout *ngIf="product" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)"
+          [projectDetails]="product"></card-layout>
       </div>
     </div>
     <div class="row p-t-10 p-b-10">
@@ -20,11 +17,7 @@
     <div class="row">
       <!-- <div class="col-sm-12"> -->
       <!-- table structure -->
-      <table
-        mat-table
-        [dataSource]="dataSource1"
-        class="mat-elevation-z8 col-sm-12"
-      >
+      <table mat-table [dataSource]="dataSource1" class="mat-elevation-z8 col-sm-12">
         <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 
@@ -83,11 +76,7 @@
     <div class="row">
       <!-- <div class="col-sm-12"> -->
       <!-- table structure -->
-      <table
-        mat-table
-        [dataSource]="dataSource2"
-        class="mat-elevation-z8 col-sm-12"
-      >
+      <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8 col-sm-12">
         <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
 
