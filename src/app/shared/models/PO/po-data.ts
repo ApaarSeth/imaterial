@@ -1,14 +1,18 @@
 export interface POData {
   supplierAddress: SupplierAddress;
   projectAddress: ProjectAddress;
+  billingAddress: BillingAddress;
   materialData: PoMaterial[];
   purchaseOrderDetailId: number;
   purchaseOrderId: number;
   poNumber: number;
-  poName: null;
-  poValidUpto: null;
-  DocumentsList: null;
+  poName: string;
+  poValidUpto: string;
+  DocumentsList: DocumentList[];
   Terms: terms;
+  comments: string;
+  projectId: number;
+  approverId?: number;
 }
 export interface PoMaterial {
   materialId: number;
@@ -18,7 +22,7 @@ export interface PoMaterial {
   materialGroup: string;
   materialUnit: string;
   estimatedQty: number;
-  estimatedRate: null;
+  estimatedRate: number;
   materialCustomFlag: number;
   materialCustomId: number;
   materialSubGroup: string;
@@ -32,8 +36,8 @@ export interface PoMaterial {
 }
 
 export interface PurchaseOrder {
-  id: 0;
-  status: 0;
+  id: number;
+  status: number;
   created_by: string;
   created_at: string;
   last_updated_by: string;
@@ -91,11 +95,59 @@ export interface ProjectAddress {
   state: string;
   pinCode: string;
   country: string;
+  email: string;
+  contactNo: string;
+  firstName: string;
+  lastName: string;
+}
+export interface BillingAddress {
+  projectAddressId: number;
+  supplierId: number;
+  projectName: string;
+  addressId: number;
+  primaryAddress: number;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  state: string;
+  pinCode: string;
+  country: string;
+  email: string;
+  contactNo: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface CardData {
   supplierAddress: SupplierAddress;
   projectAddress: ProjectAddress;
   poNumber: number;
-  poValidUpto: null;
+  poValidUpto: string;
+}
+
+export interface DocumentList {
+  documentType: string;
+  documentDesc: string;
+  documentUrl: string;
+}
+
+export interface ApproverData {
+  id: number;
+  status: number;
+  created_by: string;
+  created_at: string;
+  last_updated_by: string;
+  last_updated_at: string;
+  user_d: number;
+  userType: string;
+  organizationId: number;
+  accountOwner: number;
+  email: string;
+  contactNo: number;
+  countryCode: string;
+  uniqueCode: string;
+  firstName: string;
+  lastName: string;
+  profileImageUrl: string;
+  accountStatus: number;
 }

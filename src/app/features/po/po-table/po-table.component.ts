@@ -81,9 +81,10 @@ export class PoTableComponent implements OnInit {
     this.getData();
     console.log(this.poForms.value.forms);
   }
-  getData() {
-    this.poForms.value.forms = this.poForms.value.forms.map(material => {
-      return material.purchaseOrderDetailList.map(purchaseOrderList => {
+
+  getData(): PoMaterial[] {
+    return this.poForms.value.forms.map(material => {
+      material.purchaseOrderDetailList.map(purchaseOrderList => {
         if (this.gst === "IGST") {
           purchaseOrderList.materialIgst = purchaseOrderList.gst;
         } else {
@@ -92,6 +93,7 @@ export class PoTableComponent implements OnInit {
         }
         return purchaseOrderList;
       });
+      return material;
     });
   }
 }
