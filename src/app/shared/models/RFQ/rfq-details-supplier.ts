@@ -1,6 +1,15 @@
 export interface SendRfqObj {
+  dueDate: Date;
+  projectList: ProjectRfqObj[];
+}
+export interface ProjectRfqObj {
   projectId: number;
   projectName: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  state: string;
+  gst: string;
   materialList: MaterialRfqObj[];
 }
 
@@ -9,13 +18,18 @@ export interface MaterialRfqObj {
   materialId: number;
   rfqBrandList: BrandRfqObj[];
   rfqDetailId: number;
+  materialQuantity: number;
+  materialUnit: string;
+  materialIgst: number;
+  materialSgst: number;
+  materialCgst: number;
+  materialIGSTFlag: boolean;
 }
 
 export interface BrandRfqObj {
   brandName: string;
   brandId: string;
   brandRate: number;
-  materialIgst: number;
-  materialSgst: number;
-  materialCgst: number;
+  brandAmount: number;
+  brandRateFlag: boolean;
 }

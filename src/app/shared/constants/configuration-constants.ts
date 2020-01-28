@@ -33,6 +33,7 @@ export const API = {
   ADDRFQ: `rfq/addrfq`,
   GETRFQDETAILSUPPLIER: (rfqId, supplierId) =>
     `rfq/details/supplier/${rfqId}/${supplierId}`,
+  POSTRFQDETAILSUPPLIER: supplierId => `rfq/addSupplierDetail/${supplierId}`,
   GETAPPROVER: (organizationId, projectId) =>
     `po/users/${organizationId}/${projectId}`
   //STATE: 'account/api/permitted/address/states',
