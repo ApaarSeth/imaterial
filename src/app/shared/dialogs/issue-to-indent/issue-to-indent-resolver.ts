@@ -8,7 +8,7 @@ export class IssueToIndentResolver implements Resolve<any> {
 
     resolve() {
         return this.bomService.getIssueToIndent(13, 4).then(data => {
-            console.log("issue to indent api connected...", data.data);
+            console.log("asdfgh", data.data);
             return data.data;
         });
     }

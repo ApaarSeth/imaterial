@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: "", component: BomComponent },
   {
     path: "bom-detail",
-    resolve: { IssueToIndent: IssueToIndentResolver },
+    // resolve: { issueToIndent: IssueToIndentResolver },
     component: BomTableComponent
   }
 ];

@@ -38,5 +38,7 @@ export const API = {
     `po/users/${organizationId}/${projectId}`,
   //STATE: 'account/api/permitted/address/states',
   GETISSUETOINDENT: (projectId, materialId) =>
-    `materials/updateStock/${projectId}/${materialId}`
+    `materials/updateStock/${projectId}/${materialId}`,
+  POSTISSUETOINDENT: (materialId) =>
+    `indent/issueQty/${materialId}`
 };

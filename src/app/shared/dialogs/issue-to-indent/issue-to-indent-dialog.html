@@ -1,96 +1,65 @@
-<div mat-dialog-title>
-  <div class="row">
-    <div class="col-xs-3">
-      Steelbar 15 MM
-    </div>
-    <div class="col-xs-4">
-      Available in Stock: 1500 MT
+<div *ngIf="issueToIndentDetails && issueToIndentDetails.indentDetailList">
+  <div mat-dialog-title>
+    <div class="row">
+      <div class="col-xs-3">
+        {{issueToIndentDetails.materialName}}
+      </div>
+      <div class="col-xs-4">
+        Available in Stock: {{ issueToIndentDetails.availableStock}} MT
+      </div>
     </div>
   </div>
-</div>
 
-<div mat-dialog-content class="p-l-10 p-r-10">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="row p-t-10 p-b-10 gray-border">
-        <div class="col-xs-3"></div>
-        <div class="col-xs-2">Required Quantity</div>
-        <div class="col-xs-2">Required Date</div>
-        <div class="col-xs-2">Issued Quantity</div>
-        <div class="col-xs-3">To be Issued</div>
-      </div>
-      <div class="row p-t-10 p-b-10 gray-border">
-        <div class="col-xs-3">
-          <div>Indent 1</div>
+  <div mat-dialog-content class="p-l-10 p-r-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row p-t-10 p-b-10 gray-border">
+          <div class="col-xs-3"></div>
+          <div class="col-xs-2">Required Quantity</div>
+          <div class="col-xs-2">Required Date</div>
+          <div class="col-xs-2">Issued Quantity</div>
+          <div class="col-xs-3">To be Issued</div>
         </div>
-        <div class="col-xs-2">
-          <div>600 MT</div>
-        </div>
-        <div class="col-xs-2">
-          <div>24:01:2020</div>
-        </div>
-        <div class="col-xs-2">
-          <div>600 MT</div>
-        </div>
-        <div class="col-xs-3">
-          <mat-form-field class="col-xs-12 border-input">
-            <input matInput type="number" placeholder="Issue Quantity" />
-          </mat-form-field>
-          <span> MT</span>
-        </div>
-      </div>
-
-      <div class="row p-t-10 p-b-10 gray-border">
-        <div class="col-xs-3">
-          <div>Indent 1</div>
-        </div>
-        <div class="col-xs-2">
-          <div>600 MT</div>
-        </div>
-        <div class="col-xs-2">
-          <div>24:01:2020</div>
-        </div>
-        <div class="col-xs-2">
-          <div>600 MT</div>
-        </div>
-        <div class="col-xs-3">
-          <mat-form-field class="col-xs-12 border-input">
-            <input matInput type="number" placeholder="Issue Quantity" />
-          </mat-form-field>
-          <span> MT</span>
-        </div>
-      </div>
-
-      <div class="row p-t-10 p-b-10 gray-border">
-        <div class="col-xs-3">
-          <div>Indent 1</div>
-        </div>
-        <div class="col-xs-2">
-          <div>600 MT</div>
-        </div>
-        <div class="col-xs-2">
-          <div>24:01:2020</div>
-        </div>
-        <div class="col-xs-2">
-          <div>600 MT</div>
-        </div>
-        <div class="col-xs-3">
-          <mat-form-field class="col-xs-12 border-input">
-            <input matInput type="number" placeholder="Issue Quantity" />
-          </mat-form-field>
-          <span> MT</span>
+        <div class="row p-t-10 p-b-10 gray-border" *ngFor="let indent of issueToIndentDetails.indentDetailList">
+          <div class="col-xs-3">
+            <div>
+              {{indent.indentId}}
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div>
+              {{indent.quantity}}
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div>
+              {{indent.dueDate}}
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div>
+              {{indent.issuedQty}}
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <mat-form-field class="col-xs-12 border-input">
+              <input matInput type="number" placeholder="Issue Quantity" />
+            </mat-form-field>
+            <span> MT</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div mat-dialog-actions class="parent">
-  <div class="center-element">
-    <button mat-raised-button class="main-background-color main-button color-white m-b-5" [mat-dialog-close]=""
-      cdkFocusInitial>
-      Save
-    </button>
+  <div mat-dialog-actions class="parent">
+    <div class="center-element">
+      <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+        (click)="postIssueQuantity(issueToIndentDetails.indentDetailList)">
+        Save
+      </button>
+    </div>
+
   </div>
 
 </div>

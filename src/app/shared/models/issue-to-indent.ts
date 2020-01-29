@@ -1,3 +1,5 @@
+import { PODetailLists } from './po-details/po-details-list';
+
 export interface IssueToIndentDetails {
     materialId: number,
     materialCode: string,
@@ -16,16 +18,14 @@ export interface IssueToIndentDetails {
     issueToProject: number,
     availableStock: number,
     indentDetailList: IndentVO[],
-    // purchaseOrderDetailList: PurchaseOrderDetail[],
+    purchaseOrderDetailList: PODetailLists[],
     dueDate: string,
     quantity: number,
     issuedQty: number
-
 }
 
 export interface IndentVO {
     indentId: number,
-
     materialId: number,
     projectId: number,
     requestStatus: number,
@@ -36,16 +36,20 @@ export interface IndentVO {
     materialCount: number,
     indentName: string,
     createdBy: string,
-    // createdAt:
+    IssuedQuantityList: IssuedQuantityDetail[],
+    createdAt: string,
     issuedQty: number,
     deliveredQty: number,
     issuedDate: string
 }
 
+export interface IssuedQuantityDetail {
+    issuedQty: number,
+    issuedDate: string
+}
 
-
-
-
-// IssuedQuantityList []IssuedQuantityDetail
-// CreatedBy string `json:"createdBy" db:"created_by"`
-// CreatedAt time.Time `json:"createdAt" db:"created_at"`
+// export interface sendIssuedQuantityObj {
+//     indentId: number,
+//     issuedQty: number,
+//     issuedDate: string
+// }
