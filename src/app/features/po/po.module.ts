@@ -9,20 +9,23 @@ import { RouterModule } from "@angular/router";
 import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
 import { PORoutingModule } from "./po-routing.module";
 import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
+import { PoTableComponent } from "./po-table/po-table.component";
+import { PoComponent } from "./po.component";
+import { PoCardComponent } from './po-card/po-card.component';
 
 @NgModule({
+  declarations: [PoComponent, PODetailComponent, PoTableComponent, PoCardComponent],
   imports: [
     CommonModule,
+    PORoutingModule,
     MaterialModule,
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
     RouterModule,
-    AppSharedModule,
-    PORoutingModule
+    AppSharedModule
   ],
-  providers: [PODetailListResolver],
-  declarations: [PODetailComponent]
+  providers: [PODetailListResolver]
 })
 export class POModule {}

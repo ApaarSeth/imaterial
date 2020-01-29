@@ -20,7 +20,7 @@ import { PoComponent } from "./features/po/po.component";
 // import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 
 @NgModule({
-  declarations: [AppComponent, PoComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

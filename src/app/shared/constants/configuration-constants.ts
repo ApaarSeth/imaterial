@@ -28,9 +28,14 @@ export const API = {
   GETSUPPLIERS: organizationId => `projects/getsuppliers/${organizationId}`,
   ADDSUPPLIER: organizationId => `projects/addSuppliers/${organizationId}`,
   GETPODETAILLIST: organizationId => `po/detail/list/${organizationId}`,
+  GETPODATA: poId => `po/genarate/${poId}`,
+  SENDPODATA: `po/updatePO`,
   ADDRFQ: `rfq/addrfq`,
   GETRFQDETAILSUPPLIER: (rfqId, supplierId) =>
     `rfq/details/supplier/${rfqId}/${supplierId}`,
+  POSTRFQDETAILSUPPLIER: supplierId => `rfq/addSupplierDetail/${supplierId}`,
+  GETAPPROVER: (organizationId, projectId) =>
+    `po/users/${organizationId}/${projectId}`,
   //STATE: 'account/api/permitted/address/states',
   GETISSUETOINDENT: (projectId, materialId) =>
     `materials/updateStock/${projectId}/${materialId}`

@@ -11,23 +11,35 @@ import {
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { map } from "rxjs/operators";
 import { Materials } from "src/app/shared/models/subcategory-materials";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-rfq-bids",
   templateUrl: "./rfq-bids.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  styleUrls: [
+    "../../../../assets/scss/main.scss",
+    "../../../../assets/scss/pages/rfq-bids.component.scss"
+  ]
 })
 export class RfqBidsComponent implements OnInit {
   constructor(
     private rfqService: RFQService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {}
   rfqProjects: RfqProject[];
   rfqForms: FormGroup;
+  rfqId: number;
   ngOnInit() {
-    this.rfqService.rfqPo(1, 1).then(res => {
+    this.route.params.subscribe(rfqId => {
+      console.log("rfq", rfqId);
+      this.rfqId = Number(rfqId.id);
+    });
+    this.rfqService.rfqPo(1, this.rfqId).then(res => {
+      console.log(res);
       this.rfqProjects = res.data;
       console.log(this.rfqProjects);
+
       this.formInit();
     });
   }

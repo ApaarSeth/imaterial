@@ -33,7 +33,7 @@
                   <mat-expansion-panel *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
                     <mat-expansion-panel-header class="mat-row">
                       <span class="col-xs-2">{{ material.materialName }} </span>
-                      <span class="col-xs-2"> {{ material.materialQty }} </span>
+                      <span class="col-xs-2"> {{ material.rfqMaterialQty }} </span>
                       <span class="col-xs-1" *ngFor="let brand of material.brandList">
                         {{ brand }}
                       </span>
@@ -53,7 +53,7 @@
                             " [formGroupName]="i">
                             <span *ngIf="brandInfo != null">
                               <mat-form-field class="border-input">
-                                <input matInput formControlName="quantity" matInput placeholder="quantity"
+                                <input class="quantity" matInput formControlName="quantity" placeholder="quantity"
                                   class="m-r-5" />
                               </mat-form-field>
                               <span *ngIf="brandInfo.materialUnitPrice != null">{{ brandInfo.materialUnitPrice }}</span>
