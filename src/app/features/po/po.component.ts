@@ -32,8 +32,10 @@ export class PoComponent implements OnInit {
       this.cardData = {
         supplierAddress: this.poData.supplierAddress,
         projectAddress: this.poData.projectAddress,
+        billingAddress: this.poData.billingAddress,
         poNumber: this.poData.poNumber,
-        poValidUpto: this.poData.poValidUpto
+        poValidUpto: this.poData.poValidUpto,
+        projectId: this.poData.projectId
       };
     });
   }
