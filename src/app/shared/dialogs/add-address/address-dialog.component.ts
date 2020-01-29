@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
+import { Component, Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { RfqMaterialResponse } from "../../models/RFQ/rfq-details";
 
 // Component for dialog box
 @Component({
@@ -9,8 +10,13 @@ import { MatDialogRef } from "@angular/material";
 
 // Component class
 export class AddAddressDialogComponent {
-  constructor(public dialogRef: MatDialogRef<AddAddressDialogComponent>) {}
-
+  constructor(
+    public dialogRef: MatDialogRef<AddAddressDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: RfqMaterialResponse
+  ) {}
+  ngOnInit() {
+    console.log("data", this.data);
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }

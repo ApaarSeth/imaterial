@@ -18,7 +18,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatCheckboxModule,
-  MatChipsModule
+  MatChipsModule,
+  MatTabsModule
 } from "@angular/material";
 
 @NgModule({
@@ -40,7 +41,8 @@ import {
     MatNativeDateModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule {}

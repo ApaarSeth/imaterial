@@ -146,10 +146,20 @@ export class RFQQuantityMakesComponent implements OnInit {
     console.log(this.materialForms);
   }
 
-  openDialog(): void {
+  // deleteMaterial(index) {
+  //   this.checkedMaterialsList = this.checkedMaterialsList.map(project => {
+  //     project.projectMaterialList.splice(index, 1);
+  //     return project;
+  //   });
+  //   this.checkedMaterialsList = [...this.checkedMaterialsList];
+  //   console.log("delete data", this.checkedMaterialsList);
+  // }
+
+  openDialog(data: RfqMaterialResponse): void {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(AddAddressDialogComponent, {
-        width: "1200px"
+        width: "1200px",
+        data
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log("The dialog was closed");
