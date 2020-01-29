@@ -1,0 +1,41 @@
+   <form *ngIf="approverData" [formGroup]="approverFrm">
+       <div class="row">
+           <table mat-table [dataSource]="approverData" class="mat-elevation-z8 col-sm-12">
+               <ng-container matColumnDef="User Name">
+                   <th mat-header-cell *matHeaderCellDef> UserName </th>
+                   <td mat-cell *matCellDef=" let element;let i=index">
+                       <mat-radio-group name="aprrover" aria-labelledby="example-radio-group-label"
+                           class="example-radio-group" formControlName="approver">
+                           <mat-radio-button class="example-radio-button" [value]="element" [checked]="element.checked">
+                               {{element.firstName}}{{element.lastName}}
+                               {{element.user_d}}
+                           </mat-radio-button>
+                       </mat-radio-group>
+                   </td>
+               </ng-container>
+
+               <ng-container matColumnDef="Role">
+                   <th mat-header-cell *matHeaderCellDef> Role </th>
+                   <td mat-cell *matCellDef="let element"> {{element.userType}} </td>
+               </ng-container>
+
+               <ng-container matColumnDef="Email">
+                   <th mat-header-cell *matHeaderCellDef> Email </th>
+                   <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+               </ng-container>
+
+               <ng-container matColumnDef="Phone">
+                   <th mat-header-cell *matHeaderCellDef> Phone </th>
+                   <td mat-cell *matCellDef="let element"> {{element.contactNo}} </td>
+               </ng-container>
+
+
+               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+           </table>
+           <button mat-raised-button class="main-background-color main-button color-white center-element"
+               (click)="selectRole()">
+               Send
+           </button>
+       </div>
+   </form>
