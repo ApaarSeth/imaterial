@@ -5,7 +5,7 @@ import { POData, ApproverData } from "../../models/PO/po-data";
 
 @Component({
   selector: "select-supplier-dialog",
-  templateUrl: "selectApprover.html",
+  templateUrl: "selectPo.html",
   styleUrls: ["../../../../assets/scss/pages/selectApprover.scss"]
 })
 export class SelectApproverComponent implements OnInit {

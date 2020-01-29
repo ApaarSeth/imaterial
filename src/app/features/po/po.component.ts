@@ -4,7 +4,7 @@ import { POData, PoMaterial, CardData } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
 import { MatDialog } from "@angular/material";
-import { SelectApproverComponent } from "src/app/shared/dialogs/selectApprover/selectApprover.component";
+import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 
 @Component({
   selector: "app-po",
@@ -32,8 +32,10 @@ export class PoComponent implements OnInit {
       this.cardData = {
         supplierAddress: this.poData.supplierAddress,
         projectAddress: this.poData.projectAddress,
+        billingAddress: this.poData.billingAddress,
         poNumber: this.poData.poNumber,
-        poValidUpto: this.poData.poValidUpto
+        poValidUpto: this.poData.poValidUpto,
+        projectId: this.poData.projectId
       };
     });
   }

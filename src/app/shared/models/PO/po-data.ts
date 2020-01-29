@@ -99,6 +99,7 @@ export interface ProjectAddress {
   contactNo: string;
   firstName: string;
   lastName: string;
+  projectUserId: number;
 }
 export interface BillingAddress {
   projectAddressId: number;
@@ -116,13 +117,16 @@ export interface BillingAddress {
   contactNo: string;
   firstName: string;
   lastName: string;
+  projectBillingUserId: number;
 }
 
 export interface CardData {
   supplierAddress: SupplierAddress;
   projectAddress: ProjectAddress;
+  billingAddress: BillingAddress;
   poNumber: number;
   poValidUpto: string;
+  projectId: number;
 }
 
 export interface DocumentList {
