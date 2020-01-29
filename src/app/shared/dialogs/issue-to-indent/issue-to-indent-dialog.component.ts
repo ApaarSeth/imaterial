@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { MatDialogRef } from "@angular/material";
+import { IssueToIndentDetails } from '../../models/issue-to-indent';
+import { ActivatedRoute } from '@angular/router';
 
 // Component for dialog box
 @Component({
@@ -9,9 +11,17 @@ import { MatDialogRef } from "@angular/material";
 
 // Component class
 export class IssueToIndentDialogComponent {
-  constructor(public dialogRef: MatDialogRef<IssueToIndentDialogComponent>) {}
 
+  IssueToIndent: IssueToIndentDetails;
+
+  constructor(public dialogRef: MatDialogRef<IssueToIndentDialogComponent>, private activatedRoute: ActivatedRoute) { }
+  ngOnInit() {
+    this.IssueToIndent = this.activatedRoute.snapshot.data.IssueToIndent;
+    console.log("IssueToIndent", this.IssueToIndent);
+
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
+
 }

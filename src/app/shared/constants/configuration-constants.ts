@@ -30,6 +30,8 @@ export const API = {
   GETPODETAILLIST: organizationId => `po/detail/list/${organizationId}`,
   ADDRFQ: `rfq/addrfq`,
   GETRFQDETAILSUPPLIER: (rfqId, supplierId) =>
-    `rfq/details/supplier/${rfqId}/${supplierId}`
+    `rfq/details/supplier/${rfqId}/${supplierId}`,
   //STATE: 'account/api/permitted/address/states',
+  GETISSUETOINDENT: (projectId, materialId) =>
+    `materials/updateStock/${projectId}/${materialId}`
 };

@@ -6,7 +6,7 @@ import { API } from "../../constants/configuration-constants";
   providedIn: "root"
 })
 export class BomService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
 
   getMaterialsWithSpecs(categoryList) {
     return this.dataService.getRequestMaster(
@@ -29,5 +29,8 @@ export class BomService {
       API.POSTMATERIALSQUANTITY(userId, projectId),
       materialsQuantity
     );
+  }
+  getIssueToIndent(projectId: number, materialId: number) {
+    return this.dataService.getRequest(API.GETISSUETOINDENT(projectId, materialId));
   }
 }
