@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 // import { DocumentModel } from "../../models/rfq.model";
 import { DocumentDetails } from "../../models/RFQ/rfq-details";
+import { DocumentUploadService } from "../../services/document-download/document-download.service";
 //import { CommonService } from '../../services/common.service';
 // import { of } from 'rxjs';
 
@@ -18,7 +19,7 @@ export class UploadComponent implements OnInit {
   @Input() parentId;
   @Input() label;
 
-  constructor() {}
+  constructor(private documentUploadService: DocumentUploadService) {}
 
   ngOnInit(): void {
     //this.id = Math.round(Math.random() * 10);
@@ -77,14 +78,6 @@ export class UploadComponent implements OnInit {
         fileArr.push(fileLIst[key]);
         data.append(`files[${key}]`, fileLIst[key]);
       }
-      // data.append(`files`, fileArr);
-      // if (fileUploadType) {
-      //     data.append('fileUploadType', fileUploadType);
-      // }
-      // data.append('parentId', response.id);
-      // return this.commonService.docUpload(data).then(res => {
-      //     return response.id;
-      // });
     } else {
       return Promise.resolve();
     }
@@ -109,4 +102,10 @@ export class UploadComponent implements OnInit {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
+
+  // postDocumentUpload(data): Promise<any> {
+  //   return this.documentUploadService.postDocumentUpload(data).then(res => {
+  //     return res;
+  //   });
+  // }
 }

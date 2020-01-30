@@ -76,6 +76,16 @@ export class AddAddressDialogComponent {
       .postAddAddress("Project", this.data.projectId, address)
       .then(res => {
         res.data;
+        // this.data.projectAddressList = this.data.projectAddressList.map(
+        //   address => {
+        //     address.primaryAddress = 0;
+        //     return address;
+        //   }
+        // );
+        console.log("address", res.data);
+        // res.data.primaryAddress = 1;
+        this.data.defaultAddress = res.data;
+        this.data.projectAddressList.push(res.data);
       });
   }
 }
