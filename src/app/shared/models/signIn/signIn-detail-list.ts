@@ -10,6 +10,13 @@ export interface SignINDetailLists {
     customData: CustonDataDetails;
   }
 
+  export interface SignInData{
+    userName:string;
+    password:string;
+    grant_type:string;
+    client_id:string;
+    userType:string;
+  }
   export interface CustonDataDetails{
     // photo: string;
     organizationName: string;
