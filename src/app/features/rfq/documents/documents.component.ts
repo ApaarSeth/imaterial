@@ -52,12 +52,12 @@ export class DocumentsComponent implements OnInit {
 
       const fileArr: File[] = [];
 
-      for (let key in Object.keys(this.docs)) {
-        fileArr.push(this.docs[key]);
-        data.append(`files[${key}]`, this.docs[key]);
-      }
-      // data.append(`files`, fileArr);
-      data.append("fileUploadType", "RFQ");
+      // for (let key in Object.keys(this.docs)) {
+      //   fileArr.push(this.docs[key]);
+      //   data.append(`files[${key}]`, this.docs[key]);
+      // }
+      data.append(`file`, this.docs[0]);
+      // data.append("fileUploadType", "RFQ");
       console.log("asdxfcgvhbjnk", data);
 
       return this.documentUploadService.postDocumentUpload(data).then(res => {
