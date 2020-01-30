@@ -1,17 +1,16 @@
 <h1 mat-dialog-title>Select Address</h1>
 <div mat-dialog-content>
     <mat-tab-group class="overflow-remove">
-
         <mat-tab label="Choose Address">
             <form [formGroup]="selectAddressFrm">
                 <div class="row">
                     <div class="col-xs-12">
                         <mat-radio-group aria-label="Select an option" name="address" formControlName="address">
-                            <div class="p-t-10 p-b-10 gray-border" *ngFor="let address of data.projectAddressList">
-                                <mat-radio-button class="p-l-25" [value]="address"
-                                    [checked]="address.primaryAddress===1">{{address.addressLine1}}
-                                    <span *ngIf="address.city">, {{address.city}}</span>
-                                    <span *ngIf="address.state">, {{address.state}}</span></mat-radio-button>
+                            <div class="p-t-10 p-b-10 gray-border" *ngFor="let add of address">
+                                <mat-radio-button class="p-l-25" [value]="add" [checked]="add.primaryAddress===1">
+                                    {{address.addressLine1}}
+                                    <span *ngIf="add.city">{{add.city}}</span>
+                                    <span *ngIf="add.state">{{add.state}}</span></mat-radio-button>
                             </div>
                         </mat-radio-group>
                     </div>
@@ -32,7 +31,7 @@
                             </div>
                             <div class="row border-input">
                                 <mat-form-field class="col-xs-12 p-r-150 p-l-150">
-                                    <input matInput type="number" placeholder="Pincode" formControlName="pinCode" />
+                                    <input matInput type="string" placeholder="Pincode" formControlName="pinCode" />
                                 </mat-form-field>
                             </div>
                             <div class="row border-input">
@@ -58,6 +57,11 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
+                            <div class="row border-input">
+                                <mat-form-field class="col-xs-12 p-r-300">
+                                    <input matInput type="text" placeholder="Gst No" formControlName="gstNo" />
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -68,11 +72,11 @@
 
 <div mat-dialog-actions class="pull-right">
     <button mat-raised-button class="main-background-color main-button color-white m-b-5" [mat-dialog-close]=""
-        cdkFocusInitial (click)="onNoClick()">
+        cdkFocusInitial (click)="onselectAddress()">
         Save
     </button>
     <button mat-raised-button class="main-background-color main-button color-white m-b-5" [mat-dialog-close]=""
-        cdkFocusInitial (click)="onNoClick1()">
+        cdkFocusInitial (click)="onAddAddress()">
         Add
     </button>
 </div>

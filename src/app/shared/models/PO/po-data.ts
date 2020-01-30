@@ -105,6 +105,7 @@ export interface BillingAddress {
   projectAddressId: number;
   supplierId: number;
   projectName: string;
+  companyName: string;
   addressId: number;
   primaryAddress: number;
   addressLine1: string;
@@ -118,6 +119,8 @@ export interface BillingAddress {
   firstName: string;
   lastName: string;
   projectBillingUserId: number;
+  projectBillingAddressId: number;
+  gstNo: number;
 }
 
 export interface CardData {
