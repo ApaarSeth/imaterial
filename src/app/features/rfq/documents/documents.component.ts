@@ -5,12 +5,13 @@ import {
 } from "src/app/shared/models/RFQ/rfq-details";
 import { Router } from "@angular/router";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
+import { DocumentUploadService } from "src/app/shared/services/document-download/document-download.service";
 
 @Component({
   selector: "documents",
   templateUrl: "./documents.component.html",
   styleUrls: [
-    "../../../../assets/scss/main.scss",
+    "../../../../assets/scss/main.scss"
     // "../../../../../node_modules/froala-editor/css/froala_editor.pkgd.min.css",
     // "../../../../../node_modules/froala-editor/css/froala_style.min.css"
   ]
@@ -23,7 +24,10 @@ export class DocumentsComponent implements OnInit {
   docs: FileList;
   rfqDetails: AddRFQ;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private documentUploadService: DocumentUploadService
+  ) {}
 
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;
@@ -55,6 +59,10 @@ export class DocumentsComponent implements OnInit {
       // data.append(`files`, fileArr);
       data.append("fileUploadType", "RFQ");
       console.log("asdxfcgvhbjnk", data);
+
+      return this.documentUploadService.postDocumentUpload(data).then(res => {
+        return res;
+      });
       //data.append('parentId', this.item.itemForm.value.locationQtyList[0].attachId);
       // return this.commonService.docUpload(data).then(res => {
       //   return res;
