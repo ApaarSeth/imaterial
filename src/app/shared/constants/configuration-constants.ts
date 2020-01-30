@@ -37,6 +37,7 @@ export const API = {
   GETAPPROVER: (organizationId, projectId) =>
     `po/users/${organizationId}/${projectId}`,
   POSTADDADDRESS: (type, id) => `address/add/${type}/${id}`,
-  GETPOADDADDRESS: (type, id) => `address/get/${type}/${id}`
+  GETPOADDADDRESS: (type, id) => `address/get/${type}/${id}`,
   //STATE: 'account/api/permitted/address/states',
+SIGNUP:`sso/api/auth/signup`
 };
