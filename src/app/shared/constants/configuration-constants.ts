@@ -40,5 +40,6 @@ export const API = {
   GETISSUETOINDENT: (projectId, materialId) =>
     `materials/updateStock/${projectId}/${materialId}`,
   POSTISSUETOINDENT: (materialId) =>
-    `indent/issueQty/${materialId}`
+    `indent/issueQty/${materialId}`,
+  GETSINGLEINDENT: (indentId) => `indent/detail/${indentId}`
 };

@@ -11,7 +11,7 @@ import { IndentVO } from "../../models/indent";
   providedIn: "root"
 })
 export class IndentService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
 
   raiseIndent(projectId: Number, indentData: IndentVO[]) {
     return this.dataService.sendPostRequest(
@@ -22,5 +22,9 @@ export class IndentService {
 
   getIndentList(projectId: Number) {
     return this.dataService.getRequest(API.GETINDENTLIST(projectId));
+  }
+
+  getSingleIndent(indentId: Number) {
+    return this.dataService.getRequest(API.GETSINGLEINDENT(indentId));
   }
 }
