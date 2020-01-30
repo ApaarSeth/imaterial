@@ -62,6 +62,7 @@ export class SignupComponent implements OnInit {
      localStorage.setItem('ServiceToken', data.data.serviceRawResponse.data.serviceToken);
      localStorage.setItem('userId', data.data.serviceRawResponse.data.userId);
      localStorage.setItem('orgId', data.data.serviceRawResponse.data.orgId);
+    //  this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
   });
 // console.log("filled values", this.signInDetails);
 
