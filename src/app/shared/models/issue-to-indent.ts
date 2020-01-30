@@ -48,8 +48,8 @@ export interface IssuedQuantityDetail {
     issuedDate: string
 }
 
-// export interface sendIssuedQuantityObj {
-//     indentId: number,
-//     issuedQty: number,
-//     issuedDate: string
-// }
+export interface sendIssuedQuantityObj {
+    indentId: number,
+    issuedQty: number,
+    issuedDate: string
+}
