@@ -1,24 +1,24 @@
 <h1 mat-dialog-title>Select Address</h1>
 <div mat-dialog-content>
   <mat-tab-group class="overflow-remove">
-
+  
     <mat-tab label="Choose Address">
-      <form [formGroup]="selectAddressFrm">
+      <form  [formGroup]="selectAddressFrm">
         <div class="row">
           <div class="col-xs-12">
             <mat-radio-group aria-label="Select an option" name="address" formControlName="address">
               <div class="p-t-10 p-b-10 gray-border" *ngFor="let address of data.projectAddressList">
-                <mat-radio-button class="p-l-25" [value]="address" [checked]="address.primaryAddress===1">
-                  {{address.addressLine1}}
-                  <span *ngIf="address.city">, {{address.city}}</span>
-                  <span *ngIf="address.state">, {{address.state}}</span></mat-radio-button>
+                <mat-radio-button class="p-l-25" [value]="address" [checked]="address.primaryAddress===1"
+              >{{address.addressLine1}}
+              <span *ngIf="address.city">, {{address.city}}</span>
+              <span *ngIf="address.state">, {{address.state}}</span></mat-radio-button
+                >
               </div>
             </mat-radio-group>
           </div>
         </div>
       </form>
-    </mat-tab>
-
+      </mat-tab>
     <mat-tab label="Add Address">
       <form [formGroup]="newAddressForm">
         <div class="container">
