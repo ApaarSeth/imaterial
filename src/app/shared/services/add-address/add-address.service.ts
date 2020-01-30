@@ -19,4 +19,8 @@ export class AddAddressService {
         return res;
       });
   }
+
+  getPoAddAddress(type: string, id: number) {
+    return this.dataService.getRequest(API.GETPOADDADDRESS(type, id));
+  }
 }

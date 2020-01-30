@@ -8,6 +8,7 @@ import {
 import { MatDialog } from "@angular/material";
 import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 import { SelectPoRoleComponent } from "src/app/shared/dialogs/select-po-role/select-po-role.component";
+import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 
 @Component({
   selector: "app-po-card",
@@ -67,6 +68,39 @@ export class PoCardComponent implements OnInit {
         this.cardData.projectAddress.firstName = result[1].approver.firstName;
         this.cardData.projectAddress.lastName = result[1].approver.lastName;
         this.cardData.projectAddress.projectUserId = result[0];
+        console.log(this.cardData.projectAddress);
+        this.projectDetails.controls["projectAddress"].setValue(
+          this.cardData.projectAddress
+        );
+      }
+    });
+  }
+  openaddressDialog(roleType: string, id: number) {
+    const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
+      width: "700px",
+      data: { roleType, id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("The dialog was closed");
+      console.log(result);
+      if (result[0] === "projectBillingUserId") {
+        this.cardData.billingAddress.addressLine1 = result[1].approver.email;
+        this.cardData.billingAddress.addressLine2 =
+          result[1].approver.contactNo;
+        this.cardData.billingAddress.city = result[1].approver.firstName;
+        this.cardData.billingAddress.state = result[1].approver.lastName;
+        this.cardData.billingAddress.pinCode = result[0];
+        this.projectDetails.controls["billingAddress"].setValue(
+          this.cardData.billingAddress
+        );
+      } else {
+        this.cardData.projectAddress.addressLine1 = result[1].approver.email;
+        this.cardData.projectAddress.addressLine2 =
+          result[1].approver.contactNo;
+        this.cardData.projectAddress.city = result[1].approver.firstName;
+        this.cardData.projectAddress.state = result[1].approver.lastName;
+        this.cardData.projectAddress.pinCode = result[0];
         console.log(this.cardData.projectAddress);
         this.projectDetails.controls["projectAddress"].setValue(
           this.cardData.projectAddress

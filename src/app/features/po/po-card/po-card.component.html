@@ -22,25 +22,34 @@
                 <div class="col-xs-12 pull-left">
                     <div class="row">
                         <div class="col-xs-6">
-                            <mat-list-item mat-subheader> Project Name: {{cardData.projectAddress.projectName}}
-                            </mat-list-item>
-                            <mat-list-item mat-subheader> Contact Person:
-                                {{cardData.projectAddress.firstName?cardData.projectAddress.firstName:""}}
-                                {{cardData.projectAddress.lastName?cardData.projectAddress.lastName:""}}
+                            <mat-list>
+                                <mat-list-item mat-subheader> Project Name: {{cardData.projectAddress.projectName}}
+                                </mat-list-item>
+                                <mat-list-item mat-subheader> Contact Person:
+                                    {{cardData.projectAddress.firstName?cardData.projectAddress.firstName:""}}
+                                    {{cardData.projectAddress.lastName?cardData.projectAddress.lastName:""}}
 
-                                <button (click)="openDialog('projectUserId',cardData.projectId)"><i
-                                        class="material-icons">
-                                        edit
-                                    </i></button>
-                            </mat-list-item>
-                            <mat-list-item mat-subheader> Phone
-                                No.:{{cardData.projectAddress.contactNo?cardData.projectAddress.contactNo:""}}
-                            </mat-list-item>
-                            <mat-list-item mat-subheader> Email.:
-                                {{cardData.projectAddress.email?cardData.projectAddress.email:""}}</mat-list-item>
+                                    <a href="javascript:void(0)"
+                                        (click)="openDialog('projectUserId',cardData.projectId)"><i
+                                            class="material-icons main-color">
+                                            edit
+                                        </i></a>
+                                </mat-list-item>
+                                <mat-list-item mat-subheader> Phone
+                                    No.:{{cardData.projectAddress.contactNo?cardData.projectAddress.contactNo:""}}
+                                </mat-list-item>
+                                <mat-list-item mat-subheader> Email.:
+                                    {{cardData.projectAddress.email?cardData.projectAddress.email:""}}</mat-list-item>
+                            </mat-list>
                         </div>
                         <div class="col-xs-6">
-                            <mat-list-item mat-subheader> Delivery Address: </mat-list-item>
+                            <mat-list>
+                                <mat-list-item mat-subheader> Delivery Address</mat-list-item>
+                                <span>{{cardData.projectAddress.addressLine1}}</span>
+                                <span>{{cardData.projectAddress.addressLine2}}</span>
+                                <span>{{cardData.projectAddress.city}},{{cardData.projectAddress.state}}</span>
+                                <span>{{cardData.projectAddress.pinCode }}</span>
+                            </mat-list>
                         </div>
                     </div>
                 </div>
@@ -56,6 +65,11 @@
                         </mat-list-item>
                         <mat-list-item mat-subheader> Phone No.: {{cardData.supplierAddress.contactNo}} </mat-list-item>
                         <mat-list-item mat-subheader> Street Address:{{cardData.supplierAddress.contactNo}}
+                            <a href="javascript:void(0)"
+                                (click)="openaddressDialog('supplierAddressId',cardData.supplierAddress.supplierId)"><i
+                                    class="material-icons main-color">
+                                    edit
+                                </i></a>
                         </mat-list-item>
                         <mat-list-item mat-subheader> Pin Code: {{cardData.supplierAddress.pinCode}}</mat-list-item>
                         <mat-list-item mat-subheader> City:{{cardData.supplierAddress.city}} </mat-list-item>
@@ -69,18 +83,30 @@
                         <h3 mat-subheader>Contract Detail</h3>
                         <div class="row">
                             <div class="col-xs-6">
-                                <mat-list-item mat-subheader> Company Name: {{cardData.projectAddress.projectName}}
+                                <mat-list-item mat-subheader> Company Name: {{cardData.billingAddress.projectName}}
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> Contact Person:
-                                    <button (click)="openDialog('projectBillingUserId',cardData.projectId)"><i
-                                            class="material-icons">
+                                    {{cardData.billingAddress.firstName?cardData.billingAddress.firstName:""}}
+                                    {{cardData.billingAddress.lastName?cardData.billingAddress.lastName:""}}
+
+                                    <a href="javascript:void(0)"
+                                        (click)="openDialog('projectBillingAddressId',cardData.projectId)"><i
+                                            class="material-icons main-color">
                                             edit
-                                        </i></button>
+                                        </i></a>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> Phone No.: </mat-list-item>
+                                <mat-list-item mat-subheader> Phone
+                                    No.:{{cardData.billingAddress.contactNo?cardData.billingAddress.contactNo:""}}
+                                </mat-list-item>
+                                <mat-list-item mat-subheader> Email.:
+                                    {{cardData.billingAddress.email?cardData.billingAddress.email:""}}</mat-list-item>
                             </div>
                             <div class="col-xs-6">
-                                <mat-list-item mat-subheader> Street Address: </mat-list-item>
+                                <mat-list-item mat-subheader> Street Address: <a href="javascript:void(0)"
+                                        (click)="openaddressDialog('projectBillingAddressId',cardData.projectId)"><i
+                                            class="material-icons main-color">
+                                            edit
+                                        </i></a></mat-list-item>
                                 <mat-list-item mat-subheader> Pin Code: </mat-list-item>
                                 <mat-list-item mat-subheader> City: </mat-list-item>
                                 <mat-list-item mat-subheader> GSTIN: </mat-list-item>
