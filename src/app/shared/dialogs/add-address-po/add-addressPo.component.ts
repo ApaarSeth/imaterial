@@ -62,35 +62,36 @@ export class AddAddressPoDialogComponent {
       addressLine2: ["", Validators.required],
       pinCode: ["", Validators.required],
       state: ["", Validators.required],
-      city: ["", Validators.required]
+      city: ["", Validators.required],
+      gstNo: ["", Validators.required]
     });
-
     console.log("addresss", this.newAddressForm.value);
   }
 
-  onNoClick(): void {
-    this.data.projectAddressList = this.data.projectAddressList.map(address => {
-      address.primaryAddress = 0;
-      return address;
-    });
-    this.selectAddressFrm.value.address.primaryAddress = 1;
-    this.data.defaultAddress = this.selectAddressFrm.value.address;
-    console.log("defaultAdressUpdate", this.data);
-    this.dialogRef.close();
+  onselectAddress(): void {
+    this.dialogRef.close([this.data.roleType, this.selectAddressFrm.value]);
   }
 
-  onNoClick1(): void {
-    this.address = this.newAddressForm.value;
-    console.log("addresss", this.newAddressForm.value);
-    console.log("new object", this.address);
-    this.postAddAddress(this.address);
+  onAddAddress(): void {
+    this.postAddAddress(
+      this.data.roleType === "projectBillingAddressId" ? "project" : "supplier",
+      this.newAddressForm.value
+    );
   }
 
-  postAddAddress(address) {
+  //   onNoClick1(): void {
+  //     this.address = this.newAddressForm.value;
+  //     console.log("addresss", this.newAddressForm.value);
+  //     console.log("new object", this.address);
+  //     this.postAddAddress(this.address);
+  //   }
+
+  postAddAddress(role, address) {
     this.addAddressService
-      .postAddAddress("Project", this.data.projectId, address)
+      .postAddAddress(role, this.data.id, address)
       .then(res => {
-        res.data;
+        this.dialogRef.close([this.data.roleType, { address: res.data }]);
+        console.log("res.data", res.data);
       });
   }
 }

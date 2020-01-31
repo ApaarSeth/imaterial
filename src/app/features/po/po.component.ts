@@ -5,6 +5,8 @@ import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
 import { MatDialog } from "@angular/material";
 import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
+import { PoDocumentsComponent } from "./po-documents/po-documents.component";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-po",
@@ -21,11 +23,20 @@ export class PoComponent implements OnInit {
   viewMode = false;
   @ViewChild("poTable", { static: false }) poTable: PoTableComponent;
   @ViewChild("poCard", { static: false }) poCard: PoCardComponent;
+  @ViewChild("poDocument", { static: false }) poDocument: PoDocumentsComponent;
 
-  constructor(private dialog: MatDialog, private poService: POService) {}
-
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private poService: POService
+  ) {}
+  poId: number;
   ngOnInit() {
-    this.poService.getPoGenerateData(9).then(res => {
+    this.route.params.subscribe(poId => {
+      console.log("rfq", poId);
+      this.poId = Number(poId.id);
+    });
+    this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
       console.log(this.poData);
       this.tableData = this.poData.materialData;
@@ -40,7 +51,7 @@ export class PoComponent implements OnInit {
     });
   }
   collateResults() {
-    console.log(this.poTable.getData());
+    console.log("podocument", this.poDocument.getData());
     let poDataCollate: POData = {
       supplierAddress: this.poData.supplierAddress,
       projectAddress: this.poData.projectAddress,
@@ -51,14 +62,7 @@ export class PoComponent implements OnInit {
       poNumber: this.poCard.getData().orderNo,
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
-      DocumentsList: [
-        {
-          documentType: "PO",
-          documentDesc: "New Documents",
-          documentUrl:
-            "https://storage.googleapis.com/dev19-bs-ecom/tmp/dashboardSample.json"
-        }
-      ],
+      DocumentsList: this.poDocument.getData(),
       Terms: {
         termsDesc: "All test In it, Please add the terms test here only",
         termsType: "RFQ"
@@ -66,7 +70,7 @@ export class PoComponent implements OnInit {
       comments: "good",
       projectId: this.poData.projectId
     };
-    console.log(poDataCollate);
+    console.log("poData", poDataCollate);
     return poDataCollate;
   }
   viewModes() {
