@@ -63,7 +63,7 @@ export class AddAddressPoDialogComponent {
       pinCode: ["", Validators.required],
       state: ["", Validators.required],
       city: ["", Validators.required],
-      gstNo: ["", , Validators.required]
+      gstNo: ["", Validators.required]
     });
     console.log("addresss", this.newAddressForm.value);
   }

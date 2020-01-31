@@ -47,7 +47,7 @@ export class PoCardComponent implements OnInit {
 
   openDialog(roleType: string, projectId: number) {
     const dialogRef = this.dialog.open(SelectPoRoleComponent, {
-      width: "700px",
+      width: "1200px",
       data: { roleType, projectId }
     });
 
@@ -80,7 +80,7 @@ export class PoCardComponent implements OnInit {
   }
   openaddressDialog(roleType: string, id: number) {
     const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
-      width: "700px",
+      width: "1200px",
       data: { roleType, id }
     });
 
@@ -97,6 +97,7 @@ export class PoCardComponent implements OnInit {
         this.cardData.billingAddress.pinCode = result[1].address.pinCode;
         this.cardData.billingAddress.projectBillingAddressId =
           result[1].address.projectBillingAddressId;
+        this.cardData.billingAddress.gstNo = result[1].address.gstNo;
         this.projectDetails.controls["billingAddress"].setValue(
           this.cardData.billingAddress
         );

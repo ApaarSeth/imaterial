@@ -12,9 +12,10 @@ import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoComponent } from "./po.component";
 import { PoCardComponent } from './po-card/po-card.component';
+import { PoDocumentsComponent } from './po-documents/po-documents.component';
 
 @NgModule({
-  declarations: [PoComponent, PODetailComponent, PoTableComponent, PoCardComponent],
+  declarations: [PoComponent, PODetailComponent, PoTableComponent, PoCardComponent, PoDocumentsComponent],
   imports: [
     CommonModule,
     PORoutingModule,

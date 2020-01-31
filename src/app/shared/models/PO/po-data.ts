@@ -13,6 +13,7 @@ export interface POData {
   comments: string;
   projectId: number;
   approverId?: number;
+  DocumentData?: FormData[];
 }
 export interface PoMaterial {
   materialId: number;

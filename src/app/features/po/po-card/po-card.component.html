@@ -102,11 +102,14 @@
                                     {{cardData.billingAddress.email}}</mat-list-item>
                             </div>
                             <div class="col-xs-6">
-                                <mat-list-item mat-subheader> Street Address: <a href="javascript:void(0)"
+                                <mat-list-item mat-subheader> Street Address:
+                                    {{cardData.billingAddress.addressLine1}}
+                                    {{cardData.billingAddress.addressLine2}}<a href="javascript:void(0)"
                                         (click)="openaddressDialog('projectBillingAddressId',cardData.projectId)"><i
                                             class="material-icons main-color">
                                             edit
                                         </i></a></mat-list-item>
+
                                 <mat-list-item mat-subheader> Pin Code:{{cardData.billingAddress.pinCode}}
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> City:{{cardData.billingAddress.city}} </mat-list-item>
