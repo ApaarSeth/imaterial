@@ -16,4 +16,10 @@ export class SignInSignupService implements OnInit{
             console.error(e);
         });
       }
+
+      signIn(data) {
+        return this.dataService.sendPostRequestSsoEncodedUrl(API.SIGNIN,data).catch(e=>{
+            console.error(e);
+        });
+      }
 }

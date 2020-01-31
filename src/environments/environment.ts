@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   url: "http://localhost:1323",
   masterUrl: "http://localhost:1333",
-  ssoUrl:"http://localhost:8080"
+  ssoUrl: "http://localhost:8080"
 };
 
 /*

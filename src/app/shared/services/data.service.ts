@@ -280,6 +280,57 @@ export class DataService {
       );
   }
 
+  sendPostRequestSsoEncodedUrl(
+    url: string,
+    params: any,
+    reqOptions: DataServiceOptions = null
+  ): Promise<any> {
+    let headers = new HttpHeaders();
+    headers = headers.append("accept", "*/*");
+    //headers = headers.append( 'Authorization', 'admin');
+    headers = headers.append(
+      "Authorization",
+      "Basic " + btoa("fooClientIdPassword:secret")
+    );
+    headers = headers.append(
+      "Content-type",
+      "application/x-www-form-urlencoded; charset=utf-8"
+    );
+    if (reqOptions) {
+      if (reqOptions.skipLoader) {
+        headers = headers.append(
+          ConfigurationConstants.HEADER_SKIP_LOADER,
+          "1"
+        );
+      }
+      if (reqOptions.cache) {
+        headers = headers.append(
+          ConfigurationConstants.HEADER_CACHE_REQUEST,
+          "1"
+        );
+      }
+
+      if (reqOptions.headers) {
+        const hdrs = reqOptions.headers.split(",");
+
+        headers = headers.append(hdrs[0], hdrs[1]);
+      }
+    }
+
+    const requestUrl =
+      reqOptions && reqOptions.requestURL ? reqOptions.requestURL : this.ssoUrl;
+    const options = { headers };
+
+    return this.http
+      .post(requestUrl + url, params, options)
+      .toPromise()
+      .then(
+        res => res as any,
+        err =>
+          this.handleError(err, reqOptions && reqOptions.skipLoader === true)
+      );
+  }
+
   private handleError(err: HttpErrorResponse, skipErrorNotify = false) {
     // if ((!window.navigator.onLine) || ((typeof err === 'object') && (err.status === ErrorCodesConstants.ERROR_HTTP_NO_RESPONSE))) {
     //     this.notifier.clearAllNotifications();
