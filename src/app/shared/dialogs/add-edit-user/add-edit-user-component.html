@@ -1,0 +1,108 @@
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
+  <h1 mat-dialog-title>Add User</h1>
+  <div mat-dialog-content>
+    <div class="col-sm-12 display-flex m-t-20">
+     
+      <!-- new structure -->
+      <div class="col-sm-12">
+        <!-- first row -->
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- project Name -->
+          <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="First Name"
+            formControlName="firstName"
+          />
+          <mat-error>First Name is Required</mat-error>
+        </mat-form-field>
+          </div>
+        </div>
+        <!-- second row -->
+        <div class="row">
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="Last Name"
+            formControlName="lastName"
+          />
+          <mat-error>Last Name is Required</mat-error>
+        </mat-form-field>
+        </div>
+        <!-- third row -->
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- address 1 -->
+       <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="Email Id"
+            formControlName="emailId"
+          />
+          <mat-error>Email Id is Required</mat-error>
+        </mat-form-field>
+          </div>
+        </div>
+        <!-- fourth row -->
+        <div class="row">
+          <div class="col-sm-12">
+           <!-- city -->
+        <mat-form-field class="border-select">
+          <mat-label>City</mat-label>
+          <mat-select formControlName=role>
+            <mat-option *ngFor="let city of cities" [value]="city.value">
+              {{city.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          </div>
+        </div>
+        <!-- fifth row -->
+        <div class="row">
+          <div class="col-sm-12">
+           <!-- PinCode -->
+        <mat-form-field class="border-input">
+          <input
+            matInput
+            type="text"
+            placeholder="Phone No"
+            formControlName="phoneNo"
+          />
+          <mat-error>phoneNo is Required</mat-error>
+        </mat-form-field>
+          </div>
+        </div>
+         <!-- sixth row -->
+         <div class="row">
+          <div class="col-sm-12">
+           <!-- project unit -->
+        <mat-form-field class="border-select">
+          <mat-label>Project Unit</mat-label>
+          <mat-select formControlName="project">
+            <mat-option *ngFor="let unit of units" [value]="unit.value">
+              {{unit.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+      <!-- end structure -->
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <div class="col-sm-12">
+      <button
+        mat-raised-button [disabled]="!form.valid"
+        class="main-background-color main-button color-white pull-right"
+      >
+        Add
+      </button>
+    </div>
+  </div>
+</form>

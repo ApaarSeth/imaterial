@@ -51,6 +51,13 @@ const routes: Routes = [
       import(
         "./features/rfq-supplier-template/rfq-supplier-detail-template.module"
       ).then(m => m.RFQSupplierDetailTemplateModule)
+  },
+  {
+    path: "users",
+    loadChildren: () =>
+      import(
+        "./features/users/user-dashboard.module"
+      ).then(m => m.UserDashboardModule)
   }
 ];
 
