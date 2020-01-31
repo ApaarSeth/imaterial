@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
-import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
 import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
 import { PoComponent } from "./po.component";
+import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
     component: PODetailComponent
   },
   {
-    path: "po-generate",
+    path: "po-generate/:id",
     component: PoComponent
   }
 ];
