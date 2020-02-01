@@ -3,8 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { UserDashboardComponent } from './user-dashboard.component';
 import { UserResolver } from './resolver/user.resolver';
-import { UserDetailComponent } from './user-detail/user-detail.component';
-
+import { UserDetailComponent } from './user-details/user-details.component';
 const routes: Routes = [
   { path: "", component: UserDashboardComponent },
   {

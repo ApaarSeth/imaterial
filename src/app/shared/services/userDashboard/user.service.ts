@@ -13,56 +13,17 @@ import { IndentVO } from "../../models/indent";
 export class UserService {
   constructor(private dataService: DataService) {}
 
-  getProjects(organizationId: Number, userId: Number) {
+  getRoles() {
     return this.dataService
-      .getRequest(API.PROJECTS(organizationId, userId))
+      .getRequest(API.ROLES)
       .then(res => {
         return res;
       });
   }
 
-  getProject(organizationId: Number, projectId: Number) {
-    return this.dataService
-      .getRequest(API.GETPROJECT(organizationId, projectId))
-      .then(res => {
-        return res;
-      });
-  }
-
-  // getProjectById(organizationId:Number,userId:Number,id:number) {
-  //   return this.dataService.getRequest(API.PROJECTS(organizationId,userId),id).then(res => {
-  //       return res;
-  //   });
-  // }
-
-  addProjects(projectData: ProjectDetails) {
-    projectData.userId = 1;
-    projectData.organizationId = 1;
-    return this.dataService
-      .sendPostRequest(API.ADDPROJECT, projectData)
-      .then(res => {
-        return res;
-      });
-  }
-
-  delete(organizationId: Number, projectId: Number) {
-    return this.dataService
-      .sendPostRequest(API.DELETE(organizationId, projectId), "")
-      .then(res => {
-        return res;
-      });
-  }
-
-  updateProjects(
-    organizationId: Number,
-    projectId: Number,
-    projectData: ProjectDetails
-  ) {
-    return this.dataService
-      .sendPostRequest(
-        API.UPDATEPROJECT(organizationId, projectId),
-        projectData
-      )
+  getAllUsers(organisationId:number){
+     return this.dataService
+      .getRequest(API.ALLUSERS(organisationId))
       .then(res => {
         return res;
       });

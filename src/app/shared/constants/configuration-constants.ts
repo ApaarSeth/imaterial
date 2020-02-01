@@ -40,6 +40,8 @@ export const API = {
   GETPOADDADDRESS: (type, id) => `address/get/${type}/${id}`,
   POSTDOCUMENTUPLOAD: `documents/upload`,
   SIGNUP:`sso/api/auth/signup`,
-  SIGNIN:`sso/oauth/token`
+  SIGNIN:`sso/oauth/token`,
   //STATE: 'account/api/permitted/address/states',
+  ROLES : `user/getroles`,
+  ALLUSERS: organizationId => `user/getall/${organizationId}`
 };

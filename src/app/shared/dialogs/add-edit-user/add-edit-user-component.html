@@ -1,107 +1,133 @@
+
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
   <h1 mat-dialog-title>Add User</h1>
-  <div mat-dialog-content>
-    <div class="col-sm-12 display-flex m-t-20">
-     
       <!-- new structure -->
       <div class="col-sm-12">
         <!-- first row -->
         <div class="row">
           <div class="col-sm-12">
             <!-- project Name -->
-          <mat-form-field class="border-input">
+          <mat-form-field class="border-input add-edit-user-form-modal">
           <input
             matInput
             type="text"
             placeholder="First Name"
-            formControlName="firstName"
+            formControlName="firstName" required
           />
-          <mat-error>First Name is Required</mat-error>
+          <mat-error class="mat-error-add-edit-form-modal">First Name is Required</mat-error>
         </mat-form-field>
           </div>
         </div>
         <!-- second row -->
         <div class="row">
-        <mat-form-field class="border-input">
+          <div class="col-sm-12">
+            
+        <mat-form-field class="border-input add-edit-user-form-modal">
           <input
             matInput
             type="text"
             placeholder="Last Name"
-            formControlName="lastName"
+            formControlName="lastName" required
           />
-          <mat-error>Last Name is Required</mat-error>
+          <mat-error class="mat-error-add-edit-form-modal">Last Name is Required</mat-error>
         </mat-form-field>
+          </div>
+        
         </div>
         <!-- third row -->
         <div class="row">
           <div class="col-sm-12">
             <!-- address 1 -->
-       <mat-form-field class="border-input">
+       <mat-form-field class="border-input add-edit-user-form-modal">
           <input
             matInput
             type="text"
             placeholder="Email Id"
-            formControlName="emailId"
+            formControlName="emailId" required
           />
-          <mat-error>Email Id is Required</mat-error>
+          <!-- <mat-error class="mat-error-add-edit-form-modal">Email Id is Required</mat-error> -->
+           <small
+              *ngIf="form.controls['emailId'].hasError('required') && form.controls['emailId'].touched"
+              class="form-error-msg"> Email is required </small>
+              <small
+              *ngIf="form.controls['emailId'].hasError('pattern') && form.controls['emailId'].touched"
+              class="form-error-msg"> Enter Valid Email</small>
         </mat-form-field>
           </div>
         </div>
         <!-- fourth row -->
+         <div class="row">
+          <div class="col-sm-12">
+           <!-- PinCode -->
+        <mat-form-field class="border-input add-edit-user-form-modal">
+          <input
+            matInput
+            type="text"
+            placeholder="Phone No"
+            formControlName="phoneNo" required/>
+          <!-- <mat-error class="mat-error-add-edit-form-modal">phoneNo is Required</mat-error> -->
+          <small
+              *ngIf="form.controls['phoneNo'].hasError('required') && form.controls['phoneNo'].touched"
+              class="form-error-msg"> Phone No is required </small>
+              <small
+              *ngIf="form.controls['phoneNo'].hasError('pattern') && form.controls['phoneNo'].touched"
+              class="form-error-msg"> Enter Valid Phone No</small>
+        </mat-form-field>
+          </div>
+        </div>
+
+
+        <!-- fifth row -->
         <div class="row">
           <div class="col-sm-12">
            <!-- city -->
-        <mat-form-field class="border-select">
-          <mat-label>City</mat-label>
+        <mat-form-field class="border-select add-edit-user-form-modal">
+          <mat-label>Role</mat-label>
           <mat-select formControlName=role>
-            <mat-option *ngFor="let city of cities" [value]="city.value">
-              {{city.viewValue}}
+            <mat-option *ngFor="let role of allRoles" [value]="role.roleId">
+              {{role.roleName}}
             </mat-option>
           </mat-select>
         </mat-form-field>
           </div>
         </div>
-        <!-- fifth row -->
-        <div class="row">
-          <div class="col-sm-12">
-           <!-- PinCode -->
-        <mat-form-field class="border-input">
-          <input
-            matInput
-            type="text"
-            placeholder="Phone No"
-            formControlName="phoneNo"
-          />
-          <mat-error>phoneNo is Required</mat-error>
-        </mat-form-field>
-          </div>
-        </div>
+
          <!-- sixth row -->
          <div class="row">
           <div class="col-sm-12">
            <!-- project unit -->
-        <mat-form-field class="border-select">
-          <mat-label>Project Unit</mat-label>
+        <!-- <mat-form-field class="border-select add-edit-user-form-modal">
+          <mat-label>Project</mat-label>
           <mat-select formControlName="project">
             <mat-option *ngFor="let unit of units" [value]="unit.value">
               {{unit.value}}
             </mat-option>
           </mat-select>
         </mat-form-field>
+
+        .... -->
+
+        <mat-form-field class="border-select add-edit-user-form-modal">
+          <mat-label>Project</mat-label>
+          <mat-select formControlName="project" multiple>
+            <mat-option *ngFor="let project of allProjects" [value]="project.projectId">{{project.projectName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
           </div>
 
         </div>
       </div>
       <!-- end structure -->
-    </div>
-  </div>
+    
   <div mat-dialog-actions>
-    <div class="col-sm-12">
+    <div class="col-sm-12 save-btn-add-edit-user-modal">
       <button
-        mat-raised-button [disabled]="!form.valid"
+        mat-raised-button [disabled]="!form.valid" (click)="userDetailsNavigate()"
         class="main-background-color main-button color-white pull-right"
       >
-        Add
+        Save
       </button>
     </div>
   </div>

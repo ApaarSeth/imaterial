@@ -1,20 +1,33 @@
-export interface UserDetails {
-  firstName?: string;
-  lastName?: string;
-  emailId?: string;
-  phoneNo?: number;
-  role?: string;
+import { ProjectDetails } from './project-details';
 
-  userId?: number;
-  project?: Array<string>;
+export interface AllUserDetails {
+  firstName?: string,
+                lastName?: string,
+                userId?: number,
+                email?: string,
+                contactNo?: number,
+                accountStatus?: number,
+                status?: number,
+                roleName?: number,
+                roleId?: number,
+                projectId?: number,
+                projectName?: string,
+                ProjectList?: ProjectDetails[];
+
 }
 
 export interface UserDetailsPopUpData {
   isDelete?: boolean;
   isEdit: boolean;
-  detail?: UserDetails;
+  detail?: AllUserDetails;
 }
 
 export interface UserIds {
   userIds?: Array<Number>;
+}
+
+export interface Roles{
+  roleId?: number,
+  roleName?:string,
+  roleDescription?:string
 }

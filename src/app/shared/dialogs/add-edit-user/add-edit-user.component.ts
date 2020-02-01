@@ -8,8 +8,12 @@ import {
 } from "@angular/forms";
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { UserDetails, UserDetailsPopUpData } from '../../models/user-details';
+import {  Roles, AllUserDetails, UserDetailsPopUpData } from '../../models/user-details';
 import { UserService } from '../../services/userDashboard/user.service';
+import { Router } from '@angular/router';
+import { FieldRegExConst } from '../../constants/field-regex-constants';
+import { ProjectService } from '../../services/projectDashboard/project.service';
+import { ProjectDetails } from '../../models/project-details';
 
 export interface City {
   value: string;
@@ -32,17 +36,34 @@ export class AddEditUserComponent implements OnInit {
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
+   allProjects: ProjectDetails[];
 
-  userDetails: UserDetails;
+   allRoles : Roles[];
+
+ toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
+  userDetails: AllUserDetails;
   constructor(
     private userService: UserService,
     private dialogRef: MatDialogRef<AddEditUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserDetailsPopUpData,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private projectService: ProjectService
   ) {}
 
   ngOnInit() {
     this.initForm();
+  this.projectService.getProjects(1, 1).then(data => {
+            this.allProjects = data.data;
+            console.log(this.allProjects);
+          });
+
+this.userService.getRoles().then(data => {
+            this.allRoles = data.data;
+          });
+
+
   }
 
   close() {
@@ -75,41 +96,46 @@ export class AddEditUserComponent implements OnInit {
   units: Unit[] = [{ value: "sqm" }, { value: "acres" }];
 
   initForm() {
+
+    
+
     this.userDetails = this.data.isEdit
       ? this.data.detail
-      : ({} as UserDetails);
-    this.form = this.formBuilder.group({
-      firstName: [
+      : ({} as AllUserDetails);
+
+
+    this.form = new FormGroup({
+      firstName: new FormControl(
         this.data.isEdit ? this.data.detail.firstName : "",
         Validators.required
-      ],
-      lastName: [
+      ),
+      lastName: new FormControl(
         this.data.isEdit ? this.data.detail.lastName : "",
         Validators.required
-      ],
-      emailId: [this.data.isEdit ? this.data.detail.emailId : ""],
-      phoneNo: [
-        this.data.isEdit ? this.data.detail.phoneNo : "",
+      ),
+      emailId: new FormControl(this.data.isEdit ? this.data.detail.email : "", [Validators.required,  Validators.pattern(FieldRegExConst.EMAIL)]),
+      phoneNo: new FormControl(
+        this.data.isEdit ? this.data.detail.contactNo : "",
+        [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]
+      ),
+      role: new FormControl(
+        this.data.isEdit ? this.data.detail.roleName : "",
         Validators.required
-      ],
-      role: [
-        this.data.isEdit ? this.data.detail.role : "",
+      ),
+      project: new FormControl(
+        this.data.isEdit ? this.data.detail.ProjectList: "",
         Validators.required
-      ],
-      project: [
-        this.data.isEdit ? this.data.detail.project: "",
-        Validators.required
-      ]
+      )
     });
   }
 
-  addProjects(userDetails: UserDetails) {
+  addProjects(userDetails: AllUserDetails) {
     // this.userService.addProjects(userDetails).then(res => {
     //   //res.data;
     // });
   }
 
-  updateProjects(userDetails: UserDetails) {
+  updateProjects(userDetails: AllUserDetails) {
     // if (userDetails) {
     //   let projectId = this.data.detail.projectId;
     //   let organizationId = this.data.detail.organizationId;
@@ -129,4 +155,9 @@ export class AddEditUserComponent implements OnInit {
       this.dialogRef.close(this.addProjects(this.form.value));
     }
   }
+
+  userDetailsNavigate(){
+    this.router.navigate(["users/user-detail"]);
+    }
+  
 }
