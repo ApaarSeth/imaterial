@@ -112,7 +112,8 @@ export class IndentDetailComponent implements OnInit {
         });
     }
   }
-  viewIndentDetails() {
-    this.router.navigate(["/indent/" + this.projectId + "/single-indent"]);
+  viewIndentDetails(row) {
+    console.log("row", row);
+    this.router.navigate(["/indent/" + this.projectId + "/single-indent/" + row.indentId]);
   }
 }

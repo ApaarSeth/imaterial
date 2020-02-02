@@ -14,7 +14,7 @@ const routes: Routes = [
     component: IndentDetailComponent
   },
   {
-    path: "single-indent",
+    path: "single-indent/:indentId",
     component: SingleIndentDetailsComponent
   }
 ];

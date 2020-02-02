@@ -27,6 +27,7 @@ export class SingleIndentDetailsComponent implements OnInit {
 
     product: ProjectDetails;
     projectId: number;
+    indentId: number;
 
     singleIndentDetails: SingleIndentDetails;
     displayedColumns: string[] = [
@@ -77,26 +78,17 @@ export class SingleIndentDetailsComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.projectId = params["id"];
+            this.indentId = params["indentId"];
         });
         this.getProject(this.projectId);
-        this.getSingleIndentDetails();
-        //   this.allIndents = this.route.snapshot.data.indentList;
-        //   this.dataSource1 = this.allIndents.ongoingIndentList;
-        //   this.dataSource2 = this.allIndents.completedIndentList;
+        this.getSingleIndentDetails(this.indentId);
     }
 
-    getSingleIndentDetails() {
-        // this.indentservice.getIssueToIndent(13, 4).then(data => {
-        //   console.log("asdfgh", data.data);
-        //   this.issueToIndentDetails = data.data;
-        //   this.formsInit(this.issueToIndentDetails);
-        // });
-
-        this.indentService.getSingleIndent(1).then(data => {
-            console.log("asdfgh", data.data);
+    getSingleIndentDetails(indentId: number) {
+        this.indentService.getSingleIndent(indentId).then(data => {
+            console.log("indent data", data.data);
             this.singleIndentDetails = data.data;
-
-        })
+        });
     }
 
     getProject(id: number) {

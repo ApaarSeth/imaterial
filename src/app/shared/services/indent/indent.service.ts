@@ -25,6 +25,8 @@ export class IndentService {
   }
 
   getSingleIndent(indentId: Number) {
-    return this.dataService.getRequest(API.GETSINGLEINDENT(indentId));
+    return this.dataService.getRequest(API.GETSINGLEINDENT(indentId)).then(res => {
+      return res;
+    });
   }
 }
