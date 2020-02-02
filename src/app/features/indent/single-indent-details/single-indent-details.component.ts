@@ -11,13 +11,6 @@ import { MatDialog } from '@angular/material';
 import { SingleIndentDetails } from 'src/app/shared/models/indent';
 import { IndentService } from 'src/app/shared/services/indent/indent.service';
 
-export interface SingleIndentData {
-    materialName: string;
-    requestedQuantity: number;
-    issuedQuantity: number;
-    createdAt: string;
-}
-
 @Component({
     selector: "single-indent-details",
     templateUrl: "./single-indent-details.component.html",
@@ -36,36 +29,6 @@ export class SingleIndentDetailsComponent implements OnInit {
         "Issued Quantity",
         "Requested Date"
     ];
-    dataSource = [
-        {
-            materialName: "Material Name",
-            requestedQuantity: 12,
-            issuedQuantity: 122,
-            createdAt: "30:01:2020"
-
-        },
-        {
-            materialName: "Material Name",
-            requestedQuantity: 12,
-            issuedQuantity: 122,
-            createdAt: "30:01:2020"
-
-        },
-        {
-            materialName: "Material Name",
-            requestedQuantity: 12,
-            issuedQuantity: 122,
-            createdAt: "30:01:2020"
-
-        },
-        {
-            materialName: "Material Name",
-            requestedQuantity: 12,
-            issuedQuantity: 122,
-            createdAt: "30:01:2020"
-
-        }
-    ]
 
     constructor(
         private route: ActivatedRoute,
