@@ -1,0 +1,19 @@
+<div class="row ">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <app-upload #uploadRef (onFileUpdate)="fileUpdate($event)">
+            </app-upload>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list class="pt-0">
+                <mat-list-item *ngFor="let file of documentsName; let i = index">
+                    {{ documentsName}}
+                    <button type="button" (click)="removeFile(i)" mat-icon-button>
+
+                        <mat-icon class="font-size-16">cancel</mat-icon>
+                    </button>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+</div>

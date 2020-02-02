@@ -10,7 +10,13 @@ import { PODetailLists } from "src/app/shared/models/po-details/po-details-list"
 export class PODetailComponent implements OnInit {
   poDetails: PODetailLists;
 
-  displayedColumns = ["PO Name", "Raised Date", "Total Material", "PO Amount"];
+  displayedColumns = [
+    "PO Name",
+    "Raised Date",
+    "Total Material",
+    "PO Amount",
+    "ViewPo"
+  ];
 
   constructor(private activatedRoute: ActivatedRoute) {}
 

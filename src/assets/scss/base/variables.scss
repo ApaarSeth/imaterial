@@ -76,6 +76,11 @@ button:focus {
   display: none;
 }
 
+.overflow-remove .mat-tab-body-content {
+  height: 100%;
+  overflow: hidden;
+}
+
 input {
   // background: $white-color;
   padding: 10px;
@@ -144,6 +149,12 @@ input {
 
 .width50Percent {
   width: 50%;
+}
+
+.brand-view-style{
+  background-color: $background-table-color-grey;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 .border-input input,
@@ -243,12 +254,16 @@ a:hover {
   border-right: 1px solid black;
 }
 
-.mat-radio-outer-circle {
+.white-radiobutton .mat-radio-outer-circle {
   border-color: $white-color;
 }
 
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+.white-radiobutton .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   border-color:$main-color;
+}
+
+.black-border {
+  border-bottom: 2px solid;
 }
 
 //Muskaan's edit

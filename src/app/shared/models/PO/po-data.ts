@@ -13,6 +13,7 @@ export interface POData {
   comments: string;
   projectId: number;
   approverId?: number;
+  DocumentData?: FormData[];
 }
 export interface PoMaterial {
   materialId: number;
@@ -99,11 +100,13 @@ export interface ProjectAddress {
   contactNo: string;
   firstName: string;
   lastName: string;
+  projectUserId: number;
 }
 export interface BillingAddress {
   projectAddressId: number;
   supplierId: number;
   projectName: string;
+  companyName: string;
   addressId: number;
   primaryAddress: number;
   addressLine1: string;
@@ -116,13 +119,18 @@ export interface BillingAddress {
   contactNo: string;
   firstName: string;
   lastName: string;
+  projectBillingUserId: number;
+  projectBillingAddressId: number;
+  gstNo: number;
 }
 
 export interface CardData {
   supplierAddress: SupplierAddress;
   projectAddress: ProjectAddress;
+  billingAddress: BillingAddress;
   poNumber: number;
   poValidUpto: string;
+  projectId: number;
 }
 
 export interface DocumentList {

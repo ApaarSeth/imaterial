@@ -5,12 +5,14 @@ import {
 } from "src/app/shared/models/RFQ/rfq-details";
 import { Router } from "@angular/router";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
+import { DocumentUploadService } from "src/app/shared/services/document-download/document-download.service";
+import { DocumentList } from "src/app/shared/models/PO/po-data";
 
 @Component({
   selector: "documents",
   templateUrl: "./documents.component.html",
   styleUrls: [
-    "../../../../assets/scss/main.scss",
+    "../../../../assets/scss/main.scss"
     // "../../../../../node_modules/froala-editor/css/froala_editor.pkgd.min.css",
     // "../../../../../node_modules/froala-editor/css/froala_style.min.css"
   ]
@@ -20,10 +22,15 @@ export class DocumentsComponent implements OnInit {
   buttonName: string = "uploadDocuments";
   checkedMaterialsList: RfqMaterialResponse[];
   selectedSuppliersList: Suppliers[];
+  documentList: DocumentList[] = [];
+  documentsName: string[] = [];
   docs: FileList;
   rfqDetails: AddRFQ;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private documentUploadService: DocumentUploadService
+  ) {}
 
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;
@@ -48,27 +55,36 @@ export class DocumentsComponent implements OnInit {
 
       const fileArr: File[] = [];
 
-      for (let key in Object.keys(this.docs)) {
-        fileArr.push(this.docs[key]);
-        data.append(`files[${key}]`, this.docs[key]);
-      }
-      // data.append(`files`, fileArr);
-      data.append("fileUploadType", "RFQ");
+      data.append(`file`, this.docs[0]);
       console.log("asdxfcgvhbjnk", data);
-      //data.append('parentId', this.item.itemForm.value.locationQtyList[0].attachId);
-      // return this.commonService.docUpload(data).then(res => {
-      //   return res;
-      // });
+      return this.documentUploadService.postDocumentUpload(data).then(res => {
+        console.log(res);
+        this.documentsName.push(
+          res.data
+            .split("")
+            .splice(res.data.lastIndexOf("/") + 1, res.data.length - 1)
+            .join("")
+        );
+        this.documentList.push({
+          documentType: "PO",
+          documentDesc: "abc",
+          documentUrl: res.data
+        });
+      });
     }
-    // else {
-    //   of().toPromise();
-    // }
+    console.log(this.documentList);
+  }
+
+  removeFile(i) {
+    this.documentList.splice(i, 1);
   }
   navigateToReviewRFQ() {
     let checkedMaterialsList = this.checkedMaterialsList;
     let selectedSuppliersList = this.selectedSuppliersList;
+    let documentsList = this.documentList;
+    console.log(checkedMaterialsList);
     this.router.navigate(["/rfq/review"], {
-      state: { checkedMaterialsList, selectedSuppliersList }
+      state: { checkedMaterialsList, selectedSuppliersList, documentsList }
     });
   }
 }

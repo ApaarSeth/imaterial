@@ -33,6 +33,7 @@ export interface Address {
   gstNo?: string;
   addressType?: string;
   projectAddressId: number;
+  primaryAddress: number;
 }
 
 export interface RfqList {

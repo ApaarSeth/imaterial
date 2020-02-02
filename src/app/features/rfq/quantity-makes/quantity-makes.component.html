@@ -54,7 +54,7 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 {{material.projectName}}
-                <a href="javascript:void(0)" (click)="openDialog()" class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a>
+                <a href="javascript:void(0)" (click)="openDialog(material)" class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <!-- table part -->
@@ -113,6 +113,9 @@
                   <app-chip
                     (onUpdate)="makesUpdate($event, (i +  (mati ? checkedMaterialsList[mati].prevMatListLength : 0)))">
                   </app-chip>
+                  <!-- <button mat-button class="display-flex pull-right" (click)="deleteMaterial(i)">
+                      <mat-icon class="main-color">delete_outline</mat-icon>
+                  </button> -->
                 </td>
               </ng-container>
 

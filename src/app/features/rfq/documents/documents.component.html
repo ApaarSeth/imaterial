@@ -4,59 +4,36 @@
     <!-- fix part -->
     <div class="row p-t-15 p-b-10">
       <div class="col-xs-2">
-        <a
-          href="javascript:void(0)"
-          (click)="setButtonName('projectMaterials')"
-        >
-          <button
-            [class.active]="buttonName == 'projectMaterials'"
-            class="color-black"
-            mat-button
-          >
+        <a href="javascript:void(0)" (click)="setButtonName('projectMaterials')">
+          <button [class.active]="buttonName == 'projectMaterials'" class="color-black" mat-button>
             Project & Material
           </button>
         </a>
       </div>
       <div class="col-xs-2">
         <a href="javascript:void(0)" (click)="setButtonName('addQueryMakes')">
-          <button
-            [class.active]="buttonName == 'addQueryMakes'"
-            class="color-black"
-            mat-button
-          >
+          <button [class.active]="buttonName == 'addQueryMakes'" class="color-black" mat-button>
             Add Query & Makes
           </button>
         </a>
       </div>
       <div class="col-xs-2">
         <a href="javascript:void(0)" (click)="setButtonName('selectSupplier')">
-          <button
-            [class.active]="buttonName == 'selectSupplier'"
-            class="color-black"
-            mat-button
-          >
+          <button [class.active]="buttonName == 'selectSupplier'" class="color-black" mat-button>
             Select Supplier
           </button>
         </a>
       </div>
       <div class="col-xs-2">
         <a href="javascript:void(0)" (click)="setButtonName('uploadDocuments')">
-          <button
-            [class.active]="buttonName == 'uploadDocuments'"
-            class="color-black"
-            mat-button
-          >
+          <button [class.active]="buttonName == 'uploadDocuments'" class="color-black" mat-button>
             Upload Documents & Terms
           </button>
         </a>
       </div>
 
       <div class="text-right col-xs-3">
-        <button
-          mat-raised-button
-          class="main-background-color main-button color-white"
-          (click)="navigateToReviewRFQ()"
-        >
+        <button mat-raised-button class="main-background-color main-button color-white" (click)="navigateToReviewRFQ()">
           Review RFQ
         </button>
       </div>
@@ -65,16 +42,27 @@
     <!-- first row: select and upload -->
 
     <div class="row ">
-      <!-- first column: Select Document -->
-      <app-upload
-        #uploadRef
-        class="col-xs-12"
-        (onFileUpdate)="fileUpdate($event)"
-      ></app-upload>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <app-upload #uploadRef (onFileUpdate)="fileUpdate($event)">
+          </app-upload>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list class="pt-0">
+            <mat-list-item *ngFor="let file of documentsName; let i = index">
+              {{ documentsName}}
+              <button type="button" (click)="removeFile(i)" mat-icon-button>
+
+                <mat-icon class="font-size-16">cancel</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
     </div>
 
     <!-- second row: terms and conditions -->
+
     <!-- <div [froalaEditor]>Hello, Froala!</div> -->
-    <!-- <froala></froala> -->
   </div>
 </div>

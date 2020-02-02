@@ -11,14 +11,14 @@ export interface City {
 // Component for dialog box
 @Component({
   selector: "address-dialog",
-  templateUrl: "./address-dialog.html"
+  templateUrl: "./add-addressPo.html"
 })
 
 // Component class
-export class AddAddressDialogComponent {
+export class AddAddressPoDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<AddAddressDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: RfqMaterialResponse,
+    public dialogRef: MatDialogRef<AddAddressPoDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
     private addAddressService: AddAddressService
   ) {}
@@ -27,6 +27,21 @@ export class AddAddressDialogComponent {
   address: Address;
   ngOnInit() {
     console.log("data", this.data);
+    if (this.data.roleType === "projectBillingAddressId") {
+      this.addAddressService
+        .getPoAddAddress("Project", this.data.id)
+        .then(res => {
+          this.address = res.data;
+          console.log("addressProject", this.address);
+        });
+    } else {
+      this.addAddressService
+        .getPoAddAddress("Supplier", this.data.id)
+        .then(res => {
+          this.address = res.data;
+          console.log("addressSupplier", this.address);
+        });
+    }
     this.formInit();
   }
   cities: City[] = [
@@ -47,45 +62,36 @@ export class AddAddressDialogComponent {
       addressLine2: ["", Validators.required],
       pinCode: ["", Validators.required],
       state: ["", Validators.required],
-      city: ["", Validators.required]
+      city: ["", Validators.required],
+      gstNo: ["", Validators.required]
     });
-
     console.log("addresss", this.newAddressForm.value);
   }
 
-  onNoClick(): void {
-    this.data.projectAddressList = this.data.projectAddressList.map(address => {
-      address.primaryAddress = 0;
-      return address;
-    });
-    this.selectAddressFrm.value.address.primaryAddress = 1;
-    this.data.defaultAddress = this.selectAddressFrm.value.address;
-    console.log("defaultAdressUpdate", this.data);
-    this.dialogRef.close();
+  onselectAddress(): void {
+    this.dialogRef.close([this.data.roleType, this.selectAddressFrm.value]);
   }
 
-  onNoClick1(): void {
-    this.address = this.newAddressForm.value;
-    console.log("addresss", this.newAddressForm.value);
-    console.log("new object", this.address);
-    this.postAddAddress(this.address);
+  onAddAddress(): void {
+    this.postAddAddress(
+      this.data.roleType === "projectBillingAddressId" ? "project" : "supplier",
+      this.newAddressForm.value
+    );
   }
 
-  postAddAddress(address) {
+  //   onNoClick1(): void {
+  //     this.address = this.newAddressForm.value;
+  //     console.log("addresss", this.newAddressForm.value);
+  //     console.log("new object", this.address);
+  //     this.postAddAddress(this.address);
+  //   }
+
+  postAddAddress(role, address) {
     this.addAddressService
-      .postAddAddress("Project", this.data.projectId, address)
+      .postAddAddress(role, this.data.id, address)
       .then(res => {
-        res.data;
-        // this.data.projectAddressList = this.data.projectAddressList.map(
-        //   address => {
-        //     address.primaryAddress = 0;
-        //     return address;
-        //   }
-        // );
-        console.log("address", res.data);
-        // res.data.primaryAddress = 1;
-        this.data.defaultAddress = res.data;
-        this.data.projectAddressList.push(res.data);
+        this.dialogRef.close([this.data.roleType, { address: res.data }]);
+        console.log("res.data", res.data);
       });
   }
 }

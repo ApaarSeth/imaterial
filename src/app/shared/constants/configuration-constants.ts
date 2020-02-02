@@ -36,6 +36,11 @@ export const API = {
   POSTRFQDETAILSUPPLIER: supplierId => `rfq/addSupplierDetail/${supplierId}`,
   GETAPPROVER: (organizationId, projectId) =>
     `po/users/${organizationId}/${projectId}`,
+  POSTADDADDRESS: (type, id) => `address/add/${type}/${id}`,
+  GETPOADDADDRESS: (type, id) => `address/get/${type}/${id}`,
+  POSTDOCUMENTUPLOAD: `documents/upload`,
+  SIGNUP: `sso/api/auth/signup`,
+  SIGNIN: `sso/oauth/token`,
   //STATE: 'account/api/permitted/address/states',
   GETISSUETOINDENT: (projectId, materialId) =>
     `materials/updateStock/${projectId}/${materialId}`,

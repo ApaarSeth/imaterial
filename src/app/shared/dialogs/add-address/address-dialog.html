@@ -1,78 +1,76 @@
 <h1 mat-dialog-title>Select Address</h1>
-
-<div mat-dialog-content class="p-l-10 p-r-10">
-  <div class="row">
-    <div class="col-xs-12">
-      <mat-radio-group aria-label="Select an option">
-        <div class="row p-t-10 p-b-10 p-l-100 gray-border">
-          <mat-radio-button value="1"
-            >Sector 43, Gurugram, Haryana</mat-radio-button
-          >
+<div mat-dialog-content>
+  <mat-tab-group class="overflow-remove">
+  
+    <mat-tab label="Choose Address">
+      <form  [formGroup]="selectAddressFrm">
+        <div class="row">
+          <div class="col-xs-12">
+            <mat-radio-group aria-label="Select an option" name="address" formControlName="address">
+              <div class="p-t-10 p-b-10 gray-border" *ngFor="let address of data.projectAddressList">
+                <mat-radio-button class="p-l-25" [value]="address" [checked]="address.primaryAddress===1"
+              >{{address.addressLine1}}
+              <span *ngIf="address.city">, {{address.city}}</span>
+              <span *ngIf="address.state">, {{address.state}}</span></mat-radio-button
+                >
+              </div>
+            </mat-radio-group>
+          </div>
         </div>
-        <div class="row p-t-10 p-b-10 p-l-100 gray-border">
-          <mat-radio-button value="1"
-            >Sector 43, Gurugram, Haryana</mat-radio-button
-          >
+      </form>
+      </mat-tab>
+    <mat-tab label="Add Address">
+      <form [formGroup]="newAddressForm">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 ">
+              <div class="row border-input">
+                <mat-form-field class="col-xs-12 p-r-150 p-l-150">
+                  <input matInput type="text" placeholder="Address Line 1" formControlName="addressLine1" />
+                </mat-form-field>
+              </div>
+              <div class="row border-input">
+                <mat-form-field class="col-xs-12 p-r-150 p-l-150">
+                  <input matInput type="number" placeholder="Pincode" formControlName="pinCode" />
+                </mat-form-field>
+              </div>
+              <div class="row border-input">
+                <mat-form-field class="col-xs-12 p-r-150 p-l-150">
+                  <input matInput type="text" placeholder="State" formControlName="state" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row border-input">
+                <mat-form-field class="col-xs-12 p-r-300">
+                  <input matInput type="text" placeholder="Address Line 2" formControlName="addressLine2" />
+                </mat-form-field>
+              </div>
+              <div class="row border-input">
+                <mat-form-field class="border-select">
+                  <mat-label>City</mat-label>
+                  <mat-select formControlName=city>
+                    <mat-option *ngFor="let city of cities" [value]="city.value">
+                      {{city.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="row p-t-10 p-b-10 p-l-100 gray-border">
-          <mat-radio-button value="3"
-            >Sector 43, Gurugram, Haryana</mat-radio-button
-          >
-        </div>
-        <div class="row p-t-10 p-b-10 p-l-100 gray-border">
-          <mat-radio-button value="4"
-            >Sector 43, Gurugram, Haryana</mat-radio-button
-          >
-        </div>
-      </mat-radio-group>
-    </div>
-  </div>
-</div>
-
-<h1 mat-dialog-title class="m-0 p-t-20">Add New Address</h1>
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 ">
-      <div class="row border-input">
-        <mat-form-field class="col-xs-12 p-r-150 p-l-150">
-          <input matInput type="text" placeholder="Address Line 1" />
-        </mat-form-field>
-      </div>
-      <div class="row border-input">
-        <mat-form-field class="col-xs-12 p-r-150 p-l-150">
-          <input matInput type="number" placeholder="Pincode" />
-        </mat-form-field>
-      </div>
-      <div class="row border-input">
-        <mat-form-field class="col-xs-12 p-r-150 p-l-150">
-          <input matInput type="text" placeholder="State" />
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row border-input">
-        <mat-form-field class="col-xs-12 p-r-300">
-          <input matInput type="text" placeholder="Address Line 2" />
-        </mat-form-field>
-      </div>
-      <div class="row border-input">
-        <mat-form-field class="col-xs-12 p-r-300">
-          <select matNativeControl required>
-            <option value="city">City</option>
-          </select>
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 
 <div mat-dialog-actions class="pull-right">
-  <button
-    mat-raised-button
-    class="main-background-color main-button color-white m-b-5"
-    [mat-dialog-close]=""
-    cdkFocusInitial
-  >
+  <button mat-raised-button class="main-background-color main-button color-white m-b-5" [mat-dialog-close]=""
+    cdkFocusInitial (click)="onNoClick()">
     Save
+  </button>
+  <button mat-raised-button class="main-background-color main-button color-white m-b-5" [mat-dialog-close]=""
+    cdkFocusInitial (click)="onNoClick1()">
+    Add
   </button>
 </div>

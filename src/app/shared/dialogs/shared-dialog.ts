@@ -7,6 +7,8 @@ import { AddAddressDialogComponent } from "./add-address/address-dialog.componen
 import { IssueToIndentDialogComponent } from "./issue-to-indent/issue-to-indent-dialog.component";
 import { AddRFQConfirmationComponent } from "./add-rfq-confirmation/add-rfq-double-confirmation.component";
 import { SelectApproverComponent } from "./selectPoApprover/selectPo.component";
+import { SelectPoRoleComponent } from "./select-po-role/select-po-role.component";
+import { AddAddressPoDialogComponent } from "./add-address-po/add-addressPo.component";
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -17,5 +19,7 @@ export const SharedDialogs = [
   AddAddressDialogComponent,
   IssueToIndentDialogComponent,
   AddRFQConfirmationComponent,
-  SelectApproverComponent
+  SelectApproverComponent,
+  SelectPoRoleComponent,
+  AddAddressPoDialogComponent
 ];

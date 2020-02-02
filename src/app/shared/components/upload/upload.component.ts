@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
-// import { DocumentModel } from "../../models/rfq.model";
 import { DocumentDetails } from "../../models/RFQ/rfq-details";
-//import { CommonService } from '../../services/common.service';
-// import { of } from 'rxjs';
+import { DocumentUploadService } from "../../services/document-download/document-download.service";
 
 @Component({
   selector: "app-upload",
@@ -12,17 +10,15 @@ export class UploadComponent implements OnInit {
   fileToUpload: FileList;
   deletedDocs: number[] = [];
   uploadedDocs: DocumentDetails[];
-  //   id: number;
 
   @Output("onFileUpdate") onFileUpdate = new EventEmitter<FileList>();
   @Input() parentId;
   @Input() label;
+  @Input() filesUploaded;
 
-  constructor() {}
+  constructor(private documentUploadService: DocumentUploadService) {}
 
-  ngOnInit(): void {
-    //this.id = Math.round(Math.random() * 10);
-  }
+  ngOnInit(): void {}
 
   /**
    * This function is used to add document to a particular RFQ Item
@@ -42,7 +38,7 @@ export class UploadComponent implements OnInit {
     }
 
     this.fileToUpload = newFiles.files;
-
+    console.log("fileTOUp-load", this.fileToUpload);
     this.onFileUpdate.emit(this.fileToUpload);
   }
 
@@ -50,24 +46,22 @@ export class UploadComponent implements OnInit {
    * This function is used to remove document from a particular item of RFQ
    * @param i index of the document
    */
-  removeFile(i) {
-    const newFiles = new DataTransfer();
+  // removeFile(i) {
+  //   const newFiles = new DataTransfer();
 
-    Object.keys(this.fileToUpload).forEach(key => {
-      if (Number(key) !== i) {
-        newFiles.items.add(this.fileToUpload[key]);
-      }
-    });
-    this.fileToUpload = newFiles.files;
-    this.onFileUpdate.emit(this.fileToUpload);
-  }
+  //   Object.keys(this.fileToUpload).forEach(key => {
+  //     if (Number(key) !== i) {
+  //       newFiles.items.add(this.fileToUpload[key]);
+  //     }
+  //   });
+  //   this.fileToUpload = newFiles.files;
+  //   this.onFileUpdate.emit(this.fileToUpload);
+  // }
 
   uploadDocs(
     fileUploadType: string = null,
     fileLIst: FileList = this.fileToUpload
   ): Promise<any> {
-    // return this.commonService.getUniqueId().then(response => {
-
     if (fileLIst && fileLIst.length) {
       const data = new FormData();
 
@@ -77,19 +71,9 @@ export class UploadComponent implements OnInit {
         fileArr.push(fileLIst[key]);
         data.append(`files[${key}]`, fileLIst[key]);
       }
-      // data.append(`files`, fileArr);
-      // if (fileUploadType) {
-      //     data.append('fileUploadType', fileUploadType);
-      // }
-      // data.append('parentId', response.id);
-      // return this.commonService.docUpload(data).then(res => {
-      //     return response.id;
-      // });
     } else {
       return Promise.resolve();
     }
-
-    // });
   }
 
   reset() {

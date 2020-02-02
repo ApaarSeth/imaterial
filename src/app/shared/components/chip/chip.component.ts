@@ -27,7 +27,7 @@ export class ChipComponent implements OnInit {
     const value = event.value;
 
     // Add our fruit
-    if ((value || "").trim()) {
+    if ((value || "").trim() && this.fruits.length < 4) {
       this.fruits.push(value.trim());
     }
 

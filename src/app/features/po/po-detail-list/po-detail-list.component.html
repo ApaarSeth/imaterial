@@ -32,11 +32,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="row">
-            <table
-              mat-table
-              [dataSource]="poDetails.draftedPOList"
-              class="mat-elevation-z8 col-sm-12"
-            >
+            <table mat-table [dataSource]="poDetails.draftedPOList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="PO Name">
                 <th mat-header-cell *matHeaderCellDef>PO Name</th>
                 <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
@@ -63,6 +59,13 @@
                 </td>
               </ng-container>
 
+              <ng-container matColumnDef="ViewPo">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <a [routerLink]="['../../po/po-generate/',element.purchaseOrderId]">view po</a>
+                </td>
+              </ng-container>
+
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
@@ -78,11 +81,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="row">
-            <table
-              mat-table
-              [dataSource]="poDetails.awardedPOList"
-              class="mat-elevation-z8 col-sm-12"
-            >
+            <table mat-table [dataSource]="poDetails.awardedPOList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="PO Name">
                 <th mat-header-cell *matHeaderCellDef>PO Name</th>
                 <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
@@ -124,11 +123,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="row">
-            <table
-              mat-table
-              [dataSource]="poDetails.acceptedPOList"
-              class="mat-elevation-z8 col-sm-12"
-            >
+            <table mat-table [dataSource]="poDetails.acceptedPOList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="PO Name">
                 <th mat-header-cell *matHeaderCellDef>PO Name</th>
                 <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
@@ -170,11 +165,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="row">
-            <table
-              mat-table
-              [dataSource]="poDetails.rejectedPOList"
-              class="mat-elevation-z8 col-sm-12"
-            >
+            <table mat-table [dataSource]="poDetails.rejectedPOList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="PO Name">
                 <th mat-header-cell *matHeaderCellDef>PO Name</th>
                 <td mat-cell *matCellDef="let element">{{ element.poName }}</td>

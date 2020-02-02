@@ -10,6 +10,7 @@ import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddRFQConfirmationComponent } from "src/app/shared/dialogs/add-rfq-confirmation/add-rfq-double-confirmation.component";
+import { DocumentList } from "src/app/shared/models/PO/po-data";
 
 @Component({
   selector: "review",
@@ -20,6 +21,7 @@ export class ReviewComponent implements OnInit {
   displayedColumns: string[] = ["Material Name", "Quantity", "Makes"];
   checkedMaterialsList: RfqMaterialResponse[];
   selectedSuppliersList: Suppliers[];
+  documentList: DocumentList[];
   form: FormGroup;
   supplierIds: number[];
   rfqDetails: AddRFQ = {} as AddRFQ;
@@ -29,6 +31,7 @@ export class ReviewComponent implements OnInit {
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;
     this.selectedSuppliersList = history.state.selectedSuppliersList;
+    this.documentList = history.state.documentsList;
     this.supplierIds = this.selectedSuppliersList.map(x => x.supplierId);
     console.log("supplierIds", this.supplierIds);
     console.log("checkedMaterialsList", this.checkedMaterialsList);
@@ -55,7 +58,7 @@ export class ReviewComponent implements OnInit {
     }
     this.rfqDetails.rfqProjectsList = this.checkedMaterialsList;
     this.rfqDetails.supplierId = this.supplierIds;
-    this.rfqDetails.documentsList = [];
+    this.rfqDetails.documentsList = this.documentList;
     this.rfqDetails.terms = {
       termsDesc: "qwert hjk ghgjhkj vhj hhv jh",
       termsType: "RFQ"

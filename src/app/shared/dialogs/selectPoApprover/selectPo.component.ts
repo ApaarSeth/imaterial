@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { POService } from "../../services/po/po.service";
-import { POData, ApproverData } from "../../models/PO/po-data";
+import { POData, ApproverData, DocumentList } from "../../models/PO/po-data";
+import { DocumentUploadService } from "../../services/document-download/document-download.service";
 
 @Component({
   selector: "select-supplier-dialog",
@@ -9,7 +10,9 @@ import { POData, ApproverData } from "../../models/PO/po-data";
   styleUrls: ["../../../../assets/scss/pages/selectApprover.scss"]
 })
 export class SelectApproverComponent implements OnInit {
+  documentList: DocumentList[] = [];
   constructor(
+    private documentUploadService: DocumentUploadService,
     private poService: POService,
     private dialogRef: MatDialogRef<SelectApproverComponent>,
     @Inject(MAT_DIALOG_DATA) public data: POData
@@ -22,7 +25,6 @@ export class SelectApproverComponent implements OnInit {
       this.approverData = res.data;
       console.log(this.approverData);
     });
-    this.poService.sendPoData(this.data);
   }
 
   sendPo() {

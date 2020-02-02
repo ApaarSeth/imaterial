@@ -23,6 +23,7 @@ import { ReviewComponent } from "./review/review.component";
 import { DndDirective } from "./documents/drag-and-drop";
 import { RFQSuppliersResolver } from "./suppliers/supplier-resolver";
 import { QuantityMakesResolver } from "./quantity-makes/quantity-makes-resolver";
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { QuantityMakesResolver } from "./quantity-makes/quantity-makes-resolver"
     MatIconModule,
     MatCheckboxModule,
     MatGridListModule,
-    MatDialogModule
+    MatDialogModule,
+    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
   ],
   providers: [
     RFQResolver,
