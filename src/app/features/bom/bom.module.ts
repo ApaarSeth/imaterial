@@ -9,6 +9,7 @@ import { AppSharedModule } from "src/app/shared/app-shared-module";
 import { BomPreviewComponent } from "./bom-preview/bom-preview.component";
 import { BomTableComponent } from "./bom-table/bom-table.component";
 import { BomResolver } from "./bom.resolver";
+import { IssueToIndentResolver } from 'src/app/shared/dialogs/issue-to-indent/issue-to-indent-resolver';
 
 @NgModule({
   declarations: [BomComponent, BomPreviewComponent, BomTableComponent],
@@ -21,6 +22,6 @@ import { BomResolver } from "./bom.resolver";
     LayoutModule,
     AppSharedModule
   ],
-  providers: [BomResolver]
+  providers: [BomResolver, IssueToIndentResolver]
 })
-export class BomModule {}
+export class BomModule { }

@@ -15,10 +15,12 @@ export class PODetailComponent implements OnInit {
     "Raised Date",
     "Total Material",
     "PO Amount",
-    "ViewPo"
+    "ViewPo",
+    "ViewGRN",
+    "AddGRN"
   ];
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.poDetails = this.activatedRoute.snapshot.data.poDetailList;

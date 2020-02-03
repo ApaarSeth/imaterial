@@ -15,6 +15,8 @@ import { PoCardComponent } from "./po-card/po-card.component";
 import { PoDocumentsComponent } from "./po-documents/po-documents.component";
 import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
 import { PoSuppliersResolver } from "./po-supplier/resolver/po.resolver";
+import { ViewGRNComponent } from "./view-grn/view-grn.component";
+import { AddGRNComponent } from "./add-grn/add-grn.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { PoSuppliersResolver } from "./po-supplier/resolver/po.resolver";
     PoTableComponent,
     PoCardComponent,
     PoDocumentsComponent,
-    PoSupplierComponent
+    PoSupplierComponent,
+    ViewGRNComponent,
+    AddGRNComponent
   ],
   imports: [
     CommonModule,
