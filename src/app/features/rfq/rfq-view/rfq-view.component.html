@@ -2,22 +2,25 @@
 
 <div class="page-start-point" *ngIf="rfqDetails">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-        <div class="row m-b-10 ">
+        <div class="row m-b-10">
             <div class="col-md-12">
 
                 <!-- first row -->
-                <div class="row m-b-10">
+                <div class="row">
                     <div class="col-md-3">
-                        <div>
+                        <div class="p-t-10">
+                            <label class="text-bold">RFQ Name: </label>
                             {{rfqDetails.rfqName}}
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 p-t-10">
+                        <label class="text-bold">RFQ End Date & Time: </label>
                         {{rfqDetails.dueDate | date}}
                     </div>
 
-                    <div class="col-md-3 p-t-20 main-color">
-                        <button mat-button class="pull-right" (click)="openDialog1()">
+                    <div class="col-md-3 p-t-10 main-color">
+                        <button mat-button class="pull-right font-size14"
+                            (click)="openDialog1(rfqDetails.documentsList, rfqDetails.terms)">
                             View Terms & Conditions/Documents
                         </button>
                     </div>
@@ -50,17 +53,15 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             {{project.projectName}}
+                            <div class="main-color p-l-15">{{project.defaultAddress.addressLine1}}</div>
                         </mat-panel-title>
-                        <mat-panel-description>
-                            {{project.defaultAddress.addressLine1}}
-                        </mat-panel-description>
                     </mat-expansion-panel-header>
 
                     <!-- table -->
                     <table mat-table [dataSource]="project.projectMaterialList" class="mat-elevation-z8 col-sm-12">
                         <!-- Material Name Column -->
                         <ng-container matColumnDef="Material Name">
-                            <th mat-header-cell *matHeaderCellDef>Material Name</th>
+                            <th class="font-size14" mat-header-cell *matHeaderCellDef>Material Name</th>
                             <td mat-cell *matCellDef="let element" class="dark-gray-color">
                                 {{ element.materialName }}
                             </td>
@@ -68,7 +69,7 @@
 
                         <!-- Quantity Column -->
                         <ng-container matColumnDef="Quantity">
-                            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                            <th class="font-size14" mat-header-cell *matHeaderCellDef>Quantity</th>
                             <td mat-cell *matCellDef="let element">
                                 {{ element.quantity }}
                             </td>
@@ -76,7 +77,7 @@
 
                         <!-- Makes Column -->
                         <ng-container matColumnDef="Makes">
-                            <th mat-header-cell *matHeaderCellDef>Makes</th>
+                            <th class="font-size14" mat-header-cell *matHeaderCellDef>Makes</th>
                             <td mat-cell *matCellDef="let element">
                                 <span class="brand-view-style m-r-5" *ngFor="let make of element.makes">
                                     {{make}}
