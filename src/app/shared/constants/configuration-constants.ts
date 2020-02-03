@@ -49,5 +49,10 @@ export const API = {
   GETSINGLEINDENT: (indentId) => `indent/detail/${indentId}`,
   GETGRNDETAILS: (grnId) => `po/view/grn/${grnId}`,
   // POSTGRNDETAILS: (organizationId, purchaseOrderId) => `po/add/grn/${organizationId}/${purchaseOrderId}`,
-  GETRFQVIEW: (rfqId) => `rfq/view/details/${rfqId}`
+  GETRFQVIEW: (rfqId) => `rfq/view/details/${rfqId}`,
+  ROLES: `user/getroles`,
+  ALLUSERS: organizationId => `user/getall/${organizationId}`,
+  ADDUSER: `user/add`,
+  EDITUSER: `user/update/roleproject`,
+  DEACTIVATEUSER: userId => `user/delete/${userId}`
 };

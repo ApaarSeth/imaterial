@@ -1,0 +1,97 @@
+        <div class="page-start-point">
+            <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+                <!-- fix part -->
+                <div class="row p-t-15 p-b-10">
+                    <div class="col-xs-2">
+                        <a href="javascript:void(0)" (click)="setButtonName('selectSupplier')">
+                            <button [class.active]="buttonName == 'selectSupplier'" class="color-black" mat-button>
+                                Select Supplier
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a href="javascript:void(0)" (click)="setButtonName('projectMaterials')">
+                            <button [class.active]="buttonName == 'projectMaterials'" class="color-black" mat-button>
+                                Project & Material
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a href="javascript:void(0)" (click)="setButtonName('addQueryMakes')">
+                            <button [class.active]="buttonName == 'addQueryMakes'" class="color-black" mat-button>
+                                Add Quantity & Makes
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-xs-2">
+                        <mat-form-field class="input-search-padding-zero pull-right">
+                            <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchText" />
+                            <button mat-button matSuffix mat-icon-button>
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <div class="text-right col-xs-2">
+                        <button mat-raised-button (click)="selectProject()"
+                            class="main-background-color main-button color-white">
+                            Next
+                        </button>
+                    </div>
+                </div>
+                <form *ngIf="allSuppliers" [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'"
+                        class="mat-elevation-z8 col-sm-12">
+                        <!-- Supplier Name Column -->
+                        <ng-container matColumnDef="Supplier Name">
+                            <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-radio-group name="aprrover" aria-labelledby="example-radio-group-label"
+                                    class="example-radio-group" formControlName="supplier">
+                                    <mat-radio-button class="example-radio-button" [value]="element"
+                                        [checked]="element.checked">
+                                        {{element.firstName}}{{element.lastName}}
+                                        {{element.user_d}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                                {{ element.supplier_name }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Email Column -->
+                        <ng-container matColumnDef="Email">
+                            <th mat-header-cell *matHeaderCellDef>Email</th>
+                            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+                        </ng-container>
+
+                        <!-- Phone No. Column -->
+                        <ng-container matColumnDef="Phone No.">
+                            <th mat-header-cell *matHeaderCellDef>Phone No.</th>
+                            <td mat-cell *matCellDef="let element">{{ element.contact_no }}</td>
+                        </ng-container>
+
+                        <!-- PAN No. Column -->
+                        <ng-container matColumnDef="PAN No.">
+                            <th mat-header-cell *matHeaderCellDef>PAN No.</th>
+                            <td mat-cell *matCellDef="let element">{{ element.pan }}</td>
+                        </ng-container>
+
+                        <!-- Delete icon Column -->
+                        <ng-container matColumnDef="customColumn">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-button class="display-flex pull-right ">
+                                    <mat-icon class="main-color">delete_outline</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                    <button type="submit" mat-raised-button
+                        class="main-background-color main-button color-white center-element" [disabled]="!form.valid">
+                        Send
+                    </button>
+                </form>
+            </div>
+        </div>
