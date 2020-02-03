@@ -48,5 +48,6 @@ export const API = {
     `indent/issueQty/${materialId}`,
   GETSINGLEINDENT: (indentId) => `indent/detail/${indentId}`,
   GETGRNDETAILS: (grnId) => `po/view/grn/${grnId}`,
-  // POSTGRNDETAILS: (organizationId, purchaseOrderId) => `po/add/grn/${organizationId}/${purchaseOrderId}`
+  // POSTGRNDETAILS: (organizationId, purchaseOrderId) => `po/add/grn/${organizationId}/${purchaseOrderId}`,
+  GETRFQVIEW: (rfqId) => `rfq/view/details/${rfqId}`
 };
