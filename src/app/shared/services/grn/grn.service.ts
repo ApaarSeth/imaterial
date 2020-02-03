@@ -18,10 +18,10 @@ export class GRNService {
         });
     }
 
-    postGRNDetails(organizationId: Number, purchaseOrderId: Number, grnDetails: GRNDetails[]) {
-        return this.dataService.sendPostRequest(API.POSTGRNDETAILS(organizationId, purchaseOrderId), grnDetails).then(res => {
-            console.log("ahsghafs", res);
-        });
-    }
+    // postGRNDetails(organizationId: Number, purchaseOrderId: Number, grnDetails: GRNDetails[]) {
+    //     return this.dataService.sendPostRequest(API.POSTGRNDETAILS(organizationId, purchaseOrderId), grnDetails).then(res => {
+    //         console.log("ahsghafs", res);
+    //     });
+    // }
 
 }

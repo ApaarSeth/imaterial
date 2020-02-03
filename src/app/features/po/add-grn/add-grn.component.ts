@@ -36,7 +36,7 @@ export class AddGRNComponent implements OnInit {
 
     ngOnInit() {
         this.getGRNDetails(1);
-        this.postGRNDetails(1, 9);
+        // this.postGRNDetails(1, 9);
     }
 
     getGRNDetails(grnId: number) {
@@ -49,10 +49,10 @@ export class AddGRNComponent implements OnInit {
         });
     }
 
-    postGRNDetails(organizationId: number, purchaseOrderId: number) {
-        console.log("object", this.grnDetailsObj);
-        this.grnService.postGRNDetails(organizationId, purchaseOrderId, this.grnDetailsObj).then(data => {
-            console.log("data", data);
-        })
-    }
+    // postGRNDetails(organizationId: number, purchaseOrderId: number) {
+    //     console.log("object", this.grnDetailsObj);
+    //     this.grnService.postGRNDetails(organizationId, purchaseOrderId, this.grnDetailsObj).then(data => {
+    //         console.log("data", data);
+    //     })
+    // }
 }
