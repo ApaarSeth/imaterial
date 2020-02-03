@@ -46,7 +46,7 @@ const routes: Routes = [
       import("./features/auth/auth.module").then(m => m.AuthModule)
   },
   {
-    path: "rfq-indent-detail",
+    path: "rfq-bids",
     loadChildren: () =>
       import(
         "./features/rfq-supplier-template/rfq-supplier-detail-template.module"

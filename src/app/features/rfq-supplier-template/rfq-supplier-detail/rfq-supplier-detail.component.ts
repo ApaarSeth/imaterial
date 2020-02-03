@@ -25,7 +25,16 @@ export class RFQSupplierDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.rfqSupplierDetailList = this.activatedRoute.snapshot.data.rfqSupplierDetailResolver;
+    this.rfqService
+      .getRFQDetailSupplier(
+        this.activatedRoute.snapshot.params["rfqId"],
+        this.activatedRoute.snapshot.params["supplierId"]
+      )
+      .then(data => {
+        console.log("wefrgthyjhgff", data.data);
+        this.rfqSupplierDetailList = data.data;
+      });
+    // this.rfqSupplierDetailList = this.activatedRoute.snapshot.data.rfqSupplierDetailResolver;
     console.log("dsfhj", this.rfqSupplierDetailList);
   }
 
