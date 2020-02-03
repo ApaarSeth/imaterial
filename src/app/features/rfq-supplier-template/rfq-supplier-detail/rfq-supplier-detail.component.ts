@@ -39,7 +39,7 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
 
   postRFQDetailSupplier(rfqSupplierObj) {
-    this.rfqService.addNewSupplier(2, rfqSupplierObj).then(res => {
+    this.rfqService.postRFQDetailSupplier(this.activatedRoute.snapshot.params["supplierId"], rfqSupplierObj).then(res => {
       res.data;
     });
   }
