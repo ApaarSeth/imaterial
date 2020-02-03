@@ -10,6 +10,7 @@ import { IndentDashboardComponent } from "./indent-dashboard.component";
 import { IndentRoutingModule } from "./indent-dashboard-routing.module";
 import { IndentDetailComponent } from "./indent-detail/indent-detail.component";
 import { IndentResolver } from "./resolver/indent.resolver";
+import { SingleIndentDetailsComponent } from './single-indent-details/single-indent-details.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,6 @@ import { IndentResolver } from "./resolver/indent.resolver";
     IndentRoutingModule
   ],
   providers: [IndentResolver],
-  declarations: [IndentDashboardComponent, IndentDetailComponent]
+  declarations: [IndentDashboardComponent, IndentDetailComponent, SingleIndentDetailsComponent]
 })
-export class IndentDashboardModule {}
+export class IndentDashboardModule { }

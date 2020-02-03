@@ -9,6 +9,7 @@ import { MatDialog } from "@angular/material";
 import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 import { SelectPoRoleComponent } from "src/app/shared/dialogs/select-po-role/select-po-role.component";
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
+import { Address } from "src/app/shared/models/RFQ/rfq-details";
 
 @Component({
   selector: "app-po-card",
@@ -46,7 +47,7 @@ export class PoCardComponent implements OnInit {
 
   openDialog(roleType: string, projectId: number) {
     const dialogRef = this.dialog.open(SelectPoRoleComponent, {
-      width: "700px",
+      width: "1200px",
       data: { roleType, projectId }
     });
 
@@ -58,7 +59,8 @@ export class PoCardComponent implements OnInit {
         this.cardData.billingAddress.contactNo = result[1].approver.contactNo;
         this.cardData.billingAddress.firstName = result[1].approver.firstName;
         this.cardData.billingAddress.lastName = result[1].approver.lastName;
-        this.cardData.billingAddress.projectBillingUserId = result[0];
+        this.cardData.billingAddress.projectBillingUserId =
+          result[1].approver.projectUserId;
         this.projectDetails.controls["billingAddress"].setValue(
           this.cardData.billingAddress
         );
@@ -67,7 +69,8 @@ export class PoCardComponent implements OnInit {
         this.cardData.projectAddress.contactNo = result[1].approver.contactNo;
         this.cardData.projectAddress.firstName = result[1].approver.firstName;
         this.cardData.projectAddress.lastName = result[1].approver.lastName;
-        this.cardData.projectAddress.projectUserId = result[0];
+        this.cardData.projectAddress.projectUserId =
+          result[1].approver.projectUserId;
         console.log(this.cardData.projectAddress);
         this.projectDetails.controls["projectAddress"].setValue(
           this.cardData.projectAddress
@@ -77,33 +80,41 @@ export class PoCardComponent implements OnInit {
   }
   openaddressDialog(roleType: string, id: number) {
     const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
-      width: "700px",
+      width: "1200px",
       data: { roleType, id }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: Address) => {
       console.log("The dialog was closed");
       console.log(result);
-      if (result[0] === "projectBillingUserId") {
-        this.cardData.billingAddress.addressLine1 = result[1].approver.email;
+      if (result[0] === "projectBillingAddressId") {
+        this.cardData.billingAddress.addressLine1 =
+          result[1].address.addressLine1;
         this.cardData.billingAddress.addressLine2 =
-          result[1].approver.contactNo;
-        this.cardData.billingAddress.city = result[1].approver.firstName;
-        this.cardData.billingAddress.state = result[1].approver.lastName;
-        this.cardData.billingAddress.pinCode = result[0];
+          result[1].address.addressLine2;
+        this.cardData.billingAddress.city = result[1].address.city;
+        this.cardData.billingAddress.state = result[1].address.state;
+        this.cardData.billingAddress.pinCode = result[1].address.pinCode;
+        this.cardData.billingAddress.projectBillingAddressId =
+          result[1].address.projectBillingAddressId;
+        this.cardData.billingAddress.gstNo = result[1].address.gstNo;
         this.projectDetails.controls["billingAddress"].setValue(
           this.cardData.billingAddress
         );
       } else {
-        this.cardData.projectAddress.addressLine1 = result[1].approver.email;
-        this.cardData.projectAddress.addressLine2 =
-          result[1].approver.contactNo;
-        this.cardData.projectAddress.city = result[1].approver.firstName;
-        this.cardData.projectAddress.state = result[1].approver.lastName;
-        this.cardData.projectAddress.pinCode = result[0];
-        console.log(this.cardData.projectAddress);
-        this.projectDetails.controls["projectAddress"].setValue(
-          this.cardData.projectAddress
+        this.cardData.supplierAddress.addressLine1 =
+          result[1].address.addressLine1;
+        this.cardData.supplierAddress.addressLine2 =
+          result[1].address.addressLine2;
+        this.cardData.supplierAddress.city = result[1].address.city;
+        this.cardData.supplierAddress.state = result[1].address.state;
+        this.cardData.supplierAddress.pinCode = result[1].address.pinCode;
+        this.cardData.supplierAddress.supplierAddressId =
+          result[1].address.supplierAddressId;
+        this.cardData.supplierAddress.gstNo = result[1].address.gstNo;
+        console.log(this.cardData.supplierAddress);
+        this.projectDetails.controls["supplierAddress"].setValue(
+          this.cardData.supplierAddress
         );
       }
     });

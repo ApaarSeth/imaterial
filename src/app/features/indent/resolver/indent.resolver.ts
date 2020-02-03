@@ -13,7 +13,7 @@ export class IndentResolver implements Resolve<any> {
   constructor(
     private indentService: IndentService,
     private route: ActivatedRoute //private projectService: ProjectService
-  ) {}
+  ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     this.projectId = route.params["id"];

@@ -1,9 +1,13 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
-import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
 import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
 import { PoComponent } from "./po.component";
+import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
+import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
+import { PoSuppliersResolver } from "./po-supplier/resolver/po.resolver";
+import { ViewGRNComponent } from "./view-grn/view-grn.component";
+import { AddGRNComponent } from "./add-grn/add-grn.component";
 
 const routes: Routes = [
   {
@@ -12,8 +16,21 @@ const routes: Routes = [
     component: PODetailComponent
   },
   {
-    path: "po-generate",
+    path: "po-generate/:id",
     component: PoComponent
+  },
+  {
+    path: "po-supplier",
+    resolve: { supplier: PoSuppliersResolver },
+    component: PoSupplierComponent
+  },
+  {
+    path: "add-grn",
+    component: AddGRNComponent
+  },
+  {
+    path: "view-grn",
+    component: ViewGRNComponent
   }
 ];
 

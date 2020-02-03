@@ -1,212 +1,311 @@
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <!-- Topmost Status -->
-    <mat-card class="m-t-40 m-b-20">
-      <div class="row">
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-30 p-r-20 pull-left">23</span>
-          <span class="pull-left">Approved PO</span>
-        </div>
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Total Project</span>
-        </div>
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Completed Indent</span>
-        </div>
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Ongoing Indent</span>
-        </div>
-      </div>
-    </mat-card>
-
-    <!-- Accordion for PO Lists -->
-    <mat-accordion>
-      <div *ngIf="poDetails.draftedPOList">
-        <mat-expansion-panel class="myPanel">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Drafted PO
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="row">
-            <table
-              mat-table
-              [dataSource]="poDetails.draftedPOList"
-              class="mat-elevation-z8 col-sm-12"
-            >
-              <ng-container matColumnDef="PO Name">
-                <th mat-header-cell *matHeaderCellDef>PO Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="Raised Date">
-                <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.created_at }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="Total Material">
-                <th mat-header-cell *matHeaderCellDef>Total Material</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.totalMaterials }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="PO Amount">
-                <th mat-header-cell *matHeaderCellDef>PO Amount</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.poAmount }}
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+    <div class="col-xs-12 text-right">
+      <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+        [routerLink]="['../../po/po-supplier']">
+        Inititate Po
+      </button>
+      <!-- Topmost Status -->
+      <mat-card class="m-t-40 m-b-20">
+        <div class="row">
+          <div class="right-pipe" style="width: 20%;">
+            <span class="p-l-30 p-r-20 pull-left">23</span>
+            <span class="pull-left">Approved PO</span>
           </div>
-        </mat-expansion-panel>
-      </div>
-
-      <div *ngIf="poDetails.awardedPOList">
-        <mat-expansion-panel class="myPanel">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Awarded PO
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="row">
-            <table
-              mat-table
-              [dataSource]="poDetails.awardedPOList"
-              class="mat-elevation-z8 col-sm-12"
-            >
-              <ng-container matColumnDef="PO Name">
-                <th mat-header-cell *matHeaderCellDef>PO Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="Raised Date">
-                <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.created_at }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="Total Material">
-                <th mat-header-cell *matHeaderCellDef>Total Material</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.totalMaterials }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="PO Amount">
-                <th mat-header-cell *matHeaderCellDef>PO Amount</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.poAmount }}
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+          <div class="right-pipe" style="width: 20%;">
+            <span class="p-l-10 p-r-20 pull-left">23</span>
+            <span class="pull-left">Total Project</span>
           </div>
-        </mat-expansion-panel>
-      </div>
-
-      <div *ngIf="poDetails.acceptedPOList">
-        <mat-expansion-panel class="myPanel">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Accepted PO
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="row">
-            <table
-              mat-table
-              [dataSource]="poDetails.acceptedPOList"
-              class="mat-elevation-z8 col-sm-12"
-            >
-              <ng-container matColumnDef="PO Name">
-                <th mat-header-cell *matHeaderCellDef>PO Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="Raised Date">
-                <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.created_at }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="Total Material">
-                <th mat-header-cell *matHeaderCellDef>Total Material</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.totalMaterials }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="PO Amount">
-                <th mat-header-cell *matHeaderCellDef>PO Amount</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.poAmount }}
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+          <div class="right-pipe" style="width: 20%;">
+            <span class="p-l-10 p-r-20 pull-left">23</span>
+            <span class="pull-left">Completed Indent</span>
           </div>
-        </mat-expansion-panel>
-      </div>
-
-      <div *ngIf="poDetails.rejectedPOList">
-        <mat-expansion-panel class="myPanel">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Rejected PO
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="row">
-            <table
-              mat-table
-              [dataSource]="poDetails.rejectedPOList"
-              class="mat-elevation-z8 col-sm-12"
-            >
-              <ng-container matColumnDef="PO Name">
-                <th mat-header-cell *matHeaderCellDef>PO Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="Raised Date">
-                <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.created_at }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="Total Material">
-                <th mat-header-cell *matHeaderCellDef>Total Material</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.totalMaterials }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="PO Amount">
-                <th mat-header-cell *matHeaderCellDef>PO Amount</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.poAmount }}
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+          <div class="right-pipe" style="width: 20%;">
+            <span class="p-l-10 p-r-20 pull-left">23</span>
+            <span class="pull-left">Ongoing Indent</span>
           </div>
-        </mat-expansion-panel>
-      </div>
-    </mat-accordion>
-  </div>
-</div>
+        </div>
+      </mat-card>
+
+      <!-- Accordion for PO Lists -->
+      <mat-accordion>
+        <div *ngIf="poDetails.draftedPOList">
+          <mat-expansion-panel class="myPanel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Drafted PO
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+              <table mat-table [dataSource]="poDetails.draftedPOList" class="mat-elevation-z8 col-sm-12">
+                <ng-container matColumnDef="PO Name">
+                  <th mat-header-cell *matHeaderCellDef>PO Name</th>
+                  <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Raised Date">
+                  <th mat-header-cell *matHeaderCellDef>Raised Date</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.created_at | date}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Total Material">
+                  <th mat-header-cell *matHeaderCellDef>Total Material</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.totalMaterials }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="PO Amount">
+                  <th mat-header-cell *matHeaderCellDef>PO Amount</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.poAmount }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ViewPo">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element">
+                    <a [routerLink]="['../../po/po-generate/',element.purchaseOrderId]">view po</a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ViewGRN">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element">
+                    <a [routerLink]="['../../po/view-grn/']">View GRN</a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="AddGRN">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element">
+                    <a [routerLink]="['../../po/add-grn/']">Add GRN</a>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </div>
+          </mat-expansion-panel>
+        </div>
+
+        <div *ngIf="poDetails.awardedPOList">
+          <mat-expansion-panel class="myPanel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Awarded PO
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+              <table mat-table [dataSource]="poDetails.awardedPOList" class="mat-elevation-z8 col-sm-12">
+                <ng-container matColumnDef="PO Name">
+                  <th mat-header-cell *matHeaderCellDef>PO Name</th>
+                  <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Raised Date">
+                  <th mat-header-cell *matHeaderCellDef>Raised Date</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.created_at }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Total Material">
+                  <th mat-header-cell *matHeaderCellDef>Total Material</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.totalMaterials }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="PO Amount">
+                  <th mat-header-cell *matHeaderCellDef>PO Amount</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.poAmount }}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </div>
+
+            <!-- Accordion for PO Lists -->
+            <mat-accordion>
+              <div *ngIf="poDetails.draftedPOList">
+                <mat-expansion-panel class="myPanel">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Drafted PO
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <table mat-table [dataSource]="poDetails.draftedPOList" class="mat-elevation-z8 col-sm-12">
+                      <ng-container matColumnDef="PO Name">
+                        <th mat-header-cell *matHeaderCellDef>PO Name</th>
+                        <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Raised Date">
+                        <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.created_at }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Total Material">
+                        <th mat-header-cell *matHeaderCellDef>Total Material</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.totalMaterials }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="PO Amount">
+                        <th mat-header-cell *matHeaderCellDef>PO Amount</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.poAmount }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="ViewPo">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element">
+                          <a [routerLink]="['../../po/po-generate/',element.purchaseOrderId]">view po</a>
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+
+              <div *ngIf="poDetails.awardedPOList">
+                <mat-expansion-panel class="myPanel">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Awarded PO
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <table mat-table [dataSource]="poDetails.awardedPOList" class="mat-elevation-z8 col-sm-12">
+                      <ng-container matColumnDef="PO Name">
+                        <th mat-header-cell *matHeaderCellDef>PO Name</th>
+                        <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Raised Date">
+                        <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.created_at }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Total Material">
+                        <th mat-header-cell *matHeaderCellDef>Total Material</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.totalMaterials }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="PO Amount">
+                        <th mat-header-cell *matHeaderCellDef>PO Amount</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.poAmount }}
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+
+              <div *ngIf="poDetails.acceptedPOList">
+                <mat-expansion-panel class="myPanel">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Accepted PO
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <table mat-table [dataSource]="poDetails.acceptedPOList" class="mat-elevation-z8 col-sm-12">
+                      <ng-container matColumnDef="PO Name">
+                        <th mat-header-cell *matHeaderCellDef>PO Name</th>
+                        <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Raised Date">
+                        <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.created_at }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Total Material">
+                        <th mat-header-cell *matHeaderCellDef>Total Material</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.totalMaterials }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="PO Amount">
+                        <th mat-header-cell *matHeaderCellDef>PO Amount</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.poAmount }}
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+
+              <div *ngIf="poDetails.rejectedPOList">
+                <mat-expansion-panel class="myPanel">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Rejected PO
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <table mat-table [dataSource]="poDetails.rejectedPOList" class="mat-elevation-z8 col-sm-12">
+                      <ng-container matColumnDef="PO Name">
+                        <th mat-header-cell *matHeaderCellDef>PO Name</th>
+                        <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Raised Date">
+                        <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.created_at }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Total Material">
+                        <th mat-header-cell *matHeaderCellDef>Total Material</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.totalMaterials }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="PO Amount">
+                        <th mat-header-cell *matHeaderCellDef>PO Amount</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.poAmount }}
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>

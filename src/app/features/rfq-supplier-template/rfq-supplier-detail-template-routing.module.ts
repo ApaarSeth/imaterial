@@ -5,8 +5,8 @@ import { RFQSupplierDetailComponent } from "./rfq-supplier-detail/rfq-supplier-d
 import { RFQSupplierDetailResolver } from "./rfq-supplier-detail/rfq-supplier-detail.resolver";
 const routes: Routes = [
   {
-    path: "template",
-    resolve: { rfqSupplierDetailResolver: RFQSupplierDetailResolver },
+    path: "supplier/:rfqId/:supplierId",
+    // resolve: { rfqSupplierDetailResolver: RFQSupplierDetailResolver },
     component: RFQSupplierDetailComponent
   }
 ];
