@@ -13,13 +13,16 @@ export interface AllUserDetails {
                 projectId?: number,
                 projectName?: string,
                 ProjectList?: ProjectDetails[];
+                
+                 ProjectUser?: UserAdd;
+                
 
 }
 
 export interface UserDetailsPopUpData {
   isDelete?: boolean;
   isEdit: boolean;
-  detail?: AllUserDetails;
+  detail?: UserAdd;
 }
 
 export interface UserIds {
@@ -30,4 +33,16 @@ export interface Roles{
   roleId?: number,
   roleName?:string,
   roleDescription?:string
+}
+
+export interface UserAdd{
+     userId?: number,
+     firstName?: string,
+     lastName?: string,
+     email?: string,
+     contactNo ?: number
+     roleId?: number,
+     creatorId?: number,
+     status?:number,
+     projects?: number[]
 }

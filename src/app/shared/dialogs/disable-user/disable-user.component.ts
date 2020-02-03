@@ -30,6 +30,7 @@ export interface Unit {
   templateUrl: "disable-user-component.html"
 })
 export class DeactiveUserComponent implements OnInit {
+    userDetails: AllUserDetails;
   constructor(
     private userService: UserService,
     private dialogRef: MatDialogRef<DeactiveUserComponent>,
@@ -40,6 +41,24 @@ export class DeactiveUserComponent implements OnInit {
 
   ngOnInit() {
    
+  }
+
+  deactivateUserService(){
+    this.userDetails = this.data.isDelete
+      ? this.data.detail
+      : ({} as AllUserDetails);
+
+    if(this.data.isDelete){
+      this.userService.deactivateUser(this.data.detail.userId).then(res =>  res.data);
+    }
+  }
+
+  cancel(){
+     this.dialogRef.close({ data: 'data' });
+  }
+
+  deactivateUser(){
+     this.dialogRef.close(this.deactivateUserService());
   }
 
  

@@ -43,14 +43,14 @@
             matInput
             type="text"
             placeholder="Email Id"
-            formControlName="emailId" required
+            formControlName="email" required
           />
           <!-- <mat-error class="mat-error-add-edit-form-modal">Email Id is Required</mat-error> -->
            <small
-              *ngIf="form.controls['emailId'].hasError('required') && form.controls['emailId'].touched"
+              *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
               class="form-error-msg"> Email is required </small>
               <small
-              *ngIf="form.controls['emailId'].hasError('pattern') && form.controls['emailId'].touched"
+              *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
               class="form-error-msg"> Enter Valid Email</small>
         </mat-form-field>
           </div>
@@ -64,13 +64,13 @@
             matInput
             type="text"
             placeholder="Phone No"
-            formControlName="phoneNo" required/>
-          <!-- <mat-error class="mat-error-add-edit-form-modal">phoneNo is Required</mat-error> -->
+            formControlName="contactNo" required/>
+          <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
           <small
-              *ngIf="form.controls['phoneNo'].hasError('required') && form.controls['phoneNo'].touched"
+              *ngIf="form.controls['contactNo'].hasError('required') && form.controls['contactNo'].touched"
               class="form-error-msg"> Phone No is required </small>
               <small
-              *ngIf="form.controls['phoneNo'].hasError('pattern') && form.controls['phoneNo'].touched"
+              *ngIf="form.controls['contactNo'].hasError('pattern') && form.controls['contactNo'].touched"
               class="form-error-msg"> Enter Valid Phone No</small>
         </mat-form-field>
           </div>
@@ -83,7 +83,7 @@
            <!-- city -->
         <mat-form-field class="border-select add-edit-user-form-modal">
           <mat-label>Role</mat-label>
-          <mat-select formControlName=role>
+          <mat-select formControlName="roleId">
             <mat-option *ngFor="let role of allRoles" [value]="role.roleId">
               {{role.roleName}}
             </mat-option>
@@ -109,7 +109,7 @@
 
         <mat-form-field class="border-select add-edit-user-form-modal">
           <mat-label>Project</mat-label>
-          <mat-select formControlName="project" multiple>
+          <mat-select formControlName="projects" multiple>
             <mat-option *ngFor="let project of allProjects" [value]="project.projectId">{{project.projectName}}</mat-option>
           </mat-select>
         </mat-form-field>

@@ -8,7 +8,6 @@ import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { IndentRoutingModule } from "./user-dashboard-routing.module";
 import { UserResolver } from './resolver/user.resolver';
-import { UserDashboardComponent } from './user-dashboard.component';
 import { AddEditUserComponent } from 'src/app/shared/dialogs/add-edit-user/add-edit-user.component';
 import { UserDetailComponent } from './user-details/user-details.component';
 
@@ -25,6 +24,6 @@ import { UserDetailComponent } from './user-details/user-details.component';
     IndentRoutingModule
   ],
   providers: [UserResolver],
-  declarations: [UserDetailComponent,UserDashboardComponent]
+  declarations: [UserDetailComponent]
 })
 export class UserDashboardModule {}

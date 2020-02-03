@@ -29,7 +29,7 @@ export class HeaderLayoutModule implements OnInit {
     } else if (name === "requestForQuotation") {
       this.router.navigate(["rfq/rfq-detail"]);
     } else if (name === "users") {
-      this.router.navigate(["users"]);
+      this.router.navigate(["users/user-detail"]);
     }
 
   }

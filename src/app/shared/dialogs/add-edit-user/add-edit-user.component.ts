@@ -8,7 +8,7 @@ import {
 } from "@angular/forms";
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {  Roles, AllUserDetails, UserDetailsPopUpData } from '../../models/user-details';
+import {  Roles, AllUserDetails, UserDetailsPopUpData, UserAdd } from '../../models/user-details';
 import { UserService } from '../../services/userDashboard/user.service';
 import { Router } from '@angular/router';
 import { FieldRegExConst } from '../../constants/field-regex-constants';
@@ -43,6 +43,7 @@ export class AddEditUserComponent implements OnInit {
  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
   userDetails: AllUserDetails;
+  isInputDisabled: boolean = true;
   constructor(
     private userService: UserService,
     private dialogRef: MatDialogRef<AddEditUserComponent>,
@@ -70,31 +71,6 @@ this.userService.getRoles().then(data => {
     this.dialogRef.close();
   }
 
-  cities: City[] = [
-    { value: "Gurgaon", viewValue: "Gurgaon" },
-    { value: "Delhi-1", viewValue: "Delhi" },
-    { value: "Karnal", viewValue: "Karnal" }
-  ];
-
-  projectTypes: ProjectType[] = [
-    { type: "RESI HIGH RISE" },
-    { type: "MEDICAL HEALTH CARE" },
-    { type: "INDUSTRIAL" },
-    { type: "RESI LOW RISE" },
-    { type: "HOSPITALITY" },
-    { type: "RESIDENTIAL HIGH RISE" },
-    { type: "RESIDENTIAL LOW RISE" },
-    { type: "COMMERCIAL HIGH RISE" },
-    { type: "ROADS AND HIGHWAYS" },
-    { type: "INTERIOR AND FITOUT" },
-    { type: "COMMERCIAL RETAIL" },
-    { type: "COMMERCIAL OFFICE" },
-    { type: "WAREHOUSE" },
-    { type: "FACTORY" }
-  ];
-
-  units: Unit[] = [{ value: "sqm" }, { value: "acres" }];
-
   initForm() {
 
     
@@ -103,56 +79,75 @@ this.userService.getRoles().then(data => {
       ? this.data.detail
       : ({} as AllUserDetails);
 
+    this.isInputDisabled = this.data.isEdit;
 
     this.form = new FormGroup({
       firstName: new FormControl(
-        this.data.isEdit ? this.data.detail.firstName : "",
+        {value:this.data.isEdit ? this.data.detail.firstName : "", disabled:this.isInputDisabled},
         Validators.required
       ),
       lastName: new FormControl(
-        this.data.isEdit ? this.data.detail.lastName : "",
+        {value:this.data.isEdit ? this.data.detail.lastName : "",disabled:this.isInputDisabled},
         Validators.required
       ),
-      emailId: new FormControl(this.data.isEdit ? this.data.detail.email : "", [Validators.required,  Validators.pattern(FieldRegExConst.EMAIL)]),
-      phoneNo: new FormControl(
-        this.data.isEdit ? this.data.detail.contactNo : "",
+      email: new FormControl(
+        {value:this.data.isEdit ? this.data.detail.email : "", disabled:this.isInputDisabled},
+        [Validators.required,  Validators.pattern(FieldRegExConst.EMAIL)]),
+
+      contactNo: new FormControl(
+        {value:this.data.isEdit ? this.data.detail.contactNo : "",disabled:this.isInputDisabled},
         [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]
       ),
-      role: new FormControl(
-        this.data.isEdit ? this.data.detail.roleName : "",
+      roleId: new FormControl(
+        this.data.isEdit ? this.data.detail.roleId : "",
         Validators.required
       ),
-      project: new FormControl(
-        this.data.isEdit ? this.data.detail.ProjectList: "",
+      projects: new FormControl(
+        this.data.isEdit ? this.data.detail.projects: "",
         Validators.required
-      )
+      ),
+      creatorId : new FormControl(''),
+      userId: new FormControl(this.data.isEdit ? this.data.detail.userId : null)
+
     });
   }
 
-  addProjects(userDetails: AllUserDetails) {
-    // this.userService.addProjects(userDetails).then(res => {
-    //   //res.data;
-    // });
+  addUsers(userDetails: UserAdd) {
+    console.log(userDetails);
+    userDetails.creatorId = 1;
+
+      var form_data = new FormData();
+            for (var key in userDetails) {
+
+                form_data.append(key, userDetails[key]);
+            }
+
+    this.userService.addUsers(userDetails).then(res => {
+     // res.data;
+    });
   }
 
-  updateProjects(userDetails: AllUserDetails) {
-    // if (userDetails) {
-    //   let projectId = this.data.detail.projectId;
-    //   let organizationId = this.data.detail.organizationId;
-    //   this.userService
-    //     .updateProjects(organizationId, projectId, userDetails)
-    //     .then(res => {
-    //       res.data;
-    //     });
-    // }
+  updateUsers(userDetails: UserAdd) {
+    if (userDetails) {
+        userDetails.creatorId = 1;
+        userDetails.userId = userDetails.userId;
+
+      this.userService
+        .updateUsers(userDetails)
+        .then(res => {
+      //    res.data;
+        });
+    }
   }
 
   submit() {
     console.log(this.form.value);
+
     if (this.data.isEdit) {
-      this.dialogRef.close(this.updateProjects(this.form.value));
+
+      this.dialogRef.close(this.updateUsers(this.form.value));
     } else {
-      this.dialogRef.close(this.addProjects(this.form.value));
+      this.dialogRef.close(this.addUsers(this.form.value));
     }
   }
 

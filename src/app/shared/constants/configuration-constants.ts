@@ -43,5 +43,8 @@ export const API = {
   SIGNIN:`sso/oauth/token`,
   //STATE: 'account/api/permitted/address/states',
   ROLES : `user/getroles`,
-  ALLUSERS: organizationId => `user/getall/${organizationId}`
+  ALLUSERS: organizationId => `user/getall/${organizationId}`,
+  ADDUSER : `user/add`,
+  EDITUSER : `user/update/roleproject`,
+  DEACTIVATEUSER: userId => `user/delete/${userId}`
 };
