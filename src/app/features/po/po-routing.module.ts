@@ -4,6 +4,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
 import { PoComponent } from "./po.component";
 import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
+import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
+import { PoSuppliersResolver } from "./po-supplier/resolver/po.resolver";
 
 const routes: Routes = [
   {
@@ -14,6 +16,11 @@ const routes: Routes = [
   {
     path: "po-generate/:id",
     component: PoComponent
+  },
+  {
+    path: "po-supplier",
+    resolve: { supplier: PoSuppliersResolver },
+    component: PoSupplierComponent
   }
 ];
 

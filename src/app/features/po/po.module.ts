@@ -11,11 +11,20 @@ import { PORoutingModule } from "./po-routing.module";
 import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoComponent } from "./po.component";
-import { PoCardComponent } from './po-card/po-card.component';
-import { PoDocumentsComponent } from './po-documents/po-documents.component';
+import { PoCardComponent } from "./po-card/po-card.component";
+import { PoDocumentsComponent } from "./po-documents/po-documents.component";
+import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
+import { PoSuppliersResolver } from "./po-supplier/resolver/po.resolver";
 
 @NgModule({
-  declarations: [PoComponent, PODetailComponent, PoTableComponent, PoCardComponent, PoDocumentsComponent],
+  declarations: [
+    PoComponent,
+    PODetailComponent,
+    PoTableComponent,
+    PoCardComponent,
+    PoDocumentsComponent,
+    PoSupplierComponent
+  ],
   imports: [
     CommonModule,
     PORoutingModule,
@@ -27,6 +36,6 @@ import { PoDocumentsComponent } from './po-documents/po-documents.component';
     RouterModule,
     AppSharedModule
   ],
-  providers: [PODetailListResolver]
+  providers: [PODetailListResolver, PoSuppliersResolver]
 })
 export class POModule {}
