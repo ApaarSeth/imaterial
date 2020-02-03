@@ -165,6 +165,9 @@ export class DataService {
   ): Promise<any> {
     // LoggerService.debug(url, params);
     let headers = new HttpHeaders();
+    headers = headers.append("Access-Control-Allow-Origin", "*");
+    headers = headers.append("accept", "*/*");
+    headers = headers.append("Authorization", "admin");
     if (reqOptions) {
       if (reqOptions.skipLoader) {
         headers = headers.append(

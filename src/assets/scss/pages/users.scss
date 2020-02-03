@@ -1,0 +1,63 @@
+.wrapper-btn-center {
+    text-align: center;
+}
+
+.center-screen-btn {
+    position: absolute;
+    top: 45%;
+    left: 40%;
+}
+.btn-width-add-users{
+    width: 275px;
+}
+
+
+.add-edit-user-form-modal {
+  width: 90%;
+  padding-left: 5%;
+}
+.mat-error-add-edit-form-modal{
+    padding-top: 8px;
+}
+
+
+.save-btn-add-edit-user-modal{
+    padding:15px 0px;
+    display: flex; 
+    justify-content: center;
+}
+
+.user-details-table-div{
+   max-height: 400px;
+   width: 100%;
+   overflow: auto;
+   table{
+       border-left: 1px solid #d6d6d6;
+   }
+}
+.btn-project-user-details{
+    background:	#F0F0F0;
+    margin: 1px 1px;
+    cursor: default;
+}
+.project-user-details-width{
+    max-width: 400px;
+}
+.edit-disable-user-details-width{
+   
+    mat-icon{
+        float: right;
+    }
+     i {
+        float: right;
+    }
+}
+.add-user-details-button-right{
+    padding-bottom: 8px;
+}
+.text-align-center{
+    text-align: center;
+}
+.form-error-msg{
+    color: #f44336;
+}
