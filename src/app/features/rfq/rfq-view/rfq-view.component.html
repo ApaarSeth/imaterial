@@ -1,0 +1,95 @@
+<!-- <fix-header></fix-header> -->
+
+<div class="page-start-point" *ngIf="rfqDetails">
+    <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+        <div class="row m-b-10">
+            <div class="col-md-12">
+
+                <!-- first row -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="p-t-10">
+                            <label class="text-bold">RFQ Name: </label>
+                            {{rfqDetails.rfqName}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 p-t-10">
+                        <label class="text-bold">RFQ End Date & Time: </label>
+                        {{rfqDetails.dueDate | date}}
+                    </div>
+
+                    <div class="col-md-3 p-t-10 main-color">
+                        <button mat-button class="pull-right font-size14"
+                            (click)="openDialog1(rfqDetails.documentsList, rfqDetails.terms)">
+                            View Terms & Conditions/Documents
+                        </button>
+                    </div>
+                </div>
+
+                <!-- second row -->
+                <div class="row m-b-10">
+                    <div class="col-md-3" *ngFor="let supplier of rfqDetails.supplierDetails">
+                        <mat-card>
+                            <div class="col-md-12 text-bold">
+                                <label for="company ">{{supplier.supplier_name}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="email">{{supplier.email}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="phoneNumber">{{supplier.contact_no}}</label>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion/ Collapsible -->
+        <mat-accordion>
+            <!-- first Project -->
+            <ng-template ngFor let-project [ngForOf]="rfqDetails.rfqProjectsList" let-i="index">
+                <mat-expansion-panel class="myPanel">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{project.projectName}}
+                            <div class="main-color p-l-15">{{project.defaultAddress.addressLine1}}</div>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <!-- table -->
+                    <table mat-table [dataSource]="project.projectMaterialList" class="mat-elevation-z8 col-sm-12">
+                        <!-- Material Name Column -->
+                        <ng-container matColumnDef="Material Name">
+                            <th class="font-size14" mat-header-cell *matHeaderCellDef>Material Name</th>
+                            <td mat-cell *matCellDef="let element" class="dark-gray-color">
+                                {{ element.materialName }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Quantity Column -->
+                        <ng-container matColumnDef="Quantity">
+                            <th class="font-size14" mat-header-cell *matHeaderCellDef>Quantity</th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.quantity }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Makes Column -->
+                        <ng-container matColumnDef="Makes">
+                            <th class="font-size14" mat-header-cell *matHeaderCellDef>Makes</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span class="brand-view-style m-r-5" *ngFor="let make of element.makes">
+                                    {{make}}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                </mat-expansion-panel>
+            </ng-template>
+        </mat-accordion>
+    </div>
+</div>

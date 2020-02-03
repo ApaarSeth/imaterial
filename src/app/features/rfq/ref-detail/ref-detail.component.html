@@ -25,7 +25,7 @@
             </ng-container>
 
             <ng-container matColumnDef="Raised Date">
-              <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+              <th mat-header-cell *matHeaderCellDef>Raised Date</th>
               <td mat-cell *matCellDef="let element">
                 {{ element.createdAt | date: "dd MMM yyy" }}
               </td>
@@ -64,7 +64,7 @@
             <ng-container matColumnDef="action1">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element">
-                <a [routerLink]="['../rfq-bid']">View RFQ</a>
+                <a [routerLink]="['../rfq-view', element.rfqId]">View RFQ</a>
               </td>
             </ng-container>
             <ng-container matColumnDef="action2">
