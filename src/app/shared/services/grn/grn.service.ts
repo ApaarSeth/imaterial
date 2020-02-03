@@ -12,7 +12,10 @@ export class GRNService {
     constructor(private dataService: DataService) { }
 
     getGRNDetails(grnId: Number) {
-        return this.dataService.getRequest(API.GETGRNDETAILS(grnId));
+        return this.dataService.getRequest(API.GETGRNDETAILS(grnId)).then(res => {
+            console.log("grn details", res);
+            return res;
+        });
     }
 
     postGRNDetails(organizationId: Number, purchaseOrderId: Number, grnDetails: GRNDetails[]) {

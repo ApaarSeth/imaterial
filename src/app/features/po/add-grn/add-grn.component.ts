@@ -14,6 +14,16 @@ export class AddGRNComponent implements OnInit {
 
     grnDetails: GRNDetails;
     grnId: number;
+    grnDetailsObj: GRNDetails[];
+
+    dataSource = [
+        {
+            "materialName": "name",
+            "awardedQuantity": 23,
+            "deliveredQuantity": 21,
+            "certifiedQuantity": 22
+        }
+    ]
 
     displayedColumns: string[] = [
         "Material Name",
@@ -26,19 +36,22 @@ export class AddGRNComponent implements OnInit {
 
     ngOnInit() {
         this.getGRNDetails(1);
+        this.postGRNDetails(1, 9);
     }
 
     getGRNDetails(grnId: number) {
         this.grnService.getGRNDetails(grnId).then(data => {
             console.log("grn data", data.data);
-            this.getGRNDetails = data.data;
+            this.grnDetails = data.data;
+            this.grnDetailsObj = data.data;
+            console.log("object", this.grnDetailsObj);
+
         });
     }
 
-    postGRNDeatils(organizationId: number, purchaseOrderId: number) {
-        var grn: GRNDetails[];
-
-        this.grnService.postGRNDetails(organizationId, purchaseOrderId, grn).then(data => {
+    postGRNDetails(organizationId: number, purchaseOrderId: number) {
+        console.log("object", this.grnDetailsObj);
+        this.grnService.postGRNDetails(organizationId, purchaseOrderId, this.grnDetailsObj).then(data => {
             console.log("data", data);
         })
     }

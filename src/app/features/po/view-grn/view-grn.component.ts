@@ -31,7 +31,7 @@ export class ViewGRNComponent implements OnInit {
     getGRNDetails(grnId: number) {
         this.grnService.getGRNDetails(grnId).then(data => {
             console.log("grn data", data.data);
-            this.getGRNDetails = data.data;
+            this.grnDetails = data.data;
         });
     }
 }

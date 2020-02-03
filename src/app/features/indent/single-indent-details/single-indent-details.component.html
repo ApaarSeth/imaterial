@@ -29,7 +29,7 @@
                     <td mat-cell *matCellDef="let element">{{ element.materialName }}</td>
                 </ng-container>
 
-                <!-- Quantity Column -->
+                <!-- REquested Quantity Column -->
                 <ng-container matColumnDef="Requested Quantity">
                     <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
                     <td mat-cell *matCellDef="let element">
@@ -37,7 +37,7 @@
                     </td>
                 </ng-container>
 
-                <!-- Weight Column -->
+                <!-- Issued Quantity Column -->
                 <ng-container matColumnDef="Issued Quantity">
                     <th mat-header-cell *matHeaderCellDef>Issued Quantity</th>
                     <td mat-cell *matCellDef="let element">
@@ -45,11 +45,11 @@
                     </td>
                 </ng-container>
 
-                <!-- Symbol Column -->
+                <!-- Requested Date3 Column -->
                 <ng-container matColumnDef="Requested Date">
                     <th mat-header-cell *matHeaderCellDef>Requested Date</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.dueDate }}
+                        {{ element.dueDate | date}}
                     </td>
                 </ng-container>
 

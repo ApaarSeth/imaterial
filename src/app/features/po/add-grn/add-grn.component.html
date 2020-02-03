@@ -19,14 +19,21 @@
                     <a>Attach Checklist</a>
                 </div>
                 <div class="pull-right p-l-10 p-r-10">
-                    Calender
+
+                    <mat-form-field class="border-input">
+                        <input matInput [matDatepicker]="dueDate" placeholder="02-02-2020" formControlName="dueDate" />
+                        <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                        <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
+                    </mat-form-field>
+
                 </div>
             </div>
         </div>
 
+        <!-- *ngIf="grnDetails" -->
         <div class="row">
-            <!-- *ngIf="grnDetails" -->
-            <table mat-table [dataSource]="" class="col-sm-12">
+
+            <table mat-table [dataSource]="dataSource" class="col-sm-12">
                 <ng-container matColumnDef="Material Name">
                     <th mat-header-cell *matHeaderCellDef>Material Name</th>
                     <td mat-cell *matCellDef="let element">{{ element.materialName }}</td>
@@ -48,8 +55,9 @@
 
                 <ng-container matColumnDef="Certified Quantity">
                     <th mat-header-cell *matHeaderCellDef>Certified Quantity</th>
-                    <td mat-cell *matCellDef="let element">
-                        {{ element.certifiedQuantity }}
+                    <td mat-cell *matCellDef="let element" class="border-input">
+                        <input matInput type="number" placeholder="Quantity">
+                        <!-- {{ element.certifiedQuantity }} -->
                     </td>
                 </ng-container>
 

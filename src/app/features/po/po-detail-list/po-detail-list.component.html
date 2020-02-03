@@ -39,9 +39,9 @@
               </ng-container>
 
               <ng-container matColumnDef="Raised Date">
-                <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+                <th mat-header-cell *matHeaderCellDef>Raised Date</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ element.created_at }}
+                  {{ element.created_at | date}}
                 </td>
               </ng-container>
 

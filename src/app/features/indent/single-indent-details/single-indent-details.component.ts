@@ -21,8 +21,8 @@ export class SingleIndentDetailsComponent implements OnInit {
     product: ProjectDetails;
     projectId: number;
     indentId: number;
-
     singleIndentDetails: SingleIndentDetails;
+
     displayedColumns: string[] = [
         "Material Name",
         "Requested Quantity",
