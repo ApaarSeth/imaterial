@@ -42,7 +42,7 @@ export class IndentDetailComponent implements OnInit {
     private router: Router,
     private projectService: ProjectService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -111,5 +111,9 @@ export class IndentDetailComponent implements OnInit {
           //this.animal = result;
         });
     }
+  }
+  viewIndentDetails(row) {
+    console.log("row", row);
+    this.router.navigate(["/indent/" + this.projectId + "/single-indent/" + row.indentId]);
   }
 }

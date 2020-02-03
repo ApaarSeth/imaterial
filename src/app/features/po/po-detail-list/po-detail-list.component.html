@@ -39,9 +39,9 @@
               </ng-container>
 
               <ng-container matColumnDef="Raised Date">
-                <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+                <th mat-header-cell *matHeaderCellDef>Raised Date</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ element.created_at }}
+                  {{ element.created_at | date}}
                 </td>
               </ng-container>
 
@@ -63,6 +63,20 @@
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
                   <a [routerLink]="['../../po/po-generate/',element.purchaseOrderId]">view po</a>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ViewGRN">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <a [routerLink]="['../../po/view-grn/']">View GRN</a>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="AddGRN">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <a [routerLink]="['../../po/add-grn/']">Add GRN</a>
                 </td>
               </ng-container>
 
@@ -88,7 +102,7 @@
               </ng-container>
 
               <ng-container matColumnDef="Raised Date">
-                <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+                <th mat-header-cell *matHeaderCellDef>Raised Date</th>
                 <td mat-cell *matCellDef="let element">
                   {{ element.created_at }}
                 </td>

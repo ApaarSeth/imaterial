@@ -13,9 +13,11 @@ import { PoTableComponent } from "./po-table/po-table.component";
 import { PoComponent } from "./po.component";
 import { PoCardComponent } from './po-card/po-card.component';
 import { PoDocumentsComponent } from './po-documents/po-documents.component';
+import { ViewGRNComponent } from './view-grn/view-grn.component';
+import { AddGRNComponent } from './add-grn/add-grn.component';
 
 @NgModule({
-  declarations: [PoComponent, PODetailComponent, PoTableComponent, PoCardComponent, PoDocumentsComponent],
+  declarations: [PoComponent, PODetailComponent, PoTableComponent, PoCardComponent, PoDocumentsComponent, ViewGRNComponent, AddGRNComponent],
   imports: [
     CommonModule,
     PORoutingModule,
@@ -29,4 +31,4 @@ import { PoDocumentsComponent } from './po-documents/po-documents.component';
   ],
   providers: [PODetailListResolver]
 })
-export class POModule {}
+export class POModule { }

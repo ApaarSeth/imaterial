@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
+import { sendIssuedQuantityObj } from '../../models/issue-to-indent';
 
 @Injectable({
   providedIn: "root"
 })
 export class BomService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
 
   getMaterialsWithSpecs(categoryList) {
     return this.dataService.getRequestMaster(
@@ -29,5 +30,13 @@ export class BomService {
       API.POSTMATERIALSQUANTITY(userId, projectId),
       materialsQuantity
     );
+  }
+  getIssueToIndent(projectId: number, materialId: number) {
+    return this.dataService.getRequest(API.GETISSUETOINDENT(projectId, materialId));
+  }
+  postIssueToIndent(materialId: number, indentDetailList: sendIssuedQuantityObj[]) {
+    return this.dataService.sendPostRequest(API.POSTISSUETOINDENT(materialId), indentDetailList).then(res => {
+      return res;
+    });
   }
 }
