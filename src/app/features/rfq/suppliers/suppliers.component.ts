@@ -75,7 +75,7 @@ export class SuppliersComponent implements OnInit {
         // to do
         this.rfqService.getSuppliers(1).then(data => {
           console.log("wefrgthyjhgff", data.data);
-          return data.data;
+          this.allSuppliers =  data.data;
         });
       });
   }
