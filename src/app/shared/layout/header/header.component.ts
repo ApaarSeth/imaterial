@@ -32,6 +32,8 @@ export class HeaderLayoutModule implements OnInit {
       this.router.navigate(["users/user-detail"]);
     } else if (name === "purchaseOrder") {
       this.router.navigate(["po/detail-list"]);
+    }else if (name  === "supplier"){
+       this.router.navigate(["supplier/detail"]);
     }
 
   }

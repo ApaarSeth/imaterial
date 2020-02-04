@@ -116,7 +116,7 @@
     <!-- table structure -->
     <mat-accordion class="accordion-padding-zero">
      <ng-template ngFor let-material [ngForOf]="rfqDetails" let-i="index">
-      <mat-expansion-panel>
+      <mat-expansion-panel class="myPanel">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{material.projectName}}
@@ -139,7 +139,10 @@
           <mat-checkbox
             (change)="element.checked = !element.checked"
             [checked]="element.checked"
-            >{{ element.materialName }}
+            >{{ element.materialName }} <br>
+            <span class="category-name">
+              {{ element.materialGroup}}
+            </span>
           </mat-checkbox>
         </td>
         </ng-container>

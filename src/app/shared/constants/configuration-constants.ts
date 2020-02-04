@@ -53,9 +53,10 @@ export const API = {
   GETRFQVIEW: (rfqId) => `rfq/view/details/${rfqId}`,
   ROLES: `user/getroles`,
   ALLUSERS: organizationId => `user/getall/${organizationId}`,
-  ADDUSER: `user/add`,
-  EDITUSER: `user/update/roleproject`,
-  DEACTIVATEUSER: userId => `user/delete/${userId}`
+  ADDUSER : `user/add`,
+  EDITUSER : `user/update/roleproject`,
+  DEACTIVATEUSER: userId => `user/delete/${userId}`,
+  DELETESUPPLIER: supplierId => `projects/deleteSupplier/${supplierId}`
 };
 
 
