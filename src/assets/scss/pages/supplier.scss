@@ -1,0 +1,32 @@
+.view-address-supplier{
+    padding-right: 40px;
+    float: right;
+    font-size: 15px;
+    font-weight: 400;
+    color: #f47721;
+}
+.delete-icon{
+    color: #d0d0d0;
+}
+.supplier-dialog{
+    mat-form-field{
+        width: 100%;
+    }
+}
+
+.view-disabled-address-supplier{
+    padding-right: 64px;
+    float: right;
+    font-size: 15px;
+    font-weight: 400;
+    color: #f47721;
+}
+.supplier-details-table-div
+{
+   max-height: 500px;
+   width: 100%;
+   overflow: auto;
+   table{
+       border-left: 1px solid #d6d6d6;
+   }  
+}
