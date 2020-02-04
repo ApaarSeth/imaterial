@@ -24,6 +24,7 @@ import { DndDirective } from "./documents/drag-and-drop";
 import { RFQSuppliersResolver } from "./suppliers/supplier-resolver";
 import { QuantityMakesResolver } from "./quantity-makes/quantity-makes-resolver";
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { RFQViewComponent } from './rfq-view/rfq-view.component';
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     SuppliersComponent,
     DocumentsComponent,
     ReviewComponent,
-    DndDirective
+    DndDirective,
+    RFQViewComponent
   ]
 })
-export class RFQModule {}
+export class RFQModule { }

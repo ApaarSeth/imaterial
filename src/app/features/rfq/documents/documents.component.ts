@@ -30,7 +30,7 @@ export class DocumentsComponent implements OnInit {
   constructor(
     private router: Router,
     private documentUploadService: DocumentUploadService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;
