@@ -65,4 +65,10 @@ export class RFQService {
         return res;
       });
   }
+  deleteSuplier(supplierId:number){
+     return this.dataService
+      .sendDeleteRequest(API.DELETESUPPLIER(supplierId),{}).then(res => {
+        return res;
+      });
+  }
 }

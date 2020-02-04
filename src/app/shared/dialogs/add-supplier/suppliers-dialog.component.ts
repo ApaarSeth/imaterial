@@ -3,6 +3,7 @@ import { MatDialogRef } from "@angular/material";
 import { RFQService } from "../../services/rfq/rfq.service";
 import { Suppliers } from "../../models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FieldRegExConst } from '../../constants/field-regex-constants';
 
 // Component for dialog box
 @Component({
@@ -32,8 +33,9 @@ export class SuppliersDialogComponent {
   initForm() {
     this.form = this.formBuilder.group({
       supplier_name: ["", Validators.required],
-      email: ["", Validators.required],
-      contact_no: ["", Validators.required]
+      email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
+      pan: ["", Validators.required]
     });
   }
 
