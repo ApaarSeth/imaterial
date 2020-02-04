@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
-import { GRNDetails } from '../../models/grn';
+import { GRNDetails, GRN } from '../../models/grn';
 
 @Injectable({
     providedIn: "root"
@@ -18,10 +18,17 @@ export class GRNService {
         });
     }
 
-    // postGRNDetails(organizationId: Number, purchaseOrderId: Number, grnDetails: GRNDetails[]) {
-    //     return this.dataService.sendPostRequest(API.POSTGRNDETAILS(organizationId, purchaseOrderId), grnDetails).then(res => {
-    //         console.log("ahsghafs", res);
-    //     });
-    // }
+    viewGRN(organizationId: Number, purchaseOrderId: Number) {
+        return this.dataService.getRequest(API.VIEWGRN(organizationId, purchaseOrderId)).then(res => {
+            // console.log("view grn", res);
+            return res;
+        });
+    }
+
+    addGRN(organizationId: Number, purchaseOrderId: Number, grn: GRN[]) {
+        return this.dataService.sendPostRequest(API.ADDGRN(organizationId, purchaseOrderId), grn).then(res => {
+            console.log("ahsghafs", res);
+        });
+    }
 
 }

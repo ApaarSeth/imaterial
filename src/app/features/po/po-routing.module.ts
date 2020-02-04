@@ -8,6 +8,7 @@ import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
 import { PoSuppliersResolver } from "./po-supplier/resolver/po.resolver";
 import { ViewGRNComponent } from "./view-grn/view-grn.component";
 import { AddGRNComponent } from "./add-grn/add-grn.component";
+import { ViewGrnResolver } from './add-grn/resolver/get-grn.resolver';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
   },
   {
     path: "add-grn",
+    resolve: { viewGRN: ViewGrnResolver },
     component: AddGRNComponent
   },
   {
@@ -37,4 +39,4 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
-export class PORoutingModule {}
+export class PORoutingModule { }
