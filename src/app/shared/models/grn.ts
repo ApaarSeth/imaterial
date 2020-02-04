@@ -17,15 +17,17 @@ export interface GRNDetails {
     materialQuantity: number,
     materialUnit: string,
     materialUnitPrice: number,
-    deliveredDate: string,
+    deliveredDate: Date,
     deliverableQty: number,
     deliveredQty: number
 
 }
 
- // grnDetailId: number,
-    // grnId: number,
-    // materialId: number,
-    // materialBrand: string,
-    // deliveredQty: number,
-    // deliveredDate: string
+export interface GRN {
+    grnDetailId: number,
+    grnId: number,
+    materialId: number,
+    materialBrand: string,
+    deliveredQty: number,
+    deliveredDate: Date
+}
