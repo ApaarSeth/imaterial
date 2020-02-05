@@ -7,6 +7,7 @@ import { RouterModule } from "@angular/router";
 import { RFQSupplierDetailRoutingModule } from "./rfq-supplier-detail-template-routing.module";
 import { RFQSupplierDetailComponent } from "./rfq-supplier-detail/rfq-supplier-detail.component";
 import { RFQSupplierDetailResolver } from "./rfq-supplier-detail/rfq-supplier-detail.resolver";
+import { RFQSupplierAfterBidComponent } from './rfq-supplier-after-bid/rfq-supplier-after-bid.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { RFQSupplierDetailResolver } from "./rfq-supplier-detail/rfq-supplier-de
     RFQSupplierDetailRoutingModule
   ],
   providers: [RFQSupplierDetailResolver],
-  declarations: [RFQSupplierDetailComponent]
+  declarations: [RFQSupplierDetailComponent,RFQSupplierAfterBidComponent]
 })
 export class RFQSupplierDetailTemplateModule {}
