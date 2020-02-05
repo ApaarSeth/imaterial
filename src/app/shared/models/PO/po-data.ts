@@ -159,3 +159,22 @@ export interface ApproverData {
   profileImageUrl: string;
   accountStatus: number;
 }
+
+export interface initiatePo {
+  projectId: number;
+  projectName: string;
+  projectAddressId: number;
+  addressId: number;
+  supplierId: number;
+  supplierAddressId: number;
+  supplierName: string;
+  rfqId: null;
+  materialList: poMaterialList[];
+}
+
+export interface poMaterialList {
+  materialId: number;
+  materialQty: number;
+  brandNames: string[];
+  materialUnitPrice: number;
+}

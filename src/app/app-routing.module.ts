@@ -58,6 +58,13 @@ const routes: Routes = [
       import(
         "./features/users/user-dashboard.module"
       ).then(m => m.UserDashboardModule)
+  },
+   {
+    path: "supplier",
+    loadChildren: () =>
+      import(
+        "./features/supplier/supplier.module"
+      ).then(m => m.SupplierDashboardModule)
   }
 ];
 

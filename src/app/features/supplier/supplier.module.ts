@@ -6,10 +6,8 @@ import { CommonModule } from "@angular/common";
 import { AppSharedModule } from "src/app/shared/app-shared-module";
 import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
-import { UserResolver } from './resolver/user.resolver';
-import { AddEditUserComponent } from 'src/app/shared/dialogs/add-edit-user/add-edit-user.component';
-import { UserDetailComponent } from './user-details/user-details.component';
-import { UserRoutingModule } from './user-dashboard-routing.module';
+import { SupplierDetailComponent } from './supplier-details/supplier-details.component';
+import { SupplierRoutingModule } from './supplier-routing.module';
 
 @NgModule({
   imports: [
@@ -21,9 +19,8 @@ import { UserRoutingModule } from './user-dashboard-routing.module';
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    UserRoutingModule
+    SupplierRoutingModule
   ],
-  providers: [UserResolver],
-  declarations: [UserDetailComponent]
+  declarations: [SupplierDetailComponent]
 })
-export class UserDashboardModule {}
+export class SupplierDashboardModule {}

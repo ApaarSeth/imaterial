@@ -24,7 +24,6 @@ import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 export class RFQProjectMaterialsComponent implements OnInit {
   userId: 1;
   searchText: string = null;
-
   allProjects: ProjectDetails[];
   buttonName: string = "projectMaterials";
   projects: FormControl;

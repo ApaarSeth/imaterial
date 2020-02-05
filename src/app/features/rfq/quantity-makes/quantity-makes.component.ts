@@ -35,7 +35,7 @@ export class RFQQuantityMakesComponent implements OnInit {
   userId: 1;
   searchText: string = null;
   materialCounter = 0;
-  buttonName: string = "projectMaterials";
+  buttonName: string = "addQueryMakes";
   checkedMaterialsList: RfqMaterialResponse[];
   materialForms: FormGroup;
   rfqMat: RfqMat;
@@ -89,7 +89,7 @@ export class RFQQuantityMakesComponent implements OnInit {
         }
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
-            estimatedRate: [item.estimatedRate, Validators.required],
+            estimatedRate: [item.estimatedRate],
             quantity: [item.quantity, Validators.required],
             makes: [],
             projId: [item.projectId],

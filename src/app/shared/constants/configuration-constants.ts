@@ -48,12 +48,16 @@ export const API = {
     `indent/issueQty/${materialId}`,
   GETSINGLEINDENT: (indentId) => `indent/detail/${indentId}`,
   GETGRNDETAILS: (grnId) => `po/view/grn/${grnId}`,
-  // POSTGRNDETAILS: (organizationId, purchaseOrderId) => `po/add/grn/${organizationId}/${purchaseOrderId}`,
+  ADDGRN: (organizationId, purchaseOrderId) => `po/add/grn/${organizationId}/${purchaseOrderId}`,
+  VIEWGRN: (organizationId, purchaseOrderId) => `po/grn/detail/${organizationId}/${purchaseOrderId}`,
   GETRFQVIEW: (rfqId) => `rfq/view/details/${rfqId}`,
   ROLES: `user/getroles`,
   ALLUSERS: organizationId => `user/getall/${organizationId}`,
   ADDUSER: `user/add`,
   EDITUSER: `user/update/roleproject`,
   DEACTIVATEUSER: userId => `user/delete/${userId}`,
-  UPLOADEXCEL: projectId => `bom/materials/fileupload/${projectId}`
+  UPLOADEXCEL: projectId => `bom/materials/fileupload/${projectId}`,
+  DELETESUPPLIER: supplierId => `projects/deleteSupplier/${supplierId}`
 };
+
+

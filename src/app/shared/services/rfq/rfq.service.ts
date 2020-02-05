@@ -65,6 +65,12 @@ export class RFQService {
         return res;
       });
   }
+  deleteSuplier(supplierId:number){
+     return this.dataService
+      .sendDeleteRequest(API.DELETESUPPLIER(supplierId),{}).then(res => {
+        return res;
+      });
+  }
 
   getRFQView(rfqId: number) {
     return this.dataService.getRequest(API.GETRFQVIEW(rfqId)).then(res => {
