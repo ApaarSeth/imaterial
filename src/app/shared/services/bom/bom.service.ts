@@ -39,4 +39,7 @@ export class BomService {
       return res;
     });
   }
+  postMaterialExcel(data:FormData,projectId:number){
+ return this.dataService.sendPostRequest(API.UPLOADEXCEL(projectId),data)
+  }
 }
