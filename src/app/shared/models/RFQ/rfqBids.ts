@@ -86,7 +86,7 @@ export interface RfqMaterialList {
   estimatedPrice: null;
   matCount: number;
   rfqMaterialQty: number;
-  brandList: string[];
+  brandNames: string[];
   supplierList: RfqSupplierList[];
   rfqSuppliers: null;
   brands: null;

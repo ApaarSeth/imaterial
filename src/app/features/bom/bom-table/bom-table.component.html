@@ -1,37 +1,24 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <card-layout
-      *ngIf="product"
-      (onEdit)="editProject($event)"
-      (onDelete)="deleteProject($event)"
-      [projectDetails]="product"
-    ></card-layout>
+    <card-layout *ngIf="product" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)"
+      [projectDetails]="product"></card-layout>
     <div class="row p-t-10 p-b-10">
       <div class="col-sm-12">
         <span>
-          <button
-            mat-raised-button
-            class="main-background-color main-button color-white pull-right"
-            (click)="raiseIndent()"
-          >
+          <button mat-raised-button class="main-background-color main-button color-white pull-right"
+            (click)="raiseIndent()">
             Raise Indent
           </button>
         </span>
         <span class="p-r-5 pull-right">
-          <button
-            mat-raised-button
-            class="main-background-color main-button color-white pull-right "
-            (click)="viewIndent()"
-          >
+          <button mat-raised-button class="main-background-color main-button color-white pull-right "
+            (click)="viewIndent()">
             View Indent
           </button>
         </span>
         <span class="p-r-5 pull-right">
-          <button
-            mat-raised-button
-            class="main-background-color main-button color-white pull-right "
-            (click)="addMaterial()"
-          >
+          <button mat-raised-button class="main-background-color main-button color-white pull-right "
+            (click)="addMaterial()">
             Add Material
           </button>
         </span>
@@ -39,11 +26,7 @@
     </div>
 
     <div class="row">
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        multiTemplateDataRows
-        class="mat-eHigh performance, minimalist Go web framework
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-eHigh performance, minimalist Go web framework
         https://echo.labstack.com
         ____________________________________O/_______
                                             O\
@@ -52,19 +35,15 @@
         apaar@mystic:~/Desktop/angular/erpMaterial/material-master$ git pull upstream master
         fatal: 'upstream' does not appear to be a git repository
         fatal: Could not read from remote repository.
-        q ulevation-z8 col-sm-12"
-        matSort
-      >
+        q ulevation-z8 col-sm-12" matSort>
         <ng-container matColumnDef="materialName">
           <th *matHeaderCellDef mat-sort-header>
             Material Name
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
             <!-- <input type="checkbox" /> -->
-            <mat-checkbox
-              (change)="element.checked = !element.checked"
-              [checked]="element.checked"
-              >{{ element.materialName }}
+            <mat-checkbox (change)="element.checked = !element.checked" [checked]="element.checked">
+              {{ element.materialName }}
             </mat-checkbox>
           </td>
         </ng-container>
@@ -104,38 +83,24 @@
         <ng-container matColumnDef="customColumn">
           <th *matHeaderCellDef mat-sort-header></th>
           <td class="text-right" mat-cell *matCellDef="let element">
-            <a><mat-icon>edit</mat-icon> </a>
-            <a><mat-icon>delete_outline</mat-icon> </a>
-            <a (click)="openDialog1()"
-              >Issue to Indent
-              <mat-icon class="icon-inverse">open_in_browser</mat-icon></a
-            >
+            <a>
+              <mat-icon>edit</mat-icon>
+            </a>
+            <a>
+              <mat-icon>delete_outline</mat-icon>
+            </a>
+            <a (click)="openDialog1(element.materialId,projectId)">Issue to Indent
+              <mat-icon class="icon-inverse">open_in_browser</mat-icon></a>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="expandedDetail">
-          <td
-            mat-cell
-            *matCellDef="let element"
-            [attr.colspan]="columnsToDisplay.length"
-          >
-            <div
-              class="example-element-detail"
-              *ngIf="element.materialSpecs"
-              [@detailExpand]="
+          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+            <div class="example-element-detail" *ngIf="element.materialSpecs" [@detailExpand]="
                 element == expandedElement ? 'expanded' : 'collapsed'
-              "
-            >
-              <div
-                class="inner-table mat-elevation-z8 row"
-                *ngIf="expandedElement"
-              >
-                <table
-                  class="col-sm-12"
-                  mat-table
-                  [dataSource]="element.materialSpecs"
-                  matSort
-                >
+              ">
+              <div class="inner-table mat-elevation-z8 row" *ngIf="expandedElement">
+                <table class="col-sm-12" mat-table [dataSource]="element.materialSpecs" matSort>
                   <ng-container matColumnDef="materialName">
                     <th *matHeaderCellDef mat-sort-header>
                       Name
@@ -176,15 +141,8 @@
                       {{ element.availableStock }}
                     </td>
                   </ng-container>
-                  <tr
-                    style="opacity: 0;height: 0px;"
-                    mat-header-row
-                    *matHeaderRowDef="innerDisplayedColumns"
-                  ></tr>
-                  <tr
-                    mat-row
-                    *matRowDef="let row; columns: innerDisplayedColumns"
-                  ></tr>
+                  <tr style="opacity: 0;height: 0px;" mat-header-row *matHeaderRowDef="innerDisplayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: innerDisplayedColumns"></tr>
                 </table>
               </div>
             </div>
@@ -192,11 +150,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr
-          mat-row
-          *matRowDef="let element; columns: columnsToDisplay"
-          (click)="toggleRow(element)"
-        ></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplay" (click)="toggleRow(element)"></tr>
         <!-- <tr
           mat-row
           *matRowDef="let row; columns: ['expandedDetail']"
