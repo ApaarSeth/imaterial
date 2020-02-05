@@ -14,7 +14,7 @@
       <!-- <app-global-loader></app-global-loader> -->
 
       
-      <app-header (sidenavToggle)="sidenav.toggle()" [menu]="sidenav"></app-header>
+      <app-header *ngIf="!hideHeader" (sidenavToggle)="sidenav.toggle()" [menu]="sidenav"></app-header>
       
       <router-outlet></router-outlet>
 
