@@ -198,10 +198,11 @@ export class BomTableComponent implements OnInit {
     this.router.navigate(["/bom/" + this.projectId]);
   }
 
-  openDialog1(): void {
+  openDialog1(materialId, projectId): void {
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(IssueToIndentDialogComponent, {
-        width: "1200px"
+        width: "1200px",
+        data: { materialId: materialId, projectId: projectId }
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log("The dialog was closed");

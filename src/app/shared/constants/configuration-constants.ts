@@ -42,21 +42,21 @@ export const API = {
   SIGNUP: `sso/api/auth/signup`,
   SIGNIN: `sso/oauth/token`,
   //STATE: 'account/api/permitted/address/states',
-  GETISSUETOINDENT: (projectId, materialId) =>
-    `materials/updateStock/${projectId}/${materialId}`,
-  POSTISSUETOINDENT: (materialId) =>
-    `indent/issueQty/${materialId}`,
-  GETSINGLEINDENT: (indentId) => `indent/detail/${indentId}`,
-  GETGRNDETAILS: (grnId) => `po/view/grn/${grnId}`,
-  ADDGRN: (organizationId, purchaseOrderId) => `po/add/grn/${organizationId}/${purchaseOrderId}`,
-  VIEWGRN: (organizationId, purchaseOrderId) => `po/grn/detail/${organizationId}/${purchaseOrderId}`,
-  GETRFQVIEW: (rfqId) => `rfq/view/details/${rfqId}`,
+  GETISSUETOINDENT: (materialId, projectId) =>
+    `materials/updateStock/${materialId}/${projectId}`,
+  POSTISSUETOINDENT: materialId => `indent/issueQty/${materialId}`,
+  GETSINGLEINDENT: indentId => `indent/detail/${indentId}`,
+  GETGRNDETAILS: grnId => `po/view/grn/${grnId}`,
+  ADDGRN: (organizationId, purchaseOrderId) =>
+    `po/add/grn/${organizationId}/${purchaseOrderId}`,
+  VIEWGRN: (organizationId, purchaseOrderId) =>
+    `po/grn/detail/${organizationId}/${purchaseOrderId}`,
+  GETRFQVIEW: rfqId => `rfq/view/details/${rfqId}`,
   ROLES: `user/getroles`,
   ALLUSERS: organizationId => `user/getall/${organizationId}`,
-  ADDUSER : `user/add`,
-  EDITUSER : `user/update/roleproject`,
+  ADDUSER: `user/add`,
+  EDITUSER: `user/update/roleproject`,
   DEACTIVATEUSER: userId => `user/delete/${userId}`,
+  UPLOADEXCEL: projectId => `bom/materials/fileupload/${projectId}`,
   DELETESUPPLIER: supplierId => `projects/deleteSupplier/${supplierId}`
 };
-
-

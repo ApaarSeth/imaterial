@@ -45,7 +45,7 @@ export class BomComponent implements OnInit {
   categoriesInputData: QtyData[];
   quantityPresent: boolean = true;
   isAllFormsValid: boolean;
-
+  fileToUpload: FileList;
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
@@ -81,7 +81,17 @@ export class BomComponent implements OnInit {
       this.product = data.data;
     });
   }
-
+  uploadExcel(files: FileList) {
+    const data = new FormData()
+      data.append('file', files[0]);
+      this.bomService.postMaterialExcel(data,this.projectId).then(res => {
+        this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+      });
+   }
+   downloadExcel(url:string){
+    var win = window.open(url, '_blank');
+    win.focus();
+   }
   finalisedCategory() {
     this.showTable = true;
     this.bomService
