@@ -63,9 +63,10 @@ export class SuppliersComponent implements OnInit {
     });
   }
 
-  openDialog(): void {
+  openDialog(projectId){
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
-      width: "1200px"
+      width: "1200px",
+      data:projectId
     });
 
     dialogRef
