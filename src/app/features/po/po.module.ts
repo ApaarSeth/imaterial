@@ -19,7 +19,8 @@ import { ViewGRNComponent } from "./view-grn/view-grn.component";
 import { AddGRNComponent } from "./add-grn/add-grn.component";
 import { InitiatePoComponent } from "./initiate-po/initiate-po.component";
 import { PoProjectMaterialComponent } from "./initiate-po/po-project-material/po-project-material.component";
-import { PoQuantityMakesComponent } from './initiate-po/po-quantity-makes/po-quantity-makes.component';
+import { PoQuantityMakesComponent } from "./initiate-po/po-quantity-makes/po-quantity-makes.component";
+import { ViewGrnResolver } from "./add-grn/resolver/get-grn.resolver";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,6 @@ import { PoQuantityMakesComponent } from './initiate-po/po-quantity-makes/po-qua
     RouterModule,
     AppSharedModule
   ],
-  providers: [PODetailListResolver, InitiatePoResolver]
+  providers: [PODetailListResolver, InitiatePoResolver, ViewGrnResolver]
 })
 export class POModule {}

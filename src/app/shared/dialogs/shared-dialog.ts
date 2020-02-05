@@ -9,6 +9,9 @@ import { AddRFQConfirmationComponent } from "./add-rfq-confirmation/add-rfq-doub
 import { SelectApproverComponent } from "./selectPoApprover/selectPo.component";
 import { SelectPoRoleComponent } from "./select-po-role/select-po-role.component";
 import { AddAddressPoDialogComponent } from "./add-address-po/add-addressPo.component";
+import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
+import { DeactiveUserComponent } from './disable-user/disable-user.component';
+import { DeactiveSupplierComponent } from './disable-supplier/disable-supplier.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -17,9 +20,12 @@ export const SharedDialogs = [
   ViewDocumentsDialogComponent,
   AddCommentDialogComponent,
   AddAddressDialogComponent,
+  AddEditUserComponent,
   IssueToIndentDialogComponent,
   AddRFQConfirmationComponent,
   SelectApproverComponent,
   SelectPoRoleComponent,
-  AddAddressPoDialogComponent
+  AddAddressPoDialogComponent,
+  DeactiveUserComponent,
+  DeactiveSupplierComponent
 ];

@@ -5,29 +5,49 @@
   
   <div class="row p-t-15 p-b-10">
     <!--  -->
-    <div class="col-xs-4 display-flex">
+    <div class="col-xs-12 display-flex supplier-dialog">
       <mat-form-field class="border-input">
         <input matInput type="text" formControlName="supplier_name" placeholder="Supplier Name" />
       </mat-form-field>
     </div>
+    
 
     <!--  -->
-    <div class="col-xs-4 display-flex">
+    <div class="col-xs-12 display-flex supplier-dialog">
       <mat-form-field class="border-input">
         <input matInput type="email" formControlName="email" placeholder="Email" />
+         <small
+              *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
+              class="form-error-msg"> Email is required </small>
+              <small
+              *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
+              class="form-error-msg"> Enter Valid Email</small>
       </mat-form-field>
     </div>
 
     <!--  -->
-    <div class="col-xs-4 display-flex">
+    <div class="col-xs-12 display-flex supplier-dialog">
       <mat-form-field class="border-input">
         <input matInput type="text" formControlName="contact_no" placeholder="Phone No." />
+         <small
+              *ngIf="form.controls['contact_no'].hasError('required') && form.controls['contact_no'].touched"
+              class="form-error-msg"> contact_no is required </small>
+              <small
+              *ngIf="form.controls['contact_no'].hasError('pattern') && form.controls['contact_no'].touched"
+              class="form-error-msg"> Enter Valid contact_no</small>
+      </mat-form-field>
+    </div>
+
+    <!-- -->
+     <div class="col-xs-12 display-flex supplier-dialog">
+      <mat-form-field class="border-input">
+        <input matInput type="text" formControlName="pan" placeholder="Pan" />
       </mat-form-field>
     </div>
   </div>
 </div>
 
-<div mat-dialog-actions class="pull-right">
+<div mat-dialog-actions class="save-btn-add-edit-user-modal">
   <button
     mat-raised-button
     [disabled]="!form.valid"

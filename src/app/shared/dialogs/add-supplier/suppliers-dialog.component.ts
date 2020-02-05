@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
+import { Component, Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { RFQService } from "../../services/rfq/rfq.service";
 import { Suppliers } from "../../models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FieldRegExConst } from '../../constants/field-regex-constants';
 
 // Component for dialog box
 @Component({
@@ -18,6 +19,7 @@ export class SuppliersDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<SuppliersDialogComponent>,
     private rfqService: RFQService,
+    @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder
   ) {}
 
@@ -32,14 +34,15 @@ export class SuppliersDialogComponent {
   initForm() {
     this.form = this.formBuilder.group({
       supplier_name: ["", Validators.required],
-      email: ["", Validators.required],
-      contact_no: ["", Validators.required]
+      email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
+      pan: ["", Validators.required]
     });
   }
 
   submit() {
     console.log("form", this.form.value);
-    this.dialogRef.close(this.addSuppliers(4, this.form.value));
+    this.dialogRef.close(this.addSuppliers(this.data, this.form.value));
     // if (this.data.isEdit) {
     //   this.dialogRef.close(this.updateProjects(this.form.value));
     // } else {

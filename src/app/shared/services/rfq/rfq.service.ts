@@ -14,7 +14,7 @@ import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
   providedIn: "root"
 })
 export class RFQService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
 
   rfqMaterials(ProjectIds: ProjectIds) {
     return this.dataService.sendPostRequest(API.RFQMATERIALS, {
@@ -64,5 +64,18 @@ export class RFQService {
       .then(res => {
         return res;
       });
+  }
+  deleteSuplier(supplierId:number){
+     return this.dataService
+      .sendDeleteRequest(API.DELETESUPPLIER(supplierId),{}).then(res => {
+        return res;
+      });
+  }
+
+  getRFQView(rfqId: number) {
+    return this.dataService.getRequest(API.GETRFQVIEW(rfqId)).then(res => {
+      console.log("rfq", res)
+      return res;
+    })
   }
 }

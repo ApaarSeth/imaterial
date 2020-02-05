@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
+import { Component, Inject, OnInit } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 // Component for dialog box
 @Component({
@@ -8,8 +8,14 @@ import { MatDialogRef } from "@angular/material";
 })
 
 // Component class
-export class ViewDocumentsDialogComponent {
-  constructor(public dialogRef: MatDialogRef<ViewDocumentsDialogComponent>) {}
+export class ViewDocumentsDialogComponent implements OnInit {
+  constructor(public dialogRef: MatDialogRef<ViewDocumentsDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data,
+  ) { }
+
+  ngOnInit() {
+    console.log("dialog box data", this.data);
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

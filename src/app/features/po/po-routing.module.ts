@@ -9,6 +9,7 @@ import { InitiatePoResolver } from "./initiate-po/resolver/po.resolver";
 import { ViewGRNComponent } from "./view-grn/view-grn.component";
 import { AddGRNComponent } from "./add-grn/add-grn.component";
 import { InitiatePoComponent } from "./initiate-po/initiate-po.component";
+import { ViewGrnResolver } from "./add-grn/resolver/get-grn.resolver";
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
   },
   {
     path: "add-grn",
+    resolve: { viewGRN: ViewGrnResolver },
     component: AddGRNComponent
   },
   {
