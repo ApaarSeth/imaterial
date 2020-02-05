@@ -13,11 +13,14 @@ import { PoTableComponent } from "./po-table/po-table.component";
 import { PoComponent } from "./po.component";
 import { PoCardComponent } from "./po-card/po-card.component";
 import { PoDocumentsComponent } from "./po-documents/po-documents.component";
-import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
-import { PoSuppliersResolver } from "./po-supplier/resolver/po.resolver";
+import { PoSupplierComponent } from "./initiate-po/po-supplier/po-supplier.component";
+import { InitiatePoResolver } from "./initiate-po/resolver/po.resolver";
 import { ViewGRNComponent } from "./view-grn/view-grn.component";
 import { AddGRNComponent } from "./add-grn/add-grn.component";
-import { ViewGrnResolver } from './add-grn/resolver/get-grn.resolver';
+import { InitiatePoComponent } from "./initiate-po/initiate-po.component";
+import { PoProjectMaterialComponent } from "./initiate-po/po-project-material/po-project-material.component";
+import { PoQuantityMakesComponent } from "./initiate-po/po-quantity-makes/po-quantity-makes.component";
+import { ViewGrnResolver } from "./add-grn/resolver/get-grn.resolver";
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { ViewGrnResolver } from './add-grn/resolver/get-grn.resolver';
     PoDocumentsComponent,
     PoSupplierComponent,
     ViewGRNComponent,
-    AddGRNComponent
+    AddGRNComponent,
+    InitiatePoComponent,
+    PoProjectMaterialComponent,
+    PoQuantityMakesComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +47,6 @@ import { ViewGrnResolver } from './add-grn/resolver/get-grn.resolver';
     RouterModule,
     AppSharedModule
   ],
-  providers: [PODetailListResolver, PoSuppliersResolver, ViewGrnResolver]
+  providers: [PODetailListResolver, InitiatePoResolver, ViewGrnResolver]
 })
-export class POModule { }
+export class POModule {}

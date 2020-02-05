@@ -1,0 +1,21 @@
+.custom-stepper {
+
+    .mat-stepper-horizontal-line,
+    .mat-step-icon {
+        display: none !important;
+    }
+}
+
+.custom-header-height {
+
+    .mat-horizontal-stepper-header-container,
+    .mat-step-header {
+        height: 25px
+    }
+}
+
+.custom-po-radio {
+    .mat-radio-button {
+        display: block;
+    }
+}

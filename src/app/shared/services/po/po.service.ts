@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
+import { initiatePo } from "../../models/PO/po-data";
 
 @Injectable({
   providedIn: "root"
@@ -22,5 +23,14 @@ export class POService {
     return this.dataService.getRequest(
       API.GETAPPROVER(organizationId, projectId)
     );
+  }
+  projectMaterials(projectIds: number) {
+    return this.dataService.sendPostRequest(API.RFQMATERIALS, {
+      projectIds: [projectIds]
+    });
+  }
+
+  initiatePo(initiatePoData: initiatePo[]) {
+    return this.dataService.sendPostRequest(API.RFQADDPO, initiatePoData);
   }
 }
