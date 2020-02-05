@@ -12,6 +12,7 @@ import { AddAddressPoDialogComponent } from "./add-address-po/add-addressPo.comp
 import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
 import { DeactiveUserComponent } from './disable-user/disable-user.component';
 import { DeactiveSupplierComponent } from './disable-supplier/disable-supplier.component';
+import { ConfirmRfqBidComponent } from './confirm-rfq-bid/confirm-frq-bid-component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -27,5 +28,6 @@ export const SharedDialogs = [
   SelectPoRoleComponent,
   AddAddressPoDialogComponent,
   DeactiveUserComponent,
-  DeactiveSupplierComponent
+  DeactiveSupplierComponent,
+  ConfirmRfqBidComponent
 ];

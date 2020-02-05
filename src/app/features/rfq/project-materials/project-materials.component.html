@@ -113,7 +113,9 @@
         </mat-form-field>
       </div>
     </div>
-    <!-- table structure -->
+
+    <div class="rfq-detail-body">
+     <!-- table structure -->
     <mat-accordion class="accordion-padding-zero">
      <ng-template ngFor let-material [ngForOf]="rfqDetails" let-i="index">
       <mat-expansion-panel class="myPanel">
@@ -180,6 +182,8 @@
       </ng-template>
     </mat-accordion>
     <!-- end table structure -->
+    </div>
+
     <!-- end fix part -->
   </div>
 </div>
