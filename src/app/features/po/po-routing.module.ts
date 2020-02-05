@@ -4,10 +4,11 @@ import { Routes, RouterModule } from "@angular/router";
 import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
 import { PoComponent } from "./po.component";
 import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
-import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
-import { PoSuppliersResolver } from "./po-supplier/resolver/po.resolver";
+import { PoSupplierComponent } from "./initiate-po/po-supplier/po-supplier.component";
+import { InitiatePoResolver } from "./initiate-po/resolver/po.resolver";
 import { ViewGRNComponent } from "./view-grn/view-grn.component";
 import { AddGRNComponent } from "./add-grn/add-grn.component";
+import { InitiatePoComponent } from "./initiate-po/initiate-po.component";
 
 const routes: Routes = [
   {
@@ -20,9 +21,9 @@ const routes: Routes = [
     component: PoComponent
   },
   {
-    path: "po-supplier",
-    resolve: { supplier: PoSuppliersResolver },
-    component: PoSupplierComponent
+    path: "initiate-po",
+    resolve: { inititatePo: InitiatePoResolver },
+    component: InitiatePoComponent
   },
   {
     path: "add-grn",
