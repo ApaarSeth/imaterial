@@ -137,7 +137,7 @@ export class UserDetailComponent implements OnInit {
     data.ProjectList.forEach(element => {
       projectList.push(element.projectId);
     });
-    this.userDetailsTemp.projects = projectList;
+    this.userDetailsTemp.projectIds = projectList;
     
     this.openDialog({
       isEdit: true,
