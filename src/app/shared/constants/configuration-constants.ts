@@ -57,5 +57,6 @@ export const API = {
   ADDUSER: `user/add`,
   EDITUSER: `user/update/roleproject`,
   DEACTIVATEUSER: userId => `user/delete/${userId}`,
+  UPLOADEXCEL: projectId => `bom/materials/fileupload/${projectId}`,
   DELETESUPPLIER: supplierId => `projects/deleteSupplier/${supplierId}`
 };

@@ -44,7 +44,7 @@ const ELEMENT_DATA: AllUserDetails[] =[];
 export class UserDetailComponent implements OnInit {
    displayedColumns: string[] = ['username', 'email', 'contactNo', 'roleName', 'ProjectList','star'];
   displayedColumnsDeactivate : string[] = ['username', 'email', 'contactNo', 'roleName', 'ProjectList'];
-   dataSource = ELEMENT_DATA;
+
    dataSourceActivate = ELEMENT_DATA;
    dataSourceDeactivate = ELEMENT_DATA;
    userDetailsTemp :UserAdd = {};
@@ -69,28 +69,15 @@ export class UserDetailComponent implements OnInit {
 
   getAllUsers(){
   this.userService.getAllUsers(1).then(data => {
-            this.dataSource = data.data;
-            if(this.dataSource.length>0){
+            this.dataSourceActivate = data.data.activatedProjectList;
+            this.dataSourceDeactivate = data.data.deactivatedProjectList;
+
+            if( this.dataSourceActivate != [] || this.dataSourceDeactivate != [] || this.dataSourceActivate.length>0 || this.dataSourceDeactivate.length>0){
               this.addUserBtn = false;
             } 
             else{
               this.addUserBtn = true;
             }
-
-            this.dataSource.forEach(activateusers => {
-                 if(activateusers.ProjectUser.status == 0){
-                  this.activateUsers.push(activateusers);
-                }
-                else if(activateusers.ProjectUser.status == 1){
-                  this.deactivateUsers.push(activateusers);
-                }
-            });
-
-            this.dataSourceActivate = this.activateUsers;
-            this.dataSourceDeactivate = this.deactivateUsers;
-                if (!this.ref['destroyed']) {
-                    this.ref.detectChanges();
-                }
            
           });
   }
@@ -150,7 +137,7 @@ export class UserDetailComponent implements OnInit {
     data.ProjectList.forEach(element => {
       projectList.push(element.projectId);
     });
-    this.userDetailsTemp.projects = projectList;
+    this.userDetailsTemp.projectIds = projectList;
     
     this.openDialog({
       isEdit: true,
