@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-xs-12 text-right m-t-10 m-b-5">
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="gst">
+        <mat-radio-group class="radio-btn-group-po-table" aria-label="Select an option" [(ngModel)]="gst">
             <mat-radio-button value="IGST" class="p-r-5">IGST</mat-radio-button>
             <mat-radio-button value="CGST & SGST">CGST & SGST</mat-radio-button>
         </mat-radio-group>
     </div>
     <div class="col-xs-12">
         <form *ngIf="poTableData" [formGroup]="poForms" (ngSubmit)="sumbit()">
-            <mat-accordion displayMode="flat" multi class="mat-table" formArrayName="forms">
+            <mat-accordion displayMode="flat" multi class="mat-table po-table" formArrayName="forms">
                 <section matSort class="mat-elevation-z2 mat-header-row">
                     <span class="mat-header-cell widthReduce" mat-sort-header="vesselName">S.No</span>
                     <span class="mat-header-cell" mat-sort-header="vesselId">Material Name</span>
@@ -65,7 +65,7 @@
                     </ng-container>
 
                 </div>
-                <div class="mat-row">
+                <div class="mat-row footer">
                     <span class="mat-cell width50Percent"></span>
                     <span class=" mat-cell"></span>
                     <span class="mat-cell"></span>

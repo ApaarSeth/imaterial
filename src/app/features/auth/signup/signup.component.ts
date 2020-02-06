@@ -34,14 +34,14 @@ export class SignupComponent implements OnInit {
 
   formInit() {
    this.signupForm = this.formBuilder.group({
-    firstName: ["First Name",Validators.required],
-    lastName: ["Last name",Validators.required],
-    email: ["email@buildsupply.com",Validators.required],
-    phone: ["123456790",Validators.required],
-    organisationName: ["organisationName",Validators.required],
+    firstName: ["",Validators.required],
+    lastName: ["",Validators.required],
+    email: ["",Validators.required],
+    phone: ["",Validators.required],
+    organisationName: ["",Validators.required],
     organisationType: ["",Validators.required],
-    password: ["string",Validators.required],
-    confirmPassword: ["string",Validators.required]
+    password: ["",Validators.required],
+    confirmPassword: ["",Validators.required]
 
    });
    console.log("details", this.signupForm.value);
