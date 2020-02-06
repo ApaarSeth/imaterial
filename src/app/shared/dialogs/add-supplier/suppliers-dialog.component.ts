@@ -51,7 +51,7 @@ export class SuppliersDialogComponent {
   }
 
   addSuppliers(organisarionId: number, suppliers: Suppliers) {
-    this.rfqService.addNewSupplier(organisarionId, suppliers).then(res => {
+    this.rfqService.addNewSupplier(1, suppliers).then(res => {
       res.data;
     });
   }

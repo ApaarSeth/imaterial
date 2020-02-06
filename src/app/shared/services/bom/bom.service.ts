@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
-import { sendIssuedQuantityObj } from '../../models/issue-to-indent';
+import { sendIssuedQuantityObj } from "../../models/issue-to-indent";
 
 @Injectable({
   providedIn: "root"
 })
 export class BomService {
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService) {}
 
   getMaterialsWithSpecs(categoryList) {
     return this.dataService.getRequestMaster(
@@ -31,13 +31,20 @@ export class BomService {
       materialsQuantity
     );
   }
-  getIssueToIndent(projectId: number, materialId: number) {
-    return this.dataService.getRequest(API.GETISSUETOINDENT(projectId, materialId));
+  getIssueToIndent(materialId: number, projectId: number) {
+    return this.dataService.getRequest(
+      API.GETISSUETOINDENT(materialId, projectId)
+    );
   }
-  postIssueToIndent(materialId: number, indentDetailList: sendIssuedQuantityObj[]) {
-    return this.dataService.sendPostRequest(API.POSTISSUETOINDENT(materialId), indentDetailList).then(res => {
-      return res;
-    });
+  postIssueToIndent(
+    materialId: number,
+    indentDetailList: sendIssuedQuantityObj[]
+  ) {
+    return this.dataService
+      .sendPostRequest(API.POSTISSUETOINDENT(materialId), indentDetailList)
+      .then(res => {
+        return res;
+      });
   }
   postMaterialExcel(data:FormData,projectId:number){
  return this.dataService.sendPostRequest(API.UPLOADEXCEL(projectId),data)

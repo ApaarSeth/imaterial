@@ -16,12 +16,14 @@
                     <span class="mat-header-cell" mat-sort-header="ircs">Awarded quantity</span>
                     <span class="mat-header-cell" mat-sort-header="ircs">Amount</span>
                     <span class="mat-header-cell" mat-sort-header="ircs">GST %</span>
+                    <span class="mat-header-cell" mat-sort-header="ircs">GST Amount</span>
                     <span class="mat-header-cell" mat-sort-header="ircs">Total Amount with GST</span>
                 </section>
                 <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
                     <div class="mat-row">
                         <span class="mat-cell">{{ m }}</span>
                         <span class="mat-cell">{{ material.materialName }}</span>
+                        <span class="mat-cell"></span>
                         <span class="mat-cell"></span>
                         <span class="mat-cell"></span>
                         <span class="mat-cell"></span>
@@ -48,15 +50,32 @@
                                         placeholder="quantity" />
                                 </mat-form-field>
                             </span>
-                            <span class="mat-cell m-r-15">{{ rate.value * quantity.value }}</span>
+                            <span class="mat-cell">{{ rate.value * quantity.value }}</span>
                             <span class="mat-cell">
                                 <mat-form-field class="border-input">
-                                    <input matInput formControlName="gst" placeholder="GST%" class="m-r-5" />
+                                    <input matInput #gst formControlName="gst" placeholder="GST%" class="m-r-5" />
                                 </mat-form-field>
                             </span>
-                            <span class="mat-cell"></span>
+                            <span class="mat-cell">{{rate.value * quantity.value*gst.value/100 }}</span>
+                            <span class="mat-cell">
+                                {{ poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['total'].value| number : '1.2-2'  }}
+                            </span>
+
                         </div>
                     </ng-container>
+                    <div class="mat-row">
+                        <span class="mat-cell"></span>
+                        <span class="mat-cell"></span>
+                        <span class="mat-cell"></span>
+                        <span class="mat-cell"></span>
+                        <span class="mat-cell"></span>
+                        <span class="mat-cell"></span>
+                        <span class="mat-cell"></span>
+                        <span class="mat-cell"><span>GST Amount(Rs)</span>
+                            <br>{{gstTotalAmount | number : '1.2-2'}}</span>
+                        <span class="mat-cell"><span>Total Amount(Rs)</span>
+                            <br>{{totalAmount  | number : '1.2-2'}}</span>
+                    </div>
                 </div>
             </mat-accordion>
         </form>

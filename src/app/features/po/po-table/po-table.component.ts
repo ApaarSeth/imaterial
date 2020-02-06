@@ -1,19 +1,21 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { PoMaterial, PurchaseOrder } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
-import { ignoreElements } from "rxjs/operators";
+import { ignoreElements, debounceTime } from "rxjs/operators";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-po-table",
   templateUrl: "./po-table.component.html",
   styleUrls: ["./po-table.component.scss"]
 })
-export class PoTableComponent implements OnInit {
+export class PoTableComponent implements OnInit, OnDestroy {
   @Input("poTableData") poTableData: PoMaterial[];
   @Input("viewMode") viewMode: boolean;
   gst: string;
   constructor(private formBuilder: FormBuilder) {}
   poForms: FormGroup;
+  subscriptions: Subscription[] = [];
   ngOnInit() {
     this.formInit();
   }
@@ -22,7 +24,7 @@ export class PoTableComponent implements OnInit {
       (poMaterial: PoMaterial) => {
         let purchaseGrp: FormGroup[] = poMaterial.purchaseOrderDetailList.map(
           (purchaseoder: PurchaseOrder) => {
-            return this.formBuilder.group({
+            const frmGrp: FormGroup = this.formBuilder.group({
               id: [purchaseoder.materialId],
               status: [purchaseoder.status],
               created_by: [purchaseoder.created_by],
@@ -47,8 +49,26 @@ export class PoTableComponent implements OnInit {
               materialIgst: [1],
               materialSgst: [2],
               materialCgst: [],
-              gst: []
+              gst: [],
+              gstTotal: [],
+              total: [{ value: "", disabled: false }]
             });
+            this.subscriptions.push(
+              frmGrp.valueChanges.pipe(debounceTime(200)).subscribe(formVal => {
+                const gstCalc =
+                  formVal.materialQuantity *
+                  formVal.materialUnitPrice *
+                  (formVal.gst / 100);
+                const calc =
+                  formVal.materialQuantity * formVal.materialUnitPrice +
+                  gstCalc;
+
+                frmGrp.get("total").setValue(calc);
+                frmGrp.get("gstTotal").setValue(gstCalc);
+              })
+            );
+
+            return frmGrp;
           }
         );
         return this.formBuilder.group({
@@ -76,6 +96,30 @@ export class PoTableComponent implements OnInit {
     this.poForms = this.formBuilder.group({});
     this.poForms.addControl("forms", new FormArray(frmArr));
     console.log(this.poForms);
+  }
+
+  get totalAmount(): number {
+    return this.poForms
+      .getRawValue()
+      .forms.map(frm => frm.purchaseOrderDetailList)
+      .flat()
+      .map(mat => mat.total)
+      .reduce((a, b) => a + b);
+  }
+
+  get gstTotalAmount() {
+    return this.poForms
+      .getRawValue()
+      .forms.map(frm => frm.purchaseOrderDetailList)
+      .flat()
+      .map(mat => mat.gstTotal)
+      .reduce((a, b) => a + b);
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.subscriptions.forEach(subs => subs.unsubscribe());
   }
   sumbit() {
     this.getData();
