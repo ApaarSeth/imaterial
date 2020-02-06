@@ -8,7 +8,7 @@ import { Router } from "@angular/router";
   templateUrl: "./header.html",
   styleUrls: ["../../../../assets/scss/main.scss"]
 })
-export class HeaderLayoutModule implements OnInit {
+export class HeaderLayoutComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   @Input("menu") menu: MatSidenav;
   public buttonName: string = "projectStore";
@@ -32,9 +32,8 @@ export class HeaderLayoutModule implements OnInit {
       this.router.navigate(["users/user-detail"]);
     } else if (name === "purchaseOrder") {
       this.router.navigate(["po/detail-list"]);
-    }else if (name  === "supplier"){
-       this.router.navigate(["supplier/detail"]);
+    } else if (name === "supplier") {
+      this.router.navigate(["supplier/detail"]);
     }
-
   }
 }
