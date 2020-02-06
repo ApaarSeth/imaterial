@@ -20,7 +20,7 @@ $mat-row-horizontal-padding: 24px;
     min-height: $mat-header-row-height;
 }
 
-.mat-row {
+poCard .mat-row {
     min-height: $mat-row-height;
 }
 
@@ -47,4 +47,10 @@ $mat-row-horizontal-padding: 24px;
     overflow: hidden;
     word-wrap: break-word;
     color: black !important;
+}
+
+
+.widthReduce {
+    flex: none;
+    width: 55px;
 }

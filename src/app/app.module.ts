@@ -17,10 +17,14 @@ import { BomResolver } from "./features/bom/bom.resolver";
 import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
 import { PODetailListResolver } from "./features/po/resolver/po-detail-list-resolver";
 import { PoComponent } from "./features/po/po.component";
+import { AuthLayoutComponent } from "./shared/layout/auth-layout/auth-layout.component";
+import { MainLayoutComponent } from "./shared/layout/main-layout/main-layout.component";
+import { NotFoundComponent } from './features/not-found/not-found.component';
+import { SupplierBidLayoutComponent } from './shared/layout/supplier-bid-layout/supplier-bid-layout.component';
 // import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AuthLayoutComponent, MainLayoutComponent, NotFoundComponent, SupplierBidLayoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,7 +33,7 @@ import { PoComponent } from "./features/po/po.component";
     FlexLayoutModule,
     HttpClientModule,
     LayoutModule,
-    DashboardModule,
+    DashboardModule
     // FroalaEditorModule.forRoot(),
     // FroalaViewModule.forRoot()
   ],
@@ -44,4 +48,4 @@ import { PoComponent } from "./features/po/po.component";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

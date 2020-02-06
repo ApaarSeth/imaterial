@@ -13,8 +13,7 @@ import { Address } from "src/app/shared/models/RFQ/rfq-details";
 
 @Component({
   selector: "app-po-card",
-  templateUrl: "./po-card.component.html",
-  styleUrls: ["./po-card.component.scss"]
+  templateUrl: "./po-card.component.html"
 })
 export class PoCardComponent implements OnInit {
   @Input("cardData") cardData: CardData;
