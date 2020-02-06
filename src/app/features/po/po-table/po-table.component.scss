@@ -20,7 +20,7 @@ $mat-row-horizontal-padding: 24px;
     min-height: $mat-header-row-height;
 }
 
-.mat-row {
+poCard .mat-row {
     min-height: $mat-row-height;
 }
 
@@ -46,5 +46,48 @@ $mat-row-horizontal-padding: 24px;
     flex: 1;
     overflow: hidden;
     word-wrap: break-word;
-    color: black !important;
+    color: black;
+}
+
+
+.widthReduce {
+    flex: none;
+    width: 55px;
+}
+
+.mat-header-row{
+    background: #192135;
+    span{
+         color : #FFFFFF !important;
+    }
+   
+}
+
+.po-table{
+.mat-row{
+    border-bottom: 0.5px solid #979797;
+    min-height: 50px;
+    .mat-cell{
+        color: #707070;
+   } 
+}
+
+.footer{
+    	background-color: rgba(25,33,53,0.2);
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+        min-height: 70px;
+    .mat-cell{
+        color: #000000;
+        font-weight: 500;
+        font-size: 12px;
+   } 
+}
+
+}
+.radio-btn-group-po-table{
+    padding-right:10px ;
+    mat-radio-button{
+        padding: 0px 5px;
+    }
+
 }

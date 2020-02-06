@@ -8,10 +8,17 @@
                 </button>
             </div>
         </div>
-        <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData" [viewMode]="viewMode"></app-po-card>
-        <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData" [viewMode]="viewMode">
-        </app-po-table>
-        <app-po-documents #poDocument></app-po-documents>
+        <div class="main-div-po-outer">
+        <div class="main-div-po">
+             <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData" [viewMode]="viewMode"></app-po-card>
+        </div>
+            <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData" [viewMode]="viewMode">
+            </app-po-table>
+        </div>
+            <app-po-documents #poDocument></app-po-documents>
+       
+       
+
         <button (click)="viewModes()">viewMode</button>
     </div>
 </div>

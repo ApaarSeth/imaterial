@@ -65,3 +65,12 @@
   </div>
 
 </div>
+<div  *ngIf="issueToIndentDetails && (!issueToIndentDetails.indentDetailList)">
+ <div mat-dialog-title>
+   
+     <div class="col-xs-12 no-indent-list">
+       No Indent List Available for this {{issueToIndentDetails.materialName}}
+     </div>
+     
+ </div>
+</div>

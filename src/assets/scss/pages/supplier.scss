@@ -93,8 +93,10 @@
    } 
 }
 
-.submit-bid-div{
-    background:#ffffff ;
+.parent{
+.row{
+    .submit-bid-div{
+    background:#e6e6e6;
     margin: auto;
     width: 500px;
     height: 225px;
@@ -106,6 +108,11 @@
         padding-bottom: 10px ;
     }
 }
+}
+}
+
+
+
 .submit-bid-row{
    padding: 50px;
    height: calc(100vh - 120px);
@@ -122,4 +129,65 @@
 .quotes-submitted{
     color:#6A6A6A;
     font-size: 12px;
+}
+.no-indent-list{
+    text-align: center;
+}
+body{
+    overflow-x: hidden;
+}
+.buildsupply-logo-header{
+   img{
+        width: 250px;
+    height: 50px;
+    padding-left:10px ;
+   }    
+}
+.main-div-po-outer{
+    background: #FFFFFF !important;
+    margin-top:10px;
+    padding-top:10px;
+    border-top: 1px solid #979797;
+    border-left: 1px solid #979797;
+    border-right: 1px solid #979797;
+}
+
+.main-div-po{
+    padding: 10px 15px;
+}
+
+.second-mat-grid{
+left: calc(((50% - 2.5px) + 1px) * 1) !important;
+}
+.third-mat-grid{
+top: calc(200px) !important;
+    height: calc(203px) !important;
+}
+
+
+
+.mat-list-base .mat-subheader {
+    height: 40px !important;
+    line-height: 16px !important;
+     span{
+        color: #5F5F5F;
+        font-weight: 400;
+        font-size: 14px;
+        padding-left: 8px;
+        }
+}
+
+.header-card-po.mat-subheader{
+        color: #5F5F5F;
+        font-weight: 500;
+        font-size: 16px;
+       
+}
+.delivery-address-po-card{
+    span{
+         color: #5F5F5F;
+        font-weight: 400;
+        font-size: 14px;
+        padding-left: 15px;
+    }
 }

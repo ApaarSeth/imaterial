@@ -44,5 +44,6 @@ export interface UserAdd{
      roleId?: number,
      creatorId?: number,
      status?:number,
-     projects?: number[]
+     projectIds?: number[],
+    projects?: number[]
 }

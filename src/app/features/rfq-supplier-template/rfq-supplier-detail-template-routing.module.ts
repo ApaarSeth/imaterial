@@ -7,12 +7,12 @@ const routes: Routes = [
   {
     path: "supplier/:rfqId/:supplierId",
     // resolve: { rfqSupplierDetailResolver: RFQSupplierDetailResolver },
-    component: RFQSupplierDetailComponent
+    component: RFQSupplierDetailComponent,
   },
     {
     path: "after-submit/:brandList/:MaterialList",
     // resolve: { rfqSupplierDetailResolver: RFQSupplierDetailResolver },
-    component: RFQSupplierAfterBidComponent
+    component: RFQSupplierAfterBidComponent,
   }
 ];
 

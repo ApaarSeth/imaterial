@@ -1,5 +1,5 @@
     <form [formGroup]="projectDetails" (ngSubmit)="submit()">
-        <div class="row">
+        <div class="row ">
             <span class="m-r-35 p-l-15" *ngIf="!viewMode">
                 P.O.No.:
                 <mat-form-field class="border-input">
@@ -17,17 +17,18 @@
             </span>
             <span *ngIf="viewMode">P.O.Vaid Till:{{cardData.poValidUpto}}</span>
         </div>
-        <mat-grid-list cols="2" rowHeight="100px">
-            <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-grid-list cols="2" rowHeight="100px" class="poCard">
+            <mat-grid-tile [colspan]="1" [rowspan]="2" class="first-mat-grid">
                 <div class="col-xs-12 pull-left">
                     <div class="row">
                         <div class="col-xs-6">
                             <mat-list>
-                                <mat-list-item mat-subheader> Project Name: {{cardData.projectAddress.projectName}}
+                                <h3 mat-subheader class="header-card-po">Contract Detail</h3>
+                                <mat-list-item mat-subheader> Project Name: <span>{{cardData.projectAddress.projectName}}</span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> Contact Person:
+                                <mat-list-item mat-subheader> Contact Person:<span>
                                     {{cardData.projectAddress.firstName?cardData.projectAddress.firstName:""}}
-                                    {{cardData.projectAddress.lastName?cardData.projectAddress.lastName:""}}
+                                    {{cardData.projectAddress.lastName?cardData.projectAddress.lastName:""}}</span>
 
                                     <a href="javascript:void(0)"
                                         (click)="openDialog('projectUserId',cardData.projectId)"><i
@@ -36,58 +37,58 @@
                                         </i></a>
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> Phone
-                                    No.:{{cardData.projectAddress.contactNo?cardData.projectAddress.contactNo:""}}
+                                    No.:<span>{{cardData.projectAddress.contactNo?cardData.projectAddress.contactNo:""}}</span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> Email.:
-                                    {{cardData.projectAddress.email?cardData.projectAddress.email:""}}</mat-list-item>
+                                <mat-list-item mat-subheader> Email.:<span>
+                                    {{cardData.projectAddress.email?cardData.projectAddress.email:""}}</span></mat-list-item>
                             </mat-list>
                         </div>
                         <div class="col-xs-6">
-                            <mat-list>
+                            <mat-list class="delivery-address-po-card">
                                 <mat-list-item mat-subheader> Delivery Address</mat-list-item>
-                                <span>{{cardData.projectAddress.addressLine1}}</span>
-                                <span>{{cardData.projectAddress.addressLine2}}</span>
-                                <span>{{cardData.projectAddress.city}},{{cardData.projectAddress.state}}</span>
+                                <span>{{cardData.projectAddress.addressLine1}}</span> <br>
+                                <span *ngIf="cardData.projectAddress.addressLine2">{{cardData.projectAddress.addressLine2}}  <br></span>
+                                <span>{{cardData.projectAddress.city}},{{cardData.projectAddress.state}}</span> <br>
                                 <span>{{cardData.projectAddress.pinCode }}</span>
                             </mat-list>
                         </div>
                     </div>
                 </div>
             </mat-grid-tile>
-            <mat-grid-tile [colspan]="1" [rowspan]="4">
+            <mat-grid-tile [colspan]="1" [rowspan]="4" class="second-mat-grid">
                 <div class="col-xs-12 pull-left">
                     <mat-list>
-                        <h3 mat-subheader>Purchase Order Awarded To:</h3>
-                        <mat-list-item mat-subheader> Supplier Name: {{cardData.supplierAddress.supplierName}}
+                        <h3 mat-subheader class="header-card-po">Purchase Order Awarded To:</h3>
+                        <mat-list-item mat-subheader> Supplier Name: <span>{{cardData.supplierAddress.supplierName}}</span>
                         </mat-list-item>
-                        <mat-list-item mat-subheader> Contact Person: {{cardData.supplierAddress.supplierName}}
+                        <mat-list-item mat-subheader> Contact Person: <span>{{cardData.supplierAddress.supplierName}}</span>
 
                         </mat-list-item>
-                        <mat-list-item mat-subheader> Phone No.: {{cardData.supplierAddress.contactNo}} </mat-list-item>
-                        <mat-list-item mat-subheader> Street Address:{{cardData.supplierAddress.contactNo}}
+                        <mat-list-item mat-subheader> Phone No.:<span> {{cardData.supplierAddress.contactNo}}</span> </mat-list-item>
+                        <mat-list-item mat-subheader> Street Address: <span>{{cardData.supplierAddress.contactNo}}</span>
                             <a href="javascript:void(0)"
                                 (click)="openaddressDialog('supplierAddressId',cardData.supplierAddress.supplierId)"><i
                                     class="material-icons main-color">
                                     edit
                                 </i></a>
                         </mat-list-item>
-                        <mat-list-item mat-subheader> Pin Code: {{cardData.supplierAddress.pinCode}}</mat-list-item>
-                        <mat-list-item mat-subheader> City:{{cardData.supplierAddress.city}} </mat-list-item>
-                        <mat-list-item mat-subheader> GSTIN: {{cardData.supplierAddress.gstNo}}</mat-list-item>
+                        <mat-list-item mat-subheader> Pin Code: <span>{{cardData.supplierAddress.pinCode}}</span></mat-list-item>
+                        <mat-list-item mat-subheader> City:<span>{{cardData.supplierAddress.city}} </span></mat-list-item>
+                        <mat-list-item mat-subheader> GSTIN: <span>{{cardData.supplierAddress.gstNo}}</span></mat-list-item>
                     </mat-list>
                 </div>
             </mat-grid-tile>
-            <mat-grid-tile [colspan]="1" [rowspan]="2">
+            <mat-grid-tile [colspan]="1" [rowspan]="2" class="third-mat-grid">
                 <div class="col-xs-12 pull-left">
                     <mat-list>
-                        <h3 mat-subheader>Contract Detail</h3>
+                        <h3 mat-subheader class="header-card-po">Billing Address</h3>
                         <div class="row">
-                            <div class="col-xs-6">
-                                <mat-list-item mat-subheader> Company Name: {{cardData.billingAddress.companyName}}
+                            <div class="col-xs-6" >
+                                <mat-list-item mat-subheader> Company Name: <span>{{cardData.billingAddress.companyName}}</span>
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> Contact Person:
-                                    {{cardData.billingAddress.firstName}}
-                                    {{cardData.billingAddress.lastName}}
+                                    <span>{{cardData.billingAddress.firstName}}
+                                    {{cardData.billingAddress.lastName}}</span>
 
                                     <a href="javascript:void(0)"
                                         (click)="openDialog('projectBillingUserId',cardData.projectId)"><i
@@ -96,24 +97,24 @@
                                         </i></a>
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> Phone
-                                    No.:{{cardData.billingAddress.contactNo}}
+                                    No.:<span>{{cardData.billingAddress.contactNo}}</span>
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> Email.:
-                                    {{cardData.billingAddress.email}}</mat-list-item>
+                                    <span>{{cardData.billingAddress.email}}</span></mat-list-item>
                             </div>
                             <div class="col-xs-6">
                                 <mat-list-item mat-subheader> Street Address:
-                                    {{cardData.billingAddress.addressLine1}}
-                                    {{cardData.billingAddress.addressLine2}}<a href="javascript:void(0)"
+                                   <span> {{cardData.billingAddress.addressLine1}}
+                                    {{cardData.billingAddress.addressLine2}}</span><a href="javascript:void(0)"
                                         (click)="openaddressDialog('projectBillingAddressId',cardData.projectId)"><i
                                             class="material-icons main-color">
                                             edit
                                         </i></a></mat-list-item>
 
-                                <mat-list-item mat-subheader> Pin Code:{{cardData.billingAddress.pinCode}}
+                                <mat-list-item mat-subheader> Pin Code:<span>{{cardData.billingAddress.pinCode}}</span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> City:{{cardData.billingAddress.city}} </mat-list-item>
-                                <mat-list-item mat-subheader> GSTIN:{{cardData.billingAddress.gstNo}}</mat-list-item>
+                                <mat-list-item mat-subheader> City:<span>{{cardData.billingAddress.city}}</span> </mat-list-item>
+                                <mat-list-item mat-subheader> GSTIN:<span>{{cardData.billingAddress.gstNo}}</span></mat-list-item>
                             </div>
                         </div>
                     </mat-list>
