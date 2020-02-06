@@ -60,7 +60,7 @@ export class IssueToIndentDialogComponent implements OnInit {
     const formValues: sendIssuedQuantityObj[] = this.materialForms.value.forms;
     console.log("result", formValues);
 
-    this.bomService.postIssueToIndent(13, formValues).then(res => {
+    this.bomService.postIssueToIndent(this.data.materialId, formValues).then(res => {
       res.data;
     });
     // this.indentService.raiseIndent(this.projectId, dataSource).then(res => {
