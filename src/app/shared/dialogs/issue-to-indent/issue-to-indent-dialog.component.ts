@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
-import { MatDialogRef } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { IssueToIndentDetails, IndentVO, sendIssuedQuantityObj } from '../../models/issue-to-indent';
 import { BomService } from '../../services/bom/bom.service';
 import {
@@ -26,6 +26,7 @@ export class IssueToIndentDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<IssueToIndentDialogComponent>, private activatedRoute: ActivatedRoute,
     private bomService: BomService,
+     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder
   ) { }
 
@@ -68,7 +69,7 @@ export class IssueToIndentDialogComponent implements OnInit {
   }
 
   getIndentDetails() {
-    this.bomService.getIssueToIndent(13, 4).then(data => {
+    this.bomService.getIssueToIndent(this.data.materialId, this.data.projectId).then(data => {
       console.log("asdfgh", data.data);
       this.issueToIndentDetails = data.data;
       this.formsInit(this.issueToIndentDetails);
