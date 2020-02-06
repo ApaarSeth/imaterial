@@ -199,6 +199,7 @@ export class BomTableComponent implements OnInit {
   }
 
   openDialog1(materialId, projectId): void {
+
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(IssueToIndentDialogComponent, {
         width: "1200px",
