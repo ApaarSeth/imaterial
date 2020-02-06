@@ -53,6 +53,7 @@ export class SignupComponent implements OnInit {
     this.signInDetails.password = this.signupForm.value.password
     this.signInDetails.confirmPassword = this.signupForm.value.confirmPassword
     this.signInDetails.phone = this.signupForm.value.phone
+    this.signInDetails.phone = this.signupForm.value.email
     this.signInDetails.clientId=  "fooClientIdPassword"
     this.signInDetails.customData = {organizationName :this.signupForm.value.organisationName,
    organizationType :this.signupForm.value.organisationType}
