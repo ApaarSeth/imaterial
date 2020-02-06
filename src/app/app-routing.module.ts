@@ -16,7 +16,7 @@ const routes: Routes = [
     component: SupplierBidLayoutComponent,
     children: [
       {
-        path: "supplier",
+        path: "rfq-bids",
         loadChildren: () =>
           import(
             "./features/rfq-supplier-template/rfq-supplier-detail-template.module"
@@ -32,13 +32,6 @@ const routes: Routes = [
         path: "auth",
         loadChildren: () =>
           import("./features/auth/auth.module").then(m => m.AuthModule)
-      },
-      {
-        path: "supplier",
-        loadChildren: () =>
-          import(
-            "./features/rfq-supplier-template/rfq-supplier-detail-template.module"
-          ).then(m => m.RFQSupplierDetailTemplateModule)
       }
     ]
   },
