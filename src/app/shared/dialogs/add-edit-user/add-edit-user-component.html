@@ -109,7 +109,7 @@
 
         <mat-form-field class="border-select add-edit-user-form-modal">
           <mat-label>Project</mat-label>
-          <mat-select formControlName="projects" multiple>
+          <mat-select formControlName="projectIds" multiple>
             <mat-option *ngFor="let project of allProjects" [value]="project.projectId">{{project.projectName}}</mat-option>
           </mat-select>
         </mat-form-field>

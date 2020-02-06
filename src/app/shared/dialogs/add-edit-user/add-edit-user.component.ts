@@ -102,8 +102,8 @@ this.userService.getRoles().then(data => {
         this.data.isEdit ? this.data.detail.roleId : "",
         Validators.required
       ),
-      projects: new FormControl(
-        this.data.isEdit ? this.data.detail.projects: "",
+      projectIds: new FormControl(
+        this.data.isEdit ? this.data.detail.projectIds: "",
         Validators.required
       ),
       creatorId : new FormControl(''),
@@ -115,6 +115,7 @@ this.userService.getRoles().then(data => {
   addUsers(userDetails: UserAdd) {
     console.log(userDetails);
     userDetails.creatorId = 1;
+     userDetails.projects = userDetails.projectIds;
 
       var form_data = new FormData();
             for (var key in userDetails) {
