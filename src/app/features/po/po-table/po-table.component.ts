@@ -131,7 +131,10 @@ export class PoTableComponent implements OnInit, OnDestroy {
       material.purchaseOrderDetailList.map(purchaseOrderList => {
         if (this.gst === "IGST") {
           purchaseOrderList.materialIgst = purchaseOrderList.gst;
+          purchaseOrderList.materialSgst = 0;
+          purchaseOrderList.materialCgst = 0;
         } else {
+          purchaseOrderList.materialIgst = 0;
           purchaseOrderList.materialSgst = purchaseOrderList.gst / 2;
           purchaseOrderList.materialCgst = purchaseOrderList.gst / 2;
         }

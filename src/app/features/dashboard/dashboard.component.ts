@@ -19,37 +19,22 @@ import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confi
   styleUrls: ["../../../assets/scss/main.scss"]
 })
 export class DashboardComponent implements OnInit {
-  userId: 1;
   searchText: string = null;
 
   allProjects: ProjectDetails[];
-
+  orgId: Number;
+  userId: Number;
   constructor(
     private projectService: ProjectService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute
-  ) {
-    //const users: UserData[] = [];
-    // var users1=[];
-    // for (let i = 1; i <= 100; i++) { /*users.push(createNewUser(i));*/
-    //   users1.push({"cnt" : i,"name":"batr"+i});
-    //  }
-    // Assign the data to the data source for the table to render
-    // this.dataSource = new MatTableDataSource(users1);
-  }
+  ) {}
 
   ngOnInit() {
+    this.orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
     this.allProjects = this.activatedRoute.snapshot.data.dashBoardData;
   }
-
-  //displayedColumns = ['id', 'name', 'progress', 'color'];
-  //dataSource: MatTableDataSource<UserData>;
-
-  // addProjects(projectData: ProjectDetails){
-  //   this.projectService.addProjects(1,1,projectData).then(res => {
-  //     res.data;
-  // });
-  // }
 
   editProject(projectId: number) {
     console.log(projectId);
@@ -93,9 +78,11 @@ export class DashboardComponent implements OnInit {
         .toPromise()
         .then(result => {
           // to do
-          this.projectService.getProjects(1, 1).then(data => {
-            this.allProjects = data.data;
-          });
+          this.projectService
+            .getProjects(this.orgId, this.userId)
+            .then(data => {
+              this.allProjects = data.data;
+            });
         });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
@@ -107,9 +94,11 @@ export class DashboardComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          this.projectService.getProjects(1, 1).then(data => {
-            this.allProjects = data.data;
-          });
+          this.projectService
+            .getProjects(this.orgId, this.userId)
+            .then(data => {
+              this.allProjects = data.data;
+            });
         });
     }
   }

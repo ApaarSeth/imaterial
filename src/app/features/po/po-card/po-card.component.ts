@@ -69,7 +69,7 @@ export class PoCardComponent implements OnInit {
         this.cardData.projectAddress.firstName = result[1].approver.firstName;
         this.cardData.projectAddress.lastName = result[1].approver.lastName;
         this.cardData.projectAddress.projectUserId = result[1].approver.userId;
-        this.projectDetails.controls["projectAddre  ss"].setValue(
+        this.projectDetails.controls["projectAddress"].setValue(
           this.cardData.projectAddress
         );
       }
