@@ -7,7 +7,8 @@
         <mat-card-content>
             <mat-list class="pt-10">
                 <mat-list-item class="files-list" *ngFor="let file of documentList; let i = index">
-                    <mat-icon>file_copy</mat-icon>
+                    <!-- <mat-icon>file_copy</mat-icon> -->
+                    <img class="file-icon" src="../../../../assets/images/file-doc.png">
                     <span>{{ file.documentName}}</span>
                     <button type="button" (click)="removeFile(i)" mat-icon-button>
                         <mat-icon class="font-size-16">cancel</mat-icon>

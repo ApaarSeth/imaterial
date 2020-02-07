@@ -214,3 +214,58 @@ top: calc(200px) !important;
 .files-list {
  font-size: 12px;
 }
+
+.show-detail-qty:hover #detail-qty {
+ display: block;
+ 
+}
+
+.show-detail-qty #detail-qty {
+ display: none;
+ background-color: #ffffff;
+ color:#000000;
+ z-index: 999;
+  margin-top: -26px;
+  position: relative;
+  font-size: 10px;
+    width: 250px;
+    position: relative;
+    padding: 5px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    border: 1px solid #d0d0d0;
+}
+
+.issue-qty-div{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.show-detail-qty{
+    position: absolute;
+   margin-left: 16px;
+    margin-top: -3px;
+    img{
+        z-index: 10;
+    }
+}
+
+.file-icon{
+    width: 15px;
+    height: 18px;
+    padding-right: -14px;
+    margin-right: 5px;
+}
+
+div.limited-character {
+    position: relative;
+  white-space: nowrap; 
+  width: 150px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 10;
+}
+
+div.limited-character:hover {
+  overflow: visible;
+  z-index: 999;
+}
