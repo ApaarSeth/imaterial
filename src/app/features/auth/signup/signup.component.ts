@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SignINDetailLists } from "../../../shared/models/signIn/signIn-detail-list";
 import { from } from 'rxjs';
 import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
+import { Router } from '@angular/router';
 
 
 export interface OrganisationType{
@@ -17,6 +18,7 @@ export interface OrganisationType{
 })
 export class SignupComponent implements OnInit {
   constructor(
+    private router:Router,
     private formBuilder: FormBuilder,
     private signInSignupService :SignInSignupService
   ) {}
@@ -63,7 +65,7 @@ export class SignupComponent implements OnInit {
      localStorage.setItem('ServiceToken', data.data.serviceRawResponse.data.serviceToken);
      localStorage.setItem('userId', data.data.serviceRawResponse.data.userId);
      localStorage.setItem('orgId', data.data.serviceRawResponse.data.orgId);
-    //  this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+    this.router.navigate(["dashboard"]);
   });
 // console.log("filled values", this.signInDetails);
 

@@ -63,9 +63,7 @@ export class ReviewComponent implements OnInit {
       termsDesc: "qwert hjk ghgjhkj vhj hhv jh",
       termsType: "RFQ"
     };
-    console.log("rfqDetails", this.rfqDetails);
     this.openDialog3(this.rfqDetails);
-    //this.addRFQ(this.rfqDetails);
   }
 
   openDialog1(): void {
@@ -74,7 +72,6 @@ export class ReviewComponent implements OnInit {
         width: "1200px"
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log("The dialog was closed");
       });
     }
   }
@@ -84,7 +81,6 @@ export class ReviewComponent implements OnInit {
         width: "1200px"
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log("The dialog was closed");
       });
     }
   }
@@ -99,7 +95,6 @@ export class ReviewComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log("The dialog was closed");
       });
     }
   }

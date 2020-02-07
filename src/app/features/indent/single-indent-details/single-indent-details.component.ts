@@ -29,6 +29,7 @@ export class SingleIndentDetailsComponent implements OnInit {
         "Issued Quantity",
         "Requested Date"
     ];
+    orgId: number;
 
     constructor(
         private route: ActivatedRoute,
@@ -39,6 +40,7 @@ export class SingleIndentDetailsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.orgId=Number(localStorage.getItem("orgId"))
         this.route.params.subscribe(params => {
             this.projectId = params["id"];
             this.indentId = params["indentId"];
@@ -55,12 +57,10 @@ export class SingleIndentDetailsComponent implements OnInit {
     }
 
     getProject(id: number) {
-        this.projectService.getProject(1, id).then(data => {
+        this.projectService.getProject(this.orgId, id).then(data => {
             this.product = data.data;
         });
     }
-
-    // dialog function
 
     editProject() {
         const data: ProjetPopupData = {
@@ -82,7 +82,6 @@ export class SingleIndentDetailsComponent implements OnInit {
         this.openDialog(data);
     }
 
-    // modal function
     openDialog(data: ProjetPopupData): void {
         if (data.isDelete == false) {
             const dialogRef = this.dialog.open(AddProjectComponent, {
@@ -94,8 +93,6 @@ export class SingleIndentDetailsComponent implements OnInit {
                 .afterClosed()
                 .toPromise()
                 .then(result => {
-                    //console.log('The dialog was closed');
-                    //this.animal = result;
                 });
         } else if (data.isDelete == true) {
             const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
@@ -107,8 +104,6 @@ export class SingleIndentDetailsComponent implements OnInit {
                 .afterClosed()
                 .toPromise()
                 .then(result => {
-                    //console.log('The dialog was closed');
-                    //this.animal = result;
                 });
         }
     }

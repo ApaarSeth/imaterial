@@ -13,9 +13,10 @@ export class GlobalStoreResolver implements Resolve<any> {
   constructor(private globalStoreService: GlobalStoreService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    let orgId=Number(localStorage.getItem("orgId"))
     return Promise.all([
-      this.globalStoreService.getMaterialWiseData(1),
-      this.globalStoreService.getProjectWiseData(1)
+      this.globalStoreService.getMaterialWiseData(orgId),
+      this.globalStoreService.getProjectWiseData(orgId)
     ]).then(res => res);
   }
 }

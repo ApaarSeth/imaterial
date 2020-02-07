@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
 import { SignInData } from 'src/app/shared/models/signIn/signIn-detail-list';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "signin",
@@ -10,6 +11,7 @@ import { SignInData } from 'src/app/shared/models/signIn/signIn-detail-list';
 })
 export class SigninComponent implements OnInit {
   constructor(
+    private router:Router,
     private signInSignupService :SignInSignupService,
     private formBuilder: FormBuilder,
   ) {}
@@ -43,7 +45,7 @@ export class SigninComponent implements OnInit {
      localStorage.setItem('ServiceToken', data.serviceRawResponse.data.serviceToken);
      localStorage.setItem('userId', data.serviceRawResponse.data.userId);
      localStorage.setItem('orgId', data.serviceRawResponse.data.orgId);
-     //  this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+     this.router.navigate(["dashboard"]);
    });
 
    }

@@ -9,7 +9,6 @@ export class BomResolver implements Resolve<any> {
 
   resolve() {
     return this.bomService.getCategory().then(data => {
-      console.log("wefrgthyjhgff", data);
       return data;
     });
   }

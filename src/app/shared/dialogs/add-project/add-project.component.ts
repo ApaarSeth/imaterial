@@ -126,7 +126,6 @@ export class AddProjectComponent implements OnInit {
 
   addProjects(projectDetails: ProjectDetails) {
     this.projectService.addProjects(projectDetails).then(res => {
-      //res.data;
     });
   }
 

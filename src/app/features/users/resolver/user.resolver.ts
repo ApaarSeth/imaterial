@@ -18,7 +18,6 @@ export class UserResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     this.projectId = route.params["id"];
     return this.indentService.getIndentList(this.projectId).then(data => {
-      console.log("wefrgthyjhgff", data.data);
       return data.data;
     });
   }

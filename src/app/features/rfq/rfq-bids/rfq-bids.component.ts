@@ -30,16 +30,15 @@ export class RfqBidsComponent implements OnInit {
   rfqProjects: RfqProject[];
   rfqForms: FormGroup;
   rfqId: number;
+  orgId:number
+  
   ngOnInit() {
+    this.orgId=Number(localStorage.getItem("orgId"))
     this.route.params.subscribe(rfqId => {
-      console.log("rfq", rfqId);
       this.rfqId = Number(rfqId.id);
     });
-    this.rfqService.rfqPo(1, this.rfqId).then(res => {
-      console.log(res);
+    this.rfqService.rfqPo(this.orgId, this.rfqId).then(res => {
       this.rfqProjects = res.data;
-      console.log(this.rfqProjects);
-
       this.formInit();
     });
   }
@@ -106,7 +105,7 @@ export class RfqBidsComponent implements OnInit {
             projectAddressId: proj.projectAddressId,
             addressId: proj.projectAddressId,
             ...supplierData,
-            rfqId: 1,
+            rfqId: this.rfqId,
             materialList
           };
         };

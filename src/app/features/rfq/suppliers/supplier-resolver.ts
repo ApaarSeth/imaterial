@@ -7,8 +7,8 @@ export class RFQSuppliersResolver implements Resolve<any> {
   constructor(private rfqService: RFQService) {}
 
   resolve() {
-    return this.rfqService.getSuppliers(1).then(data => {
-      console.log("wefrgthyjhgff", data.data);
+    let orgId= Number(localStorage.getItem('orgId'))
+    return this.rfqService.getSuppliers(orgId).then(data => {
       return data.data;
     });
   }

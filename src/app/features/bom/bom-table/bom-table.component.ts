@@ -67,6 +67,7 @@ export class BomTableComponent implements OnInit {
   ];
   dataSource: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
+  orgId: number;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -80,8 +81,9 @@ export class BomTableComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
-    });
-    this.bomService.getMaterialWithQuantity(1, this.projectId).then(res => {
+    })
+    this.orgId=Number(localStorage.getItem("orgId"))
+    this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
       this.subcategories = [...res.data];
       console.log(this.subcategories);
       this.subcategories.forEach(subcategory => {
@@ -119,7 +121,7 @@ export class BomTableComponent implements OnInit {
   }
 
   getProject(id: number) {
-    this.projectService.getProject(1, id).then(data => {
+    this.projectService.getProject(this.orgId, id).then(data => {
       this.product = data.data;
     });
   }
@@ -135,14 +137,10 @@ export class BomTableComponent implements OnInit {
         state: { checkedSubcategory }
       });
     }
-    console.log(this.dataSource);
-    // this.router.navigate(["/indent/" + this.projectId]);
   }
   viewIndent() {
     this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
   }
-
-  // dialog function
 
   editProject() {
     const data: ProjetPopupData = {
@@ -164,7 +162,6 @@ export class BomTableComponent implements OnInit {
     this.openDialog(data);
   }
 
-  // modal function
   openDialog(data: ProjetPopupData): void {
     if (data.isDelete == false) {
       const dialogRef = this.dialog.open(AddProjectComponent, {
@@ -176,8 +173,6 @@ export class BomTableComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          //console.log('The dialog was closed');
-          //this.animal = result;
         });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
@@ -189,8 +184,6 @@ export class BomTableComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          //console.log('The dialog was closed');
-          //this.animal = result;
         });
     }
   }
@@ -212,28 +205,3 @@ export class BomTableComponent implements OnInit {
   }
 }
 
-// const SUBCATEGORIES: Subcategory[] = [
-//   {
-//     name: "steelbar",
-//     estimatedQuantity: 1500,
-//     requestedMaterial: null,
-//     issuedToProject: null,
-//     availableInStock: null,
-//     materials: [
-//       {
-//         name: "Steelbar 15mm",
-//         estimatedQuantity: 1500,
-//         requestedMaterial: 600,
-//         issuedToProject: 600,
-//         availableInStock: 300
-//       },
-//       {
-//         name: "Steelbar 15mm",
-//         estimatedQuantity: 1500,
-//         requestedMaterial: 600,
-//         issuedToProject: 600,
-//         availableInStock: 300
-//       }
-//     ]
-//   }
-// ];

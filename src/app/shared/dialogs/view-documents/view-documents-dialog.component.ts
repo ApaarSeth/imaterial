@@ -14,7 +14,6 @@ export class ViewDocumentsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log("dialog box data", this.data);
   }
 
   onNoClick(): void {
