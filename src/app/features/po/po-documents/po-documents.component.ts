@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
 import { DocumentUploadService } from "src/app/shared/services/document-download/document-download.service";
 import { DocumentList } from "src/app/shared/models/PO/po-data";
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: "app-po-documents",
@@ -8,6 +9,7 @@ import { DocumentList } from "src/app/shared/models/PO/po-data";
   styleUrls: ["./po-documents.component.scss"]
 })
 export class PoDocumentsComponent implements OnInit {
+  @Input('documentListLength') public documentListLength : number;
   documentList: DocumentList[] = [];
   docs: FileList;
   urlReceived = false;
@@ -33,17 +35,22 @@ export class PoDocumentsComponent implements OnInit {
       console.log("asdxfcgvhbjnk", data);
       return this.documentUploadService.postDocumentUpload(data).then(res => {
         console.log(res);
-        this.documentsName.push(
-          res.data
-            .split("")
-            .splice(res.data.lastIndexOf("/") + 1, res.data.length - 1)
-            .join("")
-        );
+        let name: string = res.data;
+        let firstName : number = name.lastIndexOf("/");
+        let lastName :number = name.indexOf("?Expires");
+        let subFileName = name.substring(firstName+1, lastName);
+
+        this.documentsName.push(subFileName);
+        
+
         this.documentList.push({
           documentType: "PO",
           documentDesc: "abc",
-          documentUrl: res.data
+          documentUrl: res.data,
+          documentName:subFileName
         });
+        this.documentListLength = this.documentList.length;
+        subFileName = "";
       });
     }
     console.log(this.documentList);
@@ -57,5 +64,7 @@ export class PoDocumentsComponent implements OnInit {
 
   removeFile(i) {
     this.documentList.splice(i, 1);
+    this.documentsName.splice(i, 1);
+    this.documentListLength = this.documentList.length;
   }
 }
