@@ -40,8 +40,10 @@ export interface IndentVO {
     createdAt: string,
     issuedQty: number,
     deliveredQty: number,
-    issuedDate: string
+    issuedDate: string,
+    requiredQuantity?: string
 }
+
 
 export interface IssuedQuantityDetail {
     issuedQty: number,
@@ -51,5 +53,6 @@ export interface IssuedQuantityDetail {
 export interface sendIssuedQuantityObj {
     indentId: number,
     issuedQty: number,
-    issuedDate: string
+    issuedDate: string,
+    requiredQuantity ?: number
 }

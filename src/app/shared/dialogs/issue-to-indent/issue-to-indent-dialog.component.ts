@@ -44,7 +44,8 @@ export class IssueToIndentDialogComponent implements OnInit {
       return this.formBuilder.group({
         indentId: [indent.indentId],
         issuedQty: ["", Validators.required],
-        issuedDate: [indent.dueDate]
+        issuedDate: [indent.dueDate],
+        requiredQuantity: [indent.quantity]
       });
     });
 
