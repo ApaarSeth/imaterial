@@ -22,10 +22,10 @@ export class RefDetailComponent implements OnInit {
     "action2"
   ];
   ngOnInit() {
-    this.rfqService.rfqDetail(1).then(res => {
+    let orgId=Number(localStorage.getItem("orgId"))
+    this.rfqService.rfqDetail(orgId).then(res => {
       this.openRfqList = res.data.openRfqList;
       this.closeRfqList = res.data.closeRfqList;
-      console.log(this.openRfqList);
     });
   }
 }

@@ -27,12 +27,12 @@ const routes: Routes = [
     component: InitiatePoComponent
   },
   {
-    path: "add-grn",
+    path: "add-grn/:poId",
     resolve: { viewGRN: ViewGrnResolver },
     component: AddGRNComponent
   },
   {
-    path: "view-grn",
+    path: "view-grn/:poId",
     component: ViewGRNComponent
   }
 ];

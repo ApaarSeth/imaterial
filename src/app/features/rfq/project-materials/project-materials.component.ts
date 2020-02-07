@@ -74,14 +74,7 @@ export class RFQProjectMaterialsComponent implements OnInit {
   }
 
   checkedMAterialFlag: boolean = false;
-  // flag(material: RfqMat) {
-  //   if (material.checked === true) {
-  //     this.checkedMAterialFlag = true;
-  //   } else {
-  //     this.checkedMAterialFlag = false;
-  //   }
-  //   console.log(this.checkedMAterialFlag);
-  // }
+  
 
   raiseIndent() {
     let projectMaterial = null;
@@ -104,7 +97,5 @@ export class RFQProjectMaterialsComponent implements OnInit {
         state: { checkedMaterials }
       });
     }
-    console.log(checkedMaterials);
-    // this.router.navigate(["/indent/" + this.projectId]);
   }
 }

@@ -7,8 +7,9 @@ export class RFQResolver implements Resolve<any> {
   constructor(private projectService: ProjectService) {}
 
   resolve() {
-    return this.projectService.getProjects(1, 1).then(data => {
-      console.log("wefrgthyjhgff", data.data);
+    let orgId=Number(localStorage.getItem("orgId"))
+    let userId=Number(localStorage.getItem("userId"))
+    return this.projectService.getProjects(orgId,userId).then(data => {
       return data.data;
     });
   }

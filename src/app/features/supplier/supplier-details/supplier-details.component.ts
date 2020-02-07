@@ -1,34 +1,11 @@
-import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef } from "@angular/core";
-import { MatDialog, MatChipInputEvent, MatTableDataSource } from "@angular/material";
-import { ActivatedRoute, Router } from "@angular/router";
-import {
-  ProjectDetails,
-  ProjectIds
-} from "src/app/shared/models/project-details";
-import {
-  FormBuilder,
-  FormArray,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { MatDialog } from "@angular/material";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { stringify } from "querystring";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import {
-  RfqMat,
-  RfqMaterialResponse
-} from "src/app/shared/models/RFQ/rfq-details";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
-import { AddEditUserComponent } from 'src/app/shared/dialogs/add-edit-user/add-edit-user.component';
-import { DeactiveUserComponent } from 'src/app/shared/dialogs/disable-user/disable-user.component';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { forEachChild } from 'typescript';
 import { SuppliersDialogComponent } from 'src/app/shared/dialogs/add-supplier/suppliers-dialog.component';
-import { Suppliers } from 'src/app/shared/models/RFQ/suppliers';
-import { SupplierDetailsPopUpData, SupplierAdd, AllSupplierDetails } from 'src/app/shared/models/supplier';
+import { SupplierDetailsPopUpData, SupplierAdd } from 'src/app/shared/models/supplier';
 import { DeactiveSupplierComponent } from 'src/app/shared/dialogs/disable-supplier/disable-supplier.component';
-import { SupplierRoutingModule } from '../supplier-routing.module';
 
 // chip static data
 export interface Fruit {
@@ -61,22 +38,18 @@ export class SupplierDetailComponent implements OnInit {
 
 
    addUserBtn : boolean = false;
+  orgId: number;
   constructor(
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private ref: ChangeDetectorRef,
-    private userService: UserService
-  ) {}
+    private rfqService: RFQService  ) {}
 
-  ngOnInit() { 
+  ngOnInit() {
+    this.orgId=Number(localStorage.getItem("orgId")) 
     this.getAllSupplier();
   }
 
   getAllSupplier(){
-    this.rfqService.getSuppliers(1).then(data => {
+    this.rfqService.getSuppliers(this.orgId).then(data => {
           this.dataSource = data.data;
             if(this.dataSource.length>0){
               this.addUserBtn = false;
@@ -99,9 +72,8 @@ export class SupplierDetailComponent implements OnInit {
         data
       });
       
-      dialogRef.afterClosed().toPromise().then(data => {
+      dialogRef.afterClosed().toPromise().then(() => {
          this.getAllSupplier();
-        console.log("The dialog was closed");
 
       });
     }
@@ -123,9 +95,8 @@ export class SupplierDetailComponent implements OnInit {
         width: "800px",
         data
       });
-      dialogRef.afterClosed().toPromise().then(data => {
+      dialogRef.afterClosed().toPromise().then(() => {
          this.getAllSupplier();
-        console.log("The dialog was closed");
       });
     }
   }

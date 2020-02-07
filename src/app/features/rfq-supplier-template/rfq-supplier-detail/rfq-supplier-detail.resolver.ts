@@ -23,7 +23,6 @@ export class RFQSupplierDetailResolver implements Resolve<any> {
         this.route.snapshot.params["supplierId"]
       )
       .then(data => {
-        console.log("wefrgthyjhgff", data.data);
         return data.data;
       });
   }

@@ -11,6 +11,7 @@ import { DocumentUploadService } from "../../services/document-download/document
 })
 export class SelectApproverComponent implements OnInit {
   documentList: DocumentList[] = [];
+  orgId: number;
   constructor(
     private documentUploadService: DocumentUploadService,
     private poService: POService,
@@ -20,15 +21,13 @@ export class SelectApproverComponent implements OnInit {
   approverData: ApproverData[] = [];
   selectedApprover: ApproverData;
   ngOnInit() {
-    console.log(this.data);
-    this.poService.getApproverData(1, this.data.projectId).then(res => {
+    this.orgId=Number(localStorage.getItem("orgId"))
+    this.poService.getApproverData(this.orgId,this.data.projectId).then(res => {
       this.approverData = res.data;
-      console.log(this.approverData);
     });
   }
 
   sendPo() {
-    console.log(this.selectedApprover);
     this.data.approverId = this.selectedApprover.user_d;
     this.poService.sendPoData(this.data);
   }

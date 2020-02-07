@@ -18,7 +18,6 @@
       /></span>
       <span class="menu-spacer"></span>
       <div fxShow="true" fxHide.lt-md>
-        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
         <a href="#" mat-button>
           <mat-icon aria-hidden="false" aria-label="Example apps icon"
             >apps</mat-icon
@@ -59,10 +58,6 @@
       Project Store
     </button>
     </a>
-    <!-- <mat-menu #aboveMenu="matMenu" yPosition="above">[matMenuTriggerFor]="aboveMenu"
-      <button mat-menu-item>Item 1</button>
-      <button mat-menu-item>Item 2</button>
-    </mat-menu> -->
     <a href="javascript:void(0)" (click)="setButtonName('globalStore')">
       <button
         [class.active]="buttonName == 'globalStore'"
@@ -91,10 +86,6 @@
     >
       Purchase Order
     </button>
-    <!-- <mat-menu #belowMenu="matMenu" yPosition="below">[matMenuTriggerFor]="belowMenu"
-      <button mat-menu-item>Item 1</button>
-      <button mat-menu-item>Item 2</button>
-    </mat-menu> -->
 
     <button
       [class.active]="buttonName == 'users'"
@@ -113,23 +104,5 @@
     >
       Supplier
     </button>
-    <!-- <mat-menu #beforeMenu="matMenu" xPosition="before"> [matMenuTriggerFor]="beforeMenu"
-      <button mat-menu-item>Item 1</button>
-      <button mat-menu-item>Item 2</button>
-    </mat-menu> -->
   </div>
-  <!-- <mat-sidenav-container fxFlexFill>
-      <mat-sidenav #sidenav>
-        <mat-nav-list>
-          <a (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
-          <a href="#" mat-list-item>Menu Item 1</a>
-          <a href="#" mat-list-item>Menu Item 2</a>
-          <a href="#" mat-list-item>Menu Item 3</a>
-          <a href="#" mat-list-item>Menu Item 4</a>
-          <a href="#" mat-list-item>Menu Item 5</a>
-          <a href="#"mat-list-item>Menu Item 6</a>
-        </mat-nav-list>
-      </mat-sidenav>
-      <mat-sidenav-content fxFlexFill>Main content</mat-sidenav-content>
-    </mat-sidenav-container> -->
 </div>

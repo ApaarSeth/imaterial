@@ -38,27 +38,9 @@ export class UploadComponent implements OnInit {
         newFiles.items.add(this.fileToUpload[key]);
       });
     }
-
     this.fileToUpload = newFiles.files;
-    console.log("fileTOUp-load", this.fileToUpload);
     this.onFileUpdate.emit(this.fileToUpload);
   }
-
-  /**
-   * This function is used to remove document from a particular item of RFQ
-   * @param i index of the document
-   */
-  // removeFile(i) {
-  //   const newFiles = new DataTransfer();
-
-  //   Object.keys(this.fileToUpload).forEach(key => {
-  //     if (Number(key) !== i) {
-  //       newFiles.items.add(this.fileToUpload[key]);
-  //     }
-  //   });
-  //   this.fileToUpload = newFiles.files;
-  //   this.onFileUpdate.emit(this.fileToUpload);
-  // }
 
   uploadDocs(
     fileUploadType: string = null,
