@@ -39,8 +39,8 @@ export const API = {
   POSTADDADDRESS: (type, id) => `address/add/${type}/${id}`,
   GETPOADDADDRESS: (type, id) => `address/get/${type}/${id}`,
   POSTDOCUMENTUPLOAD: `documents/upload`,
-  SIGNUP: `sso/api/auth/signup`,
-  SIGNIN: `sso/oauth/token`,
+  SIGNUP: `/api/auth/signup`,
+  SIGNIN: `/oauth/token`,
   //STATE: 'account/api/permitted/address/states',
   GETISSUETOINDENT: (materialId, projectId) =>
     `materials/updateStock/${materialId}/${projectId}`,
