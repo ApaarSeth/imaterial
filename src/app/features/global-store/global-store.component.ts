@@ -12,7 +12,6 @@ export class GlobalStoreComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    console.log("Hello");
     this.route.data.subscribe(data => {
       console.log(data.globalData);
       this.globalStoreData = data.globalData;

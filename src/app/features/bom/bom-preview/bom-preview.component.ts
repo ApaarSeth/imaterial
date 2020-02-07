@@ -30,6 +30,7 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 export class BomPreviewComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
   counter: number;
+  orgId: number;
 
   constructor(
     private router: Router,
@@ -53,16 +54,12 @@ export class BomPreviewComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.projectService.getProject(1, this.projectId).then(data => {
-      // console.log("data");
-      // console.log(data);
-      //     this.product = data.message;
+    this.orgId=Number(localStorage.getItem("orgId"))
+    this.projectService.getProject(this.orgId, this.projectId).then(data => {
     });
     this.bomService
-      .getMaterialWithQuantity(1, this.projectId)
+      .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
-        console.log("res.data");
-        console.log(res.data);
         this.dataQty = res.data;
         this.selectedCategory.Child = this.selectedCategory.Child.map(
           subcategory => {
@@ -79,8 +76,6 @@ export class BomPreviewComponent implements OnInit {
             return subcategory;
           }
         );
-        console.log("this.selectedCategory.Child");
-        console.log(this.selectedCategory.Child);
         this.formInit();
       })
       .catch(err => {
@@ -144,11 +139,6 @@ export class BomPreviewComponent implements OnInit {
       });
   }
 
-  // getProject(id: number){
-  //   this.projectService.getProject(1,id).then(data => {
-  //     this.product = data.message;
-  // });
-  // }
 
   customValidation(form: FormGroup) {
     if (form.value) {

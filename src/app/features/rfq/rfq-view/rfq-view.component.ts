@@ -23,7 +23,6 @@ export class RFQViewComponent implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe(rfqId => {
-            // console.log("rfq", rfqId);
             this.rfqId = Number(rfqId.id);
         });
         this.getRFQDetails(this.rfqId);
@@ -31,7 +30,6 @@ export class RFQViewComponent implements OnInit {
 
     getRFQDetails(rfqId: number) {
         this.rfqService.getRFQView(rfqId).then(res => {
-            console.log("rfq data", res.data);
             this.rfqDetails = res.data;
         });
     }
@@ -44,7 +42,6 @@ export class RFQViewComponent implements OnInit {
 
             });
             dialogRef.afterClosed().subscribe(result => {
-                console.log("The dialog was closed");
             });
         }
     }

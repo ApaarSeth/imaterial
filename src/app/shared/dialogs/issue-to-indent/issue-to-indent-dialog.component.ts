@@ -31,9 +31,6 @@ export class IssueToIndentDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.IssueToIndent = this.activatedRoute.snapshot.data.issueToIndent;
-    // console.log("activatedroute", this.activatedRoute)
-    // console.log("IssueToIndent", this.IssueToIndent);
     this.getIndentDetails();
 
   }
@@ -64,24 +61,14 @@ export class IssueToIndentDialogComponent implements OnInit {
     this.bomService.postIssueToIndent(this.data.materialId, formValues).then(res => {
       res.data;
     });
-    // this.indentService.raiseIndent(this.projectId, dataSource).then(res => {
-    //   this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
-    // });
   }
 
   getIndentDetails() {
     this.bomService.getIssueToIndent(this.data.materialId, this.data.projectId).then(data => {
-      console.log("asdfgh", data.data);
       this.issueToIndentDetails = data.data;
       this.formsInit(this.issueToIndentDetails);
     });
   }
-
-  // postIssueQuantity(indentDetailList) {
-  //   this.bomService.postIssueToIndent(13, indentDetailList).then(res => {
-  //     res.data;
-  //   });
-  // }
 
   onNoClick(): void {
     this.dialogRef.close();

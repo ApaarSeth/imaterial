@@ -10,7 +10,7 @@
             Raise Indent
           </button>
         </span>
-        <span class="p-r-5 pull-right">
+        <span class="p-r-5 pull-right" *ngIf="projectData.openIndentCount">
           <button mat-raised-button class="main-background-color main-button color-white pull-right "
             (click)="viewIndent()">
             View Indent
@@ -166,11 +166,6 @@
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let element; columns: columnsToDisplay" (click)="toggleRow(element)"></tr>
-        <!-- <tr
-          mat-row
-          *matRowDef="let row; columns: ['expandedDetail']"
-          class="example-detail-row"
-        ></tr> -->
       </table>
     </div>
   </div>

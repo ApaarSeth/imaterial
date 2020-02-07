@@ -6,12 +6,10 @@ import { RFQSupplierAfterBidComponent } from './rfq-supplier-after-bid/rfq-suppl
 const routes: Routes = [
   {
     path: "supplier/:rfqId/:supplierId",
-    // resolve: { rfqSupplierDetailResolver: RFQSupplierDetailResolver },
     component: RFQSupplierDetailComponent,
   },
     {
     path: "after-submit/:brandList/:MaterialList",
-    // resolve: { rfqSupplierDetailResolver: RFQSupplierDetailResolver },
     component: RFQSupplierAfterBidComponent,
   }
 ];

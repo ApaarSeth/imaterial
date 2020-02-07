@@ -9,8 +9,10 @@ import { GRNService } from 'src/app/shared/services/grn/grn.service';
 @Injectable()
 export class ViewGrnResolver implements Resolve<any> {
     constructor(private grnService: GRNService) { }
-
+    
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return this.grnService.viewGRN(1, 9).then(res => res.data);
+        let poId=route.params["poId"]
+        let orgId=Number(localStorage.getItem("orgId"));
+        return this.grnService.viewGRN(orgId, poId).then(res => res.data);
     }
 }

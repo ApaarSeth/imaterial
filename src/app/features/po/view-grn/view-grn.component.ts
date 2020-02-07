@@ -25,7 +25,11 @@ export class ViewGRNComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService) { }
 
     ngOnInit() {
-        this.getGRNDetails(1);
+        this.activatedRoute.params.subscribe(res=>{
+            console.log(res);
+            this.getGRNDetails(Number(res["poId"]));
+        })
+        
     }
 
     getGRNDetails(grnId: number) {

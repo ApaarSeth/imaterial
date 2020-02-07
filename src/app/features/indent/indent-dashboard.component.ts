@@ -49,7 +49,7 @@ export class IndentDashboardComponent implements OnInit {
   ];
 
   materialForms: FormGroup;
-
+orgId:Number;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -60,6 +60,7 @@ export class IndentDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.orgId=Number(localStorage.getItem("orgId"))
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
@@ -80,11 +81,10 @@ export class IndentDashboardComponent implements OnInit {
       forms: new FormArray(frmArr)
     });
 
-    console.log(this.materialForms);
   }
 
   getProject(id: number) {
-    this.projectService.getProject(1, id).then(data => {
+    this.projectService.getProject(this.orgId, id).then(data => {
       this.product = data.data;
     });
   }
@@ -99,17 +99,6 @@ export class IndentDashboardComponent implements OnInit {
     });
   }
 
-  // raiseIndent(indentVO: IndentVO[]) {
-  //   console.log("qwertyuio", indentVO);
-  //   return this.indentService
-  //     .raiseIndent(this.projectId, indentVO)
-  //     .then(res => {
-  //       console.log(res);
-  //       return;
-  //     });
-  // }
-
-  // dialog function
 
   editProject() {
     const data: ProjetPopupData = {

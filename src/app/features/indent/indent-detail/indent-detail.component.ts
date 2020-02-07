@@ -37,6 +37,7 @@ export class IndentDetailComponent implements OnInit {
   allIndents: AllIndentListVO;
   dataSource1: IndentVO[];
   dataSource2: IndentVO[];
+  orgId: number;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -52,10 +53,11 @@ export class IndentDetailComponent implements OnInit {
     this.allIndents = this.route.snapshot.data.indentList;
     this.dataSource1 = this.allIndents.ongoingIndentList;
     this.dataSource2 = this.allIndents.completedIndentList;
+    this.orgId=Number(localStorage.getItem("orgId"))
   }
 
   getProject(id: number) {
-    this.projectService.getProject(1, id).then(data => {
+    this.projectService.getProject(this.orgId, id).then(data => {
       this.product = data.data;
     });
   }
@@ -94,8 +96,6 @@ export class IndentDetailComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          //console.log('The dialog was closed');
-          //this.animal = result;
         });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
@@ -107,8 +107,6 @@ export class IndentDetailComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          //console.log('The dialog was closed');
-          //this.animal = result;
         });
     }
   }
