@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: "http://localhost:1323",
+  url: "http://localhost:1323/im",
   masterUrl: "http://localhost:1333",
   ssoUrl: "http://localhost:8080/sso"
 };

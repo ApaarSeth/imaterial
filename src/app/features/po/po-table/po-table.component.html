@@ -53,10 +53,12 @@
                             <span class="mat-cell">{{ rate.value * quantity.value  | number : '1.2-2'}}</span>
                             <span class="mat-cell">
                                 <mat-form-field class="border-input width50Percent">
-                                    <input matInput #gst formControlName="gst" placeholder="GST%" class="m-r-5" />
+                                    <input matInput type="number" #gst formControlName="gst" placeholder="GST%"
+                                        class="m-r-5" />
                                 </mat-form-field>
                             </span>
-                            <span class="mat-cell">{{rate.value * quantity.value*gst.value/100  | number : '1.2-2' }}</span>
+                            <span
+                                class="mat-cell">{{rate.value * quantity.value*gst.value/100  | number : '1.2-2' }}</span>
                             <span class="mat-cell">
                                 {{ poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['total'].value| number : '1.2-2'  }}
                             </span>
