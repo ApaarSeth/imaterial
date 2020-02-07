@@ -15,11 +15,7 @@ import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-rfq-bids",
-  templateUrl: "./rfq-bids.component.html",
-  styleUrls: [
-    "../../../../assets/scss/main.scss",
-    "../../../../assets/scss/pages/rfq-bids.component.scss"
-  ]
+  templateUrl: "./rfq-bids.component.html"
 })
 export class RfqBidsComponent implements OnInit {
   constructor(
@@ -36,7 +32,7 @@ export class RfqBidsComponent implements OnInit {
       this.rfqId = Number(rfqId.id);
     });
     this.rfqService.rfqPo(1, this.rfqId).then(res => {
-      console.log(res);
+      console.log("rfqDta", res);
       this.rfqProjects = res.data;
       console.log(this.rfqProjects);
 

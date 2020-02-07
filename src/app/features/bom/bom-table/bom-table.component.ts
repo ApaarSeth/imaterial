@@ -24,6 +24,7 @@ import {
   Materials
 } from "src/app/shared/models/subcategory-materials";
 import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
+import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
 
 @Component({
   selector: "app-bom-table",
@@ -46,6 +47,7 @@ import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-in
 export class BomTableComponent implements OnInit {
   projectId: number;
   product: ProjectDetails;
+  projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   columnsToDisplay = [
@@ -80,6 +82,9 @@ export class BomTableComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
+    });
+    this.projectService.getProject(1, this.projectId).then(res => {
+      this.projectData = res.data;
     });
     this.bomService.getMaterialWithQuantity(1, this.projectId).then(res => {
       this.subcategories = [...res.data];
@@ -199,7 +204,6 @@ export class BomTableComponent implements OnInit {
   }
 
   openDialog1(materialId, projectId): void {
-
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(IssueToIndentDialogComponent, {
         width: "1200px",
