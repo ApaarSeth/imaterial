@@ -10,7 +10,7 @@
             Raise Indent
           </button>
         </span>
-        <span class="p-r-5 pull-right">
+        <span class="p-r-5 pull-right" *ngIf="projectData.openIndentCount">
           <button mat-raised-button class="main-background-color main-button color-white pull-right "
             (click)="viewIndent()">
             View Indent
@@ -55,7 +55,7 @@
             Estimated Quantity
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
-            {{ element.estimatedQty }}
+            {{ element.estimatedQty }}{{element.materialUnit}}
           </td>
         </ng-container>
         <ng-container matColumnDef="requestedQuantity">

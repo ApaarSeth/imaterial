@@ -1,12 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SignINDetailLists } from "../../../shared/models/signIn/signIn-detail-list";
-import { from } from 'rxjs';
-import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
-import { Router } from '@angular/router';
+import { from } from "rxjs";
+import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
+import { Router } from "@angular/router";
 
-
-export interface OrganisationType{
+export interface OrganisationType {
   value: string;
   viewValue: string;
 }
@@ -18,37 +17,34 @@ export interface OrganisationType{
 })
 export class SignupComponent implements OnInit {
   constructor(
-    private router:Router,
+    private router: Router,
     private formBuilder: FormBuilder,
-    private signInSignupService :SignInSignupService
+    private signInSignupService: SignInSignupService
   ) {}
   signupForm: FormGroup;
-  signInDetails={} as SignINDetailLists ;
+  signInDetails = {} as SignINDetailLists;
   ngOnInit() {
     this.formInit();
   }
 
   organisationTypes: OrganisationType[] = [
-    { value: "Contractor", viewValue: "Contractor"},
-    { value: "Supplier", viewValue: "Supplier"},
-  ]
-
+    { value: "Contractor", viewValue: "Contractor" },
+    { value: "Supplier", viewValue: "Supplier" }
+  ];
 
   formInit() {
-   this.signupForm = this.formBuilder.group({
-    firstName: ["",Validators.required],
-    lastName: ["",Validators.required],
-    email: ["",Validators.required],
-    phone: ["",Validators.required],
-    organisationName: ["",Validators.required],
-    organisationType: ["",Validators.required],
-    password: ["",Validators.required],
-    confirmPassword: ["",Validators.required]
-
-   });
-   console.log("details", this.signupForm.value);
+    this.signupForm = this.formBuilder.group({
+      firstName: ["", Validators.required],
+      lastName: ["", Validators.required],
+      email: ["", Validators.required],
+      phone: ["", Validators.required],
+      organisationName: ["", Validators.required],
+      organisationType: ["", Validators.required],
+      password: ["", Validators.required],
+      confirmPassword: ["", Validators.required]
+    });
   }
-   signup(){
+  signup() {
     // this.signInDetails =  this.signupForm.value;
     this.signInDetails.firstName = this.signupForm.value.firstName
     this.signInDetails.lastName = this.signupForm.value.lastName
@@ -73,5 +69,3 @@ export class SignupComponent implements OnInit {
 
    }
 }
-
-

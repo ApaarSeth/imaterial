@@ -12,10 +12,10 @@
     </div>
     <form *ngIf="rfqForms" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
       <div formArrayName="forms">
-        <div>
+        <div class="customBid">
           <div *ngFor="let project of rfqProjects; let p = index" [formGroupName]="p">
             <mat-accordion displayMode="flat" multi class="mat-table">
-              <mat-expansion-panel>
+              <mat-expansion-panel class="mat-expansion-panel-body">
                 <mat-expansion-panel-header class="background-color-grey row">
                   <section matSort class="mat-elevation-z2 mat-header-row">
                     <span class="mat-header-cell"
@@ -30,7 +30,8 @@
                   </section>
                 </div>
                 <ng-container formArrayName="materialList">
-                  <mat-expansion-panel *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
+                  <mat-expansion-panel class="p-0" *ngFor="let material of project.materialList; let m = index"
+                    [formGroupName]="m">
                     <mat-expansion-panel-header class="mat-row">
                       <span class="col-xs-2">{{ material.materialName }} </span>
                       <span class="col-xs-2"> {{ material.rfqMaterialQty }} </span>
@@ -38,23 +39,24 @@
                         {{ brand }}
                       </span>
                     </mat-expansion-panel-header>
+
                     <span formArrayName="supplierList">
                       <div class="mat-row" *ngFor="
                           let supplier of material.supplierList;
                           let s = index
                         " [formGroupName]="s">
-                        <span class="col-xs-2">{{ supplier.supplierName }}
+                        <span class="col-xs-2 ">{{ supplier.supplierName }}
                         </span>
                         <span class="col-xs-2"></span>
                         <span formArrayName="brandGroup">
-                          <span class="col-xs-1" *ngFor="
+                          <span class="col-xs-1 p-l-0" *ngFor="
                               let brandInfo of supplier.brandDetailList;
                               let i = index
                             " [formGroupName]="i">
                             <span *ngIf="brandInfo != null">
                               <mat-form-field class="border-input">
-                                <input class="quantity" matInput formControlName="quantity" placeholder="quantity"
-                                  class="m-r-5" />
+                                <input class="quantity p-l-0 m-r-5" matInput formControlName="quantity"
+                                  placeholder="quantity" />
                               </mat-form-field>
                               <span *ngIf="brandInfo.materialUnitPrice != null">{{ brandInfo.materialUnitPrice }}</span>
                             </span>

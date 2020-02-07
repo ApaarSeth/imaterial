@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
 import { DocumentUploadService } from "src/app/shared/services/document-download/document-download.service";
 import { DocumentList } from "src/app/shared/models/PO/po-data";
-import { first } from 'rxjs/operators';
+import { first } from "rxjs/operators";
 
 @Component({
   selector: "app-po-documents",
@@ -9,7 +9,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ["./po-documents.component.scss"]
 })
 export class PoDocumentsComponent implements OnInit {
-  @Input('documentListLength') public documentListLength : number;
+  @Input("documentListLength") public documentListLength: number;
   documentList: DocumentList[] = [];
   docs: FileList;
   urlReceived = false;
@@ -36,18 +36,17 @@ export class PoDocumentsComponent implements OnInit {
       return this.documentUploadService.postDocumentUpload(data).then(res => {
         console.log(res);
         let name: string = res.data;
-        let firstName : number = name.lastIndexOf("/");
-        let lastName :number = name.indexOf("?Expires");
-        let subFileName = name.substring(firstName+1, lastName);
+        let firstName: number = name.lastIndexOf("/");
+        let lastName: number = name.indexOf("?Expires");
+        let subFileName = name.substring(firstName + 1, lastName);
 
         this.documentsName.push(subFileName);
-        
 
         this.documentList.push({
           documentType: "PO",
           documentDesc: "abc",
           documentUrl: res.data,
-          documentName:subFileName
+          documentName: subFileName
         });
         this.documentListLength = this.documentList.length;
         subFileName = "";
