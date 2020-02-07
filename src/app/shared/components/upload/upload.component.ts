@@ -9,7 +9,7 @@ import { DocumentUploadService } from "../../services/document-download/document
 export class UploadComponent implements OnInit {
   fileToUpload: FileList;
   @Input() documentListLength: number;
-  
+
   deletedDocs: number[] = [];
   uploadedDocs: DocumentDetails[];
 

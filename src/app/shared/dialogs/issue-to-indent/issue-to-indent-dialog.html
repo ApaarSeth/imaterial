@@ -39,8 +39,35 @@
               </div>
             </div>
             <div class="col-xs-2 formGroup">
-              <div>
-                {{indent.issuedQty}}
+              <div class="issue-qty-div">
+                <div>
+                    {{indent.issuedQty}}
+                </div>
+                
+                 <div class="show-detail-qty" *ngIf="indent.IssuedQuantityList">
+                  <img src="../../../../assets/images/i_icon.png">
+                    <div id="detail-qty">
+                      <div class="row">
+                        <div class="col-sm-6">
+                         <span>Issued Date</span>
+                         <ng-container *ngFor="let date of indent.IssuedQuantityList">
+                           <span>
+                             {{date.issuedDate}}<br>
+                           </span>
+                         </ng-container>
+                        </div>
+                         <div class="col-sm-6">
+                          <span>Issued Quantity</span>
+                           <ng-container *ngFor="let date of indent.IssuedQuantityList">
+                           <span>
+                             {{date.issuedQty}}<br>
+                           </span>
+                         </ng-container>
+                        </div>
+                      </div>
+                  </div>
+                </div> 
+        
               </div>
             </div>
             <div class=" col-xs-3 formGroup">

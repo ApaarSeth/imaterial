@@ -10,7 +10,7 @@
             Raise Indent
           </button>
         </span>
-        <span class="p-r-5 pull-right">
+        <span class="p-r-5 pull-right" *ngIf="projectData.openIndentCount">
           <button mat-raised-button class="main-background-color main-button color-white pull-right "
             (click)="viewIndent()">
             View Indent
@@ -43,10 +43,14 @@
           <td class="text-left" mat-cell *matCellDef="let element">
             <!-- <input type="checkbox" /> -->
             <mat-checkbox (change)="element.checked = !element.checked" [checked]="element.checked">
-              {{ element.materialName }}<br>
-               <span class="category-name">
-                    {{ element.materialGroup}}
-                  </span>
+                     <div class="limited-character">
+                        {{ element.materialName }} <br>
+                      </div>
+                       <div class="limited-character">
+                          <span class="category-name">
+                             {{ element.materialGroup}}
+                         </span>
+                       </div>
             </mat-checkbox>
           </td>
         </ng-container>
@@ -55,7 +59,7 @@
             Estimated Quantity
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
-            {{ element.estimatedQty }}
+            {{ element.estimatedQty }} {{ element.materialUnit }}
           </td>
         </ng-container>
         <ng-container matColumnDef="requestedQuantity">
@@ -63,7 +67,7 @@
             Requested Quantity
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
-            {{ element.requestedQuantity }}
+            {{ element.requestedQuantity }} {{ element.materialUnit }}
           </td>
         </ng-container>
         <ng-container matColumnDef="issueToProject">
@@ -109,10 +113,15 @@
                       Name
                     </th>
                     <td class="text-left" mat-cell *matCellDef="let element">
-                      {{ element.materialName }} <br>
-                     <span class="category-name">
-                    {{ element.materialGroup}}
-                    </span>
+                      <div class="limited-character">
+                        {{ element.materialName }} <br>
+                      </div>
+                       <div class="limited-character">
+                          <span class="category-name">
+                             {{ element.materialGroup}}
+                         </span>
+                       </div>
+                       
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="estimatedQty">
@@ -120,7 +129,7 @@
                       Estimated Quantity
                     </th>
                     <td class="text-left" mat-cell *matCellDef="let element">
-                      {{ element.estimatedQty }}
+                      {{ element.estimatedQty }}   {{ element.materialUnit }}
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="Requested Quantity">
@@ -128,7 +137,7 @@
                       Requested Material
                     </th>
                     <td class="text-left" mat-cell *matCellDef="let element">
-                      {{ element.requestedQuantity }}
+                      {{ element.requestedQuantity }} {{ element.materialUnit }}
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="issueToProject">
