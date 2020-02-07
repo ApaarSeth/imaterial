@@ -27,7 +27,8 @@ export class SuppliersComponent implements OnInit {
   selectedSuppliersList: Suppliers[];
   selectedSupplierFlag: boolean = false;
   checkedMaterialsList: RfqMaterialResponse[];
-
+  orgId: number;
+ 
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -35,6 +36,7 @@ export class SuppliersComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit() {
+    this.orgId= Number(localStorage.getItem('orgId'))
     this.allSuppliers = this.activatedRoute.snapshot.data.supplier;
     this.checkedMaterialsList = history.state.checkedMaterials;
     console.log("suppliers", this.allSuppliers);
@@ -53,7 +55,6 @@ export class SuppliersComponent implements OnInit {
       this.selectedSupplierFlag = true;
     }
     this.selectedSuppliersList = this.allSuppliers.filter(x => x.checked);
-    console.log("selectedSupplier", this.selectedSuppliersList);
   }
   nevigateToUploadPage() {
     let checkedMaterialsList = this.checkedMaterialsList;
@@ -73,9 +74,7 @@ export class SuppliersComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then(result => {
-        // to do
-        this.rfqService.getSuppliers(1).then(data => {
-          console.log("wefrgthyjhgff", data.data);
+        this.rfqService.getSuppliers(this.orgId).then(data => {
           this.allSuppliers =  data.data;
         });
       });

@@ -15,6 +15,7 @@ import { FieldRegExConst } from '../../constants/field-regex-constants';
 export class SuppliersDialogComponent {
   suppliers: Suppliers;
   form: FormGroup;
+  orgId: number;
 
   constructor(
     public dialogRef: MatDialogRef<SuppliersDialogComponent>,
@@ -25,6 +26,7 @@ export class SuppliersDialogComponent {
 
   ngOnInit() {
     this.initForm();
+    this.orgId=Number(localStorage.getItem("orgId"))
   }
 
   onNoClick(): void {
@@ -43,15 +45,10 @@ export class SuppliersDialogComponent {
   submit() {
     console.log("form", this.form.value);
     this.dialogRef.close(this.addSuppliers(this.data, this.form.value));
-    // if (this.data.isEdit) {
-    //   this.dialogRef.close(this.updateProjects(this.form.value));
-    // } else {
-    //   this.dialogRef.close(this.addProjects(this.form.value));
-    // }
   }
 
   addSuppliers(organisarionId: number, suppliers: Suppliers) {
-    this.rfqService.addNewSupplier(1, suppliers).then(res => {
+    this.rfqService.addNewSupplier(this.orgId, suppliers).then(res => {
       res.data;
     });
   }

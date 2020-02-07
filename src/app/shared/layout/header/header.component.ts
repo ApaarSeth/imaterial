@@ -12,10 +12,12 @@ export class HeaderLayoutComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   @Input("menu") menu: MatSidenav;
   public buttonName: string = "projectStore";
-
+orgId:Number;
   constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.orgId=Number(localStorage.getItem("orgId"))
+  }
 
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
@@ -25,7 +27,7 @@ export class HeaderLayoutComponent implements OnInit {
     if (name == "projectStore") {
       this.router.navigate(["/"]);
     } else if (name == "globalStore") {
-      this.router.navigate(["globalStore/1"]);
+      this.router.navigate(["globalStore/",this.orgId]);
     } else if (name === "requestForQuotation") {
       this.router.navigate(["rfq/rfq-detail"]);
     } else if (name === "users") {

@@ -36,7 +36,6 @@ export class AddGRNComponent implements OnInit {
 
     ngOnInit() {
         this.getGRNDetails(1);
-        // this.postGRNDetails(1, 9);
     }
 
     getGRNDetails(grnId: number) {

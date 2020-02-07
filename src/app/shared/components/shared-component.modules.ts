@@ -16,7 +16,6 @@ const components = [ProjectItemComponent, ChipComponent, UploadComponent];
     RouterModule,
     MaterialModule,
     ReactiveFormsModule
-    // HeaderSharedModule
   ],
 
   declarations: components,

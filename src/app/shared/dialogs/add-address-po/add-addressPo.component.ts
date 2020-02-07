@@ -26,7 +26,6 @@ export class AddAddressPoDialogComponent {
   newAddressForm: FormGroup;
   address: Address;
   ngOnInit() {
-    console.log("data", this.data);
     if (this.data.roleType === "projectBillingAddressId") {
       this.addAddressService
         .getPoAddAddress("Project", this.data.id)
@@ -78,20 +77,11 @@ export class AddAddressPoDialogComponent {
       this.newAddressForm.value
     );
   }
-
-  //   onNoClick1(): void {
-  //     this.address = this.newAddressForm.value;
-  //     console.log("addresss", this.newAddressForm.value);
-  //     console.log("new object", this.address);
-  //     this.postAddAddress(this.address);
-  //   }
-
   postAddAddress(role, address) {
     this.addAddressService
       .postAddAddress(role, this.data.id, address)
       .then(res => {
         this.dialogRef.close([this.data.roleType, { address: res.data }]);
-        console.log("res.data", res.data);
       });
   }
 }
