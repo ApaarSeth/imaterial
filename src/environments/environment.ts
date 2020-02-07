@@ -6,8 +6,15 @@ export const environment = {
   production: false,
   url: "http://localhost:1323",
   masterUrl: "http://localhost:1333",
-  ssoUrl: "http://localhost:8080"
+  ssoUrl: "http://localhost:8080/sso"
 };
+
+// export const environment = {
+//   production: false,
+//   url: "https://api.yeho.ga/im",
+//   masterUrl: "https://api.yeho.ga/mm",
+//   ssoUrl: "https://api.yeho.ga/sso"
+// };
 
 /*
  * For easier debugging in development mode, you can import the following file
