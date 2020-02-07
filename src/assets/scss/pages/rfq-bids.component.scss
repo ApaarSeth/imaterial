@@ -27,6 +27,11 @@
 
     .mat-header-row {
         min-height: $mat-header-row-height;
+        background: #192135;
+
+        span {
+            color: #FFFFFF !important;
+        }
     }
 
     .mat-row {

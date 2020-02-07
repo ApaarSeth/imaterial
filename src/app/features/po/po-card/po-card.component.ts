@@ -59,7 +59,7 @@ export class PoCardComponent implements OnInit {
         this.cardData.billingAddress.firstName = result[1].approver.firstName;
         this.cardData.billingAddress.lastName = result[1].approver.lastName;
         this.cardData.billingAddress.projectBillingUserId =
-          result[1].approver.projectUserId;
+          result[1].approver.userId;
         this.projectDetails.controls["billingAddress"].setValue(
           this.cardData.billingAddress
         );
@@ -68,10 +68,8 @@ export class PoCardComponent implements OnInit {
         this.cardData.projectAddress.contactNo = result[1].approver.contactNo;
         this.cardData.projectAddress.firstName = result[1].approver.firstName;
         this.cardData.projectAddress.lastName = result[1].approver.lastName;
-        this.cardData.projectAddress.projectUserId =
-          result[1].approver.projectUserId;
-        console.log(this.cardData.projectAddress);
-        this.projectDetails.controls["projectAddress"].setValue(
+        this.cardData.projectAddress.projectUserId = result[1].approver.userId;
+        this.projectDetails.controls["projectAddre  ss"].setValue(
           this.cardData.projectAddress
         );
       }
@@ -95,7 +93,7 @@ export class PoCardComponent implements OnInit {
         this.cardData.billingAddress.state = result[1].address.state;
         this.cardData.billingAddress.pinCode = result[1].address.pinCode;
         this.cardData.billingAddress.projectBillingAddressId =
-          result[1].address.projectBillingAddressId;
+          result[1].address.projectAddressId;
         this.cardData.billingAddress.gstNo = result[1].address.gstNo;
         this.projectDetails.controls["billingAddress"].setValue(
           this.cardData.billingAddress
@@ -111,7 +109,6 @@ export class PoCardComponent implements OnInit {
         this.cardData.supplierAddress.supplierAddressId =
           result[1].address.supplierAddressId;
         this.cardData.supplierAddress.gstNo = result[1].address.gstNo;
-        console.log(this.cardData.supplierAddress);
         this.projectDetails.controls["supplierAddress"].setValue(
           this.cardData.supplierAddress
         );

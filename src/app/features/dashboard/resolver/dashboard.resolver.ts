@@ -11,9 +11,13 @@ export class DashBoardResolver implements Resolve<any> {
   constructor(private projectService: ProjectService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.projectService.getProjects(1, 1).then(data => {
-      console.log("wefrgthyjhgff", data.data);
-      return data.data;
-    });
+    let userid = Number(localStorage.getItem("userId"));
+    let organizationId = Number(localStorage.getItem("orgId"));
+    return this.projectService
+      .getProjects(organizationId, userid)
+      .then(data => {
+        console.log("wefrgthyjhgff", data.data);
+        return data.data;
+      });
   }
 }

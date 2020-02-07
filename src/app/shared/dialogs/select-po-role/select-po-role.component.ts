@@ -31,7 +31,6 @@ export class SelectPoRoleComponent implements OnInit {
         }
         return approver;
       });
-      console.log("app", this.approverData);
       this.approverFrm.controls["approver"].setValue(this.approverData[0]);
     });
     this.formInit();
@@ -43,13 +42,6 @@ export class SelectPoRoleComponent implements OnInit {
     });
   }
   selectRole() {
-    console.log(this.approverFrm);
-    console.log(this.approverFrm.value);
     this.dialogRef.close([this.data.roleType, this.approverFrm.value]);
   }
-  //   sendPo() {
-  //     console.log(this.selectedApprover);
-  //     this.data.approverId = this.selectedApprover.user_d;
-  //     this.poService.sendPoData(this.data);
-  //   }
 }
