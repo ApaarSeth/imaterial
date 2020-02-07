@@ -7,7 +7,8 @@ export class PODetailListResolver implements Resolve<any> {
   constructor(private poDetailService: POService) {}
 
   resolve() {
-    return this.poDetailService.getPODetails(1).then(data => {
+    let orgId=Number(localStorage.getItem("orgId"))
+    return this.poDetailService.getPODetails(orgId).then(data => {
       console.log("wefrgthyjhgff", data.data);
       return data.data;
     });

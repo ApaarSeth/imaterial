@@ -14,7 +14,6 @@ import { ConfirmRfqBidComponent } from 'src/app/shared/dialogs/confirm-rfq-bid/c
 })
 export class RFQSupplierDetailComponent implements OnInit {
   rfqSupplierDetailList: SendRfqObj;
-  // validation flag
   dudateFlag: boolean = false;
   projectCount: number = 0;
   materialCount: number = 0;
@@ -46,7 +45,6 @@ export class RFQSupplierDetailComponent implements OnInit {
         this.activatedRoute.snapshot.params["supplierId"]
       )
       .then(data => {
-        console.log("wefrgthyjhgff", data.data);
         this.rfqSupplierDetailList = data.data;
          if(this.rfqSupplierDetailList.projectList){
             this.rfqSupplierDetailList.projectList.forEach(element => {
@@ -57,8 +55,6 @@ export class RFQSupplierDetailComponent implements OnInit {
               });
         }
       });
-    // this.rfqSupplierDetailList = this.activatedRoute.snapshot.data.rfqSupplierDetailResolver;
-    console.log("dsfhj", this.rfqSupplierDetailList);  
   }
 
   postRFQDetailSupplier(rfqSupplierObj) {
@@ -113,11 +109,8 @@ duedatefunc(event){
         }else{
            this.submitButtonValidationFlag = false;
         }
-        
-
 }
   valueChange(RFQsupplier: SendRfqObj) {
-    // console.log("gst value", this.gst);
      this.submitButtonValidationFlag = false;
         this.brandRateFlag = false;
         this.materialIGSTFlag = false;
@@ -133,30 +126,19 @@ duedatefunc(event){
     for (let project of RFQsupplier.projectList) {
       this.projectCount ++;
       for (let material of project.materialList) {
-        // gst values set
         material.materialSgst = 0;
         material.materialCgst = 0;
-        // console.log("sdfghj", project.gst);
         if (project.gst == "IGST") {
           material.materialIgst = material.materialIgst;
         } else if (project.gst == "CGST-SGST") {
           material.materialSgst = material.materialIgst / 2;
           material.materialCgst = material.materialIgst / 2;
         }
-        // console.log("igst", material.materialIgst);
-        // console.log("sgst", material.materialSgst);
-        // console.log("cgst", material.materialCgst);
-        // end value
         if (material.materialIgst) {
           material.materialIGSTFlag = true;
            this.materialIGSTFlag = material.materialIGSTFlag;
            this.materialIndividualIGSTFlag = material.materialIGSTFlag;
         }
-        //  else {
-        //   material.materialIGSTFlag = false;
-        // }
-        // this.materialIGSTFlag = material.materialIGSTFlag;
-        // console.log("materialIGSTFlag", material.materialIGSTFlag);
         for (let brand of material.rfqBrandList) {
           if (brand.brandRate) {
                brand.brandRateFlag = true;
@@ -177,13 +159,7 @@ duedatefunc(event){
                this.sameGstAndBrandFilled = false;
                this.eitherOneGstOrBrand = true;
              }
-          // else {
-          //   brand.brandRateFlag = false;
-          // }
-          // this.brandRateFlag = brand.brandRateFlag;
-          // console.log("brandRateFlag", brand.brandRateFlag);
         }
-
         if(this.brandRateFlag && this.materialIndividualIGSTFlag){
           this.gstAndBrandValue = true;
           this.materialIndividualIGSTFlag = false;
@@ -195,25 +171,14 @@ duedatefunc(event){
            this.materialIGSTFlag = false;
            this.materialIndividualIGSTFlag = false;
         }
-        // if (this.dudateFlag && this.materialIGSTFlag && this.brandRateFlag) {
-        //   this.submitButtonValidationFlag = true;
-        // }
-        // console.log(
-        //   "submitButtonValidationFlag",
-        //   this.submitButtonValidationFlag
-        // );
          if(this.oneBrandAtMaterialSelected){
                this.brandCount ++;
                this.oneBrandAtMaterialSelected = false;
         }
       }
-      
-
     }
-
       if (this.dudateFlag  && this.sameGstAndBrandFilled && (!this.eitherOneGstOrBrand)) {
           this.submitButtonValidationFlag = true;
         }
-    // console.log("dudateFlag", this.dudateFlag);
   }
 }

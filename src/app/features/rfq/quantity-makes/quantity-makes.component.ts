@@ -58,9 +58,7 @@ export class RFQQuantityMakesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //this.checkedMaterialsList = this.activatedRoute.snapshot.data.quantityMakes;
     this.checkedMaterialsList = history.state.checkedMaterials;
-    console.log("projectList", this.checkedMaterialsList);
     if (this.checkedMaterialsList) {
       this.formsInit();
     }
@@ -68,14 +66,12 @@ export class RFQQuantityMakesComponent implements OnInit {
   setButtonName(name: string) {
     this.buttonName = name;
   }
-  // chip static code
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  // form functions
   formsInit() {
     console.log("form init", this.checkedMaterialsList);
 
@@ -100,9 +96,6 @@ export class RFQQuantityMakesComponent implements OnInit {
       .flat();
     this.materialForms = this.formBuilder.group({});
     this.materialForms.addControl("forms", new FormArray(frmArr));
-    console.log("form array", frmArr);
-
-    console.log("material form", this.materialForms);
   }
 
   showIndent() {
@@ -133,27 +126,15 @@ export class RFQQuantityMakesComponent implements OnInit {
         state: { checkedMaterials }
       });
     }
-
-    console.log("asdfghjk", this.checkedMaterialsList);
   }
 
   makesUpdate(data: string[], grpIndex: number) {
-    console.log(data, grpIndex);
 
     const forms = this.materialForms.get("forms") as FormArray;
     forms.controls[grpIndex].get("makes").setValue(data);
 
-    console.log(this.materialForms);
   }
 
-  // deleteMaterial(index) {
-  //   this.checkedMaterialsList = this.checkedMaterialsList.map(project => {
-  //     project.projectMaterialList.splice(index, 1);
-  //     return project;
-  //   });
-  //   this.checkedMaterialsList = [...this.checkedMaterialsList];
-  //   console.log("delete data", this.checkedMaterialsList);
-  // }
 
   openDialog(data: RfqMaterialResponse): void {
     if (AddAddressDialogComponent) {
@@ -162,7 +143,6 @@ export class RFQQuantityMakesComponent implements OnInit {
         data
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log("The dialog was closed");
       });
     }
   }

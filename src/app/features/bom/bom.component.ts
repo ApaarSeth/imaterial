@@ -46,6 +46,8 @@ export class BomComponent implements OnInit {
   quantityPresent: boolean = true;
   isAllFormsValid: boolean;
   fileToUpload: FileList;
+  orgId: number;
+  userId: number;
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
@@ -64,7 +66,9 @@ export class BomComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.getProject(this.projectId);
-    this.bomService.getMaterialWithQuantity(1, this.projectId).then(res => {
+    this.orgId=Number(localStorage.getItem("orgId"))
+    this.userId=Number(localStorage.getItem("userId"))
+    this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
       this.categoryList = [
         ...new Set(res.data.map(cat => cat.materialGroup))
       ] as string[];
@@ -77,7 +81,7 @@ export class BomComponent implements OnInit {
   }
 
   getProject(id: number) {
-    this.projectService.getProject(1, id).then(data => {
+    this.projectService.getProject(this.orgId, id).then(data => {
       this.product = data.data;
     });
   }
@@ -106,12 +110,6 @@ export class BomComponent implements OnInit {
   }
 
   checkValidations(): void {
-    console.log(
-      this.previews.map(
-        (preview: BomPreviewComponent) => preview.quantityForms.valid
-      )
-    );
-
     this.isAllFormsValid = this.previews
       .map((preview: BomPreviewComponent) => preview.quantityForms.valid)
       .every(Boolean);
@@ -128,20 +126,13 @@ export class BomComponent implements OnInit {
         this.quantityPresent = false;
       }
     }
-    console.log(this.categoriesInputData);
     this.bomService
-      .sumbitCategory(1, this.projectId, this.categoriesInputData)
+      .sumbitCategory(this.userId, this.projectId, this.categoriesInputData)
       .then(res => {
         this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
       });
-    console.log("this.categoriesInputData");
-    console.log(this.categoriesInputData);
   }
 
-  qtyEntered(eve) {
-    console.log(eve);
-  }
-  // dialog function
 
   editProject() {
     const data: ProjetPopupData = {
@@ -163,8 +154,6 @@ export class BomComponent implements OnInit {
     this.openDialog(data);
   }
   clearSelectedCategory(category) {
-    console.log(category);
-    console.log(this.selectedCategory);
     this.selectedCategory = this.selectedCategory.filter(
       cats => cats.materialGroup !== category.materialGroup
     );
@@ -173,7 +162,6 @@ export class BomComponent implements OnInit {
     if (this.categories.value) return this.categories.value.length;
   }
 
-  // modal function
   openDialog(data: ProjetPopupData): void {
     if (data.isDelete == false) {
       const dialogRef = this.dialog.open(AddProjectComponent, {
@@ -185,8 +173,6 @@ export class BomComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          //console.log('The dialog was closed');
-          //this.animal = result;
         });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
@@ -198,8 +184,6 @@ export class BomComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          //console.log('The dialog was closed');
-          //this.animal = result;
         });
     }
   }

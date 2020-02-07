@@ -13,10 +13,6 @@ import { ProjectService } from "../../services/projectDashboard/project.service"
 import { AddRFQ } from "../../models/RFQ/rfq-details";
 import { RFQService } from "../../services/rfq/rfq.service";
 
-//   export interface City {
-//     value: string;
-//     viewValue: string;
-//   }
 
 @Component({
   selector: "add-rfq-double-confirmation-dialog",

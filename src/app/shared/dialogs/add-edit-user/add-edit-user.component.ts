@@ -44,6 +44,8 @@ export class AddEditUserComponent implements OnInit {
 
   userDetails: AllUserDetails;
   isInputDisabled: boolean = true;
+  orgId: number;
+  userId: number;
   constructor(
     private userService: UserService,
     private dialogRef: MatDialogRef<AddEditUserComponent>,
@@ -55,9 +57,10 @@ export class AddEditUserComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-  this.projectService.getProjects(1, 1).then(data => {
+    this.orgId=Number(localStorage.getItem("orgId"))
+    this.userId=Number(localStorage.getItem("userId"))
+  this.projectService.getProjects(this.orgId, this.userId).then(data => {
             this.allProjects = data.data;
-            console.log(this.allProjects);
           });
 
 this.userService.getRoles().then(data => {

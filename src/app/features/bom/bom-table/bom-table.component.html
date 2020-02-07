@@ -43,7 +43,10 @@
           <td class="text-left" mat-cell *matCellDef="let element">
             <!-- <input type="checkbox" /> -->
             <mat-checkbox (change)="element.checked = !element.checked" [checked]="element.checked">
-              {{ element.materialName }}
+              {{ element.materialName }}<br>
+               <span class="category-name">
+                    {{ element.materialGroup}}
+                  </span>
             </mat-checkbox>
           </td>
         </ng-container>
@@ -106,7 +109,10 @@
                       Name
                     </th>
                     <td class="text-left" mat-cell *matCellDef="let element">
-                      {{ element.materialName }}
+                      {{ element.materialName }} <br>
+                     <span class="category-name">
+                    {{ element.materialGroup}}
+                    </span>
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="estimatedQty">
@@ -151,11 +157,6 @@
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let element; columns: columnsToDisplay" (click)="toggleRow(element)"></tr>
-        <!-- <tr
-          mat-row
-          *matRowDef="let row; columns: ['expandedDetail']"
-          class="example-detail-row"
-        ></tr> -->
       </table>
     </div>
   </div>

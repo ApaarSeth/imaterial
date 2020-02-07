@@ -11,10 +11,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
 
-//   export interface City {
-//     value: string;
-//     viewValue: string;
-//   }
 
 @Component({
   selector: "double-confirmation-dialog",

@@ -15,10 +15,27 @@
             <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData" [viewMode]="viewMode">
             </app-po-table>
         </div>
-            <app-po-documents #poDocument></app-po-documents>
+
+        <div class="doc-froala-div">
+            <div class="row">
+                 <div class="col-sm-12">
+                    <!-- remark -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <app-po-documents #poDocument></app-po-documents>
+                </div> 
+                <div class="col-sm-8">
+                    
+                </div> 
+             </div>
+           
+        </div>
+      
        
        
 
-        <button (click)="viewModes()">viewMode</button>
+        <!-- <button (click)="viewModes()">viewMode</button> -->
     </div>
 </div>

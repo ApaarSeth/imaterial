@@ -46,23 +46,4 @@ export class ProjectItemComponent implements OnInit {
       this.router.navigate(["/bom/" + id], { state: { projectDetails } });
     }
   }
-  startSubscriptions() {
-    // this.subscriptions.push(
-    //     this._activatedRout.params.subscribe(params => {
-    //         if (params.type) {
-    //             this.addrs.addressCategory = params.type.toUpperCase();
-    //         }
-    //         if (params.addressId) {
-    //             this.getAddress(params.addressId);
-    //         } else {
-    //             if (!this.addressForm) {
-    //                 this.formInit();
-    //             }
-    //         }
-    //     }),
-    //     this._activatedRout.url.subscribe(url => {
-    //         this.isEdit = url[ 2 ].path == 'edit';
-    //     })
-    // );
-  }
 }

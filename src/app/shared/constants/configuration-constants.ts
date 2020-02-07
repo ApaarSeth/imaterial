@@ -46,7 +46,7 @@ export const API = {
     `materials/updateStock/${materialId}/${projectId}`,
   POSTISSUETOINDENT: materialId => `indent/issueQty/${materialId}`,
   GETSINGLEINDENT: indentId => `indent/detail/${indentId}`,
-  GETGRNDETAILS: grnId => `po/view/grn/${grnId}`,
+  GETGRNDETAILS: grnId => `po/view/grn/poDetails/${grnId}`,
   ADDGRN: (organizationId, purchaseOrderId) =>
     `po/add/grn/${organizationId}/${purchaseOrderId}`,
   VIEWGRN: (organizationId, purchaseOrderId) =>
