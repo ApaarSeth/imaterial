@@ -137,6 +137,8 @@ export interface DocumentList {
   documentType: string;
   documentDesc: string;
   documentUrl: string;
+  documentName?: string;
+
 }
 
 export interface ApproverData {
