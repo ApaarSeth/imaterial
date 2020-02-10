@@ -35,7 +35,7 @@
            </table>
            <button mat-raised-button class="main-background-color main-button color-white center-element"
                (click)="selectRole()">
-               Send
+               {{this.data.roleType==="projectBillingUserId"?"Billing Person":"Project Person"}}
            </button>
        </div>
    </form>

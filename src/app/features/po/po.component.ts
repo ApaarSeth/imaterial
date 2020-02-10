@@ -33,7 +33,6 @@ export class PoComponent implements OnInit {
   poId: number;
   ngOnInit() {
     this.route.params.subscribe(poId => {
-      console.log("rfq", poId);
       this.poId = Number(poId.id);
     });
     this.poService.getPoGenerateData(this.poId).then(res => {
@@ -58,7 +57,7 @@ export class PoComponent implements OnInit {
       billingAddress: this.poData.billingAddress,
       materialData: this.poTable.getData() as PoMaterial[],
       purchaseOrderDetailId: 0,
-      purchaseOrderId: 9,
+      purchaseOrderId: this.poId,
       poNumber: this.poCard.getData().orderNo,
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
@@ -70,7 +69,6 @@ export class PoComponent implements OnInit {
       comments: "good",
       projectId: this.poData.projectId
     };
-    console.log("poData", poDataCollate);
     return poDataCollate;
   }
   viewModes() {
