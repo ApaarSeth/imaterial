@@ -6,7 +6,7 @@
         <div class="col-sm-12">
           <span>
             <button mat-raised-button class="main-background-color main-button color-white pull-right"
-              [disabled]="getFormValidation()">
+              [disabled]="!getFormValidation()">
               Allocate Quantity
             </button>
           </span>
@@ -64,7 +64,7 @@
 
                             <span class="col-xs-1 p-l-0">
                               <mat-form-field class="border-input">
-                                <input class="quantity p-l-0" matInput formControlName="quantity"
+                                <input type="number" class="quantity p-l-0" matInput formControlName="quantity"
                                   placeholder="quantity" />
                               </mat-form-field>
                             </span>
