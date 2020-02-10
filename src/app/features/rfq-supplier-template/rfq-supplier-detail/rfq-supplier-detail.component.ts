@@ -6,11 +6,7 @@ import { MatDialog } from '@angular/material';
 import { ConfirmRfqBidComponent } from 'src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component';
 @Component({
   selector: "rfq-indent-detail",
-  templateUrl: "./rfq-supplier-detail.component.html",
-  styleUrls: [
-    "../../../../assets/scss/main.scss",
-    "../../../../assets/scss/pages/rfq-bids.component.scss"
-  ]
+  templateUrl: "./rfq-supplier-detail.component.html"
 })
 export class RFQSupplierDetailComponent implements OnInit {
   rfqSupplierDetailList: SendRfqObj;

@@ -17,7 +17,7 @@ export interface MaterialRfqObj {
   materialName: string;
   materialId: number;
   rfqBrandList: BrandRfqObj[];
-  rfqDetailId: number;
+  //rfqDetailId: number;
   materialQuantity: number;
   materialUnit: string;
   materialIgst: number;
@@ -32,4 +32,5 @@ export interface BrandRfqObj {
   brandRate: number;
   brandAmount: number;
   brandRateFlag: boolean;
+  rfqDetailId: number;
 }
