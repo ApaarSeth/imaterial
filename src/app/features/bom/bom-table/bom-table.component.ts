@@ -25,6 +25,7 @@ import {
 } from "src/app/shared/models/subcategory-materials";
 import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
 import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
+import { DeleteBomComponent } from 'src/app/shared/dialogs/delete-bom/delete-bom.component';
 
 @Component({
   selector: "app-bom-table",
@@ -85,7 +86,13 @@ export class BomTableComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.orgId = Number(localStorage.getItem("orgId"));
-    this.bomService
+   
+    this.getMaterialWithQuantity();
+    //this.product = history.state.projectDetails;
+  }
+
+getMaterialWithQuantity(){
+ this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
         this.subcategories = [...res.data];
@@ -111,10 +118,8 @@ export class BomTableComponent implements OnInit {
         console.log(this.dataSource);
       });
 
-    //this.product = history.state.projectDetails;
-    this.getProject(this.projectId);
-  }
-
+       this.getProject(this.projectId);
+}
   toggleRow(element: Subcategory) {
     element.materialSpecs &&
     (element.materialSpecs as MatTableDataSource<Materials>).data.length
@@ -200,8 +205,31 @@ export class BomTableComponent implements OnInit {
         data: { materialId: materialId, projectId: projectId }
       });
       dialogRef.afterClosed().subscribe(result => {
+          this.getMaterialWithQuantity();
         console.log("The dialog was closed");
       });
+    }
+  }
+
+ openDeleteDialog(materialId, projectId): void {
+    if (IssueToIndentDialogComponent) {
+      const dialogRef = this.dialog.open(DeleteBomComponent, {
+        width: "800px",
+        data: { materialId: materialId, projectId: projectId }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.getMaterialWithQuantity();
+        
+        console.log("The dialog was closed");
+
+      });
+    }
+  }
+
+
+  deleteBom(materialId,projectId,disabledStatus){
+    if(disabledStatus != true){
+      this.openDeleteDialog(materialId, projectId);
     }
   }
 }
