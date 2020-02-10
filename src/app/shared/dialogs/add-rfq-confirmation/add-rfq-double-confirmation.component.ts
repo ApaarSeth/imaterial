@@ -13,7 +13,6 @@ import { ProjectService } from "../../services/projectDashboard/project.service"
 import { AddRFQ } from "../../models/RFQ/rfq-details";
 import { RFQService } from "../../services/rfq/rfq.service";
 
-
 @Component({
   selector: "add-rfq-double-confirmation-dialog",
   templateUrl: "add-rfq-double-confirmation-component.html"
@@ -28,17 +27,15 @@ export class AddRFQConfirmationComponent implements OnInit {
 
   ngOnInit() {
     this.rfqDetails = this.data;
-    console.log("data", this.data);
   }
 
-  close() {
-    this.dialogRef.close();
+  close(data) {
+    this.dialogRef.close(data);
   }
 
   addRFQ() {
     this.rfqService.addRFQ(this.data.dataKey).then(res => {
-      res.data;
-      this.close();
+      this.close(res);
     });
   }
 }
