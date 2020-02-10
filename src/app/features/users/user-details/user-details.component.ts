@@ -65,8 +65,8 @@ export class UserDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() { 
+     this.orgId = Number(localStorage.getItem("orgId")) ;
     this.getAllUsers();
-     this.orgId = Number(localStorage.getItem("orgId"));
   }
 
   getAllUsers(){
