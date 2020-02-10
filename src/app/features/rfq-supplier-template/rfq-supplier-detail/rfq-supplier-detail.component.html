@@ -1,3 +1,4 @@
+<!-- <fix-header></fix-header> -->
 <div>
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row">
@@ -25,8 +26,13 @@
             </button>
           </div>
         </div>
-        <div displayMode="flat" multi class="mat-table" *ngFor="let projects of rfqSupplierDetailList.projectList">
-          <section matSort class="mat-header-row blue-background-color color-white">
+
+
+        <div class="table-width" displayMode="flat" multi mat-table
+          *ngFor="let projects of rfqSupplierDetailList.projectList">
+
+          <!-- Project Name Header -->
+          <section matSort class="mat-header-row blue-background-color color-white first-rowheader">
             <div class="mat-header-cell col-xs-2 font-size18" mat-sort-header="projectName">{{projects.projectName}}
             </div>
             <div class="mat-header-cell col-xs-4 font-size14" mat-sort-header="address">
@@ -41,9 +47,10 @@
             </div>
           </section>
 
+          <!-- Material Info -->
           <ng-container *ngFor="let material of projects.materialList">
             <section matSort class="mat-row material-rfq-supplies">
-              <div class="mat-cell font-size18" mat-sort-header="material">{{material.materialName}}</div>
+              <div class="mat-cell font-size14" mat-sort-header="material">{{material.materialName}}</div>
               <div class="mat-cell font-size14" mat-sort-header="qty">Requested Quantity: {{material.materialQuantity}}
                 {{material.materialUnit}}</div>
               <div class="mat border-input" mat-sort-header="gst">
@@ -55,6 +62,7 @@
               </div>
             </section>
 
+            <!-- Brand Header -->
             <ng-container>
               <section matSort class="mat-header-row brand-name-rfq-supplies">
                 <div class="mat-header-cell font-size14" mat-sort-header="brandName">Brand Name</div>
@@ -63,6 +71,7 @@
                 <div class="mat-header-cell font-size14" mat-sort-header="GSTAmt">GST Amount (Rs)</div>
               </section>
 
+              <!-- Brand-wise details -->
               <div class="mat-row table-white-background-color" *ngFor="let brand of material.rfqBrandList">
                 <div class="mat-cell">{{brand.brandName}}</div>
                 <div class="mat-cell">
@@ -81,8 +90,10 @@
               </div>
             </ng-container>
           </ng-container>
+
         </div>
       </div>
     </div>
+
   </div>
 </div>
