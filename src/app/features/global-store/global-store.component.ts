@@ -7,7 +7,7 @@ import { ActivatedRouteSnapshot, ActivatedRoute } from "@angular/router";
   styleUrls: ["../../../assets/scss/main.scss"]
 })
 export class GlobalStoreComponent implements OnInit {
-  buttonName: string;
+  buttonName: string = "materialWise";
   globalStoreData: [];
   constructor(private route: ActivatedRoute) {}
 

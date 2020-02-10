@@ -90,10 +90,10 @@
         <ng-container matColumnDef="customColumn">
           <th *matHeaderCellDef mat-sort-header></th>
           <td class="text-right" mat-cell *matCellDef="let element">
-            <a>
+            <!-- <a>
               <mat-icon>edit</mat-icon>
-            </a>
-            <a>
+            </a> -->
+            <a [ngClass]="{'non-active': ((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))}">
               <mat-icon>delete_outline</mat-icon>
             </a>
             <a (click)="openDialog1(element.materialId,projectId)"  class="issue-to-indent-modal">Issue to Indent
