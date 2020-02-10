@@ -283,24 +283,6 @@ div.limited-character {
   z-index: 10;
 }
 
-div.limited-character:hover {
-  overflow: visible;
-  z-index: 999;
-   .mcell{
-       background-color: #ffffff;
-        color:#000000;
-        z-index: 999;
-        margin-top: -26px;
-        position: relative;
-        font-size: 10px;
-         width: 250px;
-        position: relative;
-            padding: 5px;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
-    border: 1px solid #d0d0d0;
-  }
-}
-
 .blue-background-color-color-white-section{
     background: #192135;
     border-radius: 0px;
