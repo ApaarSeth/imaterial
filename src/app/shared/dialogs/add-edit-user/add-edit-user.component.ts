@@ -117,7 +117,7 @@ this.userService.getRoles().then(data => {
 
   addUsers(userDetails: UserAdd) {
     console.log(userDetails);
-    userDetails.creatorId = 1;
+    userDetails.creatorId = this.userId;
      userDetails.projects = userDetails.projectIds;
 
       var form_data = new FormData();
@@ -133,7 +133,7 @@ this.userService.getRoles().then(data => {
 
   updateUsers(userDetails: UserAdd) {
     if (userDetails) {
-        userDetails.creatorId = 1;
+        userDetails.creatorId = this.userId;
         userDetails.userId = userDetails.userId;
 
       this.userService
