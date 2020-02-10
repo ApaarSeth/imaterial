@@ -18,14 +18,9 @@
     </mat-expansion-panel-header>
     <mat-expansion-panel *ngFor="let material of project.GlobalMaterials"  class="myPanel">
       <mat-expansion-panel-header class="mat-row material-project">
-        <span class="mat-cell">
-           <div class="show-detail-qty" >
-                      <div class="name-of-mat">
-                          {{ material.GlobalMaterial.materialName }}
-                      </div>
-                    <div id="detail-qty">
-                         <span class="text-enlarge">{{ material.GlobalMaterial.materialName }}</span>
-                  </div>
+        <span class="mat-cell" matTooltip=" {{ material.GlobalMaterial.materialName }}">
+           <div class="limited-character">
+                {{ material.GlobalMaterial.materialName }}
             </div> 
           </span>
         <span class="mat-cell">{{ material.GlobalMaterial.estimatedQty }}</span>

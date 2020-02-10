@@ -8,15 +8,11 @@
   </section>
   <mat-expansion-panel *ngFor="let material of newMaterialData" class="myPanel">
     <mat-expansion-panel-header class="mat-row material-row">
-      <span class="mat-cell">
-                 <div class="show-detail-qty" >
-                      <div class="name-of-mat">
+      <span class="mat-cell"  matTooltip="{{material.GlobalMaterial.materialName }}">
+                <div class="limited-character">
                       {{ material.GlobalMaterial.materialName }}
-                      </div>
-                    <div id="detail-qty">
-                         <span class="text-enlarge">{{ material.GlobalMaterial.materialName }}</span>
-                  </div>
-                </div> 
+                </div>
+              
       </span>
 
       <span class="mat-cell"> {{ material.GlobalMaterial.estimatedQty }}  </span>
@@ -28,15 +24,10 @@
     </mat-expansion-panel-header>
     <mat-expansion-panel *ngFor="let project of material.GlobalProject" class="myPanel">
       <mat-expansion-panel-header class="mat-row material-project">
-        <span class="mat-cell">
-            <div class="show-detail-qty" >
-                      <div class="name-of-mat">
-                         {{ project.Projects.projectName }}
-                      </div>
-                    <div id="detail-qty">
-                         <span class="text-enlarge">{{ project.Projects.projectName }}</span>
-                  </div>
-                </div> 
+        <span class="mat-cell"  matTooltip="{{project.Projects.projectName }}">
+           <div class="limited-character">
+                  {{ project.Projects.projectName }}
+              </div> 
           </span>
         <span class="mat-cell"> {{ project.ProjectEstimatedQnt }}</span>
         <span class="mat-cell">{{ project.Projects.sum }}</span>
