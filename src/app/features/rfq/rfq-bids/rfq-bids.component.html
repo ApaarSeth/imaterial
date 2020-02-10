@@ -10,7 +10,7 @@
         </span>
       </div>
     </div>
-    <form *ngIf="rfqForms" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
+    <form *ngIf="rfqProjects.length" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
       <div formArrayName="forms">
         <div class="customBid">
           <div *ngFor="let project of rfqProjects; let p = index" [formGroupName]="p">

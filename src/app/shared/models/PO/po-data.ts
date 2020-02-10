@@ -147,7 +147,7 @@ export interface ApproverData {
   created_at: string;
   last_updated_by: string;
   last_updated_at: string;
-  user_d: number;
+  userId: number;
   userType: string;
   organizationId: number;
   accountOwner: number;
