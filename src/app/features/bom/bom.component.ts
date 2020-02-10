@@ -60,24 +60,26 @@ export class BomComponent implements OnInit {
   ngOnInit() {
     this.categories = new FormControl([]);
     this.fullCategoryList = this.activatedRoute.snapshot.data.bomCategory;
-    console.log(this.fullCategoryList);
-
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params["id"];
     });
+    this.orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
     this.getProject(this.projectId);
-    this.orgId=Number(localStorage.getItem("orgId"))
-    this.userId=Number(localStorage.getItem("userId"))
-    this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
-      this.categoryList = [
-        ...new Set(res.data.map(cat => cat.materialGroup))
-      ] as string[];
-      this.fullCategoryList.forEach(category => {
-        category.checked =
-          this.categoryList.indexOf(category.materialGroup) != -1;
+    this.bomService
+      .getMaterialWithQuantity(this.orgId, this.projectId)
+      .then(res => {
+        this.categoryList = [
+          ...new Set(res.data.map(cat => cat.materialGroup))
+        ] as string[];
+        this.fullCategoryList.forEach(category => {
+          category.checked =
+            this.categoryList.indexOf(category.materialGroup) != -1;
+        });
+        this.selectedCategory = this.fullCategoryList.filter(
+          opt => opt.checked
+        );
       });
-      this.selectedCategory = this.fullCategoryList.filter(opt => opt.checked);
-    });
   }
 
   getProject(id: number) {
@@ -86,16 +88,16 @@ export class BomComponent implements OnInit {
     });
   }
   uploadExcel(files: FileList) {
-    const data = new FormData()
-      data.append('file', files[0]);
-      this.bomService.postMaterialExcel(data,this.projectId).then(res => {
-        this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
-      });
-   }
-   downloadExcel(url:string){
-    var win = window.open(url, '_blank');
+    const data = new FormData();
+    data.append("file", files[0]);
+    this.bomService.postMaterialExcel(data, this.projectId).then(res => {
+      this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+    });
+  }
+  downloadExcel(url: string) {
+    var win = window.open(url, "_blank");
     win.focus();
-   }
+  }
   finalisedCategory() {
     this.showTable = true;
     this.bomService
@@ -132,7 +134,6 @@ export class BomComponent implements OnInit {
         this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
       });
   }
-
 
   editProject() {
     const data: ProjetPopupData = {
@@ -172,8 +173,7 @@ export class BomComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {
-        });
+        .then(result => {});
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -183,8 +183,7 @@ export class BomComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {
-        });
+        .then(result => {});
     }
   }
 }

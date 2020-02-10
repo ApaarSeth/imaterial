@@ -97,10 +97,11 @@ export class ReviewComponent implements OnInit {
           dataKey: data
         }
       });
-      dialogRef.afterClosed().subscribe(result => {});
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.status != 0) {
+          this.router.navigate(["rfq/rfq-detail"]);
+        }
+      });
     }
-  }
-  redirectToRfq() {
-    this.router.navigate(["rfq/rfq-details"]);
   }
 }

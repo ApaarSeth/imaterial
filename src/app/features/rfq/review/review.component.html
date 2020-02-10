@@ -7,7 +7,7 @@
           <div class="row ">
             <div class="col-xs-12 p-t-10">
               <button mat-raised-button class="main-background-color main-button color-white pull-right m-r-30"
-                [disabled]="!form.valid" (click)="redirectToRfq()">
+                [disabled]="!form.valid">
                 Float RFQ
               </button>
             </div>
@@ -20,7 +20,7 @@
               </mat-form-field>
             </div>
             <div class="col-md-4">
-              RFQ End Date & Time
+              RFQ End Date
               <mat-form-field class="border-input">
                 <input matInput [matDatepicker]="dueDate" placeholder="Project Start Date" formControlName="dueDate" />
                 <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>

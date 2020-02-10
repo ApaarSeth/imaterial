@@ -4,7 +4,12 @@
 
     .mat-expansion-panel-header.mat-expanded:focus,
     .mat-expansion-panel-header.mat-expanded:hover {
-        background: $background-color-grey !important;
+        // background: $background-color-grey !important;
+        background-color: rgba(169, 174, 188, 0.21) !important;
+    }
+
+    .mat-expansion-panel-header {
+        background-color: rgba(169, 174, 188, 0.21) !important;
     }
 
     .mat-accordion .mat-header-row {
@@ -64,7 +69,7 @@
     }
 
     input.quantity {
-        width: 4rem;
+        width: 3rem !important;
     }
 
 
@@ -79,7 +84,21 @@
     }
 
     /* mozilla solution */
-    input:-moz-placeholder {
+    input::placeholder {
         text-align: left;
+    }
+
+    .supplierLevel {
+        background-color: white;
+    }
+
+    .supplierLevel:focus,
+    .supplierLevel:hover {
+        background-color: white;
+    }
+
+
+    .mat-form-field-infix {
+        width: 87px !important;
     }
 }

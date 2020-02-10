@@ -22,7 +22,7 @@ export const API = {
   GETMATERIALWISE: organizationId => `global/materials/${organizationId}`,
   GETPROJECTWISE: organizationId => `global/projects/${organizationId}`,
   RFQMATERIALS: `rfqMaterials`,
-  RFQDETAIL: organizationId => `rfq/list/1`,
+  RFQDETAIL: organizationId => `rfq/list/${organizationId}`,
   RFQPO: (organizationId, rfqId) => `rfq/details/${organizationId}/${rfqId}`,
   RFQADDPO: `po/addPO`,
   GETSUPPLIERS: organizationId => `projects/getsuppliers/${organizationId}`,
@@ -41,7 +41,6 @@ export const API = {
   POSTDOCUMENTUPLOAD: `documents/upload`,
   SIGNUP: `api/auth/signup`,
   SIGNIN: `oauth/token`,
-  //STATE: 'account/api/permitted/address/states',
   GETISSUETOINDENT: (materialId, projectId) =>
     `materials/updateStock/${materialId}/${projectId}`,
   POSTISSUETOINDENT: materialId => `indent/issueQty/${materialId}`,
