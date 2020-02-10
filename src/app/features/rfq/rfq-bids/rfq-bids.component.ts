@@ -23,7 +23,7 @@ export class RfqBidsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute
   ) {}
-  rfqProjects: RfqProject[];
+  rfqProjects: RfqProject[] = [];
   rfqForms: FormGroup;
   rfqId: number;
   orgId: number;
@@ -35,8 +35,8 @@ export class RfqBidsComponent implements OnInit {
     });
     this.rfqService.rfqPo(this.orgId, this.rfqId).then(res => {
       this.rfqProjects = res.data;
+      this.formInit();
     });
-    this.formInit();
   }
   formInit() {
     const frmArr: FormGroup[] = this.rfqProjects.map(

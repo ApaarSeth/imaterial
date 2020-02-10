@@ -27,7 +27,7 @@ export class PoCardComponent implements OnInit {
   }
   formInit() {
     this.projectDetails = this.formBuilder.group({
-      orderNo: [],
+      orderNo: [this.cardData.poNumber],
       openingDate: [],
       endDate: ["2029-02-28T18:30:00.000Z"],
       billingAddress: [this.cardData.billingAddress],
@@ -51,8 +51,6 @@ export class PoCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
-      console.log(result);
       if (result[0] === "projectBillingUserId") {
         this.cardData.billingAddress.email = result[1].approver.email;
         this.cardData.billingAddress.contactNo = result[1].approver.contactNo;
@@ -77,13 +75,11 @@ export class PoCardComponent implements OnInit {
   }
   openaddressDialog(roleType: string, id: number) {
     const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
-      width: "1200px",
+      width: "1600px",
       data: { roleType, id }
     });
 
     dialogRef.afterClosed().subscribe((result: Address) => {
-      console.log("The dialog was closed");
-      console.log(result);
       if (result[0] === "projectBillingAddressId") {
         this.cardData.billingAddress.addressLine1 =
           result[1].address.addressLine1;
