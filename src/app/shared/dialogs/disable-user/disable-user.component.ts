@@ -31,6 +31,7 @@ export interface Unit {
 })
 export class DeactiveUserComponent implements OnInit {
     userDetails: AllUserDetails;
+  orgId: number;
   constructor(
     private userService: UserService,
     private dialogRef: MatDialogRef<DeactiveUserComponent>,
@@ -41,6 +42,7 @@ export class DeactiveUserComponent implements OnInit {
 
   ngOnInit() {
    
+     this.orgId = Number(localStorage.getItem("orgId"));
   }
 
   deactivateUserService(){
