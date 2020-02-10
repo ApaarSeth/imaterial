@@ -179,7 +179,7 @@ export class RfqBidsComponent implements OnInit {
       return value.materialList.some(materials => {
         return materials.supplierList.some(supplier => {
           return supplier.brandGroup.some(brand => {
-            return brand.quantity !== "";
+            return brand.quantity != null;
           });
         });
       });
