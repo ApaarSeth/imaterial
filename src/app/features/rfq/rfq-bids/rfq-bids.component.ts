@@ -173,4 +173,16 @@ export class RfqBidsComponent implements OnInit {
     console.log(submitData.flat(2));
     this.rfqService.rfqAddPo(submitData.flat(2));
   }
+  getFormValidation() {
+    console.log("rfqForms", this.rfqForms);
+    return this.rfqForms.value.forms.some(value => {
+      return value.materialList.some(materials => {
+        return materials.supplierList.some(supplier => {
+          return supplier.brandGroup.some(brand => {
+            return brand.quantity !== "";
+          });
+        });
+      });
+    });
+  }
 }
