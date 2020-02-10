@@ -17,7 +17,7 @@
         </button>
       </div>
 <ng-container *ngIf="dataSourceActivate.length > 0">
-  <mat-expansion-panel class="myPanel">
+  <mat-expansion-panel class="myPanel" [expanded]="true">
     <mat-expansion-panel-header>
       <div class="row p-t-10 p-b-10">
         <div class="col-sm-12">
@@ -99,7 +99,7 @@
 <p></p>
 
 <ng-container *ngIf="dataSourceActivate && dataSourceActivate.length > 0">
-  <mat-expansion-panel  class="myPanel">
+  <mat-expansion-panel  class="myPanel" [expanded]="true">
     <mat-expansion-panel-header>
       <div class="row p-t-10 p-b-10">
         <div class="col-sm-12">

@@ -49,4 +49,8 @@ export class BomService {
   postMaterialExcel(data:FormData,projectId:number){
  return this.dataService.sendPostRequest(API.UPLOADEXCEL(projectId),data)
   }
+
+  deleteMaterial(materialId:number, projectId:number){
+return this.dataService.sendDeleteRequest(API.DELETEMATERIAL(projectId,materialId),{})
+  }
 }

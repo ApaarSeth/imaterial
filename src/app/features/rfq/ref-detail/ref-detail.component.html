@@ -42,7 +42,7 @@
 
 
     <mat-accordion>
-      <mat-expansion-panel  class="myPanel">
+      <mat-expansion-panel  class="myPanel" [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Bided RFQ
@@ -110,8 +110,9 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
+    <br>
     <mat-accordion>
-      <mat-expansion-panel  class="myPanel">
+      <mat-expansion-panel  class="myPanel" [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Non-Bided RFQ

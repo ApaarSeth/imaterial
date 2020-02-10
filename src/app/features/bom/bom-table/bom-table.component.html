@@ -93,7 +93,7 @@
             <!-- <a>
               <mat-icon>edit</mat-icon>
             </a> -->
-            <a [ngClass]="{'non-active': ((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))}">
+            <a [ngClass]="{'non-active': ((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))}" (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
               <mat-icon>delete_outline</mat-icon>
             </a>
             <a (click)="openDialog1(element.materialId,projectId)"  class="issue-to-indent-modal">Issue to Indent
