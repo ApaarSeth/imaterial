@@ -18,7 +18,8 @@
               <mat-expansion-panel class="mat-expansion-panel-body">
                 <mat-expansion-panel-header class="row">
                   <section matSort class="mat-elevation-z2">
-                    <span mat-sort-header="vesselName">{{ project.projectName }}{{ project.addressLine1 }}</span>
+                    <span mat-sort-header="vesselName">{{ project.projectName }}<span
+                        class="p-l-5">{{ project.addressLine1 }}</span></span>
                   </section>
                 </mat-expansion-panel-header>
                 <div>
@@ -34,13 +35,20 @@
                     <mat-expansion-panel-header class="mat-row">
                       <span class="col-xs-2">{{ material.materialName }} </span>
                       <span class="col-xs-2"> {{ material.rfqMaterialQty }} </span>
-                      <span class="col-xs-1" *ngFor="let brand of material.brandNames">
-                        {{ brand }}
-                      </span>
+                      <ng-container *ngFor="let brand of material.brandNames">
+                        <span class="col-xs-1">
+                          {{ brand }}
+                        </span>
+                        <span class="col-xs-1">
+                          Supplier Rates
+                        </span>
+                        <span class="col-xs-1"></span>
+                      </ng-container>
+
                     </mat-expansion-panel-header>
 
-                    <span formArrayName="supplierList">
-                      <div class="mat-row" *ngFor="
+                    <ng-container formArrayName="supplierList">
+                      <div class="mat-row supplierLevel" *ngFor="
                           let supplier of material.supplierList;
                           let s = index
                         " [formGroupName]="s">
@@ -48,21 +56,24 @@
                         </span>
                         <span class="col-xs-2"></span>
                         <span formArrayName="brandGroup">
-                          <span class="col-xs-1 p-l-0" *ngFor="
+                          <ng-container *ngFor="
                               let brandInfo of supplier.brandDetailList;
                               let i = index
                             " [formGroupName]="i">
-                            <span *ngIf="brandInfo != null">
+
+                            <span class="col-xs-1 p-l-0">
                               <mat-form-field class="border-input">
-                                <input class="quantity p-l-0 m-r-5" matInput formControlName="quantity"
+                                <input class="quantity p-l-0" matInput formControlName="quantity"
                                   placeholder="quantity" />
                               </mat-form-field>
-                              <span *ngIf="brandInfo.materialUnitPrice != null">{{ brandInfo.materialUnitPrice }}</span>
                             </span>
-                          </span>
+                            <span
+                              class="col-xs-1">{{ brandInfo.materialUnitPrice != null?brandInfo.materialUnitPrice:"--" }}</span>
+                            <span class="col-xs-1"></span>
+                          </ng-container>
                         </span>
                       </div>
-                    </span>
+                    </ng-container>
                   </mat-expansion-panel>
                 </ng-container>
               </mat-expansion-panel>
