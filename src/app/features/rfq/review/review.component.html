@@ -7,7 +7,7 @@
           <div class="row ">
             <div class="col-xs-12 p-t-10">
               <button mat-raised-button class="main-background-color main-button color-white pull-right m-r-30"
-                [disabled]="!form.valid">
+                [disabled]="!form.valid" (click)="redirectToRfq()">
                 Float RFQ
               </button>
             </div>
@@ -26,16 +26,6 @@
                 <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                 <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
               </mat-form-field>
-              <!-- <mat-form-field class="border-input">
-              <input
-                matInput
-                class="p-b-10"
-                type="text"
-                disabled="true"
-                placeholder="12:09:2019  12:30 am"
-              />
-            </mat-form-field>
-            <mat-icon>calendar_today</mat-icon> -->
             </div>
             <div class="col-md-2 p-t-20 main-color">
               <button mat-button class="pull-right" (click)="openDialog1()">

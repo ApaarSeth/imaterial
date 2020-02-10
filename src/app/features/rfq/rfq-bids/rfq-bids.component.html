@@ -10,16 +10,16 @@
         </span>
       </div>
     </div>
-    <form *ngIf="rfqForms" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
+    <form *ngIf="rfqProjects.length" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
       <div formArrayName="forms">
         <div class="customBid">
           <div *ngFor="let project of rfqProjects; let p = index" [formGroupName]="p">
             <mat-accordion displayMode="flat" multi class="mat-table">
               <mat-expansion-panel class="mat-expansion-panel-body">
-                <mat-expansion-panel-header class="background-color-grey row">
-                  <section matSort class="mat-elevation-z2 mat-header-row">
-                    <span class="mat-header-cell"
-                      mat-sort-header="vesselName">{{ project.projectName }}{{ project.addressLine1 }}</span>
+                <mat-expansion-panel-header class="row">
+                  <section matSort class="mat-elevation-z2">
+                    <span mat-sort-header="vesselName">{{ project.projectName }}<span
+                        class="p-l-5">{{ project.addressLine1 }}</span></span>
                   </section>
                 </mat-expansion-panel-header>
                 <div>

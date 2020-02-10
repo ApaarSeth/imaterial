@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Select Address</h1>
 <div mat-dialog-content>
     <mat-tab-group class="overflow-remove">
-        <mat-tab label="Choose Address">
+        <mat-tab label="Choose Address" class="addressDialog">
             <form *ngIf="address" [formGroup]="selectAddressFrm">
                 <div class="row">
                     <div class="col-xs-12">
@@ -14,6 +14,12 @@
                             </div>
                         </mat-radio-group>
                     </div>
+                </div>
+                <div mat-dialog-actions class="pull-right">
+                    <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+                        cdkFocusInitial (click)="onselectAddress()">
+                        Save
+                    </button>
                 </div>
             </form>
         </mat-tab>
@@ -65,18 +71,24 @@
                         </div>
                     </div>
                 </div>
+                <div mat-dialog-actions class="pull-right">
+                    <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+                        cdkFocusInitial (click)="onAddAddress()">
+                        Add
+                    </button>
+                </div>
             </form>
         </mat-tab>
     </mat-tab-group>
 </div>
 
 <div mat-dialog-actions class="pull-right">
-    <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
+    <!-- <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
         (click)="onselectAddress()">
         Save
-    </button>
-    <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
+    </button> -->
+    <!-- <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
         (click)="onAddAddress()">
         Add
-    </button>
+    </button> -->
 </div>
