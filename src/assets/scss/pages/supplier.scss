@@ -221,13 +221,13 @@ top: calc(200px) !important;
 }
 
 .show-detail-qty #detail-qty {
- display: none;
- background-color: #ffffff;
- color:#000000;
- z-index: 999;
-  margin-top: -26px;
-  position: relative;
-  font-size: 10px;
+    display: none;
+    background-color: #ffffff;
+    color:#000000;
+    z-index: 999;
+    margin-top: -26px;
+    position: relative;
+    font-size: 10px;
     width: 250px;
     position: relative;
     padding: 5px;
@@ -235,6 +235,11 @@ top: calc(200px) !important;
     border: 1px solid #d0d0d0;
 }
 
+
+
+.text-enlarge{
+   font-size: 13px !important;
+    }
 .issue-qty-div{
     display: flex;
     justify-content: flex-start;
@@ -248,6 +253,19 @@ top: calc(200px) !important;
         z-index: 10;
     }
 }
+.show-detail-qty{
+    position: absolute;
+   margin-left: 16px;
+    margin-top: -3px;
+    .name-of-mat{
+        z-index: 10;
+        white-space: nowrap; 
+        width: 150px; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+        z-index: 10;
+    }
+}
 
 .file-icon{
     width: 15px;
@@ -257,9 +275,9 @@ top: calc(200px) !important;
 }
 
 div.limited-character {
-    position: relative;
+  position: relative;
   white-space: nowrap; 
-  width: 150px; 
+  min-width: 150px; 
   overflow: hidden;
   text-overflow: ellipsis;
   z-index: 10;
@@ -268,4 +286,82 @@ div.limited-character {
 div.limited-character:hover {
   overflow: visible;
   z-index: 999;
+   .mcell{
+       background-color: #ffffff;
+        color:#000000;
+        z-index: 999;
+        margin-top: -26px;
+        position: relative;
+        font-size: 10px;
+         width: 250px;
+        position: relative;
+            padding: 5px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    border: 1px solid #d0d0d0;
+  }
+}
+
+.blue-background-color-color-white-section{
+    background: #192135;
+    border-radius: 0px;
+    span.mat-header-cell{
+         color: #ffffff !important;
+         border-radius: 0px;
+    }
+}
+.material-row{
+    position: relative;
+    z-index: 10;
+    background: rgba(169,174,188,0.5);
+    border-radius: 0px;  
+    span.mat-header-cell{
+         color: #E5E5E5 !important;
+         border-radius: 0px;
+    }
+}
+.material-project{
+    position: relative;
+    z-index: 10;
+    
+    background: #EEEEEE;
+    border-radius: 0px;
+    span.mat-header-cell{
+         color:#707070 !important;
+         border-radius: 0px;
+    }
+}
+.material-project-details{
+    position: relative;
+    z-index: 10;
+    
+    background: #FFFFFF;
+    border-radius: 0px;
+    span.mat-header-cell{
+         color:#707070 !important;
+         border-radius: 0px;
+    }
+}
+
+
+mat-expansion-panel-header:hover{
+      background: #EEEEEE;
+      border-radius: 0px !important;
+}
+mat-expansion-panel:hover{
+      background: #EEEEEE;
+       border-radius: 0px !important;
+}
+mat-accordion:hover{
+     background: #EEEEEE;
+      border-radius: 0px !important;
+}
+////////
+mat-expansion-panel-header{
+      border-radius: 0px !important;
+}
+mat-expansion-panel{
+       border-radius: 0px !important;
+}
+mat-accordion{
+      border-radius: 0px !important;
 }

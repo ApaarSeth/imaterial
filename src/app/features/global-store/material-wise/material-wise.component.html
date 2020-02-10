@@ -1,25 +1,44 @@
 <mat-accordion displayMode="flat" multi class="mat-table">
-  <section matSort class="mat-elevation-z2 mat-header-row">
+  <section matSort class="mat-header-row blue-background-color-color-white-section">
     <span class="mat-header-cell" mat-sort-header="vesselName">Name</span>
     <span class="mat-header-cell" mat-sort-header="vesselId">Estimated Quantity</span>
     <span class="mat-header-cell" mat-sort-header="vesselStatus">Requested Quantity</span>
     <span class="mat-header-cell" mat-sort-header="ircs">Required Date</span>
     <span class="mat-header-cell" mat-sort-header="ircs">Available quantity in project</span>
   </section>
-  <mat-expansion-panel *ngFor="let material of newMaterialData">
-    <mat-expansion-panel-header class="mat-row">
-      <span class="mat-cell">{{ material.GlobalMaterial.materialName }}</span>
-      <span class="mat-cell">{{ material.GlobalMaterial.estimatedQty }}</span>
+  <mat-expansion-panel *ngFor="let material of newMaterialData" class="myPanel">
+    <mat-expansion-panel-header class="mat-row material-row">
+      <span class="mat-cell">
+                 <div class="show-detail-qty" >
+                      <div class="name-of-mat">
+                      {{ material.GlobalMaterial.materialName }}
+                      </div>
+                    <div id="detail-qty">
+                         <span class="text-enlarge">{{ material.GlobalMaterial.materialName }}</span>
+                  </div>
+                </div> 
+      </span>
+
+      <span class="mat-cell"> {{ material.GlobalMaterial.estimatedQty }}  </span>
       <span class="mat-cell">{{ material.GlobalMaterial.sum }}</span>
       <span class="mat-cell">{{
         material.GlobalMaterial.nearDueDate | date: "dd MMM yyy"
       }}</span>
       <span class="mat-cell"></span>
     </mat-expansion-panel-header>
-    <mat-expansion-panel *ngFor="let project of material.GlobalProject">
-      <mat-expansion-panel-header class="mat-row">
-        <span class="mat-cell">{{ project.Projects.projectName }}</span>
-        <span class="mat-cell">{{ project.ProjectEstimatedQnt }}</span>
+    <mat-expansion-panel *ngFor="let project of material.GlobalProject" class="myPanel">
+      <mat-expansion-panel-header class="mat-row material-project">
+        <span class="mat-cell">
+            <div class="show-detail-qty" >
+                      <div class="name-of-mat">
+                         {{ project.Projects.projectName }}
+                      </div>
+                    <div id="detail-qty">
+                         <span class="text-enlarge">{{ project.Projects.projectName }}</span>
+                  </div>
+                </div> 
+          </span>
+        <span class="mat-cell"> {{ project.ProjectEstimatedQnt }}</span>
         <span class="mat-cell">{{ project.Projects.sum }}</span>
         <span class="mat-cell">{{
           project.Projects.nearDueDate | date: "dd MMM yyy"
@@ -27,7 +46,7 @@
         <span class="mat-cell">{{ project.Projects.sum }}</span>
       </mat-expansion-panel-header>
       <div *ngFor="let material of project.Projects.indentMaterials">
-        <mat-expansion-panel-header class="mat-row">
+        <mat-expansion-panel-header class="mat-row material-project-details">
           <span class="mat-cell"></span>
           <span class="mat-cell"></span>
           <span class="mat-cell">{{ material.quantity }}</span>
