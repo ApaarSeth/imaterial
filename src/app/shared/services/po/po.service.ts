@@ -33,4 +33,8 @@ export class POService {
   initiatePo(initiatePoData: initiatePo[]) {
     return this.dataService.sendPostRequest(API.RFQADDPO, initiatePoData);
   }
+
+  approveRejectPo(poStatusData) {
+    return this.dataService.sendPostRequest(API.APPROVEREJECTPO, poStatusData);
+  }
 }

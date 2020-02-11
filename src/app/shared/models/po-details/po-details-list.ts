@@ -1,8 +1,7 @@
 export interface PODetailLists {
   draftedPOList: PurchaseOrder[];
-  awardedPOList: PurchaseOrder[];
-  acceptedPOList: PurchaseOrder[];
-  rejectedPOList: PurchaseOrder[];
+  sendForApprovalPOList: PurchaseOrder[];
+  acceptedRejectedPOList: PurchaseOrder[];
 }
 export interface PurchaseOrder {
   purchaseOrderId: number;

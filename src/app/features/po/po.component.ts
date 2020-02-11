@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild, ViewChildren } from "@angular/core";
 import { POService } from "src/app/shared/services/po/po.service";
-import { POData, PoMaterial, CardData } from "src/app/shared/models/PO/po-data";
+import {
+  POData,
+  PoMaterial,
+  CardData,
+  poApproveReject
+} from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
 import { MatDialog } from "@angular/material";
@@ -21,6 +26,7 @@ export class PoComponent implements OnInit {
   tableData: PoMaterial[] = [];
   cardData: CardData;
   viewMode = false;
+  collatePoData = {} as poApproveReject;
   @ViewChild("poTable", { static: false }) poTable: PoTableComponent;
   @ViewChild("poCard", { static: false }) poCard: PoCardComponent;
   @ViewChild("poDocument", { static: false }) poDocument: PoDocumentsComponent;
@@ -31,9 +37,11 @@ export class PoComponent implements OnInit {
     private poService: POService
   ) {}
   poId: number;
+  poMode: string;
   ngOnInit() {
-    this.route.params.subscribe(poId => {
-      this.poId = Number(poId.id);
+    this.route.params.subscribe(poParams => {
+      this.poId = Number(poParams.id);
+      this.poMode = poParams.mode;
     });
     this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
@@ -75,6 +83,7 @@ export class PoComponent implements OnInit {
     this.viewMode = true;
   }
   selectApprover() {
+    this.viewMode = true;
     let data: POData = this.collateResults();
     this.openDialog(data);
   }
@@ -88,5 +97,16 @@ export class PoComponent implements OnInit {
       console.log("The dialog was closed");
       console.log(result);
     });
+  }
+  poApproval(decision) {
+    this.collatePoData.poApproverId = this.poData.approverId;
+    this.collatePoData.purchaseOrderId = this.poData.purchaseOrderId;
+    this.collatePoData.userId = Number(localStorage.getItem("userId"));
+    if (decision === "approved") {
+      this.collatePoData.isApproved = 1;
+    } else {
+      this.collatePoData.isApproved = 0;
+    }
+    this.poService.approveRejectPo(this.collatePoData);
   }
 }

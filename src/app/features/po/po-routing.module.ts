@@ -18,7 +18,7 @@ const routes: Routes = [
     component: PODetailComponent
   },
   {
-    path: "po-generate/:id",
+    path: "po-generate/:id/:mode",
     component: PoComponent
   },
   {
