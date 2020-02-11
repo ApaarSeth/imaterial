@@ -11,7 +11,7 @@ import {
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { map } from "rxjs/operators";
 import { Materials } from "src/app/shared/models/subcategory-materials";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-rfq-bids",
@@ -19,6 +19,7 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class RfqBidsComponent implements OnInit {
   constructor(
+    private router: Router,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute
@@ -171,15 +172,18 @@ export class RfqBidsComponent implements OnInit {
       [] as RfqProjectSubmit[]
     );
     console.log(submitData.flat(2));
-    this.rfqService.rfqAddPo(submitData.flat(2));
+    this.rfqService.rfqAddPo(submitData.flat(2)).then(res => {
+      if (res.statusCode === 201) {
+        this.router.navigate(["po/detail-list"]);
+      }
+    });
   }
   getFormValidation() {
-    console.log("rfqForms", this.rfqForms);
     return this.rfqForms.value.forms.some(value => {
       return value.materialList.some(materials => {
         return materials.supplierList.some(supplier => {
           return supplier.brandGroup.some(brand => {
-            return brand.quantity !== "";
+            return brand.quantity != null;
           });
         });
       });

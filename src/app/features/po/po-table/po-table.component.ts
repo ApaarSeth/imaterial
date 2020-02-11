@@ -6,8 +6,8 @@ import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-po-table",
-  templateUrl: "./po-table.component.html",
-  styleUrls: ["./po-table.component.scss"]
+  templateUrl: "./po-table.component.html"
+  // styleUrls: ["./po-table.component.scss"]
 })
 export class PoTableComponent implements OnInit, OnDestroy {
   @Input("poTableData") poTableData: PoMaterial[];
