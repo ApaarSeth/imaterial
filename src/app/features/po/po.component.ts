@@ -90,6 +90,7 @@ export class PoComponent implements OnInit {
   openDialog(data: POData) {
     const dialogRef = this.dialog.open(SelectApproverComponent, {
       width: "700px",
+      height:"500px",
       data
     });
 
