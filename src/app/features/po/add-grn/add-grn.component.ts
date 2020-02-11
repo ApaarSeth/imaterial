@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { GRNDetails } from 'src/app/shared/models/grn';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GRNService } from 'src/app/shared/services/grn/grn.service';
 import { Validators, FormArray, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
@@ -21,14 +21,15 @@ export class AddGRNComponent implements OnInit {
         "Material Name",
         "Awarded Quantity",
         "Delivered Quantity",
-        "Certified Quantity"
+        "Certified Quantity",
+        "Brand Name"
     ];
   materialForms: FormGroup;
     orgId: number;
     purchaseOrderId: any;
 
     constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder, private route: Router) { }
 
     ngOnInit() {
        this.dataSource = this.activatedRoute.snapshot.data.viewGRN;
@@ -62,6 +63,7 @@ export class AddGRNComponent implements OnInit {
     postGRNDetails(grnDetailsObj:GRNDetails[]) {
         this.grnService.addGRN(grnDetailsObj).then(data => {
             console.log("data", data);
+            this.route.navigate(['po/detail-list']);
         })
     }
 

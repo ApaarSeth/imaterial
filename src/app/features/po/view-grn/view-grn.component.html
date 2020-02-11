@@ -10,7 +10,7 @@
         </div>
 
         <mat-accordion>
-            <div>
+            <div *ngIf="grnHeaders">
                 <mat-expansion-panel class="myPanel" *ngFor="let grnHeader of grnHeaders">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
