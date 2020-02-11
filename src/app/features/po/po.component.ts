@@ -41,7 +41,7 @@ export class PoComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
-      this.poMode = poParams.mode;
+      this.poMode = history.state.mode;
     });
     this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
