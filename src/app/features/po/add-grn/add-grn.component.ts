@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { GRNDetails } from 'src/app/shared/models/grn';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GRNService } from 'src/app/shared/services/grn/grn.service';
+import { Validators, FormArray, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 @Component({
     selector: "add-grn",
@@ -14,44 +15,76 @@ export class AddGRNComponent implements OnInit {
 
     grnDetails: GRNDetails;
     grnId: number;
-    grnDetailsObj: GRNDetails[];
-
-    dataSource = [
-        {
-            "materialName": "name",
-            "awardedQuantity": 23,
-            "deliveredQuantity": 21,
-            "certifiedQuantity": 22
-        }
-    ]
+    dataSource: GRNDetails[];
 
     displayedColumns: string[] = [
         "Material Name",
         "Awarded Quantity",
         "Delivered Quantity",
-        "Certified Quantity"
+        "Certified Quantity",
+        "Brand Name"
     ];
+  materialForms: FormGroup;
+    orgId: number;
+    purchaseOrderId: any;
 
-    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService) { }
+    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService,
+    private formBuilder: FormBuilder, private route: Router) { }
 
     ngOnInit() {
-        this.getGRNDetails(1);
+       this.dataSource = this.activatedRoute.snapshot.data.viewGRN;
+       this.purchaseOrderId = this.activatedRoute.params["poId"];
+       this.formsInit();
+    }
+      formsInit() {
+           this.orgId=Number(localStorage.getItem("orgId"));
+             const frmArr = this.dataSource.map(data => {
+                return new FormGroup({
+                    materialName: new FormControl(data.materialName),
+                    materialBrand: new FormControl(data.materialBrand),
+                    certifiedQty: new FormControl(data.certifiedQty?data.certifiedQty : ""),
+                    materialId: new FormControl(data.materialId),
+                    deliveredQty: new FormControl(data.deliveredQty),
+                    awardedQty: new FormControl(data.awardedQty),
+                    deliveredDate: new FormControl(data.deliveredDate),
+                    grnId: new FormControl(data.grnId),
+                    grnDetailId: new FormControl(data.grnDetailId),
+                    purchaseOrderId: new FormControl(data.purchaseOrderId),
+                    organizationId: new FormControl(this.orgId)
+                });
+                });
+            this.materialForms = this.formBuilder.group({
+            forms: new FormArray(frmArr)
+            });
+
+            console.log(this.materialForms);
+  }
+
+    postGRNDetails(grnDetailsObj:GRNDetails[]) {
+        this.grnService.addGRN(grnDetailsObj).then(data => {
+            console.log("data", data);
+            this.route.navigate(['po/detail-list']);
+        })
     }
 
-    getGRNDetails(grnId: number) {
-        this.grnService.getGRNDetails(grnId).then(data => {
-            console.log("grn data", data.data);
-            this.grnDetails = data.data;
-            this.grnDetailsObj = data.data;
-            console.log("object", this.grnDetailsObj);
 
-        });
-    }
+    // getGRNDetails(grnId: number) {
+    //     this.grnService.getGRNDetails(grnId).then(data => {
+    //         console.log("grn data", data.data);
+    //         this.grnDetails = data.data;
+    //         this.grnDetailsObj = data.data;
+    //         this.formsInit(this.grnDetailsObj);
 
-    // postGRNDetails(organizationId: number, purchaseOrderId: number) {
-    //     console.log("object", this.grnDetailsObj);
-    //     this.grnService.postGRNDetails(organizationId, purchaseOrderId, this.grnDetailsObj).then(data => {
-    //         console.log("data", data);
-    //     })
+    //     });
     // }
+   
+  addGrn() {
+        const formValues: GRNDetails[] = [];
+            this.materialForms.value.forms.forEach(element => {
+            if(element.certifiedQty > 0){
+            formValues.push(element);
+            }
+            });
+        this.postGRNDetails(formValues);
+  }
 }

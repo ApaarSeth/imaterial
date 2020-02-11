@@ -25,8 +25,8 @@ export class GRNService {
         });
     }
 
-    addGRN(organizationId: Number, purchaseOrderId: Number, grn: GRN[]) {
-        return this.dataService.sendPostRequest(API.ADDGRN(organizationId, purchaseOrderId), grn).then(res => {
+    addGRN(grn: GRN[]) {
+        return this.dataService.sendPostRequest(API.ADDGRN, grn).then(res => {
             console.log("ahsghafs", res);
         });
     }

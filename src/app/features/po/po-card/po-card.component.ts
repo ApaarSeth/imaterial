@@ -29,7 +29,7 @@ export class PoCardComponent implements OnInit {
     this.projectDetails = this.formBuilder.group({
       orderNo: [this.cardData.poNumber],
       openingDate: [],
-      endDate: ["2029-02-28T18:30:00.000Z"],
+      endDate: [],
       billingAddress: [this.cardData.billingAddress],
       projectAddress: [this.cardData.projectAddress],
       supplierAddress: [this.cardData.supplierAddress],
@@ -47,6 +47,7 @@ export class PoCardComponent implements OnInit {
   openDialog(roleType: string, projectId: number) {
     const dialogRef = this.dialog.open(SelectPoRoleComponent, {
       width: "1200px",
+       height:"500px",
       data: { roleType, projectId }
     });
 

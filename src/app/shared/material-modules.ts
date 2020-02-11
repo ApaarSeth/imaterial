@@ -21,7 +21,7 @@ import {
   MatCheckboxModule,
   MatChipsModule,
   MatTabsModule,
-  MatStepperModule,
+  MatStepperModule
 } from "@angular/material";
 
 @NgModule({

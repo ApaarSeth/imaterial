@@ -457,3 +457,21 @@ mat-icon {
 //     margin: auto;
 //     display: block;
 // }
+
+
+
+.mat-tab-add-address-modal-po{
+    .mat-tab-body-wrapper{
+        height: calc(100vh - 300px);
+    }
+    .show-address-po-modal{
+        max-height: calc(100vh - 350px);
+        overflow-y: auto;
+    }
+}
+
+.send-btn-select-po{
+    display: block;
+    width: 22%;
+    padding: 10px;
+}
