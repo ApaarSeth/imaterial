@@ -58,5 +58,7 @@ export const API = {
   DEACTIVATEUSER: userId => `user/delete/${userId}`,
   UPLOADEXCEL: projectId => `bom/materials/fileupload/${projectId}`,
   DELETESUPPLIER: supplierId => `projects/deleteSupplier/${supplierId}`,
-  DELETEMATERIAL: (projectId,materialId) =>`material/delete/${projectId}/${materialId}`
+  DELETEMATERIAL: (projectId, materialId) =>
+    `material/delete/${projectId}/${materialId}`,
+  APPROVEREJECTPO: `po/approveRejectPO`
 };

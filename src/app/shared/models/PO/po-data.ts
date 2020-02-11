@@ -179,3 +179,10 @@ export interface poMaterialList {
   brandNames: string[];
   materialUnitPrice: number;
 }
+
+export interface poApproveReject {
+  poApproverId: number;
+  purchaseOrderId: number;
+  userId: number;
+  isApproved: number;
+}

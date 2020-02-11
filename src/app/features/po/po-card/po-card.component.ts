@@ -19,9 +19,12 @@ export class PoCardComponent implements OnInit {
   @Input("cardData") cardData: CardData;
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder) {}
   projectDetails: FormGroup;
-  @Input("viewMode") viewMode: boolean;
+  @Input("mode") mode: string;
 
   ngOnInit() {
+    if (this.mode === "edit") {
+      this.formInit();
+    }
     this.formInit();
     console.log(this.cardData);
   }
