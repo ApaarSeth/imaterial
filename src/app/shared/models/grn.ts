@@ -19,7 +19,10 @@ export interface GRNDetails {
     materialUnitPrice: number,
     deliveredDate: Date,
     deliverableQty: number,
-    deliveredQty: number
+    deliveredQty: number,
+    certifiedQty: number,
+    awardedQty?:number,
+    organizationId?: number
 
 }
 

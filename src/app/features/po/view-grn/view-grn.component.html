@@ -11,15 +11,15 @@
 
         <mat-accordion>
             <div>
-                <mat-expansion-panel class="myPanel">
+                <mat-expansion-panel class="myPanel" *ngFor="let grnHeader of grnHeaders">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <div class="row width100Percent">
                                 <div class="col-md-4">
-                                    GRN 1
+                                    GRN - {{grnHeader.grnId}}
                                 </div>
                                 <div class="col-md-4">
-                                    02:02:2020
+                                       {{ grnHeader.grnDate | date }}
                                 </div>
                                 <div class="col-md-4">
                                     <div class="pull-right p-l-10 p-r-10">
@@ -29,7 +29,7 @@
                                         <mat-icon>remove_red_eye</mat-icon>
                                     </div>
                                     <div class="pull-right font-size14 p-l-10 p-r-10">300 kb</div>
-                                    <div class="pull-right font-size14 p-l-10 p-r-10">Document Name</div>
+                                    <div class="pull-right font-size14 p-l-10 p-r-10">{{grnHeader.checklistFileUrl}}</div>
                                     <div class="pull-right p-l-10 p-r-10">
                                         <mat-icon>descriptions</mat-icon>
                                     </div>
@@ -48,21 +48,21 @@
                             <ng-container matColumnDef="Awarded Quantity">
                                 <th mat-header-cell *matHeaderCellDef>Awarded Quantity</th>
                                 <td mat-cell *matCellDef="let element">
-                                    <!-- {{ element.awardedQuantity }} -->
+                                    {{ element.materialQty }}
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="Certified Quantity">
                                 <th mat-header-cell *matHeaderCellDef>Certified Quantity</th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{ element.deliveredQty }}
+                                    {{ element.certifiedQty }}
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="Date">
                                 <th mat-header-cell *matHeaderCellDef>Date</th>
                                 <td mat-cell *matCellDef="let element">
-                                    <!-- {{ element.deliveredDate | date }} -->
+                                    {{ element.deliveredDate | date }}
                                 </td>
                             </ng-container>
 
