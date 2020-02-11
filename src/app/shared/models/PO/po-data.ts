@@ -61,6 +61,10 @@ export interface PurchaseOrder {
   materialIgst: number;
   materialSgst: number;
   materialCgst: number;
+  amount: number;
+  gstAmount: number;
+  total: number;
+  qty?: number;
 }
 export interface terms {
   termsDesc: string;
