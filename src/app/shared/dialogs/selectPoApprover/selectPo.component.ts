@@ -31,6 +31,6 @@ export class SelectApproverComponent implements OnInit {
 
   sendPo() {
     this.data.approverId = this.selectedApprover.userId;
-    this.poService.sendPoData(this.data);
+    this.dialogRef.close(this.data);
   }
 }
