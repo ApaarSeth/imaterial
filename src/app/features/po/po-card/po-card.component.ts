@@ -22,11 +22,8 @@ export class PoCardComponent implements OnInit {
   @Input("mode") mode: string;
 
   ngOnInit() {
-    if (this.mode === "edit") {
-      this.formInit();
-    }
     this.formInit();
-    console.log(this.cardData);
+    if (this.mode != "edit") console.log("cardData", this.cardData);
   }
   formInit() {
     this.projectDetails = this.formBuilder.group({
