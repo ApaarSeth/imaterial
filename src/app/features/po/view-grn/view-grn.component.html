@@ -37,9 +37,9 @@
                             </div>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <div class="row" *ngIf="grnDetails">
+                    <div class="row">
 
-                        <table mat-table [dataSource]="grnDetails" class="mat-elevation-z8 col-sm-12">
+                        <table mat-table [dataSource]="getData(grnHeader.poMaterialList)" class="mat-elevation-z8 col-sm-12">
                             <ng-container matColumnDef="Material Name">
                                 <th mat-header-cell *matHeaderCellDef>Material Name</th>
                                 <td mat-cell *matCellDef="let element">{{ element.materialName }}</td>
@@ -48,14 +48,14 @@
                             <ng-container matColumnDef="Awarded Quantity">
                                 <th mat-header-cell *matHeaderCellDef>Awarded Quantity</th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{ element.materialQty }}
+                                    {{ element.materialQuantity }}
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="Certified Quantity">
                                 <th mat-header-cell *matHeaderCellDef>Certified Quantity</th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{ element.certifiedQty }}
+                                    {{ element.deliveredQty }}
                                 </td>
                             </ng-container>
 
