@@ -36,21 +36,21 @@
             let purchaseOrder of material.purchaseOrderDetailList;
             let p = index
           " [formGroupName]="p">
-                            <span class="mat-cell .widthReduce"></span>
+                            <span class="mat-cell widthReduce"></span>
                             <span class=" mat-cell"></span>
                             <span class="mat-cell">{{ purchaseOrder.materialBrand }}</span>
-                            <span class="mat-cell m-r-15">
+                            <span class="mat-cell">
                                 <mat-form-field class="border-input width50Percent">
                                     <input matInput #rate formControlName="materialQuantity" placeholder="rate" />
                                 </mat-form-field>
                             </span>
-                            <span class="mat-cell m-r-15">
+                            <span class="mat-cell">
                                 <mat-form-field class="border-input width50Percent">
                                     <input type="number" matInput #quantity formControlName="materialUnitPrice"
                                         placeholder="quantity" />
                                 </mat-form-field>
                             </span>
-                            <span class="mat-cell">{{ rate.value * quantity.value  | number : '1.2-2'}}</span>
+                            <span class="mat-cell">{{rate.value * quantity.value  | number : '1.2-2'}}</span>
                             <span class="mat-cell">
                                 <mat-form-field class="border-input width50Percent">
                                     <input matInput type="number" #gst formControlName="gst" placeholder="GST%"
@@ -68,7 +68,7 @@
 
                 </div>
                 <div class="mat-row footer">
-                    <span class="mat-cell width50Percent"></span>
+                    <span class="mat-cell widthReduce"></span>
                     <span class=" mat-cell"></span>
                     <span class="mat-cell"></span>
                     <span class="mat-cell"></span>

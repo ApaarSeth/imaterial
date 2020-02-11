@@ -73,7 +73,7 @@
                         <mat-list-item mat-subheader> Phone No.:<span> {{cardData.supplierAddress.contactNo}}</span>
                         </mat-list-item>
                         <mat-list-item mat-subheader> Street Address:
-                            <span>{{cardData.supplierAddress.contactNo}}</span>
+                            <span>{{cardData.supplierAddress.addressLine1}} {{cardData.supplierAddress.addressLine2}}</span>
                             <a href="javascript:void(0)"
                                 (click)="openaddressDialog('supplierAddressId',cardData.supplierAddress.supplierId)"><i
                                     class="material-icons main-color">
