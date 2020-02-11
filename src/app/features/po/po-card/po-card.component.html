@@ -33,8 +33,8 @@
                                     <span>{{cardData.projectAddress.projectName}}</span>
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> Contact Person:<span>
-                                        {{cardData.projectAddress.firstName?cardData.projectAddress.firstName:""}}
-                                        {{cardData.projectAddress.lastName?cardData.projectAddress.lastName:""}}</span>
+                                        {{cardData.projectAddress.firstName}}
+                                        {{cardData.projectAddress.lastName}}</span>
                                     <span *ngIf="mode==='edit'">
                                         <a href="javascript:void(0)"
                                             (click)="openDialog('projectUserId',cardData.projectId)"><i
@@ -44,24 +44,24 @@
                                     </span>
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> Phone
-                                    No.:<span>{{cardData.projectAddress.contactNo?cardData.projectAddress.contactNo:""}}</span>
+                                    No.:<span>{{cardData.projectAddress.contactNo}}</span>
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> Email.:<span>
-                                        {{cardData.projectAddress.email?cardData.projectAddress.email:""}}</span>
+                                        {{cardData.projectAddress.email}}</span>
                                 </mat-list-item>
                             </mat-list>
                         </div>
                         <div class="col-xs-6">
                             <mat-list class="delivery-address-po-card">
                                 <mat-list-item mat-subheader> Delivery Address</mat-list-item>
-                                <span>{{cardData.projectAddress.addressLine1?cardData.projectAddress.addressLine1:""}}</span>
+                                <span>{{cardData.projectAddress.addressLine1}}</span>
                                 <br>
                                 <span
                                     *ngIf="cardData.projectAddress.addressLine2">{{cardData.projectAddress.addressLine2}}
                                     <br></span>
-                                <span>{{cardData.projectAddress.city?cardData.projectAddress.city:""}},{{cardData.projectAddress.state?cardData.projectAddress.state:""}}</span>
+                                <span>{{cardData.projectAddress.city}},{{cardData.projectAddress.state}}</span>
                                 <br>
-                                <span>{{cardData.projectAddress.pinCode?cardData.projectAddress.pinCode:""}}</span>
+                                <span>{{cardData.projectAddress.pinCode}}</span>
                             </mat-list>
                         </div>
                     </div>
@@ -72,17 +72,17 @@
                     <mat-list>
                         <h3 mat-subheader class="header-card-po">Purchase Order Awarded To:</h3>
                         <mat-list-item mat-subheader> Supplier Name:
-                            <span>{{cardData.supplierAddress.supplierName?cardData.supplierAddress.supplierName:""}}</span>
+                            <span>{{cardData.supplierAddress.supplierName}}</span>
                         </mat-list-item>
                         <mat-list-item mat-subheader> Contact Person:
-                            <span>{{cardData.supplierAddress.supplierName?cardData.supplierAddress.supplierName:""}}</span>
+                            <span>{{cardData.supplierAddress.supplierName}}</span>
 
                         </mat-list-item>
                         <mat-list-item mat-subheader> Phone No.:<span>
-                                {{cardData.supplierAddress.contactNo?cardData.supplierAddress.contactNo:""}}</span>
+                                {{cardData.supplierAddress.contactNo}}</span>
                         </mat-list-item>
                         <mat-list-item mat-subheader> Street Address:
-                            <span>{{cardData.supplierAddress.contactNo?cardData.supplierAddress.contactNo:""}}</span>
+                            <span>{{cardData.supplierAddress.contactNo}}</span>
                             <span *ngIf="mode==='edit'">
                                 <a href="javascript:void(0)"
                                     (click)="openaddressDialog('supplierAddressId',cardData.supplierAddress.supplierId)"><i
@@ -92,13 +92,13 @@
                             </span>
                         </mat-list-item>
                         <mat-list-item mat-subheader> Pin Code:
-                            <span>{{cardData.supplierAddress.pinCode?cardData.supplierAddress.pinCode:""}}</span>
+                            <span>{{cardData.supplierAddress.pinCode}}</span>
                         </mat-list-item>
                         <mat-list-item mat-subheader>
-                            City:<span>{{cardData.supplierAddress.city?cardData.supplierAddress.city:""}} </span>
+                            City:<span>{{cardData.supplierAddress.city}} </span>
                         </mat-list-item>
                         <mat-list-item mat-subheader> GSTIN:
-                            <span>{{cardData.supplierAddress.gstNo?cardData.supplierAddress.gstNo:""}}</span>
+                            <span>{{cardData.supplierAddress.gstNo}}</span>
                         </mat-list-item>
                     </mat-list>
                 </div>
