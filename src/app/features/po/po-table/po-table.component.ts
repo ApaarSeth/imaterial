@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, ViewChild } from "@angular/core";
 import { PoMaterial, PurchaseOrder } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { ignoreElements, debounceTime } from "rxjs/operators";
@@ -6,65 +6,77 @@ import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-po-table",
-  templateUrl: "./po-table.component.html",
-  styleUrls: ["./po-table.component.scss"]
+  templateUrl: "./po-table.component.html"
+  // styleUrls: ["./po-table.component.scss"]
 })
 export class PoTableComponent implements OnInit, OnDestroy {
+  // @ViewChild("rate", { static: true }) rate: number;
+  // @ViewChild("quantity", { static: true }) quantity: number;
   @Input("poTableData") poTableData: PoMaterial[];
-  @Input("viewMode") viewMode: boolean;
+  @Input("mode") mode: string;
   gst: string;
   constructor(private formBuilder: FormBuilder) {}
   poForms: FormGroup;
   subscriptions: Subscription[] = [];
   ngOnInit() {
     this.formInit();
+    console.log(this.poTableData);
   }
   formInit() {
     const frmArr: FormGroup[] = this.poTableData.map(
-      (poMaterial: PoMaterial) => {
+      (poMaterial: PoMaterial, i) => {
         let purchaseGrp: FormGroup[] = poMaterial.purchaseOrderDetailList.map(
-          (purchaseoder: PurchaseOrder) => {
+          (purchaseorder: PurchaseOrder, j) => {
             const frmGrp: FormGroup = this.formBuilder.group({
-              id: [purchaseoder.materialId],
-              status: [purchaseoder.status],
-              created_by: [purchaseoder.created_by],
-              created_at: [purchaseoder.created_at],
-              last_updated_by: [purchaseoder.last_updated_by],
-              last_updated_at: [purchaseoder.last_updated_at],
-              projectName: [purchaseoder.projectName],
-              addressId: [purchaseoder.addressId],
-              addressLine1: [purchaseoder.addressLine1],
-              addressLine2: [purchaseoder.addressLine2],
-              city: [purchaseoder.city],
-              state: [purchaseoder.state],
-              countrypurchaseOrderDetailList: [purchaseoder.country],
-              pinCode: [purchaseoder.pinCode],
-              purchaseOrderDetailId: [purchaseoder.purchaseOrderDetailId],
-              purchaseOrderId: [purchaseoder.purchaseOrderId],
-              materialId: [purchaseoder.materialId],
-              materialBrand: [purchaseoder.materialBrand],
-              materialQuantity: [purchaseoder.materialQuantity],
-              materialUnit: [purchaseoder.materialUnit],
-              materialUnitPrice: [purchaseoder.materialUnitPrice],
+              id: [purchaseorder.materialId],
+              status: [purchaseorder.status],
+              created_by: [purchaseorder.created_by],
+              created_at: [purchaseorder.created_at],
+              last_updated_by: [purchaseorder.last_updated_by],
+              last_updated_at: [purchaseorder.last_updated_at],
+              projectName: [purchaseorder.projectName],
+              addressId: [purchaseorder.addressId],
+              addressLine1: [purchaseorder.addressLine1],
+              addressLine2: [purchaseorder.addressLine2],
+              city: [purchaseorder.city],
+              state: [purchaseorder.state],
+              countrypurchaseOrderDetailList: [purchaseorder.country],
+              pinCode: [purchaseorder.pinCode],
+              purchaseOrderDetailId: [purchaseorder.purchaseOrderDetailId],
+              purchaseOrderId: [purchaseorder.purchaseOrderId],
+              materialId: [purchaseorder.materialId],
+              materialBrand: [purchaseorder.materialBrand],
+              materialQuantity: [purchaseorder.materialQuantity],
+              materialUnit: [purchaseorder.materialUnit],
+              materialUnitPrice: [purchaseorder.materialUnitPrice],
               materialIgst: [1],
               materialSgst: [2],
               materialCgst: [],
+              amount: [],
+              gstAmount: [],
               gst: [],
               gstTotal: [],
               total: [{ value: "", disabled: false }]
             });
             this.subscriptions.push(
               frmGrp.valueChanges.pipe(debounceTime(200)).subscribe(formVal => {
+                this.poTableData[i].purchaseOrderDetailList[j].qty =
+                  formVal.materialQuantity;
+                const amount =
+                  formVal.materialQuantity * formVal.materialUnitPrice;
                 const gstCalc =
                   formVal.materialQuantity *
                   formVal.materialUnitPrice *
                   (formVal.gst / 100);
-                const calc =
-                  formVal.materialQuantity * formVal.materialUnitPrice +
-                  gstCalc;
-
+                const calc = amount + gstCalc;
+                this.poTableData[i].purchaseOrderDetailList[j].amount = amount;
+                this.poTableData[i].purchaseOrderDetailList[
+                  j
+                ].gstAmount = gstCalc;
+                this.poTableData[i].purchaseOrderDetailList[j].total = calc;
+                frmGrp.get("amount").setValue(amount);
                 frmGrp.get("total").setValue(calc);
-                frmGrp.get("gstTotal").setValue(gstCalc);
+                frmGrp.get("gstAmount").setValue(gstCalc);
               })
             );
 
@@ -99,26 +111,44 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
   get totalAmount(): number {
-    return this.poForms
-      .getRawValue()
-      .forms.map(frm => frm.purchaseOrderDetailList)
-      .flat()
-      .map(mat => mat.total)
-      .reduce((a, b) => a + b);
+    let sum: number = 0;
+    if (this.mode === "edit") {
+      return this.poForms
+        .getRawValue()
+        .forms.map(frm => frm.purchaseOrderDetailList)
+        .flat()
+        .map(mat => mat.total)
+        .reduce((a, b) => a + b);
+    } else {
+      this.poTableData.forEach((materials: PoMaterial) => {
+        materials.purchaseOrderDetailList.forEach(mat => {
+          sum += Number(mat.total);
+        });
+      });
+      return sum;
+    }
   }
 
   get gstTotalAmount() {
-    return this.poForms
-      .getRawValue()
-      .forms.map(frm => frm.purchaseOrderDetailList)
-      .flat()
-      .map(mat => mat.gstTotal)
-      .reduce((a, b) => a + b);
+    let sum = 0;
+    if (this.mode === "edit") {
+      return this.poForms
+        .getRawValue()
+        .forms.map(frm => frm.purchaseOrderDetailList)
+        .flat()
+        .map(mat => mat.gstAmount)
+        .reduce((a, b) => a + b);
+    } else {
+      this.poTableData.map((materials: PoMaterial) => {
+        materials.purchaseOrderDetailList.map(mat => {
+          sum += Number(mat.gstAmount);
+        });
+      });
+      return sum;
+    }
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
   sumbit() {
@@ -142,5 +172,75 @@ export class PoTableComponent implements OnInit, OnDestroy {
       });
       return material;
     });
+  }
+
+  getMaterialQuantity(m) {
+    if (this.mode != "edit") {
+      return this.poTableData[m].purchaseOrderDetailList.reduce(
+        (total, purchase: PurchaseOrder) => {
+          return (total += purchase.materialQuantity);
+        },
+        0
+      );
+    } else {
+      console.log(this.poForms);
+      return this.poTableData[m].purchaseOrderDetailList.reduce(
+        (total, purchase: PurchaseOrder) => {
+          return (total += purchase.qty);
+        },
+        0
+      );
+    }
+  }
+  getMaterialAmount(m) {
+    if (this.mode != "edit") {
+      return this.poTableData[m].purchaseOrderDetailList.reduce(
+        (total, purchase: PurchaseOrder) => {
+          return (total += purchase.amount);
+        },
+        0
+      );
+    } else {
+      return this.poTableData[m].purchaseOrderDetailList.reduce(
+        (total, purchase: PurchaseOrder) => {
+          return (total += purchase.amount);
+        },
+        0
+      );
+    }
+  }
+  getMaterialGstAmount(m) {
+    if (this.mode != "edit") {
+      return this.poTableData[m].purchaseOrderDetailList.reduce(
+        (total, purchase: PurchaseOrder) => {
+          return (total += purchase.gstAmount);
+        },
+        0
+      );
+    } else {
+      return this.poTableData[m].purchaseOrderDetailList.reduce(
+        (total, purchase: PurchaseOrder) => {
+          return (total += purchase.gstAmount);
+        },
+        0
+      );
+    }
+  }
+  getMaterialTotalAmount(m) {
+    if (this.mode != "edit") {
+      return this.poTableData[m].purchaseOrderDetailList.reduce(
+        (total, purchase: PurchaseOrder) => {
+          return (total += purchase.total);
+        },
+        0
+      );
+    } else {
+      return this.poTableData[m].purchaseOrderDetailList.reduce(
+        (total, purchase: PurchaseOrder) => {
+          return (total += purchase.total);
+        },
+        0
+      );
+    }
   }
 }

@@ -21,14 +21,16 @@ export class SelectApproverComponent implements OnInit {
   approverData: ApproverData[] = [];
   selectedApprover: ApproverData;
   ngOnInit() {
-    this.orgId=Number(localStorage.getItem("orgId"))
-    this.poService.getApproverData(this.orgId,this.data.projectId).then(res => {
-      this.approverData = res.data;
-    });
+    this.orgId = Number(localStorage.getItem("orgId"));
+    this.poService
+      .getApproverData(this.orgId, this.data.projectId)
+      .then(res => {
+        this.approverData = res.data;
+      });
   }
 
   sendPo() {
-    this.data.approverId = this.selectedApprover.user_d;
-    this.poService.sendPoData(this.data);
+    this.data.approverId = this.selectedApprover.userId;
+    this.dialogRef.close(this.data);
   }
 }

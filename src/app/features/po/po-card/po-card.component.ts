@@ -19,17 +19,17 @@ export class PoCardComponent implements OnInit {
   @Input("cardData") cardData: CardData;
   constructor(private dialog: MatDialog, private formBuilder: FormBuilder) {}
   projectDetails: FormGroup;
-  @Input("viewMode") viewMode: boolean;
+  @Input("mode") mode: string;
 
   ngOnInit() {
     this.formInit();
-    console.log(this.cardData);
+    if (this.mode != "edit") console.log("cardData", this.cardData);
   }
   formInit() {
     this.projectDetails = this.formBuilder.group({
-      orderNo: [],
+      orderNo: [this.cardData.poNumber],
       openingDate: [],
-      endDate: ["2029-02-28T18:30:00.000Z"],
+      endDate: [],
       billingAddress: [this.cardData.billingAddress],
       projectAddress: [this.cardData.projectAddress],
       supplierAddress: [this.cardData.supplierAddress],
@@ -47,12 +47,11 @@ export class PoCardComponent implements OnInit {
   openDialog(roleType: string, projectId: number) {
     const dialogRef = this.dialog.open(SelectPoRoleComponent, {
       width: "1200px",
+       height:"500px",
       data: { roleType, projectId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
-      console.log(result);
       if (result[0] === "projectBillingUserId") {
         this.cardData.billingAddress.email = result[1].approver.email;
         this.cardData.billingAddress.contactNo = result[1].approver.contactNo;
@@ -77,13 +76,11 @@ export class PoCardComponent implements OnInit {
   }
   openaddressDialog(roleType: string, id: number) {
     const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
-      width: "1200px",
+      width: "1600px",
       data: { roleType, id }
     });
 
     dialogRef.afterClosed().subscribe((result: Address) => {
-      console.log("The dialog was closed");
-      console.log(result);
       if (result[0] === "projectBillingAddressId") {
         this.cardData.billingAddress.addressLine1 =
           result[1].address.addressLine1;

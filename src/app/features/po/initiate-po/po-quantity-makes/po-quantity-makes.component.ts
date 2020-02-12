@@ -99,7 +99,9 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       this.initiatePoData.materialList = this.materialForms.value.forms;
     });
     this.poService.initiatePo([this.initiatePoData]).then(res => {
-      this.router.navigate(["/po/po-generate/" + res.data[0]]);
+      this.router.navigate(["/po/po-generate/" + res.data[0]], {
+        state: { mode: "edit" }
+      });
     });
     console.log(this.initiatePoData);
   }

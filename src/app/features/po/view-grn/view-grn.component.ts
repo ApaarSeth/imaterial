@@ -12,7 +12,7 @@ import { GRNService } from 'src/app/shared/services/grn/grn.service';
 
 export class ViewGRNComponent implements OnInit {
 
-    grnDetails: GRNDetails;
+    grnDetails: GRNDetails[];
     grnId: number;
 
     displayedColumns: string[] = [
@@ -21,6 +21,7 @@ export class ViewGRNComponent implements OnInit {
         "Certified Quantity",
         "Date"
     ];
+    grnHeaders: any;
 
     constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService) { }
 
@@ -35,7 +36,13 @@ export class ViewGRNComponent implements OnInit {
     getGRNDetails(grnId: number) {
         this.grnService.getGRNDetails(grnId).then(data => {
             console.log("grn data", data.data);
-            this.grnDetails = data.data;
+            this.grnHeaders = data.data;
+            //this.grnDetails = data.data.poMaterialList;
         });
+    }
+
+    getData(x){
+        console.log(x)
+        return x
     }
 }

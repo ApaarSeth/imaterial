@@ -1,5 +1,5 @@
 <mat-accordion displayMode="flat" multi class="mat-table">
-  <section matSort class="mat-elevation-z2 mat-header-row">
+  <section matSort class="mat-elevation-z2 mat-header-row blue-background-color-color-white-section">
     <span class="mat-header-cell" mat-sort-header="vesselName">Name</span>
     <span class="mat-header-cell" mat-sort-header="vesselId"
       >Estimated Quantity</span
@@ -12,13 +12,17 @@
       >Available quantity in project</span
     >
   </section>
-  <mat-expansion-panel *ngFor="let project of newProjectData">
-    <mat-expansion-panel-header class="mat-row">
+  <mat-expansion-panel *ngFor="let project of newProjectData"  class="myPanel">
+    <mat-expansion-panel-header class="mat-row material-row">
       <span class="mat-cell">{{ project.ProjectGlobal.projectName }}</span>
     </mat-expansion-panel-header>
-    <mat-expansion-panel *ngFor="let material of project.GlobalMaterials">
-      <mat-expansion-panel-header class="mat-row">
-        <span class="mat-cell">{{ material.GlobalMaterial.materialName }}</span>
+    <mat-expansion-panel *ngFor="let material of project.GlobalMaterials"  class="myPanel">
+      <mat-expansion-panel-header class="mat-row material-project">
+        <span class="mat-cell" matTooltip=" {{ material.GlobalMaterial.materialName }}">
+           <div class="limited-character">
+                {{ material.GlobalMaterial.materialName }}
+            </div> 
+          </span>
         <span class="mat-cell">{{ material.GlobalMaterial.estimatedQty }}</span>
         <span class="mat-cell">{{ material.GlobalMaterial.sum }}</span>
         <span class="mat-cell">{{

@@ -53,6 +53,7 @@ export class UserDetailComponent implements OnInit {
 
    addUserBtn : boolean = false;
   allUsers: AllUserDetails;
+  orgId: number;
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -64,11 +65,12 @@ export class UserDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() { 
+     this.orgId = Number(localStorage.getItem("orgId")) ;
     this.getAllUsers();
   }
 
   getAllUsers(){
-  this.userService.getAllUsers(1).then(data => {
+  this.userService.getAllUsers(this.orgId).then(data => {
             this.dataSourceActivate = data.data.activatedProjectList;
             this.dataSourceDeactivate = data.data.deactivatedProjectList;
 

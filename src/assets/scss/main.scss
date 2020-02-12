@@ -9,7 +9,7 @@
     @import "./layout/header.scss";
 
     @import "./base/spacing.scss";
-
+    @import "./pages/po.component.scss";
     @import "./pages/dashboard.scss";
     @import "./pages/bom-preview.scss";
     @import "./pages/global-store.component.scss";
@@ -19,3 +19,4 @@
     @import "./pages/bom.scss";
     @import "./pages/rfq-bids.component.scss";
     @import "./pages/supplier.scss";
+    @import "./pages/address-dialog.scss"

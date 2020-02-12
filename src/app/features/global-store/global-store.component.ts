@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRouteSnapshot, ActivatedRoute } from "@angular/router";
+import { ActivatedRouteSnapshot, ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-global-store",
@@ -7,9 +7,10 @@ import { ActivatedRouteSnapshot, ActivatedRoute } from "@angular/router";
   styleUrls: ["../../../assets/scss/main.scss"]
 })
 export class GlobalStoreComponent implements OnInit {
-  buttonName: string;
+  buttonName: string = "materialWise";
   globalStoreData: [];
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,
+  private router: Router) {}
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -19,5 +20,8 @@ export class GlobalStoreComponent implements OnInit {
   }
   setButtonName(name: string) {
     this.buttonName = name;
+  }
+  raiseRfq(){
+    this.router.navigate(['rfq/project-materials']);
   }
 }

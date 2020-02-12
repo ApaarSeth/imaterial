@@ -61,6 +61,10 @@ export interface PurchaseOrder {
   materialIgst: number;
   materialSgst: number;
   materialCgst: number;
+  amount: number;
+  gstAmount: number;
+  total: number;
+  qty?: number;
 }
 export interface terms {
   termsDesc: string;
@@ -147,7 +151,7 @@ export interface ApproverData {
   created_at: string;
   last_updated_by: string;
   last_updated_at: string;
-  user_d: number;
+  userId: number;
   userType: string;
   organizationId: number;
   accountOwner: number;
@@ -178,4 +182,11 @@ export interface poMaterialList {
   materialQty: number;
   brandNames: string[];
   materialUnitPrice: number;
+}
+
+export interface poApproveReject {
+  poApproverId: number;
+  purchaseOrderId: number;
+  userId: number;
+  isApproved: number;
 }

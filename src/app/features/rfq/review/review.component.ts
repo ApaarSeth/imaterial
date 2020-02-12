@@ -11,6 +11,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddRFQConfirmationComponent } from "src/app/shared/dialogs/add-rfq-confirmation/add-rfq-double-confirmation.component";
 import { DocumentList } from "src/app/shared/models/PO/po-data";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "review",
@@ -26,7 +27,11 @@ export class ReviewComponent implements OnInit {
   supplierIds: number[];
   rfqDetails: AddRFQ = {} as AddRFQ;
 
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder) {}
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;
@@ -71,8 +76,7 @@ export class ReviewComponent implements OnInit {
       const dialogRef = this.dialog.open(AddCommentDialogComponent, {
         width: "1200px"
       });
-      dialogRef.afterClosed().subscribe(result => {
-      });
+      dialogRef.afterClosed().subscribe(result => {});
     }
   }
   openDialog2(): void {
@@ -80,8 +84,7 @@ export class ReviewComponent implements OnInit {
       const dialogRef = this.dialog.open(ViewDocumentsDialogComponent, {
         width: "1200px"
       });
-      dialogRef.afterClosed().subscribe(result => {
-      });
+      dialogRef.afterClosed().subscribe(result => {});
     }
   }
 
@@ -95,6 +98,9 @@ export class ReviewComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
+        if (result.status != 0) {
+          this.router.navigate(["rfq/rfq-detail"]);
+        }
       });
     }
   }

@@ -1,26 +1,35 @@
 <h1 mat-dialog-title>Select Address</h1>
-<div mat-dialog-content>
+<div mat-dialog-content class="mat-tab-add-address-modal-po">
     <mat-tab-group class="overflow-remove">
-        <mat-tab label="Choose Address">
+        <mat-tab label="Choose Address" class="addressDialog">
             <form *ngIf="address" [formGroup]="selectAddressFrm">
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12 p-t-10 show-address-po-modal">
                         <mat-radio-group aria-label="Select an option" name="address" formControlName="address">
                             <div class="p-t-10 p-b-10 gray-border" *ngFor="let add of address">
                                 <mat-radio-button class="p-l-25" [value]="add" [checked]="add.primaryAddress===1">
-                                    {{address.addressLine1}}
-                                    <span *ngIf="add.city">{{add.city}}</span>
-                                    <span *ngIf="add.state">{{add.state}}</span></mat-radio-button>
+                                   <span *ngIf="add.addressLine1">{{add.addressLine1}}</span>
+                                    <span *ngIf="add.addressLine2">, {{add.addressLine2}}</span>
+                                    <span *ngIf="add.city">, {{add.city}}</span>
+                                    <span *ngIf="add.state">, {{add.state}}</span>
+                                     <span *ngIf="add.pinCode">, {{add.pinCode}}</span>
+                                </mat-radio-button>
                             </div>
                         </mat-radio-group>
                     </div>
+                </div>
+                <div mat-dialog-actions class="pull-right">
+                    <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+                        cdkFocusInitial (click)="onselectAddress()">
+                        Save
+                    </button>
                 </div>
             </form>
         </mat-tab>
 
         <mat-tab label="Add Address">
             <form [formGroup]="newAddressForm">
-                <div div class="container">
+                <div class="container">
                     <div class="row">
                         <div class="col-md-6 ">
                             <div class="row border-input">
@@ -29,16 +38,22 @@
                                         formControlName="addressLine1" />
                                 </mat-form-field>
                             </div>
+                              <div class="row border-input">
+                                <mat-form-field class="border-select col-xs-12 p-r-150 p-l-150">
+                                    <mat-label>City</mat-label>
+                                    <mat-select formControlName=city>
+                                        <mat-option *ngFor="let city of cities" [value]="city.value">
+                                            {{city.viewValue}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
                             <div class="row border-input">
                                 <mat-form-field class="col-xs-12 p-r-150 p-l-150">
                                     <input matInput type="string" placeholder="Pincode" formControlName="pinCode" />
                                 </mat-form-field>
                             </div>
-                            <div class="row border-input">
-                                <mat-form-field class="col-xs-12 p-r-150 p-l-150">
-                                    <input matInput type="text" placeholder="State" formControlName="state" />
-                                </mat-form-field>
-                            </div>
+                          
                         </div>
                         <div class="col-md-6">
                             <div class="row border-input">
@@ -47,14 +62,10 @@
                                         formControlName="addressLine2" />
                                 </mat-form-field>
                             </div>
+                            
                             <div class="row border-input">
-                                <mat-form-field class="border-select">
-                                    <mat-label>City</mat-label>
-                                    <mat-select formControlName=city>
-                                        <mat-option *ngFor="let city of cities" [value]="city.value">
-                                            {{city.viewValue}}
-                                        </mat-option>
-                                    </mat-select>
+                                <mat-form-field class="col-xs-12 p-r-300">
+                                    <input matInput type="text" placeholder="State" formControlName="state" />
                                 </mat-form-field>
                             </div>
                             <div class="row border-input">
@@ -65,18 +76,24 @@
                         </div>
                     </div>
                 </div>
+                <div mat-dialog-actions class="pull-right p-t-5">
+                    <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+                        cdkFocusInitial (click)="onAddAddress()">
+                        Add
+                    </button>
+                </div>
             </form>
         </mat-tab>
     </mat-tab-group>
 </div>
 
 <div mat-dialog-actions class="pull-right">
-    <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
+    <!-- <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
         (click)="onselectAddress()">
         Save
-    </button>
-    <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
+    </button> -->
+    <!-- <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
         (click)="onAddAddress()">
         Add
-    </button>
+    </button> -->
 </div>

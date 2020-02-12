@@ -44,6 +44,7 @@ export class IndentDashboardComponent implements OnInit {
   displayedColumns: string[] = [
     "Material Name",
     "Estimated Quantity",
+    "Required Material",
     "Required Quantity",
     "Required Date"
   ];

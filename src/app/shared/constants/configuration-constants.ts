@@ -22,7 +22,7 @@ export const API = {
   GETMATERIALWISE: organizationId => `global/materials/${organizationId}`,
   GETPROJECTWISE: organizationId => `global/projects/${organizationId}`,
   RFQMATERIALS: `rfqMaterials`,
-  RFQDETAIL: organizationId => `rfq/list/1`,
+  RFQDETAIL: organizationId => `rfq/list/${organizationId}`,
   RFQPO: (organizationId, rfqId) => `rfq/details/${organizationId}/${rfqId}`,
   RFQADDPO: `po/addPO`,
   GETSUPPLIERS: organizationId => `projects/getsuppliers/${organizationId}`,
@@ -41,14 +41,12 @@ export const API = {
   POSTDOCUMENTUPLOAD: `documents/upload`,
   SIGNUP: `api/auth/signup`,
   SIGNIN: `oauth/token`,
-  //STATE: 'account/api/permitted/address/states',
   GETISSUETOINDENT: (materialId, projectId) =>
     `materials/updateStock/${materialId}/${projectId}`,
   POSTISSUETOINDENT: materialId => `indent/issueQty/${materialId}`,
   GETSINGLEINDENT: indentId => `indent/detail/${indentId}`,
   GETGRNDETAILS: grnId => `po/view/grn/poDetails/${grnId}`,
-  ADDGRN: (organizationId, purchaseOrderId) =>
-    `po/add/grn/${organizationId}/${purchaseOrderId}`,
+  ADDGRN: `po/add/grn`,
   VIEWGRN: (organizationId, purchaseOrderId) =>
     `po/grn/detail/${organizationId}/${purchaseOrderId}`,
   GETRFQVIEW: rfqId => `rfq/view/details/${rfqId}`,
@@ -58,5 +56,8 @@ export const API = {
   EDITUSER: `user/update/roleproject`,
   DEACTIVATEUSER: userId => `user/delete/${userId}`,
   UPLOADEXCEL: projectId => `bom/materials/fileupload/${projectId}`,
-  DELETESUPPLIER: supplierId => `projects/deleteSupplier/${supplierId}`
+  DELETESUPPLIER: supplierId => `projects/deleteSupplier/${supplierId}`,
+  DELETEMATERIAL: (projectId, materialId) =>
+    `material/delete/${projectId}/${materialId}`,
+  APPROVEREJECTPO: `po/approveRejectPO`
 };

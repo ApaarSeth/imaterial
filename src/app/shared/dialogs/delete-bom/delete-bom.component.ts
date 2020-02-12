@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AllUserDetails, UserDetailsPopUpData } from '../../models/user-details';
 import { UserService } from '../../services/userDashboard/user.service';
 import { Router } from '@angular/router';
+import { BomService } from '../../services/bom/bom.service';
 
 export interface City {
   value: string;
@@ -26,41 +27,32 @@ export interface Unit {
 }
 
 @Component({
-  selector: "disable-user-dialog",
-  templateUrl: "disable-user-component.html"
+  selector: "delete-bom-dialog",
+  templateUrl: "delete-bom-component.html"
 })
-export class DeactiveUserComponent implements OnInit {
-    userDetails: AllUserDetails;
-  orgId: number;
+export class DeleteBomComponent implements OnInit {
   constructor(
-    private userService: UserService,
-    private dialogRef: MatDialogRef<DeactiveUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: UserDetailsPopUpData,
+    private bomService: BomService,
+    private dialogRef: MatDialogRef<DeleteBomComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private router: Router
   ) {}
 
   ngOnInit() {
    
-     this.orgId = Number(localStorage.getItem("orgId"));
   }
 
-  deactivateUserService(){
-    this.userDetails = this.data.isDelete
-      ? this.data.detail
-      : ({} as AllUserDetails);
-
-    if(this.data.isDelete){
-      this.userService.deactivateUser(this.data.detail.userId).then(res =>  res.data);
-    }
+  deactivateBomService(){
+      this.bomService.deleteMaterial(this.data.materialId, this.data.projectId).then(res =>  res.data);
   }
 
   cancel(){
      this.dialogRef.close({ data: 'data' });
   }
 
-  deactivateUser(){
-     this.dialogRef.close(this.deactivateUserService());
+  deactivateMaterial(){
+     this.dialogRef.close(this.deactivateBomService());
   }
 
  

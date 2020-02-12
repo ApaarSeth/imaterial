@@ -5,8 +5,7 @@ import { first } from "rxjs/operators";
 
 @Component({
   selector: "app-po-documents",
-  templateUrl: "./po-documents.component.html",
-  styleUrls: ["./po-documents.component.scss"]
+  templateUrl: "./po-documents.component.html"
 })
 export class PoDocumentsComponent implements OnInit {
   @Input("documentListLength") public documentListLength: number;
