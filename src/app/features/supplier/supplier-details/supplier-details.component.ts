@@ -54,7 +54,7 @@ export class SupplierDetailComponent implements OnInit {
             if(this.dataSource.length>0){
               this.addUserBtn = false;
             } 
-            else if(this.dataSource == null || this.dataSource.length==0){
+            else if(this.dataSource.length==0){
               this.addUserBtn = true;
             }
         });
