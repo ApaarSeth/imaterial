@@ -25,7 +25,7 @@ import {
 } from "src/app/shared/models/subcategory-materials";
 import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
 import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
-import { DeleteBomComponent } from 'src/app/shared/dialogs/delete-bom/delete-bom.component';
+import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom.component";
 
 @Component({
   selector: "app-bom-table",
@@ -47,7 +47,6 @@ import { DeleteBomComponent } from 'src/app/shared/dialogs/delete-bom/delete-bom
 })
 export class BomTableComponent implements OnInit {
   projectId: number;
-  product: ProjectDetails;
   projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
@@ -86,13 +85,13 @@ export class BomTableComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.orgId = Number(localStorage.getItem("orgId"));
-   
+    this.getProject(this.projectId);
     this.getMaterialWithQuantity();
     //this.product = history.state.projectDetails;
   }
 
-getMaterialWithQuantity(){
- this.bomService
+  getMaterialWithQuantity() {
+    this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
         this.subcategories = [...res.data];
@@ -117,9 +116,7 @@ getMaterialWithQuantity(){
         this.dataSource = new MatTableDataSource(this.subcategoryData);
         console.log(this.dataSource);
       });
-
-       this.getProject(this.projectId);
-}
+  }
   toggleRow(element: Subcategory) {
     element.materialSpecs &&
     (element.materialSpecs as MatTableDataSource<Materials>).data.length
@@ -131,11 +128,11 @@ getMaterialWithQuantity(){
 
   getProject(id: number) {
     this.projectService.getProject(this.orgId, id).then(data => {
-      this.product = data.data;
+      this.projectData = data.data;
     });
   }
   raiseIndent() {
-    let projectDetails = this.product;
+    let projectDetails = this.projectData;
     let checkedSubcategory = this.subcategoryData.filter(sub => {
       if (sub.checked === true) {
         return sub;
@@ -155,7 +152,7 @@ getMaterialWithQuantity(){
     const data: ProjetPopupData = {
       isEdit: true,
       isDelete: false,
-      detail: this.product
+      detail: this.projectData
     };
 
     this.openDialog(data);
@@ -165,7 +162,7 @@ getMaterialWithQuantity(){
     const data: ProjetPopupData = {
       isEdit: false,
       isDelete: true,
-      detail: this.product
+      detail: this.projectData
     };
 
     this.openDialog(data);
@@ -205,13 +202,13 @@ getMaterialWithQuantity(){
         data: { materialId: materialId, projectId: projectId }
       });
       dialogRef.afterClosed().subscribe(result => {
-          this.getMaterialWithQuantity();
+        this.getMaterialWithQuantity();
         console.log("The dialog was closed");
       });
     }
   }
 
- openDeleteDialog(materialId, projectId): void {
+  openDeleteDialog(materialId, projectId): void {
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(DeleteBomComponent, {
         width: "800px",
@@ -219,16 +216,14 @@ getMaterialWithQuantity(){
       });
       dialogRef.afterClosed().subscribe(result => {
         this.getMaterialWithQuantity();
-        
-        console.log("The dialog was closed");
 
+        console.log("The dialog was closed");
       });
     }
   }
 
-
-  deleteBom(materialId,projectId,disabledStatus){
-    if(disabledStatus != true){
+  deleteBom(materialId, projectId, disabledStatus) {
+    if (disabledStatus != true) {
       this.openDeleteDialog(materialId, projectId);
     }
   }

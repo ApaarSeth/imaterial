@@ -100,10 +100,7 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.city : "",
         Validators.required
       ],
-      area: [
-        this.data.isEdit ? this.data.detail.area : "",
-        Validators.required
-      ],
+      area: [this.data.isEdit ? this.data.detail.area : ""],
       startDate: [
         this.data.isEdit ? this.data.detail.startDate : "",
         Validators.required
@@ -112,21 +109,17 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.endDate : "",
         Validators.required
       ],
-      cost: [
-        this.data.isEdit ? this.data.detail.cost : "",
-        Validators.required
-      ],
+      cost: [this.data.isEdit ? this.data.detail.cost : ""],
       type: [
         this.data.isEdit ? this.data.detail.type : "",
         Validators.required
       ],
-      unit: [this.data.isEdit ? this.data.detail.unit : "", Validators.required]
+      unit: [this.data.isEdit ? this.data.detail.unit : ""]
     });
   }
 
   addProjects(projectDetails: ProjectDetails) {
-    this.projectService.addProjects(projectDetails).then(res => {
-    });
+    this.projectService.addProjects(projectDetails).then(res => {});
   }
 
   updateProjects(projectDetails: ProjectDetails) {
