@@ -35,9 +35,9 @@ export class ProjectService {
   //   });
   // }
 
-  addProjects(projectData: ProjectDetails) {
-    projectData.userId = 1;
-    projectData.organizationId = 1;
+  addProjects(projectData: ProjectDetails,organizationId:number,userId:number) {
+    projectData.userId = userId;
+    projectData.organizationId = organizationId;
     return this.dataService
       .sendPostRequest(API.ADDPROJECT, projectData)
       .then(res => {
