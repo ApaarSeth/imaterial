@@ -342,3 +342,7 @@ a:hover {
 .m-0-auto{
   margin: 0px auto;
 }
+
+.mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover{
+  background: #ffffff !important;
+}
