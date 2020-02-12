@@ -44,8 +44,8 @@ export class AddProjectComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.orgId=Number(localStorage.getItem("orgId"))
-    this.userId=Number(localStorage.getItem("userId"))
+    this.orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
     this.initForm();
   }
 
@@ -97,10 +97,7 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.city : "",
         Validators.required
       ],
-      area: [
-        this.data.isEdit ? this.data.detail.area : "",
-        Validators.required
-      ],
+      area: [this.data.isEdit ? this.data.detail.area : ""],
       startDate: [
         this.data.isEdit ? this.data.detail.startDate : "",
         Validators.required
@@ -109,21 +106,19 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.endDate : "",
         Validators.required
       ],
-      cost: [
-        this.data.isEdit ? this.data.detail.cost : "",
-        Validators.required
-      ],
+      cost: [this.data.isEdit ? this.data.detail.cost : ""],
       type: [
         this.data.isEdit ? this.data.detail.type : "",
         Validators.required
       ],
-      unit: [this.data.isEdit ? this.data.detail.unit : "", Validators.required]
+      unit: [this.data.isEdit ? this.data.detail.unit : ""]
     });
   }
 
   addProjects(projectDetails: ProjectDetails) {
-    this.projectService.addProjects(projectDetails,this.orgId,this.userId).then(res => {
-    });
+    this.projectService
+      .addProjects(projectDetails, this.orgId, this.userId)
+      .then(res => {});
   }
 
   updateProjects(projectDetails: ProjectDetails) {
