@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="mode==='edit'">
-        <mat-radio-group class="radio-btn-group-po-table" aria-label="Select an option" [(ngModel)]="gst">
+        <mat-radio-group class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
             <mat-radio-button value="IGST" class="p-r-5">IGST</mat-radio-button>
             <mat-radio-button value="CGST & SGST">CGST & SGST</mat-radio-button>
         </mat-radio-group>
@@ -39,7 +39,7 @@
                             <span class="mat-cell widthReduce"></span>
                             <span class=" mat-cell"></span>
                             <span class="mat-cell">{{ purchaseOrder.materialBrand }}</span>
-                            <span class="mat-cell m-r-15">
+                            <span class="mat-cell">
                                 <ng-container *ngIf="mode!='edit';else editRate"> {{ purchaseOrder.materialUnitPrice }}
                                 </ng-container>
                                 <ng-template #editRate>
@@ -49,7 +49,7 @@
                                     </mat-form-field>
                                 </ng-template>
                             </span>
-                            <span class="mat-cell m-r-15">
+                            <span class="mat-cell">
                                 <ng-container *ngIf="mode!='edit';else editQuantity">
                                     {{ purchaseOrder.materialQuantity }}</ng-container>
                                 <ng-template #editQuantity>
