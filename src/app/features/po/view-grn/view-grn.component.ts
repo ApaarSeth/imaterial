@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { GRNDetails } from 'src/app/shared/models/grn';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GRNService } from 'src/app/shared/services/grn/grn.service';
 
 @Component({
@@ -17,13 +17,13 @@ export class ViewGRNComponent implements OnInit {
 
     displayedColumns: string[] = [
         "Material Name",
+         "Brand Name",
         "Awarded Quantity",
-        "Certified Quantity",
-        "Date"
+        "Certified Quantity"
     ];
     grnHeaders: any;
 
-    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService) { }
+    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService,private route:Router) { }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe(res=>{
@@ -44,5 +44,8 @@ export class ViewGRNComponent implements OnInit {
     getData(x){
         console.log(x)
         return x
+    }
+    viewBack(){
+           this.route.navigate(['po/detail-list']);
     }
 }

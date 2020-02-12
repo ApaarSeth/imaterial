@@ -28,8 +28,8 @@
       </mat-card>
 
       <!-- Accordion for PO Lists -->
-      
-        <div *ngIf="poDetails.sendForApprovalPOList">
+      <div class="po-list-detail-custom">
+         <div *ngIf="poDetails.sendForApprovalPOList">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -38,9 +38,9 @@
             </mat-expansion-panel-header>
             <div class="row matCellAlignLeft">
               <table mat-table [dataSource]="poDetails.sendForApprovalPOList" class="mat-elevation-z8 col-sm-12">
-                <ng-container matColumnDef="PO Name">
-                  <th mat-header-cell *matHeaderCellDef>PO Name</th>
-                  <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
+                <ng-container matColumnDef="PO Number">
+                  <th mat-header-cell *matHeaderCellDef>PO Number</th>
+                  <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="Raised Date">
@@ -102,9 +102,9 @@
             </mat-expansion-panel-header>
             <div class="row matCellAlignLeft">
               <table mat-table [dataSource]="poDetails.draftedPOList" class="mat-elevation-z8 col-sm-12">
-                <ng-container matColumnDef="PO Name">
-                  <th mat-header-cell *matHeaderCellDef>PO Name</th>
-                  <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
+                <ng-container matColumnDef="PO Number">
+                  <th mat-header-cell *matHeaderCellDef>PO Number</th>
+                  <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="Raised Date">
@@ -139,14 +139,15 @@
                 <ng-container matColumnDef="ViewGRN">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let element">
-                    <!-- <a [routerLink]="['../../po/view-grn/',element.purchaseOrderId]">View GRN</a> -->
+                    <!-- <a href="javascript:void(0)" >View GRN</a>        -->
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="AddGRN">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let element">
-                    <!-- <a [routerLink]="['../../po/add-grn/',element.purchaseOrderId]">Add GRN</a> -->
+                    <!-- <a href="javascript:void(0)">Add GRN</a> -->
+                     
                   </td>
                 </ng-container>
 
@@ -166,9 +167,9 @@
             </mat-expansion-panel-header>
             <div class="row matCellAlignLeft">
               <table mat-table [dataSource]="poDetails.acceptedRejectedPOList" class="mat-elevation-z8 col-sm-12">
-                <ng-container matColumnDef="PO Name">
-                  <th mat-header-cell *matHeaderCellDef>PO Name</th>
-                  <td mat-cell *matCellDef="let element">{{ element.poName }}</td>
+                <ng-container matColumnDef="PO Number">
+                  <th mat-header-cell *matHeaderCellDef>PO Number</th>
+                  <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="Raised Date">
@@ -220,3 +221,4 @@
             </div>
           </mat-expansion-panel>
         </div>
+      </div>

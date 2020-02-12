@@ -87,4 +87,8 @@ export class AddGRNComponent implements OnInit {
             });
         this.postGRNDetails(formValues);
   }
+
+  goBack(){
+       this.route.navigate(['po/detail-list']);
+  }
 }
