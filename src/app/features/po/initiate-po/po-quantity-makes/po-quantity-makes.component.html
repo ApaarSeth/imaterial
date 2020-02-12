@@ -11,7 +11,7 @@
     </div>
     <mat-accordion class="accordion-padding-zero" formArrayName="forms">
         <ng-template ngFor let-material [ngForOf]="checkedMaterialsList" let-mati="index">
-            <mat-expansion-panel>
+            <mat-expansion-panel class="myPanel" [expanded]="true">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         {{material.projectName}}

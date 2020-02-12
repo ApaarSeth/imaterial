@@ -49,7 +49,7 @@
         <mat-accordion>
             <!-- first Project -->
             <ng-template ngFor let-project [ngForOf]="rfqDetails.rfqProjectsList" let-i="index">
-                <mat-expansion-panel class="myPanel">
+                <mat-expansion-panel class="myPanel" [expanded]="true">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             {{project.projectName}}
