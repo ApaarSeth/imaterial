@@ -72,9 +72,9 @@
 
     <div class="rfq-detail-body">
      <!-- table structure -->
-    <mat-accordion class="accordion-padding-zero">
+  
       <ng-template ngFor let-material [ngForOf]="rfqDetails" let-i="index">
-        <mat-expansion-panel class="myPanel">
+        <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
               {{material.projectName}}
@@ -129,8 +129,9 @@
 
           <!-- end table part -->
         </mat-expansion-panel>
+        <br>
       </ng-template>
-    </mat-accordion>
+   
     <!-- end table structure -->
     </div>
 

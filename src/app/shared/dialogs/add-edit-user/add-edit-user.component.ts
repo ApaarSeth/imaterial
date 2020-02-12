@@ -106,8 +106,7 @@ this.userService.getRoles().then(data => {
         Validators.required
       ),
       projectIds: new FormControl(
-        this.data.isEdit ? this.data.detail.projectIds: "",
-        Validators.required
+        this.data.isEdit ? this.data.detail.projectIds: ""
       ),
       creatorId : new FormControl(''),
       userId: new FormControl(this.data.isEdit ? this.data.detail.userId : null)
