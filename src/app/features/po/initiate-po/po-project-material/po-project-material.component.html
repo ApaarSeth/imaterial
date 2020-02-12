@@ -2,6 +2,9 @@
     <div class="row ">
         <div class="col-xs-12 text-right p-b-10">
             <span>
+                
+            </span>
+            <span>
                 <button mat-raised-button [disabled]="!form.valid" matStepperNext (click)="materialAdded()"
                     class="main-background-color main-button color-white">
                     Next
@@ -35,7 +38,7 @@
 
 <mat-accordion *ngIf="poDetails" class="accordion-padding-zero">
     <form *ngIf="poDetails" [formGroup]="materialForm">
-        <mat-expansion-panel>
+        <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{poDetails[0].projectName}}
