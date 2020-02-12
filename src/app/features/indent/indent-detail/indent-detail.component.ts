@@ -43,17 +43,17 @@ export class IndentDetailComponent implements OnInit {
     private router: Router,
     private projectService: ProjectService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
+    this.orgId = Number(localStorage.getItem("orgId"));
     this.getProject(this.projectId);
     this.allIndents = this.route.snapshot.data.indentList;
     this.dataSource1 = this.allIndents.ongoingIndentList;
     this.dataSource2 = this.allIndents.completedIndentList;
-    this.orgId=Number(localStorage.getItem("orgId"))
   }
 
   getProject(id: number) {
@@ -95,8 +95,7 @@ export class IndentDetailComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {
-        });
+        .then(result => {});
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -106,12 +105,13 @@ export class IndentDetailComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {
-        });
+        .then(result => {});
     }
   }
   viewIndentDetails(row) {
     console.log("row", row);
-    this.router.navigate(["/indent/" + this.projectId + "/single-indent/" + row.indentId]);
+    this.router.navigate([
+      "/indent/" + this.projectId + "/single-indent/" + row.indentId
+    ]);
   }
 }

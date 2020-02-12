@@ -1,5 +1,5 @@
 <!-- <fix-header></fix-header> -->
-<form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
+<form [formGroup]="form" (ngSubmit)="submit()">
   <div class="page-start-point">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent">
       <div class="row m-b-10 ">
@@ -27,16 +27,16 @@
                 <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
               </mat-form-field>
             </div>
-            <div class="col-md-2 p-t-20 main-color">
-              <button mat-button class="pull-right" (click)="openDialog1()">
-                Comment
-              </button>
-            </div>
-            <div class="col-md-3 p-t-20 main-color">
-              <button mat-button class="pull-right" (click)="openDialog2()">
-                View Terms & Conditions/Documents
-              </button>
-            </div>
+            <!-- <div class="col-md-2 p-t-20 main-color">
+                <button mat-button class="pull-right" (click)="openDialog1()">
+                  Comment
+                </button>
+              </div>
+              <div class="col-md-3 p-t-20 main-color">
+                <button mat-button class="pull-right" (click)="openDialog2()">
+                  View Terms & Conditions/Documents
+                </button>
+              </div> -->
           </div>
 
           <!-- second row -->

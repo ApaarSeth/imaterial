@@ -14,12 +14,14 @@
                 P.O.Vaid Till: {{cardData.poValidUpto |date}}
             </span>
             <ng-template #editDateBlock>
-                P.O.Vaid Till:
-                <mat-form-field class="border-input">
-                    <input matInput formControlName="endDate" [matDatepicker]="endDate" placeholder="Required Date" />
-                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                    <mat-datepicker #endDate startView="month"></mat-datepicker>
-                </mat-form-field>
+                <span> P.O.Vaid Till:
+                    <mat-form-field class="border-input">
+                        <input matInput formControlName="endDate" [matDatepicker]="endDate"
+                            placeholder="Required Date" />
+                        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                        <mat-datepicker #endDate startView="month"></mat-datepicker>
+                    </mat-form-field>
+                </span>
             </ng-template>
         </div>
         <mat-grid-list cols="2" rowHeight="100px" class="poCard">
@@ -82,7 +84,8 @@
                                 {{cardData.supplierAddress.contactNo}}</span>
                         </mat-list-item>
                         <mat-list-item mat-subheader> Street Address:
-                           <span>{{cardData.supplierAddress.addressLine1}} {{cardData.supplierAddress.addressLine2}}</span>
+                            <span>{{cardData.supplierAddress.addressLine1}}
+                                {{cardData.supplierAddress.addressLine2}}</span>
                             <span *ngIf="mode==='edit'">
                                 <a href="javascript:void(0)"
                                     (click)="openaddressDialog('supplierAddressId',cardData.supplierAddress.supplierId)"><i

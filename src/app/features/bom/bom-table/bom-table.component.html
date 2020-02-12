@@ -1,7 +1,7 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <card-layout *ngIf="product" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)"
-      [projectDetails]="product"></card-layout>
+    <card-layout *ngIf="projectData" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)"
+      [projectDetails]="projectData"></card-layout>
     <div class="row p-t-10 p-b-10">
       <div class="col-sm-12">
         <span>
@@ -10,7 +10,7 @@
             Raise Indent
           </button>
         </span>
-        <span class="p-r-5 pull-right" *ngIf="projectData.openIndentCount">
+        <span class="p-r-5 pull-right" *ngIf="projectData.openIndentCount>0">
           <button mat-raised-button class="main-background-color main-button color-white pull-right "
             (click)="viewIndent()">
             View Indent
@@ -43,14 +43,14 @@
           <td class="text-left" mat-cell *matCellDef="let element">
             <!-- <input type="checkbox" /> -->
             <mat-checkbox (change)="element.checked = !element.checked" [checked]="element.checked">
-                     <div class="limited-character" matTooltip=" {{ element.materialName }}">
-                        {{ element.materialName }} <br>
-                      </div>
-                       <div class="limited-character"  matTooltip=" {{ element.materialGroup }}">
-                          <span class="category-name">
-                             {{ element.materialGroup}}
-                         </span>
-                       </div>
+              <div class="limited-character" matTooltip=" {{ element.materialName }}">
+                {{ element.materialName }} <br>
+              </div>
+              <div class="limited-character" matTooltip=" {{ element.materialGroup }}">
+                <span class="category-name">
+                  {{ element.materialGroup}}
+                </span>
+              </div>
             </mat-checkbox>
           </td>
         </ng-container>
@@ -93,10 +93,11 @@
             <!-- <a>
               <mat-icon>edit</mat-icon>
             </a> -->
-            <a [ngClass]="{'non-active': ((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))}" (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
+            <a [ngClass]="{'non-active': ((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))}"
+              (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
               <mat-icon>delete_outline</mat-icon>
             </a>
-            <a (click)="openDialog1(element.materialId,projectId)"  class="issue-to-indent-modal">Issue to Indent
+            <a (click)="openDialog1(element.materialId,projectId)" class="issue-to-indent-modal">Issue to Indent
               <mat-icon class="icon-inverse">open_in_browser</mat-icon></a>
           </td>
         </ng-container>
@@ -116,12 +117,12 @@
                       <div class="limited-character">
                         {{ element.materialName }} <br>
                       </div>
-                       <div class="limited-character">
-                          <span class="category-name">
-                             {{ element.materialGroup}}
-                         </span>
-                       </div>
-                       
+                      <div class="limited-character">
+                        <span class="category-name">
+                          {{ element.materialGroup}}
+                        </span>
+                      </div>
+
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="estimatedQty">
@@ -129,7 +130,7 @@
                       Estimated Quantity
                     </th>
                     <td class="text-left" mat-cell *matCellDef="let element">
-                      {{ element.estimatedQty }}   {{ element.materialUnit }}
+                      {{ element.estimatedQty }} {{ element.materialUnit }}
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="Requested Quantity">

@@ -11,7 +11,7 @@ import { PoCardComponent } from "./po-card/po-card.component";
 import { MatDialog } from "@angular/material";
 import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 import { PoDocumentsComponent } from "./po-documents/po-documents.component";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-po",
@@ -32,6 +32,7 @@ export class PoComponent implements OnInit {
   @ViewChild("poDocument", { static: false }) poDocument: PoDocumentsComponent;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private poService: POService
@@ -95,8 +96,14 @@ export class PoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log("result", result);
+      this.poService.sendPoData(result).then(res => {
+        if (res.status === 1) {
+          this.router.navigate(["po/detail-list"]);
+        }
+      });
+
       console.log("The dialog was closed");
-      console.log(result);
     });
   }
   poApproval(decision) {
