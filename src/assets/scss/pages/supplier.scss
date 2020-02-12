@@ -475,3 +475,8 @@ mat-icon {
     width: 22%;
     padding: 10px;
 }
+.po-list-detail-custom{
+    .mat-row .mat-cell {
+        min-width: 80px;
+    }
+}
