@@ -7,11 +7,8 @@ import { Subscription } from "rxjs";
 @Component({
   selector: "app-po-table",
   templateUrl: "./po-table.component.html"
-  // styleUrls: ["./po-table.component.scss"]
 })
 export class PoTableComponent implements OnInit, OnDestroy {
-  // @ViewChild("rate", { static: true }) rate: number;
-  // @ViewChild("quantity", { static: true }) quantity: number;
   @Input("poTableData") poTableData: PoMaterial[];
   @Input("mode") mode: string;
   gst: string;
@@ -107,7 +104,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
     );
     this.poForms = this.formBuilder.group({});
     this.poForms.addControl("forms", new FormArray(frmArr));
-    console.log(this.poForms);
   }
 
   get totalAmount(): number {
@@ -153,7 +149,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
   sumbit() {
     this.getData();
-    console.log(this.poForms.value.forms);
   }
 
   getData(): PoMaterial[] {
@@ -183,7 +178,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
         0
       );
     } else {
-      console.log(this.poForms);
       return this.poTableData[m].purchaseOrderDetailList.reduce(
         (total, purchase: PurchaseOrder) => {
           return (total += purchase.qty);
