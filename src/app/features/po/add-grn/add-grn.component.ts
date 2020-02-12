@@ -19,10 +19,10 @@ export class AddGRNComponent implements OnInit {
 
     displayedColumns: string[] = [
         "Material Name",
+        "Brand Name",
         "Awarded Quantity",
         "Delivered Quantity",
-        "Certified Quantity",
-        "Brand Name"
+        "Certified Quantity"
     ];
   materialForms: FormGroup;
     orgId: number;
