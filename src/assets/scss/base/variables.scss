@@ -153,8 +153,10 @@ input {
 
 .brand-view-style{
   background-color: $background-table-color-grey;
-  border-radius: 20px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 7px;
+    margin: 5px 5px;
+    font-size: 12px;
 }
 
 .border-input input,
@@ -350,4 +352,29 @@ a:hover {
 
 .mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover{
   background: #ffffff !important;
+}
+
+tr.mat-header-row{
+  height:45px;
+}
+tr.mat-footer-row, tr.mat-row{
+  height:35px;
+}
+section.mat-header-row.blue-background-color-color-white-section{
+  min-height: 45px;
+}
+mat-accordion{
+ mat-expansion-panel-header{
+      max-height: 38px;
+  }
+  .mat-row{
+    max-height: 38px;
+  }
+}
+
+.text-align-center{
+  text-align: center !important;
+}
+.text-align-right{
+  text-align: right !important;
 }

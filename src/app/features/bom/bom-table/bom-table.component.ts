@@ -30,7 +30,6 @@ import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom
 @Component({
   selector: "app-bom-table",
   templateUrl: "./bom-table.component.html",
-  styleUrls: ["./bom-table.component.scss"],
   animations: [
     trigger("detailExpand", [
       state(
@@ -171,7 +170,7 @@ export class BomTableComponent implements OnInit {
   openDialog(data: ProjetPopupData): void {
     if (data.isDelete == false) {
       const dialogRef = this.dialog.open(AddProjectComponent, {
-        width: "700px",
+        width: "1000px",
         data
       });
 
