@@ -57,11 +57,13 @@ export class SignupComponent implements OnInit {
    organizationType :this.signupForm.value.organisationType}
    this.signInSignupService.signUp(this.signInDetails).then(data => {
      console.log(data.data.serviceRawResponse.data)
-     localStorage.setItem('role', data.data.serviceRawResponse.data.role);
-     localStorage.setItem('ServiceToken', data.data.serviceRawResponse.data.serviceToken);
-     localStorage.setItem('userId', data.data.serviceRawResponse.data.userId);
-     localStorage.setItem('orgId', data.data.serviceRawResponse.data.orgId);
-    this.router.navigate(["dashboard"]);
+    if (data.data.serviceRawResponse.data){
+      localStorage.setItem('role', data.data.serviceRawResponse.data.role);
+       localStorage.setItem('ServiceToken', data.data.serviceRawResponse.data.serviceToken);
+       localStorage.setItem('userId', data.data.serviceRawResponse.data.userId);
+       localStorage.setItem('orgId', data.data.serviceRawResponse.data.orgId);
+      this.router.navigate(["dashboard"]);
+    }
   });
 // console.log("filled values", this.signInDetails);
 

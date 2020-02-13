@@ -37,14 +37,14 @@ export class SigninComponent implements OnInit {
     params.append("userType", "BUYER");
 
     this.signInSignupService.signIn(params.toString()).then(data => {
-      localStorage.setItem("role", data.serviceRawResponse.data.role);
-      localStorage.setItem(
-        "ServiceToken",
-        data.serviceRawResponse.data.serviceToken
-      );
-      localStorage.setItem("userId", data.serviceRawResponse.data.userId);
-      localStorage.setItem("orgId", data.serviceRawResponse.data.orgId);
-      this.router.navigate(["dashboad"]);
+      console.log(data.serviceRawResponse.data)
+      if (data.serviceRawResponse.data){
+        localStorage.setItem("role", data.serviceRawResponse.data.role);
+        localStorage.setItem("ServiceToken",data.serviceRawResponse.data.serviceToken);
+        localStorage.setItem("userId", data.serviceRawResponse.data.userId);
+        localStorage.setItem("orgId", data.serviceRawResponse.data.orgId);
+        this.router.navigate(["dashboard"]);
+      }
     });
   }
 }
