@@ -11,7 +11,7 @@ export class PODetailComponent implements OnInit {
   poDetails: PODetailLists;
 
   displayedColumns = [
-    "PO Name",
+    "PO Number",
     "Raised Date",
     "Total Material",
     "PO Amount",

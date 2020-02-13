@@ -42,8 +42,8 @@ const ELEMENT_DATA: AllUserDetails[] =[];
 
 
 export class UserDetailComponent implements OnInit {
-   displayedColumns: string[] = ['username', 'email', 'contactNo', 'roleName', 'ProjectList','star'];
-  displayedColumnsDeactivate : string[] = ['username', 'email', 'contactNo', 'roleName', 'ProjectList'];
+   displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project','star'];
+  displayedColumnsDeactivate : string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
 
    dataSourceActivate = ELEMENT_DATA;
    dataSourceDeactivate = ELEMENT_DATA;
@@ -74,7 +74,7 @@ export class UserDetailComponent implements OnInit {
             this.dataSourceActivate = data.data.activatedProjectList;
             this.dataSourceDeactivate = data.data.deactivatedProjectList;
 
-            if( this.dataSourceActivate != [] || this.dataSourceDeactivate != [] || this.dataSourceActivate.length>0 || this.dataSourceDeactivate.length>0){
+            if(this.dataSourceActivate.length>0 || this.dataSourceDeactivate.length>0){
               this.addUserBtn = false;
             } 
             else{

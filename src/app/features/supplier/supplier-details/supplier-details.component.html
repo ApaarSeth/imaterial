@@ -22,7 +22,7 @@
         <div class="row">
           <!-- <div class="col-sm-12"> -->
           <!-- table structure -->
-          <div class="supplier-details-table-div">
+          <div class="supplier-details-table-div" *ngIf="dataSource && dataSource.length>0">
           <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-sm-12" >
             <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->

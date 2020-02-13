@@ -16,7 +16,7 @@
         <div class="customBid">
           <div *ngFor="let project of rfqProjects; let p = index" [formGroupName]="p">
             <mat-accordion displayMode="flat" multi class="mat-table">
-              <mat-expansion-panel class="mat-expansion-panel-body">
+              <mat-expansion-panel class="mat-expansion-panel-body" class="myPanel" [expanded]="true">
                 <mat-expansion-panel-header class="row">
                   <section matSort class="mat-elevation-z2">
                     <span mat-sort-header="vesselName">{{ project.projectName }}<span
