@@ -22,6 +22,7 @@ import { ProjectDetails } from "../../models/project-details";
   templateUrl: "project-item.component.html"
 })
 export class ProjectItemComponent implements OnInit {
+  id: number;
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   @Output("onEdit") onEdit = new EventEmitter<number>();
@@ -46,4 +47,13 @@ export class ProjectItemComponent implements OnInit {
       this.router.navigate(["/bom/" + id], { state: { projectDetails } });
     }
   }
+  redirectToPurchaseOrder(){
+    this.router.navigate(['po/detail-list']);
+  }
+  redirectToOpenIndentCount(id: number, projectDetails: ProjectDetails){
+    this.router.navigate(["/indent/" + id + "/indent-detail"]);
+   // this.router.navigate(['/indent/1/indent-detail']);
+  }
+ 
+
 }

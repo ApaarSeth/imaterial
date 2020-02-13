@@ -1,19 +1,27 @@
-<form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
-  <h1 mat-dialog-title>Add Project</h1>
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()" class="add-project-component-dialog">
+  <div class="header-add-edit-dialog">
+      <h1 mat-dialog-title>Add Project</h1>
+      <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+  </div>
   <div mat-dialog-content>
     <div class="col-sm-12 display-flex m-t-20">
-      <div class="col-sm-3">
-        <div style="width: 105px;height: 90px;">
-          <img src="../../../../assets/images/2020-01-08.jpg" style="width: 100%;" />
+      <div class="col-sm-2">
+        <div class="project-profile">
+          <img src="../../../../assets/images/2020-01-08.jpg"/>
         </div>
-        <div class="text-left">
+        <div class="upload-photo-btn">
+            <button type="button" (click)="uploadPhoto()">
+              <span aria-hidden="true">Upload Photo</span>
+            </button>
         </div>
       </div>
       <!-- new structure -->
-      <div class="col-sm-9">
+      <div class="col-sm-10 add-edit-form-dialog">
         <!-- first row -->
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <!-- project Name -->
             <mat-form-field class="border-input">
               <mat-label>Project Name*</mat-label>
@@ -21,40 +29,10 @@
               <!-- <mat-error>Project Name is Required</mat-error> -->
             </mat-form-field>
           </div>
-          <div class="col-sm-6">
-            <!-- project Type -->
-            <mat-form-field class="border-select">
-              <mat-label>Project Type*</mat-label>
-              <mat-select formControlName="type">
-                <mat-option *ngFor="let projectType of projectTypes" [value]="projectType.type">
-                  {{projectType.type}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
         </div>
-        <!-- second row -->
-        <div class="row">
-          <div class="col-sm-6">
-            <!-- start date -->
-            <mat-form-field class="border-input">
-              <mat-label>Project Start Date*</mat-label>
-              <input matInput [matDatepicker]="startDate" formControlName="startDate" />
-              <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-              <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-            <!-- end date -->
-            <mat-form-field class="border-input">
-              <mat-label>Project End Date*</mat-label>
-              <input matInput [matDatepicker]="endDate" formControlName="endDate" />
-              <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-              <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div>
-        <!-- third row -->
+
+
+          <!-- second row -->
         <div class="row">
           <div class="col-sm-6">
             <!-- address 1 -->
@@ -73,28 +51,8 @@
             </mat-form-field>
           </div>
         </div>
-        <!-- fourth row -->
-        <div class="row">
-          <div class="col-sm-6">
-            <!-- city -->
-            <mat-form-field class="border-select">
-              <mat-label>City*</mat-label>
-              <mat-select formControlName=city>
-                <mat-option *ngFor="let city of cities" [value]="city.value">
-                  {{city.viewValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-            <!-- state value -->
-            <mat-form-field class="border-input">
-              <mat-label>State*</mat-label>
-              <input matInput type="string" formControlName="state" />
-              <!-- <mat-error>State is Required</mat-error> -->
-            </mat-form-field>
-          </div>
-        </div>
+
+
         <!-- fifth row -->
         <div class="row">
           <div class="col-sm-6">
@@ -106,6 +64,70 @@
             </mat-form-field>
           </div>
           <div class="col-sm-6">
+            <!-- city -->
+            <mat-form-field class="border-select">
+              <mat-label>City*</mat-label>
+              <mat-select formControlName=city>
+                <mat-option *ngFor="let city of cities" [value]="city.value">
+                  {{city.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+         <!-- fourth row -->
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- state value -->
+            <mat-form-field class="border-input">
+              <mat-label>State*</mat-label>
+              <input matInput type="string" formControlName="state" />
+              <!-- <mat-error>State is Required</mat-error> -->
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+          </div>
+        </div>
+
+         <!-- fourth row -->
+        <div class="row">
+          <div class="col-sm-6 date-dialog-add-edit">
+            <!-- start date -->
+            <mat-form-field class="border-input">
+              <mat-label>Project Start Date*</mat-label>
+              <input matInput [matDatepicker]="startDate" formControlName="startDate" />
+              <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+              <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 date-dialog-add-edit">
+            <!-- end date -->
+            <mat-form-field class="border-input">
+              <mat-label>Project End Date*</mat-label>
+              <input matInput [matDatepicker]="endDate" formControlName="endDate" />
+              <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+              <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      
+
+        <!-- another row -->
+        <div class="row">
+           <div class="col-sm-6">
+            <!-- project Type -->
+            <mat-form-field class="border-select">
+              <mat-label>Project Type*</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let projectType of projectTypes" [value]="projectType.type">
+                  {{projectType.type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-3">
             <!-- project area -->
             <mat-form-field class="border-input">
               <mat-label>Area</mat-label>
@@ -114,10 +136,8 @@
 
             </mat-form-field>
           </div>
-        </div>
-        <!-- sixth row -->
-        <div class="row">
-          <div class="col-sm-6">
+        
+        <div class="col-sm-3">
             <!-- project unit -->
             <mat-form-field class="border-select">
               <mat-label>Project Unit</mat-label>
@@ -128,7 +148,12 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="col-sm-6">
+
+        </div>
+        <!-- sixth row -->
+        <div class="row">
+          
+          <div class="col-sm-3">
             <!-- construction cost -->
             <mat-form-field class="border-input">
               <mat-label>Construction Cost</mat-label>
@@ -136,13 +161,42 @@
               <!-- <mat-error>Construction Cost is Required</mat-error> -->
             </mat-form-field>
           </div>
+
+           <div class="col-sm-3">
+            <!-- project area -->
+           <mat-form-field class="border-select">
+              <mat-label>Unit</mat-label>
+              <mat-select  [value]="selectedConstructionUnit">
+                <mat-option value="1">
+                  CR
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+           <div class="col-sm-6">
+            <!-- project Type -->
+             <mat-form-field class="border-input">
+              <mat-label>GST No*</mat-label>
+              <input matInput type="text" formControlName="gstNo" />
+                <small
+              *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
+              class="form-error-msg"> Gst No is required </small>
+              <small
+              *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched"
+              class="form-error-msg"> Enter Valid Gst No</small>
+              <!-- <mat-error>Address is Required</mat-error> -->
+            </mat-form-field>
+          </div>
+
+
         </div>
       </div>
       <!-- end structure -->
     </div>
   </div>
   <div mat-dialog-actions>
-    <div class="col-sm-12">
+    <div class="col-sm-12 add-edit-dialog-button">
       <button mat-raised-button [disabled]="!form.valid"
         class="main-background-color main-button color-white pull-right">
         Add

@@ -157,5 +157,7 @@ this.userService.getRoles().then(data => {
   userDetailsNavigate(){
     this.router.navigate(["users/user-detail"]);
     }
-  
+  closeDialog(){
+    this.dialogRef.close();
+  }
 }

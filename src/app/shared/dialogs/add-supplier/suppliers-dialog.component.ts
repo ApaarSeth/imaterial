@@ -52,4 +52,7 @@ export class SuppliersDialogComponent {
       res.data;
     });
   }
+  close(){
+    this.dialogRef.close();
+  }
 }
