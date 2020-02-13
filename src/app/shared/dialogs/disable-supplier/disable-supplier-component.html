@@ -1,7 +1,11 @@
 
-  <h1 mat-dialog-title>Confirmation</h1>
-   
-   <div class="col-sm-12 text-align-center">
+  <div class="header-add-edit-dialog">
+      <h1 mat-dialog-title>Confirmation</h1>
+      <button type="button" class="close" (click)="cancel()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+  </div>
+   <div class="col-sm-12  padding-for-dialog-after-header text-align-center">
      Are you sure you want to delete this supplier?
    </div>
       

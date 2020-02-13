@@ -8,3 +8,18 @@
 .w-30{
     width: 27px;
 }
+.bom-material-table{
+    tr.mat-header-row{
+        height: 45px;
+        th{
+            font-weight: 500;
+            font-size: 14px;
+        }
+    }
+     label.mat-checkbox-layout{
+                margin-bottom:0px !important;
+                }
+                .first-column-row-header{
+                    padding-left:48px;
+                }
+}

@@ -12,6 +12,9 @@ export class AddCommentDialogComponent {
   constructor(public dialogRef: MatDialogRef<AddCommentDialogComponent>) {}
 
   onNoClick(): void {
+    this.closeDialog();
+  }
+  closeDialog(){
     this.dialogRef.close();
   }
 }
