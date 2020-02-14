@@ -2,6 +2,10 @@
     mat-form-field{
         width: 100%;
     }
+    small{
+        color: red;
+        font-size: 12px;
+    }
 }
 .sign-up-form{
     mat-form-field{
@@ -12,6 +16,11 @@
     }
     .mat-select-arrow-wrapper{
         padding-top:13px !important;
+    }
+
+    small{
+        color: red;
+        font-size: 12px;
     }
 }
 

@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
 import { Router } from "@angular/router";
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
   selector: "signin",
@@ -24,7 +25,7 @@ export class SigninComponent implements OnInit {
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      userName: ["", Validators.required],
+      phone: ["", [Validators.required,Validators.pattern(FieldRegExConst.PHONE)]],
       password: ["", Validators.required]
     });
   }
