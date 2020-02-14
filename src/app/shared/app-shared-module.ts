@@ -7,6 +7,7 @@ import { SharedDialogs } from "./dialogs/shared-dialog";
 import { MaterialModule } from "./material-modules";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SearchPipe } from "./pipes/searchPipe";
+import { NumberToWordsPipe } from "./pipes/number-to-words";
 
 @NgModule({
   imports: [
@@ -17,8 +18,13 @@ import { SearchPipe } from "./pipes/searchPipe";
     ReactiveFormsModule
   ],
   providers: [DataService],
-  declarations: [...SharedDialogs, SearchPipe],
-  exports: [...SharedDialogs, SearchPipe, SharedComponentsModule],
+  declarations: [...SharedDialogs, SearchPipe, NumberToWordsPipe],
+  exports: [
+    ...SharedDialogs,
+    SearchPipe,
+    SharedComponentsModule,
+    NumberToWordsPipe
+  ],
   entryComponents: [...SharedDialogs]
 })
 export class AppSharedModule {}

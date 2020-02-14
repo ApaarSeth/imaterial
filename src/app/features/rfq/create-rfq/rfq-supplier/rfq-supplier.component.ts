@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
-import { SuppliersDialogComponent } from "../../../shared/dialogs/add-supplier/suppliers-dialog.component";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnInit, Input } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
+import { MatDialog } from "@angular/material";
+import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
 
 @Component({
-  selector: "app-rfq-suppliers",
-  templateUrl: "./suppliers.component.html"
+  selector: "app-rfq-supplier",
+  templateUrl: "./rfq-supplier.component.html"
 })
-export class SuppliersComponent implements OnInit {
+export class RfqSupplierComponent implements OnInit {
+  @Input() selectedMaterialsList: RfqMaterialResponse[];
   searchText: string = null;
   buttonName: string = "selectSupplier";
-
   displayedColumns: string[] = [
     "Supplier Name",
     "Email",
@@ -36,14 +36,12 @@ export class SuppliersComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
-    this.allSuppliers = this.activatedRoute.snapshot.data.supplier;
-    this.checkedMaterialsList = history.state.checkedMaterials;
+    this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
     console.log("suppliers", this.allSuppliers);
     console.log("checkedMaterialsList", this.checkedMaterialsList);
   }
-
-  setButtonName(name: string) {
-    this.buttonName = name;
+  ngOnChanges(): void {
+    this.checkedMaterialsList = this.selectedMaterialsList;
   }
 
   valueChange(supplier: Suppliers) {

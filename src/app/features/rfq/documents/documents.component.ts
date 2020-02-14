@@ -11,11 +11,7 @@ import { DocumentList } from "src/app/shared/models/PO/po-data";
 @Component({
   selector: "documents",
   templateUrl: "./documents.component.html",
-  styleUrls: [
-    "../../../../assets/scss/main.scss"
-    // "../../../../../node_modules/froala-editor/css/froala_editor.pkgd.min.css",
-    // "../../../../../node_modules/froala-editor/css/froala_style.min.css"
-  ]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class DocumentsComponent implements OnInit {
   searchText: string = null;
@@ -30,7 +26,7 @@ export class DocumentsComponent implements OnInit {
   constructor(
     private router: Router,
     private documentUploadService: DocumentUploadService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.checkedMaterialsList = history.state.checkedMaterialsList;

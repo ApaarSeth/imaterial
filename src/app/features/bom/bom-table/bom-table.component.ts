@@ -144,6 +144,11 @@ export class BomTableComponent implements OnInit {
       });
     }
   }
+
+  createRfq() {
+    this.router.navigate(["/rfq/createRfq", { selectedIndex: 2 }]);
+  }
+
   viewIndent() {
     this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
   }

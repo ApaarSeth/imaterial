@@ -16,7 +16,7 @@ import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
 export class RFQService {
   constructor(private dataService: DataService) {}
 
-  rfqMaterials(ProjectIds: ProjectIds) {
+  rfqMaterials(ProjectIds: number[]) {
     return this.dataService.sendPostRequest(API.RFQMATERIALS, {
       projectIds: ProjectIds
     });

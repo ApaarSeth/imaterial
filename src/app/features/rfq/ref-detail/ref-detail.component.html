@@ -4,36 +4,42 @@
     <div class="row">
       <div class="col-xs-12">
 
-    <mat-card>
-      <div class="row">
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-30 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div  style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-      </div>
-    </mat-card>
+        <mat-card>
+          <div class="row">
+            <div class="right-pipe" style="width: 20%;">
+              <span class="p-l-30 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+            <div class="right-pipe" style="width: 20%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+            <div class="right-pipe" style="width: 20%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+            <div class="right-pipe" style="width: 20%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+            <div style="width: 20%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+          </div>
+        </mat-card>
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-12 text-right rfq-create-btn">
+      <!-- <div class="col-xs-12 text-right rfq-create-btn">
         <button mat-raised-button class="main-background-color main-button color-white m-b-5"
           [routerLink]="['../../rfq/project-materials']">
+          Create RFQ
+        </button>
+      </div> -->
+      <div class="col-xs-12 text-right rfq-create-btn">
+        <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+          [routerLink]="['../../rfq/createRfq']">
           Create RFQ
         </button>
       </div>
@@ -42,7 +48,7 @@
 
 
     <mat-accordion>
-      <mat-expansion-panel  class="myPanel" [expanded]="true">
+      <mat-expansion-panel class="myPanel" [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Bided RFQ
@@ -94,13 +100,13 @@
             </ng-container>
             <ng-container matColumnDef="action1">
               <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element"  class="action1">
+              <td mat-cell *matCellDef="let element" class="action1">
                 <a [routerLink]="['../rfq-view', element.rfqId]">View RFQ</a>
               </td>
             </ng-container>
             <ng-container matColumnDef="action2">
               <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element;let i=index"  class="action2">
+              <td mat-cell *matCellDef="let element;let i=index" class="action2">
                 <a [routerLink]="['../rfq-bid/',element.rfqId]">View Bids</a>
               </td>
             </ng-container>
@@ -112,7 +118,7 @@
     </mat-accordion>
     <br>
     <mat-accordion>
-      <mat-expansion-panel  class="myPanel" [expanded]="true">
+      <mat-expansion-panel class="myPanel" [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Non-Bided RFQ

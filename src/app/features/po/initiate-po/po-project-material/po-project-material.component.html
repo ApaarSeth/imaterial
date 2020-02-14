@@ -2,9 +2,6 @@
     <div class="row ">
         <div class="col-xs-12 text-right p-b-10">
             <span>
-                
-            </span>
-            <span>
                 <button mat-raised-button [disabled]="!form.valid" matStepperNext (click)="materialAdded()"
                     class="main-background-color main-button color-white">
                     Next
@@ -26,18 +23,15 @@
                     <mat-option *ngFor="
               let project of allProjects
                 | SearchPipe: searchText:'projectName'
-            " [value]="project" (click)="choosenProject()">{{ project.projectName }}
-                    </mat-option>
+            " [value]="project">{{ project.projectName }}
+                    </mat-option>(click)="choosenProject()"
                 </mat-select>
             </mat-form-field>
         </div>
     </div>
 </form>
-<!-- table structure -->
-
-
 <mat-accordion *ngIf="poDetails" class="accordion-padding-zero">
-    <form *ngIf="poDetails" [formGroup]="materialForm">
+    <form [formGroup]="materialForm">
         <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -46,7 +40,6 @@
                         class="main-color p-l-15">{{poDetails[0].defaultAddress.addressLine1}}</a>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <!-- table part -->
             <table mat-table [dataSource]="poDetails[0].projectMaterialList" class="mat-elevation-z8 col-sm-12"
                 formArrayName="formArr">
                 <ng-container matColumnDef="Material Name">
