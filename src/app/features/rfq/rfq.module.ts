@@ -23,8 +23,13 @@ import { ReviewComponent } from "./review/review.component";
 import { DndDirective } from "./documents/drag-and-drop";
 import { RFQSuppliersResolver } from "./suppliers/supplier-resolver";
 import { QuantityMakesResolver } from "./quantity-makes/quantity-makes-resolver";
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-import { RFQViewComponent } from './rfq-view/rfq-view.component';
+import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
+import { RFQViewComponent } from "./rfq-view/rfq-view.component";
+import { CreateRfqComponent } from "./create-rfq/create-rfq.component";
+import { RfqQuantityMakesComponent } from "./create-rfq/rfq-quantity-makes/rfq-quantity-makes.component";
+import { RfqProjectMaterialsComponent } from "./create-rfq/rfq-project-materials/rfq-project-materials.component";
+import { RfqSupplierComponent } from "./create-rfq/rfq-supplier/rfq-supplier.component";
+import { CreateRfqResolver } from "./create-rfq/resolver/createRfq.resolver";
 
 @NgModule({
   imports: [
@@ -42,14 +47,14 @@ import { RFQViewComponent } from './rfq-view/rfq-view.component';
     MatCheckboxModule,
     MatGridListModule,
     MatDialogModule,
-    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ],
-  providers: [
-    RFQResolver,
-    RFQSuppliersResolver
-    // QuantityMakesResolver
-  ],
+  providers: [RFQResolver, RFQSuppliersResolver, CreateRfqResolver],
   declarations: [
+    RfqQuantityMakesComponent,
+    RfqProjectMaterialsComponent,
+    RfqSupplierComponent,
     RFQProjectMaterialsComponent,
     RFQQuantityMakesComponent,
     RefDetailComponent,
@@ -58,7 +63,8 @@ import { RFQViewComponent } from './rfq-view/rfq-view.component';
     DocumentsComponent,
     ReviewComponent,
     DndDirective,
-    RFQViewComponent
+    RFQViewComponent,
+    CreateRfqComponent
   ]
 })
-export class RFQModule { }
+export class RFQModule {}

@@ -11,7 +11,9 @@ import { DocumentsComponent } from "./documents/documents.component";
 import { ReviewComponent } from "./review/review.component";
 import { RFQSuppliersResolver } from "./suppliers/supplier-resolver";
 import { QuantityMakesResolver } from "./quantity-makes/quantity-makes-resolver";
-import { RFQViewComponent } from './rfq-view/rfq-view.component';
+import { RFQViewComponent } from "./rfq-view/rfq-view.component";
+import { CreateRfqResolver } from "./create-rfq/resolver/createRfq.resolver";
+import { CreateRfqComponent } from "./create-rfq/create-rfq.component";
 
 const routes: Routes = [
   {
@@ -48,10 +50,15 @@ const routes: Routes = [
   {
     path: "rfq-view/:id",
     component: RFQViewComponent
+  },
+  {
+    path: "createRfq",
+    resolve: { createRfq: CreateRfqResolver },
+    component: CreateRfqComponent
   }
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
-export class RFQRoutingModule { }
+export class RFQRoutingModule {}

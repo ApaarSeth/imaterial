@@ -1,5 +1,18 @@
    <form *ngIf="approverData" [formGroup]="approverFrm">
        <div class="row">
+           <div class="col-xs-12 text-right">
+               <span *ngIf="this.data.roleType==='projectUserId'; else billing">
+                   Choose Project Person
+               </span>
+               <ng-template #billing>
+                   <span>
+                       Choose Billing Person
+                   </span>
+               </ng-template>
+           </div>
+       </div>
+
+       <div class="row">
            <table mat-table [dataSource]="approverData" class="mat-elevation-z8 col-sm-12">
                <ng-container matColumnDef="User Name">
                    <th mat-header-cell *matHeaderCellDef> UserName </th>
@@ -34,11 +47,10 @@
                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
            </table>
            <div class="p-t-10 m-0-auto">
-            <button mat-raised-button class="main-background-color main-button color-white"
-               (click)="selectRole()">
-               {{this.data.roleType==="projectBillingUserId"?"Billing Person":"Project Person"}}
-           </button>
+               <button mat-raised-button class="main-background-color main-button color-white" (click)="selectRole()">
+                   {{this.data.roleType==="projectBillingUserId"?"Billing Person":"Project Person"}}
+               </button>
            </div>
-          
+
        </div>
    </form>

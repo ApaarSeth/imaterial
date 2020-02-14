@@ -71,8 +71,8 @@
     </div>
 
     <div class="rfq-detail-body">
-     <!-- table structure -->
-  
+      <!-- table structure -->
+
       <ng-template ngFor let-material [ngForOf]="rfqDetails" let-i="index">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header>
@@ -81,12 +81,7 @@
               <a href="javascript:void(0)" class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <!-- table part -->
           <table mat-table [dataSource]="material.projectMaterialList" class="mat-elevation-z8 col-sm-12">
-            <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-
-            <!-- Position Column -->
             <ng-container matColumnDef="Material Name">
               <th mat-header-cell *matHeaderCellDef>Material Name</th>
               <td mat-cell *matCellDef="let element">
@@ -131,8 +126,8 @@
         </mat-expansion-panel>
         <br>
       </ng-template>
-   
-    <!-- end table structure -->
+
+      <!-- end table structure -->
     </div>
 
     <!-- end fix part -->
