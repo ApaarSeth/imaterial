@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
 import { Router } from "@angular/router";
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
   selector: "signin",
@@ -10,6 +11,7 @@ import { Router } from "@angular/router";
   styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class SigninComponent implements OnInit {
+  showPassWordString: boolean = false;
   constructor(
     private router: Router,
     private signInSignupService: SignInSignupService,
@@ -23,7 +25,7 @@ export class SigninComponent implements OnInit {
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      userName: ["", Validators.required],
+      phone: ["", [Validators.required,Validators.pattern(FieldRegExConst.PHONE)]],
       password: ["", Validators.required]
     });
   }
@@ -37,14 +39,22 @@ export class SigninComponent implements OnInit {
     params.append("userType", "BUYER");
 
     this.signInSignupService.signIn(params.toString()).then(data => {
-      localStorage.setItem("role", data.serviceRawResponse.data.role);
-      localStorage.setItem(
-        "ServiceToken",
-        data.serviceRawResponse.data.serviceToken
-      );
-      localStorage.setItem("userId", data.serviceRawResponse.data.userId);
-      localStorage.setItem("orgId", data.serviceRawResponse.data.orgId);
-      this.router.navigate(["dashboad"]);
+      console.log(data.serviceRawResponse.data)
+      if (data.serviceRawResponse.data){
+        localStorage.setItem("role", data.serviceRawResponse.data.role);
+        localStorage.setItem("ServiceToken",data.serviceRawResponse.data.serviceToken);
+        localStorage.setItem("userId", data.serviceRawResponse.data.userId);
+        localStorage.setItem("orgId", data.serviceRawResponse.data.orgId);
+        this.router.navigate(["dashboard"]);
+      }
     });
+  }
+
+  showPassWord(){
+    if(!this.showPassWordString){
+      this.showPassWordString = true;
+    }else{
+       this.showPassWordString = false;
+    }
   }
 }

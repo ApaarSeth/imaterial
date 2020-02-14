@@ -1,9 +1,10 @@
-<h1 mat-dialog-title>View Terms & Conditions/Documents
-  <div class="pull-right" (click)="onNoClick()">
-    <mat-icon>close</mat-icon>
 
+  <div class="header-add-edit-dialog">
+      <h1 mat-dialog-title>View Terms & Conditions/Documents</h1>
+      <button type="button" class="close" (click)="onNoClick()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
   </div>
-</h1>
 
 <div mat-dialog-content *ngIf="data">
   <div class="row ">

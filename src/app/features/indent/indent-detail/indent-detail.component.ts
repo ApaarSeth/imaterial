@@ -88,7 +88,7 @@ export class IndentDetailComponent implements OnInit {
   openDialog(data: ProjetPopupData): void {
     if (data.isDelete == false) {
       const dialogRef = this.dialog.open(AddProjectComponent, {
-        width: "700px",
+        width: "1000px",
         data
       });
 

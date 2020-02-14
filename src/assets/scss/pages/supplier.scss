@@ -438,6 +438,7 @@ mat-icon {
 
 .issue-to-indent-modal {
     cursor: pointer;
+    padding-bottom: 5px;
 }
 
 .non-active {
@@ -474,4 +475,70 @@ mat-icon {
     display: block;
     width: 22%;
     padding: 10px;
+}
+.po-list-detail-custom{
+    .mat-row .mat-cell {
+        min-width: 80px;
+    }
+}
+
+
+
+
+.show-detail-supplier:hover #detail-supplier {
+    display: block;
+
+}
+
+.show-detail-supplier #detail-supplier {
+    display: none;
+    background-color: #ffffff;
+    color: #000000;
+    z-index: 999;
+    top: -36px;
+    position: relative;
+    font-size: 10px;
+    padding: 5px 30px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    border: 1px solid #d0d0d0;
+    overflow-x: hidden;
+    max-height: 18vh;
+    overflow-y: auto;
+
+}
+
+.supplier-name-tag{
+        border-bottom: 1px solid #d0d0d0; 
+        padding: 0 32px;
+    }
+    
+.supplier-qty-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.show-detail-supplier {
+    position: absolute;
+    margin-left: 20px;
+    margin-top: -3px;
+
+    img {
+        z-index: 10;
+    }
+}
+
+.show-detail-supplier {
+    position: absolute;
+    margin-left: 20px;
+    margin-top: -3px;
+
+    .name-of-mat {
+        z-index: 10;
+        white-space: nowrap;
+        width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        z-index: 10;
+    }
 }

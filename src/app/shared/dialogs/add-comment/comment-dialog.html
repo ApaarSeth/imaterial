@@ -1,6 +1,10 @@
-<h1 mat-dialog-title>Add Comment</h1>
-
-<div mat-dialog-content>
+ <div class="header-add-edit-dialog">
+      <h1 mat-dialog-title>Add Comment</h1>
+      <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+  </div>
+<div mat-dialog-content class="padding-for-dialog-after-header">
   <div class="row">
     <div class="col-xs-12 scroll-box">
       <mat-form-field class="width100Percent">

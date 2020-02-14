@@ -10,6 +10,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
+import { FieldRegExConst } from '../../constants/field-regex-constants';
 
 export interface City {
   value: string;
@@ -36,6 +37,7 @@ export class AddProjectComponent implements OnInit {
   projectDetails: ProjectDetails;
   orgId: number;
   userId: number;
+  selectedConstructionUnit: String;
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
@@ -46,6 +48,7 @@ export class AddProjectComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
+    this.selectedConstructionUnit = "1";
     this.initForm();
   }
 
@@ -111,7 +114,11 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.type : "",
         Validators.required
       ],
-      unit: [this.data.isEdit ? this.data.detail.unit : ""]
+      unit: [this.data.isEdit ? this.data.detail.unit : ""],
+      gstNo: [
+        this.data.isEdit ? this.data.detail.gstNo : "",
+        [Validators.required,Validators.pattern(FieldRegExConst.GSTIN)]
+      ]
     });
   }
 
@@ -140,5 +147,8 @@ export class AddProjectComponent implements OnInit {
     } else {
       this.dialogRef.close(this.addProjects(this.form.value));
     }
+  }
+  closeDialog(){
+    this.dialogRef.close();
   }
 }
