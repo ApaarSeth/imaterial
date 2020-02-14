@@ -12,8 +12,7 @@ export interface OrganisationType {
 
 @Component({
   selector: "signup",
-  templateUrl: "./signup.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./signup.component.html"
 })
 export class SignupComponent implements OnInit {
   constructor(

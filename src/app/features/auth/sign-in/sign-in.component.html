@@ -1,31 +1,16 @@
-<form [formGroup]="signinForm" (ngSubmit)="signin()">
-  <div class="row m-0">
-    <div class="col-md-7 ">
-      <div class="min-height">
-        <img src="../../../assets/images/Login.jpg" alt="construction-site-image" style="width: 100%;" />
-      </div>
-    </div>
-    <div class="col-md-5 parent">
-      <div class="row center-element">
-        <div class="col-xs-12 m-b-30">
-          <img src="../../../assets/images/loginLogo.png" alt="BuildSupply" style="height:60px" />
-        </div>
-
-        <div class="col-xs-12">
-          <h2>Sign In</h2>
-        </div>
-
+<form [formGroup]="signinForm" (ngSubmit)="signin()" class="sign-in-form">
+  
         <mat-form-field class="col-xs-12 border-input">
           <input matInput formControlName="userName" type="number" placeholder="Phone No." />
         </mat-form-field>
 
         <mat-form-field class="col-xs-12 border-input">
-          <input matInput type="password" formControlName="password" placeholder="Password" />
+          <input matInput [type]="showPassWordString? 'text': 'password'" formControlName="password" placeholder="Password" />
           <a>
-            <mat-icon class="password-eye">remove_red_eye</mat-icon>
+            <mat-icon class="password-eye" (click)="showPassWord()">remove_red_eye</mat-icon>
           </a>
           <div class="main-color">
-            <a class="pull-right p-t-20">Forgot Password</a>
+            <a class="pull-right p-t-20 cursor-pointer">Forgot Password</a>
           </div>
         </mat-form-field>
 
@@ -36,13 +21,10 @@
           </button>
         </div>
 
-        <div mat-dialog-actions class="col-xs-12 p-t-20">
+        <!-- <div mat-dialog-actions class="col-xs-12 p-t-20">
           <button mat-raised-button class="background-white-color main-button main-color m-b-5" [mat-dialog-close]=""
             cdkFocusInitial style="width: 100%;">
             Sign Up
           </button>
-        </div>
-      </div>
-    </div>
-  </div>
+        </div> -->
 </form>

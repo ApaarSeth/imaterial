@@ -10,6 +10,7 @@ import { Router } from "@angular/router";
   styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class SigninComponent implements OnInit {
+  showPassWordString: boolean = false;
   constructor(
     private router: Router,
     private signInSignupService: SignInSignupService,
@@ -46,5 +47,13 @@ export class SigninComponent implements OnInit {
         this.router.navigate(["dashboard"]);
       }
     });
+  }
+
+  showPassWord(){
+    if(!this.showPassWordString){
+      this.showPassWordString = true;
+    }else{
+       this.showPassWordString = false;
+    }
   }
 }
