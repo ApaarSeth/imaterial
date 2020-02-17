@@ -24,6 +24,8 @@ import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/ad
 export class RfqQuantityMakesComponent implements OnInit {
   @Input() projectMaterialsList: RfqMaterialResponse[];
   @Output() quantityAndMakes = new EventEmitter<RfqMaterialResponse[]>();
+  @Input() stepperForm: FormGroup;
+
   userId: 1;
   searchText: string = null;
   materialCounter = 0;

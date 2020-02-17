@@ -26,6 +26,8 @@ import {
 import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
 import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
 import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom.component";
+import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
 
 @Component({
   selector: "app-bom-table",
@@ -49,6 +51,7 @@ export class BomTableComponent implements OnInit {
   projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
+  addRfq: AddRFQ;
   columnsToDisplay = [
     "materialName",
     "estimatedQty",
@@ -69,8 +72,10 @@ export class BomTableComponent implements OnInit {
   dataSource: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
   orgId: number;
+  checkedSubcategory: Subcategory[];
 
   constructor(
+    private rfqService: RFQService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
@@ -132,19 +137,55 @@ export class BomTableComponent implements OnInit {
   }
   raiseIndent() {
     let projectDetails = this.projectData;
-    let checkedSubcategory = this.subcategoryData.filter(sub => {
+    this.checkedSubcategory = this.subcategoryData.filter(sub => {
       if (sub.checked === true) {
         return sub;
       }
     });
-    if (checkedSubcategory.length) {
+    if (this.checkedSubcategory.length) {
+      let checkedList = this.checkedSubcategory;
       this.router.navigate(["/indent/" + this.projectId], {
-        state: { checkedSubcategory }
+        state: { checkedList }
       });
     }
   }
 
   createRfq() {
+    this.checkedSubcategory = this.subcategoryData.filter(sub => {
+      if (sub.checked === true) {
+        return sub;
+      }
+    });
+    let materialList: RfqMat[] = [];
+    this.checkedSubcategory.forEach((category: Subcategory, i) => {
+      let mat: RfqMat = {};
+      mat.projectId = category.projectId;
+      mat.materialId = category.materialId;
+      mat.materialName = category.materialName;
+      materialList.push(mat);
+    });
+    let projectId = materialList[0].projectId;
+    this.addRfq = {
+      rfqName: null,
+      dueDate: null,
+      supplierId: null,
+      rfqProjectsList: [
+        {
+          projectId: projectId,
+          projectName: null,
+          defaultAddress: null,
+          projectMaterialList: [],
+          projectAddressList: null,
+          prevMatListLength: null
+        }
+      ],
+      documentsList: null,
+      terms: null
+    };
+    this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
+    this.rfqService.addRFQ(this.addRfq).then(res => {
+      console.log(res);
+    });
     this.router.navigate(["/rfq/createRfq", { selectedIndex: 2 }]);
   }
 

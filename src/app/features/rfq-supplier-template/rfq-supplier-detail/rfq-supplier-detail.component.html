@@ -1,10 +1,10 @@
 <!-- <fix-header></fix-header> -->
 <div>
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <div class="row">
+    <div class="row width-100">
       <div class="col-md-12">
         <div class="row p-b-10">
-          <div class="col-md-5 p-t-10">
+          <div class="col-md-5 col-xs-12 p-t-10">
             <label for="validity" class="pull-left p-t-20 p-r-10">Quote Valid till</label>
             <mat-form-field class="border-input">
               <input matInput (dateChange)="duedatefunc($event)" [matDatepicker]="dueDate"
@@ -14,11 +14,11 @@
                 (change)="valueChange(rfqSupplierDetailList)"></mat-datepicker>
             </mat-form-field>
           </div>
-          <div class="col-md-5 p-t-10">
+          <div class="col-md-5 col-xs-8 p-t-10">
             <label for="bidCompletion" class="pull-left p-t-20 p-r-10">Bid Completion:</label>
             <span class="pull-left text-semi-bold m-t-20">{{brandCount}}/{{materialCount}}</span>
           </div>
-          <div class="col-md-2 p-t-20 p-r-30">
+          <div class="col-md-2 col-xs-4 p-t-20">
             <button mat-raised-button [disabled]="!submitButtonValidationFlag"
               class="main-background-color main-button color-white pull-right"
               (click)="postRFQDetailSupplier(rfqSupplierDetailList)">
@@ -28,70 +28,75 @@
         </div>
 
 
-        <div class="table-width" displayMode="flat" multi mat-table
-          *ngFor="let projects of rfqSupplierDetailList.projectList">
+        <div style="width:100%;overflow-x:scroll">
+                <table class="table rfq-bids-table"
+                  *ngFor="let projects of rfqSupplierDetailList.projectList">
 
-          <!-- Project Name Header -->
-          <section matSort class="mat-header-row blue-background-color color-white first-rowheader">
-            <div class="mat-header-cell col-xs-2 font-size18" mat-sort-header="projectName">{{projects.projectName}}
-            </div>
-            <div class="mat-header-cell col-xs-4 font-size14" mat-sort-header="address">
-              {{projects.addressLine1}},{{projects.city}},{{projects.state}}
-            </div>
-            <div class="col-xs-6 white-radiobutton">
-              <mat-radio-group aria-label="Select GST" class="pull-right" [(ngModel)]="projects.gst"
-                (change)="radioChange($event,projects)">
-                <mat-radio-button class="p-r-20" value="IGST">IGST</mat-radio-button>
-                <mat-radio-button value="CGST-SGST">CGST & SGST</mat-radio-button>
-              </mat-radio-group>
-            </div>
-          </section>
+                  <!-- Project Name Header -->
+                  <tr class="blue-background-color color-white">
+                    <th class="font-size18">{{projects.projectName}}
+                    </th>
+                    <th class="font-size14" colspan="2">
+                      {{projects.addressLine1}},{{projects.city}},{{projects.state}}
+                    </th>
+                    <th class="white-radiobutton">
+                      <mat-radio-group aria-label="Select GST" class="pull-right" [(ngModel)]="projects.gst"
+                        (change)="radioChange($event,projects)">
+                        <mat-radio-button class="p-r-20" value="IGST">IGST</mat-radio-button>
+                        <mat-radio-button value="CGST-SGST">CGST & SGST</mat-radio-button>
+                      </mat-radio-group>
+                    </th>
+                  </tr>
 
-          <!-- Material Info -->
-          <ng-container *ngFor="let material of projects.materialList">
-            <section matSort class="mat-row material-rfq-supplies">
-              <div class="mat-cell font-size14" mat-sort-header="material">{{material.materialName}}</div>
-              <div class="mat-cell font-size14" mat-sort-header="qty">Requested Quantity: {{material.materialQuantity}}
-                {{material.materialUnit}}</div>
-              <div class="mat border-input" mat-sort-header="gst">
-                <mat-form-field class="border-input">
-                  <input matInput type="number" placeholder="GST %" [(ngModel)]="material.materialIgst"
-                    (change)="valueChange(rfqSupplierDetailList)" />
-                  <mat-error>GST is Required</mat-error>
-                </mat-form-field>
-              </div>
-            </section>
+                  <!-- Material Info -->
+                  <ng-container *ngFor="let material of projects.materialList">
+                    <tr matSort class="material-rfq-supplies">
+                      <td class="font-size14">{{material.materialName}}</td>
+                      <td class="font-size14" colspan="2">Requested Quantity: {{material.materialQuantity}}
+                        {{material.materialUnit}}
+                        </td>
+                      <td>
+                        <mat-form-field class="border-input">
+                          <input matInput type="number" placeholder="GST %" [(ngModel)]="material.materialIgst"
+                            (change)="valueChange(rfqSupplierDetailList)" />
+                          <mat-error>GST is Required</mat-error>
+                        </mat-form-field>
+                      </td>
+                    </tr>
 
-            <!-- Brand Header -->
-            <ng-container>
-              <section matSort class="mat-header-row brand-name-rfq-supplies">
-                <div class="mat-header-cell font-size14" mat-sort-header="brandName">Brand Name</div>
-                <div class="mat-header-cell font-size14" mat-sort-header="rate">Rate</div>
-                <div class="mat-header-cell font-size14" mat-sort-header="totalAmt">Total Amount (Rs)</div>
-                <div class="mat-header-cell font-size14" mat-sort-header="GSTAmt">GST Amount (Rs)</div>
-              </section>
+                    <!-- Brand Header -->
+                    <ng-container>
+                      <tr matSort class="brand-name-rfq-supplies">
+                        <td class="font-size14">Brand Name</td>
+                        <td class="font-size14">Rate</td>
+                        <td class="font-size14">Total Amount (Rs)</td>
+                        <td class="font-size14">GST Amount (Rs)</td>
+                      </tr>
 
-              <!-- Brand-wise details -->
-              <div class="mat-row table-white-background-color" *ngFor="let brand of material.rfqBrandList">
-                <div class="mat-cell">{{brand.brandName}}</div>
-                <div class="mat-cell">
-                  <mat-form-field class="border-input">
-                    <input matInput type="number" placeholder="Rate" [(ngModel)]="brand.brandRate"
-                      (change)="valueChange(rfqSupplierDetailList)" />
-                    <mat-error>Project Name is Required</mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="mat-cell">{{brand.brandRate * material.materialQuantity}}</div>
-                <div class="mat-cell">
-                  <span *ngIf="!brand.brandRate">0</span>
-                  <span
-                    *ngIf="brand.brandRate">{{((material.materialIgst/100)*(brand.brandRate * material.materialQuantity))}}</span>
-                </div>
-              </div>
-            </ng-container>
-          </ng-container>
+                      <!-- Brand-wise details -->
+                      <tr class="table-white-background-color" *ngFor="let brand of material.rfqBrandList">
+                        <td>{{brand.brandName}}</td>
+                        <td>
+                          <mat-form-field class="border-input">
+                            <input matInput type="number" placeholder="Rate" [(ngModel)]="brand.brandRate"
+                              (change)="valueChange(rfqSupplierDetailList)" />
+                            <mat-error>Project Name is Required</mat-error>
+                          </mat-form-field>
+                        </td>
+                        <td class="text-align-right">{{brand.brandRate * material.materialQuantity}}</td>
+                        <td class="text-align-right">
+                          <span *ngIf="!brand.brandRate">0</span>
+                          <span
+                            *ngIf="brand.brandRate">{{((material.materialIgst/100)*(brand.brandRate * material.materialQuantity))}}</span>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+
+                </table>
 
         </div>
+        
       </div>
     </div>
 
