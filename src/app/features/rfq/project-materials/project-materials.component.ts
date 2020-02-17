@@ -18,8 +18,7 @@ import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 
 @Component({
   selector: "rfq",
-  templateUrl: "./project-materials.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./project-materials.component.html"
 })
 export class RFQProjectMaterialsComponent implements OnInit {
   userId: 1;
