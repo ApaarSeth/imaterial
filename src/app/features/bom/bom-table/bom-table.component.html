@@ -52,34 +52,34 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="estimatedQty">
-          <th *matHeaderCellDef mat-sort-header  class="text-align-center">
-            Estimated Quantity  
+          <th *matHeaderCellDef mat-sort-header class="text-align-center">
+            Estimated Quantity
           </th>
-          <td  class="text-align-center" mat-cell *matCellDef="let element">
+          <td class="text-align-center" mat-cell *matCellDef="let element">
             {{ element.estimatedQty }} {{ element.materialUnit }}
           </td>
         </ng-container>
         <ng-container matColumnDef="requestedQuantity">
-          <th *matHeaderCellDef mat-sort-header  class="text-align-center">
+          <th *matHeaderCellDef mat-sort-header class="text-align-center">
             Requested Quantity
           </th>
-          <td  class="text-align-center" mat-cell *matCellDef="let element">
+          <td class="text-align-center" mat-cell *matCellDef="let element">
             {{ element.requestedQuantity }} {{ element.materialUnit }}
           </td>
         </ng-container>
         <ng-container matColumnDef="issueToProject">
-          <th *matHeaderCellDef mat-sort-header  class="text-align-center">
+          <th *matHeaderCellDef mat-sort-header class="text-align-center">
             Issued To Project
           </th>
-          <td  class="text-align-center" mat-cell *matCellDef="let element">
+          <td class="text-align-center" mat-cell *matCellDef="let element">
             {{ element.issueToProject }}
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
-          <th *matHeaderCellDef mat-sort-header  class="text-align-center">
+          <th *matHeaderCellDef mat-sort-header class="text-align-center">
             Available In Stock
           </th>
-          <td  class="text-align-center" mat-cell *matCellDef="let element">
+          <td class="text-align-center" mat-cell *matCellDef="let element">
             {{ element.availableStock }}
           </td>
         </ng-container>
@@ -126,14 +126,13 @@
                           {{ element.materialGroup}}
                         </span>
                       </div>
-
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="estimatedQty">
                     <th *matHeaderCellDef mat-sort-header class="text-align-center">
                       Estimated Quantity
                     </th>
-                    <td  class="text-align-center" mat-cell *matCellDef="let element">
+                    <td class="text-align-center" mat-cell *matCellDef="let element">
                       {{ element.estimatedQty }} {{ element.materialUnit }}
                     </td>
                   </ng-container>
@@ -141,7 +140,7 @@
                     <th *matHeaderCellDef mat-sort-header class="text-align-center">
                       Requested Material
                     </th>
-                    <td  class="text-align-center" mat-cell *matCellDef="let element">
+                    <td class="text-align-center" mat-cell *matCellDef="let element">
                       {{ element.requestedQuantity }} {{ element.materialUnit }}
                     </td>
                   </ng-container>
@@ -168,7 +167,6 @@
             </div>
           </td>
         </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let element; columns: columnsToDisplay" (click)="toggleRow(element)"></tr>
       </table>
