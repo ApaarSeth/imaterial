@@ -110,6 +110,8 @@
                     <span class="mat-cell"><span>Total Amount(Rs)</span>
                         <br>{{totalAmount  | number : '1.2-2'}}</span>
                 </div>
+                <div class="col-xs-12 text-right text-semi-bold m-t-10">Net payable Amount in
+                    Words:{{totalAmount|numberToWords}} </div>
             </mat-accordion>
         </form>
     </div>

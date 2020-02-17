@@ -56,10 +56,6 @@ export class RFQProjectMaterialsComponent implements OnInit {
     this.buttonName = name;
   }
   setSelectedProjectList() {
-    console.log("list", this.projects.value);
-    console.log(
-      this.selectedProjects.map(selectedProject => selectedProject.projectId)
-    );
     this.ProjectIds = this.selectedProjects.map(
       selectedProject => selectedProject.projectId
     ) as ProjectIds;
@@ -74,7 +70,6 @@ export class RFQProjectMaterialsComponent implements OnInit {
   }
 
   checkedMAterialFlag: boolean = false;
-  
 
   raiseIndent() {
     let projectMaterial = null;

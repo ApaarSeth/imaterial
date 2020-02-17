@@ -6,16 +6,21 @@ import { SigninComponent } from "./sign-in/sign-in.component";
 import { OTPComponent } from "./otp/otp.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { SignInSignUpComponent } from './sign-in-sign-up/sign-in-sign-up.component';
 
 const routes: Routes = [
   {
-    path: "signup",
-    component: SignupComponent
+    path: "login",
+    component: SignInSignUpComponent
   },
-  {
-    path: "signin",
-    component: SigninComponent
-  },
+  // {
+  //   path: "signup",
+  //   component: SignupComponent
+  // },
+  // {
+  //   path: "signin",
+  //   component: SigninComponent
+  // },
   {
     path: "otp",
     component: OTPComponent

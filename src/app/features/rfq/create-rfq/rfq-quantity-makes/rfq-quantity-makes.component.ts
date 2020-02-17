@@ -1,41 +1,34 @@
-import { Component, OnInit, Inject, ViewChild } from "@angular/core";
-import { MatDialog, MatChipInputEvent } from "@angular/material";
-import { ActivatedRoute, Router } from "@angular/router";
 import {
-  ProjectDetails,
-  ProjectIds
-} from "src/app/shared/models/project-details";
+  Component,
+  OnInit,
+  Input,
+  SimpleChanges,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import {
-  FormBuilder,
-  FormArray,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { stringify } from "querystring";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import {
-  RfqMat,
-  RfqMaterialResponse
+  RfqMaterialResponse,
+  RfqMat
 } from "src/app/shared/models/RFQ/rfq-details";
+import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import { MatDialog } from "@angular/material";
+import { ActivatedRoute, Router } from "@angular/router";
+import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { ENTER, COMMA } from "@angular/cdk/keycodes";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 
-// chip static data
-export interface Fruit {
-  name: string;
-}
-
 @Component({
-  selector: "rfq",
-  templateUrl: "./quantity-makes.component.html"
+  selector: "app-rfq-quantity-makes",
+  templateUrl: "./rfq-quantity-makes.component.html"
 })
-export class RFQQuantityMakesComponent implements OnInit {
+export class RfqQuantityMakesComponent implements OnInit {
+  @Input() projectMaterialsList: RfqMaterialResponse[];
+  @Output() quantityAndMakes = new EventEmitter<RfqMaterialResponse[]>();
   userId: 1;
   searchText: string = null;
   materialCounter = 0;
   buttonName: string = "addQueryMakes";
-  checkedMaterialsList: RfqMaterialResponse[];
+  projectSelectedMaterials: RfqMaterialResponse[];
   materialForms: FormGroup;
   rfqMat: RfqMat;
   displayedColumns: string[] = [
@@ -56,12 +49,16 @@ export class RFQQuantityMakesComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.checkedMaterialsList = history.state.checkedMaterials;
-    if (this.checkedMaterialsList) {
+  ngOnInit() {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("this.projectMaterialsList", this.projectMaterialsList);
+    this.projectSelectedMaterials = this.projectMaterialsList;
+    if (this.projectSelectedMaterials) {
       this.formsInit();
     }
   }
+
   setButtonName(name: string) {
     this.buttonName = name;
   }
@@ -72,13 +69,12 @@ export class RFQQuantityMakesComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   formsInit() {
-    console.log("form init", this.checkedMaterialsList);
-
+    console.log("form init", this.projectSelectedMaterials);
     const temp = 0;
-    const frmArr = this.checkedMaterialsList
+    const frmArr = this.projectSelectedMaterials
       .map((subCat, i) => {
         if (i !== 0) {
-          subCat.prevMatListLength = this.checkedMaterialsList[
+          subCat.prevMatListLength = this.projectSelectedMaterials[
             i - 1
           ].projectMaterialList.length;
         }
@@ -100,18 +96,19 @@ export class RFQQuantityMakesComponent implements OnInit {
   showIndent() {
     const formValues = this.materialForms.value.forms;
     console.log("form valueeee", formValues);
-    this.checkedMaterialsList.forEach((subCat, i) => {
+    this.projectSelectedMaterials.forEach((subCat, i) => {
       subCat.projectMaterialList.forEach((project, j) => {
         formValues.forEach((val, k) => {
           if (
             project.projectId === val.projId &&
             project.materialId === val.matId
           ) {
-            this.checkedMaterialsList[i].projectMaterialList[j].estimatedRate =
-              val.estimatedRate;
-            this.checkedMaterialsList[i].projectMaterialList[j].quantity =
+            this.projectSelectedMaterials[i].projectMaterialList[
+              j
+            ].estimatedRate = val.estimatedRate;
+            this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
               val.quantity;
-            this.checkedMaterialsList[i].projectMaterialList[j].makes =
+            this.projectSelectedMaterials[i].projectMaterialList[j].makes =
               val.makes;
           } else {
             return;
@@ -119,7 +116,7 @@ export class RFQQuantityMakesComponent implements OnInit {
         });
       });
     });
-    let checkedMaterials = this.checkedMaterialsList;
+    let checkedMaterials = this.projectSelectedMaterials;
     if (checkedMaterials) {
       this.router.navigate(["/rfq/suppliers"], {
         state: { checkedMaterials }
@@ -139,6 +136,34 @@ export class RFQQuantityMakesComponent implements OnInit {
         data
       });
       dialogRef.afterClosed().subscribe(result => {});
+    }
+  }
+  materialAdded() {
+    const formValues = this.materialForms.value.forms;
+    console.log("form valueeee", this.projectSelectedMaterials);
+    this.projectSelectedMaterials.forEach((project, i) => {
+      project.projectMaterialList.forEach((material, j) => {
+        formValues.forEach((val, k) => {
+          if (
+            material.projectId === val.projId &&
+            material.materialId === val.matId
+          ) {
+            this.projectSelectedMaterials[i].projectMaterialList[
+              j
+            ].estimatedRate = val.estimatedRate;
+            this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
+              val.quantity;
+            this.projectSelectedMaterials[i].projectMaterialList[j].makes =
+              val.makes;
+          } else {
+            return;
+          }
+        });
+      });
+    });
+    let checkedMaterials = this.projectSelectedMaterials;
+    if (checkedMaterials) {
+      this.quantityAndMakes.emit(checkedMaterials);
     }
   }
 }

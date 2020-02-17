@@ -1,46 +1,51 @@
-<form [formGroup]="signupForm" (ngSubmit)="signup()">
-    <div class="row m-0">
-        <div class="col-md-7">
-            <div class="min-height">
-                <img src="../../../assets/images/Signup.jpg" alt="construction-site-image" style="width: 100%;" />
-            </div>
-        </div>
-        <div class="col-md-5 parent">
-            <div class="row center-element">
-                <div class="col-xs-12 m-b-30">
-                    <img src="../../../assets/images/loginLogo.png" alt="BuildSupply" style="height:60px" />
-                </div>
-                <div class="col-xs-12">
-                    <h2>Sign Up</h2>
-                </div>
-                <mat-form-field class="col-xs-12 border-input">
+<form [formGroup]="signupForm" (ngSubmit)="signup()" class="sign-up-form">
+ 
+                <!-- <mat-form-field class="col-xs-12 border-input">
                     <input matInput formControlName="firstName" type="text" placeholder="First Name" />
                 </mat-form-field>
                 <mat-form-field class="col-xs-12 border-input">
                     <input matInput formControlName="lastName" type="text" placeholder="Last Name" />
+                </mat-form-field> -->
+                <mat-form-field class="col-xs-12 border-input">
+                    <input matInput type="text" formControlName="organisationName" placeholder="Company Name" />
                 </mat-form-field>
                 <mat-form-field class="col-xs-12 border-input">
                     <input matInput type="email" formControlName="email" placeholder="Email" />
+                    <small
+                    *ngIf="signupForm.controls['email'].hasError('required') && signupForm.controls['email'].touched"
+                    class="signupForm-error-msg"> Email is required </small>
+                    <small
+                    *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched"
+                    class="signupForm-error-msg"> Enter Valid Email</small>
+
                 </mat-form-field>
                 <mat-form-field class="col-xs-12 border-input">
-                    <input matInput type="text" formControlName="phone" placeholder="Phone No." />
+                    <input matInput type="number" formControlName="phone" placeholder="Phone No." />
+                     <small
+                    *ngIf="signupForm.controls['phone'].hasError('required') && signupForm.controls['phone'].touched"
+                    class="signupForm-error-msg"> Phone No is required </small>
+                    <small
+                    *ngIf="signupForm.controls['phone'].hasError('pattern') && signupForm.controls['phone'].touched"
+                    class="signupForm-error-msg"> Enter Valid Phone No</small>
                 </mat-form-field>
-                <mat-form-field class="col-xs-12 border-input">
-                    <input matInput type="text" formControlName="organisationName" placeholder="Organisation Name" />
-                </mat-form-field>
-                <mat-form-field class="col-xs-12 border-select">
-                    <mat-select formControlName=organisationType>
+                
+                <!-- <mat-form-field class="col-xs-12 border-select">
+                    <mat-select formControlName="organisationType" placeholder="Contractor">
                         <mat-option *ngFor="let type of organisationTypes" [value]="type.value">
                             {{type.viewValue}}
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
+
                 <mat-form-field class="col-xs-12 border-input">
-                    <input matInput formControlName="password" type="password" placeholder="Password" />
+                     <input matInput [type]="showPassWordString? 'text': 'password'" formControlName="password" placeholder="Password" />
+                    <a>
+                        <mat-icon class="password-eye" (click)="showPassWord()">remove_red_eye</mat-icon>
+                    </a>
                 </mat-form-field>
-                <mat-form-field class="col-xs-12 border-input">
+                <!-- <mat-form-field class="col-xs-12 border-input">
                     <input matInput type="password" formControlName="confirmPassword" placeholder="Retype Password" />
-                </mat-form-field>
+                </mat-form-field> -->
                 <div mat-dialog-actions class="col-xs-12 p-t-40">
                     <button mat-raised-button class="main-background-color main-button color-white m-b-5"
                         cdkFocusInitial style="width: 100%;">
@@ -53,7 +58,5 @@
                                 Sign In
                             </button>
                         </div> -->
-            </div>
-        </div>
-    </div>
+           
 </form>

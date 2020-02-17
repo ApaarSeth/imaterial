@@ -12,6 +12,7 @@ import { AuthRoutingModule } from "./auth-routing.module";
 import { OTPComponent } from "./otp/otp.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { SignInSignUpComponent } from './sign-in-sign-up/sign-in-sign-up.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { ChangePasswordComponent } from "./change-password/change-password.compo
     SigninComponent,
     OTPComponent,
     ForgotPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    SignInSignUpComponent
   ]
 })
 export class AuthModule {}
