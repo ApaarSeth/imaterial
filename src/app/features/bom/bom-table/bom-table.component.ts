@@ -26,6 +26,7 @@ import {
 import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
 import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
 import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom.component";
+import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
 
@@ -81,7 +82,9 @@ export class BomTableComponent implements OnInit {
     private router: Router,
     private projectService: ProjectService,
     public dialog: MatDialog,
-    private bomService: BomService
+    private bomService: BomService,
+
+     private loading: GlobalLoaderService
   ) {}
 
   ngOnInit() {
@@ -95,6 +98,7 @@ export class BomTableComponent implements OnInit {
   }
 
   getMaterialWithQuantity() {
+    this.loading.show();
     this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
@@ -119,6 +123,7 @@ export class BomTableComponent implements OnInit {
         });
         this.dataSource = new MatTableDataSource(this.subcategoryData);
         console.log(this.dataSource);
+          this.loading.hide();
       });
   }
   toggleRow(element: Subcategory) {

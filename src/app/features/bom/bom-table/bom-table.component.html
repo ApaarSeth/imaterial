@@ -86,22 +86,23 @@
 
         <ng-container matColumnDef="customColumn">
           <th *matHeaderCellDef mat-sort-header></th>
-          <td class="text-right" mat-cell *matCellDef="let element">
+          <td class="text-right p-b-20" mat-cell *matCellDef="let element">
             <!-- <a>
               <mat-icon>edit</mat-icon>
             </a> -->
-
-            <a (click)="openDialog1(element.materialId,projectId)">
-              <span class="issue-to-indent-modal">
-                Issue to Indent
-              </span></a>
-            <a>
-              <mat-icon class="icon-inverse">open_in_browser</mat-icon>
-            </a>
-            <a [ngClass]="{'non-active': ((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))}"
+          
+            <a (click)="openDialog1(element.materialId,projectId)" class="width-15-px cursor-pointer"  matTooltip="Issue to Indent">
+              <img src="../../../../assets/images/ISSUE TO INDENT.png">
+              </a>
+                <a class="width-15-px p-l-5 cursor-pointer" *ngIf="!((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
               (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
-              <mat-icon>delete_outline</mat-icon>
+               <img src="../../../../assets/images/delete-button.png">
             </a>
+             <a class="width-15-px p-l-5 cursor-pointer" *ngIf="((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
+              (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
+               <img src="../../../../assets/images/delete-button_black.png">
+            </a>
+
           </td>
         </ng-container>
 

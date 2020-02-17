@@ -23,6 +23,7 @@ import {
   categoryNestedLevel
 } from "src/app/shared/models/category";
 import { QtyData } from "src/app/shared/models/subcategory-materials";
+import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -54,7 +55,8 @@ export class BomComponent implements OnInit {
     private projectService: ProjectService,
     public dialog: MatDialog,
     private router: Router,
-    private bomService: BomService
+    private bomService: BomService,
+      private loading: GlobalLoaderService
   ) {}
 
   ngOnInit() {
@@ -88,10 +90,12 @@ export class BomComponent implements OnInit {
     });
   }
   uploadExcel(files: FileList) {
+    this.loading.show();
     const data = new FormData();
     data.append("file", files[0]);
     this.bomService.postMaterialExcel(data, this.projectId).then(res => {
       this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+      this.loading.hide();
     });
   }
   downloadExcel(url: string) {
