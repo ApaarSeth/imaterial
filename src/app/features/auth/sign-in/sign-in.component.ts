@@ -32,7 +32,7 @@ export class SigninComponent implements OnInit {
 
   signin() {
     let params = new URLSearchParams();
-    params.append("username", this.signinForm.value.userName);
+    params.append("username", this.signinForm.value.phone);
     params.append("password", this.signinForm.value.password);
     params.append("grant_type", "password");
     params.append("client_id", "fooClientIdPassword");
