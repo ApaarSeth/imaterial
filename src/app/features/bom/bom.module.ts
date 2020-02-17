@@ -10,6 +10,7 @@ import { BomPreviewComponent } from "./bom-preview/bom-preview.component";
 import { BomTableComponent } from "./bom-table/bom-table.component";
 import { BomResolver } from "./bom.resolver";
 import { IssueToIndentResolver } from 'src/app/shared/dialogs/issue-to-indent/issue-to-indent-resolver';
+import { SharedComponentsModule } from 'src/app/shared/components/shared-component.modules';
 
 @NgModule({
   declarations: [BomComponent, BomPreviewComponent, BomTableComponent],
@@ -20,6 +21,7 @@ import { IssueToIndentResolver } from 'src/app/shared/dialogs/issue-to-indent/is
     ReactiveFormsModule,
     MaterialModule,
     LayoutModule,
+    SharedComponentsModule,
     AppSharedModule
   ],
   providers: [BomResolver, IssueToIndentResolver]

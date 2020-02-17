@@ -36,10 +36,10 @@
         <input matInput type="text" formControlName="contact_no" placeholder="Phone No." />
          <small
               *ngIf="form.controls['contact_no'].hasError('required') && form.controls['contact_no'].touched"
-              class="form-error-msg"> contact_no is required </small>
+              class="form-error-msg"> Phone No is required </small>
               <small
               *ngIf="form.controls['contact_no'].hasError('pattern') && form.controls['contact_no'].touched"
-              class="form-error-msg"> Enter Valid contact_no</small>
+              class="form-error-msg"> Enter Valid Phone No</small>
       </mat-form-field>
     </div>
 

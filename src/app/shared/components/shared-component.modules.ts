@@ -6,8 +6,9 @@ import { MaterialModule } from "../material-modules";
 import { ProjectItemComponent } from "./project-item/project-item.component";
 import { ChipComponent } from "./chip/chip.component";
 import { UploadComponent } from "./upload/upload.component";
+import { GlobalLoaderComponent } from './global-loader/global-loader.component';
 
-const components = [ProjectItemComponent, ChipComponent, UploadComponent];
+const components = [ProjectItemComponent, ChipComponent, UploadComponent,  GlobalLoaderComponent];
 
 @NgModule({
   imports: [
