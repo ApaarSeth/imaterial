@@ -4,30 +4,30 @@
     <div class="row">
       <div class="col-xs-12">
 
-    <mat-card>
-      <div class="row">
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-30 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div class="right-pipe" style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div  style="width: 20%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-      </div>
-    </mat-card>
+        <mat-card>
+          <div class="row">
+            <div class="right-pipe" style="width: 20%;">
+              <span class="p-l-30 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+            <div class="right-pipe" style="width: 20%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+            <div class="right-pipe" style="width: 20%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+            <div class="right-pipe" style="width: 20%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+            <div style="width: 20%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Low Stock Material</span>
+            </div>
+          </div>
+        </mat-card>
       </div>
     </div>
     <div class="row">
@@ -37,202 +37,208 @@
           Create RFQ
         </button>
       </div>
+      <!-- <div class="col-xs-12 text-right rfq-create-btn">
+        <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+          [routerLink]="['../../rfq/createRfq']">
+          Create RFQ
+        </button>
+      </div> -->
 
     </div>
 
-  <div class="rfq-list-detail-custom">
-     <mat-accordion>
-      <mat-expansion-panel  class="myPanel" [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Bided RFQ
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="row">
-          <table mat-table [dataSource]="openRfqList" class="mat-elevation-z8 col-sm-12">
-            <ng-container matColumnDef="RFQ Name">
-              <th mat-header-cell *matHeaderCellDef>RFQ Name</th>
-              <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
-            </ng-container>
+    <div class="rfq-list-detail-custom">
+      <mat-accordion>
+        <mat-expansion-panel class="myPanel" [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Bided RFQ
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <table mat-table [dataSource]="openRfqList" class="mat-elevation-z8 col-sm-12">
+              <ng-container matColumnDef="RFQ Name">
+                <th mat-header-cell *matHeaderCellDef>RFQ Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
+              </ng-container>
 
-            <ng-container matColumnDef="Raised Date">
-              <th mat-header-cell *matHeaderCellDef>Raised Date</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.createdAt | date: "dd MMM yyy" }}
-              </td>
-            </ng-container>
+              <ng-container matColumnDef="Raised Date">
+                <th mat-header-cell *matHeaderCellDef>Raised Date</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.createdAt | date: "dd MMM yyy" }}
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="End Date">
-              <th mat-header-cell *matHeaderCellDef>End Date</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.rfqDueDate | date: "dd MMM yyy" }}
-              </td>
-            </ng-container>
+              <ng-container matColumnDef="End Date">
+                <th mat-header-cell *matHeaderCellDef>End Date</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.rfqDueDate | date: "dd MMM yyy" }}
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="Projects">
-              <th mat-header-cell *matHeaderCellDef class="text-align-center">Projects</th>
-              <td mat-cell *matCellDef="let element" class="text-align-center">
-                {{ element.projectCount }}
-              </td>
-            </ng-container>
+              <ng-container matColumnDef="Projects">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center">Projects</th>
+                <td mat-cell *matCellDef="let element" class="text-align-center">
+                  {{ element.projectCount }}
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="Total Material">
-              <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Material</th>
-              <td mat-cell *matCellDef="let element" class="text-align-center">
-                {{ element.materialCount }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Total Supplier">
-              <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
-              <td mat-cell *matCellDef="let element" class="text-align-center">
-                 
-                 
-              <div class="supplier-qty-div">
-                <div>
-                    {{
+              <ng-container matColumnDef="Total Material">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Material</th>
+                <td mat-cell *matCellDef="let element" class="text-align-center">
+                  {{ element.materialCount }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Total Supplier">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
+                <td mat-cell *matCellDef="let element" class="text-align-center">
+
+
+                  <div class="supplier-qty-div">
+                    <div>
+                      {{
                   element.supplierList != null
                     ? element.supplierList.length
                     : ""
                 }}
-                </div>
-                
-                 <div class="show-detail-supplier" *ngIf="element.supplierList.length>0">
-                  <img src="../../../../assets/images/i_icon.png">
-                    <div id="detail-supplier">
-                      <div class="row">
-                        <div class="col-sm-12">
-                         <span class="supplier-name-tag">Supplier Name</span>
-                         <ng-container *ngFor="let name of element.supplierList">
-                           <span><br>
-                             {{name.supplierName}}
-                           </span>
-                         </ng-container>
+                    </div>
+
+                    <div class="show-detail-supplier" *ngIf="element.supplierList.length>0">
+                      <img src="../../../../assets/images/i_icon.png">
+                      <div id="detail-supplier">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <span class="supplier-name-tag">Supplier Name</span>
+                            <ng-container *ngFor="let name of element.supplierList">
+                              <span><br>
+                                {{name.supplierName}}
+                              </span>
+                            </ng-container>
+                          </div>
+
                         </div>
-                       
                       </div>
+                    </div>
+
                   </div>
-                </div> 
-        
-             </div>
 
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="action1">
-              <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
-              <td mat-cell *matCellDef="let element"  class="action1" class="text-align-center">
-                <a [routerLink]="['../rfq-view', element.rfqId]">View RFQ</a>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="action2">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element;let i=index"  class="action2" class="text-align-center">
-                <a [routerLink]="['../rfq-bid/',element.rfqId]" class="text-align-center">View Bids</a>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-    <br>
-    <mat-accordion *ngIf="closeRfqList">
-      <mat-expansion-panel  class="myPanel" [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Non-Bided RFQ
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="row">
-          <table mat-table [dataSource]="closeRfqList" class="mat-elevation-z8 col-sm-12">
-            <ng-container matColumnDef="RFQ Name">
-              <th mat-header-cell *matHeaderCellDef>RFQ Name</th>
-              <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
-            </ng-container>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="action1">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
+                <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
+                  <a [routerLink]="['../rfq-view', element.rfqId]">View RFQ</a>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="action2">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element;let i=index" class="action2" class="text-align-center">
+                  <a [routerLink]="['../rfq-bid/',element.rfqId]" class="text-align-center">View Bids</a>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <br>
+      <mat-accordion *ngIf="closeRfqList">
+        <mat-expansion-panel class="myPanel" [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Non-Bided RFQ
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <table mat-table [dataSource]="closeRfqList" class="mat-elevation-z8 col-sm-12">
+              <ng-container matColumnDef="RFQ Name">
+                <th mat-header-cell *matHeaderCellDef>RFQ Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
+              </ng-container>
 
-            <ng-container matColumnDef="Raised Date">
-              <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.createdAt | date: "dd MMM yyy" }}
-              </td>
-            </ng-container>
+              <ng-container matColumnDef="Raised Date">
+                <th mat-header-cell *matHeaderCellDef>Raised Date"</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.createdAt | date: "dd MMM yyy" }}
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="End Date">
-              <th mat-header-cell *matHeaderCellDef>End Date</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.rfqDueDate | date: "dd MMM yyy" }}
-              </td>
-            </ng-container>
+              <ng-container matColumnDef="End Date">
+                <th mat-header-cell *matHeaderCellDef>End Date</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.rfqDueDate | date: "dd MMM yyy" }}
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="Projects">
-              <th mat-header-cell *matHeaderCellDef class="text-align-center">Projects</th>
-              <td mat-cell *matCellDef="let element" class="text-align-center">
-                {{ element.projectCount }}
-              </td>
-            </ng-container>
+              <ng-container matColumnDef="Projects">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center">Projects</th>
+                <td mat-cell *matCellDef="let element" class="text-align-center">
+                  {{ element.projectCount }}
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="Total Material">
-              <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Material</th>
-              <td mat-cell *matCellDef="let row" class="text-align-center">
-                {{ row.materialCount }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Total Supplier">
-              <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
-              <td mat-cell *matCellDef="let element" class="text-align-center">
-               
-           <div class="supplier-qty-div">
-                <div>
-                    {{
+              <ng-container matColumnDef="Total Material">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Material</th>
+                <td mat-cell *matCellDef="let row" class="text-align-center">
+                  {{ row.materialCount }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Total Supplier">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
+                <td mat-cell *matCellDef="let element" class="text-align-center">
+
+                  <div class="supplier-qty-div">
+                    <div>
+                      {{
                   element.supplierList != null
                     ? element.supplierList.length
                     : ""
                 }}
-                </div>
-                
-                 <div class="show-detail-supplier" *ngIf="element.supplierList.length>0">
-                  <img src="../../../../assets/images/i_icon.png">
-                    <div id="detail-supplier">
-                      <div class="row">
-                        <div class="col-sm-12">
-                         <span class="supplier-name-tag">Supplier Name</span>
-                         <ng-container *ngFor="let name of element.supplierList">
-                           <span><br>
-                             {{name.supplierName}}
-                           </span>
-                         </ng-container>
+                    </div>
+
+                    <div class="show-detail-supplier" *ngIf="element.supplierList.length>0">
+                      <img src="../../../../assets/images/i_icon.png">
+                      <div id="detail-supplier">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <span class="supplier-name-tag">Supplier Name</span>
+                            <ng-container *ngFor="let name of element.supplierList">
+                              <span><br>
+                                {{name.supplierName}}
+                              </span>
+                            </ng-container>
+                          </div>
+
                         </div>
-                       
                       </div>
+                    </div>
+
                   </div>
-                </div> 
-        
-             </div>
 
 
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="action1">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element">
-                hello
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="action2">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                hello
-              </mat-cell>
-            </ng-container>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="action1">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  hello
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="action2">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  hello
+                </mat-cell>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-   
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
 
 
   </div>

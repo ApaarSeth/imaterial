@@ -42,7 +42,7 @@ export class PoComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
-      this.poMode = history.state.mode;
+      this.poMode = poParams.mode;
     });
     this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
@@ -91,7 +91,7 @@ export class PoComponent implements OnInit {
   openDialog(data: POData) {
     const dialogRef = this.dialog.open(SelectApproverComponent, {
       width: "700px",
-      height:"500px",
+      height: "500px",
       data
     });
 

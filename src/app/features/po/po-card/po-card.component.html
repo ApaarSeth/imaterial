@@ -1,28 +1,32 @@
     <form [formGroup]="projectDetails" (ngSubmit)="submit()">
-        <div class="row ">
-            <span class="m-r-35 p-l-15">
-                P.O.No.:
-                <span *ngIf="mode!='edit'; else editBlock">{{cardData.poNumber}}</span>
-                <ng-template #editBlock>
-                    <mat-form-field class="border-input">
-                        <input matInput type="string" formControlName="orderNo" placeholder="Project No."
-                            class="m-r-5" />
-                    </mat-form-field>
+        <div class="row">
+            <span class="col-xs-6">
+                <span class="m-r-35 p-l-15">
+                    <span class="text-semi-bold"> P.O.No.:</span>
+                    <span class="text-semi-bold" *ngIf="mode!='edit'; else editBlock">{{cardData.poNumber}}</span>
+                    <ng-template #editBlock>
+                        <mat-form-field class="border-input">
+                            <input matInput type="string" formControlName="orderNo" placeholder="Project No."
+                                class="m-r-5" />
+                        </mat-form-field>
+                    </ng-template>
+                </span>
+            </span>
+            <span class="col-xs-6">
+                <span class="text-semi-bold" *ngIf="mode!=='edit'; else editDateBlock">
+                    P.O.Vaid Till: <span class="p-l-5">{{cardData.poValidUpto |date}}</span>
+                </span>
+                <ng-template #editDateBlock>
+                    <span class="text-semi-bold"> P.O.Vaid Till:
+                        <mat-form-field class="border-input">
+                            <input matInput formControlName="endDate" [matDatepicker]="endDate"
+                                placeholder="Required Date" />
+                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                            <mat-datepicker #endDate startView="month"></mat-datepicker>
+                        </mat-form-field>
+                    </span>
                 </ng-template>
             </span>
-            <span *ngIf="mode!='edit'else editDateBlock">
-                P.O.Vaid Till: {{cardData.poValidUpto |date}}
-            </span>
-            <ng-template #editDateBlock>
-                <span> P.O.Vaid Till:
-                    <mat-form-field class="border-input">
-                        <input matInput formControlName="endDate" [matDatepicker]="endDate"
-                            placeholder="Required Date" />
-                        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                        <mat-datepicker #endDate startView="month"></mat-datepicker>
-                    </mat-form-field>
-                </span>
-            </ng-template>
         </div>
         <mat-grid-list cols="2" rowHeight="100px" class="poCard">
             <mat-grid-tile [colspan]="1" [rowspan]="2" class="first-mat-grid">

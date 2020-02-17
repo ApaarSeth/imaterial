@@ -151,7 +151,7 @@ input {
   width: 50%;
 }
 
-.brand-view-style{
+.brand-view-style {
   background-color: $background-table-color-grey;
   border-radius: 10px;
   padding: 7px;
@@ -209,9 +209,14 @@ input {
   float: right;
 }
 
+.text-left {
+  text-align: left;
+}
+
 .text-right {
   text-align: right;
 }
+
 
 
 .pull-left {
@@ -261,7 +266,7 @@ a:hover {
 }
 
 .white-radiobutton .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color:$main-color;
+  border-color: $main-color;
 }
 
 .black-border {
@@ -348,11 +353,13 @@ a:hover {
   -webkit-transform: scaleY(-1);
   transform: scaleY(-1);
 }
-.m-0-auto{
+
+.m-0-auto {
   margin: 0px auto;
 }
 
-.mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover{
+.mat-expansion-panel-header.mat-expanded:focus,
+.mat-expansion-panel-header.mat-expanded:hover {
   background: #ffffff !important;
 }
 

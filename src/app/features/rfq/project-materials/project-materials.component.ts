@@ -28,7 +28,7 @@ export class RFQProjectMaterialsComponent implements OnInit {
   buttonName: string = "projectMaterials";
   projects: FormControl;
   selectedProjects = [];
-  ProjectIds: ProjectIds;
+  ProjectIds: number[] = [];
   rfqDetails: RfqMaterialResponse[];
   materialForms: FormGroup;
 
@@ -56,17 +56,13 @@ export class RFQProjectMaterialsComponent implements OnInit {
     this.buttonName = name;
   }
   setSelectedProjectList() {
-    console.log("list", this.projects.value);
-    console.log(
-      this.selectedProjects.map(selectedProject => selectedProject.projectId)
-    );
     this.ProjectIds = this.selectedProjects.map(
       selectedProject => selectedProject.projectId
-    ) as ProjectIds;
+    ) as number[];
     this.rfqMaterials(this.ProjectIds);
   }
 
-  rfqMaterials(projectIds: ProjectIds) {
+  rfqMaterials(projectIds: number[]) {
     this.rfqService.rfqMaterials(projectIds).then(res => {
       this.rfqDetails = res.data;
       console.log("qwertyuio", this.rfqDetails);
@@ -74,7 +70,6 @@ export class RFQProjectMaterialsComponent implements OnInit {
   }
 
   checkedMAterialFlag: boolean = false;
-  
 
   raiseIndent() {
     let projectMaterial = null;

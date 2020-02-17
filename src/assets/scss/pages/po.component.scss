@@ -92,11 +92,14 @@
         }
 
     }
+
+    .mat-row:focus {
+        background-color: white;
+    }
 }
 
 .matCellAlignLeft {
     .mat-cell {
         text-align: left;
     }
-
 }

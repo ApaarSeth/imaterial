@@ -42,11 +42,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.selectedSupplier);
-    // this.suppliers = this.selectedSupplier.supplier;
     this.checkedMaterialsList = this.selectedMaterial;
-    console.log("form init", this.checkedMaterialsList);
-    console.log("supplier", this.selectedSupplier);
     if (this.checkedMaterialsList) {
       this.formsInit();
     }
