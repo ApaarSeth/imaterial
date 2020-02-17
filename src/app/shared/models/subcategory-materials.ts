@@ -1,16 +1,16 @@
 import { MatTableDataSource } from "@angular/material/table";
 
 export interface Subcategory {
-  materialID: number;
+  materialId: number;
   materialCode: string;
-  projectID: number;
+  projectId: number;
   materialName: string;
   materialGroup: string;
   materialUnit: string;
   estimatedQty: number;
   estimatedRate: number;
   materialCustomFlag: number;
-  materialCustomID: number;
+  materialCustomId: number;
   materialSubGroup: string;
   materialSpecs?: Materials[] | MatTableDataSource<Materials>;
   sum: number;

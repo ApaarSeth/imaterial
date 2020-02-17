@@ -9,11 +9,13 @@
             class="custom-stepper custom-header-height p-t-25">
             <mat-step stepControl="stepOne">
                 <ng-template matStepLabel>Project & Material</ng-template>
-                <app-rfq-project-materials (selectedMaterial)="getMaterial($event)"></app-rfq-project-materials>
+                <app-rfq-project-materials [stepperForm]="stpForm" #projectrMaterial
+                    (selectedMaterial)="getMaterial($event)">
+                </app-rfq-project-materials>
             </mat-step>
             <mat-step stepControl="stepSecond">
                 <ng-template matStepLabel>Add Quantity & Makes</ng-template>
-                <app-rfq-quantity-makes [projectMaterialsList]="rfqMaterial"
+                <app-rfq-quantity-makes [stepperForm]="stpForm" [projectMaterialsList]="rfqMaterial"
                     (quantityAndMakes)="getQuantityAndMakes($event)"></app-rfq-quantity-makes>
             </mat-step>
             <mat-step>
