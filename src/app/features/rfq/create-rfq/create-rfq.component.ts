@@ -29,6 +29,10 @@ export class CreateRfqComponent implements OnInit {
     this.updatedRfqMaterial = updatedMaterials;
   }
   getMaterial(materials: RfqMaterialResponse[]) {
+    console.log("materials", materials);
     this.rfqMaterial = materials;
+  }
+  selectionChange(event) {
+    console.log(event);
   }
 }

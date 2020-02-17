@@ -5,7 +5,8 @@
             <div class="col-xs-6"></div>
         </div>
         {{this.stepper.selectedIndex }}
-        <mat-horizontal-stepper [linear]="true" #stepper class="custom-stepper custom-header-height p-t-25">
+        <mat-horizontal-stepper (selectionChange)="selectionChange($event)" [linear]="true" #stepper
+            class="custom-stepper custom-header-height p-t-25">
             <mat-step stepControl="stepOne">
                 <ng-template matStepLabel>Project & Material</ng-template>
                 <app-rfq-project-materials (selectedMaterial)="getMaterial($event)"></app-rfq-project-materials>
