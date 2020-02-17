@@ -9,6 +9,7 @@ import { RFQSupplierDetailComponent } from "./rfq-supplier-detail/rfq-supplier-d
 import { RFQSupplierDetailResolver } from "./rfq-supplier-detail/rfq-supplier-detail.resolver";
 import { RFQSupplierAfterBidComponent } from './rfq-supplier-after-bid/rfq-supplier-after-bid.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
