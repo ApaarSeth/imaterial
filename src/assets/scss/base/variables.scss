@@ -265,7 +265,9 @@ a:hover {
 }
 
 .black-border {
-  border-bottom: 2px solid;
+    border-bottom: 2px solid;
+    position: relative;
+    top: 45px;
 }
 
 //Muskaan's edit
@@ -405,3 +407,7 @@ mat-accordion{
 .cursor-pointer{
   cursor: pointer;
 }
+
+.width-100{
+  width: 100%;
+  }
