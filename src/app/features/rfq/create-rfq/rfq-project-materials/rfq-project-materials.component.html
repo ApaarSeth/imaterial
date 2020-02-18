@@ -47,7 +47,7 @@
                         <ng-container matColumnDef="Material Name">
                             <th mat-header-cell *matHeaderCellDef>Material Name</th>
                             <td mat-cell *matCellDef="let element ;let i=index" formGroupName={{i}}>
-                                <mat-checkbox #ch (change)="materialChecked(ch,i,p,element)">
+                                <mat-checkbox #ch [checked]="element.checked" (change)="materialChecked(ch,i,p,project.projectId,element)">
                                     {{ element.materialName }} <br>
                                     <span class="category-name">
                                         {{ element.materialGroup}}
