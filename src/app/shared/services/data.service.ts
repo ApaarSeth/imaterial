@@ -24,6 +24,9 @@ export class DataService {
   private baseUrl: string;
   private masterUrl: string;
   private ssoUrl: string;
+  role: string;
+  userId: string;
+  orgId: string;
 
   constructor(
     private http: HttpClient,
@@ -34,6 +37,9 @@ export class DataService {
     this.baseUrl = environment.url + "/";
     this.masterUrl = environment.masterUrl + "/";
     this.ssoUrl = environment.ssoUrl + "/";
+    this.role=localStorage.getItem("roleId");
+    this.userId=localStorage.getItem("userId");
+    this.orgId=localStorage.getItem("orgId");
   }
 
   getRequest(
@@ -44,7 +50,9 @@ export class DataService {
     let headers = new HttpHeaders();
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
-    headers = headers.append("Authorization", "admin");
+    headers = headers.append("Authorization", this.role);
+    headers = headers.append("userId", this.userId);
+    headers = headers.append("orgId", this.orgId);
 
     if (reqOptions) {
       if (reqOptions.skipLoader) {
@@ -90,7 +98,9 @@ export class DataService {
     let headers = new HttpHeaders();
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
-    headers = headers.append("Authorization", "admin");
+    headers = headers.append("Authorization", this.role);
+    headers = headers.append("userId", this.userId);
+    headers = headers.append("orgId", this.orgId);
 
     if (reqOptions) {
       if (reqOptions.skipLoader) {
@@ -167,7 +177,9 @@ export class DataService {
     let headers = new HttpHeaders();
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
-    headers = headers.append("Authorization", "admin");
+    headers = headers.append("Authorization", this.role);
+    headers = headers.append("userId", this.userId);
+    headers = headers.append("orgId", this.orgId);
     if (reqOptions) {
       if (reqOptions.skipLoader) {
         headers = headers.append(
