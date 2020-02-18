@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-xs-6"> <button (click)="goBack(stepper)" type="button">Back</button></div>
             <div class="col-xs-6">
-                <button (selectionChange)="selectionChange($event)"  (click)="goForward(stepper)" type="button">Next</button>
+                <button (selectionChange)="selectionChange($event)" (click)="goForward(stepper)"
+                    type="button">Next</button>
             </div>
         </div>
         {{this.stepper.selectedIndex }}
@@ -11,8 +12,8 @@
             class="custom-stepper custom-header-height p-t-25">
             <mat-step stepControl="stepOne">
                 <ng-template matStepLabel>Project & Material</ng-template>
-                <app-rfq-project-materials  [stepperForm]="stpForm" #projectrMaterial
-                   [existingRfq]="rfqData" (selectedMaterial)="getMaterial($event)">
+                <app-rfq-project-materials [stepperForm]="stpForm" #projectrMaterial [existingRfq]="rfqData"
+                    (selectedMaterial)="getMaterial($event)">
                 </app-rfq-project-materials>
             </mat-step>
             <mat-step stepControl="stepSecond">
@@ -22,7 +23,8 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Select Supplier</ng-template>
-                <app-rfq-supplier *ngIf="currentIndex===2"  [selectedMaterialsList]="updatedRfqMaterial"></app-rfq-supplier>
+                <app-rfq-supplier *ngIf="currentIndex===2" [stepperForm]="stpForm"
+                    [selectedMaterialsList]="updatedRfqMaterial"></app-rfq-supplier>
             </mat-step>
         </mat-horizontal-stepper>
     </div>
