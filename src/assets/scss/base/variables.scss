@@ -418,3 +418,37 @@ mat-accordion{
 .width-100{
   width: 100%;
   }
+  .width-15-px{
+    img{
+      width:15px;
+      }
+  }
+  .width-17-px{
+     img{
+      width:17px;
+      }
+  }
+
+.width-22-px{
+   img{
+      width:22px;
+      }
+}
+  // SnackBar Css
+  .blue-snackbar{
+    background: $blue-color;
+    color: #ffffff;
+      .mat-simple-snackbar {
+      justify-content: center;
+    }
+  }
+
+  .error-msg{
+    color:red;
+  }
+
+  .justify-center{
+    .mat-sort-header-container{
+      justify-content: center;
+    }
+  }

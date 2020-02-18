@@ -52,7 +52,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="estimatedQty">
-          <th *matHeaderCellDef mat-sort-header class="text-align-center">
+          <th *matHeaderCellDef mat-sort-header class="text-align-center justify-center">
             Estimated Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -60,7 +60,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="requestedQuantity">
-          <th *matHeaderCellDef mat-sort-header class="text-align-center">
+          <th *matHeaderCellDef mat-sort-header class="text-align-center justify-center">
             Requested Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -68,7 +68,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="issueToProject">
-          <th *matHeaderCellDef mat-sort-header class="text-align-center">
+          <th *matHeaderCellDef mat-sort-header class="text-align-center justify-center">
             Issued To Project
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -76,7 +76,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
-          <th *matHeaderCellDef mat-sort-header class="text-align-center">
+          <th *matHeaderCellDef mat-sort-header class="text-align-center justify-center">
             Available In Stock
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -86,22 +86,23 @@
 
         <ng-container matColumnDef="customColumn">
           <th *matHeaderCellDef mat-sort-header></th>
-          <td class="text-right" mat-cell *matCellDef="let element">
+          <td class="text-right p-b-20" mat-cell *matCellDef="let element">
             <!-- <a>
               <mat-icon>edit</mat-icon>
             </a> -->
-
-            <a (click)="openDialog1(element.materialId,projectId)">
-              <span class="issue-to-indent-modal">
-                Issue to Indent
-              </span></a>
-            <a>
-              <mat-icon class="icon-inverse">open_in_browser</mat-icon>
-            </a>
-            <a [ngClass]="{'non-active': ((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))}"
+          
+            <a (click)="openDialog1(element.materialId,projectId)" class="width-15-px p-r-10 cursor-pointer"  matTooltip="Issue to Indent">
+              <img src="../../../../assets/images/issue_to_indent.png">
+              </a>
+                <a class="width-15-px p-l-5 cursor-pointer" *ngIf="!((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
               (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
-              <mat-icon>delete_outline</mat-icon>
+               <img src="../../../../assets/images/delete-button.png">
             </a>
+             <a class="width-15-px p-l-5 cursor-pointer" *ngIf="((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
+              (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
+               <img src="../../../../assets/images/delete-button_disable.png">
+            </a>
+
           </td>
         </ng-container>
 

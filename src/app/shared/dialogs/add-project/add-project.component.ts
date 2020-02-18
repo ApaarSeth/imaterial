@@ -90,7 +90,7 @@ export class AddProjectComponent implements OnInit {
       addressLine2: [this.data.isEdit ? this.data.detail.addressLine2 : ""],
       pinCode: [
         this.data.isEdit ? this.data.detail.pinCode : "",
-        Validators.required
+        [Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]
       ],
       state: [
         this.data.isEdit ? this.data.detail.state : "",
