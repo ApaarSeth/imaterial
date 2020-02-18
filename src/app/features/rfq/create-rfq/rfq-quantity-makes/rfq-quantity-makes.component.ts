@@ -8,7 +8,8 @@ import {
 } from "@angular/core";
 import {
   RfqMaterialResponse,
-  RfqMat
+  RfqMat,
+  AddRFQ
 } from "src/app/shared/models/RFQ/rfq-details";
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { MatDialog } from "@angular/material";
@@ -22,15 +23,16 @@ import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/ad
   templateUrl: "./rfq-quantity-makes.component.html"
 })
 export class RfqQuantityMakesComponent implements OnInit {
-  @Input() projectMaterialsList: RfqMaterialResponse[];
-  @Output() quantityAndMakes = new EventEmitter<RfqMaterialResponse[]>();
+  @Input() rfq: AddRFQ;
+  @Output() quantityAndMakes = new EventEmitter<[RfqMaterialResponse[],number]>();
   @Input() stepperForm: FormGroup;
 
   userId: 1;
   searchText: string = null;
   materialCounter = 0;
   buttonName: string = "addQueryMakes";
-  projectSelectedMaterials: RfqMaterialResponse[];
+  projectSelectedMaterials: RfqMaterialResponse[]=[];
+
   materialForms: FormGroup;
   rfqMat: RfqMat;
   displayedColumns: string[] = [
@@ -42,6 +44,8 @@ export class RfqQuantityMakesComponent implements OnInit {
     "Quantity",
     "Makes"
   ];
+  rfqId: any;
+  rfqData: any;
 
   constructor(
     public dialog: MatDialog,
@@ -51,14 +55,29 @@ export class RfqQuantityMakesComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(history.state.rfqData){
+     this.rfqData=history.state.rfqData.data
+      this.projectSelectedMaterials=history.state.rfqData.data.rfqProjectsList;
+      this.stepperForm.get("qty").setValue(history.state.rfqData.data);
+    }
+    this.formsInit();
+    if(this.stepperForm.get("mat").value){
+      this.projectSelectedMaterials=this.stepperForm.get("mat").value.rfqProjectsList;
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log("this.projectMaterialsList", this.projectMaterialsList);
-    this.projectSelectedMaterials = this.projectMaterialsList;
-    if (this.projectSelectedMaterials) {
-      this.formsInit();
+    console.log(this.stepperForm)
+    if(this.stepperForm.get("mat").value){
+      this.projectSelectedMaterials=this.stepperForm.get("mat").value.rfqProjectsList;
     }
+    if(this.rfq){
+      this.projectSelectedMaterials = this.rfq.rfqProjectsList;
+    }
+      if (this.projectSelectedMaterials) {
+        this.formsInit();
+      }
   }
 
   setButtonName(name: string) {
@@ -71,7 +90,6 @@ export class RfqQuantityMakesComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   formsInit() {
-    console.log("form init", this.projectSelectedMaterials);
     const temp = 0;
     const frmArr = this.projectSelectedMaterials
       .map((subCat, i) => {
@@ -120,8 +138,10 @@ export class RfqQuantityMakesComponent implements OnInit {
     });
     let checkedMaterials = this.projectSelectedMaterials;
     if (checkedMaterials) {
+      this.rfqData.projectMaterialList=checkedMaterials
+      let rfqData=this.rfqData
       this.router.navigate(["/rfq/suppliers"], {
-        state: { checkedMaterials }
+        state: { rfqData }
       });
     }
   }
@@ -142,7 +162,6 @@ export class RfqQuantityMakesComponent implements OnInit {
   }
   materialAdded() {
     const formValues = this.materialForms.value.forms;
-    console.log("form valueeee", this.projectSelectedMaterials);
     this.projectSelectedMaterials.forEach((project, i) => {
       project.projectMaterialList.forEach((material, j) => {
         formValues.forEach((val, k) => {
@@ -165,7 +184,7 @@ export class RfqQuantityMakesComponent implements OnInit {
     });
     let checkedMaterials = this.projectSelectedMaterials;
     if (checkedMaterials) {
-      this.quantityAndMakes.emit(checkedMaterials);
+      this.quantityAndMakes.emit([checkedMaterials,this.rfqId]);
     }
   }
 }
