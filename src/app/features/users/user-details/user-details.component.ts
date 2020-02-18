@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef } from "@angular/core";
-import { MatDialog, MatChipInputEvent } from "@angular/material";
+import { MatDialog, MatChipInputEvent, MatTableDataSource } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   ProjectDetails,
@@ -45,8 +45,11 @@ export class UserDetailComponent implements OnInit {
    displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project','star'];
   displayedColumnsDeactivate : string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
 
-   dataSourceActivate = ELEMENT_DATA;
-   dataSourceDeactivate = ELEMENT_DATA;
+   dataSourceActivateTemp = ELEMENT_DATA;
+   dataSourceDeactivateTemp = ELEMENT_DATA;
+
+   dataSourceActivate: MatTableDataSource<AllUserDetails>;
+   dataSourceDeactivate: MatTableDataSource<AllUserDetails>;
    userDetailsTemp :UserAdd = {};
    deactivateUsers: Array<UserAdd> = new Array<UserAdd>();
    activateUsers: Array<UserAdd> = new Array<UserAdd>();
@@ -71,10 +74,26 @@ export class UserDetailComponent implements OnInit {
 
   getAllUsers(){
   this.userService.getAllUsers(this.orgId).then(data => {
-            this.dataSourceActivate = data.data.activatedProjectList;
-            this.dataSourceDeactivate = data.data.deactivatedProjectList;
+            //  this.dataSourceActivate = data.data.activatedProjectList;
+            //  this.dataSourceDeactivate = data.data.deactivatedProjectList;
 
-            if(this.dataSourceActivate.length>0 || this.dataSourceDeactivate.length>0){
+             this.dataSourceActivate = new MatTableDataSource(data.data.activatedProjectList);
+             this.dataSourceDeactivate = new MatTableDataSource(data.data.deactivatedProjectList);
+
+             this.dataSourceActivateTemp = data.data.activatedProjectList;
+             this.dataSourceDeactivateTemp = data.data.deactivatedProjectList;
+
+              this.dataSourceActivate.filterPredicate = (data, filterValue) => {
+      const dataStr = data.ProjectUser.firstName + data.ProjectUser.lastName + data.ProjectUser.email + data.ProjectUser.contactNo + data.ProjectUser.roleId + data.roleName + data.ProjectList;
+      return dataStr.indexOf(filterValue) != -1; 
+      }
+
+       this.dataSourceDeactivate.filterPredicate = (data, filterValue) => {
+      const dataStr = data.ProjectUser.firstName + data.ProjectUser.lastName + data.ProjectUser.email + data.ProjectUser.contactNo + data.ProjectUser.roleId + data.roleName + data.ProjectList;
+      return dataStr.indexOf(filterValue) != -1; 
+      }
+
+            if(this.dataSourceActivateTemp.length>0 || this.dataSourceDeactivateTemp.length>0){
               this.addUserBtn = false;
             } 
             else{
@@ -127,7 +146,6 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
-
   editProject(data) {
     const projectList : Array<number> = new Array<number>(); 
     this.userDetailsTemp.firstName = data.ProjectUser.firstName;
@@ -147,5 +165,12 @@ export class UserDetailComponent implements OnInit {
       detail: this.userDetailsTemp
     } as UserDetailsPopUpData);
   }
+   applyFilteqqr(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+  }
 
+    applyFilter(filterValue: string) {
+        this.dataSourceActivate.filter = filterValue.trim().toLowerCase();
+         this.dataSourceDeactivate.filter = filterValue.trim().toLowerCase();
+      }
 }

@@ -1,12 +1,32 @@
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <div class="col-xs-12 text-right">
-      <button mat-raised-button class="main-background-color main-button color-white m-b-5"
-        [routerLink]="['../../po/initiate-po']">
-        Inititate PO
-      </button>
+       <div class="row">
+       <div class="col-xs-3">
+        <mat-form-field class="example-form-field border-input p-l-20">
+          <input
+            matInput
+            placeholder="Search PO"
+            type="search"
+           (keyup)="applyFilter($event.target.value)"
+          />
+          <button mat-button matSuffix mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-9">
+           <div class="text-right add-user-details-button-right p-t-10 p-r-20">
+              <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+                  [routerLink]="['../../po/initiate-po']">
+                  Inititate PO
+                </button>
+          </div>
+      </div>
+  </div>
+
+ <div class="col-xs-12 text-right">
       <!-- Topmost Status -->
-      <mat-card class="m-t-40 m-b-20">
+      <!-- <mat-card class="m-t-40 m-b-20">
         <div class="row">
           <div class="right-pipe" style="width: 25%;">
             <span class="p-l-30 p-r-20 pull-left">23</span>
@@ -25,11 +45,11 @@
             <span class="pull-left">Ongoing Indent</span>
           </div>
         </div>
-      </mat-card>
+      </mat-card> -->
 
       <!-- Accordion for PO Lists -->
       <div class="po-list-detail-custom">
-        <div *ngIf="poDetails.sendForApprovalPOList">
+        <div *ngIf="poApprovalDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -37,14 +57,14 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="row matCellAlignLeft">
-              <table mat-table [dataSource]="poDetails.sendForApprovalPOList" class="mat-elevation-z8 col-sm-12">
+              <table mat-table [dataSource]="poApprovalDetails" class="mat-elevation-z8 col-sm-12">
                 <ng-container matColumnDef="PO Number">
                   <th mat-header-cell *matHeaderCellDef>PO Number</th>
                   <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="Raised Date">
-                  <th mat-header-cell *matHeaderCellDef>Raised Date</th>
+                  <th mat-header-cell *matHeaderCellDef >Raised Date</th>
                   <td mat-cell *matCellDef="let element">
                     {{ element.created_at | date}}
                   </td>
@@ -93,7 +113,7 @@
           </mat-expansion-panel>
         </div>
         <br>
-        <div *ngIf="poDetails.draftedPOList">
+        <div *ngIf="poDraftedDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -101,7 +121,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="row matCellAlignLeft">
-              <table mat-table [dataSource]="poDetails.draftedPOList" class="mat-elevation-z8 col-sm-12">
+              <table mat-table [dataSource]="poDraftedDetails" class="mat-elevation-z8 col-sm-12">
                 <ng-container matColumnDef="PO Number">
                   <th mat-header-cell *matHeaderCellDef>PO Number</th>
                   <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
@@ -158,7 +178,7 @@
           </mat-expansion-panel>
         </div>
         <br>
-        <div *ngIf="poDetails.acceptedRejectedPOList">
+        <div *ngIf="acceptedRejectedPOListTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -166,7 +186,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="row matCellAlignLeft">
-              <table mat-table [dataSource]="poDetails.acceptedRejectedPOList" class="mat-elevation-z8 col-sm-12">
+              <table mat-table [dataSource]="acceptedRejectedPOList" class="mat-elevation-z8 col-sm-12">
                 <ng-container matColumnDef="PO Number">
                   <th mat-header-cell *matHeaderCellDef>PO Number</th>
                   <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
@@ -196,7 +216,7 @@
                 <ng-container matColumnDef="ViewPo">
                   <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
-                    <a [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'/view']">view
+                    <a href="javascript:void(0)" (click)="viewPO(element.purchaseOrderId)">view
                       po</a>
                   </td>
                 </ng-container>
@@ -221,4 +241,9 @@
             </div>
           </mat-expansion-panel>
         </div>
-      </div>
+   </div>
+  </div>
+  
+  </div>
+</div>
+      
