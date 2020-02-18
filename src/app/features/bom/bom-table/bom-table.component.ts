@@ -98,37 +98,34 @@ export class BomTableComponent implements OnInit {
     this.getMaterialWithQuantity();
     //this.product = history.state.projectDetails;
   }
-   ngAfterViewInit (){
-    this.dataSource.sort = this.sort;
-  }
 
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
-        // this.subcategories = [...res.data];
-        // console.log(this.subcategories);
-        // this.subcategories.forEach(subcategory => {
-        //   if (
-        //     subcategory.materialSpecs &&
-        //     Array.isArray(subcategory.materialSpecs) &&
-        //     subcategory.materialSpecs.length
-        //   ) {
-        //     this.subcategoryData = [
-        //       ...this.subcategoryData,
-        //       {
-        //         ...subcategory,
-        //         materialSpecs: new MatTableDataSource(subcategory.materialSpecs)
-        //       }
-        //     ];
-        //   } else {
-        //     this.subcategoryData = [...this.subcategoryData, subcategory];
-        //   }
-        // });
-      //  this.dataSource = new MatTableDataSource(this.subcategoryData);
-          this.dataSource = res.data;
-          this.dataSource.sort = this.sort;
+        this.subcategories = [...res.data];
+        console.log(this.subcategories);
+        this.subcategories.forEach(subcategory => {
+          if (
+            subcategory.materialSpecs &&
+            Array.isArray(subcategory.materialSpecs) &&
+            subcategory.materialSpecs.length
+          ) {
+            this.subcategoryData = [
+              ...this.subcategoryData,
+              {
+                ...subcategory,
+                materialSpecs: new MatTableDataSource(subcategory.materialSpecs)
+              }
+            ];
+          } else {
+            this.subcategoryData = [...this.subcategoryData, subcategory];
+          }
+        });
+         this.dataSource = new MatTableDataSource(this.subcategoryData);
+          // this.dataSource = res.data;
+          // this.dataSource.sort = this.sort;
           this.loading.hide();
           this.snack.open(res.message, '', { duration: 2000 , panelClass: ['blue-snackbar']});
       });

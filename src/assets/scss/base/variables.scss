@@ -446,3 +446,9 @@ mat-accordion{
   .error-msg{
     color:red;
   }
+
+  .justify-center{
+    .mat-sort-header-container{
+      justify-content: center;
+    }
+  }
