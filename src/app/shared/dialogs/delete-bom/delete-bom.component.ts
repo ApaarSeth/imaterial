@@ -48,7 +48,7 @@ export class DeleteBomComponent implements OnInit {
   }
 
   cancel(){
-     this.dialogRef.close({ data: 'data' });
+     this.dialogRef.close({ data: 'close' });
   }
 
   deactivateMaterial(){

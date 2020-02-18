@@ -11,7 +11,6 @@ import { BomTableComponent } from "./bom-table/bom-table.component";
 import { BomResolver } from "./bom.resolver";
 import { IssueToIndentResolver } from 'src/app/shared/dialogs/issue-to-indent/issue-to-indent-resolver';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-component.modules';
-
 @NgModule({
   declarations: [BomComponent, BomPreviewComponent, BomTableComponent],
   imports: [
