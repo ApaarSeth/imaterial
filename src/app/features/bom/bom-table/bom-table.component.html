@@ -91,8 +91,8 @@
               <mat-icon>edit</mat-icon>
             </a> -->
           
-            <a (click)="openDialog1(element.materialId,projectId)" class="width-15-px cursor-pointer"  matTooltip="Issue to Indent">
-              <img src="../../../../assets/images/ISSUE TO INDENT.png">
+            <a (click)="openDialog1(element.materialId,projectId)" class="width-15-px p-r-10 cursor-pointer"  matTooltip="Issue to Indent">
+              <img src="../../../../assets/images/issue_to_indent.png">
               </a>
                 <a class="width-15-px p-l-5 cursor-pointer" *ngIf="!((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
               (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">

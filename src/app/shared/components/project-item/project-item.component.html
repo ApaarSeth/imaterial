@@ -35,7 +35,7 @@
                     <i class="material-icons font-size12 color-text-card"
                       >format_shapes</i
                     >
-                    <span class="p-l-5">Project Area: {{ projectDetails.area }}</span>
+                    <span class="p-l-5">Project Area: {{ projectDetails.area }} {{projectDetails.unit}}</span>
                   </div>
                 </div>
               </div>
@@ -64,11 +64,10 @@
               <!-- <a href="javascript:void(0)"
                 ><i class="material-icons main-color">file_copy</i></a
               > -->
-              <a
-                href="javascript:void(0)"
-                (click)="edit(projectDetails.projectId, $event)"
-                ><i class="material-icons main-color">edit</i></a
-              >
+               <a class="width-17-px p-l-10 p-r-10 cursor-pointer"(click)="edit(projectDetails.projectId, $event)">
+               <img src="../../../../assets/images/edit.png">
+               </a>
+
               <a class="width-15-px p-l-10 p-r-10 cursor-pointer" (click)="delete(projectDetails.projectId, $event)">
                <img src="../../../../assets/images/delete-button.png">
             </a>

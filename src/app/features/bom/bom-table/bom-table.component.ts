@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
 import {
   trigger,
   state,
@@ -17,7 +17,7 @@ import {
 } from "src/app/shared/models/project-details";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog, MatSnackBar } from "@angular/material";
+import { MatDialog, MatSnackBar, MatSort } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import {
   Subcategory,
@@ -48,6 +48,7 @@ import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
   ]
 })
 export class BomTableComponent implements OnInit {
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   projectId: number;
   projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
@@ -97,36 +98,41 @@ export class BomTableComponent implements OnInit {
     this.getMaterialWithQuantity();
     //this.product = history.state.projectDetails;
   }
+   ngAfterViewInit (){
+    this.dataSource.sort = this.sort;
+  }
 
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
-        this.subcategories = [...res.data];
-        console.log(this.subcategories);
-        this.subcategories.forEach(subcategory => {
-          if (
-            subcategory.materialSpecs &&
-            Array.isArray(subcategory.materialSpecs) &&
-            subcategory.materialSpecs.length
-          ) {
-            this.subcategoryData = [
-              ...this.subcategoryData,
-              {
-                ...subcategory,
-                materialSpecs: new MatTableDataSource(subcategory.materialSpecs)
-              }
-            ];
-          } else {
-            this.subcategoryData = [...this.subcategoryData, subcategory];
-          }
-        });
-        this.dataSource = new MatTableDataSource(this.subcategoryData);
-        console.log(this.dataSource);
+        // this.subcategories = [...res.data];
+        // console.log(this.subcategories);
+        // this.subcategories.forEach(subcategory => {
+        //   if (
+        //     subcategory.materialSpecs &&
+        //     Array.isArray(subcategory.materialSpecs) &&
+        //     subcategory.materialSpecs.length
+        //   ) {
+        //     this.subcategoryData = [
+        //       ...this.subcategoryData,
+        //       {
+        //         ...subcategory,
+        //         materialSpecs: new MatTableDataSource(subcategory.materialSpecs)
+        //       }
+        //     ];
+        //   } else {
+        //     this.subcategoryData = [...this.subcategoryData, subcategory];
+        //   }
+        // });
+      //  this.dataSource = new MatTableDataSource(this.subcategoryData);
+          this.dataSource = res.data;
+          this.dataSource.sort = this.sort;
           this.loading.hide();
           this.snack.open(res.message, '', { duration: 2000 , panelClass: ['blue-snackbar']});
       });
+      
   }
   toggleRow(element: Subcategory) {
     element.materialSpecs &&
@@ -267,9 +273,15 @@ export class BomTableComponent implements OnInit {
         data: { materialId: materialId, projectId: projectId }
       });
       dialogRef.afterClosed().subscribe(result => {
-        this.getMaterialWithQuantity();
-
-        console.log("The dialog was closed");
+        
+        if(result && result.data == 'close'){
+            console.log("The dialog was closed");
+        }
+        else{
+              this.getMaterialWithQuantity();
+           console.log("The dialog was closed");
+        }
+        
       });
     }
   }
