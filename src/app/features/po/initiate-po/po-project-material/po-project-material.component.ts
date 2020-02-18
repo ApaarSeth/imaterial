@@ -56,9 +56,9 @@ export class PoProjectMaterialComponent implements OnInit {
     this.materialForm = new FormGroup({});
     this.materialForm.addControl("formArr", new FormArray(formArr));
   }
-  choosenProject() {
+  choosenProject(event) {
     this.projectIds = this.form.value.selectedProject.projectId;
-    this.poService.projectMaterials(this.projectIds).then(res => {
+    this.poService.projectMaterials(event.value.projectId).then(res => {
       this.poDetails = res.data;
       this.materialsForm();
     });

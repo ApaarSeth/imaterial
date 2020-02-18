@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   url: "http://localhost:1323/im",
   masterUrl: "http://localhost:1333/mm",
-  ssoUrl: "http://localhost:8080/sso"
+  ssoUrl: "http://localhost:8080/sso",
+   debug_mode: true
 };
 
 // export const environment = {

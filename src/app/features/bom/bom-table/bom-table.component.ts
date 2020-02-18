@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
 import {
   trigger,
   state,
@@ -17,7 +17,7 @@ import {
 } from "src/app/shared/models/project-details";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar, MatSort } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import {
   Subcategory,
@@ -26,6 +26,7 @@ import {
 import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
 import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
 import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom.component";
+import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
 
@@ -47,6 +48,7 @@ import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
   ]
 })
 export class BomTableComponent implements OnInit {
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   projectId: number;
   projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
@@ -81,7 +83,10 @@ export class BomTableComponent implements OnInit {
     private router: Router,
     private projectService: ProjectService,
     public dialog: MatDialog,
-    private bomService: BomService
+    private bomService: BomService,
+
+     private loading: GlobalLoaderService,
+      private snack: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -95,6 +100,7 @@ export class BomTableComponent implements OnInit {
   }
 
   getMaterialWithQuantity() {
+    this.loading.show();
     this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
@@ -117,9 +123,13 @@ export class BomTableComponent implements OnInit {
             this.subcategoryData = [...this.subcategoryData, subcategory];
           }
         });
-        this.dataSource = new MatTableDataSource(this.subcategoryData);
-        console.log(this.dataSource);
+         this.dataSource = new MatTableDataSource(this.subcategoryData);
+          // this.dataSource = res.data;
+          // this.dataSource.sort = this.sort;
+          this.loading.hide();
+          this.snack.open(res.message, '', { duration: 2000 , panelClass: ['blue-snackbar']});
       });
+      
   }
   toggleRow(element: Subcategory) {
     element.materialSpecs &&
@@ -260,9 +270,15 @@ export class BomTableComponent implements OnInit {
         data: { materialId: materialId, projectId: projectId }
       });
       dialogRef.afterClosed().subscribe(result => {
-        this.getMaterialWithQuantity();
-
-        console.log("The dialog was closed");
+        
+        if(result && result.data == 'close'){
+            console.log("The dialog was closed");
+        }
+        else{
+              this.getMaterialWithQuantity();
+           console.log("The dialog was closed");
+        }
+        
       });
     }
   }

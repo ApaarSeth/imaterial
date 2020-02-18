@@ -65,7 +65,7 @@ orgId:Number;
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.subcategory = history.state.checkedSubcategory;
+    this.subcategory = history.state.checkedList;
     this.getProject(this.projectId);
     this.formsInit();
   }

@@ -21,6 +21,7 @@ import { AuthLayoutComponent } from "./shared/layout/auth-layout/auth-layout.com
 import { MainLayoutComponent } from "./shared/layout/main-layout/main-layout.component";
 import { NotFoundComponent } from './features/not-found/not-found.component';
 import { SupplierBidLayoutComponent } from './shared/layout/supplier-bid-layout/supplier-bid-layout.component';
+import { AppSharedModule } from './shared/app-shared-module';
 // import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 
 @NgModule({
@@ -33,7 +34,8 @@ import { SupplierBidLayoutComponent } from './shared/layout/supplier-bid-layout/
     FlexLayoutModule,
     HttpClientModule,
     LayoutModule,
-    DashboardModule
+    DashboardModule,
+    AppSharedModule
     // FroalaEditorModule.forRoot(),
     // FroalaViewModule.forRoot()
   ],
