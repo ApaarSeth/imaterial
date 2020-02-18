@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatTableDataSource } from "@angular/material";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
@@ -25,8 +25,8 @@ const ELEMENT_DATA: SupplierAdd[] =[];
 export class SupplierDetailComponent implements OnInit {
    displayedColumns: string[] = ['suppliername', 'email', 'contactNo', 'pan','status','star'];
   displayedColumnsDeactivate : string[] = ['username', 'email', 'contactNo', 'roleName', 'ProjectList'];
-   dataSource = ELEMENT_DATA;
-   dataSourceActivate = ELEMENT_DATA;
+   dataSource =  new MatTableDataSource<SupplierAdd>();
+   dataSourceTemp = ELEMENT_DATA;
    dataSourceDeactivate = ELEMENT_DATA;
 
 
@@ -50,11 +50,18 @@ export class SupplierDetailComponent implements OnInit {
 
   getAllSupplier(){
     this.rfqService.getSuppliers(this.orgId).then(data => {
-          this.dataSource = data.data;
-            if(this.dataSource.length>0){
+          this.dataSource = new MatTableDataSource(data.data);
+           this.dataSourceTemp = data.data;
+           
+            this.dataSource.filterPredicate = (data, filterValue) => {
+                const dataStr = data.supplier_name + data.email + data.pan.toString() + data.contact_no.toString() + data.status;
+                return dataStr.indexOf(filterValue) != -1; 
+                }
+
+            if(this.dataSourceTemp.length>0){
               this.addUserBtn = false;
             } 
-            else if(this.dataSource.length==0){
+            else if(this.dataSourceTemp.length==0){
               this.addUserBtn = true;
             }
         });
@@ -101,5 +108,8 @@ export class SupplierDetailComponent implements OnInit {
     }
   }
 
+    applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+      }
 
 }

@@ -48,7 +48,6 @@ import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
   ]
 })
 export class BomTableComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
   projectId: number;
   projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
@@ -72,6 +71,7 @@ export class BomTableComponent implements OnInit {
     "customColumn"
   ];
   dataSource: MatTableDataSource<Subcategory>;
+  sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
   orgId: number;
   checkedSubcategory: Subcategory[];
@@ -130,6 +130,10 @@ export class BomTableComponent implements OnInit {
           this.snack.open(res.message, '', { duration: 2000 , panelClass: ['blue-snackbar']});
       });
       
+  }
+   applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   toggleRow(element: Subcategory) {
     element.materialSpecs &&
