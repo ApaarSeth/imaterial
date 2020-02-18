@@ -58,9 +58,15 @@
           <div class="col-sm-6">
             <!-- PinCode -->
             <mat-form-field class="border-input">
-              <mat-label>Pin Code*</mat-label>
-              <input matInput type="text" formControlName="pinCode" />
+              <mat-label>Pincode*</mat-label>
+              <input matInput type="number" formControlName="pinCode" />
               <!-- <mat-error>PinCode is Required</mat-error> -->
+              <small
+                    *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
+                    class="error-msg"> pincode is required </small>
+                    <small
+                    *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
+                    class="error-msg"> Enter Valid Pincode</small>
             </mat-form-field>
           </div>
           <div class="col-sm-6">
