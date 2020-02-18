@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import { RfqMaterialResponse, AddRFQ } from "src/app/shared/models/RFQ/rfq-details";
+import {
+  RfqMaterialResponse,
+  AddRFQ
+} from "src/app/shared/models/RFQ/rfq-details";
 import { ActivatedRoute } from "@angular/router";
 import { MatStepper } from "@angular/material";
 import { FormBuilder } from "@angular/forms";
-import { RFQService } from 'src/app/shared/services/rfq/rfq.service';
+import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 
 @Component({
   selector: "app-create-rfq",
@@ -17,7 +20,7 @@ export class CreateRfqComponent implements OnInit {
   rfqMaterial: AddRFQ;
   stpForm: any;
   prevIndex: any;
-  currentIndex=0;
+  currentIndex = 0;
   rfqData: AddRFQ;
 
   constructor(
@@ -30,10 +33,10 @@ export class CreateRfqComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (this.stepper) {
         this.stepper.selectedIndex = params.selectedIndex - 1;
-        this.currentIndex=params.selectedIndex - 1;
+        this.currentIndex = params.selectedIndex - 1;
       }
     });
-    
+
     this.stpForm = this.formBuilder.group({
       mat: [],
       qty: []
@@ -45,29 +48,28 @@ export class CreateRfqComponent implements OnInit {
   }
   getMaterial(materials: AddRFQ) {
     this.rfqMaterial = materials;
-
   }
   selectionChange(event) {
-    this.prevIndex=event.previouslySelectedIndex;
-    this.currentIndex=event.selectedIndex;
-    console.log(event)
-    if(event.previouslySelectedIndex === 1){
-      this.rfqData=this.stpForm.get("qty").value
+    this.prevIndex = event.previouslySelectedIndex;
+    this.currentIndex = event.selectedIndex;
+    console.log(event);
+    if (event.previouslySelectedIndex === 1) {
+      this.rfqData = this.stpForm.get("qty").value;
       // this.stpForm.get("mat").setValue(this.stpForm.get("qty").value)
     }
     if (event.previouslySelectedIndex === 0) {
-        this.rfqService.addRFQ(this.stpForm.get("mat").value).then(res => {
-          this.stpForm.get("mat").setValue(res.data)
-          console.log("selected mat",this.stpForm.get("mat").value)
-        });
+      this.rfqService.addRFQ(this.stpForm.get("mat").value).then(res => {
+        this.stpForm.get("mat").setValue(res.data);
+        console.log("selected mat", this.stpForm.get("mat").value);
+      });
     }
   }
 
-goBack(stepper: MatStepper){
+  goBack(stepper: MatStepper) {
     stepper.previous();
-}
+  }
 
-goForward(stepper: MatStepper){
+  goForward(stepper: MatStepper) {
     stepper.next();
-}
+  }
 }
