@@ -1,17 +1,22 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
+import {
+  RfqMaterialResponse,
+  AddRFQ
+} from "src/app/shared/models/RFQ/rfq-details";
 import { MatDialog } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
+import { FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-rfq-supplier",
   templateUrl: "./rfq-supplier.component.html"
 })
 export class RfqSupplierComponent implements OnInit {
-  @Input() selectedMaterialsList: RfqMaterialResponse[];
+  @Input() selectedMaterialsList: AddRFQ;
+  @Input() stepperForm: FormGroup;
   searchText: string = null;
   buttonName: string = "selectSupplier";
   displayedColumns: string[] = [
@@ -25,8 +30,9 @@ export class RfqSupplierComponent implements OnInit {
   allSuppliers: Suppliers[];
   selectedSuppliersList: Suppliers[];
   selectedSupplierFlag: boolean = false;
-  checkedMaterialsList: RfqMaterialResponse[];
+  checkedMaterialsList: AddRFQ;
   orgId: number;
+  rfqData: AddRFQ;
 
   constructor(
     public dialog: MatDialog,
@@ -37,6 +43,9 @@ export class RfqSupplierComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
+    if (this.stepperForm.get("qty").value) {
+      this.rfqData = this.stepperForm.get("mat").value.rfqProjectsList;
+    }
     console.log("suppliers", this.allSuppliers);
     console.log("checkedMaterialsList", this.checkedMaterialsList);
   }
@@ -54,11 +63,19 @@ export class RfqSupplierComponent implements OnInit {
     this.selectedSuppliersList = this.allSuppliers.filter(x => x.checked);
   }
   nevigateToUploadPage() {
-    let checkedMaterialsList = this.checkedMaterialsList;
-    let selectedSuppliersList = this.selectedSuppliersList;
-    this.router.navigate(["/rfq/documents"], {
-      state: { checkedMaterialsList, selectedSuppliersList }
+    // let checkedMaterialsList = this.checkedMaterialsList;
+    this.rfqData.supplierId = this.selectedSuppliersList.map(
+      supplier => supplier.supplierId
+    );
+    // let finalRfqData = this.checkedMaterialsList;
+    // let rfqId = this.selectedSuppliersList[1];
+    let finalRfq = this.rfqData;
+    this.router.navigate(["/rfq/review"], {
+      state: { finalRfq }
     });
+    // this.router.navigate(["/rfq/documents"], {
+    //   state: { checkedMaterialsList, selectedSuppliersList }
+    // });
   }
 
   openDialog(projectId) {

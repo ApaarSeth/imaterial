@@ -4,15 +4,20 @@ import {
   Output,
   EventEmitter,
   Input,
-  SimpleChanges
+  SimpleChanges,
+  ViewChild
 } from "@angular/core";
 import {
   ProjectDetails,
   ProjectIds
 } from "src/app/shared/models/project-details";
 import { FormControl, FormGroup, FormBuilder, FormArray } from "@angular/forms";
-import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
-import { MatDialog } from "@angular/material";
+import {
+  RfqMaterialResponse,
+  AddRFQ,
+  RfqMat
+} from "src/app/shared/models/RFQ/rfq-details";
+import { MatDialog, MatCheckbox } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 
@@ -22,7 +27,9 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 })
 export class RfqProjectMaterialsComponent implements OnInit {
   @Input() stepperForm: FormGroup;
+  @Input() existingRfq: AddRFQ;
   @Output() selectedMaterial = new EventEmitter<RfqMaterialResponse[]>();
+  @ViewChild("ch", { static: true }) ch: HTMLElement;
   userId: 1;
   searchText: string = null;
   allProjects: ProjectDetails[];
@@ -39,6 +46,10 @@ export class RfqProjectMaterialsComponent implements OnInit {
     "Requested Quantity",
     "Estimated Quantity"
   ];
+  addRfq: AddRFQ;
+  alreadySelectedId: number;
+  checkedMaterialList: RfqMat[];
+  checkedMaterialListIds: number[];
 
   constructor(
     public dialog: MatDialog,
@@ -50,16 +61,34 @@ export class RfqProjectMaterialsComponent implements OnInit {
   form: FormGroup;
   ngOnInit() {
     this.allProjects = this.activatedRoute.snapshot.data.createRfq[1].data;
-
+    this.addRfq = {
+      rfqName: null,
+      dueDate: null,
+      supplierId: null,
+      rfqProjectsList: [],
+      documentsList: null,
+      terms: null
+    };
     this.formInit();
     this.materialsForm();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.existingRfq) {
+      this.addRfq = this.existingRfq;
+      this.checkedMaterialList = this.addRfq.rfqProjectsList[0].projectMaterialList;
+      this.checkedMaterialListIds = this.addRfq.rfqProjectsList[0].projectMaterialList.map(
+        mat => mat.materialId
+      );
+      this.alreadySelectedId = this.addRfq.rfqProjectsList[0].projectId;
+      // this.checkAlreadySelectedMat(this.ch,this.checkedMaterialListIds,this.alreadySelectedId)
+      this.choosenProject();
+    }
     console.log("stepQty", this.stepperForm.get("qty").value);
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
   }
+  // checkAlreadySelectedMat(ch:HTMLElement,matId:number[],projectId) {
+
+  // }
 
   formInit() {
     this.form = this.formBuilder.group({
@@ -75,6 +104,9 @@ export class RfqProjectMaterialsComponent implements OnInit {
     const selectedIds = this.form.value.selectedProject.map(
       selectedProject => selectedProject.projectId
     );
+    if (this.alreadySelectedId) {
+      selectedIds.push(this.alreadySelectedId);
+    }
     if (selectedIds.length === 0) {
       this.rfqDetails = [];
       this.projectIds = [];
@@ -103,8 +135,20 @@ export class RfqProjectMaterialsComponent implements OnInit {
     }
     if (projectAdd.length) {
       this.rfqService.rfqMaterials(projectAdd).then(res => {
-        console.log(res.data);
         this.rfqDetails = [...this.rfqDetails, ...res.data];
+        this.rfqDetails = this.rfqDetails.map(project => {
+          project.projectMaterialList.map(material => {
+            if (project.projectId === this.alreadySelectedId) {
+              if (this.checkedMaterialListIds.includes(material.materialId)) {
+                material.checked = true;
+              }
+            } else {
+              material.checked = false;
+            }
+            return material;
+          });
+          return project;
+        });
         this.materialsForm();
       });
     }
@@ -132,14 +176,27 @@ export class RfqProjectMaterialsComponent implements OnInit {
     });
   }
 
-  materialChecked(checked: HTMLElement, i: number, p: number, element) {
+  materialChecked(
+    checked: MatCheckbox,
+    i: number,
+    p: number,
+    projectId: number,
+    element: RfqMat
+  ) {
     const pArr = this.materialForm.controls["forms"] as FormArray;
     const mArr = pArr.at(p) as FormArray;
     const maGrp = mArr.controls["materialList"] as FormArray;
     const mat = maGrp.at(i);
-    if (checked) {
+    if (checked.checked) {
       mat.get("material").setValue(element);
     } else {
+      if (projectId === this.alreadySelectedId) {
+        this.checkedMaterialList = this.checkedMaterialList.filter(
+          (mat: RfqMat) => {
+            return mat.materialId != element.materialId;
+          }
+        );
+      }
       mat.get("material").reset();
     }
   }
@@ -147,15 +204,35 @@ export class RfqProjectMaterialsComponent implements OnInit {
   materialAdded() {
     let newRfqDetails = JSON.parse(JSON.stringify(this.rfqDetails));
     newRfqDetails.map((rfqDetail: RfqMaterialResponse, i) => {
-      let projectMaterial = [];
+      let projectMaterial: RfqMat[] = [];
       this.materialForm.value.forms[i].materialList.forEach(element => {
         if (element.material != null) {
           projectMaterial.push(element.material);
         }
+        if (rfqDetail.projectId === this.alreadySelectedId) {
+          projectMaterial = [...projectMaterial, ...this.checkedMaterialList];
+          projectMaterial = projectMaterial.filter((material, index) => {
+            const _material = JSON.stringify(material);
+            return (
+              index ===
+              projectMaterial.findIndex(obj => {
+                return JSON.stringify(obj) === _material;
+              })
+            );
+          });
+        }
       });
+
       rfqDetail.projectMaterialList = projectMaterial;
     });
-    this.stepperForm.get("mat").setValue(newRfqDetails);
-    this.selectedMaterial.emit(newRfqDetails);
+    this.addRfq.rfqProjectsList = newRfqDetails;
+    this.stepperForm.get("mat").setValue(this.addRfq);
+
+    // if(this.addRfq.rfqProjectsList){
+    //   this.rfqService.addRFQ(this.addRfq).then(res => {
+    //
+    //     this.selectedMaterial.emit(res.data);
+    //   });
+    // }
   }
 }
