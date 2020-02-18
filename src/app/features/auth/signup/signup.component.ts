@@ -46,7 +46,7 @@ export class SignupComponent implements OnInit {
     });
   }
   signup() {
-    // this.signInDetails =  this.signupForm.value;
+    // this.signInDetails =  this.signupForm.valupe;
     // this.signInDetails.firstName = this.signupForm.value.firstName
     // this.signInDetails.lastName = this.signupForm.value.lastName
     this.signInDetails.password = this.signupForm.value.password

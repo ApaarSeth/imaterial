@@ -17,7 +17,7 @@ import {
 } from "src/app/shared/models/project-details";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import {
   Subcategory,
@@ -84,7 +84,8 @@ export class BomTableComponent implements OnInit {
     public dialog: MatDialog,
     private bomService: BomService,
 
-     private loading: GlobalLoaderService
+     private loading: GlobalLoaderService,
+      private snack: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -124,6 +125,7 @@ export class BomTableComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.subcategoryData);
         console.log(this.dataSource);
           this.loading.hide();
+          this.snack.open(res.message, '', { duration: 2000 , panelClass: ['blue-snackbar']});
       });
   }
   toggleRow(element: Subcategory) {

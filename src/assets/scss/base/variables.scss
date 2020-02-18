@@ -423,3 +423,12 @@ mat-accordion{
       width:15px;
       }
   }
+
+  // SnackBar Css
+  .blue-snackbar{
+    background: $blue-color;
+    color: #ffffff;
+      .mat-simple-snackbar {
+      justify-content: center;
+    }
+  }
