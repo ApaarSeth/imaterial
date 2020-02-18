@@ -428,7 +428,7 @@ mat-accordion{
   .blue-snackbar{
     background: $blue-color;
     color: #ffffff;
-    .mat-simple-snackbar-action {
-        color: hsl(83, 96%, 81%) !important;
+      .mat-simple-snackbar {
+      justify-content: center;
     }
   }

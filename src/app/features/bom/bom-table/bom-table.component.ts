@@ -125,7 +125,7 @@ export class BomTableComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.subcategoryData);
         console.log(this.dataSource);
           this.loading.hide();
-          this.snack.open('Details are Updated!', 'OK', { duration: 2000 , panelClass: ['blue-snackbar']});
+          this.snack.open(res.message, '', { duration: 2000 , panelClass: ['blue-snackbar']});
       });
   }
   toggleRow(element: Subcategory) {
