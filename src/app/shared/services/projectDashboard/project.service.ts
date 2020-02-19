@@ -53,6 +53,14 @@ export class ProjectService {
       });
   }
 
+  deleteDraftedPo(purchaseOrderId:Number) {
+    return this.dataService
+      .sendDeleteRequest(API.DELETEDRAFTEDPO(purchaseOrderId), "")
+      .then(res => {
+        return res;
+      });
+  }
+
   updateProjects(
     organizationId: Number,
     projectId: Number,

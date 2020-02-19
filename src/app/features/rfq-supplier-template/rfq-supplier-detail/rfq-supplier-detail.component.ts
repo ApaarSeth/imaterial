@@ -59,21 +59,27 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
 
   postRFQDetailSupplier(rfqSupplierObj) {
-    this.openDialog(rfqSupplierObj);
+    this.submitBid(rfqSupplierObj);
   }
 
   submitBid(rfqSupplierObj) {
-    this.rfqService
-      .postRFQDetailSupplier(
-        this.activatedRoute.snapshot.params["supplierId"],
-        rfqSupplierObj
-      )
-      .then(res => {
-        res.data;
-        this.router.navigate([
-          "rfq-bids/after-submit/" + this.brandCount + "/" + this.materialCount
-        ]);
-      });
+    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
+    this.router.navigate([
+          "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
+        ],{state: {supplierId, rfqSupplierObj }});
+
+
+    // this.rfqService
+    //   .postRFQDetailSupplier(
+    //     this.activatedRoute.snapshot.params["supplierId"],
+    //     rfqSupplierObj
+    //   )
+    //   .then(res => {
+    //     res.data;
+    //     this.router.navigate([
+    //       "rfq-bids/after-submit/" + this.brandCount + "/" + this.materialCount
+    //     ]);
+    //   });
   }
 
   openDialog(rfqSupplierObj): void {
