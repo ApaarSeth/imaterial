@@ -28,6 +28,7 @@ export class GRNService {
     addGRN(grn: GRN[]) {
         return this.dataService.sendPostRequest(API.ADDGRN, grn).then(res => {
             console.log("ahsghafs", res);
+            return res;
         });
     }
 
