@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
-import { initiatePo } from "../../models/PO/po-data";
+import { initiatePo, SupplierAddress } from "../../models/PO/po-data";
+import { AllSupplierDetails } from '../../models/supplier';
 
 @Injectable({
   providedIn: "root"
@@ -36,5 +37,15 @@ export class POService {
 
   approveRejectPo(poStatusData) {
     return this.dataService.sendPostRequest(API.APPROVEREJECTPO, poStatusData);
+  }
+
+  getSupplierAddress(supplierId:Number){
+     return this.dataService.getRequest(
+      API.GETSUPPLIERADDRESS(supplierId)
+    );
+  }
+
+  addAddress(address : SupplierAddress){
+       return this.dataService.sendPostRequest(API.ADDSUPPLIERADDRESS, address);
   }
 }
