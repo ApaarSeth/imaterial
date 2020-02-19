@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PODetailLists, PurchaseOrder } from "src/app/shared/models/po-details/po-details-list";
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
+import { ProjetPopupData } from 'src/app/shared/models/project-details';
+import { DeleteDraftedPoComponent } from 'src/app/shared/dialogs/delete-drafted-po/delete-drafted-po.component';
 
 @Component({
   selector: "po-detail-list",
@@ -35,12 +38,18 @@ acceptedRejectedPOListTemp : PurchaseOrder[] = [];
     "AddGRN"
   ];
 
-  constructor(private activatedRoute: ActivatedRoute, private route: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, 
+  private route: Router,  
+   private projectService: ProjectService,
+    public dialog: MatDialog
+   ) { }
 
   ngOnInit() {
+    this.PoData();
+  }
+
+PoData(){
     this.poDetails = new MatTableDataSource(this.activatedRoute.snapshot.data.poDetailList);
-     
-     
      
      this.acceptedRejectedPOList = new MatTableDataSource(this.activatedRoute.snapshot.data.poDetailList.acceptedRejectedPOList);
 
@@ -73,11 +82,13 @@ acceptedRejectedPOListTemp : PurchaseOrder[] = [];
                 }
 
     console.log("poDetails", this.poDetails);
-  }
-
+}
 
   viewPO(purchaseOrderId){
     this.route.navigate(['../../po/po-generate/'+purchaseOrderId+'/view']);
+  }
+  viewPODEdit(purchaseOrderId){
+    this.route.navigate(['../../po/po-generate/'+purchaseOrderId+'/edit']);
   }
     applyFilter(filterValue: string) {
         this.acceptedRejectedPOList.filter = filterValue.trim().toLowerCase();
@@ -86,5 +97,24 @@ acceptedRejectedPOListTemp : PurchaseOrder[] = [];
 
       }
 
+    deleteDraftedPo(element) {
+    this.openDialogDeactiveUser({
+      isEdit: false,
+      isDelete: true,
+      detail: element
+    } as ProjetPopupData);
+  }
+
+   openDialogDeactiveUser(data: ProjetPopupData): void {
+
+      const dialogRef = this.dialog.open(DeleteDraftedPoComponent, {
+        width: "800px",
+        data
+      });
+      dialogRef.afterClosed().toPromise().then(data => {
+         this.PoData();
+        console.log("The dialog was closed");
+      });
+    }
   
 }

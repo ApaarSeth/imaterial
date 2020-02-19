@@ -60,5 +60,6 @@ export const API = {
   DELETEMATERIAL: (projectId, materialId) =>
     `material/delete/${projectId}/${materialId}`,
   APPROVEREJECTPO: `po/approveRejectPO`,
-  GETGENERATEDRFQ: rfqId => `fq/stepper/${rfqId}`
+  GETGENERATEDRFQ: rfqId => `fq/stepper/${rfqId}`,
+  DELETEDRAFTEDPO: purchaseOrderId => `po/delete/${purchaseOrderId}`
 };

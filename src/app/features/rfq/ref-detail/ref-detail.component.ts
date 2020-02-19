@@ -9,11 +9,12 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class RefDetailComponent implements OnInit {
   constructor(private rfqService: RFQService) {}
- // openRfqList: RfqList[];
-  closeRfqListTemp: RfqList[];
+ // submittedRfqList: RfqList[];
+  nonSubmittedRfqListTemp: RfqList[];
+  submittedRfqListTemp : RfqList[];
 
-   openRfqList: MatTableDataSource<RfqList>;
-   closeRfqList: MatTableDataSource<RfqList>;
+   submittedRfqList: MatTableDataSource<RfqList>;
+   nonSubmittedRfqList: MatTableDataSource<RfqList>;
 
 
   displayedColumns = [
@@ -29,16 +30,17 @@ export class RefDetailComponent implements OnInit {
   ngOnInit() {
     let orgId=Number(localStorage.getItem("orgId"))
     this.rfqService.rfqDetail(orgId).then(res => {
-      this.openRfqList = new MatTableDataSource(res.data.openRfqList);
-      this.closeRfqList = new MatTableDataSource(res.data.closeRfqList);
-      this.closeRfqListTemp = res.data.closeRfqList;
+      this.submittedRfqList = new MatTableDataSource(res.data.submittedRfqList);
+      this.nonSubmittedRfqList = new MatTableDataSource(res.data.nonSubmittedRfqList);
+      this.nonSubmittedRfqListTemp = res.data.nonSubmittedRfqList;
+      this.submittedRfqListTemp = res.data.submittedRfqList;
 
-        this.openRfqList.filterPredicate = (data, filterValue) => {
+        this.submittedRfqList.filterPredicate = (data, filterValue) => {
                 const dataStr = data.rfqName + data.createdAt.toString() + data.rfqDueDate.toString()  + data.projectCount.toString() + data.materialCount.toString();
                 return dataStr.indexOf(filterValue) != -1; 
                 }
 
-  this.closeRfqList.filterPredicate = (data, filterValue) => {
+  this.nonSubmittedRfqList.filterPredicate = (data, filterValue) => {
                 const dataStr = data.rfqName + data.createdAt.toString() + data.rfqDueDate.toString() + data.projectCount.toString() + data.materialCount.toString();
                 return dataStr.indexOf(filterValue) != -1; 
                 }
@@ -47,8 +49,8 @@ export class RefDetailComponent implements OnInit {
   }
 
     applyFilter(filterValue: string) {
-        this.openRfqList.filter = filterValue.trim().toLowerCase();
-      this.closeRfqList.filter =filterValue.trim().toLowerCase();
+        this.submittedRfqList.filter = filterValue.trim().toLowerCase();
+      this.nonSubmittedRfqList.filter =filterValue.trim().toLowerCase();
 
       }
 

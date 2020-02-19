@@ -1,0 +1,27 @@
+
+  <div class="header-add-edit-dialog">
+      <h1 mat-dialog-title>Confirmation</h1>
+      <button type="button" class="close" (click)="cancel()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+  </div>
+   <div class="col-sm-12 padding-for-dialog-after-header text-align-center">
+     Are you sure you want to delete this PO?
+   </div>
+      
+  <div mat-dialog-actions>
+    <div class="col-sm-12 save-btn-add-edit-user-modal">
+        <button
+        mat-raised-button (click)="cancel()"
+        class="main-background-color main-button color-white pull-left"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button (click)="deactivateUser()"
+        class="main-background-color main-button color-white pull-right"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
