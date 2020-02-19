@@ -61,8 +61,11 @@ export class RfqSupplierComponent implements OnInit {
       supplier => supplier.supplierId
     );
     let finalRfq = this.rfqData;
-    this.router.navigate(["/rfq/review/"], {
-      state: { finalRfq }
+    this.rfqService.addRFQ(this.finalRfq).then(res => {
+      finalRfq = res.data;
+      this.router.navigate(["/rfq/review/"], {
+        state: { finalRfq }
+      });
     });
   }
   openDialog(projectId) {
