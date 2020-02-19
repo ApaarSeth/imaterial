@@ -8,6 +8,7 @@ import { RFQSupplierDetailRoutingModule } from "./rfq-supplier-detail-template-r
 import { RFQSupplierDetailComponent } from "./rfq-supplier-detail/rfq-supplier-detail.component";
 import { RFQSupplierDetailResolver } from "./rfq-supplier-detail/rfq-supplier-detail.resolver";
 import { RFQSupplierAfterBidComponent } from './rfq-supplier-after-bid/rfq-supplier-after-bid.component';
+import { RFQSupplierAddAddressComponent } from './rfq-supplier-add-address/rfq-supplier-add-address.component';
 
 
 @NgModule({
@@ -21,6 +22,6 @@ import { RFQSupplierAfterBidComponent } from './rfq-supplier-after-bid/rfq-suppl
     RFQSupplierDetailRoutingModule
   ],
   providers: [RFQSupplierDetailResolver],
-  declarations: [RFQSupplierDetailComponent,RFQSupplierAfterBidComponent]
+  declarations: [RFQSupplierDetailComponent,RFQSupplierAfterBidComponent,RFQSupplierAddAddressComponent]
 })
 export class RFQSupplierDetailTemplateModule {}

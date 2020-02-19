@@ -7,7 +7,7 @@
           <img src="../../../../assets/images/orange-tick.png" alt="BuildSupply_Logo">
         </div>
          
-         <div class="bid-material">
+         <div class="bid-material" *ngIf="brandCount && materialCount">
            Bid Completion: <b>{{brandCount}} / {{materialCount}}</b>
          </div>
          <div class="thank-you">

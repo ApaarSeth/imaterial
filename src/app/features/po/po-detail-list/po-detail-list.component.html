@@ -130,7 +130,7 @@
                 <ng-container matColumnDef="Raised Date">
                   <th mat-header-cell *matHeaderCellDef>Raised Date</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.created_at | date}}
+                    {{ element.created_at |  date: "dd MMM yyy" }}
                   </td>
                 </ng-container>
 
@@ -151,7 +151,7 @@
                 <ng-container matColumnDef="ViewPo">
                   <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                   <td mat-cell *matCellDef="let element" class="text-align-center">
-                    <a [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'/edit']">view
+                    <a href="javascript:void(0)"  (click)="viewPODEdit(element.purchaseOrderId)">view
                       po</a>
                   </td>
                 </ng-container>
@@ -159,7 +159,9 @@
                 <ng-container matColumnDef="ViewGRN">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let element">
-                    <!-- <a href="javascript:void(0)" >View GRN</a>        -->
+                      <a (click)="deleteDraftedPo(element)" class="width-15-px p-l-5 cursor-pointer pull-right"  matTooltip="Delete" >
+                             <img src="../../../../assets/images/delete-button.png">
+                       </a>       
                   </td>
                 </ng-container>
 
@@ -195,7 +197,7 @@
                 <ng-container matColumnDef="Raised Date">
                   <th mat-header-cell *matHeaderCellDef>Raised Date</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.created_at | date}}
+                    {{ element.created_at |  date: "dd MMM yyy" }}
                   </td>
                 </ng-container>
 

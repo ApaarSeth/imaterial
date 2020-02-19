@@ -28,6 +28,7 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 export class RfqProjectMaterialsComponent implements OnInit {
   @Input() stepperForm: FormGroup;
   @Input() existingRfq: AddRFQ;
+  @Output() updatedRfq = new EventEmitter<AddRFQ>();
   @ViewChild("ch", { static: true }) ch: HTMLElement;
   userId: 1;
   searchText: string = null;
@@ -234,6 +235,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
       rfqDetail.projectMaterialList = projectMaterial;
     });
     this.addRfq.rfqProjectsList = newRfqDetails;
-    this.stepperForm.get("mat").setValue(this.addRfq);
+    // this.stepperForm.get("mat").setValue(this.addRfq);
+    this.updatedRfq.emit(this.addRfq);
   }
 }

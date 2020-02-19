@@ -24,6 +24,7 @@ export interface ProjectDetails {
   pincode: string;
   primaryAddress: number;
   projectAddressId: number;
+  purchaseOrderId?: number;
   purchaseOrderCost: string;
   purchaseOrderCount: string;
   startDate: Date;
