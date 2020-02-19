@@ -26,7 +26,7 @@ import {
 import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
 import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
 import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom.component";
-import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
+import { GlobalLoaderService } from "src/app/shared/services/global-loader.service";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
 
@@ -85,8 +85,8 @@ export class BomTableComponent implements OnInit {
     public dialog: MatDialog,
     private bomService: BomService,
 
-     private loading: GlobalLoaderService,
-      private snack: MatSnackBar
+    private loading: GlobalLoaderService,
+    private snack: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -123,15 +123,17 @@ export class BomTableComponent implements OnInit {
             this.subcategoryData = [...this.subcategoryData, subcategory];
           }
         });
-         this.dataSource = new MatTableDataSource(this.subcategoryData);
-          // this.dataSource = res.data;
-          // this.dataSource.sort = this.sort;
-          this.loading.hide();
-          this.snack.open(res.message, '', { duration: 2000 , panelClass: ['blue-snackbar']});
+        this.dataSource = new MatTableDataSource(this.subcategoryData);
+        // this.dataSource = res.data;
+        // this.dataSource.sort = this.sort;
+        this.loading.hide();
+        this.snack.open(res.message, "", {
+          duration: 2000,
+          panelClass: ["blue-snackbar"]
+        });
       });
-      
   }
-   applyFilter(event: Event) {
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -180,9 +182,18 @@ export class BomTableComponent implements OnInit {
     });
     let projectId = materialList[0].projectId;
     this.addRfq = {
+      id: null,
+      status: null,
+      createdBy: null,
+      createdAt: null,
+      lastUpdatedBy: null,
+      lastUpdatedAt: null,
+      rfqId: null,
+      rfq_status: null,
       rfqName: null,
       dueDate: null,
       supplierId: null,
+      supplierDetails: null,
       rfqProjectsList: [
         {
           projectId: projectId,
@@ -198,7 +209,9 @@ export class BomTableComponent implements OnInit {
     };
     this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
     this.rfqService.addRFQ(this.addRfq).then(res => {
-      this.router.navigate(["/rfq/createRfq", { selectedIndex: 2 }],{state:{rfqData:res}});
+      this.router.navigate(["/rfq/createRfq", { selectedIndex: 2 }], {
+        state: { rfqData: res }
+      });
       console.log(res.data);
     });
   }
@@ -274,15 +287,12 @@ export class BomTableComponent implements OnInit {
         data: { materialId: materialId, projectId: projectId }
       });
       dialogRef.afterClosed().subscribe(result => {
-        
-        if(result && result.data == 'close'){
-            console.log("The dialog was closed");
+        if (result && result.data == "close") {
+          console.log("The dialog was closed");
+        } else {
+          this.getMaterialWithQuantity();
+          console.log("The dialog was closed");
         }
-        else{
-              this.getMaterialWithQuantity();
-           console.log("The dialog was closed");
-        }
-        
       });
     }
   }
