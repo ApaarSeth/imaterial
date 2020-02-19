@@ -63,5 +63,5 @@ export const API = {
   GETGENERATEDRFQ: rfqId => `fq/stepper/${rfqId}`,
   DELETEDRAFTEDPO: purchaseOrderId => `po/delete/${purchaseOrderId}`,
   GETSUPPLIERADDRESS: supplierId => `address/get/Supplier/${supplierId}`,
-  ADDSUPPLIERADDRESS : `address/add/Supplier/`
+  ADDSUPPLIERADDRESS :supplierId => `address/add/Supplier/${supplierId}`
 };

@@ -45,7 +45,7 @@ export class POService {
     );
   }
 
-  addAddress(address : SupplierAddress){
-       return this.dataService.sendPostRequest(API.ADDSUPPLIERADDRESS, address);
+  addAddress(supplierId:Number,address : SupplierAddress){
+       return this.dataService.sendPostRequest(API.ADDSUPPLIERADDRESS(supplierId), address);
   }
 }

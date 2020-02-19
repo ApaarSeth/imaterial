@@ -91,7 +91,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
 
    saveAddress(){
     console.log(this.form.value);
-    this.poService.addAddress(this.form.value).then(res=>{
+    this.poService.addAddress(this.supplierId,this.form.value).then(res=>{
       if(res.data){
           this.openDialog(this.rfqSupplierObj);
       }
