@@ -25,6 +25,7 @@ import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/ad
 export class RfqQuantityMakesComponent implements OnInit {
   @Input() rfq: AddRFQ;
   @Input() stepperForm: FormGroup;
+  @Output() updatedRfq = new EventEmitter<AddRFQ>();
 
   userId: 1;
   searchProject: string = null;
@@ -38,14 +39,15 @@ export class RfqQuantityMakesComponent implements OnInit {
   displayedColumns: string[] = [
     "Material Name",
     "Required Date",
-    "Requested Quantity",
-    "Estimated Quantity",
+    "Requested Qty",
+    "Estimated Qty",
     "Estimated Rate",
     "Quantity",
     "Makes"
   ];
   rfqId: any;
   rfqData: AddRFQ;
+  message: string;
 
   constructor(
     public dialog: MatDialog,
@@ -60,25 +62,26 @@ export class RfqQuantityMakesComponent implements OnInit {
       this.rfqData = history.state.rfqData.data;
       this.projectSelectedMaterials =
         history.state.rfqData.data.rfqProjectsList;
-      this.stepperForm.get("qty").setValue(history.state.rfqData.data);
+      this.updatedRfq.emit(this.rfqData);
+      // this.stepperForm.get("qty").setValue(history.state.rfqData.data);
     }
-    if (this.stepperForm.get("mat").value) {
-      this.rfqData = this.stepperForm.get("mat").value;
-      this.projectSelectedMaterials = this.stepperForm.get(
-        "mat"
-      ).value.rfqProjectsList;
-    }
+    // if (this.stepperForm.get("mat").value) {
+    //   this.rfqData = this.stepperForm.get("mat").value;
+    //   this.projectSelectedMaterials = this.stepperForm.get(
+    //     "mat"
+    //   ).value.rfqProjectsList;
+    // }
     this.formsInit();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.stepperForm);
-    if (this.stepperForm.get("mat").value) {
-      this.projectSelectedMaterials = this.stepperForm.get(
-        "mat"
-      ).value.rfqProjectsList;
-    }
+    // if (this.stepperForm.get("mat").value) {
+    //   this.projectSelectedMaterials = this.stepperForm.get(
+    //     "mat"
+    //   ).value.rfqProjectsList;
+    // }
     if (this.rfq) {
+      this.rfqData = this.rfq;
       this.projectSelectedMaterials = this.rfq.rfqProjectsList;
     }
     if (this.projectSelectedMaterials) {
@@ -125,7 +128,11 @@ export class RfqQuantityMakesComponent implements OnInit {
 
   makesUpdate(data: string[], grpIndex: number) {
     const forms = this.materialForms.get("forms") as FormArray;
-    forms.controls[grpIndex].get("makes").setValue(data);
+    if (data.length <= 4) {
+      forms.controls[grpIndex].get("makes").setValue(data);
+    } else {
+      this.message = "Only 4 brands allowed";
+    }
   }
 
   openDialog(data: RfqMaterialResponse): void {
@@ -136,6 +143,9 @@ export class RfqQuantityMakesComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {});
     }
+  }
+  getFormStatus() {
+    return this.materialForms;
   }
   materialAdded() {
     const formValues = this.materialForms.value.forms;
@@ -163,6 +173,7 @@ export class RfqQuantityMakesComponent implements OnInit {
     if (checkedMaterials) {
       this.rfqData.rfqProjectsList = checkedMaterials;
       this.stepperForm.get("qty").setValue(this.rfqData);
+      this.updatedRfq.emit(this.rfqData);
     }
   }
 }
