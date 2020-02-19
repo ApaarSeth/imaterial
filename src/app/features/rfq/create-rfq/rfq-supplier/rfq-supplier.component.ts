@@ -16,6 +16,7 @@ import { FormGroup } from "@angular/forms";
 })
 export class RfqSupplierComponent implements OnInit {
   @Input() stepperForm: FormGroup;
+  @Input() finalRfq: AddRFQ;
   searchText: string = null;
   buttonName: string = "selectSupplier";
   displayedColumns: string[] = [
