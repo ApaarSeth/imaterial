@@ -1,3 +1,5 @@
+import { Suppliers } from "./suppliers";
+
 export interface RfqMaterialResponse {
   projectId?: number;
   projectName?: string;
@@ -49,9 +51,18 @@ export interface RfqList {
 }
 
 export interface AddRFQ {
+  id: number;
+  status: number;
+  createdBy: string;
+  createdAt: string;
+  lastUpdatedBy: string;
+  lastUpdatedAt: string;
+  rfqId: number;
+  rfq_status: string;
   rfqName: string;
   dueDate: Date;
   supplierId: number[];
+  supplierDetails: Suppliers[];
   rfqProjectsList: RfqMaterialResponse[];
   documentsList: DocumentDetails[];
   terms: Terms;

@@ -20,12 +20,13 @@ import { Router } from "@angular/router";
 })
 export class ReviewComponent implements OnInit {
   displayedColumns: string[] = ["Material Name", "Quantity", "Makes"];
-  checkedMaterialsList: RfqMaterialResponse[];
+  finalRfq: AddRFQ;
   selectedSuppliersList: Suppliers[];
   documentList: DocumentList[];
   form: FormGroup;
   supplierIds: number[];
   rfqDetails: AddRFQ = {} as AddRFQ;
+  checkedList: RfqMaterialResponse[];
 
   constructor(
     private router: Router,
@@ -34,13 +35,14 @@ export class ReviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.checkedMaterialsList = history.state.checkedMaterialsList;
-    this.selectedSuppliersList = history.state.selectedSuppliersList;
-    this.documentList = history.state.documentsList;
-    this.supplierIds = this.selectedSuppliersList.map(x => x.supplierId);
-    console.log("supplierIds", this.supplierIds);
-    console.log("checkedMaterialsList", this.checkedMaterialsList);
-    console.log("selectedSuppliersList", this.selectedSuppliersList);
+    this.finalRfq = history.state.finalRfq;
+    this.checkedList = this.finalRfq.rfqProjectsList;
+    this.selectedSuppliersList = this.finalRfq.supplierDetails;
+    // this.documentList = history.state.documentsList;
+    // this.supplierIds = this.selectedSuppliersList.map(x => x.supplierId);
+    // console.log("supplierIds", this.supplierIds);
+    // console.log("checkedMaterialsList", this.checkedMaterialsList);
+    // console.log("selectedSuppliersList", this.selectedSuppliersList);
     this.initForm();
   }
 
@@ -58,17 +60,17 @@ export class ReviewComponent implements OnInit {
 
   setRFQDetailsValue() {
     if (this.form.value) {
-      this.rfqDetails.rfqName = this.form.value.rfqName;
-      this.rfqDetails.dueDate = this.form.value.dueDate;
+      this.finalRfq.rfqName = this.form.value.rfqName;
+      this.finalRfq.dueDate = this.form.value.dueDate;
     }
-    this.rfqDetails.rfqProjectsList = this.checkedMaterialsList;
-    this.rfqDetails.supplierId = this.supplierIds;
-    this.rfqDetails.documentsList = this.documentList;
-    this.rfqDetails.terms = {
-      termsDesc: "qwert hjk ghgjhkj vhj hhv jh",
-      termsType: "RFQ"
-    };
-    this.openDialog3(this.rfqDetails);
+    // this.rfqDetails.rfqProjectsList = this.checkedMaterialsList;
+    // this.rfqDetails.supplierId = this.supplierIds;
+    // this.rfqDetails.documentsList = this.documentList;
+    // this.rfqDetails.terms = {
+    //   termsDesc: "qwert hjk ghgjhkj vhj hhv jh",
+    //   termsType: "RFQ"
+    // };
+    this.openDialog3(this.finalRfq);
   }
 
   openDialog1(): void {
@@ -88,7 +90,7 @@ export class ReviewComponent implements OnInit {
     }
   }
 
-  openDialog3(data): void {
+  openDialog3(data: AddRFQ): void {
     console.log("sdfghjk", data);
     if (AddRFQConfirmationComponent) {
       const dialogRef = this.dialog.open(AddRFQConfirmationComponent, {
@@ -98,7 +100,7 @@ export class ReviewComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        if (result.status != 0) {
+        if (result.statusCode === 201) {
           this.router.navigate(["rfq/rfq-detail"]);
         }
       });
