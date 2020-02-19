@@ -1,70 +1,62 @@
-<div class="page-start-point">
-    <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-        <div class="row p-t-15 p-b-10">
-            <div class="row ">
-                <div class="col-xs-10 text-right p-t-10 border-input">
-                    <mat-form-field class="input-search-padding-zero pull-right">
-                        <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchText"
-                            [ngModelOptions]="{standalone: true}" />
-                        <button mat-button matSuffix mat-icon-button>
-                            <mat-icon>search</mat-icon>
-                        </button>
-                    </mat-form-field>
-                </div>
-                <div class="text-right col-xs-2">
-                    <button class="main-background-color round-button full-border m-t-5 m-r-15"
-                        (click)="openDialog(checkedMaterialsList[0].projectId)">
-                        <mat-icon class="color-white m-t-5">add</mat-icon>
-                    </button>
-                    <button mat-raised-button [disabled]="!selectedSupplierFlag" (click)="nevigateToUploadPage()"
+<div class="row ">
+    <div class="col-xs-12 text-right">
+        <mat-form-field class="input-search-padding-zero  border-input pull-right">
+            <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText"
+                [ngModelOptions]="{standalone: true}" />
+            <button mat-button matSuffix mat-icon-button>
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <button class="main-background-color round-button full-border m-t-5 m-r-15"
+            (click)="openDialog( this.rfqData.rfqProjectsList[0].projectId)">
+            <mat-icon class="color-white m-t-5">add</mat-icon>
+        </button>
+        <!-- <button mat-raised-button [disabled]="!selectedSupplierFlag" (click)="nevigateToUploadPage()"
                         class="main-background-color main-button color-white">
                         Next
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'"
-            class="mat-elevation-z8 col-sm-12">
-            <!-- Supplier Name Column -->
-            <ng-container matColumnDef="Supplier Name">
-                <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-checkbox (change)="valueChange(element)" [checked]="element.checked"></mat-checkbox>
-                    {{ element.supplier_name }}
-                </td>
-            </ng-container>
-
-            <!-- Email Column -->
-            <ng-container matColumnDef="Email">
-                <th mat-header-cell *matHeaderCellDef>Email</th>
-                <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-            </ng-container>
-
-            <!-- Phone No. Column -->
-            <ng-container matColumnDef="Phone No.">
-                <th mat-header-cell *matHeaderCellDef>Phone No.</th>
-                <td mat-cell *matCellDef="let element">{{ element.contact_no }}</td>
-            </ng-container>
-
-            <!-- PAN No. Column -->
-            <ng-container matColumnDef="PAN No.">
-                <th mat-header-cell *matHeaderCellDef>PAN No.</th>
-                <td mat-cell *matCellDef="let element">{{ element.pan }}</td>
-            </ng-container>
-
-            <!-- Delete icon Column -->
-            <ng-container matColumnDef="customColumn">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element">
-                    <button mat-button class="display-flex pull-right ">
-                        <mat-icon class="main-color">delete_outline</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+                    </button> -->
     </div>
 </div>
+<table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'"
+    class="mat-elevation-z8 col-sm-12">
+    <!-- Supplier Name Column -->
+    <ng-container matColumnDef="Supplier Name">
+        <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
+        <td mat-cell *matCellDef="let element">
+            <mat-checkbox (change)="valueChange(element)" [checked]="element.checked"></mat-checkbox>
+            {{ element.supplier_name }}
+        </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="Email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <!-- Phone No. Column -->
+    <ng-container matColumnDef="Phone No.">
+        <th mat-header-cell *matHeaderCellDef>Phone No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.contact_no }}</td>
+    </ng-container>
+
+    <!-- PAN No. Column -->
+    <ng-container matColumnDef="PAN No.">
+        <th mat-header-cell *matHeaderCellDef>PAN No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.pan }}</td>
+    </ng-container>
+
+    <!-- Delete icon Column -->
+    <ng-container matColumnDef="customColumn">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-button class="display-flex pull-right ">
+                <mat-icon class="main-color">delete_outline</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

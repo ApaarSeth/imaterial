@@ -7,23 +7,27 @@
                         (click)="goBack(stepper)" type="button">Back</button>
                 </span>
                 <button mat-raised-button class="main-background-color main-button color-white"
-                    (selectionChange)="selectionChange($event)" (click)="goForward(stepper)" type="button">Next</button>
+                    (selectionChange)="selectionChange($event)" [disabled]="currentIndex===1&&!completed"
+                    (click)="goForward(stepper)" type="button">Next</button>
             </div>
         </div>
         <mat-horizontal-stepper (selectionChange)="selectionChange($event)" [linear]="true" #stepper>
             <mat-step stepControl="stepOne">
                 <ng-template matStepLabel>Project & Material</ng-template>
-                <app-rfq-project-materials [stepperForm]="stpForm" #projectrMaterial [existingRfq]="rfqData">
+                <app-rfq-project-materials (updatedRfq)="getMaterial($event)" [stepperForm]="stpForm" #projectrMaterial
+                    [existingRfq]="rfqData">
                 </app-rfq-project-materials>
             </mat-step>
-            <mat-step stepControl="stepSecond">
+            <mat-step stepControl="stepSecond" [completed]="completed">
                 <ng-template matStepLabel>Add Quantity & Makes</ng-template>
-                <app-rfq-quantity-makes *ngIf="currentIndex===1" [stepperForm]="stpForm" [rfq]="rfqMaterial">
+                <app-rfq-quantity-makes #qtyMakes [stepperForm]="stpForm" [rfq]="rfqMaterial"
+                    (updatedRfq)="getQuantityAndMakes($event)">
                 </app-rfq-quantity-makes>
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Select Supplier</ng-template>
-                <app-rfq-supplier *ngIf="currentIndex===2" [stepperForm]="stpForm"></app-rfq-supplier>
+                <app-rfq-supplier *ngIf="currentIndex===2" [finalRfq]="finalRfq" [stepperForm]="stpForm">
+                </app-rfq-supplier>
             </mat-step>
         </mat-horizontal-stepper>
     </div>
