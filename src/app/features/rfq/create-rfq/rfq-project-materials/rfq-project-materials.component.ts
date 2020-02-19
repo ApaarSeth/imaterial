@@ -28,7 +28,6 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 export class RfqProjectMaterialsComponent implements OnInit {
   @Input() stepperForm: FormGroup;
   @Input() existingRfq: AddRFQ;
-  @Output() selectedMaterial = new EventEmitter<RfqMaterialResponse[]>();
   @ViewChild("ch", { static: true }) ch: HTMLElement;
   userId: 1;
   searchText: string = null;
@@ -62,9 +61,18 @@ export class RfqProjectMaterialsComponent implements OnInit {
   ngOnInit() {
     this.allProjects = this.activatedRoute.snapshot.data.createRfq[1].data;
     this.addRfq = {
+      id: null,
+      status: null,
+      createdBy: null,
+      createdAt: null,
+      lastUpdatedBy: null,
+      lastUpdatedAt: null,
+      rfqId: null,
+      rfq_status: null,
       rfqName: null,
       dueDate: null,
       supplierId: null,
+      supplierDetails: null,
       rfqProjectsList: [],
       documentsList: null,
       terms: null
@@ -227,12 +235,5 @@ export class RfqProjectMaterialsComponent implements OnInit {
     });
     this.addRfq.rfqProjectsList = newRfqDetails;
     this.stepperForm.get("mat").setValue(this.addRfq);
-
-    // if(this.addRfq.rfqProjectsList){
-    //   this.rfqService.addRFQ(this.addRfq).then(res => {
-    //
-    //     this.selectedMaterial.emit(res.data);
-    //   });
-    // }
   }
 }
