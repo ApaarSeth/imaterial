@@ -6,9 +6,15 @@
                     <button mat-raised-button class="main-background-color main-button color-white"
                         (click)="goBack(stepper)" type="button">Back</button>
                 </span>
-                <button mat-raised-button class="main-background-color main-button color-white"
-                    (selectionChange)="selectionChange($event)" [disabled]="currentIndex===1&&!completed"
-                    (click)="goForward(stepper)" type="button">Next</button>
+                <span *ngIf="currentIndex!=2">
+                    <button mat-raised-button class="main-background-color main-button color-white"
+                        (selectionChange)="selectionChange($event)" [disabled]="currentIndex===1&&!completed"
+                        (click)="goForward(stepper)" type="button">Next</button>
+                </span>
+                <span *ngIf="currentIndex===2">
+                    <button mat-raised-button class="main-background-color main-button color-white"
+                        (click)="reviewRfq()" type="button">Next</button>
+                </span>
             </div>
         </div>
         <mat-horizontal-stepper (selectionChange)="selectionChange($event)" [linear]="true" #stepper>
@@ -18,15 +24,15 @@
                     [existingRfq]="rfqData">
                 </app-rfq-project-materials>
             </mat-step>
-            <mat-step stepControl="stepSecond" [completed]="completed">
+            <mat-step stepControl="stepSecond">
                 <ng-template matStepLabel>Add Quantity & Makes</ng-template>
-                <app-rfq-quantity-makes #qtyMakes [stepperForm]="stpForm" [rfq]="rfqMaterial"
+                <app-rfq-quantity-makes #rfqQtyMakes [stepperForm]="stpForm" [rfq]="rfqMaterial"
                     (updatedRfq)="getQuantityAndMakes($event)">
                 </app-rfq-quantity-makes>
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Select Supplier</ng-template>
-                <app-rfq-supplier *ngIf="currentIndex===2" [finalRfq]="finalRfq" [stepperForm]="stpForm">
+                <app-rfq-supplier #rfqSupplier [finalRfq]="finalRfq" [stepperForm]="stpForm">
                 </app-rfq-supplier>
             </mat-step>
         </mat-horizontal-stepper>

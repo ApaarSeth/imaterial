@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  ViewChildren
+} from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import {
   RfqMaterialResponse,
@@ -10,16 +16,18 @@ import { MatStepper } from "@angular/material";
 import { FormBuilder } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { RfqQuantityMakesComponent } from "./rfq-quantity-makes/rfq-quantity-makes.component";
+import { RfqSupplierComponent } from "./rfq-supplier/rfq-supplier.component";
 
 @Component({
   selector: "app-create-rfq",
   templateUrl: "./create-rfq.component.html"
 })
 export class CreateRfqComponent implements OnInit {
-  @ViewChild("stepper", { static: true, read: MatStepper })
-  @ViewChild("qtyMakes", { static: true })
+  @ViewChild("stepper", { static: true, read: MatStepper }) stepper: MatStepper;
+  @ViewChild("rfqQtyMakes", { static: true })
+  rfqQtyMakes: RfqQuantityMakesComponent;
+  @ViewChild("rfqSupplier", { static: true }) rfqSupplier: RfqSupplierComponent;
   qtyMakes: RfqQuantityMakesComponent;
-  stepper: MatStepper;
   updatedRfqMaterial: AddRFQ;
   rfqMaterial: AddRFQ;
   stpForm: any;
@@ -39,6 +47,7 @@ export class CreateRfqComponent implements OnInit {
       if (this.stepper) {
         this.stepper.selectedIndex = params.selectedIndex - 1;
         this.currentIndex = params.selectedIndex - 1;
+        this.rfqMaterial = history.state.rfqData.data;
       }
     });
 
@@ -50,9 +59,11 @@ export class CreateRfqComponent implements OnInit {
 
   getQuantityAndMakes(updatedMaterials: AddRFQ) {
     this.updatedRfqMaterial = updatedMaterials;
-    if (this.qtyMakes.getFormStatus().status !== "INVALID") {
-      this.completed = true;
-    }
+    this.completed = this.rfqQtyMakes.materialForms.value.forms.every(
+      rfqQty => {
+        return rfqQty.quantity != null && rfqQty.quantity > 0;
+      }
+    );
   }
 
   getMaterial(materials: AddRFQ) {
@@ -63,28 +74,23 @@ export class CreateRfqComponent implements OnInit {
     this.prevIndex = event.previouslySelectedIndex;
     if (event.previouslySelectedIndex === 1) {
       this.rfqData = this.updatedRfqMaterial;
-      // this.stpForm.get("mat").setValue(this.stpForm.get("qty").value)
     }
     if (event.previouslySelectedIndex === 0 && event.selectedIndex === 1) {
       this.completed = false;
       this.rfqService.addRFQ(this.rfqMaterial).then(res => {
-        // this.currentIndex = event.selectedIndex;
-        // this.stpForm.get("mat").setValue(res.data);
         this.rfqMaterial = res.data;
-        // console.log("mat", this.stpForm.get("mat").value);
+        this.completed = this.rfqQtyMakes.materialForms.value.forms.every(
+          rfqQty => {
+            return rfqQty.quantity != null && rfqQty.quantity > 0;
+          }
+        );
       });
-      if (this.qtyMakes.getFormStatus().status !== "INVALID") {
-        this.completed = true;
-      }
     } else if (
       event.selectedIndex === 2 &&
       event.previouslySelectedIndex === 1
     ) {
       this.rfqService.addRFQ(this.updatedRfqMaterial).then(res => {
-        this.currentIndex = event.selectedIndex;
         this.finalRfq = res.data;
-        // this.stpForm.get("qty").setValue(res.data);
-        // console.log("selected mat", this.stpForm.get("qty").value);
       });
     } else if (event.previouslySelectedIndex == 2) {
       this.rfqService.addRFQ(this.updatedRfqMaterial).then(res => {
@@ -93,11 +99,13 @@ export class CreateRfqComponent implements OnInit {
         this.stpForm.get("qty").setValue(res.data);
         console.log("selected mat", this.stpForm.get("qty").value);
       });
-    } else if (event.selectedIndex === 1) {
-      if (this.qtyMakes.getFormStatus()) {
-        this.completed = true;
-      }
     }
+    // else if (event.selectedIndex === 1) {
+
+    //   if (this.qtyMakes.getFormStatus()) {
+    //     this.completed = true;
+    //   }
+    // }
   }
 
   goBack(stepper: MatStepper) {
@@ -106,5 +114,9 @@ export class CreateRfqComponent implements OnInit {
 
   goForward(stepper: MatStepper) {
     stepper.next();
+  }
+
+  reviewRfq() {
+    this.rfqSupplier.navigateToUploadPage();
   }
 }
