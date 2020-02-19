@@ -10,19 +10,43 @@
 
 
   <ng-container *ngIf="!addUserBtn">
+     <div class="row">
+       <div class="col-xs-3">
+        <mat-form-field class="example-form-field border-input p-l-20">
+          <input
+            matInput
+            placeholder="Search Suppliers"
+            type="search"
+           (keyup)="applyFilter($event.target.value)"
+          />
+          <button mat-button matSuffix mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-9">
+           <div class="text-right add-user-details-button-right p-t-10 p-r-20">
+              <button mat-raised-button (click)="addSupplier()"
+                class="main-background-color main-button color-white">
+                Add Supplier
+              </button>
+          </div>
+      </div>
+  </div>
+
     <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
-        <div class="text-right add-user-details-button-right">
+        <!-- <div class="text-right add-user-details-button-right">
           <button mat-raised-button (click)="addSupplier()"
             class="main-background-color main-button color-white">
             Add Supplier
           </button>
-        </div>
+        </div> -->
         
         <!-- first table structure -->
         <div class="row">
           <!-- <div class="col-sm-12"> -->
           <!-- table structure -->
-          <div class="supplier-details-table-div" *ngIf="dataSource && dataSource.length>0">
+          <div class="supplier-details-table-div" *ngIf="dataSourceTemp && dataSourceTemp.length>0">
           <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-sm-12" >
             <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->

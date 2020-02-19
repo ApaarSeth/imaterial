@@ -2,9 +2,22 @@
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <card-layout *ngIf="projectData" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)"
       [projectDetails]="projectData"></card-layout>
-    <div class="row p-t-10 p-b-10">
-      <div class="col-sm-12">
-        <span>
+    <div class="row">
+       <div class="col-xs-3">
+        <mat-form-field class="example-form-field border-input">
+          <input
+            matInput
+            placeholder="Search Materials"
+            type="search"
+           (keyup)="applyFilter($event)"
+          />
+          <button mat-button matSuffix mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-9 p-t-10">
+         <span>
           <button mat-raised-button class="main-background-color main-button color-white pull-right"
             (click)="createRfq()">
             Create RFQ
@@ -29,12 +42,13 @@
           </button>
         </span>
       </div>
+       
     </div>
 
     <div class="row">
-      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="col-sm-12 bom-material-table" matSort>
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="col-sm-12 bom-material-table">
         <ng-container matColumnDef="materialName">
-          <th *matHeaderCellDef mat-sort-header class="first-column-row-header">
+          <th *matHeaderCellDef  class="first-column-row-header">
             Material Name
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
@@ -52,7 +66,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="estimatedQty">
-          <th *matHeaderCellDef mat-sort-header class="text-align-center justify-center">
+          <th *matHeaderCellDef  class="text-align-center justify-center">
             Estimated Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -60,7 +74,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="requestedQuantity">
-          <th *matHeaderCellDef mat-sort-header class="text-align-center justify-center">
+          <th *matHeaderCellDef  class="text-align-center justify-center">
             Requested Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -68,7 +82,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="issueToProject">
-          <th *matHeaderCellDef mat-sort-header class="text-align-center justify-center">
+          <th *matHeaderCellDef  class="text-align-center justify-center">
             Issued To Project
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -76,7 +90,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
-          <th *matHeaderCellDef mat-sort-header class="text-align-center justify-center">
+          <th *matHeaderCellDef  class="text-align-center justify-center">
             Available In Stock
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -85,7 +99,7 @@
         </ng-container>
 
         <ng-container matColumnDef="customColumn">
-          <th *matHeaderCellDef mat-sort-header></th>
+          <th *matHeaderCellDef ></th>
           <td class="text-right p-b-20" mat-cell *matCellDef="let element">
             <!-- <a>
               <mat-icon>edit</mat-icon>
@@ -94,11 +108,11 @@
             <a (click)="openDialog1(element.materialId,projectId)" class="width-15-px p-r-10 cursor-pointer"  matTooltip="Issue to Indent">
               <img src="../../../../assets/images/issue_to_indent.png">
               </a>
-                <a class="width-15-px p-l-5 cursor-pointer" *ngIf="!((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
+                <a class="width-15-px p-l-5 cursor-pointer"  matTooltip="Delete" *ngIf="!((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
               (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
                <img src="../../../../assets/images/delete-button.png">
             </a>
-             <a class="width-15-px p-l-5 cursor-pointer" *ngIf="((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
+             <a class="width-15-px p-l-5"  *ngIf="((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
               (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
                <img src="../../../../assets/images/delete-button_disable.png">
             </a>
@@ -112,9 +126,9 @@
                 element == expandedElement ? 'expanded' : 'collapsed'
               ">
               <div class="inner-table mat-elevation-z8 row" *ngIf="expandedElement">
-                <table class="col-sm-12" mat-table [dataSource]="element.materialSpecs" matSort>
+                <table class="col-sm-12" mat-table [dataSource]="element.materialSpecs">
                   <ng-container matColumnDef="materialName">
-                    <th *matHeaderCellDef mat-sort-header>
+                    <th *matHeaderCellDef >
                       Name
                     </th>
                     <td class="text-left" mat-cell *matCellDef="let element">
@@ -129,7 +143,7 @@
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="estimatedQty">
-                    <th *matHeaderCellDef mat-sort-header class="text-align-center">
+                    <th *matHeaderCellDef  class="text-align-center">
                       Estimated Quantity
                     </th>
                     <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -137,7 +151,7 @@
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="Requested Quantity">
-                    <th *matHeaderCellDef mat-sort-header class="text-align-center">
+                    <th *matHeaderCellDef  class="text-align-center">
                       Requested Material
                     </th>
                     <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -145,7 +159,7 @@
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="issueToProject">
-                    <th *matHeaderCellDef mat-sort-header class="text-align-center">
+                    <th *matHeaderCellDef  class="text-align-center">
                       Issued To Project
                     </th>
                     <td class="text-align-center" mat-cell *matCellDef="let element">
@@ -153,7 +167,7 @@
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="availableStock">
-                    <th *matHeaderCellDef mat-sort-header class="text-align-center">
+                    <th *matHeaderCellDef  class="text-align-center">
                       Available In Stock
                     </th>
                     <td class="text-align-center" mat-cell *matCellDef="let element">
