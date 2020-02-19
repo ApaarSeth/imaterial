@@ -15,7 +15,6 @@ import { FormGroup } from "@angular/forms";
   templateUrl: "./rfq-supplier.component.html"
 })
 export class RfqSupplierComponent implements OnInit {
-  @Input() selectedMaterialsList: AddRFQ;
   @Input() stepperForm: FormGroup;
   searchText: string = null;
   buttonName: string = "selectSupplier";
@@ -44,15 +43,9 @@ export class RfqSupplierComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
     if (this.stepperForm.get("qty").value) {
-      this.rfqData = this.stepperForm.get("mat").value.rfqProjectsList;
+      this.rfqData = this.stepperForm.get("qty").value;
     }
-    console.log("suppliers", this.allSuppliers);
-    console.log("checkedMaterialsList", this.checkedMaterialsList);
   }
-  ngOnChanges(): void {
-    this.checkedMaterialsList = this.selectedMaterialsList;
-  }
-
   valueChange(supplier: Suppliers) {
     supplier.checked = !supplier.checked;
     let isOneEnabled = this.allSuppliers.find(x => x.checked);
@@ -63,27 +56,19 @@ export class RfqSupplierComponent implements OnInit {
     this.selectedSuppliersList = this.allSuppliers.filter(x => x.checked);
   }
   nevigateToUploadPage() {
-    // let checkedMaterialsList = this.checkedMaterialsList;
     this.rfqData.supplierId = this.selectedSuppliersList.map(
       supplier => supplier.supplierId
     );
-    // let finalRfqData = this.checkedMaterialsList;
-    // let rfqId = this.selectedSuppliersList[1];
     let finalRfq = this.rfqData;
-    this.router.navigate(["/rfq/review"], {
+    this.router.navigate(["/rfq/review/"], {
       state: { finalRfq }
     });
-    // this.router.navigate(["/rfq/documents"], {
-    //   state: { checkedMaterialsList, selectedSuppliersList }
-    // });
   }
-
   openDialog(projectId) {
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "1200px",
       data: projectId
     });
-
     dialogRef
       .afterClosed()
       .toPromise()
