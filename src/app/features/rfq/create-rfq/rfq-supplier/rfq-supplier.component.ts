@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, SimpleChanges } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import {
   RfqMaterialResponse,
@@ -28,7 +28,7 @@ export class RfqSupplierComponent implements OnInit {
   ];
 
   allSuppliers: Suppliers[];
-  selectedSuppliersList: Suppliers[];
+  selectedSuppliersList: Suppliers[] = [];
   selectedSupplierFlag: boolean = false;
   checkedMaterialsList: AddRFQ;
   orgId: number;
@@ -43,9 +43,9 @@ export class RfqSupplierComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
-    if (this.stepperForm.get("qty").value) {
-      this.rfqData = this.stepperForm.get("qty").value;
-    }
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    this.rfqData = this.finalRfq;
   }
   valueChange(supplier: Suppliers) {
     supplier.checked = !supplier.checked;
@@ -56,7 +56,7 @@ export class RfqSupplierComponent implements OnInit {
     }
     this.selectedSuppliersList = this.allSuppliers.filter(x => x.checked);
   }
-  nevigateToUploadPage() {
+  navigateToUploadPage() {
     this.rfqData.supplierId = this.selectedSuppliersList.map(
       supplier => supplier.supplierId
     );
