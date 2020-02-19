@@ -100,7 +100,7 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.city : "",
         Validators.required
       ],
-      area: [this.data.isEdit ? this.data.detail.area : ""],
+      area: [this.data.isEdit ? this.data.detail.area : "",Validators.required],
       startDate: [
         this.data.isEdit ? this.data.detail.startDate : "",
         Validators.required
@@ -109,7 +109,7 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.endDate : "",
         Validators.required
       ],
-      cost: [this.data.isEdit ? this.data.detail.cost : ""],
+      cost: [this.data.isEdit ? this.data.detail.cost : "",Validators.required],
       type: [
         this.data.isEdit ? this.data.detail.type : "",
         Validators.required
