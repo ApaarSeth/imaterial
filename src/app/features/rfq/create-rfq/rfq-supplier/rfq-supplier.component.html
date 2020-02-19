@@ -24,8 +24,7 @@
     <ng-container matColumnDef="Supplier Name">
         <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
         <td mat-cell *matCellDef="let element">
-            <mat-checkbox [disabled]="selectedSuppliersList.length===3" (change)="valueChange(element)"
-                [checked]="element.checked"></mat-checkbox>
+            <mat-checkbox (change)="valueChange(element)" [checked]="element.checked"></mat-checkbox>
             {{ element.supplier_name }}
         </td>
     </ng-container>

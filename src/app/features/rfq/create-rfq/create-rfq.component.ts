@@ -47,7 +47,9 @@ export class CreateRfqComponent implements OnInit {
       if (this.stepper) {
         this.stepper.selectedIndex = params.selectedIndex - 1;
         this.currentIndex = params.selectedIndex - 1;
-        this.rfqMaterial = history.state.rfqData.data;
+        if (history.state.rfqData) {
+          this.rfqMaterial = history.state.rfqData.data;
+        }
       }
     });
 
