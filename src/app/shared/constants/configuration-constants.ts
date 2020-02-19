@@ -10,7 +10,7 @@ export const API = {
   ADDPROJECT: `addProject`,
   UPDATEPROJECT: (organizationId, projectId) =>
     `updateProjectDetails/${organizationId}/${projectId}`,
-  RAISEINDENT: projectId => `indent/${projectId}`,
+  RAISEINDENT: projectId => `indent/raise/${projectId}`,
   DELETE: (organizationId, projectId) =>
     `deleteProject/${organizationId}/${projectId}`,
   GETMATERIALSWITHSPECS: `material/materialsSpecs`,
