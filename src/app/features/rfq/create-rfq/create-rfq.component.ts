@@ -51,16 +51,26 @@ export class CreateRfqComponent implements OnInit {
   }
   selectionChange(event) {
     this.prevIndex = event.previouslySelectedIndex;
-    this.currentIndex = event.selectedIndex;
+
     console.log(event);
+    if (event.selectedIndex === 2) {
+      console.log("selected qty", this.stpForm.get("qty").value);
+    }
     if (event.previouslySelectedIndex === 1) {
       this.rfqData = this.stpForm.get("qty").value;
       // this.stpForm.get("mat").setValue(this.stpForm.get("qty").value)
     }
     if (event.previouslySelectedIndex === 0) {
       this.rfqService.addRFQ(this.stpForm.get("mat").value).then(res => {
+        this.currentIndex = event.selectedIndex;
         this.stpForm.get("mat").setValue(res.data);
-        console.log("selected mat", this.stpForm.get("mat").value);
+        console.log("mat", this.stpForm.get("mat").value);
+      });
+    } else if (event.selectedIndex === 2) {
+      this.rfqService.addRFQ(this.stpForm.get("qty").value).then(res => {
+        this.currentIndex = event.selectedIndex;
+        this.stpForm.get("qty").setValue(res.data);
+        console.log("selected mat", this.stpForm.get("qty").value);
       });
     }
   }

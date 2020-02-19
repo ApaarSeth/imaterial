@@ -24,14 +24,14 @@ import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/ad
 })
 export class RfqQuantityMakesComponent implements OnInit {
   @Input() rfq: AddRFQ;
-  @Output() quantityAndMakes = new EventEmitter<[RfqMaterialResponse[],number]>();
   @Input() stepperForm: FormGroup;
 
   userId: 1;
-  searchText: string = null;
+  searchProject: string = null;
+  searchMaterial: string = null;
   materialCounter = 0;
   buttonName: string = "addQueryMakes";
-  projectSelectedMaterials: RfqMaterialResponse[]=[];
+  projectSelectedMaterials: RfqMaterialResponse[] = [];
 
   materialForms: FormGroup;
   rfqMat: RfqMat;
@@ -45,7 +45,7 @@ export class RfqQuantityMakesComponent implements OnInit {
     "Makes"
   ];
   rfqId: any;
-  rfqData: any;
+  rfqData: AddRFQ;
 
   constructor(
     public dialog: MatDialog,
@@ -56,33 +56,40 @@ export class RfqQuantityMakesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if(history.state.rfqData){
-     this.rfqData=history.state.rfqData.data
-      this.projectSelectedMaterials=history.state.rfqData.data.rfqProjectsList;
+    if (history.state.rfqData) {
+      this.rfqData = history.state.rfqData.data;
+      this.projectSelectedMaterials =
+        history.state.rfqData.data.rfqProjectsList;
       this.stepperForm.get("qty").setValue(history.state.rfqData.data);
     }
-    this.formsInit();
-    if(this.stepperForm.get("mat").value){
-      this.projectSelectedMaterials=this.stepperForm.get("mat").value.rfqProjectsList;
+    if (this.stepperForm.get("mat").value) {
+      this.rfqData = this.stepperForm.get("mat").value;
+      this.projectSelectedMaterials = this.stepperForm.get(
+        "mat"
+      ).value.rfqProjectsList;
     }
+    this.formsInit();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.stepperForm)
-    if(this.stepperForm.get("mat").value){
-      this.projectSelectedMaterials=this.stepperForm.get("mat").value.rfqProjectsList;
+    console.log(this.stepperForm);
+    if (this.stepperForm.get("mat").value) {
+      this.projectSelectedMaterials = this.stepperForm.get(
+        "mat"
+      ).value.rfqProjectsList;
     }
-    if(this.rfq){
+    if (this.rfq) {
       this.projectSelectedMaterials = this.rfq.rfqProjectsList;
     }
-      if (this.projectSelectedMaterials) {
-        this.formsInit();
-      }
+    if (this.projectSelectedMaterials) {
+      this.formsInit();
+    }
   }
 
   setButtonName(name: string) {
     this.buttonName = name;
   }
+
   visible = true;
   selectable = true;
   removable = true;
@@ -111,39 +118,9 @@ export class RfqQuantityMakesComponent implements OnInit {
       .flat();
     this.materialForms = this.formBuilder.group({});
     this.materialForms.addControl("forms", new FormArray(frmArr));
-  }
-
-  showIndent() {
-    const formValues = this.materialForms.value.forms;
-    console.log("form valueeee", formValues);
-    this.projectSelectedMaterials.forEach((subCat, i) => {
-      subCat.projectMaterialList.forEach((project, j) => {
-        formValues.forEach((val, k) => {
-          if (
-            project.projectId === val.projId &&
-            project.materialId === val.matId
-          ) {
-            this.projectSelectedMaterials[i].projectMaterialList[
-              j
-            ].estimatedRate = val.estimatedRate;
-            this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
-              val.quantity;
-            this.projectSelectedMaterials[i].projectMaterialList[j].makes =
-              val.makes;
-          } else {
-            return;
-          }
-        });
-      });
+    this.materialForms.valueChanges.subscribe(val => {
+      this.materialAdded();
     });
-    let checkedMaterials = this.projectSelectedMaterials;
-    if (checkedMaterials) {
-      this.rfqData.projectMaterialList=checkedMaterials
-      let rfqData=this.rfqData
-      this.router.navigate(["/rfq/suppliers"], {
-        state: { rfqData }
-      });
-    }
   }
 
   makesUpdate(data: string[], grpIndex: number) {
@@ -184,7 +161,8 @@ export class RfqQuantityMakesComponent implements OnInit {
     });
     let checkedMaterials = this.projectSelectedMaterials;
     if (checkedMaterials) {
-      this.quantityAndMakes.emit([checkedMaterials,this.rfqId]);
+      this.rfqData.rfqProjectsList = checkedMaterials;
+      this.stepperForm.get("qty").setValue(this.rfqData);
     }
   }
 }
