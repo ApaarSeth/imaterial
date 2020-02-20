@@ -13,7 +13,7 @@
                     <mat-option *ngFor="
                   let project of allProjects
                     | SearchPipe: searchText:'projectName'
-                " [value]="project" (click)="choosenProject()">{{ project.projectName }}
+                " [value]="project" selected="project.clicked" (click)="choosenProject()">{{ project.projectName }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

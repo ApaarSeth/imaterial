@@ -26,7 +26,6 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
   templateUrl: "./rfq-project-materials.component.html"
 })
 export class RfqProjectMaterialsComponent implements OnInit {
-  @Input() stepperForm: FormGroup;
   @Input() existingRfq: AddRFQ;
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   @ViewChild("ch", { static: true }) ch: HTMLElement;
@@ -85,19 +84,20 @@ export class RfqProjectMaterialsComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.existingRfq) {
       this.addRfq = this.existingRfq;
+      this.alreadySelectedId = this.addRfq.rfqProjectsList[0].projectId;
+      let bomProject = this.allProjects.find(
+        (project: ProjectDetails) =>
+          project.projectId === this.addRfq.rfqProjectsList[0].projectId
+      );
+      this.form.get("selectedProject").setValue([bomProject]);
       this.checkedMaterialList = this.addRfq.rfqProjectsList[0].projectMaterialList;
       this.checkedMaterialListIds = this.addRfq.rfqProjectsList[0].projectMaterialList.map(
         mat => mat.materialId
       );
       this.alreadySelectedId = this.addRfq.rfqProjectsList[0].projectId;
-      // this.checkAlreadySelectedMat(this.ch,this.checkedMaterialListIds,this.alreadySelectedId)
       this.choosenProject();
     }
-    console.log("stepQty", this.stepperForm.get("qty").value);
   }
-  // checkAlreadySelectedMat(ch:HTMLElement,matId:number[],projectId) {
-
-  // }
 
   formInit() {
     this.form = this.formBuilder.group({
@@ -113,9 +113,9 @@ export class RfqProjectMaterialsComponent implements OnInit {
     const selectedIds = this.form.value.selectedProject.map(
       selectedProject => selectedProject.projectId
     );
-    if (this.alreadySelectedId) {
-      selectedIds.push(this.alreadySelectedId);
-    }
+    // if (this.alreadySelectedId) {
+    //   selectedIds.push(this.alreadySelectedId);
+    // }
     if (selectedIds.length === 0) {
       this.rfqDetails = [];
       this.projectIds = [];
@@ -219,16 +219,22 @@ export class RfqProjectMaterialsComponent implements OnInit {
           projectMaterial.push(element.material);
         }
         if (rfqDetail.projectId === this.alreadySelectedId) {
-          projectMaterial = [...projectMaterial, ...this.checkedMaterialList];
-          projectMaterial = projectMaterial.filter((material, index) => {
-            const _material = JSON.stringify(material);
-            return (
-              index ===
-              projectMaterial.findIndex(obj => {
-                return JSON.stringify(obj) === _material;
-              })
-            );
+          let checkedMatName = this.checkedMaterialList.map(
+            mat => mat.materialName
+          );
+          projectMaterial = projectMaterial.filter((mat: RfqMat) => {
+            return !checkedMatName.includes(mat.materialName);
           });
+          projectMaterial = [...projectMaterial, ...this.checkedMaterialList];
+          // projectMaterial = projectMaterial.filter((material, index) => {
+          //   const _material = JSON.stringify(material);
+          //   return (
+          //     index ===
+          //     projectMaterial.findIndex(obj => {
+          //       return JSON.stringify(obj) === _material;
+          //     })
+          //   );
+          // });
         }
       });
 
