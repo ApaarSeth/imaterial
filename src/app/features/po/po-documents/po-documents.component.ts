@@ -9,7 +9,7 @@ import {
 import { DocumentUploadService } from "src/app/shared/services/document-download/document-download.service";
 import { DocumentList } from "src/app/shared/models/PO/po-data";
 import { first } from "rxjs/operators";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-po-documents",
@@ -24,6 +24,7 @@ export class PoDocumentsComponent implements OnInit {
   documentsName: string[] = [];
   mode: string;
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private documentUploadService: DocumentUploadService
   ) {}
@@ -86,5 +87,9 @@ export class PoDocumentsComponent implements OnInit {
     this.documentList.splice(i, 1);
     this.documentsName.splice(i, 1);
     this.documentListLength = this.documentList.length;
+  }
+
+  openFileUrl(i) {
+    this.router.navigate([this.documentData[i].documentUrl]);
   }
 }
