@@ -9,6 +9,7 @@ import { RouterModule } from "@angular/router";
 import { AddEditUserComponent } from 'src/app/shared/dialogs/add-edit-user/add-edit-user.component';
 import { UserDetailComponent } from './user-details/user-details.component';
 import { UserRoutingModule } from './user-dashboard-routing.module';
+import { UpdateInfoComponent } from './update-info/update-info.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,6 @@ import { UserRoutingModule } from './user-dashboard-routing.module';
     AppSharedModule,
     UserRoutingModule
   ],
-  declarations: [UserDetailComponent]
+  declarations: [UserDetailComponent, UpdateInfoComponent]
 })
 export class UserDashboardModule {}
