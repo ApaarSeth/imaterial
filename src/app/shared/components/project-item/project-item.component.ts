@@ -16,6 +16,7 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ProjectDetails } from "../../models/project-details";
+import { PermissionService } from "../../services/permission.service";
 
 @Component({
   selector: "card-layout",
@@ -23,12 +24,19 @@ import { ProjectDetails } from "../../models/project-details";
 })
 export class ProjectItemComponent implements OnInit {
   id: number;
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  permissionObj: any;
+  constructor(
+    private permissionService: PermissionService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   @Output("onEdit") onEdit = new EventEmitter<number>();
   @Output("onDelete") onDelete = new EventEmitter<number>();
   @Input("projectDetails") projectDetails: ProjectDetails;
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.permissionObj = this.permissionService.checkPermission();
+  }
 
   edit(proId: number, $event) {
     this.onEdit.emit(proId);
@@ -47,13 +55,11 @@ export class ProjectItemComponent implements OnInit {
       this.router.navigate(["/bom/" + id], { state: { projectDetails } });
     }
   }
-  redirectToPurchaseOrder(){
-    this.router.navigate(['po/detail-list']);
+  redirectToPurchaseOrder() {
+    this.router.navigate(["po/detail-list"]);
   }
-  redirectToOpenIndentCount(id: number, projectDetails: ProjectDetails){
+  redirectToOpenIndentCount(id: number, projectDetails: ProjectDetails) {
     this.router.navigate(["/indent/" + id + "/indent-detail"]);
-   // this.router.navigate(['/indent/1/indent-detail']);
+    // this.router.navigate(['/indent/1/indent-detail']);
   }
- 
-
 }
