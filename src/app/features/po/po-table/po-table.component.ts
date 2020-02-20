@@ -3,6 +3,7 @@ import { PoMaterial, PurchaseOrder } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { ignoreElements, debounceTime } from "rxjs/operators";
 import { Subscription } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-po-table",
@@ -10,12 +11,19 @@ import { Subscription } from "rxjs";
 })
 export class PoTableComponent implements OnInit, OnDestroy {
   @Input("poTableData") poTableData: PoMaterial[];
-  @Input("mode") mode: string;
+  @Input("mode") modes: string;
   gst: string;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) {}
   poForms: FormGroup;
+  mode: string;
   subscriptions: Subscription[] = [];
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.mode = params.mode;
+    });
     this.formInit();
     console.log(this.poTableData);
   }
@@ -45,7 +53,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
               materialBrand: [purchaseorder.materialBrand],
               materialQuantity: [],
               materialUnit: [],
-              materialUnitPrice: [],
+              materialUnitPrice: [purchaseorder.materialUnitPrice],
               materialIgst: [1],
               materialSgst: [2],
               materialCgst: [],
