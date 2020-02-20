@@ -13,26 +13,27 @@
                 </span>
                 <span *ngIf="currentIndex===2">
                     <button mat-raised-button class="main-background-color main-button color-white"
-                        (click)="reviewRfq()" type="button">Next</button>
+                        (selectionChange)="selectionChange($event)" (click)="reviewRfq()" type="button">Next</button>
                 </span>
             </div>
         </div>
         <mat-horizontal-stepper (selectionChange)="selectionChange($event)" [linear]="true" #stepper>
-            <mat-step stepControl="stepOne">
+            <!-- <ng-template matStepperIcon="edit" let-index="index">
+                {{1}}
+            </ng-template> -->
+            <mat-step stepControl="stepOne" completed="true">
                 <ng-template matStepLabel>Project & Material</ng-template>
-                <app-rfq-project-materials (updatedRfq)="getMaterial($event)" [stepperForm]="stpForm" #projectrMaterial
-                    [existingRfq]="rfqData">
+                <app-rfq-project-materials (updatedRfq)="getMaterial($event)" #projectrMaterial [existingRfq]="rfqData">
                 </app-rfq-project-materials>
             </mat-step>
             <mat-step stepControl="stepSecond">
                 <ng-template matStepLabel>Add Quantity & Makes</ng-template>
-                <app-rfq-quantity-makes #rfqQtyMakes [stepperForm]="stpForm" [rfq]="rfqMaterial"
-                    (updatedRfq)="getQuantityAndMakes($event)">
+                <app-rfq-quantity-makes #rfqQtyMakes [rfq]="rfqMaterial" (updatedRfq)="getQuantityAndMakes($event)">
                 </app-rfq-quantity-makes>
             </mat-step>
-            <mat-step>
+            <mat-step stepControl="stepThree">
                 <ng-template matStepLabel>Select Supplier</ng-template>
-                <app-rfq-supplier #rfqSupplier [finalRfq]="finalRfq" [stepperForm]="stpForm">
+                <app-rfq-supplier #rfqSupplier [finalRfq]="finalRfq">
                 </app-rfq-supplier>
             </mat-step>
         </mat-horizontal-stepper>
