@@ -29,6 +29,7 @@ import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom
 import { GlobalLoaderService } from "src/app/shared/services/global-loader.service";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
+import { PermissionService } from "src/app/shared/services/permission.service";
 
 @Component({
   selector: "app-bom-table",
@@ -75,8 +76,18 @@ export class BomTableComponent implements OnInit {
   expandedElement: Subcategory | null;
   orgId: number;
   checkedSubcategory: Subcategory[];
+  permissionObj: {
+    projectStoreFlag: boolean;
+    globalStoreFlag: boolean;
+    rfqFlag: boolean;
+    purchaseOrderFlag: boolean;
+    usersFlag: boolean;
+    supplierFlag: boolean;
+    projectEdit: boolean;
+  };
 
   constructor(
+    private permissionService: PermissionService,
     private rfqService: RFQService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
@@ -96,6 +107,11 @@ export class BomTableComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.getProject(this.projectId);
     this.getMaterialWithQuantity();
+    this.permissionObj = this.permissionService.checkPermission();
+    // if (this.permissionObj.rfqFlag) {
+    //   this.columnsToDisplay.push("availableStock");
+    //   this.innerDisplayedColumns.push("availableStock");
+    // }
     //this.product = history.state.projectDetails;
   }
 
