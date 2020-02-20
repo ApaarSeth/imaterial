@@ -34,3 +34,11 @@ export interface GRN {
     deliveredQty: number,
     deliveredDate: Date
 }
+
+
+export interface GRNPopupData {
+  isDelete?: boolean;
+  isEdit: boolean;
+  pID?:number;
+  detail?: GRNDetails;
+}

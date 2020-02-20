@@ -26,10 +26,10 @@
                   <div class="font-size12  color-text-card text-left width50Percent line-height">
                     <i class="material-icons font-size12 color-text-card">room</i>
                     <span *ngIf="projectDetails.addressLine1" class="p-l-5">{{ projectDetails.addressLine1 }}</span>
-                    <span *ngIf="projectDetails.addressLine1" class="p-l-5">, {{ projectDetails.addressLine2 }}</span>
-                    <span *ngIf="projectDetails.addressLine1" class="p-l-5">, {{ projectDetails.city }}</span>
-                    <span *ngIf="projectDetails.addressLine1" class="p-l-5">, {{ projectDetails.state }}</span>
-                    <span *ngIf="projectDetails.addressLine1" class="p-l-5">, {{ projectDetails.pinCode }}</span>
+                    <span *ngIf="projectDetails.addressLine2" class="p-l-5">, {{ projectDetails.addressLine2 }}</span>
+                    <span *ngIf="projectDetails.city" class="p-l-5">, {{ projectDetails.city }}</span>
+                    <span *ngIf="projectDetails.state" class="p-l-5">, {{ projectDetails.state }}</span>
+                    <span *ngIf="projectDetails.pinCode" class="p-l-5">, {{ projectDetails.pinCode }}</span>
                   </div>
                   <div class="font-size12 color-text-card text-left width50Percent">
                     <i class="material-icons font-size12 color-text-card"

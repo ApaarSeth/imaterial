@@ -25,10 +25,10 @@
         </div>
         <div class="main-div-po-outer">
             <div class="main-div-po m-b-45">
-                <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData" [mode]="this.poMode">
+                <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData">
                 </app-po-card>
             </div>
-            <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData" [mode]="this.poMode">
+            <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData">
             </app-po-table>
         </div>
 

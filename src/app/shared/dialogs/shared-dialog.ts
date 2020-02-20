@@ -14,6 +14,8 @@ import { DeactiveUserComponent } from './disable-user/disable-user.component';
 import { DeactiveSupplierComponent } from './disable-supplier/disable-supplier.component';
 import { ConfirmRfqBidComponent } from './confirm-rfq-bid/confirm-frq-bid-component';
 import { DeleteBomComponent } from './delete-bom/delete-bom.component';
+import { AddEditGrnComponent } from './add-edit-grn/add-edit-grn.component';
+import { DeleteDraftedPoComponent } from './delete-drafted-po/delete-drafted-po.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -31,5 +33,7 @@ export const SharedDialogs = [
   DeactiveUserComponent,
   DeactiveSupplierComponent,
   ConfirmRfqBidComponent,
-  DeleteBomComponent
+  DeleteBomComponent,
+  AddEditGrnComponent,
+  DeleteDraftedPoComponent
 ];

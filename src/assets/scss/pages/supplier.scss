@@ -163,6 +163,20 @@
                 padding-bottom: 10px;
             }
         }
+
+         .submit-bid-div-add{
+            background: #fafafa;
+            margin: auto;
+            width: 650px;
+            text-align: center;
+            display: block;
+            border-radius: 8px;
+
+            .image-orange-tick {
+                padding-top: 40px;
+                padding-bottom: 10px;
+            }
+        }
     }
 }
 
@@ -171,6 +185,13 @@
     height: calc(100vh - 120px);
     width:100%;
 }
+
+
+.submit-bid-row-add{
+    padding: 50px;
+    width:100%;
+}
+
 
 .bid-material {
     color: #6A6A6A;
@@ -549,3 +570,14 @@ mat-icon {
         border-top: none;
     }
 }
+
+.supplier-details-heading-add-address{
+    font-weight: 500;
+    margin:0 auto;
+    width:90%;
+    font-size: 18px;
+    font-weight: 500;
+    font-size: 18px;
+    border-bottom: 1px solid #ebe3f5;
+}
+   

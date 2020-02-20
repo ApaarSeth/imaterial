@@ -77,4 +77,8 @@ export class RFQService {
       return res;
     });
   }
+
+  getGeneratedRfq(rfqId: number) {
+    return this.dataService.getRequest(API.GETGENERATEDRFQ(rfqId));
+  }
 }

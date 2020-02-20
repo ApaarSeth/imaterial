@@ -24,12 +24,13 @@ export interface ProjectDetails {
   pincode: string;
   primaryAddress: number;
   projectAddressId: number;
+  purchaseOrderId?: number;
   purchaseOrderCost: string;
   purchaseOrderCount: string;
   startDate: Date;
   unit: string;
   matCount: number;
-  checked: boolean;
+  checked?: boolean;
 }
 
 export interface ProjetPopupData {

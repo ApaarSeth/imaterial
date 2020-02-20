@@ -8,7 +8,7 @@
             <label for="validity" class="pull-left p-t-20 p-r-10">Quote Valid till</label>
             <mat-form-field class="border-input">
               <input matInput (dateChange)="duedatefunc($event)" [matDatepicker]="dueDate"
-                placeholder="Project Start Date" [(ngModel)]="rfqSupplierDetailList.dueDate" required />
+                placeholder="Quote Valid till" [(ngModel)]="rfqSupplierDetailList.dueDate" required />
               <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
               <mat-datepicker #dueDate startView="month" [startAt]="dueDate"
                 (change)="valueChange(rfqSupplierDetailList)"></mat-datepicker>
@@ -22,7 +22,7 @@
             <button mat-raised-button [disabled]="!submitButtonValidationFlag"
               class="main-background-color main-button color-white pull-right"
               (click)="postRFQDetailSupplier(rfqSupplierDetailList)">
-              Submit
+              Next
             </button>
           </div>
         </div>

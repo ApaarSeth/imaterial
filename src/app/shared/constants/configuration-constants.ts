@@ -10,7 +10,7 @@ export const API = {
   ADDPROJECT: `addProject`,
   UPDATEPROJECT: (organizationId, projectId) =>
     `updateProjectDetails/${organizationId}/${projectId}`,
-  RAISEINDENT: projectId => `indent/${projectId}`,
+  RAISEINDENT: projectId => `indent/raise/${projectId}`,
   DELETE: (organizationId, projectId) =>
     `deleteProject/${organizationId}/${projectId}`,
   GETMATERIALSWITHSPECS: `material/materialsSpecs`,
@@ -59,5 +59,9 @@ export const API = {
   DELETESUPPLIER: supplierId => `projects/deleteSupplier/${supplierId}`,
   DELETEMATERIAL: (projectId, materialId) =>
     `material/delete/${projectId}/${materialId}`,
-  APPROVEREJECTPO: `po/approveRejectPO`
+  APPROVEREJECTPO: `po/approveRejectPO`,
+  GETGENERATEDRFQ: rfqId => `fq/stepper/${rfqId}`,
+  DELETEDRAFTEDPO: purchaseOrderId => `po/delete/${purchaseOrderId}`,
+  GETSUPPLIERADDRESS: supplierId => `address/get/Supplier/${supplierId}`,
+  ADDSUPPLIERADDRESS :supplierId => `address/add/Supplier/${supplierId}`
 };
