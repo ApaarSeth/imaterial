@@ -53,4 +53,10 @@ export class HeaderLayoutComponent implements OnInit {
       this.router.navigate(["supplier/detail"]);
     }
   }
+
+  logout(){
+    this.router.navigate(['/auth/login']).then(_ => {
+      localStorage.clear();
+    });
+  }
 }
