@@ -1,7 +1,15 @@
-import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  EventEmitter,
+  Output,
+  Input,
+  SimpleChanges
+} from "@angular/core";
 import { DocumentUploadService } from "src/app/shared/services/document-download/document-download.service";
 import { DocumentList } from "src/app/shared/models/PO/po-data";
 import { first } from "rxjs/operators";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-po-documents",
@@ -9,13 +17,27 @@ import { first } from "rxjs/operators";
 })
 export class PoDocumentsComponent implements OnInit {
   @Input("documentListLength") public documentListLength: number;
+  @Input("documentData") documentData: DocumentList[];
   documentList: DocumentList[] = [];
   docs: FileList;
   urlReceived = false;
   documentsName: string[] = [];
-  constructor(private documentUploadService: DocumentUploadService) {}
+  mode: string;
+  constructor(
+    private route: ActivatedRoute,
+    private documentUploadService: DocumentUploadService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.mode = params.mode;
+    });
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("documentList", this.documentData);
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+  }
 
   fileUpdate(files: FileList) {
     // this.urlReceived = false;

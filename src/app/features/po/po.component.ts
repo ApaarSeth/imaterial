@@ -4,7 +4,8 @@ import {
   POData,
   PoMaterial,
   CardData,
-  poApproveReject
+  poApproveReject,
+  DocumentList
 } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
@@ -30,6 +31,7 @@ export class PoComponent implements OnInit {
   @ViewChild("poTable", { static: false }) poTable: PoTableComponent;
   @ViewChild("poCard", { static: false }) poCard: PoCardComponent;
   @ViewChild("poDocument", { static: false }) poDocument: PoDocumentsComponent;
+  documentList: DocumentList[];
 
   constructor(
     private router: Router,
@@ -56,6 +58,7 @@ export class PoComponent implements OnInit {
         poValidUpto: this.poData.poValidUpto,
         projectId: this.poData.projectId
       };
+      this.documentList = this.poData.DocumentsList;
     });
   }
   collateResults() {
