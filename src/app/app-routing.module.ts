@@ -9,12 +9,14 @@ import { MainLayoutComponent } from "./shared/layout/main-layout/main-layout.com
 import { NotFoundComponent } from "./features/not-found/not-found.component";
 import { SupplierBidLayoutComponent } from "./shared/layout/supplier-bid-layout/supplier-bid-layout.component";
 import { AppDashboardComponent } from './features/app-dashboard/app-dashboard.component';
+import { AuthGuardService } from './shared/guards/auth.guards';
 
 const routes: Routes = [
   { path: "", redirectTo: "dashboard", pathMatch: "full" },
   {
     path: "",
     component: SupplierBidLayoutComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: "rfq-bids",
@@ -39,11 +41,12 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: "dashboard",
         component: DashboardComponent,
-        resolve: { dashBoardData: DashBoardResolver }
+        // resolve: { dashBoardData: DashBoardResolver }
       },
       {
         path: 'app-dashboard',

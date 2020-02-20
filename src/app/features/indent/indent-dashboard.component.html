@@ -3,103 +3,82 @@
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row">
       <div class="col-sm-12">
-        <card-layout *ngIf="product"
-          (onEdit)="editProject($event)"
-          (onDelete)="deleteProject($event)"
-          [projectDetails]="product"
-        ></card-layout>
+        <card-layout *ngIf="product" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)"
+          [projectDetails]="product"></card-layout>
       </div>
     </div>
     <div class="row p-t-10 p-b-10">
       <div class="col-sm-12">
-        <button
-          (click)="showIndent()"
-          mat-raised-button
-          [disabled]="!materialForms.valid"
-          class="main-background-color main-button color-white pull-right"
-        >
+        <button (click)="showIndent()" mat-raised-button [disabled]="!materialForms.valid"
+          class="main-background-color main-button color-white pull-right">
           Raise Indent
         </button>
       </div>
     </div>
     <!-- first table structure -->
     <form [formGroup]="materialForms">
-    <div formArrayName="forms" class="row" *ngIf="subcategory">
-              <!-- <div class="col-sm-12"> -->
-      <!-- table structure -->
-      <table
-        mat-table
-        [dataSource]="subcategory"
-        class="mat-elevation-z8 col-sm-12"
-      >
-        <!--- Note that these columns can be defined in any order.
+      <div formArrayName="forms" class="row" *ngIf="subcategory">
+        <!-- <div class="col-sm-12"> -->
+        <!-- table structure -->
+        <table mat-table [dataSource]="subcategory" class="mat-elevation-z8 col-sm-12">
+          <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="Material Name">
-        <th mat-header-cell *matHeaderCellDef>Material Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.materialName }}</td>
-        </ng-container>
+          <!-- Position Column -->
+          <ng-container matColumnDef="Material Name">
+            <th mat-header-cell *matHeaderCellDef>Material Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.materialName }}</td>
+          </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="Estimated Quantity">
-          <th mat-header-cell *matHeaderCellDef  class="text-align-center">Estimated Quantity</th>
-        <td mat-cell *matCellDef="let element" class="text-align-center">{{ element.estimatedQty }} {{element.materialUnit}}</td>
-        </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="Estimated Quantity">
+            <th mat-header-cell *matHeaderCellDef class="text-align-center">Estimated Quantity</th>
+            <td mat-cell *matCellDef="let element" class="text-align-center">{{ element.estimatedQty }}
+              {{element.materialUnit}}</td>
+          </ng-container>
 
-         <!-- Name Column -->
-        <ng-container matColumnDef="Requested Material">
-          <th mat-header-cell *matHeaderCellDef  class="text-align-center">Requested Material</th>
-        <td mat-cell *matCellDef="let element"  class="text-align-center">  {{ element.requestedQuantity }} {{ element.materialUnit }}</td>
-        </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="Requested Material">
+            <th mat-header-cell *matHeaderCellDef class="text-align-center">Requested Material</th>
+            <td mat-cell *matCellDef="let element" class="text-align-center"> {{ element.requestedQuantity }}
+              {{ element.materialUnit }}</td>
+          </ng-container>
 
-        <!-- Weight Column -->
-        <ng-container matColumnDef="Required Quantity">
-          <th mat-header-cell *matHeaderCellDef>Required Quantity</th>
-          <td mat-cell *matCellDef="let element; let i = index" >
+          <!-- Weight Column -->
+          <ng-container matColumnDef="Required Quantity">
+            <th mat-header-cell *matHeaderCellDef>Required Quantity</th>
 
-            
-            
+            <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field [formGroupName]="i" class="border-input table-input">
                 <input matInput formControlName="quantity" type="number" placeholder="Required Quantity" />
               </mat-form-field> {{element.materialUnit}}
-          </td>
-        </ng-container>
+            </td>
+          </ng-container>
 
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="Required Date">
-          <th mat-header-cell *matHeaderCellDef>Required Date</th>
-          <td mat-cell *matCellDef="let element; let i = index">
-            <mat-form-field  [formGroupName]="i" class="border-input">
-             <input
-                matInput
-                formControlName="dueDate"
-                [matDatepicker]="startDate"
-               
-                placeholder="Required Date"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="startDate"
-              ></mat-datepicker-toggle>
-              <mat-datepicker
-                #startDate
-                startView="month"
-                [startAt]="startDate"
-              ></mat-datepicker>
-            </mat-form-field>
-          </td>
-        </ng-container>
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Required Date">
+            <th mat-header-cell *matHeaderCellDef>Required Date</th>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field [formGroupName]="i" class="border-input">
+                <input hidden matInput formControlName="dueDate" [matDatepicker]="startDate" placeholder="Required Date" [min]="minDate" />
+                <!-- <span class="form-palceholder">{{ formatDate(materialForms.controls.forms.controls.dueDate.value) }}</span> -->
+                <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                <mat-datepicker #startDate></mat-datepicker>
+              </mat-form-field>
+            </td>
 
-      <!-- end structure -->
-      <!-- </div> -->
-      
-    </div>
-  </form>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <!-- end structure -->
+        <!-- </div> -->
+
+      </div>
+    </form>
     <!-- end of first structure -->
   </div>
 </div>

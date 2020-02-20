@@ -41,6 +41,7 @@ export class IndentDashboardComponent implements OnInit {
   searchText: string = null;
   projectId: number;
   product: ProjectDetails;
+  minDate = new Date();
   displayedColumns: string[] = [
     "Material Name",
     "Estimated Quantity",
@@ -50,7 +51,7 @@ export class IndentDashboardComponent implements OnInit {
   ];
 
   materialForms: FormGroup;
-orgId:Number;
+  orgId: Number;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -58,10 +59,10 @@ orgId:Number;
     private indentService: IndentService,
     private dialog: MatDialog,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.orgId=Number(localStorage.getItem("orgId"))
+    this.orgId = Number(localStorage.getItem("orgId"))
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
@@ -72,15 +73,26 @@ orgId:Number;
 
   formsInit() {
     const frmArr = this.subcategory.map(subCat => {
+
       return new FormGroup({
         dueDate: new FormControl("", Validators.required),
-        quantity: new FormControl("", Validators.required)
+        quantity: new FormControl("", {
+          validators:
+            [
+              Validators.required,
+              Validators.max(subCat.estimatedQty),
+              Validators.min(1)
+            ]
+        })
       });
     });
 
     this.materialForms = this.formBuilder.group({
       forms: new FormArray(frmArr)
     });
+
+    console.log(this.materialForms);
+    debugger
 
   }
 
@@ -89,6 +101,7 @@ orgId:Number;
       this.product = data.data;
     });
   }
+
   showIndent() {
     const formValues = this.materialForms.value.forms;
 
@@ -132,7 +145,7 @@ orgId:Number;
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -142,7 +155,19 @@ orgId:Number;
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     }
+  }
+
+  formatDate(d: any, to?: string): string {
+    debugger
+    if (!d) {
+      return 'DD/MM/YYYY';
+    }
+    let date: Date = new Date(d);
+    if (to) {
+      date = new Date(date + to);
+    }
+    return `${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
   }
 }
