@@ -164,7 +164,7 @@
             }
         }
 
-         .submit-bid-div-add{
+        .submit-bid-div-add {
             background: #fafafa;
             margin: auto;
             width: 650px;
@@ -183,13 +183,13 @@
 .submit-bid-row {
     padding: 50px;
     height: calc(100vh - 120px);
-    width:100%;
+    width: 100%;
 }
 
 
-.submit-bid-row-add{
+.submit-bid-row-add {
     padding: 50px;
-    width:100%;
+    width: 100%;
 }
 
 
@@ -483,22 +483,24 @@ mat-icon {
 
 
 
-.mat-tab-add-address-modal-po{
-    .mat-tab-body-wrapper{
+.mat-tab-add-address-modal-po {
+    .mat-tab-body-wrapper {
         height: 225px;
     }
+
     // .show-address-po-modal{
     //     max-height: calc(100vh - 350px);
     //     overflow-y: auto;
     // }
 }
 
-.send-btn-select-po{
+.send-btn-select-po {
     display: block;
     width: 22%;
     padding: 10px;
 }
-.po-list-detail-custom{
+
+.po-list-detail-custom {
     .mat-row .mat-cell {
         min-width: 80px;
     }
@@ -529,11 +531,11 @@ mat-icon {
 
 }
 
-.supplier-name-tag{
-        border-bottom: 1px solid #d0d0d0; 
-        padding: 0 32px;
-    }
-    
+.supplier-name-tag {
+    border-bottom: 1px solid #d0d0d0;
+    padding: 0 32px;
+}
+
 .supplier-qty-div {
     display: flex;
     justify-content: center;
@@ -565,19 +567,26 @@ mat-icon {
     }
 }
 
-.rfq-bids-table{
-    td, th{
+.rfq-bids-table {
+
+    td,
+    th {
         border-top: none;
     }
 }
 
-.supplier-details-heading-add-address{
+.supplier-details-heading-add-address {
     font-weight: 500;
-    margin:0 auto;
-    width:90%;
+    margin: 0 auto;
+    width: 90%;
     font-size: 18px;
     font-weight: 500;
     font-size: 18px;
     border-bottom: 1px solid #ebe3f5;
 }
-   
+
+addSupplier {
+    material-icons {
+        font-size: 20px
+    }
+}
