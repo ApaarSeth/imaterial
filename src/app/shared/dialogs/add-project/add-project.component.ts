@@ -10,7 +10,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
-import { FieldRegExConst } from '../../constants/field-regex-constants';
+import { FieldRegExConst } from "../../constants/field-regex-constants";
 
 export interface City {
   value: string;
@@ -52,9 +52,9 @@ export class AddProjectComponent implements OnInit {
     this.initForm();
   }
 
-  close() {
-    this.dialogRef.close();
-  }
+  // close() {
+  //   this.dialogRef.close();
+  // }
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
@@ -90,7 +90,7 @@ export class AddProjectComponent implements OnInit {
       addressLine2: [this.data.isEdit ? this.data.detail.addressLine2 : ""],
       pinCode: [
         this.data.isEdit ? this.data.detail.pinCode : "",
-        [Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]
+        [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
       ],
       state: [
         this.data.isEdit ? this.data.detail.state : "",
@@ -100,7 +100,10 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.city : "",
         Validators.required
       ],
-      area: [this.data.isEdit ? this.data.detail.area : "",Validators.required],
+      area: [
+        this.data.isEdit ? this.data.detail.area : "",
+        Validators.required
+      ],
       startDate: [
         this.data.isEdit ? this.data.detail.startDate : "",
         Validators.required
@@ -109,7 +112,10 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.endDate : "",
         Validators.required
       ],
-      cost: [this.data.isEdit ? this.data.detail.cost : "",Validators.required],
+      cost: [
+        this.data.isEdit ? this.data.detail.cost : "",
+        Validators.required
+      ],
       type: [
         this.data.isEdit ? this.data.detail.type : "",
         Validators.required
@@ -117,7 +123,7 @@ export class AddProjectComponent implements OnInit {
       unit: [this.data.isEdit ? this.data.detail.unit : ""],
       gstNo: [
         this.data.isEdit ? this.data.detail.gstNo : "",
-        [Validators.required,Validators.pattern(FieldRegExConst.GSTIN)]
+        [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]
       ]
     });
   }
@@ -148,7 +154,7 @@ export class AddProjectComponent implements OnInit {
       this.dialogRef.close(this.addProjects(this.form.value));
     }
   }
-  closeDialog(){
+  closeDialog() {
     this.dialogRef.close();
   }
 }
