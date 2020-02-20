@@ -10,6 +10,7 @@ import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover
 import { SelectPoRoleComponent } from "src/app/shared/dialogs/select-po-role/select-po-role.component";
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { Address } from "src/app/shared/models/RFQ/rfq-details";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-po-card",
@@ -17,13 +18,19 @@ import { Address } from "src/app/shared/models/RFQ/rfq-details";
 })
 export class PoCardComponent implements OnInit {
   @Input("cardData") cardData: CardData;
-  constructor(private dialog: MatDialog, private formBuilder: FormBuilder) {}
+  mode: string;
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder
+  ) {}
   projectDetails: FormGroup;
-  @Input("mode") mode: string;
 
   ngOnInit() {
     this.formInit();
-    if (this.mode != "edit") console.log("cardData", this.cardData);
+    this.route.params.subscribe(params => {
+      this.mode = params.mode;
+    });
   }
   formInit() {
     this.projectDetails = this.formBuilder.group({
@@ -47,7 +54,7 @@ export class PoCardComponent implements OnInit {
   openDialog(roleType: string, projectId: number) {
     const dialogRef = this.dialog.open(SelectPoRoleComponent, {
       width: "1200px",
-       height:"500px",
+      height: "500px",
       data: { roleType, projectId }
     });
 
