@@ -8,6 +8,7 @@ import { AuthLayoutComponent } from "./shared/layout/auth-layout/auth-layout.com
 import { MainLayoutComponent } from "./shared/layout/main-layout/main-layout.component";
 import { NotFoundComponent } from "./features/not-found/not-found.component";
 import { SupplierBidLayoutComponent } from "./shared/layout/supplier-bid-layout/supplier-bid-layout.component";
+import { AppDashboardComponent } from './features/app-dashboard/app-dashboard.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "dashboard", pathMatch: "full" },
@@ -43,6 +44,11 @@ const routes: Routes = [
         path: "dashboard",
         component: DashboardComponent,
         resolve: { dashBoardData: DashBoardResolver }
+      },
+      {
+        path: 'app-dashboard',
+        component: AppDashboardComponent,
+        data: { title: 'App Dashboard' }
       },
       {
         path: "bom/:id",

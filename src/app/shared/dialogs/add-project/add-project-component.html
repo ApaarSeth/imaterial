@@ -59,7 +59,7 @@
             <!-- PinCode -->
             <mat-form-field class="border-input">
               <mat-label>Pincode*</mat-label>
-              <input matInput type="number" formControlName="pinCode" />
+              <input matInput type="text" formControlName="pinCode" />
               <!-- <mat-error>PinCode is Required</mat-error> -->
               <small
                     *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
