@@ -46,14 +46,10 @@ export class CreateRfqComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (this.stepper) {
         this.stepper.selectedIndex = params.selectedIndex - 1;
-        this.currentIndex = params.selectedIndex - 1;
-        this.rfqMaterial = history.state.rfqData.data;
+        if (history.state.rfqData) {
+          this.rfqMaterial = history.state.rfqData.data;
+        }
       }
-    });
-
-    this.stpForm = this.formBuilder.group({
-      mat: [],
-      qty: []
     });
   }
 
@@ -61,7 +57,7 @@ export class CreateRfqComponent implements OnInit {
     this.updatedRfqMaterial = updatedMaterials;
     this.completed = this.rfqQtyMakes.materialForms.value.forms.every(
       rfqQty => {
-        return rfqQty.quantity != null && rfqQty.quantity > 0;
+        return rfqQty.quantity != null;
       }
     );
   }
@@ -113,6 +109,9 @@ export class CreateRfqComponent implements OnInit {
   }
 
   goForward(stepper: MatStepper) {
+    stepper.selectionChange.subscribe(res => {
+      console.log(res);
+    });
     stepper.next();
   }
 

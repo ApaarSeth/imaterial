@@ -48,7 +48,7 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <div class="col-sm-12 blue-background-color">
-    <a href="javascript:void(0)" (click)="setButtonName('projectStore')">
+    <a href="javascript:void(0)" *ngIf="permissionObj.projectStoreFlag" (click)="setButtonName('projectStore')">
     <button
       [class.active]="buttonName == 'projectStore'"
       class="color-white"
@@ -58,7 +58,7 @@
       Project Store
     </button>
     </a>
-    <a href="javascript:void(0)" (click)="setButtonName('globalStore')">
+    <a href="javascript:void(0)" *ngIf="permissionObj.globalStoreFlag" (click)="setButtonName('globalStore')">
       <button
         [class.active]="buttonName == 'globalStore'"
         class="color-white"
@@ -68,8 +68,8 @@
         Global Store
       </button>
     </a>
-
     <button
+      *ngIf="permissionObj.rfqFlag"
       [class.active]="buttonName == 'requestForQuotation'"
       class="color-white"
       mat-button
@@ -79,6 +79,7 @@
     </button>
 
     <button
+      *ngIf="permissionObj.purchaseOrderFlag"
       [class.active]="buttonName == 'purchaseOrder'"
       class="color-white"
       mat-button
@@ -88,6 +89,7 @@
     </button>
 
     <button
+      *ngIf="permissionObj.usersFlag"
       [class.active]="buttonName == 'users'"
       class="color-white"
       mat-button
@@ -97,6 +99,7 @@
     </button>
 
     <button
+      *ngIf="permissionObj.supplierFlag"
       [class.active]="buttonName == 'supplier'"
       class="color-white"
       mat-button

@@ -24,7 +24,6 @@ import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/ad
 })
 export class RfqQuantityMakesComponent implements OnInit {
   @Input() rfq: AddRFQ;
-  @Input() stepperForm: FormGroup;
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
 
   userId: 1;
@@ -172,7 +171,6 @@ export class RfqQuantityMakesComponent implements OnInit {
     let checkedMaterials = this.projectSelectedMaterials;
     if (checkedMaterials) {
       this.rfqData.rfqProjectsList = checkedMaterials;
-      this.stepperForm.get("qty").setValue(this.rfqData);
       this.updatedRfq.emit(this.rfqData);
     }
   }

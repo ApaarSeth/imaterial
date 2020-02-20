@@ -1,30 +1,25 @@
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-       <div class="row">
-       <div class="col-xs-3">
+    <div class="row">
+      <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input p-l-20">
-          <input
-            matInput
-            placeholder="Search PO"
-            type="search"
-           (keyup)="applyFilter($event.target.value)"
-          />
+          <input matInput placeholder="Search PO" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
         </mat-form-field>
       </div>
       <div class="col-xs-9">
-           <div class="text-right add-user-details-button-right p-t-10 p-r-20">
-              <button mat-raised-button class="main-background-color main-button color-white m-b-5"
-                  [routerLink]="['../../po/initiate-po']">
-                  Inititate PO
-                </button>
-          </div>
+        <div class="text-right add-user-details-button-right p-t-10 p-r-20">
+          <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+            [routerLink]="['../../po/initiate-po']">
+            Inititate PO
+          </button>
+        </div>
       </div>
-  </div>
+    </div>
 
- <div class="col-xs-12 text-right">
+    <div class="col-xs-12 text-right">
       <!-- Topmost Status -->
       <!-- <mat-card class="m-t-40 m-b-20">
         <div class="row">
@@ -64,7 +59,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="Raised Date">
-                  <th mat-header-cell *matHeaderCellDef >Raised Date</th>
+                  <th mat-header-cell *matHeaderCellDef>Raised Date</th>
                   <td mat-cell *matCellDef="let element">
                     {{ element.created_at | date}}
                   </td>
@@ -87,8 +82,7 @@
                 <ng-container matColumnDef="ViewPo">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let element">
-                    <a [routerLink]="['../../po/po-generate/',element.purchaseOrderId]"
-                      [state]="{mode:'requiredApproval'}">view po</a>
+                    <a [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'requiredApproval']">view po</a>
                   </td>
                 </ng-container>
 
@@ -151,7 +145,8 @@
                 <ng-container matColumnDef="ViewPo">
                   <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                   <td mat-cell *matCellDef="let element" class="text-align-center">
-                    <a href="javascript:void(0)"  (click)="viewPODEdit(element.purchaseOrderId)">view
+                    <a href="javascript:void(0)"
+                      [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'edit']">view
                       po</a>
                   </td>
                 </ng-container>
@@ -159,9 +154,10 @@
                 <ng-container matColumnDef="ViewGRN">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let element">
-                      <a (click)="deleteDraftedPo(element)" class="width-15-px p-l-5 cursor-pointer pull-right"  matTooltip="Delete" >
-                             <img src="../../../../assets/images/delete-button.png">
-                       </a>       
+                    <a (click)="deleteDraftedPo(element)" class="width-15-px p-l-5 cursor-pointer pull-right"
+                      matTooltip="Delete">
+                      <img src="../../../../assets/images/delete-button.png">
+                    </a>
                   </td>
                 </ng-container>
 
@@ -218,7 +214,8 @@
                 <ng-container matColumnDef="ViewPo">
                   <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
-                    <a href="javascript:void(0)" (click)="viewPO(element.purchaseOrderId)">view
+                    <a href="javascript:void(0)"
+                      [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'view']">view
                       po</a>
                   </td>
                 </ng-container>
@@ -243,9 +240,8 @@
             </div>
           </mat-expansion-panel>
         </div>
-   </div>
-  </div>
-  
+      </div>
+    </div>
+
   </div>
 </div>
-      

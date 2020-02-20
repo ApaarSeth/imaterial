@@ -30,7 +30,7 @@ export interface ProjectDetails {
   startDate: Date;
   unit: string;
   matCount: number;
-  checked: boolean;
+  checked?: boolean;
 }
 
 export interface ProjetPopupData {

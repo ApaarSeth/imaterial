@@ -10,14 +10,14 @@
             <mat-accordion displayMode="flat" multi class="mat-table po-table" formArrayName="forms">
                 <section matSort class="mat-elevation-z2 mat-header-row">
                     <span class="mat-header-cell widthReduce" mat-sort-header="vesselName">S.No</span>
-                    <span class="mat-header-cell" mat-sort-header="vesselId">Material Name</span>
-                    <span class="mat-header-cell" mat-sort-header="vesselStatus">Makes</span>
-                    <span class="mat-header-cell" mat-sort-header="ircs">Supplier Rate</span>
-                    <span class="mat-header-cell" mat-sort-header="ircs">Awarded quantity</span>
-                    <span class="mat-header-cell" mat-sort-header="ircs">Amount</span>
-                    <span class="mat-header-cell" mat-sort-header="ircs">GST %</span>
-                    <span class="mat-header-cell" mat-sort-header="ircs">GST Amount</span>
-                    <span class="mat-header-cell" mat-sort-header="ircs">Total Amount with GST</span>
+                    <span class="mat-header-cell">Material Name</span>
+                    <span class="mat-header-cell">Makes</span>
+                    <span class="mat-header-cell">Supplier Rate</span>
+                    <span class="mat-header-cell">Awarded quantity</span>
+                    <span class="mat-header-cell">Amount</span>
+                    <span class="mat-header-cell">GST %</span>
+                    <span class="mat-header-cell">GST Amount</span>
+                    <span class="mat-header-cell">Total Amount with GST</span>
                 </section>
                 <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
                     <div class="mat-row">
@@ -40,14 +40,7 @@
                             <span class=" mat-cell"></span>
                             <span class="mat-cell">{{ purchaseOrder.materialBrand }}</span>
                             <span class="mat-cell">
-                                <ng-container *ngIf="mode!='edit';else editRate"> {{ purchaseOrder.materialUnitPrice }}
-                                </ng-container>
-                                <ng-template #editRate>
-                                    <mat-form-field class="border-input width50Percent">
-                                        <input matInput type="number" #rate formControlName="materialUnitPrice"
-                                            placeholder="rate" />
-                                    </mat-form-field>
-                                </ng-template>
+                                <span>{{ purchaseOrder.materialUnitPrice }}</span>
                             </span>
                             <span class="mat-cell">
                                 <ng-container *ngIf="mode!='edit';else editQuantity">
