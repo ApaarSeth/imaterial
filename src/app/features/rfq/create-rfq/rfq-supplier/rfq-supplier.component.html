@@ -59,11 +59,14 @@
         </ng-container>
 
         <ng-container matColumnDef="customColumn1">
-            <th mat-header-cell *matHeaderCellDef> Add Supplier</th>
+            <th mat-header-cell *matHeaderCellDef> <a class="main-color"
+                    (click)="openDialog( this.rfqData.rfqProjectsList[0].projectId)">
+                    <i class="material-icons addSupplier">
+                        add
+                    </i> <span class="p-b-10">Add Supplier</span>
+                </a></th>
             <td mat-cell *matCellDef="let element">
-                // <button mat-button class="display-flex pull-right ">
-                    // <mat-icon class="main-color">delete_outline</mat-icon>
-                    // </button>
+
             </td>
         </ng-container>
 
