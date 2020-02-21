@@ -2,7 +2,7 @@
         <div class="row">
             <span class="col-xs-6">
                 <span class="m-r-35 p-l-15">
-                    <span class="text-semi-bold"> P.O. No.:</span>
+                    <span class="text-semi-bold"> *P.O. No.:</span>
                     <span class="text-semi-bold" *ngIf="mode!='edit'; else editBlock">{{cardData.poNumber}}</span>
                     <ng-template #editBlock>
                         <mat-form-field class="border-input">
@@ -17,7 +17,7 @@
                     P.O. Valid Till: <span class="p-l-5">{{cardData.poValidUpto |date}}</span>
                 </span>
                 <ng-template #editDateBlock>
-                    <span class="text-semi-bold"> P.O. Valid Till:
+                    <span class="text-semi-bold"> *P.O. Valid Till:
                         <mat-form-field class="border-input">
                             <input matInput formControlName="endDate" [matDatepicker]="endDate"
                                 placeholder="Valid Till" />

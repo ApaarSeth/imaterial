@@ -1,6 +1,6 @@
    <form *ngIf="approverData" [formGroup]="approverFrm">
        <div class="row">
-           <div class="col-xs-12 text-right">
+           <div class="col-xs-12 text-left m-b-10">
                <span *ngIf="this.data.roleType==='projectUserId'; else billing">
                    Select Project Contact Person
                </span>
@@ -48,7 +48,7 @@
            </table>
            <div class="p-t-10 m-0-auto">
                <button mat-raised-button class="main-background-color main-button color-white" (click)="selectRole()">
-                   Select"}}
+                   Select
                </button>
            </div>
 
