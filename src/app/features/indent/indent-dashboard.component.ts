@@ -90,10 +90,6 @@ export class IndentDashboardComponent implements OnInit {
     this.materialForms = this.formBuilder.group({
       forms: new FormArray(frmArr)
     });
-
-    console.log(this.materialForms);
-    debugger
-
   }
 
   getProject(id: number) {
@@ -159,15 +155,15 @@ export class IndentDashboardComponent implements OnInit {
     }
   }
 
-  formatDate(d: any, to?: string): string {
-    debugger
-    if (!d) {
-      return 'DD/MM/YYYY';
-    }
-    let date: Date = new Date(d);
-    if (to) {
-      date = new Date(date + to);
-    }
-    return `${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
-  }
+  // formatDate(d: any, to?: string): string {
+  //   debugger
+  //   if (!d) {
+  //     return 'DD/MM/YYYY';
+  //   }
+  //   let date: Date = new Date(d);
+  //   if (to) {
+  //     date = new Date(date + to);
+  //   }
+  //   return `${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
+  // }
 }
