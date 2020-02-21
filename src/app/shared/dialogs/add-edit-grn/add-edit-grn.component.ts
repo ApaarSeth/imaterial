@@ -70,7 +70,7 @@ export class AddEditGrnComponent implements OnInit {
     const frmArr = this.dataSource.map(data => {
       return new FormGroup({
         materialName: new FormControl(data.materialName),
-        materialBrand: new FormControl(data.materialName),
+        materialBrand: new FormControl(data.materialBrand),
         certifiedQty: new FormControl(data.certifiedQty ? data.certifiedQty : "", {
           validators:
             [
@@ -112,17 +112,20 @@ export class AddEditGrnComponent implements OnInit {
   //     });
   // }
 
-  addGrn() {   
-    const formValues: GRNDetails[] = [];
-    this.materialForms.value.forms.forEach(element => {
-      if (element.certifiedQty > 0) {
-        formValues.push(element);
-      }
-    });
-    this.postGRNDetails(formValues);
-  }
-  closeDialog() {
-    this.dialogRef.close();
+  addGrn() {
+    if (this.materialForms.valid) {
+      const formValues: GRNDetails[] = [];
+      this.materialForms.value.forms.forEach(element => {
+        if (element.certifiedQty > 0) {
+          formValues.push(element);
+        }
+      });
+      this.postGRNDetails(formValues);
+    }
+
   }
 
+  closeDialog(): void {
+    this.dialogRef.close(null);
+  }
 }

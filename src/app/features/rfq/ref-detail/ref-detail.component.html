@@ -58,6 +58,7 @@
               Submitted RFQ
             </mat-panel-title>
           </mat-expansion-panel-header>
+
           <div class="row">
             <table mat-table [dataSource]="submittedRfqList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="RFQ Name">
@@ -130,13 +131,14 @@
               <ng-container matColumnDef="action1">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                 <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                  <a [routerLink]="['../rfq-view', element.rfqId]">View RFQ</a>
+                  <a [routerLink]="['../rfq-view', element.rfqId]" style="color: #f47721">View RFQ</a>
                 </td>
               </ng-container>
               <ng-container matColumnDef="action2">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element;let i=index" class="action2" class="text-align-center">
-                  <a [routerLink]="['../rfq-bid/',element.rfqId]" class="text-align-center">View Bids</a>
+                  <a [routerLink]="['../rfq-bid/',element.rfqId]" class="text-align-center" style="color: #f47721">View
+                    Bids</a>
                 </td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -153,6 +155,7 @@
               Non Submitted RFQ
             </mat-panel-title>
           </mat-expansion-panel-header>
+
           <div class="row">
             <table mat-table [dataSource]="nonSubmittedRfqList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="RFQ Name">
@@ -187,6 +190,7 @@
                   {{ element.materialCount }}
                 </td>
               </ng-container>
+
               <ng-container matColumnDef="Total Supplier">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
                 <td mat-cell *matCellDef="let element" class="text-align-center">
@@ -225,7 +229,7 @@
               <ng-container matColumnDef="action1">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                 <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                  <a (click)="viewRfq(element)">View RFQ</a>
+                  <a (click)="viewRfq(element)" class="cursor" style="color: #f47721">View RFQ</a>
                 </td>
               </ng-container>
               <ng-container matColumnDef="action2">

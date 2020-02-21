@@ -68,7 +68,7 @@ export class RefDetailComponent implements OnInit {
     if (element.rfqStatus === 0) {
       this.router.navigate(["../../rfq/createRfq"]);
     } else {
-      this.router.navigate(["../rfq-view", element.rfqId]);
+      this.router.navigate(["../../rfq/rfq-view", element.rfqId]);
     }
   }
 }

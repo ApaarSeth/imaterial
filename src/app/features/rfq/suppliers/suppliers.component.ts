@@ -5,12 +5,13 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-
 @Component({
   selector: "app-rfq-suppliers",
   templateUrl: "./suppliers.component.html"
 })
+
 export class SuppliersComponent implements OnInit {
+
   searchText: string = null;
   buttonName: string = "selectSupplier";
 
@@ -33,7 +34,8 @@ export class SuppliersComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private router: Router
-  ) {}
+  ) { }
+
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.supplier;
@@ -55,6 +57,7 @@ export class SuppliersComponent implements OnInit {
     }
     this.selectedSuppliersList = this.allSuppliers.filter(x => x.checked);
   }
+
   nevigateToUploadPage() {
     let checkedMaterialsList = this.checkedMaterialsList;
     let selectedSuppliersList = this.selectedSuppliersList;
@@ -64,6 +67,7 @@ export class SuppliersComponent implements OnInit {
   }
 
   openDialog(projectId) {
+    debugger
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "1200px",
       data: projectId

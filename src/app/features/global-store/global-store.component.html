@@ -35,15 +35,15 @@
     </mat-card> -->
 
     <div class="text-right add-user-details-button-right  p-t-5">
-      <button mat-raised-button (click)="raiseRfq()" class="main-background-color main-button color-white">
-        Raise RFQ
+      <button mat-raised-button (click)="createRfq()" class="main-background-color main-button color-white">
+        Create RFQ
       </button>
     </div>
     <div *ngIf="buttonName === 'materialWise'; else elseBlock">
-      <app-material-wise [materialData]="globalStoreData[0].data"></app-material-wise>
+      <app-material-wise [materialData]="globalStoreData"></app-material-wise>
     </div>
     <ng-template #elseBlock>
-      <app-project-wise [projectData]="globalStoreData[1].data"></app-project-wise>
+      <app-project-wise *ngIf="projectWiseData.length" [projectData]="projectWiseData"></app-project-wise>
     </ng-template>
   </div>
 </div>
