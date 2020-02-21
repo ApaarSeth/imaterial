@@ -6,7 +6,7 @@
                     <span class="text-semi-bold" *ngIf="mode!='edit'; else editBlock">{{cardData.poNumber}}</span>
                     <ng-template #editBlock>
                         <mat-form-field class="border-input">
-                            <input matInput type="string" formControlName="orderNo" placeholder="P.O. No."
+                            <input matInput type="string" formControlName="orderNo" placeholder="*P.O. No."
                                 class="m-r-5" />
                         </mat-form-field>
                     </ng-template>
@@ -20,7 +20,7 @@
                     <span class="text-semi-bold"> P.O. Valid Till:
                         <mat-form-field class="border-input">
                             <input matInput formControlName="endDate" [matDatepicker]="endDate"
-                                placeholder="Valid Till" />
+                                placeholder="*Valid Till" />
                             <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                             <mat-datepicker #endDate startView="month"></mat-datepicker>
                         </mat-form-field>
@@ -47,6 +47,7 @@
                                                 class="material-icons main-color">
                                                 edit
                                             </i></a>
+
                                     </span>
                                 </mat-list-item>
                                 <mat-list-item mat-subheader> Phone
