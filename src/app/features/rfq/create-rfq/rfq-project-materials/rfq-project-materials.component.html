@@ -64,13 +64,13 @@
                         <ng-container matColumnDef="Requested Quantity">
                             <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
                             <td mat-cell *matCellDef="let element">
-                                {{ element.requestedQty }}
+                                {{ element.requestedQty }}<span class="p-l-5">{{element.materialUnit}}</span>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="Estimated Quantity">
                             <th mat-header-cell *matHeaderCellDef>Estimated Quantity</th>
                             <td mat-cell *matCellDef="let element">
-                                {{ element.estimatedQty }}
+                                {{ element.estimatedQty }}<span class="p-l-5">{{element.materialUnit}}</span>
                             </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
