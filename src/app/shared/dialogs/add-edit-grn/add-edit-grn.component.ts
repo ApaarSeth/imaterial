@@ -112,17 +112,20 @@ export class AddEditGrnComponent implements OnInit {
   //     });
   // }
 
-  addGrn() {   
-    const formValues: GRNDetails[] = [];
-    this.materialForms.value.forms.forEach(element => {
-      if (element.certifiedQty > 0) {
-        formValues.push(element);
-      }
-    });
-    this.postGRNDetails(formValues);
-  }
-  closeDialog() {
-    this.dialogRef.close();
+  addGrn() {
+    if (this.materialForms.valid) {
+      const formValues: GRNDetails[] = [];
+      this.materialForms.value.forms.forEach(element => {
+        if (element.certifiedQty > 0) {
+          formValues.push(element);
+        }
+      });
+      this.postGRNDetails(formValues);
+    }
+
   }
 
+  closeDialog(): void {
+    this.dialogRef.close(null);
+  }
 }
