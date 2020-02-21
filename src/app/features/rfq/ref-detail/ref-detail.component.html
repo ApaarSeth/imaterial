@@ -228,7 +228,7 @@
               <ng-container matColumnDef="action1">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                 <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                  <a [routerLink]="['../rfq-view', element.rfqId]">View RFQ</a>
+                  <a (click)="viewRfq(element)">View RFQ</a>
                 </td>
               </ng-container>
               <ng-container matColumnDef="action2">
