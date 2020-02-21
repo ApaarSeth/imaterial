@@ -8,10 +8,13 @@ import {
 } from "@angular/forms";
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AllUserDetails, UserDetailsPopUpData } from '../../models/user-details';
-import { UserService } from '../../services/userDashboard/user.service';
-import { Router } from '@angular/router';
-import { BomService } from '../../services/bom/bom.service';
+import {
+  AllUserDetails,
+  UserDetailsPopUpData
+} from "../../models/user-details";
+import { UserService } from "../../services/userDashboard/user.service";
+import { Router } from "@angular/router";
+import { BomService } from "../../services/bom/bom.service";
 
 export interface City {
   value: string;
@@ -39,21 +42,24 @@ export class DeleteBomComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-   
+  ngOnInit() {}
+
+  deactivateBomService() {
+    this.bomService
+      .deleteMaterial(this.data.materialId, this.data.projectId)
+      .then(res => res.data);
   }
 
-  deactivateBomService(){
-      this.bomService.deleteMaterial(this.data.materialId, this.data.projectId).then(res =>  res.data);
+  cancel() {
+    this.dialogRef.close({ data: "close" });
   }
 
-  cancel(){
-     this.dialogRef.close({ data: 'close' });
+  deactivateMaterial() {
+    this.bomService
+      .deleteMaterial(this.data.materialId, this.data.projectId)
+      .then(res => {
+        res.data;
+        this.dialogRef.close(this.deactivateBomService());
+      });
   }
-
-  deactivateMaterial(){
-     this.dialogRef.close(this.deactivateBomService());
-  }
-
- 
 }
