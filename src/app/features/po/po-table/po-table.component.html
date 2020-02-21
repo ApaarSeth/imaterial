@@ -14,10 +14,10 @@
                     <span class="mat-header-cell">Makes</span>
                     <span class="mat-header-cell">Supplier Rate</span>
                     <span class="mat-header-cell">Awarded quantity</span>
-                    <span class="mat-header-cell">Amount(Rs)</span>
+                    <span class="mat-header-cell">Amount ₹</span>
                     <span class="mat-header-cell">GST %</span>
-                    <span class="mat-header-cell">GST Amount(Rs)</span>
-                    <span class="mat-header-cell">Total Amount with GST(Rs)</span>
+                    <span class="mat-header-cell">GST Amount ₹</span>
+                    <span class="mat-header-cell">Total Amount with GST ₹</span>
                 </section>
                 <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
                     <div class="mat-row">
@@ -98,9 +98,9 @@
                     <span class="mat-cell"></span>
                     <span class="mat-cell"></span>
                     <span class="mat-cell"></span>
-                    <span class="mat-cell"><span>GST Amount(Rs)</span>
+                    <span class="mat-cell"><span>GST Amount ₹</span>
                         <br>{{gstTotalAmount | number : '1.2-2'}}</span>
-                    <span class="mat-cell"><span>Total Amount(Rs)</span>
+                    <span class="mat-cell"><span>Total Amount ₹</span>
                         <br>{{totalAmount  | number : '1.2-2'}}</span>
                 </div>
                 <div class="col-xs-12 text-right text-semi-bold m-t-10">Net payable Amount in
