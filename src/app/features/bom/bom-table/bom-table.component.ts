@@ -197,6 +197,7 @@ export class BomTableComponent implements OnInit {
       mat.requestedQty = category.requestedQuantity;
       mat.estimatedQty = category.estimatedQty;
       mat.dueDate = category.dueDate;
+      mat.materialUnit = category.materialUnit;
       materialList.push(mat);
     });
     let projectId = materialList[0].projectId;

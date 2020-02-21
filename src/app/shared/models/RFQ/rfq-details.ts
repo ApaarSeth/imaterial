@@ -20,6 +20,7 @@ export interface RfqMat {
   estimatedRate?: number;
   // to do change name makes to brands
   makes?: string[];
+  materialUnit?: string;
 }
 export interface Address {
   projectId?: number;
