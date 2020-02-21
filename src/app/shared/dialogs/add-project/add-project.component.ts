@@ -157,4 +157,6 @@ export class AddProjectComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
+
+  uploadPhoto() {}
 }

@@ -82,10 +82,11 @@ export class RfqQuantityMakesComponent implements OnInit {
     if (this.rfq) {
       this.rfqData = this.rfq;
       this.projectSelectedMaterials = this.rfq.rfqProjectsList;
-    }
-    if (this.projectSelectedMaterials) {
       this.formsInit();
     }
+    // if (this.projectSelectedMaterials) {
+    //   this.formsInit();
+    // }
   }
 
   setButtonName(name: string) {

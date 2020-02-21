@@ -51,7 +51,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
               purchaseOrderId: [purchaseorder.purchaseOrderId],
               materialId: [purchaseorder.materialId],
               materialBrand: [purchaseorder.materialBrand],
-              materialQuantity: [],
+              materialQuantity: [purchaseorder.materialQuantity],
               materialUnit: [],
               materialUnitPrice: [purchaseorder.materialUnitPrice],
               materialIgst: [1],
