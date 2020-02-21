@@ -22,11 +22,11 @@ export class SuppliersDialogComponent {
     private rfqService: RFQService,
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initForm();
-    this.orgId=Number(localStorage.getItem("orgId"))
+    this.orgId = Number(localStorage.getItem("orgId"))
   }
 
   onNoClick(): void {
@@ -43,7 +43,6 @@ export class SuppliersDialogComponent {
   }
 
   submit() {
-    console.log("form", this.form.value);
     this.dialogRef.close(this.addSuppliers(this.data, this.form.value));
   }
 
@@ -52,7 +51,8 @@ export class SuppliersDialogComponent {
       res.data;
     });
   }
-  close(){
+
+  close() {
     this.dialogRef.close();
   }
 }

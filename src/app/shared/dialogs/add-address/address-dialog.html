@@ -31,10 +31,10 @@
               <div class="row border-input">
                 <mat-form-field class="col-xs-12 p-r-150 p-l-150">
                   <input matInput type="text" placeholder="Pincode" formControlName="pinCode" />
-                   <small
+                  <small
                     *ngIf="newAddressForm.controls['pinCode'].hasError('required') && newAddressForm.controls['pinCode'].touched"
                     class="error-msg"> pincode is required </small>
-                    <small
+                  <small
                     *ngIf="newAddressForm.controls['pinCode'].hasError('pattern') && newAddressForm.controls['pinCode'].touched"
                     class="error-msg"> Enter Valid Pincode</small>
 

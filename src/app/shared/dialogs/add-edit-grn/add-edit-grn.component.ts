@@ -70,7 +70,7 @@ export class AddEditGrnComponent implements OnInit {
     const frmArr = this.dataSource.map(data => {
       return new FormGroup({
         materialName: new FormControl(data.materialName),
-        materialBrand: new FormControl(data.materialName),
+        materialBrand: new FormControl(data.materialBrand),
         certifiedQty: new FormControl(data.certifiedQty ? data.certifiedQty : "", {
           validators:
             [
