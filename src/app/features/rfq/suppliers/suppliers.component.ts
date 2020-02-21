@@ -40,8 +40,6 @@ export class SuppliersComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.supplier;
     this.checkedMaterialsList = history.state.checkedMaterials;
-    console.log("suppliers", this.allSuppliers);
-    console.log("checkedMaterialsList", this.checkedMaterialsList);
   }
 
   setButtonName(name: string) {
@@ -66,20 +64,21 @@ export class SuppliersComponent implements OnInit {
     });
   }
 
-  openDialog(projectId) {
-    debugger
+  openDialog(projectId) {    
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "1200px",
       data: projectId
     });
 
     dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(result => {
-        this.rfqService.getSuppliers(this.orgId).then(data => {
-          this.allSuppliers = data.data;
-        });
+      .afterClosed().toPromise().then(result => {
+        debugger
+        if(result){
+          this.rfqService.getSuppliers(this.orgId).then(data => {
+            this.allSuppliers = data.data;
+          });
+        }
+
       });
   }
 }

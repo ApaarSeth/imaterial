@@ -28,6 +28,7 @@ export interface Unit {
   templateUrl: "add-edit-grn-component.html"
 })
 export class AddEditGrnComponent implements OnInit {
+
   grnDetails: GRNDetails;
   grnId: number;
   dataSource: GRNDetails[];
@@ -58,7 +59,6 @@ export class AddEditGrnComponent implements OnInit {
     });
     this.purchaseOrderId = this.data.pID;
   }
-
 
   formsInit() {
     this.GRNDetails = this.data.isEdit
@@ -100,7 +100,6 @@ export class AddEditGrnComponent implements OnInit {
       this.dialogRef.close(data);
     })
   }
-
 
   // getGRNDetails(grnId: number) {
   //     this.grnService.getGRNDetails(grnId).then(data => {
