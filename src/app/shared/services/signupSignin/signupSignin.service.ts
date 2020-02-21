@@ -26,9 +26,7 @@ export class SignInSignupService implements OnInit{
           localStorage.setItem("orgId", res.serviceRawResponse.data.orgId);
           if(res.serviceRawResponse.data.success === 'true'){
             return res;
-            debugger
           }
-          console.log(res);
         })
         .catch(e=>{
             console.error(e);

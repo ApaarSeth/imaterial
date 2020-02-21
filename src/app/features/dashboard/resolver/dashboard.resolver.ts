@@ -15,10 +15,7 @@ export class DashBoardResolver implements Resolve<any> {
     let userId = Number(localStorage.getItem("userId"));
     let orgId = Number(localStorage.getItem("orgId"));
 
-    return this.projectService.getProjects(orgId, userId).then(data => {
-      console.log(data.data);
-      debugger
-      
+    return this.projectService.getProjects(orgId, userId).then(data => {     
       return data.data;
     });
   }
