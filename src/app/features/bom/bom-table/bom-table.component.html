@@ -12,20 +12,20 @@
         </mat-form-field>
       </div>
       <div class="col-xs-9 p-t-10 text-right">
-        <span class="p-r-5" *ngIf="this.permissionObj.rfqFlag">
+        <span class="" *ngIf="this.permissionObj.rfqFlag">
           <button mat-raised-button class="main-background-color main-button color-white pull-right"
             (click)="createRfq()">
             Create RFQ
           </button>
         </span>
-        <span class="p-r-5">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right"
+        <span>
+          <button mat-raised-button class="mr-3 main-background-color main-button color-white pull-right"
             (click)="raiseIndent()">
             Raise Indent
           </button>
         </span>
-        <span class="p-r-5" *ngIf="projectData.openIndentCount>0">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right "
+        <span *ngIf="projectData.openIndentCount>0">
+          <button mat-raised-button class="mx-3 main-background-color main-button color-white pull-right "
             (click)="viewIndent()">
             View Indent
           </button>

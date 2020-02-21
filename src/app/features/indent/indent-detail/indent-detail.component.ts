@@ -26,14 +26,15 @@ export interface IndentData {
 export class IndentDetailComponent implements OnInit {
   product: ProjectDetails;
   projectId: number;
-  
-displayedColumns: string[] = [
+
+  displayedColumns: string[] = [
     "Indent Name",
     "Requested Date",
     "Total No Of Material",
-    "Created By"
-    // ,"Date"
+    "Created By",
+    "View Indent"
   ];
+
   allIndents: AllIndentListVO;
   dataSource1: IndentVO[];
   dataSource2: IndentVO[];
@@ -43,7 +44,7 @@ displayedColumns: string[] = [
     private router: Router,
     private projectService: ProjectService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -95,7 +96,7 @@ displayedColumns: string[] = [
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -105,11 +106,11 @@ displayedColumns: string[] = [
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     }
   }
+  
   viewIndentDetails(row) {
-    console.log("row", row);
     this.router.navigate([
       "/indent/" + this.projectId + "/single-indent/" + row.indentId
     ]);

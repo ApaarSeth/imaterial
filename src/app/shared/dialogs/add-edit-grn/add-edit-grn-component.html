@@ -5,9 +5,9 @@
     </button>
 </div>
 
-<div class="row m-t-10">
-    <div class="col-sm-12">
-        <form *ngIf="materialForms" [formGroup]="materialForms">
+<form *ngIf="materialForms" [formGroup]="materialForms" (ngSubmit)="addGrn()">
+    <div class="row m-t-10">
+        <div class="col-sm-12">
             <div formArrayName="forms" class="row">
 
                 <table mat-table [dataSource]="dataSource" class="col-sm-12">
@@ -53,18 +53,20 @@
                 </table>
 
             </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div mat-dialog-actions>
-    <div class="col-sm-12 save-btn-add-edit-user-modal">
-        <button mat-raised-button (click)="cancel()" class="main-background-color main-button color-white pull-left">
-            Cancel
-        </button>
+    <div mat-dialog-actions>
+        <div class="col-sm-12 save-btn-add-edit-user-modal">
+            <button mat-raised-button (click)="closeDialog()"
+                class="main-background-color main-button color-white pull-left">
+                Cancel
+            </button>
 
-        <button mat-raised-button (click)="addGrn()" class="main-background-color main-button color-white pull-right" [disabled]="!materialForms.valid">
-            Save
-        </button>
+            <button mat-raised-button type="submit"
+                class="main-background-color main-button color-white pull-right" [disabled]="!materialForms.valid">
+                Save
+            </button>
+        </div>
     </div>
-</div>
+</form>

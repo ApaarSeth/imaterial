@@ -67,6 +67,7 @@ export class SuppliersComponent implements OnInit {
   }
 
   openDialog(projectId) {
+    debugger
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "1200px",
       data: projectId
