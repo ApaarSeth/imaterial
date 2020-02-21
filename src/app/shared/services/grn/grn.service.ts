@@ -13,21 +13,18 @@ export class GRNService {
 
     getGRNDetails(grnId: Number) {
         return this.dataService.getRequest(API.GETGRNDETAILS(grnId)).then(res => {
-            console.log("grn details", res);
             return res;
         });
     }
 
     viewGRN(organizationId: Number, purchaseOrderId: Number) {
         return this.dataService.getRequest(API.VIEWGRN(organizationId, purchaseOrderId)).then(res => {
-            // console.log("view grn", res);
             return res;
         });
     }
 
     addGRN(grn: GRN[]) {
         return this.dataService.sendPostRequest(API.ADDGRN, grn).then(res => {
-            console.log("ahsghafs", res);
             return res;
         });
     }

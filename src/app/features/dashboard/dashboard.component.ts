@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     private projectService: ProjectService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -36,16 +36,12 @@ export class DashboardComponent implements OnInit {
     console.log(this.userId);
     // this.allProjects = this.activatedRoute.snapshot.data.dashBoardData;
     this.getAllProjects();
-    debugger
   }
 
 
-  getAllProjects(){
+  getAllProjects() {
     this.projectService.getProjects(this.orgId, this.userId).then(data => {
-      
       this.allProjects = data.data;
-      console.log(data.data);
-      debugger
     });
   }
 
