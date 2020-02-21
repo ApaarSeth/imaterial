@@ -17,8 +17,7 @@ export class PoSupplierComponent implements OnInit {
     "Supplier Name",
     "Email",
     "Phone No.",
-    "PAN No.",
-    "customColumn"
+    "PAN No."
   ];
 
   constructor(

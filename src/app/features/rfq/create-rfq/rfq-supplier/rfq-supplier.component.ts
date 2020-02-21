@@ -75,10 +75,16 @@ export class RfqSupplierComponent implements OnInit {
   }
   navigateToUploadPage() {
     this.rfqData.supplierId = this.supplierForm.value.forms.map(supplier => {
-      if (supplier.supplier != null) {
+      if (supplier.supplier) {
         return supplier.supplier.supplierId;
       }
     });
+    this.rfqData.supplierId = this.rfqData.supplierId.filter(supplierId => {
+      if (supplierId) {
+        return supplierId;
+      }
+    });
+    // this.rfqData.supplierId.map(supplier=>supplier.supplier.supplierId)
     // this.rfqData.supplierId = this.selectedSuppliersList.map(
     //   supplier => supplier.supplierId
     // );
