@@ -48,11 +48,11 @@ export class SuppliersDialogComponent {
 
   addSuppliers(organisarionId: number, suppliers: Suppliers) {
     this.rfqService.addNewSupplier(this.orgId, suppliers).then(res => {
-      res.data;
+      this.dialogRef.close(res.data);
     });
   }
 
-  close() {
-    this.dialogRef.close();
+  close(): void {
+    this.dialogRef.close(null);
   }
 }
