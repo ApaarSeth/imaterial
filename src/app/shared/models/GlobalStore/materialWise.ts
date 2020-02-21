@@ -27,6 +27,8 @@ export interface GlobalMaterial {
   matCount: number;
   sum?: number;
   nearDueDate?: string;
+  deliveredQty: number;
+  issuedQty: number;
   availableQuantity?: null;
 }
 export interface GlobalProject {

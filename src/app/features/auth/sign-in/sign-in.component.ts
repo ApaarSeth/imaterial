@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
 import { Router } from "@angular/router";
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
 
 @Component({
   selector: "signin",
@@ -25,7 +25,10 @@ export class SigninComponent implements OnInit {
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      phone: ["", [Validators.required,Validators.pattern(FieldRegExConst.PHONE)]],
+      phone: [
+        "",
+        [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]
+      ],
       password: ["", Validators.required]
     });
   }
@@ -39,17 +42,17 @@ export class SigninComponent implements OnInit {
     params.append("userType", "BUYER");
 
     this.signInSignupService.signIn(params.toString()).then(data => {
-      if (data.serviceRawResponse.data){
-        this.router.navigate(["dashboard"]);
+      if (data.serviceRawResponse.data) {
+        this.router.navigate(["/dashboard"]);
       }
     });
   }
 
-  showPassWord(){
-    if(!this.showPassWordString){
+  showPassWord() {
+    if (!this.showPassWordString) {
       this.showPassWordString = true;
-    }else{
-       this.showPassWordString = false;
+    } else {
+      this.showPassWordString = false;
     }
   }
 }

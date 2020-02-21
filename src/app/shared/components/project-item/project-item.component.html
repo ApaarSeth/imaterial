@@ -133,16 +133,18 @@
                 </span>
               </div>
             </div>
-            <!-- <div class="col-xs-4 text-right">
-                      <button mat-raised-button class="background-white-color main-button main-color">View Project</button>
-                  </div> -->
+
           </div>
           <div class="row m-t-10">
-            <div class="col-xs-12 text-left">
+            <div class="col-xs-6 text-left">
               <div class="font-size12 color-text-card">
                 Created : {{ projectDetails.createdAt | date: "fullDate" }} By
                 {{ projectDetails.createdBy }} (Site Engineer)
               </div>
+            </div>
+            <div class="col-xs-6 text-right">
+              <button mat-raised-button class="background-white-color main-button main-color" *ngIf="url==='/dashboard'"
+                (click)="navigationToBOM(projectDetails.projectId, projectDetails)">View Project</button>
             </div>
           </div>
         </div>
