@@ -16,14 +16,9 @@ export class ViewGRNComponent implements OnInit {
 
     grnDetails: GRNDetails[];
     grnId: number;
-
-
     grnAddEditDetails: GRNDetails;
     grnAddEditId: number;
     dataSource: GRNDetails[];
-
-
-
     displayedColumns: string[] = [
         "Material Name",
          "Brand Name",
@@ -47,16 +42,15 @@ export class ViewGRNComponent implements OnInit {
 
     getGRNDetails(grnId: number) {
         this.grnService.getGRNDetails(grnId).then(data => {
-            console.log("grn data", data.data);
             this.grnHeaders = data.data;
             //this.grnDetails = data.data.poMaterialList;
         });
     }
 
     getData(x){
-        console.log(x)
         return x
     }
+
     viewBack(){
            this.route.navigate(['po/detail-list']);
     }
@@ -68,7 +62,7 @@ export class ViewGRNComponent implements OnInit {
             pID: this.pID,
             detail: this.grnHeaders
             };
-    this.openDialog(data);
+        this.openDialog(data);
     }
 
   openDialog(data: GRNPopupData): void {
