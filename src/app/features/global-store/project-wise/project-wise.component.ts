@@ -8,14 +8,16 @@ import { GlobalProject } from "src/app/shared/models/GlobalStore/projectWise";
   styleUrls: ["./project-wise.component.scss"]
 })
 export class ProjectWiseComponent implements OnInit {
+
   @Input("projectData") projectData: GlobalProject[];
   newProjectData: GlobalProject[];
-  constructor() {}
+
+  constructor() { }
 
   ngOnInit() {
-    console.log(this.projectData);
     this.mappingMaterialData();
   }
+
   mappingMaterialData() {
     this.newProjectData = this.projectData.map((project: GlobalProject) => {
       let projects: GlobalProject[] = [];

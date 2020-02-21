@@ -33,11 +33,12 @@ export class AddProjectComponent implements OnInit {
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
-
+  minDate = new Date();
   projectDetails: ProjectDetails;
   orgId: number;
   userId: number;
   selectedConstructionUnit: String;
+  
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
@@ -58,7 +59,7 @@ export class AddProjectComponent implements OnInit {
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
-    { value: "Delhi-1", viewValue: "Delhi" },
+    { value: "Delhi", viewValue: "Delhi" },
     { value: "Karnal", viewValue: "Karnal" }
   ];
 
@@ -72,7 +73,7 @@ export class AddProjectComponent implements OnInit {
     { type: "OTHERS" }
   ];
 
-  units: Unit[] = [{ value: "sqm" }, { value: "acres" }];
+  units: Unit[] = [{ value: "acres" }, { value: "sqm" }];
 
   initForm() {
     this.projectDetails = this.data.isEdit
