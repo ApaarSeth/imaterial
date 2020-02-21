@@ -17,89 +17,95 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   materialCount: number = 0;
   brandCount: number = 0;
   rfqSupplierObj: SendRfqObj;
-
-  supplierAddress: SupplierAddress;
+  supplierAddress: any;
   supplierId: number;
   form: FormGroup;
   materialForms: FormGroup;
 
   constructor(
-        public dialog: MatDialog,
+    public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
-     private formBuilder: FormBuilder,
-     private poService: POService,
-     private router:Router
-  ) {}
+    private formBuilder: FormBuilder,
+    private poService: POService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-     this.rfqSupplierObj = history.state.rfqSupplierObj;
-     this.supplierId = history.state.supplierId;
 
-      this.brandCount = this.activatedRoute.snapshot.params["brandList"];
-      this.materialCount =  this.activatedRoute.snapshot.params["MaterialList"];
+    this.rfqSupplierObj = history.state.rfqSupplierObj;
+    this.supplierId = history.state.supplierId;
+    this.brandCount = this.activatedRoute.snapshot.params["brandList"];
+    this.materialCount = this.activatedRoute.snapshot.params["MaterialList"];
 
-
-     console.log(this.rfqSupplierObj);
-     this.poService.getSupplierAddress(this.supplierId).then(data => {
-       this.supplierAddress = data.data;
-        this.initForm();
-     })
+    this.poService.getSupplierAddress(this.supplierId).then(data => {
     
+      this.supplierAddress = data;
+      this.initForm();
+    })
+
   }
 
- initForm() {
+  initForm() {
 
-       this.form = this.formBuilder.group({
+    console.log(this.supplierAddress);
+    this.form = this.formBuilder.group({
+      
       supplierName: [
-        this.supplierAddress[0].supplierName ? this.supplierAddress[0].supplierName : "",
+        this.supplierAddress.data ? this.supplierAddress.data[0].supplierName : "",
         Validators.required
       ],
-       contactNo: [
-        this.supplierAddress[0].contactNo ? this.supplierAddress[0].contactNo : "",
-        [Validators.required,Validators.pattern(FieldRegExConst.PHONE)]
+      contactNo: [
+        this.supplierAddress.data ? this.supplierAddress.data[0].contactNo : "",
+        [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]
       ],
-       email: [
-        this.supplierAddress[0].email ? this.supplierAddress[0].email : "",
-         [Validators.required,Validators.pattern(FieldRegExConst.EMAIL)]
+      email: [
+        this.supplierAddress.data ? this.supplierAddress.data[0].email : "",
+        [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]
       ],
 
       addressLine1: [
-        this.supplierAddress[0].addressLine1 ? this.supplierAddress[0].addressLine1 : "",
+        this.supplierAddress.data ? this.supplierAddress.data[0].addressLine1 : "",
         Validators.required
       ],
-      addressLine2: [this.supplierAddress[0].addressLine2 ? this.supplierAddress[0].addressLine2 : ""],
+      addressLine2: [this.supplierAddress.data ? this.supplierAddress.data[0].addressLine2 : ""],
       pinCode: [
-        this.supplierAddress[0].pinCode ? this.supplierAddress[0].pinCode : "",
-        [Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]
+        this.supplierAddress.data ? this.supplierAddress.data[0].pinCode : "",
+        [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
       ],
       state: [
-        this.supplierAddress[0].state ? this.supplierAddress[0].state : "",
+        this.supplierAddress.data ? this.supplierAddress.data[0].state : "",
         Validators.required
       ],
       city: [
-        this.supplierAddress[0].city ? this.supplierAddress[0].city : "",
+        this.supplierAddress.data ? this.supplierAddress.data[0].city : "",
         Validators.required
       ],
       gstNo: [
-        this.supplierAddress[0].gstNo ? this.supplierAddress[0].gstNo : "",
-        [Validators.required,Validators.pattern(FieldRegExConst.GSTIN)]
+        this.supplierAddress.data ? this.supplierAddress.data[0].gstNo : "",
+        [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]
       ]
     });
 
   }
 
-   saveAddress(){
+  saveAddress() {
+    this.openDialog();
+    // this.openDialog(this.rfqSupplierObj, this.form.value);
     console.log(this.form.value);
-    this.poService.addAddress(this.supplierId,this.form.value).then(res=>{
-      if(res.data){
-          this.openDialog(this.rfqSupplierObj);
-      }
-    })
+    console.log(this.rfqSupplierObj);
+    
+    // this.poService.addAddress(this.supplierId, this.form.value).then(res => {
+    //   if (res.data) {
+    //     this.openDialog(this.rfqSupplierObj);
+    //   }
+    // })
   }
 
-   openDialog(rfqSupplierObj): void {
+  openDialog(): void {
+    
     const dialogRef = this.dialog.open(ConfirmRfqBidComponent, {
+      data: { rfqSupplierData: this.rfqSupplierObj, supplierAddress: this.form.value, supplierId: this.supplierId },
       width: "800px"
     });
 
@@ -107,17 +113,17 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then(data => {
-        if (data.data == "close") {
+        if(data[0].statusCode === 201){
+          this.router.navigate(["/rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
+        }
+        /*if (data.data == "close") {
           console.log("The dialog was closed");
         }
         if (data.data == "submit") {
-         // this.submitBid(rfqSupplierObj);
           console.log("The dialog was submitted");
-           this.router.navigate([
-          "rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
-
-
-        }
+          this.router.navigate([
+            "rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
+        }*/
       });
   }
 }

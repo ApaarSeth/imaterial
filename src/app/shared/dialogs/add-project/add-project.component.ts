@@ -1,13 +1,10 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
-  Validators,
-  FormControl
+  Validators
 } from "@angular/forms";
-
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
 import { FieldRegExConst } from "../../constants/field-regex-constants";
@@ -30,6 +27,7 @@ export interface Unit {
   templateUrl: "add-project-component.html"
 })
 export class AddProjectComponent implements OnInit {
+  
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
@@ -52,10 +50,6 @@ export class AddProjectComponent implements OnInit {
     this.selectedConstructionUnit = "1";
     this.initForm();
   }
-
-  // close() {
-  //   this.dialogRef.close();
-  // }
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
@@ -148,14 +142,14 @@ export class AddProjectComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.form.value);
     if (this.data.isEdit) {
       this.dialogRef.close(this.updateProjects(this.form.value));
     } else {
       this.dialogRef.close(this.addProjects(this.form.value));
     }
   }
-  closeDialog() {
+
+  closeDialog(): void {
     this.dialogRef.close();
   }
 
