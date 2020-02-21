@@ -1,20 +1,20 @@
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()" class="add-project-component-dialog">
   <div class="header-add-edit-dialog">
-      <h1 mat-dialog-title>Add Project</h1>
-      <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
+    <h1 mat-dialog-title>Add Project</h1>
+    <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
   </div>
   <div mat-dialog-content>
     <div class="col-sm-12 display-flex m-t-20">
       <div class="col-sm-2">
         <div class="project-profile">
-          <img src="../../../../assets/images/2020-01-08.jpg"/>
+          <img src="../../../../assets/images/2020-01-08.jpg" />
         </div>
         <div class="upload-photo-btn">
-            <button type="button" (click)="uploadPhoto()">
-              <span aria-hidden="true">Upload Photo</span>
-            </button>
+          <button type="button" (click)="uploadPhoto()">
+            <span aria-hidden="true">Upload Photo</span>
+          </button>
         </div>
       </div>
       <!-- new structure -->
@@ -32,7 +32,7 @@
         </div>
 
 
-          <!-- second row -->
+        <!-- second row -->
         <div class="row">
           <div class="col-sm-6">
             <!-- address 1 -->
@@ -61,12 +61,10 @@
               <mat-label>Pincode*</mat-label>
               <input matInput type="text" formControlName="pinCode" />
               <!-- <mat-error>PinCode is Required</mat-error> -->
-              <small
-                    *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
-                    class="error-msg"> pincode is required </small>
-                    <small
-                    *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
-                    class="error-msg"> Enter Valid Pincode</small>
+              <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
+                class="error-msg"> pincode is required </small>
+              <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
+                class="error-msg"> Enter Valid Pincode</small>
             </mat-form-field>
           </div>
           <div class="col-sm-6">
@@ -82,7 +80,7 @@
           </div>
         </div>
 
-         <!-- fourth row -->
+        <!-- fourth row -->
         <div class="row">
           <div class="col-sm-6">
             <!-- state value -->
@@ -96,7 +94,7 @@
           </div>
         </div>
 
-         <!-- fourth row -->
+        <!-- fourth row -->
         <div class="row">
           <div class="col-sm-6 date-dialog-add-edit">
             <!-- start date -->
@@ -117,11 +115,11 @@
             </mat-form-field>
           </div>
         </div>
-      
+
 
         <!-- another row -->
         <div class="row">
-           <div class="col-sm-6">
+          <div class="col-sm-6">
             <!-- project Type -->
             <mat-form-field class="border-select">
               <mat-label>Project Type*</mat-label>
@@ -138,12 +136,12 @@
             <mat-form-field class="border-input">
               <mat-label>Area</mat-label>
               <!-- <mat-error>ProjectArea is Required</mat-error> -->
-              <input matInput type="number" formControlName="area" required/>
+              <input matInput type="number" formControlName="area" required />
 
             </mat-form-field>
           </div>
-        
-        <div class="col-sm-3">
+
+          <div class="col-sm-3">
             <!-- project unit -->
             <mat-form-field class="border-select">
               <mat-label>Project Unit</mat-label>
@@ -158,21 +156,21 @@
         </div>
         <!-- sixth row -->
         <div class="row">
-          
+
           <div class="col-sm-3">
             <!-- construction cost -->
             <mat-form-field class="border-input">
               <mat-label>Construction Cost</mat-label>
-              <input matInput type="number" formControlName="cost" required/>
+              <input matInput type="number" formControlName="cost" required />
               <!-- <mat-error>Construction Cost is Required</mat-error> -->
             </mat-form-field>
           </div>
 
-           <div class="col-sm-3">
+          <div class="col-sm-3">
             <!-- project area -->
-           <mat-form-field class="border-select">
+            <mat-form-field class="border-select">
               <mat-label>Unit</mat-label>
-              <mat-select  [value]="selectedConstructionUnit">
+              <mat-select [value]="selectedConstructionUnit">
                 <mat-option value="1">
                   CR
                 </mat-option>
@@ -180,17 +178,15 @@
             </mat-form-field>
           </div>
 
-           <div class="col-sm-6">
+          <div class="col-sm-6">
             <!-- project Type -->
-             <mat-form-field class="border-input">
+            <mat-form-field class="border-input">
               <mat-label>GST No*</mat-label>
               <input matInput type="text" formControlName="gstNo" />
-                <small
-              *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
-              class="form-error-msg"> Gst No is required </small>
-              <small
-              *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched"
-              class="form-error-msg"> Enter Valid Gst No</small>
+              <small *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
+                class="form-error-msg"> Gst No is required </small>
+              <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched"
+                class="form-error-msg"> Enter Valid Gst No</small>
               <!-- <mat-error>Address is Required</mat-error> -->
             </mat-form-field>
           </div>

@@ -23,10 +23,9 @@ export class RfqSupplierComponent implements OnInit {
     "Email",
     "Phone No.",
     "PAN No.",
-    "customColumn",
-    "customColumn1"
+    "customColumn"
   ];
-  allSuppliers: Suppliers[];
+  allSuppliers: Suppliers[] = [];
   selectedSuppliersList: Suppliers[] = [];
   selectedSupplierFlag: boolean = false;
   checkedMaterialsList: AddRFQ;
@@ -43,9 +42,7 @@ export class RfqSupplierComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
-    if (this.allSuppliers) {
-      this.formInit();
-    }
+    this.formInit();
   }
   formInit() {
     const frmArr: FormGroup[] = this.allSuppliers.map(supplier => {
@@ -104,6 +101,7 @@ export class RfqSupplierComponent implements OnInit {
       .then(result => {
         this.rfqService.getSuppliers(this.orgId).then(data => {
           this.allSuppliers = data.data;
+          this.formInit();
         });
       });
   }

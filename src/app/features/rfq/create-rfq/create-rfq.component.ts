@@ -87,13 +87,12 @@ export class CreateRfqComponent implements OnInit {
     ) {
       this.rfqService.addRFQ(this.updatedRfqMaterial).then(res => {
         this.finalRfq = res.data;
+        this.rfqMaterial = res.data;
       });
     } else if (event.previouslySelectedIndex == 2) {
       this.rfqService.addRFQ(this.updatedRfqMaterial).then(res => {
         this.currentIndex = event.selectedIndex;
         this.rfqMaterial = res.data;
-        this.stpForm.get("qty").setValue(res.data);
-        console.log("selected mat", this.stpForm.get("qty").value);
       });
     }
     // else if (event.selectedIndex === 1) {

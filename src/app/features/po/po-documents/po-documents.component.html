@@ -2,9 +2,7 @@
     <mat-card class="example-card">
         <mat-card-header class="upload-documents-mat-header">
             <span class="text-semi-bold" *ngIf="mode==='edit'; else editBlock">
-                <mat-form-field class="border-input">
-                    <input matInput type="string" formControlName="orderNo" placeholder="Project No." class="m-r-5" />
-                </mat-form-field>
+
                 <app-upload #uploadRef [documentListLength]="documentListLength" (onFileUpdate)="fileUpdate($event)">
                 </app-upload>
             </span>

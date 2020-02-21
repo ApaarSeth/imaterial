@@ -1,4 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  SimpleChanges
+} from "@angular/core";
 
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatChipInputEvent } from "@angular/material/chips";
@@ -18,16 +25,25 @@ export class ChipComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   fruits: string[] = [];
-
+  @Input("chips") chips: string[];
   @Output() onUpdate = new EventEmitter<string[]>();
 
   ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.chips) {
+      this.fruits = [...this.chips];
+      this.update();
+    }
+    // this.update();
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+  }
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
     // Add our fruit
-    if ((value || "").trim() && this.fruits.length < 4) {
+    if ((value || "").trim() && this.fruits.length < 5) {
       this.fruits.push(value.trim());
     }
 

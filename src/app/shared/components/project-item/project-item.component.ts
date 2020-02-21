@@ -5,7 +5,8 @@ import {
   EventEmitter,
   OnDestroy,
   Input,
-  ViewChild
+  ViewChild,
+  SimpleChanges
 } from "@angular/core";
 import {
   FormGroup,
@@ -25,6 +26,7 @@ import { PermissionService } from "../../services/permission.service";
 export class ProjectItemComponent implements OnInit {
   id: number;
   permissionObj: any;
+  url: string;
   constructor(
     private permissionService: PermissionService,
     private router: Router,
@@ -36,6 +38,9 @@ export class ProjectItemComponent implements OnInit {
   @Input("projectDetails") projectDetails: ProjectDetails;
   ngOnInit(): void {
     this.permissionObj = this.permissionService.checkPermission();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.url = this.router.url;
   }
 
   edit(proId: number, $event) {
@@ -55,6 +60,7 @@ export class ProjectItemComponent implements OnInit {
       this.router.navigate(["/bom/" + id], { state: { projectDetails } });
     }
   }
+
   redirectToPurchaseOrder() {
     this.router.navigate(["po/detail-list"]);
   }
