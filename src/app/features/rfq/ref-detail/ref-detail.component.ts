@@ -62,14 +62,13 @@ export class RefDetailComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.submittedRfqList.filter = filterValue.trim().toLowerCase();
     this.nonSubmittedRfqList.filter = filterValue.trim().toLowerCase();
-
   }
 
   viewRfq(element: RfqList) {
     if (element.rfqStatus === 0) {
       this.router.navigate(["../../rfq/createRfq"]);
     } else {
-      this.router.navigate(["../rfq-view", element.rfqId]);
+      this.router.navigate(["../../rfq/rfq-view", element.rfqId]);
     }
   }
 }
