@@ -21,16 +21,19 @@ export class RFQService {
       projectIds: ProjectIds
     });
   }
+  
   rfqDetail(organizationId: number) {
     return this.dataService.getRequest(API.RFQDETAIL(organizationId));
   }
+
   rfqPo(organizationId: number, rfqId: number) {
     return this.dataService.getRequest(API.RFQPO(organizationId, rfqId));
   }
+
   rfqAddPo(bidData: RfqProjectSubmit[]) {
-    console.log("bidData", bidData);
     return this.dataService.sendPostRequest(API.RFQADDPO, bidData);
   }
+
   getSuppliers(organizationId: number) {
     return this.dataService.getRequest(API.GETSUPPLIERS(organizationId));
   }

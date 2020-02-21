@@ -1,68 +1,61 @@
 <div class="page-start-point">
 
-<ng-container *ngIf="addUserBtn">
-   <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
-        <button  mat-raised-button  (click)="addSupplier()" class="main-background-color main-button color-white btn-width-add-users center-screen-btn">
-          Add First Supplier
-        </button>
-  </div> 
-</ng-container>
+  <ng-container *ngIf="addUserBtn">
+    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+      <button mat-raised-button (click)="addSupplier()"
+        class="main-background-color main-button color-white btn-width-add-users center-screen-btn">
+        Add First Supplier
+      </button>
+    </div>
+  </ng-container>
 
 
   <ng-container *ngIf="!addUserBtn">
-     <div class="row">
-       <div class="col-xs-3">
+    <div class="row">
+      <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input p-l-20">
-          <input
-            matInput
-            placeholder="Search Suppliers"
-            type="search"
-           (keyup)="applyFilter($event.target.value)"
-          />
+          <input matInput placeholder="Search Suppliers" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
         </mat-form-field>
       </div>
       <div class="col-xs-9">
-           <div class="text-right add-user-details-button-right p-t-10 p-r-20">
-              <button mat-raised-button (click)="addSupplier()"
-                class="main-background-color main-button color-white">
-                Add Supplier
-              </button>
-          </div>
+        <div class="text-right add-user-details-button-right p-t-10 p-r-20">
+          <button mat-raised-button (click)="addSupplier()" class="main-background-color main-button color-white">
+            Add Supplier
+          </button>
+        </div>
       </div>
-  </div>
+    </div>
 
     <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
-        <!-- <div class="text-right add-user-details-button-right">
+      <!-- <div class="text-right add-user-details-button-right">
           <button mat-raised-button (click)="addSupplier()"
             class="main-background-color main-button color-white">
             Add Supplier
           </button>
         </div> -->
-        
-        <!-- first table structure -->
-        <div class="row">
-          <!-- <div class="col-sm-12"> -->
-          <!-- table structure -->
-          <div class="supplier-details-table-div" *ngIf="dataSourceTemp && dataSourceTemp.length>0">
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-sm-12" >
+
+      <!-- first table structure -->
+      <div class="row">
+        <!-- <div class="col-sm-12"> -->
+        <!-- table structure -->
+        <div class="supplier-details-table-div" *ngIf="dataSourceTemp && dataSourceTemp.length>0">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-sm-12">
             <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
 
             <!-- Position Column -->
 
-
-            
             <ng-container matColumnDef="suppliername">
-              <th mat-header-cell *matHeaderCellDef>suppliername</th>
+              <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
               <td mat-cell *matCellDef="let element">{{ element.supplier_name}}</td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef>email</th>
+              <th mat-header-cell *matHeaderCellDef>Email</th>
               <td mat-cell *matCellDef="let element">
                 {{ element.email }}
               </td>
@@ -70,7 +63,7 @@
 
             <!-- Weight Column -->
             <ng-container matColumnDef="contactNo">
-              <th mat-header-cell *matHeaderCellDef>contactNo</th>
+              <th mat-header-cell *matHeaderCellDef>Contact No.</th>
               <td mat-cell *matCellDef="let element">
                 {{ element.contact_no }}
               </td>
@@ -78,15 +71,15 @@
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="pan">
-              <th mat-header-cell *matHeaderCellDef>pan</th>
+              <th mat-header-cell *matHeaderCellDef>PAN</th>
               <td mat-cell *matCellDef="let element">
                 {{ element.pan }}
               </td>
             </ng-container>
 
-             <!-- Symbol Column -->
+            <!-- Symbol Column -->
             <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef>status</th>
+              <th mat-header-cell *matHeaderCellDef>Status</th>
               <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="element.status == 0"> Active </ng-container>
                 <ng-container *ngIf="element.status == 1"> Inactive </ng-container>
@@ -98,27 +91,26 @@
               <th mat-header-cell *matHeaderCellDef class="edit-disable-user-details-width"></th>
               <td mat-cell *matCellDef="let element" class="edit-disable-user-details-width">
 
-                  <mat-icon aria-hidden="false" class="delete-icon" *ngIf="element.status == 0" (click)="deactivateUser(element)"> <a class="width-15-px cursor-pointer">
+                <mat-icon aria-hidden="false" class="delete-icon" *ngIf="element.status == 0"
+                  (click)="deactivateUser(element)"> <a class="width-15-px cursor-pointer">
                     <img src="../../../../assets/images/delete-button.png">
-                   </a></mat-icon> 
-                  
+                  </a></mat-icon>
 
-
-                  <span  *ngIf="element.status == 1" class="view-disabled-address-supplier"> View Address</span> 
-                  <span  *ngIf="element.status == 0" class="view-address-supplier"> View Address</span> 
+                <!-- <span *ngIf="element.status == 1" class="view-disabled-address-supplier"> View Address</span>
+                <span *ngIf="element.status == 0" class="view-address-supplier"> View Address</span> -->
               </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
-          </div>
-          <!-- end structure -->
-          <!-- </div> -->
         </div>
+        <!-- end structure -->
+        <!-- </div> -->
+      </div>
 
-  </div>
+    </div>
   </ng-container>
-  
 
- </div>
+
+</div>
