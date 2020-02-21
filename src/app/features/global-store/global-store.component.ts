@@ -39,7 +39,7 @@ export class GlobalStoreComponent implements OnInit {
     }
   }
 
-  raiseRfq() {
-    this.router.navigate(['rfq/project-materials']);
+  createRfq() {
+    this.router.navigate(['/rfq/createRfq']);
   }
 }
