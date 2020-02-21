@@ -40,9 +40,7 @@ export class POService {
   }
 
   getSupplierAddress(supplierId:Number){
-     return this.dataService.getRequest(
-      API.GETSUPPLIERADDRESS(supplierId)
-    );
+     return this.dataService.getRequest(API.GETSUPPLIERADDRESS(supplierId));
   }
 
   addAddress(supplierId:Number,address : SupplierAddress){

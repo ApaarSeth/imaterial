@@ -19,14 +19,14 @@ export class RFQSupplierAfterBidComponent implements OnInit {
 
 
   constructor(
-        public dialog: MatDialog,
+    public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService
-  ) {}
+  ) { }
 
   ngOnInit() {
-     this.brandCount = this.activatedRoute.snapshot.params["brandList"];
-      this.materialCount =  this.activatedRoute.snapshot.params["MaterialList"];
+    this.brandCount = this.activatedRoute.snapshot.params["brandList"];
+    this.materialCount = this.activatedRoute.snapshot.params["MaterialList"];
   }
 
 }

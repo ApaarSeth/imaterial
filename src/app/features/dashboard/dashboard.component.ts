@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
       isEdit: false,
       isDelete: false
     } as ProjetPopupData);
-    this.getAllProjects();
+    // this.getAllProjects();
   }
 
   deleteProject(projectId: number) {
@@ -81,17 +81,16 @@ export class DashboardComponent implements OnInit {
         data
       });
 
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => {
-          // to do
-          this.projectService
-            .getProjects(this.orgId, this.userId)
-            .then(data => {
+      dialogRef.afterClosed().toPromise().then(result => {
+        
+        if(result){
+          this.projectService.getProjects(this.orgId, this.userId).then(data => {
               this.allProjects = data.data;
-            });
-        });
+          });
+        }
+
+      });
+
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",

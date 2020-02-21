@@ -14,7 +14,7 @@ export class RFQSupplierDetailComponent implements OnInit {
   projectCount: number = 0;
   materialCount: number = 0;
   brandCount: number = 0;
-
+  minDate = new Date();
   defaultTaxBtn: string = "IGST";
   materialIGSTFlag: boolean = false;
   brandRateFlag: boolean = false;
@@ -32,7 +32,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.rfqService
@@ -41,7 +41,13 @@ export class RFQSupplierDetailComponent implements OnInit {
         this.activatedRoute.snapshot.params["supplierId"]
       )
       .then(data => {
+
+        if(data.data.rfqSupplierBidFlag === 1){
+            this.router.navigate(['/rfq-bids/finish']);
+        }
+
         this.rfqSupplierDetailList = data.data;
+        
         if (this.rfqSupplierDetailList.projectList) {
           this.rfqSupplierDetailList.projectList.forEach(element => {
             this.materialCount =
@@ -65,8 +71,8 @@ export class RFQSupplierDetailComponent implements OnInit {
   submitBid(rfqSupplierObj) {
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
     this.router.navigate([
-          "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
-        ],{state: {supplierId, rfqSupplierObj }});
+      "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
+    ], { state: { supplierId, rfqSupplierObj } });
 
 
     // this.rfqService
@@ -96,17 +102,18 @@ export class RFQSupplierDetailComponent implements OnInit {
         }
         if (data.data == "submit") {
           this.submitBid(rfqSupplierObj);
-          console.log("The dialog was submitted");
         }
       });
   }
 
   radioChange(event, projects) {
     projects.gst = event.value;
-    console.log(this.rfqSupplierDetailList);
   }
+
   duedatefunc(event) {
+
     this.dateDue = event.target.value;
+
     if (this.dateDue != "" && this.dateDue != null) {
       this.dudateFlag = true;
     } else if (this.dateDue == "" || this.dateDue == null) {
@@ -114,16 +121,13 @@ export class RFQSupplierDetailComponent implements OnInit {
       this.submitButtonValidationFlag = false;
     }
 
-    if (
-      this.dudateFlag &&
-      this.sameGstAndBrandFilled &&
-      !this.eitherOneGstOrBrand
-    ) {
+    if (this.dudateFlag && this.sameGstAndBrandFilled && !this.eitherOneGstOrBrand) {
       this.submitButtonValidationFlag = true;
     } else {
       this.submitButtonValidationFlag = false;
     }
   }
+
   valueChange(RFQsupplier: SendRfqObj) {
     this.submitButtonValidationFlag = false;
     this.brandRateFlag = false;

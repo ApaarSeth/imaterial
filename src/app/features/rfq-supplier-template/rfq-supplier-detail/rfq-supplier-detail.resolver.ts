@@ -9,6 +9,7 @@ import { ProjectService } from "src/app/shared/services/projectDashboard/project
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 
 @Injectable()
+
 export class RFQSupplierDetailResolver implements Resolve<any> {
   constructor(
     private route: ActivatedRoute,
