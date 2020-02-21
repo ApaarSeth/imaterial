@@ -62,6 +62,7 @@ export class RefDetailComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.submittedRfqList.filter = filterValue.trim().toLowerCase();
     this.nonSubmittedRfqList.filter = filterValue.trim().toLowerCase();
+
   }
 
   viewRfq(element: RfqList) {
