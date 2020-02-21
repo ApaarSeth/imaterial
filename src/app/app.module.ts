@@ -22,10 +22,19 @@ import { MainLayoutComponent } from "./shared/layout/main-layout/main-layout.com
 import { NotFoundComponent } from './features/not-found/not-found.component';
 import { SupplierBidLayoutComponent } from './shared/layout/supplier-bid-layout/supplier-bid-layout.component';
 import { AppSharedModule } from './shared/app-shared-module';
+import { AppDashboardComponent } from './features/app-dashboard/app-dashboard.component';
+import { AuthGuardService } from './shared/guards/auth.guards';
 // import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 
 @NgModule({
-  declarations: [AppComponent, AuthLayoutComponent, MainLayoutComponent, NotFoundComponent, SupplierBidLayoutComponent],
+  declarations: [
+    AppComponent, 
+    AuthLayoutComponent, 
+    MainLayoutComponent, 
+    NotFoundComponent, 
+    SupplierBidLayoutComponent, 
+    AppDashboardComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -46,7 +55,8 @@ import { AppSharedModule } from './shared/app-shared-module';
     DashBoardResolver,
     RFQResolver,
     BomResolver,
-    PODetailListResolver
+    PODetailListResolver,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

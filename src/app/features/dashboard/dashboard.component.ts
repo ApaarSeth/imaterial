@@ -28,17 +28,24 @@ export class DashboardComponent implements OnInit {
     private projectService: ProjectService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.allProjects = this.activatedRoute.snapshot.data.dashBoardData;
+    console.log(this.userId);
+    // this.allProjects = this.activatedRoute.snapshot.data.dashBoardData;
+    this.getAllProjects();
+  }
+
+
+  getAllProjects() {
+    this.projectService.getProjects(this.orgId, this.userId).then(data => {
+      this.allProjects = data.data;
+    });
   }
 
   editProject(projectId: number) {
-    console.log(projectId);
-
     const data: ProjetPopupData = {
       isEdit: true,
       isDelete: false,
@@ -53,6 +60,7 @@ export class DashboardComponent implements OnInit {
       isEdit: false,
       isDelete: false
     } as ProjetPopupData);
+    this.getAllProjects();
   }
 
   deleteProject(projectId: number) {

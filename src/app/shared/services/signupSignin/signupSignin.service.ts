@@ -18,7 +18,17 @@ export class SignInSignupService implements OnInit{
       }
 
       signIn(data) {
-        return this.dataService.sendPostRequestSsoEncodedUrl(API.SIGNIN,data).catch(e=>{
+        return this.dataService.sendPostRequestSsoEncodedUrl(API.SIGNIN,data)
+        .then(res => {
+          localStorage.setItem("role", res.serviceRawResponse.data.role);
+          localStorage.setItem("ServiceToken",res.serviceRawResponse.data.serviceToken);
+          localStorage.setItem("userId", res.serviceRawResponse.data.userId);
+          localStorage.setItem("orgId", res.serviceRawResponse.data.orgId);
+          if(res.serviceRawResponse.data.success === 'true'){
+            return res;
+          }
+        })
+        .catch(e=>{
             console.error(e);
         });
       }

@@ -8,15 +8,18 @@
   </section>
   <mat-expansion-panel *ngFor="let material of newMaterialData" class="myPanel">
     <mat-expansion-panel-header class="mat-row material-row">
-      <span class="mat-cell"  matTooltip="{{material.GlobalMaterial.materialName }}">
-                <div class="limited-character">
-                      {{ material.GlobalMaterial.materialName }}
-                </div>
-              
+      <span class="mat-cell" matTooltip="{{material.GlobalMaterial.materialName }}">
+        <div class="limited-character">
+          {{ material.GlobalMaterial.materialName }}
+        </div>
+
       </span>
 
-      <span class="mat-cell"> {{ material.GlobalMaterial.estimatedQty }}  </span>
-      <span class="mat-cell">{{ material.GlobalMaterial.sum }}</span>
+      <span class="mat-cell"> {{ material.GlobalMaterial.estimatedQty }} <span
+          class="p-l-5">{{material.GlobalMaterial.materialUnit}}</span>
+      </span>
+      <span class="mat-cell">{{ material.GlobalMaterial.sum }} <span
+          class="p-l-5">{{material.GlobalMaterial.materialUnit}}</span></span>
       <span class="mat-cell">{{
         material.GlobalMaterial.nearDueDate | date: "dd MMM yyy"
       }}</span>
@@ -24,13 +27,15 @@
     </mat-expansion-panel-header>
     <mat-expansion-panel *ngFor="let project of material.GlobalProject" class="myPanel">
       <mat-expansion-panel-header class="mat-row material-project">
-        <span class="mat-cell"  matTooltip="{{project.Projects.projectName }}">
-           <div class="limited-character">
-                  {{ project.Projects.projectName }}
-              </div> 
-          </span>
-        <span class="mat-cell"> {{ project.ProjectEstimatedQnt }}</span>
-        <span class="mat-cell">{{ project.Projects.sum }}</span>
+        <span class="mat-cell" matTooltip="{{project.Projects.projectName }}">
+          <div class="limited-character">
+            {{ project.Projects.projectName }}
+          </div>
+        </span>
+        <span class="mat-cell"> {{ project.ProjectEstimatedQnt }} <span
+            class="p-l-5">{{material.GlobalMaterial.materialUnit}}</span></span>
+        <span class="mat-cell">{{ project.Projects.sum }} <span
+            class="p-l-5">{{material.GlobalMaterial.materialUnit}}</span></span>
         <span class="mat-cell">{{
           project.Projects.nearDueDate | date: "dd MMM yyy"
         }}</span>

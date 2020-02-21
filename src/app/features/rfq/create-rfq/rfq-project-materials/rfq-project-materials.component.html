@@ -2,6 +2,7 @@
     <div class="row p-b-10">
         <div class="col-sm-12">
             <mat-form-field class="border-select pull-right m-r-25">
+                <mat-label>Select Project</mat-label>
                 <mat-select formControlName="selectedProject" multiple>
                     <div class="display-flex">
                         <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
@@ -28,8 +29,12 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             {{project.projectName}}
-                            <a href="javascript:void(0)"
-                                class="main-color p-l-15">{{project.defaultAddress.addressLine1}}</a>
+                            <a href="javascript:void(0)" class="main-color p-l-15">
+                                {{project.defaultAddress.addressLine1}}
+                                {{project.defaultAddress.city}}
+                                {{project.defaultAddress.state}}
+                                {{project.defaultAddress.country}}
+                            </a>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <table mat-table [dataSource]="project.projectMaterialList" class="mat-elevation-z8 col-sm-12"

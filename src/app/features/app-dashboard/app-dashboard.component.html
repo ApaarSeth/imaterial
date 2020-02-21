@@ -1,0 +1,168 @@
+<div class="dashboard mt-120 mb-4">
+    <div class="container-fluid bg-gray">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="things-to-do bg-white p-4 mb-4">
+                    <h5 class="mb-3">Things to do</h5>
+                    <div class="things-to-do__inner d-flex justify-content-between align-items-center">
+                        <div class="things-to-do__icons text-center cursor" (click)="openProject()">
+                            <div class="things-to-do__img">
+                                <img src="assets/images/icon5.png" alt="" class="img-fluid">
+                            </div>
+                            <h6 class="mt-3 mb-0">Add Projects</h6>
+                        </div>
+
+                        <div class="things-to-do__icons text-center">
+                            <div class="things-to-do__img">
+                                <img src="assets/images/icon4.png" alt="" class="img-fluid">
+                            </div>
+                            <h6 class="mt-3 mb-0">Create BOM</h6>
+                        </div>
+
+                        <div class="things-to-do__icons text-center cursor" [routerLink]="['/rfq/createRfq']" routerLinkActive="router-link-active" >
+                            <div class="things-to-do__img">
+                                <img src="assets/images/icon6.png" alt="" class="img-fluid">
+                            </div>
+                            <h6 class="mt-3 mb-0">Create RFQ</h6>
+                        </div>
+
+                        <div class="things-to-do__icons text-center cursor" [routerLink]="['/globalStore/'+orgId]" routerLinkActive="router-link-active" >
+                            <div class="things-to-do__img">
+                                <img src="assets/images/icon2.png" alt="" class="img-fluid">
+                            </div>
+                            <h6 class="mt-3 mb-0">Global Store</h6>
+                        </div>
+
+                        <div class="things-to-do__icons text-center cursor" [routerLink]="['/po/initiate-po']" routerLinkActive="router-link-active" >
+                            <div class="things-to-do__img">
+                                <img src="assets/images/icon1.png" alt="" class="img-fluid">
+                            </div>
+                            <h6 class="mt-3 mb-0">Create PO</h6>
+                        </div>
+
+                        <!-- <div class="things-to-do__icons text-center">
+                            <div class="things-to-do__img">
+                                <img src="assets/images/icon3.png" alt="" class="img-fluid">
+                            </div>
+                            <h6 class="mt-3 mb-0">Keep Track</h6>
+                        </div> -->
+
+                    </div>
+                </div>
+
+                <div class="statistics bg-white p-4 mb-4">
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-between">
+                            <mat-tab-group class="mat-tabs-button">
+                                <mat-tab label="Purchase Order">
+                                    <div class="statistics__purchase-order d-flex">
+                                        <div class="statistics__tile stats d-flex justify-content-between align-items-center mr-3">
+                                            <div class="stats__icon">
+                                                <img src="assets/images/icon1.png" alt="Awarded Purchase Order" class="img-fluid">
+                                            </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">155</h2>
+                                                <p class="mb-0">Awarded Purchase Order</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="statistics__tile stats d-flex justify-content-between align-items-center">
+                                            <div class="stats__icon">
+                                                <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
+                                            </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">345,6378.00</h2>
+                                                <p class="mb-0">Awarded PO Amount</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+
+                                <mat-tab label="Request for Quotations"> Content 2 </mat-tab>
+                                <mat-tab label="Indents"> Content 3 </mat-tab>
+                            </mat-tab-group>
+
+                            <div class="statistics__filter">
+                                <h5><img src="assets/images/filter.png" class="img-fluid mr-2" alt="filter"> This Month</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="approvals py-4 bg-white">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6 class="px-4">Approvals</h6>
+
+                            <div class="approvals__list d-flex justify-content-between align-items-center">
+                                <div class="approvals__desc pl-4">
+                                    <p class="mb-1">Rakesh Gupta has sent a PO for Vatika Tower Project for your approval of value</p>
+                                    <p class="mb-0"><strong>23456789.00</strong></p>
+                                </div>
+                                <div class="approvals__actions pr-4 d-flex justify-content-between align-items-center">
+                                    <div class="approvals__view">
+                                        <img src="assets/images/view-icon.png" alt="View" class="img-fluid cursor">
+                                    </div>
+                                    <div class="approvals__reject mx-3">
+                                        <button class="btn btn-outline-warning">Reject</button>
+                                    </div>
+                                    <div class="approvals__accept">
+                                        <button class="btn btn-outline-warning">Accept</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="approvals__list d-flex justify-content-between align-items-center">
+                                <div class="approvals__desc pl-4">
+                                    <p class="mb-1">Rakesh Gupta has sent a PO for Vatika Tower Project for your approval of value</p>
+                                    <p class="mb-0"><strong>23456789.00</strong></p>
+                                </div>
+                                <div class="approvals__actions pr-4 d-flex justify-content-between align-items-center">
+                                    <div class="approvals__view">
+                                        <img src="assets/images/view-icon.png" alt="View" class="img-fluid cursor">
+                                    </div>
+                                    <div class="approvals__reject mx-3">
+                                        <button class="btn btn-outline-warning">Reject</button>
+                                    </div>
+                                    <div class="approvals__accept">
+                                        <button class="btn btn-outline-warning">Accept</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="dashboard__right">
+                    <div class="project-tile">
+                        <div class="project-tile__tile w-100 mb-4 stats p-4 d-flex justify-content-between align-items-center mr-3">
+                            <div class="project-tile__icon">
+                                <img src="assets/images/project-icon.png" alt="Total number of project" class="img-fluid">
+                            </div>
+                            <div class="project-tile__content">
+                                <h2 class="mb-1">155</h2>
+                                <p class="mb-0">Total number of project</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="banner mb-4">
+                        <div class="banner__image">
+                            <img src="assets/images/fb-banner1.png" alt="Facebook Banner" class="img-fluid">
+                        </div>
+                    </div>
+
+                    <div class="banner">
+                        <div class="banner__image">
+                            <img src="assets/images/video-banner.png" alt="Video Banner" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
