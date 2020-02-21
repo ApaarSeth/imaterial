@@ -17,6 +17,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
+import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
+import { Address } from "cluster";
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -32,7 +34,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   materialCounter = 0;
   buttonName: string = "addQueryMakes";
   projectSelectedMaterials: RfqMaterialResponse[] = [];
-
+  updatedAddress: Address;
   materialForms: FormGroup;
   rfqMat: RfqMat;
   displayedColumns: string[] = [
@@ -137,11 +139,16 @@ export class RfqQuantityMakesComponent implements OnInit {
 
   openDialog(data: RfqMaterialResponse): void {
     if (AddAddressDialogComponent) {
-      const dialogRef = this.dialog.open(AddAddressDialogComponent, {
+      const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
         width: "1200px",
-        data
+        data: {
+          roleType: "projectBillingAddressId",
+          id: data.projectId
+        }
       });
-      dialogRef.afterClosed().subscribe(result => {});
+      dialogRef.afterClosed().subscribe(result => {
+        data.defaultAddress = result[1];
+      });
     }
   }
   getFormStatus() {

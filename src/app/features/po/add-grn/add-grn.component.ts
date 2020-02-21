@@ -36,6 +36,7 @@ export class AddGRNComponent implements OnInit {
     this.purchaseOrderId = this.activatedRoute.params["poId"];
     this.formsInit();
   }
+
   formsInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     const frmArr = this.dataSource.map(data => {
@@ -60,7 +61,6 @@ export class AddGRNComponent implements OnInit {
 
   postGRNDetails(grnDetailsObj: GRNDetails[]) {
     this.grnService.addGRN(grnDetailsObj).then(data => {
-      console.log("data", data);
       this.route.navigate(['po/detail-list']);
     })
   }

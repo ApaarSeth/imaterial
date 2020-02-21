@@ -50,6 +50,7 @@ export class SupplierDetailComponent implements OnInit {
 
   getAllSupplier() {
     this.rfqService.getSuppliers(this.orgId).then(data => {
+
       this.dataSource = new MatTableDataSource(data.data);
       this.dataSourceTemp = data.data;
 
@@ -66,7 +67,7 @@ export class SupplierDetailComponent implements OnInit {
       }
     });
   }
-  
+
   addSupplier() {
     this.openDialog({
       isEdit: false,
@@ -81,13 +82,13 @@ export class SupplierDetailComponent implements OnInit {
         data
       });
 
-      dialogRef.afterClosed().toPromise().then(() => {
-        this.getAllSupplier();
-
+      dialogRef.afterClosed().toPromise().then((data) => {
+        if(data){
+          this.getAllSupplier();  
+        }
       });
     }
   }
-
 
   deactivateUser(data) {
     this.suppliersDetailsTemp.supplierId = data.supplierId;

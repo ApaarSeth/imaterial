@@ -36,6 +36,7 @@ export interface Address {
   gstNo?: string;
   addressType?: string;
   projectAddressId: number;
+  projectdefaultAddressId: number;
   primaryAddress: number;
 }
 
