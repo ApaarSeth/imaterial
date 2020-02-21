@@ -58,6 +58,7 @@
               Submitted RFQ
             </mat-panel-title>
           </mat-expansion-panel-header>
+
           <div class="row">
             <table mat-table [dataSource]="submittedRfqList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="RFQ Name">
@@ -153,6 +154,7 @@
               Non Submitted RFQ
             </mat-panel-title>
           </mat-expansion-panel-header>
+
           <div class="row">
             <table mat-table [dataSource]="nonSubmittedRfqList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="RFQ Name">
@@ -187,6 +189,7 @@
                   {{ element.materialCount }}
                 </td>
               </ng-container>
+              
               <ng-container matColumnDef="Total Supplier">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
                 <td mat-cell *matCellDef="let element" class="text-align-center">
