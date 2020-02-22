@@ -4,7 +4,7 @@ import {
   RfqMaterialResponse,
   AddRFQ
 } from "src/app/shared/models/RFQ/rfq-details";
-import { MatDialog, MatCheckbox } from "@angular/material";
+import { MatDialog, MatCheckbox, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
@@ -22,8 +22,7 @@ export class RfqSupplierComponent implements OnInit {
     "Supplier Name",
     "Email",
     "Phone No.",
-    "PAN No.",
-    "customColumn"
+    "PAN No."
   ];
   allSuppliers: Suppliers[] = [];
   selectedSuppliersList: Suppliers[] = [];
@@ -32,12 +31,15 @@ export class RfqSupplierComponent implements OnInit {
   orgId: number;
   rfqData: AddRFQ;
   supplierForm: FormGroup;
+  supplierCounter: number = 0;
+  newAddedId: number;
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {}
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -61,18 +63,26 @@ export class RfqSupplierComponent implements OnInit {
     const sArr = this.supplierForm.controls["forms"] as FormArray;
     const sGrp = sArr.at(i) as FormGroup;
     if (ch.checked) {
-      sGrp.get("supplier").setValue(supplier);
+      if (this.supplierCounter < 3) {
+        this.supplierCounter++;
+        sGrp.get("supplier").setValue(supplier);
+      } else {
+        this.supplierAlert();
+        ch.checked = false;
+      }
     } else {
+      this.supplierCounter--;
       sGrp.get("material").reset();
     }
-    // supplier.checked = !supplier.checked;
-    // let isOneEnabled = this.allSuppliers.find(x => x.checked);
-    // this.selectedSupplierFlag = false;
-    // if (isOneEnabled) {
-    //   this.selectedSupplierFlag = true;
-    // }
-    // this.selectedSuppliersList = this.allSuppliers.filter(x => x.checked);
   }
+
+  supplierAlert() {
+    this._snackBar.open("Cannot add more than 3 supplier", "", {
+      duration: 2000,
+      verticalPosition: "top"
+    });
+  }
+
   navigateToUploadPage() {
     this.rfqData.supplierId = this.supplierForm.value.forms.map(supplier => {
       if (supplier.supplier) {
@@ -84,13 +94,9 @@ export class RfqSupplierComponent implements OnInit {
         return supplierId;
       }
     });
-    // this.rfqData.supplierId.map(supplier=>supplier.supplier.supplierId)
-    // this.rfqData.supplierId = this.selectedSuppliersList.map(
-    //   supplier => supplier.supplierId
-    // );
-    let finalRfq = this.rfqData;
+    this.finalRfq = this.rfqData;
     this.rfqService.addRFQ(this.finalRfq).then(res => {
-      finalRfq = res.data;
+      let finalRfq = res.data;
       this.router.navigate(["/rfq/review/"], {
         state: { finalRfq }
       });
@@ -105,7 +111,15 @@ export class RfqSupplierComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then(result => {
+        result;
         this.rfqService.getSuppliers(this.orgId).then(data => {
+          let allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
+          let tempId = data.data.map(supp => supp.supplierId);
+          allSuppliersId.forEach(id => {
+            if (!tempId.includes(id)) {
+              this.newAddedId = id;
+            }
+          });
           this.allSuppliers = data.data;
           this.formInit();
         });
