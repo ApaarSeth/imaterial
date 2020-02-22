@@ -120,7 +120,7 @@ export class RfqBidsComponent implements OnInit {
                     materialId,
                     materialQty: Number(brandData.quantity),
                     brandName: brandData.brand.brandName,
-                    materialUnitPrice
+                    materialUnitPrice: brandData.brand.materialUnitPrice
                   };
                 });
               });
