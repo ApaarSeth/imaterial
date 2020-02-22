@@ -69,8 +69,116 @@
     background-repeat: no-repeat;
     background-position: center;
     padding: 100px 0;
+    &__popup{
+        background-color: #fff;
+        border-radius: 6px;
+    }
+
+    .border-input input, .border-input select, .border-select .mat-form-field-flex{
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .mat-error{
+        font-size: 12px;
+    }
 }
 
 .padding-8{
     padding: 0px 8px;
+}
+
+.btn-outline-warning{
+    border-radius: 50px;
+    padding: 8px 30px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.37);
+    cursor: pointer;
+    color: #F47720;
+    background-color: transparent;
+    background-image: none;
+    border-color: #F47720;
+}
+
+.btn-warning.disabled, .btn-warning:disabled {
+    background-color: #F47720;
+    border-color: #F47720;
+}
+
+.userInfo-upload{
+    .drag-and-drop{
+        height: auto;
+    }
+}
+
+.org-name{
+    color: #020202;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    border-bottom: 2px solid #b8b8b8;
+}
+
+.user-profile{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.trades, .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary{
+    width: auto;
+    border: 1px solid #BCC9F0;
+    border-radius: 50px;
+    background-color: #E0E3EC;
+    padding: 6px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #020202;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.trades.active, .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary .mat-ripple-element{
+    border: 1px solid #66BF00;
+    border-radius: 50px;
+    background-color: #66BF00;
+    color: #ffffff;
+}
+
+.trades.active h6{
+    color: #ffffff;
+}
+
+.trades:not(:last-child){
+    margin-right: 15px;
+}
+
+.trade-tile {
+    color: #020202;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+.next-btn{
+    border-radius: 40px;
+    background-color: #F47720;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.5);
+    color: #fff !important;
+    padding: 8px 40px;
+}
+
+.next-btn:hover,
+.next-btn:focus,
+.next-btn:active{
+    background-color: #f37234;
+}
+
+.lh-30{
+    line-height: 30px;
+}
+
+.mat-fab.mat-warn, .mat-flat-button.mat-warn, .mat-mini-fab.mat-warn, .mat-raised-button.mat-warn {
+    background-color: #F47720;
+    font-size: 20px;
 }

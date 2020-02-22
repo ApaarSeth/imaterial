@@ -16,7 +16,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    console.log(window.location.href);
+    // console.log(window.location.href);
     this.location = window.location.href;
     if(this.location.includes('rfq-bids/supplier/') || this.location.includes('rfq-bids/after-submit/')){
       this.hideHeader = true;

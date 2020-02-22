@@ -24,6 +24,7 @@ import { SupplierBidLayoutComponent } from './shared/layout/supplier-bid-layout/
 import { AppSharedModule } from './shared/app-shared-module';
 import { AppDashboardComponent } from './features/app-dashboard/app-dashboard.component';
 import { AuthGuardService } from './shared/guards/auth.guards';
+import { UserDashboardModule } from './features/users/user-dashboard.module';
 // import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 
 @NgModule({
@@ -44,7 +45,8 @@ import { AuthGuardService } from './shared/guards/auth.guards';
     HttpClientModule,
     LayoutModule,
     DashboardModule,
-    AppSharedModule
+    AppSharedModule,
+    UserDashboardModule
     // FroalaEditorModule.forRoot(),
     // FroalaViewModule.forRoot()
   ],

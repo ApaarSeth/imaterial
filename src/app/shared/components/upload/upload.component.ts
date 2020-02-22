@@ -17,6 +17,7 @@ export class UploadComponent implements OnInit {
   @Input() parentId;
   @Input() label;
   @Input() filesUploaded;
+  @Input('updateInfo') userInfo: boolean;
 
   constructor(private documentUploadService: DocumentUploadService) {}
 
