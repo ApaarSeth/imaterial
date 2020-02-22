@@ -4,6 +4,7 @@ import { SignInSignupService } from "src/app/shared/services/signupSignin/signup
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
 import { Router } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
+import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 
 @Component({
   selector: "signin",
@@ -15,7 +16,8 @@ export class SigninComponent implements OnInit {
   constructor(
     private router: Router,
     private signInSignupService: SignInSignupService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _userService: UserService
   ) {}
   signinForm: FormGroup;
   signInData = {} as SignInData;
@@ -43,7 +45,16 @@ export class SigninComponent implements OnInit {
 
     this.signInSignupService.signIn(params.toString()).then(data => {
       if (data.serviceRawResponse.data) {
-        this.router.navigate(["/dashboard"]);
+        
+        const role = data.serviceRawResponse.data.role;
+        
+        if(role){
+          this.router.navigate(["/dashboard"]);
+        }else{
+          this.router.navigate(["/users/organisation/update-info"]);
+        }
+        
+        // this.getUserInformation(userId);
       }
     });
   }
@@ -55,4 +66,16 @@ export class SigninComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
+
+  // getUserInformation(userId){
+  //   this._userService.getUserInfo(userId).then(res => {
+  //     debugger
+  //     console.log(res);
+  //     if(res.data[0].roleId){
+  //       this.router.navigate(["/dashboard"]);
+  //     }else{
+  //       this.router.navigate(["/users/organisation/update-info"]);
+  //     }
+  //   })
+  // }
 }

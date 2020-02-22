@@ -63,5 +63,9 @@ export const API = {
   GETGENERATEDRFQ: rfqId => `fq/stepper/${rfqId}`,
   DELETEDRAFTEDPO: purchaseOrderId => `po/delete/${purchaseOrderId}`,
   GETSUPPLIERADDRESS: supplierId => `address/get/Supplier/${supplierId}`,
-  ADDSUPPLIERADDRESS :supplierId => `address/add/Supplier/${supplierId}`
+  ADDSUPPLIERADDRESS :supplierId => `address/add/Supplier/${supplierId}`,
+
+  GET_USER_PROFILE: USERID => `user/profile/${USERID}`,
+  GET_ALL_TRADES: 'all/tades',
+  SUBMIT_USER_DETAILS: 'user/update/profile'
 };
