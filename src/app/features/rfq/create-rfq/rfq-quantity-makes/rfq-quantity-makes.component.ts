@@ -9,7 +9,8 @@ import {
 import {
   RfqMaterialResponse,
   RfqMat,
-  AddRFQ
+  AddRFQ,
+  Address
 } from "src/app/shared/models/RFQ/rfq-details";
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { MatDialog } from "@angular/material";
@@ -18,7 +19,6 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
-import { Address } from "cluster";
 
 @Component({
   selector: "app-rfq-quantity-makes",
