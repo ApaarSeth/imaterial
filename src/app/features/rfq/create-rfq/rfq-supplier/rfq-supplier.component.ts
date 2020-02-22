@@ -29,6 +29,7 @@ export class RfqSupplierComponent implements OnInit {
   selectedSupplierFlag: boolean = false;
   checkedMaterialsList: AddRFQ;
   orgId: number;
+
   rfqData: AddRFQ;
   supplierForm: FormGroup;
   supplierCounter: number = 0;
@@ -58,6 +59,8 @@ export class RfqSupplierComponent implements OnInit {
   }
   ngOnChanges(changes: SimpleChanges) {
     this.rfqData = this.finalRfq;
+    console.log("this.finalRfq", this.finalRfq);
+    console.log("this.rfqData", this.rfqData);
   }
   valueChange(supplier: Suppliers, ch: MatCheckbox, i: number) {
     const sArr = this.supplierForm.controls["forms"] as FormArray;
@@ -94,8 +97,7 @@ export class RfqSupplierComponent implements OnInit {
         return supplierId;
       }
     });
-    this.finalRfq = this.rfqData;
-    this.rfqService.addRFQ(this.finalRfq).then(res => {
+    this.rfqService.addRFQ(this.rfqData).then(res => {
       let finalRfq = res.data;
       this.router.navigate(["/rfq/review/"], {
         state: { finalRfq }
