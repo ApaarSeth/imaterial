@@ -26,7 +26,13 @@
                     <mat-panel-title>
                         {{material.projectName }}
                         <a href="javascript:void(0)" (click)="openDialog(material)"
-                            class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a>
+                            class="main-color p-l-15">{{material.defaultAddress.addressLine1}}
+                            {{material.defaultAddress.addressLine2}}
+                            {{material.defaultAddress.city}}
+                            {{material.defaultAddress.state}}
+                            {{material.defaultAddress.country}}
+
+                        </a>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <table mat-table [dataSource]="material.projectMaterialList | SearchPipe: searchMaterial:'materialName'"
@@ -43,7 +49,7 @@
                     <ng-container matColumnDef="Required Date">
                         <th mat-header-cell *matHeaderCellDef>Required Date</th>
                         <td mat-cell *matCellDef="let element; let i = index">
-                            {{ element.dueDate }}
+                            {{ element.dueDate |date: "dd-MMM-yyy"  }}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="Requested Qty">

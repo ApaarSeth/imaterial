@@ -9,16 +9,16 @@ import {
 import {
   RfqMaterialResponse,
   RfqMat,
-  AddRFQ
+  AddRFQ,
+  Address
 } from "src/app/shared/models/RFQ/rfq-details";
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
-import { Address } from "cluster";
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -49,13 +49,15 @@ export class RfqQuantityMakesComponent implements OnInit {
   rfqId: any;
   rfqData: AddRFQ;
   message: string;
+  lastupdateValue: any;
 
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -166,8 +168,30 @@ export class RfqQuantityMakesComponent implements OnInit {
             this.projectSelectedMaterials[i].projectMaterialList[
               j
             ].estimatedRate = val.estimatedRate;
-            this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
-              val.quantity;
+            if (
+              val.quantity <
+              this.projectSelectedMaterials[i].projectMaterialList[j]
+                .estimatedQty
+            ) {
+              this.lastupdateValue = val.quantity;
+              this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
+                val.quantity;
+            } else {
+              (<FormGroup>(
+                (<FormArray>this.materialForms.controls["forms"]).controls[k]
+              )).controls["quantity"].setValue(this.lastupdateValue);
+              // this.materialForms.controls[
+              //   "forms"
+              // ] = val.quantity = this.lastupdateValue;
+              this._snackBar.open(
+                "Cannot add quantity greater than estimated qty",
+                "",
+                {
+                  duration: 2000,
+                  verticalPosition: "top"
+                }
+              );
+            }
             this.projectSelectedMaterials[i].projectMaterialList[j].makes =
               val.makes;
           } else {

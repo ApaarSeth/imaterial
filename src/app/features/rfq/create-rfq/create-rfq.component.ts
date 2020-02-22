@@ -54,7 +54,7 @@ export class CreateRfqComponent implements OnInit {
   }
 
   getQuantityAndMakes(updatedMaterials: AddRFQ) {
-    this.updatedRfqMaterial = updatedMaterials;
+    this.rfqMaterial = updatedMaterials;
     this.completed = this.rfqQtyMakes.materialForms.value.forms.every(
       rfqQty => {
         return rfqQty.quantity != null;
@@ -68,8 +68,8 @@ export class CreateRfqComponent implements OnInit {
   selectionChange(event) {
     this.currentIndex = event.selectedIndex;
     this.prevIndex = event.previouslySelectedIndex;
-    if (event.previouslySelectedIndex === 1) {
-      this.rfqData = this.updatedRfqMaterial;
+    if (event.previouslySelectedIndex === 1 && event.selectedIndex === 0) {
+      this.rfqData = this.rfqMaterial;
     }
     if (event.previouslySelectedIndex === 0 && event.selectedIndex === 1) {
       this.completed = false;
@@ -116,5 +116,11 @@ export class CreateRfqComponent implements OnInit {
 
   reviewRfq() {
     this.rfqSupplier.navigateToUploadPage();
+  }
+
+  checkSupplStatus() {
+    return this.rfqSupplier.supplierForm.value.some(supplier => {
+      return supplier != null;
+    });
   }
 }
