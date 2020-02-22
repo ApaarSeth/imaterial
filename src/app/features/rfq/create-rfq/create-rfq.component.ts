@@ -85,9 +85,10 @@ export class CreateRfqComponent implements OnInit {
       event.selectedIndex === 2 &&
       event.previouslySelectedIndex === 1
     ) {
-      this.rfqService.addRFQ(this.updatedRfqMaterial).then(res => {
+      this.rfqService.addRFQ(this.rfqMaterial).then(res => {
+        console.log("res.data", res.data);
         this.finalRfq = res.data;
-        this.rfqMaterial = res.data;
+        // this.rfqMaterial = res.data;
       });
     } else if (event.previouslySelectedIndex == 2) {
       this.rfqService.addRFQ(this.updatedRfqMaterial).then(res => {
