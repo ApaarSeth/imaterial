@@ -24,6 +24,7 @@ export interface MaterialRfqObj {
   materialSgst: number;
   materialCgst: number;
   materialIGSTFlag: boolean;
+  materialGst?: number;
 }
 
 export interface BrandRfqObj {
