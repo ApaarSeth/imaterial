@@ -29,6 +29,7 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit() {
     this.creatorId = Number(localStorage.getItem("userId"));
+    this.getUserData(this.creatorId);
     this.getUserRoles();
     this.formInit();
   }
@@ -41,6 +42,13 @@ export class AddUserComponent implements OnInit {
       this.roles = res.data;
     })
   }
+
+  getUserData(userId){
+    this._userService.getUserInfo(userId).then(res => {
+      localStorage.setItem("role", res.data[0].roleName);
+    });
+  }
+
 
   /**
    * @description Create fromcontrols for existing row

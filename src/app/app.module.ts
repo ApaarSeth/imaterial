@@ -25,6 +25,7 @@ import { AppSharedModule } from './shared/app-shared-module';
 import { AppDashboardComponent } from './features/app-dashboard/app-dashboard.component';
 import { AuthGuardService } from './shared/guards/auth.guards';
 import { UserDashboardModule } from './features/users/user-dashboard.module';
+import { UserDataGuardService } from './shared/guards/user-data.guards';
 // import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 
 @NgModule({
@@ -58,7 +59,8 @@ import { UserDashboardModule } from './features/users/user-dashboard.module';
     RFQResolver,
     BomResolver,
     PODetailListResolver,
-    AuthGuardService
+    AuthGuardService,
+    UserDataGuardService
   ],
   bootstrap: [AppComponent]
 })

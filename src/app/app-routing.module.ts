@@ -10,9 +10,11 @@ import { NotFoundComponent } from "./features/not-found/not-found.component";
 import { SupplierBidLayoutComponent } from "./shared/layout/supplier-bid-layout/supplier-bid-layout.component";
 import { AppDashboardComponent } from './features/app-dashboard/app-dashboard.component';
 import { AuthGuardService } from './shared/guards/auth.guards';
+import { UserDataGuardService } from './shared/guards/user-data.guards';
 
 const routes: Routes = [
   { path: "", redirectTo: "dashboard", pathMatch: "full" },
+
   {
     path: "",
     component: SupplierBidLayoutComponent,
@@ -30,6 +32,7 @@ const routes: Routes = [
   {
     path: "",
     component: AuthLayoutComponent,
+    canActivate: [UserDataGuardService],
     children: [
       {
         path: "auth",
@@ -41,7 +44,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
         path: "dashboard",
@@ -113,4 +116,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+
+export class AppRoutingModule { }

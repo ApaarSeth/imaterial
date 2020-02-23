@@ -47,7 +47,7 @@
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div class="col-sm-12 blue-background-color">
+  <div class="col-sm-12 blue-background-color" *ngIf="role">
     <a href="javascript:void(0)" *ngIf="permissionObj.projectStoreFlag" (click)="setButtonName('projectStore')">
     <button
       [class.active]="buttonName == 'projectStore'"

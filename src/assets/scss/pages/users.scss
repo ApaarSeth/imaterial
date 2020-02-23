@@ -82,6 +82,26 @@
     .mat-error{
         font-size: 12px;
     }
+
+    .mat-form-field-appearance-legacy .mat-form-field-label {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .city-input{
+        .mat-form-field-wrapper{
+            padding-top: 7px !important;
+            padding-bottom: 7px !important;
+        }
+    }
+
+    .trades.active, .mat-chip.mat-chip.mat-primary.mat-standard-chip.mat-chip-selected.ng-star-inserted.active{
+        border: 1px solid #66BF00;
+        border-radius: 50px;
+        background-color: #66BF00;
+        color: #ffffff;
+    }
+
 }
 
 .padding-8{
@@ -135,13 +155,6 @@
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
-}
-
-.trades.active, .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary .mat-ripple-element{
-    border: 1px solid #66BF00;
-    border-radius: 50px;
-    background-color: #66BF00;
-    color: #ffffff;
 }
 
 .trades.active h6{
