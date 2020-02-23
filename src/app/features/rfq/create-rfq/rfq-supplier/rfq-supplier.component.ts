@@ -44,7 +44,11 @@ export class RfqSupplierComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
-    this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
+    if (this.activatedRoute.snapshot.data.createRfq[0].data) {
+      this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
+    } else {
+      this.allSuppliers = [];
+    }
     this.formInit();
   }
   formInit() {

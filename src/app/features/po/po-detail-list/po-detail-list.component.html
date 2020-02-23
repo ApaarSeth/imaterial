@@ -105,7 +105,7 @@
               <table mat-table [dataSource]="poDraftedDetails" class="mat-elevation-z8 col-sm-12">
                 <ng-container matColumnDef="PO Number">
                   <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
-                  <td mat-cellclass="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
+                  <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="Raised Date">
@@ -136,7 +136,8 @@
                     <span class="p-r-10"><a href="javascript:void(0)" style="color: #f47721"
                         [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'edit']">View
                         P.O.</a></span>
-                    <span><a (click)="deleteDraftedPo(element)" matTooltip="Delete">
+                    <span>&nbsp;</span>    
+                    <span class="p-r-10"><a (click)="deleteDraftedPo(element)" matTooltip="Delete">
                         <img src="../../../../assets/images/delete-button.png">
                       </a></span>
                   </td>
@@ -193,8 +194,8 @@
                     <span class="p-r-10"> <a style="color: #f47721"
                         [routerLink]="['../../po/view-grn/',element.purchaseOrderId]">View
                         GRN</a></span>
-                    <span><a style="color: #f47721" [routerLink]="['../../po/add-grn/',element.purchaseOrderId]">Add
-                        GRN</a></span>
+                    <!-- <span><a style="color: #f47721" [routerLink]="['../../po/add-grn/',element.purchaseOrderId]">Add
+                        GRN</a></span> -->
 
 
 
