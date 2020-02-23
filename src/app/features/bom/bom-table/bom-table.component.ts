@@ -17,7 +17,12 @@ import {
 } from "src/app/shared/models/project-details";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog, MatSnackBar, MatSort } from "@angular/material";
+import {
+  MatDialog,
+  MatSnackBar,
+  MatSort,
+  MatCheckbox
+} from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import {
   Subcategory,
@@ -75,7 +80,7 @@ export class BomTableComponent implements OnInit {
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
   orgId: number;
-  checkedSubcategory: Subcategory[];
+  checkedSubcategory: Subcategory[] = [];
   permissionObj: {
     projectStoreFlag: boolean;
     globalStoreFlag: boolean;
@@ -169,11 +174,11 @@ export class BomTableComponent implements OnInit {
   }
   raiseIndent() {
     let projectDetails = this.projectData;
-    this.checkedSubcategory = this.subcategoryData.filter(sub => {
-      if (sub.checked === true) {
-        return sub;
-      }
-    });
+    // this.checkedSubcategory = this.subcategoryData.filter(sub => {
+    //   if (sub.checked === true) {
+    //     return sub;
+    //   }
+    // });
     if (this.checkedSubcategory.length) {
       let checkedList = this.checkedSubcategory;
       this.router.navigate(["/indent/" + this.projectId], {
@@ -181,13 +186,24 @@ export class BomTableComponent implements OnInit {
       });
     }
   }
+  getElemenetChecked(ch: MatCheckbox, element: Subcategory) {
+    if (ch.checked) {
+      element.checked = true;
+      this.checkedSubcategory.push(element);
+    } else {
+      element.checked = false;
+      this.checkedSubcategory = this.checkedSubcategory.filter(sub => {
+        return sub.materialId !== element.materialId;
+      });
+    }
+  }
 
   createRfq() {
-    this.checkedSubcategory = this.subcategoryData.filter(sub => {
-      if (sub.checked === true) {
-        return sub;
-      }
-    });
+    // this.checkedSubcategory = this.subcategoryData.filter(sub => {
+    //   if (sub.checked === true) {
+    //     return sub;
+    //   }
+    // });
     let materialList: RfqMat[] = [];
     this.checkedSubcategory.forEach((category: Subcategory, i) => {
       let mat: RfqMat = {};

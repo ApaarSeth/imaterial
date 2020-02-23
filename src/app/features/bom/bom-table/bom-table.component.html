@@ -14,13 +14,13 @@
       <div class="col-xs-9 p-t-10 text-right">
         <span class="" *ngIf="this.permissionObj.rfqFlag">
           <button mat-raised-button class="main-background-color main-button color-white pull-right"
-            (click)="createRfq()">
+            [disabled]="!this.checkedSubcategory.length" (click)="createRfq()">
             Create RFQ
           </button>
         </span>
         <span>
           <button mat-raised-button class="mr-3 main-background-color main-button color-white pull-right"
-            (click)="raiseIndent()">
+            [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
             Raise Indent
           </button>
         </span>
@@ -48,7 +48,7 @@
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
             <!-- <input type="checkbox" /> -->
-            <mat-checkbox (change)="element.checked = !element.checked" [checked]="element.checked">
+            <mat-checkbox #ch (change)="getElemenetChecked(ch,element)" [checked]=" element.checked">
               <div class="limited-character" matTooltip=" {{ element.materialName }}">
                 {{ element.materialName }} <br>
               </div>
