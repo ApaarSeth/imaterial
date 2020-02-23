@@ -1,7 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import { ActivatedRoute } from "@angular/router";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import {Component, OnInit, Output, EventEmitter} from "@angular/core";
+import {Suppliers} from "src/app/shared/models/RFQ/suppliers";
+import {ActivatedRoute} from "@angular/router";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: "app-po-supplier",
@@ -13,17 +13,9 @@ export class PoSupplierComponent implements OnInit {
   searchText: string = null;
   allSuppliers: Suppliers[];
   form: FormGroup;
-  displayedColumns: string[] = [
-    "Supplier Name",
-    "Email",
-    "Phone No.",
-    "PAN No."
-  ];
+  displayedColumns: string[] = ["Supplier Name", "Email", "Phone No.", "PAN No."];
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data;
@@ -34,7 +26,7 @@ export class PoSupplierComponent implements OnInit {
 
   formInit() {
     this.form = this.formBuilder.group({
-      supplier: []
+      supplier: ["", [Validators.required]]
     });
   }
 

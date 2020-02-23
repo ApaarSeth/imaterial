@@ -1,15 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import { ActivatedRoute } from "@angular/router";
-import {
-  ProjectDetails,
-  ProjectIds
-} from "src/app/shared/models/project-details";
-import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { POService } from "src/app/shared/services/po/po.service";
-import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
-import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
+import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
+import {Suppliers} from "src/app/shared/models/RFQ/suppliers";
+import {ActivatedRoute} from "@angular/router";
+import {ProjectDetails, ProjectIds} from "src/app/shared/models/project-details";
+import {FormGroup, FormBuilder, FormArray, Validators} from "@angular/forms";
+import {RFQService} from "src/app/shared/services/rfq/rfq.service";
+import {POService} from "src/app/shared/services/po/po.service";
+import {Projects} from "src/app/shared/models/GlobalStore/materialWise";
+import {RfqMaterialResponse} from "src/app/shared/models/RFQ/rfq-details";
 
 @Component({
   selector: "app-po-project-material",
@@ -17,23 +14,15 @@ import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 })
 export class PoProjectMaterialComponent implements OnInit {
   @Output() selectedMaterial = new EventEmitter<any>();
+  counter: number = 0;
   searchText: string = null;
-  displayedColumns: string[] = [
-    "Material Name",
-    "Required Date",
-    "Requested Quantity",
-    "Estimated Quantity"
-  ];
+  displayedColumns: string[] = ["Material Name", "Required Date", "Requested Quantity", "Estimated Quantity"];
   form: FormGroup;
   materialForm: FormGroup;
   allProjects: ProjectDetails[];
   projectIds: number;
   poDetails: RfqMaterialResponse[];
-  constructor(
-    private poService: POService,
-    private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private poService: POService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.allProjects = this.activatedRoute.snapshot.data.inititatePo[1].data;
@@ -41,18 +30,16 @@ export class PoProjectMaterialComponent implements OnInit {
   }
   formInit() {
     this.form = this.formBuilder.group({
-      selectedProject: []
+      selectedProject: ["", [Validators.required]]
     });
   }
 
   materialsForm() {
-    const formArr: FormGroup[] = this.poDetails[0].projectMaterialList.map(
-      material => {
-        return this.formBuilder.group({
-          material: []
-        });
-      }
-    );
+    const formArr: FormGroup[] = this.poDetails[0].projectMaterialList.map(material => {
+      return this.formBuilder.group({
+        material: []
+      });
+    });
     this.materialForm = new FormGroup({});
     this.materialForm.addControl("formArr", new FormArray(formArr));
   }
@@ -80,9 +67,12 @@ export class PoProjectMaterialComponent implements OnInit {
   materialChecked(checked: HTMLElement, i: number, element) {
     const arr = this.materialForm.controls["formArr"] as FormArray;
     const fGrp = arr.at(i) as FormGroup;
+
     if (checked) {
+      this.counter++;
       fGrp.get("material").setValue(element);
     } else {
+      this.counter--;
       fGrp.get("material").reset();
     }
   }

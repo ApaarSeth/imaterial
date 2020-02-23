@@ -1,34 +1,36 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from "@angular/core";
 @Pipe({
-    name: 'SearchPipe'
+  name: "SearchPipe"
 })
 export class SearchPipe implements PipeTransform {
-    transform(searchList: any[], searchText: string, property?: string): any[] {
-
-        if (searchText && searchList) {
-
-            let newSearchList = new Array<any>();
-            searchText = searchText.toLowerCase();
-            // when search the array directly 
-            if (!property) {
-                for (let search of searchList) {
-                    if (search.toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1) {
-                        newSearchList.push(search);
-                    }
-                }
-            } else {
-                for (let search of searchList) {
-                    if (search[property] && search[property].toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1) {
-                        newSearchList.push(search);
-                    }
-                }
-            }
-
-            return newSearchList;
+  transform(searchList: any[], searchText: string, property?: string, property1?: string): any[] {
+    if (searchText && searchList) {
+      let newSearchList = new Array<any>();
+      searchText = searchText.toLowerCase();
+      // when search the array directly
+      if (!property) {
+        for (let search of searchList) {
+          if (search.toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1) {
+            newSearchList.push(search);
+          }
         }
+      } else if (property && !property1) {
+        for (let search of searchList) {
+          if (search[property] && search[property].toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1) {
+            newSearchList.push(search);
+          }
+        }
+      } else {
+        for (let search of searchList) {
+          if (search[property][property1] && search[property][property1].toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1) {
+            newSearchList.push(search);
+          }
+        }
+      }
 
-        return searchList;
+      return newSearchList;
     }
 
-
+    return searchList;
+  }
 }

@@ -1,16 +1,10 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  SimpleChanges,
-  OnChanges
-} from "@angular/core";
-import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
-import { FormBuilder, Validators, FormGroup, FormArray } from "@angular/forms";
-import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import { initiatePo } from "src/app/shared/models/PO/po-data";
-import { POService } from "src/app/shared/services/po/po.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit, Input, SimpleChanges, OnChanges} from "@angular/core";
+import {RfqMaterialResponse} from "src/app/shared/models/RFQ/rfq-details";
+import {FormBuilder, Validators, FormGroup, FormArray} from "@angular/forms";
+import {Suppliers} from "src/app/shared/models/RFQ/suppliers";
+import {initiatePo} from "src/app/shared/models/PO/po-data";
+import {POService} from "src/app/shared/services/po/po.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: "app-po-quantity-makes",
@@ -21,23 +15,10 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   @Input() selectedSupplier: Suppliers;
   initiatePoData: initiatePo = {} as initiatePo;
   suppliers: Suppliers;
-  displayedColumns: string[] = [
-    "Material Name",
-    "Required Date",
-    "Requested Quantity",
-    "Estimated Quantity",
-    "Estimated Rate",
-    "Quantity",
-    "Makes"
-  ];
+  displayedColumns: string[] = ["Material Name", "Required Date", "Requested Quantity", "Estimated Quantity", "Estimated Rate", "Quantity", "Makes"];
   materialForms: FormGroup;
   checkedMaterialsList: RfqMaterialResponse[];
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private poService: POService,
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder) {}
 
   ngOnInit() {}
 
@@ -53,13 +34,11 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
     const frmArr = this.checkedMaterialsList
       .map((subCat, i) => {
         if (i !== 0) {
-          subCat.prevMatListLength = this.checkedMaterialsList[
-            i - 1
-          ].projectMaterialList.length;
+          subCat.prevMatListLength = this.checkedMaterialsList[i - 1].projectMaterialList.length;
         }
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
-            materialUnitPrice: [item.estimatedRate, Validators.required],
+            materialUnitPrice: [item.estimatedRate],
             materialQty: [item.quantity, Validators.required],
             brandNames: [],
             materialId: [item.materialId]
@@ -86,8 +65,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
     this.checkedMaterialsList.map(project => {
       this.initiatePoData.projectId = project.projectId;
       this.initiatePoData.projectName = project.projectName;
-      this.initiatePoData.projectAddressId =
-        project.defaultAddress.projectAddressId;
+      this.initiatePoData.projectAddressId = project.defaultAddress.projectAddressId;
       this.initiatePoData.supplierId = this.selectedSupplier.supplierId;
       this.initiatePoData.supplierAddressId = null;
       this.initiatePoData.supplierName = this.selectedSupplier.supplier_name;
