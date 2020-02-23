@@ -53,8 +53,6 @@ export class SigninComponent implements OnInit {
         }else{
           this.router.navigate(["/users/organisation/update-info"]);
         }
-        
-        // this.getUserInformation(userId);
       }
     });
   }
@@ -66,16 +64,4 @@ export class SigninComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
-
-  // getUserInformation(userId){
-  //   this._userService.getUserInfo(userId).then(res => {
-  //     debugger
-  //     console.log(res);
-  //     if(res.data[0].roleId){
-  //       this.router.navigate(["/dashboard"]);
-  //     }else{
-  //       this.router.navigate(["/users/organisation/update-info"]);
-  //     }
-  //   })
-  // }
 }

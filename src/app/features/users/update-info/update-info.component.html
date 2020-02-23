@@ -7,7 +7,7 @@
                         <div class="row">
 
                             <div class="col-md-12">
-                                <h3 class="user-profile text-center text-uppercase pt-2 pb-4">Update User Profile</h3>
+                                <h3 class="user-profile text-center text-uppercase pt-2 pb-4" *ngIf="users">{{ users.organizationName }}</h3>
                             </div>
 
                             <div class="col-md-6">
@@ -17,7 +17,7 @@
 
                             <div class="col-md-6">
 
-                                <h4 class="org-name text-uppercase" *ngIf="users">{{ users.organizationName }}</h4>
+                                <!-- <h4 class="org-name text-uppercase" *ngIf="users">{{ users.organizationName }}</h4> -->
                                 <!-- <mat-form-field class="border-input w-100"> -->
                                     <!-- <input matInput type="text" formControlName="organizationName"> -->
                                 <!-- </mat-form-field> -->
@@ -100,10 +100,10 @@
                             </div> -->
 
                             <div class="col-md-12">
-                                <p>Choose Trades</p>
+                                <p style="font-weight: 600;">Choose Trades</p>
                                 <mat-chip-list multiple id="chipList" [selectable]="true">
-                                    <mat-chip *ngFor="let trade of tradeList" [selected]="trade.tradeId" 
-                                        (click)="trade.selected = !trade.selected; changeSelected('s', trade.tradeId)" >
+                                    <mat-chip *ngFor="let trade of tradeList" [selected]="trade.tradeId" [class.active]="trade.selected"
+                                        (click)="trade.selected = !trade.selected; changeSelected('s', trade.tradeId)">
                                       {{trade.tradeName}}
                                   </mat-chip>
                                 </mat-chip-list>
@@ -169,7 +169,7 @@
 
 
 
-                                <mat-form-field class="border-select w-100">
+                                <mat-form-field class="border-select w-100 city-input">
                                     <mat-label>City*</mat-label>
                                     <mat-select formControlName="city">
                                         <mat-option *ngFor="let city of cities" [value]="city.value">

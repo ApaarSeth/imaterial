@@ -5,6 +5,7 @@ import { from } from "rxjs";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { Router } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
+import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 
 export interface OrganisationType {
   value: string;
@@ -20,8 +21,9 @@ export class SignupComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private signInSignupService: SignInSignupService
-  ) {}
+    private signInSignupService: SignInSignupService,
+    private _userService: UserService
+  ) { }
   signupForm: FormGroup;
   signInDetails = {} as SignINDetailLists;
   ngOnInit() {
@@ -33,28 +35,23 @@ export class SignupComponent implements OnInit {
     { value: "Supplier", viewValue: "Supplier" }
   ];
 
+
   formInit() {
     this.signupForm = this.formBuilder.group({
-      // firstName: ["", Validators.required],
-      // lastName: ["", Validators.required],
-      email: [
-        "",
+      email: ["",
         [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]
       ],
-      phone: [
-        "",
+      phone: ["",
         [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]
       ],
       organisationName: ["", Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", Validators.required]
-      // confirmPassword: ["", Validators.required]
     });
   }
+
+
   signup() {
-    // this.signInDetails =  this.signupForm.valupe;
-    // this.signInDetails.firstName = this.signupForm.value.firstName
-    // this.signInDetails.lastName = this.signupForm.value.lastName
     this.signInDetails.password = this.signupForm.value.password;
     this.signInDetails.confirmPassword = this.signupForm.value.password;
     this.signInDetails.phone = this.signupForm.value.phone;
@@ -64,24 +61,29 @@ export class SignupComponent implements OnInit {
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType
     };
+
+
     this.signInSignupService.signUp(this.signInDetails).then(data => {
-      console.log(data.data.serviceRawResponse.data);
+
       if (data.data.serviceRawResponse.data) {
+        
         localStorage.setItem("role", data.data.serviceRawResponse.data.role);
-        localStorage.setItem(
-          "ServiceToken",
-          data.data.serviceRawResponse.data.serviceToken
-        );
-        localStorage.setItem(
-          "userId",
-          data.data.serviceRawResponse.data.userId
-        );
+        localStorage.setItem("ServiceToken", data.data.serviceRawResponse.data.serviceToken);
+        localStorage.setItem("userId", data.data.serviceRawResponse.data.userId);
         localStorage.setItem("orgId", data.data.serviceRawResponse.data.orgId);
-        this.router.navigate(["/pdashboard"]);
+
+        if (data.data.serviceRawResponse.data.role) {
+          this.router.navigate(["/dashboard"]);
+        } else {
+          this.router.navigate(["/users/organisation/update-info"]);
+        }
+
+        // this.getUserInformation(userId);
+        // this.router.navigate(["/dashboard"]);
       }
     });
-    // console.log("filled values", this.signInDetails);
   }
+
   showPassWord() {
     if (!this.showPassWordString) {
       this.showPassWordString = true;
@@ -89,4 +91,16 @@ export class SignupComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
+
+  // getUserInformation(userId){
+  //   this._userService.getUserInfo(userId).then(res => {
+  //     debugger
+  //     console.log(res);
+  //     if(res.data[0].roleId){
+  //       this.router.navigate(["/dashboard"]);
+  //     }else{
+  //       this.router.navigate(["/users/organisation/update-info"]);
+  //     }
+  //   })
+  // }
 }
