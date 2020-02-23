@@ -47,8 +47,8 @@ export class AddEditGrnComponent implements OnInit {
     let orgId = Number(localStorage.getItem("orgId"));
     this.grnService.viewGRN(orgId, poId).then(res => {
       this.dataSource = res.data;
-      // this.qtyEnteredValidation = this.valueEntered();
       this.formsInit();
+      // this.qtyEnteredValidation = this.valueEntered();
     });
     this.purchaseOrderId = this.data.pID;
   }
@@ -115,7 +115,7 @@ export class AddEditGrnComponent implements OnInit {
     this.materialForms.value.forms.forEach((element, i) => {
       if (element.certifiedQty > element.deliveredQty) {
         (<FormGroup>(<FormArray>this.materialForms.controls["forms"]).controls[i]).controls["certifiedQty"].setValue(0);
-        this.snack.open("Cannot add quantity greater than estimated qty", "", {
+        this.snack.open("Certified quantity cannot be greater than delivered qty", "", {
           duration: 2000,
           verticalPosition: "top"
         });
