@@ -52,7 +52,7 @@
 
                     </mat-expansion-panel-header>
 
-                    <ng-container formArrayName="supplierList">
+                    <span formArrayName="supplierList">
                       <div class="mat-row supplierLevel" *ngFor="
                           let supplier of material.supplierList;
                           let s = index
@@ -61,10 +61,10 @@
                         </span>
                         <span class="col-xs-2"></span>
                         <span formArrayName="brandGroup">
-                          <ng-container *ngFor="
+                          <span *ngFor="
                               let brandInfo of supplier.brandDetailList;
                               let i = index
-                            " [formGroupName]="i">
+                            " [formGroupName]="i" class="col-xs-3">
 
                             <span class="col-xs-1 p-l-0">
                               <mat-form-field class="border-input">
@@ -75,10 +75,10 @@
                             <span
                               class="col-xs-1">{{ brandInfo.materialUnitPrice != null?brandInfo.materialUnitPrice:"--" }}</span>
                             <span class="col-xs-1"></span>
-                          </ng-container>
+                          </span>
                         </span>
                       </div>
-                    </ng-container>
+                    </span>
                   </mat-expansion-panel>
                 </ng-container>
               </mat-expansion-panel>
