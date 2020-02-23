@@ -87,13 +87,6 @@
         padding-left: 0;
         padding-right: 0;
     }
-    
-    .city-input{
-        .mat-form-field-wrapper{
-            padding-top: 7px !important;
-            padding-bottom: 7px !important;
-        }
-    }
 
     .trades.active, .mat-chip.mat-chip.mat-primary.mat-standard-chip.mat-chip-selected.ng-star-inserted.active{
         border: 1px solid #66BF00;
@@ -102,6 +95,22 @@
         color: #ffffff;
     }
 
+    &__form{
+        position: relative;
+        .mat-mini-fab.mat-warn{
+            position: absolute;
+            right: 0px;
+            top: 70px;
+        }
+    }
+
+}
+
+.city-input.mat-form-field-appearance-legacy, .role-input.mat-form-field-appearance-legacy{
+    .mat-form-field-wrapper{
+        padding-top: 7px !important;
+        padding-bottom: 7px !important;
+    }
 }
 
 .padding-8{
