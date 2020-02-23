@@ -72,7 +72,7 @@ export class SuppliersComponent implements OnInit {
 
     dialogRef
       .afterClosed().toPromise().then(result => {
-        debugger
+        // debugger
         if(result){
           this.rfqService.getSuppliers(this.orgId).then(data => {
             this.allSuppliers = data.data;

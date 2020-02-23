@@ -13,7 +13,7 @@ export class UserDataGuardService implements CanActivate {
         
         const userId = localStorage.getItem("userId");
         this._userService.getUserInfo(userId).then(res => {
-            debugger
+            // debugger
             if (!res.data[0].roleId) {
                 this.router.navigate(['/users/organisation/update-info']);
                 return false;
