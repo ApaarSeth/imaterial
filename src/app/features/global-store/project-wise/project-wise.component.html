@@ -15,7 +15,7 @@
     </mat-expansion-panel-header>
 
     <mat-expansion-panel *ngFor="let material of project.GlobalMaterials" class="myPanel">
-      
+
       <mat-expansion-panel-header class="mat-row material-project">
 
         <span class="mat-cell" matTooltip=" {{ material.GlobalMaterial.materialName }}">
@@ -32,7 +32,7 @@
           material.GlobalMaterial.nearDueDate | date: "dd MMM yyy"
         }}</span>
         <span
-          class="mat-cell">{{ material.GlobalMaterial.deliveredQty!=null&&material.GlobalMaterial.issuedQty!=null?material.GlobalMaterial.deliverdQty-material.GlobalMaterial.issuedQty:0 }}
+          class="mat-cell">{{ material.GlobalMaterial.deliveredQty!=null&&material.GlobalMaterial.issuedQty!=null?material.GlobalMaterial.deliveredQty-material.GlobalMaterial.issuedQty:0 }}
           <span class="p-l-5">{{material.GlobalMaterial.materialUnit}}</span></span>
 
       </mat-expansion-panel-header>
@@ -52,7 +52,7 @@
         </div>
       </ng-container>
 
-      
+
     </mat-expansion-panel>
   </mat-expansion-panel>
 </mat-accordion>

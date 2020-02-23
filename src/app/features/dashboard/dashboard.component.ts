@@ -21,14 +21,14 @@ import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confi
 export class DashboardComponent implements OnInit {
   searchText: string = null;
 
-  allProjects: ProjectDetails[];
+  allProjects: ProjectDetails[] = [];
   orgId: Number;
   userId: Number;
   constructor(
     private projectService: ProjectService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -37,7 +37,6 @@ export class DashboardComponent implements OnInit {
     // this.allProjects = this.activatedRoute.snapshot.data.dashBoardData;
     this.getAllProjects();
   }
-
 
   getAllProjects() {
     this.projectService.getProjects(this.orgId, this.userId).then(data => {
@@ -81,16 +80,18 @@ export class DashboardComponent implements OnInit {
         data
       });
 
-      dialogRef.afterClosed().toPromise().then(result => {
-        
-        if(result){
-          this.projectService.getProjects(this.orgId, this.userId).then(data => {
-              this.allProjects = data.data;
-          });
-        }
-
-      });
-
+      dialogRef
+        .afterClosed()
+        .toPromise()
+        .then(result => {
+          if (result) {
+            this.projectService
+              .getProjects(this.orgId, this.userId)
+              .then(data => {
+                this.allProjects = data.data;
+              });
+          }
+        });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",

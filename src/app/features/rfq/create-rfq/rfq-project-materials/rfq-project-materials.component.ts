@@ -47,8 +47,9 @@ export class RfqProjectMaterialsComponent implements OnInit {
   ];
   addRfq: AddRFQ;
   alreadySelectedId: number[];
-  checkedProjectList: RfqMaterialResponse[];
-  checkedProjectIds: number[];
+  checkedProjectList: RfqMaterialResponse[] = [];
+  checkedProjectIds: number[] = [];
+  finalRfqDetails: RfqMaterialResponse[];
 
   constructor(
     public dialog: MatDialog,
@@ -84,7 +85,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.existingRfq) {
       this.projectIds = [];
-      this.rfqDetails=[]
+      this.rfqDetails = [];
       this.selectedProjects = [];
       this.addRfq = this.existingRfq;
       this.alreadySelectedId = this.addRfq.rfqProjectsList.map(
@@ -190,7 +191,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
       } else {
         project.projectMaterialList = project.projectMaterialList.map(
           (material: RfqMat) => {
-            material.checked = false;
+            if (!material.checked) material.checked = false;
             return material;
           }
         );
@@ -203,7 +204,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
       let materialGrp: FormGroup[] = projects.projectMaterialList.map(
         material => {
           return this.formBuilder.group({
-            material: []
+            material: [material.checked ? material : null]
           });
         }
       );
@@ -232,22 +233,24 @@ export class RfqProjectMaterialsComponent implements OnInit {
     const maGrp = mArr.controls["materialList"] as FormArray;
     const mat = maGrp.at(i);
     if (checked.checked) {
+      element.checked = true;
       mat.get("material").setValue(element);
     } else {
-      if (this.checkedProjectIds.includes(projectId)) {
-        this.checkedProjectList = this.checkedProjectList.map(
-          (proj: RfqMaterialResponse) => {
-            if (proj.projectId === projectId) {
-              proj.projectMaterialList = proj.projectMaterialList.filter(
-                (mat: RfqMat) => {
-                  return mat.materialId != element.materialId;
-                }
-              );
-            }
-            return proj;
-          }
-        );
-      }
+      // if (this.checkedProjectIds.includes(projectId)) {
+      //   this.checkedProjectList = this.checkedProjectList.map(
+      //     (proj: RfqMaterialResponse) => {
+      //       if (proj.projectId === projectId) {
+      //         proj.projectMaterialList = proj.projectMaterialList.filter(
+      //           (mat: RfqMat) => {
+      //             return mat.materialId != element.materialId;
+      //           }
+      //         );
+      //       }
+      //       return proj;
+      //     }
+      //   );
+      // }
+      element.checked = false;
       mat.get("material").reset();
     }
   }
@@ -261,23 +264,23 @@ export class RfqProjectMaterialsComponent implements OnInit {
           projectMaterial.push(element.material);
         }
       });
-      if (
-        this.checkedProjectIds &&
-        this.checkedProjectIds.includes(rfqDetail.projectId)
-      ) {
-        let project: RfqMaterialResponse = this.checkedProjectList.find(
-          (proj: RfqMaterialResponse) => {
-            return proj.projectId === rfqDetail.projectId;
-          }
-        );
-        let checkedMatName = project.projectMaterialList.map(
-          mat => mat.materialName
-        );
-        projectMaterial = projectMaterial.filter((mat: RfqMat) => {
-          return !checkedMatName.includes(mat.materialName);
-        });
-        projectMaterial = [...projectMaterial, ...project.projectMaterialList];
-      }
+      // if (
+      //   this.checkedProjectIds &&
+      //   this.checkedProjectIds.includes(rfqDetail.projectId)
+      // ) {
+      //   let project: RfqMaterialResponse = this.checkedProjectList.find(
+      //     (proj: RfqMaterialResponse) => {
+      //       return proj.projectId === rfqDetail.projectId;
+      //     }
+      //   );
+      //   let checkedMatName = project.projectMaterialList.map(
+      //     mat => mat.materialName
+      //   );
+      //   projectMaterial = projectMaterial.filter((mat: RfqMat) => {
+      //     return !checkedMatName.includes(mat.materialName);
+      //   });
+      //   projectMaterial = [...projectMaterial, ...project.projectMaterialList];
+      // }
       rfqDetail.projectMaterialList = projectMaterial;
       return rfqDetail;
     });
