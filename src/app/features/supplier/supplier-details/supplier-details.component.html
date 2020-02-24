@@ -11,7 +11,15 @@
 
 
   <ng-container *ngIf="!addUserBtn">
-    <div class="row">
+   
+    <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
+      <!-- <div class="text-right add-user-details-button-right">
+          <button mat-raised-button (click)="addSupplier()"
+            class="main-background-color main-button color-white">
+            Add Supplier
+          </button>
+        </div> -->
+ <div class="row">
       <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input p-l-20">
           <input matInput placeholder="Search Suppliers" type="search" (keyup)="applyFilter($event.target.value)" />
@@ -29,13 +37,7 @@
       </div>
     </div>
 
-    <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
-      <!-- <div class="text-right add-user-details-button-right">
-          <button mat-raised-button (click)="addSupplier()"
-            class="main-background-color main-button color-white">
-            Add Supplier
-          </button>
-        </div> -->
+
 
       <!-- first table structure -->
       <div class="row">
