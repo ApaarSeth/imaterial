@@ -80,9 +80,9 @@ export class AddEditGrnComponent implements OnInit {
       forms: new FormArray(frmArr)
     });
 
-    this.materialForms.valueChanges.subscribe(val => {
-      this.checkValidation();
-    });
+    // this.materialForms.valueChanges.subscribe(val => {
+    //   this.checkValidation();
+    // });
   }
 
   postGRNDetails(grnDetailsObj: GRNDetails[]) {
