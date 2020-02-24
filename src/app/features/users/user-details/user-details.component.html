@@ -9,7 +9,16 @@
 </ng-container>
 
 <ng-container *ngIf="!addUserBtn">
-   <div class="row">
+  
+
+   <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
+      <!-- <div class="text-right add-user-details-button-right">
+        <button mat-raised-button (click)="addUser()"
+          class="main-background-color main-button color-white">
+          Add User
+        </button>
+      </div> -->
+       <div class="row">
        <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input p-l-20">
           <input
@@ -33,13 +42,7 @@
       </div>
   </div>
 
-   <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
-      <!-- <div class="text-right add-user-details-button-right">
-        <button mat-raised-button (click)="addUser()"
-          class="main-background-color main-button color-white">
-          Add User
-        </button>
-      </div> -->
+  
 <ng-container *ngIf="dataSourceActivateTemp.length > 0">
   <mat-expansion-panel class="myPanel" [expanded]="true">
     <mat-expansion-panel-header>

@@ -12,13 +12,13 @@
             <div class="mr-3">
               <span>
                 <img src="assets/images/download.png" alt="download" class="img-fluid mr-2">
-                <a (click)="downloadExcel('assets/images/Master_data.xlsx')"> Download BOM Tempelate</a></span>
+                <a (click)="downloadExcel('assets/images/Master_data.xlsx')"> Download BOM Template</a></span>
             </div>
             <div>
               <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload" multiple
                 (change)="uploadExcel($event.target.files)" />
               <span> <img src="assets/images/upload.png" alt="upload" class="img-fluid mr-2 w-30"> Upload BOM
-                Tempelate</span>
+                Template</span>
             </div>
           </div>
         </div>
