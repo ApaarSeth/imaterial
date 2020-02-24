@@ -76,7 +76,7 @@
                                     <mat-label>Role</mat-label>
                                     <mat-select formControlName="roleId">
                                         <mat-option *ngFor="let role of roles" [value]="role.roleId">
-                                          {{role.roleName}}
+                                          {{role.roleDescription}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -150,7 +150,7 @@
 
 
 
-                                <mat-form-field class="border-input w-100">
+                                <!-- <mat-form-field class="border-input w-100">
                                     <input matInput type="text" formControlName="pan" placeholder="PAN No.">
                                 </mat-form-field>
                                 <mat-error
@@ -158,7 +158,7 @@
                                     <mat-error *ngIf="userInfoForm.controls['pan'].hasError('required')">
                                         PAN No is required
                                     </mat-error>
-                                </mat-error>
+                                </mat-error> -->
 
                             </div>
 
@@ -191,9 +191,9 @@
                                 </mat-form-field>
                                 <mat-error
                                     *ngIf="userInfoForm.controls['gstNo'].errors && (userInfoForm.controls['gstNo'].dirty || userInfoForm.controls['gstNo'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['gstNo'].hasError('required')">
+                                    <!-- <mat-error *ngIf="userInfoForm.controls['gstNo'].hasError('required')">
                                         GST No is required
-                                    </mat-error>
+                                    </mat-error> -->
                                     <mat-error *ngIf="userInfoForm.controls['gstNo'].hasError('pattern')">
                                         GST No is invalid</mat-error>
                                 </mat-error>
