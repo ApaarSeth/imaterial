@@ -41,3 +41,23 @@
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
     background: #f47721;
 }
+
+.tab-signin-up{
+
+        .mat-tab-header {
+            display: block;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .mat-tab-header-pagination-before .mat-tab-header-pagination-chevron, .mat-tab-header-rtl .mat-tab-header-pagination-after .mat-tab-header-pagination-chevron{
+            display: none;
+        }
+        .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination{
+            display: none;
+        }
+        .mat-tab-label{
+            min-width : 90px;
+        }
+
+}
