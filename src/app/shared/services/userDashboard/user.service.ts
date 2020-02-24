@@ -57,4 +57,7 @@ export class UserService {
   submitUserDetails(userData){
       return this.dataService.sendPostRequest(API.SUBMIT_USER_DETAILS, userData)
   }
+   getNotification(userId){
+      return this.dataService.getRequest(API.GET_NOTIFICATIONS(userId))
+  }
 }
