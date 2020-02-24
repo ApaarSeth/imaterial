@@ -85,13 +85,8 @@ export class UpdateInfoComponent implements OnInit {
         ]
       }],
       
-      pan: ['', Validators.required],
-      gstNo: ['', {
-        validators: [
-          Validators.required,
-          Validators.pattern(FieldRegExConst.GSTIN)
-        ]
-      }],
+      pan: [''],
+      gstNo: [''],
 
       profileUrl: ['']
 
