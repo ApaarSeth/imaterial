@@ -69,6 +69,7 @@ export class AddEditGrnComponent implements OnInit {
         deliveredQty: new FormControl(data.deliveredQty),
         awardedQty: new FormControl(data.awardedQty),
         deliveredDate: new FormControl(data.deliveredDate),
+        deliverableQty: new FormControl(data.deliverableQty),
         grnId: new FormControl(data.grnId),
         grnDetailId: new FormControl(data.grnDetailId),
         purchaseOrderId: new FormControl(this.data.pID),
@@ -79,9 +80,9 @@ export class AddEditGrnComponent implements OnInit {
       forms: new FormArray(frmArr)
     });
 
-    this.materialForms.valueChanges.subscribe(val => {
-      this.checkValidation();
-    });
+    // this.materialForms.valueChanges.subscribe(val => {
+    //   this.checkValidation();
+    // });
   }
 
   postGRNDetails(grnDetailsObj: GRNDetails[]) {
@@ -113,7 +114,7 @@ export class AddEditGrnComponent implements OnInit {
 
   checkValidation() {
     this.materialForms.value.forms.forEach((element, i) => {
-      if (element.certifiedQty > element.deliveredQty) {
+      if (element.certifiedQty < element.deliverableQty) {
         (<FormGroup>(<FormArray>this.materialForms.controls["forms"]).controls[i]).controls["certifiedQty"].setValue(0);
         this.snack.open("Certified quantity cannot be greater than delivered qty", "", {
           duration: 2000,
