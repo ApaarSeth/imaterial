@@ -5,7 +5,7 @@
         {{issueToIndentDetails.materialName}}
       </div>
       <div class="col-xs-4">
-        Available in Stock: {{ issueToIndentDetails.availableStock}} MT
+        Available in Stock: {{ issueToIndentDetails.availableStock}} {{issueToIndentDetails.materialUnit}}
       </div>
     </div>
   </div>
@@ -21,8 +21,7 @@
           <div class="col-xs-3">To be Issued</div>
         </div>
         <form [formGroup]="materialForms " (ngSubmit)="onSubmit()">
-          <div formArrayName="forms" class="row p-t-10 p-b-10 gray-border"
-            *ngFor="let indent of issueToIndentDetails.indentDetailList; let i = index; ">
+          <div formArrayName="forms" class="row p-t-10 p-b-10 gray-border" *ngFor="let indent of issueToIndentDetails.indentDetailList; let i = index; ">
             <div class="col-xs-3 formGroup">
               <div>
                 {{indent.indentId}}
@@ -35,39 +34,40 @@
             </div>
             <div class="col-xs-2 formGroup">
               <div>
-                {{indent.dueDate}}
+                {{indent.dueDate|date: "dd-MMM-yyy"}}
               </div>
             </div>
             <div class="col-xs-2 formGroup">
               <div class="issue-qty-div">
                 <div>
-                    {{indent.issuedQty}}
+                  {{indent.issuedQty}}
                 </div>
-                
-                 <div class="show-detail-qty" *ngIf="indent.IssuedQuantityList">
-                  <img src="../../../../assets/images/i_icon.png">
-                    <div id="detail-qty">
-                      <div class="row">
-                        <div class="col-sm-6">
-                         <span>Issued Date</span>
-                         <ng-container *ngFor="let date of indent.IssuedQuantityList">
-                           <span><br>
-                             {{date.issuedDate}}
-                           </span>
-                         </ng-container>
-                        </div>
-                         <div class="col-sm-6">
-                          <span>Issued Quantity</span>
-                           <ng-container *ngFor="let date of indent.IssuedQuantityList">
-                           <span><br>
-                             {{date.issuedQty}}
-                           </span>
-                         </ng-container>
-                        </div>
+
+                <div class="show-detail-qty" *ngIf="indent.IssuedQuantityList">
+                  <img src="../../../../assets/images/i_icon.png" />
+                  <div id="detail-qty">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <span>Issued Date</span>
+                        <ng-container *ngFor="let date of indent.IssuedQuantityList">
+                          <span
+                            ><br />
+                            {{date.issuedDate| date: "dd-MMM-yyy"}}
+                          </span>
+                        </ng-container>
                       </div>
+                      <div class="col-sm-6">
+                        <span>Issued Quantity</span>
+                        <ng-container *ngFor="let date of indent.IssuedQuantityList">
+                          <span
+                            ><br />
+                            {{date.issuedQty}}
+                          </span>
+                        </ng-container>
+                      </div>
+                    </div>
                   </div>
-                </div> 
-        
+                </div>
               </div>
             </div>
             <div class=" col-xs-3 formGroup">
@@ -88,16 +88,12 @@
         Save
       </button>
     </div>
-
   </div>
-
 </div>
-<div  *ngIf="issueToIndentDetails && (!issueToIndentDetails.indentDetailList)">
- <div mat-dialog-title>
-   
-     <div class="col-xs-12 no-indent-list">
-       No Indent List Available for this {{issueToIndentDetails.materialName}}
-     </div>
-     
- </div>
+<div *ngIf="issueToIndentDetails && (!issueToIndentDetails.indentDetailList)">
+  <div mat-dialog-title>
+    <div class="col-xs-12 no-indent-list">
+      No Indent List Available for this {{issueToIndentDetails.materialName}}
+    </div>
+  </div>
 </div>
