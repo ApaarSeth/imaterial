@@ -1,10 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
-import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
-import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
-import { Router } from "@angular/router";
-import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
+import {Component, OnInit} from "@angular/core";
+import {FormGroup, Validators, FormBuilder} from "@angular/forms";
+import {SignInSignupService} from "src/app/shared/services/signupSignin/signupSignin.service";
+import {SignInData} from "src/app/shared/models/signIn/signIn-detail-list";
+import {Router} from "@angular/router";
+import {FieldRegExConst} from "src/app/shared/constants/field-regex-constants";
+import {UserService} from "src/app/shared/services/userDashboard/user.service";
 
 @Component({
   selector: "signin",
@@ -13,12 +13,7 @@ import { UserService } from 'src/app/shared/services/userDashboard/user.service'
 })
 export class SigninComponent implements OnInit {
   showPassWordString: boolean = false;
-  constructor(
-    private router: Router,
-    private signInSignupService: SignInSignupService,
-    private formBuilder: FormBuilder,
-    private _userService: UserService
-  ) {}
+  constructor(private router: Router, private signInSignupService: SignInSignupService, private formBuilder: FormBuilder, private _userService: UserService) {}
   signinForm: FormGroup;
   signInData = {} as SignInData;
   ngOnInit() {
@@ -27,10 +22,7 @@ export class SigninComponent implements OnInit {
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      phone: [
-        "",
-        [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]
-      ],
+      phone: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
       password: ["", Validators.required]
     });
   }
@@ -45,12 +37,11 @@ export class SigninComponent implements OnInit {
 
     this.signInSignupService.signIn(params.toString()).then(data => {
       if (data.serviceRawResponse.data) {
-        
         const role = data.serviceRawResponse.data.role;
-        
-        if(role){
+
+        if (role) {
           this.router.navigate(["/dashboard"]);
-        }else{
+        } else {
           this.router.navigate(["/users/organisation/update-info"]);
         }
       }

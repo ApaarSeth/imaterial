@@ -1,0 +1,35 @@
+<form [formGroup]="termsForm" ((ngSubmit)="submitRfq()">
+  <div class="row">
+    <div class="col-xs-6">
+      <h1 mat-dialog-title>Select Purchase Order Approver</h1>
+    </div>
+    <div class="col-xs-6">
+      <button mat-raised-button class="main-background-color main-button color-white" (click)="close()">
+        skip
+      </button>
+      <button mat-raised-button class="main-background-color main-button color-white" (click)="submitRfq()">
+        Next
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <ng-container *ngFor="let term of rfqTerms">
+        <mat-radio-group name="element" aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="term">
+          <mat-radio-button class="example-radio-button" [value]="element">
+            {{ element.termsDesc }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </ng-container>
+    </div>
+    <div class="col-xs-6">
+      <span *ngIf="[termsForm][controls][term].value.termsDesc === 'others'">
+        <mat-form-field class="example-full-width">
+          <mat-label>Term Desc</mat-label>
+          <textarea matInput formControlName="customTerm" placeholder="Custom Term Desc"></textarea>
+        </mat-form-field>
+      </span>
+    </div>
+  </div>
+</form>
