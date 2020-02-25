@@ -19,6 +19,6 @@ export class UserDataGuardService implements CanActivate {
                 return false;
             }
         });
-        return true;        
+        return true;
     }
 }

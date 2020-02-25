@@ -13,24 +13,24 @@ export class AppDashboardComponent implements OnInit {
   orgId: number;
 
   constructor(public dialog: MatDialog,
-  private router: Router) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
   }
 
-  openProject(){
-    let data={
-        isEdit:false,
-        isDelete:false
-      };
-    const dialogRef=this.dialog.open(AddProjectComponent,{
-      width:"1000px",
+  openProject() {
+    let data = {
+      isEdit: false,
+      isDelete: false
+    };
+    const dialogRef = this.dialog.open(AddProjectComponent, {
+      width: "1000px",
       data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard']);
     });
   }
 }

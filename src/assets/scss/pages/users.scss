@@ -128,10 +128,16 @@
     border-color: #F47720;
 }
 
-.btn-warning.disabled, .btn-warning:disabled {
+.btn-warning.disabled, .btn-warning:disabled,
+.btn-outline-warning:not(:disabled):not(.disabled).active,
+.btn-outline-warning:not(:disabled):not(.disabled):active,
+.show>.btn-outline-warning.dropdown-toggle,
+.btn-outline-warning:hover {
     background-color: #F47720;
     border-color: #F47720;
+    color: #ffffff;
 }
+
 
 .userInfo-upload{
     .drag-and-drop{
@@ -150,6 +156,7 @@
 .user-profile{
     font-size: 1.2rem;
     font-weight: 600;
+    border: none;
 }
 
 .trades, .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary{
@@ -207,5 +214,35 @@
 .margin-top-minus3px{
     img{
         margin-top: -3px;
+    }
+}
+
+.user-photo {
+    height: 90px;
+    min-width: 90px;
+    width: 90px;
+    border: 1px solid #ececec;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    display: -webkit-box;
+    display: flex;
+}
+
+.browser-method .myLabel {
+    padding: 2px 5px;
+    margin: 2px;
+    color: #1896ba;
+    cursor: pointer;
+    span {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 19px;
+    }
+    input[type=file] {
+        display: none;
     }
 }
