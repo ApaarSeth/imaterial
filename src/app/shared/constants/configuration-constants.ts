@@ -4,21 +4,16 @@ export const ConfigurationConstants = {
 };
 export const API = {
   PROJECTS: (organizationId, userId) => `projects/${organizationId}/${userId}`,
-  GETPROJECT: (organizationId, projectId) =>
-    `project/${organizationId}/${projectId}`,
+  GETPROJECT: (organizationId, projectId) => `project/${organizationId}/${projectId}`,
   GETCATERGORY: `material/groups`,
   ADDPROJECT: `addProject`,
-  UPDATEPROJECT: (organizationId, projectId) =>
-    `updateProjectDetails/${organizationId}/${projectId}`,
+  UPDATEPROJECT: (organizationId, projectId) => `updateProjectDetails/${organizationId}/${projectId}`,
   RAISEINDENT: projectId => `indent/raise/${projectId}`,
-  DELETE: (organizationId, projectId) =>
-    `deleteProject/${organizationId}/${projectId}`,
+  DELETE: (organizationId, projectId) => `deleteProject/${organizationId}/${projectId}`,
   GETMATERIALSWITHSPECS: `material/materialsSpecs`,
-  GETMATERIALSWITHQUANTITY: (organizationId, projectId) =>
-    `materials/${organizationId}/${projectId}`,
+  GETMATERIALSWITHQUANTITY: (organizationId, projectId) => `materials/${organizationId}/${projectId}`,
   GETINDENTLIST: projectId => `indent/list/${projectId}`,
-  POSTMATERIALSQUANTITY: (userId, projectId) =>
-    `materials/${userId}/${projectId}`,
+  POSTMATERIALSQUANTITY: (userId, projectId) => `materials/${userId}/${projectId}`,
   GETMATERIALWISE: organizationId => `global/materials/${organizationId}`,
   GETPROJECTWISE: organizationId => `global/projects/${organizationId}`,
   RFQMATERIALS: `rfqMaterials`,
@@ -31,24 +26,20 @@ export const API = {
   GETPODATA: poId => `po/genarate/${poId}`,
   SENDPODATA: `po/updatePO`,
   ADDRFQ: `rfq/addrfq`,
-  GETRFQDETAILSUPPLIER: (rfqId, supplierId) =>
-    `rfq/details/supplier/${rfqId}/${supplierId}`,
+  GETRFQDETAILSUPPLIER: (rfqId, supplierId) => `rfq/details/supplier/${rfqId}/${supplierId}`,
   POSTRFQDETAILSUPPLIER: supplierId => `rfq/addSupplierDetail/${supplierId}`,
-  GETAPPROVER: (organizationId, projectId) =>
-    `po/users/${organizationId}/${projectId}`,
+  GETAPPROVER: (organizationId, projectId) => `po/users/${organizationId}/${projectId}`,
   POSTADDADDRESS: (type, id) => `address/add/${type}/${id}`,
   GETPOADDADDRESS: (type, id) => `address/get/${type}/${id}`,
   POSTDOCUMENTUPLOAD: `documents/upload`,
   SIGNUP: `api/auth/signup`,
   SIGNIN: `oauth/token`,
-  GETISSUETOINDENT: (materialId, projectId) =>
-    `materials/updateStock/${materialId}/${projectId}`,
+  GETISSUETOINDENT: (materialId, projectId) => `materials/updateStock/${materialId}/${projectId}`,
   POSTISSUETOINDENT: materialId => `indent/issueQty/${materialId}`,
   GETSINGLEINDENT: indentId => `indent/detail/${indentId}`,
   GETGRNDETAILS: grnId => `po/view/grn/poDetails/${grnId}`,
   ADDGRN: `po/add/grn`,
-  VIEWGRN: (organizationId, purchaseOrderId) =>
-    `po/grn/detail/${organizationId}/${purchaseOrderId}`,
+  VIEWGRN: (organizationId, purchaseOrderId) => `po/grn/detail/${organizationId}/${purchaseOrderId}`,
   GETRFQVIEW: rfqId => `rfq/view/details/${rfqId}`,
   ROLES: `user/getroles`,
   ALLUSERS: organizationId => `user/getall/${organizationId}`,
@@ -57,16 +48,16 @@ export const API = {
   DEACTIVATEUSER: userId => `user/delete/${userId}`,
   UPLOADEXCEL: projectId => `bom/materials/fileupload/${projectId}`,
   DELETESUPPLIER: supplierId => `projects/deleteSupplier/${supplierId}`,
-  DELETEMATERIAL: (projectId, materialId) =>
-    `material/delete/${projectId}/${materialId}`,
+  DELETEMATERIAL: (projectId, materialId) => `material/delete/${projectId}/${materialId}`,
   APPROVEREJECTPO: `po/approveRejectPO`,
   GETGENERATEDRFQ: rfqId => `fq/stepper/${rfqId}`,
   DELETEDRAFTEDPO: purchaseOrderId => `po/delete/${purchaseOrderId}`,
   GETSUPPLIERADDRESS: supplierId => `address/get/Supplier/${supplierId}`,
-  ADDSUPPLIERADDRESS :supplierId => `address/add/Supplier/${supplierId}`,
-
+  ADDSUPPLIERADDRESS: supplierId => `address/add/Supplier/${supplierId}`,
+  NUMBERTOWORDS: currency => `commons/numtowords/${currency}`,
   GET_USER_PROFILE: USERID => `user/profile/${USERID}`,
   GET_ALL_TRADES: 'all/tades',
   SUBMIT_USER_DETAILS: 'user/update/profile',
-  GET_NOTIFICATIONS: userId => `user/notification/${userId}`
+  GET_NOTIFICATIONS: userId => `user/notification/${userId}`,
+  GETRFQTERMS: 'rfq/payment/terms'
 };
