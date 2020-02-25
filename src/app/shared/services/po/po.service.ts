@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { DataService } from "../data.service";
-import { API } from "../../constants/configuration-constants";
-import { initiatePo, SupplierAddress } from "../../models/PO/po-data";
-import { AllSupplierDetails } from '../../models/supplier';
+import {Injectable} from "@angular/core";
+import {DataService} from "../data.service";
+import {API} from "../../constants/configuration-constants";
+import {initiatePo, SupplierAddress} from "../../models/PO/po-data";
+import {AllSupplierDetails} from "../../models/supplier";
 
 @Injectable({
   providedIn: "root"
@@ -21,9 +21,7 @@ export class POService {
     return this.dataService.sendPostRequest(API.SENDPODATA, poData);
   }
   getApproverData(organizationId: number, projectId: number) {
-    return this.dataService.getRequest(
-      API.GETAPPROVER(organizationId, projectId)
-    );
+    return this.dataService.getRequest(API.GETAPPROVER(organizationId, projectId));
   }
   projectMaterials(projectIds: number) {
     return this.dataService.sendPostRequest(API.RFQMATERIALS, {
@@ -39,11 +37,15 @@ export class POService {
     return this.dataService.sendPostRequest(API.APPROVEREJECTPO, poStatusData);
   }
 
-  getSupplierAddress(supplierId:Number){
-     return this.dataService.getRequest(API.GETSUPPLIERADDRESS(supplierId));
+  getSupplierAddress(supplierId: Number) {
+    return this.dataService.getRequest(API.GETSUPPLIERADDRESS(supplierId));
   }
 
-  addAddress(supplierId:Number,address : SupplierAddress){
-       return this.dataService.sendPostRequest(API.ADDSUPPLIERADDRESS(supplierId), address);
+  addAddress(supplierId: Number, address: SupplierAddress) {
+    return this.dataService.sendPostRequest(API.ADDSUPPLIERADDRESS(supplierId), address);
+  }
+
+  getNumberToWords(currency: number) {
+    return this.dataService.getRequest(API.NUMBERTOWORDS(currency));
   }
 }

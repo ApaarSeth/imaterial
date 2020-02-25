@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
 import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
+import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
 
 @Component({
   selector: "app-rfq-supplier",
@@ -41,7 +42,7 @@ export class RfqSupplierComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     if (this.activatedRoute.snapshot.data.createRfq[0].data) {
@@ -101,14 +102,11 @@ export class RfqSupplierComponent implements OnInit {
         return supplierId;
       }
     });
-    this.rfqService.addRFQ(this.rfqData).then(res => {
-      let finalRfq = res.data;
-      this.router.navigate(["/rfq/review/"], {
-        state: { finalRfq }
-      });
-    });
+    this.openRfqTermsDialog(this.rfqData)
+
   }
-  openDialog(projectId) {
+
+  openSupplierDialog(projectId) {
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "1200px",
       data: projectId
@@ -130,5 +128,15 @@ export class RfqSupplierComponent implements OnInit {
           this.formInit();
         });
       });
+  }
+
+  openRfqTermsDialog(data: AddRFQ): void {
+    const dialogRef = this.dialog.open(SelectRfqTermsComponent, {
+      width: "1200px",
+      data
+    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   data.defaultAddress = result[1];
+    // });
   }
 }
