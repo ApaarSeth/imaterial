@@ -60,14 +60,14 @@ export class AddProjectComponent implements OnInit {
   projectTypes: ProjectType[] = [
     { type: "RESIDENTIAL" },
     { type: "COMMERCIAL" },
+    { type: "INTERIOR FIT-OUT" },
     { type: "INDUSTRIAL" },
     { type: "HOSPITALITY" },
-    { type: "INFRA" },
-    { type: "INTERIORS" },
+    { type: "INFRASTRUCTURE" },
     { type: "OTHERS" }
   ];
 
-  units: Unit[] = [{ value: "acres" }, { value: "sqm" }];
+  units: Unit[] = [{ value: "acres" }, { value: "sqm" },{ value: "sqft" }];
 
   initForm() {
     this.projectDetails = this.data.isEdit
@@ -118,7 +118,7 @@ export class AddProjectComponent implements OnInit {
       unit: [this.data.isEdit ? this.data.detail.unit : ""],
       gstNo: [
         this.data.isEdit ? this.data.detail.gstNo : "",
-        [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]
+        [Validators.pattern(FieldRegExConst.GSTIN)]
       ]
     });
   }
