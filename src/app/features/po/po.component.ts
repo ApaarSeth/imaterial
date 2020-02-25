@@ -38,7 +38,7 @@ export class PoComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private poService: POService
-  ) {}
+  ) { }
   poId: number;
   poMode: string;
   ngOnInit() {
@@ -74,10 +74,7 @@ export class PoComponent implements OnInit {
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
       DocumentsList: this.poDocument.getData(),
-      Terms: {
-        termsDesc: "All test In it, Please add the terms test here only",
-        termsType: "RFQ"
-      },
+      Terms: null,
       comments: "good",
       projectId: this.poData.projectId
     };

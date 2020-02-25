@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 //import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from "rxjs";
-import { environment } from "src/environments/environment";
-import { DataService } from "../data.service";
-import { API } from "../../constants/configuration-constants";
-import { ProjectIds } from "../../models/project-details";
-import { RfqProjectSubmit } from "../../models/RFQ/rfqBids";
-import { Suppliers } from "../../models/RFQ/suppliers";
-import { AddRFQ } from "../../models/RFQ/rfq-details";
-import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
+import {Observable} from "rxjs";
+import {environment} from "src/environments/environment";
+import {DataService} from "../data.service";
+import {API} from "../../constants/configuration-constants";
+import {ProjectIds} from "../../models/project-details";
+import {RfqProjectSubmit} from "../../models/RFQ/rfqBids";
+import {Suppliers} from "../../models/RFQ/suppliers";
+import {AddRFQ} from "../../models/RFQ/rfq-details";
+import {SendRfqObj} from "../../models/RFQ/rfq-details-supplier";
 
 @Injectable({
   providedIn: "root"
@@ -21,7 +21,7 @@ export class RFQService {
       projectIds: ProjectIds
     });
   }
-  
+
   rfqDetail(organizationId: number) {
     return this.dataService.getRequest(API.RFQDETAIL(organizationId));
   }
@@ -39,11 +39,9 @@ export class RFQService {
   }
 
   addNewSupplier(organizationId: number, supplier: Suppliers) {
-    return this.dataService
-      .sendPostRequest(API.ADDSUPPLIER(organizationId), supplier)
-      .then(res => {
-        return res;
-      });
+    return this.dataService.sendPostRequest(API.ADDSUPPLIER(organizationId), supplier).then(res => {
+      return res;
+    });
   }
 
   addRFQ(rfqDetail: AddRFQ) {
@@ -51,27 +49,18 @@ export class RFQService {
   }
 
   getRFQDetailSupplier(rfqId: number, supplierId: number) {
-    return this.dataService.getRequest(
-      API.GETRFQDETAILSUPPLIER(rfqId, supplierId)
-    );
+    return this.dataService.getRequest(API.GETRFQDETAILSUPPLIER(rfqId, supplierId));
   }
 
   postRFQDetailSupplier(supplierId: number, rfqSupplierDetails: SendRfqObj) {
-    return this.dataService
-      .sendPostRequest(
-        API.POSTRFQDETAILSUPPLIER(supplierId),
-        rfqSupplierDetails
-      )
-      .then(res => {
-        return res;
-      });
+    return this.dataService.sendPostRequest(API.POSTRFQDETAILSUPPLIER(supplierId), rfqSupplierDetails).then(res => {
+      return res;
+    });
   }
   deleteSuplier(supplierId: number) {
-    return this.dataService
-      .sendDeleteRequest(API.DELETESUPPLIER(supplierId), {})
-      .then(res => {
-        return res;
-      });
+    return this.dataService.sendDeleteRequest(API.DELETESUPPLIER(supplierId), {}).then(res => {
+      return res;
+    });
   }
 
   getRFQView(rfqId: number) {
@@ -83,5 +72,9 @@ export class RFQService {
 
   getGeneratedRfq(rfqId: number) {
     return this.dataService.getRequest(API.GETGENERATEDRFQ(rfqId));
+  }
+
+  getRfqTerms() {
+    return this.dataService.getRequest(API.GETRFQTERMS);
   }
 }
