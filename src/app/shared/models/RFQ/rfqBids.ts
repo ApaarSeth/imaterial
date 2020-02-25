@@ -98,6 +98,9 @@ export interface RfqSupplierList {
   supplierId: number;
   shortlistFlag: number;
   supplierName: string;
+  materialSgst: number,
+  materialCgst: number,
+  materialIgst: number,
   brandDetailList: RfqBrandDetail[];
 }
 

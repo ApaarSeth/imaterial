@@ -57,6 +57,7 @@ export class SelectRfqTermsComponent implements OnInit {
       this.router.navigate(["/rfq/review/"], {
         state: { finalRfq }
       });
+      this.dialogRef.close();
     });
   }
 }

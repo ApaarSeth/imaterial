@@ -1,105 +1,107 @@
 .customPo {
-    .mat-accordion .mat-header-row {
-        padding-left: 1.5rem;
-        padding-right: 2rem;
-        border-bottom: none;
+  .mat-accordion .mat-header-row {
+    padding-left: 1.5rem;
+    padding-right: 2rem;
+    border-bottom: none;
+  }
+
+  .mat-expansion-panel-header.mat-row {
+    border-bottom: none;
+  }
+
+  $mat-header-row-height: 56px;
+  $mat-row-height: 48px;
+  $mat-row-horizontal-padding: 24px;
+
+  .mat-table {
+    display: block;
+  }
+
+  .mat-header-row {
+    min-height: $mat-header-row-height;
+  }
+
+  poCard .mat-row {
+    min-height: $mat-row-height;
+  }
+
+  .mat-row,
+  .mat-header-row {
+    display: flex;
+    align-items: center;
+    padding: 0 $mat-row-horizontal-padding;
+    box-sizing: border-box;
+  }
+
+  .mat-cell,
+  .mat-header-cell {
+    flex: 1;
+    overflow: hidden;
+    word-wrap: break-word;
+    color: black;
+  }
+
+  .mat-cell {
+    text-align: left;
+  }
+
+  .widthReduce {
+    flex: none;
+    width: 55px;
+  }
+
+  .mat-header-row {
+    background: #192135;
+
+    span {
+      color: #ffffff !important;
+    }
+  }
+
+  .po-table {
+    .mat-row {
+      border-bottom: 0.5px solid #979797;
+      min-height: 50px;
+
+      .mat-cell {
+        color: #707070;
+      }
     }
 
-    .mat-expansion-panel-header.mat-row {
-        border-bottom: none;
+    .footer {
+      background-color: rgba(25, 33, 53, 0.2);
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+      min-height: 70px;
+
+      .mat-cell {
+        color: #000000;
+        font-weight: 500;
+        font-size: 12px;
+      }
     }
+  }
 
-    $mat-header-row-height: 56px;
-    $mat-row-height: 48px;
-    $mat-row-horizontal-padding: 24px;
+  .radio-btn-group-po-table {
+    padding-right: 10px;
 
-    .mat-table {
-        display: block;
+    mat-radio-button {
+      padding: 0px 5px;
     }
+  }
 
-    .mat-header-row {
-        min-height: $mat-header-row-height;
-    }
-
-    poCard .mat-row {
-        min-height: $mat-row-height;
-    }
-
-    .mat-row,
-    .mat-header-row {
-        display: flex;
-        align-items: center;
-        padding: 0 $mat-row-horizontal-padding;
-        box-sizing: border-box;
-    }
-
-    .mat-cell,
-    .mat-header-cell {
-        flex: 1;
-        overflow: hidden;
-        word-wrap: break-word;
-        color: black;
-    }
-
-    .mat-cell {
-        text-align: left;
-    }
-
-
-    .widthReduce {
-        flex: none;
-        width: 55px;
-    }
-
-    .mat-header-row {
-        background: #192135;
-
-        span {
-            color: #FFFFFF !important;
-        }
-
-    }
-
-    .po-table {
-        .mat-row {
-            border-bottom: 0.5px solid #979797;
-            min-height: 50px;
-
-            .mat-cell {
-                color: #707070;
-            }
-        }
-
-        .footer {
-            background-color: rgba(25, 33, 53, 0.2);
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-            min-height: 70px;
-
-            .mat-cell {
-                color: #000000;
-                font-weight: 500;
-                font-size: 12px;
-            }
-        }
-
-    }
-
-    .radio-btn-group-po-table {
-        padding-right: 10px;
-
-        mat-radio-button {
-            padding: 0px 5px;
-        }
-
-    }
-
-    .mat-row:focus {
-        background-color: white;
-    }
+  .mat-row:focus {
+    background-color: white;
+  }
 }
 
 .matCellAlignLeft {
-    .mat-cell {
-        text-align: left;
-    }
+  .mat-cell {
+    text-align: left;
+  }
+}
+
+.hidePoweredBy {
+  a#logo {
+    visibility: hidden;
+  }
 }

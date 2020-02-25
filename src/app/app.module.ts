@@ -26,7 +26,6 @@ import { AppDashboardComponent } from "./features/app-dashboard/app-dashboard.co
 import { AuthGuardService } from "./shared/guards/auth.guards";
 import { UserDashboardModule } from "./features/users/user-dashboard.module";
 import { UserDataGuardService } from "./shared/guards/user-data.guards";
-// import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 
 @NgModule({
   declarations: [AppComponent, AuthLayoutComponent, MainLayoutComponent, NotFoundComponent, SupplierBidLayoutComponent, AppDashboardComponent],
@@ -40,9 +39,7 @@ import { UserDataGuardService } from "./shared/guards/user-data.guards";
     LayoutModule,
     DashboardModule,
     AppSharedModule,
-    UserDashboardModule
-    // FroalaEditorModule.forRoot(),
-    // FroalaViewModule.forRoot()
+    UserDashboardModule,
   ],
   providers: [
     HttpInterceptorProviders,

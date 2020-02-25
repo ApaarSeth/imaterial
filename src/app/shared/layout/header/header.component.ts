@@ -28,10 +28,10 @@ export class HeaderLayoutComponent implements OnInit {
   unreadnotificationLength: number;
   allnotificationLength: number;
   constructor(
-     private userService: UserService,
+    private userService: UserService,
     private permissionService: PermissionService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -41,21 +41,21 @@ export class HeaderLayoutComponent implements OnInit {
     this.permissionObj = this.permissionService.checkPermission();
     this.userService.getNotification(this.userId).then(res => {
       this.notificationObj = res.data;
-      if(this.notificationObj){
-            this.notificationObj.forEach(element => {
-                if(element.read == 0){
-                  this.unreadnotification.push(element);
-                }
-                else if(element.read == 1){
-                  this.readnotification.push(element);
-                }
-              })
+      if (this.notificationObj) {
+        this.notificationObj.forEach(element => {
+          if (element.read == 0) {
+            this.unreadnotification.push(element);
+          }
+          else if (element.read == 1) {
+            this.readnotification.push(element);
+          }
+        })
 
-               if(this.unreadnotification)
-                this.unreadnotificationLength = this.unreadnotification.length;
+        if (this.unreadnotification)
+          this.unreadnotificationLength = this.unreadnotification.length;
 
-                if(this.readnotification && this.unreadnotification)
-                this.allnotificationLength = this.readnotification.length + this.unreadnotification.length;
+        if (this.readnotification && this.unreadnotification)
+          this.allnotificationLength = this.readnotification.length + this.unreadnotification.length;
       }
     })
   }
@@ -86,23 +86,23 @@ export class HeaderLayoutComponent implements OnInit {
     }
   }
 
-  logout(){
+  logout() {
     this.router.navigate(['/auth/login']).then(_ => {
       localStorage.clear();
     });
   }
-  openDiv(){
-    if(this.notifClicked == true){
+  openDiv() {
+    if (this.notifClicked == true) {
       this.notifClicked = false
-    }else{
+    } else {
       this.notifClicked = true;
     }
   }
-  routeTo(route){
+  routeTo(route) {
     this.router.navigate([route]);
-     //  this.router.navigate([""]);
+    //  this.router.navigate([""]);
   }
-  closeDialog(){
+  closeDialog() {
     this.notifClicked = false;
   }
 }
