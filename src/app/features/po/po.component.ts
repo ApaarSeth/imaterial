@@ -13,6 +13,7 @@ import { MatDialog } from "@angular/material";
 import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 import { PoDocumentsComponent } from "./po-documents/po-documents.component";
 import { ActivatedRoute, Router } from "@angular/router";
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: "app-po",
@@ -32,12 +33,13 @@ export class PoComponent implements OnInit {
   @ViewChild("poCard", { static: false }) poCard: PoCardComponent;
   @ViewChild("poDocument", { static: false }) poDocument: PoDocumentsComponent;
   documentList: DocumentList[];
-
+  poTerms: FormGroup;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private poService: POService
+    private poService: POService,
+    private formBuilder: FormBuilder
   ) { }
   poId: number;
   poMode: string;
@@ -60,6 +62,12 @@ export class PoComponent implements OnInit {
       };
       this.documentList = this.poData.DocumentsList;
     });
+    this.formInit();
+  }
+  formInit() {
+    this.poTerms = this.formBuilder.group({
+      textArea: []
+    })
   }
   collateResults() {
     console.log("podocument", this.poDocument.getData());
@@ -74,7 +82,7 @@ export class PoComponent implements OnInit {
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
       DocumentsList: this.poDocument.getData(),
-      Terms: null,
+      Terms: this.poTerms.get("textArea").value,
       comments: "good",
       projectId: this.poData.projectId
     };
