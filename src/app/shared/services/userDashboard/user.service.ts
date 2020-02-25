@@ -54,10 +54,15 @@ export class UserService {
     return this.dataService.getRequest(API.GET_ALL_TRADES).then(res => res);
   }
 
-  submitUserDetails(userData){
-      return this.dataService.sendPostRequest(API.SUBMIT_USER_DETAILS, userData)
+  submitUserDetails(userData) {
+    return this.dataService.sendPostRequest(API.SUBMIT_USER_DETAILS, userData)
   }
-   getNotification(userId){
-      return this.dataService.getRequest(API.GET_NOTIFICATIONS(userId))
+
+  getNotification(userId) {
+    return this.dataService.getRequest(API.GET_NOTIFICATIONS(userId))
+  }
+
+  getUserInfoUniqueCode(uniqueCode){
+    return this.dataService.getRequest(API.GET_USER_INFO_UNIQUE_CODE(uniqueCode));
   }
 }

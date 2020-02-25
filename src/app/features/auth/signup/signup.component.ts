@@ -19,6 +19,8 @@ export interface OrganisationType {
 export class SignupComponent implements OnInit {
   showPassWordString: boolean = false;
   uniqueCode: string = "";
+  user: any;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -26,16 +28,31 @@ export class SignupComponent implements OnInit {
     private signInSignupService: SignInSignupService,
     private _userService: UserService
   ) {}
+
   signupForm: FormGroup;
   signInDetails = {} as SignINDetailLists;
+
   ngOnInit() {
-    this.formInit();
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
+    
+    if(this.uniqueCode){
+      this.getUserInfo(this.uniqueCode);
+    }
+
+    this.formInit();
+
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
+  }
+
+  getUserInfo(code) {
+    this._userService.getUserInfoUniqueCode(code).then(res => {
+      this.user = res.data[0];
+      this.formInit();
+    });
   }
 
   organisationTypes: OrganisationType[] = [
@@ -45,9 +62,9 @@ export class SignupComponent implements OnInit {
 
   formInit() {
     this.signupForm = this.formBuilder.group({
-      email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      phone: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
-      organisationName: ["", Validators.required],
+      email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
+      organisationName: [this.user ? this.user.companyName : '', Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", Validators.required]
     });
@@ -73,14 +90,11 @@ export class SignupComponent implements OnInit {
         localStorage.setItem("orgId", data.data.serviceRawResponse.data.orgId);
 
         // if (data.data.serviceRawResponse.data.role || this.uniqueCode !== "") {
-          if (this.uniqueCode) {
+        if (this.uniqueCode) {
           this.router.navigate(["/dashboard"]);
         } else {
           this.router.navigate(["/users/organisation/update-info"]);
         }
-
-        // this.getUserInformation(userId);
-        // this.router.navigate(["/dashboard"]);
       }
     });
   }
