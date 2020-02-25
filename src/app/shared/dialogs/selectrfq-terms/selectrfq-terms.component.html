@@ -1,4 +1,4 @@
-<form [formGroup]="termsForm" ((ngSubmit)="submitRfq()">
+<form *ngIf="rfqTerms.length" [formGroup]="termsForm" ((ngSubmit)="submitRfq()">
   <div class="row">
     <div class="col-xs-6">
       <h1 mat-dialog-title>Select Purchase Order Approver</h1>

@@ -56,7 +56,7 @@ export const API = {
   ADDSUPPLIERADDRESS: supplierId => `address/add/Supplier/${supplierId}`,
   NUMBERTOWORDS: currency => `commons/numtowords/${currency}`,
   GET_USER_PROFILE: USERID => `user/profile/${USERID}`,
-  GET_ALL_TRADES: "all/tades",
-  SUBMIT_USER_DETAILS: "user/update/profile",
-  GETRFQTERMS: "rfq/payment/terms"
+  GET_ALL_TRADES: 'all/tades',
+  SUBMIT_USER_DETAILS: 'user/update/profile',
+  GET_NOTIFICATIONS: userId => `user/notification/${userId}`
 };
