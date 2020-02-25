@@ -67,6 +67,7 @@ export interface PurchaseOrder {
   qty?: number;
 }
 export interface terms {
+  termsId?: number;
   termsDesc: string;
   termsType: string;
 }

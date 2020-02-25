@@ -38,7 +38,10 @@
           <app-po-documents #poDocument [documentData]="documentList"></app-po-documents>
         </div>
         <form [formGroup]="poTerms"></form>
-        <div class="col-sm-8 hidePoweredBy"><textarea formControlName="textArea" [froalaEditor]="froala" [(froalaModel)]="poTerms.textArea">Hello, Froala!</textarea></div>
+        <div class="col-sm-8 hidePoweredBy" *ngIf="mode === 'edit'">
+          <textarea formControlName="textArea" [froalaEditor]="froala" [(froalaModel)]="poTerms.textArea">Hello, Froala!</textarea>
+        </div>
+        <div class="col-sm-8 hidePoweredBy" *ngIf="mode !== 'edit' && this.terms">{{ terms.termsDesc }}</div>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import {Suppliers} from "./suppliers";
+import { Suppliers } from "./suppliers";
 
 export interface RfqMaterialResponse {
   projectId?: number;
@@ -77,7 +77,7 @@ export interface DocumentDetails {
 }
 
 export interface Terms {
-  termsId: number;
+  termsId?: number;
   termsDesc: string;
   termsType: string;
 }
