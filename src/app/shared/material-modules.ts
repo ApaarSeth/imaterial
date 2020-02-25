@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatRadioModule } from "@angular/material/radio";
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import {
   MatToolbarModule,
@@ -55,4 +55,4 @@ import {
     MatBadgeModule
   ]
 })
-export class MaterialModule {}
+export class MaterialModule { }

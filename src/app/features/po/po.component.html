@@ -37,9 +37,9 @@
         <div class="col-sm-4">
           <app-po-documents #poDocument [documentData]="documentList"></app-po-documents>
         </div>
-        <div class="col-sm-8"></div>
+        <form [formGroup]="poTerms"></form>
+        <div class="col-sm-8 hidePoweredBy"><textarea formControlName="textArea" [froalaEditor]="froala" [(froalaModel)]="poTerms.textArea">Hello, Froala!</textarea></div>
       </div>
     </div>
-    <!-- <button (click)="viewModes()">viewMode</button> -->
   </div>
 </div>
