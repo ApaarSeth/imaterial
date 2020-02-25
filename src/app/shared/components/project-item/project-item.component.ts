@@ -27,6 +27,7 @@ export class ProjectItemComponent implements OnInit {
   id: number;
   permissionObj: any;
   url: string;
+
   constructor(
     private permissionService: PermissionService,
     private router: Router,
@@ -36,6 +37,8 @@ export class ProjectItemComponent implements OnInit {
   @Output("onEdit") onEdit = new EventEmitter<number>();
   @Output("onDelete") onDelete = new EventEmitter<number>();
   @Input("projectDetails") projectDetails: ProjectDetails;
+  @Input("disableEditDelete") disableEditDelete: boolean;
+
   ngOnInit(): void {
     this.permissionObj = this.permissionService.checkPermission();
   }

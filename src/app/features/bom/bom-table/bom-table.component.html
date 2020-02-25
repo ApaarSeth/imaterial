@@ -1,7 +1,7 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <card-layout *ngIf="projectData" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)"
-      [projectDetails]="projectData"></card-layout>
+      [projectDetails]="projectData" [disableEditDelete]="true"></card-layout>
     <div class="row">
       <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input">
@@ -18,22 +18,22 @@
             Create RFQ
           </button>
         </span>
-        <span>
+        <span class="p-l-5">
           <button mat-raised-button class="mr-3 main-background-color main-button color-white pull-right"
             [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
             Raise Indent
           </button>
         </span>
-        <span *ngIf="projectData.openIndentCount>0">
+        <span *ngIf="projectData.openIndentCount>0" class="p-l-5">
           <button mat-raised-button class="mx-3 main-background-color main-button color-white pull-right "
             (click)="viewIndent()">
             View Indent
           </button>
         </span>
-        <span class="p-r-5">
+        <span >
           <button mat-raised-button class="main-background-color main-button color-white pull-right "
             (click)="addMaterial()">
-            Add Material
+            Add/ Edit Material
           </button>
         </span>
       </div>
