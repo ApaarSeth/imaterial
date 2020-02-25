@@ -527,8 +527,8 @@ mat-icon {
     font-size: 10px;
     width: 400px;
     position: relative;
-   // top: 120px;
-   float: right;
+    top: -38px;
+    float: right;
 
     padding: 5px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
@@ -604,7 +604,7 @@ mat-icon {
     }
     .bell-icon{
         display:block;
-        color:white;
+        color:#192135;
     }
     
       .bell-icon:hover{
