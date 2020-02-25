@@ -67,5 +67,6 @@ export const API = {
 
   GET_USER_PROFILE: USERID => `user/profile/${USERID}`,
   GET_ALL_TRADES: 'all/tades',
-  SUBMIT_USER_DETAILS: 'user/update/profile'
+  SUBMIT_USER_DETAILS: 'user/update/profile',
+  GET_NOTIFICATIONS: userId => `user/notification/${userId}`
 };

@@ -1,9 +1,6 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { getLocaleTimeFormat } from "@angular/common";
-import {
-  GlobalStoreMaterial,
-  GlobalProject
-} from "src/app/shared/models/GlobalStore/materialWise";
+import {Component, OnInit, Input} from "@angular/core";
+import {getLocaleTimeFormat} from "@angular/common";
+import {GlobalStoreMaterial, GlobalProject} from "src/app/shared/models/GlobalStore/materialWise";
 
 @Component({
   selector: "app-material-wise",
@@ -14,19 +11,18 @@ export class MaterialWiseComponent implements OnInit {
   @Input("materialData") materialData: GlobalStoreMaterial[];
   newMaterialData: GlobalStoreMaterial[];
   constructor() {}
-
+  searchMaterial: string = "";
+  searchProject: string = "";
   ngOnInit() {
     this.mappingMaterialData();
   }
 
   mappingMaterialData() {
-    this.newMaterialData = this.materialData.map(
-      (material: GlobalStoreMaterial) => {
-        this.mappingIndentToProject(material);
-        this.mappingProjectToMaterial(material);
-        return material;
-      }
-    );
+    this.newMaterialData = this.materialData.map((material: GlobalStoreMaterial) => {
+      this.mappingIndentToProject(material);
+      this.mappingProjectToMaterial(material);
+      return material;
+    });
   }
 
   mappingProjectToMaterial(material: GlobalStoreMaterial) {
@@ -37,10 +33,7 @@ export class MaterialWiseComponent implements OnInit {
       if (!recentDateProject) {
         recentDateProject = proj.Projects.nearDueDate;
       } else {
-        if (
-          proj.Projects.nearDueDate &&
-          new Date(proj.Projects.nearDueDate) > new Date(recentDateProject)
-        ) {
+        if (proj.Projects.nearDueDate && new Date(proj.Projects.nearDueDate) > new Date(recentDateProject)) {
           recentDateProject = proj.Projects.nearDueDate;
         }
       }

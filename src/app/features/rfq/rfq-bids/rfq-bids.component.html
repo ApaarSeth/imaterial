@@ -16,14 +16,12 @@
             <mat-accordion displayMode="flat" multi class="mat-table">
               <mat-expansion-panel class="mat-expansion-panel-body" class="myPanel" [expanded]="true">
                 <mat-expansion-panel-header class="row">
-                  <section matSort class="mat-elevation-z2">
-                    <span
-                      >{{ project.projectName
-                      }}<span class="p-l-5"
-                        >{{ project.addressLine1 }} ,{{ project.addressLine2 }} {{ project.city }} {{ project.pincode }} {{ project.state }} {{ project.country }}
-                      </span></span
-                    >
-                  </section>
+                  <span
+                    >{{ project.projectName
+                    }}<span class="p-l-5 main-color"
+                      >{{ project.addressLine1 }} ,{{ project.addressLine2 }} {{ project.city }} {{ project.pincode }} {{ project.state }} {{ project.country }}
+                    </span></span
+                  >
                 </mat-expansion-panel-header>
                 <div>
                   <section class="mat-elevation-z2 mat-header-row">

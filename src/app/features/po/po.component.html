@@ -1,53 +1,45 @@
 <div class="page-start-point">
-    <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-        <div class="row">
-            <div class="col-sm-12 m-t-5 text-left" *ngIf="this.poMode==='view'">
-                ApproverName
-            </div>
-            <div class="col-sm-12 m-t-5 text-right">
-                <div *ngIf="this.poMode==='edit'">
-                    <button mat-raised-button class="main-background-color main-button color-white "
-                        (click)="selectApprover()">
-                        Send For Approval
-                    </button>
-                </div>
-                <div *ngIf="this.poMode==='requiredApproval'">
-                    <button mat-raised-button class="main-background-color main-button color-white m-r-5"
-                        (click)="poApproval('rejected')">
-                        Reject
-                    </button>
-                    <button mat-raised-button class="main-background-color main-button color-white "
-                        (click)="poApproval('approved')">
-                        Approved
-                    </button>
-                </div>
-            </div>
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+    <div class="row">
+      <div class="col-sm-12 m-t-5 text-left" *ngIf="this.poMode === 'view'">
+        ApproverName
+      </div>
+      <div class="col-sm-12 m-t-5 text-right">
+        <div *ngIf="this.poMode === 'edit'">
+          <button mat-raised-button class="main-background-color main-button color-white " (click)="selectApprover()">
+            Send For Approval
+          </button>
         </div>
-        <div class="main-div-po-outer">
-            <div class="main-div-po m-b-45">
-                <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData">
-                </app-po-card>
-            </div>
-            <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData">
-            </app-po-table>
+        <div *ngIf="this.poMode === 'requiredApproval'">
+          <button mat-raised-button class="main-background-color main-button color-white m-r-5" (click)="poApproval('rejected')">
+            Rejected
+          </button>
+          <button mat-raised-button class="main-background-color main-button color-white " (click)="poApproval('approved')">
+            Approve
+          </button>
         </div>
-
-        <div class="doc-froala-div">
-            <div class="row">
-                <div class="col-sm-12">
-                    <!-- remark -->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <app-po-documents #poDocument [documentData]="documentList"></app-po-documents>
-                </div>
-                <div class="col-sm-8">
-
-                </div>
-            </div>
-
-        </div>
-        <!-- <button (click)="viewModes()">viewMode</button> -->
+      </div>
     </div>
+    <div class="main-div-po-outer">
+      <div class="main-div-po m-b-45">
+        <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData"> </app-po-card>
+      </div>
+      <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData"> </app-po-table>
+    </div>
+
+    <div class="doc-froala-div">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- remark -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <app-po-documents #poDocument [documentData]="documentList"></app-po-documents>
+        </div>
+        <div class="col-sm-8"></div>
+      </div>
+    </div>
+    <!-- <button (click)="viewModes()">viewMode</button> -->
+  </div>
 </div>

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { GlobalStoreMaterial } from "src/app/shared/models/GlobalStore/materialWise";
-import { GlobalProject } from "src/app/shared/models/GlobalStore/projectWise";
+import {Component, OnInit, Input} from "@angular/core";
+import {GlobalStoreMaterial} from "src/app/shared/models/GlobalStore/materialWise";
+import {GlobalProject} from "src/app/shared/models/GlobalStore/projectWise";
 
 @Component({
   selector: "app-project-wise",
@@ -8,11 +8,10 @@ import { GlobalProject } from "src/app/shared/models/GlobalStore/projectWise";
   styleUrls: ["./project-wise.component.scss"]
 })
 export class ProjectWiseComponent implements OnInit {
-
   @Input("projectData") projectData: GlobalProject[];
   newProjectData: GlobalProject[];
-
-  constructor() { }
+  searchProject: string = "";
+  constructor() {}
 
   ngOnInit() {
     this.mappingMaterialData();

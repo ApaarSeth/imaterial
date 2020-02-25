@@ -1,16 +1,25 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height">
-    <a href="javascript:void(0)" (click)="setButtonName('materialWise')">
-      <button [class.active]="buttonName == 'materialWise'" class="color-black" mat-button>
-        Material Wise
-      </button>
-    </a>
+    <div class="row">
+      <div class="col-xs-6">
+        <a href="javascript:void(0)" (click)="setButtonName('materialWise')">
+          <button [class.active]="buttonName == 'materialWise'" class="color-black" mat-button>
+            Material Wise
+          </button>
+        </a>
 
-    <a href="javascript:void(0)" (click)="setButtonName('projectWise')">
-      <button [class.active]="buttonName == 'projectWise'" class="color-black" mat-button>
-        Project Wise
-      </button>
-    </a>
+        <a href="javascript:void(0)" (click)="setButtonName('projectWise')">
+          <button [class.active]="buttonName == 'projectWise'" class="color-black" mat-button>
+            Project Wise
+          </button>
+        </a>
+      </div>
+      <div class="col-xs-6 text-right">
+        <button mat-raised-button (click)="createRfq()" class="main-background-color main-button color-white">
+          Create RFQ
+        </button>
+      </div>
+    </div>
 
     <!-- <mat-card>
       <div class="row">
@@ -34,11 +43,6 @@
       </div>
     </mat-card> -->
 
-    <div class="text-right add-user-details-button-right  p-t-5">
-      <button mat-raised-button (click)="createRfq()" class="main-background-color main-button color-white">
-        Create RFQ
-      </button>
-    </div>
     <div *ngIf="buttonName === 'materialWise'; else elseBlock">
       <app-material-wise [materialData]="globalStoreData"></app-material-wise>
     </div>
