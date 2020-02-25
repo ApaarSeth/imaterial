@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -37,7 +37,8 @@ export class DeactiveUserComponent implements OnInit {
     private dialogRef: MatDialogRef<DeactiveUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserDetailsPopUpData,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private _snackBar:MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -51,7 +52,15 @@ export class DeactiveUserComponent implements OnInit {
       : ({} as AllUserDetails);
 
     if(this.data.isDelete){
-      this.userService.deactivateUser(this.data.detail.userId).then(res =>  res.data);
+      this.userService.deactivateUser(this.data.detail.userId).then(res => {
+         if(res){
+                    this._snackBar.open(res.message, "", {
+                    duration: 2000,
+                    panelClass: ["blue-snackbar"]
+                  });
+                  return res.data;
+              }
+      });
     }
   }
 

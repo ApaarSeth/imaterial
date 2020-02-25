@@ -1,12 +1,26 @@
-<div *ngIf="issueToIndentDetails && issueToIndentDetails.indentDetailList">
+<div *ngIf="issueToIndentDetails && issueToIndentDetails.indentDetailList" class="indent-Modal">
   <div mat-dialog-title>
     <div class="row">
-      <div class="col-xs-3">
-        {{issueToIndentDetails.materialName}}
+      <div class="col-xs-2 font-size-20">
+       Issue to Indent
       </div>
-      <div class="col-xs-4">
-        Available in Stock: {{ issueToIndentDetails.availableStock}} {{issueToIndentDetails.materialUnit}}
-      </div>
+
+      <div class="col-xs-4 mid-head-top">
+        <span>
+          {{issueToIndentDetails.materialName}}
+        </span> 
+       </div>
+       <div class="col-xs-4 mid-head-top">
+          <span>
+           Available in Stock: 
+           {{ issueToIndentDetails.availableStock}} {{issueToIndentDetails.materialUnit}}
+        </span>
+       </div>
+       <div class="col-xs-2">
+          <button type="button"  class="close p-t-7" (click)="onNoClick()" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+       </div>
     </div>
   </div>
 
@@ -22,30 +36,30 @@
         </div>
         <form [formGroup]="materialForms " (ngSubmit)="onSubmit()">
           <div formArrayName="forms" class="row p-t-10 p-b-10 gray-border" *ngFor="let indent of issueToIndentDetails.indentDetailList; let i = index; ">
-            <div class="col-xs-3 formGroup">
+            <div class="col-xs-3 formGroup p-t-12">
               <div>
-                {{indent.indentId}}
-              </div>
+                Intend {{indent.indentId}}
+              </div> 
             </div>
-            <div class="col-xs-2 formGroup">
+            <div class="col-xs-2 formGroup p-t-12 text-align-center p-r-40">
               <div>
                 {{indent.quantity}}
               </div>
             </div>
-            <div class="col-xs-2 formGroup">
+            <div class="col-xs-2 formGroup p-t-12">
               <div>
                 {{indent.dueDate|date: "dd-MMM-yyy"}}
               </div>
             </div>
-            <div class="col-xs-2 formGroup">
-              <div class="issue-qty-div">
-                <div>
-                  {{indent.issuedQty}}
+            <div class="col-xs-2 formGroup p-t-12">
+              <div class="supplier-qty-div">
+                <div class="p-r-50">
+                 {{indent.issuedQty}}
                 </div>
 
-                <div class="show-detail-qty" *ngIf="indent.IssuedQuantityList">
+                <div class="show-detail-supplier" *ngIf="indent.IssuedQuantityList">
                   <img src="../../../../assets/images/i_icon.png" />
-                  <div id="detail-qty">
+                  <div id="detail-supplier">
                     <div class="row">
                       <div class="col-sm-6">
                         <span>Issued Date</span>
@@ -82,13 +96,25 @@
     </div>
   </div>
 
-  <div mat-dialog-actions class="parent">
-    <div class="center-element">
-      <button mat-raised-button class="main-background-color main-button color-white m-b-5" (click)="showIndent()">
+       
+  <div mat-dialog-actions>
+    <div class="col-sm-12 save-btn-add-edit-user-modal">
+        <button
+        mat-raised-button (click)="onNoClick()"
+        class="main-color main-button pull-left"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button (click)="showIndent()"
+        class="main-background-color main-button color-white pull-right"
+      >
         Save
       </button>
     </div>
   </div>
+
+  
 </div>
 <div *ngIf="issueToIndentDetails && (!issueToIndentDetails.indentDetailList)">
   <div mat-dialog-title>

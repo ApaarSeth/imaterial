@@ -55,6 +55,10 @@ export class IssueToIndentDialogComponent implements OnInit {
   }
 
   showIndent() {
+     this.dialogRef.close(this.raiseIndent());
+  }
+
+  raiseIndent(){
      const formValues: sendIssuedQuantityObj[] = [];
     this.materialForms.value.forms.forEach(element => {
       if(element.issuedQty > 0){
@@ -65,7 +69,7 @@ export class IssueToIndentDialogComponent implements OnInit {
     console.log("result", formValues);
 
     this.bomService.postIssueToIndent(this.data.materialId, formValues).then(res => {
-      res.data;
+     return res.data;
     });
   }
 
