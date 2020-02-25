@@ -1,12 +1,22 @@
 <div class="page-start-point">
 
   <ng-container *ngIf="addUserBtn">
-    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
-      <button mat-raised-button (click)="addSupplier()"
-        class="main-background-color main-button color-white btn-width-add-users center-screen-btn">
-        Add First Supplier
-      </button>
-    </div>
+      <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+     <div class="add-user-img">
+          <img src="../../../../assets/images/supplier-background.png" alt="BuildSupply_Logo">
+             <div>
+                  <p>
+                    You haven't added any supplier yet. <br>
+                    Please create one to continue.
+                  </p>
+            </div>
+                <button  mat-raised-button  (click)="addSupplier()" class="main-background-color main-button color-white">
+                  Add First Supplier
+                </button>
+  </div>
+        </div>
+       
+       
   </ng-container>
 
 

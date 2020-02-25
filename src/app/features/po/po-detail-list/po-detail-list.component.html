@@ -46,7 +46,7 @@
       <div class="po-list-detail-custom">
         <div *ngIf="poApprovalDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
                 P.O. For Approval
               </mat-panel-title>
@@ -96,7 +96,7 @@
         <br>
         <div *ngIf="poDraftedDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
                 Drafted P.O.
               </mat-panel-title>
@@ -152,7 +152,7 @@
         <br>
         <div *ngIf="acceptedRejectedPOListTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
                 Approved P.O.
               </mat-panel-title>

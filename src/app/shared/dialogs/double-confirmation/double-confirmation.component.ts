@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -21,6 +21,7 @@ export class DoubleConfirmationComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<DoubleConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
+    private _snackBar: MatSnackBar,
     private projectService: ProjectService
   ) {}
 
@@ -37,6 +38,14 @@ export class DoubleConfirmationComponent implements OnInit {
       .delete(this.projectDetails.organizationId, this.projectDetails.projectId)
       .then(res => {
         res.data;
+        if(res){
+        
+            this._snackBar.open(res.message, "", {
+            duration: 2000,
+            panelClass: ["blue-snackbar"]
+          });
+      
+        }
         this.close();
       });
   }

@@ -2,10 +2,20 @@
 
 <ng-container *ngIf="addUserBtn">
    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
-        <button  mat-raised-button  (click)="addUser()" class="main-background-color main-button color-white btn-width-add-users center-screen-btn">
-          Add First User
-        </button>
+     <div class="add-user-img">
+          <img src="../../../../assets/images/user-background.png" alt="BuildSupply_Logo">
+             <div>
+                  <p>
+                    You haven't added any user yet. <br>
+                    Please create one to continue.
+                  </p>
+            </div>
+                  <button  mat-raised-button  (click)="addUser()" class="main-background-color main-button color-white">
+                Add First User
+              </button>
+        </div>
   </div> 
+ 
 </ng-container>
 
 <ng-container *ngIf="!addUserBtn">
@@ -33,7 +43,7 @@
         </mat-form-field>
       </div>
       <div class="col-xs-9">
-           <div class="text-right add-user-details-button-right p-r-20">
+           <div class="text-right add-user-details-button-right p-t-10 p-r-20">
               <button mat-raised-button (click)="addUser()"
                 class="main-background-color main-button color-white">
                 Add User
@@ -43,10 +53,10 @@
   </div>
 
 
-<ng-container *ngIf="dataSourceActivateTemp.length > 0">
+<ng-container *ngIf="dataSourceActivateTemp.length > 0" class="user-dts">
   <mat-expansion-panel class="myPanel" [expanded]="true">
-    <mat-expansion-panel-header>
-      <div class="row p-t-10 p-b-10">
+    <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+      <div class="row ">
         <div class="col-sm-12">
             <span>Active Users</span>
         </div>
@@ -120,7 +130,7 @@
             </td>
           </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
         </div>
@@ -131,10 +141,10 @@
 </ng-container>
 <p></p>
 
-<ng-container *ngIf="dataSourceDeactivateTemp && dataSourceDeactivateTemp.length > 0">
+<ng-container *ngIf="dataSourceDeactivateTemp && dataSourceDeactivateTemp.length > 0" class="user-dts">
   <mat-expansion-panel  class="myPanel" [expanded]="true">
-    <mat-expansion-panel-header>
-      <div class="row p-t-10 p-b-10">
+    <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+      <div class="row">
         <div class="col-sm-12">
             <span>Deactivated Users</span>
         </div>
@@ -199,7 +209,7 @@
             </td>
           </ng-container> -->
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsDeactivate"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsDeactivate;sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumnsDeactivate"></tr>
         </table>
         </div>
