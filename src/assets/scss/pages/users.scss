@@ -9,9 +9,21 @@
 }
 .btn-width-add-users{
     width: 275px;
+    top: 78%;
+    margin:10px auto;
 }
 
-
+.add-user-img{
+     img{
+         margin-top: 5%;
+     }
+     div{
+         margin-top: 15px;
+     }
+     button{
+         min-width:164px;
+     }
+}
 .add-edit-user-form-modal {
   width: 90%;
   padding-left: 5%;
@@ -26,11 +38,18 @@
     display: flex; 
     justify-content: center;
 }
-
+.user-dts{
+     .myPanel{
+         .mat-expansion-panel-header#mat-expansion-panel-header-0{
+             height: 48px !important;
+         }
+     }
+}
 .user-details-table-div{
    max-height: 400px;
    width: 100%;
-   overflow: auto;
+   overflow-y: auto;
+  
    table{
        border-left: 1px solid #d6d6d6;
    }
@@ -217,6 +236,12 @@
     }
 }
 
+.add-edit-user-modal-form{
+    mat-form-field{
+        width: 100%;
+        padding-left:0px;
+    }
+}
 .user-photo {
     height: 90px;
     min-width: 90px;

@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -39,7 +39,8 @@ export class DeactiveSupplierComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: SupplierDetailsPopUpData,
     private formBuilder: FormBuilder,
     private router: Router,
-    private rfqService: RFQService
+    private rfqService: RFQService,
+    private _snackBar:MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -53,6 +54,14 @@ export class DeactiveSupplierComponent implements OnInit {
 
     if(this.data.isDelete){
      this.rfqService.deleteSuplier(this.supplierDetails.supplierId).then(data => {
+       if(data){
+          
+            this._snackBar.open(data.message, "", {
+            duration: 2000,
+            panelClass: ["blue-snackbar"]
+          });
+      
+       }
          return data.data;
        });
     }

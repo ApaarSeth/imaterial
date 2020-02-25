@@ -105,10 +105,6 @@ export class BomTableComponent implements OnInit {
       // this.dataSource = res.data;
       // this.dataSource.sort = this.sort;
       this.loading.hide();
-      this.snack.open(res.message, "", {
-        duration: 2000,
-        panelClass: ["blue-snackbar"]
-      });
     });
   }
   applyFilter(event: Event) {

@@ -34,11 +34,14 @@
                     <div class="row">
                         <div class="col-xs-6">
                             <mat-list>
-                                <h3 mat-subheader class="header-card-po">Contract Detail</h3>
-                                <mat-list-item mat-subheader> Project Name:
+                                <h3 mat-subheader class="header-card-po border-none">Contract Detail</h3>
+                                <mat-list-item mat-subheader> <span class="font-weight-500">Project Name:</span>
                                     <span>{{cardData.projectAddress.projectName}}</span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> Contact Person:<span>
+                                <mat-list-item mat-subheader> <span class="font-weight-500">    
+                                Contact Person:
+                                </span>
+                                <span>
                                         {{cardData.projectAddress.firstName}}
                                         {{cardData.projectAddress.lastName}}</span>
                                     <span *ngIf="mode==='edit'">
@@ -50,17 +53,27 @@
 
                                     </span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> Phone
-                                    No.:<span>{{cardData.projectAddress.contactNo}}</span>
+                                <mat-list-item mat-subheader> 
+                                    <span class="font-weight-500">
+                                    Phone
+                                    No.:
+                                    </span>
+                                    <span>{{cardData.projectAddress.contactNo}}</span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> Email.:<span>
+                                <mat-list-item mat-subheader> 
+                                   <span class="font-weight-500">
+                                   Email:
+                                   </span>
+                                    <span>
                                         {{cardData.projectAddress.email}}</span>
                                 </mat-list-item>
                             </mat-list>
                         </div>
                         <div class="col-xs-6">
                             <mat-list class="delivery-address-po-card">
-                                <mat-list-item mat-subheader> Delivery Address</mat-list-item>
+                                <mat-list-item mat-subheader>
+                                     Delivery Address
+                                     </mat-list-item>
                                 <span>{{cardData.projectAddress.addressLine1}}</span>
                                 <br>
                                 <span
@@ -78,17 +91,30 @@
                 <div class="col-xs-12 pull-left">
                     <mat-list>
                         <h3 mat-subheader class="header-card-po">Purchase Order Awarded To:</h3>
-                        <mat-list-item mat-subheader> Supplier Name:
+                        <mat-list-item mat-subheader> 
+                            <span class="font-weight-500">
+                            Supplier Name:    
+                            </span>
                             <span>{{cardData.supplierAddress.supplierName}}</span>
                         </mat-list-item>
-                        <mat-list-item mat-subheader> Contact Person:
+                        <mat-list-item mat-subheader> 
+                            <span class="font-weight-500">
+                            Contact Person:
+                            </span>
                             <span>{{cardData.supplierAddress.supplierName}}</span>
 
                         </mat-list-item>
-                        <mat-list-item mat-subheader> Phone No.:<span>
+                        <mat-list-item mat-subheader> 
+                            <span class="font-weight-500">
+                            Phone No.:
+                            </span>
+                            <span>
                                 {{cardData.supplierAddress.contactNo}}</span>
                         </mat-list-item>
-                        <mat-list-item mat-subheader> Street Address:
+                        <mat-list-item mat-subheader> 
+                            <span class="font-weight-500">
+                            Street Address:
+                            </span>
                             <span>{{cardData.supplierAddress.addressLine1}}
                                 {{cardData.supplierAddress.addressLine2}}</span>
                             <span *ngIf="mode==='edit'">
@@ -99,13 +125,22 @@
                                     </i></a>
                             </span>
                         </mat-list-item>
-                        <mat-list-item mat-subheader> Pin Code:
+                        <mat-list-item mat-subheader> 
+                            <span class="font-weight-500">
+                            Pin Code:
+                            </span>
                             <span>{{cardData.supplierAddress.pinCode}}</span>
                         </mat-list-item>
                         <mat-list-item mat-subheader>
-                            City:<span>{{cardData.supplierAddress.city}} </span>
+                            <span class="font-weight-500">
+                            City:
+                            </span>
+                            <span>{{cardData.supplierAddress.city}} </span>
                         </mat-list-item>
-                        <mat-list-item mat-subheader> GSTIN:
+                        <mat-list-item mat-subheader> 
+                            <span class="font-weight-500">
+                            GSTIN:
+                            </span>
                             <span>{{cardData.supplierAddress.gstNo}}</span>
                         </mat-list-item>
                     </mat-list>
@@ -114,13 +149,19 @@
             <mat-grid-tile [colspan]="1" [rowspan]="2" class="third-mat-grid">
                 <div class="col-xs-12 pull-left">
                     <mat-list>
-                        <h3 mat-subheader class="header-card-po">Billing Address</h3>
+                        <h3 mat-subheader class="header-card-po border-none">Billing Address</h3>
                         <div class="row">
                             <div class="col-xs-6">
-                                <mat-list-item mat-subheader> Company Name:
+                                <mat-list-item mat-subheader> 
+                                    <span class="font-weight-500">
+                                    Company Name:
+                                    </span>
                                     <span>{{cardData.billingAddress.companyName}}</span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> Contact Person:
+                                <mat-list-item mat-subheader> 
+                                    <span class="font-weight-500">
+                                    Contact Person:
+                                    </span>
                                     <span>{{cardData.billingAddress.firstName}}
                                         {{cardData.billingAddress.lastName}}</span>
                                     <span *ngIf="mode==='edit'">
@@ -131,14 +172,25 @@
                                             </i></a>
                                     </span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> Phone
-                                    No.:<span>{{cardData.billingAddress.contactNo}}</span>
+                                <mat-list-item mat-subheader> 
+                                    <span class="font-weight-500">
+                                    Phone
+                                    No.:
+                                    </span>
+                                    
+                                    <span>{{cardData.billingAddress.contactNo}}</span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> Email.:
+                                <mat-list-item mat-subheader> 
+                                    <span class="font-weight-500">
+                                    Email.:
+                                    </span>
                                     <span>{{cardData.billingAddress.email}}</span></mat-list-item>
                             </div>
                             <div class="col-xs-6">
-                                <mat-list-item mat-subheader> Street Address:
+                                <mat-list-item mat-subheader> 
+                                    <span class="font-weight-500">
+                                    Street Address:
+                                    </span>
                                     <span> {{cardData.billingAddress.addressLine1}}
                                         {{cardData.billingAddress.addressLine2}}</span>
                                     <span *ngIf="mode==='edit'">
@@ -149,11 +201,24 @@
                                             </i></a></span>
                                 </mat-list-item>
 
-                                <mat-list-item mat-subheader> Pin Code:<span>{{cardData.billingAddress.pinCode}}</span>
+                                <mat-list-item mat-subheader> 
+                                    <span class="font-weight-500">
+                                    Pin Code:
+                                    </span>
+                                    
+                                    <span>{{cardData.billingAddress.pinCode}}</span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> City:<span>{{cardData.billingAddress.city}}</span>
+                                <mat-list-item mat-subheader> 
+                                    <span class="font-weight-500">
+                                    City:
+                                    </span>
+                                    <span>{{cardData.billingAddress.city}}</span>
                                 </mat-list-item>
-                                <mat-list-item mat-subheader> GSTIN:<span>{{cardData.billingAddress.gstNo}}</span>
+                                <mat-list-item mat-subheader> 
+                                  <span class="font-weight-500">
+                                  GSTIN:
+                                  </span>  
+                                    <span>{{cardData.billingAddress.gstNo}}</span>
                                 </mat-list-item>
                             </div>
                         </div>

@@ -23,3 +23,26 @@
                     padding-left:48px;
                 }
 }
+.bom-details-table-div-part{
+    max-height: 453px;
+    overflow-y: auto;
+    table{
+         width: 100%;
+    }
+}
+.indent-Modal{
+    .mat-form-field-appearance-legacy .mat-form-field-wrapper{
+        padding-top: 0px !important;
+    }
+    .mid-head-top{
+        font-size: 16px;
+        padding-top:3px;
+        text-align: center;
+    }
+    .p-t-7{
+        padding-top:7px !important;
+    }
+    .p-t-12{
+        padding-top:12px !important;
+    }
+}

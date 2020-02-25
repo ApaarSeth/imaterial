@@ -78,7 +78,7 @@ export class SupplierDetailComponent implements OnInit {
   openDialog(data: SupplierDetailsPopUpData): void {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(SuppliersDialogComponent, {
-        width: "800px",
+        width: "660px",
         data
       });
 
@@ -102,7 +102,7 @@ export class SupplierDetailComponent implements OnInit {
   openDialogDeactiveUser(data: SupplierDetailsPopUpData): void {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(DeactiveSupplierComponent, {
-        width: "800px",
+        width: "500px",
         data
       });
       dialogRef.afterClosed().toPromise().then(() => {

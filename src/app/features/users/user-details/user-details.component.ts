@@ -111,7 +111,7 @@ export class UserDetailComponent implements OnInit {
     openDialog(data: UserDetailsPopUpData): void {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(AddEditUserComponent, {
-        width: "800px",
+        width: "660px",
         data
       });
       
@@ -136,7 +136,7 @@ export class UserDetailComponent implements OnInit {
    openDialogDeactiveUser(data: UserDetailsPopUpData): void {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(DeactiveUserComponent, {
-        width: "800px",
+        width: "500px",
         data
       });
       dialogRef.afterClosed().toPromise().then(data => {
