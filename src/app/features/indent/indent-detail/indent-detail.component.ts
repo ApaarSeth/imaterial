@@ -28,7 +28,7 @@ export class IndentDetailComponent implements OnInit {
   projectId: number;
 
   displayedColumns: string[] = [
-    "Indent Name",
+    "Indent Number",
     "Requested Date",
     "Total No Of Material",
     "Created By",

@@ -25,8 +25,8 @@ export class HeaderLayoutComponent implements OnInit {
   notificationObj: NotificationInt[] = [];
   readnotification: NotificationInt[] = [];
   unreadnotification: NotificationInt[] = [];
-  unreadnotificationLength: number;
-  allnotificationLength: number;
+  unreadnotificationLength: number = null;
+  allnotificationLength: number = null;
   constructor(
      private userService: UserService,
     private permissionService: PermissionService,
@@ -51,10 +51,10 @@ export class HeaderLayoutComponent implements OnInit {
                 }
               })
 
-               if(this.unreadnotification)
+               if(this.unreadnotification && this.unreadnotification.length>0)
                 this.unreadnotificationLength = this.unreadnotification.length;
 
-                if(this.readnotification && this.unreadnotification)
+                if(this.readnotification && this.unreadnotification && this.readnotification.length>0 && this.unreadnotification.length>0)
                 this.allnotificationLength = this.readnotification.length + this.unreadnotification.length;
       }
     })
