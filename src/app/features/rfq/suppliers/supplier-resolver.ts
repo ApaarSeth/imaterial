@@ -12,7 +12,6 @@ export class RFQSuppliersResolver implements Resolve<any> {
     let orgId = Number(localStorage.getItem('orgId'))
     return this.rfqService.getSuppliers(orgId).then(data => {
       return data.data;
-      debugger
     });
   }
 

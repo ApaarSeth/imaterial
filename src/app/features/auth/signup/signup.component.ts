@@ -94,7 +94,6 @@ export class SignupComponent implements OnInit {
 
   // getUserInformation(userId){
   //   this._userService.getUserInfo(userId).then(res => {
-  //     debugger
   //     console.log(res);
   //     if(res.data[0].roleId){
   //       this.router.navigate(["/dashboard"]);
