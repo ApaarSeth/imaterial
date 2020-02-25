@@ -47,14 +47,15 @@ const routes: Routes = [
     canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
-        path: "dashboard",
+        path: "project-dashboard",
         component: DashboardComponent,
+        data: { title: 'Project Dashboard' }
         // resolve: { dashBoardData: DashBoardResolver }
       },
       {
-        path: 'app-dashboard',
+        path: 'dashboard',
         component: AppDashboardComponent,
-        data: { title: 'App Dashboard' }
+        data: { title: 'Dashboard' }
       },
       {
         path: "bom/:id",

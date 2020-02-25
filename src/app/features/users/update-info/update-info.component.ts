@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserRoles, UserDetails, TradeList } from 'src/app/shared/models/user-details';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { Router } from '@angular/router';
+import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 
 export interface City {
   value: string;
@@ -22,6 +23,8 @@ export class UpdateInfoComponent implements OnInit {
   users: UserDetails;
   tradeList: TradeList;
   selectedTrades: any[] = [];
+  localImg: string | ArrayBuffer;
+  filename: string;
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
@@ -31,7 +34,8 @@ export class UpdateInfoComponent implements OnInit {
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
-    private _router: Router) { }
+    private _router: Router,
+    private _uploadImageService: DocumentUploadService) { }
 
   ngOnInit() {
     const userId = localStorage.getItem("userId");
@@ -88,9 +92,11 @@ export class UpdateInfoComponent implements OnInit {
       pan: [''],
       gstNo: [''],
 
-      profileUrl: ['']
+      profileUrl: [''],
 
-    })
+      file: ['']
+
+    });
   }
 
   changeSelected(parameter: string, query: string) {
@@ -100,7 +106,29 @@ export class UpdateInfoComponent implements OnInit {
     } else {
       this.selectedTrades.push(query);
     }
-    // console.log(this.selectedTrades);
+  }
+
+  onFileSelect(event) {
+    if (event.target.files.length > 0) {
+        var reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = (event) => {
+            this.localImg = (<FileReader>event.target).result;
+        }
+        const file = event.target.files[0];
+        this.uploadImage(file);
+    }
+  }
+
+  uploadImage(file){
+    if (file) {
+      const data = new FormData();
+      data.append(`file`, file);
+      return this._uploadImageService.postDocumentUpload(data).then(res => {
+          this.userInfoForm.get('profileUrl').setValue(res.data);
+          debugger
+      });
+    }
   }
 
   submit(){
