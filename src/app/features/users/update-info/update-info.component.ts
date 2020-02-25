@@ -39,9 +39,12 @@ export class UpdateInfoComponent implements OnInit {
 
   ngOnInit() {
     const userId = localStorage.getItem("userId");
-    this.getUserRoles();
-    this.getUserInformation(userId);
-    this.getTradesList();
+    const role = localStorage.getItem("role");
+    // if(!role){
+      this.getUserRoles();
+      this.getUserInformation(userId);
+      this.getTradesList();
+    // }
   }
 
   getUserRoles() {

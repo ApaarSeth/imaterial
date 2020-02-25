@@ -72,7 +72,8 @@ export class SignupComponent implements OnInit {
         localStorage.setItem("userId", data.data.serviceRawResponse.data.userId);
         localStorage.setItem("orgId", data.data.serviceRawResponse.data.orgId);
 
-        if (data.data.serviceRawResponse.data.role || this.uniqueCode !== "") {
+        // if (data.data.serviceRawResponse.data.role || this.uniqueCode !== "") {
+          if (this.uniqueCode) {
           this.router.navigate(["/dashboard"]);
         } else {
           this.router.navigate(["/users/organisation/update-info"]);

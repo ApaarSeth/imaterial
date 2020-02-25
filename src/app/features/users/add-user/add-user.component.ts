@@ -45,7 +45,9 @@ export class AddUserComponent implements OnInit {
 
   getUserData(userId){
     this._userService.getUserInfo(userId).then(res => {
-      localStorage.setItem("role", res.data[0].roleName);
+      if(res.data[0].roleName){
+        localStorage.setItem("role", res.data[0].roleName);
+      }
     });
   }
 

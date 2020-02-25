@@ -1,9 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { DashboardComponent } from "./features/dashboard/dashboard.component";
-import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resolver";
 import { BomResolver } from "./features/bom/bom.resolver";
-import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
 import { AuthLayoutComponent } from "./shared/layout/auth-layout/auth-layout.component";
 import { MainLayoutComponent } from "./shared/layout/main-layout/main-layout.component";
 import { NotFoundComponent } from "./features/not-found/not-found.component";
@@ -32,7 +30,7 @@ const routes: Routes = [
   {
     path: "",
     component: AuthLayoutComponent,
-    canActivate: [UserDataGuardService],
+    // canActivate: [UserDataGuardService],
     children: [
       {
         path: "auth",
