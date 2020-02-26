@@ -40,7 +40,7 @@ export class CreateRfqComponent implements OnInit {
     private rfqService: RFQService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -96,12 +96,6 @@ export class CreateRfqComponent implements OnInit {
         this.rfqMaterial = res.data;
       });
     }
-    // else if (event.selectedIndex === 1) {
-
-    //   if (this.qtyMakes.getFormStatus()) {
-    //     this.completed = true;
-    //   }
-    // }
   }
 
   goBack(stepper: MatStepper) {

@@ -47,7 +47,6 @@
             Material Name
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
-            <!-- <input type="checkbox" /> -->
             <mat-checkbox #ch (change)="getElemenetChecked(ch,element)" [checked]=" element.checked">
               <div class="limited-character" matTooltip=" {{ element.materialName }}">
                 {{ element.materialName }} <br>

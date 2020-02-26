@@ -16,19 +16,21 @@
     <div class="col-xs-6">
       <ng-container *ngFor="let term of rfqTerms">
         <mat-radio-group name="term" aria-labelledby="example-radio-group-label" class="display-block" formControlName="term">
-          <mat-radio-button class="example-radio-button" [value]="term">
+          <mat-radio-button class="example-radio-button" [value]="term" (change)="change(term.termsDesc)">
             {{ term.termsDesc }}
           </mat-radio-button>
         </mat-radio-group>
       </ng-container>
     </div>
     <div class="col-xs-6">
-      <span *ngIf="[termsForm][controls][term].value.termsDesc === 'Others'">
-        <mat-form-field class="example-full-width">
-          <mat-label>Term Desc</mat-label>
-          <textarea matInput formControlName="customTerm" placeholder="Custom Term Desc"></textarea>
-        </mat-form-field>
-      </span>
+      <form *ngIf="this.selectedPayment === 'Others'" [formGroup]="customTermForm">
+        <span *ngIf="rfqTerms.length && this.selectedPayment === 'Others'">
+          <mat-form-field class="example-full-width">
+            <mat-label>Term Desc</mat-label>
+            <textarea matInput formControlName="customTerm" placeholder="Custom Term Desc"></textarea>
+          </mat-form-field>
+        </span>
+      </form>
     </div>
   </div>
 </form>

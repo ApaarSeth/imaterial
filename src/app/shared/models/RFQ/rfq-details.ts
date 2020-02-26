@@ -80,4 +80,5 @@ export interface Terms {
   termsId?: number;
   termsDesc: string;
   termsType: string;
+  otherDesc?: string;
 }
