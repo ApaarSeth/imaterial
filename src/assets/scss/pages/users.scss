@@ -55,6 +55,18 @@
    }
 }
 
+
+.user-details-table-div-active-inactive{
+        overflow-y: scroll;
+        max-height: 166px;
+        overflow-x: hidden;
+        width: 99.5%;;
+
+        table{
+             border-left: 1px solid #d6d6d6;
+        }
+}
+
 .btn-project-user-details{
     background:	#F0F0F0;
     margin: 3px 1px;

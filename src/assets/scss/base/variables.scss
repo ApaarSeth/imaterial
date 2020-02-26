@@ -272,7 +272,9 @@ a:hover {
   position: relative;
   top: 45px;
 }
-
+.border-radius {
+  border-radius: 10px;
+}
 //Muskaan's edit
 .round-button {
   border: none;
@@ -446,23 +448,27 @@ mat-accordion {
   color: red;
 }
 
-  .justify-center{
-    .mat-sort-header-container{
-      justify-content: center;
-    }
+.justify-center {
+  .mat-sort-header-container {
+    justify-content: center;
   }
-  
-  .mat-dialog-container{
-    padding-top: 5px !important;
-  }
-  
-  // .mat-header-cell{
-  //   background: #1997bbs !important;
-  // }
-  .mat-checkbox-inner-container{
-    width: 19px !important;
-    height: 19px !important;
-  }
+}
+
+.mat-dialog-container {
+  padding-top: 5px !important;
+}
+
+// .mat-header-cell{
+//   background: #1997bbs !important;
+// }
+.mat-checkbox-inner-container {
+  width: 19px !important;
+  height: 19px !important;
+}
 .display-block {
   display: block;
+}
+
+.hidden {
+  visibility: hidden;
 }

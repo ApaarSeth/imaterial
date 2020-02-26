@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: "./selectrfq-terms.component.html"
 })
 export class SelectRfqTermsComponent implements OnInit {
+  selectedPayment: string = '';
   constructor(
     private router: Router,
     public dialogRef: MatDialogRef<SelectRfqTermsComponent>,
@@ -33,7 +34,7 @@ export class SelectRfqTermsComponent implements OnInit {
       term: [this.rfqTerms[0], [Validators.required]]
     });
     this.customTermForm = this.formBuilder.group({
-      customTerm: []
+      customTerm: [{ value: '', disabled: true }]
     });
   }
 
@@ -49,8 +50,9 @@ export class SelectRfqTermsComponent implements OnInit {
   submitRfq() {
     this.data.terms = {
       termsId: this.termsForm.value.term.termsId,
-      termsDesc: this.termsForm.value.term.termsDesc !== "Others" ? this.termsForm.value.term.termsDesc : this.customTermForm.value.customTerm.termsDesc,
-      termsType: "RFQ"
+      termsDesc: this.selectedPayment,
+      termsType: "RFQ",
+      otherDesc: this.selectedPayment === 'Others' ? this.customTermForm.value.customTerm : ''
     };
     this.rfqService.addRFQ(this.data).then(res => {
       let finalRfq = res.data;
@@ -59,5 +61,15 @@ export class SelectRfqTermsComponent implements OnInit {
       });
       this.dialogRef.close();
     });
+  }
+
+  change(event) {
+    this.selectedPayment = event.trim();
+    if (this.selectedPayment === 'Others') {
+      this.customTermForm.get("customTerm").enable()
+    }
+    else {
+      this.customTermForm.get("customTerm").disable()
+    }
   }
 }

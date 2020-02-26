@@ -17,6 +17,7 @@
     <span class="mat-header-cell" mat-sort-header="availableQuantity">Available quantity in project</span>
   </section>
 
+<div class="global-panel">
   <mat-expansion-panel *ngFor="let project of newProjectData | SearchPipe: searchProject:'ProjectGlobal':'projectName'" class="myPanel">
     <mat-expansion-panel-header class="mat-row material-row">
       <span class="mat-cell">{{ project.ProjectGlobal.projectName }}</span>
@@ -58,4 +59,5 @@
       </ng-container>
     </mat-expansion-panel>
   </mat-expansion-panel>
+  </div>
 </mat-accordion>

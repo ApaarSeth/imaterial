@@ -1,31 +1,31 @@
-import {Component, OnInit, ChangeDetectorRef, ViewChild} from "@angular/core";
-import {trigger, state, style, transition, animate} from "@angular/animations";
-import {Observable, of} from "rxjs";
-import {DataSource} from "@angular/cdk/table";
-import {MatTableDataSource} from "@angular/material/table";
-import {Data, ActivatedRoute, Router} from "@angular/router";
-import {ProjectService} from "src/app/shared/services/projectDashboard/project.service";
-import {ProjectDetails, ProjetPopupData} from "src/app/shared/models/project-details";
-import {AddProjectComponent} from "src/app/shared/dialogs/add-project/add-project.component";
-import {DoubleConfirmationComponent} from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import {MatDialog, MatSnackBar, MatSort, MatCheckbox} from "@angular/material";
-import {BomService} from "src/app/shared/services/bom/bom.service";
-import {Subcategory, Materials} from "src/app/shared/models/subcategory-materials";
-import {IssueToIndentDialogComponent} from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
-import {Projects} from "src/app/shared/models/GlobalStore/materialWise";
-import {DeleteBomComponent} from "src/app/shared/dialogs/delete-bom/delete-bom.component";
-import {GlobalLoaderService} from "src/app/shared/services/global-loader.service";
-import {RFQService} from "src/app/shared/services/rfq/rfq.service";
-import {AddRFQ, RfqMat} from "src/app/shared/models/RFQ/rfq-details";
-import {PermissionService} from "src/app/shared/services/permission.service";
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
+import { trigger, state, style, transition, animate } from "@angular/animations";
+import { Observable, of } from "rxjs";
+import { DataSource } from "@angular/cdk/table";
+import { MatTableDataSource } from "@angular/material/table";
+import { Data, ActivatedRoute, Router } from "@angular/router";
+import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
+import { ProjectDetails, ProjetPopupData } from "src/app/shared/models/project-details";
+import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
+import { MatDialog, MatSnackBar, MatSort, MatCheckbox } from "@angular/material";
+import { BomService } from "src/app/shared/services/bom/bom.service";
+import { Subcategory, Materials } from "src/app/shared/models/subcategory-materials";
+import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
+import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
+import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom.component";
+import { GlobalLoaderService } from "src/app/shared/services/global-loader.service";
+import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
+import { PermissionService } from "src/app/shared/services/permission.service";
 
 @Component({
   selector: "app-bom-table",
   templateUrl: "./bom-table.component.html",
   animations: [
     trigger("detailExpand", [
-      state("collapsed", style({height: "0px", minHeight: "0", visibility: "hidden"})),
-      state("expanded", style({height: "*", visibility: "visible"})),
+      state("collapsed", style({ height: "0px", minHeight: "0", visibility: "hidden" })),
+      state("expanded", style({ height: "*", visibility: "visible" })),
       transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)"))
     ])
   ]
@@ -66,7 +66,7 @@ export class BomTableComponent implements OnInit {
 
     private loading: GlobalLoaderService,
     private snack: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -86,7 +86,8 @@ export class BomTableComponent implements OnInit {
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
-      this.subcategories = [...res.data];
+      this.subcategories = [];
+      this.subcategories = res.data;
       console.log(this.subcategories);
       this.subcategories.forEach(subcategory => {
         if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
@@ -133,7 +134,7 @@ export class BomTableComponent implements OnInit {
     if (this.checkedSubcategory.length) {
       let checkedList = this.checkedSubcategory;
       this.router.navigate(["/indent/" + this.projectId], {
-        state: {checkedList}
+        state: { checkedList }
       });
     }
   }
@@ -212,8 +213,8 @@ export class BomTableComponent implements OnInit {
     };
     this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
     this.rfqService.addRFQ(this.addRfq).then(res => {
-      this.router.navigate(["/rfq/createRfq", {selectedIndex: 2}], {
-        state: {rfqData: res}
+      this.router.navigate(["/rfq/createRfq", { selectedIndex: 2 }], {
+        state: { rfqData: res }
       });
       console.log(res.data);
     });
@@ -253,7 +254,7 @@ export class BomTableComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -263,18 +264,18 @@ export class BomTableComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     }
   }
   addMaterial() {
     this.router.navigate(["/bom/" + this.projectId]);
   }
 
-  openDialog1(materialId, projectId): void {
+  issueToIndent(materialId, projectId): void {
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(IssueToIndentDialogComponent, {
         width: "1200px",
-        data: {materialId: materialId, projectId: projectId}
+        data: { materialId: materialId, projectId: projectId }
       });
       dialogRef.afterClosed().subscribe(result => {
         this.getMaterialWithQuantity();
@@ -287,7 +288,7 @@ export class BomTableComponent implements OnInit {
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(DeleteBomComponent, {
         width: "800px",
-        data: {materialId: materialId, projectId: projectId}
+        data: { materialId: materialId, projectId: projectId }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result.data == "close") {
