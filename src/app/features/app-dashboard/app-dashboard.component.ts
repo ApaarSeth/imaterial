@@ -19,6 +19,7 @@ export class AppDashboardComponent implements OnInit {
   userId: number;
   projectCount: number;
   projectLists: ProjectDetails[];
+  label: string;
 
   constructor(public dialog: MatDialog,
     private router: Router,
@@ -28,7 +29,7 @@ export class AppDashboardComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.getDashboardInfo();
+    this.getDashboardInfo('po');
     this.getProjectsNumber();
   }
 
@@ -47,12 +48,12 @@ export class AppDashboardComponent implements OnInit {
     });
   }
 
-  getDashboardInfo(){
+  getDashboardInfo(label){
     const data = {
       "orgId": 21,
       "startDate":"2020-01-01T18:30:00.000Z",
       "endDate":"2020-09-28T18:30:00.000Z",
-      "dataSource":"po"
+      "dataSource": label
     }
 
     this._userService.getDashboardData(data).then(res => {
@@ -62,8 +63,24 @@ export class AppDashboardComponent implements OnInit {
 
   onTabChanged($event) {
     let clickedIndex = $event.index;
-    debugger
-    
+    switch (clickedIndex) {
+      case 0: {
+          this.label = 'po';
+          break;
+      }
+      case 1: {
+        this.label = 'rfq';
+          break;
+      }
+      case 2: {
+        this.label = 'indent';
+        break;
+      }
+      default: {
+          return;
+      }
+    }
+    this.getDashboardInfo(this.label);
   }
 
   getProjectsNumber(){
