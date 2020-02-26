@@ -5,7 +5,8 @@ import {
   PoMaterial,
   CardData,
   poApproveReject,
-  DocumentList
+  DocumentList,
+  terms
 } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
@@ -14,6 +15,7 @@ import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover
 import { PoDocumentsComponent } from "./po-documents/po-documents.component";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Terms } from 'src/app/shared/models/RFQ/rfq-details';
 
 @Component({
   selector: "app-po",
@@ -33,6 +35,7 @@ export class PoComponent implements OnInit {
   @ViewChild("poCard", { static: false }) poCard: PoCardComponent;
   @ViewChild("poDocument", { static: false }) poDocument: PoDocumentsComponent;
   documentList: DocumentList[];
+  terms: terms;
   poTerms: FormGroup;
   constructor(
     private router: Router,
@@ -42,15 +45,15 @@ export class PoComponent implements OnInit {
     private formBuilder: FormBuilder
   ) { }
   poId: number;
-  poMode: string;
+  mode: string;
   ngOnInit() {
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
-      this.poMode = poParams.mode;
+      this.mode = poParams.mode;
     });
     this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
-      console.log(this.poData);
+      console.log("poData", this.poData);
       this.tableData = this.poData.materialData;
       this.cardData = {
         supplierAddress: this.poData.supplierAddress,
@@ -61,6 +64,7 @@ export class PoComponent implements OnInit {
         projectId: this.poData.projectId
       };
       this.documentList = this.poData.DocumentsList;
+      this.terms = this.poData.Terms;
     });
     this.formInit();
   }
@@ -82,7 +86,11 @@ export class PoComponent implements OnInit {
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
       DocumentsList: this.poDocument.getData(),
-      Terms: this.poTerms.get("textArea").value,
+      Terms: {
+
+        termsDesc: this.poTerms['textArea'],
+        termsType: 'PO'
+      },
       comments: "good",
       projectId: this.poData.projectId
     };
