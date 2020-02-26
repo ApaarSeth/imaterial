@@ -59,12 +59,6 @@ export class SupplierDetailComponent implements OnInit {
         return dataStr.indexOf(filterValue) != -1;
       }
 
-      if (this.dataSourceTemp.length > 0) {
-        this.addUserBtn = false;
-      }
-      else if (this.dataSourceTemp.length == 0) {
-        this.addUserBtn = true;
-      }
     });
   }
 
@@ -83,9 +77,7 @@ export class SupplierDetailComponent implements OnInit {
       });
 
       dialogRef.afterClosed().toPromise().then((data) => {
-        if(data){
           this.getAllSupplier();  
-        }
       });
     }
   }
