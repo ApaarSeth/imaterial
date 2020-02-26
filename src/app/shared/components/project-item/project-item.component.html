@@ -55,12 +55,12 @@
               <!-- <a href="javascript:void(0)"
                 ><i class="material-icons main-color">file_copy</i></a
               > -->
-              <a *ngIf="(!disableEditDelete) && permissionObj.projectEdit" class="width-17-px p-l-10 p-r-10 cursor-pointer"  matTooltip="Edit Project"
+              <a *ngIf="(!disableEditDelete) && permissionObj.projectEdit" class="width-17-px p-l-10 p-r-10 cursor-pointer edit-project"  matTooltip="Edit Project"
                 (click)="edit(projectDetails.projectId, $event)">
                 <img src="../../../../assets/images/edit.png">
               </a>
 
-              <a *ngIf="(!disableEditDelete) && permissionObj.projectEdit" class="width-15-px p-l-10 p-r-10 cursor-pointer"  matTooltip="Delete Project"
+              <a *ngIf="(!disableEditDelete) && permissionObj.projectEdit" class="width-15-px p-l-10 p-r-10 cursor-pointer delete-project"  matTooltip="Delete Project"
                 (click)="delete(projectDetails.projectId, $event)">
                 <img src="../../../../assets/images/delete-button.png">
               </a>
@@ -87,9 +87,8 @@
                       0
                     </span>
                   </div>
-                  <div class="font-size12 p-l-15">
-                    All<br />
-                    Materials
+                  <div class="font-size12 p-l-15 p-t-5">
+                    All Materials
                   </div>
                 </div>
                 <div class="col-sm-4 box-custom color-text-card p-t-10  display-flex"
@@ -104,9 +103,8 @@
                     </span>
 
                   </div>
-                  <div class="font-size12 p-l-15">
-                    Open<br />
-                    Indents
+                  <div class="font-size12 p-l-15 p-t-5">
+                    Open Indents
                   </div>
                 </div>
                 <span class="col-sm-4">
@@ -120,15 +118,17 @@
                         0
                       </span>
                     </div>
-                    <div class="font-size12 color-text-card p-l-15">
-                      Purchase<br />
-                      Orders
-                    </div>
-                    <div class="font-size14 purchase-amount text-right p-l-25 m-t-15">
-                      <span *ngIf="projectDetails.purchaseOrderCost">
+                    <div class="font-size12 color-text-card p-l-15 p-t-5">
+                      Purchase Orders <br>
+                      <span class="font-size14 purchase-amount" *ngIf="projectDetails.purchaseOrderCost">
                         ₹{{ projectDetails.purchaseOrderCost  | number : '1.2-2' }} Cr
                       </span>
                     </div>
+                    <!-- <div class="font-size14   text-right p-l-25 m-t-15">
+                      <span *ngIf="projectDetails.purchaseOrderCost">
+                        ₹{{ projectDetails.purchaseOrderCost  | number : '1.2-2' }} Cr
+                      </span>
+                    </div> -->
                   </div>
                 </span>
               </div>
@@ -143,7 +143,7 @@
               </div>
             </div>
             <div class="col-xs-6 text-right">
-              <button mat-raised-button class="background-white-color main-button main-color" *ngIf="url==='/dashboard'"
+              <button mat-raised-button class="background-white-color main-button main-color" *ngIf="url==='/project-dashboard'"
                 (click)="navigationToBOM(projectDetails.projectId, projectDetails)">View Project</button>
             </div>
           </div>

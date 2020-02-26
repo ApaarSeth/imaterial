@@ -34,7 +34,7 @@ export class SelectRfqTermsComponent implements OnInit {
       term: [this.rfqTerms[0], [Validators.required]]
     });
     this.customTermForm = this.formBuilder.group({
-      customTerm: []
+      customTerm: [{ value: '', disabled: true }]
     });
   }
 
@@ -65,5 +65,11 @@ export class SelectRfqTermsComponent implements OnInit {
 
   change(event) {
     this.selectedPayment = event.trim();
+    if (this.selectedPayment === 'Others') {
+      this.customTermForm.get("customTerm").enable()
+    }
+    else {
+      this.customTermForm.get("customTerm").disable()
+    }
   }
 }

@@ -8,6 +8,7 @@ import {
   ProjetPopupData
 } from "src/app/shared/models/project-details";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
+import { GuidedTourService, OrientationConfiguration, Orientation, GuidedTour } from 'ngx-guided-tour';
 
 // export interface DialogData {
 //   animal: string;
@@ -24,11 +25,57 @@ export class DashboardComponent implements OnInit {
   allProjects: ProjectDetails[] = [];
   orgId: Number;
   userId: Number;
+
+
+
+  //
+
+   public dashboardTour: GuidedTour = {
+        tourId: 'purchases-tour',
+        useOrb: false,
+        
+        steps: [
+            {
+                title: 'Welcome to the Project',
+                selector: '.demo-title',
+                content: 'Here you can add your projects.',
+                orientation: Orientation.Left
+                
+            },
+            {
+                title: 'Search',
+                selector:'.example-form-field.border-input',
+                content: 'you can search your projects from here. ',
+                 orientation: Orientation.Right
+            },
+            {
+                title: 'Edit Project',
+                selector: '.edit-project',
+                content: 'You can edit you project.',
+                orientation: Orientation.Left
+            },
+            {
+                title: 'Delete Project',
+                selector: '.delete-project',
+                content: 'You can delete your projects.',
+                orientation: Orientation.Left
+            }
+           
+        ]
+    };
+
+
+    
   constructor(
     private projectService: ProjectService,
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private guidedTourService: GuidedTourService
+  ) {
+     setTimeout(() => {
+            this.guidedTourService.startTour(this.dashboardTour);
+        }, 1000);
+  }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));

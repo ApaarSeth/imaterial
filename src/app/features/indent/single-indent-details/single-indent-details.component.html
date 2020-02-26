@@ -8,11 +8,11 @@
             </div>
         </div>
         <div class="row p-t-10 p-b-10">
-            <div class="col-sm-12">
+            <!-- <div class="col-sm-12">
                 <mat-toolbar>
                     <span>Indent 1 Created by Rahul Singh on 30:01:2020</span>
                 </mat-toolbar>
-            </div>
+            </div> -->
         </div>
 
         <!-- table structure -->
@@ -33,7 +33,7 @@
                 <ng-container matColumnDef="Requested Quantity">
                     <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.requestedQuantity }}
+                        {{ element.requestedQuantity }} {{ element.materialUnit }}
                     </td>
                 </ng-container>
 
@@ -41,7 +41,7 @@
                 <ng-container matColumnDef="Issued Quantity">
                     <th mat-header-cell *matHeaderCellDef>Issued Quantity</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.issuedQty }}
+                        {{ element.issuedQty }}  {{ element.materialUnit }}
                     </td>
                 </ng-container>
 
@@ -49,7 +49,7 @@
                 <ng-container matColumnDef="Requested Date">
                     <th mat-header-cell *matHeaderCellDef>Requested Date</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.dueDate | date}}
+                        {{ element.dueDate | date: "dd-MMM-yyy" }}
                     </td>
                 </ng-container>
 

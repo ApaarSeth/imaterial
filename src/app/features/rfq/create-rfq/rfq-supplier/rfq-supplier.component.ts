@@ -132,7 +132,7 @@ export class RfqSupplierComponent implements OnInit {
 
   openRfqTermsDialog(data: AddRFQ): void {
     const dialogRef = this.dialog.open(SelectRfqTermsComponent, {
-      width: "1200px",
+      width: "600px",
       data
     });
     // dialogRef.afterClosed().subscribe(result => {
