@@ -6,6 +6,7 @@ import {Router, ActivatedRoute} from "@angular/router";
 import {FieldRegExConst} from "src/app/shared/constants/field-regex-constants";
 import {UserService} from "src/app/shared/services/userDashboard/user.service";
 import { UserDetails } from 'src/app/shared/models/user-details';
+import { MatSnackBar } from '@angular/material';
 
 export interface OrganisationType {
   value: string;
@@ -27,7 +28,8 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private signInSignupService: SignInSignupService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _snackBar: MatSnackBar
   ) {}
 
   signupForm: FormGroup;
@@ -84,7 +86,13 @@ export class SignupComponent implements OnInit {
     };
 
     this.signInSignupService.signUp(this.signInDetails).then(data => {
-      if (data.data.serviceRawResponse.data) {
+      if(data.status === 1002){
+        this._snackBar.open("Phone Number already used", "", {
+          duration: 2000,
+          verticalPosition: "top"
+        });
+      }
+      else if (data.data.serviceRawResponse.data) {
         localStorage.setItem("role", data.data.serviceRawResponse.data.role);
         localStorage.setItem("ServiceToken", data.data.serviceRawResponse.data.serviceToken);
         localStorage.setItem("userId", data.data.serviceRawResponse.data.userId);

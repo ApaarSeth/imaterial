@@ -5,6 +5,7 @@ import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
 import { Router } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
 import { UserService } from "src/app/shared/services/userDashboard/user.service";
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: "signin",
@@ -17,7 +18,8 @@ export class SigninComponent implements OnInit {
   constructor(private router: Router,
     private signInSignupService: SignInSignupService,
     private formBuilder: FormBuilder,
-    private _userService: UserService) { }
+    private _userService: UserService,
+    private _snackBar: MatSnackBar) { }
 
   showPassWordString: boolean = false;
   signinForm: FormGroup;
@@ -42,7 +44,13 @@ export class SigninComponent implements OnInit {
     params.append("userType", "BUYER");
 
     this.signInSignupService.signIn(params.toString()).then(data => {
-      if (data.serviceRawResponse.data) {
+      if(data.errorMessage){
+        this._snackBar.open("Bad Credentials", "", {
+          duration: 2000,
+          verticalPosition: "top"
+        });
+      }
+      else if (data.serviceRawResponse.data) {
 
         this.getUserInfo(data.serviceRawResponse.data.userId);
         // const role = data.serviceRawResponse.data.role;
