@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -52,7 +52,8 @@ export class AddEditUserComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: UserDetailsPopUpData,
     private formBuilder: FormBuilder,
     private router: Router,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private _snackBar:MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -126,7 +127,13 @@ this.userService.getRoles().then(data => {
             }
 
     this.userService.addUsers(userDetails).then(res => {
-     // res.data;
+      if(res){
+            this._snackBar.open(res.message, "", {
+            duration: 2000,
+            panelClass: ["blue-snackbar"]
+          });
+      }
+      
     });
   }
 
@@ -138,7 +145,12 @@ this.userService.getRoles().then(data => {
       this.userService
         .updateUsers(userDetails)
         .then(res => {
-      //    res.data;
+               if(res){
+                    this._snackBar.open(res.message, "", {
+                    duration: 2000,
+                    panelClass: ["blue-snackbar"]
+                  });
+              }
         });
     }
   }

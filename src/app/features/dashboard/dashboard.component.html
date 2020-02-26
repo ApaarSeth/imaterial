@@ -1,13 +1,22 @@
 <!-- <fix-header></fix-header> -->
 <div class="page-start-point">
   <div *ngIf="!allProjects.length" class="parent min-height">
-    <button
-      mat-raised-button
-      class="main-background-color main-button color-white center-element"
-      (click)="addProject()"
-    >
-      Add New Project
-    </button>
+   <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+     <div class="add-user-img">
+          <img src="../../../../assets/images/project-background.png" alt="Project Logo">
+             <div>
+                  <p>
+                    You haven't added any project yet. <br>
+                    Please create one to continue.
+                  </p>
+            </div>
+        </div>
+       
+        <button  mat-raised-button  (click)="addProject()" class="main-background-color main-button color-white">
+              Add First Project
+            </button>
+  </div> 
+ 
   </div>
   <div
     *ngIf="allProjects.length > 0"

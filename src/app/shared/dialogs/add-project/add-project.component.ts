@@ -126,7 +126,9 @@ export class AddProjectComponent implements OnInit {
   addProjects(projectDetails: ProjectDetails) {
     this.projectService
       .addProjects(projectDetails, this.orgId, this.userId)
-      .then(res => {});
+      .then(res => {
+        return res.data;
+      });
   }
 
   updateProjects(projectDetails: ProjectDetails) {
@@ -136,7 +138,7 @@ export class AddProjectComponent implements OnInit {
       this.projectService
         .updateProjects(organizationId, projectId, projectDetails)
         .then(res => {
-          res.data;
+          return res.data;
         });
     }
   }
