@@ -84,13 +84,13 @@ export class DashboardComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          if (result) {
+
             this.projectService
               .getProjects(this.orgId, this.userId)
               .then(data => {
                 this.allProjects = data.data;
               });
-          }
+          
         });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
