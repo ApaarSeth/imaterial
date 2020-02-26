@@ -1,19 +1,19 @@
 <form *ngIf="rfqTerms.length" [formGroup]="termsForm" ((ngSubmit)="submitRfq()">
   <div class="row">
-    <div class="col-xs-6">
-      <h1 mat-dialog-title>Select Purchase Order Approver</h1>
+    <div class="col-xs-5">
+      <h1 mat-dialog-title>Select Payment Terms</h1>
     </div>
-    <div class="col-xs-6">
-      <button mat-raised-button class="main-background-color main-button color-white" (click)="close()">
+    <div class="col-xs-5">
+      <a href="javascript:void(0)" class="main-color p-r-5" (click)="close()">
         skip
-      </button>
+      </a>
       <button mat-raised-button class="main-background-color main-button color-white" (click)="submitRfq()">
         Next
       </button>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-5">
       <ng-container *ngFor="let term of rfqTerms">
         <mat-radio-group name="term" aria-labelledby="example-radio-group-label" class="display-block" formControlName="term">
           <mat-radio-button class="example-radio-button" [value]="term" (change)="change(term.termsDesc)">
@@ -22,9 +22,9 @@
         </mat-radio-group>
       </ng-container>
     </div>
-    <div class="col-xs-6">
-      <form *ngIf="this.selectedPayment === 'Others'" [formGroup]="customTermForm">
-        <span *ngIf="rfqTerms.length && this.selectedPayment === 'Others'">
+    <div class="col-xs-3">
+      <form [formGroup]="customTermForm">
+        <span>
           <mat-form-field class="example-full-width">
             <mat-label>Term Desc</mat-label>
             <textarea matInput formControlName="customTerm" placeholder="Custom Term Desc"></textarea>
