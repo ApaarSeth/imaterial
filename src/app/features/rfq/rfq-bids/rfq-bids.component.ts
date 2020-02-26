@@ -23,7 +23,7 @@ export class RfqBidsComponent implements OnInit {
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute
-  ) {}
+  ) { }
   rfqProjects: RfqProject[] = [];
   rfqForms: FormGroup;
   rfqId: number;
@@ -58,6 +58,9 @@ export class RfqBidsComponent implements OnInit {
                   supplierId: supplier.supplierId,
                   supplierAddressId: null,
                   supplierName: supplier.supplierName,
+                  materialIgst: supplier.materialIgst,
+                  materialCgst: supplier.materialCgst,
+                  materialSgst: supplier.materialSgst,
                   brandGroup: this.formBuilder.array(brandGrp)
                 });
               }
@@ -120,7 +123,10 @@ export class RfqBidsComponent implements OnInit {
                     materialId,
                     materialQty: Number(brandData.quantity),
                     brandName: brandData.brand.brandName,
-                    materialUnitPrice: brandData.brand.materialUnitPrice
+                    materialUnitPrice: brandData.brand.materialUnitPrice,
+                    materialSgst: sup.materialSgst,
+                    materialCgst: sup.materialCgst,
+                    materialIgst: sup.materialIgst
                   };
                 });
               });

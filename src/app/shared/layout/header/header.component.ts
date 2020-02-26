@@ -61,7 +61,7 @@ export class HeaderLayoutComponent implements OnInit {
   };
 
   setButtonName(name: string) {
-    
+
     this.buttonName = name;
 
     if (name == "dashboard") {
@@ -98,7 +98,6 @@ export class HeaderLayoutComponent implements OnInit {
       localStorage.clear();
     });
   }
-
   openDiv() {
     if (this.notifClicked == true) {
       this.notifClicked = false
@@ -106,12 +105,10 @@ export class HeaderLayoutComponent implements OnInit {
       this.notifClicked = true;
     }
   }
-
   routeTo(route) {
     this.router.navigate([route]);
     //  this.router.navigate([""]);
   }
-
   closeDialog() {
     this.notifClicked = false;
   }
