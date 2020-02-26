@@ -26,7 +26,8 @@ import { AppDashboardComponent } from "./features/app-dashboard/app-dashboard.co
 import { AuthGuardService } from "./shared/guards/auth.guards";
 import { UserDashboardModule } from "./features/users/user-dashboard.module";
 import { UserDataGuardService } from "./shared/guards/user-data.guards";
-
+import { RouterModule } from '@angular/router';
+import {GuidedTourModule, GuidedTourService} from 'ngx-guided-tour';
 @NgModule({
   declarations: [AppComponent, AuthLayoutComponent, MainLayoutComponent, NotFoundComponent, SupplierBidLayoutComponent, AppDashboardComponent],
   imports: [
@@ -40,6 +41,8 @@ import { UserDataGuardService } from "./shared/guards/user-data.guards";
     DashboardModule,
     AppSharedModule,
     UserDashboardModule,
+    RouterModule,
+    GuidedTourModule
   ],
   providers: [
     HttpInterceptorProviders,
@@ -50,7 +53,8 @@ import { UserDataGuardService } from "./shared/guards/user-data.guards";
     BomResolver,
     PODetailListResolver,
     AuthGuardService,
-    UserDataGuardService
+    UserDataGuardService,
+    GuidedTourService
   ],
   bootstrap: [AppComponent]
 })
