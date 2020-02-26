@@ -19,7 +19,6 @@ export class InitiatePoResolver implements Resolve<any> {
       this.rfqService.getSuppliers(orgId),
       this.projectService.getProjects(orgId, userId)
     ]).then(data => {
-      console.log("wefrgthyjhgff", data);
       return data;
     });
   }

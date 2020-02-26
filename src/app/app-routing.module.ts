@@ -11,12 +11,12 @@ import { AuthGuardService } from './shared/guards/auth.guards';
 import { UserDataGuardService } from './shared/guards/user-data.guards';
 
 const routes: Routes = [
-  { path: "", redirectTo: "dashboard", pathMatch: "full" },
+  { path: "", redirectTo: "auth/login", pathMatch: "full" },
 
   {
     path: "",
     component: SupplierBidLayoutComponent,
-    canActivate: [AuthGuardService],
+    // canActivate: [AuthGuardService],
     children: [
       {
         path: "rfq-bids",

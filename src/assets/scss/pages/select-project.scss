@@ -1,0 +1,40 @@
+.select-project{
+    &__title {
+        margin: 10px 0 0;
+        border-bottom: 1px solid #DFDFDF;
+        padding-bottom: 10px;
+    }
+
+    .mat-dialog-title{
+        font-size: 16px;
+    }
+
+    .mat-radio-button {
+        width: 100%;
+        border-bottom: 1px solid #DFDFDF;
+        padding: 10px 0;
+    }
+
+    .mat-radio-label{
+        margin-bottom: 0;
+    }
+
+    .mat-radio-label-content{
+        width: 100%;
+    }
+
+    &__name{
+        color: #F47720;
+        font-weight: 500;
+        flex: 0 0 35%;
+        margin-left: 40px;
+    }
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple{
+    background-color: #F47720;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: #F47720;
+}

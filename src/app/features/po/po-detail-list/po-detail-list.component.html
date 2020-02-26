@@ -1,5 +1,27 @@
 <div class="page-start-point">
-  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+
+  <div *ngIf="!poApprovalDetailsTemp &&  !poDraftedDetailsTemp && !acceptedRejectedPOListTemp">
+          <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+            <div class="add-user-img">
+                  <img src="../../../../assets/images/po-background.png" alt="BuildSupply_Logo">
+                    <div>
+                          <p>
+                            You haven't created any purchase order yet. <br>
+                            Please create one to continue.
+                          </p>
+                    </div>
+                        <button  mat-raised-button   [routerLink]="['../../po/initiate-po']" class="main-background-color main-button color-white">
+                           Initiate P.O.
+                        </button>
+                </div>
+           </div> 
+    </div>
+
+
+
+
+
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent" *ngIf="poApprovalDetailsTemp ||  poDraftedDetailsTemp || acceptedRejectedPOListTemp">
     <div class="row">
       <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input p-l-20">
