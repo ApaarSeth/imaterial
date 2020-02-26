@@ -12,7 +12,7 @@
                             <h6 class="mt-3 mb-0">Add Projects</h6>
                         </div>
 
-                        <div class="things-to-do__icons text-center">
+                        <div class="things-to-do__icons text-center cursor" (click)="openBomDialog()">
                             <div class="things-to-do__img">
                                 <img src="assets/images/icon4.png" alt="" class="img-fluid">
                             </div>
@@ -61,7 +61,7 @@
                                                 <img src="assets/images/icon1.png" alt="Awarded Purchase Order" class="img-fluid">
                                             </div>
                                             <div class="stats__content">
-                                                <h2 class="mb-1">155</h2>
+                                                <h2 class="mb-1">{{ poData?.totalCount }}</h2>
                                                 <p class="mb-0">Awarded Purchase Order</p>
                                             </div>
                                         </div>
@@ -71,7 +71,7 @@
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div>
                                             <div class="stats__content">
-                                                <h2 class="mb-1">345,6378.00</h2>
+                                                <h2 class="mb-1">{{ poData?.totalValue | number : '1.2-2' }}</h2>
                                                 <p class="mb-0">Awarded PO Amount</p>
                                             </div>
                                         </div>
@@ -143,7 +143,7 @@
                                 <img src="assets/images/project-icon.png" alt="Total number of project" class="img-fluid">
                             </div>
                             <div class="project-tile__content">
-                                <h2 class="mb-1">155</h2>
+                                <h2 class="mb-1">{{ projectCount }}</h2>
                                 <p class="mb-0">Total number of project</p>
                             </div>
                         </div>

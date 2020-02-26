@@ -12,7 +12,7 @@ import { NotificationInt } from '../../models/notification';
 export class HeaderLayoutComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   @Input("menu") menu: MatSidenav;
-  public buttonName: string = "projectStore";
+  public buttonName: string = "dashboard";
   orgId: Number;
   role: string;
   permissionObj: any;

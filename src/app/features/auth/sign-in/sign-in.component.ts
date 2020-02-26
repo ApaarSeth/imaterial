@@ -1,19 +1,25 @@
-import {Component, OnInit} from "@angular/core";
-import {FormGroup, Validators, FormBuilder} from "@angular/forms";
-import {SignInSignupService} from "src/app/shared/services/signupSignin/signupSignin.service";
-import {SignInData} from "src/app/shared/models/signIn/signIn-detail-list";
-import {Router} from "@angular/router";
-import {FieldRegExConst} from "src/app/shared/constants/field-regex-constants";
-import {UserService} from "src/app/shared/services/userDashboard/user.service";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
+import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
+import { Router } from "@angular/router";
+import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
+import { UserService } from "src/app/shared/services/userDashboard/user.service";
 
 @Component({
   selector: "signin",
   templateUrl: "./sign-in.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  // styleUrls: ["../../../../assets/scss/main.scss"]
 })
+
 export class SigninComponent implements OnInit {
+
+  constructor(private router: Router,
+    private signInSignupService: SignInSignupService,
+    private formBuilder: FormBuilder,
+    private _userService: UserService) { }
+
   showPassWordString: boolean = false;
-  constructor(private router: Router, private signInSignupService: SignInSignupService, private formBuilder: FormBuilder, private _userService: UserService) {}
   signinForm: FormGroup;
   signInData = {} as SignInData;
   ngOnInit() {
@@ -37,15 +43,32 @@ export class SigninComponent implements OnInit {
 
     this.signInSignupService.signIn(params.toString()).then(data => {
       if (data.serviceRawResponse.data) {
-        const role = data.serviceRawResponse.data.role;
 
-        if (role) {
-          this.router.navigate(["/dashboard"]);
-        } else {
-          this.router.navigate(["/users/organisation/update-info"]);
-        }
+        this.getUserInfo(data.serviceRawResponse.data.userId);
+        // const role = data.serviceRawResponse.data.role;
+
+        // if (role) {
+        //   this.router.navigate(["/dashboard"]);
+        // } else {
+        //   this.router.navigate(["/users/organisation/update-info"]);
+        // }
       }
     });
+  }
+
+  /**
+   * 
+   * @param userId Logged in user Id
+   * @description Function will get the data of logged in user
+   */
+  getUserInfo(userId) {
+    this._userService.getUserInfo(userId).then(res => {
+      if ((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
+        this.router.navigate(['/users/organisation/update-info']);
+      } else {
+        this.router.navigate(["/dashboard"]);
+      }
+    })
   }
 
   showPassWord() {
