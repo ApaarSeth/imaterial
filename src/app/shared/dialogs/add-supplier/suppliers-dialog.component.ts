@@ -39,7 +39,7 @@ export class SuppliersDialogComponent {
       supplier_name: ["", Validators.required],
       email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
-      pan: ["", Validators.required]
+      pan: [""]
     });
   }
 
