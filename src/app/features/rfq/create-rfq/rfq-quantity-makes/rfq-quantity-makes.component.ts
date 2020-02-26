@@ -58,7 +58,7 @@ export class RfqQuantityMakesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (history.state.rfqData) {
@@ -169,17 +169,16 @@ export class RfqQuantityMakesComponent implements OnInit {
               j
             ].estimatedRate = val.estimatedRate;
             if (
-              val.quantity <
+              val.quantity <=
               this.projectSelectedMaterials[i].projectMaterialList[j]
                 .estimatedQty
             ) {
-              this.lastupdateValue = val.quantity;
               this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
                 val.quantity;
             } else {
               (<FormGroup>(
                 (<FormArray>this.materialForms.controls["forms"]).controls[k]
-              )).controls["quantity"].setValue(this.lastupdateValue);
+              )).controls["quantity"].setValue(0);
               // this.materialForms.controls[
               //   "forms"
               // ] = val.quantity = this.lastupdateValue;
