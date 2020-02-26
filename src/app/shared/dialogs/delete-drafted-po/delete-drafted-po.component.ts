@@ -54,7 +54,7 @@ export class DeleteDraftedPoComponent implements OnInit {
       : ({} as ProjectDetails);
 
     if(this.data.isDelete){
-      this.projectService.deleteDraftedPo(this.data.detail.purchaseOrderId).then(res =>  res.data);
+      this.projectService.deleteDraftedPo(this.data.detail.purchaseOrderId).then(res => res.data);
     }
   }
 

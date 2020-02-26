@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="things-to-do bg-white p-4 mb-4">
-                    <h5 class="mb-3">Things to do</h5>
+                    <!-- <h5 class="mb-3">Things to do</h5> -->
                     <div class="things-to-do__inner d-flex justify-content-between align-items-center">
                         <div class="things-to-do__icons text-center cursor" (click)="openProject()" matTooltip="Add Project">
                             <div class="things-to-do__img">
@@ -71,7 +71,7 @@
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div>
                                             <div class="stats__content">
-                                                <h2 class="mb-1">{{ poData?.totalValue | number : '1.2-2' }}</h2>
+                                                <h2 class="mb-1">{{ poData?.totalValue }}</h2>
                                                 <p class="mb-0">Awarded PO Amount</p>
                                             </div>
                                         </div>
