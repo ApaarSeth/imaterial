@@ -1,9 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { SignINDetailLists } from "../../../shared/models/signIn/signIn-detail-list";
-import { from } from "rxjs";
-import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
-import { Router } from "@angular/router";
+import { Component, OnInit, ViewChild, Input } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { SignupComponent } from '../signup/signup.component';
 
 export interface OrganisationType {
   value: string;
@@ -14,17 +11,29 @@ export interface OrganisationType {
   selector: "sign-in-sign-up",
   templateUrl: "./sign-in-sign-up.component.html"
 })
+
 export class SignInSignUpComponent implements OnInit {
-  tabClicked: string = 'Sign In';
+
+  tabClicked: string = "Sign In";
+  uniqueCode: string;
+  index: number;
+
   constructor(
-    private router: Router
-  ) {}
+    private router: Router,
+    private _activatedRoute: ActivatedRoute
+  ) { }
+
   ngOnInit() {
-    
+
+    this._activatedRoute.params.subscribe(param => {
+      this.uniqueCode = param["uniqueCode"];
+      this.index = this.uniqueCode ? 1 : 0;
+    });
+
   }
+
   tabChanged(event) {
     this.tabClicked = event.tab.textLabel;
-}
-
+  }
 
 }

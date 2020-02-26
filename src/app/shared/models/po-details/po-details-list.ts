@@ -19,3 +19,12 @@ export interface PurchaseOrder {
   poAmount: number;
   poName: string;
 }
+
+export interface PurchaseOrderData{
+  orgId: number;
+  dataSource: string;
+  startDate: string;
+  endDate: string;
+  totalCount: number;
+  totalValue: number;
+}

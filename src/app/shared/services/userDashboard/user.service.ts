@@ -57,7 +57,16 @@ export class UserService {
   submitUserDetails(userData) {
     return this.dataService.sendPostRequest(API.SUBMIT_USER_DETAILS, userData)
   }
+
   getNotification(userId) {
     return this.dataService.getRequest(API.GET_NOTIFICATIONS(userId))
+  }
+
+  getUserInfoUniqueCode(uniqueCode){
+    return this.dataService.getRequest(API.GET_USER_INFO_UNIQUE_CODE(uniqueCode));
+  }
+
+  getDashboardData(data){
+    return this.dataService.sendPostRequest(API.GET_DASHBOARD_DATA, data);
   }
 }
