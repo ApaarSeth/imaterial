@@ -38,8 +38,8 @@ export class SuppliersDialogComponent {
     this.form = this.formBuilder.group({
       supplier_name: ["", Validators.required],
       email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]]
-      // pan: [""]
+      contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
+      pan: [""]
     });
   }
 
