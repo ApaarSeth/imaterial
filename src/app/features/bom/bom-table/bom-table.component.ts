@@ -91,14 +91,14 @@ export class BomTableComponent implements OnInit {
       this.subcategories.forEach(subcategory => {
         if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
           this.subcategoryData = [
-            ...this.subcategoryData,
+            // ...this.subcategoryData,
             {
               ...subcategory,
               materialSpecs: new MatTableDataSource(subcategory.materialSpecs)
             }
           ];
         } else {
-          this.subcategoryData = [...this.subcategoryData, subcategory];
+          this.subcategoryData = this.subcategories;
         }
       });
       this.dataSource = new MatTableDataSource(this.subcategoryData);
