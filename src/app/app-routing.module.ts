@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: "",
     component: SupplierBidLayoutComponent,
-    canActivate: [AuthGuardService],
+    // canActivate: [AuthGuardService],
     children: [
       {
         path: "rfq-bids",
