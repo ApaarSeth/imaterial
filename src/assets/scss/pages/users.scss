@@ -255,9 +255,10 @@
     }
 }
 .user-photo {
-    height: 90px;
+    height: 120px;
     min-width: 90px;
-    width: 90px;
+    width: 60%;
+    margin: 30px auto 0;
     border: 1px solid #ececec;
     border-radius: 4px;
     background-color: #f8f8f8;
@@ -267,13 +268,22 @@
     justify-content: center;
     display: -webkit-box;
     display: flex;
+    margin-bottom: 20px;
 }
 
 .browser-method .myLabel {
-    padding: 2px 5px;
+    padding: 6px 5px;
     margin: 2px;
-    color: #1896ba;
+    color: #F47720;
+    letter-spacing: 1px;
     cursor: pointer;
+    text-align: center;
+    margin: auto;
+    display: block;
+    border: 1px solid #F47720;
+    width: 55%;
+    border-radius: 30px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
     span {
         font-size: 12px;
         font-weight: 600;

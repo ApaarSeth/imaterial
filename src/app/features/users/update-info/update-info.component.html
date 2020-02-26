@@ -32,14 +32,14 @@
 
                                 <div class="phot-title"></div>
                                 <div class="user-photo">
-                                    <img [src]="localImg || 'assets/images/default-photo.jpg'"
+                                    <img [src]="localImg || 'assets/images/default-image.png'"
                                         class="img-fluid user_photo" alt="">
                                 </div>
                             
                                 <div class="browser-method">
                                     <label class="myLabel">
                                         <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
-                                        <span>+ Add Photo</span>
+                                        <span>Upload</span>
                                     </label>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                             </div>
 
 
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
 
                                 <mat-form-field class="border-input w-100">
                                     <input matInput type="text" formControlName="addressLine1" placeholder="Address Line 1">
@@ -178,26 +178,12 @@
                                         Pincode is invalid</mat-error>
                                 </mat-error>
 
+                            </div> -->
 
-
-                                <!-- <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" formControlName="pan" placeholder="PAN No.">
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['pan'].errors && (userInfoForm.controls['pan'].dirty || userInfoForm.controls['pan'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['pan'].hasError('required')">
-                                        PAN No is required
-                                    </mat-error>
-                                </mat-error> -->
-
-                            </div>
-
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <mat-form-field class="border-input w-100">
                                     <input matInput type="text" formControlName="addressLine2" placeholder="Address Line 2">
                                 </mat-form-field>
-
-
 
                                 <mat-form-field class="border-select w-100 city-input">
                                     <mat-label>City*</mat-label>
@@ -221,13 +207,10 @@
                                 </mat-form-field>
                                 <mat-error
                                     *ngIf="userInfoForm.controls['gstNo'].errors && (userInfoForm.controls['gstNo'].dirty || userInfoForm.controls['gstNo'].touched)">
-                                    <!-- <mat-error *ngIf="userInfoForm.controls['gstNo'].hasError('required')">
-                                        GST No is required
-                                    </mat-error> -->
                                     <mat-error *ngIf="userInfoForm.controls['gstNo'].hasError('pattern')">
                                         GST No is invalid</mat-error>
                                 </mat-error>
-                            </div>
+                            </div> -->
 
                             <div class="text-center col-md-12 mt-4">
                                 <button class="btn btn-warning next-btn" [disabled]="!userInfoForm.valid">Next</button>
