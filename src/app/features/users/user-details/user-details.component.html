@@ -1,6 +1,6 @@
 <div class="page-start-point">
 
-<ng-container *ngIf="addUserBtn">
+<ng-container *ngIf="!dataSourceActivateTemp.length && !dataSourceDeactivateTemp.length">
    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
      <div class="add-user-img">
           <img src="../../../../assets/images/user-background.png" alt="BuildSupply_Logo">
@@ -18,7 +18,7 @@
  
 </ng-container>
 
-<ng-container *ngIf="!addUserBtn">
+<ng-container *ngIf="dataSourceActivateTemp.length>0 || dataSourceDeactivateTemp.length>0">
   
 
    <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
@@ -66,7 +66,7 @@
       <div class="row">
         <!-- <div class="col-sm-12"> -->
         <!-- table structure -->
-        <div class="user-details-table-div">
+        <div class="user-details-table-div-active-inactive">
         <table mat-table [dataSource]="dataSourceActivate" class="mat-elevation-z8 col-sm-12">
           <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
@@ -154,7 +154,7 @@
       <div class="row">
         <!-- <div class="col-sm-12"> -->
         <!-- table structure -->
-        <div class="user-details-table-div">
+        <div class="user-details-table-div-active-inactive">
         <table mat-table [dataSource]="dataSourceDeactivate" class="mat-elevation-z8 col-sm-12">
           <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->

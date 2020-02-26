@@ -1,6 +1,6 @@
 <div class="page-start-point">
 
-  <ng-container *ngIf="addUserBtn">
+  <ng-container *ngIf="!dataSourceTemp.length">
       <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
      <div class="add-user-img">
           <img src="../../../../assets/images/supplier-background.png" alt="BuildSupply_Logo">
@@ -20,7 +20,7 @@
   </ng-container>
 
 
-  <ng-container *ngIf="!addUserBtn">
+  <ng-container *ngIf="dataSourceTemp.length>0">
    
     <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
       <!-- <div class="text-right add-user-details-button-right">
