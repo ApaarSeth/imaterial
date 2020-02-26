@@ -140,7 +140,7 @@ export class PODetailComponent implements OnInit {
     dialogRef
       .afterClosed()
       .toPromise()
-      .then(data => {
+      .then((data) => {
         this.PoData();
         console.log("The dialog was closed");
       });
