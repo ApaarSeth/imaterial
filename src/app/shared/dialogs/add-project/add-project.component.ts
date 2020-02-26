@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -41,7 +41,8 @@ export class AddProjectComponent implements OnInit {
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar:MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -127,7 +128,15 @@ export class AddProjectComponent implements OnInit {
     this.projectService
       .addProjects(projectDetails, this.orgId, this.userId)
       .then(res => {
-        return res.data;
+         res.data;
+          if(res){
+        
+            this._snackBar.open(res.message, "", {
+            duration: 2000,
+            panelClass: ["blue-snackbar"]
+          });
+      
+        }
       });
   }
 
@@ -138,7 +147,15 @@ export class AddProjectComponent implements OnInit {
       this.projectService
         .updateProjects(organizationId, projectId, projectDetails)
         .then(res => {
-          return res.data;
+           res.data;
+            if(res){
+        
+            this._snackBar.open(res.message, "", {
+            duration: 2000,
+            panelClass: ["blue-snackbar"]
+          });
+      
+        }
         });
     }
   }
