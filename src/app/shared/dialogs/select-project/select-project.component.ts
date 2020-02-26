@@ -22,8 +22,6 @@ export class SelectProjectComponent implements OnInit {
     ngOnInit() {
         this.orgId = Number(localStorage.getItem("orgId"));
         this.userId = Number(localStorage.getItem("userId"));
-        console.log(this.data);
-
     }
 
     closeDialog(): void {
@@ -35,7 +33,7 @@ export class SelectProjectComponent implements OnInit {
 
         const project = Object.entries(this.data).flat().filter(op => op.projectId === id);
         
-        if(project[0].materialCount === 0){
+        if(project[0].matCount === 0 || project[0].matCount === null){
             this._router.navigate([`bom/${project[0].projectId}`]);
         }else{
             this._router.navigate([`bom/${project[0].projectId}/bom-detail`]);
