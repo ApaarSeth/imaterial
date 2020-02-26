@@ -1,7 +1,6 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20">
-    <card-layout *ngIf="projectData" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)"
-      [projectDetails]="projectData" [disableEditDelete]="true"></card-layout>
+    <card-layout *ngIf="projectData" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)" [projectDetails]="projectData" [disableEditDelete]="true"></card-layout>
     <div class="row">
       <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input">
@@ -13,31 +12,26 @@
       </div>
       <div class="col-xs-9 p-t-10 text-right">
         <span class="" *ngIf="this.permissionObj.rfqFlag">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right"
-            [disabled]="!this.checkedSubcategory.length" (click)="createRfq()">
+          <button mat-raised-button class="main-background-color main-button color-white pull-right" [disabled]="!this.checkedSubcategory.length" (click)="createRfq()">
             Create RFQ
           </button>
         </span>
         <span class="p-l-5">
-          <button mat-raised-button class="mr-3 main-background-color main-button color-white pull-right"
-            [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
+          <button mat-raised-button class="mr-3 main-background-color main-button color-white pull-right" [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
             Raise Indent
           </button>
         </span>
-        <span *ngIf="projectData.openIndentCount>0" class="p-l-5">
-          <button mat-raised-button class="mx-3 main-background-color main-button color-white pull-right "
-            (click)="viewIndent()">
+        <span *ngIf="projectData.openIndentCount > 0" class="p-l-5">
+          <button mat-raised-button class="mx-3 main-background-color main-button color-white pull-right " (click)="viewIndent()">
             View Indent
           </button>
         </span>
-        <span >
-          <button mat-raised-button class="main-background-color main-button color-white pull-right "
-            (click)="addMaterial()">
+        <span>
+          <button mat-raised-button class="main-background-color main-button color-white pull-right " (click)="addMaterial()">
             Add/ Edit Material
           </button>
         </span>
       </div>
-
     </div>
 
     <div class="row bom-details-table-div-part">
@@ -47,13 +41,11 @@
             Material Name
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
-            <mat-checkbox #ch (change)="getElemenetChecked(ch,element)" [checked]=" element.checked">
-              <div class="limited-character" matTooltip=" {{ element.materialName }}">
-                {{ element.materialName }} <br>
-              </div>
+            <mat-checkbox #ch (change)="getElemenetChecked(ch, element)" [checked]="element.checked">
+              <div class="limited-character" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
               <div class="limited-character" matTooltip=" {{ element.materialGroup }}">
                 <span class="category-name">
-                  {{ element.materialGroup}}
+                  {{ element.materialGroup }}
                 </span>
               </div>
             </mat-checkbox>
@@ -63,17 +55,13 @@
           <th *matHeaderCellDef class="text-align-center justify-center">
             Estimated Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element">
-            {{ element.estimatedQty }} {{ element.materialUnit }}
-          </td>
+          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }} {{ element.materialUnit }}</td>
         </ng-container>
         <ng-container matColumnDef="requestedQuantity">
           <th *matHeaderCellDef class="text-align-center justify-center">
             Requested Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element">
-            {{ element.requestedQuantity }} {{ element.materialUnit }}
-          </td>
+          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }} {{ element.materialUnit }}</td>
         </ng-container>
         <ng-container matColumnDef="issueToProject">
           <th *matHeaderCellDef class="text-align-center justify-center">
@@ -99,29 +87,30 @@
               <mat-icon>edit</mat-icon>
             </a> -->
 
-            <a *ngIf="permissionObj.rfqFlag" (click)="openDialog1(element.materialId,projectId)"
-              class="width-15-px p-r-10 cursor-pointer" matTooltip="Issue to Indent">
-              <img src="../../../../assets/images/issue_to_indent.png">
+            <a *ngIf="permissionObj.rfqFlag" (click)="openDialog1(element.materialId, projectId)" class="width-15-px p-r-10 cursor-pointer" matTooltip="Issue to Indent">
+              <img src="../../../../assets/images/issue_to_indent.png" />
             </a>
-            <a class="width-15-px p-l-5 cursor-pointer" matTooltip="Delete"
-              *ngIf="!((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
-              (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
-              <img src="../../../../assets/images/delete-button.png">
+            <a
+              class="width-15-px p-l-5 cursor-pointer"
+              matTooltip="Delete"
+              *ngIf="!(element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
+              (click)="deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
+            >
+              <img src="../../../../assets/images/delete-button.png" />
             </a>
-            <a class="width-15-px p-l-5"
-              *ngIf="((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0))"
-              (click)="deleteBom(element.materialId,element.projectId,((element.requestedQuantity === 0) &&  (element.availableStock===0) && (element.issueToProject===0)))">
-              <img src="../../../../assets/images/delete-button_disable.png">
+            <a
+              class="width-15-px p-l-5"
+              *ngIf="element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0"
+              (click)="deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
+            >
+              <img src="../../../../assets/images/delete-button_disable.png" />
             </a>
-
           </td>
         </ng-container>
 
         <ng-container matColumnDef="expandedDetail">
           <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-            <div class="example-element-detail" *ngIf="element.materialSpecs" [@detailExpand]="
-                element == expandedElement ? 'expanded' : 'collapsed'
-              ">
+            <div class="example-element-detail" *ngIf="element.materialSpecs" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
               <div class="inner-table mat-elevation-z8 row" *ngIf="expandedElement">
                 <table class="col-sm-12" mat-table [dataSource]="element.materialSpecs">
                   <ng-container matColumnDef="materialName">
@@ -129,12 +118,10 @@
                       Name
                     </th>
                     <td class="text-left" mat-cell *matCellDef="let element">
-                      <div class="limited-character">
-                        {{ element.materialName }} <br>
-                      </div>
+                      <div class="limited-character">{{ element.materialName }} <br /></div>
                       <div class="limited-character">
                         <span class="category-name">
-                          {{ element.materialGroup}}
+                          {{ element.materialGroup }}
                         </span>
                       </div>
                     </td>
@@ -143,17 +130,13 @@
                     <th *matHeaderCellDef class="text-align-center">
                       Estimated Quantity
                     </th>
-                    <td class="text-align-center" mat-cell *matCellDef="let element">
-                      {{ element.estimatedQty }} {{ element.materialUnit }}
-                    </td>
+                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }} {{ element.materialUnit }}</td>
                   </ng-container>
                   <ng-container matColumnDef="Requested Quantity">
                     <th *matHeaderCellDef class="text-align-center">
                       Requested Material
                     </th>
-                    <td class="text-align-center" mat-cell *matCellDef="let element">
-                      {{ element.requestedQuantity }} {{ element.materialUnit }}
-                    </td>
+                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }} {{ element.materialUnit }}</td>
                   </ng-container>
                   <ng-container matColumnDef="issueToProject">
                     <th *matHeaderCellDef class="text-align-center">
@@ -178,7 +161,7 @@
             </div>
           </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay;sticky:true"></tr>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
         <tr mat-row *matRowDef="let element; columns: columnsToDisplay" (click)="toggleRow(element)"></tr>
       </table>
     </div>
