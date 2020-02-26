@@ -101,6 +101,7 @@ export class BomTableComponent implements OnInit {
           this.subcategoryData = this.subcategories;
         }
       });
+      this.getProject(this.projectId);
       this.dataSource = new MatTableDataSource(this.subcategoryData);
       // this.dataSource = res.data;
       // this.dataSource.sort = this.sort;

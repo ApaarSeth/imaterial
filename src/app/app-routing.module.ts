@@ -36,9 +36,17 @@ const routes: Routes = [
         path: "auth",
         loadChildren: () =>
           import("./features/auth/auth.module").then(m => m.AuthModule)
+      },
+      {
+        path: "users",
+        loadChildren: () =>
+          import("./features/users/user-dashboard.module").then(
+            m => m.UserDashboardModule
+          )
       }
     ]
   },
+
   {
     path: "",
     component: MainLayoutComponent,
