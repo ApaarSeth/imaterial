@@ -25,14 +25,14 @@ import { AuthGuardService } from "./shared/guards/auth.guards";
 import { UserDashboardModule } from "./features/users/user-dashboard.module";
 import { UserDataGuardService } from "./shared/guards/user-data.guards";
 import { RouterModule } from '@angular/router';
-import {GuidedTourModule, GuidedTourService} from 'ngx-guided-tour';
+import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
 @NgModule({
   declarations: [
-    AppComponent, 
-    AuthLayoutComponent, 
-    MainLayoutComponent, 
-    NotFoundComponent, 
-    SupplierBidLayoutComponent, 
+    AppComponent,
+    AuthLayoutComponent,
+    MainLayoutComponent,
+    NotFoundComponent,
+    SupplierBidLayoutComponent,
     AppDashboardComponent,
   ],
   imports: [
