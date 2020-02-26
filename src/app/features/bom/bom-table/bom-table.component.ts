@@ -86,20 +86,19 @@ export class BomTableComponent implements OnInit {
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
-      this.subcategories = [];
-      this.subcategories = res.data;
+      this.subcategories = [...res.data.data];
       console.log(this.subcategories);
       this.subcategories.forEach(subcategory => {
         if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
           this.subcategoryData = [
-            ...this.subcategoryData,
+            // ...this.subcategoryData,
             {
               ...subcategory,
               materialSpecs: new MatTableDataSource(subcategory.materialSpecs)
             }
           ];
         } else {
-          this.subcategoryData = [...this.subcategoryData, subcategory];
+          this.subcategoryData = this.subcategories;
         }
       });
       this.dataSource = new MatTableDataSource(this.subcategoryData);
