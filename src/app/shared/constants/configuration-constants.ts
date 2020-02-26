@@ -61,5 +61,6 @@ export const API = {
   GET_NOTIFICATIONS: userId => `user/notification/${userId}`,
   GETRFQTERMS: 'rfq/payment/terms',
 
-  GET_USER_INFO_UNIQUE_CODE: uniqueCode => `user/info/${uniqueCode}`
+  GET_USER_INFO_UNIQUE_CODE: uniqueCode => `user/info/${uniqueCode}`,
+  GET_DASHBOARD_DATA: 'dashboard'
 };

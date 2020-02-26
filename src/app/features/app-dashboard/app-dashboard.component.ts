@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjetPopupData } from "../../shared/models/project-details";
 import { MatDialog } from "@angular/material";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 
 @Component({
   selector: 'app-app-dashboard',
@@ -13,10 +13,12 @@ export class AppDashboardComponent implements OnInit {
   orgId: number;
 
   constructor(public dialog: MatDialog,
-    private router: Router) { }
+    private router: Router,
+    private _userService: UserService) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
+    this.getDashboardInfo();
   }
 
   openProject() {
@@ -32,5 +34,21 @@ export class AppDashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.router.navigate(['/dashboard']);
     });
+  }
+
+  getDashboardInfo(){
+
+    const data = {
+      "orgId":21,
+      "startDate":"2020-01-01T18:30:00.000Z",
+      "endDate":"2020-09-28T18:30:00.000Z",
+      "dataSource":"po"
+    }
+
+    this._userService.getDashboardData(data).then(res => {
+      console.log(res);
+      debugger
+    })
+
   }
 }

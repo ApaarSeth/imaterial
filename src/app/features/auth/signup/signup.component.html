@@ -1,4 +1,4 @@
-<form [formGroup]="signupForm" (ngSubmit)="signup()" class="sign-up-form">
+<form *ngIf="signupForm" [formGroup]="signupForm" (ngSubmit)="signup()" class="sign-up-form">
  
                 <!-- <mat-form-field class="col-xs-12 border-input">
                     <input matInput formControlName="firstName" type="text" placeholder="First Name" />

@@ -1,11 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {SignINDetailLists} from "../../../shared/models/signIn/signIn-detail-list";
-import {from} from "rxjs";
 import {SignInSignupService} from "src/app/shared/services/signupSignin/signupSignin.service";
 import {Router, ActivatedRoute} from "@angular/router";
 import {FieldRegExConst} from "src/app/shared/constants/field-regex-constants";
 import {UserService} from "src/app/shared/services/userDashboard/user.service";
+import { UserDetails } from 'src/app/shared/models/user-details';
 
 export interface OrganisationType {
   value: string;
@@ -16,10 +16,11 @@ export interface OrganisationType {
   selector: "signup",
   templateUrl: "./signup.component.html"
 })
+
 export class SignupComponent implements OnInit {
   showPassWordString: boolean = false;
   uniqueCode: string = "";
-  user: any;
+  user: UserDetails;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,14 +36,12 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
+      if(this.uniqueCode){
+        this.getUserInfo(this.uniqueCode);
+      }else{
+        this.formInit();
+      }
     });
-    
-    if(this.uniqueCode){
-      this.getUserInfo(this.uniqueCode);
-    }
-
-    this.formInit();
-
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
@@ -79,7 +78,9 @@ export class SignupComponent implements OnInit {
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
       organizationName: this.signupForm.value.organisationName,
-      organizationType: this.signupForm.value.organisationType
+      organizationType: this.signupForm.value.organisationType,
+      organizationId: this.user ? this.user.organizationId : 0,
+      userId: this.user ? this.user.userId : 0
     };
 
     this.signInSignupService.signUp(this.signInDetails).then(data => {

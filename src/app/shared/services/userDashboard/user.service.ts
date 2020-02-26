@@ -65,4 +65,8 @@ export class UserService {
   getUserInfoUniqueCode(uniqueCode){
     return this.dataService.getRequest(API.GET_USER_INFO_UNIQUE_CODE(uniqueCode));
   }
+
+  getDashboardData(data){
+    return this.dataService.sendPostRequest(API.GET_DASHBOARD_DATA, data);
+  }
 }
