@@ -87,7 +87,7 @@
               <mat-icon>edit</mat-icon>
             </a> -->
 
-            <a *ngIf="permissionObj.rfqFlag" (click)="openDialog1(element.materialId, projectId)" class="width-15-px p-r-10 cursor-pointer" matTooltip="Issue to Indent">
+            <a *ngIf="permissionObj.rfqFlag" (click)="issueToIndent(element.materialId, projectId)" class="width-15-px p-r-10 cursor-pointer" matTooltip="Issue to Indent">
               <img src="../../../../assets/images/issue_to_indent.png" />
             </a>
             <a
