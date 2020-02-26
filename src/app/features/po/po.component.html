@@ -1,16 +1,16 @@
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row">
-      <div class="col-sm-12 m-t-5 text-left" *ngIf="this.poMode === 'view'">
+      <div class="col-sm-12 m-t-5 text-left" *ngIf="this.mode === 'view'">
         ApproverName
       </div>
       <div class="col-sm-12 m-t-5 text-right">
-        <div *ngIf="this.poMode === 'edit'">
+        <div *ngIf="this.mode === 'edit'">
           <button mat-raised-button class="main-background-color main-button color-white " (click)="selectApprover()">
             Send For Approval
           </button>
         </div>
-        <div *ngIf="this.poMode === 'requiredApproval'">
+        <div *ngIf="this.mode === 'requiredApproval'">
           <button mat-raised-button class="main-background-color main-button color-white m-r-5" (click)="poApproval('rejected')">
             Rejected
           </button>
@@ -26,22 +26,24 @@
       </div>
       <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData"> </app-po-table>
     </div>
-
     <div class="doc-froala-div">
-      <div class="row">
-        <div class="col-sm-12">
-          <!-- remark -->
-        </div>
-      </div>
       <div class="row">
         <div class="col-sm-4">
           <app-po-documents #poDocument [documentData]="documentList"></app-po-documents>
         </div>
-        <form [formGroup]="poTerms"></form>
         <div class="col-sm-8 hidePoweredBy" *ngIf="mode === 'edit'">
-          <textarea formControlName="textArea" [froalaEditor]="froala" [(froalaModel)]="poTerms.textArea">Hello, Froala!</textarea>
+          <form [formGroup]="poTerms">
+            <textarea formControlName="textArea" [froalaEditor]="froala" [(froalaModel)]="poTerms.textArea">Hello, Froala!</textarea>
+          </form>
         </div>
-        <div class="col-sm-8 hidePoweredBy" *ngIf="mode !== 'edit' && this.terms">{{ terms.termsDesc }}</div>
+        <div class="col-sm-8 background-white-color border-radius parent">
+        <div
+          class="center-element"
+          *ngIf="mode !== 'edit' && this.terms && terms.termsDesc !== ''"
+          [innerHTML]="terms.termsDesc"
+        ></div>
+        <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc == ''">No Term To View</div>
+      </div>
       </div>
     </div>
   </div>
