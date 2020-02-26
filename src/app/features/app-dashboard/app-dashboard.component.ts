@@ -60,6 +60,12 @@ export class AppDashboardComponent implements OnInit {
     })
   }
 
+  onTabChanged($event) {
+    let clickedIndex = $event.index;
+    debugger
+    
+  }
+
   getProjectsNumber(){
     this._projectService.getProjects(this.orgId, this.userId).then(res => {
       this.projectCount = res.data ? res.data.length : 0;
