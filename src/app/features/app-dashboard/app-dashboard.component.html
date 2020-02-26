@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-between">
                             <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event);">
-                                <mat-tab label="Purchase Order">
+                                <mat-tab label="Purchase Orders">
                                     <div class="statistics__purchase-order d-flex">
                                         <div class="statistics__tile stats d-flex justify-content-between align-items-center mr-3">
                                             <div class="stats__icon">
@@ -78,8 +78,53 @@
                                     </div>
                                 </mat-tab>
 
-                                <mat-tab label="Request for Quotations"> Content 2 </mat-tab>
-                                <mat-tab label="Indents"> Content 3 </mat-tab>
+                                <mat-tab label="Request for Quotations">
+                                    <div class="statistics__purchase-order d-flex">
+                                        <div class="statistics__tile stats d-flex justify-content-between align-items-center mr-3">
+                                            <div class="stats__icon">
+                                                <img src="assets/images/icon6.png" alt="Awarded Purchase Order" class="img-fluid">
+                                            </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">{{ poData?.totalCount }}</h2>
+                                                <p class="mb-0">Number of RFQ</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="statistics__tile stats d-flex justify-content-between align-items-center">
+                                            <div class="stats__icon">
+                                                <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
+                                            </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">{{ poData?.totalValue | number : '1.2-2' }}</h2>
+                                                <p class="mb-0">RFQ Amount</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+
+                                <mat-tab label="Indents">
+                                    <div class="statistics__purchase-order d-flex">
+                                        <div class="statistics__tile stats d-flex justify-content-between align-items-center mr-3">
+                                            <div class="stats__icon">
+                                                <img src="assets/images/fulfilled-indent-icon.png" alt="Awarded Purchase Order" class="img-fluid">
+                                            </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">{{ poData?.totalCount }}</h2>
+                                                <p class="mb-0">Fulfilled Indents</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="statistics__tile stats d-flex justify-content-between align-items-center">
+                                            <div class="stats__icon">
+                                                <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
+                                            </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">{{ poData?.totalValue | number : '1.2-2' }}</h2>
+                                                <p class="mb-0">Raised Indents</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
                             </mat-tab-group>
 
                             <div class="statistics__filter">
