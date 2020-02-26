@@ -64,7 +64,7 @@ export class AppDashboardComponent implements OnInit {
     this._projectService.getProjects(this.orgId, this.userId).then(res => {
       this.projectCount = res.data ? res.data.length : 0;
       this.projectLists = res.data;
-    })
+    });
   }
 
   openBomDialog(){
