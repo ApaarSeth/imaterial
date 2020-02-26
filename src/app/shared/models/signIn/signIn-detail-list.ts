@@ -21,6 +21,6 @@ export interface CustonDataDetails {
   uniqueCode: string;
   organizationName: string;
   organizationType: string;
-  userId: string;
-  organizationId: string;
+  userId?: string | number;
+  organizationId?: string | number;
 }

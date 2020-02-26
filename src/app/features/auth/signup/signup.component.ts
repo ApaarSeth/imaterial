@@ -79,8 +79,8 @@ export class SignupComponent implements OnInit {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
-      organizationId: this.user ? this.user.organizationId : 0,
-      userId: this.user ? this.user.userId : 0
+      // organizationId: this.user ? this.user.organizationId : 0,
+      // userId: this.user ? this.user.userId : 0
     };
 
     this.signInSignupService.signUp(this.signInDetails).then(data => {
@@ -107,15 +107,4 @@ export class SignupComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
-
-  // getUserInformation(userId){
-  //   this._userService.getUserInfo(userId).then(res => {
-  //     console.log(res);
-  //     if(res.data[0].roleId){
-  //       this.router.navigate(["/dashboard"]);
-  //     }else{
-  //       this.router.navigate(["/users/organisation/update-info"]);
-  //     }
-  //   })
-  // }
 }

@@ -2,7 +2,6 @@ import { OnInit, Component } from '@angular/core';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserRoles, UserDetails, TradeList } from 'src/app/shared/models/user-details';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { Router } from '@angular/router';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 
@@ -78,31 +77,26 @@ export class UpdateInfoComponent implements OnInit {
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
-
       tradeId: [''],
-
-      addressLine1: ['', Validators.required],
-      addressLine2: [''],
-      state: ['', Validators.required],
-      city: ['', Validators.required],
-      pinCode: ['', {
-        validators: [
-          Validators.required,
-          Validators.pattern(FieldRegExConst.PINCODE)
-        ]
-      }],
-      
-      pan: [''],
-      gstNo: [''],
-
       profileUrl: [''],
 
-      file: ['']
-
+      // addressLine1: ['', Validators.required],
+      // addressLine2: [''],
+      // state: ['', Validators.required],
+      // city: ['', Validators.required],
+      // pinCode: ['', {
+      //   validators: [
+      //     Validators.required,
+      //     Validators.pattern(FieldRegExConst.PINCODE)
+      //   ]
+      // }],
+      // pan: [''],
+      // gstNo: [''],
+      // file: ['']
     });
   }
 
-  changeSelected(parameter: string, query: string) {
+  changeSelected(parameter: string, query: string) {    
     const index = this.selectedTrades.indexOf(query);
     if (index >= 0) {
       this.selectedTrades.splice(index, 1);
@@ -129,7 +123,6 @@ export class UpdateInfoComponent implements OnInit {
       data.append(`file`, file);
       return this._uploadImageService.postDocumentUpload(data).then(res => {
           this.userInfoForm.get('profileUrl').setValue(res.data);
-          debugger
       });
     }
   }
@@ -142,7 +135,6 @@ export class UpdateInfoComponent implements OnInit {
       const data: UserDetails = this.userInfoForm.value;
 
       this._userService.submitUserDetails(data).then(res => {
-         console.log(this.userInfoForm);
         this._router.navigate(['users/organisation/add-user']); 
       });
 
