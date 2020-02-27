@@ -1,41 +1,52 @@
 <div class="page-start-point ">
-    <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-        <div class="row">
-            <div class="col-xs-12 text-right p-b-10 p-t-5">
-                <span class="p-r-5">
-                    <button mat-raised-button class="main-background-color main-button color-white"
-                        (click)="goBack(stepper)" type="button">Back</button>
-                </span>
-                <span *ngIf="currentIndex!=2">
-                    <button mat-raised-button class="main-background-color main-button color-white"
-                        (selectionChange)="selectionChange($event)" [disabled]="currentIndex===1&&!completed"
-                        (click)="goForward(stepper)" type="button">Next</button>
-                </span>
-                <span *ngIf="currentIndex===2">
-                    <button mat-raised-button class="main-background-color main-button color-white" [disabled]="false"
-                        (selectionChange)="selectionChange($event)" (click)="reviewRfq()" type="button">Next</button>
-                </span>
-            </div>
-        </div>
-        <mat-horizontal-stepper (selectionChange)="selectionChange($event)" [linear]="true" #stepper>
-            <!-- <ng-template matStepperIcon="edit" let-index="index">
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+    <div class="row">
+      <div class="col-xs-12 text-right p-b-10 p-t-5">
+        <span class="p-r-5">
+          <button mat-raised-button class="main-background-color main-button color-white" (click)="goBack(stepper)" type="button">Back</button>
+        </span>
+        <span *ngIf="currentIndex != 2">
+          <button
+            mat-raised-button
+            class="main-background-color main-button color-white"
+            (selectionChange)="selectionChange($event)"
+            [disabled]="currentIndex === 1 && !completed"
+            (click)="goForward(stepper)"
+            type="button"
+          >
+            Next
+          </button>
+        </span>
+        <span *ngIf="currentIndex === 2">
+          <button
+            mat-raised-button
+            class="main-background-color main-button color-white"
+            [disabled]="false"
+            (selectionChange)="selectionChange($event)"
+            (click)="reviewRfq()"
+            type="button"
+          >
+            Next
+          </button>
+        </span>
+      </div>
+    </div>
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" [linear]="true" #stepper>
+      <!-- <ng-template matStepperIcon="edit" let-index="index">
                 {{1}}
             </ng-template> -->
-            <mat-step stepControl="stepOne" completed="true">
-                <ng-template matStepLabel>Project & Material</ng-template>
-                <app-rfq-project-materials (updatedRfq)="getMaterial($event)" #projectrMaterial [existingRfq]="rfqData">
-                </app-rfq-project-materials>
-            </mat-step>
-            <mat-step stepControl="stepSecond">
-                <ng-template matStepLabel>Add Quantity & Makes</ng-template>
-                <app-rfq-quantity-makes #rfqQtyMakes [rfq]="rfqMaterial" (updatedRfq)="getQuantityAndMakes($event)">
-                </app-rfq-quantity-makes>
-            </mat-step>
-            <mat-step stepControl="stepThree">
-                <ng-template matStepLabel>Select Supplier</ng-template>
-                <app-rfq-supplier #rfqSupplier [finalRfq]="finalRfq">
-                </app-rfq-supplier>
-            </mat-step>
-        </mat-horizontal-stepper>
-    </div>
+      <mat-step stepControl="stepOne">
+        <ng-template matStepLabel>Project & Material</ng-template>
+        <app-rfq-project-materials (updatedRfq)="getMaterial($event)" #projectrMaterial [existingRfq]="rfqData"> </app-rfq-project-materials>
+      </mat-step>
+      <mat-step stepControl="stepSecond">
+        <ng-template matStepLabel>Add Quantity & Makes</ng-template>
+        <app-rfq-quantity-makes #rfqQtyMakes [rfq]="rfqMaterial" (updatedRfq)="getQuantityAndMakes($event)"> </app-rfq-quantity-makes>
+      </mat-step>
+      <mat-step stepControl="stepThree">
+        <ng-template matStepLabel>Select Supplier</ng-template>
+        <app-rfq-supplier #rfqSupplier [finalRfq]="finalRfq"> </app-rfq-supplier>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
 </div>

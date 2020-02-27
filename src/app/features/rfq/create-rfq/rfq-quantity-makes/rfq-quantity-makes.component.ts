@@ -116,7 +116,7 @@ export class RfqQuantityMakesComponent implements OnInit {
           return this.formBuilder.group({
             estimatedRate: [item.estimatedRate],
             quantity: [item.quantity, Validators.required],
-            makes: [],
+            makes: [item.makes],
             projId: [item.projectId],
             matId: [item.materialId]
           });

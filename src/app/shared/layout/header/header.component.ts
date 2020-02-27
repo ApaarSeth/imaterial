@@ -11,7 +11,6 @@ import { NotificationInt } from '../../models/notification';
 })
 export class HeaderLayoutComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
-  @Input("menu") menu: MatSidenav;
   public buttonName: string = "dashboard";
   orgId: Number;
   role: string;
@@ -34,24 +33,25 @@ export class HeaderLayoutComponent implements OnInit {
     this.userId = Number(localStorage.getItem("userId"));
     this.role = localStorage.getItem("role");
     // this.checkPermission(this.role);
+    this.sidenavToggle.emit('loaded');
     this.permissionObj = this.permissionService.checkPermission();
     this.userService.getNotification(this.userId).then(res => {
       this.notificationObj = res.data;
-      if(this.notificationObj){
-            this.notificationObj.forEach(element => {
-                if(element.read == 0){
-                  this.unreadnotification.push(element);
-                }
-                else if(element.read == 1){
-                  this.readnotification.push(element);
-                }
-              })
+      if (this.notificationObj) {
+        this.notificationObj.forEach(element => {
+          if (element.read == 0) {
+            this.unreadnotification.push(element);
+          }
+          else if (element.read == 1) {
+            this.readnotification.push(element);
+          }
+        })
 
-               if(this.unreadnotification && this.unreadnotification.length>0)
-                this.unreadnotificationLength = this.unreadnotification.length;
+        if (this.unreadnotification && this.unreadnotification.length > 0)
+          this.unreadnotificationLength = this.unreadnotification.length;
 
-                if(this.readnotification && this.unreadnotification && this.readnotification.length>0 && this.unreadnotification.length>0)
-                this.allnotificationLength = this.readnotification.length + this.unreadnotification.length;
+        if (this.readnotification && this.unreadnotification && this.readnotification.length > 0 && this.unreadnotification.length > 0)
+          this.allnotificationLength = this.readnotification.length + this.unreadnotification.length;
       }
     })
   }
