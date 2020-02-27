@@ -2,6 +2,12 @@ export const ConfigurationConstants = {
   HEADER_SKIP_LOADER: "Skip-Loader",
   HEADER_CACHE_REQUEST: "Cache-Request"
 };
+
+export class Froala {
+  public static key: String = 'iMFIZJNKLDXIREJI==';
+}
+
+
 export const API = {
   PROJECTS: (organizationId, userId) => `projects/${organizationId}/${userId}`,
   GETPROJECT: (organizationId, projectId) => `project/${organizationId}/${projectId}`,

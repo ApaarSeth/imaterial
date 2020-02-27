@@ -1,14 +1,21 @@
-import {Injectable} from "@angular/core";
-import {DataService} from "../data.service";
-import {API} from "../../constants/configuration-constants";
-import {initiatePo, SupplierAddress} from "../../models/PO/po-data";
-import {AllSupplierDetails} from "../../models/supplier";
+import { Injectable } from "@angular/core";
+import { DataService } from "../data.service";
+import { API } from "../../constants/configuration-constants";
+import { initiatePo, SupplierAddress } from "../../models/PO/po-data";
+import { AllSupplierDetails } from "../../models/supplier";
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class POService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
+
+  projectRole$ = new Subject();
+  billingRole$ = new Subject();
+  billingAddress$ = new Subject();
+  supplierAddress$ = new Subject();
+  poNumber$ = new Subject();
 
   getPODetails(organizationId: Number) {
     return this.dataService.getRequest(API.GETPODETAILLIST(organizationId));
