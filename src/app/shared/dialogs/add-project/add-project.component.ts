@@ -27,7 +27,7 @@ export interface Unit {
   templateUrl: "add-project-component.html"
 })
 export class AddProjectComponent implements OnInit {
-  
+
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
@@ -36,14 +36,14 @@ export class AddProjectComponent implements OnInit {
   orgId: number;
   userId: number;
   selectedConstructionUnit: String;
-  
+
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
     private formBuilder: FormBuilder,
-    private _snackBar:MatSnackBar
-  ) {}
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -68,7 +68,7 @@ export class AddProjectComponent implements OnInit {
     { type: "OTHERS" }
   ];
 
-  units: Unit[] = [{ value: "acres" }, { value: "sqm" },{ value: "sqft" }];
+  units: Unit[] = [{ value: "acres" }, { value: "sqm" }, { value: "sqft" }];
 
   initForm() {
     this.projectDetails = this.data.isEdit
@@ -128,14 +128,14 @@ export class AddProjectComponent implements OnInit {
     this.projectService
       .addProjects(projectDetails, this.orgId, this.userId)
       .then(res => {
-         res.data;
-          if(res){
-        
-            this._snackBar.open(res.message, "", {
+        res.data;
+        if (res) {
+
+          this._snackBar.open(res.message, "", {
             duration: 2000,
             panelClass: ["blue-snackbar"]
           });
-      
+
         }
       });
   }
@@ -147,15 +147,15 @@ export class AddProjectComponent implements OnInit {
       this.projectService
         .updateProjects(organizationId, projectId, projectDetails)
         .then(res => {
-           res.data;
-            if(res){
-        
+          res.data;
+          if (res) {
+
             this._snackBar.open(res.message, "", {
-            duration: 2000,
-            panelClass: ["blue-snackbar"]
-          });
-      
-        }
+              duration: 2000,
+              panelClass: ["blue-snackbar"]
+            });
+
+          }
         });
     }
   }
@@ -172,5 +172,19 @@ export class AddProjectComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  uploadPhoto() {}
+  getStart(event) {
+    const x = event.indexOf('/');
+    const month = event.substring(0, x);
+
+    event = event.replace('/', '-');
+    const y = event.indexOf('/');
+    const day = event.substring(x + 1, y);
+
+
+    const year = event.substring(y + 1, 10);
+
+    this.minDate = new Date(year, month - 1, day)
+
+  }
+  uploadPhoto() { }
 }

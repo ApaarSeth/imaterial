@@ -1,7 +1,7 @@
-<section class="update-info">
+<section class="update-info add-user">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-10 offset-md-1">
                 <div class="update-info__popup p-4 mt-5">
                     <form class="update-info__form" *ngIf="addUserForm" [formGroup]="addUserForm">
                         <div class="row">
@@ -16,7 +16,7 @@
 
                             <div class="row" [formGroupName]="i">
 
-                                <div class="col-md-4">
+                                <div class="col-md-3 width-28">
                                     <mat-form-field class="border-input w-100">
                                         <input matInput type="email" placeholder="Email" formControlName="email">
                                     </mat-form-field>
@@ -29,7 +29,7 @@
                                 </div>
     
     
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <mat-form-field class="border-input w-100">
                                         <input matInput type="text" placeholder="Phone number" formControlName="contactNo">
                                     </mat-form-field>
@@ -62,7 +62,7 @@
                             </div>
                         </div>
 
-                        <button mat-mini-fab color="warn" (click)="onAddRow()">+</button>
+                        <button mat-mini-fab color="warn" (click)="onAddRow()">+ Add User</button>
 
                         <div class="text-center col-md-12 mt-4">
                             <button class="btn btn-outline-warning mr-3" [routerLink]="['/dashboard']">Skip</button>

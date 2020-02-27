@@ -77,4 +77,8 @@ export class RFQService {
   getRfqTerms() {
     return this.dataService.getRequest(API.GETRFQTERMS);
   }
+
+  postSupplierExcel(data:FormData,organisationId:number){
+     return this.dataService.sendPostRequest(API.UPLOADSUPPLIEREXCEL(organisationId),data)
+  }
 }

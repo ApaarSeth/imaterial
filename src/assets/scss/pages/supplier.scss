@@ -376,6 +376,17 @@ div.limited-character {
     text-overflow: ellipsis;
     z-index: 10;
 }
+.rfq-after-bid{
+    .limited-character {
+        position: relative;
+        width: 400px;
+        z-index: 10;
+        span{
+            white-space: normal;
+        }
+    }
+}
+
 
 .blue-background-color-color-white-section {
     background: #192135;
@@ -594,110 +605,95 @@ mat-icon {
 
 
  #notifications {
-        display:block;
-        // width:430px;
-        // position:absolute;
-        // top:30px;
-        // left:0;
-        // background:#FFF;
-        // border:solid 1px rgba(100, 100, 100, .20);
-        // z-index: 0;
-
-
-           display: block;
+    display: block;
     background-color: #ffffff;
     color: #000000;
     z-index: 999;
-    position: relative;
     font-size: 10px;
     width: 400px;
-    position: relative;
-   top:-38px;
-   float: right;
-
+    position: absolute;
     padding: 5px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     border: 1px solid #d0d0d0;
-
+    right: 10px;
+    &:before {         
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        color: transparent;
+        border: 10px solid #CCC;
+        border-color: transparent transparent #FFF;
+        margin-top: -11px;
+        margin-right: 26px;
+        float: right;
     }
-    /* AN ARROW LIKE STRUCTURE JUST OVER THE NOTIFICATIONS WINDOW */
-    #notifications:before {         
-                content: '';
-                display: block;
-                width: 0;
-                height: 0;
-                color: transparent;
-                border: 10px solid #CCC;
-                border-color: transparent transparent #FFF;
-                margin-top: -11px;
-                margin-right: 26px;
-                float: right;
-
-    }
+}
         
-    h3 {
-        display:block;
-        color:#333; 
-        background:#FFF;
-        //font-weight:bold;
-        font-size:14px;    
-        padding:8px;
-        margin:0;
-        border-bottom:solid 1px rgba(100, 100, 100, .30);
-    }
-        
-    .seeAll {
-        background:#F6F7F8;
-        padding:8px;
-        font-size:12px;
-        font-weight:bold;
-        border-top:solid 1px rgba(100, 100, 100, .30);
-        text-align:center;
-    }
-    .seeAll a {
-        color:#3b5998;
-    }
-    .seeAll a:hover {
-        background:#F6F7F8;
-        color:#3b5998;
-        text-decoration:underline;
-    }
-    .body-of-notification{
-        max-height: 320px;
-        overflow-y: scroll;
-    }
-
-    .read-unread-heading{
-        background: #d8d8d857;
-        span{
-            opacity: 0.5;
-        }
-    }
-    .unread-background{
-        background: #3cbcc512;
-        cursor: pointer;
-    }
-    .time-notification{
-        color: rgba(0,0,0,0.38);
-        opacity: 0.8;
-    }
-    .font-size-12{
-        font-size: 12px;
-    }
-    .read-background{
-       cursor: pointer;
-    }
-    .bell-icon{
-        display:block;
-        color:#192135;
-    }
+h3 {
+    display:block;
+    color:#333; 
+    background:#FFF;
+    //font-weight:bold;
+    font-size:14px;    
+    padding:8px;
+    margin:0;
+    border-bottom:solid 1px rgba(100, 100, 100, .30);
+}
     
-      .bell-icon:hover{
-        display:block;
-        color:#f47721;
+.seeAll {
+    background:#F6F7F8;
+    padding:8px;
+    font-size:12px;
+    font-weight:bold;
+    border-top:solid 1px rgba(100, 100, 100, .30);
+    text-align:center;
+}
+.seeAll a {
+    color:#3b5998;
+}
+.seeAll a:hover {
+    background:#F6F7F8;
+    color:#3b5998;
+    text-decoration:underline;
+}
+.body-of-notification{
+    max-height: 320px;
+    overflow-y: scroll;
+}
+
+.read-unread-heading{
+    background: #d8d8d857;
+    span{
+        opacity: 0.5;
     }
-     .bell-icon-active{
-        display:block;
-        color:#f47721;
-    }
+}
+.unread-background{
+    background: #3cbcc512;
+    cursor: pointer;
+}
+.time-notification{
+    color: rgba(0,0,0,0.38);
+    opacity: 0.8;
+}
+.font-size-12{
+    font-size: 12px;
+}
+.read-background{
+    cursor: pointer;
+}
+.bell-icon{
+    display:block;
+    color:#192135;
+}
+
+.bell-icon:hover{
+    display:block;
+    color:#f47721;
+}
+
+.bell-icon-active{
+    display:block;
+    color:#f47721;
+}
     

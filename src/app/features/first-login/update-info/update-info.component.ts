@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserRoles, UserDetails, TradeList } from 'src/app/shared/models/user-details';
 import { Router } from '@angular/router';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
+import { debug } from 'util';
 
 export interface City {
   value: string;
@@ -17,13 +18,15 @@ export interface City {
 
 export class UpdateInfoComponent implements OnInit {
 
-  roles: UserRoles;
+  roles: UserRoles[];
   userInfoForm: FormGroup;
   users: UserDetails;
   tradeList: TradeList;
   selectedTrades: any[] = [];
   localImg: string | ArrayBuffer;
   filename: string;
+  role: string;
+  roleId: number;
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
@@ -38,17 +41,17 @@ export class UpdateInfoComponent implements OnInit {
 
   ngOnInit() {
     const userId = localStorage.getItem("userId");
-    const role = localStorage.getItem("role");
-    // if(!role){
-      this.getUserRoles();
-      this.getUserInformation(userId);
-      this.getTradesList();
-    // }
+    this.role = localStorage.getItem("role");
+    this.getUserRoles();
+    this.getUserInformation(userId);
+    this.getTradesList();
   }
 
   getUserRoles() {
     this._userService.getRoles().then(res => {
-      this.roles = res.data;
+      this.roles = res.data.reverse();
+      const id = this.roles.filter(opt => opt.roleName === this.role);
+      this.roleId = id[0].roleId;      
     })
   }
 
@@ -69,11 +72,11 @@ export class UpdateInfoComponent implements OnInit {
     this.userInfoForm = this._formBuilder.group({
       organizationName: [this.users ? this.users.organizationName : ''],
       organizationId: [this.users ? this.users.organizationId : ''],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: [this.users ? this.users.firstName : '', Validators.required],
+      lastName: [this.users ? this.users.lastName : '', Validators.required],
       email: [this.users ? this.users.email : '', Validators.required],
       contactNo: [this.users ? this.users.contactNo : '', Validators.required],
-      roleId: ['', Validators.required],
+      roleId: [this.roleId ? this.roleId : null, Validators.required],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
@@ -135,7 +138,7 @@ export class UpdateInfoComponent implements OnInit {
       const data: UserDetails = this.userInfoForm.value;
 
       this._userService.submitUserDetails(data).then(res => {
-        this._router.navigate(['users/organisation/add-user']); 
+        this._router.navigate(['profile/add-user']); 
       });
 
     }

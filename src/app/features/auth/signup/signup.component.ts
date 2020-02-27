@@ -102,7 +102,7 @@ export class SignupComponent implements OnInit {
         if (this.uniqueCode) {
           this.router.navigate(["/dashboard"]);
         } else {
-          this.router.navigate(["/users/organisation/update-info"]);
+          this.router.navigate(["/profile/update-info"]);
         }
       }
     });

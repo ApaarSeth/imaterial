@@ -9,6 +9,7 @@ import { SupplierBidLayoutComponent } from "./shared/layout/supplier-bid-layout/
 import { AppDashboardComponent } from './features/app-dashboard/app-dashboard.component';
 import { AuthGuardService } from './shared/guards/auth.guards';
 import { UserDataGuardService } from './shared/guards/user-data.guards';
+import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "auth/login", pathMatch: "full" },
@@ -36,13 +37,18 @@ const routes: Routes = [
         path: "auth",
         loadChildren: () =>
           import("./features/auth/auth.module").then(m => m.AuthModule)
-      },
+      }
+    ]
+  },
+
+  {
+    path: "",
+    component: ProfileLayoutComponent,
+    children: [
       {
-        path: "users",
+        path: "profile",
         loadChildren: () =>
-          import("./features/users/user-dashboard.module").then(
-            m => m.UserDashboardModule
-          )
+          import("./features/first-login/first-login.module").then(m => m.FirstLoginModule)
       }
     ]
   },

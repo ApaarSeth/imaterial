@@ -9,7 +9,7 @@ import { AuthLayoutComponent } from "./auth-layout/auth-layout.component";
 @NgModule({
   imports: [MaterialModule, FlexLayoutModule, CommonModule],
   providers: [],
-  exports: [HeaderLayoutComponent, SidenavListComponent],
-  declarations: [HeaderLayoutComponent, SidenavListComponent]
+  exports: [] , // [HeaderLayoutComponent, SidenavListComponent],
+  declarations: [] // [HeaderLayoutComponent, SidenavListComponent]
 })
 export class LayoutModule {}
