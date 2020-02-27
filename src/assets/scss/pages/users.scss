@@ -95,11 +95,11 @@
 }
 
 .update-info{
-    // background-image: url('../../images/dashboard-overlay.png');
+    background-image: url('/assets/images/dashboard-overlay.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    padding: 100px 0;
+    padding: 50px 0;
     &__popup{
         background-color: #fff;
         border-radius: 6px;
@@ -132,9 +132,27 @@
             position: absolute;
             right: 0px;
             top: 70px;
+            width: auto;
+            border-radius: 8px;
         }
+        .mat-mini-fab .mat-button-wrapper{
+            padding: 8px 15px;
+            display: inline-block;
+            line-height: 24px;
+            font-size: 14px;
+        }
+
     }
 
+}
+
+.add-user{
+    height: 100%;
+}
+
+.width-28{
+    max-width: 28%;
+    flex-basis: 28%;
 }
 
 .city-input.mat-form-field-appearance-legacy, .role-input.mat-form-field-appearance-legacy{
@@ -242,6 +260,7 @@
     background-color: #F47720;
     font-size: 20px;
 }
+
 .margin-top-minus3px{
     img{
         margin-top: -3px;
@@ -269,6 +288,11 @@
     display: -webkit-box;
     display: flex;
     margin-bottom: 20px;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 }
 
 .browser-method .myLabel {
