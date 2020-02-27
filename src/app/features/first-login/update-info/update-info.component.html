@@ -2,23 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="update-info__popup p-4 mt-5">
-
-                    <!-- <form *ngIf="photoForm" [formGroup]="photoForm">
-                    
-                        <div class="phot-title"></div>
-                        <div class="user-photo">
-                            <img [src]="localImg || 'assets/images/default-photo.jpg'"
-                                class="img-fluid user_photo" alt="">
-                        </div>
-                    
-                        <div class="browser-method">
-                            <label class="myLabel">
-                                <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
-                                <span>+ Add Photo</span>
-                            </label>
-                        </div>
-                    </form> -->
+                <div class="update-info__popup p-4">
 
                     <form class="update-info__form" *ngIf="userInfoForm" [formGroup]="userInfoForm" (ngSubmit)="submit()">
                         <div class="row">
@@ -28,7 +12,6 @@
                             </div>
 
                             <div class="col-md-6">
-                                <!-- <app-upload #uploadRef [updateInfo]="'true'"></app-upload> -->
 
                                 <div class="phot-title"></div>
                                 <div class="user-photo">

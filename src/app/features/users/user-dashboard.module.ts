@@ -8,8 +8,6 @@ import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { UserDetailComponent } from './user-details/user-details.component';
 import { UserRoutingModule } from './user-dashboard-routing.module';
-import { UpdateInfoComponent } from './update-info/update-info.component';
-import { AddUserComponent } from './add-user/add-user.component';
 
 @NgModule({
   imports: [
@@ -24,9 +22,9 @@ import { AddUserComponent } from './add-user/add-user.component';
     UserRoutingModule
   ],
   declarations: [
-    UserDetailComponent, 
-    UpdateInfoComponent,
-    AddUserComponent
+    UserDetailComponent,
+    // UpdateInfoComponent,
+    // AddUserComponent
   ]
 })
 

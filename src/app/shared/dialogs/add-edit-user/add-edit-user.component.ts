@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
@@ -7,8 +7,7 @@ import {
   FormControl
 } from "@angular/forms";
 
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {  Roles, AllUserDetails, UserDetailsPopUpData, UserAdd } from '../../models/user-details';
+import { Roles, AllUserDetails, UserDetailsPopUpData, UserAdd } from '../../models/user-details';
 import { UserService } from '../../services/userDashboard/user.service';
 import { Router } from '@angular/router';
 import { FieldRegExConst } from '../../constants/field-regex-constants';
@@ -32,20 +31,22 @@ export interface Unit {
   selector: "add-edit-user-dialog",
   templateUrl: "add-edit-user-component.html"
 })
+
 export class AddEditUserComponent implements OnInit {
+  
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
-   allProjects: ProjectDetails[];
+  allProjects: ProjectDetails[];
+  allRoles: Roles[];
 
-   allRoles : Roles[];
-
- toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
   userDetails: AllUserDetails;
   isInputDisabled: boolean = true;
   orgId: number;
   userId: number;
+
   constructor(
     private userService: UserService,
     private dialogRef: MatDialogRef<AddEditUserComponent>,
@@ -53,22 +54,20 @@ export class AddEditUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private projectService: ProjectService,
-    private _snackBar:MatSnackBar
-  ) {}
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.initForm();
-    this.orgId=Number(localStorage.getItem("orgId"))
-    this.userId=Number(localStorage.getItem("userId"))
-  this.projectService.getProjects(this.orgId, this.userId).then(data => {
-            this.allProjects = data.data;
-          });
+    this.orgId = Number(localStorage.getItem("orgId"))
+    this.userId = Number(localStorage.getItem("userId"))
+    this.projectService.getProjects(this.orgId, this.userId).then(data => {
+      this.allProjects = data.data;
+    });
 
-this.userService.getRoles().then(data => {
-            this.allRoles = data.data;
-          });
-
-
+    this.userService.getRoles().then(data => {
+      this.allRoles = data.data;
+    });
   }
 
   close() {
@@ -76,8 +75,6 @@ this.userService.getRoles().then(data => {
   }
 
   initForm() {
-
-    
 
     this.userDetails = this.data.isEdit
       ? this.data.detail
@@ -87,19 +84,19 @@ this.userService.getRoles().then(data => {
 
     this.form = new FormGroup({
       firstName: new FormControl(
-        {value:this.data.isEdit ? this.data.detail.firstName : "", disabled:this.isInputDisabled},
+        { value: this.data.isEdit ? this.data.detail.firstName : "", disabled: this.isInputDisabled },
         Validators.required
       ),
       lastName: new FormControl(
-        {value:this.data.isEdit ? this.data.detail.lastName : "",disabled:this.isInputDisabled},
+        { value: this.data.isEdit ? this.data.detail.lastName : "", disabled: this.isInputDisabled },
         Validators.required
       ),
       email: new FormControl(
-        {value:this.data.isEdit ? this.data.detail.email : "", disabled:this.isInputDisabled},
-        [Validators.required,  Validators.pattern(FieldRegExConst.EMAIL)]),
+        { value: this.data.isEdit ? this.data.detail.email : "", disabled: this.isInputDisabled },
+        [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]),
 
       contactNo: new FormControl(
-        {value:this.data.isEdit ? this.data.detail.contactNo : "",disabled:this.isInputDisabled},
+        { value: this.data.isEdit ? this.data.detail.contactNo : "", disabled: this.isInputDisabled },
         [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]
       ),
       roleId: new FormControl(
@@ -107,69 +104,65 @@ this.userService.getRoles().then(data => {
         Validators.required
       ),
       projectIds: new FormControl(
-        this.data.isEdit ? this.data.detail.projectIds: ""
+        this.data.isEdit ? this.data.detail.projectIds : []
       ),
-      creatorId : new FormControl(''),
+      creatorId: new FormControl(''),
       userId: new FormControl(this.data.isEdit ? this.data.detail.userId : null)
 
     });
   }
 
   addUsers(userDetails: UserAdd) {
-    console.log(userDetails);
+
     userDetails.creatorId = this.userId;
-     userDetails.projects = userDetails.projectIds;
+    userDetails.projects = userDetails.projectIds;
+    var form_data = new FormData();
 
-      var form_data = new FormData();
-            for (var key in userDetails) {
-
-                form_data.append(key, userDetails[key]);
-            }
+    for (var key in userDetails) {
+      form_data.append(key, userDetails[key]);
+    }
 
     this.userService.addUsers(userDetails).then(res => {
-      if(res){
-            this._snackBar.open(res.message, "", {
-            duration: 2000,
-            panelClass: ["blue-snackbar"]
-          });
+      if (res) {
+        this._snackBar.open(res.message, "", {
+          duration: 2000,
+          panelClass: ["blue-snackbar"]
+        });
       }
-      
+
     });
   }
 
   updateUsers(userDetails: UserAdd) {
     if (userDetails) {
-        userDetails.creatorId = this.userId;
-        userDetails.userId = userDetails.userId;
+      userDetails.creatorId = this.userId;
+      userDetails.userId = userDetails.userId;
 
       this.userService
         .updateUsers(userDetails)
         .then(res => {
-               if(res){
-                    this._snackBar.open(res.message, "", {
-                    duration: 2000,
-                    panelClass: ["blue-snackbar"]
-                  });
-              }
+          if (res) {
+            this._snackBar.open(res.message, "", {
+              duration: 2000,
+              panelClass: ["blue-snackbar"]
+            });
+          }
         });
     }
   }
 
   submit() {
-    console.log(this.form.value);
-
     if (this.data.isEdit) {
-
       this.dialogRef.close(this.updateUsers(this.form.value));
     } else {
       this.dialogRef.close(this.addUsers(this.form.value));
     }
   }
 
-  userDetailsNavigate(){
+  userDetailsNavigate() {
     this.router.navigate(["users/user-detail"]);
-    }
-  closeDialog(){
+  }
+  closeDialog() {
     this.dialogRef.close();
   }
 }

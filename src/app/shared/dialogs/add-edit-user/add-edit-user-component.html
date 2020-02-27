@@ -90,7 +90,7 @@
               <mat-label>Role *</mat-label>
                 <mat-select formControlName="roleId">
                   <mat-option *ngFor="let role of allRoles" [value]="role.roleId">
-                    {{role.roleName}}
+                    {{role.roleDescription}}
                   </mat-option>
                 </mat-select>
             </mat-form-field>
