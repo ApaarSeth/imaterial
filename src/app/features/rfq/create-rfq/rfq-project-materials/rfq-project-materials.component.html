@@ -1,84 +1,77 @@
 <form *ngIf="allProjects" [formGroup]="form">
-    <div class="row p-b-10">
-        <div class="col-sm-12">
-            <mat-form-field class="border-select pull-right m-r-25">
-                <mat-label>Select Project</mat-label>
-                <mat-select formControlName="selectedProject" multiple>
-                    <div class="display-flex">
-                        <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
-                            [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
-                        <button mat-button matSuffix mat-icon-button>
-                            <mat-icon>search</mat-icon>
-                        </button>
-                    </div>
-                    <mat-option *ngFor="
-                  let project of allProjects
-                    | SearchPipe: searchText:'projectName'
-                " [value]="project" selected="project.clicked" (click)="choosenProject()">{{ project.projectName }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+  <div class="row p-b-10">
+    <div class="col-sm-12">
+      <mat-form-field class="border-select pull-right m-r-25">
+        <mat-label>Select Project</mat-label>
+        <mat-select formControlName="selectedProject" multiple>
+          <div class="display-flex">
+            <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+            <button mat-button matSuffix mat-icon-button>
+              <mat-icon>search</mat-icon>
+            </button>
+          </div>
+          <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:'projectName'" [value]="project" selected="project.clicked" (click)="choosenProject()"
+            >{{ project.projectName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
+  </div>
 </form>
 <form *ngIf="rfqDetails.length" [formGroup]="materialForm">
-    <span formArrayName="forms">
-        <div *ngFor="let project of rfqDetails ;let p=index" [formGroupName]="p">
-            <mat-accordion *ngIf="rfqDetails" class="rfq-detail-body">
-                <mat-expansion-panel class="myPanel" [expanded]="true">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{project.projectName}}
-                            <a href="javascript:void(0)" class="main-color p-l-15">
-                                {{project.defaultAddress.addressLine1}}
-                                {{project.defaultAddress.city}}
-                                {{project.defaultAddress.state}}
-                                {{project.defaultAddress.country}}
-                            </a>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <table mat-table [dataSource]="project.projectMaterialList" class="mat-elevation-z8 col-sm-12"
-                        formArrayName="materialList">
-                        <ng-container matColumnDef="Material Name">
-                            <th mat-header-cell *matHeaderCellDef>Material Name</th>
-                            <td mat-cell *matCellDef="let element ;let i=index" formGroupName={{i}}>
-                                <mat-checkbox #ch [checked]="element.checked"
-                                    (change)="materialChecked(ch,i,p,project.projectId,element)">
-                                    <div class="limited-character" matTooltip=" {{ element.materialName }}">
-                                        {{ element.materialName }} <br>
-                                    </div>
-                                    <div class="limited-character" matTooltip=" {{ element.materialGroup }}">
-                                        <span class="category-name">
-                                            {{ element.materialGroup}}
-                                        </span>
-                                    </div>
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Required Date">
-                            <th mat-header-cell *matHeaderCellDef>Required Date</th>
-                            <td mat-cell *matCellDef="let element; let i = index">
-                                {{ element.dueDate|date: "dd-MMM-yyy" }}
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Requested Quantity">
-                            <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
-                            <td mat-cell *matCellDef="let element">
-                                {{ element.requestedQty }}<span class="p-l-5">{{element.materialUnit}}</span>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Estimated Quantity">
-                            <th mat-header-cell *matHeaderCellDef>Estimated Quantity</th>
-                            <td mat-cell *matCellDef="let element">
-                                {{ element.estimatedQty }}<span class="p-l-5">{{element.materialUnit}}</span>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-                    </table>
-                </mat-expansion-panel>
-                <br>
-            </mat-accordion>
-        </div>
-    </span>
+  <span formArrayName="forms">
+    <div *ngFor="let project of rfqDetails; let p = index" [formGroupName]="p">
+      <mat-accordion *ngIf="rfqDetails" class="rfq-detail-body">
+        <mat-expansion-panel class="myPanel" [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ project.projectName }}
+              <a href="javascript:void(0)" class="main-color p-l-15">
+                {{ project.defaultAddress.addressLine1 }}
+                {{ project.defaultAddress.city }}
+                {{ project.defaultAddress.state }}
+                {{ project.defaultAddress.country }}
+              </a>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <table mat-table [dataSource]="project.projectMaterialList" class="mat-elevation-z8 col-sm-12 po-custom-mat-width" formArrayName="materialList">
+            <ng-container matColumnDef="Material Name">
+              <th mat-header-cell *matHeaderCellDef>Material Name</th>
+              <td mat-cell *matCellDef="let element; let i = index" formGroupName="{{ i }}">
+                <mat-checkbox #ch [checked]="element.checked" (change)="materialChecked(ch, i, p, project.projectId, element)">
+                  <div class="limited-character" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
+                  <div class="limited-character" matTooltip=" {{ element.materialGroup }}">
+                    <span class="category-name">
+                      {{ element.materialGroup }}
+                    </span>
+                  </div>
+                </mat-checkbox>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Required Date">
+              <th mat-header-cell *matHeaderCellDef>Required Date</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ element.dueDate | date: "dd-MMM-yyy" }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Requested Quantity">
+              <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.requestedQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Estimated Quantity">
+              <th mat-header-cell *matHeaderCellDef>Estimated Quantity</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.estimatedQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </mat-expansion-panel>
+        <br />
+      </mat-accordion>
+    </div>
+  </span>
 </form>

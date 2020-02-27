@@ -100,7 +100,7 @@
             <!-- start date -->
             <mat-form-field class="border-input">
               <mat-label>Project Start Date*</mat-label>
-              <input matInput [matDatepicker]="startDate" formControlName="startDate" [min]="minDate" />
+              <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref (dateChange)="getStart(ref.value)" (focus)="startDate.open()"/>
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
@@ -201,7 +201,9 @@
     <div class="col-sm-12 add-edit-dialog-button">
       <button mat-raised-button [disabled]="!form.valid"
         class="main-background-color main-button color-white pull-right">
-        Add
+        <span *ngIf="!data.isEdit">Add</span>
+        <span *ngIf="data.isEdit">Edit</span>
+
       </button>
     </div>
   </div>

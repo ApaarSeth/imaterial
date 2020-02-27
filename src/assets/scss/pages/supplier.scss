@@ -376,6 +376,17 @@ div.limited-character {
     text-overflow: ellipsis;
     z-index: 10;
 }
+.rfq-after-bid{
+    .limited-character {
+        position: relative;
+        width: 400px;
+        z-index: 10;
+        span{
+            white-space: normal;
+        }
+    }
+}
+
 
 .blue-background-color-color-white-section {
     background: #192135;

@@ -28,10 +28,12 @@ export class ChipComponent implements OnInit {
   @Input("chips") chips: string[];
   @Output() onUpdate = new EventEmitter<string[]>();
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.chips) {
+      // console.log("chips", this.chips)
       this.fruits = [...this.chips];
+      // console.log("fruits", this.fruits)
       this.update();
     }
     // this.update();

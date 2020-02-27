@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit} from "@angular/core";
-import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from "@angular/material";
-import {FormBuilder, FormGroup, FormControl, FormArray, Validators} from "@angular/forms";
-import {GRNService} from "../../services/grn/grn.service";
-import {GRNDetails, GRNPopupData} from "../../models/grn";
+import { Component, Inject, OnInit } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
+import { GRNService } from "../../services/grn/grn.service";
+import { GRNDetails, GRNPopupData } from "../../models/grn";
 
 export interface City {
   value: string;
@@ -40,7 +40,7 @@ export class AddEditGrnComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: GRNPopupData,
     private formBuilder: FormBuilder,
     private snack: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit() {
     let poId: number = this.data.pID;
@@ -80,14 +80,14 @@ export class AddEditGrnComponent implements OnInit {
       forms: new FormArray(frmArr)
     });
 
-    this.materialForms.valueChanges.subscribe(val => {
-      this.checkValidation();
-    });
+    // this.materialForms.valueChanges.subscribe(val => {
+    //   this.checkValidation();
+    // });
   }
 
   postGRNDetails(grnDetailsObj: GRNDetails[]) {
     this.grnService.addGRN(grnDetailsObj).then(data => {
-      this.snack.open(data.message, "", {duration: 2000, panelClass: ["blue-snackbar"]});
+      this.snack.open(data.message, "", { duration: 2000, panelClass: ["blue-snackbar"] });
       this.dialogRef.close(data);
     });
   }
