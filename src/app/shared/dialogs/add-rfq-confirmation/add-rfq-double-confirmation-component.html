@@ -1,25 +1,21 @@
-  <div class="header-add-edit-dialog">
-      <h1 mat-dialog-title>Confirmation</h1>
-      <button type="button" class="close" (click)="close()" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
-  </div>
-  <br>
+<div class="header-add-edit-dialog">
+  <h1 mat-dialog-title>Confirmation</h1>
+  <button type="button" class="close" (click)="close()" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<br />
 <div mat-dialog-content class="padding-for-dialog-after-header">
-  <p class="text-center">Are you sure you want to add RFQ?</p>
+  <p class="text-center">Are you sure you want to Float RFQ?</p>
 </div>
 <div mat-dialog-actions>
   <div class="col-sm-6">
-    <button
-      mat-raised-button
-      class="main-color main-button pull-left" (click)="close()">
+    <button mat-raised-button class="main-color main-button pull-left" (click)="close()">
       Cancel
     </button>
-  </div> 
+  </div>
   <div class="col-sm-6">
-    <button
-      mat-raised-button
-      class="main-background-color main-button color-white pull-right" (click)="addRFQ()">
+    <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="addRFQ()">
       Add RFQ
     </button>
   </div>

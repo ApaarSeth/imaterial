@@ -1,0 +1,10 @@
+.rfq-custom-mat-width {
+  // table {
+  //   width: 100%;
+  // }
+
+  .mat-column-Estimated-Rate,
+  .mat-column-Quantity {
+    flex: 0 0 100px !important;
+  }
+}
