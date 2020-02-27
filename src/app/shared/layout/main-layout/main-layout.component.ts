@@ -5,7 +5,12 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./main-layout.component.html"
 })
 export class MainLayoutComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  loaded = '';
+  ngOnInit() { }
+
+  isLoaded(event) {
+    this.loaded = event
+  }
 }
