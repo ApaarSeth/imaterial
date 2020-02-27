@@ -1,75 +1,90 @@
+<mat-card class="m-t-5 m-b-10 box-shadow">
+  <mat-card-content class="mat-card-content">
 
-  <mat-card class="m-t-5 m-b-10 box-shadow">
-    <mat-card-content class="mat-card-content">
-      <div class="row">
-        <div class="col-md-2 col-xs-12" style="height: 150px;">
-          <img class="radius-10" style="height: 100%;" src="../../../../assets/images/2020-01-08.jpg"
-            alt="Photo of a Shiba Inu" />
-        </div>
-        <div class="col-md-10 col-xs-12 card-project-dialog">
-          <div class="row">
-            <div class="col-xs-10">
-              <div class="text-bold">
-                <span class="main-color card-project-name" href="javascript:void(0)">{{
+    <div class="row">
+      <div class="col-md-2 col-xs-12" style="height: 150px;">
+        <img class="radius-10" style="height: 100%;" src="../../../../assets/images/2020-01-08.jpg"
+          alt="project image" />
+      </div>
+
+
+      <div class="col-md-10 col-xs-12 card-project-dialog">
+
+        <div class="row">
+          <div class="col-xs-10">
+
+            <div class="text-bold">
+              <span class="main-color card-project-name" href="javascript:void(0)">{{
                   projectDetails.projectName
                 }}</span>
-              </div>
-              <div class="row">
-                <div class=" col-xs-10 display-flex">
-                  <div class="font-size12  color-text-card text-left width50Percent line-height">
-                    <i class="material-icons font-size12 color-text-card">room</i>
-                    <span *ngIf="projectDetails.addressLine1" class="p-l-5">{{ projectDetails.addressLine1 }}</span>
-                    <span *ngIf="projectDetails.addressLine2" class="p-l-5">, {{ projectDetails.addressLine2 }}</span>
-                    <span *ngIf="projectDetails.city" class="p-l-5">, {{ projectDetails.city }}</span>
-                    <span *ngIf="projectDetails.state" class="p-l-5">, {{ projectDetails.state }}</span>
-                    <span *ngIf="projectDetails.pinCode" class="p-l-5">, {{ projectDetails.pinCode }}</span>
-                  </div>
-                  <div class="font-size12 color-text-card text-left width50Percent">
-                    <i class="material-icons font-size12 color-text-card">format_shapes</i>
-                    <span class="p-l-5">Project Area: {{ projectDetails.area }} {{projectDetails.unit}}</span>
-                  </div>
+            </div>
+
+            <div class="row">
+              <div class=" col-xs-10 display-flex">
+                <div class="font-size12  color-text-card text-left width50Percent line-height">
+                  <i class="material-icons font-size12 color-text-card">room</i>
+                  <span *ngIf="projectDetails.addressLine1" class="p-l-5">{{ projectDetails.addressLine1 }}</span>
+                  <span *ngIf="projectDetails.addressLine2" class="p-l-5">, {{ projectDetails.addressLine2 }}</span>
+                  <span *ngIf="projectDetails.city" class="p-l-5">, {{ projectDetails.city }}</span>
+                  <span *ngIf="projectDetails.state" class="p-l-5">, {{ projectDetails.state }}</span>
+                  <span *ngIf="projectDetails.pinCode" class="p-l-5">, {{ projectDetails.pinCode }}</span>
+                </div>
+                <div class="font-size12 color-text-card text-left width50Percent">
+                  <i class="material-icons font-size12 color-text-card">format_shapes</i>
+                  <span class="p-l-5">Project Area: {{ projectDetails.area }} {{projectDetails.unit}}</span>
                 </div>
               </div>
-              <div class="row">
-                <div class=" col-xs-10 display-flex">
-                  <div class="font-size12 color-text-card text-left width50Percent">
-                    <i class="material-icons font-size12 color-text-card">today</i>
-                    <span class="p-l-5">{{ projectDetails.startDate | date }}</span> to
-                    <span class="p-l-5">{{ projectDetails.endDate | date }}</span>
-                  </div>
-                  <div class="font-size12 color-text-card text-left width50Percent">
-                    <span>₹<span class="p-l-5">
-                        Construction Cost: {{ projectDetails.cost  | number : '1.2-2' }} Cr
-                      </span>
+            </div>
+
+            <div class="row">
+              <div class=" col-xs-10 display-flex">
+                <div class="font-size12 color-text-card text-left width50Percent">
+                  <i class="material-icons font-size12 color-text-card">today</i>
+                  <span class="p-l-5">{{ projectDetails.startDate | date }}</span> to
+                  <span class="p-l-5">{{ projectDetails.endDate | date }}</span>
+                </div>
+                <div class="font-size12 color-text-card text-left width50Percent">
+                  <span>₹<span class="p-l-5">
+                      Construction Cost: {{ projectDetails.cost  | number : '1.2-2' }} Cr
                     </span>
-                  </div>
+                  </span>
                 </div>
               </div>
-              <!-- <div class="row">
+            </div>
+
+            <!-- <div class="row">
                       <div class=" col-xs-6 display-flex">
                           <div class="font-size12 color-text-card text-left width50Percent"><i class="material-icons font-size12 color-text-card">room</i> <span>{{projectDetails.addressLine2}}</span></div>
                       </div>    
                     </div> -->
-            </div>
-            <div class="col-xs-2 text-right">
-              <!-- <a href="javascript:void(0)"
+          </div>
+
+
+          <div class="col-xs-2 text-right">
+            <!-- <a href="javascript:void(0)"
                 ><i class="material-icons main-color">file_copy</i></a
               > -->
-              <a *ngIf="(!disableEditDelete) && permissionObj.projectEdit" class="width-17-px p-l-10 p-r-10 cursor-pointer edit-project"  matTooltip="Edit Project"
-                (click)="edit(projectDetails.projectId, $event)">
-                <img src="../../../../assets/images/edit.png">
-              </a>
+            <a *ngIf="(!disableEditDelete) && permissionObj.projectEdit"
+              class="width-17-px p-l-10 p-r-10 cursor-pointer edit-project" matTooltip="Edit Project"
+              (click)="edit(projectDetails.projectId, $event)">
+              <img src="../../../../assets/images/edit.png">
+            </a>
 
-              <a *ngIf="(!disableEditDelete) && permissionObj.projectEdit" class="width-15-px p-l-10 p-r-10 cursor-pointer delete-project"  matTooltip="Delete Project"
-                (click)="delete(projectDetails.projectId, $event)">
-                <img src="../../../../assets/images/delete-button.png">
-              </a>
-            </div>
+            <a *ngIf="(!disableEditDelete) && permissionObj.projectEdit"
+              class="width-15-px p-l-10 p-r-10 cursor-pointer delete-project" matTooltip="Delete Project"
+              (click)="delete(projectDetails.projectId, $event)">
+              <img src="../../../../assets/images/delete-button.png">
+            </a>
           </div>
-          <div class="row m-t-20">
-            <div class="col-xs-8">
-              <div class="display-flex display-material-indent-po-box p-l-5 p-r-5">
-                <!-- <div
+
+        </div>
+
+
+        <div class="row m-t-20">
+
+          <div class="col-xs-8">
+            <div class="display-flex display-material-indent-po-box p-l-5 p-r-5">
+              <!-- <div
                   class="col-sm-2  border-container-txt p-t-10 p-b-10 display-flex"
                 >
                   <div class="font-size20 text-bold">
@@ -77,77 +92,78 @@
                   </div>
                   <div class="font-size12 p-l-15">Low Stock Material</div>
                 </div> -->
-                <div class="col-sm-4 box-custom color-text-card p-t-10 cursor-pointer display-flex"
-                  (click)="navigationToBOM(projectDetails.projectId, projectDetails)" matTooltip="View All Materials">
-                  <div class="font-size20 text-bold">
-                    <span *ngIf="projectDetails.matCount">
-                      {{ projectDetails.matCount }}
-                    </span>
-                    <span *ngIf="!projectDetails.matCount">
-                      0
-                    </span>
-                  </div>
-                  <div class="font-size12 p-l-15 p-t-5">
-                    All Materials
-                  </div>
+              <div class="col-sm-4 box-custom color-text-card p-t-10 cursor-pointer display-flex"
+                (click)="navigationToBOM(projectDetails.projectId, projectDetails)" matTooltip="View All Materials">
+                <div class="font-size20 text-bold">
+                  <span *ngIf="projectDetails.matCount">
+                    {{ projectDetails.matCount }}
+                  </span>
+                  <span *ngIf="!projectDetails.matCount">
+                    0
+                  </span>
                 </div>
-                <div class="col-sm-4 box-custom color-text-card p-t-10 cursor-pointer  display-flex"
-                  (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
-                  matTooltip="View All Indents">
-                  <div class="font-size20 text-bold">
-                    <span *ngIf="projectDetails.openIndentCount">
-                      {{ projectDetails.openIndentCount }}
-                    </span>
-                    <span *ngIf="!projectDetails.openIndentCount">
-                      0
-                    </span>
+                <div class="font-size12 p-l-15 p-t-5">
+                  All Materials
+                </div>
+              </div>
+              <div class="col-sm-4 box-custom color-text-card p-t-10 cursor-pointer  display-flex"
+                (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
+                matTooltip="View All Indents">
+                <div class="font-size20 text-bold">
+                  <span *ngIf="projectDetails.openIndentCount">
+                    {{ projectDetails.openIndentCount }}
+                  </span>
+                  <span *ngIf="!projectDetails.openIndentCount">
+                    0
+                  </span>
 
-                  </div>
-                  <div class="font-size12 p-l-15 p-t-5">
-                    Open Indents
-                  </div>
                 </div>
-                <span class="col-sm-4">
-                  <div *ngIf="permissionObj.purchaseOrderFlag" class="box-custom cursor-pointer display-flex p-t-10 "
-                    (click)="redirectToPurchaseOrder()" matTooltip="View All Purchase Orders">
-                    <div class="font-size20 color-text-card text-bold">
-                      <span *ngIf="projectDetails.purchaseOrderCount">
-                        {{ projectDetails.purchaseOrderCount }}
-                      </span>
-                      <span *ngIf="!projectDetails.purchaseOrderCount">
-                        0
-                      </span>
-                    </div>
-                    <div class="font-size12 color-text-card p-l-15 p-t-5">
-                      Purchase Orders <br>
-                      <span class="font-size14 purchase-amount" *ngIf="projectDetails.purchaseOrderCost">
-                        ₹{{ projectDetails.purchaseOrderCost  | number : '1.2-2' }} Cr
-                      </span>
-                    </div>
-                    <!-- <div class="font-size14   text-right p-l-25 m-t-15">
+                <div class="font-size12 p-l-15 p-t-5">
+                  Open Indents
+                </div>
+              </div>
+              <span class="col-sm-4">
+                <div *ngIf="permissionObj.purchaseOrderFlag" class="box-custom cursor-pointer display-flex p-t-10 "
+                  (click)="redirectToPurchaseOrder()" matTooltip="View All Purchase Orders">
+                  <div class="font-size20 color-text-card text-bold">
+                    <span *ngIf="projectDetails.purchaseOrderCount">
+                      {{ projectDetails.purchaseOrderCount }}
+                    </span>
+                    <span *ngIf="!projectDetails.purchaseOrderCount">
+                      0
+                    </span>
+                  </div>
+                  <div class="font-size12 color-text-card p-l-15 p-t-5">
+                    Purchase Orders <br>
+                    <span class="font-size14 purchase-amount" *ngIf="projectDetails.purchaseOrderCost">
+                      ₹{{ projectDetails.purchaseOrderCost  | number : '1.2-2' }} Cr
+                    </span>
+                  </div>
+                  <!-- <div class="font-size14   text-right p-l-25 m-t-15">
                       <span *ngIf="projectDetails.purchaseOrderCost">
                         ₹{{ projectDetails.purchaseOrderCost  | number : '1.2-2' }} Cr
                       </span>
                     </div> -->
-                  </div>
-                </span>
-              </div>
+                </div>
+              </span>
             </div>
-
           </div>
-          <div class="row m-t-10">
-            <div class="col-xs-6 text-left">
-              <div class="font-size12 color-text-card">
-                Created : {{ projectDetails.createdAt | date: "fullDate" }} By
-                {{ projectDetails.createdBy }} (Site Engineer)
-              </div>
+
+        </div>
+        <div class="row m-t-10">
+          <div class="col-xs-6 text-left">
+            <div class="font-size12 color-text-card">
+              Created : {{ projectDetails.createdAt | date: "fullDate" }} By
+              {{ projectDetails.createdBy }} (Site Engineer)
             </div>
-            <div class="col-xs-6 text-right">
-              <button mat-raised-button class="background-white-color main-button main-color" *ngIf="url==='/project-dashboard'"
-                (click)="navigationToBOM(projectDetails.projectId, projectDetails)">View Project</button>
-            </div>
+          </div>
+          <div class="col-xs-6 text-right">
+            <button mat-raised-button class="background-white-color main-button main-color"
+              *ngIf="url==='/project-dashboard'"
+              (click)="navigationToBOM(projectDetails.projectId, projectDetails)">View Project</button>
           </div>
         </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -29,6 +29,21 @@
         flex: 0 0 35%;
         margin-left: 40px;
     }
+
+    &__no-projects{
+        img{
+            width: 200px;
+        }
+
+        h5{
+            font-size: 16px;
+            color: #4B4B4B;
+        }
+
+        button.close{
+            font-size: 2rem;
+        }
+    }
 }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple{
