@@ -100,7 +100,8 @@
             <!-- start date -->
             <mat-form-field class="border-input">
               <mat-label>Project Start Date*</mat-label>
-              <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref (dateChange)="getStart(ref.value)" (focus)="startDate.open()"/>
+              <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref 
+                [min]="minDate" (dateChange)="getStart(ref.value)" (focus)="startDate.open()"/>
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
