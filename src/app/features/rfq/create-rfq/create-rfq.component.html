@@ -32,9 +32,6 @@
       </div>
     </div>
     <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper>
-      <!-- <ng-template matStepperIcon="edit" let-index="index">
-                {{1}}
-            </ng-template> -->
       <mat-step stepControl="stepOne">
         <ng-template matStepLabel>Project & Material</ng-template>
         <app-rfq-project-materials (updatedRfq)="getMaterial($event)" #projectrMaterial [existingRfq]="rfqData"> </app-rfq-project-materials>

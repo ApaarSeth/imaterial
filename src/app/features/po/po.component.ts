@@ -16,6 +16,8 @@ import { PoDocumentsComponent } from "./po-documents/po-documents.component";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Terms } from 'src/app/shared/models/RFQ/rfq-details';
+import { Froala } from 'src/app/shared/constants/configuration-constants';
+import { Subscription, combineLatest } from 'rxjs';
 
 @Component({
   selector: "app-po",
@@ -26,6 +28,14 @@ import { Terms } from 'src/app/shared/models/RFQ/rfq-details';
   ]
 })
 export class PoComponent implements OnInit {
+  public froala: Object = {
+
+    placeholder: "Edit Me",
+    imageUpload: false,
+    imageBrowse: false,
+    key: Froala.key
+  }
+
   poData: POData = {} as POData;
   tableData: PoMaterial[] = [];
   cardData: CardData;
@@ -36,7 +46,10 @@ export class PoComponent implements OnInit {
   @ViewChild("poDocument", { static: false }) poDocument: PoDocumentsComponent;
   documentList: DocumentList[];
   terms: terms;
+  subscriptions: Subscription[] = [];
+  isPoValid: boolean = false;
   poTerms: FormGroup;
+  isPoNumberValid: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -67,14 +80,19 @@ export class PoComponent implements OnInit {
       this.terms = this.poData.Terms;
     });
     this.formInit();
+    this.startSubscription();
   }
+
+  ngOnChanges() {
+    this.isPoNumberValid = this.poCard.projectDetails.valid
+  }
+
   formInit() {
     this.poTerms = this.formBuilder.group({
       textArea: []
     })
   }
   collateResults() {
-    console.log("podocument", this.poDocument.getData());
     let poDataCollate: POData = {
       supplierAddress: this.poData.supplierAddress,
       projectAddress: this.poData.projectAddress,
@@ -133,4 +151,17 @@ export class PoComponent implements OnInit {
     }
     this.poService.approveRejectPo(this.collatePoData);
   }
+
+  startSubscription() {
+    this.subscriptions.push(
+      combineLatest([this.poService.billingRole$, this.poService.projectRole$, this.poService.billingAddress$, this.poService.supplierAddress$, this.poService.poNumber$]).subscribe(values => {
+        console.log("ispoValid", this.isPoValid)
+        this.isPoValid = true;
+      })
+    );
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subs => subs.unsubscribe());
+  }
+
 }
