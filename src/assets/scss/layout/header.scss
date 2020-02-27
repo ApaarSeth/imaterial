@@ -3,6 +3,9 @@
   position: fixed;
   width: 100%;
   z-index: 120;
+  mat-button:hover{
+    background: none;
+  }
 }
 
 .menu-spacer {
