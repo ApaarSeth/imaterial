@@ -62,5 +62,6 @@ export const API = {
   GETRFQTERMS: 'rfq/payment/terms',
 
   GET_USER_INFO_UNIQUE_CODE: uniqueCode => `user/info/${uniqueCode}`,
-  GET_DASHBOARD_DATA: 'dashboard'
+  GET_DASHBOARD_DATA: 'dashboard',
+  UPLOADSUPPLIEREXCEL: organisationId => `projects/uploadSuppliers/${organisationId}`,
 };
