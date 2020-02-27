@@ -26,6 +26,8 @@ import { UserDashboardModule } from "./features/users/user-dashboard.module";
 import { UserDataGuardService } from "./shared/guards/user-data.guards";
 import { RouterModule } from '@angular/router';
 import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
+import { HeaderSharedModule } from './shared/layout/header/header-shared.module';
+import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +36,7 @@ import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
     NotFoundComponent,
     SupplierBidLayoutComponent,
     AppDashboardComponent,
+    ProfileLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
     AppSharedModule,
     UserDashboardModule,
     RouterModule,
-    GuidedTourModule
+    GuidedTourModule,
+    HeaderSharedModule
   ],
   providers: [
     HttpInterceptorProviders,

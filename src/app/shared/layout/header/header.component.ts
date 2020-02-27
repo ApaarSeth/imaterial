@@ -1,15 +1,13 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
-import { MatSidenav } from "@angular/material";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
 import { PermissionService } from "../../services/permission.service";
-import { UserService } from '../../services/userDashboard/user.service';
-import { NotificationInt } from '../../models/notification';
 @Component({
   selector: "app-header",
   templateUrl: "./header.html",
   styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class HeaderLayoutComponent implements OnInit {
+
   @Output() public sidenavToggle = new EventEmitter();
   public buttonName: string = "dashboard";
   orgId: Number;
@@ -17,13 +15,8 @@ export class HeaderLayoutComponent implements OnInit {
   permissionObj: any;
   notifClicked: boolean = false;
   userId: number;
-  notificationObj: NotificationInt[] = [];
-  readnotification: NotificationInt[] = [];
-  unreadnotification: NotificationInt[] = [];
-  unreadnotificationLength: number = null;
-  allnotificationLength: number = null;
+
   constructor(
-    private userService: UserService,
     private permissionService: PermissionService,
     private router: Router
   ) { }
@@ -32,33 +25,9 @@ export class HeaderLayoutComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.role = localStorage.getItem("role");
-    // this.checkPermission(this.role);
     this.sidenavToggle.emit('loaded');
     this.permissionObj = this.permissionService.checkPermission();
-    this.userService.getNotification(this.userId).then(res => {
-      this.notificationObj = res.data;
-      if (this.notificationObj) {
-        this.notificationObj.forEach(element => {
-          if (element.read == 0) {
-            this.unreadnotification.push(element);
-          }
-          else if (element.read == 1) {
-            this.readnotification.push(element);
-          }
-        })
-
-        if (this.unreadnotification && this.unreadnotification.length > 0)
-          this.unreadnotificationLength = this.unreadnotification.length;
-
-        if (this.readnotification && this.unreadnotification && this.readnotification.length > 0 && this.unreadnotification.length > 0)
-          this.allnotificationLength = this.readnotification.length + this.unreadnotification.length;
-      }
-    })
   }
-
-  public onToggleSidenav = () => {
-    this.sidenavToggle.emit();
-  };
 
   setButtonName(name: string) {
 
@@ -93,22 +62,10 @@ export class HeaderLayoutComponent implements OnInit {
     }
   }
 
-  logout() {
-    this.router.navigate(['/auth/login']).then(_ => {
-      localStorage.clear();
-    });
-  }
-  openDiv() {
-    if (this.notifClicked == true) {
-      this.notifClicked = false
-    } else {
-      this.notifClicked = true;
-    }
-  }
   routeTo(route) {
     this.router.navigate([route]);
-    //  this.router.navigate([""]);
   }
+  
   closeDialog() {
     this.notifClicked = false;
   }
