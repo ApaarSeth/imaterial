@@ -103,9 +103,6 @@ export class CreateRfqComponent implements OnInit {
   }
 
   goForward(stepper: MatStepper) {
-    stepper.selectionChange.subscribe(res => {
-      console.log(res);
-    });
     stepper.next();
   }
 
