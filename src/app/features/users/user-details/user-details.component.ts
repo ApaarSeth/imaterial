@@ -93,11 +93,11 @@ export class UserDetailComponent implements OnInit {
       return dataStr.indexOf(filterValue) != -1; 
       }
 
-            if(this.dataSourceActivateTemp.length>0 || this.dataSourceDeactivateTemp.length>0){
-              this.addUserBtn = false;
+            if(this.dataSourceActivateTemp.length>0 && this.dataSourceDeactivateTemp.length>0){
+              this.addUserBtn = true;
             } 
             else{
-              this.addUserBtn = true;
+              this.addUserBtn = false;
             }
            
           });

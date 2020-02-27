@@ -86,7 +86,9 @@
             </div>
             <div class=" col-xs-3 formGroup">
               <mat-form-field class="col-xs-12 border-input" [formGroupName]="i">
-                <input formControlName="issuedQty" matInput type="number" placeholder="Issue Quantity" />
+                <input formControlName="issuedQty" (input)="showQuantityInput()" matInput type="number" [max]="num" placeholder="Issue Quantity" />
+                <!-- <mat-error *ngIf="materialForms.controls.forms.controls[i].controls['issuedQty'].hasError('max') &&  materialForms.controls.forms.controls[i].controls['issuedQty'].touched"
+                class="error-msg p-t-5"> Quantity should be less than available stocks. </mat-error> -->
               </mat-form-field>
               <span>{{indent.unit}}</span>
             </div>
@@ -98,6 +100,11 @@
 
        
   <div mat-dialog-actions>
+    <div class="col-sm-12 text-align-center">
+      <small   class="error-msg" *ngIf="errorMsg">
+        Sum of issued quantities should be less the quantities in available stock.
+      </small>
+    </div>
     <div class="col-sm-12 save-btn-add-edit-user-modal">
         <button
         mat-raised-button (click)="onNoClick()"
@@ -105,7 +112,7 @@
       >
         Cancel
       </button>
-      <button
+      <button [disabled]="errorMsg || !materialForms.valid"
         mat-raised-button (click)="showIndent()"
         class="main-background-color main-button color-white pull-right"
       >
