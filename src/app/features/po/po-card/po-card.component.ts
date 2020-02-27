@@ -37,7 +37,7 @@ export class PoCardComponent implements OnInit {
     this.cardData.billingAddress.projectBillingUserId && this.poService.billingRole$.next();
     this.cardData.billingAddress.projectBillingAddressId && this.poService.billingAddress$.next();
     this.cardData.supplierAddress.supplierAddressId && this.poService.supplierAddress$.next();
-    this.cardData.poNumber && this.poService.supplierAddress$.next()
+    this.cardData.poNumber && this.poService.poNumber$.next()
   }
 
   ngOnChanges(): void {
