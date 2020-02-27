@@ -61,14 +61,14 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 {{ project.projectName }}
+                <a href="javascript:void(0)" class="main-color p-l-15">
+                  {{ project.defaultAddress.addressLine1 }}
+                  {{ project.defaultAddress.addressLine2 }}
+                  {{ project.defaultAddress.city }}
+                  {{ project.defaultAddress.state }}
+                  {{ project.defaultAddress.country }}
+                </a>
               </mat-panel-title>
-              <mat-panel-description class="main-color">
-                {{ project.defaultAddress.addressLine1 }}
-                {{ project.defaultAddress.addressLine2 }}
-                {{ project.defaultAddress.city }}
-                {{ project.defaultAddress.state }}
-                {{ project.defaultAddress.country }}
-              </mat-panel-description>
             </mat-expansion-panel-header>
             <table mat-table [dataSource]="project.projectMaterialList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="Material Name">
