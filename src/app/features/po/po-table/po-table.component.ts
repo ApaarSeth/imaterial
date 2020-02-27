@@ -1,10 +1,10 @@
-import {Component, OnInit, Input, OnDestroy, ViewChild} from "@angular/core";
-import {PoMaterial, PurchaseOrder} from "src/app/shared/models/PO/po-data";
-import {FormBuilder, FormGroup, FormArray} from "@angular/forms";
-import {ignoreElements, debounceTime} from "rxjs/operators";
-import {Subscription} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
-import {POService} from "src/app/shared/services/po/po.service";
+import { Component, OnInit, Input, OnDestroy, ViewChild } from "@angular/core";
+import { PoMaterial, PurchaseOrder } from "src/app/shared/models/PO/po-data";
+import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
+import { ignoreElements, debounceTime } from "rxjs/operators";
+import { Subscription, combineLatest } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { POService } from "src/app/shared/services/po/po.service";
 
 @Component({
   selector: "app-po-table",
@@ -13,12 +13,13 @@ import {POService} from "src/app/shared/services/po/po.service";
 export class PoTableComponent implements OnInit, OnDestroy {
   @Input("poTableData") poTableData: PoMaterial[];
   @Input("mode") modes: string;
-  gst: string;
+  gst: string = '';
   words: string = "";
-  constructor(private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder) {}
+  constructor(private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
+  isPoValid: boolean
   subscriptions: Subscription[] = [];
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -57,14 +58,15 @@ export class PoTableComponent implements OnInit, OnDestroy {
           materialCgst: [],
           amount: [],
           gstAmount: [],
-          gst: [],
+          gst: [purchaseorder.materialIgst + purchaseorder.materialSgst + purchaseorder.materialCgst],
           gstTotal: [],
-          total: [{value: "", disabled: false}]
+          total: [{ value: "", disabled: false }]
         });
+        this.gst = purchaseorder.materialIgst > 0 ? 'IGST' : 'CGST & SGST'
         this.subscriptions.push(
           frmGrp.valueChanges.pipe(debounceTime(200)).subscribe(formVal => {
             updateTableValue(formVal);
-          })
+          }),
         );
         const updateTableValue = formVal => {
           this.poTableData[i].purchaseOrderDetailList[j].qty = formVal.materialQuantity;
