@@ -50,17 +50,21 @@ export class RfqProjectMaterialsComponent implements OnInit {
   checkedProjectList: RfqMaterialResponse[] = [];
   checkedProjectIds: number[] = [];
   finalRfqDetails: RfqMaterialResponse[];
-
+  rfqId: number;
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) { }
   form: FormGroup;
+
   ngOnInit() {
     this.allProjects = this.activatedRoute.snapshot.data.createRfq[1].data;
+    this.activatedRoute.params.subscribe(params => {
+      this.rfqId = params['rfqId']
+    })
     this.addRfq = {
       id: null,
       status: null,
@@ -78,11 +82,21 @@ export class RfqProjectMaterialsComponent implements OnInit {
       documentsList: null,
       terms: null
     };
+    if (this.rfqId) {
+      this.rfqService.getDraftRfq(this.rfqId).then(res => {
+        this.existingRfq = res.data;
+        this.checkExistingData()
+      })
+    }
     this.formInit();
     this.materialsForm();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.checkExistingData();
+  }
+
+  checkExistingData() {
     if (this.existingRfq) {
       this.projectIds = [];
       this.rfqDetails = [];

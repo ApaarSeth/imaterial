@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
   templateUrl: "./ref-detail.component.html"
 })
 export class RefDetailComponent implements OnInit {
-  constructor(private router: Router, private rfqService: RFQService) {}
+  constructor(private router: Router, private rfqService: RFQService) { }
   // submittedRfqList: RfqList[];
   nonSubmittedRfqListTemp: RfqList[];
   submittedRfqListTemp: RfqList[];
@@ -66,7 +66,7 @@ export class RefDetailComponent implements OnInit {
 
   viewRfq(element: RfqList) {
     if (element.rfqStatus === 0) {
-      this.router.navigate(["../../rfq/createRfq"]);
+      this.router.navigate(["../../rfq/createRfq", element.rfqId]);
     } else {
       this.router.navigate(["../../rfq/rfq-view", element.rfqId]);
     }
