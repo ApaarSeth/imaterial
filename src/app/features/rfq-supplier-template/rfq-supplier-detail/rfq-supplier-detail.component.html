@@ -12,7 +12,8 @@
             <mat-form-field class="border-input">
               
               <input matInput (dateChange)="duedatefunc($event)" [matDatepicker]="dueDate"
-                placeholder="Quote Valid till" [(ngModel)]="rfqSupplierDetailList.dueDate" [min]="minDate" required />
+                placeholder="Quote Valid till" [(ngModel)]="rfqSupplierDetailList.dueDate" 
+                (focus)="dueDate.open()" readonly [min]="minDate" required />
               
               <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
 

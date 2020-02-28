@@ -84,7 +84,7 @@ export class AddUserComponent implements OnInit {
       ],
       contactNo: ['', {
         validators: [
-          Validators.required,
+          // Validators.required,
           Validators.pattern(FieldRegExConst.PHONE)
         ]
       }

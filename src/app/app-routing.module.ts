@@ -12,12 +12,15 @@ import { UserDataGuardService } from './shared/guards/user-data.guards';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "auth/login", pathMatch: "full" },
+  { 
+    path: "", 
+    redirectTo: "auth/login", 
+    pathMatch: "full" 
+  },
 
   {
     path: "",
     component: SupplierBidLayoutComponent,
-    // canActivate: [AuthGuardService],
     children: [
       {
         path: "rfq-bids",
@@ -31,7 +34,6 @@ const routes: Routes = [
   {
     path: "",
     component: AuthLayoutComponent,
-    // canActivate: [UserDataGuardService],
     children: [
       {
         path: "auth",
@@ -44,6 +46,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileLayoutComponent,
+    canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
         path: "profile",
