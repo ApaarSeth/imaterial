@@ -9,8 +9,7 @@ import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: "signin",
-  templateUrl: "./sign-in.component.html",
-  // styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./sign-in.component.html"
 })
 
 export class SigninComponent implements OnInit {

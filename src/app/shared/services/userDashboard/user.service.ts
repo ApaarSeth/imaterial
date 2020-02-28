@@ -15,6 +15,10 @@ import { isThisTypeNode } from 'typescript';
 export class UserService {
   constructor(private dataService: DataService) { }
 
+  get isLoggedIn() {
+    return localStorage.getItem('ServiceToken') != null;
+  }
+
   getRoles() {
     return this.dataService.getRequest(API.ROLES).then(res => {
       return res;
