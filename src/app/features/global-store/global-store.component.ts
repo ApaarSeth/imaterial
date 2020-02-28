@@ -13,6 +13,8 @@ export class GlobalStoreComponent implements OnInit {
   buttonName: string = "materialWise";
   globalStoreData: [];
   projectWiseData: GlobalProject[] = [];
+  materialDataLength: number;
+  projectDataLength: number;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -41,5 +43,13 @@ export class GlobalStoreComponent implements OnInit {
 
   createRfq() {
     this.router.navigate(['/rfq/createRfq']);
+  }
+  materialShowDataLength(event){
+    console.log("length of material" +event);
+    this.materialDataLength = event;
+  }
+  projectShowDataLength(event){
+     console.log("length of project" +event);
+       this.projectDataLength = event;
   }
 }

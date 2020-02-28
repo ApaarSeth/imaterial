@@ -11,3 +11,27 @@
   min-width: 0;
   width: auto !important;
 }
+
+.width-200{
+  width:200px;
+}
+.bom-qty-page{
+  .mat-expansion-panel-header{
+    min-height:54px;
+  }
+  .mat-expansion-panel-body{
+    padding:0px;
+  }
+    .background-color-bom-category{
+    background:rgba(169,174,188,0.5);
+    border-bottom: 1px solid #bbb6b6;
+  }
+  .background-color-bom-sub-category{
+    background: #EEEEEE;
+    border-bottom: 0.5px solid #c8c5c5;
+  }
+  .background-color-bom-sub-sub-category{
+     background: #FFFFFF;
+    border-bottom: 0.5px solid #f1f0f0;
+  }
+}
