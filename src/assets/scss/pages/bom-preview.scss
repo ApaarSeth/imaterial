@@ -35,3 +35,8 @@
     border-bottom: 0.5px solid #f1f0f0;
   }
 }
+
+input[type=file], /* FF, IE7+, chrome (except button) */
+input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
+    cursor: pointer; 
+}
