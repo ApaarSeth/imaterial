@@ -6,8 +6,8 @@ import { Validators, FormArray, FormGroup, FormControl, FormBuilder } from '@ang
 
 @Component({
   selector: "add-grn",
-  templateUrl: "./add-grn.component.html",
-  styleUrls: ["/../../../../assets/scss/main.scss"]
+  templateUrl: "./add-grn.component.html"
+  // ,styleUrls: ["/../../../../assets/scss/main.scss"]
 })
 
 

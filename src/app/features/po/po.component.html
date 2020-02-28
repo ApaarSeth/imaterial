@@ -6,7 +6,7 @@
       </div>
       <div class="col-sm-12 m-t-5 text-right">
         <div *ngIf="this.mode === 'edit'">
-          <button mat-raised-button class="main-background-color main-button color-white " (click)="selectApprover()">
+          <button mat-raised-button class="main-background-color main-button color-white" (click)="selectApprover()" [disabled]="!isPoValid">
             Send For Approval
           </button>
         </div>
@@ -37,13 +37,10 @@
           </form>
         </div>
         <div class="col-sm-8 background-white-color border-radius parent">
-        <div
-          class="center-element"
-          *ngIf="mode !== 'edit' && this.terms && terms.termsDesc !== ''"
-          [innerHTML]="terms.termsDesc"
-        ></div>
-        <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc == ''">No Term To View</div>
-      </div>
+          <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc !== ''" [innerHTML]="terms.termsDesc"></div>
+          <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc == ''">No Term To View</div>
+        </div>
+        froala
       </div>
     </div>
   </div>

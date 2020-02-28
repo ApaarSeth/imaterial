@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="mode === 'edit'">
     <mat-radio-group class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
-      <mat-radio-button value="IGST" class="p-r-5">IGST</mat-radio-button>
-      <mat-radio-button value="CGST & SGST">CGST & SGST</mat-radio-button>
+      <mat-radio-button [checked]="gst === 'IGST'" value="IGST" class="p-r-5">IGST</mat-radio-button>
+      <mat-radio-button [checked]="gst === 'CGST & SGST'" value="CGST & SGST">CGST & SGST</mat-radio-button>
     </mat-radio-group>
   </div>
   <div class="col-xs-12 customPo">

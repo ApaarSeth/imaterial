@@ -49,6 +49,7 @@ export class BomComponent implements OnInit {
   fileToUpload: FileList;
   orgId: number;
   userId: number;
+  searchDataValues: categoryNestedLevel;
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
@@ -189,5 +190,8 @@ export class BomComponent implements OnInit {
         .toPromise()
         .then(result => {});
     }
+  }
+  searchData(event){
+    this.searchDataValues = event;
   }
 }

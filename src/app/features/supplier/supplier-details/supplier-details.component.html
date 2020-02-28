@@ -44,14 +44,14 @@
         <div class="text-right add-user-details-button-right p-t-10 p-r-20">
           <div class="text-right d-flex justify-content-end" appDnd>
             <div class="mr-3 p-t-10">
-              <span>
-                <img src="assets/images/download.png" alt="download" class="img-fluid mr-2">
-                <a (click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')"> Download Supplier Template</a></span>
+              <span  class="cursor-pointer">
+                <img src="assets/images/download.png" alt="download" class="img-fluid mr-2 cursor-pointer ">
+                <a class="cursor-pointer"(click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')"> Download Supplier Template</a></span>
             </div>
-            <div  class="mr-3 p-t-10">
-              <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload" multiple
+            <div  class="mr-3 p-t-10 cursor-pointer">
+              <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload cursor-pointer" multiple
                 (change)="uploadExcel($event.target.files)" />
-              <span> <img src="assets/images/upload.png" alt="upload" class="img-fluid mr-2 w-30"> Upload Supplier Template</span>
+              <span class="cursor-pointer"> <img src="assets/images/upload.png" alt="upload" class="img-fluid mr-2 w-30 cursor-pointer"> Upload Supplier Template</span>
             </div>
               <button mat-raised-button (click)="addSupplier()" class="main-background-color main-button color-white">
                 Add Supplier
