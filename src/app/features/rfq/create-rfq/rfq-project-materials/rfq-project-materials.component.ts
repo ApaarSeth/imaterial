@@ -50,17 +50,21 @@ export class RfqProjectMaterialsComponent implements OnInit {
   checkedProjectList: RfqMaterialResponse[] = [];
   checkedProjectIds: number[] = [];
   finalRfqDetails: RfqMaterialResponse[];
-
+  rfqId: number;
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) { }
   form: FormGroup;
+
   ngOnInit() {
     this.allProjects = this.activatedRoute.snapshot.data.createRfq[1].data;
+    this.activatedRoute.params.subscribe(params => {
+      this.rfqId = params['rfqId']
+    })
     this.addRfq = {
       id: null,
       status: null,
@@ -78,11 +82,21 @@ export class RfqProjectMaterialsComponent implements OnInit {
       documentsList: null,
       terms: null
     };
+    if (this.rfqId) {
+      this.rfqService.getDraftRfq(this.rfqId).then(res => {
+        this.existingRfq = res.data;
+        this.checkExistingData()
+      })
+    }
     this.formInit();
     this.materialsForm();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.checkExistingData();
+  }
+
+  checkExistingData() {
     if (this.existingRfq) {
       this.projectIds = [];
       this.rfqDetails = [];
@@ -160,6 +174,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
         );
         console.log("rfqDegtail", this.rfqDetails);
         this.materialsForm();
+        this.materialAdded();
       });
     }
     this.projectIds = [...selectedIds];
@@ -216,7 +231,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
     this.materialForm.addControl("forms", new FormArray(formArr));
 
     this.materialForm.valueChanges.subscribe(val => {
-      // console.log("val", val);
       this.materialAdded();
     });
   }
@@ -236,20 +250,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
       element.checked = true;
       mat.get("material").setValue(element);
     } else {
-      // if (this.checkedProjectIds.includes(projectId)) {
-      //   this.checkedProjectList = this.checkedProjectList.map(
-      //     (proj: RfqMaterialResponse) => {
-      //       if (proj.projectId === projectId) {
-      //         proj.projectMaterialList = proj.projectMaterialList.filter(
-      //           (mat: RfqMat) => {
-      //             return mat.materialId != element.materialId;
-      //           }
-      //         );
-      //       }
-      //       return proj;
-      //     }
-      //   );
-      // }
       element.checked = false;
       mat.get("material").reset();
     }
@@ -264,23 +264,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
           projectMaterial.push(element.material);
         }
       });
-      // if (
-      //   this.checkedProjectIds &&
-      //   this.checkedProjectIds.includes(rfqDetail.projectId)
-      // ) {
-      //   let project: RfqMaterialResponse = this.checkedProjectList.find(
-      //     (proj: RfqMaterialResponse) => {
-      //       return proj.projectId === rfqDetail.projectId;
-      //     }
-      //   );
-      //   let checkedMatName = project.projectMaterialList.map(
-      //     mat => mat.materialName
-      //   );
-      //   projectMaterial = projectMaterial.filter((mat: RfqMat) => {
-      //     return !checkedMatName.includes(mat.materialName);
-      //   });
-      //   projectMaterial = [...projectMaterial, ...project.projectMaterialList];
-      // }
       rfqDetail.projectMaterialList = projectMaterial;
       return rfqDetail;
     });

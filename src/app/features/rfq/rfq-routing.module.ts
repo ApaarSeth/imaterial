@@ -52,6 +52,11 @@ const routes: Routes = [
     component: RFQViewComponent
   },
   {
+    path: "createRfq/:rfqId",
+    resolve: { createRfq: CreateRfqResolver },
+    component: CreateRfqComponent
+  },
+  {
     path: "createRfq",
     resolve: { createRfq: CreateRfqResolver },
     component: CreateRfqComponent
