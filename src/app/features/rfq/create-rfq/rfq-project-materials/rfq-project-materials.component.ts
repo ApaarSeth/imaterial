@@ -174,6 +174,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
         );
         console.log("rfqDegtail", this.rfqDetails);
         this.materialsForm();
+        this.materialAdded();
       });
     }
     this.projectIds = [...selectedIds];
@@ -230,7 +231,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
     this.materialForm.addControl("forms", new FormArray(formArr));
 
     this.materialForm.valueChanges.subscribe(val => {
-      // console.log("val", val);
       this.materialAdded();
     });
   }
@@ -250,20 +250,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
       element.checked = true;
       mat.get("material").setValue(element);
     } else {
-      // if (this.checkedProjectIds.includes(projectId)) {
-      //   this.checkedProjectList = this.checkedProjectList.map(
-      //     (proj: RfqMaterialResponse) => {
-      //       if (proj.projectId === projectId) {
-      //         proj.projectMaterialList = proj.projectMaterialList.filter(
-      //           (mat: RfqMat) => {
-      //             return mat.materialId != element.materialId;
-      //           }
-      //         );
-      //       }
-      //       return proj;
-      //     }
-      //   );
-      // }
       element.checked = false;
       mat.get("material").reset();
     }
@@ -278,23 +264,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
           projectMaterial.push(element.material);
         }
       });
-      // if (
-      //   this.checkedProjectIds &&
-      //   this.checkedProjectIds.includes(rfqDetail.projectId)
-      // ) {
-      //   let project: RfqMaterialResponse = this.checkedProjectList.find(
-      //     (proj: RfqMaterialResponse) => {
-      //       return proj.projectId === rfqDetail.projectId;
-      //     }
-      //   );
-      //   let checkedMatName = project.projectMaterialList.map(
-      //     mat => mat.materialName
-      //   );
-      //   projectMaterial = projectMaterial.filter((mat: RfqMat) => {
-      //     return !checkedMatName.includes(mat.materialName);
-      //   });
-      //   projectMaterial = [...projectMaterial, ...project.projectMaterialList];
-      // }
       rfqDetail.projectMaterialList = projectMaterial;
       return rfqDetail;
     });

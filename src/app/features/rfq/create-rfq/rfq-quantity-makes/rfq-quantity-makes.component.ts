@@ -66,31 +66,16 @@ export class RfqQuantityMakesComponent implements OnInit {
       this.projectSelectedMaterials =
         history.state.rfqData.data.rfqProjectsList;
       this.updatedRfq.emit(this.rfqData);
-      // this.stepperForm.get("qty").setValue(history.state.rfqData.data);
     }
-    // if (this.stepperForm.get("mat").value) {
-    //   this.rfqData = this.stepperForm.get("mat").value;
-    //   this.projectSelectedMaterials = this.stepperForm.get(
-    //     "mat"
-    //   ).value.rfqProjectsList;
-    // }
     this.formsInit();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // if (this.stepperForm.get("mat").value) {
-    //   this.projectSelectedMaterials = this.stepperForm.get(
-    //     "mat"
-    //   ).value.rfqProjectsList;
-    // }
     if (this.rfq) {
       this.rfqData = this.rfq;
       this.projectSelectedMaterials = this.rfq.rfqProjectsList;
       this.formsInit();
     }
-    // if (this.projectSelectedMaterials) {
-    //   this.formsInit();
-    // }
   }
 
   setButtonName(name: string) {
