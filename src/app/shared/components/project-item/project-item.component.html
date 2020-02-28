@@ -92,54 +92,53 @@
                   </div>
                   <div class="font-size12 p-l-15">Low Stock Material</div>
                 </div> -->
-              <div class="col-sm-4 box-custom color-text-card p-t-10 cursor-pointer display-flex"
-                (click)="navigationToBOM(projectDetails.projectId, projectDetails)" matTooltip="View All Materials">
-                <div class="font-size20 text-bold">
-                  <span *ngIf="projectDetails.matCount">
-                    {{ projectDetails.matCount }}
-                  </span>
-                  <span *ngIf="!projectDetails.matCount">
-                    0
-                  </span>
+                <div class="col-sm-4 box-custom color-text-card p-t-10 cursor-pointer display-flex showAllMaterials"
+                  (click)="navigationToBOM(projectDetails.projectId, projectDetails)" matTooltip="View All Materials">
+                  <div class="font-size20 text-bold">
+                    <span *ngIf="projectDetails.matCount">
+                      {{ projectDetails.matCount }}
+                    </span>
+                    <span *ngIf="!projectDetails.matCount">
+                      0
+                    </span>
+                  </div>
+                  <div class="font-size12 p-l-15 p-t-5">
+                    All Materials
+                  </div>
                 </div>
-                <div class="font-size12 p-l-15 p-t-5">
-                  All Materials
-                </div>
-              </div>
-              <div class="col-sm-4 box-custom color-text-card p-t-10 cursor-pointer  display-flex"
-                (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
-                matTooltip="View All Indents">
-                <div class="font-size20 text-bold">
-                  <span *ngIf="projectDetails.openIndentCount">
-                    {{ projectDetails.openIndentCount }}
-                  </span>
-                  <span *ngIf="!projectDetails.openIndentCount">
-                    0
-                  </span>
-
-                </div>
-                <div class="font-size12 p-l-15 p-t-5">
-                  Open Indents
-                </div>
-              </div>
-              <span class="col-sm-4">
-                <div *ngIf="permissionObj.purchaseOrderFlag" class="box-custom cursor-pointer display-flex p-t-10 "
-                  (click)="redirectToPurchaseOrder()" matTooltip="View All Purchase Orders">
-                  <div class="font-size20 color-text-card text-bold">
-                    <span *ngIf="projectDetails.purchaseOrderCount">
-                      {{ projectDetails.purchaseOrderCount }}
+                <div class="col-sm-4 box-custom color-text-card p-t-10 cursor-pointer  display-flex showOpenIndents"
+                  (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
+                  matTooltip="View All Indents">
+                  <div class="font-size20 text-bold">
+                    <span *ngIf="projectDetails.openIndentCount">
+                      {{ projectDetails.openIndentCount }}
                     </span>
                     <span *ngIf="!projectDetails.purchaseOrderCount">
                       0
                     </span>
                   </div>
                   <div class="font-size12 color-text-card p-l-15 p-t-5">
-                    Purchase Orders <br>
-                    <span class="font-size14 purchase-amount" *ngIf="projectDetails.purchaseOrderCost">
-                      ₹{{ projectDetails.purchaseOrderCost  | number : '1.2-2' }} Cr
-                    </span>
+                   Open Indents
                   </div>
-                  <!-- <div class="font-size14   text-right p-l-25 m-t-15">
+                </div>
+                <span class="col-sm-4">
+                  <div *ngIf="permissionObj.purchaseOrderFlag" class="box-custom cursor-pointer display-flex p-t-10 showPurchaseOrders"
+                    (click)="redirectToPurchaseOrder()" matTooltip="View All Purchase Orders">
+                    <div class="font-size20 color-text-card text-bold">
+                      <span *ngIf="projectDetails.purchaseOrderCount">
+                        {{ projectDetails.purchaseOrderCount }}
+                      </span>
+                      <span *ngIf="!projectDetails.purchaseOrderCount">
+                        0
+                      </span>
+                    </div>
+                    <div class="font-size12 color-text-card p-l-15 p-t-5">
+                      Purchase Orders <br>
+                      <span class="font-size14 purchase-amount" *ngIf="projectDetails.purchaseOrderCost">
+                        ₹{{ projectDetails.purchaseOrderCost  | number : '1.2-2' }} Cr
+                      </span>
+                    </div>
+                    <!-- <div class="font-size14   text-right p-l-25 m-t-15">
                       <span *ngIf="projectDetails.purchaseOrderCost">
                         ₹{{ projectDetails.purchaseOrderCost  | number : '1.2-2' }} Cr
                       </span>

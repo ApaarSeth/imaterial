@@ -29,6 +29,7 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 })
 export class BomPreviewComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
+    @Output("searchData") searchData = new EventEmitter();
   counter: number;
   orgId: number;
 
@@ -76,6 +77,7 @@ export class BomPreviewComponent implements OnInit {
             return subcategory;
           }
         );
+        this.searchData.emit(this.selectedCategory);
         this.formInit();
       })
       .catch(err => {

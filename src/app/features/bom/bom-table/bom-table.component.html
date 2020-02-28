@@ -68,7 +68,13 @@
             Issued To Project
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
-            {{ element.issueToProject }}
+            <ng-container *ngIf="element.issueToProject; else showZEroDataIP">
+                        {{ element.issueToProject }}
+            </ng-container>
+                      <ng-template #showZEroDataIP>
+                       0
+                      </ng-template>
+                      {{ element.materialUnit }}
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
@@ -76,7 +82,13 @@
             Available In Stock
           </th>
           <td class="text-align-center" mat-cell [hidden]="!permissionObj.rfqFlag" *matCellDef="let element">
-            {{ element.availableStock }}
+            <ng-container *ngIf="element.availableStock; else showZEroData">
+                        {{ element.availableStock }}
+            </ng-container>
+                      <ng-template #showZEroData>
+                       0
+                      </ng-template>
+                      {{ element.materialUnit }}
           </td>
         </ng-container>
 
@@ -151,7 +163,13 @@
                       Available In Stock
                     </th>
                     <td class="text-align-center" mat-cell *matCellDef="let element">
-                      {{ element.availableStock }}
+                      <ng-template *ngIf="element.availableStock!=null">
+                        {{ element.availableStock }}
+                      </ng-template>
+                      <ng-template *ngIf="element.availableStock == null">
+                       0
+                      </ng-template>
+                      {{ element.materialUnit }}
                     </td>
                   </ng-container>
                   <tr style="opacity: 0;height: 0px;" mat-header-row *matHeaderRowDef="innerDisplayedColumns"></tr>

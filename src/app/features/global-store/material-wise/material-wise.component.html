@@ -1,4 +1,4 @@
-<div class="col-xs-12 text-right p-t-20 border-input">
+<div class="col-xs-12 text-right p-t-20 border-input" *ngIf="this.newMaterialData && (this.newMaterialData.length > 0)">
   <span class="p-r-20"> </span>
   <mat-form-field class="input-search-padding-zero">
     <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" />
@@ -8,7 +8,7 @@
   </mat-form-field>
 </div>
 
-<mat-accordion displayMode="flat" multi class="mat-table">
+<mat-accordion displayMode="flat" multi class="mat-table" *ngIf="this.newMaterialData && (this.newMaterialData.length > 0)">
   <section matSort class="mat-header-row blue-background-color-color-white-section">
     <span class="mat-header-cell" mat-sort-header="name">Name</span>
     <span class="mat-header-cell" mat-sort-header="estimatedQty">Estimated Quantity</span>
