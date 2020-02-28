@@ -20,4 +20,23 @@ export class UserDataGuardService implements CanActivate {
         });
         return true;
     }
+
+
+    /*canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
+        this.currentUrl = this.router.url;
+        this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+            this.previousUrl = this.currentUrl;
+            this.currentUrl = event.url;
+        }
+        });
+            const userId = localStorage.getItem("userId");
+            this._userService.getUserInfo(userId).then(res => {
+                if ((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
+                    this.router.navigate['/profile/update-info']
+                }
+            });
+            this.router.navigate([this.currentUrl]);
+        }
+    }*/
 }
