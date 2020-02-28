@@ -66,7 +66,7 @@ export const API = {
   SUBMIT_USER_DETAILS: 'user/update/profile',
   GET_NOTIFICATIONS: userId => `user/notification/${userId}`,
   GETRFQTERMS: 'rfq/payment/terms',
-
+  GETADDEDRFQ: rfqId => `rfq/stepper/${rfqId}`,
   GET_USER_INFO_UNIQUE_CODE: uniqueCode => `user/info/${uniqueCode}`,
   GET_DASHBOARD_DATA: 'dashboard',
   UPLOADSUPPLIEREXCEL: organisationId => `projects/uploadSuppliers/${organisationId}`,
