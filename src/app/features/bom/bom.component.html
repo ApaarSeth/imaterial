@@ -58,15 +58,23 @@
     </div>
     <div *ngIf="showTable">
       <div class="row p-t-10 p-b-10">
-        <div class="col-sm-8"></div>
+        <div class="col-sm-8  border-input">
+          
+          <!-- <mat-form-field class="input-search-padding-zero">
+            <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" />
+            <button mat-button matSuffix mat-icon-button>
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field> -->
+        </div>
         <div class="col-sm-4">
           <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="saveCategory()" [disabled]="!isAllFormsValid">
             SAVE
           </button>
         </div>
       </div>
-      <div *ngFor="let data of categoryData">
-        <app-bom-preview #preview [selectedCategory]="data" (inputEntered)="checkValidations($event)"></app-bom-preview>
+      <div *ngFor="let data of categoryData  | SearchPipe: searchMaterial:'data'">
+        <app-bom-preview #preview [selectedCategory]="data" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)"></app-bom-preview>
       </div>
     </div>
   </div>
