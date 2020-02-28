@@ -7,7 +7,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 @Component({
   selector: "select-supplier-dialog",
   templateUrl: "selectPoRole.html",
-  styleUrls: ["../../../../assets/scss/pages/selectPoRole.scss"]
+  // styleUrls: ["../../../../assets/scss/pages/selectPoRole.scss"]
 })
 export class SelectPoRoleComponent implements OnInit {
   displayedColumns: string[] = ["User Name", "Role", "Email", "Phone"];

@@ -61,7 +61,7 @@
                                                 <img src="assets/images/icon1.png" alt="Awarded Purchase Order" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1">{{ poData?.totalCount }}</h2>
+                                                <h2 class="mb-1 cursor" [routerLink]="['/po/detail-list']">{{ poData?.totalCount }}</h2>
                                                 <p class="mb-0">Awarded Purchase Order</p>
                                             </div>
                                         </div>
@@ -71,7 +71,7 @@
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1">{{ poData?.totalValue | number }}</h2>
+                                                <h2 class="mb-1 cursor" [routerLink]="['/po/detail-list']">₹ {{ poData?.totalValue | number }}</h2>
                                                 <p class="mb-0">Awarded P.O. Amount</p>
                                             </div>
                                         </div>
@@ -85,7 +85,7 @@
                                                 <img src="assets/images/icon6.png" alt="Awarded Purchase Order" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1">{{ poData?.totalCount }}</h2>
+                                                <h2 class="mb-1 cursor" [routerLink]="['/rfq/rfq-detail']">{{ poData?.totalCount }}</h2>
                                                 <p class="mb-0">Number of RFQ</p>
                                             </div>
                                         </div>
@@ -95,7 +95,7 @@
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1">{{ poData?.totalValue | number : '1.2-2' }}</h2>
+                                                <h2 class="mb-1 cursor" [routerLink]="['/rfq/rfq-detail']">₹ {{ poData?.totalValue | number : '1.2-2' }}</h2>
                                                 <p class="mb-0">RFQ Amount</p>
                                             </div>
                                         </div>
@@ -119,7 +119,7 @@
                                                 <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1">{{ poData?.totalValue | number : '1.2-2' }}</h2>
+                                                <h2 class="mb-1">₹ {{ poData?.totalValue | number : '1.2-2' }}</h2>
                                                 <p class="mb-0">Raised Indents</p>
                                             </div>
                                         </div>
@@ -182,7 +182,7 @@
 
             <div class="col-md-3">
                 <div class="dashboard__right">
-                    <div class="project-tile">
+                    <div class="project-tile cursor" [routerLink]="['/project-dashboard']">
                         <div class="project-tile__tile equal-height w-100 mb-4 stats px-3 py-3 d-flex align-items-center mr-3">
                             <div class="project-tile__icon">
                                 <img src="assets/images/Add-Project.png" alt="Total number of project" class="img-fluid mr-3">

@@ -33,47 +33,42 @@ export interface Unit {
 })
 export class DeactiveSupplierComponent implements OnInit {
   supplierDetails: SupplierAdd;
-  
+
   constructor(
     private dialogRef: MatDialogRef<DeactiveSupplierComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SupplierDetailsPopUpData,
     private formBuilder: FormBuilder,
     private router: Router,
     private rfqService: RFQService,
-    private _snackBar:MatSnackBar
-  ) {}
+    private _snackBar: MatSnackBar
+  ) { }
 
-  ngOnInit() {
-   
-  }
+  ngOnInit() {}
 
-  deactivateSupplierService(){
+  deactivateSupplierService() {
     this.supplierDetails = this.data.isDelete
       ? this.data.detail as SupplierAdd
       : ({} as SupplierAdd);
 
-    if(this.data.isDelete){
-     this.rfqService.deleteSuplier(this.supplierDetails.supplierId).then(data => {
-       if(data){
-          
-            this._snackBar.open(data.message, "", {
+    if (this.data.isDelete) {
+      this.rfqService.deleteSuplier(this.supplierDetails.supplierId).then(data => {
+        if (data) {
+          this._snackBar.open(data.message, "", {
             duration: 2000,
             panelClass: ["blue-snackbar"]
           });
-      
-       }
-         return data.data;
-       });
+        }
+        return data.data;
+        debugger
+      });
     }
   }
 
-  cancel(){
-     this.dialogRef.close({ data: 'data' });
+  cancel() {
+    this.dialogRef.close({ data: 'data' });
   }
 
-  deactivateSupplier(){
-     this.dialogRef.close(this.deactivateSupplierService());
+  deactivateSupplier() {
+    this.dialogRef.close(this.deactivateSupplierService());
   }
-
- 
 }

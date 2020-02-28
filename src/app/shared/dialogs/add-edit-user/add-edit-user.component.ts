@@ -33,7 +33,7 @@ export interface Unit {
 })
 
 export class AddEditUserComponent implements OnInit {
-  
+
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
@@ -162,7 +162,8 @@ export class AddEditUserComponent implements OnInit {
   userDetailsNavigate() {
     this.router.navigate(["users/user-detail"]);
   }
+
   closeDialog() {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 }

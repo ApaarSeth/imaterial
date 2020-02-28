@@ -50,7 +50,7 @@ export class AppDashboardComponent implements OnInit {
 
   getDashboardInfo(label){
     const data = {
-      "orgId": 21,
+      "orgId": this.orgId,
       "startDate":"2020-01-01T18:30:00.000Z",
       "endDate":"2020-09-28T18:30:00.000Z",
       "dataSource": label

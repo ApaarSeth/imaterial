@@ -43,7 +43,7 @@ export class SupplierDetailComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private rfqService: RFQService,
-      private loading: GlobalLoaderService) { }
+    private loading: GlobalLoaderService) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"))
@@ -79,7 +79,9 @@ export class SupplierDetailComponent implements OnInit {
       });
 
       dialogRef.afterClosed().toPromise().then((data) => {
-          this.getAllSupplier();  
+        if(data){
+          this.getAllSupplier();
+        }
       });
     }
   }
@@ -99,8 +101,10 @@ export class SupplierDetailComponent implements OnInit {
         width: "500px",
         data
       });
-      dialogRef.afterClosed().toPromise().then(() => {
-        this.getAllSupplier();
+      dialogRef.afterClosed().toPromise().then(res => {
+        if(res === undefined){
+          this.getAllSupplier();
+        }
       });
     }
   }
@@ -109,7 +113,7 @@ export class SupplierDetailComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-   uploadExcel(files: FileList) {
+  uploadExcel(files: FileList) {
     this.loading.show();
     const data = new FormData();
     data.append("file", files[0]);
@@ -118,6 +122,7 @@ export class SupplierDetailComponent implements OnInit {
       this.loading.hide();
     });
   }
+
   downloadExcel(url: string) {
     var win = window.open(url, "_blank");
     win.focus();

@@ -1,69 +1,78 @@
 $alert-color: #FF5353;
 
 .example-form-field {
-    width: 400px;
-  }
+  width: 400px;
+}
 
-  .mat-form-field-suffix{
-    margin-left: -32px;
-  }
+.mat-form-field-suffix {
+  margin-left: -32px;
+}
 
-  .border-container{
-    border: 1px solid rgba(0,0,0,0.5);
-    border-radius: 5px;
-  }
+.border-container {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
 
-  .border-right{
-    border-right: 2px solid rgba(0,0,0,0.5) !important;
-  }
+.border-right {
+  border-right: 2px solid rgba(0, 0, 0, 0.5) !important;
+}
 
-  .border-container-txt{
-    color: $alert-color;
-  }
+.border-container-txt {
+  color: $alert-color;
+}
 
-body, .bg-gray, .mat-drawer-content{
+body,
+.bg-gray,
+.mat-drawer-content {
   background-color: #e0e3ec;
 }
 
-.mt-120{
+.mt-120 {
   margin-top: 120px;
 }
 
-.things-to-do{
-    padding: 12px 20px 14px 20px;
-    h5{
-      font-size: 1.10rem;
-    }
-    &__icons {
-      box-shadow: 4px 4px 6px #bfbfbf;
-      border-radius: 10px;
-      padding: 10px 0px 0;
-      min-width: 125px;
-      border: 1px solid #192135;
-      &:hover h6{
-        background-color: #f4783d;
-        color: #fff;
-        border-radius: 0 0 10px 10px;
-        border-color: #f4783d;
-      }
-      h6{
-        font-weight: 400;
-        font-size: 0.9rem;
-        padding: 7px 10px;
-        border-top: 2px solid #c4c4c4
-      }
-    }
-    &__img img {
-        height: 80px;
-        margin-bottom: 7px;
+.things-to-do {
+  padding: 12px 20px 14px 20px;
+
+  h5 {
+    font-size: 1.10rem;
+  }
+
+  &__icons {
+    box-shadow: 4px 4px 6px #bfbfbf;
+    border-radius: 10px;
+    padding: 10px 0px 0;
+    min-width: 125px;
+    border: 1px solid #192135;
+
+    &:hover h6 {
+      background-color: #f4783d;
+      color: #fff;
+      border-radius: 0 0 10px 10px;
+      border-color: #f4783d;
     }
 
-    .add-project-img img{
-      height: 74px;
+    h6 {
+      font-weight: 400;
+      font-size: 0.9rem;
+      padding: 7px 10px;
+      border-top: 2px solid #c4c4c4
     }
+  }
+
+  &__img img {
+    height: 80px;
+    margin-bottom: 7px;
+  }
+
+  .add-project-img img {
+    height: 74px;
+  }
 }
 
-.things-to-do, .statistics, .approvals{
+.things-to-do,
+.statistics,
+.approvals {
   border-radius: 10px;
   box-shadow: 0 0 4px #b9b9b9;
 }
@@ -83,14 +92,15 @@ body, .bg-gray, .mat-drawer-content{
   text-align: center;
 }*/
 
-.statistics{
-  .mat-tab-header{
+.statistics {
+  .mat-tab-header {
     margin-bottom: 20px;
   }
 
-  .mat-ink-bar{
+  .mat-ink-bar {
     height: 4px;
   }
+
   // .mat-tab-label {
   //   opacity: 1;
   //   height: 40px;
@@ -112,7 +122,7 @@ body, .bg-gray, .mat-drawer-content{
   //   background-color: #f47a3d;
   //   box-shadow: 0 0 5px #929292;
   // }
-  
+
   // .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
   //   display: none;
   // }
@@ -121,7 +131,7 @@ body, .bg-gray, .mat-drawer-content{
   //   border-bottom: none;
   // }
 
-  &__filter h5{
+  &__filter h5 {
     height: 40px;
     border-radius: 4px;
     background-color: #eeeeee;
@@ -135,12 +145,13 @@ body, .bg-gray, .mat-drawer-content{
     color: #2096ba;
   }
 
-  .stats{
+  .stats {
     &__icon {
       border-radius: 6px;
       background-color: rgba(249, 206, 35, 0.24);
       width: 58px;
-      img{
+
+      img {
         height: 45px;
         margin: auto;
         display: block;
@@ -148,32 +159,33 @@ body, .bg-gray, .mat-drawer-content{
       }
     }
 
-    &__content{
-      h2{
+    &__content {
+      h2 {
         font-size: 30px;
         color: #f4793d;
         font-weight: 600;
       }
-      p{
+
+      p {
         font-size: 14px;
         color: #444444;
       }
     }
   }
 
-  &__tile{
+  &__tile {
     border-radius: 10px;
     background-color: #FFFFFF;
     // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
     border: 1px solid #bdbdbd;
     padding: 10px 15px;
-    width: 43%;
+    width: 50%;
   }
 }
 
-.approvals{
+.approvals {
 
-  &__list{
+  &__list {
     border: 1px solid #bdbdbd;
     border-radius: 10px;
     width: 96%;
@@ -181,29 +193,33 @@ body, .bg-gray, .mat-drawer-content{
     margin-right: auto;
   }
 
-  &__list:not(:last-child){
+  &__list:not(:last-child) {
     margin-bottom: 10px;
   }
 
-  &__list, h6{
+  &__list,
+  h6 {
     padding: 12px 0;
   }
 
-  &__desc{
-    p{
+  &__desc {
+    p {
       font-size: 13px;
       color: #797979;
     }
-    p:first-child{
+
+    p:first-child {
       color: #222222;
       font-weight: 400;
     }
-    strong{
+
+    strong {
       color: #262626;
     }
   }
 
-  .btn-outline-warning, .btn-warning{
+  .btn-outline-warning,
+  .btn-warning {
     border: 1px solid #F47720;
     border-radius: 20px;
     padding: 8px 35px;
@@ -216,7 +232,7 @@ body, .bg-gray, .mat-drawer-content{
   .btn-outline-warning,
   .btn-outline-warning:hover,
   .btn-outline-warning:active,
-  .btn-outline-warning:focus{
+  .btn-outline-warning:focus {
     background-color: #FFFFFF;
     color: #F47720;
   }
@@ -224,35 +240,41 @@ body, .bg-gray, .mat-drawer-content{
   .btn-warning,
   .btn-warning:hover,
   .btn-warning:active,
-  .btn-warning:focus{
+  .btn-warning:focus {
     background-color: #F47720;
     color: #FFFFFF;
   }
 
-  .btn-warning, .btn-outline-warning{
-    &:hover, &:active, &:focus{
+  .btn-warning,
+  .btn-outline-warning {
+
+    &:hover,
+    &:active,
+    &:focus {
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.37) !important;
     }
   }
 }
 
-.project-tile{
-  &__tile{
+.project-tile {
+  &__tile {
     border-radius: 10px;
     background-color: #FFFFFF;
     // box-shadow: 0 2px 4px 0 rgba(0,0,0,0.41);
     box-shadow: 0 0 4px #b9b9b9;
-    img{
+
+    img {
       height: 100px;
     }
   }
 
-  &__content{
-    h2{
+  &__content {
+    h2 {
       font-size: 2.5rem;
       color: #f47a3d;
     }
-    p{
+
+    p {
       font-size: 14px;
       color: #000000;
       font-weight: 500;
@@ -260,13 +282,18 @@ body, .bg-gray, .mat-drawer-content{
   }
 }
 
-.cursor{
+.cursor {
   cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
 }
-.things-to-do__icons:hover{
+
+.things-to-do__icons:hover {
   box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, 0.9);
 }
 
-.equal-height{
+.equal-height {
   min-height: 156px;
 }
