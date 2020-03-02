@@ -55,7 +55,7 @@ export class DeactiveSupplierComponent implements OnInit {
     if(this.data.isDelete){
      this.rfqService.deleteSuplier(this.supplierDetails.supplierId).then(data => {
        if(data){
-          
+            this.dialogRef.close(data.message);
             this._snackBar.open(data.message, "", {
             duration: 2000,
             panelClass: ["blue-snackbar"]
@@ -68,11 +68,11 @@ export class DeactiveSupplierComponent implements OnInit {
   }
 
   cancel(){
-     this.dialogRef.close({ data: 'data' });
+     this.dialogRef.close(null);
   }
 
   deactivateSupplier(){
-     this.dialogRef.close(this.deactivateSupplierService());
+     this.deactivateSupplierService();
   }
 
  

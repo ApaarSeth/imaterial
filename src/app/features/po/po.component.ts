@@ -18,6 +18,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Terms } from 'src/app/shared/models/RFQ/rfq-details';
 import { Froala } from 'src/app/shared/constants/configuration-constants';
 import { Subscription, combineLatest } from 'rxjs';
+import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 
 @Component({
   selector: "app-po",
@@ -50,13 +51,33 @@ export class PoComponent implements OnInit {
   isPoValid: boolean = false;
   poTerms: FormGroup;
   isPoNumberValid: boolean = false;
+
+   public POPreviewTour: GuidedTour = {
+        tourId: 'po-preview-tour',
+        useOrb: false,
+        steps: [
+             {
+              title:'Send for approval',
+              selector: '.send-for-approval-btn',
+              content: 'Click here to send the purchase order for approval .',
+              orientation: Orientation.Left
+            }
+        ]
+    };
+
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private poService: POService,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private guidedTourService: GuidedTourService
+  ) {
+       setTimeout(() => {
+            this.guidedTourService.startTour(this.POPreviewTour);
+        }, 1000);
+   }
   poId: number;
   mode: string;
   ngOnInit() {

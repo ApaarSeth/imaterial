@@ -44,18 +44,19 @@ export class SuppliersDialogComponent {
   }
 
   submit() {
-    this.dialogRef.close(this.addSuppliers(this.data, this.form.value));
+   this.addSuppliers(this.data, this.form.value);
   }
 
   addSuppliers(organisarionId: number, suppliers: Suppliers) {
     this.rfqService.addNewSupplier(this.orgId, suppliers).then(res => {
         if(res){
+           this.dialogRef.close(res.message);
             this._snackBar.open(res.message, "", {
             duration: 2000,
             panelClass: ["blue-snackbar"]
           });
       }
-      this.dialogRef.close(res.data);
+     
     });
   }
 

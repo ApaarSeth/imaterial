@@ -7,6 +7,7 @@ import { SuppliersDialogComponent } from 'src/app/shared/dialogs/add-supplier/su
 import { SupplierDetailsPopUpData, SupplierAdd } from 'src/app/shared/models/supplier';
 import { DeactiveSupplierComponent } from 'src/app/shared/dialogs/disable-supplier/disable-supplier.component';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
+import { GuidedTourService, GuidedTour, Orientation } from 'ngx-guided-tour';
 
 // chip static data
 export interface Fruit {
@@ -40,10 +41,31 @@ export class SupplierDetailComponent implements OnInit {
 
   addUserBtn: boolean = false;
   orgId: number;
+
+     public SupplierDashboardTour: GuidedTour = {
+        tourId: 'supplier-tour',
+        useOrb: false,
+        
+        steps: [
+            {
+              title:'Add Suppliers',
+              selector: '.add-supplier-button',
+              content: 'Click here to onboard the supplier.',
+              orientation: Orientation.Left
+            }
+        ]
+    };
+
   constructor(
     public dialog: MatDialog,
     private rfqService: RFQService,
-      private loading: GlobalLoaderService) { }
+      private loading: GlobalLoaderService,
+      private guidedTourService: GuidedTourService
+  ) {
+    setTimeout(() => {
+            this.guidedTourService.startTour(this.SupplierDashboardTour);
+        }, 1000);
+  }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"))
@@ -79,7 +101,10 @@ export class SupplierDetailComponent implements OnInit {
       });
 
       dialogRef.afterClosed().toPromise().then((data) => {
-          this.getAllSupplier();  
+        if(data && data!=null){
+           this.getAllSupplier();  
+        }
+         
       });
     }
   }
@@ -99,8 +124,10 @@ export class SupplierDetailComponent implements OnInit {
         width: "500px",
         data
       });
-      dialogRef.afterClosed().toPromise().then(() => {
-        this.getAllSupplier();
+      dialogRef.afterClosed().toPromise().then((data) => {
+        if(data && data!=null){
+           this.getAllSupplier();  
+        }
       });
     }
   }
