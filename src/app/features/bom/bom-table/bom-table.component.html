@@ -102,17 +102,18 @@
             <a *ngIf="permissionObj.rfqFlag" (click)="issueToIndent(element.materialId, projectId)" class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Issue to Indent">
               <img src="../../../../assets/images/issue_to_indent.png" />
             </a>
+            
             <a
               class="width-15-px p-l-5 cursor-pointer"
               matTooltip="Delete"
-              *ngIf="!(element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
+              *ngIf="!((element.requestedQuantity === 0 || element.requestedQuantity === null) && (element.availableStock === 0 || element.availableStock === null) && (element.issueToProject === 0 || element.issueToProject === null))"
               (click)="deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
             >
               <img src="../../../../assets/images/delete-button.png" />
             </a>
             <a
-              class="width-15-px p-l-5"
-              *ngIf="element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0"
+              class="width-15-px p-l-5 "
+              *ngIf="(element.requestedQuantity === 0 || element.requestedQuantity === null) && (element.availableStock === 0 || element.availableStock === null) && (element.issueToProject === 0 || element.issueToProject === null)"
               (click)="deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
             >
               <img src="../../../../assets/images/delete-button_disable.png" />

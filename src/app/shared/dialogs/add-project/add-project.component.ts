@@ -159,12 +159,22 @@ export class AddProjectComponent implements OnInit {
     }
   }
 
+formatDate(oldDate): Date {
+   let newDate= new Date(oldDate);
+   newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
+    return newDate;
+  }
+
   submit() {
     if (this.data.isEdit) {
-     // this.dialogRef.close(this.updateProjects(this.form.value));
+   
+     this.form.value.startDate = this.formatDate(this.form.value.startDate);
+     this.form.value.endDate = this.formatDate(this.form.value.endDate);
+
       this.updateProjects(this.form.value);
     } else {
-     // this.dialogRef.close(this.addProjects(this.form.value));
+      this.form.value.startDate = this.formatDate(this.form.value.startDate);
+      this.form.value.endDate = this.formatDate(this.form.value.endDate);
       this.addProjects(this.form.value);
     }
   }
