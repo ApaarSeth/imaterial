@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from "@angular/core";
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import {
   RfqMaterialResponse,
@@ -17,6 +17,7 @@ import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/
 })
 export class RfqSupplierComponent implements OnInit {
   @Input() finalRfq: AddRFQ;
+  @Output() updatedRfq = new EventEmitter<AddRFQ>();
   searchText: string = null;
   buttonName: string = "selectSupplier";
   displayedColumns: string[] = [
@@ -91,7 +92,12 @@ export class RfqSupplierComponent implements OnInit {
     });
   }
 
-  navigateToUploadPage() {
+  reviewRfq() {
+    this.supplierAdded();
+    this.openRfqTermsDialog(this.rfqData);
+  }
+
+  supplierAdded() {
     this.rfqData.supplierId = this.supplierForm.value.forms.map(supplier => {
       if (supplier.supplier) {
         return supplier.supplier.supplierId;
@@ -102,8 +108,11 @@ export class RfqSupplierComponent implements OnInit {
         return supplierId;
       }
     });
-    this.openRfqTermsDialog(this.rfqData)
+  }
 
+  changeRfq() {
+    this.supplierAdded()
+    this.updatedRfq.emit(this.rfqData);
   }
 
   openSupplierDialog(projectId) {
