@@ -25,3 +25,7 @@
 @import "./pages/select-project.scss";
 @import "./pages/walkthrough.scss";
 @import "./pages/common.scss";
+
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}

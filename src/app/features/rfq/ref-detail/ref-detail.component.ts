@@ -71,4 +71,9 @@ export class RefDetailComponent implements OnInit {
       this.router.navigate(["../../rfq/rfq-view", element.rfqId]);
     }
   }
+
+  createRfq() {
+    this.router.navigate(["/rfq/createRfq"]);
+  }
+
 }
