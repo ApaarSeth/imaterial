@@ -81,6 +81,8 @@ export class SignupComponent implements OnInit {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
+      organizationId: this.user ?this.user.organizationId.toString():null,
+      userId: this.user ? this.user.userId.toString():null,
       // organizationId: this.user ? this.user.organizationId : 0,
       // userId: this.user ? this.user.userId : 0
     };
