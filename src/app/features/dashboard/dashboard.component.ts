@@ -59,6 +59,24 @@ export class DashboardComponent implements OnInit {
                 selector: '.delete-project',
                 content: 'You can delete your projects.',
                 orientation: Orientation.Left
+            },
+            {
+                title: 'Show All Materials',
+                selector: '.showAllMaterials',
+                content: 'You can view all your materials.',
+                orientation: Orientation.Bottom
+            },
+            {
+                title: 'Show Open Indents',
+                selector: '.showOpenIndents',
+                content: 'You can view all your indents.',
+                orientation: Orientation.Bottom
+            },
+            {
+                title: 'Show Purchase Orders',
+                selector: '.showPurchaseOrders',
+                content: 'You can view all your purchase orders.',
+                orientation: Orientation.Bottom
             }
            
         ]

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from "@angular/core";
+import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
 import {GlobalStoreMaterial} from "src/app/shared/models/GlobalStore/materialWise";
 import {GlobalProject} from "src/app/shared/models/GlobalStore/projectWise";
 
@@ -9,6 +9,7 @@ import {GlobalProject} from "src/app/shared/models/GlobalStore/projectWise";
 })
 export class ProjectWiseComponent implements OnInit {
   @Input("projectData") projectData: GlobalProject[];
+  @Output("projectDataLength") projectDataLength = new EventEmitter();
   newProjectData: GlobalProject[];
   searchProject: string = "";
   constructor() {}
@@ -42,5 +43,6 @@ export class ProjectWiseComponent implements OnInit {
       }
       return project;
     });
+    this.projectDataLength.emit(this.newProjectData.length);
   }
 }

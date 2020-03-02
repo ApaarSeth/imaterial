@@ -101,7 +101,7 @@
             <mat-form-field class="border-input">
               <mat-label>Project Start Date*</mat-label>
               <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref 
-                [min]="minDate" (dateChange)="getStart(ref.value)" (focus)="startDate.open()"/>
+                [min]="minDate" (dateChange)="getStart(ref.value)" (focus)="startDate.open()" readonly/>
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
@@ -110,7 +110,8 @@
             <!-- end date -->
             <mat-form-field class="border-input">
               <mat-label>Project End Date*</mat-label>
-              <input matInput [matDatepicker]="endDate" formControlName="endDate" [min]="minDate" />
+              <input matInput [matDatepicker]="endDate" formControlName="endDate" [min]="minDate" 
+                (focus)="endDate.open()" readonly/>
               <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
               <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
             </mat-form-field>

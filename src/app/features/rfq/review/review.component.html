@@ -20,7 +20,7 @@
             <div class="col-md-4">
               RFQ End Date
               <mat-form-field class="border-input">
-                <input matInput [matDatepicker]="dueDate" formControlName="dueDate" />
+                <input matInput [matDatepicker]="dueDate" formControlName="dueDate" (focus)="dueDate.open()" readonly />
                 <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                 <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
               </mat-form-field>

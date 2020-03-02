@@ -20,7 +20,7 @@
                     <span class="text-semi-bold"> P.O. Valid Till:
                         <mat-form-field class="border-input">
                             <input matInput formControlName="endDate" [matDatepicker]="endDate"
-                                placeholder="Valid Till" />
+                                placeholder="*Valid Till" (focus)="endDate.open()" readonly/>
                             <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                             <mat-datepicker #endDate startView="month"></mat-datepicker>
                         </mat-form-field>

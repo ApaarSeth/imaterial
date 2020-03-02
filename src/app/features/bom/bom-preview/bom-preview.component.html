@@ -1,8 +1,8 @@
 <mat-accordion>
   <form [formGroup]="quantityForms">
     <div #myele>
-      <mat-expansion-panel class="m-b-5 m-t-5">
-        <mat-expansion-panel-header class="background-color-grey row">
+      <mat-expansion-panel class="m-b-5 m-t-5 bom-qty-page" [expanded]="true">
+        <mat-expansion-panel-header class="background-color-bom-category row">
           <div class="col-xs-6">
             <mat-panel-title class="pull-left">
               {{ selectedCategory.materialGroup }}
@@ -16,31 +16,41 @@
         </mat-expansion-panel-header>
 
         <ng-container formArrayName="forms" *ngIf="selectedCategory.Child">
-          <div class="row" *ngFor="let subcategory of selectedCategory.Child; let i = index" formGroupName="{{ i }}">
+          <div class="row background-color-bom-sub-category p-0" *ngFor="let subcategory of selectedCategory.Child; let i = index" formGroupName="{{ i }}">
             <div class="col-xs-6">
-              <span class="pull-left p-l-10 p-t-5">{{
+              <span class="pull-left p-l-40 p-t-20">{{
                 subcategory.materialName
               }}</span>
             </div>
             <div class="col-xs-6">
-              <span class="pull-right">
-                <mat-form-field class="full-border widthZero">
-                  <input matInput formControlName="estimatedQty" class="p-b-5 shortWidth" placeholder="eg. 1500" />
+              <span class="pull-right p-r-40">
+                <!-- <mat-form-field class="full-border widthZero">
+                  <input matInput formControlName="estimatedQty"  placeholder="eg. 1500" />
                   <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
-                </mat-form-field>
+                </mat-form-field> -->
+
+                     <mat-form-field class="border-input widthZero">
+                        <input  matInput formControlName="estimatedQty"  class="p-b-5 shortWidth" placeholder="Enter Quantity" />
+                        <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
+                      </mat-form-field>
               </span>
             </div>
             <ng-container *ngIf="subcategory.Specs">
-              <div class="row" *ngFor="let material of subcategory.Specs">
+              <div class="row background-color-bom-sub-sub-category p-0" *ngFor="let material of subcategory.Specs">
                 <div class="col-xs-6">
-                  <span class="pull-left p-l-30 ">{{ material.label }}</span>
+                  <span class="pull-left p-l-60 p-t-20">{{ material.label }}</span>
                 </div>
                 <div class="col-xs-6">
-                  <span class="pull-right">
-                    <mat-form-field class="full-border widthZero">
+                  <span class="pull-right p-r-40">
+                    <!-- <mat-form-field class="full-border widthZero">
                       <input matInput class="p-b-5 shortWidth" placeholder="eg. 1500" /><span
                         class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
-                    </mat-form-field>
+                    </mat-form-field> -->
+
+                     <mat-form-field class="border-input widthZero">
+                        <input  matInput  class="p-b-5 shortWidth"  placeholder="Enter Quantity" />
+                        <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
+                      </mat-form-field>
                   </span>
                 </div>
               </div>
