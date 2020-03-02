@@ -26,63 +26,63 @@ export class DashboardComponent implements OnInit {
   orgId: Number;
   userId: Number;
 
-
-
-  //
-
    public dashboardTour: GuidedTour = {
         tourId: 'purchases-tour',
         useOrb: false,
         
         steps: [
             {
-                title: 'Welcome to the Project',
+                title: 'Add Project',
                 selector: '.demo-title',
-                content: 'Here you can add your projects.',
+                content: 'Click here to add a new project with basic details of project.',
                 orientation: Orientation.Left
                 
             },
             {
-                title: 'Search',
+                title: 'Search Project',
                 selector:'.example-form-field.border-input',
-                content: 'you can search your projects from here. ',
+                content: 'Click here to search your project from project list.',
                  orientation: Orientation.Right
+            },
+            {
+                title: 'View Project',
+                selector: '.view-project',
+                content: 'Click here to view the project & add materials in project.',
+                orientation: Orientation.Left
             },
             {
                 title: 'Edit Project',
                 selector: '.edit-project',
-                content: 'You can edit you project.',
+                content: 'Click here to edit the project details.',
                 orientation: Orientation.Left
             },
             {
                 title: 'Delete Project',
                 selector: '.delete-project',
-                content: 'You can delete your projects.',
+                content: 'Click here to delete the project. All your project data will get deleted.',
                 orientation: Orientation.Left
             },
             {
                 title: 'Show All Materials',
                 selector: '.showAllMaterials',
-                content: 'You can view all your materials.',
+                content: 'Click here to view all your materials.',
                 orientation: Orientation.Bottom
             },
             {
                 title: 'Show Open Indents',
                 selector: '.showOpenIndents',
-                content: 'You can view all your indents.',
+                content: 'Click here to view all your indents.',
                 orientation: Orientation.Bottom
             },
             {
                 title: 'Show Purchase Orders',
                 selector: '.showPurchaseOrders',
-                content: 'You can view all your purchase orders.',
+                content: 'Click here to view all your purchase orders.',
                 orientation: Orientation.Bottom
             }
            
         ]
     };
-
-
     
   constructor(
     private projectService: ProjectService,
@@ -149,12 +149,14 @@ export class DashboardComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-
-            this.projectService
+            if(result && result!=null){
+               this.projectService
               .getProjects(this.orgId, this.userId)
               .then(data => {
                 this.allProjects = data.data;
               });
+            }
+           
           
         });
     } else if (data.isDelete == true) {
@@ -167,11 +169,14 @@ export class DashboardComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-          this.projectService
-            .getProjects(this.orgId, this.userId)
-            .then(data => {
-              this.allProjects = data.data;
-            });
+           if(result && result!=null){
+               this.projectService
+                .getProjects(this.orgId, this.userId)
+                .then(data => {
+                  this.allProjects = data.data;
+                });
+           }
+      
         });
     }
   }

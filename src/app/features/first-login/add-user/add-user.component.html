@@ -20,12 +20,14 @@
                                     <mat-form-field class="border-input w-100">
                                         <input matInput type="email" placeholder="Email" formControlName="email">
                                     </mat-form-field>
-                                    <!-- <mat-error
-                                        *ngIf="addUserForm.controls['email'].errors && (addUserForm.controls['email'].dirty || addUserForm.controls['email'].touched)">
-                                        <mat-error *ngIf="addUserForm.controls['email'].hasError('required')">
+                                    
+                                        <mat-error *ngIf="addUserForm.controls.other.controls[i].controls['email'].hasError('required') && addUserForm.controls.other.controls[i].controls['email'].touched">
                                             Email is required
                                         </mat-error>
-                                    </mat-error> -->
+                                        <mat-error *ngIf="addUserForm.controls.other.controls[i].controls['email'].hasError('pattern') && addUserForm.controls.other.controls[i].controls['email'].touched">
+                                            Enter Valid Email
+                                        </mat-error>
+                                    <!-- other.controls.other.controls[i].controls.email.errors -->
                                 </div>
     
     
@@ -33,12 +35,9 @@
                                     <mat-form-field class="border-input w-100">
                                         <input matInput type="text" placeholder="Phone number" formControlName="contactNo">
                                     </mat-form-field>
-                                    <!-- <mat-error
-                                        *ngIf="addUserForm.controls['contactNo'].errors && (addUserForm.controls['contactNo'].dirty || addUserForm.controls['contactNo'].touched)">
-                                        <mat-error *ngIf="addUserForm.controls['contactNo'].hasError('required')">
-                                            Phone number is required
+                                     <mat-error *ngIf="addUserForm.controls.other.controls[i].controls['contactNo'].hasError('pattern') && addUserForm.controls.other.controls[i].controls['contactNo'].touched">
+                                            Enter Valid Phone No
                                         </mat-error>
-                                    </mat-error> -->
                                 </div>
     
     
@@ -51,11 +50,9 @@
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
-                                    <!-- <mat-error
-                                        *ngIf="addUserForm.controls['roleId'].errors && (addUserForm.controls['roleId'].dirty || addUserForm.controls['roleId'].touched)">
-                                        <mat-error *ngIf="addUserForm.controls['roleId'].hasError('required')">
-                                            Role is required</mat-error>
-                                    </mat-error> -->
+                                     <mat-error *ngIf="addUserForm.controls.other.controls[i].controls['roleId'].hasError('required') && addUserForm.controls.other.controls[i].controls['roleId'].touched">
+                                            Role is required
+                                        </mat-error>
                                 </div>
 
                                 

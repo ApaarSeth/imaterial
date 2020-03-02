@@ -61,6 +61,7 @@ export class AddUserComponent implements OnInit {
     });
 
     this.rows = this._formBuilder.array([]);
+    console.log(this.addUserForm);
   }
 
   /**
@@ -68,6 +69,7 @@ export class AddUserComponent implements OnInit {
    */
   onAddRow() {
     (<FormArray>this.addUserForm.get('other')).push(this.addOtherFormGroup());
+     console.log(this.addUserForm);
   }
 
   /**
@@ -75,12 +77,11 @@ export class AddUserComponent implements OnInit {
    */
   addOtherFormGroup(): FormGroup {
     return this._formBuilder.group({
-      email: ['', {
-        validators: [
+      email: ['', [
           Validators.required,
           Validators.pattern(FieldRegExConst.EMAIL)
         ]
-      }
+      
       ],
       contactNo: ['', {
         validators: [

@@ -30,7 +30,7 @@ export class DoubleConfirmationComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 
   delete() {
@@ -39,14 +39,13 @@ export class DoubleConfirmationComponent implements OnInit {
       .then(res => {
         res.data;
         if(res){
-        
+            this.dialogRef.close(res.message);
             this._snackBar.open(res.message, "", {
             duration: 2000,
             panelClass: ["blue-snackbar"]
           });
       
         }
-        this.close();
       });
   }
 }

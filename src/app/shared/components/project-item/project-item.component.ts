@@ -29,39 +29,12 @@ export class ProjectItemComponent implements OnInit {
   permissionObj: any;
   url: string;
 
-
-  //  public dashboardTour: GuidedTour = {
-  //       tourId: 'dashboard-tour',
-  //       useOrb: false,
-        
-  //       steps: [
-  //           {
-  //               title: '.edit-project',
-  //               selector: '.edit-project',
-  //               content: 'Step position can be set so that steps are always in view. This step is on the left.',
-  //               orientation: Orientation.Left
-  //           },
-  //           {
-  //               title: '.delete-project',
-  //               selector: '.delete-project',
-  //               content: 'This step is on the right.',
-  //               orientation: Orientation.Right
-  //           }
-  //       ]
-  //   };
-
-
-
   constructor(
     private permissionService: PermissionService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
      private guidedTourService: GuidedTourService
-  ) {
-    // setTimeout(() => {
-    //         this.guidedTourService.startTour(this.dashboardTour);
-    //     }, 1000);
-  }
+  ) {}
 
   @Output("onEdit") onEdit = new EventEmitter<number>();
   @Output("onDelete") onDelete = new EventEmitter<number>();

@@ -128,14 +128,13 @@ export class AddProjectComponent implements OnInit {
     this.projectService
       .addProjects(projectDetails, this.orgId, this.userId)
       .then(res => {
-        res.data;
+       // res.data;
+        this.dialogRef.close(res.message);
         if (res) {
-
           this._snackBar.open(res.message, "", {
             duration: 2000,
             panelClass: ["blue-snackbar"]
           });
-
         }
       });
   }
@@ -147,8 +146,8 @@ export class AddProjectComponent implements OnInit {
       this.projectService
         .updateProjects(organizationId, projectId, projectDetails)
         .then(res => {
-          res.data;
           if (res) {
+            this.dialogRef.close(res.message);
 
             this._snackBar.open(res.message, "", {
               duration: 2000,
@@ -160,16 +159,28 @@ export class AddProjectComponent implements OnInit {
     }
   }
 
+formatDate(oldDate): Date {
+   let newDate= new Date(oldDate);
+   newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
+    return newDate;
+  }
+
   submit() {
     if (this.data.isEdit) {
-      this.dialogRef.close(this.updateProjects(this.form.value));
+   
+     this.form.value.startDate = this.formatDate(this.form.value.startDate);
+     this.form.value.endDate = this.formatDate(this.form.value.endDate);
+
+      this.updateProjects(this.form.value);
     } else {
-      this.dialogRef.close(this.addProjects(this.form.value));
+      this.form.value.startDate = this.formatDate(this.form.value.startDate);
+      this.form.value.endDate = this.formatDate(this.form.value.endDate);
+      this.addProjects(this.form.value);
     }
   }
 
   closeDialog(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 
   getStart(event) {
