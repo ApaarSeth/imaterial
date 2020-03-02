@@ -1,5 +1,17 @@
 <form *ngIf="projectSelectedMaterials.length" [formGroup]="materialForms">
   <div class="row ">
+    <div class="col-xs-12 text-right p-b-10">
+      <span class="p-r-5">
+        <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="materialAdded()" type="button">Back</button>
+      </span>
+      <span>
+        <button mat-raised-button matStepperNext [disabled]="!valid" (click)="materialAdded()" class="main-background-color main-button color-white">
+          Next
+        </button>
+      </span>
+    </div>
+  </div>
+  <div class="row ">
     <div class="col-xs-12 text-right p-t-10 border-input">
       <span class="p-r-20">
         <mat-form-field class="input-search-padding-zero">

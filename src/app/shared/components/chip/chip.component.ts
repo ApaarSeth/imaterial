@@ -32,6 +32,9 @@ export class ChipComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.chips) {
       // console.log("chips", this.chips)
+      this.chips = this.chips.filter((chip) => {
+        return !!chip;
+      })
       this.fruits = [...this.chips];
       // console.log("fruits", this.fruits)
       this.update();
