@@ -1,12 +1,12 @@
 <mat-sidenav-container>
-    <mat-sidenav class="sidenav" #sidenav [fixedInViewport]="true" [mode]="'over'">
-        <button class="menu-close" (click)="sidenav.close()" mat-icon-button>
-            <mat-icon>close</mat-icon>
-        </button>
-        <app-sidenav-list></app-sidenav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <app-header (sidenavToggle)="sidenav.toggle()" [menu]="sidenav"></app-header>
-        <router-outlet> </router-outlet>
-    </mat-sidenav-content>
+  <mat-sidenav class="sidenav" #sidenav [fixedInViewport]="true" [mode]="'over'">
+    <button class="menu-close" (click)="sidenav.close()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+    <app-sidenav-list></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header></app-header>
+    <router-outlet> </router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>

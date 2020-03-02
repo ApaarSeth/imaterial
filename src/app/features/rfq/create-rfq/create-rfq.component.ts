@@ -40,7 +40,7 @@ export class CreateRfqComponent implements OnInit {
     private rfqService: RFQService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -54,7 +54,7 @@ export class CreateRfqComponent implements OnInit {
   }
 
   getQuantityAndMakes(updatedMaterials: AddRFQ) {
-    this.updatedRfqMaterial = updatedMaterials;
+    this.rfqMaterial = updatedMaterials;
     this.completed = this.rfqQtyMakes.materialForms.value.forms.every(
       rfqQty => {
         return rfqQty.quantity != null;
@@ -68,8 +68,10 @@ export class CreateRfqComponent implements OnInit {
   selectionChange(event) {
     this.currentIndex = event.selectedIndex;
     this.prevIndex = event.previouslySelectedIndex;
-    if (event.previouslySelectedIndex === 1) {
-      this.rfqData = this.updatedRfqMaterial;
+    if (event.previouslySelectedIndex === 1 && event.selectedIndex === 0) {
+      this.rfqService.addRFQ(this.rfqMaterial).then(res => {
+        this.rfqData = res.data;;
+      });
     }
     if (event.previouslySelectedIndex === 0 && event.selectedIndex === 1) {
       this.completed = false;
@@ -85,9 +87,10 @@ export class CreateRfqComponent implements OnInit {
       event.selectedIndex === 2 &&
       event.previouslySelectedIndex === 1
     ) {
-      this.rfqService.addRFQ(this.updatedRfqMaterial).then(res => {
+      this.rfqService.addRFQ(this.rfqMaterial).then(res => {
+        console.log("res.data", res.data);
         this.finalRfq = res.data;
-        this.rfqMaterial = res.data;
+        // this.rfqMaterial = res.data;
       });
     } else if (event.previouslySelectedIndex == 2) {
       this.rfqService.addRFQ(this.updatedRfqMaterial).then(res => {
@@ -95,12 +98,6 @@ export class CreateRfqComponent implements OnInit {
         this.rfqMaterial = res.data;
       });
     }
-    // else if (event.selectedIndex === 1) {
-
-    //   if (this.qtyMakes.getFormStatus()) {
-    //     this.completed = true;
-    //   }
-    // }
   }
 
   goBack(stepper: MatStepper) {
@@ -108,13 +105,16 @@ export class CreateRfqComponent implements OnInit {
   }
 
   goForward(stepper: MatStepper) {
-    stepper.selectionChange.subscribe(res => {
-      console.log(res);
-    });
     stepper.next();
   }
 
   reviewRfq() {
     this.rfqSupplier.navigateToUploadPage();
+  }
+
+  checkSupplStatus() {
+    return this.rfqSupplier.supplierForm.value.some(supplier => {
+      return supplier != null;
+    });
   }
 }

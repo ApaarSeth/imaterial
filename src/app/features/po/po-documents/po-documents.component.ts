@@ -27,7 +27,7 @@ export class PoDocumentsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private documentUploadService: DocumentUploadService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -66,7 +66,7 @@ export class PoDocumentsComponent implements OnInit {
 
         this.documentList.push({
           documentType: "PO",
-          documentDesc: "abc",
+          documentDesc: subFileName,
           documentUrl: res.data,
           documentName: subFileName
         });
@@ -89,7 +89,7 @@ export class PoDocumentsComponent implements OnInit {
     this.documentListLength = this.documentList.length;
   }
 
-  openFileUrl(i) {
-    this.router.navigate([this.documentData[i].documentUrl]);
+  openFileUrl(url: string) {
+    this.router.navigate([url]);
   }
 }

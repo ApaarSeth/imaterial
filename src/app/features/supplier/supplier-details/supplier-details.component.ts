@@ -6,6 +6,7 @@ import { UserService } from 'src/app/shared/services/userDashboard/user.service'
 import { SuppliersDialogComponent } from 'src/app/shared/dialogs/add-supplier/suppliers-dialog.component';
 import { SupplierDetailsPopUpData, SupplierAdd } from 'src/app/shared/models/supplier';
 import { DeactiveSupplierComponent } from 'src/app/shared/dialogs/disable-supplier/disable-supplier.component';
+import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 
 // chip static data
 export interface Fruit {
@@ -41,7 +42,8 @@ export class SupplierDetailComponent implements OnInit {
   orgId: number;
   constructor(
     public dialog: MatDialog,
-    private rfqService: RFQService) { }
+    private rfqService: RFQService,
+      private loading: GlobalLoaderService) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"))
@@ -50,6 +52,7 @@ export class SupplierDetailComponent implements OnInit {
 
   getAllSupplier() {
     this.rfqService.getSuppliers(this.orgId).then(data => {
+
       this.dataSource = new MatTableDataSource(data.data);
       this.dataSourceTemp = data.data;
 
@@ -58,15 +61,9 @@ export class SupplierDetailComponent implements OnInit {
         return dataStr.indexOf(filterValue) != -1;
       }
 
-      if (this.dataSourceTemp.length > 0) {
-        this.addUserBtn = false;
-      }
-      else if (this.dataSourceTemp.length == 0) {
-        this.addUserBtn = true;
-      }
     });
   }
-  
+
   addSupplier() {
     this.openDialog({
       isEdit: false,
@@ -77,17 +74,15 @@ export class SupplierDetailComponent implements OnInit {
   openDialog(data: SupplierDetailsPopUpData): void {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(SuppliersDialogComponent, {
-        width: "800px",
+        width: "660px",
         data
       });
 
-      dialogRef.afterClosed().toPromise().then(() => {
-        this.getAllSupplier();
-
+      dialogRef.afterClosed().toPromise().then((data) => {
+          this.getAllSupplier();  
       });
     }
   }
-
 
   deactivateUser(data) {
     this.suppliersDetailsTemp.supplierId = data.supplierId;
@@ -101,7 +96,7 @@ export class SupplierDetailComponent implements OnInit {
   openDialogDeactiveUser(data: SupplierDetailsPopUpData): void {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(DeactiveSupplierComponent, {
-        width: "800px",
+        width: "500px",
         data
       });
       dialogRef.afterClosed().toPromise().then(() => {
@@ -114,4 +109,17 @@ export class SupplierDetailComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+   uploadExcel(files: FileList) {
+    this.loading.show();
+    const data = new FormData();
+    data.append("file", files[0]);
+    this.rfqService.postSupplierExcel(data, this.orgId).then(res => {
+      this.getAllSupplier();
+      this.loading.hide();
+    });
+  }
+  downloadExcel(url: string) {
+    var win = window.open(url, "_blank");
+    win.focus();
+  }
 }

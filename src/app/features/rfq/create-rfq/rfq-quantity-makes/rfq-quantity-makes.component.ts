@@ -9,14 +9,16 @@ import {
 import {
   RfqMaterialResponse,
   RfqMat,
-  AddRFQ
+  AddRFQ,
+  Address
 } from "src/app/shared/models/RFQ/rfq-details";
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
+import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -32,7 +34,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   materialCounter = 0;
   buttonName: string = "addQueryMakes";
   projectSelectedMaterials: RfqMaterialResponse[] = [];
-
+  updatedAddress: Address;
   materialForms: FormGroup;
   rfqMat: RfqMat;
   displayedColumns: string[] = [
@@ -47,14 +49,16 @@ export class RfqQuantityMakesComponent implements OnInit {
   rfqId: any;
   rfqData: AddRFQ;
   message: string;
+  lastupdateValue: any;
 
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
-    private router: Router
-  ) {}
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     if (history.state.rfqData) {
@@ -62,31 +66,16 @@ export class RfqQuantityMakesComponent implements OnInit {
       this.projectSelectedMaterials =
         history.state.rfqData.data.rfqProjectsList;
       this.updatedRfq.emit(this.rfqData);
-      // this.stepperForm.get("qty").setValue(history.state.rfqData.data);
     }
-    // if (this.stepperForm.get("mat").value) {
-    //   this.rfqData = this.stepperForm.get("mat").value;
-    //   this.projectSelectedMaterials = this.stepperForm.get(
-    //     "mat"
-    //   ).value.rfqProjectsList;
-    // }
     this.formsInit();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // if (this.stepperForm.get("mat").value) {
-    //   this.projectSelectedMaterials = this.stepperForm.get(
-    //     "mat"
-    //   ).value.rfqProjectsList;
-    // }
     if (this.rfq) {
       this.rfqData = this.rfq;
       this.projectSelectedMaterials = this.rfq.rfqProjectsList;
       this.formsInit();
     }
-    // if (this.projectSelectedMaterials) {
-    //   this.formsInit();
-    // }
   }
 
   setButtonName(name: string) {
@@ -112,7 +101,7 @@ export class RfqQuantityMakesComponent implements OnInit {
           return this.formBuilder.group({
             estimatedRate: [item.estimatedRate],
             quantity: [item.quantity, Validators.required],
-            makes: [],
+            makes: [item.makes],
             projId: [item.projectId],
             matId: [item.materialId]
           });
@@ -137,11 +126,16 @@ export class RfqQuantityMakesComponent implements OnInit {
 
   openDialog(data: RfqMaterialResponse): void {
     if (AddAddressDialogComponent) {
-      const dialogRef = this.dialog.open(AddAddressDialogComponent, {
+      const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
         width: "1200px",
-        data
+        data: {
+          roleType: "projectBillingAddressId",
+          id: data.projectId
+        }
       });
-      dialogRef.afterClosed().subscribe(result => {});
+      dialogRef.afterClosed().subscribe(result => {
+        data.defaultAddress = result[1];
+      });
     }
   }
   getFormStatus() {
@@ -159,8 +153,29 @@ export class RfqQuantityMakesComponent implements OnInit {
             this.projectSelectedMaterials[i].projectMaterialList[
               j
             ].estimatedRate = val.estimatedRate;
-            this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
-              val.quantity;
+            if (
+              val.quantity <=
+              this.projectSelectedMaterials[i].projectMaterialList[j]
+                .estimatedQty
+            ) {
+              this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
+                val.quantity;
+            } else {
+              (<FormGroup>(
+                (<FormArray>this.materialForms.controls["forms"]).controls[k]
+              )).controls["quantity"].setValue(0);
+              // this.materialForms.controls[
+              //   "forms"
+              // ] = val.quantity = this.lastupdateValue;
+              this._snackBar.open(
+                "Cannot add quantity greater than estimated qty",
+                "",
+                {
+                  duration: 2000,
+                  verticalPosition: "top"
+                }
+              );
+            }
             this.projectSelectedMaterials[i].projectMaterialList[j].makes =
               val.makes;
           } else {

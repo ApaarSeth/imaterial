@@ -1,13 +1,10 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { Component, Inject, OnInit } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
-  Validators,
-  FormControl
+  Validators
 } from "@angular/forms";
-
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
 import { FieldRegExConst } from "../../constants/field-regex-constants";
@@ -30,6 +27,7 @@ export interface Unit {
   templateUrl: "add-project-component.html"
 })
 export class AddProjectComponent implements OnInit {
+
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
@@ -38,13 +36,14 @@ export class AddProjectComponent implements OnInit {
   orgId: number;
   userId: number;
   selectedConstructionUnit: String;
-  
+
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -52,10 +51,6 @@ export class AddProjectComponent implements OnInit {
     this.selectedConstructionUnit = "1";
     this.initForm();
   }
-
-  // close() {
-  //   this.dialogRef.close();
-  // }
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
@@ -66,14 +61,14 @@ export class AddProjectComponent implements OnInit {
   projectTypes: ProjectType[] = [
     { type: "RESIDENTIAL" },
     { type: "COMMERCIAL" },
+    { type: "INTERIOR FIT-OUT" },
     { type: "INDUSTRIAL" },
     { type: "HOSPITALITY" },
-    { type: "INFRA" },
-    { type: "INTERIORS" },
+    { type: "INFRASTRUCTURE" },
     { type: "OTHERS" }
   ];
 
-  units: Unit[] = [{ value: "acres" }, { value: "sqm" }];
+  units: Unit[] = [{ value: "acres" }, { value: "sqm" }, { value: "sqft" }];
 
   initForm() {
     this.projectDetails = this.data.isEdit
@@ -124,7 +119,7 @@ export class AddProjectComponent implements OnInit {
       unit: [this.data.isEdit ? this.data.detail.unit : ""],
       gstNo: [
         this.data.isEdit ? this.data.detail.gstNo : "",
-        [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]
+        [Validators.pattern(FieldRegExConst.GSTIN)]
       ]
     });
   }
@@ -132,7 +127,17 @@ export class AddProjectComponent implements OnInit {
   addProjects(projectDetails: ProjectDetails) {
     this.projectService
       .addProjects(projectDetails, this.orgId, this.userId)
-      .then(res => {});
+      .then(res => {
+        res.data;
+        if (res) {
+
+          this._snackBar.open(res.message, "", {
+            duration: 2000,
+            panelClass: ["blue-snackbar"]
+          });
+
+        }
+      });
   }
 
   updateProjects(projectDetails: ProjectDetails) {
@@ -143,21 +148,43 @@ export class AddProjectComponent implements OnInit {
         .updateProjects(organizationId, projectId, projectDetails)
         .then(res => {
           res.data;
+          if (res) {
+
+            this._snackBar.open(res.message, "", {
+              duration: 2000,
+              panelClass: ["blue-snackbar"]
+            });
+
+          }
         });
     }
   }
 
   submit() {
-    console.log(this.form.value);
     if (this.data.isEdit) {
       this.dialogRef.close(this.updateProjects(this.form.value));
     } else {
       this.dialogRef.close(this.addProjects(this.form.value));
     }
   }
-  closeDialog() {
+
+  closeDialog(): void {
     this.dialogRef.close();
   }
 
-  uploadPhoto() {}
+  getStart(event) {
+    const x = event.indexOf('/');
+    const month = event.substring(0, x);
+
+    event = event.replace('/', '-');
+    const y = event.indexOf('/');
+    const day = event.substring(x + 1, y);
+
+
+    const year = event.substring(y + 1, 10);
+
+    this.minDate = new Date(year, month - 1, day)
+
+  }
+  uploadPhoto() { }
 }

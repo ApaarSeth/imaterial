@@ -5,7 +5,8 @@ import {
   PoMaterial,
   CardData,
   poApproveReject,
-  DocumentList
+  DocumentList,
+  terms
 } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
@@ -13,6 +14,10 @@ import { MatDialog } from "@angular/material";
 import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 import { PoDocumentsComponent } from "./po-documents/po-documents.component";
 import { ActivatedRoute, Router } from "@angular/router";
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Terms } from 'src/app/shared/models/RFQ/rfq-details';
+import { Froala } from 'src/app/shared/constants/configuration-constants';
+import { Subscription, combineLatest } from 'rxjs';
 
 @Component({
   selector: "app-po",
@@ -23,6 +28,14 @@ import { ActivatedRoute, Router } from "@angular/router";
   ]
 })
 export class PoComponent implements OnInit {
+  public froala: Object = {
+
+    placeholder: "Edit Me",
+    imageUpload: false,
+    imageBrowse: false,
+    key: Froala.key
+  }
+
   poData: POData = {} as POData;
   tableData: PoMaterial[] = [];
   cardData: CardData;
@@ -32,23 +45,28 @@ export class PoComponent implements OnInit {
   @ViewChild("poCard", { static: false }) poCard: PoCardComponent;
   @ViewChild("poDocument", { static: false }) poDocument: PoDocumentsComponent;
   documentList: DocumentList[];
-
+  terms: terms;
+  subscriptions: Subscription[] = [];
+  isPoValid: boolean = false;
+  poTerms: FormGroup;
+  isPoNumberValid: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private poService: POService
-  ) {}
+    private poService: POService,
+    private formBuilder: FormBuilder
+  ) { }
   poId: number;
-  poMode: string;
+  mode: string;
   ngOnInit() {
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
-      this.poMode = poParams.mode;
+      this.mode = poParams.mode;
     });
     this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
-      console.log(this.poData);
+      console.log("poData", this.poData);
       this.tableData = this.poData.materialData;
       this.cardData = {
         supplierAddress: this.poData.supplierAddress,
@@ -59,10 +77,22 @@ export class PoComponent implements OnInit {
         projectId: this.poData.projectId
       };
       this.documentList = this.poData.DocumentsList;
+      this.terms = this.poData.Terms;
     });
+    this.formInit();
+    this.startSubscription();
+  }
+
+  ngOnChanges() {
+    this.isPoNumberValid = this.poCard.projectDetails.valid
+  }
+
+  formInit() {
+    this.poTerms = this.formBuilder.group({
+      textArea: []
+    })
   }
   collateResults() {
-    console.log("podocument", this.poDocument.getData());
     let poDataCollate: POData = {
       supplierAddress: this.poData.supplierAddress,
       projectAddress: this.poData.projectAddress,
@@ -75,8 +105,9 @@ export class PoComponent implements OnInit {
       poValidUpto: this.poCard.getData().endDate,
       DocumentsList: this.poDocument.getData(),
       Terms: {
-        termsDesc: "All test In it, Please add the terms test here only",
-        termsType: "RFQ"
+
+        termsDesc: this.poTerms['textArea'],
+        termsType: 'PO'
       },
       comments: "good",
       projectId: this.poData.projectId
@@ -120,4 +151,17 @@ export class PoComponent implements OnInit {
     }
     this.poService.approveRejectPo(this.collatePoData);
   }
+
+  startSubscription() {
+    this.subscriptions.push(
+      combineLatest([this.poService.billingRole$, this.poService.projectRole$, this.poService.billingAddress$, this.poService.supplierAddress$, this.poService.poNumber$]).subscribe(values => {
+        console.log("ispoValid", this.isPoValid)
+        this.isPoValid = true;
+      })
+    );
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subs => subs.unsubscribe());
+  }
+
 }

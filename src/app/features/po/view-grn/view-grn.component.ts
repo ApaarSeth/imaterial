@@ -21,23 +21,20 @@ export class ViewGRNComponent implements OnInit {
     dataSource: GRNDetails[];
     displayedColumns: string[] = [
         "Material Name",
-         "Brand Name",
+        "Brand Name",
         "Awarded Quantity",
         "Certified Quantity"
     ];
     grnHeaders: any;
     pID: number;
 
-    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService,private route:Router,public dialog: MatDialog) { }
+    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog) { }
 
     ngOnInit() {
-
-        this.activatedRoute.params.subscribe(res=>{
-            console.log(res);
+        this.activatedRoute.params.subscribe(res => {
             this.pID = Number(res["poId"]);
             this.getGRNDetails(Number(res["poId"]));
         })
-        
     }
 
     getGRNDetails(grnId: number) {
@@ -47,37 +44,36 @@ export class ViewGRNComponent implements OnInit {
         });
     }
 
-    getData(x){
+    getData(x) {
         return x
     }
 
-    viewBack(){
-           this.route.navigate(['po/detail-list']);
+    viewBack() {
+        this.route.navigate(['po/detail-list']);
     }
 
-    addGRN(){
+    addGRN() {
         const data: GRNPopupData = {
             isEdit: false,
             isDelete: false,
             pID: this.pID,
             detail: this.grnHeaders
-            };
+        };
         this.openDialog(data);
     }
 
-  openDialog(data: GRNPopupData): void {
-    if (data.isDelete == false) {
-      const dialogRef = this.dialog.open(AddEditGrnComponent, {
-        width: "1000px",
-        height:"500px",
-        data
-      });
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => {
-             this.getGRNDetails(this.pID);
-        });
+    openDialog(data: GRNPopupData): void {
+        if (data.isDelete == false) {
+            const dialogRef = this.dialog.open(AddEditGrnComponent, {
+                width: "1000px",
+                height: "500px",
+                data
+            });
+            dialogRef.afterClosed().toPromise().then(result => {
+                if(result){
+                    this.getGRNDetails(this.pID);
+                }
+            });
+        }
     }
-  }
 }

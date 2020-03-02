@@ -14,14 +14,14 @@ import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
   providedIn: "root"
 })
 export class RFQService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
 
   rfqMaterials(ProjectIds: number[]) {
     return this.dataService.sendPostRequest(API.RFQMATERIALS, {
       projectIds: ProjectIds
     });
   }
-  
+
   rfqDetail(organizationId: number) {
     return this.dataService.getRequest(API.RFQDETAIL(organizationId));
   }
@@ -39,11 +39,9 @@ export class RFQService {
   }
 
   addNewSupplier(organizationId: number, supplier: Suppliers) {
-    return this.dataService
-      .sendPostRequest(API.ADDSUPPLIER(organizationId), supplier)
-      .then(res => {
-        return res;
-      });
+    return this.dataService.sendPostRequest(API.ADDSUPPLIER(organizationId), supplier).then(res => {
+      return res;
+    });
   }
 
   addRFQ(rfqDetail: AddRFQ) {
@@ -51,27 +49,18 @@ export class RFQService {
   }
 
   getRFQDetailSupplier(rfqId: number, supplierId: number) {
-    return this.dataService.getRequest(
-      API.GETRFQDETAILSUPPLIER(rfqId, supplierId)
-    );
+    return this.dataService.getRequest(API.GETRFQDETAILSUPPLIER(rfqId, supplierId));
   }
 
   postRFQDetailSupplier(supplierId: number, rfqSupplierDetails: SendRfqObj) {
-    return this.dataService
-      .sendPostRequest(
-        API.POSTRFQDETAILSUPPLIER(supplierId),
-        rfqSupplierDetails
-      )
-      .then(res => {
-        return res;
-      });
+    return this.dataService.sendPostRequest(API.POSTRFQDETAILSUPPLIER(supplierId), rfqSupplierDetails).then(res => {
+      return res;
+    });
   }
   deleteSuplier(supplierId: number) {
-    return this.dataService
-      .sendDeleteRequest(API.DELETESUPPLIER(supplierId), {})
-      .then(res => {
-        return res;
-      });
+    return this.dataService.sendDeleteRequest(API.DELETESUPPLIER(supplierId), {}).then(res => {
+      return res;
+    });
   }
 
   getRFQView(rfqId: number) {
@@ -83,5 +72,17 @@ export class RFQService {
 
   getGeneratedRfq(rfqId: number) {
     return this.dataService.getRequest(API.GETGENERATEDRFQ(rfqId));
+  }
+
+  getRfqTerms() {
+    return this.dataService.getRequest(API.GETRFQTERMS);
+  }
+
+  postSupplierExcel(data: FormData, organisationId: number) {
+    return this.dataService.sendPostRequest(API.UPLOADSUPPLIEREXCEL(organisationId), data)
+  }
+
+  getDraftRfq(rfqId: number) {
+    return this.dataService.getRequest(API.GETADDEDRFQ(rfqId));
   }
 }

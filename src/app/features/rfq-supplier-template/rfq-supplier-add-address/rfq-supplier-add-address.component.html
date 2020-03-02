@@ -3,210 +3,159 @@
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row submit-bid-row-add">
       <div class="submit-bid-div-add">
-       
-      <form *ngIf="form" [formGroup]="form">   
-                <!-- new structure -->
-                <div class="col-sm-12">
-                  <div class="supplier-details-heading-add-address">
-                    Supplier Details
-                  </div>
-                  <!-- first row -->
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <!-- project Name -->
-                    <mat-form-field class="border-input add-edit-user-form-modal">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="Contact Person"
-                      formControlName="supplierName" required
-                    />
-                    <mat-error class="mat-error-add-edit-form-modal">Supplier Name is Required</mat-error>
-                  </mat-form-field>
-                    </div>
 
-                    <div class="col-sm-6">
-                      <!-- address 1 -->
-                         <mat-form-field class="border-input add-edit-user-form-modal">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="Phone No"
-                      formControlName="contactNo" required/>
-                    <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
-                    <small
-                        *ngIf="form.controls['contactNo'].hasError('required') && form.controls['contactNo'].touched"
-                        class="form-error-msg"> Phone No is required </small>
-                        <small
-                        *ngIf="form.controls['contactNo'].hasError('pattern') && form.controls['contactNo'].touched"
-                        class="form-error-msg"> Enter Valid Phone No</small>
-                  </mat-form-field>
-
-                    </div>
-
-                  </div>
-            
-                  <!-- third row -->
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <!-- address 1 -->
-                <mat-form-field class="border-input add-edit-user-form-modal">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="Email Id"
-                      formControlName="email" required
-                    />
-                    <!-- <mat-error class="mat-error-add-edit-form-modal">Email Id is Required</mat-error> -->
-                    <small
-                        *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
-                        class="form-error-msg"> Email is required </small>
-                        <small
-                        *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
-                        class="form-error-msg"> Enter Valid Email</small>
-                  </mat-form-field>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <mat-form-field class="border-input add-edit-user-form-modal">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="GST No"
-                      formControlName="gstNo" required/>
-                    <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
-                    <small
-                        *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
-                        class="form-error-msg"> GST No is required </small>
-                        <small
-                        *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched"
-                        class="form-error-msg"> Enter Valid GST No</small>
-                  </mat-form-field>
-                    </div>
-                       
-                  </div>
-                  <!-- fourth row -->
-                  <div class="row p-t-20">
-                    <div class="col-sm-6">
-                    <!-- PinCode -->
-                  <mat-form-field class="border-input add-edit-user-form-modal">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="addressLine1"
-                      formControlName="addressLine1" required/>
-                    <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine1 is Required</mat-error> -->
-                    <small
-                        *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched"
-                        class="form-error-msg"> AddressLine1 is required </small>
-                        <small
-                        *ngIf="form.controls['addressLine1'].hasError('pattern') && form.controls['addressLine1'].touched"
-                        class="form-error-msg"> Enter Valid AddressLine1</small>
-                  </mat-form-field>
-                    </div>
-
-                    <div class="col-sm-6">
-                    <!-- PinCode -->
-                  <mat-form-field class="border-input add-edit-user-form-modal">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="addressLine2"
-                      formControlName="addressLine2" required/>
-                    <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine2 is Required</mat-error> -->
-                    <small
-                        *ngIf="form.controls['addressLine2'].hasError('required') && form.controls['addressLine2'].touched"
-                        class="form-error-msg"> Address Line 2 is required </small>
-                        <small
-                        *ngIf="form.controls['addressLine2'].hasError('pattern') && form.controls['addressLine2'].touched"
-                        class="form-error-msg"> Enter Valid Address Line 2</small>
-                  </mat-form-field>
-                    </div>
-                    
-                  </div>
-
-                  <!-- fifth row-->
-                  <!-- fourth row -->
-                  <div class="row">
-                    <div class="col-sm-6">
-                    <!-- PinCode -->
-                  <mat-form-field class="border-input add-edit-user-form-modal">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="City"
-                      formControlName="city" required/>
-                    <!-- <mat-error class="mat-error-add-edit-form-modal">city is Required</mat-error> -->
-                    <small
-                        *ngIf="form.controls['city'].hasError('required') && form.controls['city'].touched"
-                        class="form-error-msg"> city is required </small>
-                        <small
-                        *ngIf="form.controls['city'].hasError('pattern') && form.controls['city'].touched"
-                        class="form-error-msg"> Enter Valid city</small>
-                  </mat-form-field>
-                    </div>
-
-                    <div class="col-sm-6">
-                    <!-- PinCode -->
-                  <mat-form-field class="border-input add-edit-user-form-modal">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="State"
-                      formControlName="state" required/>
-                    <!-- <mat-error class="mat-error-add-edit-form-modal">state is Required</mat-error> -->
-                    <small
-                        *ngIf="form.controls['state'].hasError('required') && form.controls['state'].touched"
-                        class="form-error-msg"> state is required </small>
-                        <small
-                        *ngIf="form.controls['state'].hasError('pattern') && form.controls['state'].touched"
-                        class="form-error-msg"> Enter Valid state</small>
-                  </mat-form-field>
-                    </div>
-                    
-                  </div>
-
-                  <!-- sixth row-->
-                    <!-- fourth row -->
-                  <div class="row">
-                    <div class="col-sm-6">
-                    <!-- PinCode -->
-                  <mat-form-field class="border-input add-edit-user-form-modal">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="Pincode"
-                      formControlName="pinCode" required/>
-                    <!-- <mat-error class="mat-error-add-edit-form-modal">pinCode is Required</mat-error> -->
-                    <small
-                        *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
-                        class="form-error-msg"> pinCode is required </small>
-                        <small
-                        *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
-                        class="form-error-msg"> Enter Valid pinCode</small>
-                  </mat-form-field>
-                    </div>
-
-                    <div class="col-sm-6">
-                    
-                    </div>
-                    
-                  </div>
-                  
-                </div>
-                <!-- end structure -->
-              
-            <div mat-dialog-actions>
-              <div class="col-sm-12 save-btn-add-edit-user-modal">
-                <button
-                  mat-raised-button [disabled]="!form.valid" (click)="saveAddress()"
-                  class="main-background-color main-button color-white pull-right"
-                >
-                  Submit
-                </button>
-              </div>
+        <form *ngIf="form" [formGroup]="form">
+          <!-- new structure -->
+          <div class="col-sm-12">
+            <div class="supplier-details-heading-add-address">
+              Supplier Details
             </div>
-      </form>
+            <!-- first row -->
+            <div class="row">
+              <div class="col-sm-6">
+                <!-- project Name -->
+                <mat-form-field class="border-input add-edit-user-form-modal">
+                  <input matInput type="text" placeholder="Contact Person" formControlName="supplierName" required />
+                  <mat-error class="mat-error-add-edit-form-modal">Supplier Name is Required</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-6">
+                <!-- address 1 -->
+                <mat-form-field class="border-input add-edit-user-form-modal">
+                  <input matInput type="text" placeholder="Phone No" formControlName="contactNo" required />
+                  <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
+                  <small *ngIf="form.controls['contactNo'].hasError('required') && form.controls['contactNo'].touched"
+                    class="form-error-msg"> Phone No is required </small>
+                  <small *ngIf="form.controls['contactNo'].hasError('pattern') && form.controls['contactNo'].touched"
+                    class="form-error-msg"> Enter Valid Phone No</small>
+                </mat-form-field>
+
+              </div>
+
+            </div>
+
+            <!-- third row -->
+            <div class="row">
+              <div class="col-sm-6">
+                <!-- address 1 -->
+                <mat-form-field class="border-input add-edit-user-form-modal">
+                  <input matInput type="text" placeholder="Email Id" formControlName="email" required />
+                  <!-- <mat-error class="mat-error-add-edit-form-modal">Email Id is Required</mat-error> -->
+                  <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
+                    class="form-error-msg"> Email is required </small>
+                  <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
+                    class="form-error-msg"> Enter Valid Email</small>
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-6">
+                <mat-form-field class="border-input add-edit-user-form-modal">
+                  <input matInput type="text" placeholder="GST No" formControlName="gstNo" required />
+                  <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
+                  <small *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
+                    class="form-error-msg"> GST No is required </small>
+                  <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched"
+                    class="form-error-msg"> Enter Valid GST No</small>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <!-- fourth row -->
+            <div class="row p-t-20">
+              <div class="col-sm-6">
+                <!-- PinCode -->
+                <mat-form-field class="border-input add-edit-user-form-modal">
+                  <input matInput type="text" placeholder="addressLine1" formControlName="addressLine1" required />
+                  <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine1 is Required</mat-error> -->
+                  <small
+                    *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched"
+                    class="form-error-msg"> AddressLine1 is required </small>
+                  <small
+                    *ngIf="form.controls['addressLine1'].hasError('pattern') && form.controls['addressLine1'].touched"
+                    class="form-error-msg"> Enter Valid AddressLine1</small>
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-6">
+                <!-- PinCode -->
+                <mat-form-field class="border-input add-edit-user-form-modal">
+                  <input matInput type="text" placeholder="addressLine2" formControlName="addressLine2" />
+                  <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine2 is Required</mat-error> -->
+                  <!-- <small
+                    *ngIf="form.controls['addressLine2'].hasError('required') && form.controls['addressLine2'].touched"
+                    class="form-error-msg"> Address Line 2 is required </small> -->
+                  <small
+                    *ngIf="form.controls['addressLine2'].hasError('pattern') && form.controls['addressLine2'].touched"
+                    class="form-error-msg"> Enter Valid Address Line 2</small>
+                </mat-form-field>
+              </div>
+
+            </div>
+
+            <!-- fifth row-->
+             <!-- fourth row -->
+            <div class="row">
+              <div class="col-sm-6">
+                <!-- PinCode -->
+                <mat-form-field class="border-input add-edit-user-form-modal">
+                  <input matInput type="text" placeholder="Pincode" formControlName="pinCode" required />
+                  <!-- <mat-error class="mat-error-add-edit-form-modal">pinCode is Required</mat-error> -->
+                  <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
+                    class="form-error-msg"> pinCode is required </small>
+                  <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
+                    class="form-error-msg"> Enter Valid pinCode</small>
+                </mat-form-field>
+              </div>
+          
+             <div class="col-sm-6">
+                <!-- PinCode -->
+                <mat-form-field class="border-input add-edit-user-form-modal">
+                  <input matInput type="text" placeholder="City" formControlName="city" required />
+                  <!-- <mat-error class="mat-error-add-edit-form-modal">city is Required</mat-error> -->
+                  <small *ngIf="form.controls['city'].hasError('required') && form.controls['city'].touched"
+                    class="form-error-msg"> city is required </small>
+                  <small *ngIf="form.controls['city'].hasError('pattern') && form.controls['city'].touched"
+                    class="form-error-msg"> Enter Valid city</small>
+                </mat-form-field>
+              </div>
+
+            </div>
+            
+            <!-- fourth row -->
+            <div class="row">
+              <div class="col-sm-6">
+                <!-- PinCode -->
+                <mat-form-field class="border-input add-edit-user-form-modal">
+                  <input matInput type="text" placeholder="State" formControlName="state" required />
+                  <!-- <mat-error class="mat-error-add-edit-form-modal">state is Required</mat-error> -->
+                  <small *ngIf="form.controls['state'].hasError('required') && form.controls['state'].touched"
+                    class="form-error-msg"> state is required </small>
+                  <small *ngIf="form.controls['state'].hasError('pattern') && form.controls['state'].touched"
+                    class="form-error-msg"> Enter Valid state</small>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                
+              </div>
+
+            </div>
+
+            <!-- sixth row-->
+           
+
+          </div>
+          <!-- end structure -->
+
+          <div mat-dialog-actions>
+            <div class="col-sm-12 save-btn-add-edit-user-modal">
+              <button mat-raised-button [disabled]="!form.valid" (click)="saveAddress()"
+                class="main-background-color main-button color-white pull-right">
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
 
 
 

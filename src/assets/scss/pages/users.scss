@@ -9,9 +9,21 @@
 }
 .btn-width-add-users{
     width: 275px;
+    top: 78%;
+    margin:10px auto;
 }
 
-
+.add-user-img{
+     img{
+         margin-top: 5%;
+     }
+     div{
+         margin-top: 15px;
+     }
+     button{
+         min-width:164px;
+     }
+}
 .add-edit-user-form-modal {
   width: 90%;
   padding-left: 5%;
@@ -26,14 +38,43 @@
     display: flex; 
     justify-content: center;
 }
-
+.user-dts{
+     .myPanel{
+         .mat-expansion-panel-header#mat-expansion-panel-header-0{
+             height: 48px !important;
+         }
+     }
+}
 .user-details-table-div{
    max-height: 400px;
    width: 100%;
-   overflow: auto;
+   overflow-y: auto;
+  
    table{
        border-left: 1px solid #d6d6d6;
    }
+}
+
+
+.user-details-table-div-active-inactive{
+        overflow-y: scroll;
+        max-height: 166px;
+        overflow-x: hidden;
+        width: 99.5%;;
+
+        table{
+             border-left: 1px solid #d6d6d6;
+        }
+}
+.user-details-table-div-active-inactive-single{
+        overflow-y: scroll;
+        max-height: 407px;
+        overflow-x: hidden;
+        width: 99.5%;;
+
+        table{
+             border-left: 1px solid #d6d6d6;
+        }
 }
 
 .btn-project-user-details{
@@ -64,13 +105,225 @@
 }
 
 .update-info{
-    // background-image: url('../../images/dashboard-overlay.png');
+    background-image: url('/assets/images/dashboard-overlay.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    padding: 100px 0;
+    padding: 50px 0;
+    &__popup{
+        background-color: #fff;
+        border-radius: 6px;
+    }
+
+    .border-input input, .border-input select, .border-select .mat-form-field-flex{
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .mat-error{
+        font-size: 12px;
+    }
+
+    .mat-form-field-appearance-legacy .mat-form-field-label {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .trades.active, .mat-chip.mat-chip.mat-primary.mat-standard-chip.mat-chip-selected.ng-star-inserted.active{
+        border: 1px solid #66BF00;
+        border-radius: 50px;
+        background-color: #66BF00;
+        color: #ffffff;
+    }
+
+    &__form{
+        position: relative;
+        .mat-mini-fab.mat-warn{
+            position: absolute;
+            right: 0px;
+            top: 70px;
+            width: auto;
+            border-radius: 8px;
+        }
+        .mat-mini-fab .mat-button-wrapper{
+            padding: 8px 15px;
+            display: inline-block;
+            line-height: 24px;
+            font-size: 14px;
+        }
+
+    }
+
+}
+
+.add-user{
+    height: 100%;
+}
+
+.width-28{
+    max-width: 28%;
+    flex-basis: 28%;
+}
+
+.city-input.mat-form-field-appearance-legacy, .role-input.mat-form-field-appearance-legacy{
+    .mat-form-field-wrapper{
+        padding-top: 7px !important;
+        padding-bottom: 7px !important;
+    }
 }
 
 .padding-8{
     padding: 0px 8px;
+}
+
+.btn-outline-warning{
+    border-radius: 50px;
+    padding: 8px 30px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.37);
+    cursor: pointer;
+    color: #F47720;
+    background-color: transparent;
+    background-image: none;
+    border-color: #F47720;
+}
+
+.btn-warning.disabled, .btn-warning:disabled,
+.btn-outline-warning:not(:disabled):not(.disabled).active,
+.btn-outline-warning:not(:disabled):not(.disabled):active,
+.show>.btn-outline-warning.dropdown-toggle,
+.btn-outline-warning:hover {
+    background-color: #F47720;
+    border-color: #F47720;
+    color: #ffffff;
+}
+
+
+.userInfo-upload{
+    .drag-and-drop{
+        height: auto;
+    }
+}
+
+.org-name{
+    color: #020202;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    border-bottom: 2px solid #b8b8b8;
+}
+
+.user-profile{
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+}
+
+.trades, .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary{
+    width: auto;
+    border: 1px solid #BCC9F0;
+    border-radius: 50px;
+    background-color: #E0E3EC;
+    padding: 6px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #020202;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.trades.active h6{
+    color: #ffffff;
+}
+
+.trades:not(:last-child){
+    margin-right: 15px;
+}
+
+.trade-tile {
+    color: #020202;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+.next-btn{
+    border-radius: 40px;
+    background-color: #F47720;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.5);
+    color: #fff !important;
+    padding: 8px 40px;
+}
+
+.next-btn:hover,
+.next-btn:focus,
+.next-btn:active{
+    background-color: #f37234;
+}
+
+.lh-30{
+    line-height: 30px;
+}
+
+.mat-fab.mat-warn, .mat-flat-button.mat-warn, .mat-mini-fab.mat-warn, .mat-raised-button.mat-warn {
+    background-color: #F47720;
+    font-size: 20px;
+}
+
+.margin-top-minus3px{
+    img{
+        margin-top: -3px;
+    }
+}
+
+.add-edit-user-modal-form{
+    mat-form-field{
+        width: 100%;
+        padding-left:0px;
+    }
+}
+.user-photo {
+    height: 120px;
+    min-width: 90px;
+    width: 60%;
+    margin: 30px auto 0;
+    border: 1px solid #ececec;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    display: -webkit-box;
+    display: flex;
+    margin-bottom: 20px;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.browser-method .myLabel {
+    padding: 6px 5px;
+    margin: 2px;
+    color: #F47720;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-align: center;
+    margin: auto;
+    display: block;
+    border: 1px solid #F47720;
+    width: 55%;
+    border-radius: 30px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    span {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 19px;
+    }
+    input[type=file] {
+        display: none;
+    }
 }

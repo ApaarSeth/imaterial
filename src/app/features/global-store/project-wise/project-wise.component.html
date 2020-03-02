@@ -1,5 +1,14 @@
-<mat-accordion displayMode="flat" multi class="mat-table">
+<div class="col-xs-12 text-right p-t-20 border-input" *ngIf="this.newProjectData.length && this.newProjectData.length>0">
+  <span class="p-r-20"> </span>
+  <mat-form-field class="input-search-padding-zero">
+    <input matInput placeholder="Search Project" type="search" [(ngModel)]="searchProject" />
+    <button mat-button matSuffix mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
 
+<mat-accordion displayMode="flat" multi class="mat-table" *ngIf="this.newProjectData.length && this.newProjectData.length>0">
   <section matSort class="mat-elevation-z2 mat-header-row blue-background-color-color-white-section">
     <span class="mat-header-cell" mat-sort-header="name">Name</span>
     <span class="mat-header-cell" mat-sort-header="estimatedQuantity">Estimated Quantity</span>
@@ -8,35 +17,34 @@
     <span class="mat-header-cell" mat-sort-header="availableQuantity">Available quantity in project</span>
   </section>
 
-  <mat-expansion-panel *ngFor="let project of newProjectData" class="myPanel">
-
+<div class="global-panel">
+  <mat-expansion-panel *ngFor="let project of newProjectData | SearchPipe: searchProject:'ProjectGlobal':'projectName'" class="myPanel">
     <mat-expansion-panel-header class="mat-row material-row">
       <span class="mat-cell">{{ project.ProjectGlobal.projectName }}</span>
     </mat-expansion-panel-header>
 
     <mat-expansion-panel *ngFor="let material of project.GlobalMaterials" class="myPanel">
-      
       <mat-expansion-panel-header class="mat-row material-project">
-
         <span class="mat-cell" matTooltip=" {{ material.GlobalMaterial.materialName }}">
           <div class="limited-character">
             {{ material.GlobalMaterial.materialName }}
           </div>
         </span>
 
-        <span class="mat-cell">{{ material.GlobalMaterial.estimatedQty }} <span
-            class="p-l-5">{{material.GlobalMaterial.materialUnit}}</span></span>
-        <span class="mat-cell">{{ material.GlobalMaterial.sum }} <span
-            class="p-l-5">{{material.GlobalMaterial.materialUnit}}</span></span>
-        <span class="mat-cell">{{
-          material.GlobalMaterial.nearDueDate | date: "dd MMM yyy"
-        }}</span>
-        <span
-          class="mat-cell">{{ material.GlobalMaterial.deliveredQty!=null&&material.GlobalMaterial.issuedQty!=null?material.GlobalMaterial.deliverdQty-material.GlobalMaterial.issuedQty:0 }}
-          <span class="p-l-5">{{material.GlobalMaterial.materialUnit}}</span></span>
-
+        <span class="mat-cell"
+          >{{ material.GlobalMaterial.estimatedQty }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
+        >
+        <span class="mat-cell"
+          >{{ material.GlobalMaterial.sum }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
+        >
+        <span class="mat-cell">{{ material.GlobalMaterial.nearDueDate | date: "dd MMM yyy" }}</span>
+        <span class="mat-cell"
+          >{{
+            material.GlobalMaterial.deliveredQty != null && material.GlobalMaterial.issuedQty != null ? material.GlobalMaterial.deliveredQty - material.GlobalMaterial.issuedQty : 0
+          }}
+          <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
+        >
       </mat-expansion-panel-header>
-
 
       <ng-container *ngIf="material.IndentMaterial">
         <div *ngFor="let indent of material.IndentMaterial">
@@ -44,15 +52,12 @@
             <span class="mat-cell"></span>
             <span class="mat-cell"></span>
             <span class="mat-cell">{{ indent.quantity }}</span>
-            <span class="mat-cell">{{
-              indent.dueDate | date: "dd MMM yyy"
-            }}</span>
+            <span class="mat-cell">{{ indent.dueDate | date: "dd MMM yyy" }}</span>
             <span class="mat-cell"></span>
           </mat-expansion-panel-header>
         </div>
       </ng-container>
-
-      
     </mat-expansion-panel>
   </mat-expansion-panel>
+  </div>
 </mat-accordion>

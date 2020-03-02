@@ -5,8 +5,7 @@
         <div class="col-md-12">
           <div class="row ">
             <div class="col-xs-12 p-t-10">
-              <button mat-raised-button class="main-background-color main-button color-white pull-right m-r-30"
-                [disabled]="!form.valid">
+              <button mat-raised-button class="main-background-color main-button color-white pull-right m-r-30" [disabled]="!form.valid">
                 Float RFQ
               </button>
             </div>
@@ -21,7 +20,7 @@
             <div class="col-md-4">
               RFQ End Date
               <mat-form-field class="border-input">
-                <input matInput [matDatepicker]="dueDate" formControlName="dueDate" />
+                <input matInput [matDatepicker]="dueDate" formControlName="dueDate" (focus)="dueDate.open()" readonly />
                 <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                 <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
               </mat-form-field>
@@ -43,37 +42,35 @@
             <div class="col-md-3" *ngFor="let supplier of selectedSuppliersList">
               <mat-card>
                 <div class="col-md-12 text-bold">
-                  <label for="company ">{{supplier.supplier_name}}</label>
+                  <label for="company ">{{ supplier.supplier_name }}</label>
                 </div>
                 <div class="col-md-12">
-                  <label for="email">{{supplier.email}}</label>
+                  <label for="email">{{ supplier.email }}</label>
                 </div>
                 <div class="col-md-12">
-                  <label for="phoneNumber">{{supplier.contact_no}}</label>
+                  <label for="phoneNumber">{{ supplier.contact_no }}</label>
                 </div>
               </mat-card>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Accordion/ Collapsible -->
       <mat-accordion>
-        <!-- first Project -->
         <ng-template ngFor let-project [ngForOf]="checkedList" let-i="index">
-          <mat-expansion-panel class="myPanel">
+          <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{project.projectName}}
+                {{ project.projectName }}
+                <a href="javascript:void(0)" class="main-color p-l-15">
+                  {{ project.defaultAddress.addressLine1 }}
+                  {{ project.defaultAddress.addressLine2 }}
+                  {{ project.defaultAddress.city }}
+                  {{ project.defaultAddress.state }}
+                  {{ project.defaultAddress.country }}
+                </a>
               </mat-panel-title>
-              <mat-panel-description>
-                {{project.defaultAddress.addressLine1}}
-              </mat-panel-description>
             </mat-expansion-panel-header>
-
-            <!-- table -->
             <table mat-table [dataSource]="project.projectMaterialList" class="mat-elevation-z8 col-sm-12">
-              <!-- Material Name Column -->
               <ng-container matColumnDef="Material Name">
                 <th mat-header-cell *matHeaderCellDef>Material Name</th>
                 <td mat-cell *matCellDef="let element" class="dark-gray-color">
@@ -81,7 +78,6 @@
                 </td>
               </ng-container>
 
-              <!-- Quantity Column -->
               <ng-container matColumnDef="Quantity">
                 <th mat-header-cell *matHeaderCellDef>Quantity</th>
                 <td mat-cell *matCellDef="let element">
@@ -89,13 +85,14 @@
                 </td>
               </ng-container>
 
-              <!-- Makes Column -->
               <ng-container matColumnDef="Makes">
                 <th mat-header-cell *matHeaderCellDef>Makes</th>
                 <td mat-cell *matCellDef="let element">
-                  <span class="brand-view-style m-r-5" *ngFor="let make of element.makes">
-                    {{make}}
-                  </span>
+                  <ng-container *ngIf="element.makes">
+                    <span class="brand-view-style m-r-5" *ngFor="let make of element.makes">
+                      {{ make }}
+                    </span>
+                  </ng-container>
                 </td>
               </ng-container>
 

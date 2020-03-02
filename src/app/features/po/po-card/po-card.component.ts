@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
   ProjectAddress,
   SupplierAddress,
@@ -11,6 +11,7 @@ import { SelectPoRoleComponent } from "src/app/shared/dialogs/select-po-role/sel
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { Address } from "src/app/shared/models/RFQ/rfq-details";
 import { ActivatedRoute } from "@angular/router";
+import { POService } from 'src/app/shared/services/po/po.service';
 
 @Component({
   selector: "app-po-card",
@@ -20,28 +21,41 @@ export class PoCardComponent implements OnInit {
   @Input("cardData") cardData: CardData;
   mode: string;
   constructor(
+    private poService: POService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
   projectDetails: FormGroup;
-
+  isPoNoAndDateValid: boolean = false
   ngOnInit() {
     this.formInit();
     this.route.params.subscribe(params => {
       this.mode = params.mode;
     });
+    this.cardData.projectAddress.projectUserId && this.poService.projectRole$.next();
+    this.cardData.billingAddress.projectBillingUserId && this.poService.billingRole$.next();
+    this.cardData.billingAddress.projectBillingAddressId && this.poService.billingAddress$.next();
+    this.cardData.supplierAddress.supplierAddressId && this.poService.supplierAddress$.next();
+    this.cardData.poNumber && this.poService.poNumber$.next()
   }
+
+  ngOnChanges(): void {
+  }
+
   formInit() {
     this.projectDetails = this.formBuilder.group({
-      orderNo: [this.cardData.poNumber],
+      orderNo: [this.cardData.poNumber, Validators.required],
       openingDate: [],
-      endDate: [],
+      endDate: [this.cardData.poValidUpto],
       billingAddress: [this.cardData.billingAddress],
       projectAddress: [this.cardData.projectAddress],
       supplierAddress: [this.cardData.supplierAddress],
       projectId: []
     });
+    this.projectDetails.valueChanges.subscribe((val) => {
+      val.orderNo && this.poService.poNumber$.next();
+    })
   }
   submit() {
     console.log(this.projectDetails.value);
@@ -66,6 +80,7 @@ export class PoCardComponent implements OnInit {
         this.cardData.billingAddress.lastName = result[1].approver.lastName;
         this.cardData.billingAddress.projectBillingUserId =
           result[1].approver.userId;
+        result[1].approver.userId && this.poService.billingRole$.next();
         this.projectDetails.controls["billingAddress"].setValue(
           this.cardData.billingAddress
         );
@@ -75,6 +90,7 @@ export class PoCardComponent implements OnInit {
         this.cardData.projectAddress.firstName = result[1].approver.firstName;
         this.cardData.projectAddress.lastName = result[1].approver.lastName;
         this.cardData.projectAddress.projectUserId = result[1].approver.userId;
+        result[1].approver.userId && this.poService.projectRole$.next();
         this.projectDetails.controls["projectAddress"].setValue(
           this.cardData.projectAddress
         );
@@ -98,6 +114,7 @@ export class PoCardComponent implements OnInit {
         this.cardData.billingAddress.pinCode = result[1].address.pinCode;
         this.cardData.billingAddress.projectBillingAddressId =
           result[1].address.projectAddressId;
+        result[1].address.projectAddressId && this.poService.billingAddress$.next();
         this.cardData.billingAddress.gstNo = result[1].address.gstNo;
         this.projectDetails.controls["billingAddress"].setValue(
           this.cardData.billingAddress
@@ -112,6 +129,7 @@ export class PoCardComponent implements OnInit {
         this.cardData.supplierAddress.pinCode = result[1].address.pinCode;
         this.cardData.supplierAddress.supplierAddressId =
           result[1].address.supplierAddressId;
+        result[1].address.supplierAddressId && this.poService.supplierAddress$.next();
         this.cardData.supplierAddress.gstNo = result[1].address.gstNo;
         this.projectDetails.controls["supplierAddress"].setValue(
           this.cardData.supplierAddress

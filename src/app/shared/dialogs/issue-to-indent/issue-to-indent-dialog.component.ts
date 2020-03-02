@@ -23,6 +23,8 @@ export class IssueToIndentDialogComponent implements OnInit {
   issueToIndentDetails: IssueToIndentDetails;
   materialForms: FormGroup;
   dataSource: IndentVO;
+  sum: number = 0;
+  errorMsg: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<IssueToIndentDialogComponent>, private activatedRoute: ActivatedRoute,
     private bomService: BomService,
@@ -37,10 +39,12 @@ export class IssueToIndentDialogComponent implements OnInit {
 
 
   formsInit(indentDetail) {
+    const num = Number(this.issueToIndentDetails.availableStock);
+
     const frmArr = indentDetail.indentDetailList.map((indent: IndentVO) => {
       return this.formBuilder.group({
         indentId: [indent.indentId],
-        issuedQty: ["", Validators.required],
+        issuedQty: ["", [Validators.max(num)]],
         issuedDate: [indent.dueDate],
         requiredQuantity: [indent.quantity]
       });
@@ -55,18 +59,37 @@ export class IssueToIndentDialogComponent implements OnInit {
   }
 
   showIndent() {
-     const formValues: sendIssuedQuantityObj[] = [];
+     this.dialogRef.close(this.raiseIndent());
+  }
+
+showQuantityInput(){
+  this.sum=0;
+        this.materialForms.value.forms.forEach(element => {
+          if(element.issuedQty > 0){
+            this.sum = this.sum + element.issuedQty;
+          }
+        });
+
+        const num = Number(this.issueToIndentDetails.availableStock);
+        if(this.sum < num){
+           this.errorMsg = false;
+        }
+         else if (this.sum > num){
+            this.errorMsg = true;
+          }
+}
+  raiseIndent(){
+    const formValues: sendIssuedQuantityObj[] = [];
     this.materialForms.value.forms.forEach(element => {
       if(element.issuedQty > 0){
        formValues.push(element);
       }
     });
-   
     console.log("result", formValues);
-
     this.bomService.postIssueToIndent(this.data.materialId, formValues).then(res => {
-      res.data;
-    });
+          return res.data;
+          });
+    
   }
 
   getIndentDetails() {

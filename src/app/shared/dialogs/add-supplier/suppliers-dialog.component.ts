@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import { RFQService } from "../../services/rfq/rfq.service";
 import { Suppliers } from "../../models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
@@ -20,6 +20,7 @@ export class SuppliersDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<SuppliersDialogComponent>,
     private rfqService: RFQService,
+    private _snackBar:MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder
   ) { }
@@ -38,7 +39,7 @@ export class SuppliersDialogComponent {
       supplier_name: ["", Validators.required],
       email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
-      pan: ["", Validators.required]
+      pan: [""]
     });
   }
 
@@ -48,11 +49,17 @@ export class SuppliersDialogComponent {
 
   addSuppliers(organisarionId: number, suppliers: Suppliers) {
     this.rfqService.addNewSupplier(this.orgId, suppliers).then(res => {
-      res.data;
+        if(res){
+            this._snackBar.open(res.message, "", {
+            duration: 2000,
+            panelClass: ["blue-snackbar"]
+          });
+      }
+      this.dialogRef.close(res.data);
     });
   }
 
-  close() {
-    this.dialogRef.close();
+  close(): void {
+    this.dialogRef.close(null);
   }
 }

@@ -52,6 +52,11 @@ const routes: Routes = [
     component: RFQViewComponent
   },
   {
+    path: "createRfq/:rfqId",
+    resolve: { createRfq: CreateRfqResolver },
+    component: CreateRfqComponent
+  },
+  {
     path: "createRfq",
     resolve: { createRfq: CreateRfqResolver },
     component: CreateRfqComponent
@@ -61,4 +66,4 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
-export class RFQRoutingModule {}
+export class RFQRoutingModule { }

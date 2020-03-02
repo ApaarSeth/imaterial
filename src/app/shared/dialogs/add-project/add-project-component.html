@@ -1,6 +1,6 @@
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()" class="add-project-component-dialog">
   <div class="header-add-edit-dialog">
-    <h1 mat-dialog-title>Add Project</h1>
+    <h1 mat-dialog-title>Project Details</h1>
     <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
       <span aria-hidden="true">×</span>
     </button>
@@ -100,7 +100,8 @@
             <!-- start date -->
             <mat-form-field class="border-input">
               <mat-label>Project Start Date*</mat-label>
-              <input matInput [matDatepicker]="startDate" formControlName="startDate" [min]="minDate" />
+              <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref 
+                [min]="minDate" (dateChange)="getStart(ref.value)" (focus)="startDate.open()" readonly/>
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
@@ -109,7 +110,8 @@
             <!-- end date -->
             <mat-form-field class="border-input">
               <mat-label>Project End Date*</mat-label>
-              <input matInput [matDatepicker]="endDate" formControlName="endDate" [min]="minDate" />
+              <input matInput [matDatepicker]="endDate" formControlName="endDate" [min]="minDate" 
+                (focus)="endDate.open()" readonly/>
               <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
               <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
             </mat-form-field>
@@ -144,7 +146,7 @@
           <div class="col-sm-3">
             <!-- project unit -->
             <mat-form-field class="border-select">
-              <mat-label>Project Unit</mat-label>
+              <mat-label>Unit</mat-label>
               <mat-select formControlName="unit">
                 <mat-option *ngFor="let unit of units" [value]="unit.value">
                   {{unit.value}}
@@ -160,9 +162,9 @@
           <div class="col-sm-3">
             <!-- construction cost -->
             <mat-form-field class="border-input">
-              <mat-label>Construction Cost</mat-label>
+              <mat-label>Construction Cost &#x20b9;</mat-label>
               <input matInput type="number" formControlName="cost" required />
-              <!-- <mat-error>Construction Cost is Required</mat-error> -->
+              <!-- <mat-error>Construction Cost is Required</mat-error> --> 
             </mat-form-field>
           </div>
 
@@ -181,10 +183,10 @@
           <div class="col-sm-6">
             <!-- project Type -->
             <mat-form-field class="border-input">
-              <mat-label>GST No*</mat-label>
+              <mat-label>GST IN</mat-label>
               <input matInput type="text" formControlName="gstNo" />
-              <small *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
-                class="form-error-msg"> Gst No is required </small>
+              <!-- <small *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
+                class="form-error-msg"> Gst No is required </small> -->
               <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched"
                 class="form-error-msg"> Enter Valid Gst No</small>
               <!-- <mat-error>Address is Required</mat-error> -->
@@ -201,7 +203,9 @@
     <div class="col-sm-12 add-edit-dialog-button">
       <button mat-raised-button [disabled]="!form.valid"
         class="main-background-color main-button color-white pull-right">
-        Add
+        <span *ngIf="!data.isEdit">Add</span>
+        <span *ngIf="data.isEdit">Edit</span>
+
       </button>
     </div>
   </div>

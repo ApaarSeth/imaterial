@@ -36,6 +36,7 @@ export interface Address {
   gstNo?: string;
   addressType?: string;
   projectAddressId: number;
+  projectdefaultAddressId: number;
   primaryAddress: number;
 }
 
@@ -76,7 +77,8 @@ export interface DocumentDetails {
 }
 
 export interface Terms {
-  // to do --- binding pending
+  termsId?: number;
   termsDesc: string;
   termsType: string;
+  otherDesc?: string;
 }

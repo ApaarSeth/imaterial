@@ -14,6 +14,11 @@ export class SignInSignupService implements OnInit{
     signUp(data) {
         return this.dataService.sendPostRequestSso(API.SIGNUP,data).catch(e=>{
             console.error(e);
+            // let data:any={};
+            // data.erroType= 'Invalid Credentials',
+            // data.errorMessage = 'Phone No. or Password Incorrect';
+            // console.log(e.error_description);
+            // return data;
         });
       }
 
@@ -29,7 +34,14 @@ export class SignInSignupService implements OnInit{
           }
         })
         .catch(e=>{
-            console.error(e);
+          if(e.error === 'invalid_grant' || e.error === 'unauthorized'){
+            let data:any={};
+            data.erroType= 'Invalid Credentials',
+            data.errorMessage = 'Phone No. or Password Incorrect';
+            console.log(e.error_description);
+            return data;
+          }
+            // console.error(e);
         });
       }
 }

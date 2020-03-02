@@ -1,110 +1,120 @@
 @import "../base/variables.scss";
 
 .customBid {
+  .mat-expansion-panel-header.mat-expanded:focus,
+  .mat-expansion-panel-header.mat-expanded:hover {
+    // background: $background-color-grey !important;
+    background-color: rgba(169, 174, 188, 0.21) !important;
+  }
 
-    .mat-expansion-panel-header.mat-expanded:focus,
-    .mat-expansion-panel-header.mat-expanded:hover {
-        // background: $background-color-grey !important;
-        background-color: rgba(169, 174, 188, 0.21) !important;
+  .mat-expansion-panel-header {
+    background-color: rgba(169, 174, 188, 0.21) !important;
+  }
+
+  .mat-accordion .mat-header-row {
+    padding-left: 1.5rem;
+    padding-right: 2rem;
+    border-bottom: none;
+  }
+
+  .mat-expansion-panel-header.mat-row {
+    border-bottom: none;
+  }
+
+  $mat-header-row-height: 56px;
+  $mat-row-height: 48px;
+  $mat-row-horizontal-padding: 24px;
+
+  .mat-table {
+    display: block;
+  }
+
+  .mat-header-row {
+    min-height: $mat-header-row-height;
+    background: #192135;
+
+    span {
+      color: #ffffff !important;
     }
+  }
 
-    .mat-expansion-panel-header {
-        background-color: rgba(169, 174, 188, 0.21) !important;
-    }
+  .mat-row {
+    min-height: $mat-row-height;
+    padding-left: 1.5rem;
+  }
 
-    .mat-accordion .mat-header-row {
-        padding-left: 1.5rem;
-        padding-right: 2rem;
-        border-bottom: none;
-    }
+  .mat-row,
+  .mat-header-row {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
 
-    .mat-expansion-panel-header.mat-row {
-        border-bottom: none;
-    }
+    // Workaround for https://goo.gl/pFmjJD in IE 11. Adds a pseudo
+    // element that will stretch the row the correct height. See:
+    // https://connect.microsoft.com/IE/feedback/details/802625
+    // &::after {
+    //   display: inline-block;
+    //   min-height: inherit;
+    //   content: '';
+    // }
+  }
 
-    $mat-header-row-height: 56px;
-    $mat-row-height: 48px;
-    $mat-row-horizontal-padding: 24px;
+  .mat-cell,
+  .mat-header-cell {
+    flex: 1;
+    overflow: hidden;
+    word-wrap: break-word;
+    color: black;
+  }
 
-    .mat-table {
-        display: block;
-    }
+  input.quantity {
+    width: 3rem !important;
+  }
 
-    .mat-header-row {
-        min-height: $mat-header-row-height;
-        background: #192135;
+  .mat-expansion-panel-body {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
 
-        span {
-            color: #FFFFFF !important;
-        }
-    }
+  ::-webkit-input-placeholder {
+    text-align: left;
+  }
 
-    .mat-row {
-        min-height: $mat-row-height;
-        padding-left: 1.5rem;
-    }
+  /* mozilla solution */
+  input::placeholder {
+    text-align: left;
+  }
 
-    .mat-row,
-    .mat-header-row {
-        display: flex;
-        align-items: center;
-        box-sizing: border-box;
+  .supplierLevel {
+    background-color: white;
+  }
 
-        // Workaround for https://goo.gl/pFmjJD in IE 11. Adds a pseudo
-        // element that will stretch the row the correct height. See:
-        // https://connect.microsoft.com/IE/feedback/details/802625
-        // &::after {
-        //   display: inline-block;
-        //   min-height: inherit;
-        //   content: '';
-        // }
-    }
+  .supplierLevel:focus,
+  .supplierLevel:hover {
+    background-color: white;
+  }
 
-    .mat-cell,
-    .mat-header-cell {
-        flex: 1;
-        overflow: hidden;
-        word-wrap: break-word;
-        color: black;
-    }
-
-    input.quantity {
-        width: 3rem !important;
-    }
-
-
-
-    .mat-expansion-panel-body {
-        padding-left: 0px !important;
-        padding-right: 0px !important;
-    }
-
-    ::-webkit-input-placeholder {
-        text-align: left;
-    }
-
-    /* mozilla solution */
-    input::placeholder {
-        text-align: left;
-    }
-
-    .supplierLevel {
-        background-color: white;
-    }
-
-    .supplierLevel:focus,
-    .supplierLevel:hover {
-        background-color: white;
-    }
-
-
-    .mat-form-field-infix {
-        width: 87px !important;
-    }
+  .mat-form-field-infix {
+    width: 87px !important;
+  }
 }
 
-.rfq-list-detail-custom{
-    .mat-row .mat-cell {
-        min-width: 80px;
-    }
+.rfq-list-detail-custom {
+  .mat-row .mat-cell {
+    min-width: 80px;
+  }
+}
+.customBid .mat-expansion-panel-header.rfqbid-header-color {
+  background-color: (169, 174, 188, 0.21) !important;
+}
+
+.customBid .mat-expansion-panel-header,
+.customBid .mat-expansion-panel-header.mat-expanded,
+.customBid .mat-expansion-panel-header.mat-expanded:focus,
+.customBid .mat-expansion-panel-header.mat-expanded:hover {
+  background-color: #ffffff !important;
+}
+
+.rfqbid-header-color {
+  background-color: (169, 174, 188, 0.21) !important;
 }

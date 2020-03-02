@@ -1,9 +1,25 @@
 <div class="page-start-point">
-  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+  <div *ngIf="!submittedRfqListTemp && !nonSubmittedRfqListTemp" class="parent min-height">
+    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+      <div class="add-user-img">
+        <img src="../../../../assets/images/rfq-details.png" alt="Project Logo" />
+        <div>
+          <p>
+            You haven't created any RFQ yet. <br />
+            Please create one to continue.
+          </p>
+        </div>
+      </div>
 
+      <button mat-raised-button [routerLink]="['../../rfq/createRfq']" class="main-background-color main-button color-white">
+        Create RFQ
+      </button>
+    </div>
+  </div>
+
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent" *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp">
     <div class="row">
       <div class="col-xs-12">
-
         <!-- <mat-card>
           <div class="row">
             <div class="right-pipe" style="width: 20%;">
@@ -41,21 +57,19 @@
       </div>
       <div class="col-xs-9">
         <div class="text-right add-user-details-button-right p-t-10 p-r-20">
-          <button mat-raised-button class="main-background-color main-button color-white m-b-5"
-            [routerLink]="['../../rfq/createRfq']">
+          <button mat-raised-button class="main-background-color main-button color-white m-b-5" [routerLink]="['../../rfq/createRfq']">
             Create RFQ
           </button>
         </div>
       </div>
     </div>
 
-
     <div class="rfq-list-detail-custom">
       <mat-accordion *ngIf="submittedRfqListTemp">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Submitted RFQ
+              Quotes Received
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -96,36 +110,28 @@
               <ng-container matColumnDef="Total Supplier">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
                 <td mat-cell *matCellDef="let element" class="text-align-center">
-
-
                   <div class="supplier-qty-div">
                     <div>
-                      {{
-                  element.supplierList != null
-                    ? element.supplierList.length
-                    : ""
-                }}
+                      {{ element.supplierList != null ? element.supplierList.length : "" }}
                     </div>
 
-                    <div class="show-detail-supplier" *ngIf="element.supplierList.length>0">
-                      <img src="../../../../assets/images/i_icon.png">
+                    <div class="show-detail-supplier" *ngIf="element.supplierList.length > 0">
+                      <img src="../../../../assets/images/i_icon.png" />
                       <div id="detail-supplier">
                         <div class="row">
                           <div class="col-sm-12">
                             <span class="supplier-name-tag">Supplier Name</span>
                             <ng-container *ngFor="let name of element.supplierList">
-                              <span><br>
-                                {{name.supplierName}}
+                              <span
+                                ><br />
+                                {{ name.supplierName }}
                               </span>
                             </ng-container>
                           </div>
-
                         </div>
                       </div>
                     </div>
-
                   </div>
-
                 </td>
               </ng-container>
               <ng-container matColumnDef="action1">
@@ -136,9 +142,8 @@
               </ng-container>
               <ng-container matColumnDef="action2">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element;let i=index" class="action2" class="text-align-center">
-                  <a [routerLink]="['../rfq-bid/',element.rfqId]" class="text-align-center" style="color: #f47721">View
-                    Bids</a>
+                <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center">
+                  <a [routerLink]="['../rfq-bid/', element.rfqId]" class="text-align-center" style="color: #f47721">View Bids</a>
                 </td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -147,12 +152,12 @@
           </div>
         </mat-expansion-panel>
       </mat-accordion>
-      <br>
+      <br />
       <mat-accordion *ngIf="nonSubmittedRfqListTemp">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Non Submitted RFQ
+              Quotes Not Received
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -194,48 +199,39 @@
               <ng-container matColumnDef="Total Supplier">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
                 <td mat-cell *matCellDef="let element" class="text-align-center">
-
-
                   <div class="supplier-qty-div">
                     <div>
-                      {{
-                  element.supplierList != null
-                    ? element.supplierList.length
-                    : ""
-                }}
+                      {{ element.supplierList != null ? element.supplierList.length : "" }}
                     </div>
 
                     <div class="show-detail-supplier" *ngIf="element.supplierList">
-                      <img src="../../../../assets/images/i_icon.png">
+                      <img src="../../../../assets/images/i_icon.png" />
                       <div id="detail-supplier">
                         <div class="row">
                           <div class="col-sm-12">
                             <span class="supplier-name-tag">Supplier Name</span>
                             <ng-container *ngFor="let name of element.supplierList">
-                              <span><br>
-                                {{name.supplierName}}
+                              <span
+                                ><br />
+                                {{ name.supplierName }}
                               </span>
                             </ng-container>
                           </div>
-
                         </div>
                       </div>
                     </div>
-
                   </div>
-
                 </td>
               </ng-container>
               <ng-container matColumnDef="action1">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                 <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                  <a (click)="viewRfq(element)" class="cursor" style="color: #f47721">View RFQ</a>
+                  <a (click)="viewRfq(element)" class="cursor" style="color: #f47721">{{ element.rfqStatus === 0 ? "Drated RFQ" : "Floated RFQ" }}</a>
                 </td>
               </ng-container>
               <ng-container matColumnDef="action2">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element;let i=index" class="action2" class="text-align-center">
-                </td>
+                <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center"></td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

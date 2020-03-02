@@ -1,28 +1,16 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate
-} from "@angular/animations";
+import { trigger, state, style, transition, animate } from "@angular/animations";
 import { Observable, of } from "rxjs";
 import { DataSource } from "@angular/cdk/table";
 import { MatTableDataSource } from "@angular/material/table";
 import { Data, ActivatedRoute, Router } from "@angular/router";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import {
-  ProjectDetails,
-  ProjetPopupData
-} from "src/app/shared/models/project-details";
+import { ProjectDetails, ProjetPopupData } from "src/app/shared/models/project-details";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog, MatSnackBar, MatSort } from "@angular/material";
+import { MatDialog, MatSnackBar, MatSort, MatCheckbox } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
-import {
-  Subcategory,
-  Materials
-} from "src/app/shared/models/subcategory-materials";
+import { Subcategory, Materials } from "src/app/shared/models/subcategory-materials";
 import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
 import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
 import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom.component";
@@ -36,15 +24,9 @@ import { PermissionService } from "src/app/shared/services/permission.service";
   templateUrl: "./bom-table.component.html",
   animations: [
     trigger("detailExpand", [
-      state(
-        "collapsed",
-        style({ height: "0px", minHeight: "0", visibility: "hidden" })
-      ),
+      state("collapsed", style({ height: "0px", minHeight: "0", visibility: "hidden" })),
       state("expanded", style({ height: "*", visibility: "visible" })),
-      transition(
-        "expanded <=> collapsed",
-        animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
-      )
+      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)"))
     ])
   ]
 })
@@ -54,28 +36,14 @@ export class BomTableComponent implements OnInit {
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = [
-    "materialName",
-    "estimatedQty",
-    "requestedQuantity",
-    "issueToProject",
-    "availableStock",
-    "customColumn"
-  ];
+  columnsToDisplay = ["materialName", "estimatedQty", "requestedQuantity", "issueToProject", "availableStock", "customColumn"];
 
-  innerDisplayedColumns = [
-    "materialName",
-    "estimatedQty",
-    "requestedQuantity",
-    "issueToProject",
-    "availableStock",
-    "customColumn"
-  ];
+  innerDisplayedColumns = ["materialName", "estimatedQty", "requestedQuantity", "issueToProject", "availableStock", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
   orgId: number;
-  checkedSubcategory: Subcategory[];
+  checkedSubcategory: Subcategory[] = [];
   permissionObj: {
     projectStoreFlag: boolean;
     globalStoreFlag: boolean;
@@ -98,7 +66,7 @@ export class BomTableComponent implements OnInit {
 
     private loading: GlobalLoaderService,
     private snack: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -117,47 +85,36 @@ export class BomTableComponent implements OnInit {
 
   getMaterialWithQuantity() {
     this.loading.show();
-    this.bomService
-      .getMaterialWithQuantity(this.orgId, this.projectId)
-      .then(res => {
-        this.subcategories = [...res.data];
-        console.log(this.subcategories);
-        this.subcategories.forEach(subcategory => {
-          if (
-            subcategory.materialSpecs &&
-            Array.isArray(subcategory.materialSpecs) &&
-            subcategory.materialSpecs.length
-          ) {
-            this.subcategoryData = [
-              ...this.subcategoryData,
-              {
-                ...subcategory,
-                materialSpecs: new MatTableDataSource(subcategory.materialSpecs)
-              }
-            ];
-          } else {
-            this.subcategoryData = [...this.subcategoryData, subcategory];
-          }
-        });
-        this.dataSource = new MatTableDataSource(this.subcategoryData);
-        // this.dataSource = res.data;
-        // this.dataSource.sort = this.sort;
-        this.loading.hide();
-        this.snack.open(res.message, "", {
-          duration: 2000,
-          panelClass: ["blue-snackbar"]
-        });
+    this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
+      this.subcategories = [...res.data];
+      console.log(this.subcategories);
+      this.subcategories.forEach(subcategory => {
+        if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
+          this.subcategoryData = [
+            // ...this.subcategoryData,
+            {
+              ...subcategory,
+              materialSpecs: new MatTableDataSource(subcategory.materialSpecs)
+            }
+          ];
+        } else {
+          this.subcategoryData = this.subcategories;
+        }
       });
+      this.getProject(this.projectId);
+      this.dataSource = new MatTableDataSource(this.subcategoryData);
+      // this.dataSource = res.data;
+      // this.dataSource.sort = this.sort;
+      this.loading.hide();
+    });
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   toggleRow(element: Subcategory) {
-    element.materialSpecs &&
-    (element.materialSpecs as MatTableDataSource<Materials>).data.length
-      ? (this.expandedElement =
-          this.expandedElement === element ? null : element)
+    element.materialSpecs && (element.materialSpecs as MatTableDataSource<Materials>).data.length
+      ? (this.expandedElement = this.expandedElement === element ? null : element)
       : null;
     this.cd.detectChanges();
   }
@@ -169,11 +126,11 @@ export class BomTableComponent implements OnInit {
   }
   raiseIndent() {
     let projectDetails = this.projectData;
-    this.checkedSubcategory = this.subcategoryData.filter(sub => {
-      if (sub.checked === true) {
-        return sub;
-      }
-    });
+    // this.checkedSubcategory = this.subcategoryData.filter(sub => {
+    //   if (sub.checked === true) {
+    //     return sub;
+    //   }
+    // });
     if (this.checkedSubcategory.length) {
       let checkedList = this.checkedSubcategory;
       this.router.navigate(["/indent/" + this.projectId], {
@@ -181,13 +138,24 @@ export class BomTableComponent implements OnInit {
       });
     }
   }
+  getElemenetChecked(ch: MatCheckbox, element: Subcategory) {
+    if (ch.checked) {
+      element.checked = true;
+      this.checkedSubcategory.push(element);
+    } else {
+      element.checked = false;
+      this.checkedSubcategory = this.checkedSubcategory.filter(sub => {
+        return sub.materialId !== element.materialId;
+      });
+    }
+  }
 
   createRfq() {
-    this.checkedSubcategory = this.subcategoryData.filter(sub => {
-      if (sub.checked === true) {
-        return sub;
-      }
-    });
+    // this.checkedSubcategory = this.subcategoryData.filter(sub => {
+    //   if (sub.checked === true) {
+    //     return sub;
+    //   }
+    // });
     let materialList: RfqMat[] = [];
     this.checkedSubcategory.forEach((category: Subcategory, i) => {
       let mat: RfqMat = {};
@@ -217,8 +185,24 @@ export class BomTableComponent implements OnInit {
       rfqProjectsList: [
         {
           projectId: projectId,
-          projectName: null,
-          defaultAddress: null,
+          projectName: this.projectData.projectName,
+          defaultAddress: {
+            projectId: this.projectData.projectId,
+            projectName: this.projectData.projectName,
+            addressID: this.projectData.projectAddressId,
+            addressShortname: this.projectData.addressShortname,
+            addressLine1: this.projectData.addressShortname,
+            addressLine2: this.projectData.addressLine2,
+            city: this.projectData.city,
+            state: this.projectData.state,
+            pinCode: this.projectData.pinCode,
+            country: this.projectData.country,
+            gstNo: this.projectData.gstNo,
+            addressType: this.projectData.addressType,
+            projectAddressId: this.projectData.projectAddressId,
+            projectdefaultAddressId: this.projectData.projectAddressId,
+            primaryAddress: this.projectData.primaryAddress
+          },
           projectMaterialList: [],
           projectAddressList: null,
           prevMatListLength: null
@@ -270,7 +254,7 @@ export class BomTableComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -280,14 +264,14 @@ export class BomTableComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     }
   }
   addMaterial() {
     this.router.navigate(["/bom/" + this.projectId]);
   }
 
-  openDialog1(materialId, projectId): void {
+  issueToIndent(materialId, projectId): void {
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(IssueToIndentDialogComponent, {
         width: "1200px",

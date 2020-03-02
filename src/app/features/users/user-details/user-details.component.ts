@@ -93,11 +93,11 @@ export class UserDetailComponent implements OnInit {
       return dataStr.indexOf(filterValue) != -1; 
       }
 
-            if(this.dataSourceActivateTemp.length>0 || this.dataSourceDeactivateTemp.length>0){
-              this.addUserBtn = false;
+            if(this.dataSourceActivateTemp.length>0 && this.dataSourceDeactivateTemp.length>0){
+              this.addUserBtn = true;
             } 
             else{
-              this.addUserBtn = true;
+              this.addUserBtn = false;
             }
            
           });
@@ -111,7 +111,7 @@ export class UserDetailComponent implements OnInit {
     openDialog(data: UserDetailsPopUpData): void {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(AddEditUserComponent, {
-        width: "800px",
+        width: "660px",
         data
       });
       
@@ -136,7 +136,7 @@ export class UserDetailComponent implements OnInit {
    openDialogDeactiveUser(data: UserDetailsPopUpData): void {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(DeactiveUserComponent, {
-        width: "800px",
+        width: "500px",
         data
       });
       dialogRef.afterClosed().toPromise().then(data => {

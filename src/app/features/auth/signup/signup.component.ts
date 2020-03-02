@@ -1,10 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { SignINDetailLists } from "../../../shared/models/signIn/signIn-detail-list";
-import { from } from "rxjs";
-import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
-import { Router } from "@angular/router";
-import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
+import {Component, OnInit} from "@angular/core";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {SignINDetailLists} from "../../../shared/models/signIn/signIn-detail-list";
+import {SignInSignupService} from "src/app/shared/services/signupSignin/signupSignin.service";
+import {Router, ActivatedRoute} from "@angular/router";
+import {FieldRegExConst} from "src/app/shared/constants/field-regex-constants";
+import {UserService} from "src/app/shared/services/userDashboard/user.service";
+import { UserDetails } from 'src/app/shared/models/user-details';
+import { MatSnackBar } from '@angular/material';
 
 export interface OrganisationType {
   value: string;
@@ -15,73 +17,97 @@ export interface OrganisationType {
   selector: "signup",
   templateUrl: "./signup.component.html"
 })
+
 export class SignupComponent implements OnInit {
   showPassWordString: boolean = false;
+  uniqueCode: string = "";
+  user: UserDetails;
+
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private signInSignupService: SignInSignupService
+    private signInSignupService: SignInSignupService,
+    private _userService: UserService,
+    private _snackBar: MatSnackBar
   ) {}
+
   signupForm: FormGroup;
   signInDetails = {} as SignINDetailLists;
+
   ngOnInit() {
-    this.formInit();
+    this.route.params.subscribe(param => {
+      this.uniqueCode = param["uniqueCode"];
+      if(this.uniqueCode){
+        this.getUserInfo(this.uniqueCode);
+      }else{
+        this.formInit();
+      }
+    });
+    // let urlLength = this.router.url.toString().length;
+    // let lastSlash = this.router.url.toString().lastIndexOf("/");
+    // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
+  }
+
+  getUserInfo(code) {
+    this._userService.getUserInfoUniqueCode(code).then(res => {
+      this.user = res.data[0];
+      this.formInit();
+    });
   }
 
   organisationTypes: OrganisationType[] = [
-    { value: "Contractor", viewValue: "Contractor" },
-    { value: "Supplier", viewValue: "Supplier" }
+    {value: "Contractor", viewValue: "Contractor"},
+    {value: "Supplier", viewValue: "Supplier"}
   ];
 
   formInit() {
     this.signupForm = this.formBuilder.group({
-      // firstName: ["", Validators.required],
-      // lastName: ["", Validators.required],
-      email: [
-        "",
-        [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]
-      ],
-      phone: [
-        "",
-        [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]
-      ],
-      organisationName: ["", Validators.required],
+      email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
+      organisationName: [this.user ? this.user.companyName : '', Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", Validators.required]
-      // confirmPassword: ["", Validators.required]
     });
   }
+
   signup() {
-    // this.signInDetails =  this.signupForm.valupe;
-    // this.signInDetails.firstName = this.signupForm.value.firstName
-    // this.signInDetails.lastName = this.signupForm.value.lastName
     this.signInDetails.password = this.signupForm.value.password;
     this.signInDetails.confirmPassword = this.signupForm.value.password;
     this.signInDetails.phone = this.signupForm.value.phone;
     this.signInDetails.email = this.signupForm.value.email;
     this.signInDetails.clientId = "fooClientIdPassword";
     this.signInDetails.customData = {
+      uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
       organizationName: this.signupForm.value.organisationName,
-      organizationType: this.signupForm.value.organisationType
+      organizationType: this.signupForm.value.organisationType,
+      // organizationId: this.user ? this.user.organizationId : 0,
+      // userId: this.user ? this.user.userId : 0
     };
+
     this.signInSignupService.signUp(this.signInDetails).then(data => {
-      console.log(data.data.serviceRawResponse.data);
-      if (data.data.serviceRawResponse.data) {
+      if(data.status === 1002){
+        this._snackBar.open("Phone Number already used", "", {
+          duration: 2000,
+          verticalPosition: "top"
+        });
+      }
+      else if (data.data.serviceRawResponse.data) {
         localStorage.setItem("role", data.data.serviceRawResponse.data.role);
-        localStorage.setItem(
-          "ServiceToken",
-          data.data.serviceRawResponse.data.serviceToken
-        );
-        localStorage.setItem(
-          "userId",
-          data.data.serviceRawResponse.data.userId
-        );
+        localStorage.setItem("ServiceToken", data.data.serviceRawResponse.data.serviceToken);
+        localStorage.setItem("userId", data.data.serviceRawResponse.data.userId);
         localStorage.setItem("orgId", data.data.serviceRawResponse.data.orgId);
-        this.router.navigate(["/pdashboard"]);
+
+        // if (data.data.serviceRawResponse.data.role || this.uniqueCode !== "") {
+        if (this.uniqueCode) {
+          this.router.navigate(["/dashboard"]);
+        } else {
+          this.router.navigate(["/profile/update-info"]);
+        }
       }
     });
-    // console.log("filled values", this.signInDetails);
   }
+
   showPassWord() {
     if (!this.showPassWordString) {
       this.showPassWordString = true;

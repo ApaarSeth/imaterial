@@ -1,22 +1,26 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { DashboardComponent } from "./features/dashboard/dashboard.component";
-import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resolver";
 import { BomResolver } from "./features/bom/bom.resolver";
-import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
 import { AuthLayoutComponent } from "./shared/layout/auth-layout/auth-layout.component";
 import { MainLayoutComponent } from "./shared/layout/main-layout/main-layout.component";
 import { NotFoundComponent } from "./features/not-found/not-found.component";
 import { SupplierBidLayoutComponent } from "./shared/layout/supplier-bid-layout/supplier-bid-layout.component";
 import { AppDashboardComponent } from './features/app-dashboard/app-dashboard.component';
 import { AuthGuardService } from './shared/guards/auth.guards';
+import { UserDataGuardService } from './shared/guards/user-data.guards';
+import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "dashboard", pathMatch: "full" },
+  { 
+    path: "", 
+    redirectTo: "auth/login", 
+    pathMatch: "full" 
+  },
+
   {
     path: "",
     component: SupplierBidLayoutComponent,
-    canActivate: [AuthGuardService],
     children: [
       {
         path: "rfq-bids",
@@ -38,20 +42,35 @@ const routes: Routes = [
       }
     ]
   },
+
+  {
+    path: "",
+    component: ProfileLayoutComponent,
+    canActivate: [AuthGuardService, UserDataGuardService],
+    children: [
+      {
+        path: "profile",
+        loadChildren: () =>
+          import("./features/first-login/first-login.module").then(m => m.FirstLoginModule)
+      }
+    ]
+  },
+
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
-        path: "dashboard",
+        path: "project-dashboard",
         component: DashboardComponent,
+        data: { title: 'Project Dashboard' }
         // resolve: { dashBoardData: DashBoardResolver }
       },
       {
-        path: 'app-dashboard',
+        path: 'dashboard',
         component: AppDashboardComponent,
-        data: { title: 'App Dashboard' }
+        data: { title: 'Dashboard' }
       },
       {
         path: "bom/:id",
@@ -113,4 +132,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+
+export class AppRoutingModule { }

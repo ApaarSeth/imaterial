@@ -2,49 +2,49 @@
     <div class="container-fluid bg-gray">
         <div class="row">
             <div class="col-md-9">
-                <div class="things-to-do bg-white p-4 mb-4">
-                    <h5 class="mb-3">Things to do</h5>
+                <div class="things-to-do bg-white mb-4 equal-height">
+                    <!-- <h5 class="mb-3">Things to do</h5> -->
                     <div class="things-to-do__inner d-flex justify-content-between align-items-center">
-                        <div class="things-to-do__icons text-center cursor" (click)="openProject()">
-                            <div class="things-to-do__img">
-                                <img src="assets/images/icon5.png" alt="" class="img-fluid">
+                        <div class="things-to-do__icons text-center cursor" (click)="openProject()" matTooltip="Add Project">
+                            <div class="things-to-do__img add-project-img">
+                                <img src="assets/images/Add-Project.png" alt="" class="img-fluid">
                             </div>
-                            <h6 class="mt-3 mb-0">Add Projects</h6>
+                            <h6 class="mb-0">Add Project</h6>
                         </div>
 
-                        <div class="things-to-do__icons text-center">
+                        <div class="things-to-do__icons text-center cursor" (click)="openBomDialog()" matTooltip="Create BOM">
                             <div class="things-to-do__img">
-                                <img src="assets/images/icon4.png" alt="" class="img-fluid">
+                                <img src="assets/images/BOM.png" alt="" class="img-fluid">
                             </div>
-                            <h6 class="mt-3 mb-0">Create BOM</h6>
+                            <h6 class="mb-0">Create BOM</h6>
                         </div>
 
-                        <div class="things-to-do__icons text-center cursor" [routerLink]="['/rfq/createRfq']" routerLinkActive="router-link-active" >
+                        <div class="things-to-do__icons text-center cursor" [routerLink]="['/rfq/createRfq']" matTooltip="Create RFQ">
                             <div class="things-to-do__img">
-                                <img src="assets/images/icon6.png" alt="" class="img-fluid">
+                                <img src="assets/images/RFQ.png" alt="" class="img-fluid">
                             </div>
-                            <h6 class="mt-3 mb-0">Create RFQ</h6>
+                            <h6 class="mb-0">Create RFQ</h6>
                         </div>
 
-                        <div class="things-to-do__icons text-center cursor" [routerLink]="['/globalStore/'+orgId]" routerLinkActive="router-link-active" >
+                        <div class="things-to-do__icons text-center cursor" [routerLink]="['/globalStore/'+orgId]" matTooltip="Global Store">
                             <div class="things-to-do__img">
-                                <img src="assets/images/icon2.png" alt="" class="img-fluid">
+                                <img src="assets/images/Global-Store.png" alt="" class="img-fluid">
                             </div>
-                            <h6 class="mt-3 mb-0">Global Store</h6>
+                            <h6 class="mb-0">Global Store</h6>
                         </div>
 
-                        <div class="things-to-do__icons text-center cursor" [routerLink]="['/po/initiate-po']" routerLinkActive="router-link-active" >
+                        <div class="things-to-do__icons text-center cursor" [routerLink]="['/po/initiate-po']" matTooltip="Create Purchase Order">
                             <div class="things-to-do__img">
-                                <img src="assets/images/icon1.png" alt="" class="img-fluid">
+                                <img src="assets/images/PO.png" alt="" class="img-fluid">
                             </div>
-                            <h6 class="mt-3 mb-0">Create PO</h6>
+                            <h6 class="mb-0">Create PO</h6>
                         </div>
 
                         <!-- <div class="things-to-do__icons text-center">
                             <div class="things-to-do__img">
                                 <img src="assets/images/icon3.png" alt="" class="img-fluid">
                             </div>
-                            <h6 class="mt-3 mb-0">Keep Track</h6>
+                            <h6 class="mb-0">Keep Track</h6>
                         </div> -->
 
                     </div>
@@ -53,33 +53,78 @@
                 <div class="statistics bg-white p-4 mb-4">
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-between">
-                            <mat-tab-group class="mat-tabs-button">
-                                <mat-tab label="Purchase Order">
+                            <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event);">
+                                <mat-tab label="Purchase Orders">
                                     <div class="statistics__purchase-order d-flex">
-                                        <div class="statistics__tile stats d-flex justify-content-between align-items-center mr-3">
-                                            <div class="stats__icon">
+                                        <div class="statistics__tile stats mr-3">
+                                            <!-- <div class="stats__icon">
                                                 <img src="assets/images/icon1.png" alt="Awarded Purchase Order" class="img-fluid">
-                                            </div>
+                                            </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1">155</h2>
+                                                <h2 class="mb-1">{{ poData?.totalCount }}</h2>
                                                 <p class="mb-0">Awarded Purchase Order</p>
                                             </div>
                                         </div>
 
-                                        <div class="statistics__tile stats d-flex justify-content-between align-items-center">
-                                            <div class="stats__icon">
+                                        <div class="statistics__tile stats">
+                                            <!-- <div class="stats__icon">
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
-                                            </div>
+                                            </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1">345,6378.00</h2>
-                                                <p class="mb-0">Awarded PO Amount</p>
+                                                <h2 class="mb-1">{{ poData?.totalValue | number }}</h2>
+                                                <p class="mb-0">Awarded P.O. Amount</p>
                                             </div>
                                         </div>
                                     </div>
                                 </mat-tab>
 
-                                <mat-tab label="Request for Quotations"> Content 2 </mat-tab>
-                                <mat-tab label="Indents"> Content 3 </mat-tab>
+                                <mat-tab label="Request for Quotations">
+                                    <div class="statistics__purchase-order d-flex">
+                                        <div class="statistics__tile stats mr-3">
+                                            <!-- <div class="stats__icon">
+                                                <img src="assets/images/icon6.png" alt="Awarded Purchase Order" class="img-fluid">
+                                            </div> -->
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">{{ poData?.totalCount }}</h2>
+                                                <p class="mb-0">Number of RFQ</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="statistics__tile stats">
+                                          <!-- <div class="stats__icon">
+                                                <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
+                                            </div> -->
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">{{ poData?.totalValue | number : '1.2-2' }}</h2>
+                                                <p class="mb-0">RFQ Amount</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+
+                                <mat-tab label="Indents">
+                                    <div class="statistics__purchase-order d-flex">
+                                        <div class="statistics__tile stats mr-3">
+                                            <!-- <div class="stats__icon">
+                                                <img src="assets/images/fulfilled-indent-icon.png" alt="Awarded Purchase Order" class="img-fluid">
+                                            </div> -->
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">{{ poData?.totalCount }}</h2>
+                                                <p class="mb-0">Fulfilled Indents</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="statistics__tile stats">
+                                            <!-- <div class="stats__icon">
+                                                <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
+                                            </div> -->
+                                            <div class="stats__content">
+                                                <h2 class="mb-1">{{ poData?.totalValue | number : '1.2-2' }}</h2>
+                                                <p class="mb-0">Raised Indents</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
                             </mat-tab-group>
 
                             <div class="statistics__filter">
@@ -107,7 +152,7 @@
                                         <button class="btn btn-outline-warning">Reject</button>
                                     </div>
                                     <div class="approvals__accept">
-                                        <button class="btn btn-outline-warning">Accept</button>
+                                        <button class="btn btn-warning">Accept</button>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +170,7 @@
                                         <button class="btn btn-outline-warning">Reject</button>
                                     </div>
                                     <div class="approvals__accept">
-                                        <button class="btn btn-outline-warning">Accept</button>
+                                        <button class="btn btn-warning">Accept</button>
                                     </div>
                                 </div>
                             </div>
@@ -138,13 +183,13 @@
             <div class="col-md-3">
                 <div class="dashboard__right">
                     <div class="project-tile">
-                        <div class="project-tile__tile w-100 mb-4 stats p-4 d-flex justify-content-between align-items-center mr-3">
+                        <div class="project-tile__tile equal-height w-100 mb-4 stats px-3 py-3 d-flex align-items-center mr-3">
                             <div class="project-tile__icon">
-                                <img src="assets/images/project-icon.png" alt="Total number of project" class="img-fluid">
+                                <img src="assets/images/Add-Project.png" alt="Total number of project" class="img-fluid mr-3">
                             </div>
                             <div class="project-tile__content">
-                                <h2 class="mb-1">155</h2>
-                                <p class="mb-0">Total number of project</p>
+                                <h2 class="mb-1">{{ projectCount }}</h2>
+                                <p class="mb-0">Total number of projects</p>
                             </div>
                         </div>
                     </div>

@@ -4,19 +4,23 @@ import { SignInSignupService } from "src/app/shared/services/signupSignin/signup
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
 import { Router } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
+import { UserService } from "src/app/shared/services/userDashboard/user.service";
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: "signin",
-  templateUrl: "./sign-in.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./sign-in.component.html"
 })
+
 export class SigninComponent implements OnInit {
-  showPassWordString: boolean = false;
-  constructor(
-    private router: Router,
+
+  constructor(private router: Router,
     private signInSignupService: SignInSignupService,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private _userService: UserService,
+    private _snackBar: MatSnackBar) { }
+
+  showPassWordString: boolean = false;
   signinForm: FormGroup;
   signInData = {} as SignInData;
   ngOnInit() {
@@ -25,10 +29,7 @@ export class SigninComponent implements OnInit {
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      phone: [
-        "",
-        [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]
-      ],
+      phone: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
       password: ["", Validators.required]
     });
   }
@@ -42,10 +43,39 @@ export class SigninComponent implements OnInit {
     params.append("userType", "BUYER");
 
     this.signInSignupService.signIn(params.toString()).then(data => {
-      if (data.serviceRawResponse.data) {
-        this.router.navigate(["/dashboard"]);
+      if(data.errorMessage){
+        this._snackBar.open("Bad Credentials", "", {
+          duration: 2000,
+          verticalPosition: "top"
+        });
+      }
+      else if (data.serviceRawResponse.data) {
+
+        this.getUserInfo(data.serviceRawResponse.data.userId);
+        // const role = data.serviceRawResponse.data.role;
+
+        // if (role) {
+        //   this.router.navigate(["/dashboard"]);
+        // } else {
+        //   this.router.navigate(["/users/organisation/update-info"]);
+        // }
       }
     });
+  }
+
+  /**
+   * 
+   * @param userId Logged in user Id
+   * @description Function will get the data of logged in user
+   */
+  getUserInfo(userId) {
+    this._userService.getUserInfo(userId).then(res => {
+      if ((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
+        this.router.navigate(['/profile/update-info']);
+      } else {
+        this.router.navigate(["/dashboard"]);
+      }
+    })
   }
 
   showPassWord() {

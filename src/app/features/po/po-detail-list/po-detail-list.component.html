@@ -1,5 +1,27 @@
 <div class="page-start-point">
-  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+
+  <div *ngIf="!poApprovalDetailsTemp &&  !poDraftedDetailsTemp && !acceptedRejectedPOListTemp">
+          <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+            <div class="add-user-img">
+                  <img src="../../../../assets/images/po-background.png" alt="BuildSupply_Logo">
+                    <div>
+                          <p>
+                            You haven't created any purchase order yet. <br>
+                            Please create one to continue.
+                          </p>
+                    </div>
+                        <button  mat-raised-button   [routerLink]="['../../po/initiate-po']" class="main-background-color main-button color-white"  matTooltip="Issue P.O. to supplier without Request For Quotations">
+                           Create P.O.
+                        </button>
+                </div>
+           </div> 
+    </div>
+
+
+
+
+
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent" *ngIf="poApprovalDetailsTemp ||  poDraftedDetailsTemp || acceptedRejectedPOListTemp">
     <div class="row">
       <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input p-l-20">
@@ -12,8 +34,8 @@
       <div class="col-xs-9">
         <div class="text-right add-user-details-button-right p-t-10 p-r-20">
           <button mat-raised-button class="main-background-color main-button color-white m-b-5"
-            [routerLink]="['../../po/initiate-po']">
-            Inititate P.O.
+            [routerLink]="['../../po/initiate-po']" matTooltip="Issue P.O. to supplier without Request For Quotations">
+            Create P.O.
           </button>
         </div>
       </div>
@@ -46,7 +68,7 @@
       <div class="po-list-detail-custom">
         <div *ngIf="poApprovalDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
                 P.O. For Approval
               </mat-panel-title>
@@ -96,7 +118,7 @@
         <br>
         <div *ngIf="poDraftedDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
                 Drafted P.O.
               </mat-panel-title>
@@ -105,7 +127,7 @@
               <table mat-table [dataSource]="poDraftedDetails" class="mat-elevation-z8 col-sm-12">
                 <ng-container matColumnDef="PO Number">
                   <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
-                  <td mat-cellclass="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
+                  <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="Raised Date">
@@ -136,7 +158,8 @@
                     <span class="p-r-10"><a href="javascript:void(0)" style="color: #f47721"
                         [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'edit']">View
                         P.O.</a></span>
-                    <span><a (click)="deleteDraftedPo(element)" matTooltip="Delete">
+                    <span>&nbsp;</span>    
+                    <span class="p-r-10"><a (click)="deleteDraftedPo(element)" matTooltip="Delete">
                         <img src="../../../../assets/images/delete-button.png">
                       </a></span>
                   </td>
@@ -151,7 +174,7 @@
         <br>
         <div *ngIf="acceptedRejectedPOListTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
                 Approved P.O.
               </mat-panel-title>
@@ -193,8 +216,8 @@
                     <span class="p-r-10"> <a style="color: #f47721"
                         [routerLink]="['../../po/view-grn/',element.purchaseOrderId]">View
                         GRN</a></span>
-                    <span><a style="color: #f47721" [routerLink]="['../../po/add-grn/',element.purchaseOrderId]">Add
-                        GRN</a></span>
+                    <!-- <span><a style="color: #f47721" [routerLink]="['../../po/add-grn/',element.purchaseOrderId]">Add
+                        GRN</a></span> -->
 
 
 

@@ -47,3 +47,65 @@ export interface UserAdd{
      projectIds?: number[],
     projects?: number[]
 }
+
+export interface UserRoles{
+  roleId: number;
+  roleName: string;
+  roleDescription: string;
+}
+
+export interface UserDetails{
+  id: number;
+  status: number;
+  createdBy: string;
+  createdAt: string;
+  lastUpdatedBy: string;
+  lastUpdatedAt: string;
+  firstName: string;
+  lastName: string;
+  userId: number;
+  email: string;
+  contactNo: string;
+  accountStatus: number;
+  roleName: string;
+  roleId: number;
+  roleDescription?: string;
+  projectId?: number;
+  projectName?: string;
+  addressId?: number;
+  addressShortname?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  ssoId?: number;
+  state?: string;
+  pinCode?: string;
+  country?: string;
+  gstNo?: string;
+  addressType?: string;
+  primaryAddress?: string;
+  organizationName?: string;
+  organizationType?: string;
+  organizationId: number;
+  profileUrl?: string;
+  profileImageUrl?: string;
+  ssoUserId?: number;
+  userType?: string;
+  accountOwner?: number;
+  countryCode?: string;
+  uniqueCode?: string;
+  companyName?: string;
+}
+
+export interface TradeList{
+  id: number;
+  status: number;
+  createdBy: string;
+  createdAt: string;
+  lastUpdatedBy: string;
+  lastUpdatedAt: string;
+  tradeId: number[];
+  tradeName: string;
+  tradeDescription: string;
+  selected?: boolean;
+}

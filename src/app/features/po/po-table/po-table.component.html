@@ -1,111 +1,99 @@
 <div class="row">
-    <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="mode==='edit'">
-        <mat-radio-group class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
-            <mat-radio-button value="IGST" class="p-r-5">IGST</mat-radio-button>
-            <mat-radio-button value="CGST & SGST">CGST & SGST</mat-radio-button>
-        </mat-radio-group>
-    </div>
-    <div class="col-xs-12 customPo">
-        <form *ngIf="poTableData" [formGroup]="poForms" (ngSubmit)="sumbit()">
-            <mat-accordion displayMode="flat" multi class="mat-table po-table" formArrayName="forms">
-                <section matSort class="mat-elevation-z2 mat-header-row">
-                    <span class="mat-header-cell widthReduce" mat-sort-header="vesselName">S.No</span>
-                    <span class="mat-header-cell">Material Name</span>
-                    <span class="mat-header-cell">Makes</span>
-                    <span class="mat-header-cell">Supplier Rate</span>
-                    <span class="mat-header-cell">Awarded quantity</span>
-                    <span class="mat-header-cell">Amount ₹</span>
-                    <span class="mat-header-cell">GST %</span>
-                    <span class="mat-header-cell">GST Amount ₹</span>
-                    <span class="mat-header-cell">Total Amount with GST ₹</span>
-                </section>
-                <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
-                    <div class="mat-row">
-                        <span class="mat-cell widthReduce">{{ m+1 }}</span>
-                        <span class="mat-cell">{{ material.materialName }}</span>
-                        <span class="mat-cell"></span>
-                        <span class="mat-cell"></span>
-                        <span class="mat-cell">{{getMaterialQuantity(m)| number : '1.2-2'}}</span>
-                        <span class="mat-cell">{{getMaterialAmount(m) | number : '1.2-2'}}</span>
-                        <span class="mat-cell"></span>
-                        <span class="mat-cell">{{getMaterialGstAmount(m)| number : '1.2-2'}}</span>
-                        <span class="mat-cell">{{getMaterialTotalAmount(m)| number : '1.2-2'}}</span>
-                    </div>
-                    <ng-container formArrayName="purchaseOrderDetailList">
-                        <div class="mat-row" *ngFor="
-            let purchaseOrder of material.purchaseOrderDetailList;
-            let p = index
-          " [formGroupName]="p">
-                            <span class="mat-cell widthReduce"></span>
-                            <span class=" mat-cell"></span>
-                            <span class="mat-cell">{{ purchaseOrder.materialBrand }}</span>
-                            <span class="mat-cell">
-                                <span>{{ purchaseOrder.materialUnitPrice }}</span>
-                            </span>
-                            <span class="mat-cell">
-                                <ng-container *ngIf="mode!='edit';else editQuantity">
-                                    {{ purchaseOrder.materialQuantity }}</ng-container>
-                                <ng-template #editQuantity>
-                                    <mat-form-field class="border-input width50Percent">
-                                        <input type="number" matInput #quantity formControlName="materialQuantity"
-                                            placeholder="quantity" />
-                                    </mat-form-field>
-
-                                </ng-template>
-                            </span>
-                            <span class="mat-cell">
-                                <ng-container *ngIf="mode!='edit';else editAmount">{{purchaseOrder.amount}}
-                                </ng-container>
-                                <ng-template #editAmount>
-                                    {{ poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['amount'].value| number : '1.2-2'}}
-                                </ng-template>
-                            </span>
-                            <span class="mat-cell">
-                                <span *ngIf="mode!='edit';else editGst">
-                                    {{ purchaseOrder.materialIgst+purchaseOrder.materialCgst+purchaseOrder.materialSgst }}</span>
-                                <ng-template #editGst>
-                                    <mat-form-field class="border-input width50Percent">
-                                        <input matInput type="number" #gst formControlName="gst" placeholder="GST%"
-                                            class="m-r-5" />
-                                    </mat-form-field>
-                                </ng-template>
-                            </span>
-                            <span class="mat-cell">
-                                <ng-container *ngIf="mode!='edit';else editgstAmount">{{purchaseOrder.gstAmount}}
-                                </ng-container>
-                                <ng-template #editgstAmount>
-                                    {{ poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['gstAmount'].value| number : '1.2-2'  }}
-                                </ng-template>
-                            </span>
-                            <span class="mat-cell">
-                                <ng-container *ngIf="mode!='edit';else editTotal">{{purchaseOrder.total}}
-                                </ng-container>
-                                <ng-template #editTotal>
-                                    {{ poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['total'].value| number : '1.2-2'  }}
-                                </ng-template>
-
-                            </span>
-
-                        </div>
-                    </ng-container>
-
-                </div>
-                <div class="mat-row footer">
-                    <span class="mat-cell widthReduce"></span>
-                    <span class=" mat-cell"></span>
-                    <span class="mat-cell"></span>
-                    <span class="mat-cell"></span>
-                    <span class="mat-cell"></span>
-                    <span class="mat-cell"></span>
-                    <span class="mat-cell"></span>
-                    <span class="mat-cell"><span>GST Amount ₹</span>
-                        <br>{{gstTotalAmount | number : '1.2-2'}}</span>
-                    <span class="mat-cell"><span>Total Amount ₹</span>
-                        <br>{{totalAmount  | number : '1.2-2'}}</span>
-                </div>
-                <div class="col-xs-12 text-right text-semi-bold m-t-10">Net payable Amount in
-                    Words:{{totalAmount|numberToWords}} </div>
-            </mat-accordion>
-        </form>
-    </div>
+  <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="mode === 'edit'">
+    <mat-radio-group class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
+      <mat-radio-button [checked]="gst === 'IGST'" value="IGST" class="p-r-5">IGST</mat-radio-button>
+      <mat-radio-button [checked]="gst === 'CGST & SGST'" value="CGST & SGST">CGST & SGST</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="col-xs-12 customPo">
+    <form *ngIf="poTableData" [formGroup]="poForms" (ngSubmit)="sumbit()">
+      <mat-accordion displayMode="flat" multi class="mat-table po-table" formArrayName="forms">
+        <section matSort class="mat-elevation-z2 mat-header-row">
+          <span class="mat-header-cell widthReduce" mat-sort-header="vesselName">S.No</span>
+          <span class="mat-header-cell">Material Name</span>
+          <span class="mat-header-cell">Makes</span>
+          <span class="mat-header-cell">Supplier Rate</span>
+          <span class="mat-header-cell">Awarded quantity</span>
+          <span class="mat-header-cell">Amount ₹</span>
+          <span class="mat-header-cell">GST %</span>
+          <span class="mat-header-cell">GST Amount ₹</span>
+          <span class="mat-header-cell">Total Amount with GST ₹</span>
+        </section>
+        <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
+          <div class="mat-row">
+            <span class="mat-cell widthReduce">{{ m + 1 }}</span>
+            <span class="mat-cell">{{ material.materialName }}</span>
+            <span class="mat-cell"></span>
+            <span class="mat-cell"></span>
+            <span class="mat-cell">{{ getMaterialQuantity(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell"></span>
+            <span class="mat-cell">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell">{{ getMaterialTotalAmount(m) | number: "1.2-2" }}</span>
+          </div>
+          <ng-container formArrayName="purchaseOrderDetailList">
+            <div class="mat-row" *ngFor="let purchaseOrder of material.purchaseOrderDetailList; let p = index" [formGroupName]="p">
+              <span class="mat-cell widthReduce"></span>
+              <span class=" mat-cell"></span>
+              <span class="mat-cell">{{ purchaseOrder.materialBrand }}</span>
+              <span class="mat-cell">
+                <ng-container *ngIf="mode != 'edit'; else editRate"> {{ purchaseOrder.materialUnitPrice }}</ng-container>
+                <ng-template #editRate>
+                  <mat-form-field class="border-input width50Percent">
+                    <input type="number" matInput #rate formControlName="materialUnitPrice" placeholder="rate" />
+                  </mat-form-field>
+                </ng-template>
+              </span>
+              <span class="mat-cell">
+                <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity }}</ng-container>
+                <ng-template #editQuantity>
+                  <mat-form-field class="border-input width50Percent">
+                    <input type="number" matInput #quantity formControlName="materialQuantity" placeholder="quantity" />
+                  </mat-form-field>
+                </ng-template>
+              </span>
+              <span class="mat-cell">
+                <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount }} </ng-container>
+                <ng-template #editAmount>
+                  {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
+                </ng-template>
+              </span>
+              <span class="mat-cell">
+                <span *ngIf="mode != 'edit'; else editGst"> {{ purchaseOrder.materialIgst + purchaseOrder.materialCgst + purchaseOrder.materialSgst }}</span>
+                <ng-template #editGst>
+                  <mat-form-field class="border-input width50Percent">
+                    <input matInput type="number" #gst formControlName="gst" placeholder="GST%" class="m-r-5" />
+                  </mat-form-field>
+                </ng-template>
+              </span>
+              <span class="mat-cell">
+                <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount }} </ng-container>
+                <ng-template #editgstAmount>
+                  {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["gstAmount"].value | number: "1.2-2" }}
+                </ng-template>
+              </span>
+              <span class="mat-cell">
+                <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total }} </ng-container>
+                <ng-template #editTotal>
+                  {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["total"].value | number: "1.2-2" }}
+                </ng-template>
+              </span>
+            </div>
+          </ng-container>
+        </div>
+        <div class="mat-row footer">
+          <span class="mat-cell widthReduce"></span>
+          <span class=" mat-cell"></span>
+          <span class="mat-cell"></span>
+          <span class="mat-cell"></span>
+          <span class="mat-cell"></span>
+          <span class="mat-cell"></span>
+          <span class="mat-cell"></span>
+          <span class="mat-cell"><span>GST Amount ₹</span> <br />{{ gstTotalAmount | number: "1.2-2" }}</span>
+          <span class="mat-cell"><span>Total Amount ₹</span> <br />{{ totalAmount | number: "1.2-2" }}</span>
+        </div>
+        <div class="col-xs-12 text-right text-semi-bold m-t-10">Net Payable Amount in Words : {{ totalAmount | numberToWords | async }}</div>
+      </mat-accordion>
+    </form>
+  </div>
 </div>

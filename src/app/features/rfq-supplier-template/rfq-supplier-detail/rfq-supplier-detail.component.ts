@@ -14,7 +14,7 @@ export class RFQSupplierDetailComponent implements OnInit {
   projectCount: number = 0;
   materialCount: number = 0;
   brandCount: number = 0;
-
+  minDate = new Date();
   defaultTaxBtn: string = "IGST";
   materialIGSTFlag: boolean = false;
   brandRateFlag: boolean = false;
@@ -32,7 +32,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.rfqService
@@ -41,7 +41,13 @@ export class RFQSupplierDetailComponent implements OnInit {
         this.activatedRoute.snapshot.params["supplierId"]
       )
       .then(data => {
+
+        if (data.data.rfqSupplierBidFlag === 1) {
+          this.router.navigate(['/rfq-bids/finish']);
+        }
+
         this.rfqSupplierDetailList = data.data;
+
         if (this.rfqSupplierDetailList.projectList) {
           this.rfqSupplierDetailList.projectList.forEach(element => {
             this.materialCount =
@@ -65,8 +71,8 @@ export class RFQSupplierDetailComponent implements OnInit {
   submitBid(rfqSupplierObj) {
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
     this.router.navigate([
-          "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
-        ],{state: {supplierId, rfqSupplierObj }});
+      "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
+    ], { state: { supplierId, rfqSupplierObj } });
 
 
     // this.rfqService
@@ -96,17 +102,18 @@ export class RFQSupplierDetailComponent implements OnInit {
         }
         if (data.data == "submit") {
           this.submitBid(rfqSupplierObj);
-          console.log("The dialog was submitted");
         }
       });
   }
 
   radioChange(event, projects) {
     projects.gst = event.value;
-    console.log(this.rfqSupplierDetailList);
   }
+
   duedatefunc(event) {
+
     this.dateDue = event.target.value;
+
     if (this.dateDue != "" && this.dateDue != null) {
       this.dudateFlag = true;
     } else if (this.dateDue == "" || this.dateDue == null) {
@@ -114,16 +121,13 @@ export class RFQSupplierDetailComponent implements OnInit {
       this.submitButtonValidationFlag = false;
     }
 
-    if (
-      this.dudateFlag &&
-      this.sameGstAndBrandFilled &&
-      !this.eitherOneGstOrBrand
-    ) {
+    if (this.dudateFlag && this.sameGstAndBrandFilled && !this.eitherOneGstOrBrand) {
       this.submitButtonValidationFlag = true;
     } else {
       this.submitButtonValidationFlag = false;
     }
   }
+
   valueChange(RFQsupplier: SendRfqObj) {
     this.submitButtonValidationFlag = false;
     this.brandRateFlag = false;
@@ -138,27 +142,40 @@ export class RFQSupplierDetailComponent implements OnInit {
       this.dudateFlag = true;
     }
     for (let project of RFQsupplier.projectList) {
+
       this.projectCount++;
+
       for (let material of project.materialList) {
-        material.materialSgst = 0;
-        material.materialCgst = 0;
+
+        // material.materialSgst = 0;
+        // material.materialCgst = 0;
+
         if (project.gst == "IGST") {
           material.materialIgst = material.materialIgst;
+          material.materialSgst = 0;
+          material.materialCgst = 0;
+
         } else if (project.gst == "CGST-SGST") {
-          material.materialSgst = material.materialIgst / 2;
-          material.materialCgst = material.materialIgst / 2;
+          material.materialGst = material.materialIgst;
+          material.materialSgst = material.materialGst / 2;
+          material.materialCgst = material.materialGst / 2;
+          // material.materialIgst = 0;
         }
+
         if (material.materialIgst) {
           material.materialIGSTFlag = true;
           this.materialIGSTFlag = material.materialIGSTFlag;
           this.materialIndividualIGSTFlag = material.materialIGSTFlag;
         }
+
         for (let brand of material.rfqBrandList) {
+
           if (brand.brandRate) {
             brand.brandRateFlag = true;
             this.brandRateFlag = brand.brandRateFlag;
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
           }
+
           if (this.materialIndividualIGSTFlag && this.brandRateFlag) {
             this.sameGstAndBrandFilled = true;
           } else if (this.materialIndividualIGSTFlag && !this.brandRateFlag) {
@@ -170,11 +187,14 @@ export class RFQSupplierDetailComponent implements OnInit {
             this.sameGstAndBrandFilled = false;
             this.eitherOneGstOrBrand = true;
           }
+
         }
+
         if (this.brandRateFlag && this.materialIndividualIGSTFlag) {
           this.gstAndBrandValue = true;
           this.materialIndividualIGSTFlag = false;
           this.brandRateFlag = false;
+
         } else {
           this.gstAndBrandValue = false;
           this.brandRateFlag = false;
@@ -185,6 +205,7 @@ export class RFQSupplierDetailComponent implements OnInit {
           this.brandCount++;
           this.oneBrandAtMaterialSelected = false;
         }
+
       }
     }
     if (

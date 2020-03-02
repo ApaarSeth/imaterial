@@ -2,13 +2,20 @@ import { Injectable } from "@angular/core";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
 import { initiatePo, SupplierAddress } from "../../models/PO/po-data";
-import { AllSupplierDetails } from '../../models/supplier';
+import { AllSupplierDetails } from "../../models/supplier";
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class POService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
+
+  projectRole$ = new Subject();
+  billingRole$ = new Subject();
+  billingAddress$ = new Subject();
+  supplierAddress$ = new Subject();
+  poNumber$ = new Subject();
 
   getPODetails(organizationId: Number) {
     return this.dataService.getRequest(API.GETPODETAILLIST(organizationId));
@@ -21,9 +28,7 @@ export class POService {
     return this.dataService.sendPostRequest(API.SENDPODATA, poData);
   }
   getApproverData(organizationId: number, projectId: number) {
-    return this.dataService.getRequest(
-      API.GETAPPROVER(organizationId, projectId)
-    );
+    return this.dataService.getRequest(API.GETAPPROVER(organizationId, projectId));
   }
   projectMaterials(projectIds: number) {
     return this.dataService.sendPostRequest(API.RFQMATERIALS, {
@@ -39,13 +44,15 @@ export class POService {
     return this.dataService.sendPostRequest(API.APPROVEREJECTPO, poStatusData);
   }
 
-  getSupplierAddress(supplierId:Number){
-     return this.dataService.getRequest(
-      API.GETSUPPLIERADDRESS(supplierId)
-    );
+  getSupplierAddress(supplierId: Number) {
+    return this.dataService.getRequest(API.GETSUPPLIERADDRESS(supplierId));
   }
 
-  addAddress(supplierId:Number,address : SupplierAddress){
-       return this.dataService.sendPostRequest(API.ADDSUPPLIERADDRESS(supplierId), address);
+  addAddress(supplierId: Number, address: SupplierAddress) {
+    return this.dataService.sendPostRequest(API.ADDSUPPLIERADDRESS(supplierId), address);
+  }
+
+  getNumberToWords(currency: number) {
+    return this.dataService.getRequest(API.NUMBERTOWORDS(currency));
   }
 }
