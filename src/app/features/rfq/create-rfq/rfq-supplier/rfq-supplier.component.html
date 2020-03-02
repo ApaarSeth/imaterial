@@ -1,4 +1,14 @@
 <div class="row ">
+  <div class="col-xs-12 text-right p-b-10 m-r-25">
+    <span class="p-r-5">
+      <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="navigateToUploadPage()" type="button">Back</button>
+    </span>
+    <span>
+      <button mat-raised-button matStepperNext [disabled]="!valid" (click)="reviewRfq()" class="main-background-color main-button color-white">
+        Next
+      </button>
+    </span>
+  </div>
   <div class="col-xs-12 text-right">
     <mat-form-field class="input-search-padding-zero  border-input pull-right">
       <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />

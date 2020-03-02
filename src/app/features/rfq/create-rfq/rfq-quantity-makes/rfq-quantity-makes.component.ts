@@ -12,7 +12,7 @@ import {
   AddRFQ,
   Address
 } from "src/app/shared/models/RFQ/rfq-details";
-import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormArray, ValidatorFn, AbstractControl } from "@angular/forms";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
@@ -25,7 +25,7 @@ import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-
   templateUrl: "./rfq-quantity-makes.component.html"
 })
 export class RfqQuantityMakesComponent implements OnInit {
-  @Input() rfq: AddRFQ;
+  @Input() generatedRfq: AddRFQ;
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
 
   userId: 1;
@@ -50,6 +50,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   rfqData: AddRFQ;
   message: string;
   lastupdateValue: any;
+  valid: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -71,9 +72,9 @@ export class RfqQuantityMakesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.rfq) {
-      this.rfqData = this.rfq;
-      this.projectSelectedMaterials = this.rfq.rfqProjectsList;
+    if (this.generatedRfq) {
+      this.rfqData = this.generatedRfq as AddRFQ;
+      this.projectSelectedMaterials = this.rfqData.rfqProjectsList;
       this.formsInit();
     }
   }
@@ -100,7 +101,7 @@ export class RfqQuantityMakesComponent implements OnInit {
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
             estimatedRate: [item.estimatedRate],
-            quantity: [item.quantity, Validators.required],
+            quantity: [item.quantity, [Validators.required, this.quantityCheck(item.estimatedQty)]],
             makes: [item.makes],
             projId: [item.projectId],
             matId: [item.materialId]
@@ -111,10 +112,29 @@ export class RfqQuantityMakesComponent implements OnInit {
     this.materialForms = this.formBuilder.group({});
     this.materialForms.addControl("forms", new FormArray(frmArr));
     this.materialForms.valueChanges.subscribe(val => {
-      this.materialAdded();
+      this.valid = val.forms.some(mat => {
+        return mat.quantity >= 0;
+      })
     });
   }
 
+  quantityCheck(estimatedQty: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (estimatedQty < control.value) {
+        this._snackBar.open(
+          "Cannot add quantity greater than estimated qty",
+          "",
+          {
+            duration: 2000,
+            verticalPosition: "top"
+          }
+        );
+        control.setValue(0)
+        return { 'nameIsForbidden': true };
+      }
+      return null;
+    }
+  }
   makesUpdate(data: string[], grpIndex: number) {
     const forms = this.materialForms.get("forms") as FormArray;
     if (data.length <= 4) {
@@ -141,6 +161,8 @@ export class RfqQuantityMakesComponent implements OnInit {
   getFormStatus() {
     return this.materialForms;
   }
+
+
   materialAdded() {
     const formValues = this.materialForms.value.forms;
     this.projectSelectedMaterials.forEach((project, i) => {
@@ -153,29 +175,8 @@ export class RfqQuantityMakesComponent implements OnInit {
             this.projectSelectedMaterials[i].projectMaterialList[
               j
             ].estimatedRate = val.estimatedRate;
-            if (
-              val.quantity <=
-              this.projectSelectedMaterials[i].projectMaterialList[j]
-                .estimatedQty
-            ) {
-              this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
-                val.quantity;
-            } else {
-              (<FormGroup>(
-                (<FormArray>this.materialForms.controls["forms"]).controls[k]
-              )).controls["quantity"].setValue(0);
-              // this.materialForms.controls[
-              //   "forms"
-              // ] = val.quantity = this.lastupdateValue;
-              this._snackBar.open(
-                "Cannot add quantity greater than estimated qty",
-                "",
-                {
-                  duration: 2000,
-                  verticalPosition: "top"
-                }
-              );
-            }
+            this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
+              val.quantity;
             this.projectSelectedMaterials[i].projectMaterialList[j].makes =
               val.makes;
           } else {
