@@ -14,6 +14,7 @@ import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { ProjectService } from '../../services/projectDashboard/project.service';
 import { ProjectDetails } from '../../models/project-details';
 
+
 export interface City {
   value: string;
   viewValue: string;
@@ -39,9 +40,6 @@ export class AddEditUserComponent implements OnInit {
   endDate = new Date(2021, 0, 1);
   allProjects: ProjectDetails[];
   allRoles: Roles[];
-
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
   userDetails: AllUserDetails;
   isInputDisabled: boolean = true;
   orgId: number;
@@ -129,6 +127,7 @@ export class AddEditUserComponent implements OnInit {
           duration: 2000,
           panelClass: ["blue-snackbar"]
         });
+        return res.data;
       }
 
     });
@@ -148,6 +147,7 @@ export class AddEditUserComponent implements OnInit {
               duration: 2000,
               panelClass: ["blue-snackbar"]
             });
+              return res.data;
           }
         });
     }

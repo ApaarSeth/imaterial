@@ -64,7 +64,7 @@ export class UserDetailComponent implements OnInit {
         useOrb: false,
         steps: [
             {
-              title:'Add Users',
+              title:'Add User',
               selector: '.add-user-button',
               content: 'Click here to add other users of your organisation.',
               orientation: Orientation.Left
@@ -110,6 +110,12 @@ export class UserDetailComponent implements OnInit {
       const dataStr = data.ProjectUser.firstName + data.ProjectUser.lastName + data.ProjectUser.email + data.ProjectUser.contactNo + data.ProjectUser.roleId + data.roleName + data.ProjectList;
       return dataStr.indexOf(filterValue) != -1; 
       }           
+      if(this.dataSourceActivateTemp.length>0 && this.dataSourceDeactivateTemp.length>0){
+              this.addUserBtn = true;
+            }
+            else{
+              this.addUserBtn = false;
+            }
     }
            
           });
