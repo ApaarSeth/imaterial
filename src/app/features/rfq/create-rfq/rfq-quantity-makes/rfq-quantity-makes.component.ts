@@ -154,7 +154,7 @@ export class RfqQuantityMakesComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        data.defaultAddress = result[1];
+        data.defaultAddress = result[1].address;
       });
     }
   }

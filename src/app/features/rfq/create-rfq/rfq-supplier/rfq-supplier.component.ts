@@ -8,7 +8,7 @@ import { MatDialog, MatCheckbox, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
-import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
+import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
 
 @Component({
@@ -36,6 +36,7 @@ export class RfqSupplierComponent implements OnInit {
   supplierForm: FormGroup;
   supplierCounter: number = 0;
   newAddedId: number;
+
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -44,6 +45,7 @@ export class RfqSupplierComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar
   ) { }
+
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     if (this.activatedRoute.snapshot.data.createRfq[0].data) {
@@ -53,6 +55,7 @@ export class RfqSupplierComponent implements OnInit {
     }
     this.formInit();
   }
+
   formInit() {
     const frmArr: FormGroup[] = this.allSuppliers.map(supplier => {
       return this.formBuilder.group({
@@ -63,11 +66,25 @@ export class RfqSupplierComponent implements OnInit {
       forms: new FormArray(frmArr)
     });
   }
+
+  supplierCheck() {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      let check = control.value.some(supp => {
+        return supp.supplier != null
+      })
+      if (check) {
+        return { 'selectSomeSupplier': true };
+      }
+      return null;
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     this.rfqData = this.finalRfq;
     console.log("this.finalRfq", this.finalRfq);
     console.log("this.rfqData", this.rfqData);
   }
+
   valueChange(supplier: Suppliers, ch: MatCheckbox, i: number) {
     const sArr = this.supplierForm.controls["forms"] as FormArray;
     const sGrp = sArr.at(i) as FormGroup;
@@ -81,7 +98,7 @@ export class RfqSupplierComponent implements OnInit {
       }
     } else {
       this.supplierCounter--;
-      sGrp.get("material").reset();
+      sGrp.get("supplier").reset();
     }
   }
 
@@ -124,18 +141,19 @@ export class RfqSupplierComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then(result => {
-        result;
-        this.rfqService.getSuppliers(this.orgId).then(data => {
-          let allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
-          let tempId = data.data.map(supp => supp.supplierId);
-          allSuppliersId.forEach(id => {
-            if (!tempId.includes(id)) {
-              this.newAddedId = id;
-            }
+        if (result > 0) {
+          this.rfqService.getSuppliers(this.orgId).then(data => {
+            //   let allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
+            //   let tempId = data.data.map(supp => supp.supplierId);
+            //   allSuppliersId.forEach(id => {
+            //     if (!tempId.includes(id)) {
+            //       this.newAddedId = id;
+            //     }
+            //   });
+            this.allSuppliers = data.data;
+            this.formInit();
           });
-          this.allSuppliers = data.data;
-          this.formInit();
-        });
+        }
       });
   }
 
