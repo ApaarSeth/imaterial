@@ -32,3 +32,15 @@ button.active {
 .mat-menu-panel {
   background: $white-color !important;
 }
+
+.notification-bell-icon.mat-button.mat-button-base{
+  min-width: auto;
+  padding-top:5px;
+   .mat-icon{
+     display: block;
+   }
+}
+.notification-bell-icon.mat-button.mat-button-base:hover{
+  background-color: none;
+}
+

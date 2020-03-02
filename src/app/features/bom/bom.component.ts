@@ -24,6 +24,7 @@ import {
 } from "src/app/shared/models/category";
 import { QtyData } from "src/app/shared/models/subcategory-materials";
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
+import { GuidedTourService, Orientation, GuidedTour } from 'ngx-guided-tour';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -50,6 +51,42 @@ export class BomComponent implements OnInit {
   orgId: number;
   userId: number;
   searchDataValues: categoryNestedLevel;
+
+     public BomDashboardTour: GuidedTour = {
+        tourId: 'bom-tour',
+        useOrb: false,
+        
+        steps: [
+            {
+                title: 'Choose Option',
+                selector:'.material-select-options',
+                content: 'Choose from material groups to add materials in the Bill of materials from your project.',
+                 orientation: Orientation.Right
+            },
+            {
+                title: 'Download Excel Template',
+                selector: '.download-bom-template',
+                content: 'Download excel template to upload materials in your project .',
+                orientation: Orientation.Left
+                
+            }
+        ]
+    };
+
+   public BomDashboardTourSecond: GuidedTour = {
+        tourId: 'bom-second-tour',
+        useOrb: false,
+        
+        steps: [
+            {
+              title:'Save Button',
+              selector: '.save-material-button',
+              content: 'Enter the quantity against the materials and add in BOM.',
+              orientation: Orientation.Left
+            }
+        ]
+    };
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
@@ -57,8 +94,13 @@ export class BomComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private bomService: BomService,
-      private loading: GlobalLoaderService
-  ) {}
+    private loading: GlobalLoaderService,
+    private guidedTourService: GuidedTourService
+  ) {
+    setTimeout(() => {
+            this.guidedTourService.startTour(this.BomDashboardTour);
+        }, 1000);
+  }
 
   ngOnInit() {
     this.categories = new FormControl([]);
@@ -105,6 +147,10 @@ export class BomComponent implements OnInit {
   }
   finalisedCategory() {
     this.showTable = true;
+     setTimeout(() => {
+            this.guidedTourService.startTour(this.BomDashboardTourSecond);
+        }, 1000);
+        
     this.bomService
       .getMaterialsWithSpecs({
         pid: this.categories.value.map(

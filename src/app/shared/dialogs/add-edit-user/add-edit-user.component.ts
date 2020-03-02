@@ -71,7 +71,7 @@ export class AddEditUserComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 
   initForm() {
@@ -124,6 +124,7 @@ export class AddEditUserComponent implements OnInit {
 
     this.userService.addUsers(userDetails).then(res => {
       if (res) {
+         this.dialogRef.close(res.message);
         this._snackBar.open(res.message, "", {
           duration: 2000,
           panelClass: ["blue-snackbar"]
@@ -142,6 +143,7 @@ export class AddEditUserComponent implements OnInit {
         .updateUsers(userDetails)
         .then(res => {
           if (res) {
+            this.dialogRef.close(res.message);
             this._snackBar.open(res.message, "", {
               duration: 2000,
               panelClass: ["blue-snackbar"]
@@ -153,9 +155,9 @@ export class AddEditUserComponent implements OnInit {
 
   submit() {
     if (this.data.isEdit) {
-      this.dialogRef.close(this.updateUsers(this.form.value));
+      this.updateUsers(this.form.value);
     } else {
-      this.dialogRef.close(this.addUsers(this.form.value));
+      this.addUsers(this.form.value);
     }
   }
 
@@ -163,6 +165,6 @@ export class AddEditUserComponent implements OnInit {
     this.router.navigate(["users/user-detail"]);
   }
   closeDialog() {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 }

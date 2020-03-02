@@ -1,7 +1,7 @@
 <form *ngIf="allProjects" [formGroup]="form">
   <div class="row p-b-10">
     <div class="col-sm-12">
-      <mat-form-field class="border-select pull-right m-r-25">
+      <mat-form-field class="border-select pull-right m-r-25 select-project">
         <mat-label *ngIf="!rfqDetails.length">Select Project</mat-label>
         <mat-select formControlName="selectedProject" multiple>
           <div class="display-flex">

@@ -25,6 +25,7 @@ import { UserDetailsPopUpData,AllUserDetails,UserAdd } from 'src/app/shared/mode
 import { DeactiveUserComponent } from 'src/app/shared/dialogs/disable-user/disable-user.component';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { forEachChild } from 'typescript';
+import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 
 // chip static data
 export interface Fruit {
@@ -57,6 +58,20 @@ export class UserDetailComponent implements OnInit {
    addUserBtn : boolean = false;
   allUsers: AllUserDetails;
   orgId: number;
+
+     public UserDashboardTour: GuidedTour = {
+        tourId: 'supplier-tour',
+        useOrb: false,
+        steps: [
+            {
+              title:'Add Users',
+              selector: '.add-user-button',
+              content: 'Click here to add other users of your organisation.',
+              orientation: Orientation.Left
+            }
+        ]
+    };
+
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -64,20 +79,23 @@ export class UserDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private ref: ChangeDetectorRef,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+     private guidedTourService: GuidedTourService
+  ) {
+          setTimeout(() => {
+            this.guidedTourService.startTour(this.UserDashboardTour);
+        }, 1000);
+   }
 
   ngOnInit() { 
-     this.orgId = Number(localStorage.getItem("orgId")) ;
-    this.getAllUsers();
+     this.orgId = Number(localStorage.getItem("orgId")) ;  
+     this.getAllUsers();
   }
 
   getAllUsers(){
   this.userService.getAllUsers(this.orgId).then(data => {
-            //  this.dataSourceActivate = data.data.activatedProjectList;
-            //  this.dataSourceDeactivate = data.data.deactivatedProjectList;
-
-             this.dataSourceActivate = new MatTableDataSource(data.data.activatedProjectList);
+    if(data){
+            this.dataSourceActivate = new MatTableDataSource(data.data.activatedProjectList);
              this.dataSourceDeactivate = new MatTableDataSource(data.data.deactivatedProjectList);
 
              this.dataSourceActivateTemp = data.data.activatedProjectList;
@@ -91,36 +109,31 @@ export class UserDetailComponent implements OnInit {
        this.dataSourceDeactivate.filterPredicate = (data, filterValue) => {
       const dataStr = data.ProjectUser.firstName + data.ProjectUser.lastName + data.ProjectUser.email + data.ProjectUser.contactNo + data.ProjectUser.roleId + data.roleName + data.ProjectList;
       return dataStr.indexOf(filterValue) != -1; 
-      }
-
-            if(this.dataSourceActivateTemp.length>0 && this.dataSourceDeactivateTemp.length>0){
-              this.addUserBtn = true;
-            } 
-            else{
-              this.addUserBtn = false;
-            }
+      }           
+    }
            
           });
   }
   addUser() {
     this.openDialog({
       isEdit: false,
-      isDelete: false
+      isDelete: false,
+
     } as UserDetailsPopUpData);
   }
     openDialog(data: UserDetailsPopUpData): void {
-    if (AddAddressDialogComponent) {
+
       const dialogRef = this.dialog.open(AddEditUserComponent, {
         width: "660px",
         data
       });
       
       dialogRef.afterClosed().toPromise().then(data => {
-         this.getAllUsers();
-        console.log("The dialog was closed");
-
+        if(data && data!=null){
+          this.getAllUsers();
+        }
       });
-    }
+    
   }
 
   
@@ -134,16 +147,17 @@ export class UserDetailComponent implements OnInit {
   }
 
    openDialogDeactiveUser(data: UserDetailsPopUpData): void {
-    if (AddAddressDialogComponent) {
+
       const dialogRef = this.dialog.open(DeactiveUserComponent, {
         width: "500px",
         data
       });
       dialogRef.afterClosed().toPromise().then(data => {
-         this.getAllUsers();
-        console.log("The dialog was closed");
+         if(data && data!=null){
+            this.getAllUsers();
+        }
       });
-    }
+    
   }
 
   editProject(data) {

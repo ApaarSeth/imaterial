@@ -10,7 +10,7 @@
           </div>
           <div class="col-xs-6 text-right d-flex justify-content-end" appDnd>
             <div class="mr-3">
-              <span class="cursor-pointer">
+              <span class="cursor-pointer download-bom-template">
                 <img src="assets/images/download.png" alt="download" class="img-fluid mr-2">
                 <a (click)="downloadExcel('assets/images/Master_data.xlsx')"> Download BOM Template</a></span>
             </div>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="col-sm-12">
-          <mat-form-field class="border-select center-element">
+          <mat-form-field class="border-select center-element material-select-options">
             <mat-label *ngIf="!selectedCategory.length">Select Category</mat-label>
             <mat-select [formControl]="categories" [(ngModel)]="selectedCategory" multiple floatlLabel="never">
               <div class="display-flex">
@@ -68,7 +68,7 @@
           </mat-form-field> -->
         </div>
         <div class="col-sm-4">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="saveCategory()" [disabled]="!isAllFormsValid">
+          <button mat-raised-button class="main-background-color main-button color-white pull-right save-material-button" (click)="saveCategory()" [disabled]="!isAllFormsValid">
             SAVE
           </button>
         </div>

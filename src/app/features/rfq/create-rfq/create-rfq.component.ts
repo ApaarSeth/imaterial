@@ -17,6 +17,7 @@ import { FormBuilder } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { RfqQuantityMakesComponent } from "./rfq-quantity-makes/rfq-quantity-makes.component";
 import { RfqSupplierComponent } from "./rfq-supplier/rfq-supplier.component";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
 
 @Component({
   selector: "app-create-rfq",
@@ -36,16 +37,53 @@ export class CreateRfqComponent implements OnInit {
   rfqData: AddRFQ;
   finalRfq: AddRFQ;
   completed: boolean = false;
+
+     public RfqProjectTour: GuidedTour = {
+        tourId: 'rfq-project-tour',
+        useOrb: false,
+        
+        steps: [
+            {
+              title:'Search Project',
+              selector: '.select-project',
+              content: 'Select one/multiple projects to add material in the RFQ.',
+              orientation: Orientation.Left
+            }
+        ]
+    };
+
+ public RfqSupplierTour: GuidedTour = {
+        tourId: 'rfq-supplier-tour',
+        useOrb: false,
+        
+        steps: [
+             {
+              title:'Add Supplier',
+              selector: '.add-supplier-btn',
+              content: 'Add supplier to whom RFQ needs to be floated.',
+              orientation: Orientation.Left
+            }
+        ]
+    };
   constructor(
     private rfqService: RFQService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+     private guidedTourService: GuidedTourService
+  ) { 
+     
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       if (this.stepper) {
         this.stepper.selectedIndex = params.selectedIndex - 1;
+
+         setTimeout(() => {
+            this.guidedTourService.startTour(this.RfqProjectTour);
+        }, 1000);
+
+
         if (history.state.rfqData) {
           this.rfqMaterial = history.state.rfqData.data;
         }
@@ -69,11 +107,17 @@ export class CreateRfqComponent implements OnInit {
     this.currentIndex = event.selectedIndex;
     this.prevIndex = event.previouslySelectedIndex;
     if (event.previouslySelectedIndex === 1 && event.selectedIndex === 0) {
+      
+       setTimeout(() => {
+            this.guidedTourService.startTour(this.RfqProjectTour);
+        }, 1000);
+
       this.rfqService.addRFQ(this.rfqMaterial).then(res => {
         this.rfqData = res.data;;
       });
     }
     if (event.previouslySelectedIndex === 0 && event.selectedIndex === 1) {
+
       this.completed = false;
       this.rfqService.addRFQ(this.rfqMaterial).then(res => {
         this.rfqMaterial = res.data;
@@ -87,6 +131,13 @@ export class CreateRfqComponent implements OnInit {
       event.selectedIndex === 2 &&
       event.previouslySelectedIndex === 1
     ) {
+
+       setTimeout(() => {
+            this.guidedTourService.startTour(this.RfqSupplierTour);
+        }, 1000);
+
+
+
       this.rfqService.addRFQ(this.rfqMaterial).then(res => {
         console.log("res.data", res.data);
         this.finalRfq = res.data;

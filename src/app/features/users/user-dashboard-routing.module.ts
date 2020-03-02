@@ -7,17 +7,7 @@ const routes: Routes = [
   {
     path: "user-detail",
     component: UserDetailComponent
-  },
-
-  // {
-  //   path: 'organisation/update-info',
-  //   component: UpdateInfoComponent
-  // },
-
-  // {
-  //   path: 'organisation/add-user',
-  //   component: AddUserComponent
-  // }
+  }
 ];
 
 @NgModule({

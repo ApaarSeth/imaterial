@@ -20,17 +20,13 @@ export class UserService {
   }
 
   getRoles() {
-    return this.dataService.getRequest(API.ROLES).then(res => {
-      return res;
-    });
+    return this.dataService.getRequest(API.ROLES).then(res => res);
   }
 
   getAllUsers(organisationId: number) {
     return this.dataService
       .getRequest(API.ALLUSERS(organisationId))
-      .then(res => {
-        return res;
-      });
+      .then(res => res);
   }
 
   addUsers(user: UserAdd) {

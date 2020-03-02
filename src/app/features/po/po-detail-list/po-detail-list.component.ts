@@ -8,6 +8,7 @@ import { MatTableDataSource, MatDialog } from "@angular/material";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
 import { ProjetPopupData } from "src/app/shared/models/project-details";
 import { DeleteDraftedPoComponent } from "src/app/shared/dialogs/delete-drafted-po/delete-drafted-po.component";
+import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 
 @Component({
   selector: "po-detail-list",
@@ -37,12 +38,32 @@ export class PODetailComponent implements OnInit {
     "Action"
   ];
 
+  public PODetailTour: GuidedTour = {
+        tourId: 'po-detail-tour',
+        useOrb: false,
+        
+        steps: [
+             {
+              title:'Create P.O.',
+              selector: '.create-po-btn',
+              content: 'Click here to create a purchase order by selecting the materials from a project.',
+              orientation: Orientation.Left
+            }
+        ]
+    };
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private route: Router,
     private projectService: ProjectService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private guidedTourService: GuidedTourService
+  ) {
+
+         setTimeout(() => {
+            this.guidedTourService.startTour(this.PODetailTour);
+        }, 1000);
+  }
 
   ngOnInit() {
     this.PoData();
