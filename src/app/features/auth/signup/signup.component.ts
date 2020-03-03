@@ -7,6 +7,8 @@ import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants"
 import { UserService } from "src/app/shared/services/userDashboard/user.service";
 import { UserDetails } from 'src/app/shared/models/user-details';
 import { MatSnackBar } from '@angular/material';
+import { TokenService } from 'src/app/shared/services/token.service';
+import { auth } from 'src/app/shared/models/auth';
 
 export interface OrganisationType {
   value: string;
@@ -24,6 +26,7 @@ export class SignupComponent implements OnInit {
   user: UserDetails;
 
   constructor(
+    private tokenService: TokenService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -99,11 +102,12 @@ export class SignupComponent implements OnInit {
           verticalPosition: "top"
         });
       }
-      else if (data.data.serviceRawResponse.data) {
-        localStorage.setItem("role", data.data.serviceRawResponse.data.role);
-        localStorage.setItem("ServiceToken", data.data.serviceRawResponse.data.serviceToken);
-        localStorage.setItem("userId", data.data.serviceRawResponse.data.userId);
-        localStorage.setItem("orgId", data.data.serviceRawResponse.data.orgId);
+      else if (data.data.serviceRawResponse.data as auth) {
+        this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
+        // localStorage.setItem("role", data.data.serviceRawResponse.data.role);
+        // localStorage.setItem("accessToken", data.data.serviceRawResponse.data.serviceToken);
+        // localStorage.setItem("userId", data.data.serviceRawResponse.data.userId);
+        // localStorage.setItem("orgId", data.data.serviceRawResponse.data.orgId);
 
         // if (data.data.serviceRawResponse.data.role || this.uniqueCode !== "") {
         if (this.uniqueCode) {

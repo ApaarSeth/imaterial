@@ -48,18 +48,18 @@ export class DataService {
     reqOptions: DataServiceOptions = null
   ): ResolveData {
     let headers = new HttpHeaders();
-    headers = headers.append("Access-Control-Allow-Origin", "*");
-    headers = headers.append("accept", "*/*");
-    if(this.role){
-      headers = headers.append("Authorization", this.role);
-    }
-    if(this.userId){
-      headers = headers.append("userId", this.userId);
-    }
-    if(this.orgId){
-      headers = headers.append("orgId", this.orgId);
-    }
-    
+    // headers = headers.append("Access-Control-Allow-Origin", "*");
+    // headers = headers.append("accept", "*/*");
+    // if(this.role){
+    //   headers = headers.append("Authorization", this.role);
+    // }
+    // if(this.userId){
+    //   headers = headers.append("userId", this.userId);
+    // }
+    // if(this.orgId){
+    //   headers = headers.append("orgId", this.orgId);
+    // }
+
 
     if (reqOptions) {
       if (reqOptions.skipLoader) {
@@ -106,13 +106,13 @@ export class DataService {
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
     // headers = headers.append("Authorization", "admin");
-    if(this.role){
+    if (this.role) {
       headers = headers.append("Authorization", this.role);
     }
-    if(this.userId){
+    if (this.userId) {
       headers = headers.append("userId", this.userId);
     }
-    if(this.orgId){
+    if (this.orgId) {
       headers = headers.append("orgId", this.orgId);
     }
     if (reqOptions) {
@@ -191,13 +191,13 @@ export class DataService {
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
     // headers = headers.append("Authorization", "admin");
-    if(this.role){
+    if (this.role) {
       headers = headers.append("Authorization", this.role);
     }
-    if(this.userId){
+    if (this.userId) {
       headers = headers.append("userId", this.userId);
     }
-    if(this.orgId){
+    if (this.orgId) {
       headers = headers.append("orgId", this.orgId);
     }
     if (reqOptions) {

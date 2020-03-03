@@ -1,4 +1,4 @@
-<div class="col-xs-12 text-right p-t-20 border-input" *ngIf="this.newMaterialData && (this.newMaterialData.length > 0)">
+<div class="col-xs-12 text-right p-t-20 border-input" *ngIf="this.newMaterialData && this.newMaterialData.length > 0">
   <span class="p-r-20"> </span>
   <mat-form-field class="input-search-padding-zero">
     <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" />
@@ -8,7 +8,7 @@
   </mat-form-field>
 </div>
 
-<mat-accordion displayMode="flat" multi class="mat-table" *ngIf="this.newMaterialData && (this.newMaterialData.length > 0)">
+<mat-accordion displayMode="flat" multi class="mat-table" *ngIf="this.newMaterialData && this.newMaterialData.length > 0">
   <section matSort class="mat-header-row blue-background-color-color-white-section">
     <span class="mat-header-cell" mat-sort-header="name">Name</span>
     <span class="mat-header-cell" mat-sort-header="estimatedQty">Estimated Quantity</span>
@@ -16,50 +16,55 @@
     <span class="mat-header-cell" mat-sort-header="requiredDate">Required Date</span>
     <span class="mat-header-cell" mat-sort-header="availableQuantity">Available quantity in project</span>
   </section>
-<div class="global-panel">
-  <mat-expansion-panel *ngFor="let material of newMaterialData | SearchPipe: searchMaterial:'GlobalMaterial':'materialName'" class="myPanel">
-    <mat-expansion-panel-header class="mat-row material-row">
-      <span class="mat-cell" matTooltip="{{ material.GlobalMaterial.materialName }}">
-        <div class="limited-character">
-          {{ material.GlobalMaterial.materialName }}
-        </div>
-      </span>
-
-      <span class="mat-cell">
-        {{ material.GlobalMaterial.estimatedQty }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span>
-      </span>
-      <span class="mat-cell"
-        >{{ material.GlobalMaterial.sum }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
-      >
-      <span class="mat-cell">{{ material.GlobalMaterial.nearDueDate | date: "dd MMM yyy" }}</span>
-      <span class="mat-cell"></span>
-    </mat-expansion-panel-header>
-    <mat-expansion-panel *ngFor="let project of material.GlobalProject" class="myPanel">
-      <mat-expansion-panel-header class="mat-row material-project">
-        <span class="mat-cell" matTooltip="{{ project.Projects.projectName }}">
+  <div class="global-panel">
+    <mat-expansion-panel *ngFor="let material of newMaterialData | SearchPipe: searchMaterial:'GlobalMaterial':'materialName'" class="myPanel">
+      <mat-expansion-panel-header class="mat-row material-row">
+        <span class="mat-cell" matTooltip="{{ material.GlobalMaterial.materialName }}">
           <div class="limited-character">
-            {{ project.Projects.projectName }}
+            {{ material.GlobalMaterial.materialName }}
           </div>
         </span>
+
         <span class="mat-cell">
-          {{ project.ProjectEstimatedQnt }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
-        >
+          {{ material.GlobalMaterial.estimatedQty }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span>
+        </span>
         <span class="mat-cell"
-          >{{ project.Projects.sum }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
+          >{{ material.GlobalMaterial.sum }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
         >
-        <span class="mat-cell">{{ project.Projects.nearDueDate | date: "dd MMM yyy" }}</span>
-        <span class="mat-cell">{{ project.Projects.sum }}</span>
+        <span class="mat-cell">{{ material.GlobalMaterial.nearDueDate | date: "dd MMM yyy" }}</span>
+        <span class="mat-cell"
+          >{{
+            material.GlobalMaterial.deliveredQty != null && material.GlobalMaterial.issuedQty != null ? material.GlobalMaterial.deliveredQty - material.GlobalMaterial.issuedQty : 0
+          }}
+          <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
+        >
       </mat-expansion-panel-header>
-      <div *ngFor="let material of project.Projects.indentMaterials">
-        <mat-expansion-panel-header class="mat-row material-project-details">
-          <span class="mat-cell"></span>
-          <span class="mat-cell"></span>
-          <span class="mat-cell">{{ material.quantity }}</span>
-          <span class="mat-cell">{{ material.dueDate | date: "dd MMM yyy" }}</span>
+      <mat-expansion-panel *ngFor="let project of material.GlobalProject" class="myPanel">
+        <mat-expansion-panel-header class="mat-row material-project">
+          <span class="mat-cell" matTooltip="{{ project.Projects.projectName }}">
+            <div class="limited-character">
+              {{ project.Projects.projectName }}
+            </div>
+          </span>
+          <span class="mat-cell">
+            {{ project.ProjectEstimatedQnt }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
+          >
+          <span class="mat-cell"
+            >{{ project.Projects.sum }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
+          >
+          <span class="mat-cell">{{ project.Projects.nearDueDate | date: "dd MMM yyy" }}</span>
           <span class="mat-cell"></span>
         </mat-expansion-panel-header>
-      </div>
+        <div *ngFor="let material of project.Projects.indentMaterials">
+          <mat-expansion-panel-header class="mat-row material-project-details">
+            <span class="mat-cell"></span>
+            <span class="mat-cell"></span>
+            <span class="mat-cell">{{ material.quantity }}</span>
+            <span class="mat-cell">{{ material.dueDate | date: "dd MMM yyy" }}</span>
+            <span class="mat-cell"></span>
+          </mat-expansion-panel-header>
+        </div>
+      </mat-expansion-panel>
     </mat-expansion-panel>
-  </mat-expansion-panel>
-</div>
+  </div>
 </mat-accordion>

@@ -10,7 +10,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     private reqInProgress = false;
 
-    constructor(private token: TokenService,
+    constructor(private tokenService: TokenService,
         private http: HttpClient,
         private handler: HttpBackend) {
         this.http = new HttpClient(this.handler);
@@ -18,35 +18,38 @@ export class TokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        return this.getToken().pipe(
-            mergeMap(token => {
-                const authorizationKey = `Bearer ${this.token.getToken()}`;
+        return this.getAuthHeaders().pipe(
+            mergeMap(headers => {
+                //  const authorizationKey = `Bearer ${this.tokenService.getToken()}`;
 
-                if (!request.headers.has('Content-Type')) {
+                // if (!request.headers.has('Content-Type')) {
+                //     // request = request.clone({
+                //     //   headers: request.headers.set('Content-Type', 'application/json')
+                //     // });
+                // }
+
+                if (request.url.indexOf('api/auth/signup') > -1 ||
+                    request.url.indexOf('oauth/token') > -1 ||
+                    request.url.indexOf('material/materialsSpecs') > -1 ||
+                    request.url.indexOf('material/groups') > -1) {
+                    return next.handle(request)
+                }
+                else if (headers) {
                     // request = request.clone({
-                    //   headers: request.headers.set('Content-Type', 'application/json')
+                    //     headers: request.headers.set('Authorization', this.tokenService.getRole()),
+
                     // });
-                }
-
-                if (this.token.getToken()) {
-                    request = request.clone({
-                        headers: request.headers.set('Authorization', authorizationKey)
+                    let modifiedRequest = request.clone({
+                        setHeaders: headers
                     });
+                    return next.handle(modifiedRequest);
                 }
-
-                request = request.clone({
-                    // setHeaders: {
-                    //     'Access-Control-Allow-Origin': '*',
-                    //     'accept': '*/*'
-                    // }
-                });
-                return next.handle(request);
             }));
     }
 
 
-    getToken(): Observable<any> {
-        const t = this.token.getToken();
+    getAuthHeaders(): Observable<any> {
+        const t = this.tokenService.getAuthHeader();
         return of(t);
 
     }
