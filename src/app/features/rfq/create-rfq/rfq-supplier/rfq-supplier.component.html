@@ -1,27 +1,27 @@
-<form *ngIf="allSuppliers.length" [formGroup]="supplierForm">
-  <div class="row ">
-    <div class="col-xs-12 text-right p-b-10 m-r-25">
-      <span class="p-r-5">
-        <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="navigateToUploadPage()" type="button">Back</button>
-      </span>
-      <span>
-        <button mat-raised-button matStepperNext [disabled]="this.supplierCounter === 0" (click)="reviewRfq()" class="main-background-color main-button color-white">
-          Next
-        </button>
-      </span>
-    </div>
-    <div class="col-xs-12 text-right">
-      <mat-form-field class="input-search-padding-zero  border-input pull-right">
-        <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
-        <button mat-button matSuffix mat-icon-button>
-          <mat-icon>search</mat-icon>
-        </button>
-      </mat-form-field>
-      <button mat-raised-button class="main-background-color main-button color-white m-r-15" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
-        <i class="material-icons addSupplier">add</i> Supplier
+<div class="row ">
+  <div class="col-xs-12 text-right p-b-10 m-r-25">
+    <span class="p-r-5">
+      <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="navigateToUploadPage()" type="button">Back</button>
+    </span>
+    <span>
+      <button mat-raised-button matStepperNext [disabled]="this.supplierCounter === 0" (click)="reviewRfq()" class="main-background-color main-button color-white">
+        Next
       </button>
-    </div>
+    </span>
   </div>
+  <div class="col-xs-12 text-right">
+    <mat-form-field class="input-search-padding-zero  border-input pull-right">
+      <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+      <button mat-button matSuffix mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-raised-button class="main-background-color main-button color-white m-r-15" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
+      <i class="material-icons addSupplier">add</i> Supplier
+    </button>
+  </div>
+</div>
+<form *ngIf="allSuppliers.length" [formGroup]="supplierForm">
   <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'" formArrayName="forms" class="mat-elevation-z8 col-sm-12">
     <ng-container matColumnDef="Supplier Name">
       <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
