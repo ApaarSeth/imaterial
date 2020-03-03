@@ -1,5 +1,26 @@
 <div class="row ">
-  <div class="col-xs-12 text-right p-b-10 m-r-25">
+   <div class="col-xs-6">
+  
+    <mat-form-field class="input-search-padding-zero  border-input ">
+      <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+      <button mat-button matSuffix mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+  </div>
+  <div class="col-xs-6 text-right">
+    <span class="p-r-5">
+
+      <span class=" m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
+          <span class="font-size20">
+           +
+          </span> 
+          <span>
+            Supplier
+          </span>
+      </span>
+    </span>
     <span class="p-r-5">
       <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="navigateToUploadPage()" type="button">Back</button>
     </span>
@@ -9,7 +30,7 @@
       </button>
     </span>
   </div>
-  <div class="col-xs-12 text-right">
+  <!-- <div class="col-xs-12 text-right">
     <mat-form-field class="input-search-padding-zero  border-input pull-right">
       <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
       <button mat-button matSuffix mat-icon-button>
@@ -19,7 +40,7 @@
     <button mat-raised-button class="main-background-color main-button color-white m-r-15" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
       <i class="material-icons addSupplier">add</i> Supplier
     </button>
-  </div>
+  </div> -->
 </div>
 <form *ngIf="allSuppliers.length" [formGroup]="supplierForm">
   <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'" formArrayName="forms" class="mat-elevation-z8 col-sm-12">
@@ -41,10 +62,10 @@
       <td mat-cell *matCellDef="let element">{{ element.contact_no }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="PAN No.">
+    <!-- <ng-container matColumnDef="PAN No.">
       <th mat-header-cell *matHeaderCellDef>PAN No.</th>
       <td mat-cell *matCellDef="let element">{{ element.pan }}</td>
-    </ng-container>
+    </ng-container> -->
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
