@@ -10,10 +10,6 @@ import {
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { GuidedTourService, OrientationConfiguration, Orientation, GuidedTour } from 'ngx-guided-tour';
 
-// export interface DialogData {
-//   animal: string;
-//   name: string;
-// }
 @Component({
   selector: "dashboard",
   templateUrl: "./dashboard.component.html",
@@ -26,73 +22,73 @@ export class DashboardComponent implements OnInit {
   orgId: Number;
   userId: Number;
 
-   public dashboardTour: GuidedTour = {
-        tourId: 'purchases-tour',
-        useOrb: false,
-        
-        steps: [
-            {
-                title: 'Add Project',
-                selector: '.demo-title',
-                content: 'Click here to add a new project with basic details of project.',
-                orientation: Orientation.Left
-                
-            },
-            {
-                title: 'Search Project',
-                selector:'.example-form-field.border-input',
-                content: 'Click here to search your project from project list.',
-                 orientation: Orientation.Right
-            },
-            {
-                title: 'View Project',
-                selector: '.view-project',
-                content: 'Click here to view the project & add materials in project.',
-                orientation: Orientation.Left
-            },
-            {
-                title: 'Edit Project',
-                selector: '.edit-project',
-                content: 'Click here to edit the project details.',
-                orientation: Orientation.Left
-            },
-            {
-                title: 'Delete Project',
-                selector: '.delete-project',
-                content: 'Click here to delete the project. All your project data will get deleted.',
-                orientation: Orientation.Left
-            },
-            {
-                title: 'Show All Materials',
-                selector: '.showAllMaterials',
-                content: 'Click here to view all your materials.',
-                orientation: Orientation.Bottom
-            },
-            {
-                title: 'Show Open Indents',
-                selector: '.showOpenIndents',
-                content: 'Click here to view all your indents.',
-                orientation: Orientation.Bottom
-            },
-            {
-                title: 'Show Purchase Orders',
-                selector: '.showPurchaseOrders',
-                content: 'Click here to view all your purchase orders.',
-                orientation: Orientation.Bottom
-            }
-           
-        ]
-    };
-    
+  public dashboardTour: GuidedTour = {
+    tourId: 'purchases-tour',
+    useOrb: false,
+
+    steps: [
+      {
+        title: 'Add Project',
+        selector: '.demo-title',
+        content: 'Click here to add a new project with basic details of project.',
+        orientation: Orientation.Left
+
+      },
+      {
+        title: 'Search Project',
+        selector: '.example-form-field.border-input',
+        content: 'Click here to search your project from project list.',
+        orientation: Orientation.Right
+      },
+      {
+        title: 'View Project',
+        selector: '.view-project',
+        content: 'Click here to view the project & add materials in project.',
+        orientation: Orientation.Left
+      },
+      {
+        title: 'Edit Project',
+        selector: '.edit-project',
+        content: 'Click here to edit the project details.',
+        orientation: Orientation.Left
+      },
+      {
+        title: 'Delete Project',
+        selector: '.delete-project',
+        content: 'Click here to delete the project. All your project data will get deleted.',
+        orientation: Orientation.Left
+      },
+      {
+        title: 'Show All Materials',
+        selector: '.showAllMaterials',
+        content: 'Click here to view all your materials.',
+        orientation: Orientation.Bottom
+      },
+      {
+        title: 'Show Open Indents',
+        selector: '.showOpenIndents',
+        content: 'Click here to view all your indents.',
+        orientation: Orientation.Bottom
+      },
+      {
+        title: 'Show Purchase Orders',
+        selector: '.showPurchaseOrders',
+        content: 'Click here to view all your purchase orders.',
+        orientation: Orientation.Bottom
+      }
+
+    ]
+  };
+
   constructor(
     private projectService: ProjectService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private guidedTourService: GuidedTourService
   ) {
-     setTimeout(() => {
-            this.guidedTourService.startTour(this.dashboardTour);
-        }, 1000);
+    setTimeout(() => {
+      this.guidedTourService.startTour(this.dashboardTour);
+    }, 1000);
   }
 
   ngOnInit() {
@@ -149,15 +145,15 @@ export class DashboardComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-            if(result && result!=null){
-               this.projectService
+          if (result && result != null) {
+            this.projectService
               .getProjects(this.orgId, this.userId)
               .then(data => {
                 this.allProjects = data.data;
               });
-            }
-           
-          
+          }
+
+
         });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
@@ -169,14 +165,14 @@ export class DashboardComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(result => {
-           if(result && result!=null){
-               this.projectService
-                .getProjects(this.orgId, this.userId)
-                .then(data => {
-                  this.allProjects = data.data;
-                });
-           }
-      
+          if (result && result != null) {
+            this.projectService
+              .getProjects(this.orgId, this.userId)
+              .then(data => {
+                this.allProjects = data.data;
+              });
+          }
+
         });
     }
   }

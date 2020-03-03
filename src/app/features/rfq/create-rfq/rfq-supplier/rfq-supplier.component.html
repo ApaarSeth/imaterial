@@ -4,7 +4,7 @@
       <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="navigateToUploadPage()" type="button">Back</button>
     </span>
     <span>
-      <button mat-raised-button matStepperNext [disabled]="!valid" (click)="reviewRfq()" class="main-background-color main-button color-white">
+      <button mat-raised-button matStepperNext [disabled]="this.supplierCounter === 0" (click)="reviewRfq()" class="main-background-color main-button color-white">
         Next
       </button>
     </span>
@@ -16,7 +16,7 @@
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-raised-button class="main-background-color main-button color-white m-r-15 add-supplier-btn" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
+    <button mat-raised-button class="main-background-color main-button color-white m-r-15" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
       <i class="material-icons addSupplier">add</i> Supplier
     </button>
   </div>
