@@ -34,7 +34,7 @@ export interface Unit {
 })
 
 export class AddEditUserComponent implements OnInit {
-  
+
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
@@ -122,7 +122,7 @@ export class AddEditUserComponent implements OnInit {
 
     this.userService.addUsers(userDetails).then(res => {
       if (res) {
-         this.dialogRef.close(res.message);
+        this.dialogRef.close(res.message);
         this._snackBar.open(res.message, "", {
           duration: 2000,
           panelClass: ["blue-snackbar"]
@@ -147,7 +147,7 @@ export class AddEditUserComponent implements OnInit {
               duration: 2000,
               panelClass: ["blue-snackbar"]
             });
-              return res.data;
+            return res.data;
           }
         });
     }
