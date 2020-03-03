@@ -458,9 +458,11 @@ mat-accordion {
   padding-top: 5px !important;
 }
 
-// .mat-header-cell{
-//   background: #1997bbs !important;
-// }
+.mat-header-cell{
+  background: #2197bb;
+  font-size: 15px;
+  font-weight: 450;
+}
 .mat-checkbox-inner-container {
   width: 19px !important;
   height: 19px !important;
@@ -472,3 +474,8 @@ mat-accordion {
 .hidden {
   visibility: hidden;
 }
+
+.fr-box.fr-basic .fr-element{
+   //   line-height: 0.6 !important;
+      min-height: 106px !important;
+  }
