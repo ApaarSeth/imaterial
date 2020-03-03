@@ -23,8 +23,7 @@ export class RfqSupplierComponent implements OnInit {
   displayedColumns: string[] = [
     "Supplier Name",
     "Email",
-    "Phone No.",
-    "PAN No."
+    "Phone No."
   ];
   allSuppliers: Suppliers[] = [];
   selectedSuppliersList: Suppliers[] = [];
@@ -134,7 +133,7 @@ export class RfqSupplierComponent implements OnInit {
 
   openSupplierDialog(projectId) {
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
-      width: "1200px",
+      width: "660px",
       data: projectId
     });
     dialogRef
