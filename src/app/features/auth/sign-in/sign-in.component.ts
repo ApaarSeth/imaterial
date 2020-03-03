@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
 import { UserService } from "src/app/shared/services/userDashboard/user.service";
 import { MatSnackBar } from '@angular/material';
+import { TokenService } from 'src/app/shared/services/token.service';
 
 @Component({
   selector: "signin",
@@ -14,7 +15,7 @@ import { MatSnackBar } from '@angular/material';
 
 export class SigninComponent implements OnInit {
 
-  constructor(private router: Router,
+  constructor(private tokenService :TokenService,private router: Router,
     private signInSignupService: SignInSignupService,
     private formBuilder: FormBuilder,
     private _userService: UserService,
@@ -50,7 +51,7 @@ export class SigninComponent implements OnInit {
         });
       }
       else if (data.serviceRawResponse.data) {
-
+        this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
         this.getUserInfo(data.serviceRawResponse.data.userId);
         // const role = data.serviceRawResponse.data.role;
 

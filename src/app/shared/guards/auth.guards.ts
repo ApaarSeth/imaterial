@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Router, CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
 import { UserService } from '../services/userDashboard/user.service';
+import { TokenService } from '../services/token.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
     constructor(private router: Router,
-        private _userService: UserService) {
+        private token: TokenService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -16,7 +17,7 @@ export class AuthGuardService implements CanActivate {
         // }
         // return true;
 
-        if (!this._userService.isLoggedIn) {
+        if (!this.token.getToken()) {
             this.router.navigate(['/']);
             return false;
         }

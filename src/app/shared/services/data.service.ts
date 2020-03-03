@@ -48,8 +48,8 @@ export class DataService {
     reqOptions: DataServiceOptions = null
   ): ResolveData {
     let headers = new HttpHeaders();
-    // headers = headers.append("Access-Control-Allow-Origin", "*");
-    // headers = headers.append("accept", "*/*");
+    headers = headers.append("Access-Control-Allow-Origin", "*");
+    headers = headers.append("accept", "*/*");
     // if(this.role){
     //   headers = headers.append("Authorization", this.role);
     // }
@@ -106,15 +106,15 @@ export class DataService {
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
     // headers = headers.append("Authorization", "admin");
-    if (this.role) {
-      headers = headers.append("Authorization", this.role);
-    }
-    if (this.userId) {
-      headers = headers.append("userId", this.userId);
-    }
-    if (this.orgId) {
-      headers = headers.append("orgId", this.orgId);
-    }
+    // if (this.role) {
+    //   headers = headers.append("Authorization", this.role);
+    // }
+    // if (this.userId) {
+    //   headers = headers.append("userId", this.userId);
+    // }
+    // if (this.orgId) {
+    //   headers = headers.append("orgId", this.orgId);
+    // }
     if (reqOptions) {
       if (reqOptions.skipLoader) {
         headers = headers.append(
@@ -191,15 +191,15 @@ export class DataService {
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
     // headers = headers.append("Authorization", "admin");
-    if (this.role) {
-      headers = headers.append("Authorization", this.role);
-    }
-    if (this.userId) {
-      headers = headers.append("userId", this.userId);
-    }
-    if (this.orgId) {
-      headers = headers.append("orgId", this.orgId);
-    }
+    // if (this.role) {
+    //   headers = headers.append("Authorization", this.role);
+    // }
+    // if (this.userId) {
+    //   headers = headers.append("userId", this.userId);
+    // }
+    // if (this.orgId) {
+    //   headers = headers.append("orgId", this.orgId);
+    // }
     if (reqOptions) {
       if (reqOptions.skipLoader) {
         headers = headers.append(
@@ -372,10 +372,18 @@ export class DataService {
     //     this.notifier.notify("INTERNET CONNECTION ISSUE");
     //     throw undefined;
     // }
+    // if (err && err.error) {
+    //   if (
+    //     err.error.error && err.error.error === "Unauthorized" &&
+    //     err.error.httpStatusCode === 401
+    //   ) {
+    //     localStorage.clear();
+    //     window.location.reload();
+    //   }
+    // }
 
     if (
-      err.error.error === "Unauthorized" &&
-      err.error.httpStatusCode === 401
+      err
     ) {
       localStorage.clear();
       window.location.reload();

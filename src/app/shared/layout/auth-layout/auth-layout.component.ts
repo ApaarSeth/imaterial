@@ -9,15 +9,15 @@ export class AuthLayoutComponent implements OnInit {
   mySubscription: any;
 
   constructor(private router: Router) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
+    // this.router.routeReuseStrategy.shouldReuseRoute = function () {
+    //   return false;
+    // };
 
-    this.mySubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.router.navigated = false;
-      }
-    });
+    // this.mySubscription = this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.router.navigated = false;
+    //   }
+    // });
   }
 
   ngOnInit() { }
