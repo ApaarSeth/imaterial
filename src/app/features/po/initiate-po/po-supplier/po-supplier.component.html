@@ -1,13 +1,21 @@
 <form *ngIf="allSuppliers" [formGroup]="form" (ngSubmit)="choosenSupplier()">
   <div class="row ">
-    <div class="col-xs-12 text-right p-b-10">
+     <div class="col-xs-6">
+         <mat-form-field class="example-form-field border-input p-l-20 border-input p-r-20">
+              <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+              <button mat-button matSuffix mat-icon-button>
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
+     </div>
+    <div class="col-xs-6 text-right p-t-10">
       <span>
-        <mat-form-field class="border-input p-r-20">
+        <!-- <mat-form-field class="example-form-field border-input p-l-20 border-input p-r-20">
           <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
-        </mat-form-field>
+        </mat-form-field> -->
       </span>
       <span>
         <button [disabled]="!form.valid" mat-raised-button matStepperNext class="main-background-color main-button color-white">
