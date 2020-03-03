@@ -30,9 +30,7 @@ export class UserService {
   }
 
   addUsers(user: UserAdd) {
-    return this.dataService.sendPostRequest(API.ADDUSER, user).then(res => {
-      return res;
-    });
+    return this.dataService.sendPostRequest(API.ADDUSER, user)
   }
   updateUsers(user: UserAdd) {
     return this.dataService.sendPostRequest(API.EDITUSER, user).then(res => {
@@ -62,11 +60,11 @@ export class UserService {
     return this.dataService.getRequest(API.GET_NOTIFICATIONS(userId))
   }
 
-  getUserInfoUniqueCode(uniqueCode){
+  getUserInfoUniqueCode(uniqueCode) {
     return this.dataService.getRequest(API.GET_USER_INFO_UNIQUE_CODE(uniqueCode));
   }
 
-  getDashboardData(data){
+  getDashboardData(data) {
     return this.dataService.sendPostRequest(API.GET_DASHBOARD_DATA, data);
   }
 }
