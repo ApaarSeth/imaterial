@@ -67,7 +67,7 @@
       <!-- Accordion for PO Lists -->
       <div class="po-list-detail-custom">
         <div *ngIf="poApprovalDetailsTemp">
-          <mat-expansion-panel class="myPanel" [expanded]="true">
+          <mat-expansion-panel class="myPanel m-b-10" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
                 P.O. For Approval
@@ -115,7 +115,7 @@
             </div>
           </mat-expansion-panel>
         </div>
-        <br>
+        
         <div *ngIf="poDraftedDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
@@ -159,7 +159,7 @@
                         [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'edit']">View
                         P.O.</a></span>
                     <span>&nbsp;</span>    
-                    <span class="p-r-10"><a (click)="deleteDraftedPo(element)" matTooltip="Delete">
+                    <span class="p-r-10 float-right"><a (click)="deleteDraftedPo(element)" matTooltip="Delete">
                         <img src="../../../../assets/images/delete-button.png">
                       </a></span>
                   </td>

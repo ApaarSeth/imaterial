@@ -68,7 +68,7 @@ button:focus {
 }
 
 .page-start-point {
-  padding-top: 105px !important;
+  padding-top: 120px !important;
   height: 100%;
 }
 
@@ -181,7 +181,7 @@ input {
 }
 
 .min-height {
-  min-height: calc(100vh - 110px);
+  min-height: calc(100vh - 130px);
 }
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
@@ -479,3 +479,7 @@ mat-accordion {
    //   line-height: 0.6 !important;
       min-height: 106px !important;
   }
+  .float-right{
+    float: right;
+  }
+  
