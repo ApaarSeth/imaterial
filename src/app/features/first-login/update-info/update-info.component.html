@@ -1,107 +1,84 @@
 <section class="update-info">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="update-info__popup p-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="update-info__popup p-4">
+          <form class="update-info__form" *ngIf="userInfoForm" [formGroup]="userInfoForm" (ngSubmit)="submit()">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="user-profile text-center text-uppercase pt-2 pb-4" *ngIf="users">{{ users.organizationName }}</h3>
+              </div>
 
-                    <form class="update-info__form" *ngIf="userInfoForm" [formGroup]="userInfoForm" (ngSubmit)="submit()">
-                        <div class="row">
+              <div class="col-md-6">
+                <div class="phot-title"></div>
+                <div class="user-photo">
+                  <img [src]="localImg || 'assets/images/default-image.png'" class="img-fluid user_photo" alt="" />
+                </div>
 
-                            <div class="col-md-12">
-                                <h3 class="user-profile text-center text-uppercase pt-2 pb-4" *ngIf="users">{{ users.organizationName }}</h3>
-                            </div>
+                <div class="browser-method">
+                  <label class="myLabel">
+                    <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
+                    <span>Upload</span>
+                  </label>
+                </div>
+              </div>
 
-                            <div class="col-md-6">
+              <div class="col-md-6">
+                <!-- <h4 class="org-name text-uppercase" *ngIf="users">{{ users.organizationName }}</h4> -->
+                <!-- <mat-form-field class="border-input w-100"> -->
+                <!-- <input matInput type="text" formControlName="organizationName"> -->
+                <!-- </mat-form-field> -->
 
-                                <div class="phot-title"></div>
-                                <div class="user-photo">
-                                    <img [src]="localImg || 'assets/images/default-image.png'"
-                                        class="img-fluid user_photo" alt="">
-                                </div>
-                            
-                                <div class="browser-method">
-                                    <label class="myLabel">
-                                        <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
-                                        <span>Upload</span>
-                                    </label>
-                                </div>
-                            </div>
-                            
+                <mat-form-field class="border-input w-100">
+                  <input matInput type="text" placeholder="First Name" formControlName="firstName" />
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['firstName'].errors && (userInfoForm.controls['firstName'].dirty || userInfoForm.controls['firstName'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['firstName'].hasError('required')">
+                    First name is required
+                  </mat-error>
+                </mat-error>
 
-                            <div class="col-md-6">
+                <mat-form-field class="border-input w-100">
+                  <input matInput type="text" placeholder="Last Name" formControlName="lastName" />
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['lastName'].errors && (userInfoForm.controls['lastName'].dirty || userInfoForm.controls['lastName'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['lastName'].hasError('required')">
+                    Last name is required
+                  </mat-error>
+                </mat-error>
 
-                                <!-- <h4 class="org-name text-uppercase" *ngIf="users">{{ users.organizationName }}</h4> -->
-                                <!-- <mat-form-field class="border-input w-100"> -->
-                                    <!-- <input matInput type="text" formControlName="organizationName"> -->
-                                <!-- </mat-form-field> -->
+                <mat-form-field class="border-input w-100">
+                  <input matInput type="text" placeholder="Email Id" formControlName="email" />
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['email'].errors && (userInfoForm.controls['email'].dirty || userInfoForm.controls['email'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['email'].hasError('required')">
+                    Email address is required
+                  </mat-error>
+                </mat-error>
 
+                <mat-form-field class="border-input w-100">
+                  <input matInput type="text" placeholder="Phone No." formControlName="contactNo" />
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
+                    Phone number is required
+                  </mat-error>
+                </mat-error>
 
+                <mat-form-field class="border-select w-100">
+                  <mat-label>Role</mat-label>
+                  <mat-select formControlName="roleId">
+                    <mat-option *ngFor="let role of roles" [value]="role.roleId">
+                      {{ role.roleDescription }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['roleId'].errors && (userInfoForm.controls['roleId'].dirty || userInfoForm.controls['roleId'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['roleId'].hasError('required')"> Role is required</mat-error>
+                </mat-error>
+              </div>
 
-                                <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" placeholder="First Name" formControlName="firstName">
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['firstName'].errors && (userInfoForm.controls['firstName'].dirty || userInfoForm.controls['firstName'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['firstName'].hasError('required')">
-                                        First name is required
-                                    </mat-error>
-                                </mat-error>
-
-
-
-                                <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" placeholder="Last Name" formControlName="lastName">
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['lastName'].errors && (userInfoForm.controls['lastName'].dirty || userInfoForm.controls['lastName'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['lastName'].hasError('required')">
-                                        Last name is required
-                                    </mat-error>
-                                </mat-error>
-
-
-
-                                <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" placeholder="Email Id" formControlName="email">
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['email'].errors && (userInfoForm.controls['email'].dirty || userInfoForm.controls['email'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['email'].hasError('required')">
-                                        Email address is required
-                                    </mat-error>
-                                </mat-error>
-
-
-                                
-                                <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" placeholder="Phone No." formControlName="contactNo">
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
-                                        Phone number is required
-                                    </mat-error>
-                                </mat-error>
-
-
-
-                                <mat-form-field class="border-select w-100">
-                                    <mat-label>Role</mat-label>
-                                    <mat-select formControlName="roleId">
-                                        <mat-option *ngFor="let role of roles" [value]="role.roleId">
-                                          {{role.roleDescription}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['roleId'].errors && (userInfoForm.controls['roleId'].dirty || userInfoForm.controls['roleId'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['roleId'].hasError('required')">
-                                        Role is required</mat-error>
-                                </mat-error>
-                            </div>
-
-
-                            <!-- <div class="col-md-12">
+              <!-- <div class="col-md-12">
                                 <p>Choose Trades</p>
                                 <div class="trade-list d-flex align-items-center flex-wrap">
                                     <div class="trades" *ngFor="let trade of tradeList; let i = index"
@@ -112,18 +89,25 @@
                                 </div>
                             </div> -->
 
-                            <div class="col-md-12">
-                                <p style="font-weight: 600;">Choose Trades</p>
-                                <mat-chip-list multiple id="chipList" [selectable]="true">
-                                    <mat-chip *ngFor="let trade of tradeList" [selected]="trade.tradeId" [class.active]="trade.selected"
-                                        (click)="trade.selected = !trade.selected; changeSelected('s', trade.tradeId)">
-                                      {{trade.tradeName}}
-                                  </mat-chip>
-                                </mat-chip-list>
-                            </div>
+              <div class="col-md-12">
+                <p style="font-weight: 600;">Choose Trades</p>
+                <mat-chip-list multiple id="chipList" [selectable]="true">
+                  <mat-chip
+                    *ngFor="let trade of tradeList"
+                    [selected]="trade.tradeId"
+                    [class.active]="trade.selected && trade.tradeId !== 22"
+                    (click)="trade.selected = !trade.selected; changeSelected('s', trade)"
+                  >
+                    {{ trade.tradeName }}
+                  </mat-chip>
+                  <form [formGroup]="customTrade"></form>
+                  <mat-form-field *ngIf="selectedTradesId.indexOf(22) > -1" class="border-input main-color">
+                    <input matInput formControlName="trade" type="text" placeholder="Enter Trade" />
+                  </mat-form-field>
+                </mat-chip-list>
+              </div>
 
-
-                            <!-- <div class="col-md-6">
+              <!-- <div class="col-md-6">
 
                                 <mat-form-field class="border-input w-100">
                                     <input matInput type="text" formControlName="addressLine1" placeholder="Address Line 1">
@@ -163,7 +147,7 @@
 
                             </div> -->
 
-                            <!-- <div class="col-md-6">
+              <!-- <div class="col-md-6">
                                 <mat-form-field class="border-input w-100">
                                     <input matInput type="text" formControlName="addressLine2" placeholder="Address Line 2">
                                 </mat-form-field>
@@ -195,14 +179,13 @@
                                 </mat-error>
                             </div> -->
 
-                            <div class="text-center col-md-12 mt-4">
-                                <button class="btn btn-warning next-btn" [disabled]="!userInfoForm.valid">Next</button>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
+              <div class="text-center col-md-12 mt-4">
+                <button class="btn btn-warning next-btn" [disabled]="!userInfoForm.valid">Next</button>
+              </div>
             </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </section>
