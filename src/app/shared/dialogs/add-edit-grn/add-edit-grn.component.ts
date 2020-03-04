@@ -27,7 +27,7 @@ export class AddEditGrnComponent implements OnInit {
   dataSource: GRNDetails[];
   GRNDetails: GRNDetails;
   qtyEnteredValidation;
-  displayedColumns: string[] = ["Material Name", "Brand Name", "Awarded Quantity", "Delivered Quantity", "Certified Quantity"];
+  displayedColumns: string[] = ["Material Name", "Brand Name", "Unit", "Awarded Quantity", "Delivered Quantity", "Certified Quantity"];
   materialForms: FormGroup;
   orgId: number;
   purchaseOrderId: any;

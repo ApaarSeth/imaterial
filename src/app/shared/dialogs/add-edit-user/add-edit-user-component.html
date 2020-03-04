@@ -132,7 +132,8 @@
         mat-raised-button [disabled]="!form.valid" (click)="userDetailsNavigate()"
         class="main-background-color main-button color-white pull-right"
       >
-        Save
+        <span *ngIf="!data.isEdit">Add</span>
+        <span *ngIf="data.isEdit">Edit</span>
       </button>
     </div>
   </div>
