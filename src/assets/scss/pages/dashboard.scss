@@ -270,3 +270,9 @@ body, .bg-gray, .mat-drawer-content{
 .equal-height{
   min-height: 156px;
 }
+
+.banner{
+  &__image img{
+    width: 100%;
+  }
+}
