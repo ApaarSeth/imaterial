@@ -3,7 +3,7 @@
 
     <div class="row">
       <div class="col-md-2 col-xs-12" style="height: 150px;">
-        <img class="radius-10" style="height: 100%;" src="../../../../assets/images/2020-01-08.jpg"
+        <img class="radius-10 project-item-image" [src]="projectDetails.imageUrl || '../../../../assets/images/project-default-image.png'"
           alt="project image" />
       </div>
 
@@ -23,11 +23,11 @@
               <div class=" col-xs-10 display-flex">
                 <div class="font-size12  color-text-card text-left width50Percent line-height">
                   <i class="material-icons font-size12 color-text-card">room</i>
-                  <span *ngIf="projectDetails.addressLine1" class="p-l-5">{{ projectDetails.addressLine1 }}</span>
-                  <span *ngIf="projectDetails.addressLine2" class="p-l-5">, {{ projectDetails.addressLine2 }}</span>
-                  <span *ngIf="projectDetails.city" class="p-l-5">, {{ projectDetails.city }}</span>
-                  <span *ngIf="projectDetails.state" class="p-l-5">, {{ projectDetails.state }}</span>
-                  <span *ngIf="projectDetails.pinCode" class="p-l-5">, {{ projectDetails.pinCode }}</span>
+                  <span *ngIf="projectDetails.addressLine1">{{ projectDetails.addressLine1 }}</span>
+                  <span *ngIf="projectDetails.addressLine2">, {{ projectDetails.addressLine2 }}</span>
+                  <span *ngIf="projectDetails.city">, {{ projectDetails.city }}</span>
+                  <span *ngIf="projectDetails.state">, {{ projectDetails.state }}</span>
+                  <span *ngIf="projectDetails.pinCode">, {{ projectDetails.pinCode }}</span>
                 </div>
                 <div class="font-size12 color-text-card text-left width50Percent">
                   <i class="material-icons font-size12 color-text-card">format_shapes</i>
@@ -41,7 +41,7 @@
                 <div class="font-size12 color-text-card text-left width50Percent">
                   <i class="material-icons font-size12 color-text-card">today</i>
                   <span class="p-l-5">{{ projectDetails.startDate | date }}</span> to
-                  <span class="p-l-5">{{ projectDetails.endDate | date }}</span>
+                  <span>{{ projectDetails.endDate | date }}</span>
                 </div>
                 <div class="font-size12 color-text-card text-left width50Percent">
                   <span>₹<span class="p-l-5">

@@ -67,7 +67,7 @@
                                 <!-- <input matInput type="number" placeholder="Quantity"> -->
 
                             <mat-form-field [formGroupName]="i" class="border-input table-input">
-                                    <input matInput formControlName="certifiedQty" type="number" placeholder="Required Quantity" />
+                                    <input matInput formControlName="certifiedQty" type="number" placeholder="Required Quantity" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
                                 </mat-form-field>
                                 <!-- {{ element.certifiedQuantity }} -->
                             </td>

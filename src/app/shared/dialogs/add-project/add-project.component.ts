@@ -8,6 +8,7 @@ import {
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
 import { FieldRegExConst } from "../../constants/field-regex-constants";
+import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 
 export interface City {
   value: string;
@@ -40,10 +41,13 @@ export class AddProjectComponent implements OnInit {
   sameStartEndDate: boolean = false;
   endstring: string;
 
+  localImg: string | ArrayBuffer;
+
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
+      private _uploadImageService: DocumentUploadService,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar
   ) { }
@@ -123,7 +127,8 @@ export class AddProjectComponent implements OnInit {
       gstNo: [
         this.data.isEdit ? this.data.detail.gstNo : "",
         [Validators.pattern(FieldRegExConst.GSTIN)]
-      ]
+      ],
+     imageUrl: [''],
     });
   }
 
@@ -186,6 +191,17 @@ formatDate(oldDate): Date {
     this.dialogRef.close(null);
   }
 
+getPincode(event){
+     if (event.target.value.length == 6) {
+         this.projectService.getPincode(event.target.value).then(res =>{
+           if(res.message){
+             this.form.get('city').setValue("gurgaon");
+             this.form.get('state').setValue("haryana");
+           }
+         });
+     }
+
+}
   getStart(event) {
     const x = event.indexOf('/');
     const month = event.substring(0, x);
@@ -223,5 +239,25 @@ formatDate(oldDate): Date {
     return dtFrom == dtTo
   }
 
-  uploadPhoto() { }
+    onFileSelect(event) {
+    if (event.target.files.length > 0) {
+        var reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = (event) => {
+            this.localImg = (<FileReader>event.target).result;
+        }
+        const file = event.target.files[0];
+        this.uploadImage(file);
+    }
+  }
+    uploadImage(file){
+    if (file) {
+      const data = new FormData();
+      data.append(`file`, file);
+      return this._uploadImageService.postDocumentUpload(data).then(res => {
+          this.form.get('imageUrl').setValue(res.data);
+      });
+    }
+  }
+
 }
