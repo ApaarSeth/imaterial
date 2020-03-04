@@ -393,10 +393,10 @@ export class DataService {
     if (
       err
     ) {
-      localStorage.clear();
-      window.location.reload();
+      console.log(err)
+
     }
     //this.notifier.notify(err.error.message);
-    throw err.error;
+    throw err;
   }
 }
