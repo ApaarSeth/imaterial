@@ -70,4 +70,5 @@ export const API = {
   GET_USER_INFO_UNIQUE_CODE: uniqueCode => `user/info/${uniqueCode}`,
   GET_DASHBOARD_DATA: 'dashboard',
   UPLOADSUPPLIEREXCEL: organisationId => `projects/uploadSuppliers/${organisationId}`,
+  GETCITYANDSTATE: pincode => `city-state/get/${pincode}`
 };

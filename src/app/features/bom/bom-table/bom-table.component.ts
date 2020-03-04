@@ -37,9 +37,9 @@ export class BomTableComponent implements OnInit {
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName", "estimatedQty", "requestedQuantity", "issueToProject", "availableStock", "customColumn"];
+  columnsToDisplay = ["materialName", "estimatedQty", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
 
-  innerDisplayedColumns = ["materialName", "estimatedQty", "requestedQuantity", "issueToProject", "availableStock", "customColumn"];
+  innerDisplayedColumns = ["materialName", "estimatedQty", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;

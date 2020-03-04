@@ -20,7 +20,7 @@
 
                 </mat-form-field>
                 <mat-form-field class="col-xs-12 border-input">
-                    <input matInput type="number" formControlName="phone" placeholder="Phone No." />
+                    <input matInput type="number"  min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" placeholder="Phone No." />
                      <small
                     *ngIf="signupForm.controls['phone'].hasError('required') && signupForm.controls['phone'].touched"
                     class="signupForm-error-msg"> Phone No is required </small>

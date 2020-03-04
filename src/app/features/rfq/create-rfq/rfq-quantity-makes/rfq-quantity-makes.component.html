@@ -17,7 +17,7 @@
       </mat-form-field>
     </div>
 
-    <div class="col-xs-6 text-right p-t-10">
+    <div class="col-xs-6 text-right p-t-10 p-b-10">
       <span class="p-r-5">
         <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="materialAdded()" type="button">Back</button>
       </span>
@@ -91,7 +91,7 @@
             <th mat-header-cell *matHeaderCellDef>Estimated Rate</th>
             <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)" class="border-input table-input">
-                <input matInput formControlName="estimatedRate" type="number" placeholder="Estimated Rate" />
+                <input matInput formControlName="estimatedRate" type="number" placeholder="Estimated Rate" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
               </mat-form-field>
             </td>
           </ng-container>
@@ -99,7 +99,7 @@
             <th mat-header-cell *matHeaderCellDef>Quantity</th>
             <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)" class="border-input table-input">
-                <input matInput formControlName="quantity" type="number" placeholder="Quantity" />
+                <input matInput formControlName="quantity" type="number" placeholder="Quantity" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
               </mat-form-field>
             </td>
           </ng-container>
