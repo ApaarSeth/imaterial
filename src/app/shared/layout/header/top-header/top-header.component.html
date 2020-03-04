@@ -6,7 +6,7 @@
         <span><img width="200" src="../../../../assets/images/loginLogo.png" alt="logo" /></span>
         <span class="menu-spacer"></span>
 
-        <button class="pull-right p-t-10 notification-bell-icon" mat-button>
+        <button class="pull-right p-t-10 notification-bell-icon" mat-button [matMenuTriggerFor]="notifs">
 
             <a href="javascript:void(0)" (click)="openDiv()">
                 <mat-icon [ngClass]="{'bell-icon-active': notifClicked === true,'bell-icon':notifClicked === false }"
@@ -35,55 +35,57 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<ng-container *ngIf="notifClicked">
-    <div id="notifications">
-        <h3>Notifications</h3>
-        <div class="body-of-notification">
+    <mat-menu #notifs="matMenu" class="header-bell-menu">
+            <div class="main-div-bell" mat-menu-item>
+                  <div id="notifications">
+                <h3>Notifications</h3>
+                <div class="body-of-notification">
 
-            <ng-container *ngIf="unreadnotification && unreadnotification.length>0">
-                <div class="read-unread-heading p-10  cursor-pointer">
-                    <span>
-                        Recent
-                    </span>
-                    <span class="pull-right ">
-                        You have {{unreadnotification.length}} unread notifications
-                    </span>
+                    <ng-container *ngIf="unreadnotification && unreadnotification.length>0">
+                        <div class="read-unread-heading p-l-10 p-r-10  cursor-pointer">
+                            <span>
+                                Recent
+                            </span>
+                            <span class="pull-right ">
+                                You have {{unreadnotification.length}} unread notifications
+                            </span>
+                        </div>
+                        <ng-container *ngFor="let notification of unreadnotification">
+                            <div (click)="routeTo(notification.resourceUrl)" class="p-l-10 p-r-10 unread-background  cursor-pointer">
+                                <span *ngIf="notification.notificationText" class="font-size-12">
+                                    {{notification.notificationText}}
+                                </span>
+                                <span *ngIf="notification.created_at" class="time-notification">
+                                    <br>
+                                    {{notification.created_at |  date:'medium'}}
+                                </span>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="readnotification && readnotification.length>0">
+                        <div class="read-unread-heading">
+                            <span class="p-5">
+                                Earlier
+                            </span>
+
+                        </div>
+                        <ng-container *ngFor="let notification of readnotification">
+                            <div (click)="routeTo(notification.resourceUrl)" class="read-background cursor-pointer">
+                                <span *ngIf="notification.notificationText" class="font-size-12">
+                                    {{notification.notificationText}}
+                                </span>
+                                <span *ngIf="notification.created_at" class="time-notification">
+                                    <br>
+                                    {{notification.created_at | date:'medium'}}
+                                </span>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+
                 </div>
-                <ng-container *ngFor="let notification of unreadnotification">
-                    <div (click)="routeTo(notification.resourceUrl)" class="p-10 unread-background  cursor-pointer">
-                        <span *ngIf="notification.notificationText" class="font-size-12">
-                            {{notification.notificationText}}
-                        </span>
-                        <span *ngIf="notification.created_at" class="time-notification">
-                            <br>
-                            {{notification.created_at |  date:'medium'}}
-                        </span>
-                    </div>
-                </ng-container>
-            </ng-container>
-
-            <ng-container *ngIf="readnotification && readnotification.length>0">
-                <div class="read-unread-heading">
-                    <span class="p-5">
-                        Earlier
-                    </span>
-
-                </div>
-                <ng-container *ngFor="let notification of readnotification">
-                    <div (click)="routeTo(notification.resourceUrl)" class="read-background cursor-pointer">
-                        <span *ngIf="notification.notificationText" class="font-size-12">
-                            {{notification.notificationText}}
-                        </span>
-                        <span *ngIf="notification.created_at" class="time-notification">
-                            <br>
-                            {{notification.created_at | date:'medium'}}
-                        </span>
-                    </div>
-                </ng-container>
-            </ng-container>
-
-
-        </div>
-        <!-- <div class="seeAll"><a href="#">View All</a></div> -->
-    </div>
-</ng-container>
+                <!-- <div class="seeAll"><a href="#">View All</a></div> -->
+            </div>
+            </div>
+    </mat-menu> 

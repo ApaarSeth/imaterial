@@ -92,7 +92,7 @@
             </div>
             <div class=" col-xs-3 formGroup">
               <mat-form-field class="col-xs-12 border-input" [formGroupName]="i">
-                <input formControlName="issuedQty" (input)="showQuantityInput()" matInput type="number" [max]="num" placeholder="Issue Quantity" />
+                <input formControlName="issuedQty" (input)="showQuantityInput()" matInput type="number" [max]="num" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Issue Quantity" />
                 <!-- <mat-error *ngIf="materialForms.controls.forms.controls[i].controls['issuedQty'].hasError('max') &&  materialForms.controls.forms.controls[i].controls['issuedQty'].touched"
                 class="error-msg p-t-5"> Quantity should be less than available stocks. </mat-error> -->
               </mat-form-field>
@@ -108,7 +108,7 @@
   <div mat-dialog-actions>
     <div class="col-sm-12 text-align-center">
       <small   class="error-msg" *ngIf="errorMsg">
-        Sum of issued quantities should be less the quantities in available stock.
+        Sum of issued quantities should be less than the quantities in available stock.
       </small>
     </div>
     <div class="col-sm-12 save-btn-add-edit-user-modal">

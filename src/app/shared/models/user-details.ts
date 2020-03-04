@@ -2,20 +2,20 @@ import { ProjectDetails } from './project-details';
 
 export interface AllUserDetails {
   firstName?: string,
-                lastName?: string,
-                userId?: number,
-                email?: string,
-                contactNo?: number,
-                accountStatus?: number,
-                status?: number,
-                roleName?: number,
-                roleId?: number,
-                projectId?: number,
-                projectName?: string,
-                ProjectList?: ProjectDetails[];
-                
-                 ProjectUser?: UserAdd;
-                
+  lastName?: string,
+  userId?: number,
+  email?: string,
+  contactNo?: number,
+  accountStatus?: number,
+  status?: number,
+  roleName?: number,
+  roleId?: number,
+  projectId?: number,
+  projectName?: string,
+  ProjectList?: ProjectDetails[];
+
+  ProjectUser?: UserAdd;
+
 
 }
 
@@ -29,32 +29,32 @@ export interface UserIds {
   userIds?: Array<Number>;
 }
 
-export interface Roles{
+export interface Roles {
   roleId?: number,
-  roleName?:string,
-  roleDescription?:string
+  roleName?: string,
+  roleDescription?: string
 }
 
-export interface UserAdd{
-     userId?: number,
-     firstName?: string,
-     lastName?: string,
-     email?: string,
-     contactNo ?: number
-     roleId?: number,
-     creatorId?: number,
-     status?:number,
-     projectIds?: number[],
-    projects?: number[]
+export interface UserAdd {
+  userId?: number,
+  firstName?: string,
+  lastName?: string,
+  email?: string,
+  contactNo?: number
+  roleId?: number,
+  creatorId?: number,
+  status?: number,
+  projectIds?: number[],
+  projects?: number[]
 }
 
-export interface UserRoles{
+export interface UserRoles {
   roleId: number;
   roleName: string;
   roleDescription: string;
 }
 
-export interface UserDetails{
+export interface UserDetails {
   id: number;
   status: number;
   createdBy: string;
@@ -97,14 +97,14 @@ export interface UserDetails{
   companyName?: string;
 }
 
-export interface TradeList{
+export interface TradeList {
   id: number;
   status: number;
   createdBy: string;
   createdAt: string;
   lastUpdatedBy: string;
   lastUpdatedAt: string;
-  tradeId: number[];
+  tradeId: number;
   tradeName: string;
   tradeDescription: string;
   selected?: boolean;

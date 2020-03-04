@@ -114,12 +114,13 @@ ngx-guided-tour {
             color: $tour-text-color;
             background-color: $tour-step-color;
             box-shadow: 0 0.4rem 0.6rem $tour-shadow-color;
+            border-radius: 5px;
         }
 
         .tour-buttons {
             button.skip-button {
                 color: $tour-skip-link-color;
-                 font-weight: 400;
+                 font-weight: 450 !important;
             }
 
             .back-button {

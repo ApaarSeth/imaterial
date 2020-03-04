@@ -75,4 +75,12 @@ export class ProjectService {
         return res;
       });
   }
+
+  getPincode(pin:number){
+     return this.dataService
+      .getRequest(API.GETCITYANDSTATE(pin))
+      .then(res => {
+        return res;
+      });
+  }
 }

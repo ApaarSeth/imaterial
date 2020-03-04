@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 import { POService } from 'src/app/shared/services/po/po.service';
 import { SupplierAddress } from 'src/app/shared/models/PO/po-data';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
 @Component({
   selector: "rfq-supplier-add-address",
   templateUrl: "./rfq-supplier-add-address.component.html"
@@ -21,6 +22,8 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   supplierId: number;
   form: FormGroup;
   materialForms: FormGroup;
+  city: string;
+  state: string;
 
   constructor(
     public dialog: MatDialog,
@@ -28,7 +31,8 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private poService: POService,
-    private router: Router
+    private router: Router,
+    private projectService: ProjectService
   ) { }
 
   ngOnInit() {
@@ -74,11 +78,11 @@ export class RFQSupplierAddAddressComponent implements OnInit {
         [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
       ],
       state: [
-        this.supplierAddress.data ? this.supplierAddress.data[0].state : "",
+        {value:this.supplierAddress.data ? this.supplierAddress.data[0].state : "",disabled:true},
         Validators.required
       ],
       city: [
-        this.supplierAddress.data ? this.supplierAddress.data[0].city : "",
+        {value:this.supplierAddress.data ? this.supplierAddress.data[0].city : "",disabled:true},
         Validators.required
       ],
       gstNo: [
@@ -101,9 +105,24 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     //   }
     // })
   }
+  getPincode(event){
+     if (event.target.value.length == 6) {
+         this.projectService.getPincode(event.target.value).then(res =>{
+           if(res.data){
+             this.city = res.data[0].districtName;
+             this.state = res.data[0].stateName;
+             this.form.get('city').setValue(res.data[0].districtName);
+             this.form.get('state').setValue(res.data[0].stateName);
+           }
+         });
+     }
+
+}
 
   openDialog(): void {
-    
+       this.form.value.city = this.city;
+       this.form.value.state = this.state;
+
     const dialogRef = this.dialog.open(ConfirmRfqBidComponent, {
       data: { rfqSupplierData: this.rfqSupplierObj, supplierAddress: this.form.value, supplierId: this.supplierId },
       width: "800px"

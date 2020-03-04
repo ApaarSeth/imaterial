@@ -54,6 +54,7 @@ body, .bg-gray, .mat-drawer-content{
       }
     }
     &__img img {
+        min-height: 80px;
         height: 80px;
         margin-bottom: 7px;
     }
@@ -132,7 +133,7 @@ body, .bg-gray, .mat-drawer-content{
     text-align: center;
     padding: 0 20px;
     line-height: 36px;
-    color: #2096ba;
+    color: #093c55;
   }
 
   .stats{
