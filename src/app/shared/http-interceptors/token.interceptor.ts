@@ -10,43 +10,50 @@ export class TokenInterceptor implements HttpInterceptor {
 
     private reqInProgress = false;
 
-    constructor(private token: TokenService,
+    constructor(private tokenService: TokenService,
         private http: HttpClient,
         private handler: HttpBackend) {
         this.http = new HttpClient(this.handler);
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        return this.getAuthHeaders().pipe(
+            mergeMap(headers => {
+                const authorizationKey = `Bearer ${this.tokenService.getToken()}`;
+                //  const authorizationKey = `Bearer ${this.tokenService.getToken()}`;
 
-        return this.getToken().pipe(
-            mergeMap(token => {
-                const authorizationKey = `Bearer ${this.token.getToken()}`;
+                // if (!request.headers.has('Content-Type')) {
+                //     // request = request.clone({
+                //     //   headers: request.headers.set('Content-Type', 'application/json')
+                //     // });
+                // }
 
-                if (!request.headers.has('Content-Type')) {
-                    // request = request.clone({
-                    //   headers: request.headers.set('Content-Type', 'application/json')
-                    // });
+                if (request.url.indexOf('api/auth/signup') > -1 ||
+                    request.url.indexOf('oauth/token') > -1 ||
+                    request.url.indexOf('material/materialsSpecs') > -1 ||
+                    request.url.indexOf('material/groups') > -1) {
+                    return next.handle(request)
                 }
-
-                if (this.token.getToken()) {
-                    request = request.clone({
-                        headers: request.headers.set('Authorization', authorizationKey)
+                else if (headers) {
+                    let modifiedRequest = request.clone({
+                        headers: request.headers.set(
+                            'Authorization', authorizationKey)
+                            .set('userId', this.tokenService.getUserId().toString())
+                            .set('orgId', this.tokenService.getOrgId().toString())
+                            .set('role', this.tokenService.getRole())
                     });
+            
+                    // let modifiedRequest = request.clone({
+                    //     setHeaders: headers
+                    // });
+                    return next.handle(modifiedRequest);
                 }
-
-                request = request.clone({
-                    // setHeaders: {
-                    //     'Access-Control-Allow-Origin': '*',
-                    //     'accept': '*/*'
-                    // }
-                });
-                return next.handle(request);
             }));
     }
 
 
-    getToken(): Observable<any> {
-        const t = this.token.getToken();
+    getAuthHeaders(): Observable<any> {
+        const t = this.tokenService.getAuthHeader();
         return of(t);
 
     }
