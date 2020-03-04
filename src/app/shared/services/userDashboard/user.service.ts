@@ -45,7 +45,7 @@ export class UserService {
   }
 
   getUserInfo(userId) {
-    return this.dataService.getRequest(API.GET_USER_PROFILE(userId)).then(res => res);
+    return this.dataService.getRequest(API.GET_USER_PROFILE(userId)).then(res => res)
   }
 
   getTrades() {

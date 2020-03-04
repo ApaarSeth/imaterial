@@ -40,9 +40,8 @@ export class TokenInterceptor implements HttpInterceptor {
                             'Authorization', authorizationKey)
                             .set('userId', this.tokenService.getUserId().toString())
                             .set('orgId', this.tokenService.getOrgId().toString())
-                            .set('role', this.tokenService.getRole())
                     });
-            
+
                     // let modifiedRequest = request.clone({
                     //     setHeaders: headers
                     // });
