@@ -17,9 +17,9 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
         return this.getAuthHeaders().pipe(
             mergeMap(headers => {
+                const authorizationKey = `Bearer ${this.tokenService.getToken()}`;
                 //  const authorizationKey = `Bearer ${this.tokenService.getToken()}`;
 
                 // if (!request.headers.has('Content-Type')) {
@@ -35,13 +35,17 @@ export class TokenInterceptor implements HttpInterceptor {
                     return next.handle(request)
                 }
                 else if (headers) {
-                    // request = request.clone({
-                    //     headers: request.headers.set('Authorization', this.tokenService.getRole()),
-
-                    // });
                     let modifiedRequest = request.clone({
-                        setHeaders: headers
+                        headers: request.headers.set(
+                            'Authorization', authorizationKey)
+                            .set('userId', this.tokenService.getUserId().toString())
+                            .set('orgId', this.tokenService.getOrgId().toString())
+                            .set('role', this.tokenService.getRole())
                     });
+            
+                    // let modifiedRequest = request.clone({
+                    //     setHeaders: headers
+                    // });
                     return next.handle(modifiedRequest);
                 }
             }));

@@ -20,9 +20,10 @@ export class UpdateInfoComponent implements OnInit {
 
   roles: UserRoles[];
   userInfoForm: FormGroup;
+  customTrade: FormGroup;
   users: UserDetails;
   tradeList: TradeList;
-  selectedTrades: any[] = [];
+  selectedTrades: TradeList[] = [];
   localImg: string | ArrayBuffer;
   filename: string;
   role: string;
@@ -33,6 +34,7 @@ export class UpdateInfoComponent implements OnInit {
     { value: "Delhi", viewValue: "Delhi" },
     { value: "Karnal", viewValue: "Karnal" }
   ];
+  selectedTradesId: number[] = [];
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -51,7 +53,7 @@ export class UpdateInfoComponent implements OnInit {
     this._userService.getRoles().then(res => {
       this.roles = res.data.reverse();
       const id = this.roles.filter(opt => opt.roleName === this.role);
-      this.roleId = id[0].roleId;      
+      this.roleId = id[0].roleId;
     })
   }
 
@@ -62,7 +64,7 @@ export class UpdateInfoComponent implements OnInit {
     });
   }
 
-  getTradesList(){
+  getTradesList() {
     this._userService.getTrades().then(res => {
       this.tradeList = res.data;
     })
@@ -80,7 +82,7 @@ export class UpdateInfoComponent implements OnInit {
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
-      tradeId: [''],
+      trade: [],
       profileUrl: [''],
 
       // addressLine1: ['', Validators.required],
@@ -97,48 +99,71 @@ export class UpdateInfoComponent implements OnInit {
       // gstNo: [''],
       // file: ['']
     });
+    this.customTrade = this._formBuilder.group({
+      trade: []
+    })
   }
 
-  changeSelected(parameter: string, query: string) {    
-    const index = this.selectedTrades.indexOf(query);
-    if (index >= 0) {
-      this.selectedTrades.splice(index, 1);
+  changeSelected(parameter: string, trade: TradeList) {
+    let choosenIndex = -1;
+    this.selectedTrades.forEach((trades, index) => {
+      if (trades.tradeId = trade.tradeId) {
+        choosenIndex = index;
+      }
+    })
+    if (choosenIndex >= 0) {
+      this.selectedTrades.splice(choosenIndex, 1);
     } else {
-      this.selectedTrades.push(query);
+      this.selectedTrades.push(trade);
+      if (trade.tradeId === 22) {
+        this.customTrade.get("trade").enable()
+      }
+      else {
+        this.customTrade.get("trade").disable()
+      }
     }
+
+    this.selectedTradesId = this.selectedTrades.map((trades: TradeList) => trades.tradeId).flat()
   }
 
   onFileSelect(event) {
     if (event.target.files.length > 0) {
-        var reader = new FileReader();
-        reader.readAsDataURL(event.target.files[0]);
-        reader.onload = (event) => {
-            this.localImg = (<FileReader>event.target).result;
-        }
-        const file = event.target.files[0];
-        this.uploadImage(file);
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event) => {
+        this.localImg = (<FileReader>event.target).result;
+      }
+      const file = event.target.files[0];
+      this.uploadImage(file);
     }
   }
 
-  uploadImage(file){
+  uploadImage(file) {
     if (file) {
       const data = new FormData();
       data.append(`file`, file);
       return this._uploadImageService.postDocumentUpload(data).then(res => {
-          this.userInfoForm.get('profileUrl').setValue(res.data);
+        this.userInfoForm.get('profileUrl').setValue(res.data);
       });
     }
   }
 
-  submit(){
+  submit() {
 
-    if(this.userInfoForm.valid){
-      
-      this.userInfoForm.value.tradeId = [...this.selectedTrades];
+    if (this.userInfoForm.valid) {
+      this.selectedTrades = this.selectedTrades.map((trade: TradeList) => {
+        if (trade.tradeId === 22) {
+          trade.tradeDescription = this.customTrade.value.trade;
+        }
+        return trade;
+      })
+      this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
+
+      // this.userInfoForm.value.tradeId = [...this.selectedTrades];
       const data: UserDetails = this.userInfoForm.value;
 
       this._userService.submitUserDetails(data).then(res => {
-        this._router.navigate(['profile/add-user']); 
+        this._router.navigate(['profile/add-user']);
       });
 
     }
