@@ -59,7 +59,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    // canActivate: [AuthGuardService, UserDataGuardService],
+    canActivate: [AuthGuardService],
     children: [
       {
         path: "project-dashboard",

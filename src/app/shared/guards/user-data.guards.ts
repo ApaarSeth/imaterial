@@ -16,7 +16,8 @@ export class UserDataGuardService implements CanActivate {
             if ((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
                 return true;
             }
-            this.router.createUrlTree(['/dashboard']);
+            this.router.navigate(['/dashboard']);
+            return false;
         });
     }
 }
