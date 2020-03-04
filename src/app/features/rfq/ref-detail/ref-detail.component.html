@@ -65,7 +65,7 @@
     </div>
 
     <div class="rfq-list-detail-custom">
-      <mat-accordion *ngIf="submittedRfqListTemp">
+      <mat-accordion *ngIf="submittedRfqListTemp" class="m-b-10">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -152,7 +152,7 @@
           </div>
         </mat-expansion-panel>
       </mat-accordion>
-      <br />
+     
       <mat-accordion *ngIf="nonSubmittedRfqListTemp">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header>

@@ -6,6 +6,26 @@
   mat-button:hover{
     background: none;
   }
+.blue-background-color{
+  height: 50px;
+    .mat-button-wrapper{
+             font-size: 16px !important;
+        }
+        .color-white.active{
+          border-bottom: 5px solid $main-color;
+      }
+
+  a{
+      line-height: 3.4;
+      .mat-button-wrapper{
+             font-size: 16px !important;
+        }
+      .color-white.active{
+          border-bottom: 5px solid $main-color;
+      }
+  } 
+}
+     
 }
 
 .menu-spacer {

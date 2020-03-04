@@ -110,10 +110,12 @@
             <!-- end date -->
             <mat-form-field class="border-input">
               <mat-label>Project End Date*</mat-label>
-              <input matInput [matDatepicker]="endDate" formControlName="endDate" [min]="minDate" 
+              <input matInput [matDatepicker]="endDate" formControlName="endDate" #refEnd 
+                 (dateChange)="getEndDate(refEnd.value)" [min]="minDate" 
                 (focus)="endDate.open()" readonly/>
               <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
               <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
+                 <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small>
             </mat-form-field>
           </div>
         </div>
@@ -201,11 +203,10 @@
   </div>
   <div mat-dialog-actions>
     <div class="col-sm-12 add-edit-dialog-button">
-      <button mat-raised-button [disabled]="!form.valid"
+      <button mat-raised-button [disabled]="!form.valid || sameStartEndDate"
         class="main-background-color main-button color-white pull-right">
         <span *ngIf="!data.isEdit">Add</span>
         <span *ngIf="data.isEdit">Edit</span>
-
       </button>
     </div>
   </div>
