@@ -29,7 +29,7 @@
           </div>
 
           <mat-form-field class="col-xs-12 border-input p-t-50 p-l-0">
-            <input matInput type="number" placeholder="OTP" />
+            <input matInput type="number" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="OTP" />
             <div class="main-color">
               <a class="pull-right p-t-20">Resend OTP</a>
             </div>

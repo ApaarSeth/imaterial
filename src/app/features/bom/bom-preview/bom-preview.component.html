@@ -30,7 +30,7 @@
                 </mat-form-field> -->
 
                      <mat-form-field class="border-input widthZero">
-                        <input  matInput formControlName="estimatedQty" type="number"  class="p-b-5 shortWidth" placeholder="Enter Quantity" />
+                        <input  matInput formControlName="estimatedQty" type="number"  class="p-b-5 shortWidth" placeholder="Enter Quantity"  min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
                         <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
                       </mat-form-field>
               </span>
@@ -48,7 +48,7 @@
                     </mat-form-field> -->
 
                      <mat-form-field class="border-input widthZero">
-                        <input  matInput  class="p-b-5 shortWidth" type="number" placeholder="Enter Quantity" />
+                        <input  matInput  class="p-b-5 shortWidth" type="number"  min="0" placeholder="Enter Quantity"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
                         <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
                       </mat-form-field>
                   </span>

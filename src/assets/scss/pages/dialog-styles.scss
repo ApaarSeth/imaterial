@@ -22,21 +22,10 @@
            width: 90%;
            margin: 0 auto;
            padding-top: 10px;
-        button{
-            box-sizing: border-box;	
-            border: 1px solid #F47720;	
-            border-radius: 15px;	
-            background-color: #FFFFFF;	
-            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.5);
-            span{
-                height: 22px;	
-                width: 59px;	
-                color: #F47720;		
-                font-size: 16px;	
-                line-height: 22px;
-            }
-
-        }
+       .myLabel{
+           width:90%;
+           padding:2px;
+       }
     }
 
     .add-edit-form-dialog{
