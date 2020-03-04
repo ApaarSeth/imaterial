@@ -99,7 +99,7 @@
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Pincode" formControlName="pinCode" required />
+                  <input matInput type="text" placeholder="Pincode" formControlName="pinCode" (input)="getPincode($event)" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">pinCode is Required</mat-error> -->
                   <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
                     class="form-error-msg"> pinCode is required </small>
@@ -114,9 +114,9 @@
                   <input matInput type="text" placeholder="City" formControlName="city" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">city is Required</mat-error> -->
                   <small *ngIf="form.controls['city'].hasError('required') && form.controls['city'].touched"
-                    class="form-error-msg"> city is required </small>
+                    class="form-error-msg"> City is required </small>
                   <small *ngIf="form.controls['city'].hasError('pattern') && form.controls['city'].touched"
-                    class="form-error-msg"> Enter Valid city</small>
+                    class="form-error-msg"> Enter Valid City</small>
                 </mat-form-field>
               </div>
 
@@ -130,9 +130,9 @@
                   <input matInput type="text" placeholder="State" formControlName="state" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">state is Required</mat-error> -->
                   <small *ngIf="form.controls['state'].hasError('required') && form.controls['state'].touched"
-                    class="form-error-msg"> state is required </small>
+                    class="form-error-msg"> State is required </small>
                   <small *ngIf="form.controls['state'].hasError('pattern') && form.controls['state'].touched"
-                    class="form-error-msg"> Enter Valid state</small>
+                    class="form-error-msg"> Enter Valid State</small>
                 </mat-form-field>
               </div>
               <div class="col-sm-6">

@@ -42,6 +42,8 @@ export class AddProjectComponent implements OnInit {
   endstring: string;
 
   localImg: string | ArrayBuffer;
+  city: string;
+  state: string;
 
   constructor(
     private projectService: ProjectService,
@@ -96,11 +98,11 @@ export class AddProjectComponent implements OnInit {
         [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
       ],
       state: [
-        this.data.isEdit ? this.data.detail.state : "",
+        {value:this.data.isEdit ? this.data.detail.state : "",disabled:true},
         Validators.required
       ],
       city: [
-        this.data.isEdit ? this.data.detail.city : "",
+        {value:this.data.isEdit ? this.data.detail.city : "",disabled:true},
         Validators.required
       ],
       area: [
@@ -178,9 +180,12 @@ formatDate(oldDate): Date {
    
      this.form.value.startDate = this.formatDate(this.form.value.startDate);
      this.form.value.endDate = this.formatDate(this.form.value.endDate);
-
+     this.form.value.city = this.city;
+     this.form.value.state = this.state;
       this.updateProjects(this.form.value);
     } else {
+      this.form.value.city = this.city;
+     this.form.value.state = this.state;
       this.form.value.startDate = this.formatDate(this.form.value.startDate);
       this.form.value.endDate = this.formatDate(this.form.value.endDate);
       this.addProjects(this.form.value);
@@ -194,9 +199,11 @@ formatDate(oldDate): Date {
 getPincode(event){
      if (event.target.value.length == 6) {
          this.projectService.getPincode(event.target.value).then(res =>{
-           if(res.message){
-             this.form.get('city').setValue("gurgaon");
-             this.form.get('state').setValue("haryana");
+           if(res.data){
+             this.city = res.data[0].districtName;
+             this.state = res.data[0].stateName;
+             this.form.get('city').setValue(res.data[0].districtName);
+             this.form.get('state').setValue(res.data[0].stateName);
            }
          });
      }
