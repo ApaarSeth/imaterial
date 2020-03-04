@@ -67,7 +67,7 @@
                 </ng-template>
               </span>
               <span class="mat-cell">
-                <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount }} </ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
                 <ng-template #editgstAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["gstAmount"].value | number: "1.2-2" }}
                 </ng-template>
