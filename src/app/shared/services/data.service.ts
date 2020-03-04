@@ -382,13 +382,20 @@ export class DataService {
     //   }
     // }
 
+    // if (
+    //   err.error.error === "Unauthorized" &&
+    //   err.error.httpStatusCode === 401
+    // ) {
+    //   localStorage.clear();
+    //   window.location.reload();
+    // }
+
     if (
       err
     ) {
       localStorage.clear();
       window.location.reload();
     }
-
     //this.notifier.notify(err.error.message);
     throw err.error;
   }

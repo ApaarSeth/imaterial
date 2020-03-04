@@ -15,7 +15,7 @@ import { TokenService } from 'src/app/shared/services/token.service';
 
 export class SigninComponent implements OnInit {
 
-  constructor(private tokenService :TokenService,private router: Router,
+  constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
     private formBuilder: FormBuilder,
     private _userService: UserService,
@@ -44,7 +44,7 @@ export class SigninComponent implements OnInit {
     params.append("userType", "BUYER");
 
     this.signInSignupService.signIn(params.toString()).then(data => {
-      if(data.errorMessage){
+      if (data.errorMessage) {
         this._snackBar.open("Bad Credentials", "", {
           duration: 2000,
           verticalPosition: "top"
@@ -71,11 +71,7 @@ export class SigninComponent implements OnInit {
    */
   getUserInfo(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      if ((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
-        this.router.navigate(['/profile/update-info']);
-      } else {
-        this.router.navigate(["/dashboard"]);
-      }
+      this.router.navigate(['/profile/update-info']);
     })
   }
 
