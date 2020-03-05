@@ -110,11 +110,11 @@
                   (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
                   matTooltip="View All Indents">
                   <div class="font-size20 text-bold">
-                    <span *ngIf="projectDetails.openIndentCount">
-                      {{ projectDetails.openIndentCount }}
-                    </span>
-                    <span *ngIf="!projectDetails.purchaseOrderCount">
+                    <span *ngIf="!projectDetails.openIndentCount">
                       0
+                    </span>
+                     <span *ngIf="projectDetails.openIndentCount">
+                      {{ projectDetails.openIndentCount }}
                     </span>
                   </div>
                   <div class="font-size12 color-text-card p-l-15 p-t-5">
