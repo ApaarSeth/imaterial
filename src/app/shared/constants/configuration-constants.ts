@@ -70,5 +70,8 @@ export const API = {
   GET_USER_INFO_UNIQUE_CODE: uniqueCode => `user/info/${uniqueCode}`,
   GET_DASHBOARD_DATA: 'dashboard',
   UPLOADSUPPLIEREXCEL: organisationId => `projects/uploadSuppliers/${organisationId}`,
-  GETCITYANDSTATE: pincode => `city-state/get/${pincode}`
+  GETCITYANDSTATE: pincode => `city-state/get/${pincode}`,
+  SENDOTP:phone => `api/auth/otp/create?phone=${phone}`,
+  VERIFYOTP:(phone,otp) => `api/auth/otp/verify?phone=${phone}&otp=${otp}`,
+  VERIFYEMAIL: email => `verify/email?email=${email}`
 };
