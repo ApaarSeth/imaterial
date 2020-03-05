@@ -39,9 +39,9 @@ export class RfqQuantityMakesComponent implements OnInit {
   rfqMat: RfqMat;
   displayedColumns: string[] = [
     "Material Name",
-    "Required Date",
-    "Requested Qty",
     "Estimated Qty",
+    "Requested Qty",
+    "Fullfillment Date",
     "Estimated Rate",
     "Quantity",
     "Makes"
@@ -103,8 +103,9 @@ export class RfqQuantityMakesComponent implements OnInit {
             estimatedRate: [item.estimatedRate],
             quantity: [item.quantity, [Validators.required, this.quantityCheck(item.estimatedQty)]],
             makes: [item.makes],
+            fullfilmentDate: [],
             projId: [item.projectId],
-            matId: [item.materialId]
+            matId: [item.materialId],
           });
         });
       })
@@ -179,6 +180,9 @@ export class RfqQuantityMakesComponent implements OnInit {
               val.quantity;
             this.projectSelectedMaterials[i].projectMaterialList[j].makes =
               val.makes;
+            this.projectSelectedMaterials[i].projectMaterialList[
+              j
+            ].fullfilmentDate = val.fullfilmentDate;
           } else {
             return;
           }

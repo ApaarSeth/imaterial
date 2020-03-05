@@ -85,7 +85,6 @@ export class ViewGRNComponent implements OnInit {
         if (data.isDelete == false) {
             const dialogRef = this.dialog.open(AddEditGrnComponent, {
                 width: "1000px",
-                height: "500px",
                 data
             });
             dialogRef.afterClosed().toPromise().then(result => {

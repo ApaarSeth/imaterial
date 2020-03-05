@@ -1,10 +1,28 @@
 .rfq-custom-mat-width {
-  // table {
-  //   width: 100%;
-  // }
-
   .mat-column-Estimated-Rate,
-  .mat-column-Quantity {
-    flex: 0 0 100px !important;
+  .mat-column-Estimated-Rate .mat-form-field {
+    max-width: 120px;
   }
+  .mat-column-Quantity,
+  .mat-column-Quantity .mat-form-field {
+    max-width: 100px;
+  }
+  .mat-column-Makes,
+  .mat-column-Makes .mat-form-field {
+    max-width: 150px;
+  }
+
+  .mat-column-Fullfillment-Date,
+  .mat-column-Fullfillment-Date .mat-form-field {
+    max-width: 100px;
+  }
+
+  .mat-column-material-name,
+  .mat-column-material-name .mat-form-field {
+    max-width: 100px;
+  }
+}
+
+.customWidth {
+  flex: 0 0 75px !important;
 }
