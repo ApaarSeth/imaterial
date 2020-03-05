@@ -371,11 +371,21 @@ body {
 div.limited-character {
     position: relative;
     white-space: nowrap;
-    width: 230px;
     overflow: hidden;
     text-overflow: ellipsis;
     z-index: 10;
 }
+
+div.limited-character.bom{
+        max-width: 694px;
+}
+div.limited-character.global{
+    width:230px;
+}
+div.limited-character.po-p-m{
+    max-width: 874px;
+}
+
 .rfq-after-bid{
     .limited-character {
         position: relative;
@@ -608,7 +618,8 @@ mat-icon {
     height: auto;
     max-height: 319px;
     overflow-y: scroll;
-    padding-left:1px
+    padding-left:1px;
+    padding-right: 0px;
 }
 
 .header-bell-menu button.mat-menu-item:hover{
@@ -619,8 +630,13 @@ mat-icon {
 .header-bell-menu.mat-menu-panel {
     min-width: 412px !important;
     }
-    .header-bell-menu.mat-menu-ite\m {
+    .header-bell-menu.mat-menu-item {
         height: auto;
+    }
+    .header-bell-menu{
+        .mat-menu-content{
+             padding: 0px !important;
+        }
     }
 
  #notifications {
@@ -629,7 +645,7 @@ mat-icon {
     color: #000000;
     z-index: 999;
     font-size: 10px;
-    width: 406px;
+    width: 100%;
     &:before {         
         content: '';
         display: block;
@@ -648,6 +664,7 @@ h3 {
     display:block;
     color:#333; 
     background:#FFF;
+    cursor: default;
     //font-weight:bold;
     font-size:14px;    
     padding:8px;
@@ -678,13 +695,15 @@ h3 {
 
 .read-unread-heading{
     background: #d8d8d857;
+    cursor: default;
     span{
         opacity: 0.5;
+        cursor: default;
     }
 }
 .unread-background{
     background: #3cbcc512;
-    cursor: pointer;
+    cursor: default;
 }
 .time-notification{
     color: rgba(0,0,0,0.38);

@@ -24,6 +24,10 @@ export class SignupComponent implements OnInit {
   showPassWordString: boolean = false;
   uniqueCode: string = "";
   user: UserDetails;
+  lessOTPDigits: boolean;
+  showOtp: boolean= false;
+  emailVerified: boolean = true;
+  emailMessage: string;
 
   constructor(
     private tokenService: TokenService,
@@ -70,7 +74,8 @@ export class SignupComponent implements OnInit {
       phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
       organisationName: [this.user ? this.user.companyName : '', Validators.required],
       organisationType: ["Contractor", Validators.required],
-      password: ["", Validators.required]
+      password: ["", Validators.required],
+      otp: ["", [Validators.required]]
     });
   }
 
@@ -126,4 +131,37 @@ export class SignupComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
+  enterPhone(event){
+    const value = event.target.value
+    if(value.match(FieldRegExConst.PHONE)){
+      this.signInSignupService.sendOTP(value).then(res=>{
+        if(res.data)
+        this.showOtp = res.data.success;
+      });
+    }
+  }
+  enterOTP(event){
+      const otp = event.target.value
+      if(event.target.value.length == 4){
+        this.signInSignupService.verifyOTP(this.signupForm.value.phone,otp).then(res=>{
+        if(res.data){
+           this.lessOTPDigits = res.data.success;
+        }
+        });
+      }
+  }
+  verifyEmail(event){
+      const email = event.target.value
+        if(email.match(FieldRegExConst.EMAIL)){
+          this.signInSignupService.verifyEMAIL(this.signupForm.value.email).then(res=>{
+          if(res){
+            this.emailVerified = res.data;
+            this.emailMessage = res.message;
+          }
+          });
+        }
+    }
+  
+
 }
+
