@@ -15,7 +15,7 @@
         <span class="mat-header-cell" mat-sort-header="requiredDate">Required Date</span>
         <span class="mat-header-cell" mat-sort-header="availableQuantity">Available quantity in project</span>
       </section>
-      <div class="global-panel">
+      <div>
         <mat-expansion-panel *ngFor="let material of newMaterialData | SearchPipe: searchMaterial:'GlobalMaterial':'materialName'" class="myPanel">
           <mat-expansion-panel-header class="mat-row material-row">
             <span class="mat-cell" matTooltip="{{ material.GlobalMaterial.materialName }}">
