@@ -371,11 +371,21 @@ body {
 div.limited-character {
     position: relative;
     white-space: nowrap;
-    width: 230px;
     overflow: hidden;
     text-overflow: ellipsis;
     z-index: 10;
 }
+
+div.limited-character.bom{
+        max-width: 639px;
+}
+div.limited-character.global{
+    width:230px;
+}
+div.limited-character.po-p-m{
+    max-width: 874px;
+}
+
 .rfq-after-bid{
     .limited-character {
         position: relative;
