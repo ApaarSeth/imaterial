@@ -55,6 +55,8 @@
           </div>
         </div>
       </div>
+      <mat-card>Payment Terms:{{ this.finalRfq.terms.termsDesc }}</mat-card>
+
       <mat-accordion>
         <ng-template ngFor let-project [ngForOf]="checkedList" let-i="index">
           <mat-expansion-panel class="myPanel" [expanded]="true">

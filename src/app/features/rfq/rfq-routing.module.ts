@@ -44,7 +44,7 @@ const routes: Routes = [
     component: DocumentsComponent
   },
   {
-    path: "review",
+    path: "review/:rfqId",
     component: ReviewComponent
   },
   {
