@@ -22,7 +22,7 @@
 
         <div mat-dialog-actions class="col-xs-12 p-t-40">
           <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
-            style="width: 100%;">
+            style="width: 100%;" [disabled]="!signinForm.valid">
             Sign In
           </button>
         </div>

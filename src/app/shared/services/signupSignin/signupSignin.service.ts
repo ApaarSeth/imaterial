@@ -37,4 +37,13 @@ export class SignInSignupService implements OnInit{
             // console.error(e);
         });
       }
+      sendOTP(phone){
+        return this.dataService.sendPostRequestSsoEncodedUrl(API.SENDOTP(phone),{}).then(res => {return res});
+      }
+        verifyOTP(phone,otp){
+           return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYOTP(phone,otp),{}).then(res => {return res});
+     }
+     verifyEMAIL(email){
+        return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => {return res});
+     }
 }
