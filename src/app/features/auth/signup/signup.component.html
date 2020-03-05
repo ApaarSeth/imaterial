@@ -7,6 +7,16 @@
                     <input matInput formControlName="lastName" type="text" placeholder="Last Name" />
                 </mat-form-field> -->
                 <mat-form-field class="col-xs-12 border-input">
+                    <input matInput type="number"  min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" placeholder="Phone No." />
+                     <small
+                    *ngIf="signupForm.controls['phone'].hasError('required') && signupForm.controls['phone'].touched"
+                    class="signupForm-error-msg"> Phone No is required </small>
+                    <small
+                    *ngIf="signupForm.controls['phone'].hasError('pattern') && signupForm.controls['phone'].touched"
+                    class="signupForm-error-msg"> Enter Valid Phone No</small>
+                </mat-form-field>
+
+                <mat-form-field class="col-xs-12 border-input">
                     <input matInput type="text" formControlName="organisationName" placeholder="Company Name" />
                 </mat-form-field>
                 <mat-form-field class="col-xs-12 border-input">
@@ -18,15 +28,6 @@
                     *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched"
                     class="signupForm-error-msg"> Enter Valid Email</small>
 
-                </mat-form-field>
-                <mat-form-field class="col-xs-12 border-input">
-                    <input matInput type="number"  min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" placeholder="Phone No." />
-                     <small
-                    *ngIf="signupForm.controls['phone'].hasError('required') && signupForm.controls['phone'].touched"
-                    class="signupForm-error-msg"> Phone No is required </small>
-                    <small
-                    *ngIf="signupForm.controls['phone'].hasError('pattern') && signupForm.controls['phone'].touched"
-                    class="signupForm-error-msg"> Enter Valid Phone No</small>
                 </mat-form-field>
                 
                 <!-- <mat-form-field class="col-xs-12 border-select">
