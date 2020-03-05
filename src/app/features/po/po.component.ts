@@ -52,18 +52,18 @@ export class PoComponent implements OnInit {
   poTerms: FormGroup;
   isPoNumberValid: boolean = false;
 
-   public POPreviewTour: GuidedTour = {
-        tourId: 'po-preview-tour',
-        useOrb: false,
-        steps: [
-             {
-              title:'Send for approval',
-              selector: '.send-for-approval-btn',
-              content: 'Click here to send the purchase order for approval .',
-              orientation: Orientation.Left
-            }
-        ]
-    };
+  public POPreviewTour: GuidedTour = {
+    tourId: 'po-preview-tour',
+    useOrb: false,
+    steps: [
+      {
+        title: 'Send for approval',
+        selector: '.send-for-approval-btn',
+        content: 'Click here to send the purchase order for approval .',
+        orientation: Orientation.Left
+      }
+    ]
+  };
 
 
   constructor(
@@ -74,10 +74,10 @@ export class PoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private guidedTourService: GuidedTourService
   ) {
-       setTimeout(() => {
-            this.guidedTourService.startTour(this.POPreviewTour);
-        }, 1000);
-   }
+    setTimeout(() => {
+      this.guidedTourService.startTour(this.POPreviewTour);
+    }, 1000);
+  }
   poId: number;
   mode: string;
   ngOnInit() {
@@ -153,7 +153,7 @@ export class PoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log("result", result);
       this.poService.sendPoData(result).then(res => {
-        if (res.status === 1) {
+        if (res.status === 0) {
           this.router.navigate(["po/detail-list"]);
         }
       });
@@ -170,7 +170,11 @@ export class PoComponent implements OnInit {
     } else {
       this.collatePoData.isApproved = 0;
     }
-    this.poService.approveRejectPo(this.collatePoData);
+    this.poService.approveRejectPo(this.collatePoData).then(res => {
+      if (res.status === 0) {
+        this.router.navigate(["po/detail-list"]);
+      }
+    });
   }
 
   startSubscription() {
