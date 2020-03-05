@@ -51,17 +51,24 @@
             </mat-checkbox>
           </td>
         </ng-container>
+        <ng-container matColumnDef="Unit">
+          <th *matHeaderCellDef class="text-align-center justify-center">
+            Unit
+          </th>
+          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.materialUnit }}</td>
+        </ng-container>
+
         <ng-container matColumnDef="estimatedQty">
           <th *matHeaderCellDef class="text-align-center justify-center">
             Estimated Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }} {{ element.materialUnit }}</td>
+          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }}</td>
         </ng-container>
         <ng-container matColumnDef="indentedQuantity">
           <th *matHeaderCellDef class="text-align-center justify-center">
             Indented Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }} {{ element.materialUnit }}</td>
+          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }}</td>
         </ng-container>
         <ng-container matColumnDef="issueToProject">
           <th *matHeaderCellDef class="text-align-center justify-center">
@@ -74,7 +81,6 @@
                       <ng-template #showZEroDataIP>
                        0
                       </ng-template>
-                      {{ element.materialUnit }}
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
@@ -88,7 +94,6 @@
                       <ng-template #showZEroData>
                        0
                       </ng-template>
-                      {{ element.materialUnit }}
           </td>
         </ng-container>
 
@@ -143,17 +148,24 @@
                       </div>
                     </td>
                   </ng-container>
+                   <ng-container matColumnDef="Unit">
+                    <th *matHeaderCellDef class="text-align-center">
+                      Unit
+                    </th>
+                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.materialUnit }}</td>
+                  </ng-container>
+
                   <ng-container matColumnDef="estimatedQty">
                     <th *matHeaderCellDef class="text-align-center">
                       Estimated Quantity
                     </th>
-                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }} {{ element.materialUnit }}</td>
+                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }}</td>
                   </ng-container>
                   <ng-container matColumnDef="Requested Quantity">
                     <th *matHeaderCellDef class="text-align-center">
                       Requested Material
                     </th>
-                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }} {{ element.materialUnit }}</td>
+                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }}</td>
                   </ng-container>
                   <ng-container matColumnDef="issueToProject">
                     <th *matHeaderCellDef class="text-align-center">
@@ -174,7 +186,6 @@
                       <ng-template *ngIf="element.availableStock == null">
                        0
                       </ng-template>
-                      {{ element.materialUnit }}
                     </td>
                   </ng-container>
                   <tr style="opacity: 0;height: 0px;" mat-header-row *matHeaderRowDef="innerDisplayedColumns"></tr>
