@@ -43,9 +43,9 @@ export class AddUserComponent implements OnInit {
     })
   }
 
-  getUserData(userId){
+  getUserData(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      if(res.data[0].roleName){
+      if (res.data[0].roleName) {
         localStorage.setItem("role", res.data[0].roleName);
       }
     });
@@ -69,19 +69,24 @@ export class AddUserComponent implements OnInit {
    */
   onAddRow() {
     (<FormArray>this.addUserForm.get('other')).push(this.addOtherFormGroup());
-     console.log(this.addUserForm);
+    console.log(this.addUserForm);
   }
 
   /**
    * @description Create formcontrols after click on + button
    */
+
+  onDelete(index) {
+    (<FormArray>this.addUserForm.get('other')).removeAt(index)
+  }
+
   addOtherFormGroup(): FormGroup {
     return this._formBuilder.group({
       email: ['', [
-          Validators.required,
-          Validators.pattern(FieldRegExConst.EMAIL)
-        ]
-      
+        Validators.required,
+        Validators.pattern(FieldRegExConst.EMAIL)
+      ]
+
       ],
       contactNo: ['', {
         validators: [

@@ -1,74 +1,79 @@
 <section class="update-info add-user">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 offset-md-1">
-                <div class="update-info__popup p-4 mt-5">
-                    <form class="update-info__form" *ngIf="addUserForm" [formGroup]="addUserForm">
-                        <div class="row">
-
-                            <div class="col-md-12">
-                                <h3 class="user-profile text-center text-uppercase pt-2 pb-4">Invite Users</h3>
-                            </div>
-                        </div>
-
-                        <div formArrayName="other" 
-                            *ngFor="let other of addUserForm.get('other').controls; let i = index">
-
-                            <div class="row" [formGroupName]="i">
-
-                                <div class="col-md-3 width-28">
-                                    <mat-form-field class="border-input w-100">
-                                        <input matInput type="email" placeholder="Email" formControlName="email">
-                                    </mat-form-field>
-                                    
-                                        <mat-error *ngIf="addUserForm.controls.other.controls[i].controls['email'].hasError('required') && addUserForm.controls.other.controls[i].controls['email'].touched">
-                                            Email is required
-                                        </mat-error>
-                                        <mat-error *ngIf="addUserForm.controls.other.controls[i].controls['email'].hasError('pattern') && addUserForm.controls.other.controls[i].controls['email'].touched">
-                                            Enter Valid Email
-                                        </mat-error>
-                                    <!-- other.controls.other.controls[i].controls.email.errors -->
-                                </div>
-    
-    
-                                <div class="col-md-3">
-                                    <mat-form-field class="border-input w-100">
-                                        <input matInput type="text" placeholder="Phone number" formControlName="contactNo">
-                                    </mat-form-field>
-                                     <mat-error *ngIf="addUserForm.controls.other.controls[i].controls['contactNo'].hasError('pattern') && addUserForm.controls.other.controls[i].controls['contactNo'].touched">
-                                            Enter Valid Phone No
-                                        </mat-error>
-                                </div>
-    
-    
-                                <div class="col-md-4">
-                                    <mat-form-field class="border-select w-100 role-input">
-                                        <mat-label>Role</mat-label>
-                                        <mat-select formControlName="roleId">
-                                            <mat-option *ngFor="let role of roles" [value]="role.roleId">
-                                                {{role.roleDescription}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                     <mat-error *ngIf="addUserForm.controls.other.controls[i].controls['roleId'].hasError('required') && addUserForm.controls.other.controls[i].controls['roleId'].touched">
-                                            Role is required
-                                        </mat-error>
-                                </div>
-
-                                
-                            </div>
-                        </div>
-
-                        <button mat-mini-fab color="warn" (click)="onAddRow()">+ Add User</button>
-
-                        <div class="text-center col-md-12 mt-4">
-                            <button class="btn btn-outline-warning mr-3" [routerLink]="['/dashboard']">Skip</button>
-                            <button class="btn btn-warning next-btn" (click)="submit()" [disabled]="!addUserForm.valid">Done</button>
-                        </div>
-
-                    </form>
-                </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="update-info__popup p-4 mt-5">
+          <form class="update-info__form" *ngIf="addUserForm" [formGroup]="addUserForm">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="user-profile text-center text-uppercase pt-2 pb-4">Invite Users</h3>
+              </div>
             </div>
+
+            <div formArrayName="other" *ngFor="let other of addUserForm.get('other').controls; let i = index">
+              <div class="row p-l-30" [formGroupName]="i">
+                <div class="col-md-2 width-28">
+                  <mat-form-field class="border-input w-100">
+                    <input matInput type="email" placeholder="Email" formControlName="email" />
+                  </mat-form-field>
+
+                  <mat-error
+                    *ngIf="addUserForm.controls.other.controls[i].controls['email'].hasError('required') && addUserForm.controls.other.controls[i].controls['email'].touched"
+                  >
+                    Email is required
+                  </mat-error>
+                  <mat-error
+                    *ngIf="addUserForm.controls.other.controls[i].controls['email'].hasError('pattern') && addUserForm.controls.other.controls[i].controls['email'].touched"
+                  >
+                    Enter Valid Email
+                  </mat-error>
+                  <!-- other.controls.other.controls[i].controls.email.errors -->
+                </div>
+
+                <div class="col-md-2">
+                  <mat-form-field class="border-input w-100">
+                    <input matInput type="text" placeholder="Phone number" formControlName="contactNo" />
+                  </mat-form-field>
+                  <mat-error
+                    *ngIf="addUserForm.controls.other.controls[i].controls['contactNo'].hasError('pattern') && addUserForm.controls.other.controls[i].controls['contactNo'].touched"
+                  >
+                    Enter Valid Phone No
+                  </mat-error>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field class="border-select w-100 role-input">
+                    <mat-label>Role</mat-label>
+                    <mat-select formControlName="roleId">
+                      <mat-option *ngFor="let role of roles" [value]="role.roleId">
+                        {{ role.roleDescription }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-error
+                    *ngIf="addUserForm.controls.other.controls[i].controls['roleId'].hasError('required') && addUserForm.controls.other.controls[i].controls['roleId'].touched"
+                  >
+                    Role is required
+                  </mat-error>
+                </div>
+                <div class="col-md-1 text-center p-t-15" *ngIf="addUserForm.get('other').controls.length > 1">
+                  <a class="width-15-px p-l-5 cursor-pointer" matTooltip="Delete" (click)="onDelete(i)">
+                    <img src="../../../../assets/images/delete-button.png" />
+                  </a>
+                </div>
+                <div class="col-md-2" *ngIf="i === addUserForm.get('other').controls.length - 1">
+                  <button mat-raised-button class="main-background-color main-button color-white" (click)="onAddRow()">+ Add User</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center col-md-12 mt-4">
+              <button class="btn btn-outline-warning mr-3" [routerLink]="['/dashboard']">Skip</button>
+              <button class="btn btn-warning next-btn" (click)="submit()" [disabled]="!addUserForm.valid">Done</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </section>
