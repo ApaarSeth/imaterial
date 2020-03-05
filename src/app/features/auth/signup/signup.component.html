@@ -22,7 +22,7 @@
                      <small
                     *ngIf="signupForm.controls['otp'].hasError('required') && signupForm.controls['otp'].touched"
                     class="signupForm-error-msg"> OTP No is required </small>
-                    <small *ngIf="!lessOTPDigits" class="signupForm-error-msg"> Enter Valid OTP</small>
+                    <small *ngIf="!lessOTPDigits && (otpLength==4)" class="signupForm-error-msg"> Enter Valid OTP</small>
                 </mat-form-field>
                 
                 <mat-form-field class="col-xs-12 border-input">
