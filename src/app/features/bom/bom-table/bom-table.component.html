@@ -42,8 +42,8 @@
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
             <mat-checkbox #ch (change)="getElemenetChecked(ch, element)" [checked]="element.checked">
-              <div class="limited-character" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
-              <div class="limited-character" matTooltip=" {{ element.materialGroup }}">
+              <div class="limited-character bom" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
+              <div class="limited-character bom" matTooltip=" {{ element.materialGroup }}">
                 <span class="category-name">
                   {{ element.materialGroup }}
                 </span>

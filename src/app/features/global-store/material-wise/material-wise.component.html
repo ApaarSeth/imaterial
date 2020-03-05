@@ -19,7 +19,7 @@
         <mat-expansion-panel *ngFor="let material of newMaterialData | SearchPipe: searchMaterial:'GlobalMaterial':'materialName'" class="myPanel">
           <mat-expansion-panel-header class="mat-row material-row">
             <span class="mat-cell" matTooltip="{{ material.GlobalMaterial.materialName }}">
-              <div class="limited-character">
+              <div class="limited-character global">
                 {{ material.GlobalMaterial.materialName }}
               </div>
             </span>
@@ -43,7 +43,7 @@
           <mat-expansion-panel *ngFor="let project of material.GlobalProject" class="myPanel">
             <mat-expansion-panel-header class="mat-row material-project">
               <span class="mat-cell" matTooltip="{{ project.Projects.projectName }}">
-                <div class="limited-character">
+                <div class="limited-character global">
                   {{ project.Projects.projectName }}
                 </div>
               </span>
