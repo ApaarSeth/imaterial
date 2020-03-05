@@ -95,7 +95,7 @@ export class AddEditUserComponent implements OnInit {
 
       contactNo: new FormControl(
         { value: this.data.isEdit ? this.data.detail.contactNo : "", disabled: this.isInputDisabled },
-        [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]
+        // [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]
       ),
       roleId: new FormControl(
         this.data.isEdit ? this.data.detail.roleId : "",
