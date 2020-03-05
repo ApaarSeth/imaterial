@@ -29,6 +29,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
   @Input() existingRfq: AddRFQ;
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   @ViewChild("ch", { static: true }) ch: HTMLElement;
+  searchProject: string = null;
+  searchMaterial: string = null;
   userId: 1;
   searchText: string = null;
   allProjects: ProjectDetails[];
