@@ -55,10 +55,10 @@
           </div>
         </div>
       </div>
-      <mat-card class="m-b-10 p-b-10"
+      <mat-card class="m-b-10 p-b-10" *ngIf="this.finalRfq.terms"
         >Payment Terms:
         <span classs="p-l-15">
-          {{ this.finalRfq.terms.termsDesc }}
+          {{ this.finalRfq.terms.termsDesc.trim() === "Others" ? this.finalRfq.terms.otherDesc : this.finalRfq.terms.termsDesc }}
         </span>
       </mat-card>
 

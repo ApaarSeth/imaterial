@@ -28,6 +28,7 @@ import { RouterModule } from '@angular/router';
 import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
 import { HeaderSharedModule } from './shared/layout/header/header-shared.module';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
+import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +64,7 @@ import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-l
     PODetailListResolver,
     AuthGuardService,
     UserDataGuardService,
+    AfterSignUpGuardService,
     GuidedTourService
   ],
   bootstrap: [AppComponent]
