@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, SimpleChanges } from "@angular/core";
 import { Router } from "@angular/router";
 import { PermissionService } from "../../services/permission.service";
 @Component({
@@ -28,6 +28,10 @@ export class HeaderLayoutComponent implements OnInit {
     this.sidenavToggle.emit('loaded');
     this.permissionObj = this.permissionService.checkPermission();
     this.highlightButton(this.router.url);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.highlightButton(this.router.url);
+
   }
 
   highlightButton(url: string) {
