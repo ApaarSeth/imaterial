@@ -186,7 +186,6 @@ export class UserDetailComponent implements OnInit {
       detail: this.userDetailsTemp
     } as UserDetailsPopUpData);
   }
-
   applyFilteqqr(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
   }
