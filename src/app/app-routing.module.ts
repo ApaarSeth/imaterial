@@ -10,6 +10,7 @@ import { AppDashboardComponent } from './features/app-dashboard/app-dashboard.co
 import { AuthGuardService } from './shared/guards/auth.guards';
 import { UserDataGuardService } from './shared/guards/user-data.guards';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
+import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 
 const routes: Routes = [
   {
@@ -59,7 +60,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService, AfterSignUpGuardService],
     children: [
       {
         path: "project-dashboard",

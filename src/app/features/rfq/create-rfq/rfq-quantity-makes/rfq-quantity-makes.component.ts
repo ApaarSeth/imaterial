@@ -141,7 +141,15 @@ export class RfqQuantityMakesComponent implements OnInit {
     if (data.length <= 4) {
       forms.controls[grpIndex].get("makes").setValue(data);
     } else {
-      this.message = "Only 4 brands allowed";
+      this._snackBar.open(
+        "Only 4 brands allowed",
+        "",
+        {
+          duration: 2000,
+          verticalPosition: "top"
+        }
+      );
+
     }
   }
 

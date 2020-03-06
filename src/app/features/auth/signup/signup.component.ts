@@ -28,6 +28,7 @@ export class SignupComponent implements OnInit {
   showOtp: boolean= false;
   emailVerified: boolean = true;
   emailMessage: string;
+  otpLength: number = 0;
 
   constructor(
     private tokenService: TokenService,
@@ -133,8 +134,9 @@ export class SignupComponent implements OnInit {
     }
   }
   enterPhone(event){
+    this.lessOTPDigits = false;
     const value = event.target.value
-    if(value.match(FieldRegExConst.PHONE)){
+    if((value.match(FieldRegExConst.PHONE)) && (value.length==10)){
       this.signInSignupService.sendOTP(value).then(res=>{
         if(res.data)
         this.showOtp = res.data.success;
@@ -144,6 +146,7 @@ export class SignupComponent implements OnInit {
   enterOTP(event){
       const otp = event.target.value
       if(event.target.value.length == 4){
+        this.otpLength = event.target.value.length;
         this.signInSignupService.verifyOTP(this.signupForm.value.phone,otp).then(res=>{
         if(res.data){
            this.lessOTPDigits = res.data.success;
