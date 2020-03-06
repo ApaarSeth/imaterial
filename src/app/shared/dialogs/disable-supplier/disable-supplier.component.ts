@@ -33,21 +33,19 @@ export interface Unit {
 })
 export class DeactiveSupplierComponent implements OnInit {
   supplierDetails: SupplierAdd;
-  
+
   constructor(
     private dialogRef: MatDialogRef<DeactiveSupplierComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SupplierDetailsPopUpData,
     private formBuilder: FormBuilder,
     private router: Router,
     private rfqService: RFQService,
-    private _snackBar:MatSnackBar
-  ) {}
+    private _snackBar: MatSnackBar
+  ) { }
 
-  ngOnInit() {
-   
-  }
+  ngOnInit() {}
 
-  deactivateSupplierService(){
+  deactivateSupplierService() {
     this.supplierDetails = this.data.isDelete
       ? this.data.detail as SupplierAdd
       : ({} as SupplierAdd);
@@ -60,10 +58,10 @@ export class DeactiveSupplierComponent implements OnInit {
             duration: 2000,
             panelClass: ["blue-snackbar"]
           });
-      
-       }
-         return data.data;
-       });
+        }
+        return data.data;
+        debugger
+      });
     }
   }
 
@@ -74,6 +72,4 @@ export class DeactiveSupplierComponent implements OnInit {
   deactivateSupplier(){
      this.deactivateSupplierService();
   }
-
- 
 }

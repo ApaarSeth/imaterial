@@ -76,5 +76,4 @@ export const API = {
   VERIFYEMAIL: email => `verify/email?email=${email}`,
   GETUSERGUIDEFLAG: `userGuide`,
   SENDUSERGUIDEFLAG: `add/userGuide`
-
 };
