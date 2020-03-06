@@ -9,7 +9,8 @@
     <div class="col-sm-12 display-flex m-t-20">
       <div class="col-sm-2">
         <div class="project-profile">
-            <img [src]="localImg || '../../../../assets/images/project-default-image.png'">
+            <img *ngIf="data.detail" [src]="localImg || data.detail.imageUrl || '../../../../assets/images/project-default-image.png'">
+             <img *ngIf="!data.detail" [src]="localImg || '../../../../assets/images/project-default-image.png'">
         </div>
         <div class="upload-photo-btn browser-method p-t-10">
          <label class="myLabel">

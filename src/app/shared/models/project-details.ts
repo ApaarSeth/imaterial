@@ -33,6 +33,7 @@ export interface ProjectDetails {
   unit: string;
   matCount: number;
   checked?: boolean;
+  imageUrl?:string;
 }
 
 export interface ProjetPopupData {
