@@ -81,20 +81,20 @@
               </td>
             </ng-container>
             <ng-container matColumnDef="Required Date">
-              <th mat-header-cell *matHeaderCellDef>Required Date</th>
+              <th mat-header-cell class="text-center" *matHeaderCellDef>Required Date</th>
               <td mat-cell *matCellDef="let element; let i = index">
                 {{ element.dueDate | date: "dd-MMM-yyy" }}
               </td>
             </ng-container>
             <ng-container matColumnDef="Requested Quantity">
-              <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
-              <td mat-cell *matCellDef="let element">
+              <th mat-header-cell class="text-center" *matHeaderCellDef>Requested Quantity</th>
+              <td class="text-center" mat-cell *matCellDef="let element">
                 {{ element.requestedQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
               </td>
             </ng-container>
             <ng-container matColumnDef="Estimated Quantity">
-              <th mat-header-cell *matHeaderCellDef>Estimated Quantity</th>
-              <td mat-cell *matCellDef="let element">
+              <th mat-header-cell class="text-center" *matHeaderCellDef>Estimated Quantity</th>
+              <td class="text-center" mat-cell *matCellDef="let element">
                 {{ element.estimatedQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
               </td>
             </ng-container>
