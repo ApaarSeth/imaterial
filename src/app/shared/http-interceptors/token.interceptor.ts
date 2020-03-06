@@ -31,10 +31,12 @@ export class TokenInterceptor implements HttpInterceptor {
                 if (request.url.indexOf('api/auth/signup') > -1 ||
                     request.url.indexOf('oauth/token') > -1 ||
                     request.url.indexOf('material/materialsSpecs') > -1 ||
-                    request.url.indexOf('api/auth/otp/create')>-1||
-                    request.url.indexOf('api/auth/otp/verify')>-1 ||
-                    request.url.indexOf('verify/email')>-1 ||
-                    request.url.indexOf('material/groups') > -1) {
+                    request.url.indexOf('api/auth/otp/create') > -1 ||
+                    request.url.indexOf('api/auth/otp/verify') > -1 ||
+                    request.url.indexOf('verify/email') > -1 ||
+                    request.url.indexOf('material/groups') > -1 ||
+                    request.url.indexOf('user/info/') > -1 ||
+                    request.url.indexOf('rfq/details/supplier/') > -1) {
                     return next.handle(request)
                 }
                 else if (headers) {
