@@ -52,7 +52,7 @@ export class SelectRfqTermsComponent implements OnInit {
       termsId: this.termsForm.value.term.termsId,
       termsDesc: this.selectedPayment,
       termsType: "RFQ",
-      otherDesc: this.selectedPayment === 'Others' ? this.customTermForm.value.customTerm : ''
+      otherDesc: this.selectedPayment.trim() === 'Others' ? this.customTermForm.value.customTerm : ''
     };
     this.rfqService.addRFQ(this.data).then(res => {
       let finalRfq = res.data;

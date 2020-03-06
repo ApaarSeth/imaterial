@@ -161,8 +161,8 @@ export class RfqSupplierComponent implements OnInit {
       width: "400px",
       data
     });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   data.defaultAddress = result[1];
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      // data.defaultAddress = result[1];
+    });
   }
 }
