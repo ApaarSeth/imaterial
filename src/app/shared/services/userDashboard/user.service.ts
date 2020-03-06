@@ -1,19 +1,15 @@
 import { Injectable } from "@angular/core";
-//import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from "rxjs";
-import { environment } from "src/environments/environment";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
-import { ProjectDetails } from "../../models/project-details";
-import { IndentVO } from "../../models/indent";
 import { UserAdd } from '../../models/user-details';
-import { isThisTypeNode } from 'typescript';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+    private _router: Router) { }
 
   get isLoggedIn() {
     return localStorage.getItem('ServiceToken') != null;
@@ -66,5 +62,11 @@ export class UserService {
 
   getDashboardData(data) {
     return this.dataService.sendPostRequest(API.GET_DASHBOARD_DATA, data);
+  }
+
+  logoutUser() {
+    this._router.navigate(['/auth/login']).then(_ => {
+      localStorage.clear();
+    });
   }
 }

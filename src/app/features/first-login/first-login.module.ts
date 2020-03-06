@@ -9,6 +9,7 @@ import { RouterModule } from "@angular/router";
 import { UpdateInfoComponent } from './update-info/update-info.component';
 import { FirstLoginRoutingModule } from './first-login.routing';
 import { AddUserComponent } from './add-user/add-user.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { AddUserComponent } from './add-user/add-user.component';
     ],
     declarations: [
         UpdateInfoComponent,
-         AddUserComponent
+        AddUserComponent,
+        TermsConditionsComponent
     ]
 })
 

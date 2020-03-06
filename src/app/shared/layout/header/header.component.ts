@@ -29,11 +29,17 @@ export class HeaderLayoutComponent implements OnInit {
     this.permissionObj = this.permissionService.checkPermission();
     this.highlightButton(this.router.url);
   }
+<<<<<<< HEAD
   ngOnChanges(changes: SimpleChanges): void {
     this.highlightButton(this.router.url);
 
   }
 
+=======
+  ngOnChanges(){
+    
+  }
+>>>>>>> 4e92ad0cf1104d1c37a77b073bf86a80291c6bca
   highlightButton(url: string) {
     if (url.includes('dashboard')) {
       this.buttonName = 'dashboard'

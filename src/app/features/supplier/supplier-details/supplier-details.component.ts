@@ -104,7 +104,6 @@ export class SupplierDetailComponent implements OnInit {
         if(data && data!=null){
            this.getAllSupplier();  
         }
-         
       });
     }
   }
@@ -136,7 +135,7 @@ export class SupplierDetailComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-   uploadExcel(files: FileList) {
+  uploadExcel(files: FileList) {
     this.loading.show();
     const data = new FormData();
     data.append("file", files[0]);
@@ -145,6 +144,7 @@ export class SupplierDetailComponent implements OnInit {
       this.loading.hide();
     });
   }
+
   downloadExcel(url: string) {
     var win = window.open(url, "_blank");
     win.focus();

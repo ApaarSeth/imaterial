@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { UpdateInfoComponent } from './update-info/update-info.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 
 const routes: Routes = [
     {
@@ -13,7 +14,13 @@ const routes: Routes = [
     {
         path: 'add-user',
         component: AddUserComponent
+    },
+
+    {
+        path: 'terms-conditions',
+        component: TermsConditionsComponent
     }
+
 
 ];
 

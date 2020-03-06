@@ -19,3 +19,13 @@
         display: block;
     }
 }
+
+.approver-tbl{
+    .mat-row .mat-cell:first-child {
+        border-left: 1px solid #e1e1e1;
+    }
+
+    .mat-row .mat-cell:last-child {
+        border-right: 1px solid #e1e1e1;
+    }
+}

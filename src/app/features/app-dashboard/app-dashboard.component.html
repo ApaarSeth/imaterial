@@ -61,8 +61,8 @@
                                                 <img src="assets/images/icon1.png" alt="Awarded Purchase Order" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1" *ngIf="poData.totalCount">{{ poData?.totalCount }}</h2>
-                                                 <h2 class="mb-1" *ngIf="!poData.totalCount">0</h2>
+                                                <h2 class="mb-1" [routerLink]="['/po/detail-list']" *ngIf="poData.totalCount">{{ poData?.totalCount }}</h2>
+                                                 <h2 class="mb-1" [routerLink]="['/po/detail-list']" *ngIf="!poData.totalCount">0</h2>
                                                 <p class="mb-0">Awarded Purchase Order</p>
                                             </div>
                                         </div>
@@ -72,8 +72,8 @@
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1" *ngIf="poData.totalValue">{{ poData?.totalValue | number }}</h2>
-                                                 <h2 class="mb-1" *ngIf="!poData.totalValue">0</h2>
+                                                <h2 class="mb-1" [routerLink]="['/po/detail-list']" *ngIf="poData.totalValue">{{ poData?.totalValue | number }}</h2>
+                                                 <h2 class="mb-1" [routerLink]="['/po/detail-list']" *ngIf="!poData.totalValue">0</h2>
                                                 <p class="mb-0">Awarded P.O. Amount</p>
                                             </div>
                                         </div>
@@ -87,8 +87,8 @@
                                                 <img src="assets/images/icon6.png" alt="Awarded Purchase Order" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1" *ngIf="rfqData.totalCount">{{ rfqData?.totalCount }}</h2>
-                                                <h2 class="mb-1" *ngIf="!rfqData.totalCount">0</h2>
+                                                <h2 class="mb-1" [routerLink]="['/rfq/rfq-detail']" *ngIf="rfqData.totalCount">{{ rfqData?.totalCount }}</h2>
+                                                <h2 class="mb-1" [routerLink]="['/rfq/rfq-detail']" *ngIf="!rfqData.totalCount">0</h2>
                                                 <p class="mb-0">Number of RFQ</p>
                                             </div>
                                         </div>
@@ -98,8 +98,8 @@
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1" *ngIf="rfqData.totalValue">{{ rfqData?.totalValue | number : '1.2-2' }}</h2>
-                                                <h2 class="mb-1" *ngIf="!rfqData.totalValue">0</h2>
+                                                <h2 class="mb-1" [routerLink]="['/rfq/rfq-detail']" *ngIf="rfqData.totalValue">₹ {{ rfqData?.totalValue | number : '1.2-2' }}</h2>
+                                                <h2 class="mb-1" [routerLink]="['/rfq/rfq-detail']" *ngIf="!rfqData.totalValue">₹ 0</h2>
                                                 <p class="mb-0">RFQ Amount</p>
                                             </div>
                                         </div>
@@ -124,8 +124,8 @@
                                                 <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
                                             <div class="stats__content">
-                                                <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue | number : '1.2-2' }}</h2>
-                                                <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
+                                                <h2 class="mb-1" *ngIf="indentData.totalValue">₹ {{ indentData?.totalValue | number : '1.2-2' }}</h2>
+                                                <h2 class="mb-1" *ngIf="!indentData.totalValue">₹ 0</h2>
                                                 <p class="mb-0">Raised Indents</p>
                                             </div>
                                         </div>
@@ -140,7 +140,9 @@
                     </div>
                 </div>
 
-                <div class="approvals py-4 bg-white">
+                <!--- Will implement later once api is ready -->
+                
+                <!-- <div class="approvals py-4 bg-white">
                     <div class="row">
                         <div class="col-md-12">
                             <h6 class="px-4">Approvals</h6>
@@ -183,12 +185,12 @@
 
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="col-md-3">
                 <div class="dashboard__right">
-                    <div class="project-tile">
+                    <div class="project-tile cursor" [routerLink]="['/project-dashboard']">
                         <div class="project-tile__tile equal-height w-100 mb-4 stats px-3 py-3 d-flex align-items-center mr-3">
                             <div class="project-tile__icon">
                                 <img src="assets/images/Add-Project.png" alt="Total number of project" class="img-fluid mr-3">
