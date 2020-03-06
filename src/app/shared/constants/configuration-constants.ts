@@ -73,5 +73,8 @@ export const API = {
   GETCITYANDSTATE: pincode => `city-state/get/${pincode}`,
   SENDOTP:phone => `api/auth/otp/create?phone=${phone}`,
   VERIFYOTP:(phone,otp) => `api/auth/otp/verify?phone=${phone}&otp=${otp}`,
-  VERIFYEMAIL: email => `verify/email?email=${email}`
+  VERIFYEMAIL: email => `verify/email?email=${email}`,
+  GETUSERGUIDEFLAG: `userGuide`,
+  SENDUSERGUIDEFLAG: `add/userGuide`
+
 };
