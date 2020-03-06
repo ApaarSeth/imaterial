@@ -29,8 +29,7 @@ $mat-row-horizontal-padding: 24px;
   display: flex;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  align-items: center;
-  padding: 0 $mat-row-horizontal-padding;
+  // padding: 0 $mat-row-horizontal-padding;
   box-sizing: border-box;
 
   // Workaround for https://goo.gl/pFmjJD in IE 11. Adds a pseudo
@@ -48,5 +47,12 @@ $mat-row-horizontal-padding: 24px;
   flex: 1;
   overflow: hidden;
   word-wrap: break-word;
+  align-items: center;
   color: black !important;
+}
+
+// .mat-header-cell,
+.name-padding {
+  flex: none;
+  // padding-left: 45px;
 }

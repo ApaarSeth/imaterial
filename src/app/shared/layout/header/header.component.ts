@@ -27,6 +27,30 @@ export class HeaderLayoutComponent implements OnInit {
     this.role = localStorage.getItem("role");
     this.sidenavToggle.emit('loaded');
     this.permissionObj = this.permissionService.checkPermission();
+    this.highlightButton(this.router.url);
+  }
+
+  highlightButton(url: string) {
+    if (url.includes('dashboard')) {
+      this.buttonName = 'dashboard'
+    } else if (url.includes('project-dashboard')) {
+      this.buttonName = 'projectStore'
+    }
+    else if (url.includes('globalStore')) {
+      this.buttonName = 'globalStore'
+    }
+    else if (url.includes('rfq')) {
+      this.buttonName = 'requestForQuotation'
+    }
+    else if (url.includes('users')) {
+      this.buttonName = 'users'
+    }
+    else if (url.includes('po')) {
+      this.buttonName = 'purchaseOrder'
+    }
+    else if (url.includes('supplier')) {
+      this.buttonName = 'supplier'
+    }
   }
 
   setButtonName(name: string) {
@@ -65,7 +89,7 @@ export class HeaderLayoutComponent implements OnInit {
   routeTo(route) {
     this.router.navigate([route]);
   }
-  
+
   closeDialog() {
     this.notifClicked = false;
   }

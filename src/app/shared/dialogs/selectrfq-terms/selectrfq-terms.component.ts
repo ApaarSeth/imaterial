@@ -50,13 +50,16 @@ export class SelectRfqTermsComponent implements OnInit {
   submitRfq() {
     this.data.terms = {
       termsId: this.termsForm.value.term.termsId,
-      termsDesc: this.selectedPayment,
+      termsDesc: this.termsForm.value.term.termsDesc,
       termsType: "RFQ",
       otherDesc: this.selectedPayment.trim() === 'Others' ? this.customTermForm.value.customTerm : ''
     };
     this.rfqService.addRFQ(this.data).then(res => {
       let finalRfq = res.data;
-      this.router.navigate(["/rfq/review/", res.data.rfqId]);
+      // this.router.navigate(["/rfq/review/", res.data.rfqId]
+      this.router.navigate(["/rfq/review/"], {
+        state: { finalRfq }
+      });
       this.dialogRef.close();
     });
   }
