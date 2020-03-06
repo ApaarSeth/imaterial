@@ -7,7 +7,8 @@ import { PurchaseOrderData } from 'src/app/shared/models/po-details/po-details-l
 import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
 import { SelectProjectComponent } from 'src/app/shared/dialogs/select-project/select-project.component';
 import { ProjectDetails } from 'src/app/shared/models/project-details';
-
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { GuideTourModel } from 'src/app/shared/models/guided_tour';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -22,18 +23,30 @@ export class AppDashboardComponent implements OnInit {
   projectCount: number;
   projectLists: ProjectDetails[];
   label: string;
+  userGuidedata:GuideTourModel[] = []; 
 
   constructor(public dialog: MatDialog,
     private router: Router,
     private _userService: UserService,
+    private userguideservice : UserGuideService,
     private _projectService: ProjectService) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.getDashboardInfo('po');
-     this.getDashboardInfo('rfq');
-      this.getDashboardInfo('indent');
+    this.getDashboardInfo('rfq');
+    this.getDashboardInfo('indent');
+    
+    
+     this.userguideservice.getUserGuideFlag().then(res=>{
+        this.userGuidedata = res.data;
+        this.userGuidedata.forEach(element => {
+         localStorage.setItem(element.moduleName,element.enableGuide);
+       });
+
+    })
+
     this.getProjectsNumber();
   }
 
