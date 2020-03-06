@@ -1,27 +1,27 @@
 <div class="page-start-point">
-
-  <div *ngIf="!poApprovalDetailsTemp &&  !poDraftedDetailsTemp && !acceptedRejectedPOListTemp">
-          <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
-            <div class="add-user-img">
-                  <img src="../../../../assets/images/po-background.png" alt="BuildSupply_Logo">
-                    <div>
-                          <p>
-                            You haven't created any purchase order yet. <br>
-                            Please create one to continue.
-                          </p>
-                    </div>
-                        <button  mat-raised-button   [routerLink]="['../../po/initiate-po']" class="main-background-color main-button color-white"  matTooltip="Issue P.O. to supplier without Request For Quotations">
-                           Create P.O.
-                        </button>
-                </div>
-           </div> 
+  <div *ngIf="!poApprovalDetailsTemp && !poDraftedDetailsTemp && !acceptedRejectedPOListTemp">
+    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+      <div class="add-user-img">
+        <img src="../../../../assets/images/po-background.png" alt="BuildSupply_Logo" />
+        <div>
+          <p>
+            You haven't created any purchase order yet. <br />
+            Please create one to continue.
+          </p>
+        </div>
+        <button
+          mat-raised-button
+          [routerLink]="['../../po/initiate-po']"
+          class="main-background-color main-button color-white"
+          matTooltip="Issue P.O. to supplier without Request For Quotations"
+        >
+          Create P.O.
+        </button>
+      </div>
     </div>
+  </div>
 
-
-
-
-
-  <div class="p-l-20 p-r-20 p-b-20 min-height parent" *ngIf="poApprovalDetailsTemp ||  poDraftedDetailsTemp || acceptedRejectedPOListTemp">
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent" *ngIf="poApprovalDetailsTemp || poDraftedDetailsTemp || acceptedRejectedPOListTemp">
     <div class="row">
       <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input p-l-20">
@@ -33,8 +33,12 @@
       </div>
       <div class="col-xs-9">
         <div class="text-right add-user-details-button-right p-t-10 p-r-20">
-          <button mat-raised-button class="main-background-color main-button color-white m-b-5 create-po-btn"
-            [routerLink]="['../../po/initiate-po']" matTooltip="Issue P.O. to supplier without Request For Quotations">
+          <button
+            mat-raised-button
+            class="main-background-color main-button color-white m-b-5 create-po-btn"
+            [routerLink]="['../../po/initiate-po']"
+            matTooltip="Issue P.O. to supplier without Request For Quotations"
+          >
             Create P.O.
           </button>
         </div>
@@ -83,7 +87,7 @@
                 <ng-container matColumnDef="Raised Date">
                   <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.created_at |  date: "dd-MMM-yyy" }}
+                    {{ element.created_at | date: "dd-MMM-yyy" }}
                   </td>
                 </ng-container>
 
@@ -95,8 +99,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="PO Amount">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef> PO Amount ₹ </th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
+                  <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount ₹</th>
+                  <td mat-cell class="text-right" *matCellDef="let element">
                     {{ element.poAmount }}
                   </td>
                 </ng-container>
@@ -104,8 +108,7 @@
                 <ng-container matColumnDef="Action">
                   <th mat-header-cell class="text-align-center" class="text-align-right" *matHeaderCellDef></th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
-                    <a style="color: #f47721"
-                      [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'requiredApproval']">View P.O</a>
+                    <a style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'requiredApproval']">View P.O</a>
                   </td>
                 </ng-container>
 
@@ -115,7 +118,7 @@
             </div>
           </mat-expansion-panel>
         </div>
-        
+
         <div *ngIf="poDraftedDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
@@ -133,21 +136,20 @@
                 <ng-container matColumnDef="Raised Date">
                   <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.created_at |  date: "dd-MMM-yyy" }}
+                    {{ element.created_at | date: "dd-MMM-yyy" }}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Total Material">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef class="text-align-center">Total
-                    Material</th>
+                  <th mat-header-cell class="text-align-center" *matHeaderCellDef class="text-align-center">Total Material</th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
                     {{ element.totalMaterials }}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="PO Amount">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Amount ₹</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
+                  <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount ₹</th>
+                  <td mat-cell class="text-right" *matCellDef="let element">
                     {{ element.poAmount }}
                   </td>
                 </ng-container>
@@ -155,13 +157,13 @@
                 <ng-container matColumnDef="Action">
                   <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
-                    <span class="p-r-10"><a href="javascript:void(0)" style="color: #f47721"
-                        [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'edit']">View
-                        P.O.</a></span>
-                    <span>&nbsp;</span>    
-                    <span class="p-r-10 float-right"><a (click)="deleteDraftedPo(element)" matTooltip="Delete">
-                        <img src="../../../../assets/images/delete-button.png">
-                      </a></span>
+                    <span class="p-r-10"
+                      ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'edit']">View P.O.</a></span
+                    >
+                    <span>&nbsp;</span>
+                    <span class="p-r-10 float-right"
+                      ><a (click)="deleteDraftedPo(element)" matTooltip="Delete"> <img src="../../../../assets/images/delete-button.png" /> </a
+                    ></span>
                   </td>
                 </ng-container>
 
@@ -171,7 +173,7 @@
             </div>
           </mat-expansion-panel>
         </div>
-        <br>
+        <br />
         <div *ngIf="acceptedRejectedPOListTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
@@ -189,7 +191,7 @@
                 <ng-container matColumnDef="Raised Date">
                   <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.created_at |  date: "dd-MMM-yyy"  }}
+                    {{ element.created_at | date: "dd-MMM-yyy" }}
                   </td>
                 </ng-container>
 
@@ -201,8 +203,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="PO Amount">
-                  <th mat-header-cell *matHeaderCellDef class="text-align-right">PO Amount ₹</th>
-                  <td mat-cell *matCellDef="let element" class="text-align-right">
+                  <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount ₹</th>
+                  <td mat-cell *matCellDef="let element" class="text-right">
                     {{ element.poAmount }}
                   </td>
                 </ng-container>
@@ -210,21 +212,14 @@
                 <ng-container matColumnDef="Action">
                   <th mat-header-cell class="text-align-center" *matHeaderCellDef></th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
-                    <span class="p-r-10"><a style="color: #f47721" href="javascript:void(0)"
-                        [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'view']">View
-                        P.O.</a></span>
-                    <span class="p-r-10"> <a style="color: #f47721"
-                        [routerLink]="['../../po/view-grn/',element.purchaseOrderId]">View
-                        GRN</a></span>
+                    <span class="p-r-10"
+                      ><a style="color: #f47721" href="javascript:void(0)" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
+                    >
+                    <span class="p-r-10"> <a style="color: #f47721" [routerLink]="['../../po/view-grn/', element.purchaseOrderId]">View GRN</a></span>
                     <!-- <span><a style="color: #f47721" [routerLink]="['../../po/add-grn/',element.purchaseOrderId]">Add
                         GRN</a></span> -->
-
-
-
                   </td>
                 </ng-container>
-
-
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -234,6 +229,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

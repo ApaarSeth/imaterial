@@ -41,7 +41,7 @@ export class SelectRfqTermsComponent implements OnInit {
   close() {
     this.rfqService.addRFQ(this.data).then(res => {
       let finalRfq = res.data;
-      this.router.navigate(["/rfq/review/"], {
+      this.router.navigate(["/rfq/review/", res.data.rfqId], {
         state: { finalRfq }
       });
     });
@@ -50,12 +50,13 @@ export class SelectRfqTermsComponent implements OnInit {
   submitRfq() {
     this.data.terms = {
       termsId: this.termsForm.value.term.termsId,
-      termsDesc: this.selectedPayment,
+      termsDesc: this.termsForm.value.term.termsDesc,
       termsType: "RFQ",
-      otherDesc: this.selectedPayment === 'Others' ? this.customTermForm.value.customTerm : ''
+      otherDesc: this.selectedPayment.trim() === 'Others' ? this.customTermForm.value.customTerm : ''
     };
     this.rfqService.addRFQ(this.data).then(res => {
       let finalRfq = res.data;
+      // this.router.navigate(["/rfq/review/", res.data.rfqId]
       this.router.navigate(["/rfq/review/"], {
         state: { finalRfq }
       });
@@ -64,8 +65,7 @@ export class SelectRfqTermsComponent implements OnInit {
   }
 
   change(event) {
-    this.selectedPayment = event.trim();
-    if (this.selectedPayment === 'Others') {
+    if (event.trim() === 'Others') {
       this.customTermForm.get("customTerm").enable()
     }
     else {

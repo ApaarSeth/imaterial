@@ -158,11 +158,11 @@ export class RfqSupplierComponent implements OnInit {
 
   openRfqTermsDialog(data: AddRFQ): void {
     const dialogRef = this.dialog.open(SelectRfqTermsComponent, {
-      width: "600px",
+      width: "400px",
       data
     });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   data.defaultAddress = result[1];
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      // data.defaultAddress = result[1];
+    });
   }
 }

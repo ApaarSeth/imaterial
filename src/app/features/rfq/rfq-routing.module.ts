@@ -43,6 +43,10 @@ const routes: Routes = [
     path: "documents",
     component: DocumentsComponent
   },
+  // {
+  //   path: "review/:rfqId",
+  //   component: ReviewComponent
+  // },
   {
     path: "review",
     component: ReviewComponent
