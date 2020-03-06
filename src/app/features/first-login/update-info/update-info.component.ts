@@ -51,7 +51,7 @@ export class UpdateInfoComponent implements OnInit {
 
   getUserRoles() {
     this._userService.getRoles().then(res => {
-      this.roles = res.data.reverse();
+      this.roles = res.data;
       this.roles.splice(2, 1);
       const id = this.roles.filter(opt => opt.roleName === this.role);
       this.roleId = id[0].roleId;
