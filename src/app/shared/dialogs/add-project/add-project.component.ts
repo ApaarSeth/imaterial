@@ -166,7 +166,6 @@ export class AddProjectComponent implements OnInit {
         .then(res => {
           if (res) {
             this.dialogRef.close(res.message);
-
             this._snackBar.open(res.message, "", {
               duration: 2000,
               panelClass: ["blue-snackbar"]
@@ -197,7 +196,7 @@ export class AddProjectComponent implements OnInit {
       this.form.value.startDate = this.formatDate(this.form.value.startDate);
       this.form.value.endDate = this.formatDate(this.form.value.endDate);
       this.addProjects(this.form.value);
-      this._router.navigate(['/project-dashboard']);
+      
     }
   }
 
