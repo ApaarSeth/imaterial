@@ -67,8 +67,7 @@ export class PoCardComponent implements OnInit {
 
   openDialog(roleType: string, projectId: number) {
     const dialogRef = this.dialog.open(SelectPoRoleComponent, {
-      width: "1200px",
-      height: "500px",
+      width: "700px",
       data: { roleType, projectId }
     });
 

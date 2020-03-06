@@ -1,18 +1,16 @@
 <div>
-    <h1 mat-dialog-title>Select Purchase Order Approver</h1>
-    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
-        [(ngModel)]="selectedApprover">
-        <div *ngFor="let approver of approverData">
-            <mat-radio-button class="example-radio-button" [value]="approver">
-                {{approver.firstName}}{{approver.lastName}}
-            </mat-radio-button>
-            <mat-divider></mat-divider>
-        </div>
-    </mat-radio-group>
-    <div class="m-0-auto send-btn-select-po">
-        <button mat-raised-button class="main-background-color main-button color-white" (click)="sendPo()">
-            Send
-        </button>
+  <h1 mat-dialog-title>Select Purchase Order Approver</h1>
+  <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="selectedApprover">
+    <div *ngFor="let approver of approverData">
+      <mat-radio-button class="example-radio-button" [value]="approver">
+        {{approver.firstName}}{{approver.lastName}}
+      </mat-radio-button>
+      <mat-divider></mat-divider>
     </div>
-
+  </mat-radio-group>
+  <div class="col-xs-12 text-center">
+    <button mat-raised-button class="main-background-color main-button color-white" (click)="sendPo()">
+      Select Approver
+    </button>
+  </div>
 </div>
