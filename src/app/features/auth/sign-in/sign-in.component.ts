@@ -72,7 +72,8 @@ export class SigninComponent implements OnInit {
   getUserInfo(userId) {
     this._userService.getUserInfo(userId).then(res => {
       if (res && (res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
-        this.router.navigate(['/profile/update-info']);;
+        this.router.navigate(["/profile/terms-conditions"]);
+        // this.router.navigate(['/profile/update-info']);
       }
       else {
         this.router.navigate(['/dashboard']);

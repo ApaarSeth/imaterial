@@ -9,13 +9,13 @@
     <div class="col-sm-12 display-flex m-t-20">
       <div class="col-sm-2">
         <div class="project-profile">
-            <img [src]="localImg || '../../../../assets/images/project-default-image.png'">
+          <img [src]="localImg || '../../../../assets/images/project-default-image.png'">
         </div>
         <div class="upload-photo-btn browser-method p-t-10">
-         <label class="myLabel">
-              <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
-                   <span>Upload</span>
-              </label>
+          <label class="myLabel">
+            <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
+            <span>Upload</span>
+          </label>
         </div>
       </div>
       <!-- new structure -->
@@ -70,9 +70,9 @@
           </div>
           <div class="col-sm-6">
             <!-- city -->
-           <mat-form-field class="border-input">
+            <mat-form-field class="border-input">
               <mat-label>City*</mat-label>
-              <input matInput type="string" formControlName="city"/>
+              <input matInput type="string" formControlName="city" />
               <!-- <mat-error>State is Required</mat-error> -->
             </mat-form-field>
           </div>
@@ -84,7 +84,7 @@
             <!-- state value -->
             <mat-form-field class="border-input">
               <mat-label>State*</mat-label>
-              <input matInput type="string" formControlName="state"/>
+              <input matInput type="string" formControlName="state" />
               <!-- <mat-error>State is Required</mat-error> -->
             </mat-form-field>
           </div>
@@ -96,24 +96,37 @@
         <div class="row">
           <div class="col-sm-6 date-dialog-add-edit">
             <!-- start date -->
-            <mat-form-field class="border-input">
+
+            <!-- <mat-form-field class="mr-5 w-75">
+              <input hidden matInput [matDatepicker]="startDate" formControlName="startDate" #ref
+              (dateChange)="getStart(ref.value)" (focus)="startDate.open()" readonly>
+              <span class="form-placeholder">{{ customDateFormat(form.controls.startDate.value) }}</span>
+              <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+              <mat-datepicker #startDate></mat-datepicker>
+            </mat-form-field> -->
+
+
+            <mat-form-field class="border-input date-label">
               <mat-label>Project Start Date*</mat-label>
-              <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref 
-                 (dateChange)="getStart(ref.value)" (focus)="startDate.open()" readonly/>
+              <span class="form-placeholder">{{ ref.value | date: "dd-MMM-yyy" }}</span>
+              <input hidden matInput [matDatepicker]="startDate" formControlName="startDate" #ref
+                (dateChange)="getStart(ref.value)" (focus)="startDate.open()" readonly [min]="minDate"/>
+              
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
+
           </div>
           <div class="col-sm-6 date-dialog-add-edit">
             <!-- end date -->
-            <mat-form-field class="border-input">
+            <mat-form-field class="border-input date-label">
               <mat-label>Project End Date*</mat-label>
-              <input matInput [matDatepicker]="endDate" formControlName="endDate" #refEnd 
-                 (dateChange)="getEndDate(refEnd.value)" [min]="minDate" 
-                (focus)="endDate.open()" readonly/>
+              <span class="form-placeholder">{{ refEnd.value | date: "dd-MMM-yyy" }}</span>
+              <input hidden matInput [matDatepicker]="endDate" formControlName="endDate" #refEnd
+                (dateChange)="getEndDate(refEnd.value)" [min]="minDate" (focus)="endDate.open()" readonly />
               <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
               <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
-                 <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small>
+              <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small>
             </mat-form-field>
           </div>
         </div>
@@ -138,7 +151,8 @@
             <mat-form-field class="border-input">
               <mat-label>Area</mat-label>
               <!-- <mat-error>ProjectArea is Required</mat-error> -->
-              <input matInput type="number" formControlName="area" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
+              <input matInput type="number" formControlName="area" min="0"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
 
             </mat-form-field>
           </div>
@@ -163,8 +177,9 @@
             <!-- construction cost -->
             <mat-form-field class="border-input">
               <mat-label>Construction Cost &#x20b9;</mat-label>
-              <input matInput type="number" formControlName="cost" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
-              <!-- <mat-error>Construction Cost is Required</mat-error> --> 
+              <input matInput type="number" formControlName="cost" min="0"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
+              <!-- <mat-error>Construction Cost is Required</mat-error> -->
             </mat-form-field>
           </div>
 
