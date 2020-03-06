@@ -58,7 +58,13 @@ export class AddProjectComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.selectedConstructionUnit = "1";
-    this.initForm();
+     this.initForm();
+    if(this.data.isEdit){
+      if(this.data.detail.pinCode){
+        this.cityStateFetch(this.data.detail.pinCode);
+      }
+    }
+   
   }
 
   cities: City[] = [
@@ -130,7 +136,7 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.gstNo : "",
         [Validators.pattern(FieldRegExConst.GSTIN)]
       ],
-     imageUrl: [''],
+     imageUrl: [this.data.isEdit ? this.data.detail.imageUrl : ""],
     });
   }
 
@@ -198,7 +204,12 @@ formatDate(oldDate): Date {
 
 getPincode(event){
      if (event.target.value.length == 6) {
-         this.projectService.getPincode(event.target.value).then(res =>{
+        this.cityStateFetch(event.target.value);
+     }
+
+}
+cityStateFetch(value){
+   this.projectService.getPincode(value).then(res =>{
            if(res.data){
              this.city = res.data[0].districtName;
              this.state = res.data[0].stateName;
@@ -206,8 +217,6 @@ getPincode(event){
              this.form.get('state').setValue(res.data[0].stateName);
            }
          });
-     }
-
 }
   getStart(event) {
     const x = event.indexOf('/');
