@@ -103,7 +103,7 @@ export class RfqQuantityMakesComponent implements OnInit {
             estimatedRate: [item.estimatedRate],
             quantity: [item.quantity, [Validators.required, this.quantityCheck(item.estimatedQty)]],
             makes: [item.makes],
-            fullfilmentDate: [],
+            fullfilmentDate: [item.fullfilmentDate],
             projId: [item.projectId],
             matId: [item.materialId],
           });

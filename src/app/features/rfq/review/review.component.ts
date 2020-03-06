@@ -57,19 +57,19 @@ export class ReviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.finalRfq = history.state.finalRfq;
-    // this.checkedList = this.finalRfq.rfqProjectsList;
-    // this.selectedSuppliersList = this.finalRfq.supplierDetails;
-    this.activatedRoute.params.subscribe(params => {
-      this.rfqId = params['rfqId']
-    })
-    if (this.rfqId) {
-      this.rfqService.getDraftRfq(this.rfqId).then(res => {
-        this.finalRfq = res.data;
-        this.checkedList = this.finalRfq.rfqProjectsList;
-        this.selectedSuppliersList = this.finalRfq.supplierDetails;
-      })
-    }
+    this.finalRfq = history.state.finalRfq;
+    this.checkedList = this.finalRfq.rfqProjectsList;
+    this.selectedSuppliersList = this.finalRfq.supplierDetails;
+    // this.activatedRoute.params.subscribe(params => {
+    //   this.rfqId = params['rfqId']
+    // })
+    // if (this.rfqId) {
+    //   this.rfqService.getDraftRfq(this.rfqId).then(res => {
+    //     this.finalRfq = res.data;
+    //     this.checkedList = this.finalRfq.rfqProjectsList;
+    //     this.selectedSuppliersList = this.finalRfq.supplierDetails;
+    //   })
+    // }
     // this.documentList = history.state.documentsList;
     // this.supplierIds = this.selectedSuppliersList.map(x => x.supplierId);
     // console.log("supplierIds", this.supplierIds);
