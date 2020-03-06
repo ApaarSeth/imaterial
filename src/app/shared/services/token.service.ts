@@ -1,37 +1,92 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { auth } from '../models/auth';
 // import {DynamicRoutesTypes} from '../../core/shared/constants/dynamic-routes-types';
 
 @Injectable()
 export class TokenService {
 
-     
+
     /**
      * @important - Do not use any other service in Token Service - can cause circular dependency issue
      * */
     constructor() {
 
 
-       
+
     }
- 
-  
-    /**
-     * @description get access token
-     * */
-    getToken(): string {
-        return localStorage.getItem('accessToken');
-    } 
+
+    getAuthHeader() {
+        const authorizationKey = `Bearer ${this.getToken()}`;
+        const authData = {
+            'Authorization': authorizationKey,
+            'userId': this.getUserId(),
+            'orgId': this.getOrgId(),
+            'role': this.getRole()
+        }
+        return authData;
+    }
+
+    setAuthResponseData(data: auth) {
+        this.saveAccessToken(data.serviceToken);
+        this.saverole(data.role);
+        this.saveUserId(data.userId);
+        this.saveOrgId(data.orgId);
+    }
 
     /**
      * @description set access token
      * */
     saveAccessToken(token): string {
-        if(token){
+        if (token) {
             localStorage.setItem('accessToken', token);
-        }else{
+        } else {
             localStorage.removeItem('accessToken');
         }
         return this.getToken();
+    }
+
+    /**
+    * @description get access token
+    * */
+    getToken(): string {
+        return localStorage.getItem('accessToken');
+    }
+
+    saverole(role): string {
+        if (role) {
+            localStorage.setItem('role', role);
+        } else {
+            localStorage.removeItem('role');
+        }
+        return this.getRole();
+    }
+
+    getRole(): string {
+
+        return localStorage.getItem('role');
+    }
+    saveUserId(userId): number {
+        if (userId) {
+            localStorage.setItem('userId', userId);
+        } else {
+            localStorage.removeItem('userId');
+        }
+        return this.getUserId();
+    }
+    getUserId(): number {
+        return Number(localStorage.getItem('userId'));
+    }
+
+    saveOrgId(orgId): number {
+        if (orgId) {
+            localStorage.setItem('orgId', orgId);
+        } else {
+            localStorage.removeItem('orgId');
+        }
+        return this.getOrgId();
+    }
+    getOrgId(): number {
+        return Number(localStorage.getItem('orgId'));
     }
 
     /**
@@ -46,12 +101,12 @@ export class TokenService {
      * */
     saveLoginStatus(status: boolean): boolean {
         localStorage.setItem('is_loggedIn', (status) ? 'true' : 'false');
-      //  this._isLoggedIn = status;
+        //  this._isLoggedIn = status;
         return this.getLoggedIn();
     }
- 
 
-  
+
+
 
     /**
      * @description set access token, login status and user data information
@@ -61,10 +116,10 @@ export class TokenService {
         this.saveLoginStatus(loginStatus);
     }
 
-    clearToken(){
+    clearToken() {
         this.saveAccessToken(null);
     }
 
     /**** Login and access token specific functions ends ****/
-    
+
 }

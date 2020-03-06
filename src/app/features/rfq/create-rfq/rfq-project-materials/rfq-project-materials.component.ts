@@ -11,7 +11,7 @@ import {
   ProjectDetails,
   ProjectIds
 } from "src/app/shared/models/project-details";
-import { FormControl, FormGroup, FormBuilder, FormArray } from "@angular/forms";
+import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
 import {
   RfqMaterialResponse,
   AddRFQ,
@@ -29,6 +29,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
   @Input() existingRfq: AddRFQ;
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   @ViewChild("ch", { static: true }) ch: HTMLElement;
+  searchProject: string = null;
+  searchMaterial: string = null;
   userId: 1;
   searchText: string = null;
   allProjects: ProjectDetails[];
@@ -51,6 +53,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
   checkedProjectIds: number[] = [];
   finalRfqDetails: RfqMaterialResponse[];
   rfqId: number;
+  counter: number = 0;
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -101,7 +104,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
       this.projectIds = [];
       this.rfqDetails = [];
       this.selectedProjects = [];
-      this.addRfq = this.existingRfq;
+      this.addRfq = this.existingRfq as AddRFQ;
       this.alreadySelectedId = this.addRfq.rfqProjectsList.map(
         (rfqMat: RfqMaterialResponse) => {
           return rfqMat.projectId;
@@ -115,8 +118,9 @@ export class RfqProjectMaterialsComponent implements OnInit {
       this.form.get("selectedProject").setValue(this.selectedProjects);
       this.checkedProjectList = this.addRfq.rfqProjectsList;
       this.checkedProjectIds = this.addRfq.rfqProjectsList.map(
-        (projectMaterialList: RfqMaterialResponse) => {
-          return projectMaterialList.projectId;
+        (projects: RfqMaterialResponse) => {
+          this.counter += projects.projectMaterialList.length
+          return projects.projectId;
         }
       );
       this.choosenProject();
@@ -125,7 +129,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
 
   formInit() {
     this.form = this.formBuilder.group({
-      selectedProject: [[]]
+      selectedProject: ['', [Validators.required]]
     });
   }
   setButtonName(name: string) {
@@ -174,7 +178,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
         );
         console.log("rfqDegtail", this.rfqDetails);
         this.materialsForm();
-        this.materialAdded();
+        // this.materialAdded();
       });
     }
     this.projectIds = [...selectedIds];
@@ -230,9 +234,9 @@ export class RfqProjectMaterialsComponent implements OnInit {
     this.materialForm = new FormGroup({});
     this.materialForm.addControl("forms", new FormArray(formArr));
 
-    this.materialForm.valueChanges.subscribe(val => {
-      this.materialAdded();
-    });
+    // this.materialForm.valueChanges.subscribe(val => {
+    //   this.materialAdded();
+    // });
   }
 
   materialChecked(
@@ -248,8 +252,10 @@ export class RfqProjectMaterialsComponent implements OnInit {
     const mat = maGrp.at(i);
     if (checked.checked) {
       element.checked = true;
+      this.counter++;
       mat.get("material").setValue(element);
     } else {
+      this.counter--;
       element.checked = false;
       mat.get("material").reset();
     }
@@ -261,9 +267,26 @@ export class RfqProjectMaterialsComponent implements OnInit {
       let projectMaterial: RfqMat[] = [];
       this.materialForm.value.forms[i].materialList.forEach(element => {
         if (element.material != null) {
-          projectMaterial.push(element.material);
+          if (this.checkedProjectIds.includes(rfqDetail.projectId)) {
+            this.checkedProjectList.forEach((project: RfqMaterialResponse) => {
+              if (project.projectId === rfqDetail.projectId) {
+                let materialAddedFlag = false;
+                project.projectMaterialList.forEach((mat: RfqMat) => {
+                  if (mat.materialId === element.material.materialId) {
+                    projectMaterial.push(mat);
+                    materialAddedFlag = true;
+                  }
+                })
+                if (!materialAddedFlag) {
+                  projectMaterial.push(element.material);
+                }
+              }
+            })
+          } else {
+            projectMaterial.push(element.material);
+          }
         }
-      });
+      })
       rfqDetail.projectMaterialList = projectMaterial;
       return rfqDetail;
     });

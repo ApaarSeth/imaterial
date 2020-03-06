@@ -8,6 +8,7 @@ import {
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
 import { FieldRegExConst } from "../../constants/field-regex-constants";
+import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 
 export interface City {
   value: string;
@@ -36,11 +37,19 @@ export class AddProjectComponent implements OnInit {
   orgId: number;
   userId: number;
   selectedConstructionUnit: String;
+  startstring: string;
+  sameStartEndDate: boolean = false;
+  endstring: string;
+
+  localImg: string | ArrayBuffer;
+  city: string;
+  state: string;
 
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
+      private _uploadImageService: DocumentUploadService,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar
   ) { }
@@ -89,11 +98,11 @@ export class AddProjectComponent implements OnInit {
         [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
       ],
       state: [
-        this.data.isEdit ? this.data.detail.state : "",
+        {value:this.data.isEdit ? this.data.detail.state : "",disabled:true},
         Validators.required
       ],
       city: [
-        this.data.isEdit ? this.data.detail.city : "",
+        {value:this.data.isEdit ? this.data.detail.city : "",disabled:true},
         Validators.required
       ],
       area: [
@@ -120,7 +129,8 @@ export class AddProjectComponent implements OnInit {
       gstNo: [
         this.data.isEdit ? this.data.detail.gstNo : "",
         [Validators.pattern(FieldRegExConst.GSTIN)]
-      ]
+      ],
+     imageUrl: [''],
     });
   }
 
@@ -128,14 +138,13 @@ export class AddProjectComponent implements OnInit {
     this.projectService
       .addProjects(projectDetails, this.orgId, this.userId)
       .then(res => {
-        res.data;
+       // res.data;
+        this.dialogRef.close(res.message);
         if (res) {
-
           this._snackBar.open(res.message, "", {
             duration: 2000,
             panelClass: ["blue-snackbar"]
           });
-
         }
       });
   }
@@ -147,8 +156,8 @@ export class AddProjectComponent implements OnInit {
       this.projectService
         .updateProjects(organizationId, projectId, projectDetails)
         .then(res => {
-          res.data;
           if (res) {
+            this.dialogRef.close(res.message);
 
             this._snackBar.open(res.message, "", {
               duration: 2000,
@@ -160,18 +169,46 @@ export class AddProjectComponent implements OnInit {
     }
   }
 
+formatDate(oldDate): Date {
+   let newDate= new Date(oldDate);
+   newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
+    return newDate;
+  }
+
   submit() {
     if (this.data.isEdit) {
-      this.dialogRef.close(this.updateProjects(this.form.value));
+   
+     this.form.value.startDate = this.formatDate(this.form.value.startDate);
+     this.form.value.endDate = this.formatDate(this.form.value.endDate);
+     this.form.value.city = this.city;
+     this.form.value.state = this.state;
+      this.updateProjects(this.form.value);
     } else {
-      this.dialogRef.close(this.addProjects(this.form.value));
+      this.form.value.city = this.city;
+     this.form.value.state = this.state;
+      this.form.value.startDate = this.formatDate(this.form.value.startDate);
+      this.form.value.endDate = this.formatDate(this.form.value.endDate);
+      this.addProjects(this.form.value);
     }
   }
 
   closeDialog(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 
+getPincode(event){
+     if (event.target.value.length == 6) {
+         this.projectService.getPincode(event.target.value).then(res =>{
+           if(res.data){
+             this.city = res.data[0].districtName;
+             this.state = res.data[0].stateName;
+             this.form.get('city').setValue(res.data[0].districtName);
+             this.form.get('state').setValue(res.data[0].stateName);
+           }
+         });
+     }
+
+}
   getStart(event) {
     const x = event.indexOf('/');
     const month = event.substring(0, x);
@@ -183,8 +220,51 @@ export class AddProjectComponent implements OnInit {
 
     const year = event.substring(y + 1, 10);
 
-    this.minDate = new Date(year, month - 1, day)
+    this.minDate = new Date(year, month - 1, day);
+    this.startstring = this.minDate.toString();
 
+    this.sameStartEndDate = this.isSameDay(this.startstring, this.endstring);
   }
-  uploadPhoto() { }
+
+  getEndDate(event){
+    const x = event.indexOf('/');
+    const month = event.substring(0, x);
+
+    event = event.replace('/', '-');
+    const y = event.indexOf('/');
+    const day = event.substring(x + 1, y);
+
+
+    const year = event.substring(y + 1, 10);
+
+     const endDate = new Date(year, month - 1, day);
+      this.endstring = endDate.toString();
+
+    this.sameStartEndDate = this.isSameDay(this.startstring, this.endstring);
+  }
+  isSameDay (dtFrom, dtTo) {
+    return dtFrom == dtTo
+  }
+
+    onFileSelect(event) {
+    if (event.target.files.length > 0) {
+        var reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = (event) => {
+            this.localImg = (<FileReader>event.target).result;
+        }
+        const file = event.target.files[0];
+        this.uploadImage(file);
+    }
+  }
+    uploadImage(file){
+    if (file) {
+      const data = new FormData();
+      data.append(`file`, file);
+      return this._uploadImageService.postDocumentUpload(data).then(res => {
+          this.form.get('imageUrl').setValue(res.data);
+      });
+    }
+  }
+
 }

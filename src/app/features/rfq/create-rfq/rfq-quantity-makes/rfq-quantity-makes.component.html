@@ -1,6 +1,34 @@
 <form *ngIf="projectSelectedMaterials.length" [formGroup]="materialForms">
   <div class="row ">
-    <div class="col-xs-12 text-right p-t-10 border-input">
+    <div class="col-xs-6 p-t-10 border-input">
+      <mat-form-field class=" input-search-padding-zero">
+        <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
+        <button mat-button matSuffix mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field class=" p-l-20 input-search-padding-zero">
+        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" [ngModelOptions]="{standalone: true}" />
+        <button mat-button matSuffix mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <div class="col-xs-6 text-right p-t-10 p-b-10">
+      <span class="p-r-5">
+        <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="materialAdded()" type="button">Back</button>
+      </span>
+      <span>
+        <button mat-raised-button matStepperNext [disabled]="!valid" (click)="materialAdded()" class="main-background-color main-button color-white">
+          Next
+        </button>
+      </span>
+    </div>
+  </div>
+  <div class="row ">
+    <!-- <div class="col-xs-12 text-right p-t-10 border-input">
       <span class="p-r-20">
         <mat-form-field class="input-search-padding-zero">
           <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
@@ -15,7 +43,7 @@
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field>
-    </div>
+    </div> -->
   </div>
   <div *ngFor="let material of projectSelectedMaterials | SearchPipe: searchProject:'projectName'; let mati = index">
     <mat-accordion class="accordion-padding-zero" formArrayName="forms">
@@ -36,33 +64,43 @@
           <ng-container matColumnDef="Material Name">
             <th mat-header-cell *matHeaderCellDef>Material Name</th>
             <td mat-cell *matCellDef="let element">
-              <div class="limited-character" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="Required Date">
-            <th mat-header-cell *matHeaderCellDef>Required Date</th>
-            <td mat-cell *matCellDef="let element; let i = index">
-              {{ element.dueDate | date: "dd-MMM-yyy" }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="Requested Qty">
-            <th mat-header-cell *matHeaderCellDef>Requested Qty</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.requestedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
+              <div class="limited-character global" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
             </td>
           </ng-container>
           <ng-container matColumnDef="Estimated Qty">
             <th mat-header-cell *matHeaderCellDef>Estimated Qty</th>
-            <td mat-cell *matCellDef="let element">
+            <td class="text-center" mat-cell *matCellDef="let element">
               {{ element.estimatedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Requested Qty">
+            <th mat-header-cell *matHeaderCellDef>Requested Qty</th>
+            <td class="text-center" mat-cell *matCellDef="let element">
+              {{ element.requestedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Fullfillment Date">
+            <th mat-header-cell *matHeaderCellDef>Fullfillment Date</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)" class="border-input">
+                <input matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" (focus)="dueDate.open()" readonly />
+                <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
+              </mat-form-field>
             </td>
           </ng-container>
           <ng-container matColumnDef="Estimated Rate">
             <th mat-header-cell *matHeaderCellDef>Estimated Rate</th>
             <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)" class="border-input table-input">
-                <input matInput formControlName="estimatedRate" type="number" placeholder="Estimated Rate" />
+                <input
+                  matInput
+                  formControlName="estimatedRate"
+                  type="number"
+                  placeholder="Estimated Rate"
+                  min="0"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                />
               </mat-form-field>
             </td>
           </ng-container>
@@ -70,7 +108,7 @@
             <th mat-header-cell *matHeaderCellDef>Quantity</th>
             <td mat-cell *matCellDef="let element; let i = index">
               <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)" class="border-input table-input">
-                <input matInput formControlName="quantity" type="number" placeholder="Quantity" />
+                <input matInput formControlName="quantity" type="number" placeholder="Quantity" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
               </mat-form-field>
             </td>
           </ng-container>

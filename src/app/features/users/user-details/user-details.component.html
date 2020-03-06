@@ -1,206 +1,193 @@
 <div class="page-start-point">
-
-<ng-container *ngIf="(dataSourceActivateTemp==null || dataSourceActivateTemp.length == 0) && (dataSourceDeactivateTemp==null || dataSourceDeactivateTemp.length == 0)">
-   <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
-     <div class="add-user-img">
-          <img src="../../../../assets/images/user-background.png" alt="BuildSupply_Logo">
-             <div>
-                  <p>
-                    You haven't added any user yet. <br>
-                    Please create one to continue.
-                  </p>
-            </div>
-                  <button  mat-raised-button  (click)="addUser()" class="main-background-color main-button color-white">
-                Add First User
-              </button>
+  <ng-container *ngIf="(dataSourceActivateTemp == null || dataSourceActivateTemp.length == 0) && (dataSourceDeactivateTemp == null || dataSourceDeactivateTemp.length == 0)">
+    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+      <div class="add-user-img">
+        <img src="../../../../assets/images/user-background.png" alt="BuildSupply_Logo" />
+        <div>
+          <p>
+            You haven't added any user yet. <br />
+            Please create one to continue.
+          </p>
         </div>
-  </div> 
- 
-</ng-container>
+        <button mat-raised-button (click)="addUser()" class="main-background-color main-button color-white">
+          Add First User
+        </button>
+      </div>
+    </div>
+  </ng-container>
 
-<ng-container *ngIf="dataSourceActivateTemp.length>0 || dataSourceDeactivateTemp.length>0">
-  
-
-   <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
+  <ng-container *ngIf="dataSourceActivateTemp.length > 0 || dataSourceDeactivateTemp.length > 0">
+    <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
       <!-- <div class="text-right add-user-details-button-right">
         <button mat-raised-button (click)="addUser()"
           class="main-background-color main-button color-white">
           Add User
         </button>
       </div> -->
-       <div class="row">
-       <div class="col-xs-3">
-        <mat-form-field class="example-form-field border-input p-l-20">
-          <input
-            matInput
-            placeholder="Search Users"
-            type="search"
-           (keyup)="applyFilter($event.target.value)"
-          />
-          <button mat-button matSuffix mat-icon-button>
-            <mat-icon>search</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <div class="col-xs-9">
-           <div class="text-right add-user-details-button-right p-t-10 p-r-20">
-              <button mat-raised-button (click)="addUser()"
-                class="main-background-color main-button color-white">
-                Add User
-              </button>
+      <div class="row">
+        <div class="col-xs-3">
+          <mat-form-field class="example-form-field border-input p-l-20">
+            <input matInput placeholder="Search Users" type="search" (keyup)="applyFilter($event.target.value)" />
+            <button mat-button matSuffix mat-icon-button>
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="col-xs-9">
+          <div class="text-right add-user-details-button-right p-t-10 p-r-20">
+            <button mat-raised-button (click)="addUser()" class="main-background-color main-button color-white add-user-button">
+              Add User
+            </button>
           </div>
-      </div>
-  </div>
-
-
-<ng-container *ngIf="dataSourceActivateTemp.length > 0" class="user-dts">
-  <mat-expansion-panel class="myPanel" [expanded]="true">
-    <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-      <div class="row ">
-        <div class="col-sm-12">
-            <span>Active Users</span>
         </div>
       </div>
-    </mat-expansion-panel-header>
-      <!-- first table structure -->
-      <div class="row">
-        <!-- <div class="col-sm-12"> -->
-        <!-- table structure -->
-        <div  [ngClass]="{'user-details-table-div-active-inactive': addUserBtn===true,'user-details-table-div-active-inactive-single':addUserBtn===false }">
-        <table mat-table [dataSource]="dataSourceActivate" class="mat-elevation-z8 col-sm-12">
-          <!--- Note that these columns can be defined in any order.
+
+      <ng-container *ngIf="dataSourceActivateTemp.length > 0" class="user-dts">
+        <mat-expansion-panel class="myPanel" [expanded]="true">
+          <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+            <div class="row ">
+              <div class="col-sm-12">
+                <span>Active Users</span>
+              </div>
+            </div>
+          </mat-expansion-panel-header>
+          <!-- first table structure -->
+          <div class="row">
+            <!-- <div class="col-sm-12"> -->
+            <!-- table structure -->
+            <div [ngClass]="{'user-details-table-div-active-inactive': addUserBtn === true, 'user-details-table-div-active-inactive-single': addUserBtn === false}">
+              <table mat-table [dataSource]="dataSourceActivate" class="mat-elevation-z8 col-sm-12">
+                <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
 
-          <!-- Position Column -->
+                <!-- Position Column -->
 
+                <ng-container matColumnDef="User Name">
+                  <th mat-header-cell *matHeaderCellDef>User Name</th>
+                  <td mat-cell *matCellDef="let element">{{ element.ProjectUser.firstName }} {{ element.ProjectUser.lastName }}</td>
+                </ng-container>
 
-          
-          <ng-container matColumnDef="User Name">
-            <th mat-header-cell *matHeaderCellDef>User Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.ProjectUser.firstName}} {{element.ProjectUser.lastName}}</td>
-          </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="Email Id">
+                  <th mat-header-cell *matHeaderCellDef>Email Id</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.ProjectUser.email }}
+                  </td>
+                </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="Email Id">
-            <th mat-header-cell *matHeaderCellDef>Email Id</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.ProjectUser.email }}
-            </td>
-          </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="Phone">
+                  <th mat-header-cell *matHeaderCellDef>Phone</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.ProjectUser.contactNo }}
+                  </td>
+                </ng-container>
 
-          <!-- Weight Column -->
-          <ng-container matColumnDef="Phone">
-            <th mat-header-cell *matHeaderCellDef>Phone</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.ProjectUser.contactNo }}
-            </td>
-          </ng-container>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="Role">
+                  <th mat-header-cell *matHeaderCellDef>Role</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.ProjectUser.roleDescription }}
+                  </td>
+                </ng-container>
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="Role">
-            <th mat-header-cell *matHeaderCellDef>Role</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.ProjectUser.roleName }}
-            </td>
-          </ng-container>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="Project">
+                  <th mat-header-cell *matHeaderCellDef class="project-user-details-width">Project</th>
+                  <td mat-cell *matCellDef="let element" class="project-user-details-width">
+                    <ng-container *ngFor="let x of element.ProjectList">
+                      <button mat-button class="btn-project-user-details">
+                        {{ x.projectName }}
+                      </button>
+                    </ng-container>
+                  </td>
+                </ng-container>
 
-        <!-- Symbol Column -->
-          <ng-container matColumnDef="Project">
-            <th mat-header-cell *matHeaderCellDef  class="project-user-details-width">Project</th>
-            <td mat-cell *matCellDef="let element"  class="project-user-details-width">
-              <ng-container *ngFor = "let x of element.ProjectList">
-                <button mat-button class="btn-project-user-details">
-                    {{x.projectName}}
-                </button>
-              </ng-container>
-            </td>
-          </ng-container>
+                <ng-container matColumnDef="star" stickyEnd>
+                  <th mat-header-cell *matHeaderCellDef class="edit-disable-user-details-width"></th>
+                  <td mat-cell *matCellDef="let element" class="edit-disable-user-details-width">
+                    <mat-icon aria-hidden="false" (click)="deactivateUser(element)">
+                      <a class="width-22-px p-r-10 p-t-10 cursor-pointer"> <img src="../../../../assets/images/user-disable.png" /> </a
+                    ></mat-icon>
+                    <i class="material-icons main-color" (click)="editProject(element)">
+                      <a class="width-17-px p-r-20 cursor-pointer margin-top-minus3px">
+                        <img src="../../../../assets/images/edit.png" />
+                      </a>
+                    </i>
+                  </td>
+                </ng-container>
 
-          <ng-container matColumnDef="star" stickyEnd>
-            <th mat-header-cell *matHeaderCellDef class="edit-disable-user-details-width"></th>
-            <td mat-cell *matCellDef="let element" class="edit-disable-user-details-width">
-                <mat-icon aria-hidden="false" (click)="deactivateUser(element)"> <a class="width-22-px p-r-10 p-t-10 cursor-pointer">
-               <img src="../../../../assets/images/user-disable.png">
-               </a></mat-icon>
-              <i class="material-icons main-color" (click)="editProject(element)"> 
-                <a class="width-17-px p-r-10 cursor-pointer margin-top-minus3px">
-               <img src="../../../../assets/images/edit.png">
-               </a>
-                 </i>
-            </td>
-          </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </div>
+            <!-- end structure -->
+            <!-- </div> -->
+          </div>
+        </mat-expansion-panel>
+      </ng-container>
+      <p></p>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-        </div>
-        <!-- end structure -->
-        <!-- </div> -->
-      </div>
-  </mat-expansion-panel>
-</ng-container>
-<p></p>
-
-<ng-container *ngIf="dataSourceDeactivateTemp && dataSourceDeactivateTemp.length > 0" class="user-dts">
-  <mat-expansion-panel  class="myPanel" [expanded]="true">
-    <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-      <div class="row">
-        <div class="col-sm-12">
-            <span>Deactivated Users</span>
-        </div>
-      </div>
-    </mat-expansion-panel-header>
-      <!-- first table structure -->
-      <div class="row">
-        <!-- <div class="col-sm-12"> -->
-        <!-- table structure -->
-        <div [ngClass]="{'user-details-table-div-active-inactive':addUserBtn===true,'user-details-table-div-active-inactive-single':addUserBtn===false}">
-        <table mat-table [dataSource]="dataSourceDeactivate" class="mat-elevation-z8 col-sm-12">
-          <!--- Note that these columns can be defined in any order.
+      <ng-container *ngIf="dataSourceDeactivateTemp && dataSourceDeactivateTemp.length > 0" class="user-dts">
+        <mat-expansion-panel class="myPanel" [expanded]="true">
+          <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+            <div class="row">
+              <div class="col-sm-12">
+                <span>Deactivated Users</span>
+              </div>
+            </div>
+          </mat-expansion-panel-header>
+          <!-- first table structure -->
+          <div class="row">
+            <!-- <div class="col-sm-12"> -->
+            <!-- table structure -->
+            <div [ngClass]="{'user-details-table-div-active-inactive': addUserBtn === true, 'user-details-table-div-active-inactive-single': addUserBtn === false}">
+              <table mat-table [dataSource]="dataSourceDeactivate" class="mat-elevation-z8 col-sm-12">
+                <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
 
-          <!-- Position Column -->
-          <ng-container matColumnDef="User Name">
-            <th mat-header-cell *matHeaderCellDef>User Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.ProjectUser.firstName}} {{element.ProjectUser.lastName}}</td>
-          </ng-container>
+                <!-- Position Column -->
+                <ng-container matColumnDef="User Name">
+                  <th mat-header-cell *matHeaderCellDef>User Name</th>
+                  <td mat-cell *matCellDef="let element">{{ element.ProjectUser.firstName }} {{ element.ProjectUser.lastName }}</td>
+                </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="Email Id">
-            <th mat-header-cell *matHeaderCellDef>Email Id</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.ProjectUser.email }}
-            </td>
-          </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="Email Id">
+                  <th mat-header-cell *matHeaderCellDef>Email Id</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.ProjectUser.email }}
+                  </td>
+                </ng-container>
 
-          <!-- Weight Column -->
-          <ng-container matColumnDef="Phone">
-            <th mat-header-cell *matHeaderCellDef>Phone</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.ProjectUser.contactNo }}
-            </td>
-          </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="Phone">
+                  <th mat-header-cell *matHeaderCellDef>Phone</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.ProjectUser.contactNo }}
+                  </td>
+                </ng-container>
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="Role">
-            <th mat-header-cell *matHeaderCellDef>Role</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.ProjectUser.roleName }}
-            </td>
-          </ng-container>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="Role">
+                  <th mat-header-cell *matHeaderCellDef>Role</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.ProjectUser.roleDescription }}
+                  </td>
+                </ng-container>
 
-        <!-- Symbol Column -->
-          <ng-container matColumnDef="Project">
-            <th mat-header-cell *matHeaderCellDef  class="project-user-details-width">Project</th>
-            <td mat-cell *matCellDef="let element"  class="project-user-details-width">
-              <ng-container *ngFor = "let x of element.ProjectList">
-                <button mat-button class="btn-project-user-details">
-                    {{x.projectName}}
-                </button>
-              </ng-container>
-            </td>
-          </ng-container>
-  <!-- 
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="Project">
+                  <th mat-header-cell *matHeaderCellDef class="project-user-details-width">Project</th>
+                  <td mat-cell *matCellDef="let element" class="project-user-details-width">
+                    <ng-container *ngFor="let x of element.ProjectList">
+                      <button mat-button class="btn-project-user-details">
+                        {{ x.projectName }}
+                      </button>
+                    </ng-container>
+                  </td>
+                </ng-container>
+                <!-- 
           <ng-container matColumnDef="star" stickyEnd>
             <th mat-header-cell *matHeaderCellDef class="edit-disable-user-details-width"></th>
             <td mat-cell *matCellDef="let element" class="edit-disable-user-details-width">
@@ -209,18 +196,15 @@
             </td>
           </ng-container> -->
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsDeactivate;sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumnsDeactivate"></tr>
-        </table>
-        </div>
-        <!-- end structure -->
-        <!-- </div> -->
-      </div>
-  </mat-expansion-panel>
-</ng-container>
-
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsDeactivate; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsDeactivate"></tr>
+              </table>
+            </div>
+            <!-- end structure -->
+            <!-- </div> -->
+          </div>
+        </mat-expansion-panel>
+      </ng-container>
+    </div>
+  </ng-container>
 </div>
-</ng-container>
- 
-
- </div>

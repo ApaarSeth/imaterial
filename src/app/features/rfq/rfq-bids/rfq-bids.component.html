@@ -5,7 +5,7 @@
         <div class="col-sm-12">
           <span>
             <button mat-raised-button class="main-background-color main-button color-white pull-right" [disabled]="!getFormValidation()">
-              Allocate Quantity
+              Create P.O
             </button>
           </span>
         </div>
@@ -56,7 +56,7 @@
                             <div class="col-xs-2 p-l-0 p-r-0">
                               <span class="col-xs-1 p-l-0 text-left">
                                 <mat-form-field class="border-input">
-                                  <input type="number" class="quantity p-l-0" matInput formControlName="quantity" placeholder="qty" />
+                                  <input type="number" class="quantity p-l-0" matInput formControlName="quantity" placeholder="qty" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
                                 </mat-form-field>
                               </span>
                               <span class="col-xs-1 p-l-20">{{ brandInfo.materialUnitPrice != null ? brandInfo.materialUnitPrice : "--" }}</span>

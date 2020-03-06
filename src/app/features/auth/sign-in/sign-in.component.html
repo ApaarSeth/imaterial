@@ -1,7 +1,7 @@
 <form [formGroup]="signinForm" (ngSubmit)="signin()" class="sign-in-form">
   
         <mat-form-field class="col-xs-12 border-input">
-          <input matInput formControlName="phone" type="number" placeholder="Phone No." />
+          <input matInput formControlName="phone" type="number" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Phone No." />
            <small
                     *ngIf="signinForm.controls['phone'].hasError('required') && signinForm.controls['phone'].touched"
                     class="signinForm-error-msg"> Phone No is required </small>
@@ -22,7 +22,7 @@
 
         <div mat-dialog-actions class="col-xs-12 p-t-40">
           <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
-            style="width: 100%;">
+            style="width: 100%;" [disabled]="!signinForm.valid">
             Sign In
           </button>
         </div>

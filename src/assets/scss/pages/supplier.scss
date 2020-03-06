@@ -371,11 +371,21 @@ body {
 div.limited-character {
     position: relative;
     white-space: nowrap;
-    width: 230px;
     overflow: hidden;
     text-overflow: ellipsis;
     z-index: 10;
 }
+
+div.limited-character.bom{
+        max-width: 694px;
+}
+div.limited-character.global{
+    width:230px;
+}
+div.limited-character.po-p-m{
+    max-width: 874px;
+}
+
 .rfq-after-bid{
     .limited-character {
         position: relative;
@@ -389,7 +399,8 @@ div.limited-character {
 
 
 .blue-background-color-color-white-section {
-    background: #192135;
+   // background: #192135;
+    background: #2197bb;
     border-radius: 0px;
 
     span.mat-header-cell {
@@ -602,7 +613,31 @@ mat-icon {
     }
 }
 
+.header-bell-menu .main-div-bell.mat-menu-item {
+    width: 100%;
+    height: auto;
+    max-height: 319px;
+    overflow-y: scroll;
+    padding-left:1px;
+    padding-right: 0px;
+}
 
+.header-bell-menu button.mat-menu-item:hover{
+    background: none !important;
+}
+
+
+.header-bell-menu.mat-menu-panel {
+    min-width: 412px !important;
+    }
+    .header-bell-menu.mat-menu-item {
+        height: auto;
+    }
+    .header-bell-menu{
+        .mat-menu-content{
+             padding: 0px !important;
+        }
+    }
 
  #notifications {
     display: block;
@@ -610,12 +645,7 @@ mat-icon {
     color: #000000;
     z-index: 999;
     font-size: 10px;
-    width: 400px;
-    position: absolute;
-    padding: 5px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    border: 1px solid #d0d0d0;
-    right: 10px;
+    width: 100%;
     &:before {         
         content: '';
         display: block;
@@ -634,6 +664,7 @@ h3 {
     display:block;
     color:#333; 
     background:#FFF;
+    cursor: default;
     //font-weight:bold;
     font-size:14px;    
     padding:8px;
@@ -658,19 +689,21 @@ h3 {
     text-decoration:underline;
 }
 .body-of-notification{
-    max-height: 320px;
-    overflow-y: scroll;
+    max-height: 288px;
+   // overflow-y: scroll;
 }
 
 .read-unread-heading{
     background: #d8d8d857;
+    cursor: default;
     span{
         opacity: 0.5;
+        cursor: default;
     }
 }
 .unread-background{
     background: #3cbcc512;
-    cursor: pointer;
+    cursor: default;
 }
 .time-notification{
     color: rgba(0,0,0,0.38);

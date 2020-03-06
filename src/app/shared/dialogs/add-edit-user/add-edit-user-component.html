@@ -1,7 +1,7 @@
 
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()" class="add-edit-user-modal-form">
- <div class="header-add-edit-dialog">
-      <h1 mat-dialog-title>Add User</h1>
+ <div class="header-add-edit-dialog row">
+      <h1 mat-dialog-title>User Details</h1>
       <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
         <span aria-hidden="true">×</span>
       </button>
@@ -69,14 +69,14 @@
             matInput
             type="text"
             placeholder="Phone No"
-            formControlName="contactNo" required/>
+            formControlName="contactNo"/>
           <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
-          <small
+          <!-- <small
               *ngIf="form.controls['contactNo'].hasError('required') && form.controls['contactNo'].touched"
               class="form-error-msg"> Phone No is required </small>
               <small
               *ngIf="form.controls['contactNo'].hasError('pattern') && form.controls['contactNo'].touched"
-              class="form-error-msg"> Enter Valid Phone No</small>
+              class="form-error-msg"> Enter Valid Phone No</small> -->
         </mat-form-field>
           </div>
         </div>
@@ -132,7 +132,8 @@
         mat-raised-button [disabled]="!form.valid" (click)="userDetailsNavigate()"
         class="main-background-color main-button color-white pull-right"
       >
-        Save
+        <span *ngIf="!data.isEdit">Add</span>
+        <span *ngIf="data.isEdit">Edit</span>
       </button>
     </div>
   </div>

@@ -33,7 +33,7 @@
       </div>
       <div class="col-xs-9">
         <div class="text-right add-user-details-button-right p-t-10 p-r-20">
-          <button mat-raised-button class="main-background-color main-button color-white m-b-5"
+          <button mat-raised-button class="main-background-color main-button color-white m-b-5 create-po-btn"
             [routerLink]="['../../po/initiate-po']" matTooltip="Issue P.O. to supplier without Request For Quotations">
             Create P.O.
           </button>
@@ -67,7 +67,7 @@
       <!-- Accordion for PO Lists -->
       <div class="po-list-detail-custom">
         <div *ngIf="poApprovalDetailsTemp">
-          <mat-expansion-panel class="myPanel" [expanded]="true">
+          <mat-expansion-panel class="myPanel m-b-10" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
                 P.O. For Approval
@@ -115,7 +115,7 @@
             </div>
           </mat-expansion-panel>
         </div>
-        <br>
+        
         <div *ngIf="poDraftedDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
@@ -159,7 +159,7 @@
                         [routerLink]="['../../po/po-generate/',element.purchaseOrderId,'edit']">View
                         P.O.</a></span>
                     <span>&nbsp;</span>    
-                    <span class="p-r-10"><a (click)="deleteDraftedPo(element)" matTooltip="Delete">
+                    <span class="p-r-10 float-right"><a (click)="deleteDraftedPo(element)" matTooltip="Delete">
                         <img src="../../../../assets/images/delete-button.png">
                       </a></span>
                   </td>

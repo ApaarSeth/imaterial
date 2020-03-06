@@ -16,6 +16,8 @@ export class AppDashboardComponent implements OnInit {
 
   orgId: number;
   poData: PurchaseOrderData;
+  rfqData:PurchaseOrderData;
+  indentData:PurchaseOrderData;
   userId: number;
   projectCount: number;
   projectLists: ProjectDetails[];
@@ -30,6 +32,8 @@ export class AppDashboardComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.getDashboardInfo('po');
+     this.getDashboardInfo('rfq');
+      this.getDashboardInfo('indent');
     this.getProjectsNumber();
   }
 
@@ -57,7 +61,14 @@ export class AppDashboardComponent implements OnInit {
     }
 
     this._userService.getDashboardData(data).then(res => {
-        this.poData = res.data;
+        if(label == 'po')
+         this.poData = res.data;
+        
+         if(label == 'rfq')
+         this.rfqData = res.data;
+         
+         if(label == 'indent')
+         this.indentData = res.data;
     })
   }
 

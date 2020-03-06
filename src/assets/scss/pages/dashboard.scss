@@ -31,25 +31,34 @@ body,
   margin-top: 120px;
 }
 
-.things-to-do {
-  padding: 12px 20px 14px 20px;
-
-  h5 {
-    font-size: 1.10rem;
-  }
-
-  &__icons {
-    box-shadow: 4px 4px 6px #bfbfbf;
-    border-radius: 10px;
-    padding: 10px 0px 0;
-    min-width: 125px;
-    border: 1px solid #192135;
-
-    &:hover h6 {
-      background-color: #f4783d;
-      color: #fff;
-      border-radius: 0 0 10px 10px;
-      border-color: #f4783d;
+.things-to-do{
+    padding: 12px 20px 14px 20px;
+    h5{
+      font-size: 1.10rem;
+    }
+    &__icons {
+      box-shadow: 4px 4px 6px #bfbfbf;
+      border-radius: 10px;
+      padding: 10px 0px 0;
+      min-width: 125px;
+      border: 1px solid #192135;
+      &:hover h6{
+        background-color: #f4783d;
+        color: #fff;
+        border-radius: 0 0 10px 10px;
+        border-color: #f4783d;
+      }
+      h6{
+        font-weight: 400;
+        font-size: 0.9rem;
+        padding: 7px 10px;
+        border-top: 2px solid #c4c4c4
+      }
+    }
+    &__img img {
+        min-height: 80px;
+        height: 80px;
+        margin-bottom: 7px;
     }
 
     h6 {
@@ -142,7 +151,7 @@ body,
     text-align: center;
     padding: 0 20px;
     line-height: 36px;
-    color: #2096ba;
+    color: #093c55;
   }
 
   .stats {

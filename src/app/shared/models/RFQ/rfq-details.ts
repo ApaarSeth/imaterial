@@ -18,6 +18,7 @@ export interface RfqMat {
   checked?: boolean;
   quantity?: number;
   estimatedRate?: number;
+  fullfilmentDate?: string;
   // to do change name makes to brands
   makes?: string[];
   materialUnit?: string;

@@ -6,13 +6,13 @@
       </div>
       <div class="col-sm-12 m-t-5 text-right">
         <div *ngIf="this.mode === 'edit'">
-          <button mat-raised-button class="main-background-color main-button color-white" (click)="selectApprover()" [disabled]="!isPoValid">
+          <button mat-raised-button class="main-background-color main-button color-white send-for-approval-btn" (click)="selectApprover()" [disabled]="!isPoValid">
             Send For Approval
           </button>
         </div>
         <div *ngIf="this.mode === 'requiredApproval'">
-          <button mat-raised-button class="main-background-color main-button color-white m-r-5" (click)="poApproval('rejected')">
-            Rejected
+          <button mat-raised-button class="background-color-white main-button main-color m-r-5" (click)="poApproval('rejected')">
+            Reject
           </button>
           <button mat-raised-button class="main-background-color main-button color-white " (click)="poApproval('approved')">
             Approve
@@ -40,7 +40,6 @@
           <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc !== ''" [innerHTML]="terms.termsDesc"></div>
           <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc == ''">No Term To View</div>
         </div>
-        froala
       </div>
     </div>
   </div>

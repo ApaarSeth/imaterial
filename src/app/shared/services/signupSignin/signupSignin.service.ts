@@ -12,14 +12,7 @@ export class SignInSignupService implements OnInit{
     constructor(private dataService: DataService) {}
 
     signUp(data) {
-        return this.dataService.sendPostRequestSso(API.SIGNUP,data).catch(e=>{
-            console.error(e);
-            // let data:any={};
-            // data.erroType= 'Invalid Credentials',
-            // data.errorMessage = 'Phone No. or Password Incorrect';
-            // console.log(e.error_description);
-            // return data;
-        });
+        return this.dataService.sendPostRequestSso(API.SIGNUP,data)
       }
 
       signIn(data) {
@@ -44,4 +37,13 @@ export class SignInSignupService implements OnInit{
             // console.error(e);
         });
       }
+      sendOTP(phone){
+        return this.dataService.sendPostRequestSsoEncodedUrl(API.SENDOTP(phone),{}).then(res => {return res});
+      }
+        verifyOTP(phone,otp){
+           return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYOTP(phone,otp),{}).then(res => {return res});
+     }
+     verifyEMAIL(email){
+        return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => {return res});
+     }
 }

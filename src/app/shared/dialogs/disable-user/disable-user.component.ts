@@ -54,6 +54,7 @@ export class DeactiveUserComponent implements OnInit {
     if(this.data.isDelete){
       this.userService.deactivateUser(this.data.detail.userId).then(res => {
          if(res){
+            this.dialogRef.close(res.message);
                     this._snackBar.open(res.message, "", {
                     duration: 2000,
                     panelClass: ["blue-snackbar"]
@@ -65,11 +66,11 @@ export class DeactiveUserComponent implements OnInit {
   }
 
   cancel(){
-     this.dialogRef.close({ data: 'data' });
+     this.dialogRef.close(null);
   }
 
   deactivateUser(){
-     this.dialogRef.close(this.deactivateUserService());
+     this.deactivateUserService();
   }
 
  

@@ -18,6 +18,7 @@ import { GlobalLoaderService } from "src/app/shared/services/global-loader.servi
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
 import { PermissionService } from "src/app/shared/services/permission.service";
+import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 
 @Component({
   selector: "app-bom-table",
@@ -36,9 +37,9 @@ export class BomTableComponent implements OnInit {
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName", "estimatedQty", "requestedQuantity", "issueToProject", "availableStock", "customColumn"];
+  columnsToDisplay = ["materialName","estimatedQty", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
 
-  innerDisplayedColumns = ["materialName", "estimatedQty", "requestedQuantity", "issueToProject", "availableStock", "customColumn"];
+  innerDisplayedColumns = ["materialName", "estimatedQty", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -54,6 +55,34 @@ export class BomTableComponent implements OnInit {
     projectEdit: boolean;
   };
 
+     public BomDetailsashboardTour: GuidedTour = {
+        tourId: 'bom-details-tour',
+        useOrb: false,
+        
+        steps: [
+            {
+                title: 'Raise Indent',
+                selector: '.raise-indent-btn',
+                content: 'Select materials from the bill of materials for which the indents has to be raised.',
+                orientation: Orientation.Left
+                
+            },
+            {
+                title: 'Create RFQ',
+                selector:'.create-rfq-btn',
+                content: 'Select material from the bill of materials and add it in RFQ to receive the quotes.',
+                 orientation: Orientation.Left
+            },
+            {
+              title:'Issue to Indent',
+              selector:'.issue-to-indent-icon',
+              content: 'Click here to issue the available stock of material to the indents raised.',
+                 orientation: Orientation.Left
+            }
+        ]
+    };
+
+
   constructor(
     private permissionService: PermissionService,
     private rfqService: RFQService,
@@ -65,9 +94,12 @@ export class BomTableComponent implements OnInit {
     private bomService: BomService,
 
     private loading: GlobalLoaderService,
-    private snack: MatSnackBar
-  ) { }
-
+     private guidedTourService: GuidedTourService
+  ) {
+    setTimeout(() => {
+            this.guidedTourService.startTour(this.BomDetailsashboardTour);
+        }, 1000);
+  }
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
@@ -213,8 +245,8 @@ export class BomTableComponent implements OnInit {
     };
     this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
     this.rfqService.addRFQ(this.addRfq).then(res => {
-      this.router.navigate(["/rfq/createRfq", { selectedIndex: 2 }], {
-        state: { rfqData: res }
+      this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
+        state: { rfqData: res, selectedIndex: 1 }
       });
       console.log(res.data);
     });

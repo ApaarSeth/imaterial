@@ -7,26 +7,37 @@
                     <input matInput formControlName="lastName" type="text" placeholder="Last Name" />
                 </mat-form-field> -->
                 <mat-form-field class="col-xs-12 border-input">
-                    <input matInput type="text" formControlName="organisationName" placeholder="Company Name" />
-                </mat-form-field>
-                <mat-form-field class="col-xs-12 border-input">
-                    <input matInput type="email" formControlName="email" placeholder="Email" />
-                    <small
-                    *ngIf="signupForm.controls['email'].hasError('required') && signupForm.controls['email'].touched"
-                    class="signupForm-error-msg"> Email is required </small>
-                    <small
-                    *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched"
-                    class="signupForm-error-msg"> Enter Valid Email</small>
-
-                </mat-form-field>
-                <mat-form-field class="col-xs-12 border-input">
-                    <input matInput type="number" formControlName="phone" placeholder="Phone No." />
+                    <input matInput type="number"  min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" placeholder="Phone No." (input)="enterPhone($event)" />
                      <small
                     *ngIf="signupForm.controls['phone'].hasError('required') && signupForm.controls['phone'].touched"
                     class="signupForm-error-msg"> Phone No is required </small>
                     <small
                     *ngIf="signupForm.controls['phone'].hasError('pattern') && signupForm.controls['phone'].touched"
                     class="signupForm-error-msg"> Enter Valid Phone No</small>
+                    <small *ngIf="lessOTPDigits" class="signupForm-error-msg green-colour"> Mobile Number is Verified</small>
+                </mat-form-field>
+
+                <mat-form-field class="col-xs-12 border-input" *ngIf="showOtp && !lessOTPDigits">
+                    <input matInput type="number"  min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="otp" (input)="enterOTP($event)" placeholder="Enter the OTP" />
+                     <small
+                    *ngIf="signupForm.controls['otp'].hasError('required') && signupForm.controls['otp'].touched"
+                    class="signupForm-error-msg"> OTP No is required </small>
+                    <small *ngIf="!lessOTPDigits" class="signupForm-error-msg"> Enter Valid OTP</small>
+                </mat-form-field>
+                
+                <mat-form-field class="col-xs-12 border-input">
+                    <input matInput type="text" formControlName="organisationName" placeholder="Company Name" />
+                </mat-form-field>
+                <mat-form-field class="col-xs-12 border-input">
+                    <input matInput type="email" formControlName="email" (input)="verifyEmail($event)" placeholder="Email" />
+                    <small
+                    *ngIf="signupForm.controls['email'].hasError('required') && signupForm.controls['email'].touched"
+                    class="signupForm-error-msg"> Email is required </small>
+                    <small
+                    *ngIf="signupForm.controls['email'].hasError('minlength') && signupForm.controls['email'].touched"
+                    class="signupForm-error-msg"> Enter Valid Email</small>
+
+                    <small *ngIf="(!emailVerified)">Email already in use.</small>
                 </mat-form-field>
                 
                 <!-- <mat-form-field class="col-xs-12 border-select">
@@ -48,7 +59,7 @@
                 </mat-form-field> -->
                 <div mat-dialog-actions class="col-xs-12 p-t-40">
                     <button mat-raised-button class="main-background-color main-button color-white m-b-5"
-                        cdkFocusInitial style="width: 100%;">
+                        cdkFocusInitial style="width: 100%;" [disabled]="!signupForm.valid || !lessOTPDigits || !emailVerified">
                         Sign Up
                     </button>
                 </div>

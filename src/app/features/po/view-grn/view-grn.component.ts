@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GRNService } from 'src/app/shared/services/grn/grn.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddEditGrnComponent } from 'src/app/shared/dialogs/add-edit-grn/add-edit-grn.component';
+import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 
 @Component({
     selector: "view-grn",
@@ -28,7 +29,25 @@ export class ViewGRNComponent implements OnInit {
     grnHeaders: any;
     pID: number;
 
-    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog) { }
+    public GRNTour: GuidedTour = {
+        tourId: 'grn-tour',
+        useOrb: false,
+        steps: [
+             {
+              title:'Add GRN',
+              selector: '.add-grn-btn',
+              content: 'Click here to add the quantity of material which has been received & certified.',
+              orientation: Orientation.Left
+            }
+        ]
+    };
+
+    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog,private guidedTourService: GuidedTourService){
+        setTimeout(() => {
+            this.guidedTourService.startTour(this.GRNTour);
+        }, 1000);
+
+     }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe(res => {
@@ -66,7 +85,6 @@ export class ViewGRNComponent implements OnInit {
         if (data.isDelete == false) {
             const dialogRef = this.dialog.open(AddEditGrnComponent, {
                 width: "1000px",
-                height: "500px",
                 data
             });
             dialogRef.afterClosed().toPromise().then(result => {

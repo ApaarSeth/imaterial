@@ -40,7 +40,7 @@
                 <ng-container *ngIf="mode != 'edit'; else editRate"> {{ purchaseOrder.materialUnitPrice }}</ng-container>
                 <ng-template #editRate>
                   <mat-form-field class="border-input width50Percent">
-                    <input type="number" matInput #rate formControlName="materialUnitPrice" placeholder="rate" />
+                    <input type="number" matInput #rate formControlName="materialUnitPrice" placeholder="rate" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
                   </mat-form-field>
                 </ng-template>
               </span>
@@ -48,7 +48,7 @@
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity }}</ng-container>
                 <ng-template #editQuantity>
                   <mat-form-field class="border-input width50Percent">
-                    <input type="number" matInput #quantity formControlName="materialQuantity" placeholder="quantity" />
+                    <input type="number" matInput #quantity formControlName="materialQuantity" placeholder="quantity" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
                   </mat-form-field>
                 </ng-template>
               </span>
@@ -62,12 +62,12 @@
                 <span *ngIf="mode != 'edit'; else editGst"> {{ purchaseOrder.materialIgst + purchaseOrder.materialCgst + purchaseOrder.materialSgst }}</span>
                 <ng-template #editGst>
                   <mat-form-field class="border-input width50Percent">
-                    <input matInput type="number" #gst formControlName="gst" placeholder="GST%" class="m-r-5" />
+                    <input matInput type="number" #gst formControlName="gst" placeholder="GST%" class="m-r-5" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
                   </mat-form-field>
                 </ng-template>
               </span>
               <span class="mat-cell">
-                <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount }} </ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
                 <ng-template #editgstAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["gstAmount"].value | number: "1.2-2" }}
                 </ng-template>
@@ -92,7 +92,7 @@
           <span class="mat-cell"><span>GST Amount ₹</span> <br />{{ gstTotalAmount | number: "1.2-2" }}</span>
           <span class="mat-cell"><span>Total Amount ₹</span> <br />{{ totalAmount | number: "1.2-2" }}</span>
         </div>
-        <div class="col-xs-12 text-right text-semi-bold m-t-10">Net Payable Amount in Words : {{ totalAmount | numberToWords | async }}</div>
+        <div class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35">Net Payable Amount in Words : {{ totalAmount | numberToWords | async }}</div>
       </mat-accordion>
     </form>
   </div>

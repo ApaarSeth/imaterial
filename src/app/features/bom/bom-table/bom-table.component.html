@@ -12,12 +12,12 @@
       </div>
       <div class="col-xs-9 p-t-10 text-right">
         <span class="" *ngIf="this.permissionObj.rfqFlag">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right" [disabled]="!this.checkedSubcategory.length" (click)="createRfq()">
+          <button mat-raised-button class="main-background-color main-button color-white pull-right create-rfq-btn" [disabled]="!this.checkedSubcategory.length" (click)="createRfq()">
             Create RFQ
           </button>
         </span>
         <span class="p-l-5">
-          <button mat-raised-button class="mx-3 main-background-color main-button color-white pull-right" [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
+          <button mat-raised-button class="mx-3 main-background-color main-button color-white pull-right raise-indent-btn" [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
             Raise Indent
           </button>
         </span>
@@ -42,8 +42,8 @@
           </th>
           <td class="text-left" mat-cell *matCellDef="let element">
             <mat-checkbox #ch (change)="getElemenetChecked(ch, element)" [checked]="element.checked">
-              <div class="limited-character" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
-              <div class="limited-character" matTooltip=" {{ element.materialGroup }}">
+              <div class="limited-character bom" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
+              <div class="limited-character bom" matTooltip=" {{ element.materialGroup }}">
                 <span class="category-name">
                   {{ element.materialGroup }}
                 </span>
@@ -51,15 +51,16 @@
             </mat-checkbox>
           </td>
         </ng-container>
+
         <ng-container matColumnDef="estimatedQty">
           <th *matHeaderCellDef class="text-align-center justify-center">
             Estimated Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }} {{ element.materialUnit }}</td>
         </ng-container>
-        <ng-container matColumnDef="requestedQuantity">
+        <ng-container matColumnDef="indentedQuantity">
           <th *matHeaderCellDef class="text-align-center justify-center">
-            Requested Quantity
+            Indented Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }} {{ element.materialUnit }}</td>
         </ng-container>
@@ -69,12 +70,11 @@
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
             <ng-container *ngIf="element.issueToProject; else showZEroDataIP">
-                        {{ element.issueToProject }}
+                        {{ element.issueToProject }} {{ element.materialUnit }}
             </ng-container>
                       <ng-template #showZEroDataIP>
-                       0
+                       0 {{ element.materialUnit }}
                       </ng-template>
-                      {{ element.materialUnit }}
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
@@ -83,12 +83,11 @@
           </th>
           <td class="text-align-center" mat-cell [hidden]="!permissionObj.rfqFlag" *matCellDef="let element">
             <ng-container *ngIf="element.availableStock; else showZEroData">
-                        {{ element.availableStock }}
+                        {{ element.availableStock }} {{ element.materialUnit }}
             </ng-container>
                       <ng-template #showZEroData>
-                       0
+                       0 {{ element.materialUnit }}
                       </ng-template>
-                      {{ element.materialUnit }}
           </td>
         </ng-container>
 
@@ -99,21 +98,26 @@
               <mat-icon>edit</mat-icon>
             </a> -->
 
-            <a *ngIf="permissionObj.rfqFlag" (click)="issueToIndent(element.materialId, projectId)" class="width-15-px p-r-10 cursor-pointer" matTooltip="Issue to Indent">
+            <a *ngIf="permissionObj.rfqFlag && (!(element.availableStock === 0 || element.availableStock === null))" (click)="issueToIndent(element.materialId, projectId)" class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Issue to Indent">
               <img src="../../../../assets/images/issue_to_indent.png" />
             </a>
+
+
+            <a *ngIf="permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)" class="width-15-px p-r-10  issue-to-indent-icon">
+              <img src="../../../../assets/images/issue_to_indent_disabled.png" />
+            </a>
+            
             <a
               class="width-15-px p-l-5 cursor-pointer"
               matTooltip="Delete"
-              *ngIf="!(element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
+              *ngIf="((element.requestedQuantity === 0 || element.requestedQuantity === null) && (element.availableStock === 0 || element.availableStock === null) && (element.issueToProject === 0 || element.issueToProject === null))"
               (click)="deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
             >
               <img src="../../../../assets/images/delete-button.png" />
             </a>
             <a
-              class="width-15-px p-l-5"
-              *ngIf="element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0"
-              (click)="deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
+              class="width-15-px p-l-5 "
+              *ngIf="!((element.requestedQuantity === 0 || element.requestedQuantity === null) && (element.availableStock === 0 || element.availableStock === null) && (element.issueToProject === 0 || element.issueToProject === null))"
             >
               <img src="../../../../assets/images/delete-button_disable.png" />
             </a>
@@ -138,17 +142,24 @@
                       </div>
                     </td>
                   </ng-container>
+                   <ng-container matColumnDef="Unit">
+                    <th *matHeaderCellDef class="text-align-center">
+                      Unit
+                    </th>
+                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.materialUnit }}</td>
+                  </ng-container>
+
                   <ng-container matColumnDef="estimatedQty">
                     <th *matHeaderCellDef class="text-align-center">
                       Estimated Quantity
                     </th>
-                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }} {{ element.materialUnit }}</td>
+                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }}</td>
                   </ng-container>
                   <ng-container matColumnDef="Requested Quantity">
                     <th *matHeaderCellDef class="text-align-center">
                       Requested Material
                     </th>
-                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }} {{ element.materialUnit }}</td>
+                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }}</td>
                   </ng-container>
                   <ng-container matColumnDef="issueToProject">
                     <th *matHeaderCellDef class="text-align-center">
@@ -169,7 +180,6 @@
                       <ng-template *ngIf="element.availableStock == null">
                        0
                       </ng-template>
-                      {{ element.materialUnit }}
                     </td>
                   </ng-container>
                   <tr style="opacity: 0;height: 0px;" mat-header-row *matHeaderRowDef="innerDisplayedColumns"></tr>

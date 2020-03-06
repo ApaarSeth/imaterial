@@ -12,10 +12,10 @@ import { UserDataGuardService } from './shared/guards/user-data.guards';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 
 const routes: Routes = [
-  { 
-    path: "", 
-    redirectTo: "auth/login", 
-    pathMatch: "full" 
+  {
+    path: "",
+    redirectTo: "auth/login",
+    pathMatch: "full"
   },
 
   {
@@ -46,7 +46,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileLayoutComponent,
-    canActivate: [AuthGuardService, UserDataGuardService],
+    // canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
         path: "profile",
@@ -59,7 +59,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [AuthGuardService, UserDataGuardService],
+    canActivate: [AuthGuardService],
     children: [
       {
         path: "project-dashboard",
