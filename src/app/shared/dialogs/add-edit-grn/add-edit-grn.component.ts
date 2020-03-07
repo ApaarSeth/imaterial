@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from "@angular/forms";
 import { GRNService } from "../../services/grn/grn.service";
 import { GRNDetails, GRNPopupData } from "../../models/grn";
 
@@ -39,7 +39,7 @@ export class AddEditGrnComponent implements OnInit {
     private dialogRef: MatDialogRef<AddEditGrnComponent>,
     @Inject(MAT_DIALOG_DATA) public data: GRNPopupData,
     private formBuilder: FormBuilder,
-    private snack: MatSnackBar
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -48,7 +48,6 @@ export class AddEditGrnComponent implements OnInit {
     this.grnService.viewGRN(orgId, poId).then(res => {
       this.dataSource = res.data;
       this.formsInit();
-      // this.qtyEnteredValidation = this.valueEntered();
     });
     this.purchaseOrderId = this.data.pID;
   }
@@ -62,8 +61,8 @@ export class AddEditGrnComponent implements OnInit {
       return new FormGroup({
         materialName: new FormControl(data.materialName),
         materialBrand: new FormControl(data.materialBrand),
-        certifiedQty: new FormControl(data.certifiedQty ? data.certifiedQty : "", {
-          validators: [Validators.max(data.materialQuantity), Validators.min(1)]
+        certifiedQty: new FormControl(data.certifiedQty ? data.certifiedQty : null, {
+          validators: [this.checkValidation(data.deliverableQty)]
         }),
         materialId: new FormControl(data.materialId),
         deliveredQty: new FormControl(data.deliveredQty),
@@ -87,7 +86,10 @@ export class AddEditGrnComponent implements OnInit {
 
   postGRNDetails(grnDetailsObj: GRNDetails[]) {
     this.grnService.addGRN(grnDetailsObj).then(data => {
-      this.snack.open(data.message, "", { duration: 2000, panelClass: ["blue-snackbar"] });
+      this._snackBar.open(data.message, "", {
+        duration: 2000, panelClass: ["success-snackbar"],
+        verticalPosition: "top"
+      });
       this.dialogRef.close(data);
     });
   }
@@ -112,16 +114,23 @@ export class AddEditGrnComponent implements OnInit {
     this.postGRNDetails(formValues);
   }
 
-  checkValidation() {
-    this.materialForms.value.forms.forEach((element, i) => {
-      if (element.certifiedQty < element.deliverableQty) {
-        (<FormGroup>(<FormArray>this.materialForms.controls["forms"]).controls[i]).controls["certifiedQty"].setValue(0);
-        this.snack.open("Certified quantity cannot be greater than delivered qty", "", {
-          duration: 2000,
-          verticalPosition: "top"
-        });
+  checkValidation(deliverableQty: number) {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (control.value > deliverableQty) {
+        this._snackBar.open(
+          "Certified quantity cannot be greater than delivered qty",
+          "",
+          {
+            duration: 2000,
+            panelClass: ["warning-snackbar"],
+            verticalPosition: "top"
+          }
+        );
+        control.setValue(0)
+        return { 'nameIsForbidden': true };
       }
-    });
+      return null;
+    }
   }
 
   valueEntered() {

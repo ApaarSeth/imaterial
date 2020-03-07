@@ -109,6 +109,7 @@ export class SignupComponent implements OnInit {
       if (data.status === 1002) {
         this._snackBar.open("Phone Number already used", "", {
           duration: 2000,
+          panelClass: ["warning-snackbar"],
           verticalPosition: "top"
         });
       }

@@ -9,3 +9,13 @@ body {
 }
 
 @import "./assets/scss/main.scss";
+
+.success-snackbar {
+  background: #2196f3 !important;
+  color: white !important;
+}
+
+.warning-snackbar {
+  background: $alert-color !important;
+  color: black !important;
+}

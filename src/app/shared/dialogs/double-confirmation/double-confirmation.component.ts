@@ -23,7 +23,7 @@ export class DoubleConfirmationComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
     private _snackBar: MatSnackBar,
     private projectService: ProjectService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.projectDetails = this.data.detail;
@@ -38,13 +38,14 @@ export class DoubleConfirmationComponent implements OnInit {
       .delete(this.projectDetails.organizationId, this.projectDetails.projectId)
       .then(res => {
         res.data;
-        if(res){
-            this.dialogRef.close(res.message);
-            this._snackBar.open(res.message, "", {
+        if (res) {
+          this.dialogRef.close(res.message);
+          this._snackBar.open(res.message, "", {
             duration: 2000,
-            panelClass: ["blue-snackbar"]
+            panelClass: ["success-snackbar"],
+            verticalPosition: "top"
           });
-      
+
         }
       });
   }
