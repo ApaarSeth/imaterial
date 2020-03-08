@@ -43,20 +43,21 @@ export class DeactiveSupplierComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   deactivateSupplierService() {
     this.supplierDetails = this.data.isDelete
       ? this.data.detail as SupplierAdd
       : ({} as SupplierAdd);
 
-    if(this.data.isDelete){
-     this.rfqService.deleteSuplier(this.supplierDetails.supplierId).then(data => {
-       if(data){
-            this.dialogRef.close(data.message);
-            this._snackBar.open(data.message, "", {
+    if (this.data.isDelete) {
+      this.rfqService.deleteSuplier(this.supplierDetails.supplierId).then(data => {
+        if (data) {
+          this.dialogRef.close(data.message);
+          this._snackBar.open(data.message, "", {
             duration: 2000,
-            panelClass: ["blue-snackbar"]
+            panelClass: ["success-snackbar"],
+            verticalPosition: "top"
           });
         }
         return data.data;
@@ -65,11 +66,11 @@ export class DeactiveSupplierComponent implements OnInit {
     }
   }
 
-  cancel(){
-     this.dialogRef.close(null);
+  cancel() {
+    this.dialogRef.close(null);
   }
 
-  deactivateSupplier(){
-     this.deactivateSupplierService();
+  deactivateSupplier() {
+    this.deactivateSupplierService();
   }
 }

@@ -47,6 +47,7 @@ export class SigninComponent implements OnInit {
       if (data.errorMessage) {
         this._snackBar.open("Bad Credentials", "", {
           duration: 2000,
+          panelClass: ["warning-snackbar"],
           verticalPosition: "top"
         });
       }

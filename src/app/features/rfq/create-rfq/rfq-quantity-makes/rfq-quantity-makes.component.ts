@@ -101,7 +101,7 @@ export class RfqQuantityMakesComponent implements OnInit {
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
             estimatedRate: [item.estimatedRate],
-            quantity: [item.quantity, [Validators.required, this.quantityCheck(item.estimatedQty)]],
+            quantity: [item.quantity ? item.quantity : null, [Validators.required, this.quantityCheck(item.estimatedQty)]],
             makes: [item.makes],
             fullfilmentDate: [item.fullfilmentDate],
             projId: [item.projectId],
@@ -114,7 +114,7 @@ export class RfqQuantityMakesComponent implements OnInit {
     this.materialForms.addControl("forms", new FormArray(frmArr));
     this.materialForms.valueChanges.subscribe(val => {
       this.valid = val.forms.some(mat => {
-        return mat.quantity >= 0;
+        return mat.quantity > 0;
       })
     });
   }
@@ -127,6 +127,7 @@ export class RfqQuantityMakesComponent implements OnInit {
           "",
           {
             duration: 2000,
+            panelClass: ["warning-snackbar"],
             verticalPosition: "top"
           }
         );
@@ -146,6 +147,7 @@ export class RfqQuantityMakesComponent implements OnInit {
         "",
         {
           duration: 2000,
+          panelClass: ["warning-snackbar"],
           verticalPosition: "top"
         }
       );

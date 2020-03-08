@@ -1,6 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit, Output, EventEmitter, SimpleChanges } from "@angular/core";
+import { Router, NavigationEnd } from "@angular/router";
 import { PermissionService } from "../../services/permission.service";
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 @Component({
   selector: "app-header",
   templateUrl: "./header.html",
@@ -15,6 +17,7 @@ export class HeaderLayoutComponent implements OnInit {
   permissionObj: any;
   notifClicked: boolean = false;
   userId: number;
+  subsriptions: Subscription[] = [];
 
   constructor(
     private permissionService: PermissionService,
@@ -28,10 +31,23 @@ export class HeaderLayoutComponent implements OnInit {
     this.sidenavToggle.emit('loaded');
     this.permissionObj = this.permissionService.checkPermission();
     this.highlightButton(this.router.url);
+    this.startSubscription();
   }
-  ngOnChanges(){
-    
+  startSubscription(): void {
+
+    this.subsriptions.push(
+      this.router.events
+        .pipe(filter(e => e instanceof NavigationEnd))
+        .subscribe(event => {
+          this.highlightButton(this.router.url);
+        })
+    )
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.highlightButton(this.router.url);
+
+  }
+
   highlightButton(url: string) {
     if (url.includes('dashboard')) {
       this.buttonName = 'dashboard'
@@ -94,5 +110,9 @@ export class HeaderLayoutComponent implements OnInit {
 
   closeDialog() {
     this.notifClicked = false;
+  }
+
+  ngOnDestroy() {
+    this.subsriptions.forEach(subs => subs.unsubscribe());
   }
 }
