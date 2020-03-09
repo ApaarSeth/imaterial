@@ -20,7 +20,7 @@ export class SuppliersDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<SuppliersDialogComponent>,
     private rfqService: RFQService,
-    private _snackBar:MatSnackBar,
+    private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder
   ) { }
@@ -44,19 +44,20 @@ export class SuppliersDialogComponent {
   }
 
   submit() {
-   this.addSuppliers(this.data, this.form.value);
+    this.addSuppliers(this.data, this.form.value);
   }
 
   addSuppliers(organisarionId: number, suppliers: Suppliers) {
     this.rfqService.addNewSupplier(this.orgId, suppliers).then(res => {
-        if(res){
-           this.dialogRef.close(res.message);
-            this._snackBar.open(res.message, "", {
-            duration: 2000,
-            panelClass: ["blue-snackbar"]
-          });
+      if (res) {
+        this.dialogRef.close(res.message);
+        this._snackBar.open('Supplier Added', "", {
+          duration: 2000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "top"
+        });
       }
-     
+
     });
   }
 

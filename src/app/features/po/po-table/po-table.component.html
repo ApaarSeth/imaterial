@@ -25,10 +25,10 @@
             <span class="mat-cell">{{ material.materialName }}</span>
             <span class="mat-cell"></span>
             <span class="mat-cell"></span>
-            <span class="mat-cell">{{ getMaterialQuantity(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell text-center">{{ getMaterialQuantity(m) | number: "1.2-2" }}</span>
             <span class="mat-cell">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
             <span class="mat-cell"></span>
-            <span class="mat-cell">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell text-right m-r-20">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
             <span class="mat-cell">{{ getMaterialTotalAmount(m) | number: "1.2-2" }}</span>
           </div>
           <ng-container formArrayName="purchaseOrderDetailList">
@@ -40,7 +40,15 @@
                 <ng-container *ngIf="mode != 'edit'; else editRate"> {{ purchaseOrder.materialUnitPrice }}</ng-container>
                 <ng-template #editRate>
                   <mat-form-field class="border-input width50Percent">
-                    <input type="number" matInput #rate formControlName="materialUnitPrice" placeholder="rate" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                    <input
+                      type="number"
+                      matInput
+                      #rate
+                      formControlName="materialUnitPrice"
+                      placeholder="rate"
+                      min="0"
+                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    />
                   </mat-form-field>
                 </ng-template>
               </span>
@@ -48,7 +56,15 @@
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity }}</ng-container>
                 <ng-template #editQuantity>
                   <mat-form-field class="border-input width50Percent">
-                    <input type="number" matInput #quantity formControlName="materialQuantity" placeholder="quantity" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                    <input
+                      type="number"
+                      matInput
+                      #quantity
+                      formControlName="materialQuantity"
+                      placeholder="quantity"
+                      min="0"
+                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    />
                   </mat-form-field>
                 </ng-template>
               </span>
@@ -62,11 +78,20 @@
                 <span *ngIf="mode != 'edit'; else editGst"> {{ purchaseOrder.materialIgst + purchaseOrder.materialCgst + purchaseOrder.materialSgst }}</span>
                 <ng-template #editGst>
                   <mat-form-field class="border-input width50Percent">
-                    <input matInput type="number" #gst formControlName="gst" placeholder="GST%" class="m-r-5" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                    <input
+                      matInput
+                      type="number"
+                      #gst
+                      formControlName="gst"
+                      placeholder="GST%"
+                      class="m-r-5"
+                      min="0"
+                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    />
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell">
+              <span class="mat-cell ">
                 <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
                 <ng-template #editgstAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["gstAmount"].value | number: "1.2-2" }}

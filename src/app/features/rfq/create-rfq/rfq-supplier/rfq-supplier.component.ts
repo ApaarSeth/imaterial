@@ -104,6 +104,7 @@ export class RfqSupplierComponent implements OnInit {
   supplierAlert() {
     this._snackBar.open("Cannot add more than 3 supplier", "", {
       duration: 2000,
+      panelClass: ["warning-snackbar"],
       verticalPosition: "top"
     });
   }
@@ -140,7 +141,7 @@ export class RfqSupplierComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then(result => {
-        if (result > 0) {
+        if (result === 'done') {
           this.rfqService.getSuppliers(this.orgId).then(data => {
             //   let allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
             //   let tempId = data.data.map(supp => supp.supplierId);

@@ -125,7 +125,8 @@ export class AddEditUserComponent implements OnInit {
         this.dialogRef.close(res.message);
         this._snackBar.open(res.message, "", {
           duration: 2000,
-          panelClass: ["blue-snackbar"]
+          panelClass: ["success-snackbar"],
+          verticalPosition: "top"
         });
         return res.data;
       }
@@ -145,7 +146,8 @@ export class AddEditUserComponent implements OnInit {
             this.dialogRef.close(res.message);
             this._snackBar.open(res.message, "", {
               duration: 2000,
-              panelClass: ["blue-snackbar"]
+              panelClass: ["success-snackbar"],
+              verticalPosition: "top"
             });
             return res.data;
           }

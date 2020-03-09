@@ -9,6 +9,7 @@ import { UserDetails } from 'src/app/shared/models/user-details';
 import { MatSnackBar } from '@angular/material';
 import { TokenService } from 'src/app/shared/services/token.service';
 import { auth } from 'src/app/shared/models/auth';
+import { debounceTime } from 'rxjs/operators';
 
 export interface OrganisationType {
   value: string;
@@ -25,7 +26,7 @@ export class SignupComponent implements OnInit {
   uniqueCode: string = "";
   user: UserDetails;
   lessOTPDigits: boolean;
-  showOtp: boolean= false;
+  showOtp: boolean = false;
   emailVerified: boolean = true;
   emailMessage: string;
   otpLength: number = 0;
@@ -78,6 +79,9 @@ export class SignupComponent implements OnInit {
       password: ["", Validators.required],
       otp: ["", [Validators.required]]
     });
+    if (this.user.contactNo && this.user.contactNo.length === 10) {
+      this.enterPhone(event, this.user.contactNo)
+    }
   }
 
   signup() {
@@ -105,6 +109,7 @@ export class SignupComponent implements OnInit {
       if (data.status === 1002) {
         this._snackBar.open("Phone Number already used", "", {
           duration: 2000,
+          panelClass: ["warning-snackbar"],
           verticalPosition: "top"
         });
       }
@@ -133,39 +138,39 @@ export class SignupComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
-  enterPhone(event){
+  enterPhone(event, numberPassed?: string) {
     this.lessOTPDigits = false;
-    const value = event.target.value
-    if((value.match(FieldRegExConst.PHONE)) && (value.length==10)){
-      this.signInSignupService.sendOTP(value).then(res=>{
-        if(res.data)
-        this.showOtp = res.data.success;
+    const value = numberPassed ? numberPassed : event.target.value;
+    if ((value.match(FieldRegExConst.PHONE)) && (value.length == 10)) {
+      this.signInSignupService.sendOTP(value).then(res => {
+        if (res.data)
+          this.showOtp = res.data.success;
       });
     }
   }
-  enterOTP(event){
-      const otp = event.target.value
-      if(event.target.value.length == 4){
-        this.otpLength = event.target.value.length;
-        this.signInSignupService.verifyOTP(this.signupForm.value.phone,otp).then(res=>{
-        if(res.data){
-           this.lessOTPDigits = res.data.success;
+  enterOTP(event) {
+    const otp = event.target.value
+    if (event.target.value.length == 4) {
+      this.otpLength = event.target.value.length;
+      this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
+        if (res.data) {
+          this.lessOTPDigits = res.data.success;
         }
-        });
-      }
-  }
-  verifyEmail(event){
-      const email = event.target.value
-        if(email.match(FieldRegExConst.EMAIL)){
-          this.signInSignupService.verifyEMAIL(this.signupForm.value.email).then(res=>{
-          if(res){
-            this.emailVerified = res.data;
-            this.emailMessage = res.message;
-          }
-          });
-        }
+      });
     }
-  
+  }
+  verifyEmail(event) {
+    const email = event.target.value
+    if (email.match(FieldRegExConst.EMAIL)) {
+      this.signInSignupService.verifyEMAIL(this.signupForm.value.email).then(res => {
+        if (res) {
+          this.emailVerified = res.data;
+          this.emailMessage = res.message;
+        }
+      });
+    }
+  }
+
 
 }
 
