@@ -143,7 +143,7 @@ export class RfqQuantityMakesComponent implements OnInit {
       forms.controls[grpIndex].get("makes").setValue(data);
     } else {
       this._snackBar.open(
-        "Only 4 brands allowed",
+        "Only 5 brands allowed",
         "",
         {
           duration: 2000,
