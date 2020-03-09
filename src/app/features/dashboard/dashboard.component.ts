@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   orgId: Number;
   userId: Number;
 
-public dashboardTour: GuidedTour = {
+  public dashboardTour: GuidedTour = {
     tourId: 'purchases-tour',
     useOrb: false,
     steps: [
@@ -82,7 +82,7 @@ public dashboardTour: GuidedTour = {
         orientation: Orientation.Bottom
       }
     ]
-   // skipCallback:this.setLocalStorage()
+    // skipCallback:this.setLocalStorage()
   };
 
   constructor(
@@ -104,18 +104,18 @@ public dashboardTour: GuidedTour = {
     //    });
 
     // })
-   if((localStorage.getItem('projectDashboard') == "null") || (localStorage.getItem('projectDashboard') =='0')){
-        setTimeout(() => {
+    if ((localStorage.getItem('projectDashboard') == "null") || (localStorage.getItem('projectDashboard') == '0')) {
+      setTimeout(() => {
         this.guidedTourService.startTour(this.dashboardTour);
       }, 1000);
-   }
+    }
 
     console.log(this.userId);
     this.getAllProjects();
   }
 
-  setLocalStorage(){
-    localStorage.setItem('projectDashboard','1');
+  setLocalStorage() {
+    localStorage.setItem('projectDashboard', '1');
   }
 
   getAllProjects() {
