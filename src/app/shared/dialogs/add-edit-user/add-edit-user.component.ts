@@ -164,6 +164,7 @@ export class AddEditUserComponent implements OnInit {
   userDetailsNavigate() {
     this.router.navigate(["users/user-detail"]);
   }
+
   closeDialog() {
     this.dialogRef.close(null);
   }

@@ -17,18 +17,18 @@ export class AppDashboardComponent implements OnInit {
 
   orgId: number;
   poData: PurchaseOrderData;
-  rfqData:PurchaseOrderData;
-  indentData:PurchaseOrderData;
+  rfqData: PurchaseOrderData;
+  indentData: PurchaseOrderData;
   userId: number;
   projectCount: number;
   projectLists: ProjectDetails[];
   label: string;
-  userGuidedata:GuideTourModel[] = []; 
+  userGuidedata: GuideTourModel[] = [];
 
   constructor(public dialog: MatDialog,
     private router: Router,
     private _userService: UserService,
-    private userguideservice : UserGuideService,
+    private userguideservice: UserGuideService,
     private _projectService: ProjectService) { }
 
   ngOnInit() {
@@ -37,13 +37,13 @@ export class AppDashboardComponent implements OnInit {
     this.getDashboardInfo('po');
     this.getDashboardInfo('rfq');
     this.getDashboardInfo('indent');
-    
-    
-     this.userguideservice.getUserGuideFlag().then(res=>{
-        this.userGuidedata = res.data;
-        this.userGuidedata.forEach(element => {
-         localStorage.setItem(element.moduleName,element.enableGuide);
-       });
+
+
+    this.userguideservice.getUserGuideFlag().then(res => {
+      this.userGuidedata = res.data;
+      this.userGuidedata.forEach(element => {
+        localStorage.setItem(element.moduleName, element.enableGuide);
+      });
 
     })
 
@@ -61,27 +61,27 @@ export class AppDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/project-dashboard']);
     });
   }
 
-  getDashboardInfo(label){
+  getDashboardInfo(label) {
     const data = {
       "orgId": this.orgId,
-      "startDate":"2020-01-01T18:30:00.000Z",
-      "endDate":"2020-09-28T18:30:00.000Z",
+      "startDate": "2020-01-01T18:30:00.000Z",
+      "endDate": "2020-09-28T18:30:00.000Z",
       "dataSource": label
     }
 
     this._userService.getDashboardData(data).then(res => {
-        if(label == 'po')
-         this.poData = res.data;
-        
-         if(label == 'rfq')
-         this.rfqData = res.data;
-         
-         if(label == 'indent')
-         this.indentData = res.data;
+      if (label == 'po')
+        this.poData = res.data;
+
+      if (label == 'rfq')
+        this.rfqData = res.data;
+
+      if (label == 'indent')
+        this.indentData = res.data;
     })
   }
 
@@ -89,39 +89,39 @@ export class AppDashboardComponent implements OnInit {
     let clickedIndex = $event.index;
     switch (clickedIndex) {
       case 0: {
-          this.label = 'po';
-          break;
+        this.label = 'po';
+        break;
       }
       case 1: {
         this.label = 'rfq';
-          break;
+        break;
       }
       case 2: {
         this.label = 'indent';
         break;
       }
       default: {
-          return;
+        return;
       }
     }
     this.getDashboardInfo(this.label);
   }
 
-  getProjectsNumber(){
+  getProjectsNumber() {
     this._projectService.getProjects(this.orgId, this.userId).then(res => {
       this.projectCount = res.data ? res.data.length : 0;
       this.projectLists = res.data;
     });
   }
 
-  openBomDialog(){
+  openBomDialog() {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
       width: "1000px",
       data: this.projectLists
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        return;
+      return;
     });
   }
 }

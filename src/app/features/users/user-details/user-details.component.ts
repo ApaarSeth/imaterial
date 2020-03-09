@@ -120,6 +120,7 @@ export class UserDetailComponent implements OnInit {
 
     });
   }
+
   addUser() {
     this.openDialog({
       isEdit: false,

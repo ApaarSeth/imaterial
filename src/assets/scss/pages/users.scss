@@ -101,7 +101,7 @@
   color: #f44336;
 }
 
-.update-info {
+.update-info, .terms-conditions {
   background-image: url("/assets/images/dashboard-overlay.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -249,18 +249,29 @@
   font-weight: 400;
 }
 
-.next-btn {
+.next-btn, .hollow-btn{
   border-radius: 40px;
-  background-color: #f47720;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
-  color: #fff !important;
   padding: 8px 40px;
+  border: 1px solid #f47720;
 }
 
-.next-btn:hover,
-.next-btn:focus,
-.next-btn:active {
-  background-color: #f37234;
+.hollow-btn{
+  background-color: #fff;
+  color: #f47720 !important;
+}
+
+.next-btn {
+  background-color: #f47720;
+  color: #fff !important;
+}
+
+.next-btn, .hollow-btn{
+  &:hover, &:focus, &:active{
+    background-color: #f37234;
+    border-color: #f37234;
+    color: #fff !important;
+  }
 }
 
 .lh-30 {
@@ -340,4 +351,20 @@
 
 .mat-standard-chip:hover::after {
   opacity: 0 !important;
+}
+
+.w-40{
+  width: 40% !important;
+}
+
+.terms-conditions{
+  &__outer-gray{
+    background-color: #F1F1F1;
+    border-radius: 6px;
+    padding: 2rem !important;
+  }
+
+  &__content {
+    color: #696969;
+  }
 }
