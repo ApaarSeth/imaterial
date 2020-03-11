@@ -18,16 +18,20 @@ import { POService } from 'src/app/shared/services/po/po.service';
   templateUrl: "./po-card.component.html"
 })
 export class PoCardComponent implements OnInit {
+  
   @Input("cardData") cardData: CardData;
   mode: string;
+  projectDetails: FormGroup;
+  isPoNoAndDateValid: boolean = false
+  minDate = new Date();
+
   constructor(
     private poService: POService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private formBuilder: FormBuilder
   ) { }
-  projectDetails: FormGroup;
-  isPoNoAndDateValid: boolean = false
+
   ngOnInit() {
     this.formInit();
     this.route.params.subscribe(params => {
@@ -72,28 +76,31 @@ export class PoCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result[0] === "projectBillingUserId") {
-        this.cardData.billingAddress.email = result[1].approver.email;
-        this.cardData.billingAddress.contactNo = result[1].approver.contactNo;
-        this.cardData.billingAddress.firstName = result[1].approver.firstName;
-        this.cardData.billingAddress.lastName = result[1].approver.lastName;
-        this.cardData.billingAddress.projectBillingUserId =
-          result[1].approver.userId;
-        result[1].approver.userId && this.poService.billingRole$.next();
-        this.projectDetails.controls["billingAddress"].setValue(
-          this.cardData.billingAddress
-        );
-      } else {
-        this.cardData.projectAddress.email = result[1].approver.email;
-        this.cardData.projectAddress.contactNo = result[1].approver.contactNo;
-        this.cardData.projectAddress.firstName = result[1].approver.firstName;
-        this.cardData.projectAddress.lastName = result[1].approver.lastName;
-        this.cardData.projectAddress.projectUserId = result[1].approver.userId;
-        result[1].approver.userId && this.poService.projectRole$.next();
-        this.projectDetails.controls["projectAddress"].setValue(
-          this.cardData.projectAddress
-        );
+      if(result){
+        if (result[0] === "projectBillingUserId") {
+          this.cardData.billingAddress.email = result[1].approver.email;
+          this.cardData.billingAddress.contactNo = result[1].approver.contactNo;
+          this.cardData.billingAddress.firstName = result[1].approver.firstName;
+          this.cardData.billingAddress.lastName = result[1].approver.lastName;
+          this.cardData.billingAddress.projectBillingUserId =
+            result[1].approver.userId;
+          result[1].approver.userId && this.poService.billingRole$.next();
+          this.projectDetails.controls["billingAddress"].setValue(
+            this.cardData.billingAddress
+          );
+        } else {
+          this.cardData.projectAddress.email = result[1].approver.email;
+          this.cardData.projectAddress.contactNo = result[1].approver.contactNo;
+          this.cardData.projectAddress.firstName = result[1].approver.firstName;
+          this.cardData.projectAddress.lastName = result[1].approver.lastName;
+          this.cardData.projectAddress.projectUserId = result[1].approver.userId;
+          result[1].approver.userId && this.poService.projectRole$.next();
+          this.projectDetails.controls["projectAddress"].setValue(
+            this.cardData.projectAddress
+          );
+        }
       }
+      
     });
   }
   openaddressDialog(roleType: string, id: number) {

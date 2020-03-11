@@ -101,7 +101,7 @@
                 <ng-container matColumnDef="PO Amount">
                   <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount ₹</th>
                   <td mat-cell class="text-right" *matCellDef="let element">
-                    {{ element.poAmount }}
+                    {{ element.poAmount | number : '1.2-2' }}
                   </td>
                 </ng-container>
 
@@ -150,7 +150,7 @@
                 <ng-container matColumnDef="PO Amount">
                   <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount ₹</th>
                   <td mat-cell class="text-right" *matCellDef="let element">
-                    {{ element.poAmount }}
+                    {{ element.poAmount | number : '1.2-2' }}
                   </td>
                 </ng-container>
 

@@ -145,6 +145,11 @@ export class SignupComponent implements OnInit {
       this.signInSignupService.sendOTP(value).then(res => {
         if (res.data)
           this.showOtp = res.data.success;
+          this._snackBar.open("OTP has been sent on your phone number", "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "top"
+          });
       });
     }
   }

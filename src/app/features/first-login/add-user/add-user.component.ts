@@ -88,13 +88,13 @@ export class AddUserComponent implements OnInit {
       ]
 
       ],
-      contactNo: ['', {
-        validators: [
-          // Validators.required,
-          Validators.pattern(FieldRegExConst.PHONE)
-        ]
-      }
-      ],
+      // contactNo: ['', {
+      //   validators: [
+      //     // Validators.required,
+      //     Validators.pattern(FieldRegExConst.PHONE)
+      //   ]
+      // }
+      // ],
       roleId: [null, Validators.required],
       firstName: [''],
       lastName: [''],
