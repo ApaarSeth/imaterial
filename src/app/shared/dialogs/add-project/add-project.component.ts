@@ -41,7 +41,6 @@ export class AddProjectComponent implements OnInit {
   startstring: string;
   sameStartEndDate: boolean = false;
   endstring: string;
-
   localImg: string | ArrayBuffer;
   city: string;
   state: string;

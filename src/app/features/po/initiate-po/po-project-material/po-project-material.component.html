@@ -37,7 +37,13 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ poDetails[0].projectName }}
-          <a href="javascript:void(0)" class="main-color p-l-15">{{ poDetails[0].defaultAddress.addressLine1 }}</a>
+          <a href="javascript:void(0)" class="main-color p-l-15">
+            {{ poDetails[0].defaultAddress.addressLine1 }}
+            <span *ngIf="poDetails[0].defaultAddress.addressLine2">, {{ poDetails[0].defaultAddress.addressLine2 }}</span>
+            <span *ngIf="poDetails[0].defaultAddress.city">, {{ poDetails[0].defaultAddress.city }}</span>
+            <span *ngIf="poDetails[0].defaultAddress.state">, {{ poDetails[0].defaultAddress.state }}</span>
+            <span *ngIf="poDetails[0].defaultAddress.pinCode">, {{ poDetails[0].defaultAddress.pinCode }}</span>
+          </a>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <table mat-table [dataSource]="poDetails[0].projectMaterialList" class="mat-elevation-z8 col-sm-12" formArrayName="formArr">

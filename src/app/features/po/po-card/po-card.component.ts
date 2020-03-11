@@ -18,16 +18,20 @@ import { POService } from 'src/app/shared/services/po/po.service';
   templateUrl: "./po-card.component.html"
 })
 export class PoCardComponent implements OnInit {
+  
   @Input("cardData") cardData: CardData;
   mode: string;
+  projectDetails: FormGroup;
+  isPoNoAndDateValid: boolean = false
+  minDate = new Date();
+
   constructor(
     private poService: POService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private formBuilder: FormBuilder
   ) { }
-  projectDetails: FormGroup;
-  isPoNoAndDateValid: boolean = false
+
   ngOnInit() {
     this.formInit();
     this.route.params.subscribe(params => {

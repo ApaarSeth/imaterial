@@ -64,7 +64,7 @@ export class AddEditUserComponent implements OnInit {
     });
 
     this.userService.getRoles().then(data => {
-      this.allRoles = data.data.reverse();
+      this.allRoles = data.data;
     });
   }
 
