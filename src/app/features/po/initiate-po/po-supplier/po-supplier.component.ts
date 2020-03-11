@@ -13,7 +13,7 @@ export class PoSupplierComponent implements OnInit {
   searchText: string = null;
   allSuppliers: Suppliers[];
   form: FormGroup;
-  displayedColumns: string[] = ["Supplier Name", "Email", "Phone No.", "PAN No."];
+  displayedColumns: string[] = ["Supplier Name", "Email", "Phone No."];
 
   constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {}
 
