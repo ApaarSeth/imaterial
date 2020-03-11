@@ -85,16 +85,23 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="Quantity">
-                <th mat-header-cell class="text-center" *matHeaderCellDef>Quantity</th>
+              <ng-container matColumnDef="Required Date">
+                <th mat-header-cell class="text-center" *matHeaderCellDef>Required Date</th>
                 <td mat-cell class="text-center" *matCellDef="let element">
+                  {{ element.fullfilmentDate | date }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Quantity">
+                <th mat-header-cell class="text-center w-15" *matHeaderCellDef>Quantity</th>
+                <td mat-cell class="text-center w-15" *matCellDef="let element">
                   {{ element.quantity }}<span class="p-l-5">{{ element.materialUnit }}</span>
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="Makes">
-                <th mat-header-cell *matHeaderCellDef>Makes</th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef class="text-center w-40">Makes</th>
+                <td mat-cell *matCellDef="let element" class="text-center w-40">
                   <ng-container *ngIf="element.makes">
                     <span class="brand-view-style m-r-5" *ngFor="let make of element.makes">
                       {{ make }}

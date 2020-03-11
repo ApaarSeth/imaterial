@@ -65,7 +65,7 @@ export class RFQService {
 
   getRFQView(rfqId: number) {
     return this.dataService.getRequest(API.GETRFQVIEW(rfqId)).then(res => {
-      console.log("rfq", res);
+      // console.log("rfq", res);
       return res;
     });
   }

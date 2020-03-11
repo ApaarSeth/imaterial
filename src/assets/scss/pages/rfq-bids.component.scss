@@ -22,7 +22,7 @@
   }
 
   $mat-header-row-height: 56px;
-  $mat-row-height: 48px;
+  $mat-row-height: 52px;
   $mat-row-horizontal-padding: 24px;
 
   .mat-table {
@@ -31,7 +31,7 @@
 
   .mat-header-row {
     min-height: $mat-header-row-height;
-    background: #192135;
+    background: #2297bb;
 
     span {
       color: #ffffff !important;
@@ -87,6 +87,14 @@
 
   .supplierLevel {
     background-color: white;
+    .col-sm-2:first-child{
+      color: #5F5F5F;
+      font-weight: 500;
+    }
+  }
+
+  .mat-expansion-panel:hover{
+    background-color: rgba(169, 174, 188, 0.21);
   }
 
   .supplierLevel:focus,
@@ -95,7 +103,41 @@
   }
 
   .mat-form-field-infix {
-    width: 87px !important;
+    width: 100% !important;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper{
+    padding-top: 0px !important;
+  }
+
+  .mat-expansion-panel-header.rfqbid-header-color {
+    background-color: (169, 174, 188, 0.21) !important;
+  }
+
+  .supplierLevel{
+    border: 1px solid #EDEBEB;
+    border-top: none;
+  }
+
+  .mat-accordion .mat-expansion-panel-header,
+  .rfqbid-header-color {
+    background: rgba(169, 174, 188, 0.21) !important;
+    border: 1px solid #979797;
+    color: #707070;
+    font-weight: 500;
+  }
+
+  .mat-accordion .mat-expansion-panel-header{
+    min-height: 50px;
+  }
+
+  .w-12{
+    max-width: 12%;
+    flex-basis: 12%;
+  }
+
+  .margin-right:not(:last-child){
+    margin-right: 30px;
   }
 }
 
@@ -110,16 +152,13 @@
     min-height: 48px;
   }
 }
-.customBid .mat-expansion-panel-header.rfqbid-header-color {
-  background-color: (169, 174, 188, 0.21) !important;
-}
 
-.customBid .mat-expansion-panel-header,
-.customBid .mat-expansion-panel-header.mat-expanded,
-.customBid .mat-expansion-panel-header.mat-expanded:focus,
-.customBid .mat-expansion-panel-header.mat-expanded:hover {
-  background-color: #ffffff !important;
-}
+// .customBid .mat-expansion-panel-header,
+// .customBid .mat-expansion-panel-header.mat-expanded,
+// .customBid .mat-expansion-panel-header.mat-expanded:focus,
+// .customBid .mat-expansion-panel-header.mat-expanded:hover {
+//   background-color: #ffffff !important;
+// }
 
 .rfqbid-header-color {
   background-color: (169, 174, 188, 0.21) !important;
