@@ -2,8 +2,7 @@
   <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row">
       <div class="col-sm-12">
-        <card-layout *ngIf="product" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)"
-          [projectDetails]="product" [disableEditDelete]="true"></card-layout>
+        <card-layout *ngIf="product" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
       </div>
     </div>
     <div class="row p-t-10">
@@ -68,13 +67,11 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
       </table>
 
       <!-- end structure -->
       <!-- </div> -->
     </div>
-
 
     <div class="row p-t-10">
       <div class="col-sm-12">
@@ -101,7 +98,7 @@
         <ng-container matColumnDef="Requested Date">
           <th mat-header-cell *matHeaderCellDef>Requested Date</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.createdAt | date: "dd-MMM-yyy"}}
+            {{ element.createdAt | date: "dd-MMM-yyy" }}
           </td>
         </ng-container>
 

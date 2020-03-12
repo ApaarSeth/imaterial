@@ -19,11 +19,12 @@ import { RFQService } from "../../services/rfq/rfq.service";
 })
 export class AddRFQConfirmationComponent implements OnInit {
   rfqDetails: AddRFQ;
+  selectBuildsupplyAsSupplier: boolean = true;
   constructor(
     private dialogRef: MatDialogRef<AddRFQConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private rfqService: RFQService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.rfqDetails = this.data;
@@ -34,6 +35,7 @@ export class AddRFQConfirmationComponent implements OnInit {
   }
 
   addRFQ() {
+    (<AddRFQ>this.data.dataKey).selectBuildsupplyAsSupplier = this.selectBuildsupplyAsSupplier
     this.rfqService.addRFQ(this.data.dataKey).then(res => {
       this.close(res);
     });

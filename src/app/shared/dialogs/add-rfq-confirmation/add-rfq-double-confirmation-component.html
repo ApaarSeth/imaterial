@@ -5,9 +5,13 @@
   </button>
 </div>
 <br />
-<div mat-dialog-content class="padding-for-dialog-after-header">
-  <p class="text-center">Are you sure you want to Float RFQ?</p>
+
+<div class="text-center">
+  <mat-checkbox [checked]="selectBuildsupplyAsSupplier" [(ngModel)]="selectBuildsupplyAsSupplier">
+    Do you want to take quotes from BuildSupply ?
+  </mat-checkbox>
 </div>
+
 <div mat-dialog-actions>
   <div class="col-sm-6">
     <button mat-raised-button class="main-color main-button pull-left" (click)="close()">

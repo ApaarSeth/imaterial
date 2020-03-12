@@ -29,6 +29,7 @@ import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
 import { HeaderSharedModule } from './shared/layout/header/header-shared.module';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
+import { MAT_DATE_LOCALE } from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +66,8 @@ import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
     AuthGuardService,
     UserDataGuardService,
     AfterSignUpGuardService,
-    GuidedTourService
+    GuidedTourService,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]
 })

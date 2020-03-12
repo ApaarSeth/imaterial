@@ -90,10 +90,16 @@ export class ReviewComponent implements OnInit {
     this.setRFQDetailsValue();
   }
 
+  formatDate(oldDate): Date {
+    let newDate = new Date(oldDate);
+    newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
+    return newDate;
+  }
+
   setRFQDetailsValue() {
     if (this.form.value) {
       this.finalRfq.rfqName = this.form.value.rfqName;
-      this.finalRfq.dueDate = this.form.value.dueDate;
+      this.finalRfq.dueDate = this.formatDate(this.form.value.dueDate);
     }
     // this.rfqDetails.rfqProjectsList = this.checkedMaterialsList;
     // this.rfqDetails.supplierId = this.supplierIds;

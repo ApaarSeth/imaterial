@@ -17,13 +17,12 @@
       </span>
       <ng-template #editDateBlock>
         <span class="text-semi-bold">
-          P.O. Valid Till: 
+          P.O. Valid Till:
           <mat-form-field class="border-input">
             <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" placeholder="Valid Till" (focus)="endDate.open()" readonly [min]="minDate" />
             <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
             <mat-datepicker #endDate startView="month"></mat-datepicker>
           </mat-form-field>
-         
         </span>
       </ng-template>
     </span>
