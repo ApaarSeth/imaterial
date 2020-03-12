@@ -9,8 +9,8 @@
     <div class="col-sm-12 display-flex m-t-20">
       <div class="col-sm-2">
         <div class="project-profile">
-            <img *ngIf="data.detail" [src]="localImg || data.detail.imageUrl || '../../../../assets/images/project-default-image.png'">
-             <img *ngIf="!data.detail" [src]="localImg || '../../../../assets/images/project-default-image.png'">
+          <img *ngIf="data.detail" [src]="localImg || data.detail.imageUrl || '../../../../assets/images/project-default-image.png'" />
+          <img *ngIf="!data.detail" [src]="localImg || '../../../../assets/images/project-default-image.png'" />
         </div>
         <div class="upload-photo-btn browser-method p-t-10">
           <label class="myLabel">
@@ -33,7 +33,6 @@
           </div>
         </div>
 
-
         <!-- second row -->
         <div class="row">
           <div class="col-sm-6">
@@ -54,7 +53,6 @@
           </div>
         </div>
 
-
         <!-- fifth row -->
         <div class="row">
           <div class="col-sm-6">
@@ -63,10 +61,8 @@
               <mat-label>Pincode*</mat-label>
               <input matInput type="text" (input)="getPincode($event)" formControlName="pinCode" />
               <!-- <mat-error>PinCode is Required</mat-error> -->
-              <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
-                class="error-msg"> pincode is required </small>
-              <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
-                class="error-msg"> Enter Valid Pincode</small>
+              <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched" class="error-msg"> pincode is required </small>
+              <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched" class="error-msg"> Enter Valid Pincode</small>
             </mat-form-field>
           </div>
           <div class="col-sm-6">
@@ -89,8 +85,7 @@
               <!-- <mat-error>State is Required</mat-error> -->
             </mat-form-field>
           </div>
-          <div class="col-sm-6">
-          </div>
+          <div class="col-sm-6"></div>
         </div>
 
         <!-- fourth row -->
@@ -106,32 +101,47 @@
               <mat-datepicker #startDate></mat-datepicker>
             </mat-form-field> -->
 
-
             <mat-form-field class="border-input date-label">
               <mat-label>Project Start Date*</mat-label>
-              <span class="form-placeholder">{{ ref.value | date: "dd-MMM-yyy" }}</span>
-              <input hidden matInput [matDatepicker]="startDate" formControlName="startDate" #ref
-                (dateChange)="getStart(ref.value)" (focus)="startDate.open()" readonly [min]="minDate"/>
-              
+              <span class="form-placeholder">{{ ref.value | date: "dd MMM yyy"}}</span>
+              <input
+                hidden
+                matInput
+                [matDatepicker]="startDate"
+                formControlName="startDate"
+                #ref
+                (dateChange)="getStart(ref.value)"
+                (focus)="startDate.open()"
+                readonly
+                [min]="minDate"
+              />
+
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
-
           </div>
           <div class="col-sm-6 date-dialog-add-edit">
             <!-- end date -->
             <mat-form-field class="border-input date-label">
               <mat-label>Project End Date*</mat-label>
               <span class="form-placeholder">{{ refEnd.value | date: "dd-MMM-yyy" }}</span>
-              <input hidden matInput [matDatepicker]="endDate" formControlName="endDate" #refEnd
-                (dateChange)="getEndDate(refEnd.value)" [min]="minDate" (focus)="endDate.open()" readonly />
+              <input
+                hidden
+                matInput
+                [matDatepicker]="endDate"
+                formControlName="endDate"
+                #refEnd
+                (dateChange)="getEndDate(refEnd.value)"
+                [min]="minDate"
+                (focus)="endDate.open()"
+                readonly
+              />
               <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
               <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
               <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small>
             </mat-form-field>
           </div>
         </div>
-
 
         <!-- another row -->
         <div class="row">
@@ -152,9 +162,7 @@
             <mat-form-field class="border-input">
               <mat-label>Area</mat-label>
               <!-- <mat-error>ProjectArea is Required</mat-error> -->
-              <input matInput type="number" formControlName="area" min="0"
-                onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
-
+              <input matInput type="number" formControlName="area" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
             </mat-form-field>
           </div>
 
@@ -169,17 +177,14 @@
               </mat-select>
             </mat-form-field>
           </div>
-
         </div>
         <!-- sixth row -->
         <div class="row">
-
           <div class="col-sm-3">
             <!-- construction cost -->
             <mat-form-field class="border-input">
               <mat-label>Construction Cost &#x20b9;</mat-label>
-              <input matInput type="number" formControlName="cost" min="0"
-                onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
+              <input matInput type="number" formControlName="cost" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
               <!-- <mat-error>Construction Cost is Required</mat-error> -->
             </mat-form-field>
           </div>
@@ -203,13 +208,10 @@
               <input matInput type="text" formControlName="gstNo" />
               <!-- <small *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
                 class="form-error-msg"> Gst No is required </small> -->
-              <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched"
-                class="form-error-msg"> Enter Valid Gst No</small>
+              <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched" class="form-error-msg"> Enter Valid Gst No</small>
               <!-- <mat-error>Address is Required</mat-error> -->
             </mat-form-field>
           </div>
-
-
         </div>
       </div>
       <!-- end structure -->
@@ -217,8 +219,7 @@
   </div>
   <div mat-dialog-actions>
     <div class="col-sm-12 add-edit-dialog-button">
-      <button mat-raised-button [disabled]="!form.valid || sameStartEndDate"
-        class="main-background-color main-button color-white pull-right">
+      <button mat-raised-button [disabled]="!form.valid || sameStartEndDate" class="main-background-color main-button color-white pull-right">
         <span *ngIf="!data.isEdit">Add</span>
         <span *ngIf="data.isEdit">Save</span>
       </button>

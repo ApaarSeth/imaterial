@@ -1,36 +1,30 @@
 <div class="page-start-point">
-    <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-        <div class="row p-t-20 p-b-20">
-            <!-- <div class="col-xs-6">PO Number: {{grnHeaders[0].poNumber}}</div> -->
-            <div class="col-xs-6"></div>
-            <div class="col-xs-6">
-        
-                <button (click)="viewBack()" mat-raised-button class="background-white-color main-color main-button pull-right">
-                    Back
-                </button>
+  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+    <div class="row p-t-20 p-b-20">
+      <!-- <div class="col-xs-6">PO Number: {{grnHeaders[0].poNumber}}</div> -->
+      <div class="col-xs-6"></div>
+      <div class="col-xs-6">
+        <button (click)="viewBack()" mat-raised-button class="background-white-color main-color main-button pull-right">
+          Back
+        </button>
 
-                  <button mat-raised-button class="main-background-color main-button color-white pull-right m-r-10 add-grn-btn"
-                  (click)="addGRN()">
-                   Add GRN
-                </button>
+        <button mat-raised-button class="main-background-color main-button color-white pull-right m-r-10 add-grn-btn" (click)="addGRN()">
+          Add GRN
+        </button>
+      </div>
+    </div>
 
-
-            </div>
-        </div>
-
-        <mat-accordion>
-            <div *ngIf="grnHeaders">
-                <mat-expansion-panel class="myPanel" *ngFor="let grnHeader of grnHeaders">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <div class="row width100Percent">
-                                <div class="col-md-4">
-                                    GRN - {{grnHeader.grnId}}
-                                </div>
-                                <div class="col-md-4">
-                                       {{ grnHeader.grnDate | date }}
-                                </div>
-                                <!-- <div class="col-md-4">
+    <mat-accordion>
+      <div *ngIf="grnHeaders">
+        <mat-expansion-panel class="myPanel" *ngFor="let grnHeader of grnHeaders">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="row width100Percent">
+                <div class="col-md-4">GRN - {{ grnHeader.grnId }}</div>
+                <div class="col-md-4">
+                  {{ grnHeader.grnDate | date: "dd-MMM-yyy" }}
+                </div>
+                <!-- <div class="col-md-4">
                                     <div class="pull-right p-l-10 p-r-10">
                                         <mat-icon>cloud_download</mat-icon>
                                     </div>
@@ -43,51 +37,48 @@
                                         <mat-icon>descriptions</mat-icon>
                                     </div>
                                 </div> -->
-                            </div>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="row">
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <table mat-table [dataSource]="getData(grnHeader.poMaterialList)" class="mat-elevation-z8 col-sm-12">
+              <ng-container matColumnDef="Material Name">
+                <th mat-header-cell *matHeaderCellDef>Material Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.materialName }}</td>
+              </ng-container>
 
-                        <table mat-table [dataSource]="getData(grnHeader.poMaterialList)" class="mat-elevation-z8 col-sm-12">
-                            <ng-container matColumnDef="Material Name">
-                                <th mat-header-cell *matHeaderCellDef>Material Name</th>
-                                <td mat-cell *matCellDef="let element">{{ element.materialName }}</td>
-                            </ng-container>
+              <ng-container matColumnDef="Brand Name">
+                <th mat-header-cell *matHeaderCellDef>Brand Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.materialBrand }}</td>
+              </ng-container>
 
-                              <ng-container matColumnDef="Brand Name">
-                                <th mat-header-cell *matHeaderCellDef>Brand Name</th>
-                                <td mat-cell *matCellDef="let element">{{ element.materialBrand }}</td>
-                            </ng-container>
+              <ng-container matColumnDef="Awarded Quantity">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center">Awarded Quantity</th>
+                <td mat-cell *matCellDef="let element" class="text-align-center">
+                  {{ element.materialQuantity }}
+                </td>
+              </ng-container>
 
-                            <ng-container matColumnDef="Awarded Quantity">
-                                <th mat-header-cell *matHeaderCellDef class="text-align-center">Awarded Quantity</th>
-                                <td mat-cell *matCellDef="let element" class="text-align-center">
-                                    {{ element.materialQuantity }}
-                                </td>
-                            </ng-container>
+              <ng-container matColumnDef="Certified Quantity">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center">Certified Quantity</th>
+                <td mat-cell *matCellDef="let element" class="text-align-center">
+                  {{ element.deliveredQty }}
+                </td>
+              </ng-container>
 
-                            <ng-container matColumnDef="Certified Quantity">
-                                <th mat-header-cell *matHeaderCellDef class="text-align-center">Certified Quantity</th>
-                                <td mat-cell *matCellDef="let element" class="text-align-center">
-                                    {{ element.deliveredQty }}
-                                </td>
-                            </ng-container>
-
-                            <!-- <ng-container matColumnDef="Date">
+              <!-- <ng-container matColumnDef="Date">
                                 <th mat-header-cell *matHeaderCellDef>Date</th>
                                 <td mat-cell *matCellDef="let element">
                                     {{ element.deliveredDate | date }}
                                 </td>
                             </ng-container> -->
 
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-                        </table>
-                    </div>
-                </mat-expansion-panel>
-            </div>
-
-
-        </mat-accordion>
-    </div>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </mat-accordion>
+  </div>
 </div>
