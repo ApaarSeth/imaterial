@@ -55,9 +55,10 @@
               {{ project.projectName }}
               <a href="javascript:void(0)" class="main-color p-l-15">
                 {{ project.defaultAddress.addressLine1 }}
-                {{ project.defaultAddress.city }}
-                {{ project.defaultAddress.state }}
-                {{ project.defaultAddress.country }}
+                <ng-container *ngIf="project.defaultAddress.addressLine2">, {{ project.defaultAddress.addressLine2 }}</ng-container>
+                <ng-container *ngIf="project.defaultAddress.city">, {{ project.defaultAddress.city }}</ng-container>
+                <ng-container *ngIf="project.defaultAddress.state">, {{ project.defaultAddress.state }}</ng-container>
+                <ng-container *ngIf="project.defaultAddress.pinCode">{{ project.defaultAddress.pinCode }}</ng-container>
               </a>
             </mat-panel-title>
           </mat-expansion-panel-header>

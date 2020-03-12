@@ -22,7 +22,7 @@ export class AddGRNComponent implements OnInit {
     "Brand Name",
     "Awarded Quantity",
     "Delivered Quantity",
-    "Certified Quantity"
+    "Received Quantity"
   ];
   materialForms: FormGroup;
   orgId: number;

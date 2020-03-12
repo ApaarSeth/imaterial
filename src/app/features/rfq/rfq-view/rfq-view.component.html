@@ -73,11 +73,19 @@
               </td>
             </ng-container>
 
+            <!-- Date Column -->
+            <ng-container matColumnDef="Required Date">
+              <th class="font-size14" mat-header-cell *matHeaderCellDef>Required Date</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.fullfilmentDate | date }}
+              </td>
+            </ng-container>
+
             <!-- Quantity Column -->
             <ng-container matColumnDef="Quantity">
-              <th class="font-size14" mat-header-cell *matHeaderCellDef class="text-align-center">Quantity</th>
-              <td mat-cell *matCellDef="let element" class="text-align-center">
-                {{ element.rfqMaterialQty }}
+              <th class="font-size14" mat-header-cell *matHeaderCellDef class="text-align-center w-15">Quantity</th>
+              <td mat-cell *matCellDef="let element" class="text-align-center w-15">
+                {{ element.rfqMaterialQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
               </td>
             </ng-container>
 

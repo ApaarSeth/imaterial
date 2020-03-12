@@ -11,7 +11,7 @@ import { Rfq, Documents, TermsObj } from 'src/app/shared/models/RFQ/rfq-view';
     styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class RFQViewComponent implements OnInit {
-    displayedColumns: string[] = ["Material Name", "Quantity", "Makes"];
+    displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Makes"];
     rfqDetails: Rfq = {} as Rfq;
     rfqId: number;
     terms: TermsObj;

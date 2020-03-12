@@ -19,7 +19,7 @@ import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
   templateUrl: "./review.component.html"
 })
 export class ReviewComponent implements OnInit {
-  displayedColumns: string[] = ["Material Name", "Quantity", "Makes"];
+  displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Makes"];
   finalRfq: AddRFQ;
   selectedSuppliersList: Suppliers[];
   documentList: DocumentList[];
