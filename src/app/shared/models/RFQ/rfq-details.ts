@@ -68,6 +68,7 @@ export interface AddRFQ {
   supplierDetails: Suppliers[];
   rfqProjectsList: RfqMaterialResponse[];
   documentsList: DocumentDetails[];
+  selectBuildsupplyAsSupplier?: boolean
   terms: Terms;
 }
 

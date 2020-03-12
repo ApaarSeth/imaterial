@@ -24,8 +24,8 @@ export class RFQViewComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe(rfqId => {
             this.rfqId = Number(rfqId.id);
+            this.getRFQDetails(this.rfqId);
         });
-        this.getRFQDetails(this.rfqId);
     }
 
     getRFQDetails(rfqId: number) {
@@ -34,15 +34,15 @@ export class RFQViewComponent implements OnInit {
         });
     }
 
-    openDialog1(documentsList: Documents, terms: TermsObj): void {
-        if (ViewDocumentsDialogComponent) {
-            const dialogRef = this.dialog.open(ViewDocumentsDialogComponent, {
-                width: "1200px",
-                data: { documentsList, terms }
+    // openDialog1(documentsList: Documents, terms: TermsObj): void {
+    //     if (ViewDocumentsDialogComponent) {
+    //         const dialogRef = this.dialog.open(ViewDocumentsDialogComponent, {
+    //             width: "1200px",
+    //             data: { documentsList, terms }
 
-            });
-            dialogRef.afterClosed().subscribe(result => {
-            });
-        }
-    }
+    //         });
+    //         dialogRef.afterClosed().subscribe(result => {
+    //         });
+    //     }
+    // }
 }

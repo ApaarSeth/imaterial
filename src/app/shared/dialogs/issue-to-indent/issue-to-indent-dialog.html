@@ -2,31 +2,31 @@
   <div mat-dialog-title>
     <div class="row">
       <div class="col-xs-2 font-size-20">
-       Issue to Indent
+        Issue to Indent
       </div>
 
       <div class="col-xs-4 mid-head-top">
         <span>
           {{issueToIndentDetails.materialName}}
-        </span> 
-       </div>
-       <div class="col-xs-4 mid-head-top">
-          <span>
-           Available in Stock: 
-           <span *ngIf="issueToIndentDetails.availableStock>0">
-             {{issueToIndentDetails.availableStock}}
-           </span> 
-           <span *ngIf="issueToIndentDetails.availableStock == null">
-            0
-           </span> 
-           {{issueToIndentDetails.materialUnit}}
         </span>
-       </div>
-       <div class="col-xs-2">
-          <button type="button"  class="close p-t-7" (click)="onNoClick()" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-       </div>
+      </div>
+      <div class="col-xs-4 mid-head-top">
+        <span>
+          Available in Stock:
+          <span *ngIf="issueToIndentDetails.availableStock>0">
+            {{issueToIndentDetails.availableStock}}
+          </span>
+          <span *ngIf="issueToIndentDetails.availableStock == null">
+            0
+          </span>
+          {{issueToIndentDetails.materialUnit}}
+        </span>
+      </div>
+      <div class="col-xs-2">
+        <button type="button" class="close p-t-7" (click)="onNoClick()" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -45,7 +45,7 @@
             <div class="col-xs-3 formGroup p-t-12">
               <div>
                 Intend {{indent.indentId}}
-              </div> 
+              </div>
             </div>
             <div class="col-xs-2 formGroup p-t-12 text-align-center p-r-40">
               <div>
@@ -60,12 +60,12 @@
             <div class="col-xs-2 formGroup p-t-12">
               <div class="supplier-qty-div">
                 <div class="p-r-50">
-                 {{indent.issuedQty}}
+                  {{indent.issuedQty}}
                 </div>
 
                 <div class="show-detail-supplier" *ngIf="indent.IssuedQuantityList">
                   <!-- <img src="../../../../assets/images/i_icon.png" /> -->
-                   <mat-icon>info</mat-icon>
+                  <mat-icon>info</mat-icon>
                   <div id="detail-supplier">
                     <div class="row">
                       <div class="col-sm-6">
@@ -93,7 +93,16 @@
             </div>
             <div class=" col-xs-3 formGroup">
               <mat-form-field class="col-xs-12 border-input" [formGroupName]="i">
-                <input formControlName="issuedQty" (input)="showQuantityInput()" matInput type="number" [max]="num" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Issue Quantity" />
+                <input
+                  formControlName="issuedQty"
+                  (input)="showQuantityInput()"
+                  matInput
+                  type="number"
+                  [max]="num"
+                  min="0"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  placeholder="Issue Quantity"
+                />
                 <!-- <mat-error *ngIf="materialForms.controls.forms.controls[i].controls['issuedQty'].hasError('max') &&  materialForms.controls.forms.controls[i].controls['issuedQty'].touched"
                 class="error-msg p-t-5"> Quantity should be less than available stocks. </mat-error> -->
               </mat-form-field>
@@ -105,30 +114,21 @@
     </div>
   </div>
 
-       
   <div mat-dialog-actions>
     <div class="col-sm-12 text-align-center">
-      <small   class="error-msg" *ngIf="errorMsg">
+      <small class="error-msg" *ngIf="errorMsg">
         Sum of 'To be issued' quantities should be less than available stock.
       </small>
     </div>
     <div class="col-sm-12 save-btn-add-edit-user-modal">
-        <button
-        mat-raised-button (click)="onNoClick()"
-        class="main-color main-button pull-left"
-      >
+      <button mat-raised-button (click)="onNoClick()" class="main-color main-button pull-left">
         Cancel
       </button>
-      <button [disabled]="errorMsg || !materialForms.valid"
-        mat-raised-button (click)="showIndent()"
-        class="main-background-color main-button color-white pull-right"
-      >
+      <button [disabled]="errorMsg || !materialForms.valid" mat-raised-button (click)="showIndent()" class="main-background-color main-button color-white pull-right">
         Save
       </button>
     </div>
   </div>
-
-  
 </div>
 <div *ngIf="issueToIndentDetails && (!issueToIndentDetails.indentDetailList)">
   <div mat-dialog-title>
