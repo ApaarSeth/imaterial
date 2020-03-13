@@ -30,7 +30,7 @@
                 <!-- </mat-form-field> -->
 
                 <mat-form-field class="border-input w-100">
-                  <input matInput type="text" placeholder="First Name" formControlName="firstName" />
+                  <input matInput type="text" placeholder="*First Name" formControlName="firstName" />
                 </mat-form-field>
                 <mat-error *ngIf="userInfoForm.controls['firstName'].errors && (userInfoForm.controls['firstName'].dirty || userInfoForm.controls['firstName'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['firstName'].hasError('required')">
@@ -39,7 +39,7 @@
                 </mat-error>
 
                 <mat-form-field class="border-input w-100">
-                  <input matInput type="text" placeholder="Last Name" formControlName="lastName" />
+                  <input matInput type="text" placeholder="*Last Name" formControlName="lastName" />
                 </mat-form-field>
                 <mat-error *ngIf="userInfoForm.controls['lastName'].errors && (userInfoForm.controls['lastName'].dirty || userInfoForm.controls['lastName'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['lastName'].hasError('required')">

@@ -7,6 +7,16 @@ export class Froala {
   public static key: String = 'iMFIZJNKLDXIREJI==';
 }
 
+// export const HeaderConstants = [
+//   { name: 'dashboard', link: 'dashboard', flag: true },
+//   { name: 'projectStore', link: 'project-dashboard', flag: this.permissionService.checkPermission().projectStoreFlag },
+//   { name: 'globalStore', link: 'globalStore/', flag: this.permissionService.checkPermission().globalStoreFlag },
+//   { name: 'requestForQuotation', link: 'rfq/rfq-detail', flag: this.permissionService.checkPermission().rfqFlag },
+//   { name: 'users', link: 'users/user-detail', flag: this.permissionService.checkPermission().usersFlag },
+//   { name: 'purchaseOrder', link: 'po/detail-list', flag: this.permissionService.checkPermission().purchaseOrderFlag },
+//   { name: 'supplier', link: 'supplier/detail', flag: this.permissionService.checkPermission().supplierFlag }
+// ]
+
 
 export const API = {
   PROJECTS: (organizationId, userId) => `projects/${organizationId}/${userId}`,
@@ -71,8 +81,8 @@ export const API = {
   GET_DASHBOARD_DATA: 'dashboard',
   UPLOADSUPPLIEREXCEL: organisationId => `projects/uploadSuppliers/${organisationId}`,
   GETCITYANDSTATE: pincode => `city-state/get/${pincode}`,
-  SENDOTP:phone => `api/auth/otp/create?phone=${phone}`,
-  VERIFYOTP:(phone,otp) => `api/auth/otp/verify?phone=${phone}&otp=${otp}`,
+  SENDOTP: phone => `api/auth/otp/create?phone=${phone}`,
+  VERIFYOTP: (phone, otp) => `api/auth/otp/verify?phone=${phone}&otp=${otp}`,
   VERIFYEMAIL: email => `verify/email?email=${email}`,
   GETUSERGUIDEFLAG: `userGuide`,
   SENDUSERGUIDEFLAG: `add/userGuide`
