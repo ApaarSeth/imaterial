@@ -143,14 +143,18 @@ export class RfqSupplierComponent implements OnInit {
       .then(result => {
         if (result === 'done') {
           this.rfqService.getSuppliers(this.orgId).then(data => {
-            //   let allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
-            //   let tempId = data.data.map(supp => supp.supplierId);
-            //   allSuppliersId.forEach(id => {
-            //     if (!tempId.includes(id)) {
-            //       this.newAddedId = id;
-            //     }
-            //   });
-            this.allSuppliers = data.data;
+            let allSuppliersId: number[] = this.allSuppliers.map(supp => supp.supplierId);
+            let tempId: number[] = data.data.map(supp => supp.supplierId);
+            let newAddedId: number = null
+            allSuppliersId.forEach(id => {
+              if (!tempId.includes(id)) {
+                newAddedId = id;
+              }
+            });
+            let newSupplier = data.data.filter(supp => {
+              return newAddedId === supp.supplierId
+            })
+            this.allSuppliers.push(newSupplier);
             this.formInit();
           });
         }

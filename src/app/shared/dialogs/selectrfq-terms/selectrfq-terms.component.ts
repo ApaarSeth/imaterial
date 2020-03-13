@@ -56,7 +56,7 @@ export class SelectRfqTermsComponent implements OnInit {
     };
     this.rfqService.addRFQ(this.data).then(res => {
       let finalRfq = res.data;
-      this.router.navigate(["/rfq/review/"], {
+      this.router.navigate(["/rfq/review/", res.data.rfqId], {
         state: { finalRfq }
       });
       this.dialogRef.close();

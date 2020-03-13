@@ -12,9 +12,9 @@
 
             <div formArrayName="other" *ngFor="let other of addUserForm.get('other').controls; let i = index">
               <div class="row p-l-30" [formGroupName]="i">
-                <div class="col-md-2 width-28">
+                <div class="col-md-4">
                   <mat-form-field class="border-input w-100">
-                    <input matInput type="email" placeholder="Email" formControlName="email" />
+                    <input matInput type="email" placeholder="*Email" formControlName="email" />
                   </mat-form-field>
 
                   <mat-error
@@ -41,9 +41,9 @@
                   </mat-error>
                 </div> -->
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <mat-form-field class="border-select w-100 role-input">
-                    <mat-label>Role</mat-label>
+                    <mat-label>*Role</mat-label>
                     <mat-select formControlName="roleId">
                       <mat-option *ngFor="let role of roles" [value]="role.roleId">
                         {{ role.roleDescription }}

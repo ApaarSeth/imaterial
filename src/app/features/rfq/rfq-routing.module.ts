@@ -19,7 +19,7 @@ const routes: Routes = [
     component: RfqBidsComponent
   },
   {
-    path: "review",
+    path: "review/:rfqId",
     component: ReviewComponent
   },
   {

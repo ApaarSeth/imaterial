@@ -3,10 +3,10 @@ import { Router, NavigationEnd } from "@angular/router";
 import { PermissionService } from "../../services/permission.service";
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+// import { HeaderConstants } from '../../constants/configuration-constants';
 @Component({
   selector: "app-header",
-  templateUrl: "./header.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./header.html"
 })
 export class HeaderLayoutComponent implements OnInit {
 
@@ -18,6 +18,7 @@ export class HeaderLayoutComponent implements OnInit {
   notifClicked: boolean = false;
   userId: number;
   subsriptions: Subscription[] = [];
+  headerConst: { name: string, link: string }[]
 
   constructor(
     private permissionService: PermissionService,
@@ -29,6 +30,7 @@ export class HeaderLayoutComponent implements OnInit {
     this.userId = Number(localStorage.getItem("userId"));
     this.role = localStorage.getItem("role");
     this.sidenavToggle.emit('loaded');
+    // this.headerConst = HeaderConstants
     this.permissionObj = this.permissionService.checkPermission();
     this.highlightButton(this.router.url);
     this.startSubscription();
@@ -43,13 +45,9 @@ export class HeaderLayoutComponent implements OnInit {
         })
     )
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.highlightButton(this.router.url);
-
-  }
 
   highlightButton(url: string) {
-    if (url.includes('dashboard')) {
+    if (url.includes('dashboard') && !url.includes('project-dashboard')) {
       this.buttonName = 'dashboard'
     } else if (url.includes('project-dashboard')) {
       this.buttonName = 'projectStore'
