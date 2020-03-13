@@ -103,7 +103,7 @@
 
             <mat-form-field class="border-input date-label">
               <mat-label>Project Start Date*</mat-label>
-              <span class="form-placeholder">{{ ref.value | date: "dd-MMM-yyy" }}</span>
+              <span class="form-placeholder">{{form["controls"]["startDate"].value | date: "dd-MMM-yyy" }}</span>
               <input hidden matInput [matDatepicker]="startDate" formControlName="startDate" #ref (dateChange)="getStart(ref.value)" (focus)="startDate.open()" readonly />
 
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
@@ -114,7 +114,7 @@
             <!-- end date -->
             <mat-form-field class="border-input date-label">
               <mat-label>Project End Date*</mat-label>
-              <span class="form-placeholder">{{ refEnd.value | date: "dd-MMM-yyy" }}</span>
+              <span class="form-placeholder">{{ form["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span>
               <input
                 hidden
                 matInput
