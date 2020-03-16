@@ -5,7 +5,7 @@ import {
   QueryList,
   ViewChildren
 } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
@@ -51,43 +51,45 @@ export class BomComponent implements OnInit {
   orgId: number;
   userId: number;
   searchDataValues: categoryNestedLevel;
+  form: FormGroup;
+  tradeNames: string[] = []
+  public BomDashboardTour: GuidedTour = {
+    tourId: 'bom-tour',
+    useOrb: false,
 
-     public BomDashboardTour: GuidedTour = {
-        tourId: 'bom-tour',
-        useOrb: false,
-        
-        steps: [
-            {
-                title: 'Choose Option',
-                selector:'.material-select-options',
-                content: 'Choose from material groups to add materials in the Bill of materials from your project.',
-                 orientation: Orientation.Right
-            },
-            {
-                title: 'Download Excel Template',
-                selector: '.download-bom-template',
-                content: 'Download excel template to upload materials in your project .',
-                orientation: Orientation.Left
-                
-            }
-        ]
-    };
+    steps: [
+      {
+        title: 'Choose Option',
+        selector: '.material-select-options',
+        content: 'Choose from material groups to add materials in the Bill of materials from your project.',
+        orientation: Orientation.Right
+      },
+      {
+        title: 'Download Excel Template',
+        selector: '.download-bom-template',
+        content: 'Download excel template to upload materials in your project .',
+        orientation: Orientation.Left
 
-   public BomDashboardTourSecond: GuidedTour = {
-        tourId: 'bom-second-tour',
-        useOrb: false,
-        
-        steps: [
-            {
-              title:'Save Button',
-              selector: '.save-material-button',
-              content: 'Enter the quantity against the materials and add in BOM.',
-              orientation: Orientation.Left
-            }
-        ]
-    };
+      }
+    ]
+  };
+
+  public BomDashboardTourSecond: GuidedTour = {
+    tourId: 'bom-second-tour',
+    useOrb: false,
+
+    steps: [
+      {
+        title: 'Save Button',
+        selector: '.save-material-button',
+        content: 'Enter the quantity against the materials and add in BOM.',
+        orientation: Orientation.Left
+      }
+    ]
+  };
 
   constructor(
+    private fomBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private projectService: ProjectService,
@@ -98,8 +100,8 @@ export class BomComponent implements OnInit {
     private guidedTourService: GuidedTourService
   ) {
     setTimeout(() => {
-            this.guidedTourService.startTour(this.BomDashboardTour);
-        }, 1000);
+      this.guidedTourService.startTour(this.BomDashboardTour);
+    }, 1000);
   }
 
   ngOnInit() {
@@ -125,8 +127,14 @@ export class BomComponent implements OnInit {
           opt => opt.checked
         );
       });
+    this.formInit()
   }
 
+  formInit() {
+    this.form = this.fomBuilder.group({
+      selectedTrades: ['']
+    })
+  }
   getProject(id: number) {
     this.projectService.getProject(this.orgId, id).then(data => {
       this.product = data.data;
@@ -145,15 +153,62 @@ export class BomComponent implements OnInit {
     var win = window.open(url, "_blank");
     win.focus();
   }
+
+  choosenProject() {
+    let projectAdd: string[] = [];
+    let projectRemove: string[] = [];
+    const selectedTrades = this.form.value.selectedTrades.map(
+      selectedTrade => selectedTrade.materialGroup
+    );
+    if (selectedTrades.length === 0) {
+      this.categoryData = [];
+      this.tradeNames = [];
+      return;
+    }
+    if (this.tradeNames.length === 0) {
+      projectAdd = selectedTrades;
+    } else if (this.tradeNames.length < selectedTrades.length) {
+      for (let id of selectedTrades) {
+        if (!this.tradeNames.includes(id)) {
+          projectAdd.push(id);
+        }
+      }
+    } else if (this.tradeNames.length >= selectedTrades.length) {
+      for (let id of this.tradeNames) {
+        if (!selectedTrades.includes(id)) {
+          projectRemove.push(id);
+        }
+      }
+      this.categoryData = this.categoryData.filter(
+        (category: categoryNestedLevel) => {
+          return !projectRemove.includes(category.materialGroup);
+        }
+      );
+    }
+    if (projectAdd.length) {
+      this.bomService.getMaterialsWithSpecs(projectAdd).then(res => {
+        this.categoryData = [...this.categoryData, ...res.data];
+        // this.categoryData = this.categoryData.map(
+        //   (project: categoryNestedLevel) => {
+        //     let proj = this.getCheckedMaterial(project);
+        //     return proj;
+        //   }
+        // );
+        // this.materialAdded();
+      });
+    }
+    this.tradeNames = [...selectedTrades];
+  }
+
   finalisedCategory() {
     this.showTable = true;
-     setTimeout(() => {
-            this.guidedTourService.startTour(this.BomDashboardTourSecond);
-        }, 1000);
-        
+    // setTimeout(() => {
+    //   this.guidedTourService.startTour(this.BomDashboardTourSecond);
+    // }, 1000);
+
     this.bomService
       .getMaterialsWithSpecs({
-        pid: this.categories.value.map(
+        pid: this.form.value.selectedTrades.map(
           selectedCategory => selectedCategory.materialGroup
         )
       })
@@ -224,7 +279,7 @@ export class BomComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -234,10 +289,10 @@ export class BomComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => {});
+        .then(result => { });
     }
   }
-  searchData(event){
+  searchData(event) {
     this.searchDataValues = event;
   }
 }

@@ -278,6 +278,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
                   }
                 })
                 if (!materialAddedFlag) {
+                  element.material.fullfilmentDate = element.material.dueDate;
                   projectMaterial.push(element.material);
                 }
               }
