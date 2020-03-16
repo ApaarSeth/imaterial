@@ -45,7 +45,7 @@ export class SigninComponent implements OnInit {
 
     this.signInSignupService.signIn(params.toString()).then(data => {
       if (data.errorMessage) {
-        this._snackBar.open("Bad Credentials", "", {
+        this._snackBar.open(data.errorMessage, "", {
           duration: 2000,
           panelClass: ["warning-snackbar"],
           verticalPosition: "top"
