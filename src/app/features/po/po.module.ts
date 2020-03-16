@@ -22,6 +22,7 @@ import { PoProjectMaterialComponent } from "./initiate-po/po-project-material/po
 import { PoQuantityMakesComponent } from "./initiate-po/po-quantity-makes/po-quantity-makes.component";
 import { ViewGrnResolver } from "./add-grn/resolver/get-grn.resolver";
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
     MatInputModule,
     RouterModule,
     AppSharedModule,

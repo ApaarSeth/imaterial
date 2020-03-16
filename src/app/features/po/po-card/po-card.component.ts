@@ -105,12 +105,13 @@ export class PoCardComponent implements OnInit {
   }
   openaddressDialog(roleType: string, id: number) {
     const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
-      width: "1600px",
+      width: "800px",
       data: { roleType, id }
     });
 
     dialogRef.afterClosed().subscribe((result: Address) => {
-      if (result[0] === "projectBillingAddressId") {
+      if(result!=null){
+           if (result[0] === "projectBillingAddressId") {
         this.cardData.billingAddress.addressLine1 =
           result[1].address.addressLine1;
         this.cardData.billingAddress.addressLine2 =
@@ -141,6 +142,8 @@ export class PoCardComponent implements OnInit {
           this.cardData.supplierAddress
         );
       }
+      }
+     
     });
   }
 }
