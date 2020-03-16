@@ -1,22 +1,29 @@
+
+
+
 export const ConfigurationConstants = {
   HEADER_SKIP_LOADER: "Skip-Loader",
-  HEADER_CACHE_REQUEST: "Cache-Request"
-};
+  HEADER_CACHE_REQUEST: "Cache-Request",
+}
 
 export class Froala {
   public static key: String = 'iMFIZJNKLDXIREJI==';
 }
 
-// export const HeaderConstants = [
-//   { name: 'dashboard', link: 'dashboard', flag: true },
-//   { name: 'projectStore', link: 'project-dashboard', flag: this.permissionService.checkPermission().projectStoreFlag },
-//   { name: 'globalStore', link: 'globalStore/', flag: this.permissionService.checkPermission().globalStoreFlag },
-//   { name: 'requestForQuotation', link: 'rfq/rfq-detail', flag: this.permissionService.checkPermission().rfqFlag },
-//   { name: 'users', link: 'users/user-detail', flag: this.permissionService.checkPermission().usersFlag },
-//   { name: 'purchaseOrder', link: 'po/detail-list', flag: this.permissionService.checkPermission().purchaseOrderFlag },
-//   { name: 'supplier', link: 'supplier/detail', flag: this.permissionService.checkPermission().supplierFlag }
-// ]
+export const HeaderConstants = {
+  PERMISSIONHEADER: (permissionObj, orgId) => {
+    return [
+      { name: 'Dashboard', link: '/dashboard', flag: true },
+      { name: 'Project Store', link: '/project-dashboard', flag: permissionObj.projectStoreFlag },
+      { name: 'Global Store', link: '/globalStore/' + orgId, flag: permissionObj.globalStoreFlag },
+      { name: 'Request For Quotation', link: '/rfq/rfq-detail', flag: permissionObj.rfqFlag },
+      { name: 'Users', link: '/users/user-detail', flag: permissionObj.usersFlag },
+      { name: 'Purchase Order', link: '/po/detail-list', flag: permissionObj.purchaseOrderFlag },
+      { name: 'Supplier', link: '/supplier/detail', flag: permissionObj.supplierFlag }
+    ]
 
+  }
+}
 
 export const API = {
   PROJECTS: (organizationId, userId) => `projects/${organizationId}/${userId}`,
