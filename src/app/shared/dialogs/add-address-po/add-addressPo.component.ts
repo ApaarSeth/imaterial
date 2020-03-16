@@ -4,6 +4,7 @@ import { RfqMaterialResponse, Address } from "../../models/RFQ/rfq-details";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AddAddressService } from "../../services/add-address/add-address.service";
 import { ProjectService } from '../../services/projectDashboard/project.service';
+import { FieldRegExConst } from '../../constants/field-regex-constants';
 
 export interface City {
   value: string;
@@ -64,13 +65,13 @@ export class AddAddressPoDialogComponent {
     // new address form
     this.newAddressForm = this.formBuilder.group({
       addressLine1: ["", Validators.required],
-      addressLine2: ["", Validators.required],
-      pinCode: ["", Validators.required],
+      addressLine2: [""],
+      pinCode: ["", [Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]],
       state: [{ value: "", disabled: true }, Validators.required],
       city: [{ value: "", disabled: true }, Validators.required],
-      gstNo: ["", Validators.required]
+      gstNo: ["",  [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]]
     });
-    // console.log("addresss", this.newAddressForm.value);
+    // console.log("addresss", this.newAddressFor,m.value);
   }
 
   onselectAddress(): void {
@@ -107,5 +108,8 @@ export class AddAddressPoDialogComponent {
         this.newAddressForm.get('state').setValue(res.data[0].stateName);
       }
     });
+  }
+  close(){
+    this.dialogRef.close(null);
   }
 }
