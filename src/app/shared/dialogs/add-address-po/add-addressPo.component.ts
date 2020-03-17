@@ -18,6 +18,8 @@ export interface City {
 
 // Component class
 export class AddAddressPoDialogComponent {
+  validPincode: boolean;
+  pincodeLength: number;
   constructor(
     public dialogRef: MatDialogRef<AddAddressPoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -94,6 +96,12 @@ export class AddAddressPoDialogComponent {
   }
 
   getPincode(event) {
+        this.validPincode = false;
+        this.city = "";
+        this.state = "";
+        this.newAddressForm.get('city').setValue("");
+        this.newAddressForm.get('state').setValue("");
+        this.pincodeLength = event.target.value.length;
     if (event.target.value.length == 6) {
       this.cityStateFetch(event.target.value);
     }
@@ -104,6 +112,11 @@ export class AddAddressPoDialogComponent {
       if (res.data) {
         this.city = res.data[0].districtName;
         this.state = res.data[0].stateName;
+        if(this.city && this.state)
+        this.validPincode = true;
+        else
+        this.validPincode = false;
+
         this.newAddressForm.get('city').setValue(res.data[0].districtName);
         this.newAddressForm.get('state').setValue(res.data[0].stateName);
       }
