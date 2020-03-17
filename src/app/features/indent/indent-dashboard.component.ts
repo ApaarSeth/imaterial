@@ -166,12 +166,12 @@ export class IndentDashboardComponent implements OnInit {
   //   return `${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
   // }
   formatDate(oldDate): Date {
-   let newDate= new Date(oldDate);
-   newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
+   let newDate = new Date(oldDate);
+    newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
     return newDate;
   }
   getStart(date,i){
-    this.materialForms.controls.forms.value[i].dueDate = this.formatDate(date);
+    this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
     console.log(this.materialForms);
   }
 }
