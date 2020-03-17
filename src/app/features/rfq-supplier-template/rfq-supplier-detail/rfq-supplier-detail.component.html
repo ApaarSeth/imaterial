@@ -42,10 +42,10 @@
         <span>
           Payment Details :
         </span>
-        <span *ngIf="rfqSupplierDetailList.terms.termsDesc" class="p-l-20">
+        <span *ngIf="rfqSupplierDetailList && rfqSupplierDetailList.terms && rfqSupplierDetailList.terms.termsDesc" class="p-l-20">
             {{rfqSupplierDetailList.terms.termsDesc}}
         </span>
-         <span *ngIf="!rfqSupplierDetailList.terms.termsDesc" class="p-l-20">
+         <span *ngIf="!(rfqSupplierDetailList && rfqSupplierDetailList.terms && rfqSupplierDetailList.terms.termsDesc)" class="p-l-20">
            -
         </span>
       </div>
