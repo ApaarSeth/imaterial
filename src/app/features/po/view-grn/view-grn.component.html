@@ -16,7 +16,7 @@
 
     <mat-accordion>
       <div *ngIf="grnHeaders">
-        <mat-expansion-panel class="myPanel" *ngFor="let grnHeader of grnHeaders">
+        <mat-expansion-panel class="myPanel" *ngFor="let grnHeader of grnHeaders" [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <div class="row width100Percent">
