@@ -7,7 +7,7 @@ import { sendIssuedQuantityObj } from "../../models/issue-to-indent";
   providedIn: "root"
 })
 export class BomService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
 
   getMaterialsWithSpecs(categoryList) {
     return this.dataService.getRequestMaster(
@@ -25,6 +25,10 @@ export class BomService {
       return res;
     });
   }
+  getTrades(tradeList) {
+    return this.dataService.getRequestMaster(API.GETBOMTRADES, tradeList)
+  }
+
   sumbitCategory(userId: number, projectId: number, materialsQuantity) {
     return this.dataService.sendPostRequest(
       API.POSTMATERIALSQUANTITY(userId, projectId),
@@ -46,11 +50,11 @@ export class BomService {
         return res;
       });
   }
-  postMaterialExcel(data:FormData,projectId:number){
- return this.dataService.sendPostRequest(API.UPLOADEXCEL(projectId),data)
+  postMaterialExcel(data: FormData, projectId: number) {
+    return this.dataService.sendPostRequest(API.UPLOADEXCEL(projectId), data)
   }
 
-  deleteMaterial(materialId:number, projectId:number){
-return this.dataService.sendDeleteRequest(API.DELETEMATERIAL(projectId,materialId),{})
+  deleteMaterial(materialId: number, projectId: number) {
+    return this.dataService.sendDeleteRequest(API.DELETEMATERIAL(projectId, materialId), {})
   }
 }

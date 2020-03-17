@@ -25,6 +25,7 @@ import {
 import { QtyData } from "src/app/shared/models/subcategory-materials";
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 import { GuidedTourService, Orientation, GuidedTour } from 'ngx-guided-tour';
+import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -53,6 +54,7 @@ export class BomComponent implements OnInit {
   searchDataValues: categoryNestedLevel;
   form: FormGroup;
   tradeNames: string[] = []
+  tradesList: string[];
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,
@@ -96,6 +98,7 @@ export class BomComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private bomService: BomService,
+    private userService: UserService,
     private loading: GlobalLoaderService,
     private guidedTourService: GuidedTourService
   ) {
@@ -113,20 +116,23 @@ export class BomComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.getProject(this.projectId);
-    this.bomService
-      .getMaterialWithQuantity(this.orgId, this.projectId)
-      .then(res => {
-        this.categoryList = [
-          ...new Set(res.data.map(cat => cat.materialGroup))
-        ] as string[];
-        this.fullCategoryList.forEach(category => {
-          category.checked =
-            this.categoryList.indexOf(category.materialGroup) != -1;
-        });
-        this.selectedCategory = this.fullCategoryList.filter(
-          opt => opt.checked
-        );
-      });
+    this.userService.getTrades().then(res => {
+      this.tradesList = res.data;
+    })
+    // this.bomService
+    //   .getMaterialWithQuantity(this.orgId, this.projectId)
+    //   .then(res => {
+    //     this.categoryList = [
+    //       ...new Set(res.data.map(cat => cat.materialGroup))
+    //     ] as string[];
+    //     this.fullCategoryList.forEach(category => {
+    //       category.checked =
+    //         this.categoryList.indexOf(category.materialGroup) != -1;
+    //     });
+    //     this.selectedCategory = this.fullCategoryList.filter(
+    //       opt => opt.checked
+    //     );
+    //   });
     this.formInit()
   }
 
@@ -158,7 +164,7 @@ export class BomComponent implements OnInit {
     let projectAdd: string[] = [];
     let projectRemove: string[] = [];
     const selectedTrades = this.form.value.selectedTrades.map(
-      selectedTrade => selectedTrade.materialGroup
+      selectedTrade => selectedTrade.tradeName
     );
     if (selectedTrades.length === 0) {
       this.categoryData = [];
@@ -186,7 +192,7 @@ export class BomComponent implements OnInit {
       );
     }
     if (projectAdd.length) {
-      this.bomService.getMaterialsWithSpecs(projectAdd).then(res => {
+      this.bomService.getTrades({ tradeNames: [...projectAdd] }).then(res => {
         this.categoryData = [...this.categoryData, ...res.data];
         // this.categoryData = this.categoryData.map(
         //   (project: categoryNestedLevel) => {
@@ -266,7 +272,7 @@ export class BomComponent implements OnInit {
     );
   }
   getSelectedCategoriesLength() {
-    if (this.categories.value) return this.categories.value.length;
+    if (this.form.value.selectedTrades) return this.form.value.selectedTrades.length;
   }
 
   openDialog(data: ProjetPopupData): void {

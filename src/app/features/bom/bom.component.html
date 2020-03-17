@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-xs-6 text-right">
               <mat-form-field class="border-select p-t-0">
-                <mat-label *ngIf="!selectedCategory.length">Select Category</mat-label>
+                <mat-label *ngIf="!selectedCategory.length">Select Trades</mat-label>
                 <mat-select formControlName="selectedTrades" multiple>
                   <div class="display-flex">
                     <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Category Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
@@ -16,10 +16,10 @@
                     </button>
                   </div>
                   <mat-select-trigger>
-                    <mat-label>Select Category</mat-label>
+                    <mat-label>Select Trades</mat-label>
                   </mat-select-trigger>
-                  <mat-option *ngFor="let category of fullCategoryList | SearchPipe: searchText" [value]="category" selected="category.checked" (click)="choosenProject()"
-                    >{{ category.materialGroup }}
+                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchText" [value]="trade" selected="trade.checked" (click)="choosenProject()"
+                    >{{ trade.tradeName }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
