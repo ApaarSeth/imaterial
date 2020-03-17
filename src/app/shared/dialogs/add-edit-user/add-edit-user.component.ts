@@ -82,7 +82,7 @@ export class AddEditUserComponent implements OnInit {
 
     this.form = new FormGroup({
       firstName: new FormControl(
-         this.data.isEdit ? this.data.detail.firstName : "" ,
+         this.data.isEdit ? this.data.detail.firstName : "",
         Validators.required
       ),
       lastName: new FormControl(
@@ -90,11 +90,11 @@ export class AddEditUserComponent implements OnInit {
         Validators.required
       ),
       email: new FormControl(
-         this.data.isEdit ? this.data.detail.email : "" ,
+         this.data.isEdit ? this.data.detail.email : "",
         [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]),
 
       contactNo: new FormControl(
-         this.data.isEdit ? this.data.detail.contactNo : "" ,
+         this.data.isEdit ? this.data.detail.contactNo : "",
         // [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]
       ),
       roleId: new FormControl(
