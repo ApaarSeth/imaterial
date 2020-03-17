@@ -23,7 +23,7 @@
               <div class="col-sm-6">
                 <!-- address 1 -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Phone No" formControlName="contactNo" required />
+                  <input matInput type="number" placeholder="Phone No" formControlName="contactNo" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
                   <small *ngIf="form.controls['contactNo'].hasError('required') && form.controls['contactNo'].touched"
                     class="form-error-msg"> Phone No is required </small>
@@ -102,9 +102,12 @@
                   <input matInput type="text" placeholder="Pincode" formControlName="pinCode" (input)="getPincode($event)" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">pinCode is Required</mat-error> -->
                   <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
-                    class="form-error-msg"> pinCode is required </small>
-                  <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
-                    class="form-error-msg"> Enter Valid pinCode</small>
+                    class="form-error-msg"> Pincode is required </small>
+                  <!-- <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
+                    class="form-error-msg"> Enter Valid pinCode</small> -->
+                   <small *ngIf="form.controls['pinCode'].touched && (!validPincode) && (pincodeLength>0)" class="error-msg">
+                      Enter Valid Pincode
+                   </small> 
                 </mat-form-field>
               </div>
           
@@ -149,7 +152,7 @@
 
           <div mat-dialog-actions>
             <div class="col-sm-12 save-btn-add-edit-user-modal">
-              <button mat-raised-button [disabled]="!form.valid" (click)="saveAddress()"
+              <button mat-raised-button [disabled]="!form.valid || (!validPincode)" (click)="saveAddress()"
                 class="main-background-color main-button color-white pull-right">
                 Submit
               </button>

@@ -44,6 +44,8 @@ export class AddProjectComponent implements OnInit {
   localImg: string | ArrayBuffer;
   city: string;
   state: string;
+  validPincode: boolean = null;
+  pincodeLength: number;
 
   constructor(
     private projectService: ProjectService,
@@ -132,7 +134,7 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.type : "",
         Validators.required
       ],
-      unit: [this.data.isEdit ? this.data.detail.unit : ""],
+      unit: [this.data.isEdit ? this.data.detail.unit : "", Validators.required],
       gstNo: [
         this.data.isEdit ? this.data.detail.gstNo : "",
         [Validators.pattern(FieldRegExConst.GSTIN)]
@@ -206,6 +208,12 @@ export class AddProjectComponent implements OnInit {
   }
 
   getPincode(event) {
+        this.validPincode = false;
+        this.city = "";
+        this.state = "";
+        this.form.get('city').setValue("");
+        this.form.get('state').setValue("");
+        this.pincodeLength = event.target.value.length;
     if (event.target.value.length == 6) {
       this.cityStateFetch(event.target.value);
     }
@@ -216,9 +224,15 @@ export class AddProjectComponent implements OnInit {
       if (res.data) {
         this.city = res.data[0].districtName;
         this.state = res.data[0].stateName;
+        if(this.city && this.state)
+        this.validPincode = true;
+        else
+        this.validPincode = false;
+
         this.form.get('city').setValue(res.data[0].districtName);
         this.form.get('state').setValue(res.data[0].stateName);
       }
+     
     });
   }
   getStart(event) {

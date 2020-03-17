@@ -61,8 +61,11 @@
               <mat-label>Pincode*</mat-label>
               <input matInput type="text" (input)="getPincode($event)" formControlName="pinCode" />
               <!-- <mat-error>PinCode is Required</mat-error> -->
-              <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched" class="error-msg"> pincode is required </small>
-              <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched" class="error-msg"> Enter Valid Pincode</small>
+              <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched" class="error-msg"> Pincode is required </small>
+              <!-- <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched" class="error-msg"> Enter Valid Pincode</small> -->
+              <small *ngIf="form.controls['pinCode'].touched && (!validPincode) && (pincodeLength>0)" class="error-msg">
+                Enter Valid Pincode
+              </small> 
             </mat-form-field>
           </div>
           <div class="col-sm-6">
@@ -159,7 +162,7 @@
           <div class="col-sm-3">
             <!-- project unit -->
             <mat-form-field class="border-select">
-              <mat-label>Unit</mat-label>
+              <mat-label>Unit *</mat-label>
               <mat-select formControlName="unit">
                 <mat-option *ngFor="let unit of units" [value]="unit.value">
                   {{unit.value}}
@@ -209,7 +212,7 @@
   </div>
   <div mat-dialog-actions>
     <div class="col-sm-12 add-edit-dialog-button">
-      <button mat-raised-button [disabled]="!form.valid || sameStartEndDate" class="main-background-color main-button color-white pull-right">
+      <button mat-raised-button [disabled]="!form.valid || (!validPincode) || sameStartEndDate" class="main-background-color main-button color-white pull-right">
         <span *ngIf="!data.isEdit">Add</span>
         <span *ngIf="data.isEdit">Save</span>
       </button>
