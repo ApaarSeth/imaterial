@@ -105,3 +105,9 @@
     visibility: hidden;
   }
 }
+
+.add-address-dialog-div-main{
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper{
+    padding-top: 7px !important;
+  }
+}

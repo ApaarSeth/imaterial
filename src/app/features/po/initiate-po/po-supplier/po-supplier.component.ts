@@ -2,6 +2,9 @@ import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {Suppliers} from "src/app/shared/models/RFQ/suppliers";
 import {ActivatedRoute} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import { RFQService } from 'src/app/shared/services/rfq/rfq.service';
+import { SuppliersDialogComponent } from 'src/app/shared/dialogs/add-supplier/suppliers-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: "app-po-supplier",
@@ -15,7 +18,10 @@ export class PoSupplierComponent implements OnInit {
   form: FormGroup;
   displayedColumns: string[] = ["Supplier Name", "Email", "Phone No."];
 
-  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {}
+  constructor(private formBuilder: FormBuilder,
+  private rfqService: RFQService,
+      public dialog: MatDialog,
+   private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data;
@@ -23,6 +29,15 @@ export class PoSupplierComponent implements OnInit {
   }
 
   selectProject() {}
+
+  getSuppliers(){
+     let userId=Number(localStorage.getItem("userId"));
+     let orgId=Number(localStorage.getItem("orgId"));
+
+      this.rfqService.getSuppliers(orgId).then(data => {
+     this.allSuppliers =  data.data;;
+    });
+  }
 
   formInit() {
     this.form = this.formBuilder.group({
@@ -36,5 +51,18 @@ export class PoSupplierComponent implements OnInit {
 
   choosenSupplier() {
     return this.selectedSupplier.emit(this.form.value.supplier);
+  }
+    openSupplierDialog() {
+    const dialogRef = this.dialog.open(SuppliersDialogComponent, {
+      width: "660px"
+    });
+    dialogRef
+      .afterClosed()
+      .toPromise()
+      .then(result => {
+        if (result === 'done') {
+         this.getSuppliers();
+        }
+      });
   }
 }

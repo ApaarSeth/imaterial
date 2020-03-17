@@ -507,11 +507,11 @@ mat-icon {
 
 .mat-tab-add-address-modal-po {
     .mat-tab-body-wrapper {
-        height: 225px;
+        height: auto;
     }
 
     // .show-address-po-modal{
-    //     max-height: calc(100vh - 350px);
+    //     max-height calc(100vh - 350px);
     //     overflow-y: auto;
     // }
 }
