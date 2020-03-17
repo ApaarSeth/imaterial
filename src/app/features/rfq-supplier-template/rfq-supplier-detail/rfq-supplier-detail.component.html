@@ -38,6 +38,18 @@
         </div>
 
 
+      <div class="material-rfq-supplies p-15 p-l-25 font-bold">
+        <span>
+          Payment Details :
+        </span>
+        <span *ngIf="rfqSupplierDetailList.terms.termsDesc" class="p-l-20">
+            {{rfqSupplierDetailList.terms.termsDesc}}
+        </span>
+         <span *ngIf="!rfqSupplierDetailList.terms.termsDesc" class="p-l-20">
+           -
+        </span>
+      </div>
+
         <div style="width:100%;overflow-x:scroll">
           <table class="table rfq-bids-table" *ngFor="let projects of rfqSupplierDetailList.projectList">
 
@@ -86,7 +98,7 @@
                 <td class="font-size14" colspan="2">Requested Quantity: {{material.materialQuantity}}
                   {{material.materialUnit}}
                 </td>
-                <td>
+                <td class="text-align-right">
                   <mat-form-field class="border-input">
                     <input matInput type="number" placeholder="GST %" [(ngModel)]="material.materialIgst"
                       (change)="valueChange(rfqSupplierDetailList)" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
