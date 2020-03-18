@@ -24,6 +24,8 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   materialForms: FormGroup;
   city: string;
   state: string;
+  pincodeLength: number;
+  validPincode: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -106,11 +108,22 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     // })
   }
   getPincode(event){
+        this.validPincode = false;
+        this.city = "";
+        this.state = "";
+        this.form.get('city').setValue("");
+        this.form.get('state').setValue("");
+        this.pincodeLength = event.target.value.length;
+        
      if (event.target.value.length == 6) {
          this.projectService.getPincode(event.target.value).then(res =>{
            if(res.data){
              this.city = res.data[0].districtName;
              this.state = res.data[0].stateName;
+           if(this.city && this.state)
+            this.validPincode = true;
+          else
+            this.validPincode = false;
              this.form.get('city').setValue(res.data[0].districtName);
              this.form.get('state').setValue(res.data[0].stateName);
            }
