@@ -47,7 +47,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileLayoutComponent,
-    canActivate: [AuthGuardService, UserDataGuardService],
+    // canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
         path: "profile",

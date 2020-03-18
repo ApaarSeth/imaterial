@@ -1,11 +1,11 @@
-<mat-accordion>
-  <form [formGroup]="quantityForms">
+<form *ngIf="selectedCategory" [formGroup]="quantityForms">
+  <mat-accordion>
     <div #myele>
       <mat-expansion-panel class="m-b-5 m-t-5 bom-qty-page" [expanded]="true">
         <mat-expansion-panel-header class="background-color-bom-category row">
           <div class="col-xs-6">
             <mat-panel-title class="pull-left">
-              {{ selectedCategory.materialGroup }}
+              {{ selectedCategory.groupName }}
             </mat-panel-title>
           </div>
           <div class="col-xs-6">
@@ -15,12 +15,10 @@
           </div>
         </mat-expansion-panel-header>
 
-        <ng-container formArrayName="forms" *ngIf="selectedCategory.Child">
-          <div class="row background-color-bom-sub-category p-0" *ngFor="let subcategory of selectedCategory.Child; let i = index" formGroupName="{{ i }}">
+        <ng-container formArrayName="forms" *ngIf="selectedCategory.materialList">
+          <div class="row background-color-bom-sub-category p-0" *ngFor="let subcategory of selectedCategory.materialList; let i = index" formGroupName="{{ i }}">
             <div class="col-xs-6">
-              <span class="pull-left p-l-40 p-t-20">{{
-                subcategory.materialName
-              }}</span>
+              <span class="pull-left p-l-40 p-t-20">{{ subcategory.materialName }}</span>
             </div>
             <div class="col-xs-6">
               <span class="pull-right p-r-40">
@@ -29,10 +27,18 @@
                   <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
                 </mat-form-field> -->
 
-                     <mat-form-field class="border-input widthZero">
-                        <input  matInput formControlName="estimatedQty" type="number"  class="p-b-5 shortWidth" placeholder="Enter Quantity"  min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
-                        <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
-                      </mat-form-field>
+                <mat-form-field class="border-input widthZero">
+                  <input
+                    matInput
+                    formControlName="estimatedQty"
+                    type="number"
+                    class="p-b-5 shortWidth"
+                    placeholder="Enter Quantity"
+                    min="0"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  />
+                  <span class="p-b-15 p-l-5">{{ subcategory.materialUnit }}</span>
+                </mat-form-field>
               </span>
             </div>
             <ng-container *ngIf="subcategory.Specs">
@@ -47,10 +53,17 @@
                         class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
                     </mat-form-field> -->
 
-                     <mat-form-field class="border-input widthZero">
-                        <input  matInput  class="p-b-5 shortWidth" type="number"  min="0" placeholder="Enter Quantity"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
-                        <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
-                      </mat-form-field>
+                    <mat-form-field class="border-input widthZero">
+                      <input
+                        matInput
+                        class="p-b-5 shortWidth"
+                        type="number"
+                        min="0"
+                        placeholder="Enter Quantity"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                      />
+                      <span class="p-b-15 p-l-5">{{ subcategory.materialUnit }}</span>
+                    </mat-form-field>
                   </span>
                 </div>
               </div>
@@ -59,5 +72,5 @@
         </ng-container>
       </mat-expansion-panel>
     </div>
-  </form>
-</mat-accordion>
+  </mat-accordion>
+</form>

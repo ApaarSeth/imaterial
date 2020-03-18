@@ -57,4 +57,8 @@ export class BomService {
   deleteMaterial(materialId: number, projectId: number) {
     return this.dataService.sendDeleteRequest(API.DELETEMATERIAL(projectId, materialId), {})
   }
+
+  getOrgTrades() {
+    return this.dataService.getRequest(API.ORGANIZATIONTRADES)
+  }
 }

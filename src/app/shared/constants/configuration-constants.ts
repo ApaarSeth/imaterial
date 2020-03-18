@@ -93,5 +93,6 @@ export const API = {
   VERIFYEMAIL: email => `verify/email?email=${email}`,
   GETUSERGUIDEFLAG: `userGuide`,
   SENDUSERGUIDEFLAG: `add/userGuide`,
-  GETBOMTRADES: `material/get/trades`
+  GETBOMTRADES: `material/get/trades`,
+  ORGANIZATIONTRADES: `all/org/tades`
 };

@@ -18,7 +18,7 @@
                   <mat-select-trigger>
                     <mat-label>Select Trades</mat-label>
                   </mat-select-trigger>
-                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchText" [value]="trade" selected="trade.checked" (click)="choosenProject()"
+                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchText" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
                     >{{ trade.tradeName }}
                   </mat-option>
                 </mat-select>
@@ -61,22 +61,17 @@
             </div>
           </div>
         </form>
-        <div class="row display-flex m-b-20">
-          <div class="m-b-10 m-r-10" *ngFor="let category of selectedCategory">
-            <mat-card class="p-l-10 p-r-0 p-t-0 p-b-0 font-size14"
-              >{{ category.materialGroup }}
-              <button mat-button matSuffix mat-icon-button>
-                <mat-icon class="font-size14" (click)="clearSelectedCategory(category)">clear</mat-icon>
-              </button>
-            </mat-card>
+        <div class="row display-flex m-t-20">
+          <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
+            <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
           </div>
         </div>
         <div class="col-sm-12"></div>
-        <div class="col-sm-12 text-right m-t-40">
+        <!-- <div class="col-sm-12 text-right m-t-40">
           <button *ngIf="getSelectedCategoriesLength()" mat-raised-button class="main-background-color main-button color-white" (click)="finalisedCategory()">
             Next
           </button>
-        </div>
+        </div> -->
         <div *ngIf="showTable">
           <div class="row p-t-10 p-b-10">
             <div class="col-sm-8  border-input">
@@ -89,7 +84,7 @@
             </div>
           </div>
           <div *ngFor="let data of categoryData | SearchPipe: searchMaterial:'data'">
-            <app-bom-preview #preview [selectedCategory]="data" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)"></app-bom-preview>
+            <app-bom-preview #preview [category]="data" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)"></app-bom-preview>
           </div>
         </div>
       </mat-card>

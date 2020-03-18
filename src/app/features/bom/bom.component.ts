@@ -26,6 +26,7 @@ import { QtyData } from "src/app/shared/models/subcategory-materials";
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 import { GuidedTourService, Orientation, GuidedTour } from 'ngx-guided-tour';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
+import { orgTrades } from 'src/app/shared/models/trades';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -54,7 +55,7 @@ export class BomComponent implements OnInit {
   searchDataValues: categoryNestedLevel;
   form: FormGroup;
   tradeNames: string[] = []
-  tradesList: string[];
+  tradesList: orgTrades[];
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,
@@ -116,8 +117,14 @@ export class BomComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.getProject(this.projectId);
-    this.userService.getTrades().then(res => {
-      this.tradesList = res.data;
+    this.formInit()
+    this.bomService.getOrgTrades().then(res => {
+      this.tradesList = res.data as orgTrades[];
+      const selectedTrades = this.tradesList.filter((trade: orgTrades) => {
+        return trade.isAttatched
+      })
+      this.form.get('selectedTrades').setValue(selectedTrades)
+      this.choosenTrade()
     })
     // this.bomService
     //   .getMaterialWithQuantity(this.orgId, this.projectId)
@@ -133,7 +140,7 @@ export class BomComponent implements OnInit {
     //       opt => opt.checked
     //     );
     //   });
-    this.formInit()
+
   }
 
   formInit() {
@@ -160,9 +167,9 @@ export class BomComponent implements OnInit {
     win.focus();
   }
 
-  choosenProject() {
-    let projectAdd: string[] = [];
-    let projectRemove: string[] = [];
+  choosenTrade() {
+    let tradeAdd: string[] = [];
+    let tradeRemove: string[] = [];
     const selectedTrades = this.form.value.selectedTrades.map(
       selectedTrade => selectedTrade.tradeName
     );
@@ -172,28 +179,29 @@ export class BomComponent implements OnInit {
       return;
     }
     if (this.tradeNames.length === 0) {
-      projectAdd = selectedTrades;
+      tradeAdd = selectedTrades;
     } else if (this.tradeNames.length < selectedTrades.length) {
       for (let id of selectedTrades) {
         if (!this.tradeNames.includes(id)) {
-          projectAdd.push(id);
+          tradeAdd.push(id);
         }
       }
     } else if (this.tradeNames.length >= selectedTrades.length) {
       for (let id of this.tradeNames) {
         if (!selectedTrades.includes(id)) {
-          projectRemove.push(id);
+          tradeRemove.push(id);
         }
       }
       this.categoryData = this.categoryData.filter(
         (category: categoryNestedLevel) => {
-          return !projectRemove.includes(category.materialGroup);
+          return !tradeRemove.includes(category.groupName);
         }
       );
     }
-    if (projectAdd.length) {
-      this.bomService.getTrades({ tradeNames: [...projectAdd] }).then(res => {
-        this.categoryData = [...this.categoryData, ...res.data];
+    if (tradeAdd.length) {
+      this.bomService.getTrades({ tradeNames: [...tradeAdd] }).then(res => {
+        this.categoryData = [...this.categoryData, ...res];
+        this.showTable = true;
         // this.categoryData = this.categoryData.map(
         //   (project: categoryNestedLevel) => {
         //     let proj = this.getCheckedMaterial(project);
