@@ -45,7 +45,8 @@ export interface UserAdd {
   creatorId?: number,
   status?: number,
   projectIds?: number[],
-  projects?: number[]
+  projects?: number[],
+  accountStatus?: number,
 }
 
 export interface UserRoles {
