@@ -42,6 +42,7 @@ export interface material {
 }
 
 export interface categoryNestedLevel {
+  tradeName: string;
   groupName: string;
   materialList: material[];
 }
