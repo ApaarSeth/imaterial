@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { categoryNestedLevel } from "src/app/shared/models/category";
+import { categoryNestedLevel, material } from "src/app/shared/models/category";
 import {
   FormGroup,
   FormControl,
@@ -52,6 +52,7 @@ export class BomPreviewComponent implements OnInit {
     this.step = index;
   }
   @Input("category") category: categoryNestedLevel;
+  // @Input("searchMaterial") searchMaterial: string;
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
@@ -87,6 +88,15 @@ export class BomPreviewComponent implements OnInit {
       });
     this.formInit();
   }
+
+  // ngOnChanges(): void {
+  //   if (this.searchMaterial != "" && this.selectedCategory) {
+  //     this.selectedCategory.materialList = this.selectedCategory.materialList.filter((materialList: material) => {
+  //       return materialList.materialName.includes(this.searchMaterial)
+  //     })
+  //   }
+  // }
+
   formInit() {
     const frmArr: FormGroup[] = this.selectedCategory.materialList.map(subcategory => {
       return this.formBuilder.group({

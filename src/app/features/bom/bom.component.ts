@@ -56,6 +56,7 @@ export class BomComponent implements OnInit {
   form: FormGroup;
   tradeNames: string[] = []
   tradesList: orgTrades[];
+  searchMaterial: string;
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,
@@ -118,7 +119,7 @@ export class BomComponent implements OnInit {
     this.userId = Number(localStorage.getItem("userId"));
     this.getProject(this.projectId);
     this.formInit()
-    this.bomService.getOrgTrades().then(res => {
+    this.bomService.getOrgTrades(this.projectId).then(res => {
       this.tradesList = res.data as orgTrades[];
       const selectedTrades = this.tradesList.filter((trade: orgTrades) => {
         return trade.isAttatched
@@ -173,44 +174,45 @@ export class BomComponent implements OnInit {
     const selectedTrades = this.form.value.selectedTrades.map(
       selectedTrade => selectedTrade.tradeName
     );
-    if (selectedTrades.length === 0) {
-      this.categoryData = [];
-      this.tradeNames = [];
-      return;
-    }
-    if (this.tradeNames.length === 0) {
-      tradeAdd = selectedTrades;
-    } else if (this.tradeNames.length < selectedTrades.length) {
-      for (let id of selectedTrades) {
-        if (!this.tradeNames.includes(id)) {
-          tradeAdd.push(id);
-        }
-      }
-    } else if (this.tradeNames.length >= selectedTrades.length) {
-      for (let id of this.tradeNames) {
-        if (!selectedTrades.includes(id)) {
-          tradeRemove.push(id);
-        }
-      }
-      this.categoryData = this.categoryData.filter(
-        (category: categoryNestedLevel) => {
-          return !tradeRemove.includes(category.groupName);
-        }
-      );
-    }
-    if (tradeAdd.length) {
-      this.bomService.getTrades({ tradeNames: [...tradeAdd] }).then(res => {
-        this.categoryData = [...this.categoryData, ...res];
-        this.showTable = true;
-        // this.categoryData = this.categoryData.map(
-        //   (project: categoryNestedLevel) => {
-        //     let proj = this.getCheckedMaterial(project);
-        //     return proj;
-        //   }
-        // );
-        // this.materialAdded();
-      });
-    }
+    // if (selectedTrades.length === 0) {
+    //   this.categoryData = [];
+    //   this.tradeNames = [];
+    //   return;
+    // }
+    // if (this.tradeNames.length === 0) {
+    //   tradeAdd = selectedTrades;
+    // } else if (this.tradeNames.length < selectedTrades.length) {
+    //   for (let id of selectedTrades) {
+    //     if (!this.tradeNames.includes(id)) {
+    //       tradeAdd.push(id);
+    //     }
+    //   }
+    // } else if (this.tradeNames.length >= selectedTrades.length) {
+    //   for (let id of this.tradeNames) {
+    //     if (!selectedTrades.includes(id)) {
+    //       tradeRemove.push(id);
+    //     }
+    //   }
+    //   this.categoryData = this.categoryData.filter(
+    //     (category: categoryNestedLevel) => {
+    //       return !tradeRemove.includes(category.tradeName);
+    //     }
+    //   );
+    // }
+    // if (tradeAdd.length) {
+
+    this.bomService.getTrades({ tradeNames: [...selectedTrades] }).then(res => {
+      this.categoryData = [...res];
+      this.showTable = true;
+      // this.categoryData = this.categoryData.map(
+      //   (project: categoryNestedLevel) => {
+      //     let proj = this.getCheckedMaterial(project);
+      //     return proj;
+      //   }
+      // );
+      // this.materialAdded();
+    });
+    // }
     this.tradeNames = [...selectedTrades];
   }
 
@@ -248,6 +250,11 @@ export class BomComponent implements OnInit {
         this.quantityPresent = false;
       }
     }
+    const tradeData = {
+      projectId: Number(this.projectId),
+      tradelist: [...this.form.value.selectedTrades]
+    }
+    this.bomService.setProjTrades(tradeData);
     this.bomService
       .sumbitCategory(this.userId, this.projectId, this.categoriesInputData)
       .then(res => {
