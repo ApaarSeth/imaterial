@@ -164,7 +164,10 @@ export class UpdateInfoComponent implements OnInit {
       const data: UserDetails = this.userInfoForm.value;
 
       this._userService.submitUserDetails(data).then(res => {
+        if(this.users.roleName === 'l1')
         this._router.navigate(['profile/add-user']);
+        else if(this.users.roleName != 'l1')
+        this._router.navigate(['dashboard']);
       });
 
     }

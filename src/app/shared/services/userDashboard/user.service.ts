@@ -28,6 +28,9 @@ export class UserService {
   addUsers(user: UserAdd) {
     return this.dataService.sendPostRequest(API.ADDUSER, user)
   }
+  postTerms(id){
+    return this.dataService.sendPostRequest(API.TERMS(id),{})
+  }
   updateUsers(user: UserAdd) {
     return this.dataService.sendPostRequest(API.EDITUSER, user).then(res => {
       return res;
