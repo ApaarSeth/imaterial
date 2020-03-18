@@ -91,6 +91,7 @@ export class BomPreviewComponent implements OnInit {
     const frmArr: FormGroup[] = this.selectedCategory.materialList.map(subcategory => {
       return this.formBuilder.group({
         materialId: [subcategory.materialId],
+        materialMasterId: [subcategory.materialId],
         estimatedQty: [subcategory.estimatedQty],
         materialCode: [subcategory.materialCode],
         materialName: [subcategory.materialName],
