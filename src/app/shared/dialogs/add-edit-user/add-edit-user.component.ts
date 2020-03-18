@@ -82,19 +82,19 @@ export class AddEditUserComponent implements OnInit {
 
     this.form = new FormGroup({
       firstName: new FormControl(
-         this.data.isEdit ? this.data.detail.firstName : "",
+         {value : this.data.isEdit ? this.data.detail.firstName : "", disabled: ( this.data.isEdit && (this.data.detail.accountStatus==1))? true:false},
         Validators.required
       ),
       lastName: new FormControl(
-         this.data.isEdit ? this.data.detail.lastName : "",
+        {value : this.data.isEdit ? this.data.detail.lastName : "", disabled: ( this.data.isEdit && (this.data.detail.accountStatus==1))? true:false},
         Validators.required
       ),
       email: new FormControl(
-         this.data.isEdit ? this.data.detail.email : "",
+        {value : this.data.isEdit ? this.data.detail.email : "", disabled: ( this.data.isEdit && (this.data.detail.accountStatus==1))? true:false},
         [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]),
 
       contactNo: new FormControl(
-         this.data.isEdit ? this.data.detail.contactNo : "",
+         {value : this.data.isEdit ? this.data.detail.contactNo : "", disabled: ( this.data.isEdit && (this.data.detail.accountStatus==1))? true:false},
         // [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]
       ),
       roleId: new FormControl(
