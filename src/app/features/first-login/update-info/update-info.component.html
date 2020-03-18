@@ -89,7 +89,7 @@
                                 </div>
                             </div> -->
 
-              <div class="col-md-12">
+              <div class="col-md-12" *ngIf="users.roleName === 'l1'">
                 <p style="font-weight: 600;">Choose Trades</p>
                 <mat-chip-list multiple id="chipList" [selectable]="true">
                   <mat-chip

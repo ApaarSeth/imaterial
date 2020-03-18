@@ -19,7 +19,7 @@
 
                     <div class="terms-conditions__actions w-50 mx-auto mt-4 d-flex justify-content-between">
                         <button class="btn btn-warning hollow-btn" (click)="logout()">Decline</button>
-                        <button class="btn btn-warning next-btn" [routerLink]="(['/profile/update-info'])">Accept</button>
+                        <button class="btn btn-warning next-btn" (click)="acceptTerms()" >Accept</button>
                     </div>
                 </div>
             </div>
