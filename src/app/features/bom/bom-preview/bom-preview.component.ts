@@ -29,7 +29,7 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 })
 export class BomPreviewComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
-    @Output("searchData") searchData = new EventEmitter();
+  @Output("searchData") searchData = new EventEmitter();
   counter: number;
   orgId: number;
 
@@ -39,30 +39,32 @@ export class BomPreviewComponent implements OnInit {
     private projectService: ProjectService,
     private bomService: BomService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
   private dataQty: Materials[];
   projectId: number;
   frmArr: FormGroup[];
   quantityForms: FormGroup;
+  selectedCategory: categoryNestedLevel;
   // product: ProjectDetails;
   step = 0;
 
   setStep(index: number) {
     this.step = index;
   }
-  @Input("selectedCategory") selectedCategory: categoryNestedLevel;
+  @Input("category") category: categoryNestedLevel;
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.orgId=Number(localStorage.getItem("orgId"))
-    this.projectService.getProject(this.orgId, this.projectId).then(data => {
-    });
+    this.orgId = Number(localStorage.getItem("orgId"))
+    // this.projectService.getProject(this.orgId, this.projectId).then(data => {
+    // });
+    this.selectedCategory = this.category
     this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
         this.dataQty = res.data;
-        this.selectedCategory.Child = this.selectedCategory.Child.map(
+        this.selectedCategory.materialList = this.selectedCategory.materialList.map(
           subcategory => {
             for (let data of this.dataQty) {
               if (
@@ -86,7 +88,7 @@ export class BomPreviewComponent implements OnInit {
     this.formInit();
   }
   formInit() {
-    const frmArr: FormGroup[] = this.selectedCategory.Child.map(subcategory => {
+    const frmArr: FormGroup[] = this.selectedCategory.materialList.map(subcategory => {
       return this.formBuilder.group({
         materialId: [subcategory.materialId],
         estimatedQty: [subcategory.estimatedQty],

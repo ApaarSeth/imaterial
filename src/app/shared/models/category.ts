@@ -36,10 +36,12 @@ export interface material {
   estimatedQty?: number;
   estimatedRate?: number;
   materialId?: number;
+  treadId: number;
+  tradeName: string;
+  tradeList: string[]
 }
 
 export interface categoryNestedLevel {
-  pid: string;
-  materialGroup: string;
-  Child: material[];
+  groupName: string;
+  materialList: material[];
 }
