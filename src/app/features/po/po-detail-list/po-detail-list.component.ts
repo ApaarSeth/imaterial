@@ -59,10 +59,6 @@ export class PODetailComponent implements OnInit {
     public dialog: MatDialog,
     private guidedTourService: GuidedTourService
   ) {
-
-         setTimeout(() => {
-            this.guidedTourService.startTour(this.PODetailTour);
-        }, 1000);
   }
 
   ngOnInit() {
@@ -89,7 +85,11 @@ export class PODetailComponent implements OnInit {
     this.poDraftedDetailsTemp = this.activatedRoute.snapshot.data.poDetailList.draftedPOList;
     this.poApprovalDetailsTemp = this.activatedRoute.snapshot.data.poDetailList.sendForApprovalPOList;
     this.acceptedRejectedPOListTemp = this.activatedRoute.snapshot.data.poDetailList.acceptedRejectedPOList;
-
+    if(this.poApprovalDetailsTemp || this.poDraftedDetailsTemp || this.acceptedRejectedPOListTemp){
+        setTimeout(() => {
+            this.guidedTourService.startTour(this.PODetailTour);
+        }, 1000);
+    }
     this.acceptedRejectedPOList = new MatTableDataSource(
       this.activatedRoute.snapshot.data.poDetailList.acceptedRejectedPOList
     );
