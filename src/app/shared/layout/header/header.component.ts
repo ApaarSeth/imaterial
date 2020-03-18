@@ -58,7 +58,7 @@ export class HeaderLayoutComponent implements OnInit {
     else if (url.includes('rfq')) {
       this.buttonName = 'Request For Quotation'
     }
-    else if (url.includes('Users')) {
+    else if (url.includes('user-detail')) {
       this.buttonName = 'Users'
     }
     else if (url.includes('po')) {

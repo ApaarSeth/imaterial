@@ -8,7 +8,7 @@ $alert-color: #ff5353;
 $background-color-grey: #979797;
 $background-table-color-grey: #ececec;
 $green-color: #7ed321;
-
+$skyblue-color: #2197bb;
 a:hover {
   color: $main-color !important;
   text-decoration: none;
@@ -16,6 +16,10 @@ a:hover {
 
 .background-color-grey {
   background-color: $background-color-grey;
+}
+
+.background-color-skyblue {
+  background-color: $skyblue-color;
 }
 
 .background-white-color {

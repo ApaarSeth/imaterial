@@ -10,6 +10,7 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
 import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: "app-rfq-supplier",
@@ -25,6 +26,7 @@ export class RfqSupplierComponent implements OnInit {
     "Email",
     "Phone No."
   ];
+  allSupplier = new Observable<Suppliers[]>();
   allSuppliers: Suppliers[] = [];
   selectedSuppliersList: Suppliers[] = [];
   selectedSupplierFlag: boolean = false;
@@ -49,6 +51,7 @@ export class RfqSupplierComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     if (this.activatedRoute.snapshot.data.createRfq[0].data) {
       this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
+      // this.allSupplier.next(this.allSuppliers);
     } else {
       this.allSuppliers = [];
     }
@@ -90,9 +93,11 @@ export class RfqSupplierComponent implements OnInit {
     if (ch.checked) {
       if (this.supplierCounter < 3) {
         this.supplierCounter++;
+        supplier.checked = true
         sGrp.get("supplier").setValue(supplier);
       } else {
         this.supplierAlert();
+        supplier.checked = false;
         ch.checked = false;
       }
     } else {
@@ -146,15 +151,17 @@ export class RfqSupplierComponent implements OnInit {
             let allSuppliersId: number[] = this.allSuppliers.map(supp => supp.supplierId);
             let tempId: number[] = data.data.map(supp => supp.supplierId);
             let newAddedId: number = null
-            allSuppliersId.forEach(id => {
-              if (!tempId.includes(id)) {
+            tempId.forEach(id => {
+              if (!allSuppliersId.includes(id)) {
                 newAddedId = id;
               }
             });
             let newSupplier = data.data.filter(supp => {
               return newAddedId === supp.supplierId
             })
-            this.allSuppliers.push(newSupplier);
+            this.allSuppliers.push(...newSupplier);
+            this.allSuppliers = this.allSuppliers.slice();
+            //  this.allSupplier.next(this.allSuppliers)
             this.formInit();
           });
         }
