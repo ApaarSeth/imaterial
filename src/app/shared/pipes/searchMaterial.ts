@@ -19,7 +19,10 @@ export class SearchMaterialPipe implements PipeTransform {
                     let newMaterialList = search[property].filter(list => {
                         return list[property1].toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1
                     })
-                    newSearchList.push({ ...search, materialList: newMaterialList });
+                    if (newMaterialList.length) {
+                        newSearchList.push({ ...search, materialList: newMaterialList });
+                    }
+
                 }
             }
 

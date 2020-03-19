@@ -1,6 +1,6 @@
 <form *ngIf="selectedCategory.length" [formGroup]="quantityForms">
   <ng-container formArrayName="forms">
-    <span [formGroupName]="c" *ngFor="let category of selectedCategory; let c = index">
+    <span [formGroupName]="c" *ngFor="let category of selectedCategory | SearchMaterial: searchMat:'materialList':'materialName'; let c = index">
       <mat-accordion>
         <div #myele>
           <mat-expansion-panel class="m-b-5 m-t-5 bom-qty-page" [expanded]="true">
@@ -16,13 +16,8 @@
                 </span>
               </div>
             </mat-expansion-panel-header>
-
             <ng-container formArrayName="materialGroup">
-              <div
-                class="row background-color-bom-sub-category p-0"
-                *ngFor="let subcategory of category.materialList | SearchPipe: searchMat:'materialName'; let sc = index"
-                formGroupName="{{ sc }}"
-              >
+              <div class="row background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index" formGroupName="{{ sc }}">
                 <div class="col-xs-3">
                   <span class="pull-left p-l-40 p-t-20">{{ subcategory.materialName }}</span>
                 </div>

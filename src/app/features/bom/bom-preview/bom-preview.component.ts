@@ -94,13 +94,9 @@ export class BomPreviewComponent implements OnInit {
     this.formInit();
   }
 
-  // ngOnChanges(): void {
-  //   if (this.searchMaterial != "" && this.selectedCategory) {
-  //     this.selectedCategory.materialList = this.selectedCategory.materialList.filter((materialList: material) => {
-  //       return materialList.materialName.includes(this.searchMaterial)
-  //     })
-  //   }
-  // }
+  ngOnChanges(): void {
+    this.selectedCategory = this.category
+  }
 
   formInit() {
 

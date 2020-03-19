@@ -10,7 +10,7 @@ import {
 } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 import { PoDocumentsComponent } from "./po-documents/po-documents.component";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -72,7 +72,8 @@ export class PoComponent implements OnInit {
     private dialog: MatDialog,
     private poService: POService,
     private formBuilder: FormBuilder,
-    private guidedTourService: GuidedTourService
+    private guidedTourService: GuidedTourService,
+    private _snackBar: MatSnackBar
   ) {
     setTimeout(() => {
       this.guidedTourService.startTour(this.POPreviewTour);
@@ -153,6 +154,16 @@ export class PoComponent implements OnInit {
       console.log("result", result);
       this.poService.sendPoData(result).then(res => {
         if (res.status === 0) {
+          this._snackBar.open(
+            res.message,
+            "",
+            {
+              duration: 2000,
+              panelClass: ["warning-snackbar"],
+              verticalPosition: "top"
+            }
+          );
+
           this.router.navigate(["po/detail-list"]);
         }
       });
