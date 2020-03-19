@@ -94,6 +94,7 @@ export const API = {
   GETUSERGUIDEFLAG: `userGuide`,
   SENDUSERGUIDEFLAG: `add/userGuide`,
   GETBOMTRADES: `material/get/trades`,
-  ORGANIZATIONTRADES: `all/org/tades`,
-  TERMS:id => `update/terms/${id}`
+  ORGANIZATIONTRADES: projectId => `all/org/trades/${projectId}`,
+  PROJECTTRADES: `add/projectTrades`,
+  TERMS: id => `update/terms/${id}`
 };
