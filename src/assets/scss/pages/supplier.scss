@@ -403,7 +403,13 @@ div.limited-character.po-p-m{
     background: #2197bb;
     border-radius: 0px;
 
-    span.mat-header-cell {
+    span.mat-header-cell.material {
+        color: #ffffff !important;
+        border-radius: 0px;
+        padding: 12px;
+        padding-left: 0px;
+    }
+      span.mat-header-cell {
         color: #ffffff !important;
         border-radius: 0px;
     }
