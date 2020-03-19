@@ -52,8 +52,7 @@ export class RfqBidsComponent implements OnInit {
                       brand: [brand],
                       quantity: []
                     });
-                  }
-                );
+                  });
                 return this.formBuilder.group({
                   supplierId: supplier.supplierId,
                   supplierAddressId: null,
