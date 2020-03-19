@@ -274,18 +274,18 @@ export class RfqProjectMaterialsComponent implements OnInit {
                 project.projectMaterialList.forEach((mat: RfqMat) => {
                   if (mat.materialId === element.material.materialId) {
                     // mat.fullfilmentDate = element.material.dueDate;
-                    projectMaterial.push({ ...mat, fullfilmentDate: element.material.dueDate });
+                    projectMaterial.push({ ...mat, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null });
                     materialAddedFlag = true;
                   }
                 })
                 if (!materialAddedFlag) {
                   // element.material.fullfilmentDate = element.material.dueDate;
-                  projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate });
+                  projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null });
                 }
               }
             })
           } else {
-            projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate });
+            projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null });
           }
         }
       })
