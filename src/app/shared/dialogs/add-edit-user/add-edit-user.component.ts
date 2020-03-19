@@ -44,6 +44,8 @@ export class AddEditUserComponent implements OnInit {
   isInputDisabled: boolean = true;
   orgId: number;
   userId: number;
+  emailVerified: boolean = true;
+  emailMessage: string;
 
   constructor(
     private userService: UserService,
@@ -160,6 +162,20 @@ export class AddEditUserComponent implements OnInit {
       this.updateUsers(this.form.value);
     } else {
       this.addUsers(this.form.value);
+    }
+  }
+  verifyEmail(event) {
+    const email = event.target.value
+    if (email.match(FieldRegExConst.EMAIL)) {
+      if(!((this.data.isEdit) && (this.data.detail.email=== email))){
+          this.userService.verifyEMAIL(this.form.value.email).then(res => {
+        if (res) {
+          this.emailVerified = res.data;
+          this.emailMessage = res.message;
+        }
+      });
+      }
+    
     }
   }
 

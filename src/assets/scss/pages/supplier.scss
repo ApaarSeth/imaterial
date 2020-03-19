@@ -403,7 +403,13 @@ div.limited-character.po-p-m{
     background: #2197bb;
     border-radius: 0px;
 
-    span.mat-header-cell {
+    span.mat-header-cell.material {
+        color: #ffffff !important;
+        border-radius: 0px;
+        padding: 12px;
+        padding-left: 0px;
+    }
+      span.mat-header-cell {
         color: #ffffff !important;
         border-radius: 0px;
     }
@@ -620,6 +626,8 @@ mat-icon {
     overflow-y: scroll;
     padding-left:1px;
     padding-right: 0px;
+    white-space: pre-line;
+    line-height: 15px;
 }
 
 .header-bell-menu button.mat-menu-item:hover{
@@ -689,7 +697,7 @@ h3 {
     text-decoration:underline;
 }
 .body-of-notification{
-    max-height: 288px;
+    //max-height: 288px;
    // overflow-y: scroll;
 }
 
