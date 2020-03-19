@@ -30,9 +30,10 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 export class BomPreviewComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
   @Output("searchData") searchData = new EventEmitter();
+  @Input("category") category: categoryNestedLevel[];
+  @Input("searchMat") searchMat: string;
   counter: number;
   orgId: number;
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -44,15 +45,16 @@ export class BomPreviewComponent implements OnInit {
   projectId: number;
   frmArr: FormGroup[];
   quantityForms: FormGroup;
-  selectedCategory: categoryNestedLevel;
+  selectedCategory: categoryNestedLevel[];
+  // searchMaterial: string;
   // product: ProjectDetails;
   step = 0;
 
   setStep(index: number) {
     this.step = index;
   }
-  @Input("category") category: categoryNestedLevel;
-  // @Input("searchMaterial") searchMaterial: string;
+
+
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
@@ -65,21 +67,24 @@ export class BomPreviewComponent implements OnInit {
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
         this.dataQty = res.data;
-        this.selectedCategory.materialList = this.selectedCategory.materialList.map(
-          subcategory => {
-            for (let data of this.dataQty) {
-              if (
-                subcategory.materialGroup === data.materialGroup &&
-                subcategory.materialName === data.materialName &&
-                data.estimatedQty > 0
-              ) {
-                subcategory.estimatedQty = data.estimatedQty;
-                subcategory.materialId = data.materialId;
+        this.selectedCategory.map((category: categoryNestedLevel) => {
+          category.materialList = category.materialList.map(
+            subcategory => {
+              for (let data of this.dataQty) {
+                if (
+                  subcategory.materialGroup === data.materialGroup &&
+                  subcategory.materialName === data.materialName &&
+                  data.estimatedQty > 0
+                ) {
+                  subcategory.estimatedQty = data.estimatedQty;
+                  subcategory.materialId = data.materialId;
+                }
               }
-            }
-            return subcategory;
-          }
-        );
+              return subcategory;
+            });
+          return category;
+        })
+
         this.searchData.emit(this.selectedCategory);
         this.formInit();
       })
@@ -98,18 +103,25 @@ export class BomPreviewComponent implements OnInit {
   // }
 
   formInit() {
-    const frmArr: FormGroup[] = this.selectedCategory.materialList.map(subcategory => {
-      return this.formBuilder.group({
-        materialId: [subcategory.materialId],
-        materialMasterId: [subcategory.materialId],
-        estimatedQty: [subcategory.estimatedQty],
-        materialCode: [subcategory.materialCode],
-        materialName: [subcategory.materialName],
-        materialGroup: [subcategory.materialGroup],
-        materialUnit: [subcategory.materialUnit],
-        estimatedRate: [subcategory.estimatedRate]
+
+    let frmArr: FormGroup[] = this.selectedCategory.map((category: categoryNestedLevel) => {
+      const matGrp: FormGroup[] = category.materialList.map(subcategory => {
+        return this.formBuilder.group({
+          materialId: [subcategory.materialId],
+          materialMasterId: [subcategory.materialId],
+          estimatedQty: [subcategory.estimatedQty],
+          materialCode: [subcategory.materialCode],
+          materialName: [subcategory.materialName],
+          materialGroup: [subcategory.materialGroup],
+          materialUnit: [subcategory.materialUnit],
+          estimatedRate: [subcategory.estimatedRate]
+        });
       });
-    });
+      return this.formBuilder.group({
+        materialGroup: this.formBuilder.array(matGrp)
+      });
+    })
+
     this.quantityForms = this.formBuilder.group(
       {},
       { validators: [this.getMaterialLength] }
