@@ -40,28 +40,27 @@
                   <a (click)="downloadExcel('assets/images/Master_data.xlsx')"> Download BOM Template</a></span
                 >
               </div>
-              <div class="mr-3">
+              <div class="mr-3 p-t-10 cursor-pointer">
                 <input
-                  class="fileupload cursor-pointer width-200"
                   type="file"
                   accept=".xlsx"
                   #fileDropRef
                   id="fileDropRef"
+                  class="fileupload cursor-pointer"
                   style="display: none;"
                   multiple
                   (change)="uploadExcel($event.target.files)"
                 />
-                <label class="cursor-pointer upload-template">
-                  <img src="assets/images/upload.png" alt="upload" class="img-fluid mr-2 w-30" />
-                  <span class="cursor-pointer">Upload BOM Template</span>
-                </label>
+                <label for="fileDropRef" class="cursor-pointer upload-template">
+                  <img src="assets/images/upload.png" alt="upload" class="img-fluid mr-2 w-30 cursor-pointer" /> Upload BOM Template</label
+                >
               </div>
               <div>
                 <button
                   mat-raised-button
                   class="main-background-color main-button color-white pull-right save-material-button"
                   (click)="saveCategory()"
-                  <!-- [disabled]="!isAllFormsValid" --></button>
+                  [disabled]="!isAllFormsValid"
                 >
                   Add to BOM
                 </button>

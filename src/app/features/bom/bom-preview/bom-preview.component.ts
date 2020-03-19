@@ -45,7 +45,7 @@ export class BomPreviewComponent implements OnInit {
   projectId: number;
   frmArr: FormGroup[];
   quantityForms: FormGroup;
-  selectedCategory: categoryNestedLevel[];
+  selectedCategory: categoryNestedLevel[] = [];
   // searchMaterial: string;
   // product: ProjectDetails;
   step = 0;
@@ -128,6 +128,15 @@ export class BomPreviewComponent implements OnInit {
     );
     this.quantityForms.addControl("forms", new FormArray(frmArr));
 
+    for (let val of this.quantityForms.value.forms) {
+      let result = val.materialGroup.some(mat => {
+        return mat.estimatedQty && mat.estimatedQty >= 0
+      })
+      if (result) {
+        this.inputEntered.emit(true);
+        break;
+      }
+    }
     this.quantityForms.valueChanges.subscribe(changes => {
       this.inputEntered.emit(true);
     });
