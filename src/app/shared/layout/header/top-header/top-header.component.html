@@ -42,14 +42,14 @@
       <h3>Notifications</h3>
       <div class="body-of-notification">
         <ng-container *ngIf="unreadnotification && unreadnotification.length > 0">
-          <div class="read-unread-heading p-l-10 p-r-10  cursor-pointer">
+          <div class="read-unread-heading p-10 cursor-pointer">
             <span>
               Recent
             </span>
             <span class="pull-right "> You have {{ unreadnotification.length }} unread notifications </span>
           </div>
           <ng-container *ngFor="let notification of unreadnotification">
-            <div (click)="routeTo(notification.resourceUrl)" class="p-l-10 p-r-10 unread-background  cursor-pointer">
+            <div (click)="routeTo(notification.resourceUrl)" class="p-l-10 p-r-10 p-t-20 unread-background  cursor-pointer">
               <span *ngIf="notification.notificationText" class="font-size-12">
                 {{ notification.notificationText }}
               </span>

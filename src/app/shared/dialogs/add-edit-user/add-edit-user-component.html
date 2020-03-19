@@ -48,7 +48,7 @@
             matInput
             type="text"
             placeholder="Email Id"
-            formControlName="email" required
+            formControlName="email" (input)="verifyEmail($event)" required
           />
           <!-- <mat-error class="mat-error-add-edit-form-modal">Email Id is Required</mat-error> -->
            <small
@@ -57,6 +57,7 @@
               <small
               *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
               class="form-error-msg"> Enter Valid Email</small>
+               <small class="form-error-msg" *ngIf="(!emailVerified)">Email already in use.</small>
         </mat-form-field>
           </div>
         </div>
@@ -129,7 +130,7 @@
   <div mat-dialog-actions>
     <div class="col-sm-12 save-btn-add-edit-user-modal">
       <button
-        mat-raised-button [disabled]="!form.valid" (click)="userDetailsNavigate()"
+        mat-raised-button [disabled]="!form.valid || !emailVerified" (click)="userDetailsNavigate()"
         class="main-background-color main-button color-white pull-right"
       >
         <span *ngIf="!data.isEdit">Add</span>

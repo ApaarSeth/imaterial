@@ -149,6 +149,7 @@ export class UpdateInfoComponent implements OnInit {
     }
   }
 
+
   submit() {
 
     if (this.userInfoForm.valid) {
