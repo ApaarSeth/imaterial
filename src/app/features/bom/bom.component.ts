@@ -233,10 +233,10 @@ export class BomComponent implements OnInit {
       });
   }
 
-  checkValidations(): void {
-    this.isAllFormsValid = this.previews
-      .map((preview: BomPreviewComponent) => preview.quantityForms.valid)
-      .every(Boolean);
+  checkValidations(event: boolean): void {
+    this.isAllFormsValid = event
+    // .map((preview: BomPreviewComponent) => preview.quantityForms.valid)
+    // .every(Boolean);
   }
 
   saveCategory() {
