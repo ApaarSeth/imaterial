@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 import { UserRoles, UserDetails, TradeList } from 'src/app/shared/models/user-details';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { Router } from '@angular/router';
+import { elementAt, count } from 'rxjs/operators';
 
 export interface City {
   value: string;
@@ -21,10 +22,18 @@ export class AddUserComponent implements OnInit {
   addUserForm: FormGroup;
   users: UserDetails;
   rows: FormArray;
+  emailVerified: boolean = true;
+  emailMessage: string;
+
   creatorId: number;
+  index: string[] = [];
+
+  emails: string[] = [];
+  count: any;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
+    private userService: UserService,
     private _router: Router) { }
 
   ngOnInit() {
@@ -102,6 +111,32 @@ export class AddUserComponent implements OnInit {
       creatorId: [this.creatorId],
       userId: [null],
     });
+  }
+
+  verifyEmail(event,formNo,index) {
+    const email = event.target.value;
+    if (email.match(FieldRegExConst.EMAIL)) {
+          this.userService.verifyEMAIL(formNo.value).then(res => {
+        if (res) {
+          this.index[index] = res.data;
+          this.emails[index]=formNo.value;
+          this.emailVerified = true;
+          this.index.forEach(element => {
+            if(!element)
+            this.emailVerified = false;
+          })
+          this.count = 0;
+          for(let i=0; i<this.emails.length-1;i++){
+            for(let j=i+1 ;j<this.emails.length;j++){
+              if(this.emails[i] == this.emails[j])
+               this.count++;
+            }
+          }
+          this.emailMessage = res.message;
+        }
+      });
+     
+    }
   }
 
   /**
