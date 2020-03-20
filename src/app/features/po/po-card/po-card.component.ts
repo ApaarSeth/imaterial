@@ -18,7 +18,7 @@ import { POService } from 'src/app/shared/services/po/po.service';
   templateUrl: "./po-card.component.html"
 })
 export class PoCardComponent implements OnInit {
-  
+
   @Input("cardData") cardData: CardData;
   mode: string;
   projectDetails: FormGroup;
@@ -76,7 +76,7 @@ export class PoCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         if (result[0] === "projectBillingUserId") {
           this.cardData.billingAddress.email = result[1].approver.email;
           this.cardData.billingAddress.contactNo = result[1].approver.contactNo;
@@ -100,7 +100,7 @@ export class PoCardComponent implements OnInit {
           );
         }
       }
-      
+
     });
   }
   openaddressDialog(roleType: string, id: number) {
@@ -110,40 +110,40 @@ export class PoCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: Address) => {
-      if(result!=null){
-           if (result[0] === "projectBillingAddressId") {
-        this.cardData.billingAddress.addressLine1 =
-          result[1].address.addressLine1;
-        this.cardData.billingAddress.addressLine2 =
-          result[1].address.addressLine2;
-        this.cardData.billingAddress.city = result[1].address.city;
-        this.cardData.billingAddress.state = result[1].address.state;
-        this.cardData.billingAddress.pinCode = result[1].address.pinCode;
-        this.cardData.billingAddress.projectBillingAddressId =
-          result[1].address.projectAddressId;
-        result[1].address.projectAddressId && this.poService.billingAddress$.next();
-        this.cardData.billingAddress.gstNo = result[1].address.gstNo;
-        this.projectDetails.controls["billingAddress"].setValue(
-          this.cardData.billingAddress
-        );
-      } else {
-        this.cardData.supplierAddress.addressLine1 =
-          result[1].address.addressLine1;
-        this.cardData.supplierAddress.addressLine2 =
-          result[1].address.addressLine2;
-        this.cardData.supplierAddress.city = result[1].address.city;
-        this.cardData.supplierAddress.state = result[1].address.state;
-        this.cardData.supplierAddress.pinCode = result[1].address.pinCode;
-        this.cardData.supplierAddress.supplierAddressId =
-          result[1].address.supplierAddressId;
-        result[1].address.supplierAddressId && this.poService.supplierAddress$.next();
-        this.cardData.supplierAddress.gstNo = result[1].address.gstNo;
-        this.projectDetails.controls["supplierAddress"].setValue(
-          this.cardData.supplierAddress
-        );
+      if (result != null) {
+        if (result[0] === "projectBillingAddressId") {
+          this.cardData.billingAddress.addressLine1 =
+            result[1].address.addressLine1;
+          this.cardData.billingAddress.addressLine2 =
+            result[1].address.addressLine2;
+          this.cardData.billingAddress.city = result[1].address.city;
+          this.cardData.billingAddress.state = result[1].address.state;
+          this.cardData.billingAddress.pinCode = result[1].address.pinCode;
+          this.cardData.billingAddress.projectBillingAddressId =
+            result[1].address.projectAddressId;
+          result[1].address.projectAddressId && this.poService.billingAddress$.next();
+          this.cardData.billingAddress.gstNo = result[1].address.gstNo;
+          this.projectDetails.controls["billingAddress"].setValue(
+            this.cardData.billingAddress
+          );
+        } else {
+          this.cardData.supplierAddress.addressLine1 =
+            result[1].address.addressLine1;
+          this.cardData.supplierAddress.addressLine2 =
+            result[1].address.addressLine2;
+          this.cardData.supplierAddress.city = result[1].address.city;
+          this.cardData.supplierAddress.state = result[1].address.state;
+          this.cardData.supplierAddress.pinCode = result[1].address.pinCode;
+          this.cardData.supplierAddress.supplierAddressId =
+            result[1].address.supplierAddressId;
+          result[1].address.supplierAddressId && this.poService.supplierAddress$.next();
+          this.cardData.supplierAddress.gstNo = result[1].address.gstNo;
+          this.projectDetails.controls["supplierAddress"].setValue(
+            this.cardData.supplierAddress
+          );
+        }
       }
-      }
-     
+
     });
   }
 }
