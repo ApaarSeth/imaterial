@@ -41,10 +41,6 @@
     color: black;
   }
 
-  .mat-cell {
-    text-align: left;
-  }
-
   .widthReduce {
     flex: none;
     width: 55px;
@@ -94,20 +90,14 @@
   }
 }
 
-.matCellAlignLeft {
-  .mat-cell {
-    text-align: left;
-  }
-}
-
 .hidePoweredBy {
   a#logo {
     visibility: hidden;
   }
 }
 
-.add-address-dialog-div-main{
-  .mat-form-field-appearance-legacy .mat-form-field-wrapper{
+.add-address-dialog-div-main {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
     padding-top: 7px !important;
   }
 }

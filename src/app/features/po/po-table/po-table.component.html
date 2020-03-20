@@ -25,10 +25,10 @@
             <span class="mat-cell">{{ material.materialName }}</span>
             <span class="mat-cell"></span>
             <span class="mat-cell"></span>
-            <span class="mat-cell text-center">{{ getMaterialQuantity(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell">{{ getMaterialQuantity(m) | number: "1.2-2" }}</span>
             <span class="mat-cell">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
             <span class="mat-cell"></span>
-            <span class="mat-cell text-right m-r-20">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
             <span class="mat-cell">{{ getMaterialTotalAmount(m) | number: "1.2-2" }}</span>
           </div>
           <ng-container formArrayName="purchaseOrderDetailList">
