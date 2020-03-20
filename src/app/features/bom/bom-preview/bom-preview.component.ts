@@ -94,16 +94,11 @@ export class BomPreviewComponent implements OnInit {
     this.formInit();
   }
 
-  // ngOnChanges(): void {
-  //   if (this.searchMaterial != "" && this.selectedCategory) {
-  //     this.selectedCategory.materialList = this.selectedCategory.materialList.filter((materialList: material) => {
-  //       return materialList.materialName.includes(this.searchMaterial)
-  //     })
-  //   }
-  // }
+  ngOnChanges(): void {
+    this.selectedCategory = this.category
+  }
 
   formInit() {
-
     let frmArr: FormGroup[] = this.selectedCategory.map((category: categoryNestedLevel) => {
       const matGrp: FormGroup[] = category.materialList.map(subcategory => {
         return this.formBuilder.group({
@@ -167,12 +162,14 @@ export class BomPreviewComponent implements OnInit {
   }
 
   getData() {
-    return this.quantityForms.value.forms
-      .filter(inputData => inputData.estimatedQty)
-      .map(inputdata => {
-        inputdata.estimatedQty = parseInt(inputdata.estimatedQty);
-        return inputdata;
-      });
+    return this.quantityForms.value.forms.map(val => {
+      return val.materialGroup.filter(inputData => inputData.estimatedQty)
+        .map(inputdata => {
+          inputdata.estimatedQty = Number(inputdata.estimatedQty);
+          return inputdata;
+        });
+    }).flat()
+
   }
 
 
