@@ -26,7 +26,7 @@ export class AddAddressPoDialogComponent {
     private formBuilder: FormBuilder,
     private addAddressService: AddAddressService,
     private projectService: ProjectService
-  ) {}
+  ) { }
 
   selectAddressFrm: FormGroup;
   newAddressForm: FormGroup;
@@ -68,10 +68,10 @@ export class AddAddressPoDialogComponent {
     this.newAddressForm = this.formBuilder.group({
       addressLine1: ["", Validators.required],
       addressLine2: [""],
-      pinCode: ["", [Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]],
+      pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
       state: [{ value: "", disabled: true }, Validators.required],
       city: [{ value: "", disabled: true }, Validators.required],
-      gstNo: ["",  [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]]
+      gstNo: ["", [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]]
     });
     // console.log("addresss", this.newAddressFor,m.value);
   }
@@ -83,10 +83,10 @@ export class AddAddressPoDialogComponent {
   onAddAddress(): void {
     this.postAddAddress(
       this.data.roleType === "projectBillingAddressId" ? "project" : "supplier",
-      this.newAddressForm.value
+      this.newAddressForm.getRawValue()
     );
   }
-  
+
   postAddAddress(role, address) {
     this.addAddressService
       .postAddAddress(role, this.data.id, address)
@@ -96,12 +96,12 @@ export class AddAddressPoDialogComponent {
   }
 
   getPincode(event) {
-        this.validPincode = false;
-        this.city = "";
-        this.state = "";
-        this.newAddressForm.get('city').setValue("");
-        this.newAddressForm.get('state').setValue("");
-        this.pincodeLength = event.target.value.length;
+    this.validPincode = false;
+    this.city = "";
+    this.state = "";
+    this.newAddressForm.get('city').setValue("");
+    this.newAddressForm.get('state').setValue("");
+    this.pincodeLength = event.target.value.length;
     if (event.target.value.length == 6) {
       this.cityStateFetch(event.target.value);
     }
@@ -112,17 +112,16 @@ export class AddAddressPoDialogComponent {
       if (res.data) {
         this.city = res.data[0].districtName;
         this.state = res.data[0].stateName;
-        if(this.city && this.state)
-        this.validPincode = true;
+        if (this.city && this.state)
+          this.validPincode = true;
         else
-        this.validPincode = false;
-
+          this.validPincode = false;
         this.newAddressForm.get('city').setValue(res.data[0].districtName);
         this.newAddressForm.get('state').setValue(res.data[0].stateName);
       }
     });
   }
-  close(){
+  close() {
     this.dialogRef.close(null);
   }
 }

@@ -163,7 +163,17 @@ export class PoComponent implements OnInit {
               verticalPosition: "top"
             }
           );
-
+        }
+        else {
+          this._snackBar.open(
+            res.message,
+            "",
+            {
+              duration: 2000,
+              panelClass: ["warning-snackbar"],
+              verticalPosition: "top"
+            }
+          );
           this.router.navigate(["po/detail-list"]);
         }
       });
@@ -182,6 +192,25 @@ export class PoComponent implements OnInit {
     }
     this.poService.approveRejectPo(this.collatePoData).then(res => {
       if (res.status === 0) {
+        this._snackBar.open(
+          res.message,
+          "",
+          {
+            duration: 2000,
+            panelClass: ["warning-snackbar"],
+            verticalPosition: "top"
+          }
+        );
+      } else {
+        this._snackBar.open(
+          res.message,
+          "",
+          {
+            duration: 2000,
+            panelClass: ["warning-snackbar"],
+            verticalPosition: "top"
+          }
+        );
         this.router.navigate(["po/detail-list"]);
       }
     });
