@@ -10,7 +10,7 @@
                   {{ category.groupName }}
                 </mat-panel-title>
               </div>
-              <div class="col-xs-6">
+              <div class="col-xs-6 p-r-65">
                 <span class="pull-right">
                   Estimated Quantity
                 </span>
@@ -53,6 +53,7 @@
                 <div class="col-xs-1 p-t-25">
                   {{ subcategory.materialUnit }}
                 </div>
+
                 <ng-container *ngIf="subcategory.Specs">
                   <div class="row background-color-bom-sub-sub-category p-0" *ngFor="let material of subcategory.Specs">
                     <div class="col-xs-6">
