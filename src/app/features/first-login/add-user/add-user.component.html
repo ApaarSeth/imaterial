@@ -1,8 +1,8 @@
 <section class="update-info add-user">
   <div class="container">
     <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="update-info__popup p-4 mt-5">
+      <div class="col-xs-12 terms-margin-set-width col-md-8 offset-md-2">
+        <div class="update-info__popup p-4 mt-5 invite-users">
           <form class="update-info__form" *ngIf="addUserForm" [formGroup]="addUserForm">
             <div class="row">
               <div class="col-md-12">
@@ -11,7 +11,7 @@
             </div>
 
             <div formArrayName="other" *ngFor="let other of addUserForm.get('other').controls; let i = index">
-              <div class="row p-l-30" [formGroupName]="i">
+              <div class="row add-invite-user-form" [formGroupName]="i">
                 <div class="col-md-4">
                   <mat-form-field class="border-input w-100">
                     <input matInput type="email" placeholder="*Email" (input)="verifyEmail($event,addUserForm.controls.other.controls[i].controls['email'],i)" formControlName="email" />
@@ -62,7 +62,7 @@
                     <img src="../../../../assets/images/delete-button.png" />
                   </a>
                 </div>
-                <div class="col-md-2" *ngIf="i === addUserForm.get('other').controls.length - 1">
+                <div class="col-md-2 text-align-center p-t-10" *ngIf="i === addUserForm.get('other').controls.length - 1">
                   <button mat-raised-button class="main-background-color main-button color-white" (click)="onAddRow()">+ Add User</button>
                 </div>
               </div>
