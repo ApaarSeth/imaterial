@@ -58,7 +58,7 @@
                   </mat-error>
                 </div>
                 <div class="col-md-1 text-center p-t-15" *ngIf="addUserForm.get('other').controls.length > 1">
-                  <a class="width-15-px p-l-5 cursor-pointer" matTooltip="Delete" (click)="onDelete(i)">
+                  <a class="width-15-px p-l-5 cursor-pointer float-right-invite-delBtn" matTooltip="Delete" (click)="onDelete(i)">
                     <img src="../../../../assets/images/delete-button.png" />
                   </a>
                 </div>
@@ -66,6 +66,7 @@
                   <button mat-raised-button class="main-background-color main-button color-white" (click)="onAddRow()">+ Add User</button>
                 </div>
               </div>
+              <hr  *ngIf="i<(addUserForm.get('other').controls.length - 1)">
             </div>
               <div class="text-center col-md-12 mt-4">
                  <small class="form-error-msg" *ngIf="(count == 1)">You can't add duplicate email address.</small>
