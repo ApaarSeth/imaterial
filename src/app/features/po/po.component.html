@@ -1,9 +1,7 @@
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row">
-      <!-- <div class="col-sm-12 m-t-5 text-left" *ngIf="this.mode === 'view'">
-        ApproverName
-      </div> -->
+      <div class="col-sm-12 m-t-5 ext-semi-bold text-left" *ngIf="this.mode === 'view'">PO is Approved by {{ this.poData.approverName }}</div>
       <div class="col-sm-12 m-t-5 text-right">
         <div *ngIf="this.mode === 'edit'">
           <button mat-raised-button class="main-background-color main-button color-white send-for-approval-btn" (click)="selectApprover()" [disabled]="!isPoValid">
@@ -37,7 +35,7 @@
           </form>
         </div>
         <div class="col-sm-8 background-white-color border-radius parent">
-          <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc !== ''" [innerHTML]="terms.termsDesc"></div>
+          <div class="word-wrap" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc !== ''" [innerHTML]="terms.termsDesc"></div>
           <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc == ''">No Term To View</div>
         </div>
       </div>
