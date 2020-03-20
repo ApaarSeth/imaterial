@@ -155,8 +155,13 @@
   }
 }
 
+.invite-users{
+  max-height: 500px;
+  overflow-y: scroll;
+}
 .add-user {
   height: 100%;
+  padding-top:0px;
 }
 
 .width-28 {
@@ -366,5 +371,25 @@
 
   &__content {
     color: #696969;
+  }
+}
+
+@media only screen and (max-width: 1010px) {
+ .terms-margin-set-width {
+   margin-left:0px;
+   margin-right:0px ;
+   width:100%;
+   .user-profile{
+     padding-bottom: 0px !important;
+   }
+   .choose-trades{
+     padding-top: 20px;
+   }
+  }
+}
+
+@media only screen and (min-width: 768px){
+  .add-invite-user-form{
+    padding-left: 30px;
   }
 }

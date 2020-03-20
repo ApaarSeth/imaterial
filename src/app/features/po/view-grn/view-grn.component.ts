@@ -23,8 +23,8 @@ export class ViewGRNComponent implements OnInit {
     displayedColumns: string[] = [
         "Material Name",
         "Brand Name",
-        "Awarded Quantity"
-        // "Received Quantity"
+        "Awarded Quantity",
+        "Delivered Quantity"
     ];
     grnHeaders: any;
     pID: number;
