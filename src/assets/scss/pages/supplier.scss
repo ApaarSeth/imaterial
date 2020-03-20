@@ -555,7 +555,9 @@ mat-icon {
     overflow-x: hidden;
     max-height: 18vh;
     overflow-y: auto;
-
+    .row{
+        width:175px;
+    }
 }
 
 
@@ -572,8 +574,8 @@ mat-icon {
 
 .show-detail-supplier {
     position: absolute;
-    margin-left: 20px;
-    margin-top: -3px;
+    margin-left: 25px;
+    margin-top: 3px;
 
     img {
         z-index: 10;
@@ -582,9 +584,9 @@ mat-icon {
 
 .show-detail-supplier {
     position: absolute;
-    margin-left: 20px;
-    margin-top: -3px;
-
+    margin-left: 25px;
+    margin-top: 3px;
+    
     .name-of-mat {
         z-index: 10;
         white-space: nowrap;

@@ -115,6 +115,7 @@ export class AddUserComponent implements OnInit {
 
   verifyEmail(event,formNo,index) {
     const email = event.target.value;
+      this.index[index] = "true";
     if (email.match(FieldRegExConst.EMAIL)) {
           this.userService.verifyEMAIL(formNo.value).then(res => {
         if (res) {

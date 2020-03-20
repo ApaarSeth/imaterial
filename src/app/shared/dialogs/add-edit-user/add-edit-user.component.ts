@@ -165,7 +165,8 @@ export class AddEditUserComponent implements OnInit {
     }
   }
   verifyEmail(event) {
-    const email = event.target.value
+    const email = event.target.value;
+    this.emailVerified = true;
     if (email.match(FieldRegExConst.EMAIL)) {
       if(!((this.data.isEdit) && (this.data.detail.email=== email))){
           this.userService.verifyEMAIL(this.form.value.email).then(res => {

@@ -12,7 +12,7 @@
 
             <div formArrayName="other" *ngFor="let other of addUserForm.get('other').controls; let i = index">
               <div class="row add-invite-user-form" [formGroupName]="i">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <mat-form-field class="border-input w-100">
                     <input matInput type="email" placeholder="*Email" (input)="verifyEmail($event,addUserForm.controls.other.controls[i].controls['email'],i)" formControlName="email" />
                   </mat-form-field>
@@ -42,7 +42,7 @@
                   </mat-error>
                 </div> -->
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <mat-form-field class="border-select w-100 role-input">
                     <mat-label>*Role</mat-label>
                     <mat-select formControlName="roleId">
@@ -62,7 +62,7 @@
                     <img src="../../../../assets/images/delete-button.png" />
                   </a>
                 </div>
-                <div class="col-md-2 text-align-center p-t-10" *ngIf="i === addUserForm.get('other').controls.length - 1">
+                <div class="col-md-2 text-align-center p-t-10 p-l-0" *ngIf="i === addUserForm.get('other').controls.length - 1">
                   <button mat-raised-button class="main-background-color main-button color-white" (click)="onAddRow()">+ Add User</button>
                 </div>
               </div>
