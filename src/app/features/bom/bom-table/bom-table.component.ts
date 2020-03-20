@@ -37,7 +37,7 @@ export class BomTableComponent implements OnInit {
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName","estimatedQty", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
+  columnsToDisplay = ["materialName", "estimatedQty", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
 
   innerDisplayedColumns = ["materialName", "estimatedQty", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
@@ -55,32 +55,32 @@ export class BomTableComponent implements OnInit {
     projectEdit: boolean;
   };
 
-     public BomDetailsashboardTour: GuidedTour = {
-        tourId: 'bom-details-tour',
-        useOrb: false,
-        
-        steps: [
-            {
-                title: 'Raise Indent',
-                selector: '.raise-indent-btn',
-                content: 'Select materials from the bill of materials for which the indents has to be raised.',
-                orientation: Orientation.Left
-                
-            },
-            {
-                title: 'Create RFQ',
-                selector:'.create-rfq-btn',
-                content: 'Select material from the bill of materials and add it in RFQ to receive the quotes.',
-                 orientation: Orientation.Left
-            },
-            {
-              title:'Issue to Indent',
-              selector:'.issue-to-indent-icon',
-              content: 'Click here to issue the available stock of material to the indents raised.',
-                 orientation: Orientation.Left
-            }
-        ]
-    };
+  public BomDetailsashboardTour: GuidedTour = {
+    tourId: 'bom-details-tour',
+    useOrb: false,
+
+    steps: [
+      {
+        title: 'Raise Indent',
+        selector: '.raise-indent-btn',
+        content: 'Select materials from the bill of materials for which the indents has to be raised.',
+        orientation: Orientation.Left
+
+      },
+      {
+        title: 'Create RFQ',
+        selector: '.create-rfq-btn',
+        content: 'Select material from the bill of materials and add it in RFQ to receive the quotes.',
+        orientation: Orientation.Left
+      },
+      {
+        title: 'Issue to Indent',
+        selector: '.issue-to-indent-icon',
+        content: 'Click here to issue the available stock of material to the indents raised.',
+        orientation: Orientation.Left
+      }
+    ]
+  };
 
 
   constructor(
@@ -94,11 +94,11 @@ export class BomTableComponent implements OnInit {
     private bomService: BomService,
 
     private loading: GlobalLoaderService,
-     private guidedTourService: GuidedTourService
+    private guidedTourService: GuidedTourService
   ) {
     setTimeout(() => {
-            this.guidedTourService.startTour(this.BomDetailsashboardTour);
-        }, 1000);
+      this.guidedTourService.startTour(this.BomDetailsashboardTour);
+    }, 1000);
   }
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -197,6 +197,7 @@ export class BomTableComponent implements OnInit {
       mat.requestedQty = category.requestedQuantity;
       mat.estimatedQty = category.estimatedQty;
       mat.dueDate = category.dueDate;
+      mat.fullfilmentDate = String(category.dueDate) === "" ? null : String(category.dueDate);
       mat.materialUnit = category.materialUnit;
       materialList.push(mat);
     });
