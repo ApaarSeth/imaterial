@@ -70,7 +70,6 @@ export class ViewGRNComponent implements OnInit {
     viewBack() {
         this.route.navigate(['po/detail-list']);
     }
-
     addGRN() {
         const data: GRNPopupData = {
             isEdit: false,
