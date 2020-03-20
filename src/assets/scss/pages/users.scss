@@ -368,3 +368,17 @@
     color: #696969;
   }
 }
+
+@media only screen and (max-width: 1010px) {
+ .terms-margin-set-width {
+   margin-left:0px;
+   margin-right:0px ;
+   width:100%;
+   .user-profile{
+     padding-bottom: 0px !important;
+   }
+   .choose-trades{
+     padding-top: 20px;
+   }
+  }
+}
