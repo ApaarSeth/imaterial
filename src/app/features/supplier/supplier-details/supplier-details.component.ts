@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
-import { MatDialog, MatTableDataSource } from "@angular/material";
+import { MatDialog, MatTableDataSource, MatDialogRef, MatSnackBar } from "@angular/material";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
@@ -60,7 +60,8 @@ export class SupplierDetailComponent implements OnInit {
     public dialog: MatDialog,
     private rfqService: RFQService,
       private loading: GlobalLoaderService,
-      private guidedTourService: GuidedTourService
+      private guidedTourService: GuidedTourService,
+      private _snackBar: MatSnackBar
   ) {
     setTimeout(() => {
             this.guidedTourService.startTour(this.SupplierDashboardTour);
@@ -78,11 +79,19 @@ export class SupplierDetailComponent implements OnInit {
       this.dataSource = new MatTableDataSource(data.data);
       this.dataSourceTemp = data.data;
 
-      this.dataSource.filterPredicate = (data, filterValue) => {
-        const dataStr = data.supplier_name + data.email + data.pan.toString() + data.contact_no.toString() + data.status;
+      // this.dataSource.filterPredicate = (data, filterValue) => {
+      //   const dataStr = data.supplier_name.toString() + data.email.toString() + data.pan.toString() + data.contact_no.toString() + data.status;
+      //   return dataStr.indexOf(filterValue) != -1;
+      // }
+      
+       this.dataSource.filterPredicate = (data, filterValue) => {
+        const dataStr =
+          data.supplier_name.toString().toLowerCase() +
+          data.email.toString().toLowerCase() +
+          data.contact_no.toString();
         return dataStr.indexOf(filterValue) != -1;
-      }
-
+      };
+      
     });
   }
 
@@ -140,8 +149,15 @@ export class SupplierDetailComponent implements OnInit {
     const data = new FormData();
     data.append("file", files[0]);
     this.rfqService.postSupplierExcel(data, this.orgId).then(res => {
-      this.getAllSupplier();
-      this.loading.hide();
+      if(res){
+            this._snackBar.open(res.message, "", {
+              duration: 2000,
+              panelClass: ["success-snackbar"],
+              verticalPosition: "top"
+            });
+             this.getAllSupplier();
+            this.loading.hide();
+      }
     });
   }
 

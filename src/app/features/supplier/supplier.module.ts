@@ -8,6 +8,7 @@ import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { SupplierDetailComponent } from './supplier-details/supplier-details.component';
 import { SupplierRoutingModule } from './supplier-routing.module';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
