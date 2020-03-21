@@ -96,6 +96,7 @@ export interface UserDetails {
   countryCode?: string;
   uniqueCode?: string;
   companyName?: string;
+    turnOverId?: number;
 }
 
 export interface TradeList {
@@ -109,4 +110,16 @@ export interface TradeList {
   tradeName: string;
   tradeDescription: string;
   selected?: boolean;
+}
+export interface TurnOverList{
+  id ?: number;
+  status ?: number;
+  createdBy ?: string;
+  createdAt ?: string;
+  lastUpdatedBy ?:  string;
+  lastUpdatedAt ?:  string;
+  turnOverId ?:  number;
+  shortName ?:  string;
+  longName ?:  string;
+ 
 }

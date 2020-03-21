@@ -76,6 +76,21 @@
                 <mat-error *ngIf="userInfoForm.controls['roleId'].errors && (userInfoForm.controls['roleId'].dirty || userInfoForm.controls['roleId'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['roleId'].hasError('required')"> Role is required</mat-error>
                 </mat-error>
+
+
+                  <mat-form-field class="border-select w-100">
+                  <mat-label>Select Turn Over</mat-label>
+                  <mat-select formControlName="turnOverId">
+                    <mat-option *ngFor="let turnOver of turnOverList" [value]="turnOver.turnOverId">
+                      {{ turnOver.shortName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                 <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')"> Turn 
+                  over is required</mat-error>
+                </mat-error>
+
               </div>
 
               <!-- <div class="col-md-12">
@@ -101,7 +116,7 @@
                     {{ trade.tradeName }}
                   </mat-chip>
                   <form [formGroup]="customTrade">
-                    <mat-form-field *ngIf="selectedTradesId.indexOf(22) > -1" class="border-input main-color p-l-10">
+                    <mat-form-field *ngIf="selectedTradesId.indexOf(22) > -1" class="border-input p-l-10">
                       <input matInput formControlName="trade" type="text" placeholder="Enter Trade" />
                     </mat-form-field>
                   </form>

@@ -1,7 +1,7 @@
 import { OnInit, Component } from '@angular/core';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList } from 'src/app/shared/models/user-details';
+import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/models/user-details';
 import { Router } from '@angular/router';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { debug } from 'util';
@@ -23,11 +23,13 @@ export class UpdateInfoComponent implements OnInit {
   customTrade: FormGroup;
   users: UserDetails;
   tradeList: TradeList;
+  turnOverList: TurnOverList;
   selectedTrades: TradeList[] = [];
   localImg: string | ArrayBuffer;
   filename: string;
   role: string;
   roleId: number;
+
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
@@ -47,6 +49,7 @@ export class UpdateInfoComponent implements OnInit {
     this.getUserRoles();
     this.getUserInformation(userId);
     this.getTradesList();
+    this.getTurnOverList();
   }
 
   getUserRoles() {
@@ -64,6 +67,11 @@ export class UpdateInfoComponent implements OnInit {
       this.formInit();
     });
   }
+  getTurnOverList(){
+     this._userService.getTurnOverList().then(res => {
+      this.turnOverList = res.data;
+    })
+  }
 
   getTradesList() {
     this._userService.getTrades().then(res => {
@@ -80,6 +88,7 @@ export class UpdateInfoComponent implements OnInit {
       email: [this.users ? this.users.email : '', Validators.required],
       contactNo: [this.users ? this.users.contactNo : '', Validators.required],
       roleId: [this.roleId ? this.roleId : null, Validators.required],
+      turnOverId:[this.users?this.users.turnOverId : null, Validators.required],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
