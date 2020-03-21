@@ -58,11 +58,11 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     this.form = this.formBuilder.group({
       
       supplierName: [
-        this.supplierAddress.data ? this.supplierAddress.data[0].supplierName : "",
+        this.supplierAddress.data ? this.supplierAddress.data[0].supplier_name : "",
         Validators.required
       ],
       contactNo: [
-        this.supplierAddress.data ? this.supplierAddress.data[0].contactNo : "",
+        this.supplierAddress.data ? this.supplierAddress.data[0].contact_no : "",
         [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]
       ],
       email: [
