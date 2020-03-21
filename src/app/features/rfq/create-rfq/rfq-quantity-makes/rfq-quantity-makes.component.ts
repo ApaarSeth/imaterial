@@ -194,8 +194,9 @@ export class RfqQuantityMakesComponent implements OnInit {
             this.projectSelectedMaterials[i].projectMaterialList[j].makes =
               val.makes;
             let date = new Date(this.commonService.formatDate(val.fullfilmentDate))
+            let dummyMonth = date.getMonth() + 1;
             const year = date.getFullYear().toString();
-            const month = date.getMonth() > 10 ? date.getMonth().toString() : "0" + date.getMonth().toString();
+            const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
             const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
             this.projectSelectedMaterials[i].projectMaterialList[
               j

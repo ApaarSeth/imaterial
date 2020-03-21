@@ -128,7 +128,13 @@ export class ReviewComponent implements OnInit {
   setRFQDetailsValue() {
     if (this.form.value) {
       this.finalRfq.rfqName = this.form.value.rfqName;
-      this.finalRfq.dueDate = this.commonService.formatDate(this.form.value.dueDate);
+      let date = new Date(this.commonService.formatDate(this.form.value.dueDate))
+      let dummyMonth = date.getMonth() + 1;
+      const year = date.getFullYear().toString();
+      const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+      const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+
+      this.finalRfq.dueDate = year + "-" + month + "-" + day
     }
     // this.rfqDetails.rfqProjectsList = this.checkedMaterialsList;
     // this.rfqDetails.supplierId = this.supplierIds;
