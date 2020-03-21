@@ -13,6 +13,7 @@ import { AddRFQConfirmationComponent } from "src/app/shared/dialogs/add-rfq-conf
 import { DocumentList } from "src/app/shared/models/PO/po-data";
 import { Router, ActivatedRoute } from "@angular/router";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
+import { CommonService } from 'src/app/shared/services/commonService';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 
 @Component({
@@ -41,12 +42,12 @@ export class ReviewComponent implements OnInit {
         orientation: Orientation.Left
       }
     ],
-      skipCallback: () => {
+    skipCallback: () => {
       this.setLocalStorage()
-      },
-      completeCallback: () => {
-        this.setLocalStorage()
-      }
+    },
+    completeCallback: () => {
+      this.setLocalStorage()
+    }
   };
   userId: number;
 
@@ -57,10 +58,11 @@ export class ReviewComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private guidedTourService: GuidedTourService,
+    private commonService: CommonService,
     private userGuideService: UserGuideService
   ) {
 
-  
+
   }
 
   ngOnInit() {
@@ -68,13 +70,13 @@ export class ReviewComponent implements OnInit {
     // this.checkedList = this.finalRfq.rfqProjectsList;
     // this.selectedSuppliersList = this.finalRfq.supplierDetails;
 
-      this.userId = Number(localStorage.getItem("userId"));
+    this.userId = Number(localStorage.getItem("userId"));
 
-     if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
-          setTimeout(() => {
-            this.guidedTourService.startTour(this.RfqPreviewTour);
-          }, 1000);
-     }
+    if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.RfqPreviewTour);
+      }, 1000);
+    }
 
     this.activatedRoute.params.subscribe(params => {
       this.rfqId = params['rfqId']
@@ -97,17 +99,17 @@ export class ReviewComponent implements OnInit {
     this.initForm();
   }
 
-     setLocalStorage() {
-        const popovers ={
-        "userId":this.userId,
-        "moduleName":"rfq",
-        "enableGuide":1
+  setLocalStorage() {
+    const popovers = {
+      "userId": this.userId,
+      "moduleName": "rfq",
+      "enableGuide": 1
     };
-        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
-          if(res){
-            localStorage.setItem('rfq', '1');
-          }
-        })
+    this.userGuideService.sendUserGuideFlag(popovers).then(res => {
+      if (res) {
+        localStorage.setItem('rfq', '1');
+      }
+    })
   }
   initForm() {
     this.form = this.formBuilder.group({
@@ -121,16 +123,12 @@ export class ReviewComponent implements OnInit {
     this.setRFQDetailsValue();
   }
 
-  formatDate(oldDate): Date {
-    let newDate = new Date(oldDate);
-    newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
-    return newDate;
-  }
+
 
   setRFQDetailsValue() {
     if (this.form.value) {
       this.finalRfq.rfqName = this.form.value.rfqName;
-      this.finalRfq.dueDate = this.formatDate(this.form.value.dueDate);
+      this.finalRfq.dueDate = this.commonService.formatDate(this.form.value.dueDate);
     }
     // this.rfqDetails.rfqProjectsList = this.checkedMaterialsList;
     // this.rfqDetails.supplierId = this.supplierIds;

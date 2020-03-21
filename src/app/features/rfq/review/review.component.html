@@ -17,12 +17,24 @@
                 <input class="p-b-10" matInput type="text" formControlName="rfqName" placeholder="*RFQ Name" />
               </mat-form-field>
             </div>
-            <div class="col-md-4">
-              RFQ End Date
-              <mat-form-field class="border-input">
+            <!-- <div class="col-md-4">
+              <mat-form-field class="border-input date-label">
+                <mat-label>RFQ End Date</mat-label>
+                <span class="form-placeholder">{{ form["controls"]["dueDate"].value | date: "dd-MMM-yyy" }}</span>
                 <input matInput [matDatepicker]="dueDate" formControlName="dueDate" (focus)="dueDate.open()" readonly />
                 <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                 <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
+              </mat-form-field>
+            </div> -->
+            <div class="col-xs-6 date-dialog-add-edit">
+              <!-- end date -->
+              <mat-form-field class="border-input date-label">
+                <mat-label>Project End Date*</mat-label>
+                <span class="form-placeholder">{{ form["controls"]["dueDate"].value | date: "dd-MMM-yyy" }}</span>
+                <input hidden matInput [matDatepicker]="endDate" formControlName="dueDate" [min]="minDate" (focus)="dueDate.open()" readonly />
+                <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
+                <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small>
               </mat-form-field>
             </div>
             <!-- <div class="col-md-2 p-t-20 main-color">

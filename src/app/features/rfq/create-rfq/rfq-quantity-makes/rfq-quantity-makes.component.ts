@@ -19,6 +19,7 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -58,7 +59,9 @@ export class RfqQuantityMakesComponent implements OnInit {
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService
+
   ) { }
 
   ngOnInit() {
@@ -190,9 +193,13 @@ export class RfqQuantityMakesComponent implements OnInit {
               val.quantity;
             this.projectSelectedMaterials[i].projectMaterialList[j].makes =
               val.makes;
+            let date = new Date(this.commonService.formatDate(val.fullfilmentDate))
+            const year = date.getFullYear().toString();
+            const month = date.getMonth() > 10 ? date.getMonth().toString() : "0" + date.getMonth().toString();
+            const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
             this.projectSelectedMaterials[i].projectMaterialList[
               j
-            ].fullfilmentDate = val.fullfilmentDate;
+            ].fullfilmentDate = year + "-" + month + "-" + day;
           } else {
             return;
           }
