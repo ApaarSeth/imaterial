@@ -70,9 +70,6 @@ export class CreateRfqComponent implements OnInit {
         ],
       skipCallback: () => {
       this.setLocalStorage()
-      },
-      completeCallback: () => {
-        this.setLocalStorage()
       }
     };
   orgId: number;
