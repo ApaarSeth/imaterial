@@ -25,6 +25,11 @@ export class UserService {
       .then(res => res);
   }
 
+  getTurnOverList(){
+      return this.dataService
+      .getRequest(API.TURNOVERLIST)
+      .then(res => res);
+  }
   addUsers(user: UserAdd) {
     return this.dataService.sendPostRequest(API.ADDUSER, user)
   }

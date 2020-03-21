@@ -96,5 +96,6 @@ export const API = {
   GETBOMTRADES: `material/get/trades`,
   ORGANIZATIONTRADES: projectId => `all/org/trades/${projectId}`,
   PROJECTTRADES: `add/projectTrades`,
-  TERMS: id => `update/terms/${id}`
+  TERMS: id => `update/terms/${id}`,
+  TURNOVERLIST : `get/turnovers`
 };

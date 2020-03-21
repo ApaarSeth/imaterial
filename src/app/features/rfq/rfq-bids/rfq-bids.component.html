@@ -1,36 +1,28 @@
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-
     <form *ngIf="rfqProjects.length" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
       <div class="row p-t-10 p-b-10">
         <div class="col-sm-12">
           <span>
-            <button mat-raised-button class="main-background-color main-button color-white pull-right"
-              [disabled]="!getFormValidation()">
+            <button mat-raised-button class="main-background-color main-button color-white pull-right" [disabled]="!getFormValidation()">
               Create P.O
             </button>
           </span>
         </div>
       </div>
-
-
       <div formArrayName="forms">
         <div class="customBid">
-
           <div *ngFor="let project of rfqProjects; let p = index" [formGroupName]="p">
-            
             <mat-accordion displayMode="flat" multi class="mat-table">
               <mat-expansion-panel class="mat-expansion-panel-body" class="myPanel" [expanded]="true">
-
                 <mat-expansion-panel-header class="">
                   <span class="top-header-area">
-                    <span class="project-name mr-5">{{ project.projectName}}</span>
-                    <span class="main-color">{{ project.addressLine1 }} ,{{ project.addressLine2 }}
-                      {{ project.city }} {{ project.pinCode }} {{ project.state }} {{ project.country }}
+                    <span class="project-name mr-5">{{ project.projectName }}</span>
+                    <span class="main-color"
+                      >{{ project.addressLine1 }} ,{{ project.addressLine2 }} {{ project.city }} {{ project.pinCode }} {{ project.state }} {{ project.country }}
                     </span>
                   </span>
                 </mat-expansion-panel-header>
-
 
                 <!--table class="table">
                   <tr>
@@ -70,11 +62,9 @@
 
                 <ng-container formArrayName="materialList">
                   <div class="p-0" *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
-
                     <section class="mat-row rfqbid-header-color">
                       <span class="col-sm-2">
-                        <div class="limited-character" matTooltip=" {{ material.materialName }}">
-                          {{ material.materialName }} <br /></div>
+                        <div class="limited-character" matTooltip=" {{ material.materialName }}">{{ material.materialName }} <br /></div>
                       </span>
                       <span class="col-sm-1"> {{ material.rfqMaterialQty }} </span>
 
@@ -92,55 +82,52 @@
                           </ng-container>
                         </div>
                       </span>
-                      
                     </section>
 
                     <ng-container formArrayName="supplierList">
-                      <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index"
-                        [formGroupName]="s">
+                      <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index" [formGroupName]="s">
                         <span class="col-sm-2">{{ supplier.supplierName }} </span>
                         <span class="col-sm-1"></span>
 
-                        
+                        <div class="col-sm-9">
+                          <div class="row align-items-center">
+                            <ng-container formArrayName="brandGroup">
+                              <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index" [formGroupName]="i">
+                                <span class="col-sm-1 text-center">
+                                  <ng-container *ngIf="brandInfo.materialUnitPrice !== null; else dashedLine">
+                                    <mat-form-field class="border-input">
+                                      <input
+                                        type="number"
+                                        class="quantity"
+                                        matInput
+                                        formControlName="quantity"
+                                        placeholder="qty"
+                                        min="0"
+                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                      />
+                                    </mat-form-field>
+                                  </ng-container>
 
-                          <div class="col-sm-9">
-                            <div class="row align-items-center">
-                              <ng-container formArrayName="brandGroup">
-                                <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index"
-                                  [formGroupName]="i">
-                                  <span class="col-sm-1 text-center">
-                                    <ng-container *ngIf="brandInfo.materialUnitPrice !== null; else dashedLine">
-                                      <mat-form-field class="border-input">
-                                        <input type="number" class="quantity" matInput formControlName="quantity"
-                                          placeholder="qty" min="0"
-                                          onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                                      </mat-form-field>
-                                    </ng-container>
+                                  <ng-template #dashedLine>
+                                    <span>--</span>
+                                  </ng-template>
+                                </span>
 
-                                    <ng-template #dashedLine>
-                                      <span>--</span>
-                                    </ng-template>
-                                  </span>
-                                  
-                                  <span class="col-sm-1 text-right margin-right">
-                                    {{ brandInfo.materialUnitPrice != null ? brandInfo.materialUnitPrice : "--" }}
-                                  </span>
+                                <span class="col-sm-1 text-right margin-right">
+                                  {{ brandInfo.materialUnitPrice != null ? brandInfo.materialUnitPrice : "--" }}
+                                </span>
 
-                                  <!-- <span class="col-sm-1"></span> -->
-                                </ng-container>
+                                <!-- <span class="col-sm-1"></span> -->
                               </ng-container>
-                            </div>
+                            </ng-container>
                           </div>
-
+                        </div>
                       </div>
                     </ng-container>
-
                   </div>
                 </ng-container>
-
               </mat-expansion-panel>
             </mat-accordion>
-
           </div>
         </div>
       </div>

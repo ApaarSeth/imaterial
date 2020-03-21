@@ -101,3 +101,8 @@
     padding-top: 7px !important;
   }
 }
+.dropdownPadding {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding: 0px !important;
+  }
+}

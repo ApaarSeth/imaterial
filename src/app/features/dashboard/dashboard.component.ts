@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
         orientation: Orientation.Bottom
       }
     ],
-     skipCallback: () => {
+    skipCallback: () => {
       this.setLocalStorage()
     },
     completeCallback: () => {
@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private userGuideService:UserGuideService,
+    private userGuideService: UserGuideService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private guidedTourService: GuidedTourService
@@ -106,7 +106,8 @@ export class DashboardComponent implements OnInit {
 
     if ((localStorage.getItem('projectDashboard') == "null") || (localStorage.getItem('projectDashboard') == '0')) {
       setTimeout(() => {
-        this.guidedTourService.startTour(this.dashboardTour);
+        this.guidedTourService.startTour(this.dashboardTour)
+
       }, 1000);
     }
 
@@ -115,14 +116,14 @@ export class DashboardComponent implements OnInit {
   }
 
   setLocalStorage() {
-    const popovers ={
-    "userId":this.userId,
-    "moduleName":"projectDashboard",
-    "enableGuide":1
-};
-    this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
-      if(res){
-         localStorage.setItem('projectDashboard', '1');
+    const popovers = {
+      "userId": this.userId,
+      "moduleName": "projectDashboard",
+      "enableGuide": 1
+    };
+    this.userGuideService.sendUserGuideFlag(popovers).then(res => {
+      if (res) {
+        localStorage.setItem('projectDashboard', '1');
       }
     })
   }
