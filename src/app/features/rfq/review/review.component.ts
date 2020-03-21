@@ -13,6 +13,7 @@ import { AddRFQConfirmationComponent } from "src/app/shared/dialogs/add-rfq-conf
 import { DocumentList } from "src/app/shared/models/PO/po-data";
 import { Router, ActivatedRoute } from "@angular/router";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "review",
@@ -48,7 +49,8 @@ export class ReviewComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private guidedTourService: GuidedTourService
+    private guidedTourService: GuidedTourService,
+    private commonService: CommonService
   ) {
 
     setTimeout(() => {
@@ -92,16 +94,12 @@ export class ReviewComponent implements OnInit {
     this.setRFQDetailsValue();
   }
 
-  formatDate(oldDate): Date {
-    let newDate = new Date(oldDate);
-    newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
-    return newDate;
-  }
+
 
   setRFQDetailsValue() {
     if (this.form.value) {
       this.finalRfq.rfqName = this.form.value.rfqName;
-      this.finalRfq.dueDate = this.formatDate(this.form.value.dueDate);
+      this.finalRfq.dueDate = this.commonService.formatDate(this.form.value.dueDate);
     }
     // this.rfqDetails.rfqProjectsList = this.checkedMaterialsList;
     // this.rfqDetails.supplierId = this.supplierIds;

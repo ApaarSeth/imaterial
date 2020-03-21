@@ -22,12 +22,13 @@
                   <span class="pull-left p-l-40 p-t-20">{{ subcategory.materialName }}</span>
                 </div>
                 <div class="col-xs-5 p-t-10">
-                  <span class="pull-right" *ngFor="let trades of subcategory.tradeList">
-                    <mat-card class="mat-card-width p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white" matTooltip="{{ trades }}">
+                  <span class="pull-right text-semi-bold" *ngFor="let trades of subcategory.tradeList; let i = index">
+                    {{ trades }}<span *ngIf="i === subcategory.tradeList.length">,</span>
+                    <!-- <mat-card class="mat-card-width p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white" matTooltip="{{ trades }}">
                       <div class="limited-character global">
                         {{ trades }}
                       </div>
-                    </mat-card>
+                    </mat-card> -->
                   </span>
                 </div>
                 <div class="col-xs-3">

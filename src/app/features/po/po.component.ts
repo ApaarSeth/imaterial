@@ -19,6 +19,7 @@ import { Terms } from 'src/app/shared/models/RFQ/rfq-details';
 import { Froala } from 'src/app/shared/constants/configuration-constants';
 import { Subscription, combineLatest } from 'rxjs';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-po",
@@ -73,7 +74,8 @@ export class PoComponent implements OnInit {
     private poService: POService,
     private formBuilder: FormBuilder,
     private guidedTourService: GuidedTourService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService
   ) {
     setTimeout(() => {
       this.guidedTourService.startTour(this.POPreviewTour);
@@ -124,7 +126,8 @@ export class PoComponent implements OnInit {
       purchaseOrderId: this.poId,
       poNumber: this.poCard.getData().orderNo,
       poName: "",
-      poValidUpto: this.poCard.getData().endDate,
+      poValidUpto: this.commonService.formatDate(this.poCard.getData().endDate),
+
       DocumentsList: this.poDocument.getData(),
       Terms: {
 

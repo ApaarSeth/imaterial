@@ -81,8 +81,13 @@ export class DashboardComponent implements OnInit {
         content: 'Click here to view all your purchase orders.',
         orientation: Orientation.Bottom
       }
-    ]
-    // skipCallback:this.setLocalStorage()
+    ],
+    skipCallback: (event: number) => {
+      this.setLocalStorage()
+    },
+    completeCallback: () => {
+      this.setLocalStorage()
+    }
   };
 
   constructor(
@@ -100,13 +105,14 @@ export class DashboardComponent implements OnInit {
     // this.userguideservice.getUserGuideFlag().then(res=>{
     //     this.userGuidedata = res.data;
     //     this.userGuidedata.forEach(element => {
-    //      localStorage.setItem(element.moduleName,element.enableGuide);
-    //    });
+    //     localStorage.setItem(element.moduleName,element.enableGuide);
+    //   });
 
     // })
     if ((localStorage.getItem('projectDashboard') == "null") || (localStorage.getItem('projectDashboard') == '0')) {
       setTimeout(() => {
-        this.guidedTourService.startTour(this.dashboardTour);
+        this.guidedTourService.startTour(this.dashboardTour)
+
       }, 1000);
     }
 
