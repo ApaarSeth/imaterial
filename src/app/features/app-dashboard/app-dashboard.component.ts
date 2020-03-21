@@ -61,7 +61,8 @@ export class AppDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['/project-dashboard']);
+        if (result && result != null)
+          this.router.navigate(['/project-dashboard']);
     });
   }
 

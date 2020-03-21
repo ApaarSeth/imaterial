@@ -171,7 +171,7 @@ export class IndentDashboardComponent implements OnInit {
     return newDate;
   }
   getStart(date,i){
-    this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
+  this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
     console.log(this.materialForms);
   }
 }
