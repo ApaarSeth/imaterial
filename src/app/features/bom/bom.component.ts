@@ -27,6 +27,7 @@ import { GlobalLoaderService } from 'src/app/shared/services/global-loader.servi
 import { GuidedTourService, Orientation, GuidedTour } from 'ngx-guided-tour';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { orgTrades } from 'src/app/shared/models/trades';
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -75,22 +76,28 @@ export class BomComponent implements OnInit {
         orientation: Orientation.Left
 
       }
-    ]
-  };
-
-  public BomDashboardTourSecond: GuidedTour = {
-    tourId: 'bom-second-tour',
-    useOrb: false,
-
-    steps: [
-      {
-        title: 'Save Button',
-        selector: '.save-material-button',
-        content: 'Enter the quantity against the materials and add in BOM.',
-        orientation: Orientation.Left
+    ],
+      skipCallback: () => {
+      this.setLocalStorage()
+      },
+      completeCallback: () => {
+        this.setLocalStorage()
       }
-    ]
   };
+
+  // public BomDashboardTourSecond: GuidedTour = {
+  //   tourId: 'bom-second-tour',
+  //   useOrb: false,
+
+  //   steps: [
+  //     {
+  //       title: 'Save Button',
+  //       selector: '.save-material-button',
+  //       content: 'Enter the quantity against the materials and add in BOM.',
+  //       orientation: Orientation.Left
+  //     }
+  //   ]
+  // };
 
   constructor(
     private fomBuilder: FormBuilder,
@@ -102,11 +109,9 @@ export class BomComponent implements OnInit {
     private bomService: BomService,
     private userService: UserService,
     private loading: GlobalLoaderService,
-    private guidedTourService: GuidedTourService
-  ) {
-    setTimeout(() => {
-      this.guidedTourService.startTour(this.BomDashboardTour);
-    }, 1000);
+    private guidedTourService: GuidedTourService,
+    private userGuideService: UserGuideService
+    ) {
   }
 
   ngOnInit() {
@@ -117,6 +122,14 @@ export class BomComponent implements OnInit {
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
+
+    if ((localStorage.getItem('addBom') == "null") || (localStorage.getItem('addBom') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.BomDashboardTour);
+      }, 1000);
+    }
+
+
     this.getProject(this.projectId);
     this.formInit()
     this.bomService.getOrgTrades(this.projectId).then(res => {
@@ -142,6 +155,18 @@ export class BomComponent implements OnInit {
     //     );
     //   });
 
+  }
+   setLocalStorage() {
+        const popovers ={
+        "userId":this.userId,
+        "moduleName":"addBom",
+        "enableGuide":1
+    };
+        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
+          if(res){
+            localStorage.setItem('addBom', '1');
+          }
+        })
   }
 
   formInit() {

@@ -19,6 +19,7 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
 import { PermissionService } from "src/app/shared/services/permission.service";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 
 @Component({
   selector: "app-bom-table",
@@ -79,8 +80,15 @@ export class BomTableComponent implements OnInit {
         content: 'Click here to issue the available stock of material to the indents raised.',
         orientation: Orientation.Left
       }
-    ]
+    ],
+      skipCallback: () => {
+      this.setLocalStorage()
+      },
+      completeCallback: () => {
+        this.setLocalStorage()
+      }
   };
+  userId: number;
 
 
   constructor(
@@ -94,17 +102,22 @@ export class BomTableComponent implements OnInit {
     private bomService: BomService,
 
     private loading: GlobalLoaderService,
-    private guidedTourService: GuidedTourService
+    private guidedTourService: GuidedTourService,
+    private userGuideService: UserGuideService
   ) {
-    setTimeout(() => {
-      this.guidedTourService.startTour(this.BomDetailsashboardTour);
-    }, 1000);
   }
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
     this.orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
+   if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.BomDetailsashboardTour);
+      }, 1000);
+    }
+
     this.getProject(this.projectId);
     this.getMaterialWithQuantity();
     this.permissionObj = this.permissionService.checkPermission();
@@ -115,6 +128,18 @@ export class BomTableComponent implements OnInit {
     //this.product = history.state.projectDetails;
   }
 
+    setLocalStorage() {
+        const popovers ={
+        "userId":this.userId,
+        "moduleName":"bomDashboard",
+        "enableGuide":1
+    };
+        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
+          if(res){
+            localStorage.setItem('bomDashboard', '1');
+          }
+        })
+  }
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {

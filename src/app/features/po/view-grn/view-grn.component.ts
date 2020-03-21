@@ -5,6 +5,7 @@ import { GRNService } from 'src/app/shared/services/grn/grn.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddEditGrnComponent } from 'src/app/shared/dialogs/add-edit-grn/add-edit-grn.component';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 
 @Component({
     selector: "view-grn",
@@ -39,10 +40,17 @@ export class ViewGRNComponent implements OnInit {
               content: 'Click here to add the quantity of material which has been received & certified.',
               orientation: Orientation.Left
             }
-        ]
+        ],
+      skipCallback: () => {
+      this.setLocalStorage()
+      },
+      completeCallback: () => {
+        this.setLocalStorage()
+      }
     };
+    userId: number;
 
-    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog,private guidedTourService: GuidedTourService){
+    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog,private guidedTourService: GuidedTourService,private userGuideService: UserGuideService){
         setTimeout(() => {
             this.guidedTourService.startTour(this.GRNTour);
         }, 1000);
@@ -55,6 +63,19 @@ export class ViewGRNComponent implements OnInit {
             this.getGRNDetails(Number(res["poId"]));
         })
     }
+     setLocalStorage() {
+        this.userId = Number(localStorage.getItem("userId"));
+        const popovers ={
+        "userId":this.userId,
+        "moduleName":"grn",
+        "enableGuide":1
+    };
+        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
+          if(res){
+            localStorage.setItem('grn', '1');
+          }
+        })
+  }
 
     getGRNDetails(grnId: number) {
         this.grnService.getGRNDetails(grnId).then(data => {

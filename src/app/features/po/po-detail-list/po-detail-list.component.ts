@@ -9,6 +9,7 @@ import { ProjectService } from "src/app/shared/services/projectDashboard/project
 import { ProjetPopupData } from "src/app/shared/models/project-details";
 import { DeleteDraftedPoComponent } from "src/app/shared/dialogs/delete-drafted-po/delete-drafted-po.component";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 
 @Component({
   selector: "po-detail-list",
@@ -49,23 +50,46 @@ export class PODetailComponent implements OnInit {
               content: 'Click here to create a purchase order by selecting the materials from a project.',
               orientation: Orientation.Left
             }
-        ]
+        ],
+         skipCallback: () => {
+      this.setLocalStorage()
+      }
     };
+  userId: number;
+  orgId: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private route: Router,
     private projectService: ProjectService,
     public dialog: MatDialog,
-    private guidedTourService: GuidedTourService
+    private guidedTourService: GuidedTourService,
+    private userGuideService : UserGuideService
   ) {
   }
 
   ngOnInit() {
+    
     this.PoData();
   }
 
+    setLocalStorage() {
+        const popovers ={
+        "userId":this.userId,
+        "moduleName":"po",
+        "enableGuide":1
+    };
+        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
+          if(res){
+            localStorage.setItem('po', '1');
+          }
+        })
+  }
+
   PoData() {
+     this.orgId = Number(localStorage.getItem("orgId"));
+     this.userId = Number(localStorage.getItem("userId"));
+
     this.poDetails = new MatTableDataSource(
       this.activatedRoute.snapshot.data.poDetailList
     );
@@ -86,9 +110,11 @@ export class PODetailComponent implements OnInit {
     this.poApprovalDetailsTemp = this.activatedRoute.snapshot.data.poDetailList.sendForApprovalPOList;
     this.acceptedRejectedPOListTemp = this.activatedRoute.snapshot.data.poDetailList.acceptedRejectedPOList;
     if(this.poApprovalDetailsTemp || this.poDraftedDetailsTemp || this.acceptedRejectedPOListTemp){
+       if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {
         setTimeout(() => {
             this.guidedTourService.startTour(this.PODetailTour);
         }, 1000);
+       }
     }
     this.acceptedRejectedPOList = new MatTableDataSource(
       this.activatedRoute.snapshot.data.poDetailList.acceptedRejectedPOList

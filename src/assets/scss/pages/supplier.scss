@@ -572,6 +572,31 @@ mat-icon {
     align-items: center;
 }
 
+.show-detail-supplier.rfq-icon-material-i {
+    position: absolute;
+    margin-left: 25px;
+    margin-top: -2px;
+
+    img {
+        z-index: 10;
+    }
+}
+
+.show-detail-supplier.rfq-icon-material-i {
+    position: absolute;
+    margin-left: 25px;
+    margin-top: -2px;
+    
+    .name-of-mat {
+        z-index: 10;
+        white-space: nowrap;
+        width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        z-index: 10;
+    }
+}
+
 .show-detail-supplier {
     position: absolute;
     margin-left: 25px;

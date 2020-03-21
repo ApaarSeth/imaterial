@@ -26,6 +26,7 @@ import { DeactiveUserComponent } from 'src/app/shared/dialogs/disable-user/disab
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { forEachChild } from 'typescript';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 
 // chip static data
 export interface Fruit {
@@ -69,8 +70,15 @@ export class UserDetailComponent implements OnInit {
         content: 'Click here to add other users of your organisation.',
         orientation: Orientation.Left
       }
-    ]
+    ],
+      skipCallback: () => {
+      this.setLocalStorage()
+    },
+    completeCallback: () => {
+      this.setLocalStorage()
+    }
   };
+  userId: number;
 
   constructor(
     public dialog: MatDialog,
@@ -80,15 +88,19 @@ export class UserDetailComponent implements OnInit {
     private router: Router,
     private ref: ChangeDetectorRef,
     private userService: UserService,
-    private guidedTourService: GuidedTourService
+    private guidedTourService: GuidedTourService,
+    private userGuideService : UserGuideService
   ) {
-    setTimeout(() => {
-      this.guidedTourService.startTour(this.UserDashboardTour);
-    }, 1000);
   }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
+      if ((localStorage.getItem('user') == "null") || (localStorage.getItem('user') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.UserDashboardTour);
+      }, 1000);
+    }
     this.getAllUsers();
   }
 
@@ -121,6 +133,18 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
+    setLocalStorage() {
+        const popovers ={
+        "userId":this.userId,
+        "moduleName":"user",
+        "enableGuide":1
+    };
+        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
+          if(res){
+            localStorage.setItem('user', '1');
+          }
+        })
+  }
   addUser() {
     this.openDialog({
       isEdit: false,
