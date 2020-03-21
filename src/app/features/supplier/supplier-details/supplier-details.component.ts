@@ -8,6 +8,7 @@ import { SupplierDetailsPopUpData, SupplierAdd } from 'src/app/shared/models/sup
 import { DeactiveSupplierComponent } from 'src/app/shared/dialogs/disable-supplier/disable-supplier.component';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 import { GuidedTourService, GuidedTour, Orientation } from 'ngx-guided-tour';
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 
 // chip static data
 export interface Fruit {
@@ -53,23 +54,34 @@ export class SupplierDetailComponent implements OnInit {
               content: 'Click here to onboard the supplier.',
               orientation: Orientation.Left
             }
-        ]
+        ],
+      skipCallback: () => {
+      this.setLocalStorage()
+    },
+    completeCallback: () => {
+      this.setLocalStorage()
+    }
     };
+  userId: number;
 
   constructor(
     public dialog: MatDialog,
     private rfqService: RFQService,
       private loading: GlobalLoaderService,
       private guidedTourService: GuidedTourService,
-      private _snackBar: MatSnackBar
+      private _snackBar: MatSnackBar,
+      private userGuideService: UserGuideService
   ) {
-    setTimeout(() => {
-            this.guidedTourService.startTour(this.SupplierDashboardTour);
-        }, 1000);
   }
 
   ngOnInit() {
-    this.orgId = Number(localStorage.getItem("orgId"))
+    this.orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
+     if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.SupplierDashboardTour);
+      }, 1000);
+    }
     this.getAllSupplier();
   }
 
@@ -124,6 +136,18 @@ export class SupplierDetailComponent implements OnInit {
       isDelete: true,
       detail: this.suppliersDetailsTemp
     } as SupplierDetailsPopUpData);
+  }
+    setLocalStorage() {
+    const popovers ={
+    "userId":this.userId,
+    "moduleName":"supplier",
+    "enableGuide":1
+};
+    this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
+      if(res){
+         localStorage.setItem('supplier', '1');
+      }
+    })
   }
 
   openDialogDeactiveUser(data: SupplierDetailsPopUpData): void {

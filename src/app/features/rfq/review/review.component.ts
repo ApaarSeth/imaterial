@@ -13,6 +13,7 @@ import { AddRFQConfirmationComponent } from "src/app/shared/dialogs/add-rfq-conf
 import { DocumentList } from "src/app/shared/models/PO/po-data";
 import { Router, ActivatedRoute } from "@angular/router";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 
 @Component({
   selector: "review",
@@ -39,8 +40,15 @@ export class ReviewComponent implements OnInit {
         content: 'Click here to float RFQ to the selected suppliers.',
         orientation: Orientation.Left
       }
-    ]
+    ],
+      skipCallback: () => {
+      this.setLocalStorage()
+      },
+      completeCallback: () => {
+        this.setLocalStorage()
+      }
   };
+  userId: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -48,18 +56,26 @@ export class ReviewComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private guidedTourService: GuidedTourService
+    private guidedTourService: GuidedTourService,
+    private userGuideService: UserGuideService
   ) {
 
-    setTimeout(() => {
-      this.guidedTourService.startTour(this.RfqPreviewTour);
-    }, 1000);
+  
   }
 
   ngOnInit() {
     // this.finalRfq = history.state.finalRfq;
     // this.checkedList = this.finalRfq.rfqProjectsList;
     // this.selectedSuppliersList = this.finalRfq.supplierDetails;
+
+      this.userId = Number(localStorage.getItem("userId"));
+
+     if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
+          setTimeout(() => {
+            this.guidedTourService.startTour(this.RfqPreviewTour);
+          }, 1000);
+     }
+
     this.activatedRoute.params.subscribe(params => {
       this.rfqId = params['rfqId']
       if (this.rfqId) {
@@ -72,6 +88,7 @@ export class ReviewComponent implements OnInit {
 
     })
 
+
     // this.documentList = history.state.documentsList;
     // this.supplierIds = this.selectedSuppliersList.map(x => x.supplierId);
     // console.log("supplierIds", this.supplierIds);
@@ -80,6 +97,18 @@ export class ReviewComponent implements OnInit {
     this.initForm();
   }
 
+     setLocalStorage() {
+        const popovers ={
+        "userId":this.userId,
+        "moduleName":"rfq",
+        "enableGuide":1
+    };
+        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
+          if(res){
+            localStorage.setItem('rfq', '1');
+          }
+        })
+  }
   initForm() {
     this.form = this.formBuilder.group({
       rfqName: ["", Validators.required],

@@ -9,6 +9,7 @@ import {
 } from "src/app/shared/models/project-details";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { GuidedTourService, OrientationConfiguration, Orientation, GuidedTour } from 'ngx-guided-tour';
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 
 @Component({
   selector: "dashboard",
@@ -81,12 +82,18 @@ export class DashboardComponent implements OnInit {
         content: 'Click here to view all your purchase orders.',
         orientation: Orientation.Bottom
       }
-    ]
-    // skipCallback:this.setLocalStorage()
+    ],
+     skipCallback: () => {
+      this.setLocalStorage()
+    },
+    completeCallback: () => {
+      this.setLocalStorage()
+    }
   };
 
   constructor(
     private projectService: ProjectService,
+    private userGuideService:UserGuideService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private guidedTourService: GuidedTourService
@@ -97,13 +104,6 @@ export class DashboardComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
 
-    // this.userguideservice.getUserGuideFlag().then(res=>{
-    //     this.userGuidedata = res.data;
-    //     this.userGuidedata.forEach(element => {
-    //      localStorage.setItem(element.moduleName,element.enableGuide);
-    //    });
-
-    // })
     if ((localStorage.getItem('projectDashboard') == "null") || (localStorage.getItem('projectDashboard') == '0')) {
       setTimeout(() => {
         this.guidedTourService.startTour(this.dashboardTour);
@@ -115,7 +115,16 @@ export class DashboardComponent implements OnInit {
   }
 
   setLocalStorage() {
-    localStorage.setItem('projectDashboard', '1');
+    const popovers ={
+    "userId":this.userId,
+    "moduleName":"projectDashboard",
+    "enableGuide":1
+};
+    this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
+      if(res){
+         localStorage.setItem('projectDashboard', '1');
+      }
+    })
   }
 
   getAllProjects() {

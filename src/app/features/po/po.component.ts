@@ -19,6 +19,7 @@ import { Terms } from 'src/app/shared/models/RFQ/rfq-details';
 import { Froala } from 'src/app/shared/constants/configuration-constants';
 import { Subscription, combineLatest } from 'rxjs';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
+import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 
 @Component({
   selector: "app-po",
@@ -62,8 +63,15 @@ export class PoComponent implements OnInit {
         content: 'Click here to send the purchase order for approval .',
         orientation: Orientation.Left
       }
-    ]
+    ],
+    skipCallback: () => {
+      this.setLocalStorage()
+      },
+      completeCallback: () => {
+        this.setLocalStorage()
+      }
   };
+  userId: number;
 
 
   constructor(
@@ -73,15 +81,19 @@ export class PoComponent implements OnInit {
     private poService: POService,
     private formBuilder: FormBuilder,
     private guidedTourService: GuidedTourService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private userGuideService: UserGuideService
   ) {
-    setTimeout(() => {
-      this.guidedTourService.startTour(this.POPreviewTour);
-    }, 1000);
   }
   poId: number;
   mode: string;
   ngOnInit() {
+    if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {
+    setTimeout(() => {
+      this.guidedTourService.startTour(this.POPreviewTour);
+    }, 1000);
+       }
+       
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
       this.mode = poParams.mode;
@@ -103,6 +115,21 @@ export class PoComponent implements OnInit {
     });
     this.formInit();
     this.startSubscription();
+  }
+
+ setLocalStorage() {
+    this.userId = Number(localStorage.getItem("userId"));
+    
+        const popovers ={
+        "userId":this.userId,
+        "moduleName":"po",
+        "enableGuide":1
+    };
+        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
+          if(res){
+            localStorage.setItem('po', '1');
+          }
+        })
   }
 
   ngOnChanges() {
