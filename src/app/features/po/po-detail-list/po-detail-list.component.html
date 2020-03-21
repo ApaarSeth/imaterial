@@ -100,7 +100,7 @@
                 <ng-container matColumnDef="PO Amount">
                   <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount ₹</th>
                   <td mat-cell class="text-right" *matCellDef="let element">
-                    {{ element.poAmount | number : '1.2-2' }}
+                    {{ element.poAmount | number: "1.2-2" }}
                   </td>
                 </ng-container>
 
@@ -149,7 +149,7 @@
                 <ng-container matColumnDef="PO Amount">
                   <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount ₹</th>
                   <td mat-cell class="text-right" *matCellDef="let element">
-                    {{ element.poAmount | number : '1.2-2' }}
+                    {{ element.poAmount | number: "1.2-2" }}
                   </td>
                 </ng-container>
 
@@ -157,7 +157,7 @@
                   <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
                   <td mat-cell class="text-align-center" *matCellDef="let element">
                     <span class="p-r-10"
-                      ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'edit']">View P.O.</a></span
+                      ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'edit']">Review Draft P.O.</a></span
                     >
                     <span>&nbsp;</span>
                     <span class="p-r-10 float-right"
@@ -214,7 +214,7 @@
                     <span class="p-r-10"
                       ><a style="color: #f47721" href="javascript:void(0)" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
                     >
-                    <span class="p-r-10"> <a style="color: #f47721" [routerLink]="['../../po/view-grn/', element.purchaseOrderId]">View GRN</a></span>
+                    <span class="p-r-10"> <a style="color: #f47721" [routerLink]="['../../po/view-grn/', element.purchaseOrderId]">Add/View GRN</a></span>
                     <!-- <span><a style="color: #f47721" [routerLink]="['../../po/add-grn/',element.purchaseOrderId]">Add
                         GRN</a></span> -->
                   </td>

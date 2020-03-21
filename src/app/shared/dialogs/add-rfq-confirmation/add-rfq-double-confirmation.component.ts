@@ -35,7 +35,7 @@ export class AddRFQConfirmationComponent implements OnInit {
   }
 
   addRFQ() {
-    (<AddRFQ>this.data.dataKey).selectBuildsupplyAsSupplier = this.selectBuildsupplyAsSupplier
+    (<AddRFQ>this.data.dataKey).selectBuildsupplyAsSupplier = true;
     this.rfqService.addRFQ(this.data.dataKey).then(res => {
       this.close(res);
     });

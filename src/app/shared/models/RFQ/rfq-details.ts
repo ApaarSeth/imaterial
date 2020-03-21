@@ -63,7 +63,7 @@ export interface AddRFQ {
   rfqId: number;
   rfq_status: string;
   rfqName: string;
-  dueDate: Date;
+  dueDate: string;
   supplierId: number[];
   supplierDetails: Suppliers[];
   rfqProjectsList: RfqMaterialResponse[];

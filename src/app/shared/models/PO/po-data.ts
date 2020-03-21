@@ -14,6 +14,10 @@ export interface POData {
   projectId: number;
   approverId?: number;
   DocumentData?: FormData[];
+  poStatusChangedBy?: string;
+  poStatusChangedOn?: string;
+  approverName?: string;
+  roleDescription?: string;
 }
 export interface PoMaterial {
   materialId: number;

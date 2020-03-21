@@ -1,12 +1,12 @@
-import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
-import {Suppliers} from "src/app/shared/models/RFQ/suppliers";
-import {ActivatedRoute} from "@angular/router";
-import {ProjectDetails, ProjectIds} from "src/app/shared/models/project-details";
-import {FormGroup, FormBuilder, FormArray, Validators} from "@angular/forms";
-import {RFQService} from "src/app/shared/services/rfq/rfq.service";
-import {POService} from "src/app/shared/services/po/po.service";
-import {Projects} from "src/app/shared/models/GlobalStore/materialWise";
-import {RfqMaterialResponse} from "src/app/shared/models/RFQ/rfq-details";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
+import { ActivatedRoute } from "@angular/router";
+import { ProjectDetails, ProjectIds } from "src/app/shared/models/project-details";
+import { FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
+import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { POService } from "src/app/shared/services/po/po.service";
+import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
+import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 
 @Component({
   selector: "app-po-project-material",
@@ -22,7 +22,9 @@ export class PoProjectMaterialComponent implements OnInit {
   allProjects: ProjectDetails[];
   projectIds: number;
   poDetails: RfqMaterialResponse[];
-  constructor(private poService: POService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {}
+  searchProject: string;
+  searchMaterial: string;
+  constructor(private poService: POService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.allProjects = this.activatedRoute.snapshot.data.inititatePo[1].data;
