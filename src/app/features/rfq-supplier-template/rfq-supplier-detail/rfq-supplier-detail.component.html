@@ -9,9 +9,9 @@
             
             <label for="validity" class="pull-left p-t-20 p-r-10">Quote Valid till</label>
             
-            <mat-form-field class="border-input">
-              
-              <input matInput (dateChange)="duedatefunc($event)" [matDatepicker]="dueDate"
+            <mat-form-field class="border-input date-label-indent">
+                 <span class="form-placeholder">{{ dateDue| date: "dd-MMM-yyy"}}</span>
+              <input matInput hidden (dateChange)="duedatefunc($event)" [matDatepicker]="dueDate"
                 placeholder="Quote Valid till" [(ngModel)]="rfqSupplierDetailList.dueDate" 
                 (focus)="dueDate.open()" readonly [min]="minDate" required />
               

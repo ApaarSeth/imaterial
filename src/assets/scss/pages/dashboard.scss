@@ -290,3 +290,31 @@ body,
         margin-top: 0px;
     }
 }
+
+.date-label-indent {
+    .mat-form-field-label-wrapper {
+        overflow: visible;
+        top: -28px;
+    }
+    .mat-form-field-infix {
+        border-bottom: 2px solid #b8b8b8;
+        padding-top: 25px !important;
+        line-height: 34px;
+    }
+    .mat-datepicker-toggle-default-icon {
+        margin-top: -15px;
+    }
+}
+
+.date-label-indent.mat-form-field-should-float {
+    .mat-form-field-label-wrapper {
+        top: -13px;
+    }
+    .mat-form-field-infix {
+        padding-top: 12px !important;
+        line-height: 10px;
+    }
+    .mat-datepicker-toggle-default-icon {
+        margin-top: 0px;
+    }
+}
