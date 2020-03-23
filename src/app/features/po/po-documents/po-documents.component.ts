@@ -58,16 +58,13 @@ export class PoDocumentsComponent implements OnInit {
       return this.documentUploadService.postDocumentUpload(data).then(res => {
         console.log(res);
         let name: string = res.data;
-        let firstName: number = name.lastIndexOf("/");
-        let lastName: number = name.indexOf("?Expires");
-        let subFileName = name.substring(firstName + 1, lastName);
-
+        let firstName: number = res.data.fileName.lastIndexOf("/");
+        let subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
         this.documentsName.push(subFileName);
-
         this.documentList.push({
           documentType: "PO",
           documentDesc: subFileName,
-          documentUrl: res.data,
+          documentUrl: res.data.url,
           documentName: subFileName
         });
         this.documentListLength = this.documentList.length;
