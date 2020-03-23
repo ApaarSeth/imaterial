@@ -290,7 +290,7 @@ export class AddProjectComponent implements OnInit {
       const data = new FormData();
       data.append(`file`, file);
       return this._uploadImageService.postDocumentUpload(data).then(res => {
-        this.form.get('imageUrl').setValue(res.data);
+        this.form.get('imageUrl').setValue(res.data.fileName);
       });
     }
   }
