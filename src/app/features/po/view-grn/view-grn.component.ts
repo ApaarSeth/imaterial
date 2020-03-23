@@ -6,6 +6,8 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddEditGrnComponent } from 'src/app/shared/dialogs/add-edit-grn/add-edit-grn.component';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { POService } from 'src/app/shared/services/po/po.service';
+import { POData } from 'src/app/shared/models/PO/po-data';
 
 @Component({
     selector: "view-grn",
@@ -28,54 +30,57 @@ export class ViewGRNComponent implements OnInit {
         "Delivered Quantity"
     ];
     grnHeaders: any;
-    pID: number;
-
+    poId: number;
+    poData: POData
     public GRNTour: GuidedTour = {
         tourId: 'grn-tour',
         useOrb: false,
         steps: [
-             {
-              title:'Add GRN',
-              selector: '.add-grn-btn',
-              content: 'Click here to add the quantity of material which has been received & certified.',
-              orientation: Orientation.Left
+            {
+                title: 'Add GRN',
+                selector: '.add-grn-btn',
+                content: 'Click here to add the quantity of material which has been received & certified.',
+                orientation: Orientation.Left
             }
         ],
-      skipCallback: () => {
-      this.setLocalStorage()
-      },
-      completeCallback: () => {
-        this.setLocalStorage()
-      }
+        skipCallback: () => {
+            this.setLocalStorage()
+        },
+        completeCallback: () => {
+            this.setLocalStorage()
+        }
     };
     userId: number;
 
-    constructor(private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog,private guidedTourService: GuidedTourService,private userGuideService: UserGuideService){
+    constructor(private poService: POService, private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog, private guidedTourService: GuidedTourService, private userGuideService: UserGuideService) {
         setTimeout(() => {
             this.guidedTourService.startTour(this.GRNTour);
         }, 1000);
 
-     }
+    }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe(res => {
-            this.pID = Number(res["poId"]);
+            this.poId = Number(res["poId"]);
+            this.poService.getPoGenerateData(this.poId).then(res => {
+                this.poData = res.data;
+            })
             this.getGRNDetails(Number(res["poId"]));
         })
     }
-     setLocalStorage() {
+    setLocalStorage() {
         this.userId = Number(localStorage.getItem("userId"));
-        const popovers ={
-        "userId":this.userId,
-        "moduleName":"grn",
-        "enableGuide":1
-    };
-        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
-          if(res){
-            localStorage.setItem('grn', '1');
-          }
+        const popovers = {
+            "userId": this.userId,
+            "moduleName": "grn",
+            "enableGuide": 1
+        };
+        this.userGuideService.sendUserGuideFlag(popovers).then(res => {
+            if (res) {
+                localStorage.setItem('grn', '1');
+            }
         })
-  }
+    }
 
     getGRNDetails(grnId: number) {
         this.grnService.getGRNDetails(grnId).then(data => {
@@ -95,7 +100,7 @@ export class ViewGRNComponent implements OnInit {
         const data: GRNPopupData = {
             isEdit: false,
             isDelete: false,
-            pID: this.pID,
+            pID: this.poId,
             detail: this.grnHeaders
         };
         this.openDialog(data);
@@ -108,8 +113,8 @@ export class ViewGRNComponent implements OnInit {
                 data
             });
             dialogRef.afterClosed().toPromise().then(result => {
-                if(result){
-                    this.getGRNDetails(this.pID);
+                if (result) {
+                    this.getGRNDetails(this.poId);
                 }
             });
         }
