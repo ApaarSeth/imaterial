@@ -93,6 +93,8 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       ]
     });
 
+   if(this.form.value.pinCode)
+    this.validPincode = true;
   }
 
   saveAddress() {
