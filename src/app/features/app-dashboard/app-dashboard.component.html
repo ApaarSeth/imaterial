@@ -5,7 +5,7 @@
         <div class="things-to-do bg-white mb-4 equal-height">
           <!-- <h5 class="mb-3">Things to do</h5> -->
           <div class="things-to-do__inner d-flex justify-content-between align-items-center">
-            <div class="things-to-do__icons text-center cursor" (click)="openProject()" matTooltip="You can add your project details">
+            <div *ngIf="this.permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" (click)="openProject()" matTooltip="You can add your project details">
               <div class="things-to-do__img add-project-img">
                 <img src="assets/images/Add-Project.png" alt="" class="img-fluid" />
               </div>

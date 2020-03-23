@@ -1,3 +1,6 @@
+import { RfqMaterialResponse } from '../RFQ/rfq-details';
+import { Suppliers } from '../RFQ/suppliers';
+
 export interface POData {
   supplierAddress: SupplierAddress;
   projectAddress: ProjectAddress;
@@ -194,4 +197,9 @@ export interface poApproveReject {
   purchaseOrderId: number;
   userId: number;
   isApproved: number;
+}
+
+export interface initiatePoData {
+  selectedMaterial: RfqMaterialResponse[],
+  selectedSupplier: Suppliers
 }

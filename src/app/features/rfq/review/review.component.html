@@ -29,7 +29,7 @@
             <div class="col-xs-6 date-dialog-add-edit">
               <!-- end date -->
               <mat-form-field class="border-input date-label">
-                <mat-label>Project End Date*</mat-label>
+                <mat-label>RFQ end date*</mat-label>
                 <span class="form-placeholder">{{ form["controls"]["dueDate"].value | date: "dd-MMM-yyy" }}</span>
                 <input hidden matInput [matDatepicker]="endDate" formControlName="dueDate" [min]="minDate" (focus)="dueDate.open()" readonly />
                 <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
@@ -92,7 +92,7 @@
             <table mat-table [dataSource]="project.projectMaterialList" class="mat-elevation-z8 col-sm-12">
               <ng-container matColumnDef="Material Name">
                 <th mat-header-cell *matHeaderCellDef>Material Name</th>
-                <td mat-cell *matCellDef="let element" class="dark-gray-color">
+                <td mat-cell *matCellDef="let element">
                   {{ element.materialName }}
                 </td>
               </ng-container>

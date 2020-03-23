@@ -58,7 +58,7 @@
                 <ng-container *ngIf="project.defaultAddress.addressLine2">, {{ project.defaultAddress.addressLine2 }}</ng-container>
                 <ng-container *ngIf="project.defaultAddress.city">, {{ project.defaultAddress.city }}</ng-container>
                 <ng-container *ngIf="project.defaultAddress.state">, {{ project.defaultAddress.state }}</ng-container>
-                <ng-container *ngIf="project.defaultAddress.pinCode">{{ project.defaultAddress.pinCode }}</ng-container>
+                <ng-container *ngIf="project.defaultAddress.pinCode"> {{ project.defaultAddress.pinCode }}</ng-container>
               </a>
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -83,7 +83,7 @@
             </ng-container>
             <ng-container matColumnDef="Required Date">
               <th mat-header-cell class="text-center" *matHeaderCellDef>Required Date</th>
-              <td mat-cell *matCellDef="let element; let i = index">
+              <td class="text-center" mat-cell *matCellDef="let element; let i = index">
                 {{ element.dueDate | date: "dd-MMM-yyy" }}
               </td>
             </ng-container>

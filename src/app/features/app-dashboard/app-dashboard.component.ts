@@ -9,6 +9,7 @@ import { SelectProjectComponent } from 'src/app/shared/dialogs/select-project/se
 import { ProjectDetails } from 'src/app/shared/models/project-details';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { GuideTourModel } from 'src/app/shared/models/guided_tour';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -24,14 +25,24 @@ export class AppDashboardComponent implements OnInit {
   projectLists: ProjectDetails[];
   label: string;
   userGuidedata: GuideTourModel[] = [];
-
+  permissionObj: {
+    projectStoreFlag: boolean;
+    globalStoreFlag: boolean;
+    rfqFlag: boolean;
+    purchaseOrderFlag: boolean;
+    usersFlag: boolean;
+    supplierFlag: boolean;
+    projectEdit: boolean;
+  };
   constructor(public dialog: MatDialog,
     private router: Router,
     private _userService: UserService,
     private userguideservice: UserGuideService,
-    private _projectService: ProjectService) { }
+    private _projectService: ProjectService,
+    private permissionService: PermissionService) { }
 
   ngOnInit() {
+    this.permissionObj = this.permissionService.checkPermission();
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.getDashboardInfo('po');
@@ -61,8 +72,8 @@ export class AppDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        if (result && result != null)
-          this.router.navigate(['/project-dashboard']);
+      if (result && result != null)
+        this.router.navigate(['/project-dashboard']);
     });
   }
 
