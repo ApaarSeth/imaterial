@@ -10,6 +10,7 @@ import { ProjetPopupData } from "src/app/shared/models/project-details";
 import { DeleteDraftedPoComponent } from "src/app/shared/dialogs/delete-drafted-po/delete-drafted-po.component";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { POService } from 'src/app/shared/services/po/po.service';
 
 @Component({
   selector: "po-detail-list",
@@ -40,55 +41,56 @@ export class PODetailComponent implements OnInit {
   ];
 
   public PODetailTour: GuidedTour = {
-        tourId: 'po-detail-tour',
-        useOrb: false,
-        
-        steps: [
-             {
-              title:'Create P.O.',
-              selector: '.create-po-btn',
-              content: 'Click here to create a purchase order by selecting the materials from a project.',
-              orientation: Orientation.Left
-            }
-        ],
-         skipCallback: () => {
-      this.setLocalStorage()
+    tourId: 'po-detail-tour',
+    useOrb: false,
+
+    steps: [
+      {
+        title: 'Create P.O.',
+        selector: '.create-po-btn',
+        content: 'Click here to create a purchase order by selecting the materials from a project.',
+        orientation: Orientation.Left
       }
-    };
+    ],
+    skipCallback: () => {
+      this.setLocalStorage()
+    }
+  };
   userId: number;
   orgId: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private poDetailService: POService,
     private route: Router,
     private projectService: ProjectService,
     public dialog: MatDialog,
     private guidedTourService: GuidedTourService,
-    private userGuideService : UserGuideService
+    private userGuideService: UserGuideService
   ) {
   }
 
   ngOnInit() {
-    
+
     this.PoData();
   }
 
-    setLocalStorage() {
-        const popovers ={
-        "userId":this.userId,
-        "moduleName":"po",
-        "enableGuide":1
+  setLocalStorage() {
+    const popovers = {
+      "userId": this.userId,
+      "moduleName": "po",
+      "enableGuide": 1
     };
-        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
-          if(res){
-            localStorage.setItem('po', '1');
-          }
-        })
+    this.userGuideService.sendUserGuideFlag(popovers).then(res => {
+      if (res) {
+        localStorage.setItem('po', '1');
+      }
+    })
   }
 
   PoData() {
-     this.orgId = Number(localStorage.getItem("orgId"));
-     this.userId = Number(localStorage.getItem("userId"));
+    this.orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
 
     this.poDetails = new MatTableDataSource(
       this.activatedRoute.snapshot.data.poDetailList
@@ -109,12 +111,12 @@ export class PODetailComponent implements OnInit {
     this.poDraftedDetailsTemp = this.activatedRoute.snapshot.data.poDetailList.draftedPOList;
     this.poApprovalDetailsTemp = this.activatedRoute.snapshot.data.poDetailList.sendForApprovalPOList;
     this.acceptedRejectedPOListTemp = this.activatedRoute.snapshot.data.poDetailList.acceptedRejectedPOList;
-    if(this.poApprovalDetailsTemp || this.poDraftedDetailsTemp || this.acceptedRejectedPOListTemp){
-       if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {
+    if (this.poApprovalDetailsTemp || this.poDraftedDetailsTemp || this.acceptedRejectedPOListTemp) {
+      if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {
         setTimeout(() => {
-            this.guidedTourService.startTour(this.PODetailTour);
+          this.guidedTourService.startTour(this.PODetailTour);
         }, 1000);
-       }
+      }
     }
     this.acceptedRejectedPOList = new MatTableDataSource(
       this.activatedRoute.snapshot.data.poDetailList.acceptedRejectedPOList
@@ -188,6 +190,10 @@ export class PODetailComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then((data) => {
+        this.poDetailService.getPODetails(this.orgId).then(data => {
+          this.poDraftedDetails = new MatTableDataSource(data.data.draftedPOList);
+          this.poDraftedDetailsTemp = data.data.draftedPOList
+        });
         this.PoData();
         console.log("The dialog was closed");
       });

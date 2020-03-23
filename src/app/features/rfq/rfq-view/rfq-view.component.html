@@ -59,7 +59,13 @@
           <mat-expansion-panel-header>
             <mat-panel-title>
               {{ project.projectName }}
-              <div class="main-color p-l-15">{{ project.defaultAddress.addressLine1 }}</div>
+              <div class="main-color p-l-15">
+                {{ project.defaultAddress.addressLine1 }}
+                {{ project.defaultAddress.addressLine2 }}
+                {{ project.defaultAddress.city }}
+                {{ project.defaultAddress.state }}
+                {{ project.defaultAddress.country }}
+              </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
 

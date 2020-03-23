@@ -56,7 +56,7 @@
         <ng-container matColumnDef="Material Name">
           <th mat-header-cell *matHeaderCellDef>Material Name</th>
           <td mat-cell *matCellDef="let element; let i = index" formGroupName="{{ i }}">
-            <mat-checkbox #ch (change)="materialChecked(ch, i, element)">
+            <mat-checkbox #ch [checked]="element.checked" (change)="materialChecked(ch, i, element)">
               <div class="limited-character po-p-m" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
             </mat-checkbox>
           </td>

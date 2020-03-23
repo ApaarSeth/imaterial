@@ -12,12 +12,22 @@
       </div>
       <div class="col-xs-9 p-t-10 text-right">
         <span class="" *ngIf="this.permissionObj.rfqFlag">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right create-rfq-btn" [disabled]="!this.checkedSubcategory.length" (click)="createRfq()">
+          <button
+            mat-raised-button
+            class="main-background-color main-button color-white pull-right create-rfq-btn"
+            [disabled]="!this.checkedSubcategory.length"
+            (click)="createRfq()"
+          >
             Create RFQ
           </button>
         </span>
         <span class="p-l-5">
-          <button mat-raised-button class="mx-3 main-background-color main-button color-white pull-right raise-indent-btn" [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
+          <button
+            mat-raised-button
+            class="mx-3 main-background-color main-button color-white pull-right raise-indent-btn"
+            [disabled]="!this.checkedSubcategory.length"
+            (click)="raiseIndent()"
+          >
             Raise Indent
           </button>
         </span>
@@ -26,7 +36,7 @@
             View Indent
           </button>
         </span> -->
-        <span>
+        <span *ngIf="this.permissionObj.rfqFlag">
           <button mat-raised-button class="main-background-color main-button color-white pull-right " (click)="addMaterial()">
             Add/Edit Material
           </button>
@@ -69,12 +79,8 @@
             Issued To Project
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
-            <ng-container *ngIf="element.issueToProject; else showZEroDataIP">
-                        {{ element.issueToProject }} {{ element.materialUnit }}
-            </ng-container>
-                      <ng-template #showZEroDataIP>
-                       0 {{ element.materialUnit }}
-                      </ng-template>
+            <ng-container *ngIf="element.issueToProject; else showZEroDataIP"> {{ element.issueToProject }} {{ element.materialUnit }} </ng-container>
+            <ng-template #showZEroDataIP> 0 {{ element.materialUnit }} </ng-template>
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
@@ -82,12 +88,8 @@
             Available In Stock
           </th>
           <td class="text-align-center" mat-cell [hidden]="!permissionObj.rfqFlag" *matCellDef="let element">
-            <ng-container *ngIf="element.availableStock; else showZEroData">
-                        {{ element.availableStock }} {{ element.materialUnit }}
-            </ng-container>
-                      <ng-template #showZEroData>
-                       0 {{ element.materialUnit }}
-                      </ng-template>
+            <ng-container *ngIf="element.availableStock; else showZEroData"> {{ element.availableStock }} {{ element.materialUnit }} </ng-container>
+            <ng-template #showZEroData> 0 {{ element.materialUnit }} </ng-template>
           </td>
         </ng-container>
 
@@ -98,26 +100,40 @@
               <mat-icon>edit</mat-icon>
             </a> -->
 
-            <a *ngIf="permissionObj.rfqFlag && (!(element.availableStock === 0 || element.availableStock === null))" (click)="issueToIndent(element.materialId, projectId)" class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Issue to Indent">
+            <a
+              *ngIf="permissionObj.rfqFlag && !(element.availableStock === 0 || element.availableStock === null)"
+              (click)="issueToIndent(element.materialId, projectId)"
+              class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"
+              matTooltip="Issue to Indent"
+            >
               <img src="../../../../assets/images/issue_to_indent.png" />
             </a>
-
 
             <a *ngIf="permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)" class="width-15-px p-r-10  issue-to-indent-icon">
               <img src="../../../../assets/images/issue_to_indent_disabled.png" />
             </a>
-            
+
             <a
               class="width-15-px p-l-5 cursor-pointer"
               matTooltip="Delete"
-              *ngIf="((element.requestedQuantity === 0 || element.requestedQuantity === null) && (element.availableStock === 0 || element.availableStock === null) && (element.issueToProject === 0 || element.issueToProject === null))"
+              *ngIf="
+                (element.requestedQuantity === 0 || element.requestedQuantity === null) &&
+                (element.availableStock === 0 || element.availableStock === null) &&
+                (element.issueToProject === 0 || element.issueToProject === null)
+              "
               (click)="deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
             >
               <img src="../../../../assets/images/delete-button.png" />
             </a>
             <a
               class="width-15-px p-l-5 "
-              *ngIf="!((element.requestedQuantity === 0 || element.requestedQuantity === null) && (element.availableStock === 0 || element.availableStock === null) && (element.issueToProject === 0 || element.issueToProject === null))"
+              *ngIf="
+                !(
+                  (element.requestedQuantity === 0 || element.requestedQuantity === null) &&
+                  (element.availableStock === 0 || element.availableStock === null) &&
+                  (element.issueToProject === 0 || element.issueToProject === null)
+                )
+              "
             >
               <img src="../../../../assets/images/delete-button_disable.png" />
             </a>
@@ -142,7 +158,7 @@
                       </div>
                     </td>
                   </ng-container>
-                   <ng-container matColumnDef="Unit">
+                  <ng-container matColumnDef="Unit">
                     <th *matHeaderCellDef class="text-align-center">
                       Unit
                     </th>
@@ -174,11 +190,11 @@
                       Available In Stock
                     </th>
                     <td class="text-align-center" mat-cell *matCellDef="let element">
-                      <ng-template *ngIf="element.availableStock!=null">
+                      <ng-template *ngIf="element.availableStock != null">
                         {{ element.availableStock }}
                       </ng-template>
                       <ng-template *ngIf="element.availableStock == null">
-                       0
+                        0
                       </ng-template>
                     </td>
                   </ng-container>
