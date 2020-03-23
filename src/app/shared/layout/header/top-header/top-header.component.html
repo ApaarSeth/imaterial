@@ -36,7 +36,7 @@
         <mat-icon aria-hidden="false" aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
       </button>
       <mat-menu #logIn="matMenu">
-        <button mat-menu-item class="background-white-color">
+        <button mat-menu-item class="background-white-color" (click)="goToProfile()" >
           My Account
         </button>
         <button mat-menu-item class="background-white-color" (click)="logout()" routerLinkActive="router-link-active">LogOut</button>

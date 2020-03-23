@@ -30,6 +30,8 @@ import { HeaderSharedModule } from './shared/layout/header/header-shared.module'
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { ProfileComponent } from './features/profile/profile.component';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +40,8 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     NotFoundComponent,
     SupplierBidLayoutComponent,
     AppDashboardComponent,
-    ProfileLayoutComponent
+    ProfileLayoutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +56,8 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     UserDashboardModule,
     RouterModule,
     GuidedTourModule,
+    FormsModule,
+    ReactiveFormsModule,
     HeaderSharedModule
   ],
   providers: [
