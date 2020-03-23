@@ -114,6 +114,8 @@
                                     {{ trade.tradeName }}
                                </mat-chip> 
                             </ng-container>
+                        </ng-container>
+                          <ng-container *ngFor="let x of usersTrade">
                             <ng-container *ngIf="x != trade.tradeId">
                                  <mat-chip >
                                       {{ trade.tradeName }}
