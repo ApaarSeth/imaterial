@@ -81,15 +81,15 @@ export class BomTableComponent implements OnInit {
         orientation: Orientation.Left
       }
     ],
-      skipCallback: () => {
+    skipCallback: () => {
       this.setLocalStorage()
-      },
-      completeCallback: () => {
-        this.setLocalStorage()
-      }
+    },
+    completeCallback: () => {
+      this.setLocalStorage()
+    }
   };
   userId: number;
-
+  role: string;
 
   constructor(
     private permissionService: PermissionService,
@@ -112,7 +112,7 @@ export class BomTableComponent implements OnInit {
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-   if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
+    if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
       setTimeout(() => {
         this.guidedTourService.startTour(this.BomDetailsashboardTour);
       }, 1000);
@@ -128,17 +128,17 @@ export class BomTableComponent implements OnInit {
     //this.product = history.state.projectDetails;
   }
 
-    setLocalStorage() {
-        const popovers ={
-        "userId":this.userId,
-        "moduleName":"bomDashboard",
-        "enableGuide":1
+  setLocalStorage() {
+    const popovers = {
+      "userId": this.userId,
+      "moduleName": "bomDashboard",
+      "enableGuide": 1
     };
-        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
-          if(res){
-            localStorage.setItem('bomDashboard', '1');
-          }
-        })
+    this.userGuideService.sendUserGuideFlag(popovers).then(res => {
+      if (res) {
+        localStorage.setItem('bomDashboard', '1');
+      }
+    })
   }
   getMaterialWithQuantity() {
     this.loading.show();
