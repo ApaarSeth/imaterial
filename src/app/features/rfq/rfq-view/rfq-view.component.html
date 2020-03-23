@@ -64,7 +64,7 @@
                 {{ project.defaultAddress.addressLine2 }}
                 {{ project.defaultAddress.city }}
                 {{ project.defaultAddress.state }}
-                {{ project.defaultAddress.country }}
+                {{ project.defaultAddress.pinCode }}
               </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -74,7 +74,7 @@
             <!-- Material Name Column -->
             <ng-container matColumnDef="Material Name">
               <th class="font-size14" mat-header-cell *matHeaderCellDef>Material Name</th>
-              <td mat-cell *matCellDef="let element" class="dark-gray-color">
+              <td mat-cell *matCellDef="let element">
                 {{ element.materialName }}
               </td>
             </ng-container>
