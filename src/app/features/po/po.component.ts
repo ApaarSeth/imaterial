@@ -153,7 +153,7 @@ export class PoComponent implements OnInit {
       purchaseOrderId: this.poId,
       poNumber: this.poCard.getData().orderNo,
       poName: "",
-      poValidUpto: this.commonService.formatDate(this.poCard.getData().endDate),
+      poValidUpto: this.poCard.getData().endDate,
 
       DocumentsList: this.poDocument.getData(),
       Terms: {

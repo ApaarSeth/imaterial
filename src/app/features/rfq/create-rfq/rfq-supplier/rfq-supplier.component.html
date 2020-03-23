@@ -34,7 +34,7 @@
     <ng-container matColumnDef="Supplier Name">
       <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
       <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i">
-        <mat-checkbox #ch selected="element.checked" (change)="valueChange(element, ch, i)"> </mat-checkbox>
+        <mat-checkbox #ch [checked]="element.checked" (change)="valueChange(element, ch, i)"> </mat-checkbox>
         {{ element.supplier_name }}
       </td>
     </ng-container>

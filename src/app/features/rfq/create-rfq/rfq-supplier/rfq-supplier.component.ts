@@ -57,11 +57,30 @@ export class RfqSupplierComponent implements OnInit {
     }
     this.formInit();
   }
+  ngOnChanges(changes: SimpleChanges) {
+    this.rfqData = this.finalRfq;
+    if (this.rfqData) {
+      this.allSuppliers = this.allSuppliers.map((supplier: Suppliers) => {
+        if (this.finalRfq.supplierId.includes(supplier.supplierId)) {
+          supplier.checked = true;
+          this.supplierCounter++;
+        }
+        else {
+          supplier.checked = false
+        }
+        return supplier;
+      })
+      this.formInit();
+    }
+
+    console.log("this.finalRfq", this.finalRfq);
+    console.log("this.rfqData", this.rfqData);
+  }
 
   formInit() {
     const frmArr: FormGroup[] = this.allSuppliers.map(supplier => {
       return this.formBuilder.group({
-        supplier: []
+        supplier: [supplier.checked ? supplier : null]
       });
     });
     this.supplierForm = this.formBuilder.group({
@@ -81,11 +100,7 @@ export class RfqSupplierComponent implements OnInit {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    this.rfqData = this.finalRfq;
-    console.log("this.finalRfq", this.finalRfq);
-    console.log("this.rfqData", this.rfqData);
-  }
+
 
   valueChange(supplier: Suppliers, ch: MatCheckbox, i: number) {
     const sArr = this.supplierForm.controls["forms"] as FormArray;

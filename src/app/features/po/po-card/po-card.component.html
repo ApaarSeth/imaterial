@@ -11,15 +11,17 @@
         </ng-template>
       </span>
     </span>
-    <span class="col-xs-6">
+    <span class="col-xs-6 date-dialog-add-edit">
       <span class="text-semi-bold" *ngIf="mode !== 'edit'; else editDateBlock">
         P.O. Valid Till: <span class="p-l-5">{{ cardData.poValidUpto | date: "dd-MMM-yyy" }}</span>
       </span>
       <ng-template #editDateBlock>
         <span class="text-semi-bold">
           P.O. Valid Till:
-          <mat-form-field class="border-input">
-            <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" placeholder="Valid Till" (focus)="endDate.open()" readonly [min]="minDate" />
+          <mat-form-field class="border-input date-label validTill">
+            <mat-label>Valid Till</mat-label>
+            <span class="form-placeholder">{{ projectDetails["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span>
+            <input hidden #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (focus)="endDate.open()" readonly [min]="minDate" />
             <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
             <mat-datepicker #endDate startView="month"></mat-datepicker>
           </mat-form-field>

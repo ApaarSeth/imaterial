@@ -12,6 +12,7 @@ import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-
 import { Address } from "src/app/shared/models/RFQ/rfq-details";
 import { ActivatedRoute } from "@angular/router";
 import { POService } from 'src/app/shared/services/po/po.service';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-po-card",
@@ -29,7 +30,8 @@ export class PoCardComponent implements OnInit {
     private poService: POService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
@@ -66,6 +68,12 @@ export class PoCardComponent implements OnInit {
   }
 
   getData() {
+    let date = new Date(this.commonService.formatDate(this.projectDetails.get("endDate").value))
+    let dummyMonth = date.getMonth() + 1;
+    const year = date.getFullYear().toString();
+    const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+    const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+    this.projectDetails.get("endDate").setValue(year + "-" + month + "-" + day)
     return this.projectDetails.value;
   }
 
