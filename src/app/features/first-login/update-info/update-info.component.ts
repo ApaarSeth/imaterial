@@ -153,7 +153,7 @@ export class UpdateInfoComponent implements OnInit {
       const data = new FormData();
       data.append(`file`, file);
       return this._uploadImageService.postDocumentUpload(data).then(res => {
-        this.userInfoForm.get('profileUrl').setValue(res.data);
+        this.userInfoForm.get('profileUrl').setValue(res.data.fileName);
       });
     }
   }
