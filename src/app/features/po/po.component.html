@@ -2,7 +2,7 @@
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row">
       <div class="col-sm-12 m-t-5 text-semi-bold text-left" *ngIf="this.mode === 'view'">
-        PO is Approved by {{ this.poData.poStatusChangedBy }} on {{ this.poData.poStatusChangedOn }}
+        PO is Approved by {{ this.poData.poStatusChangedBy }} on {{ this.poData.poStatusChangedOn | date: "dd-MMM-yyy" }}
       </div>
       <div class="col-sm-12 m-t-5 text-right">
         <div *ngIf="this.mode === 'edit'">
@@ -33,7 +33,7 @@
         </div>
         <div class="col-sm-8 hidePoweredBy" *ngIf="mode === 'edit'">
           <form [formGroup]="poTerms">
-            <textarea formControlName="textArea" [froalaEditor]="froala" [(froalaModel)]="poTerms.textArea">Hello, Froala!</textarea>
+            <textarea formControlName="textArea" [innerHTML]="terms && terms.termsDesc" [froalaEditor]="froala" [(froalaModel)]="poTerms.textArea">Hello, Froala!</textarea>
           </form>
         </div>
         <div class="col-sm-8 background-white-color border-radius parent">

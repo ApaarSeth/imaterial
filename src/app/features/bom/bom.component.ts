@@ -77,12 +77,12 @@ export class BomComponent implements OnInit {
 
       }
     ],
-      skipCallback: () => {
+    skipCallback: () => {
       this.setLocalStorage()
-      },
-      completeCallback: () => {
-        this.setLocalStorage()
-      }
+    },
+    completeCallback: () => {
+      this.setLocalStorage()
+    }
   };
 
   // public BomDashboardTourSecond: GuidedTour = {
@@ -111,7 +111,7 @@ export class BomComponent implements OnInit {
     private loading: GlobalLoaderService,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService
-    ) {
+  ) {
   }
 
   ngOnInit() {
@@ -133,7 +133,10 @@ export class BomComponent implements OnInit {
     this.getProject(this.projectId);
     this.formInit()
     this.bomService.getOrgTrades(this.projectId).then(res => {
-      this.tradesList = res.data as orgTrades[];
+      this.tradesList = (<orgTrades[]>res.data).filter((trade: orgTrades) => {
+        return trade.tradeName !== 'General Contractor' && trade.tradeName !== 'Others'
+      });
+
       const selectedTrades = this.tradesList.filter((trade: orgTrades) => {
         return trade.isAttatched
       })
@@ -156,17 +159,17 @@ export class BomComponent implements OnInit {
     //   });
 
   }
-   setLocalStorage() {
-        const popovers ={
-        "userId":this.userId,
-        "moduleName":"addBom",
-        "enableGuide":1
+  setLocalStorage() {
+    const popovers = {
+      "userId": this.userId,
+      "moduleName": "addBom",
+      "enableGuide": 1
     };
-        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
-          if(res){
-            localStorage.setItem('addBom', '1');
-          }
-        })
+    this.userGuideService.sendUserGuideFlag(popovers).then(res => {
+      if (res) {
+        localStorage.setItem('addBom', '1');
+      }
+    })
   }
 
   formInit() {
