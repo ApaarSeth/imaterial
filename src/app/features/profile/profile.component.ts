@@ -36,6 +36,7 @@ export class ProfileComponent implements OnInit {
     { value: "Karnal", viewValue: "Karnal" }
   ];
   selectedTradesId: number[] = [];
+  usersTrade: number[] = [];
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -63,6 +64,12 @@ export class ProfileComponent implements OnInit {
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
       this.users = res.data ? res.data[0] : null;
+      if(res.data[0].trade){
+           res.data[0].trade.forEach(element => {
+            this.usersTrade.push(element.tradeId);
+          });
+      }
+     
       this.formInit();
     });
   }

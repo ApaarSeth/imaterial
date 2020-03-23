@@ -12,15 +12,15 @@
               <div class="col-sm-12 col-md-6">
                 <div class="phot-title"></div>
                 <div class="user-photo">
-                  <img [src]="localImg || 'assets/images/default-image.png'" class="img-fluid user_photo" alt="" />
+                  <img [src]="users.profileUrl || localImg || 'assets/images/default-image.png'" class="img-fluid user_photo" alt="" />
                 </div>
 
-                <div class="browser-method">
+                <!-- <div class="browser-method">
                   <label class="myLabel">
                     <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
                     <span>Upload</span>
                   </label>
-                </div>
+                </div> -->
               </div>
 
               <div class="col-sm-12 col-md-6">
@@ -107,14 +107,21 @@
               <div class="col-sm-12 col-md-12 choose-trades" *ngIf="users.roleName === 'l1'">
                 <p style="font-weight: 600;">Choose Trades</p>
                 <mat-chip-list multiple id="chipList" [selectable]="true">
-                  <mat-chip
-                    *ngFor="let trade of tradeList"
-                    [selected]="trade.tradeId"
-                    [ngClass]="[trade.selected && trade.tradeId !== 22 ? 'active' : '', trade.tradeId === 22 ? 'user-Other-Trade' : '']"
-                    (click)="trade.selected = !trade.selected; changeSelected('s', trade)"
-                  >
-                    {{ trade.tradeName }}
-                  </mat-chip>
+                  <ng-container *ngFor="let trade of tradeList">
+                        <ng-container *ngFor="let x of usersTrade">
+                            <ng-container *ngIf="x == trade.tradeId">
+                               <mat-chip class="background-green">
+                                    {{ trade.tradeName }}
+                               </mat-chip> 
+                            </ng-container>
+                            <ng-container *ngIf="x != trade.tradeId">
+                                 <mat-chip >
+                                      {{ trade.tradeName }}
+                               </mat-chip>  
+                            </ng-container>
+                        </ng-container>
+                  </ng-container>
+                  
                   <form [formGroup]="customTrade">
                     <mat-form-field *ngIf="selectedTradesId.indexOf(22) > -1" class="border-input p-l-10">
                       <input matInput formControlName="trade" type="text" placeholder="Enter Trade" />
