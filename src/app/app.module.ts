@@ -30,6 +30,8 @@ import { HeaderSharedModule } from './shared/layout/header/header-shared.module'
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
+import { environment } from 'src/environments/environment';
 import { ProfileComponent } from './features/profile/profile.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
@@ -54,6 +56,8 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
     DashboardModule,
     AppSharedModule,
     UserDashboardModule,
+    NgxGoogleAnalyticsModule.forRoot(environment.ga),
+    NgxGoogleAnalyticsRouterModule,
     RouterModule,
     GuidedTourModule,
     FormsModule,

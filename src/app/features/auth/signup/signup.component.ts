@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material';
 import { TokenService } from 'src/app/shared/services/token.service';
 import { auth } from 'src/app/shared/models/auth';
 import { debounceTime } from 'rxjs/operators';
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 export interface OrganisationType {
   value: string;
@@ -38,7 +39,8 @@ export class SignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private signInSignupService: SignInSignupService,
     private _userService: UserService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private navService: AppNavigationService
   ) { }
 
   signupForm: FormGroup;
@@ -116,6 +118,12 @@ export class SignupComponent implements OnInit {
       }
       else if (data.data.serviceRawResponse.data as auth) {
         this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'Signup_successfully',
+          label: 'email-id',
+          value: null
+        });
         // localStorage.setItem("role", data.data.serviceRawResponse.data.role);
         // localStorage.setItem("accessToken", data.data.serviceRawResponse.data.serviceToken);
         // localStorage.setItem("userId", data.data.serviceRawResponse.data.userId);
@@ -146,11 +154,11 @@ export class SignupComponent implements OnInit {
       this.signInSignupService.sendOTP(value).then(res => {
         if (res.data)
           this.showOtp = res.data.success;
-          this._snackBar.open("OTP has been sent on your phone number", "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "top"
-          });
+        this._snackBar.open("OTP has been sent on your phone number", "", {
+          duration: 2000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "top"
+        });
       });
     }
   }

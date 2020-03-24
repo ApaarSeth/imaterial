@@ -10,6 +10,7 @@ import { ProjectService } from "../../services/projectDashboard/project.service"
 import { FieldRegExConst } from "../../constants/field-regex-constants";
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { Router } from '@angular/router';
+import { AppNavigationService } from '../../services/navigation.service';
 
 export interface City {
   value: string;
@@ -54,7 +55,8 @@ export class AddProjectComponent implements OnInit {
     private _uploadImageService: DocumentUploadService,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    private _router: Router
+    private _router: Router,
+    private navService: AppNavigationService
   ) { }
 
   ngOnInit() {
@@ -147,6 +149,12 @@ export class AddProjectComponent implements OnInit {
     this.projectService
       .addProjects(projectDetails, this.orgId, this.userId)
       .then(res => {
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'Project_created',
+          label: 'project_name',
+          value: null
+        });
         // res.data;
         this.dialogRef.close(res.message);
         if (res) {
@@ -208,12 +216,12 @@ export class AddProjectComponent implements OnInit {
   }
 
   getPincode(event) {
-        this.validPincode = false;
-        this.city = "";
-        this.state = "";
-        this.form.get('city').setValue("");
-        this.form.get('state').setValue("");
-        this.pincodeLength = event.target.value.length;
+    this.validPincode = false;
+    this.city = "";
+    this.state = "";
+    this.form.get('city').setValue("");
+    this.form.get('state').setValue("");
+    this.pincodeLength = event.target.value.length;
     if (event.target.value.length == 6) {
       this.cityStateFetch(event.target.value);
     }
@@ -224,15 +232,15 @@ export class AddProjectComponent implements OnInit {
       if (res.data) {
         this.city = res.data[0].districtName;
         this.state = res.data[0].stateName;
-        if(this.city && this.state)
-        this.validPincode = true;
+        if (this.city && this.state)
+          this.validPincode = true;
         else
-        this.validPincode = false;
+          this.validPincode = false;
 
         this.form.get('city').setValue(res.data[0].districtName);
         this.form.get('state').setValue(res.data[0].stateName);
       }
-     
+
     });
   }
   getStart(event) {

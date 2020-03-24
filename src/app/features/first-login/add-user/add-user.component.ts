@@ -5,6 +5,7 @@ import { UserRoles, UserDetails, TradeList } from 'src/app/shared/models/user-de
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { Router } from '@angular/router';
 import { elementAt, count } from 'rxjs/operators';
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 export interface City {
   value: string;
@@ -34,7 +35,8 @@ export class AddUserComponent implements OnInit {
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private userService: UserService,
-    private _router: Router) { }
+    private _router: Router,
+    private navService: AppNavigationService) { }
 
   ngOnInit() {
     this.creatorId = Number(localStorage.getItem("userId"));
@@ -113,30 +115,30 @@ export class AddUserComponent implements OnInit {
     });
   }
 
-  verifyEmail(event,formNo,index) {
+  verifyEmail(event, formNo, index) {
     const email = event.target.value;
-      this.index[index] = "true";
+    this.index[index] = "true";
     if (email.match(FieldRegExConst.EMAIL)) {
-          this.userService.verifyEMAIL(formNo.value).then(res => {
+      this.userService.verifyEMAIL(formNo.value).then(res => {
         if (res) {
           this.index[index] = res.data;
-          this.emails[index]=formNo.value;
+          this.emails[index] = formNo.value;
           this.emailVerified = true;
           this.index.forEach(element => {
-            if(!element)
-            this.emailVerified = false;
+            if (!element)
+              this.emailVerified = false;
           })
           this.count = 0;
-          for(let i=0; i<this.emails.length-1;i++){
-            for(let j=i+1 ;j<this.emails.length;j++){
-              if(this.emails[i] == this.emails[j])
-               this.count++;
+          for (let i = 0; i < this.emails.length - 1; i++) {
+            for (let j = i + 1; j < this.emails.length; j++) {
+              if (this.emails[i] == this.emails[j])
+                this.count++;
             }
           }
           this.emailMessage = res.message;
         }
       });
-     
+
     }
   }
 
@@ -148,6 +150,12 @@ export class AddUserComponent implements OnInit {
     data.map(user => {
       this._userService.addUsers(user).then(res => {
         if (res) {
+          this.navService.gaEvent({
+            action: 'submit',
+            category: 'Add_user_requested',
+            label: 'role/email-id',
+            value: null
+          });
           this._router.navigate(['/dashboard']);
         }
       });

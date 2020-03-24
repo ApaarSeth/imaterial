@@ -5,6 +5,7 @@ import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { initiatePo, initiatePoData } from "src/app/shared/models/PO/po-data";
 import { POService } from "src/app/shared/services/po/po.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ["Material Name", "Required Date", "Requested Quantity", "Estimated Quantity", "Estimated Rate", "Quantity", "Makes"];
   materialForms: FormGroup;
   checkedMaterialsList: RfqMaterialResponse[];
-  constructor(private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder) { }
+  constructor(private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder) { }
 
   ngOnInit() { }
 
@@ -75,6 +76,12 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       this.initiatePoData.materialList = this.materialForms.value.forms;
     });
     this.poService.initiatePo([this.initiatePoData]).then(res => {
+      this.navService.gaEvent({
+        action: 'submit',
+        category: 'material-name',
+        label: 'material name',
+        value: null
+      });
       this.router.navigate(["/po/po-generate/" + res.data[0] + "/edit"]);
     });
     console.log(this.initiatePoData);

@@ -11,6 +11,7 @@
 // };
 
 export const environment = {
+  ga: "",
   production: false,
   url: "https://api.yeho.ga/im",
   masterUrl: "https://api.yeho.ga/mm",
