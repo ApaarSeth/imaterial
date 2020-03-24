@@ -96,7 +96,7 @@ export interface UserDetails {
   countryCode?: string;
   uniqueCode?: string;
   companyName?: string;
-    turnOverId?: number;
+    TurnOverId?: number;
 }
 
 export interface TradeList {
