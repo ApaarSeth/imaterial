@@ -4,6 +4,7 @@ import { RFQService } from "../../services/rfq/rfq.service";
 import { Suppliers } from "../../models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FieldRegExConst } from '../../constants/field-regex-constants';
+import { AppNavigationService } from '../../services/navigation.service';
 
 // Component for dialog box
 @Component({
@@ -22,7 +23,8 @@ export class SuppliersDialogComponent {
     private rfqService: RFQService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private navService: AppNavigationService
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,12 @@ export class SuppliersDialogComponent {
   addSuppliers(organisarionId: number, suppliers: Suppliers) {
     this.rfqService.addNewSupplier(this.orgId, suppliers).then(res => {
       if (res) {
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'supplier_added',
+          label: 'supplier_added',
+          value: null
+        });
         this.dialogRef.close(res.message);
         this._snackBar.open('Supplier Added', "", {
           duration: 2000,

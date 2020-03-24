@@ -28,6 +28,7 @@ import { GuidedTourService, Orientation, GuidedTour } from 'ngx-guided-tour';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { orgTrades } from 'src/app/shared/models/trades';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -110,7 +111,8 @@ export class BomComponent implements OnInit {
     private userService: UserService,
     private loading: GlobalLoaderService,
     private guidedTourService: GuidedTourService,
-    private userGuideService: UserGuideService
+    private userGuideService: UserGuideService,
+    private navService: AppNavigationService
   ) {
   }
 
@@ -286,6 +288,12 @@ export class BomComponent implements OnInit {
     this.bomService
       .sumbitCategory(this.userId, this.projectId, this.categoriesInputData)
       .then(res => {
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'material_added',
+          label: 'material name',
+          value: null
+        });
         this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
       });
   }

@@ -12,6 +12,7 @@ import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
 import { AddRFQ } from "../../models/RFQ/rfq-details";
 import { RFQService } from "../../services/rfq/rfq.service";
+import { AppNavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: "add-rfq-double-confirmation-dialog",
@@ -23,7 +24,8 @@ export class AddRFQConfirmationComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<AddRFQConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private rfqService: RFQService
+    private rfqService: RFQService,
+    private navService: AppNavigationService
   ) { }
 
   ngOnInit() {
@@ -37,6 +39,12 @@ export class AddRFQConfirmationComponent implements OnInit {
   addRFQ() {
     (<AddRFQ>this.data.dataKey).selectBuildsupplyAsSupplier = true;
     this.rfqService.addRFQ(this.data.dataKey).then(res => {
+      this.navService.gaEvent({
+        action: 'submit',
+        category: 'Rfq_floated',
+        label: 'rfq-name',
+        value: null
+      });
       this.close(res);
     });
   }
