@@ -141,7 +141,7 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.gstNo : "",
         [Validators.pattern(FieldRegExConst.GSTIN)]
       ],
-      imageUrl: [this.data.isEdit ? this.data.detail.imageUrl : ""],
+      imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
     });
   }
 
@@ -195,7 +195,6 @@ export class AddProjectComponent implements OnInit {
 
   submit() {
     if (this.data.isEdit) {
-
       this.form.value.startDate = this.formatDate(this.form.value.startDate);
       this.form.value.endDate = this.formatDate(this.form.value.endDate);
       this.form.value.city = this.city;
