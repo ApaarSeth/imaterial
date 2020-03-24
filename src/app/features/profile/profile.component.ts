@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   userInfoForm: FormGroup;
   customTrade: FormGroup;
   users: UserDetails;
-  tradeList: TradeList;
+  tradeList: TradeList[] = [];
   turnOverList: TurnOverList;
   selectedTrades: TradeList[] = [];
   localImg: string | ArrayBuffer;
@@ -82,6 +82,16 @@ export class ProfileComponent implements OnInit {
   getTradesList() {
     this._userService.getTrades().then(res => {
       this.tradeList = res.data;
+     
+     if(this.tradeList){
+          this.tradeList.forEach(element => {
+                for(let i=0 ; i<this.usersTrade.length;i++){
+                  if(this.usersTrade[i] == element.tradeId)
+                        element.selected = true;
+                }
+         });
+     }
+      
     })
   }
 
@@ -100,20 +110,6 @@ export class ProfileComponent implements OnInit {
       country: ['India'],
       trade: [],
       profileUrl: [''],
-
-      // addressLine1: ['', Validators.required],
-      // addressLine2: [''],
-      // state: ['', Validators.required],
-      // city: ['', Validators.required],
-      // pinCode: ['', {
-      //   validators: [
-      //     Validators.required,
-      //     Validators.pattern(FieldRegExConst.PINCODE)
-      //   ]
-      // }],
-      // pan: [''],
-      // gstNo: [''],
-      // file: ['']
     });
     this.customTrade = this._formBuilder.group({
       trade: []

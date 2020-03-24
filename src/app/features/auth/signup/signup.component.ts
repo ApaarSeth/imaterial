@@ -81,7 +81,8 @@ export class SignupComponent implements OnInit {
       password: ["", Validators.required],
       otp: ["", [Validators.required]]
     });
-    if (this.user.contactNo && this.user.contactNo.length === 10) {
+
+    if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
       this.enterPhone(event, this.user.contactNo)
     }
   }
