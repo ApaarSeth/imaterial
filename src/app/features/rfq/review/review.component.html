@@ -29,7 +29,7 @@
             <div class="col-xs-6 date-dialog-add-edit">
               <!-- end date -->
               <mat-form-field class="border-input date-label">
-                <mat-label>RFQ end date*</mat-label>
+                <mat-label>RFQ End Date*</mat-label>
                 <span class="form-placeholder">{{ form["controls"]["dueDate"].value | date: "dd-MMM-yyy" }}</span>
                 <input hidden matInput [matDatepicker]="endDate" formControlName="dueDate" [min]="minDate" (focus)="dueDate.open()" readonly />
                 <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>

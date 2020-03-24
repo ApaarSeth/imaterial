@@ -1,6 +1,6 @@
-import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
-import {getLocaleTimeFormat} from "@angular/common";
-import {GlobalStoreMaterial, GlobalProject} from "src/app/shared/models/GlobalStore/materialWise";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { getLocaleTimeFormat } from "@angular/common";
+import { GlobalStoreMaterial, GlobalProject } from "src/app/shared/models/GlobalStore/materialWise";
 
 @Component({
   selector: "app-material-wise",
@@ -9,9 +9,9 @@ import {GlobalStoreMaterial, GlobalProject} from "src/app/shared/models/GlobalSt
 })
 export class MaterialWiseComponent implements OnInit {
   @Input("materialData") materialData: GlobalStoreMaterial[];
-   @Output("materialDataLength") materialDataLength = new EventEmitter();
+  @Output("materialDataLength") materialDataLength = new EventEmitter();
   newMaterialData: GlobalStoreMaterial[];
-  constructor() {}
+  constructor() { }
   searchMaterial: string = "";
   searchProject: string = "";
   ngOnInit() {
@@ -47,7 +47,7 @@ export class MaterialWiseComponent implements OnInit {
   mappingIndentToProject(material: GlobalStoreMaterial) {
     for (let project of material.GlobalProject) {
       let sum = 0;
-      let nearDueDate: string;
+      let nearDueDate: string = null;
       if (project.IndentMaterial) {
         for (let indent of project.IndentMaterial) {
           if (!nearDueDate) {
