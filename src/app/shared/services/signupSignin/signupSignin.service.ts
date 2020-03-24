@@ -46,7 +46,7 @@ export class SignInSignupService implements OnInit {
   verifyEMAIL(email) {
     return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => { return res });
   }
-  VerifyMobile(mobile){
+  VerifyMobile(mobile) {
     return this.dataService.getRequest(API.VERIFYMOBILE(mobile)).then(res => { return res });
   }
 }

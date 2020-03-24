@@ -17,9 +17,16 @@
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ material.projectName }}
-            <a href="javascript:void(0)" class="main-color p-l-15"
+            <!-- <a href="javascript:void(0)" class="main-color p-l-15"
               >{{ material.defaultAddress.addressLine1 }}, {{ material.defaultAddress.addressLine2 }}, {{ material.defaultAddress.city }}, {{ material.defaultAddress.state }},
               {{ material.defaultAddress.pinCode }}
+            </a> -->
+            <a href="javascript:void(0)" class="main-color p-l-15">
+              {{ material.defaultAddress.addressLine1 }}
+              <ng-container *ngIf="material.defaultAddress.addressLine2">, {{ material.defaultAddress.addressLine2 }}</ng-container>
+              <ng-container *ngIf="material.defaultAddress.city">, {{ material.defaultAddress.city }}</ng-container>
+              <ng-container *ngIf="material.defaultAddress.state">, {{ material.defaultAddress.state }}</ng-container>
+              <ng-container *ngIf="material.defaultAddress.pinCode"> {{ material.defaultAddress.pinCode }}</ng-container>
             </a>
             <!-- <a href="javascript:void(0)" (click)="openDialog(material)"
                             class="main-color p-l-15">{{material.defaultAddress.addressLine1}}</a> -->

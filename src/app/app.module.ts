@@ -34,6 +34,7 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
 import { environment } from 'src/environments/environment';
 import { ProfileComponent } from './features/profile/profile.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthModule } from './features/auth/auth.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
+    // AuthModule,
     LayoutModule,
     DashboardModule,
     AppSharedModule,
@@ -62,7 +64,8 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
     GuidedTourModule,
     FormsModule,
     ReactiveFormsModule,
-    HeaderSharedModule
+    HeaderSharedModule,
+
   ],
   providers: [
     HttpInterceptorProviders,
