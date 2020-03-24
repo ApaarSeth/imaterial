@@ -155,7 +155,7 @@
   }
 }
 
-.update-info-profile, .terms-conditions {
+.update-info-profile {
   background-image: url("/assets/images/background-image-overlay.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -421,6 +421,8 @@
     background-color: #F1F1F1;
     border-radius: 6px;
     padding: 2rem !important;
+    max-height: 357px;
+    overflow-y: scroll;
   }
 
   &__content {

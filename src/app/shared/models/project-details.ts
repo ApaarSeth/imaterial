@@ -34,6 +34,7 @@ export interface ProjectDetails {
   matCount: number;
   checked?: boolean;
   imageUrl?:string;
+  imageFileName?:string;
 }
 
 export interface ProjetPopupData {
