@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 
 export class TermsConditionsComponent implements OnInit {
+  agreeSelected: boolean = false;
 
   constructor(private _userService: UserService, private router:Router) { }
 
@@ -23,5 +24,13 @@ export class TermsConditionsComponent implements OnInit {
       if(res.data)
        this.router.navigate(['/profile/update-info']);
     })
+  }
+  agree(event){
+    if(event.checked){
+      this.agreeSelected = true;
+    }
+    else{
+       this.agreeSelected = false;
+    }
   }
 }
