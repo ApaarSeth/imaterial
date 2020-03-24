@@ -1,0 +1,216 @@
+<section class="update-info-profile" *ngIf="users">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 terms-margin-set-width col-md-8 offset-md-2">
+        <div class="update-info__popup p-4">
+          <form class="update-info__form" *ngIf="userInfoForm" [formGroup]="userInfoForm" (ngSubmit)="submit()">
+            <div class="row">
+              <div class="col-sm-12 col-md-12">
+                <h3 class="user-profile text-center text-uppercase pt-2 pb-4" *ngIf="users">{{ users.organizationName }}</h3>
+              </div>
+
+              <div class="col-sm-12 col-md-6">
+                <div class="phot-title"></div>
+                <div class="user-photo">
+                  <img [src]="users.profileUrl || localImg || 'assets/images/default-image.png'" class="img-fluid user_photo" alt="" />
+                </div>
+
+                <!-- <div class="browser-method">
+                  <label class="myLabel">
+                    <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
+                    <span>Upload</span>
+                  </label>
+                </div> -->
+              </div>
+
+              <div class="col-sm-12 col-md-6">
+                <!-- <h4 class="org-name text-uppercase" *ngIf="users">{{ users.organizationName }}</h4> -->
+                <!-- <mat-form-field class="border-input w-100"> -->
+                <!-- <input matInput type="text" formControlName="organizationName"> -->
+                <!-- </mat-form-field> -->
+
+                <mat-form-field class="border-input w-100">
+                  <input matInput type="text" placeholder="*First Name" formControlName="firstName" />
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['firstName'].errors && (userInfoForm.controls['firstName'].dirty || userInfoForm.controls['firstName'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['firstName'].hasError('required')">
+                    First name is required
+                  </mat-error>
+                </mat-error>
+
+                <mat-form-field class="border-input w-100">
+                  <input matInput type="text" placeholder="*Last Name" formControlName="lastName" />
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['lastName'].errors && (userInfoForm.controls['lastName'].dirty || userInfoForm.controls['lastName'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['lastName'].hasError('required')">
+                    Last name is required
+                  </mat-error>
+                </mat-error>
+
+                <mat-form-field class="border-input w-100">
+                  <input matInput type="text" placeholder="Email Id" formControlName="email" />
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['email'].errors && (userInfoForm.controls['email'].dirty || userInfoForm.controls['email'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['email'].hasError('required')">
+                    Email address is required
+                  </mat-error>
+                </mat-error>
+
+                <mat-form-field class="border-input w-100">
+                  <input matInput type="text" placeholder="Phone No." formControlName="contactNo" />
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
+                    Phone number is required
+                  </mat-error>
+                </mat-error>
+
+                <mat-form-field class="border-select w-100">
+                  <mat-label>Role</mat-label>
+                  <mat-select formControlName="roleId">
+                    <mat-option *ngFor="let role of roles" [value]="role.roleId">
+                      {{ role.roleDescription }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['roleId'].errors && (userInfoForm.controls['roleId'].dirty || userInfoForm.controls['roleId'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['roleId'].hasError('required')"> Role is required</mat-error>
+                </mat-error>
+
+
+                  <mat-form-field class="border-select w-100">
+                  <mat-label>Select Turn Over</mat-label>
+                  <mat-select formControlName="turnOverId">
+                    <mat-option *ngFor="let turnOver of turnOverList" [value]="turnOver.turnOverId">
+                      {{ turnOver.shortName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                 <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')"> Turn 
+                  over is required</mat-error>
+                </mat-error>
+
+              </div>
+
+              <!-- <div class="col-md-12">
+                                <p>Choose Trades</p>
+                                <div class="trade-list d-flex align-items-center flex-wrap">
+                                    <div class="trades" *ngFor="let trade of tradeList; let i = index"
+                                        [ngClass]="{'active': clickedItem === i }"
+                                        (click)="clickedItem = i">
+                                        <h6 class="trade-tile">{{ trade.tradeName }}</h6>
+                                    </div>
+                                </div>
+                            </div> -->
+
+              <div class="col-sm-12 col-md-12 choose-trades" *ngIf="users.roleName === 'l1'">
+                <p style="font-weight: 600;">Choose Trades</p>
+                <mat-chip-list multiple id="chipList" [selectable]="true">
+                  <ng-container *ngFor="let trade of tradeList">
+                        <ng-container *ngFor="let x of usersTrade">
+                            <ng-container *ngIf="x == trade.tradeId">
+                               <mat-chip class="background-green">
+                                    {{ trade.tradeName }}
+                               </mat-chip> 
+                            </ng-container>
+                        </ng-container>
+                          <ng-container *ngFor="let x of usersTrade">
+                            <ng-container *ngIf="x != trade.tradeId">
+                                 <mat-chip >
+                                      {{ trade.tradeName }}
+                               </mat-chip>  
+                            </ng-container>
+                        </ng-container>
+                  </ng-container>
+                  
+                  <form [formGroup]="customTrade">
+                    <mat-form-field *ngIf="selectedTradesId.indexOf(22) > -1" class="border-input p-l-10">
+                      <input matInput formControlName="trade" type="text" placeholder="Enter Trade" />
+                    </mat-form-field>
+                  </form>
+                </mat-chip-list>
+              </div>
+
+              <!-- <div class="col-md-6">
+
+                                <mat-form-field class="border-input w-100">
+                                    <input matInput type="text" formControlName="addressLine1" placeholder="Address Line 1">
+                                </mat-form-field>
+                                <mat-error
+                                    *ngIf="userInfoForm.controls['addressLine1'].errors && (userInfoForm.controls['addressLine1'].dirty || userInfoForm.controls['addressLine1'].touched)">
+                                    <mat-error *ngIf="userInfoForm.controls['addressLine1'].hasError('required')">
+                                        Address line 1 is required
+                                    </mat-error>
+                                </mat-error>
+
+
+
+                                <mat-form-field class="border-input w-100">
+                                    <input matInput type="text" formControlName="state" placeholder="State">
+                                </mat-form-field>
+                                <mat-error
+                                    *ngIf="userInfoForm.controls['addressLine2'].errors && (userInfoForm.controls['addressLine2'].dirty || userInfoForm.controls['addressLine2'].touched)">
+                                    <mat-error *ngIf="userInfoForm.controls['addressLine2'].hasError('required')">
+                                        Address line 2 is required
+                                    </mat-error>
+                                </mat-error>
+
+
+
+                                <mat-form-field class="border-input w-100">
+                                    <input matInput type="text" formControlName="pinCode" placeholder="Pin No.">
+                                </mat-form-field>
+                                <mat-error
+                                    *ngIf="userInfoForm.controls['pinCode'].errors && (userInfoForm.controls['pinCode'].dirty || userInfoForm.controls['pinCode'].touched)">
+                                    <mat-error *ngIf="userInfoForm.controls['pinCode'].hasError('required')">
+                                        Pincode is required
+                                    </mat-error>
+                                    <mat-error *ngIf="userInfoForm.controls['pinCode'].hasError('pattern')">
+                                        Pincode is invalid</mat-error>
+                                </mat-error>
+
+                            </div> -->
+
+              <!-- <div class="col-md-6">
+                                <mat-form-field class="border-input w-100">
+                                    <input matInput type="text" formControlName="addressLine2" placeholder="Address Line 2">
+                                </mat-form-field>
+
+                                <mat-form-field class="border-select w-100 city-input">
+                                    <mat-label>City*</mat-label>
+                                    <mat-select formControlName="city">
+                                        <mat-option *ngFor="let city of cities" [value]="city.value">
+                                          {{city.viewValue}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-error
+                                    *ngIf="userInfoForm.controls['city'].errors && (userInfoForm.controls['city'].dirty || userInfoForm.controls['city'].touched)">
+                                    <mat-error *ngIf="userInfoForm.controls['city'].hasError('required')">
+                                        City is required
+                                    </mat-error>
+                                </mat-error>
+
+
+
+                                <mat-form-field class="border-input w-100">
+                                    <input matInput type="text" formControlName="gstNo" placeholder="GST No.">
+                                </mat-form-field>
+                                <mat-error
+                                    *ngIf="userInfoForm.controls['gstNo'].errors && (userInfoForm.controls['gstNo'].dirty || userInfoForm.controls['gstNo'].touched)">
+                                    <mat-error *ngIf="userInfoForm.controls['gstNo'].hasError('pattern')">
+                                        GST No is invalid</mat-error>
+                                </mat-error>
+                            </div> -->
+
+              <div class="text-center col-md-12 mt-4">
+                <!-- <button class="btn btn-warning next-btn" [disabled]="!userInfoForm.valid">Next</button> -->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

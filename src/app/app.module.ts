@@ -32,6 +32,8 @@ import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 import { MAT_DATE_LOCALE } from '@angular/material';
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { environment } from 'src/environments/environment';
+import { ProfileComponent } from './features/profile/profile.component';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +42,8 @@ import { environment } from 'src/environments/environment';
     NotFoundComponent,
     SupplierBidLayoutComponent,
     AppDashboardComponent,
-    ProfileLayoutComponent
+    ProfileLayoutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,8 @@ import { environment } from 'src/environments/environment';
     NgxGoogleAnalyticsRouterModule,
     RouterModule,
     GuidedTourModule,
+    FormsModule,
+    ReactiveFormsModule,
     HeaderSharedModule
   ],
   providers: [

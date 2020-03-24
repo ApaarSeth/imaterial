@@ -63,7 +63,9 @@ export class TopHeaderComponent implements OnInit {
       localStorage.clear();
     });
   }
-
+goToProfile(){
+  this.router.navigate(['/profile-account']);
+  }
   openDiv() {
     if (this.notifClicked == true) {
       this.notifClicked = false

@@ -11,6 +11,7 @@ import { AuthGuardService } from './shared/guards/auth.guards';
 import { UserDataGuardService } from './shared/guards/user-data.guards';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
+import { ProfileComponent } from './features/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,11 @@ const routes: Routes = [
         component: DashboardComponent,
         data: { title: 'Project Dashboard' }
         // resolve: { dashBoardData: DashBoardResolver }
+      },
+      {
+        path: 'profile-account',
+        component: ProfileComponent,
+        data: { title: 'profile' }
       },
       {
         path: 'dashboard',

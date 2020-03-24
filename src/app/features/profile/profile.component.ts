@@ -1,11 +1,9 @@
 import { OnInit, Component } from '@angular/core';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/models/user-details';
 import { Router } from '@angular/router';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
-import { debug } from 'util';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 
 export interface City {
   value: string;
@@ -13,11 +11,11 @@ export interface City {
 }
 
 @Component({
-  selector: 'app-update-info',
-  templateUrl: './update-info.component.html'
+  selector: 'app-profile',
+  templateUrl: './profile.component.html'
 })
 
-export class UpdateInfoComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
   roles: UserRoles[];
   userInfoForm: FormGroup;
@@ -38,12 +36,12 @@ export class UpdateInfoComponent implements OnInit {
     { value: "Karnal", viewValue: "Karnal" }
   ];
   selectedTradesId: number[] = [];
+  usersTrade: number[] = [];
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _router: Router,
-    private _uploadImageService: DocumentUploadService,
-    private navService: AppNavigationService) { }
+    private _uploadImageService: DocumentUploadService) { }
 
   ngOnInit() {
     const userId = localStorage.getItem("userId");
@@ -66,11 +64,17 @@ export class UpdateInfoComponent implements OnInit {
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
       this.users = res.data ? res.data[0] : null;
+      if(res.data[0].trade){
+           res.data[0].trade.forEach(element => {
+            this.usersTrade.push(element.tradeId);
+          });
+      }
+     
       this.formInit();
     });
   }
-  getTurnOverList() {
-    this._userService.getTurnOverList().then(res => {
+  getTurnOverList(){
+     this._userService.getTurnOverList().then(res => {
       this.turnOverList = res.data;
     })
   }
@@ -90,7 +94,7 @@ export class UpdateInfoComponent implements OnInit {
       email: [this.users ? this.users.email : '', Validators.required],
       contactNo: [this.users ? this.users.contactNo : '', Validators.required],
       roleId: [this.roleId ? this.roleId : null, Validators.required],
-      turnOverId: [this.users ? this.users.turnOverId : null, Validators.required],
+      turnOverId:[this.users?this.users.turnOverId : null, Validators.required],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
@@ -176,16 +180,10 @@ export class UpdateInfoComponent implements OnInit {
       const data: UserDetails = this.userInfoForm.value;
 
       this._userService.submitUserDetails(data).then(res => {
-        this.navService.gaEvent({
-          action: 'submit',
-          category: 'Organisation_info',
-          label: 'profile-completed',
-          value: null
-        });
-        if (this.users.roleName === 'l1')
-          this._router.navigate(['profile/add-user']);
-        else if (this.users.roleName != 'l1')
-          this._router.navigate(['dashboard']);
+        if(this.users.roleName === 'l1')
+        this._router.navigate(['profile/add-user']);
+        else if(this.users.roleName != 'l1')
+        this._router.navigate(['dashboard']);
       });
 
     }

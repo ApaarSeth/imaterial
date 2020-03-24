@@ -155,6 +155,60 @@
   }
 }
 
+.update-info-profile, .terms-conditions {
+  background-image: url("/assets/images/background-image-overlay.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 130px 0;
+  &__popup {
+    background-color: #fff;
+    border-radius: 6px;
+  }
+
+  .border-input input,
+  .border-input select,
+  .border-select .mat-form-field-flex {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .mat-error {
+    font-size: 12px;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-label {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .trades.active,
+  .mat-chip.mat-chip.mat-primary.mat-standard-chip.mat-chip-selected.ng-star-inserted.active {
+    border: 1px solid #66bf00;
+    border-radius: 50px;
+    background-color: #66bf00;
+    color: #ffffff;
+  }
+
+  &__form {
+    position: relative;
+    .mat-mini-fab.mat-warn {
+      position: absolute;
+      right: 0px;
+      top: 70px;
+      width: auto;
+      border-radius: 50px;
+      padding: 0px 1px;
+    }
+    .mat-mini-fab .mat-button-wrapper {
+      padding: 8px 15px;
+      display: inline-block;
+      line-height: 24px;
+      font-size: 14px;
+    }
+  }
+}
+
 .invite-users{
   max-height: 500px;
   overflow-y: scroll;
@@ -392,4 +446,8 @@
   .float-right-invite-delBtn{
     float: right;
   }
+}
+.background-green{
+   border: 1px solid #81e212;
+    background-color: #81e212  !important;
 }
