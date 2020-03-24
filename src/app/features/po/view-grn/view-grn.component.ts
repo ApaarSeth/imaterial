@@ -53,13 +53,14 @@ export class ViewGRNComponent implements OnInit {
     userId: number;
 
     constructor(private poService: POService, private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog, private guidedTourService: GuidedTourService, private userGuideService: UserGuideService) {
-        setTimeout(() => {
-            this.guidedTourService.startTour(this.GRNTour);
-        }, 1000);
-
     }
 
     ngOnInit() {
+       if ((localStorage.getItem('grn') == "null") || (localStorage.getItem('grn') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.GRNTour);
+      }, 1000);
+    }
         this.activatedRoute.params.subscribe(res => {
             this.poId = Number(res["poId"]);
             this.poService.getPoGenerateData(this.poId).then(res => {
