@@ -5,7 +5,7 @@ import {
   HttpParams,
   HttpErrorResponse
 } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
+import { environment } from "../../../environments/environment"
 //import { ErrorCodesConstants } from '../constants/error-codes-constants';
 import { isUndefined } from "util";
 //import { NotificationService } from './notification-service';
@@ -15,6 +15,7 @@ import { isUndefined } from "util";
 import { ConfigurationConstants } from "../constants/configuration-constants";
 import { ResolveData, Router } from "@angular/router";
 import { DataServiceOptions } from "../models/data-service-options";
+import { Utils } from '../helpers/utils';
 //import { NotificationService } from './notification-service';
 
 @Injectable({
@@ -22,6 +23,7 @@ import { DataServiceOptions } from "../models/data-service-options";
 })
 export class DataService {
   private baseUrl: string;
+  private baseStartUrl: string;
   private masterUrl: string;
   private ssoUrl: string;
   private role: string;
@@ -34,9 +36,14 @@ export class DataService {
     //private token:environment TokenService,
     private router: Router
   ) {
-    this.baseUrl = environment.url + "/";
-    this.masterUrl = environment.masterUrl + "/";
-    this.ssoUrl = environment.ssoUrl + "/";
+    // this.baseUrl = environment.url + "/";
+    // this.masterUrl = environment.masterUrl + "/";
+    // this.ssoUrl = environment.ssoUrl + "/";
+    // this.baseUrl=Utils.baseUrl;
+    this.baseStartUrl = Utils.baseUrl();
+    this.baseUrl = this.baseStartUrl + "im/";
+    this.masterUrl = this.baseStartUrl + "mm/";
+    this.ssoUrl = this.baseStartUrl + "sso/";
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.orgId = localStorage.getItem("orgId");
