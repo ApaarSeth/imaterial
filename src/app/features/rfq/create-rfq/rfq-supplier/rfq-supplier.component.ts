@@ -161,9 +161,10 @@ export class RfqSupplierComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then(result => {
-        if (result === 'done') {
+        if (result === 'Supplier Successfully added') {
+          let allSuppliersId: number[] = [];
           this.rfqService.getSuppliers(this.orgId).then(data => {
-            let allSuppliersId: number[] = this.allSuppliers.map(supp => supp.supplierId);
+            allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
             let tempId: number[] = data.data.map(supp => supp.supplierId);
             let newAddedId: number = null
             tempId.forEach(id => {
