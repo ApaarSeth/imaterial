@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { map } from "rxjs/operators";
 import { Materials } from "src/app/shared/models/subcategory-materials";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
   selector: "app-rfq-bids",
@@ -22,7 +23,8 @@ export class RfqBidsComponent implements OnInit {
     private router: Router,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private navService: AppNavigationService
   ) { }
   rfqProjects: RfqProject[] = [];
   rfqForms: FormGroup;
@@ -179,6 +181,12 @@ export class RfqBidsComponent implements OnInit {
     console.log(submitData.flat(2));
     this.rfqService.rfqAddPo(submitData.flat(2)).then(res => {
       if (res.statusCode === 201) {
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'po_created',
+          label: 'material name',
+          value: null
+        });
         this.router.navigate(["po/detail-list"]);
       }
     });

@@ -5,6 +5,7 @@ import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/
 import { Router } from '@angular/router';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { debug } from 'util';
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 export interface City {
   value: string;
@@ -41,7 +42,8 @@ export class UpdateInfoComponent implements OnInit {
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _router: Router,
-    private _uploadImageService: DocumentUploadService) { }
+    private _uploadImageService: DocumentUploadService,
+    private navService: AppNavigationService) { }
 
   ngOnInit() {
     const userId = localStorage.getItem("userId");
@@ -67,8 +69,8 @@ export class UpdateInfoComponent implements OnInit {
       this.formInit();
     });
   }
-  getTurnOverList(){
-     this._userService.getTurnOverList().then(res => {
+  getTurnOverList() {
+    this._userService.getTurnOverList().then(res => {
       this.turnOverList = res.data;
     })
   }
@@ -88,7 +90,7 @@ export class UpdateInfoComponent implements OnInit {
       email: [this.users ? this.users.email : '', Validators.required],
       contactNo: [this.users ? this.users.contactNo : '', Validators.required],
       roleId: [this.roleId ? this.roleId : null, Validators.required],
-      turnOverId:[this.users?this.users.turnOverId : null, Validators.required],
+      turnOverId: [this.users ? this.users.turnOverId : null, Validators.required],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
@@ -174,10 +176,16 @@ export class UpdateInfoComponent implements OnInit {
       const data: UserDetails = this.userInfoForm.value;
 
       this._userService.submitUserDetails(data).then(res => {
-        if(this.users.roleName === 'l1')
-        this._router.navigate(['profile/add-user']);
-        else if(this.users.roleName != 'l1')
-        this._router.navigate(['dashboard']);
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'Organisation_info',
+          label: 'profile-completed',
+          value: null
+        });
+        if (this.users.roleName === 'l1')
+          this._router.navigate(['profile/add-user']);
+        else if (this.users.roleName != 'l1')
+          this._router.navigate(['dashboard']);
       });
 
     }

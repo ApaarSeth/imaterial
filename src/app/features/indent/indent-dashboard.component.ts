@@ -18,6 +18,7 @@ import {
   Validators,
   FormControl
 } from "@angular/forms";
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 export interface PeriodicElement {
   materialName: string;
@@ -58,7 +59,8 @@ export class IndentDashboardComponent implements OnInit {
     private projectService: ProjectService,
     private indentService: IndentService,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private navService: AppNavigationService
   ) { }
 
   ngOnInit() {
@@ -105,6 +107,12 @@ export class IndentDashboardComponent implements OnInit {
       return { ...cat, ...formValues[i] };
     });
     this.indentService.raiseIndent(this.projectId, dataSource).then(res => {
+      this.navService.gaEvent({
+        action: 'submit',
+        category: 'indent_created',
+        label: null,
+        value: null
+      });
       this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
     });
   }
@@ -166,12 +174,12 @@ export class IndentDashboardComponent implements OnInit {
   //   return `${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
   // }
   formatDate(oldDate): Date {
-   let newDate = new Date(oldDate);
+    let newDate = new Date(oldDate);
     newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
     return newDate;
   }
-  getStart(date,i){
-  this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
+  getStart(date, i) {
+    this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
     console.log(this.materialForms);
   }
 }

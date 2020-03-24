@@ -17,7 +17,7 @@ export class SelectApproverComponent implements OnInit {
     private poService: POService,
     private dialogRef: MatDialogRef<SelectApproverComponent>,
     @Inject(MAT_DIALOG_DATA) public data: POData
-  ) {}
+  ) { }
   approverData: ApproverData[] = [];
   selectedApprover: ApproverData;
   ngOnInit() {

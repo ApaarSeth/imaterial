@@ -21,6 +21,7 @@ import { Subscription, combineLatest } from 'rxjs';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
   selector: "app-po",
@@ -84,7 +85,8 @@ export class PoComponent implements OnInit {
     private guidedTourService: GuidedTourService,
     private _snackBar: MatSnackBar,
     private commonService: CommonService,
-    private userGuideService: UserGuideService
+    private userGuideService: UserGuideService,
+    private navService: AppNavigationService
   ) {
   }
   poId: number;
@@ -195,6 +197,12 @@ export class PoComponent implements OnInit {
           );
         }
         else {
+          this.navService.gaEvent({
+            action: 'submit',
+            category: 'sent_approval_po',
+            label: null,
+            value: null
+          });
           this._snackBar.open(
             res.message,
             "",
@@ -232,6 +240,23 @@ export class PoComponent implements OnInit {
           }
         );
       } else {
+        if (decision === "approved") {
+          this.navService.gaEvent({
+            action: 'submit',
+            category: 'approve_po',
+            label: null,
+            value: null
+          });
+        }
+        else {
+          this.navService.gaEvent({
+            action: 'submit',
+            category: 'rejection',
+            label: null,
+            value: null
+          });
+        }
+
         this._snackBar.open(
           res.message,
           "",
