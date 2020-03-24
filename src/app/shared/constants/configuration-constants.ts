@@ -97,5 +97,6 @@ export const API = {
   ORGANIZATIONTRADES: projectId => `all/org/trades/${projectId}`,
   PROJECTTRADES: `add/projectTrades`,
   TERMS: id => `update/terms/${id}`,
-  TURNOVERLIST : `get/turnovers`
+  TURNOVERLIST : `get/turnovers`,
+  VERIFYMOBILE: mobile => `verify/contact?contact=${mobile}`
 };

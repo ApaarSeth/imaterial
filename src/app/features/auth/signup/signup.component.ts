@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit {
   emailVerified: boolean = true;
   emailMessage: string;
   otpLength: number = 0;
+  verifiedMobile: boolean = false;
 
   constructor(
     private tokenService: TokenService,
@@ -149,21 +150,50 @@ export class SignupComponent implements OnInit {
   }
   enterPhone(event, numberPassed?: string) {
     this.lessOTPDigits = false;
+    this.verifiedMobile = false;
+    this.showOtp = false;
     const value = numberPassed ? numberPassed : event.target.value;
     if ((value.match(FieldRegExConst.PHONE)) && (value.length == 10)) {
-      this.signInSignupService.sendOTP(value).then(res => {
-        if (res.data)
-          this.showOtp = res.data.success;
-        this._snackBar.open("OTP has been sent on your phone number", "", {
-          duration: 2000,
-          panelClass: ["success-snackbar"],
-          verticalPosition: "top"
-        });
-      });
+       if (!this.uniqueCode) {
+          this.verifyMobile(value);
+       }
+       if((this.uniqueCode) && (this.user.contactNo == value)){
+          this.sendotp(value);
+        }
+        else if((this.uniqueCode) && (this.user.contactNo != value)){
+           this.verifyMobile(value);
+        }
     }
   }
+
+  sendotp(value){
+     this.signInSignupService.sendOTP(value).then(res => {
+              if (res.data)
+                this.showOtp = res.data.success;
+              this._snackBar.open("OTP has been sent on your phone number", "", {
+                duration: 2000,
+                panelClass: ["success-snackbar"],
+                verticalPosition: "top"
+              });
+
+            });
+  }
+
+  verifyMobile(mobile){
+     this.signInSignupService.VerifyMobile(mobile).then(res => {
+            this.verifiedMobile = res.data;
+            this._snackBar.open(res.message, "", {
+                duration: 2000,
+                panelClass: ["success-snackbar"],
+                verticalPosition: "top"
+              });
+               if (this.verifiedMobile){
+                    this.sendotp(mobile);
+                }
+     });
+  }
   enterOTP(event) {
-    const otp = event.target.value
+    const otp = event.target.value;
     if (event.target.value.length == 4) {
       this.otpLength = event.target.value.length;
       this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
