@@ -13,9 +13,9 @@
 export const environment = {
   ga: "",
   production: false,
-  url: "https://api.yeho.ga/im",
-  masterUrl: "https://api.yeho.ga/mm",
-  ssoUrl: "https://api.yeho.ga/sso",
+  // url: "https://api.yeho.ga/im",
+  // masterUrl: "https://api.yeho.ga/mm",
+  // ssoUrl: "https://api.yeho.ga/sso",
   debug_mode: true
 };
 

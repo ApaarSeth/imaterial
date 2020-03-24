@@ -68,12 +68,14 @@ export class PoCardComponent implements OnInit {
   }
 
   getData() {
-    let date = new Date(this.commonService.formatDate(this.projectDetails.get("endDate").value))
-    let dummyMonth = date.getMonth() + 1;
-    const year = date.getFullYear().toString();
-    const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-    const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
-    this.projectDetails.get("endDate").setValue(year + "-" + month + "-" + day)
+    if (this.projectDetails.get("endDate").value) {
+      let date = new Date(this.commonService.formatDate(this.projectDetails.get("endDate").value))
+      let dummyMonth = date.getMonth() + 1;
+      const year = date.getFullYear().toString();
+      const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+      const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+      this.projectDetails.get("endDate").setValue(year + "-" + month + "-" + day)
+    }
     return this.projectDetails.value;
   }
 
