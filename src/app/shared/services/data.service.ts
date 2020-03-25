@@ -406,4 +406,53 @@ export class DataService {
     //this.notifier.notify(err.error.message);
     throw err;
   }
+
+
+  resetPasswordSSOPOST(
+    url: string,
+    params: any,
+    reqOptions: DataServiceOptions = null
+  ): Promise<any> {
+    let headers = new HttpHeaders();
+    let ssotoken = localStorage.getItem('SSO_ACCESS_TOKEN');
+    headers = headers.append("accept", "*/*");
+    //headers = headers.append( 'Authorization', 'admin');
+     headers = headers.append(
+      "Authorization",
+      "Bearer " + ssotoken
+    );
+    if (reqOptions) {
+      if (reqOptions.skipLoader) {
+        headers = headers.append(
+          ConfigurationConstants.HEADER_SKIP_LOADER,
+          "1"
+        );
+      }
+      if (reqOptions.cache) {
+        headers = headers.append(
+          ConfigurationConstants.HEADER_CACHE_REQUEST,
+          "1"
+        );
+      }
+
+      if (reqOptions.headers) {
+        const hdrs = reqOptions.headers.split(",");
+
+        headers = headers.append(hdrs[0], hdrs[1]);
+      }
+    }
+
+    const requestUrl =
+      reqOptions && reqOptions.requestURL ? reqOptions.requestURL : this.ssoUrl;
+    const options = { headers };
+
+    return this.http
+      .post(requestUrl + url, params, options)
+      .toPromise()
+      .then(
+        res => res as any,
+        err =>
+          this.handleError(err, reqOptions && reqOptions.skipLoader === true)
+      );
+  }
 }

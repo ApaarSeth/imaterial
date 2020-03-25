@@ -89,49 +89,17 @@ export class ForgotPasswordComponent implements OnInit {
   forgetPasswordSubmit() {
     this.forgetPassDetails.password = this.forgetPassForm.value.password;
     this.forgetPassDetails.confirmPassword = this.forgetPassForm.value.password;
-    this.forgetPassDetails.phone = this.forgetPassForm.value.phone;
-    this.forgetPassDetails.clientId = "fooClientIdPassword";
-   
-    this.forgetPassDetails.customData = {
-      uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
-      organizationName: this.forgetPassForm.value.organisationName,
-      organizationType: this.forgetPassForm.value.organisationType,
-      organizationId: this.user ? this.user.organizationId.toString() : null,
-      userId: this.user ? this.user.userId.toString() : null,
 
-      // organizationId: this.user ? this.user.organizationId : 0,
-      // userId: this.user ? this.user.userId : 0
-    };
-
-    this.signInSignupService.signUp(this.forgetPassDetails).then(data => {
-      if (data.status === 1002) {
-        this._snackBar.open("Phone Number already used", "", {
-          duration: 2000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "top"
-        });
-      }
-      else if (data.data.serviceRawResponse.data as auth) {
-        this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
-        this.navService.gaEvent({
-          action: 'submit',
-          category: 'Signup_successfully',
-          label: 'email-id',
-          value: null
-        });
-        // localStorage.setItem("role", data.data.serviceRawResponse.data.role);
-        // localStorage.setItem("accessToken", data.data.serviceRawResponse.data.serviceToken);
-        // localStorage.setItem("userId", data.data.serviceRawResponse.data.userId);
-        // localStorage.setItem("orgId", data.data.serviceRawResponse.data.orgId);
-
-        // if (data.data.serviceRawResponse.data.role || this.uniqueCode !== "") {
-        if (this.uniqueCode) {
-          this.router.navigate(["/dashboard"]);
-        } else {
-          // this.router.navigate(["/profile/update-info"]);
-          this.router.navigate(["/profile/terms-conditions"]);
-        }
-      }
+    this.signInSignupService.forgotPassword(this.forgetPassDetails).then(res => {
+     if(res.data.success){
+        this._snackBar.open("Your password has been reset successfully", "", {
+                duration: 2000,
+                panelClass: ["success-snackbar"],
+                verticalPosition: "top"
+              });
+       this.router.navigate(['auth/login']);
+       localStorage.clear();
+     }
     });
   }
 
@@ -185,11 +153,21 @@ export class ForgotPasswordComponent implements OnInit {
   verifyMobile(mobile){
      this.signInSignupService.VerifyMobile(mobile).then(res => {
             this.verifiedMobile = res.data;
-            this._snackBar.open(res.message, "", {
+            if(!this.verifiedMobile){
+               this._snackBar.open("Your mobile number is verified", "", {
                 duration: 2000,
                 panelClass: ["success-snackbar"],
                 verticalPosition: "top"
               });
+            }
+            else{
+               this._snackBar.open("This mobile number is not registered.", "", {
+                duration: 2000,
+                panelClass: ["success-snackbar"],
+                verticalPosition: "top"
+              });
+            }
+           
      });
   }
   enterOTP(event) {
@@ -198,9 +176,10 @@ export class ForgotPasswordComponent implements OnInit {
     this.otpLength = event.target.value.length;
     if (event.target.value.length == 4) {
       this.otpLength = event.target.value.length;
-      this.signInSignupService.verifyOTP(this.forgetPassForm.value.phone, otp).then(res => {
+      this.signInSignupService.verifyForgetPasswordOTP(this.forgetPassForm.value.phone, otp, 'fooClientIdPassword').then(res => {
         if (res.data) {
           this.lessOTPDigits = res.data.success;
+          localStorage.setItem('SSO_ACCESS_TOKEN',res.data.access_token);
         }
       });
     }
