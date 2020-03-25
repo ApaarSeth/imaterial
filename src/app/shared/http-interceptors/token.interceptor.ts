@@ -37,7 +37,8 @@ export class TokenInterceptor implements HttpInterceptor {
                     request.url.indexOf('material/groups') > -1 ||
                     request.url.indexOf('user/info/') > -1 ||
                     request.url.indexOf('material/get/trades') > -1 ||
-                    request.url.indexOf('rfq/details/supplier/') > -1) {
+                    request.url.indexOf('rfq/details/supplier/') > -1 ||
+                    request.url.indexOf('api/user/resetPassword') > -1) {
                     return next.handle(request)
                 }
                 else if (headers) {

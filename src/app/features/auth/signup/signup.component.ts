@@ -27,12 +27,13 @@ export class SignupComponent implements OnInit {
   showPassWordString: boolean = false;
   uniqueCode: string = "";
   user: UserDetails;
-  lessOTPDigits: boolean;
+  lessOTPDigits: boolean = false;
   showOtp: boolean = false;
   emailVerified: boolean = true;
   emailMessage: string;
   otpLength: number = 0;
   verifiedMobile: boolean = false;
+  value: any;
 
   constructor(
     private tokenService: TokenService,
@@ -53,9 +54,12 @@ export class SignupComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       if (this.uniqueCode) {
+        this.lessOTPDigits = true;
         this.getUserInfo(this.uniqueCode);
       } else {
         this.formInit();
+        this.signupForm.controls.otp.setValidators([Validators.required]);
+        this.signupForm.controls.otp.updateValueAndValidity();
       }
     });
     // let urlLength = this.router.url.toString().length;
@@ -82,7 +86,7 @@ export class SignupComponent implements OnInit {
       organisationName: [this.user ? this.user.companyName : '', Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", Validators.required],
-      otp: ["", [Validators.required]]
+      otp: [""]
     });
 
     if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
@@ -152,19 +156,23 @@ export class SignupComponent implements OnInit {
     }
   }
   enterPhone(event, numberPassed?: string) {
-    this.lessOTPDigits = false;
+    if (!this.uniqueCode)
+      this.lessOTPDigits = false;
+
     this.verifiedMobile = false;
     this.showOtp = false;
-    const value = numberPassed ? numberPassed : event.target.value;
-    if ((value.match(FieldRegExConst.PHONE)) && (value.length == 10)) {
+    this.value = numberPassed ? numberPassed : event.target.value;
+  }
+  sendOtpBtn() {
+    if ((this.value.match(FieldRegExConst.PHONE)) && (this.value.length == 10)) {
       if (!this.uniqueCode) {
-        this.verifyMobile(value);
+        this.verifyMobile(this.value);
       }
-      if ((this.uniqueCode) && (this.user.contactNo == value)) {
-        this.sendotp(value);
+      if ((this.uniqueCode) && (this.user.contactNo == this.value)) {
+        this.sendotp(this.value);
       }
-      else if ((this.uniqueCode) && (this.user.contactNo != value)) {
-        this.verifyMobile(value);
+      else if ((this.uniqueCode) && (this.user.contactNo != this.value)) {
+        this.verifyMobile(this.value);
       }
     }
   }
@@ -196,15 +204,18 @@ export class SignupComponent implements OnInit {
     });
   }
   enterOTP(event) {
-    const otp = event.target.value;
-    if (event.target.value.length == 4) {
-      this.otpLength = event.target.value.length;
-      this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
-        if (res.data) {
-          this.lessOTPDigits = res.data.success;
-        }
-      });
+    if (!this.uniqueCode) {
+      const otp = event.target.value;
+      if (event.target.value.length == 4) {
+        this.otpLength = event.target.value.length;
+        this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
+          if (res.data) {
+            this.lessOTPDigits = res.data.success;
+          }
+        });
+      }
     }
+
   }
   verifyEmail(event) {
     const email = event.target.value
@@ -220,4 +231,3 @@ export class SignupComponent implements OnInit {
 
 
 }
-
