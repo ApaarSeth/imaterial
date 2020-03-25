@@ -11,6 +11,7 @@ import { FieldRegExConst } from "../../constants/field-regex-constants";
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { Router } from '@angular/router';
 import { AppNavigationService } from '../../services/navigation.service';
+import { FacebookPixelService } from '../../services/fb-pixel.service';
 
 export interface City {
   value: string;
@@ -56,7 +57,8 @@ export class AddProjectComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private fbPixel: FacebookPixelService
   ) { }
 
   ngOnInit() {
@@ -149,6 +151,7 @@ export class AddProjectComponent implements OnInit {
     this.projectService
       .addProjects(projectDetails, this.orgId, this.userId)
       .then(res => {
+        this.fbPixel.fire('CompleteRegistration')
         this.navService.gaEvent({
           action: 'submit',
           category: 'Project_created',

@@ -12,8 +12,9 @@ export class UserDataGuardService implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
         const userId = localStorage.getItem("userId");
+        const uniqueCode = localStorage.getItem("uniqueCode") ? localStorage.getItem("uniqueCode") : null;
         return this._userService.getUserInfo(userId).then(res => {
-            if ((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
+            if (((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) || uniqueCode != null) {
                 return true;
             }
             this.router.navigate(['/dashboard']);
