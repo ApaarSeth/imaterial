@@ -11,6 +11,7 @@ import { TokenService } from 'src/app/shared/services/token.service';
 import { auth } from 'src/app/shared/models/auth';
 import { debounceTime } from 'rxjs/operators';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 
 export interface OrganisationType {
   value: string;
@@ -41,7 +42,8 @@ export class SignupComponent implements OnInit {
     private signInSignupService: SignInSignupService,
     private _userService: UserService,
     private _snackBar: MatSnackBar,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private fbPixel: FacebookPixelService
   ) { }
 
   signupForm: FormGroup;
@@ -119,6 +121,7 @@ export class SignupComponent implements OnInit {
       }
       else if (data.data.serviceRawResponse.data as auth) {
         this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
+        this.fbPixel.fire('Lead')
         this.navService.gaEvent({
           action: 'submit',
           category: 'Signup_successfully',
@@ -154,43 +157,43 @@ export class SignupComponent implements OnInit {
     this.showOtp = false;
     const value = numberPassed ? numberPassed : event.target.value;
     if ((value.match(FieldRegExConst.PHONE)) && (value.length == 10)) {
-       if (!this.uniqueCode) {
-          this.verifyMobile(value);
-       }
-       if((this.uniqueCode) && (this.user.contactNo == value)){
-          this.sendotp(value);
-        }
-        else if((this.uniqueCode) && (this.user.contactNo != value)){
-           this.verifyMobile(value);
-        }
+      if (!this.uniqueCode) {
+        this.verifyMobile(value);
+      }
+      if ((this.uniqueCode) && (this.user.contactNo == value)) {
+        this.sendotp(value);
+      }
+      else if ((this.uniqueCode) && (this.user.contactNo != value)) {
+        this.verifyMobile(value);
+      }
     }
   }
 
-  sendotp(value){
-     this.signInSignupService.sendOTP(value).then(res => {
-              if (res.data)
-                this.showOtp = res.data.success;
-              this._snackBar.open("OTP has been sent on your phone number", "", {
-                duration: 2000,
-                panelClass: ["success-snackbar"],
-                verticalPosition: "top"
-              });
+  sendotp(value) {
+    this.signInSignupService.sendOTP(value).then(res => {
+      if (res.data)
+        this.showOtp = res.data.success;
+      this._snackBar.open("OTP has been sent on your phone number", "", {
+        duration: 2000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "top"
+      });
 
-            });
+    });
   }
 
-  verifyMobile(mobile){
-     this.signInSignupService.VerifyMobile(mobile).then(res => {
-            this.verifiedMobile = res.data;
-            this._snackBar.open(res.message, "", {
-                duration: 2000,
-                panelClass: ["success-snackbar"],
-                verticalPosition: "top"
-              });
-               if (this.verifiedMobile){
-                    this.sendotp(mobile);
-                }
-     });
+  verifyMobile(mobile) {
+    this.signInSignupService.VerifyMobile(mobile).then(res => {
+      this.verifiedMobile = res.data;
+      this._snackBar.open(res.message, "", {
+        duration: 2000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "top"
+      });
+      if (this.verifiedMobile) {
+        this.sendotp(mobile);
+      }
+    });
   }
   enterOTP(event) {
     const otp = event.target.value;
