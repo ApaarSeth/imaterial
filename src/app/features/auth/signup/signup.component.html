@@ -1,4 +1,4 @@
-<form *ngIf="signupForm" [formGroup]="signupForm" class="sign-up-form">
+<form *ngIf="signupForm" [formGroup]="signupForm" (ngSubmit)="signup()" class="sign-up-form">
  
                 <!-- <mat-form-field class="col-xs-12 border-input">
                     <input matInput formControlName="firstName" type="text" placeholder="First Name" />
@@ -10,7 +10,7 @@
                     <mat-form-field class="col-xs-12 border-input display-flex">
                     <input matInput type="number"  min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" #phone placeholder="Phone No." (input)="enterPhone($event)" />
                     <button *ngIf="!lessOTPDigits"  mat-raised-button class="main-background-color main-button color-white pull-right" [disabled]="phone.value.length != 10" (click)="sendOtpBtn()">
-                        Send Otp
+                        Send Otp 
                     </button>
                 </mat-form-field>
                   <small
@@ -63,9 +63,10 @@
                 <!-- <mat-form-field class="col-xs-12 border-input">
                     <input matInput type="password" formControlName="confirmPassword" placeholder="Retype Password" />
                 </mat-form-field> -->
+                   
                 <div mat-dialog-actions class="col-xs-12 p-t-40">
                     <button mat-raised-button class="main-background-color main-button color-white m-b-5"
-                        cdkFocusInitial style="width: 100%;" [disabled]="!signupForm.valid || !lessOTPDigits || !emailVerified" (click)="signup()">
+                        cdkFocusInitial style="width: 100%;" [disabled]="!signupForm.valid || !lessOTPDigits || !emailVerified">
                         Sign Up
                     </button>
                 </div>

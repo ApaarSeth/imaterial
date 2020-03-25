@@ -21,7 +21,7 @@ export class ForgotPasswordComponent implements OnInit {
   showPassWordString: boolean = false;
   uniqueCode: string = "";
   user: UserDetails;
-  lessOTPDigits: boolean = false;
+  lessOTPDigits: string = "";
   showOtp: boolean = false;
   emailVerified: boolean = true;
   emailMessage: string;
@@ -35,6 +35,8 @@ export class ForgotPasswordComponent implements OnInit {
   phonescreenShow: boolean = true;
   passscreenShow: boolean = false;
   lastFourDigit: any;
+  otpValue: number;
+  otpMessageVerify: string = "";
 
   constructor(
        private tokenService: TokenService,
@@ -77,8 +79,8 @@ export class ForgotPasswordComponent implements OnInit {
     this.forgetPassForm = this.formBuilder.group({
       phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
       organisationType: ["Contractor", Validators.required],
-      password: ["", Validators.required],
-      otp: ["", [Validators.required]]
+      password: [""],
+      otp: [""]
     });
 
     if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
@@ -111,7 +113,6 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
   enterPhone(event, numberPassed?: string) {
-    this.lessOTPDigits = false;
     this.verifiedMobile = true;
     this.showOtp = false;
     this.value = numberPassed ? numberPassed : event.target.value;
@@ -153,42 +154,45 @@ export class ForgotPasswordComponent implements OnInit {
   verifyMobile(mobile){
      this.signInSignupService.VerifyMobile(mobile).then(res => {
             this.verifiedMobile = res.data;
-            if(!this.verifiedMobile){
-               this._snackBar.open("Your mobile number is verified", "", {
+            if(this.verifiedMobile){
+               this._snackBar.open("User is not registered. Please Sign up", "", {
                 duration: 2000,
                 panelClass: ["success-snackbar"],
                 verticalPosition: "top"
               });
             }
-            else{
-               this._snackBar.open("This mobile number is not registered.", "", {
-                duration: 2000,
-                panelClass: ["success-snackbar"],
-                verticalPosition: "top"
-              });
-            }
-           
      });
   }
   enterOTP(event) {
     const otp = event.target.value;
-    this.showOtp = false;
     this.otpLength = event.target.value.length;
     if (event.target.value.length == 4) {
       this.otpLength = event.target.value.length;
-      this.signInSignupService.verifyForgetPasswordOTP(this.forgetPassForm.value.phone, otp, 'fooClientIdPassword').then(res => {
+      this.otpValue = event.target.value;
+    }
+  }
+  verifyOTP(otp){
+   this.signInSignupService.verifyForgetPasswordOTP(this.forgetPassForm.value.phone, otp, 'fooClientIdPassword').then(res => {
         if (res.data) {
           this.lessOTPDigits = res.data.success;
+          this.otpMessageVerify = res.data.message;
           localStorage.setItem('SSO_ACCESS_TOKEN',res.data.access_token);
+          if(this.lessOTPDigits){
+            this.OtpscreenShow = false;
+            this.phonescreenShow = false;
+            this.passscreenShow = true;
+          }
         }
       });
-    }
   }
 submitNumber(){
     if(!this.verifiedMobile){
       this.OtpscreenShow = true;
       this.phonescreenShow = false;
       this.passscreenShow = false;
+      this.forgetPassForm.value.otp = null;
+      this.otpMessageVerify = "";
+      this.otpLength = 0;
       this.lastFourDigit = this.value.substring(6,10);
       this.sendotp(this.value);
     }
@@ -198,15 +202,12 @@ resendOtp(){
    this.sendotp(this.value);
 }
 submitOTP(){
-  this.OtpscreenShow = false;
-  this.phonescreenShow = false;
-  this.passscreenShow = true;
+  this.verifyOTP(this.otpValue); 
 }
 submitPass(){
 this.forgetPasswordSubmit();
 }
 goBackToNumber(){
-    
       this.OtpscreenShow = false;
       this.phonescreenShow = true;
       this.passscreenShow = false;  

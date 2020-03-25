@@ -26,7 +26,7 @@ export class SignupComponent implements OnInit {
   showPassWordString: boolean = false;
   uniqueCode: string = "";
   user: UserDetails;
-  lessOTPDigits: boolean;
+  lessOTPDigits: boolean = false;
   showOtp: boolean = false;
   emailVerified: boolean = true;
   emailMessage: string;
@@ -52,9 +52,12 @@ export class SignupComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       if (this.uniqueCode) {
+        this.lessOTPDigits = true;
         this.getUserInfo(this.uniqueCode);
       } else {
         this.formInit();
+        this.signupForm.controls.otp.setValidators([Validators.required]);
+         this.signupForm.controls.otp.updateValueAndValidity();
       }
     });
     // let urlLength = this.router.url.toString().length;
@@ -81,7 +84,7 @@ export class SignupComponent implements OnInit {
       organisationName: [this.user ? this.user.companyName : '', Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", Validators.required],
-      otp: ["", [Validators.required]]
+      otp: [""]
     });
 
     if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
@@ -150,7 +153,9 @@ export class SignupComponent implements OnInit {
     }
   }
   enterPhone(event, numberPassed?: string) {
+    if(!this.uniqueCode)
     this.lessOTPDigits = false;
+    
     this.verifiedMobile = false;
     this.showOtp = false;
     this.value = numberPassed ? numberPassed : event.target.value;
@@ -196,7 +201,8 @@ export class SignupComponent implements OnInit {
      });
   }
   enterOTP(event) {
-    const otp = event.target.value;
+    if(!this.uniqueCode){
+         const otp = event.target.value;
     if (event.target.value.length == 4) {
       this.otpLength = event.target.value.length;
       this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
@@ -205,6 +211,8 @@ export class SignupComponent implements OnInit {
         }
       });
     }
+    }
+   
   }
   verifyEmail(event) {
     const email = event.target.value
