@@ -35,6 +35,7 @@ export class PODetailComponent implements OnInit {
   displayedColumns = [
     "PO Number",
     "Raised Date",
+    "Supplier Name",
     "Total Material",
     "PO Amount",
     "Action"
