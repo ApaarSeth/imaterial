@@ -89,4 +89,7 @@ export class SigninComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
+  goToForgetPass(){
+    this.router.navigate(['auth/forgot-password']);
+  }
 }

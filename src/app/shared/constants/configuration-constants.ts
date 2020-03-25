@@ -98,5 +98,7 @@ export const API = {
   PROJECTTRADES: `add/projectTrades`,
   TERMS: id => `update/terms/${id}`,
   TURNOVERLIST : `get/turnovers`,
-  VERIFYMOBILE: mobile => `verify/contact?contact=${mobile}`
+  VERIFYMOBILE: mobile => `verify/contact?contact=${mobile}`,
+  VERIFYFORGETPASSWORDOTP: (phone, otp, clientId) => `api/auth/otp/verify?phone=${phone}&otp=${otp}&tokenRequired=true&client_id=${clientId}`,
+  FORGOTPASSWORD: `api/user/resetPassword`
 };
