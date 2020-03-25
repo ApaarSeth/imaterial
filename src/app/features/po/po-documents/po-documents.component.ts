@@ -50,15 +50,13 @@ export class PoDocumentsComponent implements OnInit {
   uploadDocs() {
     if (this.docs && this.docs.length) {
       const data = new FormData();
-
       const fileArr: File[] = [];
-
       data.append(`file`, this.docs[0]);
       console.log("asdxfcgvhbjnk", data);
       return this.documentUploadService.postDocumentUpload(data).then(res => {
         console.log(res);
         let name: string = res.data;
-        let firstName: number = res.data.fileName.lastIndexOf("/");
+        let firstName: number = res.data.fileName.indexOf("_");
         let subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
         this.documentsName.push(subFileName);
         this.documentList.push({

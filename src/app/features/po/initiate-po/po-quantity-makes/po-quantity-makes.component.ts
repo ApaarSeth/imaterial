@@ -17,7 +17,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   @Output() finalPoData = new EventEmitter<any>();
   initiatePoData: initiatePo = {} as initiatePo;
   suppliers: Suppliers;
-  displayedColumns: string[] = ["Material Name", "Required Date", "Requested Quantity", "Estimated Quantity", "Estimated Rate", "Quantity", "Makes"];
+  displayedColumns: string[] = ["Material Name", "Required Date", "Requested Qty", "Fullfillment Date", "Estimated Qty", "Estimated Rate", "Quantity", "Makes"];
   materialForms: FormGroup;
   checkedMaterialsList: RfqMaterialResponse[];
   constructor(private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder) { }
@@ -44,7 +44,8 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
             materialUnitPrice: [item.estimatedRate],
             materialQty: [item.quantity, Validators.required],
             brandNames: [item.makes],
-            materialId: [item.materialId]
+            materialId: [item.materialId],
+            fullfilmentDate: [item.dueDate]
           });
         });
       })

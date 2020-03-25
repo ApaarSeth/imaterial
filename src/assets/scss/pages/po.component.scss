@@ -106,9 +106,38 @@
     padding: 0px !important;
   }
 }
-
-.validTill {
+s .validTill {
   .mat-form-field-infix {
     padding: 0px;
+  }
+}
+
+.po-custom-mat-width {
+  .mat-column-PO-Number,
+  .mat-column-PO-Number .mat-form-field {
+    max-width: 100px;
+  }
+  .mat-column-Raised-Date,
+  .mat-column-Raised-Date .mat-form-field {
+    max-width: 100px;
+  }
+  .mat-column-Supplier-Name,
+  .mat-column-Supplier-Name .mat-form-field {
+    max-width: 150px;
+  }
+
+  .mat-column-Total-Material,
+  .mat-column-Total-Material .mat-form-field {
+    max-width: 50px;
+  }
+
+  .mat-column-PO-Amount,
+  .mat-column-PO-Amount .mat-form-field {
+    max-width: 100px;
+  }
+
+  .mat-column-Action,
+  .mat-column-Action .mat-form-field {
+    max-width: 150px;
   }
 }
