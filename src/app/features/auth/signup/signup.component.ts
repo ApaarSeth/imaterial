@@ -32,6 +32,7 @@ export class SignupComponent implements OnInit {
   emailMessage: string;
   otpLength: number = 0;
   verifiedMobile: boolean = false;
+  value: any;
 
   constructor(
     private tokenService: TokenService,
@@ -152,16 +153,18 @@ export class SignupComponent implements OnInit {
     this.lessOTPDigits = false;
     this.verifiedMobile = false;
     this.showOtp = false;
-    const value = numberPassed ? numberPassed : event.target.value;
-    if ((value.match(FieldRegExConst.PHONE)) && (value.length == 10)) {
+    this.value = numberPassed ? numberPassed : event.target.value;
+  }
+  sendOtpBtn(){
+      if ((this.value.match(FieldRegExConst.PHONE)) && (this.value.length == 10)) {
        if (!this.uniqueCode) {
-          this.verifyMobile(value);
+          this.verifyMobile(this.value);
        }
-       if((this.uniqueCode) && (this.user.contactNo == value)){
-          this.sendotp(value);
+       if((this.uniqueCode) && (this.user.contactNo == this.value)){
+          this.sendotp(this.value);
         }
-        else if((this.uniqueCode) && (this.user.contactNo != value)){
-           this.verifyMobile(value);
+        else if((this.uniqueCode) && (this.user.contactNo != this.value)){
+           this.verifyMobile(this.value);
         }
     }
   }

@@ -10,6 +10,14 @@ export interface SignINDetailLists {
   customData: CustonDataDetails;
 }
 
+export interface ForgetPassDetails {
+  phone: string;
+  password: string;
+  confirmPassword: string;
+  clientId?: string;
+    customData: CustonDataDetails;
+}
+
 export interface SignInData {
   userName: string;
   password: string;

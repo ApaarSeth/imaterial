@@ -1,16 +1,13 @@
-.sign-in-form{
-    mat-form-field{
+
+
+.forget-pass-form{
+   .mat-form-field-appearance-legacy .mat-form-field-wrapper{
         width: 100%;
     }
-    small{
-        color: red;
-        font-size: 12px;
-    }
-}
-.sign-up-form{
-    mat-form-field{
-        width: 100%;
-    }
+   
+   .password-forget{
+       width: 100% !important;
+   }
     .mat-form-field-flex{
         padding-left: 0px !important;
     }
@@ -42,17 +39,8 @@
 }
 }
 
-.signup-image{
-    height: 100vh;
-    object-fit: cover;
-}
-
-.login-image{
-    height: 100vh;
-    object-fit: cover;
-}
-
-.form-design {
+.form-design-forget {
+    padding-top: 25%;
     width: 75%;
     margin: auto;
 }
@@ -85,10 +73,34 @@
 
 }
 
-.signupForm-error-msg.resend-otp{
-    float: right;
-    font-weight: 500;
-    padding-top:10px;
-    color: #f47721 !important;
-    cursor: pointer;
-}
+    .heading-forget{
+        font-size: 22px;
+        font-weight: 500;
+        .otp{
+            display: flex;
+            img{
+                width: 25px;
+                height: 29px;
+                padding-top: 4px;
+                cursor: pointer;
+            }
+            div{
+                padding-left: 10px;
+            }
+        }
+    }
+     .heading-des-forget{
+         padding-top:10px;
+        font-size: 14px;
+        font-weight: 450;
+        color: #6e6b6b;
+    }
+
+    @media only screen and (max-width: 1195px){
+        .form-design-forget {
+                padding-top: 0px;
+                width: 75%;
+                margin: auto;
+            }
+
+    }
