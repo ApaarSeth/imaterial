@@ -29,6 +29,7 @@ import { UserService } from 'src/app/shared/services/userDashboard/user.service'
 import { orgTrades } from 'src/app/shared/models/trades';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -112,7 +113,8 @@ export class BomComponent implements OnInit {
     private loading: GlobalLoaderService,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private fbPixel: FacebookPixelService
   ) {
   }
 
@@ -288,6 +290,7 @@ export class BomComponent implements OnInit {
     this.bomService
       .sumbitCategory(this.userId, this.projectId, this.categoriesInputData)
       .then(res => {
+        this.fbPixel.fire('AddToCart');
         this.navService.gaEvent({
           action: 'submit',
           category: 'material_added',

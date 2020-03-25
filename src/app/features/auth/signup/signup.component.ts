@@ -11,6 +11,7 @@ import { TokenService } from 'src/app/shared/services/token.service';
 import { auth } from 'src/app/shared/models/auth';
 import { debounceTime } from 'rxjs/operators';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 
 export interface OrganisationType {
   value: string;
@@ -42,7 +43,8 @@ export class SignupComponent implements OnInit {
     private signInSignupService: SignInSignupService,
     private _userService: UserService,
     private _snackBar: MatSnackBar,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private fbPixel: FacebookPixelService
   ) { }
 
   signupForm: FormGroup;
@@ -57,7 +59,7 @@ export class SignupComponent implements OnInit {
       } else {
         this.formInit();
         this.signupForm.controls.otp.setValidators([Validators.required]);
-         this.signupForm.controls.otp.updateValueAndValidity();
+        this.signupForm.controls.otp.updateValueAndValidity();
       }
     });
     // let urlLength = this.router.url.toString().length;
@@ -123,6 +125,7 @@ export class SignupComponent implements OnInit {
       }
       else if (data.data.serviceRawResponse.data as auth) {
         this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
+        this.fbPixel.fire('Lead')
         this.navService.gaEvent({
           action: 'submit',
           category: 'Signup_successfully',
@@ -153,66 +156,66 @@ export class SignupComponent implements OnInit {
     }
   }
   enterPhone(event, numberPassed?: string) {
-    if(!this.uniqueCode)
-    this.lessOTPDigits = false;
-    
+    if (!this.uniqueCode)
+      this.lessOTPDigits = false;
+
     this.verifiedMobile = false;
     this.showOtp = false;
     this.value = numberPassed ? numberPassed : event.target.value;
   }
-  sendOtpBtn(){
-      if ((this.value.match(FieldRegExConst.PHONE)) && (this.value.length == 10)) {
-       if (!this.uniqueCode) {
-          this.verifyMobile(this.value);
-       }
-       if((this.uniqueCode) && (this.user.contactNo == this.value)){
-          this.sendotp(this.value);
-        }
-        else if((this.uniqueCode) && (this.user.contactNo != this.value)){
-           this.verifyMobile(this.value);
-        }
+  sendOtpBtn() {
+    if ((this.value.match(FieldRegExConst.PHONE)) && (this.value.length == 10)) {
+      if (!this.uniqueCode) {
+        this.verifyMobile(this.value);
+      }
+      if ((this.uniqueCode) && (this.user.contactNo == this.value)) {
+        this.sendotp(this.value);
+      }
+      else if ((this.uniqueCode) && (this.user.contactNo != this.value)) {
+        this.verifyMobile(this.value);
+      }
     }
   }
 
-  sendotp(value){
-     this.signInSignupService.sendOTP(value).then(res => {
-              if (res.data)
-                this.showOtp = res.data.success;
-              this._snackBar.open("OTP has been sent on your phone number", "", {
-                duration: 2000,
-                panelClass: ["success-snackbar"],
-                verticalPosition: "top"
-              });
+  sendotp(value) {
+    this.signInSignupService.sendOTP(value).then(res => {
+      if (res.data)
+        this.showOtp = res.data.success;
+      this._snackBar.open("OTP has been sent on your phone number", "", {
+        duration: 2000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "top"
+      });
 
-            });
+    });
   }
 
-  verifyMobile(mobile){
-     this.signInSignupService.VerifyMobile(mobile).then(res => {
-            this.verifiedMobile = res.data;
-            this._snackBar.open(res.message, "", {
-                duration: 2000,
-                panelClass: ["success-snackbar"],
-                verticalPosition: "top"
-              });
-               if (this.verifiedMobile){
-                    this.sendotp(mobile);
-                }
-     });
+  verifyMobile(mobile) {
+    this.signInSignupService.VerifyMobile(mobile).then(res => {
+      this.verifiedMobile = res.data;
+      this._snackBar.open(res.message, "", {
+        duration: 2000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "top"
+      });
+      if (this.verifiedMobile) {
+        this.sendotp(mobile);
+      }
+    });
   }
   enterOTP(event) {
-    if(!this.uniqueCode){
-         const otp = event.target.value;
-    if (event.target.value.length == 4) {
-      this.otpLength = event.target.value.length;
-      this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
-        if (res.data) {
-          this.lessOTPDigits = res.data.success;
-        }
-      });
+    if (!this.uniqueCode) {
+      const otp = event.target.value;
+      if (event.target.value.length == 4) {
+        this.otpLength = event.target.value.length;
+        this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
+          if (res.data) {
+            this.lessOTPDigits = res.data.success;
+          }
+        });
+      }
     }
-    }
-   
+
   }
   verifyEmail(event) {
     const email = event.target.value
@@ -228,4 +231,3 @@ export class SignupComponent implements OnInit {
 
 
 }
-

@@ -4,6 +4,7 @@ import { PermissionService } from "../../services/permission.service";
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { HeaderConstants, ConfigurationConstants } from '../../constants/configuration-constants';
+import { FacebookPixelService } from '../../services/fb-pixel.service';
 @Component({
   selector: "app-header",
   templateUrl: "./header.html"
@@ -22,7 +23,8 @@ export class HeaderLayoutComponent implements OnInit {
 
   constructor(
     private permissionService: PermissionService,
-    private router: Router
+    private router: Router,
+    private fbPixel: FacebookPixelService
   ) { }
 
   ngOnInit() {
@@ -42,6 +44,9 @@ export class HeaderLayoutComponent implements OnInit {
         .pipe(filter(e => e instanceof NavigationEnd))
         .subscribe(event => {
           this.highlightButton(this.router.url);
+          if (event instanceof NavigationEnd) {
+            this.fbPixel.fire('PageView');
+          }
         })
     )
   }

@@ -197,6 +197,7 @@
             </div>
           </mat-expansion-panel>
         </div>
+        <br />
         <div *ngIf="poDraftedDetailsTemp">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
@@ -263,7 +264,12 @@
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
-                Approved P.O.
+                <div class="col-xs-6 text-left">
+                  Approved P.O.
+                </div>
+                <div class="col-xs-6 text-right">
+                  *GRN = Good Receive Date
+                </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="row matCellAlignLeft">
@@ -309,7 +315,7 @@
                     >
                     <!-- <span>&nbsp;</span> -->
                     <span class="p-r-10"
-                      ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/view-grn/', element.purchaseOrderId]">Add/Add Good Receive Note</a></span
+                      ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/view-grn/', element.purchaseOrderId]">Add/View GRN</a></span
                     >
 
                     <!-- <span class="p-r-10"
