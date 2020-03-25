@@ -18,9 +18,12 @@ export interface PurchaseOrder {
   totalMaterials: number;
   poAmount: number;
   poName: string;
+  poStatusChangedOn: string;
+  poStatusChangedBy: string
+  supplierName: string;
 }
 
-export interface PurchaseOrderData{
+export interface PurchaseOrderData {
   orgId: number;
   dataSource: string;
   startDate: string;
