@@ -18,6 +18,7 @@ export class TopHeaderComponent implements OnInit {
   unreadnotification: NotificationInt[] = [];
   unreadnotificationLength: number = null;
   allnotificationLength: number = null;
+  userName: string;
   
   constructor(
     private userService: UserService,
@@ -27,6 +28,7 @@ export class TopHeaderComponent implements OnInit {
   ngOnInit() {
 
     this.userId = Number(localStorage.getItem("userId"));
+    this.userName = localStorage.getItem("userName");
     this.sidenavToggle.emit('loaded');
 
     this.getNotifications();

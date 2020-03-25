@@ -70,6 +70,8 @@ export class SignupComponent implements OnInit {
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {
       this.user = res.data[0];
+      if(res.data[0].firstName)
+      localStorage.setItem("userName",res.data[0].firstName);
       this.formInit();
     });
   }

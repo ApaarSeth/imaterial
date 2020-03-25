@@ -187,6 +187,7 @@ export class UpdateInfoComponent implements OnInit {
           label: 'profile-completed',
           value: null
         });
+        localStorage.setItem("userName",this.userInfoForm.value.firstName);
         if (this.users.roleName === 'l1')
           this._router.navigate(['profile/add-user']);
         else if (this.users.roleName != 'l1')
