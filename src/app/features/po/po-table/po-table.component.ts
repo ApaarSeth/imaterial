@@ -105,6 +105,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
         issueToProject: [poMaterial.issueToProject],
         availableStock: [poMaterial.availableStock],
         indentDetailList: null,
+        fullfilmentDate: [poMaterial.fullfilmentDate],
         purchaseOrderDetailList: this.formBuilder.array(purchaseGrp)
       });
     });

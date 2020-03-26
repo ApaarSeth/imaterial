@@ -18,7 +18,7 @@
     <div class="upload-green-tick">
       <img src="../../../../assets/images/upload-green-arrow.png" />
     </div>
-    <input type="file" #fileDropRef id="fileDropRef" class="drag-and-drop" multiple (click)="uploadFiles($event.target.files)" />
+    <input type="file" #fileDropRef id="fileDropRef" class="drag-and-drop" multiple (change)="uploadFiles($event.target.files)" />
     <span>Drag and drop or <span for="fileDropRef" class="main-color">Browse</span> files to upload</span>
   </div>
 

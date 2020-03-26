@@ -40,6 +40,7 @@ export interface PoMaterial {
   issueToProject: number;
   availableStock: number;
   indentDetailList: null;
+  fullfilmentDate: string;
   purchaseOrderDetailList: PurchaseOrder[];
 }
 

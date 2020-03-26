@@ -45,4 +45,5 @@ export interface categoryNestedLevel {
   tradeName: string;
   groupName: string;
   materialList: material[];
+  allNull?: boolean;
 }
