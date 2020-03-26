@@ -98,6 +98,7 @@ export class UpdateInfoComponent implements OnInit {
       roleId: [this.users ? this.users.roleId : null, Validators.required],
       turnOverId: [this.users ? this.users.TurnOverId : null],
       userId: [this.users ? this.users.userId : null],
+      roleDescription: [{value : this.users ? this.users.roleDescription : null,disabled : true}],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
       trade: [],
