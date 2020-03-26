@@ -46,7 +46,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
             materialQty: [item.quantity, Validators.required],
             brandNames: [item.makes],
             materialId: [item.materialId],
-            fullfilmentDate: [item.dueDate != "" || item.dueDate != null ? item.dueDate : null]
+            fullfilmentDate: []
           });
         });
       })
