@@ -3,7 +3,7 @@ import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
 import { UserAdd } from '../../models/user-details';
 import { Router } from '@angular/router';
-
+import {NotificationInt} from '../../models/notification'
 @Injectable({
   providedIn: "root"
 })
@@ -60,9 +60,6 @@ export class UserService {
     return this.dataService.sendPostRequest(API.SUBMIT_USER_DETAILS, userData)
   }
 
-  getNotification(userId) {
-    return this.dataService.getRequest(API.GET_NOTIFICATIONS(userId))
-  }
 
   getUserInfoUniqueCode(uniqueCode) {
     return this.dataService.getRequest(API.GET_USER_INFO_UNIQUE_CODE(uniqueCode));
