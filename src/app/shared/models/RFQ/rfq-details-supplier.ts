@@ -1,5 +1,6 @@
 export interface SendRfqObj {
   dueDate: Date;
+  quoteValidTill: Date;
   projectList: ProjectRfqObj[];
 }
 export interface ProjectRfqObj {
@@ -9,6 +10,7 @@ export interface ProjectRfqObj {
   addressLine2: string;
   city: string;
   state: string;
+  
   gst: string;
   materialList: MaterialRfqObj[];
 }
