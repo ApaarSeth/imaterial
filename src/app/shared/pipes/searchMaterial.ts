@@ -16,16 +16,23 @@ export class SearchMaterialPipe implements PipeTransform {
                 }
             } else if (property && property1) {
                 for (let search of searchList) {
-                    let newMaterialList = search[property].filter(list => {
-                        return list[property1].toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1
+                    let newMaterialList = search[property].map(list => {
+                        if (list[property1].toLowerCase().indexOf(searchText.trim().toLowerCase()) > -1)
+                            list.isNull = false;
+                        else
+                            list.isNull = true;
+                        return list;
                     })
                     if (newMaterialList.length) {
-                        newSearchList.push({ ...search, materialList: newMaterialList });
+                        let allNull = newMaterialList.every(list => {
+                            return list.isNull === true;
+                        })
+                        newSearchList.push({ ...search, materialList: newMaterialList, allNull });
                     }
 
                 }
             }
-
+            console.log(newSearchList)
             return newSearchList;
         }
 

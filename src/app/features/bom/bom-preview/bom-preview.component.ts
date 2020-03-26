@@ -62,14 +62,14 @@ export class BomPreviewComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"))
     // this.projectService.getProject(this.orgId, this.projectId).then(data => {
     // });
-    this.selectedCategory = this.category
+    this.selectedCategory = [...this.category];
     this.mappingMaterialWithQuantity()
     this.formInit();
   }
 
 
   ngOnChanges(): void {
-    this.selectedCategory = this.category;
+    this.selectedCategory = [...this.category];
     this.formInit();
   }
 
@@ -135,7 +135,7 @@ export class BomPreviewComponent implements OnInit {
           return category;
         })
 
-        this.searchData.emit(this.selectedCategory);
+        // this.searchData.emit(this.selectedCategory);
         this.formInit();
       })
       .catch(err => {
