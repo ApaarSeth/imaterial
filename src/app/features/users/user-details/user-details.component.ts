@@ -121,12 +121,12 @@ export class UserDetailComponent implements OnInit {
         this.dataSourceDeactivateTemp = data.data.deactivatedProjectList;
 
         this.dataSourceActivate.filterPredicate = (data, filterValue) => {
-          const dataStr = data.ProjectUser.firstName + data.ProjectUser.lastName + data.ProjectUser.email + data.ProjectUser.contactNo + data.ProjectUser.roleId + data.roleName + data.ProjectList;
+          const dataStr = data.ProjectUser.firstName.toLowerCase() + data.ProjectUser.lastName.toLowerCase() + data.ProjectUser.email.toLowerCase() + data.ProjectUser.contactNo + data.ProjectUser.roleId + data.roleName + data.ProjectList;
           return dataStr.indexOf(filterValue) != -1;
         }
 
         this.dataSourceDeactivate.filterPredicate = (data, filterValue) => {
-          const dataStr = data.ProjectUser.firstName + data.ProjectUser.lastName + data.ProjectUser.email + data.ProjectUser.contactNo + data.ProjectUser.roleId + data.roleName + data.ProjectList;
+          const dataStr = data.ProjectUser.firstName.toLowerCase() + data.ProjectUser.lastName.toLowerCase() + data.ProjectUser.email.toLowerCase() + data.ProjectUser.contactNo + data.ProjectUser.roleId + data.roleName + data.ProjectList;
           return dataStr.indexOf(filterValue) != -1;
         }
         if (this.dataSourceActivateTemp.length > 0 && this.dataSourceDeactivateTemp.length > 0) {
