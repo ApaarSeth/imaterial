@@ -10,6 +10,7 @@ import { ProjectDetails } from 'src/app/shared/models/project-details';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { GuideTourModel } from 'src/app/shared/models/guided_tour';
 import { PermissionService } from 'src/app/shared/services/permission.service';
+import { CommonService } from 'src/app/shared/services/commonService';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -39,6 +40,7 @@ export class AppDashboardComponent implements OnInit {
     private _userService: UserService,
     private userguideservice: UserGuideService,
     private _projectService: ProjectService,
+    private commonService : CommonService,
     private permissionService: PermissionService) { }
 
   ngOnInit() {
@@ -59,8 +61,12 @@ export class AppDashboardComponent implements OnInit {
     })
 
     this.getProjectsNumber();
+    this.getNotifications();
   }
 
+getNotifications(){
+    this.commonService.getNotification(this.userId);
+  }
   openProject() {
     let data = {
       isEdit: false,

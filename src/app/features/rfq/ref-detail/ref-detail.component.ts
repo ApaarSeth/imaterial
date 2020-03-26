@@ -3,13 +3,15 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { RfqList } from "src/app/shared/models/RFQ/rfq-details";
 import { MatTableDataSource } from "@angular/material";
 import { Router } from "@angular/router";
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-ref-detail",
   templateUrl: "./ref-detail.component.html"
 })
 export class RefDetailComponent implements OnInit {
-  constructor(private router: Router, private rfqService: RFQService) { }
+  userId: number;
+  constructor(private router: Router, private rfqService: RFQService, private commonService: CommonService) { }
   // submittedRfqList: RfqList[];
   nonSubmittedRfqListTemp: RfqList[];
   submittedRfqListTemp: RfqList[];
@@ -29,6 +31,7 @@ export class RefDetailComponent implements OnInit {
   ];
   ngOnInit() {
     let orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
     this.rfqService.rfqDetail(orgId).then(res => {
       this.submittedRfqList = new MatTableDataSource(res.data.submittedRfqList);
       this.nonSubmittedRfqList = new MatTableDataSource(
@@ -57,6 +60,11 @@ export class RefDetailComponent implements OnInit {
         return dataStr.indexOf(filterValue) != -1;
       };
     });
+      this.getNotifications();
+  }
+
+ getNotifications(){
+    this.commonService.getNotification(this.userId);
   }
 
   applyFilter(filterValue: string) {

@@ -8,6 +8,7 @@ import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { POService } from 'src/app/shared/services/po/po.service';
 import { POData } from 'src/app/shared/models/PO/po-data';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
     selector: "view-grn",
@@ -52,7 +53,7 @@ export class ViewGRNComponent implements OnInit {
     };
     userId: number;
 
-    constructor(private poService: POService, private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog, private guidedTourService: GuidedTourService, private userGuideService: UserGuideService) {
+    constructor(private poService: POService, private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog, private guidedTourService: GuidedTourService, private userGuideService: UserGuideService,private commonService: CommonService) {
     }
 
     ngOnInit() {
@@ -68,7 +69,11 @@ export class ViewGRNComponent implements OnInit {
             })
             this.getGRNDetails(Number(res["poId"]));
         })
+        this.getNotifications();
     }
+getNotifications(){
+    this.commonService.getNotification(this.userId);
+  }
     setLocalStorage() {
         this.userId = Number(localStorage.getItem("userId"));
         const popovers = {
