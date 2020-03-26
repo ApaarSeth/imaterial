@@ -38,6 +38,7 @@ export class UpdateInfoComponent implements OnInit {
     { value: "Karnal", viewValue: "Karnal" }
   ];
   selectedTradesId: number[] = [];
+  url: string;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -161,6 +162,7 @@ export class UpdateInfoComponent implements OnInit {
       data.append(`file`, file);
       return this._uploadImageService.postDocumentUpload(data).then(res => {
         this.userInfoForm.get('profileUrl').setValue(res.data.fileName);
+        this.url = res.data.url;
       });
     }
   }
@@ -187,7 +189,12 @@ export class UpdateInfoComponent implements OnInit {
           label: 'profile-completed',
           value: null
         });
+
         localStorage.setItem("userName",this.userInfoForm.value.firstName);
+        if(this.url){
+           localStorage.setItem("companyImage",this.url);
+        }
+
         if (this.users.roleName === 'l1')
           this._router.navigate(['profile/add-user']);
         else if (this.users.roleName != 'l1')
