@@ -19,6 +19,7 @@ export class TopHeaderComponent implements OnInit {
   unreadnotificationLength: number = null;
   allnotificationLength: number = null;
   userName: string;
+  url: string;
   
   constructor(
     private userService: UserService,
@@ -29,6 +30,7 @@ export class TopHeaderComponent implements OnInit {
 
     this.userId = Number(localStorage.getItem("userId"));
     this.userName = localStorage.getItem("userName");
+    this.url = localStorage.getItem("companyImage")
     this.sidenavToggle.emit('loaded');
 
     this.getNotifications();
