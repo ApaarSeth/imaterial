@@ -10,6 +10,7 @@ import {
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { GuidedTourService, OrientationConfiguration, Orientation, GuidedTour } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "dashboard",
@@ -96,7 +97,8 @@ export class DashboardComponent implements OnInit {
     private userGuideService: UserGuideService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private guidedTourService: GuidedTourService
+    private guidedTourService: GuidedTourService,
+     private commonService : CommonService
   ) {
   }
 
@@ -110,6 +112,8 @@ export class DashboardComponent implements OnInit {
 
       }, 1000);
     }
+    
+    
 
     console.log(this.userId);
     this.getAllProjects();
@@ -126,8 +130,13 @@ export class DashboardComponent implements OnInit {
         localStorage.setItem('projectDashboard', '1');
       }
     })
+
+    this.getNotifications();
   }
 
+ getNotifications(){
+    this.commonService.getNotification(this.userId);
+  }
   getAllProjects() {
     this.projectService.getProjects(this.orgId, this.userId).then(data => {
       this.allProjects = data.data;

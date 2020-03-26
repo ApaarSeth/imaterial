@@ -27,6 +27,7 @@ import { UserService } from 'src/app/shared/services/userDashboard/user.service'
 import { forEachChild } from 'typescript';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 // chip static data
 export interface Fruit {
@@ -89,7 +90,8 @@ export class UserDetailComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private userService: UserService,
     private guidedTourService: GuidedTourService,
-    private userGuideService : UserGuideService
+    private userGuideService : UserGuideService,
+    private commonService: CommonService
   ) {
   }
 
@@ -102,6 +104,11 @@ export class UserDetailComponent implements OnInit {
       }, 1000);
     }
     this.getAllUsers();
+   this.getNotifications();
+  }
+
+ getNotifications(){
+    this.commonService.getNotification(this.userId);
   }
 
   getAllUsers() {

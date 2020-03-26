@@ -38,6 +38,7 @@ export class UpdateInfoComponent implements OnInit {
     { value: "Karnal", viewValue: "Karnal" }
   ];
   selectedTradesId: number[] = [];
+  url: string;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -67,6 +68,11 @@ export class UpdateInfoComponent implements OnInit {
     this._userService.getUserInfo(userId).then(res => {
       this.users = res.data ? res.data[0] : null;
       this.formInit();
+      if(this.users.roleName === 'l1')
+       {
+           this.userInfoForm.controls.turnOverId.setValidators([Validators.required]);
+         this.userInfoForm.controls.turnOverId.updateValueAndValidity();
+       }
     });
   }
   getTurnOverList() {
@@ -90,7 +96,7 @@ export class UpdateInfoComponent implements OnInit {
       email: [this.users ? this.users.email : '', Validators.required],
       contactNo: [this.users ? this.users.contactNo : '', Validators.required],
       roleId: [this.users ? this.users.roleId : null, Validators.required],
-      turnOverId: [this.users ? this.users.TurnOverId : null, Validators.required],
+      turnOverId: [this.users ? this.users.TurnOverId : null],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
@@ -156,6 +162,7 @@ export class UpdateInfoComponent implements OnInit {
       data.append(`file`, file);
       return this._uploadImageService.postDocumentUpload(data).then(res => {
         this.userInfoForm.get('profileUrl').setValue(res.data.fileName);
+        this.url = res.data.url;
       });
     }
   }
@@ -182,6 +189,12 @@ export class UpdateInfoComponent implements OnInit {
           label: 'profile-completed',
           value: null
         });
+
+        localStorage.setItem("userName",this.userInfoForm.value.firstName);
+        if(this.url){
+           localStorage.setItem("companyImage",this.url);
+        }
+
         if (this.users.roleName === 'l1')
           this._router.navigate(['profile/add-user']);
         else if (this.users.roleName != 'l1')

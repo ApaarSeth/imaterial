@@ -78,7 +78,7 @@
                 </mat-error>
 
 
-                  <mat-form-field class="border-select w-100">
+                  <mat-form-field class="border-select w-100" *ngIf="users.roleName === 'l1'">
                   <mat-label>Select Turn Over</mat-label>
                   <mat-select formControlName="turnOverId">
                     <mat-option *ngFor="let turnOver of turnOverList" [value]="turnOver.turnOverId">

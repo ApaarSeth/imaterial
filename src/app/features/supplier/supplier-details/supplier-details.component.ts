@@ -9,6 +9,7 @@ import { DeactiveSupplierComponent } from 'src/app/shared/dialogs/disable-suppli
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 import { GuidedTourService, GuidedTour, Orientation } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 // chip static data
 export interface Fruit {
@@ -70,7 +71,8 @@ export class SupplierDetailComponent implements OnInit {
       private loading: GlobalLoaderService,
       private guidedTourService: GuidedTourService,
       private _snackBar: MatSnackBar,
-      private userGuideService: UserGuideService
+      private userGuideService: UserGuideService,
+      private commonService : CommonService
   ) {
   }
 
@@ -82,9 +84,13 @@ export class SupplierDetailComponent implements OnInit {
         this.guidedTourService.startTour(this.SupplierDashboardTour);
       }, 1000);
     }
+    this.getNotifications();
     this.getAllSupplier();
   }
 
+ getNotifications(){
+    this.commonService.getNotification(this.userId);
+  }
   getAllSupplier() {
     this.rfqService.getSuppliers(this.orgId).then(data => {
 

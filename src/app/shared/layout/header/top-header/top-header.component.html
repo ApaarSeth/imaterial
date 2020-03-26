@@ -31,8 +31,10 @@
 
     <div fxShow="true" fxHide.lt-md>
       <button mat-button [matMenuTriggerFor]="logIn">
-        <img class="img-circle" height="36" width="38" src="../../../../assets/images/user-image.jpg" alt="Test" />
-        Test
+        <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/user-image.jpg'" alt="Test" />
+        <span>
+          {{userName}}
+        </span>
         <mat-icon aria-hidden="false" aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
       </button>
       <mat-menu #logIn="matMenu">

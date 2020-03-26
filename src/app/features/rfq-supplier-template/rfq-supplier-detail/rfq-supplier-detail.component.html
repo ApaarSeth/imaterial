@@ -26,6 +26,10 @@
           <div class="col-md-5 col-xs-8 p-t-10">
             <label for="bidCompletion" class="pull-left p-t-20 p-r-10">Bid Completion:</label>
             <span class="pull-left text-semi-bold m-t-20">{{brandCount}}/{{materialCount}}</span>
+            
+            <span  class="pull-right text-semi-bold m-t-20">
+              RFQ Expiry Date :: {{rfqSupplierDetailList.dueDate | date: "dd-MMM-yyy"}}
+            </span>
           </div>
 
           <div class="col-md-2 col-xs-4 p-t-20">
@@ -95,8 +99,11 @@
                   <span>
                     {{material.materialName}}
                   </span></td>
-                <td class="font-size14" colspan="2">Requested Quantity: {{material.materialQuantity}}
+                <td class="font-size14">Requested Quantity: {{material.materialQuantity}}
                   {{material.materialUnit}}
+                </td>
+                <td  class="font-size14">
+                  Required Date : {{material.fullfilmentDate | date: "dd-MMM-yyy"}}
                 </td>
                 <td class="text-align-right">
                   <mat-form-field class="border-input">
@@ -132,7 +139,7 @@
                   <td class="text-align-right">{{(brand.brandRate * material.materialQuantity | number:'1.2-2')}}</td>
                   
                   <td class="text-align-right">
-                    <span *ngIf="!brand.brandRate">0</span>
+                    <span *ngIf="!brand.brandRate">0.00</span>
                     <span
                       *ngIf="brand.brandRate">{{((material.materialIgst/100)*(brand.brandRate * material.materialQuantity)) | number:'1.2-2'}}</span>
                   </td>
