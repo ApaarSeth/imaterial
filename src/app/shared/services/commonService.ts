@@ -31,8 +31,8 @@ export class CommonService {
         this.notificationObj = res.data;
         this.unreadnotification = [];
         this.readnotification = [];
-         localStorage.removeItem("all_notification");
-         localStorage.removeItem("un_read_notification");
+        // localStorage.removeItem("all_notification");
+        // localStorage.removeItem("un_read_notification");
 
         if (this.notificationObj) {
           this.notificationObj.forEach(element => {
@@ -47,7 +47,7 @@ export class CommonService {
           if (this.unreadnotification && this.unreadnotification.length > 0){
             this.unreadnotificationLength = 0;
             this.unreadnotificationLength = this.unreadnotification.length;
-            localStorage.setItem("un_read_notification",this.unreadnotificationLength.toString());
+           // localStorage.setItem("un_read_notification",this.unreadnotificationLength.toString());
             this.onUserUpdate$.next(this.unreadnotificationLength);
           }
             
@@ -55,7 +55,7 @@ export class CommonService {
           if (this.readnotification && this.unreadnotification && this.readnotification.length > 0 && this.unreadnotification.length > 0){
              this.allnotificationLength = 0;
              this.allnotificationLength = this.readnotification.length + this.unreadnotification.length;
-             localStorage.setItem("all_notification",this.allnotificationLength.toString());
+           //  localStorage.setItem("all_notification",this.allnotificationLength.toString());
           }
            
         }

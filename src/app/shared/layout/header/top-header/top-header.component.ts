@@ -38,7 +38,7 @@ export class TopHeaderComponent implements OnInit {
     this.url = localStorage.getItem("companyImage")
     this.sidenavToggle.emit('loaded');
     this.getNotifications();
-    this.getNotificationFromLocalstorage();
+  //  this.getNotificationFromLocalstorage();
     this.startSubscriptions();
   }
   startSubscriptions(){
@@ -71,15 +71,16 @@ goToProfile(){
   }
   openDiv() {
     if (this.notifClicked == true) {
-      this.notifClicked = false
+       this.getNotificationData();
+        this.notifClicked = false;
     } else {
-      this.notifClicked = true;
       this.getNotificationData();
-      this.getNotificationFromLocalstorage();
+      this.notifClicked = true;
     }
   }
   getNotificationData(){
      this.commonService.getNotificationData(this.userId).then(res => {
+       this.notificationObj = [];
         this.notificationObj = res.data;
         this.unreadnotification = [];
         this.readnotification = [];
@@ -97,13 +98,13 @@ goToProfile(){
   
           if (this.unreadnotification && this.unreadnotification.length > 0){
             this,this.unreadnotificationLength = this.unreadnotification.length;
-            localStorage.setItem("un_read_notification",this.unreadnotificationLength.toString());
+          //  localStorage.setItem("un_read_notification",this.unreadnotificationLength.toString());
           }
             
   
           if (this.readnotification && this.unreadnotification && this.readnotification.length > 0 && this.unreadnotification.length > 0){
              this.allnotificationLength = this.readnotification.length + this.unreadnotification.length;
-             localStorage.setItem("all_notification",this.allnotificationLength.toString());
+           //  localStorage.setItem("all_notification",this.allnotificationLength.toString());
           }
            
         }

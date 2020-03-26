@@ -151,8 +151,8 @@
           <!-- end structure -->
 
           <div mat-dialog-actions>
-            <div class="col-sm-12 save-btn-add-edit-user-modal">
-              <button mat-raised-button [disabled]="!form.valid || (!validPincode)" (click)="saveAddress()"
+            <div class="col-sm-12 save-btn-add-edit-user-modal rfq-bid-address">
+              <button mat-raised-button [disabled]="addSupplierAddress ? false : (!form.valid || (!validPincode))" (click)="saveAddress()"
                 class="main-background-color main-button color-white pull-right">
                 Submit
               </button>
