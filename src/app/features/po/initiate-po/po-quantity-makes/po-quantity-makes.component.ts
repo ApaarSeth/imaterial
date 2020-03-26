@@ -7,6 +7,7 @@ import { POService } from "src/app/shared/services/po/po.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { isPlatformBrowser } from "@angular/common";
+import { CommonService } from 'src/app/shared/services/commonService';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ["Material Name", "Required Date", "Requested Qty", "Fullfillment Date", "Estimated Qty", "Estimated Rate", "Quantity", "Makes"];
   materialForms: FormGroup;
   checkedMaterialsList: RfqMaterialResponse[];
-  constructor(private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder) { }
+  constructor(private commonService: CommonService, private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder) { }
 
   ngOnInit() { }
 
@@ -46,7 +47,9 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
             materialQty: [item.quantity, Validators.required],
             brandNames: [item.makes],
             materialId: [item.materialId],
-            fullfilmentDate: []
+            fullfilmentDate: [
+
+            ]
           });
         });
       })
@@ -76,8 +79,16 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       this.initiatePoData.supplierName = this.poData.selectedSupplier.supplier_name;
       this.initiatePoData.rfqId = null;
       this.materialForms.value.forms = this.materialForms.value.forms.map(material => {
-        if (material.fullfilmentDate === "") {
+        if (material.fullfilmentDate === "" || material.fullfilmentDate === null) {
           material.fullfilmentDate = null;
+        }
+        else {
+          let date = new Date(this.commonService.formatDate(material.fullfilmentDate))
+          let dummyMonth = date.getMonth() + 1;
+          const year = date.getFullYear().toString();
+          const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+          const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+          material.fullfilmentDate = year + "-" + month + "-" + day;
         }
         return material
       });
