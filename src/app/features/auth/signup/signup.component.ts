@@ -34,6 +34,7 @@ export class SignupComponent implements OnInit {
   otpLength: number = 0;
   verifiedMobile: boolean = false;
   value: any;
+  organisationDisabled: boolean = false;
 
   constructor(
     private tokenService: TokenService,
@@ -55,6 +56,7 @@ export class SignupComponent implements OnInit {
       this.uniqueCode = param["uniqueCode"];
       if (this.uniqueCode) {
         this.lessOTPDigits = true;
+        this.organisationDisabled = true;
         this.getUserInfo(this.uniqueCode);
       } else {
         this.formInit();
@@ -85,7 +87,7 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
-      organisationName: [this.user ? this.user.companyName : '', Validators.required],
+      organisationName: [{value : this.user ? this.user.companyName : '', disabled:this.organisationDisabled}, Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", Validators.required],
       otp: [""]
