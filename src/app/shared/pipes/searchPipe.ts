@@ -30,7 +30,6 @@ export class SearchPipe implements PipeTransform {
           for (let prop of search[property][property1]) {
 
           }
-
         }
       }
 

@@ -1,92 +1,96 @@
 <form *ngIf="selectedCategory.length" [formGroup]="quantityForms">
   <ng-container formArrayName="forms">
-    <span [formGroupName]="c" *ngFor="let category of selectedCategory | SearchMaterial: searchMat:'materialList':'materialName'; let c = index">
-      <mat-accordion>
-        <div #myele>
-          <mat-expansion-panel class="m-b-5 m-t-5 bom-qty-page" [expanded]="true">
-            <mat-expansion-panel-header class="background-color-bom-category row">
-              <div class="col-xs-6">
-                <mat-panel-title class="pull-left">
-                  {{ category.groupName }}
-                </mat-panel-title>
-              </div>
-              <div class="col-xs-6 p-r-65">
-                <span class="pull-right">
-                  Estimated Quantity
-                </span>
-              </div>
-            </mat-expansion-panel-header>
-            <ng-container formArrayName="materialGroup">
-              <div class="row background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index" formGroupName="{{ sc }}">
-                <div class="col-xs-3">
-                  <span class="pull-left p-l-40 p-t-20">{{ subcategory.materialName }}</span>
+    <span *ngFor="let category of selectedCategory | SearchPipe: searchMat:'groupName'; let c = index">
+      <ng-container [formGroupName]="c">
+        <mat-accordion>
+          <div #myele>
+            <mat-expansion-panel class="m-b-5 m-t-5 bom-qty-page" [expanded]="true">
+              <mat-expansion-panel-header class="background-color-bom-category row">
+                <div class="col-xs-6">
+                  <mat-panel-title class="pull-left">
+                    {{ category.groupName }}
+                  </mat-panel-title>
                 </div>
-                <div class="col-xs-5 p-t-10">
-                  <span class="pull-right text-semi-bold" *ngFor="let trades of subcategory.tradeList; let i = index">
-                    {{ trades }}<span *ngIf="i === subcategory.tradeList.length">,</span>
-                    <!-- <mat-card class="mat-card-width p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white" matTooltip="{{ trades }}">
-                      <div class="limited-character global">
-                        {{ trades }}
-                      </div>
-                    </mat-card> -->
-                  </span>
-                </div>
-                <div class="col-xs-3">
+                <div class="col-xs-6 p-r-65">
                   <span class="pull-right">
-                    <!-- <mat-form-field class="full-border widthZero">
-                  <input matInput formControlName="estimatedQty"  placeholder="eg. 1500" />
-                  <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
-                </mat-form-field> -->
-
-                    <mat-form-field class="border-input widthZero">
-                      <input
-                        matInput
-                        formControlName="estimatedQty"
-                        type="number"
-                        class="p-b-5 shortWidth"
-                        placeholder="Enter Quantity"
-                        min="0"
-                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                      />
-                    </mat-form-field>
+                    Estimated Quantity
                   </span>
                 </div>
-                <div class="col-xs-1 p-t-25">
-                  {{ subcategory.materialUnit }}
-                </div>
-
-                <ng-container *ngIf="subcategory.Specs">
-                  <div class="row background-color-bom-sub-sub-category p-0" *ngFor="let material of subcategory.Specs">
-                    <div class="col-xs-6">
-                      <span class="pull-left p-l-60 p-t-20">{{ material.label }}</span>
+              </mat-expansion-panel-header>
+              <ng-container formArrayName="materialGroup">
+                <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index" [formGroupName]="sc">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <span class="pull-left p-l-40 p-t-20">{{ subcategory.materialName }}</span>
                     </div>
-                    <div class="col-xs-6">
-                      <span class="pull-right p-r-40">
+                    <div class="col-xs-5 p-t-10">
+                      <span class="pull-right text-semi-bold" *ngFor="let trades of subcategory.tradeList; let i = index">
+                        {{ trades }}<span *ngIf="i === subcategory.tradeList.length">,</span>
+                        <!-- <mat-card class="mat-card-width p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white" matTooltip="{{ trades }}">
+                        <div class="limited-character global">
+                          {{ trades }}
+                        </div>
+                      </mat-card> -->
+                      </span>
+                    </div>
+                    <div class="col-xs-3">
+                      <span class="pull-right">
                         <!-- <mat-form-field class="full-border widthZero">
-                      <input matInput class="p-b-5 shortWidth" placeholder="eg. 1500" /><span
-                        class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
-                    </mat-form-field> -->
+                    <input matInput formControlName="estimatedQty"  placeholder="eg. 1500" />
+                    <span class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
+                  </mat-form-field> -->
 
                         <mat-form-field class="border-input widthZero">
                           <input
                             matInput
-                            class="p-b-5 shortWidth"
+                            formControlName="estimatedQty"
                             type="number"
-                            min="0"
+                            class="p-b-5 shortWidth"
                             placeholder="Enter Quantity"
+                            min="0"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                           />
-                          <span class="p-b-15 p-l-5">{{ subcategory.materialUnit }}</span>
                         </mat-form-field>
                       </span>
                     </div>
+                    <div class="col-xs-1 p-t-25">
+                      {{ subcategory.materialUnit }}
+                    </div>
+
+                    <ng-container *ngIf="subcategory.Specs">
+                      <div class="row background-color-bom-sub-sub-category p-0" *ngFor="let material of subcategory.Specs">
+                        <div class="col-xs-6">
+                          <span class="pull-left p-l-60 p-t-20">{{ material.label }}</span>
+                        </div>
+                        <div class="col-xs-6">
+                          <span class="pull-right p-r-40">
+                            <!-- <mat-form-field class="full-border widthZero">
+                        <input matInput class="p-b-5 shortWidth" placeholder="eg. 1500" /><span
+                          class="p-b-15 p-l-5">{{subcategory.materialUnit}}</span>
+                      </mat-form-field> -->
+
+                            <mat-form-field class="border-input widthZero">
+                              <input
+                                matInput
+                                class="p-b-5 shortWidth"
+                                type="number"
+                                min="0"
+                                placeholder="Enter Quantity"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                              />
+                              <span class="p-b-15 p-l-5">{{ subcategory.materialUnit }}</span>
+                            </mat-form-field>
+                          </span>
+                        </div>
+                      </div>
+                    </ng-container>
                   </div>
-                </ng-container>
-              </div>
-            </ng-container>
-          </mat-expansion-panel>
-        </div>
-      </mat-accordion>
+                </div>
+              </ng-container>
+            </mat-expansion-panel>
+          </div>
+        </mat-accordion>
+      </ng-container>
     </span>
   </ng-container>
 </form>
