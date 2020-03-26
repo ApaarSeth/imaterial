@@ -12,7 +12,7 @@
             <mat-form-field class="border-input date-label-indent">
                  <span class="form-placeholder">{{ dateDue| date: "dd-MMM-yyy"}}</span>
               <input matInput hidden (dateChange)="duedatefunc($event)" [matDatepicker]="dueDate"
-                placeholder="Quote Valid till" [(ngModel)]="rfqSupplierDetailList.dueDate" 
+                placeholder="Quote Valid till" [(ngModel)]="rfqSupplierDetailList.quoteValidTill" 
                 (focus)="dueDate.open()" readonly [min]="minDate" required />
               
               <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
@@ -107,8 +107,9 @@
                 </td>
                 <td class="text-align-right">
                   <mat-form-field class="border-input">
-                    <input matInput type="number" placeholder="GST %" [(ngModel)]="material.materialIgst"
-                      (change)="valueChange(rfqSupplierDetailList)" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                    <input matInput type="number" placeholder="GST %" [(ngModel)]="material.materialIgst"  min="0"
+                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                      (change)="valueChange(rfqSupplierDetailList)"/>
                     <mat-error>GST is Required</mat-error>
                   </mat-form-field>
                 </td>
@@ -130,7 +131,8 @@
                   
                   <td>
                     <mat-form-field class="border-input">
-                      <input matInput type="number" placeholder="Rate" [(ngModel)]="brand.brandRate"
+                      <input matInput type="number" placeholder="Rate"  min="0"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57" [(ngModel)]="brand.brandRate"
                         (change)="valueChange(rfqSupplierDetailList)" />
                       <mat-error>Project Name is Required</mat-error>
                     </mat-form-field>
