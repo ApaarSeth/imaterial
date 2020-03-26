@@ -111,6 +111,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     });
     this.poForms = this.formBuilder.group({});
     this.poForms.addControl("forms", new FormArray(frmArr));
+    console.log(this.poForms)
   }
 
   get totalAmount(): number {

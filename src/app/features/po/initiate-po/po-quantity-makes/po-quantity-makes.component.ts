@@ -6,6 +6,7 @@ import { initiatePo, initiatePoData } from "src/app/shared/models/PO/po-data";
 import { POService } from "src/app/shared/services/po/po.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { isPlatformBrowser } from "@angular/common";
 
 
 @Component({
@@ -45,7 +46,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
             materialQty: [item.quantity, Validators.required],
             brandNames: [item.makes],
             materialId: [item.materialId],
-            fullfilmentDate: [item.dueDate]
+            fullfilmentDate: [item.dueDate != "" || item.dueDate != null ? item.dueDate : null]
           });
         });
       })
@@ -74,8 +75,15 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       this.initiatePoData.supplierAddressId = null;
       this.initiatePoData.supplierName = this.poData.selectedSupplier.supplier_name;
       this.initiatePoData.rfqId = null;
+      this.materialForms.value.forms = this.materialForms.value.forms.map(material => {
+        if (material.fullfilmentDate === "") {
+          material.fullfilmentDate = null;
+        }
+        return material
+      });
       this.initiatePoData.materialList = this.materialForms.value.forms;
     });
+
     this.poService.initiatePo([this.initiatePoData]).then(res => {
       this.navService.gaEvent({
         action: 'submit',
