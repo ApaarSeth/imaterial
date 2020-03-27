@@ -26,7 +26,7 @@
             <span class="mat-cell">{{ material.materialName }}</span>
             <span class="mat-cell"></span>
             <span class="mat-cell">
-              <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate }}</ng-container>
+              <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate|date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
                 <mat-form-field class="border-input  date-label date-button mat-form-field-padding" style="width: 77%;">
                   <mat-label>Select Date</mat-label>
