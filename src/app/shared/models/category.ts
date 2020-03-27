@@ -46,4 +46,5 @@ export interface categoryNestedLevel {
   groupName: string;
   materialList: material[];
   allNull?: boolean;
+  isNull?: boolean;
 }

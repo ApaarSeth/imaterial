@@ -8,12 +8,16 @@ export class SearchMaterialPipe implements PipeTransform {
             let newSearchList = new Array<any>();
             searchText = searchText.toLowerCase();
             // when search the array directly
-            if (!property) {
-                for (let search of searchList) {
-                    if (search.indexOf(searchText.trim().toLowerCase()) > -1) {
-                        newSearchList.push(search);
+            if (property && !property1) {
+                searchList = searchList.map(search => {
+                    if (search[property].indexOf(searchText.trim().toLowerCase()) > -1) {
+                        search.isNull = false;
                     }
-                }
+                    else {
+                        search.isNull = true;
+                    }
+                    return search;
+                })
             } else if (property && property1) {
                 for (let search of searchList) {
                     let newMaterialList = search[property].map(list => {
@@ -32,10 +36,8 @@ export class SearchMaterialPipe implements PipeTransform {
 
                 }
             }
-            console.log(newSearchList)
-            return newSearchList;
+            return searchList;
         }
-
         return searchList;
     }
 }

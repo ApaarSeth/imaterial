@@ -59,7 +59,7 @@ export class BomComponent implements OnInit {
   form: FormGroup;
   tradeNames: string[] = []
   tradesList: orgTrades[];
-  searchMaterial: string;
+  // searchMaterial: string;
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,
@@ -163,6 +163,7 @@ export class BomComponent implements OnInit {
     //   });
 
   }
+
   setLocalStorage() {
     const popovers = {
       "userId": this.userId,
@@ -174,6 +175,10 @@ export class BomComponent implements OnInit {
         localStorage.setItem('addBom', '1');
       }
     })
+  }
+
+  searchMaterial(event) {
+    this.bomService.searchText.next(event);
   }
 
   formInit() {
