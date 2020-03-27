@@ -12,6 +12,8 @@ import { auth } from 'src/app/shared/models/auth';
 import { debounceTime } from 'rxjs/operators';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
+import { DataService } from 'src/app/shared/services/data.service';
+import { API } from 'src/app/shared/constants/configuration-constants';
 
 export interface OrganisationType {
   value: string;
@@ -45,9 +47,10 @@ export class SignupComponent implements OnInit {
     private _userService: UserService,
     private _snackBar: MatSnackBar,
     private navService: AppNavigationService,
-    private fbPixel: FacebookPixelService
+    private fbPixel: FacebookPixelService,
+    private dataService: DataService
   ) { }
-
+  acceptTerms: boolean;
   signupForm: FormGroup;
   signInDetails = {} as SignINDetailLists;
 
@@ -55,7 +58,7 @@ export class SignupComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       if (this.uniqueCode) {
-       // this.lessOTPDigits = true;
+        // this.lessOTPDigits = true;
         this.organisationDisabled = true;
         this.getUserInfo(this.uniqueCode);
       } else {
@@ -70,8 +73,8 @@ export class SignupComponent implements OnInit {
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {
       this.user = res.data[0];
-      if(res.data[0].firstName)
-      localStorage.setItem("userName",res.data[0].firstName);
+      if (res.data[0].firstName)
+        localStorage.setItem("userName", res.data[0].firstName);
       this.formInit();
     });
   }
@@ -85,10 +88,10 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
-      organisationName: [{value : this.user ? this.user.companyName : '', disabled:this.organisationDisabled}, Validators.required],
+      organisationName: [{ value: this.user ? this.user.companyName : '', disabled: this.organisationDisabled }, Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", Validators.required],
-      otp: ["",Validators.required]
+      otp: ["", Validators.required]
     });
 
     if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
@@ -143,8 +146,19 @@ export class SignupComponent implements OnInit {
         if (this.uniqueCode) {
           localStorage.setItem("uniqueCode", this.uniqueCode);
         }
-        // this.router.navigate(["/profile/update-info"]);
-        this.router.navigate(["/profile/terms-conditions"]);
+
+
+
+        this.dataService.getRequest(API.CHECKTERMS).then(res => {
+          this.acceptTerms = res.data;
+          if (!this.acceptTerms) {
+            this.router.navigate(["/profile/terms-conditions"]);
+          }
+          else {
+            this.router.navigate(["/profile/update-info"]);
+          }
+        })
+
 
       }
     });
@@ -158,7 +172,7 @@ export class SignupComponent implements OnInit {
     }
   }
   enterPhone(event, numberPassed?: string) {
-      this.lessOTPDigits = false;
+    this.lessOTPDigits = false;
 
     this.verifiedMobile = false;
     this.showOtp = false;
@@ -205,17 +219,17 @@ export class SignupComponent implements OnInit {
     });
   }
   enterOTP(event) {
-  
-      const otp = event.target.value;
-      if (event.target.value.length == 4) {
-        this.otpLength = event.target.value.length;
-        this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
-          if (res.data) {
-            this.lessOTPDigits = res.data.success;
-          }
-        });
-      }
-    
+
+    const otp = event.target.value;
+    if (event.target.value.length == 4) {
+      this.otpLength = event.target.value.length;
+      this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
+        if (res.data) {
+          this.lessOTPDigits = res.data.success;
+        }
+      });
+    }
+
 
   }
   verifyEmail(event) {

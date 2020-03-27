@@ -8,6 +8,7 @@ import { POService } from "src/app/shared/services/po/po.service";
 import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
 import { RfqMaterialResponse, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
 import { initiatePoData } from 'src/app/shared/models/PO/po-data';
+import { MatCheckbox } from "@angular/material";
 
 @Component({
   selector: "app-po-project-material",
@@ -152,15 +153,17 @@ export class PoProjectMaterialComponent implements OnInit {
     this.selectedMaterial.emit(poData);
   }
 
-  materialChecked(checked: HTMLElement, i: number, element) {
+  materialChecked(checked: MatCheckbox, i: number, element) {
     const arr = this.materialForm.controls["formArr"] as FormArray;
     const fGrp = arr.at(i) as FormGroup;
 
-    if (checked) {
+    if (checked.checked) {
       this.counter++;
+      element.checked = true;
       fGrp.get("material").setValue(element);
     } else {
       this.counter--;
+      element.checked = false;
       fGrp.get("material").reset();
     }
   }
