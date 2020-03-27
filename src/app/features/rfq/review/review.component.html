@@ -100,7 +100,7 @@
               <ng-container matColumnDef="Required Date">
                 <th mat-header-cell class="text-center" *matHeaderCellDef>Required Date</th>
                 <td mat-cell class="text-center" *matCellDef="let element">
-                  {{ element.fullfilmentDate | date }}
+                  {{ element.fullfilmentDate | date: "dd-MMM-yyy" }}
                 </td>
               </ng-container>
 
