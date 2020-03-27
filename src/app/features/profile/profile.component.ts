@@ -105,6 +105,7 @@ export class ProfileComponent implements OnInit {
       contactNo: [{value:this.users ? this.users.contactNo : '',disabled:true}, Validators.required],
       roleId: [{value:this.users ? this.users.roleId : null,disabled:true}, Validators.required],
       turnOverId:[{value:this.users?this.users.TurnOverId : null,disabled:true}, Validators.required],
+       roleDescription: [{value : this.users ? this.users.roleDescription : null,disabled : true}],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
