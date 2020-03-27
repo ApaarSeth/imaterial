@@ -109,15 +109,6 @@ export class DashboardComponent implements OnInit {
     this.permissionObj = this.permissionService.checkPermission();
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    
-    if ((localStorage.getItem('projectDashboard') == "null") || (localStorage.getItem('projectDashboard') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.dashboardTour)
-
-      }, 1000);
-    }
-    
-    
 
     console.log(this.userId);
     this.getAllProjects();
@@ -144,6 +135,15 @@ export class DashboardComponent implements OnInit {
   getAllProjects() {
     this.projectService.getProjects(this.orgId, this.userId).then(data => {
       this.allProjects = data.data;
+      if(this.allProjects && this.allProjects.length>0)
+      {
+        if ((localStorage.getItem('projectDashboard') == "null") || (localStorage.getItem('projectDashboard') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.dashboardTour)
+
+      }, 1000);
+    }
+      }
     });
   }
 
