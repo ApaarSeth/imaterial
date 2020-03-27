@@ -9,7 +9,7 @@ export class UserDataGuardService implements CanActivate {
     acceptTerms: boolean;
 
     constructor(private router: Router,
-        private dataService : DataService,
+        private dataService: DataService,
         private _userService: UserService) {
     }
 
@@ -18,26 +18,23 @@ export class UserDataGuardService implements CanActivate {
         const userId = localStorage.getItem("userId");
         const uniqueCode = localStorage.getItem("uniqueCode") ? localStorage.getItem("uniqueCode") : null;
 
-        return  this.dataService.getRequest(API.CHECKTERMS).then(res => {
+        return this.dataService.getRequest(API.CHECKTERMS).then(res => {
             this.acceptTerms = res.data;
-          return this._userService.getUserInfo(userId).then(res => {
-                    if(this.acceptTerms){
-                        if (((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) || uniqueCode != null) {
-                            this.router.navigate(['/profile/update-info']);
-                            return true;
-                        }
-                        else{
-                            this.router.navigate(['/dashboard']);
-                            return false;
-                        }
+            return this._userService.getUserInfo(userId).then(res => {
+
+                if (((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) || uniqueCode != null) {
+                    if (this.acceptTerms) {
+                        this.router.navigate(['/profile/update-info']);
                     }
-                    else{
-                        this.router.navigate(['/profile/terms-conditions']);
-                        return true;
-                    }
+                    return true;
+                }
+                else {
+                    this.router.navigate(['/dashboard']);
+                    return false;
+                }
             });
         })
 
-       
+
     }
 }
