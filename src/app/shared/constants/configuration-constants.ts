@@ -27,6 +27,7 @@ export const HeaderConstants = {
 
 export const API = {
   PROJECTS: (organizationId, userId) => `projects/${organizationId}/${userId}`,
+  USERPROJECTS : `user/project`,
   GETPROJECT: (organizationId, projectId) => `project/${organizationId}/${projectId}`,
   GETCATERGORY: `material/groups`,
   ADDPROJECT: `addProject`,
