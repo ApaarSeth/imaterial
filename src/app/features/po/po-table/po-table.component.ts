@@ -22,6 +22,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   initialCounter = 0;
   isPoValid: boolean
   subscriptions: Subscription[] = [];
+  minDate = new Date();
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.mode = params.mode;

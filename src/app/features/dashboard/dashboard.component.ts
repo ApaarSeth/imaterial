@@ -11,6 +11,7 @@ import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confi
 import { GuidedTourService, OrientationConfiguration, Orientation, GuidedTour } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { PermissionService } from 'src/app/shared/services/permission.service';
 
 @Component({
   selector: "dashboard",
@@ -29,6 +30,7 @@ export class DashboardComponent implements OnInit {
   allProjects: ProjectDetails[] = [];
   orgId: Number;
   userId: Number;
+  permissionObj: any;
 
   public dashboardTour: GuidedTour = {
     tourId: 'purchases-tour',
@@ -98,14 +100,16 @@ export class DashboardComponent implements OnInit {
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private guidedTourService: GuidedTourService,
-     private commonService : CommonService
+     private commonService : CommonService,
+     private permissionService: PermissionService,
   ) {
   }
 
   ngOnInit() {
+    this.permissionObj = this.permissionService.checkPermission();
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-
+    
     if ((localStorage.getItem('projectDashboard') == "null") || (localStorage.getItem('projectDashboard') == '0')) {
       setTimeout(() => {
         this.guidedTourService.startTour(this.dashboardTour)

@@ -15,13 +15,13 @@
           <span class="mat-header-cell">Fullfillment Date</span>
           <span class="mat-header-cell">Supplier Rate</span>
           <span class="mat-header-cell">Awarded quantity</span>
-          <span class="mat-header-cell">Amount ₹</span>
-          <span class="mat-header-cell">GST %</span>
+          <span class="mat-header-cell text-right p-r-10">Amount ₹</span>
+          <span class="mat-header-cell text-center">GST %</span>
           <span class="mat-header-cell">GST Amount ₹</span>
           <span class="mat-header-cell">Total Amount with GST ₹</span>
         </section>
         <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
-          <div class="mat-row">
+          <div class="material-row">
             <span class="mat-cell widthReduce">{{ m + 1 }}</span>
             <span class="mat-cell">{{ material.materialName }}</span>
             <span class="mat-cell"></span>
@@ -31,15 +31,15 @@
                 <mat-form-field class="border-input  date-label date-button mat-form-field-padding" style="width: 77%;">
                   <mat-label>Select Date</mat-label>
                   <span class="form-placeholder">{{ poForms["controls"]["forms"]["controls"][m]["controls"]["fullfilmentDate"].value | date: "dd-MMM-yyy" }}</span>
-                  <input hidden matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" placeholde="Enter Date" (focus)="dueDate.open()" readonly />
+                  <input hidden matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" placeholde="Enter Date" (focus)="dueDate.open()" [min]="minDate" readonly />
                   <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                   <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
                 </mat-form-field>
               </ng-template>
             </span>
             <span class="mat-cell"></span>
-            <span class="mat-cell">{{ getMaterialQuantity(m) | number: "1.2-2" }}</span>
-            <span class="mat-cell">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell text-center">{{ getMaterialQuantity(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell text-right p-r-20">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
             <span class="mat-cell"></span>
             <span class="mat-cell">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
             <span class="mat-cell">{{ getMaterialTotalAmount(m) | number: "1.2-2" }}</span>
@@ -66,7 +66,7 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell">
+              <span class="mat-cell  text-center">
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity }}</ng-container>
                 <ng-template #editQuantity>
                   <mat-form-field class="border-input width50Percent">
@@ -82,13 +82,13 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell">
+              <span class="mat-cell text-right p-r-20">
                 <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount }} </ng-container>
                 <ng-template #editAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
                 </ng-template>
               </span>
-              <span class="mat-cell">
+              <span class="mat-cell text-center">
                 <span *ngIf="mode != 'edit'; else editGst"> {{ purchaseOrder.materialIgst + purchaseOrder.materialCgst + purchaseOrder.materialSgst }}</span>
                 <ng-template #editGst>
                   <mat-form-field class="border-input width50Percent">

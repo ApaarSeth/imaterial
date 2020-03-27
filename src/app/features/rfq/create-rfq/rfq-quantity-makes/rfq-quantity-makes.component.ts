@@ -52,7 +52,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   message: string;
   lastupdateValue: any;
   valid: boolean = false;
-
+  minDate=new Date();
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,

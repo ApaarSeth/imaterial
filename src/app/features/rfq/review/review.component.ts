@@ -30,6 +30,7 @@ export class ReviewComponent implements OnInit {
   rfqDetails: AddRFQ = {} as AddRFQ;
   checkedList: RfqMaterialResponse[];
   rfqId: number;
+  minDate = new Date();
   public RfqPreviewTour: GuidedTour = {
     tourId: 'rfq-preview-tour',
     useOrb: false,

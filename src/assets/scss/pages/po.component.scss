@@ -11,6 +11,7 @@
 
   $mat-header-row-height: 56px;
   $mat-row-height: 48px;
+  $material-row-height: 77px;
   $mat-row-horizontal-padding: 24px;
 
   .mat-table {
@@ -21,11 +22,15 @@
     min-height: $mat-header-row-height;
   }
 
-  poCard .mat-row {
+  .mat-row {
+    min-height: $mat-row-height;
+  }
+  .material-row {
     min-height: $mat-row-height;
   }
 
   .mat-row,
+  .material-row,
   .mat-header-row {
     display: flex;
     align-items: center;
@@ -64,6 +69,12 @@
       }
     }
 
+    .material-row {
+      border-bottom: 0.5px solid #979797;
+      .mat-cell {
+        color: #707070;
+      }
+    }
     .footer {
       background-color: rgba(25, 33, 53, 0.2);
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
