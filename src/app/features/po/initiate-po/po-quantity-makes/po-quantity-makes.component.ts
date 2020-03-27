@@ -21,7 +21,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   suppliers: Suppliers;
   displayedColumns: string[] = ["Material Name", "Required Date", "Requested Qty", "Fullfillment Date", "Estimated Qty", "Estimated Rate", "Quantity", "Makes"];
   materialForms: FormGroup;
-  minDate=new Date();
+  minDate = new Date();
   checkedMaterialsList: RfqMaterialResponse[];
   constructor(private commonService: CommonService, private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder) { }
 
@@ -29,7 +29,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.poData)
-      this.checkedMaterialsList = this.poData.selectedMaterial;
+      this.checkedMaterialsList = [...this.poData.selectedMaterial];
     if (this.checkedMaterialsList) {
       this.formsInit();
     }
