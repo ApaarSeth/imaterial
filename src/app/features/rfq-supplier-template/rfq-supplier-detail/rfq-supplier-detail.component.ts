@@ -139,7 +139,7 @@ export class RFQSupplierDetailComponent implements OnInit {
 
     this.brandCount = 0;
     this.oneBrandAtMaterialSelected = false;
-    if (RFQsupplier.dueDate) {
+    if (RFQsupplier.quoteValidTill) {
       this.dudateFlag = true;
     }
     for (let project of RFQsupplier.projectList) {
