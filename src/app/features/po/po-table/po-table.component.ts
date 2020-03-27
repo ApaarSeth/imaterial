@@ -5,6 +5,7 @@ import { ignoreElements, debounceTime } from "rxjs/operators";
 import { Subscription, combineLatest } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { POService } from "src/app/shared/services/po/po.service";
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-po-table",
@@ -15,7 +16,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   @Input("mode") modes: string;
   gst: string = '';
   words: string = "";
-  constructor(private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
@@ -111,6 +112,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     });
     this.poForms = this.formBuilder.group({});
     this.poForms.addControl("forms", new FormArray(frmArr));
+    console.log(this.poForms)
   }
 
   get totalAmount(): number {
@@ -161,6 +163,17 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getData(): PoMaterial[] {
     return this.poForms.value.forms.map(material => {
+      if (material.fullfilmentDate === "" || material.fullfilmentDate === null) {
+        material.fullfilmentDate = null;
+      }
+      else {
+        let date = new Date(this.commonService.formatDate(material.fullfilmentDate))
+        let dummyMonth = date.getMonth() + 1;
+        const year = date.getFullYear().toString();
+        const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+        const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+        material.fullfilmentDate = year + "-" + month + "-" + day;
+      }
       material.purchaseOrderDetailList.map(purchaseOrderList => {
         if (this.gst === "IGST") {
           purchaseOrderList.materialIgst = purchaseOrderList.gst;
