@@ -61,7 +61,7 @@ export class AddEditUserComponent implements OnInit {
     this.initForm();
     this.orgId = Number(localStorage.getItem("orgId"))
     this.userId = Number(localStorage.getItem("userId"))
-    this.projectService.getProjects(this.orgId, this.userId).then(data => {
+    this.projectService.getUserProjects().then(data => {
       this.allProjects = data.data;
     });
 

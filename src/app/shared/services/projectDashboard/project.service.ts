@@ -21,6 +21,14 @@ export class ProjectService {
       });
   }
 
+  getUserProjects() {
+    return this.dataService
+      .getRequest(API.USERPROJECTS)
+      .then(res => {
+        return res;
+      });
+  }
+
   getProject(organizationId: Number, projectId: Number) {
     return this.dataService
       .getRequest(API.GETPROJECT(organizationId, projectId))
