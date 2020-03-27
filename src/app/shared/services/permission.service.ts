@@ -16,7 +16,8 @@ export class PermissionService {
     purchaseOrderFlag: false,
     usersFlag: false,
     supplierFlag: false,
-    projectEdit: false
+    projectEdit: false,
+    addProject:false
   };
 
   constructor() {
@@ -32,6 +33,7 @@ export class PermissionService {
       this.permissionObj.usersFlag = true;
       this.permissionObj.supplierFlag = true;
       this.permissionObj.projectEdit = true;
+      this.permissionObj.addProject = true;
     } else {
       this.permissionObj.projectStoreFlag = true;
     }

@@ -1,147 +1,147 @@
 <div class="dashboard mt-120 mb-4">
-  <div class="container-fluid bg-gray">
-    <div class="row">
-      <div class="col-md-9">
-        <div class="things-to-do bg-white mb-4 equal-height">
-          <!-- <h5 class="mb-3">Things to do</h5> -->
-          <div class="things-to-do__inner d-flex justify-content-between align-items-center">
-            <div *ngIf="this.permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" (click)="openProject()" matTooltip="You can add your project details">
-              <div class="things-to-do__img add-project-img">
-                <img src="assets/images/Add-Project.png" alt="" class="img-fluid" />
-              </div>
-              <h6 class="mb-0">Add Project</h6>
-            </div>
+    <div class="container-fluid bg-gray">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="things-to-do bg-white mb-4 equal-height">
+                    <!-- <h5 class="mb-3">Things to do</h5> -->
+                    <div class="things-to-do__inner d-flex justify-content-between align-items-center">
+                        <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" (click)="openProject()" matTooltip="You can add your project details">
+                            <div class="things-to-do__img add-project-img">
+                                <img src="assets/images/Add-Project.png" alt="" class="img-fluid" />
+                            </div>
+                            <h6 class="mb-0">Add Project</h6>
+                        </div>
 
-            <div class="things-to-do__icons text-center cursor" (click)="openBomDialog()" matTooltip="You can create your BOM of materials">
-              <div class="things-to-do__img">
-                <img src="assets/images/BOM.png" alt="" class="img-fluid" />
-              </div>
-              <h6 class="mb-0">Create BOM</h6>
-            </div>
+                        <div class="things-to-do__icons text-center cursor" (click)="openBomDialog()" matTooltip="You can create your BOM of materials">
+                            <div class="things-to-do__img">
+                                <img src="assets/images/BOM.png" alt="" class="img-fluid" />
+                            </div>
+                            <h6 class="mb-0">Create BOM</h6>
+                        </div>
 
-            <div class="things-to-do__icons text-center cursor" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFQs">
-              <div class="things-to-do__img">
-                <img src="assets/images/RFQ.png" alt="" class="img-fluid" />
-              </div>
-              <h6 class="mb-0">Create RFQ</h6>
-            </div>
+                        <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFQs">
+                            <div class="things-to-do__img">
+                                <img src="assets/images/RFQ.png" alt="" class="img-fluid" />
+                            </div>
+                            <h6 class="mb-0">Create RFQ</h6>
+                        </div>
 
-            <div class="things-to-do__icons text-center cursor" [routerLink]="['/globalStore/' + orgId]" matTooltip="You can check your material details">
-              <div class="things-to-do__img">
-                <img src="assets/images/Global-Store.png" alt="Global Store" class="img-fluid" />
-              </div>
-              <h6 class="mb-0">Global Store</h6>
-            </div>
+                        <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/globalStore/' + orgId]" matTooltip="You can check your material details">
+                            <div class="things-to-do__img">
+                                <img src="assets/images/Global-Store.png" alt="Global Store" class="img-fluid" />
+                            </div>
+                            <h6 class="mb-0">Global Store</h6>
+                        </div>
 
-            <div class="things-to-do__icons text-center cursor" [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
-              <div class="things-to-do__img">
-                <img src="assets/images/PO.png" alt="" class="img-fluid" />
-              </div>
-              <h6 class="mb-0">Create PO</h6>
-            </div>
+                        <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
+                            <div class="things-to-do__img">
+                                <img src="assets/images/PO.png" alt="" class="img-fluid" />
+                            </div>
+                            <h6 class="mb-0">Create PO</h6>
+                        </div>
 
-            <!-- <div class="things-to-do__icons text-center">
+                        <!-- <div class="things-to-do__icons text-center">
                             <div class="things-to-do__img">
                                 <img src="assets/images/icon3.png" alt="" class="img-fluid">
                             </div>
                             <h6 class="mb-0">Keep Track</h6>
                         </div> -->
-          </div>
-        </div>
+                    </div>
+                </div>
 
-        <div class="statistics bg-white p-4 mb-4">
-          <div class="row">
-            <div class="col-md-12 d-flex justify-content-between">
-              <mat-tab-group class="mat-tabs-button">
-                <mat-tab label="Purchase Orders" *ngIf="poData">
-                  <div class="statistics__purchase-order d-flex">
-                    <div class="statistics__tile stats mr-3">
-                      <!-- <div class="stats__icon">
+                <div class="statistics bg-white p-4 mb-4">
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-between">
+                            <mat-tab-group class="mat-tabs-button">
+                                <mat-tab label="Purchase Orders" *ngIf="permissionObj.rfqFlag && poData">
+                                    <div class="statistics__purchase-order d-flex">
+                                        <div class="statistics__tile stats mr-3">
+                                            <!-- <div class="stats__icon">
                                                 <img src="assets/images/icon1.png" alt="Awarded Purchase Order" class="img-fluid">
                                             </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/po/detail-list']" *ngIf="poData.totalCount">{{ poData?.totalCount }}</h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/po/detail-list']" *ngIf="!poData.totalCount">0</h2>
-                        <p class="mb-0">Awarded Purchase Order</p>
-                      </div>
-                    </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/po/detail-list']" *ngIf="poData.totalCount">{{ poData?.totalCount }}</h2>
+                                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/po/detail-list']" *ngIf="!poData.totalCount">0</h2>
+                                                <p class="mb-0">Awarded Purchase Order</p>
+                                            </div>
+                                        </div>
 
-                    <div class="statistics__tile stats">
-                      <!-- <div class="stats__icon">
+                                        <div class="statistics__tile stats">
+                                            <!-- <div class="stats__icon">
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/po/detail-list']" *ngIf="poData.totalValue">₹ {{ poData?.totalValue | number }}</h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/po/detail-list']" *ngIf="!poData.totalValue">₹ 0</h2>
-                        <p class="mb-0">Awarded P.O. Amount</p>
-                      </div>
-                    </div>
-                  </div>
-                </mat-tab>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/po/detail-list']" *ngIf="poData.totalValue">₹ {{ poData?.totalValue | number }}</h2>
+                                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/po/detail-list']" *ngIf="!poData.totalValue">₹ 0</h2>
+                                                <p class="mb-0">Awarded P.O. Amount</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
 
-                <mat-tab label="Request for Quotations" *ngIf="rfqData">
-                  <div class="statistics__purchase-order d-flex">
-                    <div class="statistics__tile stats mr-3">
-                      <!-- <div class="stats__icon">
+                                <mat-tab label="Request for Quotations" *ngIf="permissionObj.rfqFlag && rfqData">
+                                    <div class="statistics__purchase-order d-flex">
+                                        <div class="statistics__tile stats mr-3">
+                                            <!-- <div class="stats__icon">
                                                 <img src="assets/images/icon6.png" alt="Awarded Purchase Order" class="img-fluid">
                                             </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="rfqData.totalCount">{{ rfqData?.totalCount }}</h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="!rfqData.totalCount">0</h2>
-                        <p class="mb-0">Number of RFQ</p>
-                      </div>
-                    </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="rfqData.totalCount">{{ rfqData?.totalCount }}</h2>
+                                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="!rfqData.totalCount">0</h2>
+                                                <p class="mb-0">Number of RFQ</p>
+                                            </div>
+                                        </div>
 
-                    <div class="statistics__tile stats">
-                      <!-- <div class="stats__icon">
+                                        <div class="statistics__tile stats">
+                                            <!-- <div class="stats__icon">
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="rfqData.totalValue">₹ {{ rfqData?.totalValue | number: "1.2-2" }}</h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="!rfqData.totalValue">₹ 0</h2>
-                        <p class="mb-0">RFQ Amount</p>
-                      </div>
-                    </div>
-                  </div>
-                </mat-tab>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="rfqData.totalValue">₹ {{ rfqData?.totalValue | number: "1.2-2" }}</h2>
+                                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="!rfqData.totalValue">₹ 0</h2>
+                                                <p class="mb-0">RFQ Amount</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
 
-                <mat-tab label="Indents" *ngIf="indentData">
-                  <div class="statistics__purchase-order d-flex">
-                    <div class="statistics__tile stats mr-3">
-                      <!-- <div class="stats__icon">
+                                <mat-tab label="Indents" *ngIf="indentData">
+                                    <div class="statistics__purchase-order d-flex">
+                                        <div class="statistics__tile stats mr-3">
+                                            <!-- <div class="stats__icon">
                                                 <img src="assets/images/fulfilled-indent-icon.png" alt="Awarded Purchase Order" class="img-fluid">
                                             </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1" *ngIf="indentData.totalCount">{{ indentData?.totalCount }}</h2>
-                        <h2 class="mb-1" *ngIf="!indentData.totalCount">0</h2>
-                        <p class="mb-0">Fulfilled Indents</p>
-                      </div>
-                    </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1" *ngIf="indentData.totalCount">{{ indentData?.totalCount }}</h2>
+                                                <h2 class="mb-1" *ngIf="!indentData.totalCount">0</h2>
+                                                <p class="mb-0">Fulfilled Indents</p>
+                                            </div>
+                                        </div>
 
-                    <div class="statistics__tile stats">
-                      <!-- <div class="stats__icon">
+                                        <div class="statistics__tile stats">
+                                            <!-- <div class="stats__icon">
                                                 <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue | number: "1.2-2" }}</h2>
-                        <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
-                        <p class="mb-0">Raised Indents</p>
-                      </div>
+                                            <div class="stats__content">
+                                                <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue | number: "1.2-2" }}</h2>
+                                                <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
+                                                <p class="mb-0">Raised Indents</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                            </mat-tab-group>
+
+                            <div class="statistics__filter">
+                                <h5><img src="assets/images/filter.png" class="img-fluid mr-2" alt="filter" /> This Month</h5>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </mat-tab>
-              </mat-tab-group>
+                </div>
 
-              <div class="statistics__filter">
-                <h5><img src="assets/images/filter.png" class="img-fluid mr-2" alt="filter" /> This Month</h5>
-              </div>
-            </div>
-          </div>
-        </div>
+                <!--- Will implement later once api is ready -->
 
-        <!--- Will implement later once api is ready -->
-
-        <!-- <div class="approvals py-4 bg-white">
+                <!-- <div class="approvals py-4 bg-white">
                     <div class="row">
                         <div class="col-md-12">
                             <h6 class="px-4">Approvals</h6>
@@ -185,38 +185,38 @@
                         </div>
                     </div>
                 </div> -->
-      </div>
-
-      <div class="col-md-3">
-        <div class="dashboard__right">
-          <div class="project-tile cursor" [routerLink]="['/project-dashboard']">
-            <div class="project-tile__tile equal-height w-100 mb-4 stats px-3 py-3 d-flex align-items-center mr-3">
-              <div class="project-tile__icon">
-                <img src="assets/images/Add-Project.png" alt="Total number of project" class="img-fluid mr-3" />
-              </div>
-              <div class="project-tile__content">
-                <h2 class="mb-1" *ngIf="projectCount">{{ projectCount }}</h2>
-                <h2 class="mb-1" *ngIf="!projectCount">0</h2>
-                <p class="mb-0">Total number of projects</p>
-              </div>
             </div>
-          </div>
 
-          <div class="banner mb-4">
-            <div class="banner__image">
-              <a href="https://www.buildsupply.com" class="cursor-pointer">
-                   <img src="assets/images/fb_banner_new.png" alt="Facebook Banner" class="img-fluid" />
-              </a>
-            </div>
-          </div>
+            <div class="col-md-3">
+                <div class="dashboard__right">
+                    <div class="project-tile cursor" [routerLink]="['/project-dashboard']">
+                        <div class="project-tile__tile equal-height w-100 mb-4 stats px-3 py-3 d-flex align-items-center mr-3">
+                            <div class="project-tile__icon">
+                                <img src="assets/images/Add-Project.png" alt="Total number of project" class="img-fluid mr-3" />
+                            </div>
+                            <div class="project-tile__content">
+                                <h2 class="mb-1" *ngIf="projectCount">{{ projectCount }}</h2>
+                                <h2 class="mb-1" *ngIf="!projectCount">0</h2>
+                                <p class="mb-0">Total number of projects</p>
+                            </div>
+                        </div>
+                    </div>
 
-          <div class="banner">
-            <div class="banner__image">
-              <img src="assets/images/video-banner.png" alt="Video Banner" class="img-fluid" />
+                    <div class="banner mb-4">
+                        <div class="banner__image">
+                            <a href="https://www.buildsupply.com" class="cursor-pointer">
+                                <img src="assets/images/fb_banner_new.png" alt="Facebook Banner" class="img-fluid" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="banner">
+                        <div class="banner__image">
+                            <img src="assets/images/video-banner.png" alt="Video Banner" class="img-fluid" />
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
