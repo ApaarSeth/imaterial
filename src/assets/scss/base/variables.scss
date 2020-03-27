@@ -455,6 +455,10 @@ mat-accordion {
 .error-msg {
   color: red;
 }
+.error-msg.sameStartEndDate{
+  padding-left: 4px;
+  color : red;
+}
 
 .justify-center {
   .mat-sort-header-container {

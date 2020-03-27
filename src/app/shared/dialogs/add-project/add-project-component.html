@@ -131,8 +131,8 @@
               />
               <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
               <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
-              <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small>
             </mat-form-field>
+             <small *ngIf="sameStartEndDate" class="error-msg sameStartEndDate"> End Date must be greater than Start Date </small>
           </div>
         </div>
 

@@ -185,4 +185,7 @@ export class ProfileComponent implements OnInit {
 
     }
   }
+  redirectToDashboard(){
+    this._router.navigate(['/dashboard']);
+  }
 }
