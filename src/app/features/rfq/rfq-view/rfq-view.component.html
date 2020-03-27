@@ -14,7 +14,7 @@
           </div>
           <div class="col-md-4 p-t-10">
             <label class="text-bold">RFQ End Date: </label>
-            {{ rfqDetails.dueDate | date: "dd MMM yyy" }}
+            {{ rfqDetails.dueDate | date: "dd-MMM-yyy" }}
           </div>
 
           <!-- <div class="col-md-3 p-t-10 main-color">
@@ -83,7 +83,7 @@
             <ng-container matColumnDef="Required Date">
               <th class="font-size14" mat-header-cell *matHeaderCellDef>Required Date</th>
               <td mat-cell *matCellDef="let element">
-                {{ element.fullfilmentDate | date }}
+                {{ element.fullfilmentDate | date: "dd-MMM-yyy" }}
               </td>
             </ng-container>
 
