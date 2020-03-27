@@ -7,35 +7,35 @@
                     <div class="things-to-do__inner d-flex justify-content-between align-items-center">
                         <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" (click)="openProject()" matTooltip="You can add your project details">
                             <div class="things-to-do__img add-project-img">
-                                <img src="assets/images/Add-Project.png" alt="" class="img-fluid" />
+                                <img src="../../../assets/images/Add-Project.png" alt="" class="img-fluid" />
                             </div>
                             <h6 class="mb-0">Add Project</h6>
                         </div>
 
                         <div class="things-to-do__icons text-center cursor" (click)="openBomDialog()" matTooltip="You can create your BOM of materials">
                             <div class="things-to-do__img">
-                                <img src="assets/images/BOM.png" alt="" class="img-fluid" />
+                                <img src="../../../assets/images/BOM.png" alt="" class="img-fluid" />
                             </div>
                             <h6 class="mb-0">Create BOM</h6>
                         </div>
 
                         <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFQs">
                             <div class="things-to-do__img">
-                                <img src="assets/images/RFQ.png" alt="" class="img-fluid" />
+                                <img src="../../../assets/images/RFQ.png" alt="" class="img-fluid" />
                             </div>
                             <h6 class="mb-0">Create RFQ</h6>
                         </div>
 
                         <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/globalStore/' + orgId]" matTooltip="You can check your material details">
                             <div class="things-to-do__img">
-                                <img src="assets/images/Global-Store.png" alt="Global Store" class="img-fluid" />
+                                <img src="../../../assets/images/global-store.png" alt="Global Store" class="img-fluid" />
                             </div>
                             <h6 class="mb-0">Global Store</h6>
                         </div>
 
                         <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
                             <div class="things-to-do__img">
-                                <img src="assets/images/PO.png" alt="" class="img-fluid" />
+                                <img src="../../../assets/images/PO.png" alt="" class="img-fluid" />
                             </div>
                             <h6 class="mb-0">Create PO</h6>
                         </div>

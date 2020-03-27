@@ -264,14 +264,15 @@ export class AddProjectComponent implements OnInit {
 
   getEndDate(event) {
     const x = event.indexOf('/');
-    const month = event.substring(0, x);
+    const day = event.substring(0, x);
 
     event = event.replace('/', '-');
     const y = event.indexOf('/');
-    const day = event.substring(x + 1, y);
+    const month = event.substring(x + 1, y);
 
 
     const year = event.substring(y + 1, 10);
+
 
     const endDate = new Date(year, month - 1, day);
     this.endstring = endDate.toString();

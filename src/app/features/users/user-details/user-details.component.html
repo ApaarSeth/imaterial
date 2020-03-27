@@ -55,7 +55,7 @@
           <div class="row">
             <!-- <div class="col-sm-12"> -->
             <!-- table structure -->
-            <div [ngClass]="{'user-details-table-div-active-inactive': addUserBtn === true, 'user-details-table-div-active-inactive-single': addUserBtn === false}">
+            <div class="user-details-table-div-active-inactive-single">
               <table mat-table [dataSource]="dataSourceActivate" class="mat-elevation-z8 col-sm-12">
                 <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
@@ -130,7 +130,9 @@
         </mat-expansion-panel>
       </ng-container>
       <p></p>
-
+<!--
+  [ngClass]="{'user-details-table-div-active-inactive': addUserBtn === true, 'user-details-table-div-active-inactive-single': addUserBtn === false}"
+-->
       <ng-container *ngIf="dataSourceDeactivateTemp && dataSourceDeactivateTemp.length > 0" class="user-dts">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
@@ -144,7 +146,7 @@
           <div class="row">
             <!-- <div class="col-sm-12"> -->
             <!-- table structure -->
-            <div [ngClass]="{'user-details-table-div-active-inactive': addUserBtn === true, 'user-details-table-div-active-inactive-single': addUserBtn === false}">
+            <div  class="user-details-table-div-active-inactive-single">
               <table mat-table [dataSource]="dataSourceDeactivate" class="mat-elevation-z8 col-sm-12">
                 <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
