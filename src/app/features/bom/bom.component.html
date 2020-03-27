@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-xs-3  text -left border-input">
               <mat-form-field class="input-search-padding-zero">
-                <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" [ngModelOptions]="{standalone: true}" />
+                <input #text matInput placeholder="Search Material" type="search" (input)="searchMaterial(text.value)" />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
@@ -81,13 +81,7 @@
         </div> -->
         <div *ngIf="showTable">
           <!-- <div *ngFor="let data of categoryData"> -->
-          <app-bom-preview
-            #preview
-            [searchMat]="searchMaterial"
-            [category]="categoryData"
-            (searchData)="searchData($event)"
-            (inputEntered)="checkValidations($event)"
-          ></app-bom-preview>
+          <app-bom-preview #preview [category]="categoryData" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)"></app-bom-preview>
         </div>
         <!-- </div> -->
       </mat-card>

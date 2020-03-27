@@ -1,9 +1,9 @@
 <form *ngIf="selectedCategory.length" [formGroup]="quantityForms">
   <ng-container formArrayName="forms">
-    <span *ngFor="let category of selectedCategory | SearchPipe: searchMat:'groupName'; let c = index">
+    <span *ngFor="let category of selectedCategory; let c = index">
       <ng-container [formGroupName]="c">
         <mat-accordion>
-          <div #myele>
+          <div #myele *ngIf="!isSearching ? true : !category.isNull">
             <mat-expansion-panel class="m-b-5 m-t-5 bom-qty-page" [expanded]="true">
               <mat-expansion-panel-header class="background-color-bom-category row">
                 <div class="col-xs-6">

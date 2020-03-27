@@ -31,7 +31,7 @@ export class BomPreviewComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
   @Output("searchData") searchData = new EventEmitter();
   @Input("category") category: categoryNestedLevel[];
-  @Input("searchMat") searchMat: string;
+  // @Input("searchMat") searchMat: string;
   counter: number;
   orgId: number;
   constructor(
@@ -49,7 +49,7 @@ export class BomPreviewComponent implements OnInit {
   // searchMaterial: string;
   // product: ProjectDetails;
   step = 0;
-
+  isSearching: boolean;
   setStep(index: number) {
     this.step = index;
   }
@@ -65,6 +65,21 @@ export class BomPreviewComponent implements OnInit {
     this.selectedCategory = [...this.category];
     this.mappingMaterialWithQuantity()
     this.formInit();
+    this.bomService.searchText.subscribe(val => {
+      if (val && val !== '') {
+        this.isSearching = true;
+        for (let category of this.selectedCategory)
+          if (category.groupName.toLowerCase().indexOf(val.trim().toLowerCase()) > -1) {
+            category.isNull = false;
+          }
+          else {
+            category.isNull = true;
+          }
+      }
+      else {
+        this.isSearching = false;
+      }
+    })
   }
 
 
@@ -107,9 +122,13 @@ export class BomPreviewComponent implements OnInit {
         break;
       }
     }
-    this.quantityForms.valueChanges.subscribe(changes => {
-      this.inputEntered.emit(true);
-    });
+    (<FormArray>this.quantityForms.controls["forms"]).controls.map((control: FormGroup, i) => {
+      (<FormArray>control.controls['materialGroup']).controls.map((control: FormGroup, j) => {
+        control.controls['estimatedQty'].valueChanges.subscribe(val => {
+
+        })
+      })
+    })
   }
 
   mappingMaterialWithQuantity() {

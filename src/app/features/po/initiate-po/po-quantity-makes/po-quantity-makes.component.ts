@@ -21,6 +21,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   suppliers: Suppliers;
   displayedColumns: string[] = ["Material Name", "Required Date", "Requested Qty", "Fullfillment Date", "Estimated Qty", "Estimated Rate", "Quantity", "Makes"];
   materialForms: FormGroup;
+  minDate=new Date();
   checkedMaterialsList: RfqMaterialResponse[];
   constructor(private commonService: CommonService, private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder) { }
 
@@ -47,9 +48,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
             materialQty: [item.quantity, Validators.required],
             brandNames: [item.makes],
             materialId: [item.materialId],
-            fullfilmentDate: [
-
-            ]
+            fullfilmentDate: [item.dueDate]
           });
         });
       })
