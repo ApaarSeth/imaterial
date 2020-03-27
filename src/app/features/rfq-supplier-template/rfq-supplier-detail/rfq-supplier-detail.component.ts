@@ -61,6 +61,26 @@ export class RFQSupplierDetailComponent implements OnInit {
             }
           });
         }
+
+         for (let project of this.rfqSupplierDetailList.projectList) {
+              for (let material of project.materialList) {
+                if(material.materialIgst == 0){
+                  material.Igst = null;
+                }
+                else{
+                   material.Igst = material.materialIgst;
+                }
+                 for (let brand of material.rfqBrandList) {
+                      if(brand.brandRate == 0){
+                          brand.tempRate = null;
+                      }
+                      else{
+                       brand.brandRate = brand.tempRate;
+                      }
+                 }
+              }
+            }
+
       });
   }
 
@@ -150,7 +170,7 @@ export class RFQSupplierDetailComponent implements OnInit {
 
         // material.materialSgst = 0;
         // material.materialCgst = 0;
-
+        material.materialIgst = material.Igst;
         if (project.gst == "IGST") {
           material.materialIgst = material.materialIgst;
           material.materialSgst = 0;
@@ -162,22 +182,24 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialCgst = material.materialGst / 2;
           // material.materialIgst = 0;
         }
-
-        if (material.materialIgst) {
+        if (material.materialIgst >= 0 &&  material.materialIgst!=null) {
           material.materialIGSTFlag = true;
           this.materialIGSTFlag = material.materialIGSTFlag;
           this.materialIndividualIGSTFlag = material.materialIGSTFlag;
         }
 
+        
         for (let brand of material.rfqBrandList) {
-
-          if (brand.brandRate) {
+          brand.brandRate = brand.tempRate;
+          
+          if (brand.brandRate >= 0 && brand.brandRate!=null) {
             brand.brandRateFlag = true;
             this.brandRateFlag = brand.brandRateFlag;
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
           }
 
-          if (this.materialIndividualIGSTFlag && this.brandRateFlag) {
+  if((brand == material.rfqBrandList[material.rfqBrandList.length - 1])){
+       if (this.materialIndividualIGSTFlag && this.brandRateFlag) {
             this.sameGstAndBrandFilled = true;
           } else if (this.materialIndividualIGSTFlag && !this.brandRateFlag) {
             this.brandNotMatchedCount++;
@@ -188,7 +210,7 @@ export class RFQSupplierDetailComponent implements OnInit {
             this.sameGstAndBrandFilled = false;
             this.eitherOneGstOrBrand = true;
           }
-
+  }
         }
 
         if (this.brandRateFlag && this.materialIndividualIGSTFlag) {
