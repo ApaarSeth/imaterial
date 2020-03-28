@@ -13,9 +13,9 @@
 export const environment = {
   ga: "",
   production: false,
-  url: "https://api.buildsupply.com/im",
-  masterUrl: "https://api.buildsupply.com/mm",
-  ssoUrl: "https://api.buildsupply.com/sso",
+  // url: "https://api.buildsupply.com/im",
+  // masterUrl: "https://api.buildsupply.com/mm",
+  // ssoUrl: "https://api.buildsupply.com/sso",
   debug_mode: true
 };
 

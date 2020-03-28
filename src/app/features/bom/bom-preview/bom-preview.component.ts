@@ -85,6 +85,7 @@ export class BomPreviewComponent implements OnInit {
 
   ngOnChanges(): void {
     this.selectedCategory = [...this.category];
+    this.enteredInput();
     this.formInit();
   }
 
@@ -112,22 +113,17 @@ export class BomPreviewComponent implements OnInit {
       { validators: [this.getMaterialLength] }
     );
     this.quantityForms.addControl("forms", new FormArray(frmArr));
+    this.enteredInput();
 
-    for (let val of this.quantityForms.value.forms) {
-      let result = val.materialGroup.some(mat => {
-        return mat.estimatedQty && mat.estimatedQty >= 0
-      })
-      if (result) {
-        this.inputEntered.emit(true);
-        break;
-      }
-    }
     (<FormArray>this.quantityForms.controls["forms"]).controls.map((control: FormGroup, i) => {
       (<FormArray>control.controls['materialGroup']).controls.map((control: FormGroup, j) => {
         control.controls['estimatedQty'].valueChanges.subscribe(val => {
 
         })
       })
+    })
+    this.quantityForms.valueChanges.subscribe(changes => {
+      this.inputEntered.emit(true);
     })
   }
 
@@ -169,7 +165,17 @@ export class BomPreviewComponent implements OnInit {
       this.counter++;
       this.inputEntered.emit(true);
     }
+    for (let val of this.quantityForms.value.forms) {
+      let result = val.materialGroup.some(mat => {
+        return mat.estimatedQty && mat.estimatedQty >= 0
+      })
+      if (result) {
+        this.inputEntered.emit(true);
+        break;
+      }
+    }
   }
+
   getMaterialLength(control: AbstractControl) {
     if (!control.touched) {
       return null;
@@ -189,6 +195,7 @@ export class BomPreviewComponent implements OnInit {
   }
 
   getData() {
+    this.enteredInput();
     return this.quantityForms.value.forms.map(val => {
       return val.materialGroup.filter(inputData => inputData.estimatedQty)
         .map(inputdata => {
