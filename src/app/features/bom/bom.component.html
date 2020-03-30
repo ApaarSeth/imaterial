@@ -1,6 +1,6 @@
 <div class="page-start-point ">
   <div class="p-l-20 p-r-20 p-b-20 min-height">
-    <card-layout *ngIf="product" (onEdit)="editProject($event)" (onDelete)="deleteProject($event)" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
+    <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
     <div class="p-t-10">
       <mat-card class="parent">
         <form [formGroup]="form">
@@ -56,7 +56,6 @@
                 >
               </div>
               <div>
-                {{ preview ? preview.quantityForms.status : "" }}
                 <button
                   mat-raised-button
                   class="main-background-color main-button color-white pull-right save-material-button"
