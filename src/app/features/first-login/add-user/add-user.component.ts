@@ -96,7 +96,8 @@ export class AddUserComponent implements OnInit {
   onDelete(index) {
     (<FormArray>this.addUserForm.get('other')).removeAt(index);
     this.index.splice(index,1);
-    console.log(this.index);
+    this.emails[index]=null;
+     console.log(this.emails);
      this.index.forEach(element => {
             if (element == 'false'){
               this.emailVerified = false;
@@ -106,6 +107,16 @@ export class AddUserComponent implements OnInit {
           })
           if(this.check != true){
             this.emailVerified = true;
+            this.check = null;
+          }
+
+          this.count = 0;
+          for (let i = 0; i < this.emails.length - 1; i++) {
+            for (let j = i + 1; j < this.emails.length; j++) {
+               if ((this.emails[i] != null) &&  (this.emails[j]!=null) && (this.emails[i] == this.emails[j]) )
+                this.count++;
+            }
+           
           }
   }
 
@@ -149,7 +160,7 @@ export class AddUserComponent implements OnInit {
           this.count = 0;
           for (let i = 0; i < this.emails.length - 1; i++) {
             for (let j = i + 1; j < this.emails.length; j++) {
-              if (this.emails[i] == this.emails[j])
+              if ((this.emails[i] != null) &&  (this.emails[j]!=null) && (this.emails[i] == this.emails[j]) )
                 this.count++;
             }
           }
