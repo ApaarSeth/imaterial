@@ -47,6 +47,7 @@ export interface Supplier {
 export interface TermsObj {
     termsDesc: string,
     termsType: string,
+    otherDesc: string;
 }
 
 export interface Documents {

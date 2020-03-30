@@ -31,10 +31,10 @@
               <mat-form-field class="border-input date-label">
                 <mat-label>RFQ End Date*</mat-label>
                 <span class="form-placeholder">{{ form["controls"]["dueDate"].value | date: "dd-MMM-yyy" }}</span>
-                <input hidden matInput [matDatepicker]="endDate" formControlName="dueDate" [min]="minDate" (focus)="dueDate.open()" readonly />
+                <input hidden matInput [matDatepicker]="endDate" formControlName="dueDate" [min]="minDate" (focus)="endDate.open()" readonly />
                 <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                 <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
-                <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small>
+                <!-- <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small> -->
               </mat-form-field>
             </div>
             <!-- <div class="col-md-2 p-t-20 main-color">
