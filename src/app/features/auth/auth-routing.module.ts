@@ -34,6 +34,10 @@ const routes: Routes = [
     component: ForgotPasswordComponent
   },
   {
+    path: "forgot-password/:uniqueCode",
+    component: ForgotPasswordComponent
+  },
+  {
     path: "change-password",
     component: ChangePasswordComponent
   }
