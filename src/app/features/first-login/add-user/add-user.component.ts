@@ -32,6 +32,7 @@ export class AddUserComponent implements OnInit {
   emails: string[] = [];
   count: any;
   addUserFormLength: number;
+  check: boolean;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -81,7 +82,10 @@ export class AddUserComponent implements OnInit {
    */
   onAddRow() {
     (<FormArray>this.addUserForm.get('other')).push(this.addOtherFormGroup());
-    // this.addUserFormLength = this.addUserForm.controls.other.controls.length;
+     this.addUserFormLength = this.addUserForm.get('other')['controls'].length;
+    if(this.index[this.addUserFormLength - 1] == 'false'){
+      this.index[this.addUserFormLength - 1] = 'true';
+    }
     console.log(this.addUserForm);
   }
 
@@ -90,7 +94,19 @@ export class AddUserComponent implements OnInit {
    */
 
   onDelete(index) {
-    (<FormArray>this.addUserForm.get('other')).removeAt(index)
+    (<FormArray>this.addUserForm.get('other')).removeAt(index);
+    this.index.splice(index,1);
+    console.log(this.index);
+     this.index.forEach(element => {
+            if (element == 'false'){
+              this.emailVerified = false;
+              this.check = true;
+            }
+              
+          })
+          if(this.check != true){
+            this.emailVerified = true;
+          }
   }
 
   addOtherFormGroup(): FormGroup {
