@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
 import { UserService } from "src/app/shared/services/userDashboard/user.service";
 import { MatSnackBar } from '@angular/material';
@@ -17,19 +17,26 @@ import { API } from 'src/app/shared/constants/configuration-constants';
 })
 
 export class SigninComponent implements OnInit {
+  uniqueCode: string = "";
 
   constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
     private formBuilder: FormBuilder,
     private _userService: UserService,
-    private _snackBar: MatSnackBar,
-    private dataService: DataService) { }
+      private route: ActivatedRoute,
+      private dataService: DataService,
+    private _snackBar: MatSnackBar) { }
 
   showPassWordString: boolean = false;
   signinForm: FormGroup;
   signInData = {} as SignInData;
   acceptTerms: boolean;
   ngOnInit() {
+     this.route.params.subscribe(param => {
+      this.uniqueCode = param["uniqueCode"];
+    });
+
+
     this.formInit();
   }
 
@@ -108,7 +115,12 @@ export class SigninComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
-  goToForgetPass() {
-    this.router.navigate(['auth/forgot-password']);
+  goToForgetPass(){
+    if(this.uniqueCode){
+       this.router.navigate(['auth/forgot-password/'+this.uniqueCode]);
+    }
+    else{
+       this.router.navigate(['auth/forgot-password']);
+    }
   }
 }
