@@ -2,6 +2,7 @@ export interface SendRfqObj {
   dueDate: Date;
   quoteValidTill: Date;
   projectList: ProjectRfqObj[];
+  terms?: any
 }
 export interface ProjectRfqObj {
   projectId: number;
@@ -10,7 +11,7 @@ export interface ProjectRfqObj {
   addressLine2: string;
   city: string;
   state: string;
-  
+
   gst: string;
   materialList: MaterialRfqObj[];
 }
@@ -24,7 +25,7 @@ export interface MaterialRfqObj {
   materialUnit: string;
   materialIgst: number;
   materialSgst: number;
-  Igst? : number;
+  Igst?: number;
   materialCgst: number;
   materialIGSTFlag: boolean;
   materialGst?: number;
