@@ -114,13 +114,12 @@
                   <mat-chip
                     *ngFor="let trade of tradeList"
                     [selected]="trade.tradeId"
-                    [ngClass]="[trade.selected && trade.tradeId !== 22 ? 'active' : '', trade.tradeId === 22 ? 'user-Other-Trade' : '']"
-                    (click)="trade.selected = !trade.selected; changeSelected('s', trade)"
-                  >
+                    [ngClass]="[trade.selected && trade.tradeId !== OthersId ? 'active' : '', trade.tradeId === OthersId ? 'user-Other-Trade' : '']"
+                    (click)="trade.selected = !trade.selected; changeSelected('s', trade)">
                     {{ trade.tradeName }}
                   </mat-chip>
                   <form [formGroup]="customTrade">
-                    <mat-form-field *ngIf="selectedTradesId.indexOf(22) > -1" class="border-input p-l-10">
+                    <mat-form-field *ngIf="selectedTradesId.indexOf(OthersId) > -1" class="border-input p-l-10">
                       <input matInput formControlName="trade" type="text" placeholder="Enter Trade" />
                     </mat-form-field>
                   </form>

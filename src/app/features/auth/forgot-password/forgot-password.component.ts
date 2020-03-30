@@ -213,5 +213,14 @@ goBackToNumber(){
       this.passscreenShow = false;  
 }
 
+reDirectToSignIn(){
+  if(this.uniqueCode){
+       this.router.navigate(['auth/login/'+this.uniqueCode]);
+    }
+    else{
+       this.router.navigate(['auth/login']);
+    }
+}
+
 }
 

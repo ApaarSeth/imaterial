@@ -39,6 +39,7 @@ export class UpdateInfoComponent implements OnInit {
   ];
   selectedTradesId: number[] = [];
   url: string;
+  OthersId: number;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -84,6 +85,13 @@ export class UpdateInfoComponent implements OnInit {
   getTradesList() {
     this._userService.getTrades().then(res => {
       this.tradeList = res.data;
+      if(res.data){
+        res.data.forEach(element => {
+          if(element.tradeName == 'Others'){
+            this.OthersId = element.tradeId; 
+          }
+      });
+      }
     })
   }
 
@@ -134,7 +142,7 @@ export class UpdateInfoComponent implements OnInit {
       this.selectedTrades.splice(choosenIndex, 1);
     } else {
       this.selectedTrades.push(trade);
-      if (trade.tradeId === 22) {
+      if (trade.tradeId === this.OthersId) {
         this.customTrade.get("trade").enable()
       }
       else {
@@ -173,7 +181,7 @@ export class UpdateInfoComponent implements OnInit {
 
     if (this.userInfoForm.valid) {
       this.selectedTrades = this.selectedTrades.map((trade: TradeList) => {
-        if (trade.tradeId === 22) {
+        if (trade.tradeId === this.OthersId) {
           trade.tradeDescription = this.customTrade.value.trade;
         }
         return trade;
