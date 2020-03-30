@@ -101,18 +101,18 @@
               </div>
 
               <div class="col-sm-12 col-md-12 choose-trades" *ngIf="users.roleName === 'l1'">
-                <p style="font-weight: 600;">Choose Trades</p>
+                <p style="font-weight: 600;">Selected Trades</p>
                 <mat-chip-list multiple id="chipList" [selectable]="true">
                       <mat-chip
                     *ngFor="let trade of tradeList"
                     [selected]="trade.tradeId"
-                    [ngClass]="[trade.selected && trade.tradeId !== 22 ? 'active' : '', trade.tradeId === 22 ? 'user-Other-Trade' : '']"
+                    [ngClass]="[trade.selected && trade.tradeId !== OthersId ? 'active' : '', trade.tradeId === OthersId ? 'user-Other-Trade' : '']"
                     style="cursor: default;"
                   >
                     {{ trade.tradeName }}
                   </mat-chip>
                   <!-- <form [formGroup]="customTrade">
-                    <mat-form-field *ngIf="selectedTradesId.indexOf(22) > -1" class="border-input p-l-10">
+                    <mat-form-field *ngIf="selectedTradesId.indexOf(OthersId) > -1" class="border-input p-l-10">
                       <input matInput formControlName="trade" type="text" placeholder="Enter Trade" />
                     </mat-form-field>
                   </form> -->
