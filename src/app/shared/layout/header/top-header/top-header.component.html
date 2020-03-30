@@ -41,7 +41,7 @@
         <button mat-menu-item class="background-white-color" (click)="goToProfile()" >
           My Account
         </button>
-        <button mat-menu-item class="background-white-color" (click)="logout()" routerLinkActive="router-link-active">LogOut</button>
+        <button mat-menu-item class="background-white-color" (click)="logout()" routerLinkActive="router-link-active">Logout</button>
       </mat-menu>
     </div>
   </mat-toolbar-row>
@@ -60,7 +60,7 @@
             <span class="pull-right "> You have {{ unreadnotification.length }} unread notifications </span>
           </div>
           <ng-container *ngFor="let notification of unreadnotification">
-            <div (click)="routeTo(notification.resourceUrl)" class="p-l-10 p-r-10 p-t-20 unread-background  cursor-pointer">
+            <div class="p-l-10 p-r-10 p-t-20 unread-background  cursor-pointer">
               <span *ngIf="notification.notificationText" class="font-size-12">
                 {{ notification.notificationText }}
               </span>
@@ -79,7 +79,7 @@
             </span>
           </div>
           <ng-container *ngFor="let notification of readnotification">
-            <div (click)="routeTo(notification.resourceUrl)" class="read-background cursor-pointer">
+            <div class="read-background cursor-pointer">
               <span *ngIf="notification.notificationText" class="font-size-12">
                 {{ notification.notificationText }}
               </span>
