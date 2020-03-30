@@ -101,7 +101,7 @@
               </div>
 
               <div class="col-sm-12 col-md-12 choose-trades" *ngIf="users.roleName === 'l1'">
-                <p style="font-weight: 600;">Choose Trades</p>
+                <p style="font-weight: 600;">Selected Trades</p>
                 <mat-chip-list multiple id="chipList" [selectable]="true">
                       <mat-chip
                     *ngFor="let trade of tradeList"
