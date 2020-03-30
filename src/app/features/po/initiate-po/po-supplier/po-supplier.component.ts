@@ -66,7 +66,7 @@ export class PoSupplierComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then(result => {
-        if (result === 'done') {
+        if (result === 'Supplier Successfully added') {
           this.getSuppliers();
         }
       });

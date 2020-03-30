@@ -272,8 +272,6 @@ export class BomComponent implements OnInit {
 
   checkValidations(event: boolean): void {
     this.isAllFormsValid = event
-    // .map((preview: BomPreviewComponent) => preview.quantityForms.valid)
-    // .every(Boolean);
   }
 
   saveCategory() {
