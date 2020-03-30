@@ -72,13 +72,17 @@ export class BomPreviewComponent implements OnInit {
     this.bomService.searchText.subscribe(val => {
       if (val && val !== '') {
         this.isSearching = true;
-        for (let category of this.selectedCategory)
-          if (category.groupName.toLowerCase().indexOf(val.trim().toLowerCase()) > -1) {
-            category.isNull = false;
+        for (let category of this.selectedCategory) {
+          for (let mat of category.materialList) {
+            if (mat.materialName.toLowerCase().indexOf(val.trim().toLowerCase()) > -1) {
+              mat.isNull = false;
+            }
+            else {
+              mat.isNull = true;
+            }
           }
-          else {
-            category.isNull = true;
-          }
+          category.allNull = category.materialList.every(mat => mat.isNull)
+        }
       }
       else {
         this.isSearching = false;

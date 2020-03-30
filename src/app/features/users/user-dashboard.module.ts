@@ -1,3 +1,4 @@
+
 import { NgModule } from "@angular/core";
 import { MaterialModule } from "src/app/shared/material-modules";
 import { LayoutModule } from "src/app/shared/layout/layout-module";
@@ -23,7 +24,7 @@ import { UserRoutingModule } from './user-dashboard-routing.module';
   ],
   declarations: [
     UserDetailComponent,
-    // UpdateInfoComponent,
+
     // AddUserComponent
   ]
 })
