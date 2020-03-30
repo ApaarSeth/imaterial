@@ -107,7 +107,8 @@
                 <td class="text-align-right">
                   <mat-form-field class="border-input">
                     <input matInput type="number" placeholder="GST %" [(ngModel)]="material.Igst"  min="0"
-                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                     onkeypress="return ((event.charCode > 47 && event.charCode < 58) 
+      || event.charCode == 46)"
                       (keyup)="valueChange(rfqSupplierDetailList)"/>
                     <mat-error>GST is Required</mat-error>
                   </mat-form-field>
@@ -131,7 +132,8 @@
                   <td>
                     <mat-form-field class="border-input">
                       <input matInput type="number" placeholder="Rate"  min="0"
-                  onkeypress="return event.charCode >= 48 && event.charCode <= 57" [(ngModel)]="brand.tempRate"
+                  onkeypress="return ((event.charCode > 47 && event.charCode < 58) 
+      || event.charCode == 46)" [(ngModel)]="brand.tempRate"
                         (keyup)="valueChange(rfqSupplierDetailList)" />
                       <mat-error>Rate is Required</mat-error>
                     </mat-form-field>
