@@ -91,6 +91,8 @@ export class RFQSupplierDetailComponent implements OnInit {
   submitBid(rfqSupplierObj) {
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
+    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
+    rfqSupplierObj.rfqId = rfqId;
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });
