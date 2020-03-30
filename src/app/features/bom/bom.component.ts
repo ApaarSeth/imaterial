@@ -48,7 +48,7 @@ export class BomComponent implements OnInit {
   product: ProjectDetails;
   fullCategoryList: categoryLevel[];
   selectedCategory: categoryLevel[] = [];
-  @ViewChildren("preview") previews: QueryList<BomPreviewComponent>;
+  @ViewChild("preview", { static: false }) previews: BomPreviewComponent;
   categoriesInputData: QtyData[];
   quantityPresent: boolean = true;
   isAllFormsValid: boolean;
@@ -275,11 +275,9 @@ export class BomComponent implements OnInit {
   }
 
   saveCategory() {
-    this.categoriesInputData = this.previews
-      .map(preview => {
-        return preview.getData();
-      })
-      .flat();
+    console.log(this.previews.quantityForms)
+    this.categoriesInputData =
+      this.previews.getData();
     for (let data of this.categoriesInputData) {
       if (data.estimatedQty > 0) {
         this.quantityPresent = false;

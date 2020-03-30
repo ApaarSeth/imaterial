@@ -56,11 +56,12 @@
                 >
               </div>
               <div>
+                {{ preview ? preview.quantityForms.status : "" }}
                 <button
                   mat-raised-button
                   class="main-background-color main-button color-white pull-right save-material-button"
                   (click)="saveCategory()"
-                  [disabled]="!isAllFormsValid"
+                  [disabled]="this.previews && this.previews.quantityForms.invalid"
                 >
                   Add to BOM
                 </button>
