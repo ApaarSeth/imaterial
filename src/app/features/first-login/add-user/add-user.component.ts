@@ -31,6 +31,7 @@ export class AddUserComponent implements OnInit {
 
   emails: string[] = [];
   count: any;
+  addUserFormLength: number;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -80,6 +81,7 @@ export class AddUserComponent implements OnInit {
    */
   onAddRow() {
     (<FormArray>this.addUserForm.get('other')).push(this.addOtherFormGroup());
+    // this.addUserFormLength = this.addUserForm.controls.other.controls.length;
     console.log(this.addUserForm);
   }
 
@@ -121,11 +123,11 @@ export class AddUserComponent implements OnInit {
     if (email.match(FieldRegExConst.EMAIL)) {
       this.userService.verifyEMAIL(formNo.value).then(res => {
         if (res) {
-          this.index[index] = res.data;
+          this.index[index] = res.data.toString();
           this.emails[index] = formNo.value;
           this.emailVerified = true;
           this.index.forEach(element => {
-            if (!element)
+            if (element == 'false')
               this.emailVerified = false;
           })
           this.count = 0;

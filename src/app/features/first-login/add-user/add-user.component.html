@@ -10,25 +10,25 @@
               </div>
             </div>
 
-            <div formArrayName="other" *ngFor="let other of addUserForm.get('other').controls; let i = index">
+            <div formArrayName="other" *ngFor="let other of addUserForm.get('other')['controls']; let i = index">
               <div class="row add-invite-user-form" [formGroupName]="i">
                 <div class="col-md-5">
                   <mat-form-field class="border-input w-100">
-                    <input matInput type="email" placeholder="*Email" (input)="verifyEmail($event,addUserForm.controls.other.controls[i].controls['email'],i)" formControlName="email" />
+                    <input matInput type="email" placeholder="*Email" (input)="verifyEmail($event,other.controls['email'],i)" formControlName="email" />
                   </mat-form-field>
 
                   <mat-error
-                    *ngIf="addUserForm.controls.other.controls[i].controls['email'].hasError('required') && addUserForm.controls.other.controls[i].controls['email'].touched"
+                    *ngIf="other.controls['email'].hasError('required') && other.controls['email'].touched"
                   >
                     Email is required
                   </mat-error>
                   <mat-error
-                    *ngIf="addUserForm.controls.other.controls[i].controls['email'].hasError('pattern') && addUserForm.controls.other.controls[i].controls['email'].touched"
+                    *ngIf="other.controls['email'].hasError('pattern') && other.controls['email'].touched"
                   >
                     Enter Valid Email
                   </mat-error>
-                   <small class="form-error-msg" *ngIf="(index[i]==false)">Email already in use.</small>
-                  <!-- other.controls.other.controls[i].controls.email.errors -->
+                   <small class="form-error-msg" *ngIf="(index[i]==='false')">Email already in use.</small>
+                  <!-- other.controls.other.controls.email.errors -->
                 </div>
 
                 <!-- <div class="col-md-2">
@@ -36,7 +36,7 @@
                     <input matInput type="text" placeholder="Phone number" formControlName="contactNo" />
                   </mat-form-field>
                   <mat-error
-                    *ngIf="addUserForm.controls.other.controls[i].controls['contactNo'].hasError('pattern') && addUserForm.controls.other.controls[i].controls['contactNo'].touched"
+                    *ngIf="other.controls['contactNo'].hasError('pattern') && other.controls['contactNo'].touched"
                   >
                     Enter Valid Phone No
                   </mat-error>
@@ -52,21 +52,21 @@
                     </mat-select>
                   </mat-form-field>
                   <mat-error
-                    *ngIf="addUserForm.controls.other.controls[i].controls['roleId'].hasError('required') && addUserForm.controls.other.controls[i].controls['roleId'].touched"
+                    *ngIf="other.controls['roleId'].hasError('required') && other.controls['roleId'].touched"
                   >
                     Role is required
                   </mat-error>
                 </div>
                 <div class="col-md-1 text-center p-t-15">
-                  <a *ngIf="addUserForm.get('other').controls.length > 1" class="width-15-px p-l-5 cursor-pointer float-right-invite-delBtn" matTooltip="Delete" (click)="onDelete(i)">
+                  <a *ngIf="addUserForm.get('other').value.length > 1" class="width-15-px p-l-5 cursor-pointer float-right-invite-delBtn" matTooltip="Delete" (click)="onDelete(i)">
                     <img src="../../../../assets/images/delete-button.png" />
                   </a>
                 </div>
-                <div class="col-md-2 text-align-center p-t-10 p-l-0" *ngIf="i === addUserForm.get('other').controls.length - 1">
+                <div class="col-md-2 text-align-center p-t-10 p-l-0" *ngIf="i === addUserForm.get('other').value.length - 1">
                   <button mat-raised-button class="main-background-color main-button color-white" (click)="onAddRow()">+ Add User</button>
                 </div>
               </div>
-              <hr  *ngIf="i<(addUserForm.get('other').controls.length - 1)">
+              <hr  *ngIf="i<(addUserForm.get('other').value.length - 1)">
             </div>
               <div class="text-center col-md-12 mt-4">
                  <small class="form-error-msg" *ngIf="(count == 1)">You can't add duplicate email address.</small>
