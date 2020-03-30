@@ -93,22 +93,11 @@ export class RFQSupplierDetailComponent implements OnInit {
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
     let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
+    console.log(rfqSupplierObj);
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });
 
-
-    // this.rfqService
-    //   .postRFQDetailSupplier(
-    //     this.activatedRoute.snapshot.params["supplierId"],
-    //     rfqSupplierObj
-    //   )
-    //   .then(res => {
-    //     res.data;
-    //     this.router.navigate([
-    //       "rfq-bids/after-submit/" + this.brandCount + "/" + this.materialCount
-    //     ]);
-    //   });
   }
 
   openDialog(rfqSupplierObj): void {
@@ -129,8 +118,23 @@ export class RFQSupplierDetailComponent implements OnInit {
       });
   }
 
-  radioChange(event, projects) {
-    projects.gst = event.value;
+  radioChange(event, project) {
+    project.gst = event.value;
+
+      for (let material of project.materialList) {
+        material.materialIgst = material.Igst;
+        if (project.gst == "IGST") {
+          material.materialIgst = material.materialIgst;
+          material.materialSgst = 0;
+          material.materialCgst = 0;
+
+        } else if (project.gst == "CGST-SGST") {
+          material.materialGst = material.materialIgst;
+          material.materialSgst = material.materialGst / 2;
+          material.materialCgst = material.materialGst / 2;
+          material.materialIgst = 0;
+        }
+      }
   }
 
   duedatefunc(event) {
@@ -182,7 +186,7 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialGst = material.materialIgst;
           material.materialSgst = material.materialGst / 2;
           material.materialCgst = material.materialGst / 2;
-          // material.materialIgst = 0;
+          material.materialIgst = 0;
         }
         if (material.materialIgst >= 0 &&  material.materialIgst!=null) {
           material.materialIGSTFlag = true;
