@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit {
   ];
   selectedTradesId: number[] = [];
   usersTrade: number[] = [];
+  OthersId: any;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -48,7 +49,6 @@ export class ProfileComponent implements OnInit {
     this.role = localStorage.getItem("role");
     this.getUserRoles();
     this.getUserInformation(userId);
-    this.getTradesList();
     this.getTurnOverList();
   }
 
@@ -68,6 +68,7 @@ export class ProfileComponent implements OnInit {
            res.data[0].trade.forEach(element => {
             this.usersTrade.push(element.tradeId);
           });
+          this.getTradesList();
       }
      
       this.formInit();
@@ -82,7 +83,15 @@ export class ProfileComponent implements OnInit {
   getTradesList() {
     this._userService.getTrades().then(res => {
       this.tradeList = res.data;
-     
+    
+      if(res.data){
+        res.data.forEach(element => {
+          if(element.tradeName == 'Others'){
+            this.OthersId = element.tradeId; 
+          }
+      });
+      }
+      
      if(this.tradeList){
           this.tradeList.forEach(element => {
                 for(let i=0 ; i<this.usersTrade.length;i++){
@@ -91,6 +100,8 @@ export class ProfileComponent implements OnInit {
                 }
          });
      }
+
+
       
     })
   }
@@ -128,7 +139,7 @@ export class ProfileComponent implements OnInit {
       this.selectedTrades.splice(choosenIndex, 1);
     } else {
       this.selectedTrades.push(trade);
-      if (trade.tradeId === 22) {
+      if (trade.tradeId === this.OthersId) {
         this.customTrade.get("trade").enable()
       }
       else {
@@ -166,7 +177,7 @@ export class ProfileComponent implements OnInit {
 
     if (this.userInfoForm.valid) {
       this.selectedTrades = this.selectedTrades.map((trade: TradeList) => {
-        if (trade.tradeId === 22) {
+        if (trade.tradeId === this.OthersId) {
           trade.tradeDescription = this.customTrade.value.trade;
         }
         return trade;
