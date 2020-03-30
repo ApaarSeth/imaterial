@@ -148,8 +148,8 @@ export interface CardData {
 
 export interface DocumentList {
   documentType: string;
-  documentDesc: string;
-  documentUrl: string;
+  DocumentDesc: string;
+  DocumentUrl: string;
   documentName?: string;
 }
 
