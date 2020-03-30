@@ -39,6 +39,7 @@ export interface material {
   treadId: number;
   tradeName: string;
   tradeList: string[]
+  isNull?: boolean;
 }
 
 export interface categoryNestedLevel {

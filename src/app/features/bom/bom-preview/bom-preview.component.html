@@ -3,7 +3,7 @@
     <span *ngFor="let category of selectedCategory; let c = index">
       <ng-container [formGroupName]="c">
         <mat-accordion>
-          <div #myele *ngIf="!isSearching ? true : !category.isNull">
+          <div #myele *ngIf="!isSearching ? true : !category.allNull">
             <mat-expansion-panel class="m-b-5 m-t-5 bom-qty-page" [expanded]="true">
               <mat-expansion-panel-header class="background-color-bom-category row">
                 <div class="col-xs-6">
@@ -19,7 +19,7 @@
               </mat-expansion-panel-header>
               <ng-container formArrayName="materialGroup">
                 <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index" [formGroupName]="sc">
-                  <div class="row">
+                  <div class="row" *ngIf="!subcategory.isNull">
                     <div class="col-xs-3">
                       <span class="pull-left p-l-40 p-t-20">{{ subcategory.materialName }}</span>
                     </div>
