@@ -65,6 +65,10 @@ export class BomPreviewComponent implements OnInit {
     this.selectedCategory = [...this.category];
     this.mappingMaterialWithQuantity()
     this.formInit();
+    this.searchCategory();
+  }
+
+  searchCategory() {
     this.bomService.searchText.subscribe(val => {
       if (val && val !== '') {
         this.isSearching = true;
@@ -82,10 +86,9 @@ export class BomPreviewComponent implements OnInit {
     })
   }
 
-
   ngOnChanges(): void {
     this.selectedCategory = [...this.category];
-    this.enteredInput();
+    // this.enteredInput();
     this.formInit();
   }
 
@@ -109,19 +112,13 @@ export class BomPreviewComponent implements OnInit {
     })
 
     this.quantityForms = this.formBuilder.group(
-      {},
-      { validators: [this.getMaterialLength] }
+      { forms: this.formBuilder.array(frmArr) }
+      , { validators: this.getMaterialLength() }
     );
-    this.quantityForms.addControl("forms", new FormArray(frmArr));
-    this.enteredInput();
+    // this.quantityForms.addControl("forms", new FormArray(frmArr, [this.getMaterialLength()]));
+    // this.enteredInput();r
 
-    (<FormArray>this.quantityForms.controls["forms"]).controls.map((control: FormGroup, i) => {
-      (<FormArray>control.controls['materialGroup']).controls.map((control: FormGroup, j) => {
-        control.controls['estimatedQty'].valueChanges.subscribe(val => {
 
-        })
-      })
-    })
     this.quantityForms.valueChanges.subscribe(changes => {
       this.inputEntered.emit(true);
     })
@@ -176,26 +173,48 @@ export class BomPreviewComponent implements OnInit {
     }
   }
 
-  getMaterialLength(control: AbstractControl) {
-    if (!control.touched) {
-      return null;
-    }
+  getMaterialLength(minRequired = 1): ValidatorFn {
+    // if (!control.touched) {
+    //   return null;
+    // }
 
-    if (!Object.keys(control.value).length) {
-      return { inValid: true };
-    } else {
-      const isAllEmpty = control.value.forms.every(cat => !cat.estimatedQty);
+    // if (!Object.keys(control.value).length) {
+    //   return { inValid: true };
+    // } else {
+    //   const isAllEmpty = control.value.forms.every(cat => !cat.estimatedQty);
 
-      if (isAllEmpty) {
-        return { inValid: true };
-      } else {
-        return null;
+    //   if (isAllEmpty) {
+    //     return { inValid: true };
+    //   } else {
+    //     return null;
+    //   }
+    // }
+    return (formGroup: FormGroup): { [key: string]: boolean } | null => {
+      let checked = false;
+      for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {
+        const control: FormArray = (<FormArray>formGroup.get('forms')).controls[key] as FormArray;
+        checked = control.value.materialGroup.some(material => {
+          return material.estimatedQty > 0
+        })
+        if (checked) {
+          break;
+        }
       }
-    }
+      // if (control.value) {
+      //   checked++;
+      // }
+
+      if (!checked) {
+        return {
+          requireCheckboxToBeChecked: true,
+        };
+      }
+
+      return null;
+    };
   }
 
   getData() {
-    this.enteredInput();
     return this.quantityForms.value.forms.map(val => {
       return val.materialGroup.filter(inputData => inputData.estimatedQty)
         .map(inputdata => {
