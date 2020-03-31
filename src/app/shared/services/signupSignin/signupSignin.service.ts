@@ -35,10 +35,8 @@ export class SignInSignupService implements OnInit {
           let data: any = {};
           data.erroType = 'Invalid Credentials',
             data.errorMessage = 'Phone No. or Password Incorrect';
-          console.log(e.error_description);
           return data;
         }
-        // console.error(e);
       });
   }
   sendOTP(phone) {

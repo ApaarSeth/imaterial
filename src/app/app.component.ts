@@ -19,9 +19,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    // console.log(window.location.href);
     this.location = window.location.href;
-    localStorage.setItem('debug', String(environment.debug_mode))
     this.fbPixel.load();
     if (this.location.includes('rfq-bids/supplier/') || this.location.includes('rfq-bids/after-submit/')) {
       this.hideHeader = true;
