@@ -248,7 +248,6 @@ export class RFQSupplierDetailComponent implements OnInit {
           this.brandCount++;
           this.oneBrandAtMaterialSelected = false;
         }
-
       }
     }
     if (
