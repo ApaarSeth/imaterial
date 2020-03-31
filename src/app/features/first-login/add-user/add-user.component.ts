@@ -132,7 +132,7 @@ export class AddUserComponent implements OnInit {
       // contactNo: ['', {
       //   validators: [
       //     // Validators.required,
-      //     Validators.pattern(FieldRegExConst.PHONE)
+      //     Validators.pattern(FieldRegExConst.MOBILE)
       //   ]
       // }
       // ],

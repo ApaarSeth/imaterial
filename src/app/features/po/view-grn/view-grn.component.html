@@ -2,7 +2,9 @@
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row p-t-20 p-b-20">
       <!-- <div class="col-xs-6">PO Number: {{grnHeaders[0].poNumber}}</div> -->
-      <div class="col-xs-6 text-semi-bold">PO Number: {{ poData.poNumber }}</div>
+      <div class="col-xs-6 text-semi-bold">PO Number: <span *ngIf="poData && poData.poNumber">
+        {{ poData.poNumber }}
+      </span></div>
       <div class="col-xs-6">
         <button (click)="viewBack()" mat-raised-button class="background-white-color main-color main-button pull-right">
           Back
