@@ -73,8 +73,6 @@ export class RfqSupplierComponent implements OnInit {
       this.formInit();
     }
 
-    console.log("this.finalRfq", this.finalRfq);
-    console.log("this.rfqData", this.rfqData);
   }
 
   formInit() {

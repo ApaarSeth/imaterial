@@ -94,9 +94,6 @@ export class ReviewComponent implements OnInit {
 
     // this.documentList = history.state.documentsList;
     // this.supplierIds = this.selectedSuppliersList.map(x => x.supplierId);
-    // console.log("supplierIds", this.supplierIds);
-    // console.log("checkedMaterialsList", this.checkedMaterialsList);
-    // console.log("selectedSuppliersList", this.selectedSuppliersList);
     this.initForm();
   }
 
