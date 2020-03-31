@@ -7,7 +7,7 @@ import {
 } from "src/app/shared/models/project-details";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { IndentVO } from "src/app/shared/models/indent";
 import { IndentService } from "src/app/shared/services/indent/indent.service";
 import { Subcategory } from "src/app/shared/models/subcategory-materials";
@@ -60,7 +60,8 @@ export class IndentDashboardComponent implements OnInit {
     private indentService: IndentService,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -107,13 +108,22 @@ export class IndentDashboardComponent implements OnInit {
       return { ...cat, ...formValues[i] };
     });
     this.indentService.raiseIndent(this.projectId, dataSource).then(res => {
-      this.navService.gaEvent({
+       this._snackBar.open(res.message, "", {
+          duration: 2000,
+          panelClass: ["warning-snackbar"],
+          verticalPosition: "top"
+        });
+
+      if(res.status == 1){
+        this.navService.gaEvent({
         action: 'submit',
         category: 'indent_created',
         label: null,
         value: null
       });
       this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
+      }
+      
     });
   }
 
