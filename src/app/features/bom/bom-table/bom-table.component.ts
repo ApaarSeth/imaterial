@@ -144,7 +144,6 @@ export class BomTableComponent implements OnInit {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
       this.subcategories = [...res.data];
-      console.log(this.subcategories);
       this.subcategories.forEach(subcategory => {
         if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
           this.subcategoryData = [
@@ -274,7 +273,6 @@ export class BomTableComponent implements OnInit {
       this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
         state: { rfqData: res, selectedIndex: 1 }
       });
-      console.log(res.data);
     });
   }
 
@@ -337,7 +335,6 @@ export class BomTableComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         this.getMaterialWithQuantity();
-        console.log("The dialog was closed");
       });
     }
   }
@@ -350,10 +347,8 @@ export class BomTableComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result.data == "close") {
-          console.log("The dialog was closed");
         } else {
           this.getMaterialWithQuantity();
-          console.log("The dialog was closed");
         }
       });
     }
