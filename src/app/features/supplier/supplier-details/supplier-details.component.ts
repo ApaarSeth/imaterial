@@ -27,7 +27,7 @@ const ELEMENT_DATA: SupplierAdd[] = [];
 
 
 export class SupplierDetailComponent implements OnInit {
-  displayedColumns: string[] = ['suppliername', 'email', 'contactNo', 'status', 'star'];
+  displayedColumns: string[] = ['suppliername', 'email', 'contactNo', 'status'];
   displayedColumnsDeactivate: string[] = ['username', 'email', 'contactNo', 'roleName', 'ProjectList'];
   dataSource = new MatTableDataSource<SupplierAdd>();
   dataSourceTemp = ELEMENT_DATA;
