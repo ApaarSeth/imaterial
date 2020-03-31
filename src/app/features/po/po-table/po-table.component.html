@@ -89,7 +89,8 @@
                 </ng-template>
               </span>
               <span class="mat-cell text-center">
-                <span *ngIf="mode != 'edit'; else editGst"> {{ purchaseOrder.materialIgst + purchaseOrder.materialCgst + purchaseOrder.materialSgst }}</span>
+                <span *ngIf="mode != 'edit' && (purchaseOrder.materialIgst != 0) &&  (purchaseOrder.materialCgst == 0) && (purchaseOrder.materialSgst == 0) ; else editGst">{{ purchaseOrder.materialIgst }}</span>
+                 <span *ngIf="mode != 'edit' && (purchaseOrder.materialIgst != 0) &&  (purchaseOrder.materialCgst != 0) && (purchaseOrder.materialSgst != 0) ; else editGst">{{ purchaseOrder.materialCgst + purchaseOrder.materialSgst }}</span>
                 <ng-template #editGst>
                   <mat-form-field class="border-input width50Percent">
                     <input

@@ -87,7 +87,7 @@ export class SignupComponent implements OnInit {
   formInit() {
     this.signupForm = this.formBuilder.group({
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
+      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
       organisationName: [{ value: this.user ? this.user.companyName : '', disabled: this.organisationDisabled }, Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", Validators.required],
@@ -179,7 +179,7 @@ export class SignupComponent implements OnInit {
     this.value = numberPassed ? numberPassed : event.target.value;
   }
   sendOtpBtn() {
-    if ((this.value.match(FieldRegExConst.PHONE)) && (this.value.length == 10)) {
+    if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
       if (!this.uniqueCode) {
         this.verifyMobile(this.value);
       }
