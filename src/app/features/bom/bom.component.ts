@@ -275,7 +275,6 @@ export class BomComponent implements OnInit {
   }
 
   saveCategory() {
-    console.log(this.previews.quantityForms)
     this.categoriesInputData =
       this.previews.getData();
     for (let data of this.categoriesInputData) {

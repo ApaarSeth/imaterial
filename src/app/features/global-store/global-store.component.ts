@@ -54,11 +54,9 @@ export class GlobalStoreComponent implements OnInit {
     this.router.navigate(['/rfq/createRfq']);
   }
   materialShowDataLength(event){
-    console.log("length of material" +event);
     this.materialDataLength = event;
   }
   projectShowDataLength(event){
-     console.log("length of project" +event);
        this.projectDataLength = event;
   }
 }

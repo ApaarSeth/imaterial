@@ -110,7 +110,6 @@ export class DashboardComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
 
-    console.log(this.userId);
     this.getAllProjects();
   }
 
