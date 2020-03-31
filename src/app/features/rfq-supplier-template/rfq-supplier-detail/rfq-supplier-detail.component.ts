@@ -4,6 +4,7 @@ import { SendRfqObj } from "src/app/shared/models/RFQ/rfq-details-supplier";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { MatDialog } from "@angular/material";
 import { ConfirmRfqBidComponent } from "src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component";
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 @Component({
   selector: "rfq-indent-detail",
   templateUrl: "./rfq-supplier-detail.component.html"
@@ -26,6 +27,8 @@ export class RFQSupplierDetailComponent implements OnInit {
   dateDue: string = "";
   brandNotMatchedCount: number = 0;
   oneBrandAtMaterialSelected: boolean;
+  dotCount: any;
+  rateValid: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -132,7 +135,7 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialGst = material.materialIgst;
           material.materialSgst = material.materialGst / 2;
           material.materialCgst = material.materialGst / 2;
-          material.materialIgst = 0;
+         // material.materialIgst = 0;
         }
       }
   }
@@ -155,7 +158,18 @@ export class RFQSupplierDetailComponent implements OnInit {
     }
   }
 
-  valueChange(RFQsupplier: SendRfqObj) {
+  valueChange(RFQsupplier: SendRfqObj,event) {
+  
+  //  if(event.target.value.length>0 && event.target.value.match(FieldRegExConst.RATES)){
+  //    if((event.charCode > 47 && event.charCode < 58) || event.charCode == 46){
+  //                         this.rateValid = true
+  //                      }
+  //   }
+  //   else {
+  //     this.rateValid = false;
+  //   }
+     
+
     this.submitButtonValidationFlag = false;
     this.brandRateFlag = false;
     this.materialIGSTFlag = false;
@@ -186,7 +200,7 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialGst = material.materialIgst;
           material.materialSgst = material.materialGst / 2;
           material.materialCgst = material.materialGst / 2;
-          material.materialIgst = 0;
+          //material.materialIgst = 0;
         }
         if (material.materialIgst >= 0 &&  material.materialIgst!=null) {
           material.materialIGSTFlag = true;
@@ -244,5 +258,9 @@ export class RFQSupplierDetailComponent implements OnInit {
     ) {
       this.submitButtonValidationFlag = true;
     }
+
+    
+
   }
+
 }

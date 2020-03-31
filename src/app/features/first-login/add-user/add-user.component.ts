@@ -97,6 +97,7 @@ export class AddUserComponent implements OnInit {
     (<FormArray>this.addUserForm.get('other')).removeAt(index);
     this.index.splice(index,1);
     this.emails[index]=null;
+    this.emails.splice(index,1);
      console.log(this.emails);
      this.index.forEach(element => {
             if (element == 'false'){
