@@ -45,11 +45,14 @@
         <span>
           Payment Details :
         </span>
-        <span *ngIf="rfqSupplierDetailList && rfqSupplierDetailList.terms && rfqSupplierDetailList.terms.termsDesc" class="p-l-20">
+        <span *ngIf="rfqSupplierDetailList && rfqSupplierDetailList.terms &&  rfqSupplierDetailList.terms.otherDesc === null && rfqSupplierDetailList.terms.termsDesc != null" class="p-l-20">
             {{rfqSupplierDetailList.terms.termsDesc}}
         </span>
-         <span *ngIf="!(rfqSupplierDetailList && rfqSupplierDetailList.terms && rfqSupplierDetailList.terms.termsDesc)" class="p-l-20">
-           -
+         <span *ngIf="(rfqSupplierDetailList && rfqSupplierDetailList.terms && rfqSupplierDetailList.terms.otherDesc != null)" class="p-l-20">
+           {{rfqSupplierDetailList.terms.otherDesc}}
+        </span>
+         <span *ngIf="(rfqSupplierDetailList && rfqSupplierDetailList.terms && rfqSupplierDetailList.terms.otherDesc === null && rfqSupplierDetailList.terms.termsDesc === null)" class="p-l-20">
+          -
         </span>
       </div>
 
@@ -77,8 +80,8 @@
                 <span *ngIf="projects.state">
                   , {{projects.state}}
                 </span>
-                <span *ngIf="projects.pincode">
-                  , {{projects.pincode}}
+                <span *ngIf="projects.pinCode">
+                  , {{projects.pinCode}}
                 </span>
               </th>
 
@@ -107,8 +110,9 @@
                 <td class="text-align-right">
                   <mat-form-field class="border-input">
                     <input matInput type="number" placeholder="GST %" [(ngModel)]="material.Igst"  min="0"
-                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                      (keyup)="valueChange(rfqSupplierDetailList)"/>
+                     onkeypress="return ((event.charCode > 47 && event.charCode < 58) 
+      || event.charCode == 46)"
+                      (keyup)="valueChange(rfqSupplierDetailList,$event)"/>
                     <mat-error>GST is Required</mat-error>
                   </mat-form-field>
                 </td>
@@ -131,8 +135,10 @@
                   <td>
                     <mat-form-field class="border-input">
                       <input matInput type="number" placeholder="Rate"  min="0"
-                  onkeypress="return event.charCode >= 48 && event.charCode <= 57" [(ngModel)]="brand.tempRate"
-                        (keyup)="valueChange(rfqSupplierDetailList)" />
+                       onkeypress="return ((event.charCode > 47 && event.charCode < 58) 
+                       || event.charCode == 46)"
+                       title="Rates must be valid" [(ngModel)]="brand.tempRate"
+                        (keyup)="valueChange(rfqSupplierDetailList,$event)" />
                       <mat-error>Rate is Required</mat-error>
                     </mat-form-field>
                   </td>

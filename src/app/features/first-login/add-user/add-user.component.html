@@ -69,11 +69,11 @@
               <hr  *ngIf="i<(addUserForm.get('other').value.length - 1)">
             </div>
               <div class="text-center col-md-12 mt-4">
-                 <small class="form-error-msg" *ngIf="(count == 1)">You can't add duplicate email address.</small>
+                 <small class="form-error-msg" *ngIf="(count > 0)">You can't add duplicate email address.</small>
               </div>
             <div class="text-center col-md-12 mt-4">
               <button class="btn btn-outline-warning mr-3" [routerLink]="['/dashboard']">Skip</button>
-              <button class="btn btn-warning next-btn" (click)="submit()" [disabled]="!addUserForm.valid || (!emailVerified) || (count==1)">Done</button>
+              <button class="btn btn-warning next-btn" (click)="submit()" [disabled]="!addUserForm.valid || (!emailVerified) || (count>0)">Done</button>
             </div>
           </form>
         </div>

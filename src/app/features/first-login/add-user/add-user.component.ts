@@ -32,6 +32,7 @@ export class AddUserComponent implements OnInit {
   emails: string[] = [];
   count: any;
   addUserFormLength: number;
+  check: boolean;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -81,7 +82,10 @@ export class AddUserComponent implements OnInit {
    */
   onAddRow() {
     (<FormArray>this.addUserForm.get('other')).push(this.addOtherFormGroup());
-    // this.addUserFormLength = this.addUserForm.controls.other.controls.length;
+     this.addUserFormLength = this.addUserForm.get('other')['controls'].length;
+    if(this.index[this.addUserFormLength - 1] == 'false'){
+      this.index[this.addUserFormLength - 1] = 'true';
+    }
     console.log(this.addUserForm);
   }
 
@@ -90,7 +94,31 @@ export class AddUserComponent implements OnInit {
    */
 
   onDelete(index) {
-    (<FormArray>this.addUserForm.get('other')).removeAt(index)
+    (<FormArray>this.addUserForm.get('other')).removeAt(index);
+    this.index.splice(index,1);
+    this.emails[index]=null;
+    this.emails.splice(index,1);
+     console.log(this.emails);
+     this.index.forEach(element => {
+            if (element == 'false'){
+              this.emailVerified = false;
+              this.check = true;
+            }
+              
+          })
+          if(this.check != true){
+            this.emailVerified = true;
+            this.check = null;
+          }
+
+          this.count = 0;
+          for (let i = 0; i < this.emails.length - 1; i++) {
+            for (let j = i + 1; j < this.emails.length; j++) {
+               if ((this.emails[i] != null) &&  (this.emails[j]!=null) && (this.emails[i] == this.emails[j]) )
+                this.count++;
+            }
+           
+          }
   }
 
   addOtherFormGroup(): FormGroup {
@@ -133,7 +161,7 @@ export class AddUserComponent implements OnInit {
           this.count = 0;
           for (let i = 0; i < this.emails.length - 1; i++) {
             for (let j = i + 1; j < this.emails.length; j++) {
-              if (this.emails[i] == this.emails[j])
+              if ((this.emails[i] != null) &&  (this.emails[j]!=null) && (this.emails[i] == this.emails[j]) )
                 this.count++;
             }
           }
