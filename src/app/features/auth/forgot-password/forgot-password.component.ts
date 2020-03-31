@@ -77,7 +77,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   formInit() {
     this.forgetPassForm = this.formBuilder.group({
-      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
+      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
       organisationType: ["Contractor", Validators.required],
       password: [""],
       otp: [""]
@@ -116,7 +116,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.verifiedMobile = true;
     this.showOtp = false;
     this.value = numberPassed ? numberPassed : event.target.value;
-     if ((this.value.match(FieldRegExConst.PHONE)) && (this.value.length == 10)) {
+     if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
        this.phoneNumberChecked = true;
        this.verifyMobile(this.value);
      }
@@ -125,7 +125,7 @@ export class ForgotPasswordComponent implements OnInit {
      }
   }
   sendOtpBtn(){
-      if ((this.value.match(FieldRegExConst.PHONE)) && (this.value.length == 10)) {
+      if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
        if (!this.uniqueCode) {
           this.verifyMobile(this.value);
        }

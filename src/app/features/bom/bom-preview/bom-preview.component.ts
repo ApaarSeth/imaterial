@@ -86,8 +86,15 @@ export class BomPreviewComponent implements OnInit {
       }
       else {
         this.isSearching = false;
+        for (let category of this.selectedCategory) {
+          for (let mat of category.materialList) {
+            mat.isNull = false;
+          }
+          category.allNull = false;
+        }
       }
     })
+
   }
 
   ngOnChanges(): void {
