@@ -55,18 +55,14 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       .flat();
     this.materialForms = this.formBuilder.group({});
     this.materialForms.addControl("forms", new FormArray(frmArr));
-    console.log("form array", frmArr);
 
-    console.log("material form", this.materialForms);
   }
 
   makesUpdate(data: string[], grpIndex: number) {
-    console.log(data, grpIndex);
 
     const forms = this.materialForms.get("forms") as FormArray;
     forms.controls[grpIndex].get("brandNames").setValue(data);
 
-    console.log(this.materialForms);
   }
   materialAdded() {
     this.checkedMaterialsList.map(project => {
@@ -103,7 +99,6 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       });
       this.router.navigate(["/po/po-generate/" + res.data[0] + "/edit"]);
     });
-    console.log(this.initiatePoData);
   }
   sendDataBack() {
     this.poData.selectedMaterial[0].projectMaterialList = this.poData.selectedMaterial[0].projectMaterialList.map((mat: RfqMat) => {

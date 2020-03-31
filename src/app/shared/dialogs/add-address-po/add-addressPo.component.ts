@@ -40,14 +40,12 @@ export class AddAddressPoDialogComponent {
         .getPoAddAddress("Project", this.data.id)
         .then(res => {
           this.address = res.data;
-          // console.log("addressProject", this.address);
         });
     } else {
       this.addAddressService
         .getPoAddAddress("Supplier", this.data.id)
         .then(res => {
           this.address = res.data;
-          // console.log("addressSupplier", this.address);
         });
     }
     this.formInit();
@@ -62,7 +60,6 @@ export class AddAddressPoDialogComponent {
     this.selectAddressFrm = this.formBuilder.group({
       address: []
     });
-    // console.log("form data", this.selectAddressFrm);
 
     // new address form
     this.newAddressForm = this.formBuilder.group({
@@ -73,7 +70,6 @@ export class AddAddressPoDialogComponent {
       city: [{ value: "", disabled: true }, Validators.required],
       gstNo: ["", [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]]
     });
-    // console.log("addresss", this.newAddressFor,m.value);
   }
 
   onselectAddress(): void {

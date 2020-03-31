@@ -24,13 +24,10 @@ export class NumberToWordsPipe implements PipeTransform {
         }
 
         return Promise.all([this.poService.getNumberToWords(Number(totalAmount[0])), this.poService.getNumberToWords(paise)]).then(data => {
-          console.log(data[0].data);
-
           return (this.words = data[0].data + " Rupees & " + data[1].data + " Paise");
         });
       } else {
         return this.poService.getNumberToWords(Number(totalAmount[0])).then(data => {
-          console.log(data.data + " Rupees");
           this.words = data.data + " Rupees";
           return data.data + " Rupees";
         });

@@ -1,0 +1,21 @@
+<div class="header-add-edit-dialog">
+    <h1 mat-dialog-title>Confirmation</h1>
+    <button type="button" class="close" (click)="close()" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div mat-dialog-content class="padding-for-dialog-after-header">
+<p class="text-center">Go to Project Store and add GSTIN in your project</p>
+</div>
+   
+<div mat-dialog-actions>
+    <a [routerLink]="['/']" >
+    <button
+      mat-raised-button 
+      class="main-background-color main-button color-white pull-right"
+    >
+      Project Store 
+    </button>
+  </a>
+  </div>
+</div>

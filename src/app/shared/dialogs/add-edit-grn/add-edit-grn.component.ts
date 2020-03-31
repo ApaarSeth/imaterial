@@ -96,7 +96,6 @@ export class AddEditGrnComponent implements OnInit {
 
   // getGRNDetails(grnId: number) {
   //     this.grnService.getGRNDetails(grnId).then(data => {
-  //         console.log("grn data", data.data);
   //         this.grnDetails = data.data;
   //         this.grnDetailsObj = data.data;
   //         this.formsInit(this.grnDetailsObj);

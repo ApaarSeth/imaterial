@@ -22,6 +22,7 @@ import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gstin-missing.component';
 
 @Component({
   selector: "app-po",
@@ -104,7 +105,6 @@ export class PoComponent implements OnInit {
     });
     this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
-      console.log("poData", this.poData);
       this.tableData = this.poData.materialData;
       this.cardData = {
         supplierAddress: this.poData.supplierAddress,
@@ -183,9 +183,11 @@ export class PoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("result", result);
       this.poService.sendPoData(result).then(res => {
         if (res.status === 0) {
+          if (res.message = "gst field missing from billing address") {
+            this.openProjectDialog();
+          }
           this._snackBar.open(
             res.message,
             "",
@@ -215,10 +217,16 @@ export class PoComponent implements OnInit {
           this.router.navigate(["po/detail-list"]);
         }
       });
-
-      console.log("The dialog was closed");
     });
   }
+
+  openProjectDialog() {
+    const dialogRef = this.dialog.open(GSTINMissingComponent, {
+      width: "400px"
+
+    });
+  }
+
   poApproval(decision) {
     this.collatePoData.poApproverId = this.poData.approverId;
     this.collatePoData.purchaseOrderId = this.poData.purchaseOrderId;
@@ -274,7 +282,6 @@ export class PoComponent implements OnInit {
   startSubscription() {
     this.subscriptions.push(
       combineLatest([this.poService.billingRole$, this.poService.projectRole$, this.poService.billingAddress$, this.poService.supplierAddress$, this.poService.poNumber$]).subscribe(values => {
-        console.log("ispoValid", this.isPoValid)
         this.isPoValid = true;
       })
     );

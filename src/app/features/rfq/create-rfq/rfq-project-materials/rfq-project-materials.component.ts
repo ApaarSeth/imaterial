@@ -176,7 +176,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
             return proj;
           }
         );
-        console.log("rfqDegtail", this.rfqDetails);
         this.materialsForm();
         // this.materialAdded();
       });

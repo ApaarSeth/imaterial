@@ -72,7 +72,6 @@ export class RfqSupplierComponent implements OnInit {
       })
       this.formInit();
     }
-
   }
 
   formInit() {
