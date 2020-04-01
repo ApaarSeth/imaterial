@@ -39,7 +39,6 @@ export class AddAddressDialogComponent {
     this.selectAddressFrm = this.formBuilder.group({
       address: []
     });
-    // console.log("form data", this.selectAddressFrm);
 
     // new address form
     this.newAddressForm = this.formBuilder.group({
@@ -50,7 +49,6 @@ export class AddAddressDialogComponent {
       city: ["", Validators.required]
     });
 
-    // console.log("addresss", this.newAddressForm.value);
   }
 
   onNoClick(): void {
@@ -60,14 +58,11 @@ export class AddAddressDialogComponent {
     });
     this.selectAddressFrm.value.address.primaryAddress = 1;
     this.data.defaultAddress = this.selectAddressFrm.value.address;
-    // console.log("defaultAdressUpdate", this.data);
     this.dialogRef.close();
   }
 
   onNoClick1(): void {
     this.address = this.newAddressForm.value;
-    // console.log("addresss", this.newAddressForm.value);
-    // console.log("new object", this.address);
     this.postAddAddress(this.address);
   }
 

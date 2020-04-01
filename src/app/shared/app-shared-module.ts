@@ -8,9 +8,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SearchPipe } from "./pipes/searchPipe";
 import { NumberToWordsPipe } from "./pipes/number-to-words";
 import { SearchMaterialPipe } from './pipes/searchMaterial';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [CommonModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule],
   providers: [DataService],
   declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe],
   exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe],

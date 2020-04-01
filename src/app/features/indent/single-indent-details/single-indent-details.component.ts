@@ -51,7 +51,6 @@ export class SingleIndentDetailsComponent implements OnInit {
 
     getSingleIndentDetails(indentId: number) {
         this.indentService.getSingleIndent(indentId).then(data => {
-            console.log("indent data", data.data);
             this.singleIndentDetails = data.data;
         });
     }

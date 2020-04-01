@@ -56,13 +56,13 @@ export class RFQSupplierAddAddressComponent implements OnInit {
              this.form.controls.supplierName.setValidators([Validators.required]);
              this.form.controls.supplierName.updateValueAndValidity();
 
-             this.form.controls.contactNo.setValidators([Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]);
+             this.form.controls.contactNo.setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE)]);
              this.form.controls.contactNo.updateValueAndValidity();
 
             this.form.controls.email.setValidators([Validators.required,Validators.pattern(FieldRegExConst.EMAIL)]);
             this.form.controls.email.updateValueAndValidity();
           
-           this.form.controls.contactNo.setValidators([Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]);
+           this.form.controls.contactNo.setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE)]);
            this.form.controls.contactNo.updateValueAndValidity();
 
            this.form.controls.addressLine1.setValidators([Validators.required]);
@@ -91,7 +91,6 @@ export class RFQSupplierAddAddressComponent implements OnInit {
 
   initForm() {
 
-    //console.log(this.supplierAddress);
     this.form = this.formBuilder.group({
       
       supplierName: [
@@ -131,8 +130,6 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   saveAddress() {
     this.openDialog();
     // this.openDialog(this.rfqSupplierObj, this.form.value);
-    // console.log(this.form.value);
-    // console.log(this.rfqSupplierObj);
     
     // this.poService.addAddress(this.supplierId, this.form.value).then(res => {
     //   if (res.data) {
@@ -186,10 +183,8 @@ export class RFQSupplierAddAddressComponent implements OnInit {
           this.router.navigate(["/rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
         }
         /*if (data.data == "close") {
-          console.log("The dialog was closed");
         }
         if (data.data == "submit") {
-          console.log("The dialog was submitted");
           this.router.navigate([
             "rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
         }*/
