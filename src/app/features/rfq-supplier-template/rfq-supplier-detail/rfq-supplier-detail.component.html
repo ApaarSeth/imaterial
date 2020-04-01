@@ -148,7 +148,7 @@
                   <td class="text-align-right">
                     <span *ngIf="!brand.brandRate">0.00</span>
                     <span
-                      *ngIf="brand.brandRate">{{((material.materialIgst/100)*(brand.brandRate * material.materialQuantity)) | number:'1.2-2'}}</span>
+                      *ngIf="brand.brandRate">{{((material.Igst/100)*(brand.brandRate * material.materialQuantity)) | number:'1.2-2'}}</span>
                   </td>
                 </tr>
               </ng-container>

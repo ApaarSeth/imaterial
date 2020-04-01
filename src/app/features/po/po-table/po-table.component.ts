@@ -60,7 +60,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
           materialCgst: [],
           amount: [],
           gstAmount: [],
-          gst: [purchaseorder.materialIgst + purchaseorder.materialSgst + purchaseorder.materialCgst],
+          gst: [(purchaseorder.materialSgst != 0 && purchaseorder.materialCgst !=0 ?  purchaseorder.materialSgst + purchaseorder.materialCgst : purchaseorder.materialIgst)],
           gstTotal: [],
           total: [{ value: "", disabled: false }]
         });
