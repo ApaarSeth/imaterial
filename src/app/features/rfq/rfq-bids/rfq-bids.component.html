@@ -97,7 +97,7 @@
                             <ng-container formArrayName="brandGroup">
                               <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index" [formGroupName]="i">
                                 <span class="col-sm-1 text-center">
-                                  <ng-container *ngIf="brandInfo.materialUnitPrice !== null; else dashedLine">
+                                  <ng-container *ngIf="brandInfo.materialUnitPrice !== null && 0; else dashedLine">
                                     <mat-form-field class="border-input">
                                       <input
                                         type="number"

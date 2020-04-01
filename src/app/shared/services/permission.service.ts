@@ -3,13 +3,14 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { isThisTypeNode } from "typescript";
+import { permission } from '../models/permissionObject';
 
 @Injectable({
   providedIn: "root"
 })
 export class PermissionService {
   private role: string;
-  permissionObj = {
+  permissionObj: permission = {
     projectStoreFlag: false,
     globalStoreFlag: false,
     rfqFlag: false,
@@ -17,7 +18,8 @@ export class PermissionService {
     usersFlag: false,
     supplierFlag: false,
     projectEdit: false,
-    addProject:false
+    addProject: false,
+    poApprovalFlag: false
   };
 
   constructor() {
@@ -25,7 +27,7 @@ export class PermissionService {
   }
 
   checkPermission() {
-    if (this.role == "l1" || this.role == "l2") {
+    if (this.role == "l1") {
       this.permissionObj.projectStoreFlag = true;
       this.permissionObj.globalStoreFlag = true;
       this.permissionObj.rfqFlag = true;
@@ -34,7 +36,20 @@ export class PermissionService {
       this.permissionObj.supplierFlag = true;
       this.permissionObj.projectEdit = true;
       this.permissionObj.addProject = true;
-    } else {
+      this.permissionObj.poApprovalFlag = true;
+    }
+    else if (this.role == "l1" || this.role == "l2") {
+      this.permissionObj.projectStoreFlag = true;
+      this.permissionObj.globalStoreFlag = true;
+      this.permissionObj.rfqFlag = true;
+      this.permissionObj.purchaseOrderFlag = true;
+      this.permissionObj.usersFlag = true;
+      this.permissionObj.supplierFlag = true;
+      this.permissionObj.projectEdit = true;
+      this.permissionObj.addProject = true;
+    }
+
+    else {
       this.permissionObj.projectStoreFlag = true;
     }
     return this.permissionObj;
