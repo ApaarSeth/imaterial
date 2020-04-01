@@ -128,7 +128,7 @@ export class AddEditUserComponent implements OnInit {
         this._snackBar.open(res.message, "", {
           duration: 2000,
           panelClass: ["success-snackbar"],
-          verticalPosition: "top"
+          verticalPosition: "bottom"
         });
         return res.data;
       }
@@ -149,7 +149,7 @@ export class AddEditUserComponent implements OnInit {
             this._snackBar.open(res.message, "", {
               duration: 2000,
               panelClass: ["success-snackbar"],
-              verticalPosition: "top"
+              verticalPosition: "bottom"
             });
             return res.data;
           }

@@ -60,7 +60,7 @@ export class SigninComponent implements OnInit {
         this._snackBar.open(data.errorMessage, "", {
           duration: 2000,
           panelClass: ["warning-snackbar"],
-          verticalPosition: "top"
+          verticalPosition: "bottom"
         });
       }
       else if (data.serviceRawResponse.data) {

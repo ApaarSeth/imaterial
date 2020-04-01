@@ -57,7 +57,7 @@ export class DeactiveSupplierComponent implements OnInit {
           this._snackBar.open(data.message, "", {
             duration: 2000,
             panelClass: ["success-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           });
         }
         return data.data;

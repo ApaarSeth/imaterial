@@ -123,7 +123,7 @@ export class RfqSupplierComponent implements OnInit {
     this._snackBar.open("Cannot add more than 3 supplier", "", {
       duration: 2000,
       panelClass: ["warning-snackbar"],
-      verticalPosition: "top"
+      verticalPosition: "bottom"
     });
   }
 

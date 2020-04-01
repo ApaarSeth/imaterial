@@ -3,7 +3,8 @@ import { Router } from "@angular/router";
 import { NotificationInt } from 'src/app/shared/models/notification';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { CommonService } from 'src/app/shared/services/commonService';
-import { Subscription } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: "app-top-header",
@@ -24,10 +25,13 @@ export class TopHeaderComponent implements OnInit {
   readnotification: NotificationInt[] = [];
   unreadnotification: NotificationInt[] = [];
 
-
+  subscription : Subscription;
   subscriptions: Subscription[] = [];
+  newunreadMessage: number;
   constructor(
     private commonService: CommonService,
+     private _snackBar: MatSnackBar,
+
     private router: Router
   ) { }
 
@@ -37,13 +41,27 @@ export class TopHeaderComponent implements OnInit {
     this.userName = localStorage.getItem("userName");
     this.url = localStorage.getItem("companyImage")
     this.sidenavToggle.emit('loaded');
+    
     this.getNotifications();
-  //  this.getNotificationFromLocalstorage();
     this.startSubscriptions();
+    
+    const source = interval(10000);
+    this.subscription = source.subscribe(val => {this.getNotifications();this.startSubscriptions()});
   }
   startSubscriptions(){
       this.subscriptions.push(
              this.commonService.onUserUpdate$.subscribe(notificationLength => {
+               if(this.unreadnotificationLength == null){
+                 this.unreadnotificationLength = notificationLength;
+               }
+               if(notificationLength > this.unreadnotificationLength){
+                 this.newunreadMessage = notificationLength - this.unreadnotificationLength;
+                  this._snackBar.open("You have " + this.newunreadMessage + " new notifications", "", {
+                    duration: 2000,
+                    panelClass: ["success-snackbar"],
+                    verticalPosition: "bottom"
+                  });
+               }
                 this.unreadnotificationLength = notificationLength;
             })
         );
@@ -116,5 +134,6 @@ goToProfile(){
   }
     ngOnDestroy() {
      this.subscriptions.forEach(subs => subs.unsubscribe());
+     this.subscription.unsubscribe();
   }
 }
