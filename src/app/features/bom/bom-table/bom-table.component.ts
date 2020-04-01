@@ -109,7 +109,8 @@ export class BomTableComponent implements OnInit {
 
     this.getProject(this.projectId);
     this.getMaterialWithQuantity();
-    this.permissionObj = this.permissionService.checkPermission();
+    const role = localStorage.getItem("role")
+    this.permissionObj = this.permissionService.checkPermission(role);
     // if (this.permissionObj.rfqFlag) {
     //   this.columnsToDisplay.push("availableStock");
     //   this.innerDisplayedColumns.push("availableStock");

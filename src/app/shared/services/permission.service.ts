@@ -23,11 +23,10 @@ export class PermissionService {
   };
 
   constructor() {
-    this.role = localStorage.getItem("role");
   }
 
-  checkPermission() {
-    if (this.role == "l1") {
+  checkPermission(role: string) {
+    if (role == "l1") {
       this.permissionObj.projectStoreFlag = true;
       this.permissionObj.globalStoreFlag = true;
       this.permissionObj.rfqFlag = true;
@@ -38,7 +37,7 @@ export class PermissionService {
       this.permissionObj.addProject = true;
       this.permissionObj.poApprovalFlag = true;
     }
-    else if (this.role == "l1" || this.role == "l2") {
+    else if (role == "l2") {
       this.permissionObj.projectStoreFlag = true;
       this.permissionObj.globalStoreFlag = true;
       this.permissionObj.rfqFlag = true;
@@ -48,7 +47,6 @@ export class PermissionService {
       this.permissionObj.projectEdit = true;
       this.permissionObj.addProject = true;
     }
-
     else {
       this.permissionObj.projectStoreFlag = true;
     }

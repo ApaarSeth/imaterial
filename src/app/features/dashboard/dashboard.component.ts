@@ -100,13 +100,14 @@ export class DashboardComponent implements OnInit {
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private guidedTourService: GuidedTourService,
-     private commonService : CommonService,
-     private permissionService: PermissionService,
+    private commonService: CommonService,
+    private permissionService: PermissionService,
   ) {
   }
 
   ngOnInit() {
-    this.permissionObj = this.permissionService.checkPermission();
+    const role = localStorage.getItem("role")
+    this.permissionObj = this.permissionService.checkPermission(role);
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
 
@@ -128,20 +129,19 @@ export class DashboardComponent implements OnInit {
     this.getNotifications();
   }
 
- getNotifications(){
+  getNotifications() {
     this.commonService.getNotification(this.userId);
   }
   getAllProjects() {
     this.projectService.getProjects(this.orgId, this.userId).then(data => {
       this.allProjects = data.data;
-      if(this.allProjects && this.allProjects.length>0)
-      {
+      if (this.allProjects && this.allProjects.length > 0) {
         if ((localStorage.getItem('projectDashboard') == "null") || (localStorage.getItem('projectDashboard') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.dashboardTour)
+          setTimeout(() => {
+            this.guidedTourService.startTour(this.dashboardTour)
 
-      }, 1000);
-    }
+          }, 1000);
+        }
       }
     });
   }

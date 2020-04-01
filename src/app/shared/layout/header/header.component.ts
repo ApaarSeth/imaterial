@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { HeaderConstants, ConfigurationConstants } from '../../constants/configuration-constants';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
+import { IfStmt } from '@angular/compiler';
 @Component({
   selector: "app-header",
   templateUrl: "./header.html"
@@ -32,8 +33,11 @@ export class HeaderLayoutComponent implements OnInit {
     this.userId = Number(localStorage.getItem("userId"));
     this.role = localStorage.getItem("role");
     this.sidenavToggle.emit('loaded');
-    this.permissionObj = this.permissionService.checkPermission();
-    this.headerConst = HeaderConstants.PERMISSIONHEADER(this.permissionObj, this.orgId);
+    if (this.role) {
+      this.permissionObj = this.permissionService.checkPermission(this.role);
+      this.headerConst = HeaderConstants.PERMISSIONHEADER(this.permissionObj, this.orgId);
+    }
+
     this.highlightButton(this.router.url);
     this.startSubscription();
   }
