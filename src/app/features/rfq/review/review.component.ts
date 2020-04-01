@@ -117,7 +117,7 @@ export class ReviewComponent implements OnInit {
   }
 
   submit() {
-    console.log("form", this.form.value);
+    // console.log("form", this.form.value);
     this.setRFQDetailsValue();
   }
 
@@ -162,7 +162,7 @@ export class ReviewComponent implements OnInit {
   }
 
   openDialog3(data: AddRFQ): void {
-    console.log("sdfghjk", data);
+    // console.log("sdfghjk", data);
     if (AddRFQConfirmationComponent) {
       const dialogRef = this.dialog.open(AddRFQConfirmationComponent, {
         width: "500px",

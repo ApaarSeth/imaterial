@@ -35,7 +35,7 @@ export class PoDocumentsComponent implements OnInit {
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("documentList", this.documentData);
+    // console.log("documentList", this.documentData);
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
   }
@@ -43,7 +43,7 @@ export class PoDocumentsComponent implements OnInit {
   fileUpdate(files: FileList) {
     // this.urlReceived = false;
     this.docs = files;
-    console.log("docs", this.docs);
+    // console.log("docs", this.docs);
     this.uploadDocs();
   }
 
@@ -52,9 +52,9 @@ export class PoDocumentsComponent implements OnInit {
       const data = new FormData();
       const fileArr: File[] = [];
       data.append(`file`, this.docs[0]);
-      console.log("asdxfcgvhbjnk", data);
+      // console.log("asdxfcgvhbjnk", data);
       return this.documentUploadService.postDocumentUpload(data).then(res => {
-        console.log(res);
+        // console.log(res);
         let name: string = res.data;
         let firstName: number = res.data.fileName.indexOf("_");
         let subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
@@ -69,7 +69,7 @@ export class PoDocumentsComponent implements OnInit {
         subFileName = "";
       });
     }
-    console.log(this.documentList);
+    // console.log(this.documentList);
   }
 
   getData() {
