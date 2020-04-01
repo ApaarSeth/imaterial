@@ -4,7 +4,7 @@
 export const ConfigurationConstants = {
   HEADER_SKIP_LOADER: "Skip-Loader",
   HEADER_CACHE_REQUEST: "Cache-Request",
-  LOADING_TIMEOUT : 300,
+  LOADING_TIMEOUT : 500,
 }
 
 export class Froala {

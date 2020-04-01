@@ -101,7 +101,6 @@ export class RFQSupplierDetailComponent implements OnInit {
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
     let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
-  //  console.log(rfqSupplierObj);
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });
@@ -118,7 +117,6 @@ export class RFQSupplierDetailComponent implements OnInit {
       .toPromise()
       .then(data => {
         if (data.data == "close") {
-      //    console.log("The dialog was closed");
         }
         if (data.data == "submit") {
           this.submitBid(rfqSupplierObj);
@@ -253,6 +251,7 @@ export class RFQSupplierDetailComponent implements OnInit {
           this.brandCount++;
           this.oneBrandAtMaterialSelected = false;
         }
+
       }
     }
     if (

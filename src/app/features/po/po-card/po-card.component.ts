@@ -64,7 +64,6 @@ export class PoCardComponent implements OnInit {
     })
   }
   submit() {
-   // console.log(this.projectDetails.value);
   }
 
   getData() {

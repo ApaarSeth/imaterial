@@ -4,7 +4,6 @@ export class LoggerService {
 
     static debug(...args) {
         if ((!environment.production) || (environment.debug_mode)) {
-            console.log(...args);
         }
     }
 
@@ -13,7 +12,6 @@ export class LoggerService {
     }
 
     static info(...args) {
-        //console.log(...args);
     }
 
     static error(...args) {

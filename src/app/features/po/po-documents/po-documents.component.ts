@@ -10,6 +10,7 @@ import { DocumentUploadService } from "src/app/shared/services/document-download
 import { DocumentList } from "src/app/shared/models/PO/po-data";
 import { first } from "rxjs/operators";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: "app-po-documents",
@@ -26,6 +27,7 @@ export class PoDocumentsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private _snackBar: MatSnackBar,
     private documentUploadService: DocumentUploadService
   ) { }
 
@@ -35,7 +37,6 @@ export class PoDocumentsComponent implements OnInit {
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log("documentList", this.documentData);
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
   }
@@ -43,7 +44,6 @@ export class PoDocumentsComponent implements OnInit {
   fileUpdate(files: FileList) {
     // this.urlReceived = false;
     this.docs = files;
-    // console.log("docs", this.docs);
     this.uploadDocs();
   }
 
@@ -52,9 +52,7 @@ export class PoDocumentsComponent implements OnInit {
       const data = new FormData();
       const fileArr: File[] = [];
       data.append(`file`, this.docs[0]);
-      // console.log("asdxfcgvhbjnk", data);
       return this.documentUploadService.postDocumentUpload(data).then(res => {
-        // console.log(res);
         let name: string = res.data;
         let firstName: number = res.data.fileName.indexOf("_");
         let subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
@@ -67,9 +65,19 @@ export class PoDocumentsComponent implements OnInit {
         });
         this.documentListLength = this.documentList.length;
         subFileName = "";
+      }).catch(err => {
+        this._snackBar.open(
+          err.error.message,
+          "",
+          {
+            duration: 4000,
+            panelClass: ["warning-snackbar"],
+            verticalPosition: "top"
+          }
+        );
+
       });
     }
-    // console.log(this.documentList);
   }
 
   getData() {
