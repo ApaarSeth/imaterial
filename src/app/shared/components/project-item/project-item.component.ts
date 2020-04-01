@@ -33,8 +33,8 @@ export class ProjectItemComponent implements OnInit {
     private permissionService: PermissionService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-     private guidedTourService: GuidedTourService
-  ) {}
+    private guidedTourService: GuidedTourService
+  ) { }
 
   @Output("onEdit") onEdit = new EventEmitter<number>();
   @Output("onDelete") onDelete = new EventEmitter<number>();
@@ -42,7 +42,8 @@ export class ProjectItemComponent implements OnInit {
   @Input("disableEditDelete") disableEditDelete: boolean;
 
   ngOnInit(): void {
-    this.permissionObj = this.permissionService.checkPermission();
+    const role = localStorage.getItem("role")
+    this.permissionObj = this.permissionService.checkPermission(role);
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.url = this.router.url;

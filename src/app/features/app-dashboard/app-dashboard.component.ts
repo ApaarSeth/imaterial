@@ -38,8 +38,11 @@ export class AppDashboardComponent implements OnInit {
     private permissionService: PermissionService) { }
 
   ngOnInit() {
-    this.permissionObj = this.permissionService.checkPermission();
-    this.orgId = Number(localStorage.getItem("orgId"));
+    const role = localStorage.getItem("role")
+    if (role) {
+      this.permissionObj = this.permissionService.checkPermission(role);
+      this.orgId = Number(localStorage.getItem("orgId"));
+    }
     this.userId = Number(localStorage.getItem("userId"));
     this.getDashboardInfo('po');
     this.getDashboardInfo('rfq');

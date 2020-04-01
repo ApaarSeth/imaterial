@@ -77,7 +77,8 @@ export class PODetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.permissionObj = this.permissionService.checkPermission();
+    const role = localStorage.getItem("role")
+    this.permissionObj = this.permissionService.checkPermission(role);
     this.PoData();
     this.getNotifications();
   }
