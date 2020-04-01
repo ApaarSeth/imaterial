@@ -20,6 +20,7 @@ import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
 import { PermissionService } from "src/app/shared/services/permission.service";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { permission } from 'src/app/shared/models/permissionObject';
 
 @Component({
   selector: "app-bom-table",
@@ -46,15 +47,7 @@ export class BomTableComponent implements OnInit {
   expandedElement: Subcategory | null;
   orgId: number;
   checkedSubcategory: Subcategory[] = [];
-  permissionObj: {
-    projectStoreFlag: boolean;
-    globalStoreFlag: boolean;
-    rfqFlag: boolean;
-    purchaseOrderFlag: boolean;
-    usersFlag: boolean;
-    supplierFlag: boolean;
-    projectEdit: boolean;
-  };
+  permissionObj: permission;
 
   public BomDetailsashboardTour: GuidedTour = {
     tourId: 'bom-details-tour',
@@ -112,7 +105,7 @@ export class BomTableComponent implements OnInit {
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-   
+
 
     this.getProject(this.projectId);
     this.getMaterialWithQuantity();
@@ -174,11 +167,11 @@ export class BomTableComponent implements OnInit {
   getProject(id: number) {
     this.projectService.getProject(this.orgId, id).then(data => {
       this.projectData = data.data;
-       if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.BomDetailsashboardTour);
-      }, 1000);
-    }
+      if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
+        setTimeout(() => {
+          this.guidedTourService.startTour(this.BomDetailsashboardTour);
+        }, 1000);
+      }
     });
   }
   raiseIndent() {
