@@ -112,11 +112,7 @@ export class BomTableComponent implements OnInit {
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.BomDetailsashboardTour);
-      }, 1000);
-    }
+   
 
     this.getProject(this.projectId);
     this.getMaterialWithQuantity();
@@ -178,6 +174,11 @@ export class BomTableComponent implements OnInit {
   getProject(id: number) {
     this.projectService.getProject(this.orgId, id).then(data => {
       this.projectData = data.data;
+       if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.BomDetailsashboardTour);
+      }, 1000);
+    }
     });
   }
   raiseIndent() {

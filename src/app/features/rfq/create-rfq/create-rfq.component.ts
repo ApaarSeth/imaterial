@@ -141,7 +141,6 @@ export class CreateRfqComponent implements OnInit {
 
   getQuantityAndMakes(updatedMaterials: AddRFQ) {
     this.rfqService.addRFQ(updatedMaterials).then((res) => {
-      // console.log("res.data", res.data);
       this.finalRfq = res.data as AddRFQ
       this.rfqData = res.data as AddRFQ
     });

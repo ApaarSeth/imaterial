@@ -28,7 +28,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
       this.mode = params.mode;
     });
     this.formInit();
-    // console.log(this.poTableData);
   }
   formInit() {
     const frmArr: FormGroup[] = this.poTableData.map((poMaterial: PoMaterial, i) => {
@@ -113,7 +112,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
     });
     this.poForms = this.formBuilder.group({});
     this.poForms.addControl("forms", new FormArray(frmArr));
-    // console.log(this.poForms)
   }
 
   get totalAmount(): number {
