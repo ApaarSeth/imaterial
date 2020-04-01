@@ -192,7 +192,7 @@ export class PoComponent implements OnInit {
             {
               duration: 2000,
               panelClass: ["warning-snackbar"],
-              verticalPosition: "top"
+              verticalPosition: "bottom"
             }
           );
         }
@@ -209,7 +209,7 @@ export class PoComponent implements OnInit {
             {
               duration: 2000,
               panelClass: ["warning-snackbar"],
-              verticalPosition: "top"
+              verticalPosition: "bottom"
             }
           );
           this.router.navigate(["po/detail-list"]);
@@ -236,7 +236,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
       } else {
@@ -263,7 +263,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
         this.router.navigate(["po/detail-list"]);

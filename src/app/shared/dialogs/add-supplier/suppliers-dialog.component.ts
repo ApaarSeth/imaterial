@@ -62,7 +62,7 @@ export class SuppliersDialogComponent {
         this._snackBar.open('Supplier Added', "", {
           duration: 2000,
           panelClass: ["success-snackbar"],
-          verticalPosition: "top"
+          verticalPosition: "bottom"
         });
       }
 
