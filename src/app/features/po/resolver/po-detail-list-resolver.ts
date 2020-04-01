@@ -9,7 +9,7 @@ export class PODetailListResolver implements Resolve<any> {
   resolve() {
     let orgId=Number(localStorage.getItem("orgId"))
     return this.poDetailService.getPODetails(orgId).then(data => {
-      console.log("wefrgthyjhgff", data.data);
+      // console.log("wefrgthyjhgff", data.data);
       return data.data;
     });
   }
