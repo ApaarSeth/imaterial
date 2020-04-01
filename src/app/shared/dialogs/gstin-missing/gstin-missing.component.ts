@@ -10,6 +10,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { ProjectService } from "../../services/projectDashboard/project.service"
 export class GSTINMissingComponent implements OnInit {
   projectDetails: ProjectDetails;
   constructor(
+    private router: Router,
     private dialogRef: MatDialogRef<GSTINMissingComponent>,
     private _snackBar: MatSnackBar,
     private projectService: ProjectService
@@ -28,6 +30,7 @@ export class GSTINMissingComponent implements OnInit {
   }
 
   close() {
+    this.router.navigate(["/project-dashboard"])
     this.dialogRef.close(null);
   }
 

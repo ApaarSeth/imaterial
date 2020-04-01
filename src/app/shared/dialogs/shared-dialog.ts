@@ -18,6 +18,7 @@ import { AddEditGrnComponent } from "./add-edit-grn/add-edit-grn.component";
 import { DeleteDraftedPoComponent } from "./delete-drafted-po/delete-drafted-po.component";
 import { SelectRfqTermsComponent } from "./selectrfq-terms/selectrfq-terms.component";
 import { SelectProjectComponent } from './select-project/select-project.component';
+import { GSTINMissingComponent } from './gstin-missing/gstin-missing.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -39,5 +40,6 @@ export const SharedDialogs = [
   AddEditGrnComponent,
   DeleteDraftedPoComponent,
   SelectRfqTermsComponent,
-  SelectProjectComponent
+  SelectProjectComponent,
+  GSTINMissingComponent
 ];
