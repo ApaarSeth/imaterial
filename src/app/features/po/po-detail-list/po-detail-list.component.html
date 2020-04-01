@@ -127,7 +127,7 @@
             </div>
           </mat-expansion-panel>
         </div> -->
-        <div *ngIf="poApprovalDetailsTemp">
+        <div *ngIf="poApprovalDetailsTemp && permissionObj.rfqFlag">
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
               <mat-panel-title>
