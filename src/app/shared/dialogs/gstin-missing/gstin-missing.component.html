@@ -1,17 +1,17 @@
 <div class="header-add-edit-dialog">
   <h1 mat-dialog-title>ADD GSTIN</h1>
-  <button type="button" class="close" (click)="close()" aria-label="Close">
+  <button type="button" class="close" (click)="closeModal()" aria-label="Close">
     <span aria-hidden="true">×</span>
   </button>
 </div>
 <div mat-dialog-content class="padding-for-dialog-after-header">
-  <p class="text-center">Go to Project Store and add GSTIN in your project</p>
+  <p class="text-center">Update GST for Project {{ projectName }}</p>
 </div>
 
 <div class="col-xs-12 text-center">
   <a [routerLink]="['/project-dashboard']">
     <button (click)="close()" mat-raised-button class="main-background-color main-button color-white">
-      Project Store
+      View Project Store
     </button>
   </a>
 </div>
