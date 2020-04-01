@@ -183,7 +183,7 @@ export class SupplierDetailComponent implements OnInit {
             this._snackBar.open(res.message, "", {
               duration: 2000,
               panelClass: ["success-snackbar"],
-              verticalPosition: "top"
+              verticalPosition: "bottom"
             });
              this.getAllSupplier();
             this.loading.hide();

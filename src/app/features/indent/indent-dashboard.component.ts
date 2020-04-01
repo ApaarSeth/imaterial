@@ -111,7 +111,7 @@ export class IndentDashboardComponent implements OnInit {
        this._snackBar.open(res.message, "", {
           duration: 2000,
           panelClass: ["warning-snackbar"],
-          verticalPosition: "top"
+          verticalPosition: "bottom"
         });
 
       if(res.status == 1){

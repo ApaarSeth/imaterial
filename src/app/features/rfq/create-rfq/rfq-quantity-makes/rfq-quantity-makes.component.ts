@@ -131,7 +131,7 @@ export class RfqQuantityMakesComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
         control.setValue(0)
@@ -151,7 +151,7 @@ export class RfqQuantityMakesComponent implements OnInit {
         {
           duration: 2000,
           panelClass: ["warning-snackbar"],
-          verticalPosition: "top"
+          verticalPosition: "bottom"
         }
       );
 

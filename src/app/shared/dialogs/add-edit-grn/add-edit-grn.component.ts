@@ -88,7 +88,7 @@ export class AddEditGrnComponent implements OnInit {
     this.grnService.addGRN(grnDetailsObj).then(data => {
       this._snackBar.open(data.message, "", {
         duration: 2000, panelClass: ["success-snackbar"],
-        verticalPosition: "top"
+        verticalPosition: "bottom"
       });
       this.dialogRef.close(data);
     });
@@ -123,7 +123,7 @@ export class AddEditGrnComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
         control.setValue(0)

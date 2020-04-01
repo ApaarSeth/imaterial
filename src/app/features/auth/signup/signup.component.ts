@@ -125,7 +125,7 @@ export class SignupComponent implements OnInit {
         this._snackBar.open("Phone Number already used", "", {
           duration: 2000,
           panelClass: ["warning-snackbar"],
-          verticalPosition: "top"
+          verticalPosition: "bottom"
         });
       }
       else if (data.data.serviceRawResponse.data as auth) {
@@ -199,7 +199,7 @@ export class SignupComponent implements OnInit {
       this._snackBar.open("OTP has been sent on your phone number", "", {
         duration: 2000,
         panelClass: ["success-snackbar"],
-        verticalPosition: "top"
+        verticalPosition: "bottom"
       });
 
     });
@@ -211,7 +211,7 @@ export class SignupComponent implements OnInit {
       this._snackBar.open(res.message, "", {
         duration: 2000,
         panelClass: ["success-snackbar"],
-        verticalPosition: "top"
+        verticalPosition: "bottom"
       });
       if (this.verifiedMobile) {
         this.sendotp(mobile);
