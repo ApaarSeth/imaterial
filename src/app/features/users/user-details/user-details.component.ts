@@ -98,11 +98,7 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-      if ((localStorage.getItem('user') == "null") || (localStorage.getItem('user') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.UserDashboardTour);
-      }, 1000);
-    }
+    
     this.getAllUsers();
    this.getNotifications();
   }
@@ -119,6 +115,12 @@ export class UserDetailComponent implements OnInit {
 
         this.dataSourceActivateTemp = data.data.activatedProjectList;
         this.dataSourceDeactivateTemp = data.data.deactivatedProjectList;
+
+          if ((localStorage.getItem('user') == "null") || (localStorage.getItem('user') == '0')) {
+            setTimeout(() => {
+              this.guidedTourService.startTour(this.UserDashboardTour);
+            }, 1000);
+          }
 
         this.dataSourceActivate.filterPredicate = (data, filterValue) => {
           const username = data.ProjectUser.firstName.toLowerCase() + " " + data.ProjectUser.lastName.toLowerCase();

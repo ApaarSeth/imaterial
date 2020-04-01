@@ -93,11 +93,7 @@ export class PoComponent implements OnInit {
   poId: number;
   mode: string;
   ngOnInit() {
-    if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.POPreviewTour);
-      }, 1000);
-    }
+ 
 
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
@@ -116,6 +112,11 @@ export class PoComponent implements OnInit {
       };
       this.documentList = this.poData.DocumentsList;
       this.terms = this.poData.Terms;
+      if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {
+        setTimeout(() => {
+          this.guidedTourService.startTour(this.POPreviewTour);
+        }, 1000);
+      }
     });
     this.formInit();
     this.startSubscription();
@@ -194,7 +195,7 @@ export class PoComponent implements OnInit {
             {
               duration: 2000,
               panelClass: ["warning-snackbar"],
-              verticalPosition: "top"
+              verticalPosition: "bottom"
             }
           );
         }
@@ -211,7 +212,7 @@ export class PoComponent implements OnInit {
             {
               duration: 2000,
               panelClass: ["warning-snackbar"],
-              verticalPosition: "top"
+              verticalPosition: "bottom"
             }
           );
           this.router.navigate(["po/detail-list"]);
@@ -244,7 +245,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
       } else {
@@ -271,7 +272,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
         this.router.navigate(["po/detail-list"]);

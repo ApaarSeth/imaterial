@@ -97,7 +97,7 @@ export class ForgotPasswordComponent implements OnInit {
         this._snackBar.open("Your password has been reset successfully", "", {
                 duration: 2000,
                 panelClass: ["success-snackbar"],
-                verticalPosition: "top"
+                verticalPosition: "bottom"
               });
        this.router.navigate(['auth/login']);
        localStorage.clear();
@@ -145,7 +145,7 @@ export class ForgotPasswordComponent implements OnInit {
               this._snackBar.open("OTP has been sent on your phone number", "", {
                 duration: 2000,
                 panelClass: ["success-snackbar"],
-                verticalPosition: "top"
+                verticalPosition: "bottom"
               });
 
             });
@@ -158,7 +158,7 @@ export class ForgotPasswordComponent implements OnInit {
                this._snackBar.open("User is not registered. Please Sign up", "", {
                 duration: 2000,
                 panelClass: ["success-snackbar"],
-                verticalPosition: "top"
+                verticalPosition: "bottom"
               });
             }
      });

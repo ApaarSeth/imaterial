@@ -128,12 +128,7 @@ export class BomComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
 
-    if ((localStorage.getItem('addBom') == "null") || (localStorage.getItem('addBom') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.BomDashboardTour);
-      }, 1000);
-    }
-
+   
 
     this.getProject(this.projectId);
     this.formInit()
@@ -190,6 +185,12 @@ export class BomComponent implements OnInit {
   getProject(id: number) {
     this.projectService.getProject(this.orgId, id).then(data => {
       this.product = data.data;
+       if ((localStorage.getItem('addBom') == "null") || (localStorage.getItem('addBom') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.BomDashboardTour);
+      }, 1000);
+    }
+
     });
   }
   uploadExcel(files: FileList) {

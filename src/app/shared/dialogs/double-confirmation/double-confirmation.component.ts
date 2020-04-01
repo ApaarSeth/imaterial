@@ -43,7 +43,7 @@ export class DoubleConfirmationComponent implements OnInit {
           this._snackBar.open(res.message, "", {
             duration: 2000,
             panelClass: ["success-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           });
 
         }

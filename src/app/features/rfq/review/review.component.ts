@@ -73,12 +73,6 @@ export class ReviewComponent implements OnInit {
 
     this.userId = Number(localStorage.getItem("userId"));
 
-    if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.RfqPreviewTour);
-      }, 1000);
-    }
-
     this.activatedRoute.params.subscribe(params => {
       this.rfqId = params['rfqId']
       if (this.rfqId) {
@@ -86,6 +80,11 @@ export class ReviewComponent implements OnInit {
           this.finalRfq = res.data;
           this.checkedList = this.finalRfq.rfqProjectsList;
           this.selectedSuppliersList = this.finalRfq.supplierDetails;
+           if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
+            setTimeout(() => {
+              this.guidedTourService.startTour(this.RfqPreviewTour);
+            }, 1000);
+          }
         })
       }
 

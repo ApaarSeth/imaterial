@@ -79,11 +79,7 @@ export class SupplierDetailComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-     if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.SupplierDashboardTour);
-      }, 1000);
-    }
+   
     this.getNotifications();
     this.getAllSupplier();
   }
@@ -96,6 +92,11 @@ export class SupplierDetailComponent implements OnInit {
 
       this.dataSource = new MatTableDataSource(data.data);
       this.dataSourceTemp = data.data;
+        if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
+      setTimeout(() => {
+        this.guidedTourService.startTour(this.SupplierDashboardTour);
+      }, 1000);
+    }
 
       // this.dataSource.filterPredicate = (data, filterValue) => {
       //   const dataStr = data.supplier_name.toString() + data.email.toString() + data.pan.toString() + data.contact_no.toString() + data.status;
@@ -183,7 +184,7 @@ export class SupplierDetailComponent implements OnInit {
             this._snackBar.open(res.message, "", {
               duration: 2000,
               panelClass: ["success-snackbar"],
-              verticalPosition: "top"
+              verticalPosition: "bottom"
             });
              this.getAllSupplier();
             this.loading.hide();

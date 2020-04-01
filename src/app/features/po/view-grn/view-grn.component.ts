@@ -57,15 +57,16 @@ export class ViewGRNComponent implements OnInit {
     }
 
     ngOnInit() {
-       if ((localStorage.getItem('grn') == "null") || (localStorage.getItem('grn') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.GRNTour);
-      }, 1000);
-    }
+     
         this.activatedRoute.params.subscribe(res => {
             this.poId = Number(res["poId"]);
             this.poService.getPoGenerateData(this.poId).then(res => {
                 this.poData = res.data;
+                  if ((localStorage.getItem('grn') == "null") || (localStorage.getItem('grn') == '0')) {
+                    setTimeout(() => {
+                        this.guidedTourService.startTour(this.GRNTour);
+                    }, 1000);
+                    }
             })
             this.getGRNDetails(Number(res["poId"]));
         })
