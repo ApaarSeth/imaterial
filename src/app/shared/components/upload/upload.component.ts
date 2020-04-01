@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input, ElementRef, ViewChild } from "@angular/core";
 import { DocumentDetails } from "../../models/RFQ/rfq-details";
 import { DocumentUploadService } from "../../services/document-download/document-download.service";
 
@@ -16,17 +16,28 @@ export class UploadComponent implements OnInit {
   @Output("onFileUpdate") onFileUpdate = new EventEmitter<FileList>();
   @Input() parentId;
   @Input() label;
-  @Input() filesUploaded;
+  @Input("filesRemoved") filesRemoved: boolean;
   @Input('updateInfo') userInfo: boolean;
+  @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
+  constructor(private documentUploadService: DocumentUploadService) { }
 
-  constructor(private documentUploadService: DocumentUploadService) {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   /**
    * This function is used to add document to a particular RFQ Item
    * @param files Document to be upload
    */
+
+  ngOnChanges(): void {
+    if (this.filesRemoved) {
+      this.myInputVariable.nativeElement.value = "";
+      this.fileToUpload = this.myInputVariable.nativeElement.value;
+
+    }
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+
+  }
   uploadFiles(files: FileList) {
     let newFiles = new DataTransfer();
 

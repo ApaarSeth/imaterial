@@ -24,6 +24,7 @@ export class PoDocumentsComponent implements OnInit {
   urlReceived = false;
   documentsName: string[] = [];
   mode: string;
+  filesRemoved: boolean;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -53,6 +54,7 @@ export class PoDocumentsComponent implements OnInit {
       const fileArr: File[] = [];
       data.append(`file`, this.docs[0]);
       return this.documentUploadService.postDocumentUpload(data).then(res => {
+        this.filesRemoved = false;
         let name: string = res.data;
         let firstName: number = res.data.fileName.indexOf("_");
         let subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
@@ -66,6 +68,8 @@ export class PoDocumentsComponent implements OnInit {
         this.documentListLength = this.documentList.length;
         subFileName = "";
       }).catch(err => {
+        this.filesRemoved = true;
+        this.docs = null;
         this._snackBar.open(
           err.error.message,
           "",
@@ -90,6 +94,7 @@ export class PoDocumentsComponent implements OnInit {
     this.documentList.splice(i, 1);
     this.documentsName.splice(i, 1);
     this.documentListLength = this.documentList.length;
+    this.filesRemoved = true;
   }
 
   openFileUrl(url: string) {

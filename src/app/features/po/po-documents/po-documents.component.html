@@ -2,7 +2,7 @@
   <mat-card class="width96Percent border-radius">
     <mat-card-header class="upload-documents-mat-header">
       <span class="text-semi-bold" *ngIf="mode === 'edit'">
-        <app-upload #uploadRef [documentListLength]="documentListLength" (onFileUpdate)="fileUpdate($event)"> </app-upload>
+        <app-upload #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"> </app-upload>
       </span>
       <span *ngIf="mode !== 'edit'" class="col-xs-12 text-align-center text-semi-bold">
         View Document
