@@ -60,6 +60,7 @@ export class BomComponent implements OnInit {
   tradeNames: string[] = []
   tradesList: orgTrades[];
   // searchMaterial: string;
+  searchTrade: string = ""
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,

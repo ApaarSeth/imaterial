@@ -18,7 +18,7 @@
                 <mat-label *ngIf="!categoryData.length">Select Trades</mat-label>
                 <mat-select formControlName="selectedTrades" multiple>
                   <div class="display-flex">
-                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Category Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Trade" [(ngModel)]="searchTrade" [ngModelOptions]="{standalone: true}" />
                     <button mat-button matSuffix mat-icon-button>
                       <mat-icon>search</mat-icon>
                     </button>
@@ -26,7 +26,7 @@
                   <mat-select-trigger>
                     <mat-label>Select Trades</mat-label>
                   </mat-select-trigger>
-                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchText" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
+                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade :'tradeName'" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
                     >{{ trade.tradeName }}
                   </mat-option>
                 </mat-select>
@@ -37,7 +37,7 @@
               <div class="mr-3">
                 <span class="cursor-pointer download-bom-template">
                   <img src="assets/images/download.png" alt="download" class="img-fluid mr-2" />
-                  <a (click)="downloadExcel('assets/images/Master_data.xlsx')"> Download BOM Template</a></span
+                  <a (click)="downloadExcel('assets/images/BOM_Template.xlsx')"> Download BOM Template</a></span
                 >
               </div>
               <div class="mr-3 cursor-pointer">
