@@ -104,7 +104,7 @@ export class PoComponent implements OnInit {
     });
     this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
-      console.log("poData", this.poData);
+      // console.log("poData", this.poData);
       this.tableData = this.poData.materialData;
       this.cardData = {
         supplierAddress: this.poData.supplierAddress,
@@ -183,7 +183,7 @@ export class PoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("result", result);
+      // console.log("result", result);
       this.poService.sendPoData(result).then(res => {
         if (res.status === 0) {
           this._snackBar.open(
@@ -216,7 +216,7 @@ export class PoComponent implements OnInit {
         }
       });
 
-      console.log("The dialog was closed");
+      // console.log("The dialog was closed");
     });
   }
   poApproval(decision) {
@@ -274,7 +274,7 @@ export class PoComponent implements OnInit {
   startSubscription() {
     this.subscriptions.push(
       combineLatest([this.poService.billingRole$, this.poService.projectRole$, this.poService.billingAddress$, this.poService.supplierAddress$, this.poService.poNumber$]).subscribe(values => {
-        console.log("ispoValid", this.isPoValid)
+        // console.log("ispoValid", this.isPoValid)
         this.isPoValid = true;
       })
     );

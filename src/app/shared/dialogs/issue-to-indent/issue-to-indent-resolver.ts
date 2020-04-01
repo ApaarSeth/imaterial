@@ -14,7 +14,7 @@ export class IssueToIndentResolver implements Resolve<any> {
     return this.bomService
       .getIssueToIndent(this.data.materialId, this.data.projectId)
       .then(data => {
-        console.log("asdfgh", data.data);
+        // console.log("asdfgh", data.data);
         return data.data;
       });
   }

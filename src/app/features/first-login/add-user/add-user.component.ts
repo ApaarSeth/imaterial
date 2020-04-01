@@ -74,7 +74,7 @@ export class AddUserComponent implements OnInit {
     });
 
     this.rows = this._formBuilder.array([]);
-    console.log(this.addUserForm);
+   // console.log(this.addUserForm);
   }
 
   /**
@@ -86,7 +86,7 @@ export class AddUserComponent implements OnInit {
     if(this.index[this.addUserFormLength - 1] == 'false'){
       this.index[this.addUserFormLength - 1] = 'true';
     }
-    console.log(this.addUserForm);
+   // console.log(this.addUserForm);
   }
 
   /**
@@ -98,7 +98,7 @@ export class AddUserComponent implements OnInit {
     this.index.splice(index,1);
     this.emails[index]=null;
     this.emails.splice(index,1);
-     console.log(this.emails);
+    // console.log(this.emails);
      this.index.forEach(element => {
             if (element == 'false'){
               this.emailVerified = false;

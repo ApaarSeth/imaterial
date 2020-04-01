@@ -164,7 +164,7 @@ export class PODetailComponent implements OnInit {
       return dataStr.indexOf(filterValue) != -1;
     };
 
-    console.log("poDetails", this.poDetails);
+   // console.log("poDetails", this.poDetails);
   }
 
   viewPO(purchaseOrderId) {
@@ -201,7 +201,7 @@ export class PODetailComponent implements OnInit {
           this.poDraftedDetailsTemp = data.data.draftedPOList
         });
         this.PoData();
-        console.log("The dialog was closed");
+       // console.log("The dialog was closed");
       });
   }
 }

@@ -5,6 +5,7 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { MatDialog } from "@angular/material";
 import { ConfirmRfqBidComponent } from "src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component";
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { materialize } from 'rxjs/operators';
 @Component({
   selector: "rfq-indent-detail",
   templateUrl: "./rfq-supplier-detail.component.html"
@@ -68,10 +69,14 @@ export class RFQSupplierDetailComponent implements OnInit {
          for (let project of this.rfqSupplierDetailList.projectList) {
               for (let material of project.materialList) {
                 if(material.materialIgst == 0){
-                  material.Igst = null;
+                  material.Igst = material.materialCgst+material.materialSgst;
+                    if(material.Igst == 0)
+                      material.Igst = null
                 }
                 else{
                    material.Igst = material.materialIgst;
+                     if(material.Igst == 0)
+                      material.Igst = null
                 }
                  for (let brand of material.rfqBrandList) {
                       if(brand.brandRate == 0){
@@ -96,7 +101,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
     let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
-   // console.log(rfqSupplierObj);
+  //  console.log(rfqSupplierObj);
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });
@@ -135,7 +140,7 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialGst = material.materialIgst;
           material.materialSgst = material.materialGst / 2;
           material.materialCgst = material.materialGst / 2;
-         // material.materialIgst = 0;
+          material.materialIgst = 0;
         }
       }
   }
@@ -200,9 +205,9 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialGst = material.materialIgst;
           material.materialSgst = material.materialGst / 2;
           material.materialCgst = material.materialGst / 2;
-          //material.materialIgst = 0;
+          material.materialIgst = 0;
         }
-        if (material.materialIgst >= 0 &&  material.materialIgst!=null) {
+        if (material.Igst >= 0 &&  material.Igst!=null) {
           material.materialIGSTFlag = true;
           this.materialIGSTFlag = material.materialIGSTFlag;
           this.materialIndividualIGSTFlag = material.materialIGSTFlag;

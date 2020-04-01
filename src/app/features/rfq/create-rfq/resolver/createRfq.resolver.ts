@@ -18,7 +18,7 @@ export class CreateRfqResolver implements Resolve<any> {
       this.rfqService.getSuppliers(orgId),
       this.projectService.getProjects(orgId, userId)
     ]).then(data => {
-      console.log("wefrgthyjhgff", data);
+      // console.log("wefrgthyjhgff", data);
       return data;
     });
   }

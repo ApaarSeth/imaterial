@@ -86,7 +86,7 @@ export class RfqBidsComponent implements OnInit {
     );
     this.rfqForms = this.formBuilder.group({});
     this.rfqForms.addControl("forms", new FormArray(frmArr));
-    console.log(this.rfqForms);
+    // console.log(this.rfqForms);
   }
 
   allocateQuantity() {
@@ -153,7 +153,7 @@ export class RfqBidsComponent implements OnInit {
               }
             });
           });
-          console.log(suppList);
+          // console.log(suppList);
           return suppList;
         };
 
@@ -178,7 +178,7 @@ export class RfqBidsComponent implements OnInit {
       },
       [] as RfqProjectSubmit[]
     );
-    console.log(submitData.flat(2));
+    // console.log(submitData.flat(2));
     this.rfqService.rfqAddPo(submitData.flat(2)).then(res => {
       if (res.statusCode === 201) {
         this.navService.gaEvent({

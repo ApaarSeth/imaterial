@@ -55,7 +55,7 @@ export class IssueToIndentDialogComponent implements OnInit {
       forms: new FormArray(frmArr)
     });
 
-    console.log(this.materialForms);
+    // console.log(this.materialForms);
   }
 
   showIndent() {
@@ -85,7 +85,7 @@ showQuantityInput(){
        formValues.push(element);
       }
     });
-    console.log("result", formValues);
+    // console.log("result", formValues);
     this.bomService.postIssueToIndent(this.data.materialId, formValues).then(res => {
           return res.data;
           });
