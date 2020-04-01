@@ -191,6 +191,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
             return proj.projectId === project.projectId;
           }
         );
+        project.defaultAddress = alreadySelectedProj.defaultAddress;
         let checkedMaterialIds = alreadySelectedProj.projectMaterialList.map(
           (material: RfqMat) => {
             return material.materialId;
