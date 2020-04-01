@@ -11,6 +11,7 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { GuideTourModel } from 'src/app/shared/models/guided_tour';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { ViewVideoComponent } from 'src/app/shared/dialogs/video-video/view-video.component';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -141,5 +142,13 @@ getNotifications(){
     dialogRef.afterClosed().subscribe(result => {
       return;
     });
+  }
+
+  showVideo(): void {
+
+    const dialogRef = this.dialog.open(ViewVideoComponent, {
+      width: "660px"
+    });
+
   }
 }
