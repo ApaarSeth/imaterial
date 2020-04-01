@@ -189,15 +189,6 @@ export class PoComponent implements OnInit {
           if (res.message = "gst field missing from billing address") {
             this.openProjectDialog(data);
           }
-          this._snackBar.open(
-            res.message,
-            "",
-            {
-              duration: 2000,
-              panelClass: ["warning-snackbar"],
-              verticalPosition: "bottom"
-            }
-          );
         }
         else {
           this.navService.gaEvent({
