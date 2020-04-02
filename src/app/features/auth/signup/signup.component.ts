@@ -90,7 +90,7 @@ export class SignupComponent implements OnInit {
       phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
       organisationName: [{ value: this.user ? this.user.companyName : '', disabled: this.organisationDisabled }, Validators.required],
       organisationType: ["Contractor", Validators.required],
-      password: ["", Validators.required],
+      password: ["", [Validators.required, Validators.minLength(6)]],
       otp: ["", Validators.required]
     });
 
