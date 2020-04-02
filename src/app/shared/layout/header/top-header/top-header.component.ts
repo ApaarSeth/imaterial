@@ -27,7 +27,7 @@ export class TopHeaderComponent implements OnInit {
 
   subscription : Subscription;
   subscriptions: Subscription[] = [];
-  newunreadMessage: number;
+  newunreadMessage: number = null;
   constructor(
     private commonService: CommonService,
      private _snackBar: MatSnackBar,
@@ -54,6 +54,7 @@ export class TopHeaderComponent implements OnInit {
                if(this.unreadnotificationLength == null){
                  this.unreadnotificationLength = notificationLength;
                }
+               //this.newunreadMessage = null;
                if(notificationLength > this.unreadnotificationLength){
                  this.newunreadMessage = notificationLength - this.unreadnotificationLength;
                   this._snackBar.open("You have " + this.newunreadMessage + " new notifications", "", {
@@ -91,8 +92,10 @@ goToProfile(){
     if (this.notifClicked == true) {
        this.getNotificationData();
         this.notifClicked = false;
+         this.newunreadMessage = null;
     } else {
       this.getNotificationData();
+      this.newunreadMessage = null;
       this.notifClicked = true;
     }
   }
