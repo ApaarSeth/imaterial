@@ -29,7 +29,7 @@ export class IndentDetailComponent implements OnInit {
 
   displayedColumns: string[] = [
     "Indent Number",
-    "Requested Date",
+    "Indented Date",
     "Total No Of Material",
     "Created By",
     "View Indent"
