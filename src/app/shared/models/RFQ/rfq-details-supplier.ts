@@ -11,7 +11,7 @@ export interface ProjectRfqObj {
   addressLine2: string;
   city: string;
   state: string;
-
+  pinCode?: string,
   gst: string;
   materialList: MaterialRfqObj[];
 }
@@ -29,6 +29,7 @@ export interface MaterialRfqObj {
   materialCgst: number;
   materialIGSTFlag: boolean;
   materialGst?: number;
+  fullfilmentDate?: string;
 }
 
 export interface BrandRfqObj {
