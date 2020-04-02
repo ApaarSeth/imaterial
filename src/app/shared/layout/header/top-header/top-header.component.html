@@ -6,7 +6,7 @@
     <span><img width="200" src="../../../../assets/images/loginLogo.png" alt="logo"/></span>
     <span class="menu-spacer"></span>
 
- <a href="https://api.whatsapp.com/send?phone=+918512060007">
+ <a href="https://api.whatsapp.com/send?phone=+918512060007" target="_blank">
    <div class="whatsapp-div-header">
          <div>
           <img src="../../../../assets/images/whatsapp-main.png" class="whatsapp-icon">
@@ -22,7 +22,7 @@
       <a href="javascript:void(0)" (click)="openDiv()">
         <mat-icon
           [ngClass]="{'bell-icon-active': notifClicked === true, 'bell-icon': notifClicked === false}"
-          matBadge="{{ unreadnotificationLength }}"
+          matBadge="{{ newunreadMessage }}"
           matBadgeSize="small"
           matBadge="15"
           matBadgeColor="warn"
