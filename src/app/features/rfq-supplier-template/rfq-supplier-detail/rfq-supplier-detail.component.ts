@@ -66,28 +66,28 @@ export class RFQSupplierDetailComponent implements OnInit {
           });
         }
 
-         for (let project of this.rfqSupplierDetailList.projectList) {
-              for (let material of project.materialList) {
-                if(material.materialIgst == 0){
-                  material.Igst = material.materialCgst+material.materialSgst;
-                    if(material.Igst == 0)
-                      material.Igst = null
-                }
-                else{
-                   material.Igst = material.materialIgst;
-                     if(material.Igst == 0)
-                      material.Igst = null
-                }
-                 for (let brand of material.rfqBrandList) {
-                      if(brand.brandRate == 0){
-                          brand.tempRate = null;
-                      }
-                      else{
-                       brand.brandRate = brand.tempRate;
-                      }
-                 }
+        for (let project of this.rfqSupplierDetailList.projectList) {
+          for (let material of project.materialList) {
+            if (material.materialIgst == 0) {
+              material.Igst = material.materialCgst + material.materialSgst;
+              if (material.Igst == 0)
+                material.Igst = null
+            }
+            else {
+              material.Igst = material.materialIgst;
+              if (material.Igst == 0)
+                material.Igst = null
+            }
+            for (let brand of material.rfqBrandList) {
+              if (brand.brandRate == 0) {
+                brand.tempRate = null;
+              }
+              else {
+                brand.brandRate = brand.tempRate;
               }
             }
+          }
+        }
 
       });
   }
@@ -127,20 +127,20 @@ export class RFQSupplierDetailComponent implements OnInit {
   radioChange(event, project) {
     project.gst = event.value;
 
-      for (let material of project.materialList) {
-        material.materialIgst = material.Igst;
-        if (project.gst == "IGST") {
-          material.materialIgst = material.materialIgst;
-          material.materialSgst = 0;
-          material.materialCgst = 0;
+    for (let material of project.materialList) {
+      material.materialIgst = material.Igst;
+      if (project.gst == "IGST") {
+        material.materialIgst = material.materialIgst;
+        material.materialSgst = 0;
+        material.materialCgst = 0;
 
-        } else if (project.gst == "CGST-SGST") {
-          material.materialGst = material.materialIgst;
-          material.materialSgst = material.materialGst / 2;
-          material.materialCgst = material.materialGst / 2;
-          material.materialIgst = 0;
-        }
+      } else if (project.gst == "CGST-SGST") {
+        material.materialGst = material.materialIgst;
+        material.materialSgst = material.materialGst / 2;
+        material.materialCgst = material.materialGst / 2;
+        material.materialIgst = 0;
       }
+    }
   }
 
   duedatefunc(event) {
@@ -161,17 +161,17 @@ export class RFQSupplierDetailComponent implements OnInit {
     }
   }
 
-  valueChange(RFQsupplier: SendRfqObj,event) {
-  
-  //  if(event.target.value.length>0 && event.target.value.match(FieldRegExConst.RATES)){
-  //    if((event.charCode > 47 && event.charCode < 58) || event.charCode == 46){
-  //                         this.rateValid = true
-  //                      }
-  //   }
-  //   else {
-  //     this.rateValid = false;
-  //   }
-     
+  valueChange(RFQsupplier: SendRfqObj) {
+
+    //  if(event.target.value.length>0 && event.target.value.match(FieldRegExConst.RATES)){
+    //    if((event.charCode > 47 && event.charCode < 58) || event.charCode == 46){
+    //                         this.rateValid = true
+    //                      }
+    //   }
+    //   else {
+    //     this.rateValid = false;
+    //   }
+
 
     this.submitButtonValidationFlag = false;
     this.brandRateFlag = false;
@@ -205,35 +205,35 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialCgst = material.materialGst / 2;
           material.materialIgst = 0;
         }
-        if (material.Igst >= 0 &&  material.Igst!=null) {
+        if (material.Igst >= 0 && material.Igst != null) {
           material.materialIGSTFlag = true;
           this.materialIGSTFlag = material.materialIGSTFlag;
           this.materialIndividualIGSTFlag = material.materialIGSTFlag;
         }
 
-        
+
         for (let brand of material.rfqBrandList) {
           brand.brandRate = brand.tempRate;
-          
-          if (brand.brandRate >= 0 && brand.brandRate!=null) {
+
+          if (brand.brandRate >= 0 && brand.brandRate != null) {
             brand.brandRateFlag = true;
             this.brandRateFlag = brand.brandRateFlag;
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
           }
 
-  if((brand == material.rfqBrandList[material.rfqBrandList.length - 1])){
-       if (this.materialIndividualIGSTFlag && this.brandRateFlag) {
-            this.sameGstAndBrandFilled = true;
-          } else if (this.materialIndividualIGSTFlag && !this.brandRateFlag) {
-            this.brandNotMatchedCount++;
-            this.sameGstAndBrandFilled = false;
-            this.eitherOneGstOrBrand = true;
-          } else if (!this.materialIndividualIGSTFlag && this.brandRateFlag) {
-            this.brandNotMatchedCount++;
-            this.sameGstAndBrandFilled = false;
-            this.eitherOneGstOrBrand = true;
+          if ((brand == material.rfqBrandList[material.rfqBrandList.length - 1])) {
+            if (this.materialIndividualIGSTFlag && this.brandRateFlag) {
+              this.sameGstAndBrandFilled = true;
+            } else if (this.materialIndividualIGSTFlag && !this.brandRateFlag) {
+              this.brandNotMatchedCount++;
+              this.sameGstAndBrandFilled = false;
+              this.eitherOneGstOrBrand = true;
+            } else if (!this.materialIndividualIGSTFlag && this.brandRateFlag) {
+              this.brandNotMatchedCount++;
+              this.sameGstAndBrandFilled = false;
+              this.eitherOneGstOrBrand = true;
+            }
           }
-  }
         }
 
         if (this.brandRateFlag && this.materialIndividualIGSTFlag) {
@@ -262,7 +262,7 @@ export class RFQSupplierDetailComponent implements OnInit {
       this.submitButtonValidationFlag = true;
     }
 
-    
+
 
   }
 
