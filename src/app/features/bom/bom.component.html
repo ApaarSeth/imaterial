@@ -26,7 +26,7 @@
                   <mat-select-trigger>
                     <mat-label>Select Trades</mat-label>
                   </mat-select-trigger>
-                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade :'tradeName'" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
+                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:'tradeName'" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
                     >{{ trade.tradeName }}
                   </mat-option>
                 </mat-select>
@@ -60,7 +60,7 @@
                   mat-raised-button
                   class="main-background-color main-button color-white pull-right save-material-button"
                   (click)="saveCategory()"
-                  [disabled]="this.previews && this.previews.quantityForms.invalid"
+                  [disabled]="this.topMaterial ? this.topMaterial.quantityForms.invalid : this.allMaterial ? this.allMaterial.quantityForms.invalid : false"
                 >
                   Add to BOM
                 </button>
@@ -73,15 +73,32 @@
             <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
           </div>
         </div>
-        <div class="col-sm-12"></div>
-        <!-- <div class="col-sm-12 text-right m-t-40">
-          <button *ngIf="getSelectedCategoriesLength()" mat-raised-button class="main-background-color main-button color-white" (click)="finalisedCategory()">
-            Next
-          </button>
-        </div> -->
+
         <div *ngIf="showTable">
+          <ng-container>
+            <div class="row">
+              <div class="col-xs-6">
+                <a href="javascript:void(0)" (click)="setButtonName('25Material')">
+                  <button [class.active]="buttonName == '25Material'" class="color-black" mat-button>
+                    TOP 25 Material
+                  </button>
+                </a>
+
+                <a href="javascript:void(0)" (click)="setButtonName('AllMaterial')">
+                  <button [class.active]="buttonName == 'AllMaterial'" class="color-black" mat-button>
+                    All Material
+                  </button>
+                </a>
+              </div>
+            </div>
+            <div *ngIf="buttonName === '25Material'; else elseBlock">
+              <app-bom-topMaterial #preview [category]="categoryData" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)"></app-bom-topMaterial>
+            </div>
+            <ng-template #elseBlock>
+              <app-bom-allMaterial #preview1 [category]="categoryData" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)"></app-bom-allMaterial>
+            </ng-template>
+          </ng-container>
           <!-- <div *ngFor="let data of categoryData"> -->
-          <app-bom-preview #preview [category]="categoryData" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)"></app-bom-preview>
         </div>
         <!-- </div> -->
       </mat-card>

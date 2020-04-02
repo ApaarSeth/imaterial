@@ -20,6 +20,7 @@ import { SelectRfqTermsComponent } from "./selectrfq-terms/selectrfq-terms.compo
 import { SelectProjectComponent } from './select-project/select-project.component';
 import { GSTINMissingComponent } from './gstin-missing/gstin-missing.component';
 import { ViewVideoComponent } from './video-video/view-video.component';
+import { AddBomWarningComponent } from './add-bom-warning/add-bom-warning.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -43,5 +44,6 @@ export const SharedDialogs = [
   SelectRfqTermsComponent,
   SelectProjectComponent,
   ViewVideoComponent,
-  GSTINMissingComponent
+  GSTINMissingComponent,
+  AddBomWarningComponent
 ];

@@ -133,7 +133,7 @@ export class BomTableComponent implements OnInit {
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
-      this.subcategories = [...res.data];
+      this.subcategories = res.data ? [...res.data] : [];
       this.subcategories.forEach(subcategory => {
         if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
           this.subcategoryData = [

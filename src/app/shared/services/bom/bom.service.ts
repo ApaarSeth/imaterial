@@ -29,6 +29,11 @@ export class BomService {
       return res;
     });
   }
+
+  get25Trades(tradeList) {
+    return this.dataService.getRequestMaster(API.GET25BOMTRADES, tradeList)
+  }
+
   getTrades(tradeList) {
     return this.dataService.getRequestMaster(API.GETBOMTRADES, tradeList)
   }
