@@ -12,6 +12,7 @@ import { GuideTourModel } from 'src/app/shared/models/guided_tour';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { ViewVideoComponent } from 'src/app/shared/dialogs/video-video/view-video.component';
+import { permission } from 'src/app/shared/models/permissionObject';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -27,26 +28,21 @@ export class AppDashboardComponent implements OnInit {
   projectLists: ProjectDetails[];
   label: string;
   userGuidedata: GuideTourModel[] = [];
-  permissionObj: {
-    projectStoreFlag: boolean;
-    globalStoreFlag: boolean;
-    rfqFlag: boolean;
-    purchaseOrderFlag: boolean;
-    usersFlag: boolean;
-    supplierFlag: boolean;
-    projectEdit: boolean;
-  };
+  permissionObj: permission;
   constructor(public dialog: MatDialog,
     private router: Router,
     private _userService: UserService,
     private userguideservice: UserGuideService,
     private _projectService: ProjectService,
-    private commonService : CommonService,
+    private commonService: CommonService,
     private permissionService: PermissionService) { }
 
   ngOnInit() {
-    this.permissionObj = this.permissionService.checkPermission();
-    this.orgId = Number(localStorage.getItem("orgId"));
+    const role = localStorage.getItem("role")
+    if (role) {
+      this.permissionObj = this.permissionService.checkPermission(role);
+      this.orgId = Number(localStorage.getItem("orgId"));
+    }
     this.userId = Number(localStorage.getItem("userId"));
     this.getDashboardInfo('po');
     this.getDashboardInfo('rfq');
@@ -65,7 +61,7 @@ export class AppDashboardComponent implements OnInit {
     this.getNotifications();
   }
 
-getNotifications(){
+  getNotifications() {
     this.commonService.getNotification(this.userId);
   }
   openProject() {

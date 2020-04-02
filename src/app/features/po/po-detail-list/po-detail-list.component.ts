@@ -12,6 +12,8 @@ import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { POService } from 'src/app/shared/services/po/po.service';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { PermissionService } from 'src/app/shared/services/permission.service';
+import { permission } from 'src/app/shared/models/permissionObject';
 
 @Component({
   selector: "po-detail-list",
@@ -60,24 +62,27 @@ export class PODetailComponent implements OnInit {
   };
   userId: number;
   orgId: number;
-
+  permissionObj: permission;
   constructor(
     private activatedRoute: ActivatedRoute,
     private poDetailService: POService,
+    private permissionService: PermissionService,
     private route: Router,
     private projectService: ProjectService,
     public dialog: MatDialog,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
-    private commonService : CommonService
+    private commonService: CommonService
   ) {
   }
 
   ngOnInit() {
+    const role = localStorage.getItem("role")
+    this.permissionObj = this.permissionService.checkPermission(role);
     this.PoData();
     this.getNotifications();
   }
-    getNotifications(){
+  getNotifications() {
     this.commonService.getNotification(this.userId);
   }
 

@@ -26,12 +26,22 @@
             <span class="mat-cell">{{ material.materialName }}</span>
             <span class="mat-cell"></span>
             <span class="mat-cell">
-              <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate|date: "dd-MMM-yyy" }}</ng-container>
+              <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
                 <mat-form-field class="border-input  date-label date-button mat-form-field-padding" style="width: 77%;">
                   <mat-label *ngIf="!inputDate.value">Select Date</mat-label>
                   <span class="form-placeholder">{{ poForms["controls"]["forms"]["controls"][m]["controls"]["fullfilmentDate"].value | date: "dd-MMM-yyy" }}</span>
-                  <input #inputDate hidden matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" placeholde="Enter Date" (focus)="dueDate.open()" [min]="minDate" readonly />
+                  <input
+                    #inputDate
+                    hidden
+                    matInput
+                    [matDatepicker]="dueDate"
+                    formControlName="fullfilmentDate"
+                    placeholde="Enter Date"
+                    (focus)="dueDate.open()"
+                    [min]="minDate"
+                    readonly
+                  />
                   <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                   <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
                 </mat-form-field>
@@ -90,13 +100,13 @@
               </span>
               <span class="mat-cell text-center">
                 <span *ngIf="mode != 'edit'; else editGst">
-                  <span *ngIf="(purchaseOrder && (purchaseOrder.materialCgst == 0) && (purchaseOrder.materialSgst === 0))">
+                  <span *ngIf="purchaseOrder && purchaseOrder.materialCgst == 0 && purchaseOrder.materialSgst === 0">
                     {{ purchaseOrder.materialIgst }}
                   </span>
-                  <span *ngIf="(purchaseOrder && (purchaseOrder.materialCgst != 0) && (purchaseOrder.materialSgst != 0))">
+                  <span *ngIf="purchaseOrder && purchaseOrder.materialCgst != 0 && purchaseOrder.materialSgst != 0">
                     {{ purchaseOrder.materialCgst + purchaseOrder.materialSgst }}
                   </span>
-                  </span>
+                </span>
                 <ng-template #editGst>
                   <mat-form-field class="border-input width50Percent">
                     <input
@@ -138,7 +148,9 @@
           <span class="mat-cell"><span>GST Amount ₹</span> <br />{{ gstTotalAmount | number: "1.2-2" }}</span>
           <span class="mat-cell"><span>Total Amount ₹</span> <br />{{ totalAmount | number: "1.2-2" }}</span>
         </div>
-        <div class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35">Net Payable Amount in Words : {{ totalAmount | numberToWords | async }}</div>
+        <div class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35">
+          Net Payable Amount in Words :Rupees {{ totalAmount | numberToWords | async | titlecase }} <span class="text-semi-bold">Only /-</span>
+        </div>
       </mat-accordion>
     </form>
   </div>

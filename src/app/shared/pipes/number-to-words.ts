@@ -1,20 +1,20 @@
-import {Pipe, PipeTransform} from "@angular/core";
-import {isConstructorDeclaration} from "typescript";
-import {POService} from "../services/po/po.service";
-import {DataService} from "../services/data.service";
-import {API} from "../constants/configuration-constants";
+import { Pipe, PipeTransform } from "@angular/core";
+import { isConstructorDeclaration } from "typescript";
+import { POService } from "../services/po/po.service";
+import { DataService } from "../services/data.service";
+import { API } from "../constants/configuration-constants";
 
 @Pipe({
   name: "numberToWords"
 })
 export class NumberToWordsPipe implements PipeTransform {
-  constructor(private poService: POService) {}
+  constructor(private poService: POService) { }
   words = "";
   transform(amount: number, args?: any): any {
     if (amount) {
       let totalAmount = amount.toString().split(".");
       if (totalAmount[1] && totalAmount[1] !== "00") {
-        let paise = Number(totalAmount[1].slice(0, 3));
+        let paise = Number((totalAmount[1].length === 1 ? totalAmount[1] + '0' : totalAmount[1]).slice(0, 3));
         if (paise > 100) {
           if (paise % 10 >= 5) {
             paise = Math.floor(paise / 10) + 1;

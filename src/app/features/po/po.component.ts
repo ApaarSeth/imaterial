@@ -93,7 +93,7 @@ export class PoComponent implements OnInit {
   poId: number;
   mode: string;
   ngOnInit() {
- 
+
 
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
@@ -187,17 +187,8 @@ export class PoComponent implements OnInit {
       this.poService.sendPoData(result).then(res => {
         if (res.status === 0) {
           if (res.message = "gst field missing from billing address") {
-            this.openProjectDialog();
+            this.openProjectDialog(data);
           }
-          this._snackBar.open(
-            res.message,
-            "",
-            {
-              duration: 2000,
-              panelClass: ["warning-snackbar"],
-              verticalPosition: "bottom"
-            }
-          );
         }
         else {
           this.navService.gaEvent({
@@ -221,10 +212,10 @@ export class PoComponent implements OnInit {
     });
   }
 
-  openProjectDialog() {
+  openProjectDialog(data: POData) {
     const dialogRef = this.dialog.open(GSTINMissingComponent, {
-      width: "400px"
-
+      width: "400px",
+      data
     });
   }
 
@@ -245,7 +236,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
+            verticalPosition: "top"
           }
         );
       } else {
@@ -272,7 +263,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
+            verticalPosition: "top"
           }
         );
         this.router.navigate(["po/detail-list"]);
