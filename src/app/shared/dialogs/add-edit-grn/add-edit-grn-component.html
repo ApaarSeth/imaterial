@@ -14,7 +14,7 @@
 <form *ngIf="materialForms" [formGroup]="materialForms" (ngSubmit)="addGrn()">
   <div class="row m-t-10">
     <div class="col-sm-12">
-      <div formArrayName="forms" class="row">
+      <div formArrayName="forms" class="row form-add-edit-grn-div">
         <table mat-table [dataSource]="dataSource" class="col-sm-12">
           <ng-container matColumnDef="Material Name">
             <th mat-header-cell *matHeaderCellDef>Material Name</th>
