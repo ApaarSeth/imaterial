@@ -72,6 +72,9 @@
     <a>
       <mat-icon class="password-eye" (click)="showPassWord()">remove_red_eye</mat-icon>
     </a>
+    <small *ngIf="signupForm.controls['password'].errors?.minlength && signupForm.controls['password'].touched" class="signupForm-error-msg"
+      >minimum characters required is 6</small
+    >
   </mat-form-field>
   <!-- <mat-form-field class="col-xs-12 border-input">
                     <input matInput type="password" formControlName="confirmPassword" placeholder="Retype Password" />
