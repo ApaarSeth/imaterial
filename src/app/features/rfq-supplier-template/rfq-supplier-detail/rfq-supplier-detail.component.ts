@@ -30,6 +30,9 @@ export class RFQSupplierDetailComponent implements OnInit {
   oneBrandAtMaterialSelected: boolean;
   dotCount: any;
   rateValid: boolean;
+  gstValid: boolean;
+  ALLVALID: boolean;
+  eitherOneValidInMaterial: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -68,6 +71,7 @@ export class RFQSupplierDetailComponent implements OnInit {
 
         for (let project of this.rfqSupplierDetailList.projectList) {
           for (let material of project.materialList) {
+            material.validGst = true;
             if (material.materialIgst == 0) {
               material.Igst = material.materialCgst + material.materialSgst;
               if (material.Igst == 0)
@@ -79,6 +83,7 @@ export class RFQSupplierDetailComponent implements OnInit {
                 material.Igst = null
             }
             for (let brand of material.rfqBrandList) {
+              brand.validBrand = true;
               if (brand.brandRate == 0) {
                 brand.tempRate = null;
               }
@@ -178,6 +183,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     this.materialIGSTFlag = false;
     this.sameGstAndBrandFilled = false;
     this.eitherOneGstOrBrand = false;
+    this.eitherOneValidInMaterial = false;
     this.dudateFlag = false;
 
     this.brandCount = 0;
@@ -206,6 +212,14 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialIgst = 0;
         }
         if (material.Igst >= 0 && material.Igst != null) {
+          if(material.Igst.toString().match(FieldRegExConst.RATES)){
+            material.validGst = true;
+            this.gstValid = true;
+          }
+          else{
+             material.validGst = false;
+             this.gstValid = false;
+          }
           material.materialIGSTFlag = true;
           this.materialIGSTFlag = material.materialIGSTFlag;
           this.materialIndividualIGSTFlag = material.materialIGSTFlag;
@@ -216,6 +230,14 @@ export class RFQSupplierDetailComponent implements OnInit {
           brand.brandRate = brand.tempRate;
 
           if (brand.brandRate >= 0 && brand.brandRate != null) {
+             if(brand.brandRate.toString().match(FieldRegExConst.RATES)){
+                brand.validBrand = true;
+                this.rateValid = true;
+              }
+              else{
+               brand.validBrand = false;
+               this.rateValid = false;
+              }
             brand.brandRateFlag = true;
             this.brandRateFlag = brand.brandRateFlag;
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
@@ -232,6 +254,13 @@ export class RFQSupplierDetailComponent implements OnInit {
               this.brandNotMatchedCount++;
               this.sameGstAndBrandFilled = false;
               this.eitherOneGstOrBrand = true;
+            }
+            if(this.gstValid && this.rateValid){
+              this.ALLVALID = true;
+            }
+            else if(!this.gstValid || !this.rateValid){
+              this.ALLVALID = false;
+              this.eitherOneValidInMaterial = true;
             }
           }
         }
@@ -257,7 +286,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     if (
       this.dudateFlag &&
       this.sameGstAndBrandFilled &&
-      !this.eitherOneGstOrBrand
+      !this.eitherOneGstOrBrand && this.ALLVALID && !this.eitherOneValidInMaterial
     ) {
       this.submitButtonValidationFlag = true;
     }

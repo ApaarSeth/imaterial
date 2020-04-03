@@ -71,8 +71,9 @@
                       formControlName="materialUnitPrice"
                       placeholder="rate"
                       min="0"
-                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                     />
+                      <small *ngIf="poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['materialUnitPrice'].hasError('pattern') && poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['materialUnitPrice'].touched" class="error-msg"> Invalid rate </small>
+                      <!-- controls.forms.controls[""0""].controls.purchaseOrderDetailList.controls[""0""].controls.materialUnitPrice -->
                   </mat-form-field>
                 </ng-template>
               </span>
@@ -117,8 +118,8 @@
                       placeholder="GST%"
                       class="m-r-5"
                       min="0"
-                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                     />
+                     <small *ngIf="poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['gst'].hasError('pattern') && poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['gst'].touched" class="error-msg"> Invalid gst </small>
                   </mat-form-field>
                 </ng-template>
               </span>

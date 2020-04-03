@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { isPlatformBrowser } from "@angular/common";
 import { CommonService } from 'src/app/shared/services/commonService';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
         }
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
-            materialUnitPrice: [item.estimatedRate],
+            materialUnitPrice: [item.estimatedRate,Validators.pattern(FieldRegExConst.RATES)],
             materialQty: [item.quantity, Validators.required],
             brandNames: [item.makes],
             materialId: [item.materialId],
