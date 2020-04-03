@@ -154,10 +154,12 @@ export class BomTableComponent implements OnInit {
       this.loading.hide();
     });
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
   toggleRow(element: Subcategory) {
     element.materialSpecs && (element.materialSpecs as MatTableDataSource<Materials>).data.length
       ? (this.expandedElement = this.expandedElement === element ? null : element)
