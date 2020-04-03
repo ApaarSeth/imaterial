@@ -115,15 +115,15 @@
                     <input
                       matInput
                       type="number"
-                      title="GST% must be valid"
+                      title=""
                       placeholder="GST %"
                       [(ngModel)]="material.Igst"
                       min="0"
                       (keyup)="valueChange(rfqSupplierDetailList)"
                     />
                   </mat-form-field>
-                   <div class="d-flex justify-content-center" style="padding-left:32px !important;"> 
-                     <small *ngIf="!material.validGst" class="error-msg">Enter Valid Gst</small>
+                   <div class="d-flex justify-content-center" style="padding-left:50px !important;"> 
+                     <small *ngIf="!material.validGst" class="error-msg">Enter Valid GST%</small>
                    </div> 
                 </td>
               </tr>
@@ -148,7 +148,7 @@
                         type="number"
                         placeholder="Rate"
                         min="0"
-                        title="Rates must be valid"
+                        title=""
                         [(ngModel)]="brand.tempRate"
                         (keyup)="valueChange(rfqSupplierDetailList)"
                       />
