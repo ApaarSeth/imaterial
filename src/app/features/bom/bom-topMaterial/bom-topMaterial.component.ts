@@ -31,7 +31,7 @@ export class BomTopMaterialComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
   @Output("searchData") searchData = new EventEmitter();
   @Input("category") category: categoryNestedLevel[];
-  // @Input("searchMat") searchMat: string;
+  @Input("searchMat") searchMat: string;
   counter: number;
   orgId: number;
   constructor(
@@ -69,6 +69,9 @@ export class BomTopMaterialComponent implements OnInit {
   }
 
   searchCategory() {
+    if (this.category) {
+      this.selectedCategory = [...this.category];
+    }
     this.bomService.searchText.subscribe(val => {
       if (val && val !== '') {
         this.isSearching = true;
@@ -99,8 +102,12 @@ export class BomTopMaterialComponent implements OnInit {
 
   ngOnChanges(): void {
     this.selectedCategory = [...this.category];
-    // this.enteredInput();
+    if (this.searchMat != null && this.searchMat != "") {
+      this.bomService.searchText.next(this.searchMat);
+    }
     this.formInit();
+    // this.enteredInput();
+
   }
 
   formInit() {
@@ -130,8 +137,13 @@ export class BomTopMaterialComponent implements OnInit {
     // this.enteredInput();r
 
 
-    this.quantityForms.valueChanges.subscribe(changes => {
-      this.inputEntered.emit(true);
+    (<FormArray>this.quantityForms.get('forms')).controls.map((control: FormGroup) => {
+      (<FormArray>control.get('materialGroup')).controls.map((control: FormGroup) => {
+        control.get("estimatedQty").valueChanges.subscribe(changes => {
+          console.log("changes", changes)
+          this.inputEntered.emit(true);
+        })
+      })
     })
   }
 
@@ -140,26 +152,27 @@ export class BomTopMaterialComponent implements OnInit {
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
         this.dataQty = res.data;
-        this.selectedCategory.map((category: categoryNestedLevel) => {
-          category.materialList = category.materialList.map(
-            subcategory => {
-              for (let data of this.dataQty) {
-                if (
-                  subcategory.materialGroup === data.materialGroup &&
-                  subcategory.materialName === data.materialName &&
-                  data.estimatedQty > 0
-                ) {
-                  subcategory.estimatedQty = data.estimatedQty;
-                  subcategory.materialId = data.materialId;
+        if (this.dataQty) {
+          this.selectedCategory.map((category: categoryNestedLevel) => {
+            category.materialList = category.materialList.map(
+              subcategory => {
+                for (let data of this.dataQty) {
+                  if (
+                    subcategory.materialGroup === data.materialGroup &&
+                    subcategory.materialName === data.materialName &&
+                    data.estimatedQty > 0
+                  ) {
+                    subcategory.estimatedQty = data.estimatedQty;
+                    subcategory.materialId = data.materialId;
+                  }
                 }
-              }
-              return subcategory;
-            });
-          return category;
-        })
-
+                return subcategory;
+              });
+            return category;
+          })
+          this.formInit();
+        }
         // this.searchData.emit(this.selectedCategory);
-        this.formInit();
       })
       .catch(err => {
         console.log(err);
@@ -185,21 +198,6 @@ export class BomTopMaterialComponent implements OnInit {
   }
 
   getMaterialLength(minRequired = 1): ValidatorFn {
-    // if (!control.touched) {
-    //   return null;
-    // }
-
-    // if (!Object.keys(control.value).length) {
-    //   return { inValid: true };
-    // } else {
-    //   const isAllEmpty = control.value.forms.every(cat => !cat.estimatedQty);
-
-    //   if (isAllEmpty) {
-    //     return { inValid: true };
-    //   } else {
-    //     return null;
-    //   }
-    // }
     return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
       for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {

@@ -15,7 +15,7 @@
             </div>
             <div class="col-xs-3 text-right">
               <mat-form-field class="border-select p-t-0">
-                <mat-label *ngIf="!categoryData.length">Select Trades</mat-label>
+                <mat-label *ngIf="!topMaterialData.length">Select Trades</mat-label>
                 <mat-select formControlName="selectedTrades" multiple>
                   <div class="display-flex">
                     <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Trade" [(ngModel)]="searchTrade" [ngModelOptions]="{standalone: true}" />
@@ -75,7 +75,27 @@
         </div>
 
         <div *ngIf="showTable">
-          <ng-container>
+          <mat-tab-group (selectedTabChange)="tabClick($event)">
+            <mat-tab label="Top Materials">
+              <app-bom-topMaterial
+                #preview
+                [category]="topMaterialData"
+                [searchMat]="searchAgain"
+                (searchData)="searchData($event)"
+                (inputEntered)="checkValidations($event)"
+              ></app-bom-topMaterial
+            ></mat-tab>
+            <mat-tab label="All Materials"
+              ><app-bom-allMaterial
+                #preview1
+                [category]="allMaterialData"
+                [searchMat]="searchAgain"
+                (searchData)="searchData($event)"
+                (inputEntered)="checkValidationsAll($event)"
+              ></app-bom-allMaterial
+            ></mat-tab>
+          </mat-tab-group>
+          <!-- <ng-container>
             <div class="row">
               <div class="col-xs-6">
                 <a href="javascript:void(0)" (click)="setButtonName('25Material')">
@@ -83,7 +103,6 @@
                     TOP 25 Material
                   </button>
                 </a>
-
                 <a href="javascript:void(0)" (click)="setButtonName('AllMaterial')">
                   <button [class.active]="buttonName == 'AllMaterial'" class="color-black" mat-button>
                     All Material
@@ -91,16 +110,24 @@
                 </a>
               </div>
             </div>
-            <div *ngIf="buttonName === '25Material'; else elseBlock">
-              <app-bom-topMaterial #preview [category]="categoryData" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)"></app-bom-topMaterial>
+            <div>
+              <app-bom-topMaterial
+                *ngIf="buttonName === '25Material'"
+                #preview
+                [category]="categoryData"
+                (searchData)="searchData($event)"
+                (inputEntered)="checkValidations($event)"
+              ></app-bom-topMaterial>
+              <app-bom-allMaterial
+                *ngIf="buttonName === 'AllMaterial'"
+                #preview1
+                [category]="categoryData"
+                (searchData)="searchData($event)"
+                (inputEntered)="checkValidations($event)"
+              ></app-bom-allMaterial>
             </div>
-            <ng-template #elseBlock>
-              <app-bom-allMaterial #preview1 [category]="categoryData" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)"></app-bom-allMaterial>
-            </ng-template>
-          </ng-container>
-          <!-- <div *ngFor="let data of categoryData"> -->
+          </ng-container> -->
         </div>
-        <!-- </div> -->
       </mat-card>
     </div>
   </div>

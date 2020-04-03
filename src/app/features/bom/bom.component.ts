@@ -3,7 +3,8 @@ import {
   OnInit,
   ViewChild,
   QueryList,
-  ViewChildren
+  ViewChildren,
+  ElementRef
 } from "@angular/core";
 import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -42,9 +43,9 @@ export class BomComponent implements OnInit {
   showTable = false;
   categories: FormControl;
   categoryList: string[] = [];
-  categoryData: categoryNestedLevel[] = [];
+  topMaterialData: categoryNestedLevel[] = [];
+  allMaterialData: categoryNestedLevel[] = [];
   value = "";
-
   projectId: number;
   searchText: string = null;
   product: ProjectDetails;
@@ -52,6 +53,7 @@ export class BomComponent implements OnInit {
   selectedCategory: categoryLevel[] = [];
   @ViewChild("preview", { static: false }) topMaterial: BomTopMaterialComponent;
   @ViewChild("preview1", { static: false }) allMaterial: BOMAllMaterialComponent;
+  @ViewChild("text", { static: false }) text: ElementRef;
   selectedTrades: string[];
   categoriesInputData: QtyData[];
   quantityPresent: boolean = true;
@@ -63,9 +65,13 @@ export class BomComponent implements OnInit {
   form: FormGroup;
   tradeNames: string[] = []
   tradesList: orgTrades[];
-  // searchMaterial: string;
+  currentIndex: number = null;
+  previousIndex: number = null;
   searchTrade: string = "";
-  buttonName: string = "25Material";
+  buttonName: number = 0;
+  searchAgain: string;
+  valueChanged: boolean = false;
+  valueChangedAll: boolean = false;
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,
@@ -93,20 +99,6 @@ export class BomComponent implements OnInit {
     }
   };
 
-  // public BomDashboardTourSecond: GuidedTour = {
-  //   tourId: 'bom-second-tour',
-  //   useOrb: false,
-
-  //   steps: [
-  //     {
-  //       title: 'Save Button',
-  //       selector: '.save-material-button',
-  //       content: 'Enter the quantity against the materials and add in BOM.',
-  //       orientation: Orientation.Left
-  //     }
-  //   ]
-  // };
-
   constructor(
     private fomBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -120,7 +112,8 @@ export class BomComponent implements OnInit {
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
     private navService: AppNavigationService,
-    private fbPixel: FacebookPixelService
+    private fbPixel: FacebookPixelService,
+    private globalLoader: GlobalLoaderService
   ) {
   }
 
@@ -148,21 +141,6 @@ export class BomComponent implements OnInit {
       this.form.get('selectedTrades').setValue(selectedTrades)
       this.choosenTrade()
     })
-    // this.bomService
-    //   .getMaterialWithQuantity(this.orgId, this.projectId)
-    //   .then(res => {
-    //     this.categoryList = [
-    //       ...new Set(res.data.map(cat => cat.materialGroup))
-    //     ] as string[];
-    //     this.fullCategoryList.forEach(category => {
-    //       category.checked =
-    //         this.categoryList.indexOf(category.materialGroup) != -1;
-    //     });
-    //     this.selectedCategory = this.fullCategoryList.filter(
-    //       opt => opt.checked
-    //     );
-    //   });
-
   }
 
   setLocalStorage() {
@@ -195,7 +173,6 @@ export class BomComponent implements OnInit {
           this.guidedTourService.startTour(this.BomDashboardTour);
         }, 1000);
       }
-
     });
   }
   uploadExcel(files: FileList) {
@@ -218,7 +195,6 @@ export class BomComponent implements OnInit {
     this.selectedTrades = this.form.value.selectedTrades.map(
       selectedTrade => selectedTrade.tradeName
     );
-
     {// if (selectedTrades.length === 0) {
       //   this.categoryData = [];
       //   this.tradeNames = [];
@@ -248,35 +224,16 @@ export class BomComponent implements OnInit {
 
     }
     this.callApi();
-
-
-    // this.bomService.getTrades({ tradeNames: [...selectedTrades] }).then(res => {
-    //   this.categoryData = [...res];
-    //   this.showTable = true;
-    //   // this.categoryData = this.categoryData.map(
-    //   //   (project: categoryNestedLevel) => {
-    //   //     let proj = this.getCheckedMaterial(project);
-    //   //     return proj;
-    //   //   }
-    //   // );
-    //   // this.materialAdded();
-    // });
-    // }
     this.tradeNames = [...this.selectedTrades];
   }
+
   callApi() {
-    if (this.buttonName === '25Material') {
+    if (this.buttonName === 0) {
       if (this.selectedTrades.length) {
         this.bomService.get25Trades({ tradeNames: [...this.selectedTrades] }).then(res => {
-          this.categoryData = [...res];
+          this.topMaterialData = [...res];
+          this.searchAgain = this.text.nativeElement.value
           this.showTable = true;
-          // this.categoryData = this.categoryData.map(
-          //   (project: categoryNestedLevel) => {
-          //     let proj = this.getCheckedMaterial(project);
-          //     return proj;
-          //   }
-          // );
-          // this.materialAdded();
         });
       }
       else {
@@ -286,15 +243,9 @@ export class BomComponent implements OnInit {
     else {
       if (this.selectedTrades.length) {
         this.bomService.getTrades({ tradeNames: [...this.selectedTrades] }).then(res => {
-          this.categoryData = [...res];
+          this.allMaterialData = [...res];
+          this.searchAgain = this.text.nativeElement.value
           this.showTable = true;
-          // this.categoryData = this.categoryData.map(
-          //   (project: categoryNestedLevel) => {
-          //     let proj = this.getCheckedMaterial(project);
-          //     return proj;
-          //   }
-          // );
-          // this.materialAdded();
         });
       }
       else {
@@ -304,27 +255,50 @@ export class BomComponent implements OnInit {
   }
 
   setButtonName(name: string) {
+    // this.globalLoader.show();
+    // let dataPresent: boolean;
+    // if (this.buttonName === "25Material") {
+    //   dataPresent = this.topMaterial ? (<QtyData[]>this.topMaterial.getData()).some(data => {
+    //     return data.estimatedQty > 0
+    //   }) : false;
+    // }
+    // else {
+    //   dataPresent = this.allMaterial ? (<QtyData[]>this.allMaterial.getData()).some(data => {
+    //     return data.estimatedQty > 0
+    //   }) : false;
+    // }
+    // if (dataPresent) {
+    //   this.openAddBomDialog(name);
+    // } else {
+    //   this.buttonName = name;
+    //   this.callApi()
+    // }
+  }
+
+  tabClick(event) {
+    this.text.nativeElement.value = ""
+    this.previousIndex = this.currentIndex ? this.currentIndex : 0;
+    this.currentIndex = event.index;
     let dataPresent: boolean;
-    if (this.buttonName === "25Material") {
-      dataPresent = this.topMaterial ? (<QtyData[]>this.topMaterial.getData()).some(data => {
-        return data.estimatedQty > 0
-      }) : false;
+    if (this.previousIndex === 0) {
+      dataPresent = this.valueChanged;
     }
     else {
-      dataPresent = this.allMaterial ? (<QtyData[]>this.allMaterial.getData()).some(data => {
-        return data.estimatedQty > 0
-      }) : false;
+      dataPresent = this.valueChangedAll;
     }
     if (dataPresent) {
-      this.openAddBomDialog(name);
+      this.valueChanged = false;
+      this.valueChangedAll = false;
+      this.openAddBomDialog(event.index);
     } else {
-      this.buttonName = name;
+      this.buttonName = event.index;
+      this.valueChanged = false;
+      this.valueChangedAll = false;
       this.callApi()
     }
-
-
   }
-  openAddBomDialog(name: string) {
+
+  openAddBomDialog(index: number) {
     const dialogRef = this.dialog.open(AddBomWarningComponent, {
       width: "400px"
     });
@@ -334,36 +308,38 @@ export class BomComponent implements OnInit {
         this.saveCategory();
       }
       else {
-        this.buttonName = name;
+        this.buttonName = index;
         this.callApi();
       }
     })
   }
 
 
-  finalisedCategory() {
-    this.showTable = true;
-    // setTimeout(() => {
-    //   this.guidedTourService.startTour(this.BomDashboardTourSecond);
-    // }, 1000);
+  // finalisedCategory() {
+  //   this.showTable = true;
 
-    this.bomService
-      .getMaterialsWithSpecs({
-        pid: this.form.value.selectedTrades.map(
-          selectedCategory => selectedCategory.materialGroup
-        )
-      })
-      .then(res => {
-        this.categoryData = [...res];
-      });
-  }
+  //   this.bomService
+  //     .getMaterialsWithSpecs({
+  //       pid: this.form.value.selectedTrades.map(
+  //         selectedCategory => selectedCategory.materialGroup
+  //       )
+  //     })
+  //     .then(res => {
+  //       this.topMaterialData = [...res];
+  //     });
+  // }
 
   checkValidations(event: boolean): void {
-    this.isAllFormsValid = event
+    this.valueChanged = event
+  }
+
+
+  checkValidationsAll(event: boolean): void {
+    this.valueChangedAll = event
   }
 
   saveCategory() {
-    if (this.buttonName === "25Material") {
+    if (this.buttonName === 0) {
       this.categoriesInputData =
         this.topMaterial.getData();
     }
@@ -415,11 +391,13 @@ export class BomComponent implements OnInit {
 
     this.openDialog(data);
   }
+
   clearSelectedCategory(category) {
     this.selectedCategory = this.selectedCategory.filter(
       cats => cats.materialGroup !== category.materialGroup
     );
   }
+
   getSelectedCategoriesLength() {
     if (this.form.value.selectedTrades) return this.form.value.selectedTrades.length;
   }
@@ -447,6 +425,7 @@ export class BomComponent implements OnInit {
         .then(result => { });
     }
   }
+
   searchData(event) {
     this.searchDataValues = event;
   }
