@@ -118,12 +118,12 @@
                       placeholder="GST %"
                       [(ngModel)]="material.Igst"
                       min="0"
-                      onkeypress="return ((event.charCode > 47 && event.charCode < 58) 
-      || event.charCode == 46)"
                       (keyup)="valueChange(rfqSupplierDetailList)"
                     />
-                    <mat-error>GST is Required</mat-error>
                   </mat-form-field>
+                   <div class="d-flex justify-content-center" style="padding-left:32px !important;"> 
+                     <small *ngIf="!material.validGst" class="error-msg">Enter Valid Gst</small>
+                   </div> 
                 </td>
               </tr>
 
@@ -147,13 +147,12 @@
                         type="number"
                         placeholder="Rate"
                         min="0"
-                        onkeypress="return ((event.charCode > 47 && event.charCode < 58) 
-                       || event.charCode == 46)"
                         title="Rates must be valid"
                         [(ngModel)]="brand.tempRate"
                         (keyup)="valueChange(rfqSupplierDetailList)"
                       />
-                      <mat-error>Rate is Required</mat-error>
+                      <small *ngIf="!brand.validBrand"  class="error-msg">Enter Valid Rate</small>
+                      
                     </mat-form-field>
                   </td>
 

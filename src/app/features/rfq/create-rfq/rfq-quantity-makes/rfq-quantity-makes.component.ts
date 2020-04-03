@@ -20,6 +20,7 @@ import { ENTER, COMMA } from "@angular/cdk/keycodes";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { CommonService } from 'src/app/shared/services/commonService';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -103,8 +104,8 @@ export class RfqQuantityMakesComponent implements OnInit {
         }
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
-            estimatedRate: [item.estimatedRate],
-            quantity: [item.quantity ? item.quantity : null, [Validators.required, this.quantityCheck(item.estimatedQty)]],
+            estimatedRate: [item.estimatedRate ,Validators.pattern(FieldRegExConst.RATES) ],
+            quantity: [item.quantity ? item.quantity : null, [Validators.required,this.quantityCheck(item.estimatedQty)]],
             makes: [item.makes],
             fullfilmentDate: [item.fullfilmentDate],
             projId: [item.projectId],

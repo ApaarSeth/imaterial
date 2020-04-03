@@ -26,6 +26,7 @@ export interface MaterialRfqObj {
   materialIgst: number;
   materialSgst: number;
   Igst?: number;
+  validGst?: boolean;
   materialCgst: number;
   materialIGSTFlag: boolean;
   materialGst?: number;
@@ -38,6 +39,7 @@ export interface BrandRfqObj {
   brandRate: number;
   brandAmount: number;
   brandRateFlag: boolean;
+  validBrand?:boolean;
   rfqDetailId: number;
   tempRate?: number;
 }
