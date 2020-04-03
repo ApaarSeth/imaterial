@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild } from "@angular/core";
 import { PoMaterial, PurchaseOrder } from "src/app/shared/models/PO/po-data";
-import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
+import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
 import { ignoreElements, debounceTime } from "rxjs/operators";
 import { Subscription, combineLatest } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { POService } from "src/app/shared/services/po/po.service";
 import { CommonService } from 'src/app/shared/services/commonService';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
   selector: "app-po-table",
@@ -53,13 +54,13 @@ export class PoTableComponent implements OnInit, OnDestroy {
           materialBrand: [purchaseorder.materialBrand],
           materialQuantity: [purchaseorder.materialQuantity],
           materialUnit: [],
-          materialUnitPrice: [purchaseorder.materialUnitPrice],
+          materialUnitPrice: [purchaseorder.materialUnitPrice, Validators.pattern(FieldRegExConst.RATES)],
           materialIgst: [1],
           materialSgst: [2],
           materialCgst: [],
           amount: [],
           gstAmount: [],
-          gst: [(purchaseorder.materialSgst != 0 && purchaseorder.materialCgst !=0 ?  purchaseorder.materialSgst + purchaseorder.materialCgst : purchaseorder.materialIgst)],
+          gst: [(purchaseorder.materialSgst != 0 && purchaseorder.materialCgst !=0 ?  purchaseorder.materialSgst + purchaseorder.materialCgst : purchaseorder.materialIgst), Validators.pattern(FieldRegExConst.RATES)],
           gstTotal: [],
           total: [{ value: "", disabled: false }]
         });
@@ -112,6 +113,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     });
     this.poForms = this.formBuilder.group({});
     this.poForms.addControl("forms", new FormArray(frmArr));
+    console.log(this.poForms);
   }
 
   get totalAmount(): number {

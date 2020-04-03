@@ -79,7 +79,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.forgetPassForm = this.formBuilder.group({
       phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
       organisationType: ["Contractor", Validators.required],
-      password: [""],
+      password: ["", [Validators.required, Validators.minLength(6)]],
       otp: [""]
     });
 

@@ -90,9 +90,9 @@
                   type="number"
                   placeholder="Awarded Rate"
                   min="0"
-                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                 />
-              </mat-form-field>
+                   <small *ngIf=" materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].hasError('pattern') && materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].touched" class="error-msg"> Invalid awarded rate </small>
+                </mat-form-field>
             </td>
           </ng-container>
           <!-- quantity -->
