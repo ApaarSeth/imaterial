@@ -4,7 +4,7 @@
 export const ConfigurationConstants = {
   HEADER_SKIP_LOADER: "Skip-Loader",
   HEADER_CACHE_REQUEST: "Cache-Request",
-  LOADING_TIMEOUT : 500,
+  LOADING_TIMEOUT: 500,
 }
 
 export class Froala {
@@ -28,7 +28,7 @@ export const HeaderConstants = {
 
 export const API = {
   PROJECTS: (organizationId, userId) => `projects/${organizationId}/${userId}`,
-  USERPROJECTS : `user/project`,
+  USERPROJECTS: `user/project`,
   GETPROJECT: (organizationId, projectId) => `project/${organizationId}/${projectId}`,
   GETCATERGORY: `material/groups`,
   ADDPROJECT: `addProject`,
@@ -96,12 +96,13 @@ export const API = {
   GETUSERGUIDEFLAG: `userGuide`,
   SENDUSERGUIDEFLAG: `add/userGuide`,
   GETBOMTRADES: `material/get/trades`,
+  GET25BOMTRADES: `topmaterial/get/trades`,
   ORGANIZATIONTRADES: projectId => `all/org/trades/${projectId}`,
   PROJECTTRADES: `add/projectTrades`,
   TERMS: id => `update/terms/${id}`,
-  TURNOVERLIST : `get/turnovers`,
+  TURNOVERLIST: `get/turnovers`,
   VERIFYMOBILE: mobile => `verify/contact?contact=${mobile}`,
   VERIFYFORGETPASSWORDOTP: (phone, otp, clientId) => `api/auth/otp/verify?phone=${phone}&otp=${otp}&tokenRequired=true&client_id=${clientId}`,
   FORGOTPASSWORD: `api/user/resetPassword`,
-  CHECKTERMS : `get/isuser/terms/accepted`
+  CHECKTERMS: `get/isuser/terms/accepted`
 };
