@@ -17,7 +17,7 @@ import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-proj
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { MatDialog } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
-import { BomPreviewComponent } from "./bom-preview/bom-preview.component";
+import { BomTopMaterialComponent } from "./bom-topMaterial/bom-topMaterial.component";
 import {
   categoryLevel,
   categoryNestedLevel
@@ -30,6 +30,8 @@ import { orgTrades } from 'src/app/shared/models/trades';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
+import { AddBomWarningComponent } from 'src/app/shared/dialogs/add-bom-warning/add-bom-warning.component';
+import { BOMAllMaterialComponent } from './bom-allMaterial/bom-allMaterial.component';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -48,7 +50,9 @@ export class BomComponent implements OnInit {
   product: ProjectDetails;
   fullCategoryList: categoryLevel[];
   selectedCategory: categoryLevel[] = [];
-  @ViewChild("preview", { static: false }) previews: BomPreviewComponent;
+  @ViewChild("preview", { static: false }) topMaterial: BomTopMaterialComponent;
+  @ViewChild("preview1", { static: false }) allMaterial: BOMAllMaterialComponent;
+  selectedTrades: string[];
   categoriesInputData: QtyData[];
   quantityPresent: boolean = true;
   isAllFormsValid: boolean;
@@ -60,7 +64,8 @@ export class BomComponent implements OnInit {
   tradeNames: string[] = []
   tradesList: orgTrades[];
   // searchMaterial: string;
-  searchTrade: string = ""
+  searchTrade: string = "";
+  buttonName: string = "25Material";
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,
@@ -128,7 +133,7 @@ export class BomComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
 
-   
+
 
     this.getProject(this.projectId);
     this.formInit()
@@ -185,11 +190,11 @@ export class BomComponent implements OnInit {
   getProject(id: number) {
     this.projectService.getProject(this.orgId, id).then(data => {
       this.product = data.data;
-       if ((localStorage.getItem('addBom') == "null") || (localStorage.getItem('addBom') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.BomDashboardTour);
-      }, 1000);
-    }
+      if ((localStorage.getItem('addBom') == "null") || (localStorage.getItem('addBom') == '0')) {
+        setTimeout(() => {
+          this.guidedTourService.startTour(this.BomDashboardTour);
+        }, 1000);
+      }
 
     });
   }
@@ -210,50 +215,131 @@ export class BomComponent implements OnInit {
   choosenTrade() {
     let tradeAdd: string[] = [];
     let tradeRemove: string[] = [];
-    const selectedTrades = this.form.value.selectedTrades.map(
+    this.selectedTrades = this.form.value.selectedTrades.map(
       selectedTrade => selectedTrade.tradeName
     );
-    // if (selectedTrades.length === 0) {
-    //   this.categoryData = [];
-    //   this.tradeNames = [];
-    //   return;
-    // }
-    // if (this.tradeNames.length === 0) {
-    //   tradeAdd = selectedTrades;
-    // } else if (this.tradeNames.length < selectedTrades.length) {
-    //   for (let id of selectedTrades) {
-    //     if (!this.tradeNames.includes(id)) {
-    //       tradeAdd.push(id);
-    //     }
-    //   }
-    // } else if (this.tradeNames.length >= selectedTrades.length) {
-    //   for (let id of this.tradeNames) {
-    //     if (!selectedTrades.includes(id)) {
-    //       tradeRemove.push(id);
-    //     }
-    //   }
-    //   this.categoryData = this.categoryData.filter(
-    //     (category: categoryNestedLevel) => {
-    //       return !tradeRemove.includes(category.tradeName);
-    //     }
-    //   );
-    // }
-    // if (tradeAdd.length) {
 
-    this.bomService.getTrades({ tradeNames: [...selectedTrades] }).then(res => {
-      this.categoryData = [...res];
-      this.showTable = true;
-      // this.categoryData = this.categoryData.map(
-      //   (project: categoryNestedLevel) => {
-      //     let proj = this.getCheckedMaterial(project);
-      //     return proj;
+    {// if (selectedTrades.length === 0) {
+      //   this.categoryData = [];
+      //   this.tradeNames = [];
+      //   return;
+      // }
+      // if (this.tradeNames.length === 0) {
+      //   tradeAdd = selectedTrades;
+      // } else if (this.tradeNames.length < selectedTrades.length) {
+      //   for (let id of selectedTrades) {
+      //     if (!this.tradeNames.includes(id)) {
+      //       tradeAdd.push(id);
+      //     }
       //   }
-      // );
-      // this.materialAdded();
-    });
+      // } else if (this.tradeNames.length >= selectedTrades.length) {
+      //   for (let id of this.tradeNames) {
+      //     if (!selectedTrades.includes(id)) {
+      //       tradeRemove.push(id);
+      //     }
+      //   }
+      //   this.categoryData = this.categoryData.filter(
+      //     (category: categoryNestedLevel) => {
+      //       return !tradeRemove.includes(category.tradeName);
+      //     }
+      //   );
+      // }
+      // if (tradeAdd.length) {
+
+    }
+    this.callApi();
+
+
+    // this.bomService.getTrades({ tradeNames: [...selectedTrades] }).then(res => {
+    //   this.categoryData = [...res];
+    //   this.showTable = true;
+    //   // this.categoryData = this.categoryData.map(
+    //   //   (project: categoryNestedLevel) => {
+    //   //     let proj = this.getCheckedMaterial(project);
+    //   //     return proj;
+    //   //   }
+    //   // );
+    //   // this.materialAdded();
+    // });
     // }
-    this.tradeNames = [...selectedTrades];
+    this.tradeNames = [...this.selectedTrades];
   }
+  callApi() {
+    if (this.buttonName === '25Material') {
+      if (this.selectedTrades.length) {
+        this.bomService.get25Trades({ tradeNames: [...this.selectedTrades] }).then(res => {
+          this.categoryData = [...res];
+          this.showTable = true;
+          // this.categoryData = this.categoryData.map(
+          //   (project: categoryNestedLevel) => {
+          //     let proj = this.getCheckedMaterial(project);
+          //     return proj;
+          //   }
+          // );
+          // this.materialAdded();
+        });
+      }
+      else {
+        this.showTable = false;
+      }
+    }
+    else {
+      if (this.selectedTrades.length) {
+        this.bomService.getTrades({ tradeNames: [...this.selectedTrades] }).then(res => {
+          this.categoryData = [...res];
+          this.showTable = true;
+          // this.categoryData = this.categoryData.map(
+          //   (project: categoryNestedLevel) => {
+          //     let proj = this.getCheckedMaterial(project);
+          //     return proj;
+          //   }
+          // );
+          // this.materialAdded();
+        });
+      }
+      else {
+        this.showTable = false;
+      }
+    }
+  }
+
+  setButtonName(name: string) {
+    let dataPresent: boolean;
+    if (this.buttonName === "25Material") {
+      dataPresent = this.topMaterial ? (<QtyData[]>this.topMaterial.getData()).some(data => {
+        return data.estimatedQty > 0
+      }) : false;
+    }
+    else {
+      dataPresent = this.allMaterial ? (<QtyData[]>this.allMaterial.getData()).some(data => {
+        return data.estimatedQty > 0
+      }) : false;
+    }
+    if (dataPresent) {
+      this.openAddBomDialog(name);
+    } else {
+      this.buttonName = name;
+      this.callApi()
+    }
+
+
+  }
+  openAddBomDialog(name: string) {
+    const dialogRef = this.dialog.open(AddBomWarningComponent, {
+      width: "400px"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.saveCategory();
+      }
+      else {
+        this.buttonName = name;
+        this.callApi();
+      }
+    })
+  }
+
 
   finalisedCategory() {
     this.showTable = true;
@@ -277,8 +363,15 @@ export class BomComponent implements OnInit {
   }
 
   saveCategory() {
-    this.categoriesInputData =
-      this.previews.getData();
+    if (this.buttonName === "25Material") {
+      this.categoriesInputData =
+        this.topMaterial.getData();
+    }
+    else {
+      this.categoriesInputData =
+        this.allMaterial.getData();
+    }
+
     for (let data of this.categoriesInputData) {
       if (data.estimatedQty > 0) {
         this.quantityPresent = false;

@@ -23,11 +23,11 @@ import { parse } from "querystring";
 import { Materials } from "src/app/shared/models/subcategory-materials";
 
 @Component({
-  selector: "app-bom-preview",
-  templateUrl: "./bom-preview.component.html",
+  selector: "app-bom-allMaterial",
+  templateUrl: "./bom-allMaterial.component.html",
   styleUrls: ["../../../../assets/scss/main.scss"]
 })
-export class BomPreviewComponent implements OnInit {
+export class BOMAllMaterialComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
   @Output("searchData") searchData = new EventEmitter();
   @Input("category") category: categoryNestedLevel[];
