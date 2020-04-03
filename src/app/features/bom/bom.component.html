@@ -76,7 +76,7 @@
 
         <div *ngIf="showTable">
           <mat-tab-group (selectedTabChange)="tabClick($event)">
-            <mat-tab label="Top Material">
+            <mat-tab label="Top Materials">
               <app-bom-topMaterial
                 #preview
                 [category]="topMaterialData"
@@ -85,13 +85,13 @@
                 (inputEntered)="checkValidations($event)"
               ></app-bom-topMaterial
             ></mat-tab>
-            <mat-tab label="All Material"
+            <mat-tab label="All Materials"
               ><app-bom-allMaterial
                 #preview1
                 [category]="allMaterialData"
                 [searchMat]="searchAgain"
                 (searchData)="searchData($event)"
-                (inputEntered)="checkValidations($event)"
+                (inputEntered)="checkValidationsAll($event)"
               ></app-bom-allMaterial
             ></mat-tab>
           </mat-tab-group>
