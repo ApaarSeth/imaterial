@@ -32,6 +32,7 @@ export class RFQSupplierDetailComponent implements OnInit {
   rateValid: boolean;
   gstValid: boolean;
   ALLVALID: boolean;
+  eitherOneValidInMaterial: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -182,6 +183,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     this.materialIGSTFlag = false;
     this.sameGstAndBrandFilled = false;
     this.eitherOneGstOrBrand = false;
+    this.eitherOneValidInMaterial = false;
     this.dudateFlag = false;
 
     this.brandCount = 0;
@@ -258,6 +260,7 @@ export class RFQSupplierDetailComponent implements OnInit {
             }
             else if(!this.gstValid || !this.rateValid){
               this.ALLVALID = false;
+              this.eitherOneValidInMaterial = true;
             }
           }
         }
@@ -283,7 +286,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     if (
       this.dudateFlag &&
       this.sameGstAndBrandFilled &&
-      !this.eitherOneGstOrBrand && this.ALLVALID
+      !this.eitherOneGstOrBrand && this.ALLVALID && !this.eitherOneValidInMaterial
     ) {
       this.submitButtonValidationFlag = true;
     }

@@ -120,8 +120,10 @@
                       min="0"
                       (keyup)="valueChange(rfqSupplierDetailList)"
                     />
-                     <small *ngIf="!material.validGst">Enter Valid Gst</small>
                   </mat-form-field>
+                   <div class="d-flex justify-content-center" style="padding-left:32px !important;"> 
+                     <small *ngIf="!material.validGst" class="error-msg">Enter Valid Gst</small>
+                   </div> 
                 </td>
               </tr>
 
@@ -149,7 +151,7 @@
                         [(ngModel)]="brand.tempRate"
                         (keyup)="valueChange(rfqSupplierDetailList)"
                       />
-                      <small *ngIf="!brand.validBrand">Enter Valid Rate</small>
+                      <small *ngIf="!brand.validBrand"  class="error-msg">Enter Valid Rate</small>
                       
                     </mat-form-field>
                   </td>
