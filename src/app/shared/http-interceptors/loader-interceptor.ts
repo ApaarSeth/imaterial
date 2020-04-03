@@ -21,24 +21,29 @@ export class LoaderInterceptor implements HttpInterceptor {
             const directRequest = req.clone({ headers });
             return next.handle(directRequest);
         }
-
         let ended = false;
-        const timer = setTimeout(() => {    //<<<---    using ()=> syntax
-            if (!ended) {
-                this.globalLoader.show();
-            }
-            clearTimeout(timer);
-        }, ConfigurationConstants.LOADING_TIMEOUT);
+        if (req.url.includes("topmaterial") || req.url.includes("material")) {
+            this.globalLoader.show();
+        }
+        else {
+            const timer = setTimeout(() => {    //<<<---    using ()=> syntax
+                if (!ended) {
+                    this.globalLoader.show();
+                }
+                clearTimeout(timer);
+            }, ConfigurationConstants.LOADING_TIMEOUT);
+        }
+
 
         return next.handle(req).pipe(tap(event => {
             // Succeeds when there is a response; ignore other events
             if (event instanceof HttpResponse) {
-                 ended = true;
+                ended = true;
                 this.globalLoader.hide();
             }
         }, err => {
             // Operation failed; error is an HttpErrorResponse
-                ended = true;
+            ended = true;
             this.globalLoader.hide();
         }));
     }

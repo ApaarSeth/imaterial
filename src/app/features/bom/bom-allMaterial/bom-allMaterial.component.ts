@@ -31,7 +31,7 @@ export class BOMAllMaterialComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
   @Output("searchData") searchData = new EventEmitter();
   @Input("category") category: categoryNestedLevel[];
-  // @Input("searchMat") searchMat: string;
+  @Input("searchMat") searchMat: string;
   counter: number;
   orgId: number;
   constructor(
@@ -68,6 +68,17 @@ export class BOMAllMaterialComponent implements OnInit {
     this.searchCategory();
   }
 
+  ngOnChanges(): void {
+    this.selectedCategory = [...this.category];
+    if (this.searchMat != null && this.searchMat != "") {
+      this.bomService.searchText.next(this.searchMat);
+    }
+    this.formInit();
+    // this.enteredInput();
+  }
+
+
+
   searchCategory() {
     this.bomService.searchText.subscribe(val => {
       if (val && val !== '') {
@@ -97,11 +108,6 @@ export class BOMAllMaterialComponent implements OnInit {
 
   }
 
-  ngOnChanges(): void {
-    this.selectedCategory = [...this.category];
-    // this.enteredInput();
-    this.formInit();
-  }
 
   formInit() {
     let frmArr: FormGroup[] = this.selectedCategory.map((category: categoryNestedLevel) => {
@@ -140,26 +146,27 @@ export class BOMAllMaterialComponent implements OnInit {
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
         this.dataQty = res.data;
-        this.selectedCategory.map((category: categoryNestedLevel) => {
-          category.materialList = category.materialList.map(
-            subcategory => {
-              for (let data of this.dataQty) {
-                if (
-                  subcategory.materialGroup === data.materialGroup &&
-                  subcategory.materialName === data.materialName &&
-                  data.estimatedQty > 0
-                ) {
-                  subcategory.estimatedQty = data.estimatedQty;
-                  subcategory.materialId = data.materialId;
+        if (this.dataQty) {
+          this.selectedCategory.map((category: categoryNestedLevel) => {
+            category.materialList = category.materialList.map(
+              subcategory => {
+                for (let data of this.dataQty) {
+                  if (
+                    subcategory.materialGroup === data.materialGroup &&
+                    subcategory.materialName === data.materialName &&
+                    data.estimatedQty > 0
+                  ) {
+                    subcategory.estimatedQty = data.estimatedQty;
+                    subcategory.materialId = data.materialId;
+                  }
                 }
-              }
-              return subcategory;
-            });
-          return category;
-        })
-
-        // this.searchData.emit(this.selectedCategory);
-        this.formInit();
+                return subcategory;
+              });
+            return category;
+          })
+          // this.searchData.emit(this.selectedCategory);
+          this.formInit();
+        }
       })
       .catch(err => {
         console.log(err);
