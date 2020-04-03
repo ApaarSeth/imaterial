@@ -70,6 +70,8 @@ export class BomComponent implements OnInit {
   searchTrade: string = "";
   buttonName: number = 0;
   searchAgain: string;
+  valueChanged: boolean = false;
+  valueChangedAll: boolean = false;
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,
@@ -279,19 +281,19 @@ export class BomComponent implements OnInit {
     this.currentIndex = event.index;
     let dataPresent: boolean;
     if (this.previousIndex === 0) {
-      dataPresent = this.topMaterial ? (<QtyData[]>this.topMaterial.getData()).some(data => {
-        return data.estimatedQty > 0
-      }) : false;
+      dataPresent = this.valueChanged;
     }
     else {
-      dataPresent = this.allMaterial ? (<QtyData[]>this.allMaterial.getData()).some(data => {
-        return data.estimatedQty > 0
-      }) : false;
+      dataPresent = this.valueChangedAll;
     }
     if (dataPresent) {
+      this.valueChanged = false;
+      this.valueChangedAll = false;
       this.openAddBomDialog(event.index);
     } else {
       this.buttonName = event.index;
+      this.valueChanged = false;
+      this.valueChangedAll = false;
       this.callApi()
     }
   }
@@ -328,7 +330,12 @@ export class BomComponent implements OnInit {
   // }
 
   checkValidations(event: boolean): void {
-    this.isAllFormsValid = event
+    this.valueChanged = event
+  }
+
+
+  checkValidationsAll(event: boolean): void {
+    this.valueChangedAll = event
   }
 
   saveCategory() {

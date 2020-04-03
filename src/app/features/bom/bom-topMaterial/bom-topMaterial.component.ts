@@ -137,8 +137,13 @@ export class BomTopMaterialComponent implements OnInit {
     // this.enteredInput();r
 
 
-    this.quantityForms.valueChanges.subscribe(changes => {
-      this.inputEntered.emit(true);
+    (<FormArray>this.quantityForms.get('forms')).controls.map((control: FormGroup) => {
+      (<FormArray>control.get('materialGroup')).controls.map((control: FormGroup) => {
+        control.get("estimatedQty").valueChanges.subscribe(changes => {
+          console.log("changes", changes)
+          this.inputEntered.emit(true);
+        })
+      })
     })
   }
 
