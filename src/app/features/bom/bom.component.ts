@@ -284,9 +284,7 @@ export class BomComponent implements OnInit {
       dataPresent = this.valueChanged;
     }
     else {
-      dataPresent = this.allMaterial ? (<QtyData[]>this.allMaterial.getData()).some(data => {
-        return data.estimatedQty > 0
-      }) : false;
+      dataPresent = this.valueChangedAll;
     }
     if (dataPresent) {
       this.valueChanged = false;
