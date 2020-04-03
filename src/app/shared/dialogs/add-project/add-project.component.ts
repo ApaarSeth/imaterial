@@ -120,7 +120,7 @@ export class AddProjectComponent implements OnInit {
       ],
       area: [
         this.data.isEdit ? this.data.detail.area : "",
-        Validators.required
+       [Validators.required, Validators.pattern(FieldRegExConst.RATES)]
       ],
       startDate: [
         this.data.isEdit ? this.data.detail.startDate : "",
@@ -132,7 +132,7 @@ export class AddProjectComponent implements OnInit {
       ],
       cost: [
         this.data.isEdit ? this.data.detail.cost : "",
-        Validators.required
+        [Validators.required, Validators.pattern(FieldRegExConst.RATES)]
       ],
       type: [
         this.data.isEdit ? this.data.detail.type : "",
