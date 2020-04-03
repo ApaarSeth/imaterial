@@ -155,7 +155,9 @@
             <mat-form-field class="border-input">
               <mat-label>Area</mat-label>
               <!-- <mat-error>ProjectArea is Required</mat-error> -->
-              <input matInput type="number" formControlName="area" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
+              <input matInput type="number" formControlName="area" min="0" required />
+                 <small *ngIf="form.controls['area'].hasError('required') && form.controls['area'].touched" class="error-msg"> Area is required </small>
+                <small *ngIf="form.controls['area'].hasError('pattern') && form.controls['area'].touched" class="error-msg"> Enter valid area </small>
             </mat-form-field>
           </div>
 
@@ -177,8 +179,9 @@
             <!-- construction cost -->
             <mat-form-field class="border-input">
               <mat-label>Construction Cost &#x20b9;</mat-label>
-              <input matInput type="number" formControlName="cost" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required />
-              <!-- <mat-error>Construction Cost is Required</mat-error> -->
+              <input matInput type="number" formControlName="cost" min="0" required />
+             <small *ngIf="form.controls['cost'].hasError('required') && form.controls['cost'].touched" class="error-msg"> Construction cost is required </small>
+                <small *ngIf="form.controls['cost'].hasError('pattern') && form.controls['cost'].touched" class="error-msg"> Enter valid construction cost </small>
             </mat-form-field>
           </div>
 
