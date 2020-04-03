@@ -109,8 +109,8 @@
                     type="number"
                     placeholder="Estimated Rate"
                     min="0"
-                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                   />
+                  <small *ngIf=" materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['estimatedRate'].hasError('pattern') && materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['estimatedRate'].touched" class="error-msg"> Invalid estimated rate </small>
                 </mat-form-field>
               </td>
             </ng-container>
