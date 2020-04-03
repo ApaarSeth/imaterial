@@ -10,5 +10,5 @@ export const FieldRegExConst = {
     MOBILE : /^[6-9]\d{9}$/,
     LANDLINE : /^[0-9]\d{2,4}\d{6,8}$/,
     PINCODE: /^[1-9]{1}[0-9]{5}$/,
-    RATES : /^([0-9]+(\.[0-9]+)?)/
+    RATES : /^(\d{1,5}|\d{0,5}\.\d{1,2})$/
 };
