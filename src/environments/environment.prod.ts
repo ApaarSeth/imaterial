@@ -1,5 +1,5 @@
 export const environment = {
-  ga: "UA-145397532-1",
+  ga: "UA-161262508-1",
   production: true,
   debug_mode: false,
 };
