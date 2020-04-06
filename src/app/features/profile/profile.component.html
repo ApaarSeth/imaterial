@@ -16,15 +16,15 @@
               <div class="col-sm-12 col-md-6">
                 <div class="phot-title"></div>
                 <div class="user-photo">
-                  <img [src]="users.profileUrl || localImg || 'assets/images/default-image.png'" class="img-fluid user_photo" alt="" />
+                  <img [src]="localImg || users.profileUrl || 'assets/images/default-image.png'" class="img-fluid user_photo" alt="" />
                 </div>
 
-                <!-- <div class="browser-method">
+                <div class="browser-method">
                   <label class="myLabel">
                     <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
                     <span>Upload</span>
                   </label>
-                </div> -->
+                </div>
               </div>
 
               <div class="col-sm-12 col-md-6">
@@ -121,7 +121,7 @@
 
           
               <div class="text-center col-md-12 mt-4">
-                <!-- <button class="btn btn-warning next-btn" [disabled]="!userInfoForm.valid">Next</button> -->
+                <button class="btn btn-warning next-btn" [disabled]="!localImg">Save</button>
               </div>
             </div>
           </form>

@@ -201,7 +201,8 @@ export class UpdateInfoComponent implements OnInit {
 
         localStorage.setItem("userName",this.userInfoForm.value.firstName);
         if(this.url){
-           localStorage.setItem("companyImage",this.url);
+        
+           this._userService.UpdateProfileImage.next(this.url);
         }
 
         if (this.users.roleName === 'l1')
