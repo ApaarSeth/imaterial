@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from "@angular/core";
 import { MatDialog, MatTableDataSource, MatDialogRef, MatSnackBar } from "@angular/material";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
@@ -32,7 +32,7 @@ export class SupplierDetailComponent implements OnInit {
   dataSource = new MatTableDataSource<SupplierAdd>();
   dataSourceTemp = ELEMENT_DATA;
   dataSourceDeactivate = ELEMENT_DATA;
-
+  @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
 
   deactivateUsers: Array<SupplierAdd> = new Array<SupplierAdd>();
   activateUsers: Array<SupplierAdd> = new Array<SupplierAdd>();
@@ -44,47 +44,47 @@ export class SupplierDetailComponent implements OnInit {
   addUserBtn: boolean = false;
   orgId: number;
 
-     public SupplierDashboardTour: GuidedTour = {
-        tourId: 'supplier-tour',
-        useOrb: false,
-        
-        steps: [
-            {
-              title:'Add Suppliers',
-              selector: '.add-supplier-button',
-              content: 'Click here to onboard the supplier.',
-              orientation: Orientation.Left
-            }
-        ],
-      skipCallback: () => {
+  public SupplierDashboardTour: GuidedTour = {
+    tourId: 'supplier-tour',
+    useOrb: false,
+
+    steps: [
+      {
+        title: 'Add Suppliers',
+        selector: '.add-supplier-button',
+        content: 'Click here to onboard the supplier.',
+        orientation: Orientation.Left
+      }
+    ],
+    skipCallback: () => {
       this.setLocalStorage()
     },
     completeCallback: () => {
       this.setLocalStorage()
     }
-    };
+  };
   userId: number;
 
   constructor(
     public dialog: MatDialog,
     private rfqService: RFQService,
-      private loading: GlobalLoaderService,
-      private guidedTourService: GuidedTourService,
-      private _snackBar: MatSnackBar,
-      private userGuideService: UserGuideService,
-      private commonService : CommonService
+    private loading: GlobalLoaderService,
+    private guidedTourService: GuidedTourService,
+    private _snackBar: MatSnackBar,
+    private userGuideService: UserGuideService,
+    private commonService: CommonService
   ) {
   }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-   
+
     this.getNotifications();
     this.getAllSupplier();
   }
 
- getNotifications(){
+  getNotifications() {
     this.commonService.getNotification(this.userId);
   }
   getAllSupplier() {
@@ -92,25 +92,25 @@ export class SupplierDetailComponent implements OnInit {
 
       this.dataSource = new MatTableDataSource(data.data);
       this.dataSourceTemp = data.data;
-        if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
-      setTimeout(() => {
-        this.guidedTourService.startTour(this.SupplierDashboardTour);
-      }, 1000);
-    }
+      if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
+        setTimeout(() => {
+          this.guidedTourService.startTour(this.SupplierDashboardTour);
+        }, 1000);
+      }
 
       // this.dataSource.filterPredicate = (data, filterValue) => {
       //   const dataStr = data.supplier_name.toString() + data.email.toString() + data.pan.toString() + data.contact_no.toString() + data.status;
       //   return dataStr.indexOf(filterValue) != -1;
       // }
-      
-       this.dataSource.filterPredicate = (data, filterValue) => {
+
+      this.dataSource.filterPredicate = (data, filterValue) => {
         const dataStr =
           data.supplier_name.toString().toLowerCase() +
           data.email.toString().toLowerCase() +
           data.contact_no.toString();
         return dataStr.indexOf(filterValue) != -1;
       };
-      
+
     });
   }
 
@@ -129,8 +129,8 @@ export class SupplierDetailComponent implements OnInit {
       });
 
       dialogRef.afterClosed().toPromise().then((data) => {
-        if(data && data!=null){
-           this.getAllSupplier();  
+        if (data && data != null) {
+          this.getAllSupplier();
         }
       });
     }
@@ -144,15 +144,15 @@ export class SupplierDetailComponent implements OnInit {
       detail: this.suppliersDetailsTemp
     } as SupplierDetailsPopUpData);
   }
-    setLocalStorage() {
-    const popovers ={
-    "userId":this.userId,
-    "moduleName":"supplier",
-    "enableGuide":1
-};
-    this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
-      if(res){
-         localStorage.setItem('supplier', '1');
+  setLocalStorage() {
+    const popovers = {
+      "userId": this.userId,
+      "moduleName": "supplier",
+      "enableGuide": 1
+    };
+    this.userGuideService.sendUserGuideFlag(popovers).then(res => {
+      if (res) {
+        localStorage.setItem('supplier', '1');
       }
     })
   }
@@ -164,8 +164,8 @@ export class SupplierDetailComponent implements OnInit {
         data
       });
       dialogRef.afterClosed().toPromise().then((data) => {
-        if(data && data!=null){
-           this.getAllSupplier();  
+        if (data && data != null) {
+          this.getAllSupplier();
         }
       });
     }
@@ -180,15 +180,16 @@ export class SupplierDetailComponent implements OnInit {
     const data = new FormData();
     data.append("file", files[0]);
     this.rfqService.postSupplierExcel(data, this.orgId).then(res => {
-      if(res){
-            this._snackBar.open(res.message, "", {
-              duration: 2000,
-              panelClass: ["success-snackbar"],
-              verticalPosition: "bottom"
-            });
-             this.getAllSupplier();
-            this.loading.hide();
+      if (res) {
+        this._snackBar.open(res.message, "", {
+          duration: 2000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+        this.getAllSupplier();
+        this.loading.hide();
       }
+      this.myInputVariable.nativeElement.value = "";
     });
   }
 
