@@ -39,6 +39,7 @@ export class TopHeaderComponent implements OnInit {
 
     this.userId = Number(localStorage.getItem("userId"));
     this.userName = localStorage.getItem("userName");
+    this.url = localStorage.getItem('profileUrl');
     this.sidenavToggle.emit('loaded');
     
     this.getNotifications();
