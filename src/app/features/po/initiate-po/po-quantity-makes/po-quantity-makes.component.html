@@ -65,7 +65,7 @@
                   materialForms["controls"]["forms"]["controls"][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]["controls"]["fullfilmentDate"].value
                     | date: "dd-MMM-yyy"
                 }}</span> -->
-                <input matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" (focus)="dueDate.open()" readonly />
+                <input matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" readonly />
                 <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                 <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
               </mat-form-field>
