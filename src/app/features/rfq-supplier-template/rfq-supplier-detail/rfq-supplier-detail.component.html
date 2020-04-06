@@ -13,18 +13,18 @@
                 matInput
                 #quote
                 (dateChange)="duedatefunc($event,quote.value)"
-                [matDatepicker]="dueDate"
+                [matDatepicker]="quoteValidTill"
                 placeholder="Quote Valid till"
                 [(ngModel)]="rfqSupplierDetailList.quoteValidTill"
-                (focus)="dueDate.open()"
+                (focus)="quoteValidTill.open()"
                 readonly
                 [min]="rfqSupplierDetailList.dueDate"
                 required
               />
 
-              <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+              <mat-datepicker-toggle matSuffix [for]="quoteValidTill"></mat-datepicker-toggle>
 
-              <mat-datepicker #dueDate (keyup)="valueChange(rfqSupplierDetailList)"></mat-datepicker>
+              <mat-datepicker #quoteValidTill startView="month" (keyup)="valueChange(rfqSupplierDetailList)"></mat-datepicker>
               <!-- startView="month" [startAt]="dueDate" -->
             </mat-form-field>
             <small class="error-msg white-space-nowrap">{{showDateError}}</small>
