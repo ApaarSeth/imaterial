@@ -131,6 +131,7 @@ export class SignupComponent implements OnInit {
       else if (data.data.serviceRawResponse.data as auth) {
         this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
         this.fbPixel.fire('Lead')
+        this.fbPixel.fire('PageView')
         this.navService.gaEvent({
           action: 'submit',
           category: 'Signup_successfully',
@@ -171,6 +172,7 @@ export class SignupComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
+
   enterPhone(event, numberPassed?: string) {
     this.lessOTPDigits = false;
 
@@ -178,6 +180,7 @@ export class SignupComponent implements OnInit {
     this.showOtp = false;
     this.value = numberPassed ? numberPassed : event.target.value;
   }
+
   sendOtpBtn() {
     if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
       if (!this.uniqueCode) {
@@ -229,9 +232,8 @@ export class SignupComponent implements OnInit {
         }
       });
     }
-
-
   }
+
   verifyEmail(event) {
     const email = event.target.value
     if (email.match(FieldRegExConst.EMAIL)) {

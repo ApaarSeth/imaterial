@@ -114,7 +114,9 @@ export interface ProjectAddress {
   firstName: string;
   lastName: string;
   projectUserId: number;
+  gstNo: string;
 }
+
 export interface BillingAddress {
   projectAddressId: number;
   supplierId: number;
