@@ -33,6 +33,8 @@ export class RFQSupplierDetailComponent implements OnInit {
   gstValid: boolean;
   ALLVALID: boolean;
   eitherOneValidInMaterial: boolean;
+  showDateError: string;
+  endstring: string;
 
   constructor(
     public dialog: MatDialog,
@@ -148,12 +150,33 @@ export class RFQSupplierDetailComponent implements OnInit {
     }
   }
 
-  duedatefunc(event) {
+  duedatefunc(event,value) {
 
     this.dateDue = event.target.value;
 
+     const x = value.indexOf('/');
+    const day = value.substring(0, x);
+
+    value = value.replace('/', '-');
+    const y = value.indexOf('/');
+    const month = value.substring(x + 1, y);
+
+
+    const year = value.substring(y + 1, 10);
+
+
+    const endDate = year+ "-"+ month +"-"+ day;
+    this.endstring = endDate.toString();
+
     if (this.dateDue != "" && this.dateDue != null) {
-      this.dudateFlag = true;
+      if(this.endstring == this.rfqSupplierDetailList.dueDate.toString()){
+        this.showDateError = "Quote Valid Till must be greater than RFQ Expiry Date";
+         this.dudateFlag = false;
+      }
+      else{
+         this.showDateError = null;
+          this.dudateFlag = true;
+      }
     } else if (this.dateDue == "" || this.dateDue == null) {
       this.dudateFlag = false;
       this.submitButtonValidationFlag = false;

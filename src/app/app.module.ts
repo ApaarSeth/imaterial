@@ -29,12 +29,13 @@ import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
 import { HeaderSharedModule } from './shared/layout/header/header-shared.module';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
-import { MAT_DATE_LOCALE } from '@angular/material';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { environment } from 'src/environments/environment';
 import { ProfileComponent } from './features/profile/profile.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './features/auth/auth.module';
+import { PICK_FORMATS, PickDateAdapter } from './shared/services/date.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +80,9 @@ import { AuthModule } from './features/auth/auth.module';
     UserDataGuardService,
     AfterSignUpGuardService,
     GuidedTourService,
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+     {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
   ],
   bootstrap: [AppComponent]
 })

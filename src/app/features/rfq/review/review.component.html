@@ -28,10 +28,10 @@
             </div> -->
             <div class="col-xs-6 date-dialog-add-edit">
               <!-- end date -->
-              <mat-form-field class="border-input date-label">
+              <mat-form-field class="border-input">
                 <mat-label>RFQ End Date*</mat-label>
-                <span class="form-placeholder">{{ form["controls"]["dueDate"].value | date: "dd-MMM-yyy" }}</span>
-                <input hidden matInput [matDatepicker]="endDate" formControlName="dueDate" [min]="minDate" (focus)="endDate.open()" readonly />
+                <!-- <span class="form-placeholder">{{ form["controls"]["dueDate"].value | date: "dd-MMM-yyy" }}</span> -->
+                <input matInput [matDatepicker]="endDate" formControlName="dueDate" [min]="minDate" (focus)="endDate.open()" readonly />
                 <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                 <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
                 <!-- <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small> -->

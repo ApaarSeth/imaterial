@@ -7,18 +7,18 @@
           <div class="col-md-5 col-xs-12 p-t-10">
             <label for="validity" class="pull-left p-t-20 p-r-10">Quote Valid till</label>
 
-            <mat-form-field class="border-input date-label-indent">
-              <span class="form-placeholder">{{ dateDue | date: "dd-MMM-yyy" }}</span>
+            <mat-form-field class="border-input">
+              <!-- <span class="form-placeholder">{{ dateDue | date: "dd-MMM-yyy" }}</span> -->
               <input
                 matInput
-                hidden
-                (dateChange)="duedatefunc($event)"
+                #quote
+                (dateChange)="duedatefunc($event,quote.value)"
                 [matDatepicker]="dueDate"
                 placeholder="Quote Valid till"
                 [(ngModel)]="rfqSupplierDetailList.quoteValidTill"
                 (focus)="dueDate.open()"
                 readonly
-                [min]="minDate"
+                [min]="rfqSupplierDetailList.dueDate"
                 required
               />
 
@@ -27,6 +27,7 @@
               <mat-datepicker #dueDate (keyup)="valueChange(rfqSupplierDetailList)"></mat-datepicker>
               <!-- startView="month" [startAt]="dueDate" -->
             </mat-form-field>
+            <small class="error-msg white-space-nowrap">{{showDateError}}</small>
           </div>
 
           <div class="col-md-5 col-xs-8 p-t-10">
@@ -115,14 +116,15 @@
                     <input
                       matInput
                       type="number"
+                      title=""
                       placeholder="GST %"
                       [(ngModel)]="material.Igst"
                       min="0"
                       (keyup)="valueChange(rfqSupplierDetailList)"
                     />
                   </mat-form-field>
-                   <div class="d-flex justify-content-center" style="padding-left:32px !important;"> 
-                     <small *ngIf="!material.validGst" class="error-msg">Enter Valid Gst</small>
+                   <div class="d-flex justify-content-center" style="padding-left:50px !important;"> 
+                     <small *ngIf="!material.validGst" class="error-msg">Enter Valid GST%</small>
                    </div> 
                 </td>
               </tr>
@@ -147,7 +149,7 @@
                         type="number"
                         placeholder="Rate"
                         min="0"
-                        title="Rates must be valid"
+                        title=""
                         [(ngModel)]="brand.tempRate"
                         (keyup)="valueChange(rfqSupplierDetailList)"
                       />
