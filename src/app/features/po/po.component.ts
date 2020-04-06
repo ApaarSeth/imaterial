@@ -117,6 +117,9 @@ export class PoComponent implements OnInit {
           this.guidedTourService.startTour(this.POPreviewTour);
         }, 1000);
       }
+      if (this.poData.projectAddress.gstNo === "" || this.poData.projectAddress.gstNo === null) {
+        this.openProjectDialog(this.poData)
+      }
     });
     this.formInit();
     this.startSubscription();

@@ -195,6 +195,7 @@ export class BomComponent implements OnInit {
     this.selectedTrades = this.form.value.selectedTrades.map(
       selectedTrade => selectedTrade.tradeName
     );
+    this.callApi();
     {// if (selectedTrades.length === 0) {
       //   this.categoryData = [];
       //   this.tradeNames = [];
@@ -223,7 +224,7 @@ export class BomComponent implements OnInit {
       // if (tradeAdd.length) {
 
     }
-    this.callApi();
+
     this.tradeNames = [...this.selectedTrades];
   }
 
