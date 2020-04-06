@@ -246,36 +246,36 @@ export class AddProjectComponent implements OnInit {
     });
   }
   getStart(event) {
-    const x = event.indexOf('/');
-    const day = event.substring(0, x);
+    // const x = event.indexOf('/');
+    // const day = event.substring(0, x);
 
-    event = event.replace('/', '-');
-    const y = event.indexOf('/');
-    const month = event.substring(x + 1, y);
+    // event = event.replace('/', '-');
+    // const y = event.indexOf('/');
+    // const month = event.substring(x + 1, y);
 
 
-    const year = event.substring(y + 1, 10);
+    // const year = event.substring(y + 1, 10);
 
-    this.minDate = new Date(year, month - 1, day);
-    this.startstring = this.minDate.toString();
+    // this.minDate = new Date(year, month - 1, day);
+    this.startstring = event;
 
     this.sameStartEndDate = this.isSameDay(this.startstring, this.endstring);
   }
 
   getEndDate(event) {
-    const x = event.indexOf('/');
-    const day = event.substring(0, x);
+    // const x = event.indexOf('/');
+    // const day = event.substring(0, x);
 
-    event = event.replace('/', '-');
-    const y = event.indexOf('/');
-    const month = event.substring(x + 1, y);
-
-
-    const year = event.substring(y + 1, 10);
+    // event = event.replace('/', '-');
+    // const y = event.indexOf('/');
+    // const month = event.substring(x + 1, y);
 
 
-    const endDate = new Date(year, month - 1, day);
-    this.endstring = endDate.toString();
+    // const year = event.substring(y + 1, 10);
+
+
+    // const endDate = new Date(year, month - 1, day);
+    this.endstring = event;
 
     this.sameStartEndDate = this.isSameDay(this.startstring, this.endstring);
   }
