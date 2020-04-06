@@ -14,7 +14,7 @@ export const PICK_FORMATS = {
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
       if (displayFormat === 'input') {
-          return formatDate(date,'dd-MMM-yyyy',this.locale);;
+          return formatDate(date,'dd-MMM-yyy',this.locale);
       } else {
           return date.toDateString();
       }

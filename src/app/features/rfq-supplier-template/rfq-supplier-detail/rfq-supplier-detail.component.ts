@@ -6,6 +6,7 @@ import { MatDialog } from "@angular/material";
 import { ConfirmRfqBidComponent } from "src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component";
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { materialize } from 'rxjs/operators';
+import { formatDate, DatePipe } from '@angular/common';
 @Component({
   selector: "rfq-indent-detail",
   templateUrl: "./rfq-supplier-detail.component.html"
@@ -154,22 +155,20 @@ export class RFQSupplierDetailComponent implements OnInit {
 
     this.dateDue = event.target.value;
 
-     const x = value.indexOf('/');
-    const day = value.substring(0, x);
-
-    value = value.replace('/', '-');
-    const y = value.indexOf('/');
-    const month = value.substring(x + 1, y);
+    // const x =  this.dateDue.indexOf('/');
+    // const day =  this.dateDue.substring(0, x);
+    // const y =  this.dateDue.indexOf('/');
+    // const month =  this.dateDue.substring(x + 1, y);
 
 
-    const year = value.substring(y + 1, 10);
-
-
-    const endDate = year+ "-"+ month +"-"+ day;
-    this.endstring = endDate.toString();
+    // const year = value.substring(y + 1, 10);
+    // const endDate = year+ "-"+ month +"-"+ day;
+    // this.endstring = endDate;
+     const  datePipe = new DatePipe('en-US');
+     const setDob = datePipe.transform(this.rfqSupplierDetailList.dueDate, 'dd-MMM-yyy');  
 
     if (this.dateDue != "" && this.dateDue != null) {
-      if(this.endstring == this.rfqSupplierDetailList.dueDate.toString()){
+      if(value == setDob){
         this.showDateError = "Quote Valid Till must be greater than RFQ Expiry Date";
          this.dudateFlag = false;
       }
@@ -190,17 +189,6 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
 
   valueChange(RFQsupplier: SendRfqObj) {
-
-    //  if(event.target.value.length>0 && event.target.value.match(FieldRegExConst.RATES)){
-    //    if((event.charCode > 47 && event.charCode < 58) || event.charCode == 46){
-    //                         this.rateValid = true
-    //                      }
-    //   }
-    //   else {
-    //     this.rateValid = false;
-    //   }
-
-
     this.submitButtonValidationFlag = false;
     this.brandRateFlag = false;
     this.materialIGSTFlag = false;
@@ -212,7 +200,10 @@ export class RFQSupplierDetailComponent implements OnInit {
     this.brandCount = 0;
     this.oneBrandAtMaterialSelected = false;
     if (RFQsupplier.quoteValidTill) {
-      this.dudateFlag = true;
+      if(this.showDateError != null)
+        this.dudateFlag = false;
+      else
+        this.dudateFlag = true;
     }
     for (let project of RFQsupplier.projectList) {
 

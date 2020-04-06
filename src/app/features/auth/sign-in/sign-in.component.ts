@@ -86,7 +86,7 @@ export class SigninComponent implements OnInit {
     this._userService.getUserInfo(userId).then(res => {
       if (res.data[0].firstName)
         localStorage.setItem("userName", res.data[0].firstName);
-
+        localStorage.setItem("profileUrl", res.data[0].profileUrl);
       // if (res && (res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
 
 

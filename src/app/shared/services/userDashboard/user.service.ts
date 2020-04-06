@@ -4,10 +4,12 @@ import { API } from "../../constants/configuration-constants";
 import { UserAdd } from '../../models/user-details';
 import { Router } from '@angular/router';
 import {NotificationInt} from '../../models/notification'
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
+   UpdateProfileImage = new Subject<string>();
   constructor(private dataService: DataService,
     private _router: Router) { }
 
