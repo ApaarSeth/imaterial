@@ -7,11 +7,10 @@
           <div class="col-md-5 col-xs-12 p-t-10">
             <label for="validity" class="pull-left p-t-20 p-r-10">Quote Valid till</label>
 
-            <mat-form-field class="border-input date-label-indent">
-              <span class="form-placeholder">{{ dateDue | date: "dd-MMM-yyy" }}</span>
+            <mat-form-field class="border-input">
+              <!-- <span class="form-placeholder">{{ dateDue | date: "dd-MMM-yyy" }}</span> -->
               <input
                 matInput
-                hidden
                 #quote
                 (dateChange)="duedatefunc($event,quote.value)"
                 [matDatepicker]="dueDate"
