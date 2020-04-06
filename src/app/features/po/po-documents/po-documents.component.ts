@@ -67,6 +67,7 @@ export class PoDocumentsComponent implements OnInit {
         });
         this.documentListLength = this.documentList.length;
         subFileName = "";
+        this.filesRemoved = true;
       }).catch(err => {
         this.filesRemoved = true;
         this.docs = null;
@@ -79,7 +80,6 @@ export class PoDocumentsComponent implements OnInit {
             verticalPosition: "top"
           }
         );
-
       });
     }
   }

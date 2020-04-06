@@ -102,6 +102,7 @@ export class DashboardComponent implements OnInit {
     private guidedTourService: GuidedTourService,
     private commonService: CommonService,
     private permissionService: PermissionService,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -110,8 +111,8 @@ export class DashboardComponent implements OnInit {
     this.permissionObj = this.permissionService.checkPermission(role);
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-
     this.getAllProjects();
+
   }
 
   setLocalStorage() {
@@ -143,6 +144,11 @@ export class DashboardComponent implements OnInit {
           }, 1000);
         }
       }
+      this.route.queryParams.subscribe(params => {
+        if (params.projectId) {
+          this.editProject(Number(params.projectId))
+        }
+      })
     });
   }
 

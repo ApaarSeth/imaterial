@@ -32,8 +32,8 @@ export class UploadComponent implements OnInit {
     if (this.filesRemoved) {
       this.myInputVariable.nativeElement.value = "";
       this.fileToUpload = this.myInputVariable.nativeElement.value;
-
     }
+
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
 
