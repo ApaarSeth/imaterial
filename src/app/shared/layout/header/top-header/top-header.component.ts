@@ -31,7 +31,7 @@ export class TopHeaderComponent implements OnInit {
   constructor(
     private commonService: CommonService,
      private _snackBar: MatSnackBar,
-
+    private _userService : UserService,
     private router: Router
   ) { }
 
@@ -39,7 +39,6 @@ export class TopHeaderComponent implements OnInit {
 
     this.userId = Number(localStorage.getItem("userId"));
     this.userName = localStorage.getItem("userName");
-    this.url = localStorage.getItem("companyImage")
     this.sidenavToggle.emit('loaded');
     
     this.getNotifications();
@@ -64,6 +63,10 @@ export class TopHeaderComponent implements OnInit {
                   });
                }
                 this.unreadnotificationLength = notificationLength;
+            }),
+
+            this._userService.UpdateProfileImage.subscribe(image => {
+              this.url = image;
             })
         );
   }

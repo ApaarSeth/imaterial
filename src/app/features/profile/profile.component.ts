@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit {
   selectedTradesId: number[] = [];
   usersTrade: number[] = [];
   OthersId: any;
+  url: any;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -168,6 +169,8 @@ export class ProfileComponent implements OnInit {
       data.append(`file`, file);
       return this._uploadImageService.postDocumentUpload(data).then(res => {
         this.userInfoForm.get('profileUrl').setValue(res.data.fileName);
+          this.url = res.data.url;
+       
       });
     }
   }
@@ -184,13 +187,12 @@ export class ProfileComponent implements OnInit {
       })
       this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
 
-      // this.userInfoForm.value.tradeId = [...this.selectedTrades];
-      const data: UserDetails = this.userInfoForm.value;
+      const data: UserDetails = this.userInfoForm.getRawValue();
 
       this._userService.submitUserDetails(data).then(res => {
-        if(this.users.roleName === 'l1')
-        this._router.navigate(['profile/add-user']);
-        else if(this.users.roleName != 'l1')
+          if(this.url){
+            this._userService.UpdateProfileImage.next(this.url);
+        }
         this._router.navigate(['dashboard']);
       });
 
