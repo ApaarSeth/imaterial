@@ -1,6 +1,4 @@
 import { isUndefined } from 'util';
-
-
 const salt = 'BuildSupply';
 const num = 5;
 const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"

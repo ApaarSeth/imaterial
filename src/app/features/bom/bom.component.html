@@ -1,11 +1,11 @@
-<div class="page-start-point ">
+<div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height">
     <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
     <div class="p-t-10">
       <mat-card class="parent">
         <form [formGroup]="form">
           <div class="row">
-            <div class="col-xs-3  text -left border-input">
+            <div class="col-xs-3 text -left border-input">
               <mat-form-field class="input-search-padding-zero">
                 <input #text matInput placeholder="Search Material" type="search" (input)="searchMaterial(text.value)" />
                 <button mat-button matSuffix mat-icon-button>
@@ -60,7 +60,9 @@
                   mat-raised-button
                   class="main-background-color main-button color-white pull-right save-material-button"
                   (click)="saveCategory()"
-                  [disabled]="this.topMaterial ? this.topMaterial.quantityForms.invalid : this.allMaterial ? this.allMaterial.quantityForms.invalid : false"
+                  [disabled]="
+                    this.currentIndex === 0 ? (this.topMaterial ? this.topMaterial.quantityForms.invalid : true) : this.allMaterial ? this.allMaterial.quantityForms.invalid : true
+                  "
                 >
                   Add to BOM
                 </button>
