@@ -104,10 +104,10 @@
               <mat-datepicker #startDate></mat-datepicker>
             </mat-form-field> -->
 
-            <mat-form-field class="border-input date-label">
+            <mat-form-field class="border-input">
               <mat-label>Project Start Date*</mat-label>
-              <span class="form-placeholder">{{form["controls"]["startDate"].value | date: "dd-MMM-yyy" }}</span>
-              <input hidden matInput [matDatepicker]="startDate" formControlName="startDate" #ref (dateChange)="getStart(ref.value)" (focus)="startDate.open()" readonly />
+              <!-- <span class="form-placeholder">{{form["controls"]["startDate"].value | date: "dd-MMM-yyy" }}</span> -->
+              <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref (dateChange)="getStart(ref.value)" (focus)="startDate.open()" readonly />
 
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
@@ -115,17 +115,16 @@
           </div>
           <div class="col-sm-6 date-dialog-add-edit">
             <!-- end date -->
-            <mat-form-field class="border-input date-label">
+            <mat-form-field class="border-input">
               <mat-label>Project End Date*</mat-label>
-              <span class="form-placeholder">{{ form["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span>
+              <!-- <span class="form-placeholder" >{{ form["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
               <input
-                hidden
                 matInput
                 [matDatepicker]="endDate"
                 formControlName="endDate"
                 #refEnd
                 (dateChange)="getEndDate(refEnd.value)"
-                [min]="minDate"
+                [min]="form['controls']['startDate'].value"
                 (focus)="endDate.open()"
                 readonly
               />

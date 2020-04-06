@@ -9,6 +9,7 @@ import { RFQSupplierDetailComponent } from "./rfq-supplier-detail/rfq-supplier-d
 import { RFQSupplierDetailResolver } from "./rfq-supplier-detail/rfq-supplier-detail.resolver";
 import { RFQSupplierAfterBidComponent } from './rfq-supplier-after-bid/rfq-supplier-after-bid.component';
 import { RFQSupplierAddAddressComponent } from './rfq-supplier-add-address/rfq-supplier-add-address.component';
+import { AppSharedModule } from 'src/app/shared/app-shared-module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { RFQSupplierAddAddressComponent } from './rfq-supplier-add-address/rfq-s
     ReactiveFormsModule,
     MatInputModule,
     RouterModule,
+    AppSharedModule,
     RFQSupplierDetailRoutingModule
   ],
   providers: [RFQSupplierDetailResolver],
