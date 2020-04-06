@@ -65,7 +65,7 @@ export class BomComponent implements OnInit {
   form: FormGroup;
   tradeNames: string[] = []
   tradesList: orgTrades[];
-  currentIndex: number = null;
+  currentIndex: number = 0;
   previousIndex: number = null;
   searchTrade: string = "";
   buttonName: number = 0;
