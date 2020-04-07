@@ -102,6 +102,8 @@ export class BomTopMaterialComponent implements OnInit {
 
   ngOnChanges(): void {
     this.selectedCategory = [...this.category];
+    this.mappingMaterialWithQuantity()
+    this.formInit();
     if (this.searchMat != null && this.searchMat != "") {
       this.bomService.searchText.next(this.searchMat);
     }
