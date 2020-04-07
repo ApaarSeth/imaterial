@@ -39,6 +39,8 @@ export class ProfileComponent implements OnInit {
   usersTrade: number[] = [];
   OthersId: any;
   url: any;
+  imageFileSizeError: string = "";
+  imageFileSize: boolean = false;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -159,7 +161,16 @@ export class ProfileComponent implements OnInit {
         this.localImg = (<FileReader>event.target).result;
       }
       const file = event.target.files[0];
-      this.uploadImage(file);
+      var fileSize =  event.target.files[0].size; // in bytes
+      if(fileSize < 2000000){
+        this.imageFileSizeError = "";
+        this.imageFileSize = true;
+        this.uploadImage(file);
+      }
+      else{
+         this.imageFileSize = false;
+         this.imageFileSizeError = "Image must be less than 2 mb";
+      }
     }
   }
 
