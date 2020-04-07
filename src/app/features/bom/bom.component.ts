@@ -72,6 +72,8 @@ export class BomComponent implements OnInit {
   searchAgain: string;
   valueChanged: boolean = false;
   valueChangedAll: boolean = false;
+  showTopMaterial: boolean = true;
+  showAllMaterial: boolean = true;
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,
@@ -125,9 +127,6 @@ export class BomComponent implements OnInit {
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-
-
-
     this.getProject(this.projectId);
     this.formInit()
     this.bomService.getOrgTrades(this.projectId).then(res => {
@@ -238,7 +237,6 @@ export class BomComponent implements OnInit {
         });
       }
       else {
-        this.showTable = false;
       }
     }
     else {
@@ -250,7 +248,6 @@ export class BomComponent implements OnInit {
         });
       }
       else {
-        this.showTable = false;
       }
     }
   }
@@ -290,9 +287,10 @@ export class BomComponent implements OnInit {
     if (dataPresent) {
       this.valueChanged = false;
       this.valueChangedAll = false;
+      this.currentIndex === 0 ? this.showTopMaterial === false : this.showAllMaterial === false
       this.openAddBomDialog(event.index);
     } else {
-      this.buttonName = event.index;
+      this.buttonName = this.currentIndex;
       this.valueChanged = false;
       this.valueChangedAll = false;
       this.callApi()
@@ -301,7 +299,8 @@ export class BomComponent implements OnInit {
 
   openAddBomDialog(index: number) {
     const dialogRef = this.dialog.open(AddBomWarningComponent, {
-      width: "400px"
+      width: "400px",
+      backdropClass: 'backdropBackground'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -309,6 +308,7 @@ export class BomComponent implements OnInit {
         this.saveCategory();
       }
       else {
+        index === 0 ? this.showTopMaterial === true : this.showAllMaterial === true
         this.buttonName = index;
         this.callApi();
       }

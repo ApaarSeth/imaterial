@@ -80,6 +80,7 @@
           <mat-tab-group (selectedTabChange)="tabClick($event)">
             <mat-tab label="Top Materials">
               <app-bom-topMaterial
+                *ngIf="showTopMaterial"
                 #preview
                 [category]="topMaterialData"
                 [searchMat]="searchAgain"
@@ -89,6 +90,7 @@
             ></mat-tab>
             <mat-tab label="All Materials"
               ><app-bom-allMaterial
+                *ngIf="showAllMaterial"
                 #preview1
                 [category]="allMaterialData"
                 [searchMat]="searchAgain"
