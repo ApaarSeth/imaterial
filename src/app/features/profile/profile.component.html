@@ -24,6 +24,9 @@
                     <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
                     <span>Upload</span>
                   </label>
+                  <div class="text-align-center">
+                     <small  class="error-msg">{{imageFileSizeError}}</small>
+                  </div>
                 </div>
               </div>
 
@@ -121,7 +124,7 @@
 
           
               <div class="text-center col-md-12 mt-4">
-                <button class="btn btn-warning next-btn" [disabled]="!localImg">Save</button>
+                <button class="btn btn-warning next-btn" [disabled]="!imageFileSize">Save</button>
               </div>
             </div>
           </form>
