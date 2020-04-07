@@ -60,7 +60,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
           materialCgst: [],
           amount: [],
           gstAmount: [],
-          gst: [(purchaseorder.materialSgst != 0 && purchaseorder.materialCgst !=0 ?  purchaseorder.materialSgst + purchaseorder.materialCgst : purchaseorder.materialIgst), Validators.pattern(FieldRegExConst.RATES)],
+          gst: [(purchaseorder.materialSgst != 0 && purchaseorder.materialCgst != 0 ? purchaseorder.materialSgst + purchaseorder.materialCgst : purchaseorder.materialIgst), Validators.pattern(FieldRegExConst.RATES)],
           gstTotal: [],
           total: [{ value: "", disabled: false }]
         });
@@ -113,7 +113,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
     });
     this.poForms = this.formBuilder.group({});
     this.poForms.addControl("forms", new FormArray(frmArr));
-    console.log(this.poForms);
   }
 
   get totalAmount(): number {

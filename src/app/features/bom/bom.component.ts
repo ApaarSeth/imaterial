@@ -6,7 +6,7 @@ import {
   ViewChildren,
   ElementRef
 } from "@angular/core";
-import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
+import { FormControl, FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
@@ -429,5 +429,9 @@ export class BomComponent implements OnInit {
 
   searchData(event) {
     this.searchDataValues = event;
+  }
+
+  get formArray() {
+    return <FormArray>this.form.get('selectedTrades').value;
   }
 }

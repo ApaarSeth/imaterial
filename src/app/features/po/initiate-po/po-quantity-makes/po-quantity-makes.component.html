@@ -1,5 +1,5 @@
 <form *ngIf="checkedMaterialsList" [formGroup]="materialForms">
-  <div class="row ">
+  <div class="row">
     <div class="col-xs-12 text-right p-b-10">
       <span class="p-r-5">
         <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="sendDataBack()" type="button">Back</button>
@@ -84,15 +84,18 @@
             <th mat-header-cell class="text-center" *matHeaderCellDef>Awarded Rate</th>
             <td mat-cell class="text-center" *matCellDef="let element; let i = index">
               <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input">
-                <input
-                  matInput
-                  formControlName="materialUnitPrice"
-                  type="number"
-                  placeholder="Awarded Rate"
-                  min="0"
-                />
-                   <small *ngIf=" materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].hasError('pattern') && materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].touched" class="error-msg"> Invalid awarded rate </small>
-                </mat-form-field>
+                <input matInput formControlName="materialUnitPrice" type="number" placeholder="Awarded Rate" min="0" />
+                <small
+                  *ngIf="
+                    materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].hasError(
+                      'pattern'
+                    ) && materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].touched
+                  "
+                  class="error-msg"
+                >
+                  Invalid awarded rate
+                </small>
+              </mat-form-field>
             </td>
           </ng-container>
           <!-- quantity -->

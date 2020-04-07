@@ -138,7 +138,6 @@ export class BOMAllMaterialComponent implements OnInit {
     (<FormArray>this.quantityForms.get('forms')).controls.map((control: FormGroup) => {
       (<FormArray>control.get('materialGroup')).controls.map((control: FormGroup) => {
         control.get("estimatedQty").valueChanges.subscribe(changes => {
-          console.log("changes", changes)
           this.inputEntered.emit(true);
         })
       })
@@ -177,7 +176,6 @@ export class BOMAllMaterialComponent implements OnInit {
         }
       })
       .catch(err => {
-        console.log(err);
       });
   }
 
