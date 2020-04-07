@@ -203,6 +203,7 @@ export class UpdateInfoComponent implements OnInit {
         if(this.url){
         
            this._userService.UpdateProfileImage.next(this.url);
+           localStorage.setItem('profileUrl',this.url);
         }
 
         if (this.users.roleName === 'l1')

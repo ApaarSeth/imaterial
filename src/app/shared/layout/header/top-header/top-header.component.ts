@@ -68,6 +68,7 @@ export class TopHeaderComponent implements OnInit {
 
             this._userService.UpdateProfileImage.subscribe(image => {
               this.url = image;
+              localStorage.setItem('profileUrl',this.url);
             })
         );
   }
