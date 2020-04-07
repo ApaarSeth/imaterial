@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { debug } from 'util';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 export interface City {
   value: string;
@@ -103,8 +104,8 @@ export class UpdateInfoComponent implements OnInit {
       organizationId: [this.users ? this.users.organizationId : ''],
       firstName: [this.users ? this.users.firstName : '', Validators.required],
       lastName: [this.users ? this.users.lastName : '', Validators.required],
-      email: [this.users ? this.users.email : '', Validators.required],
-      contactNo: [this.users ? this.users.contactNo : '', Validators.required],
+      email: [this.users ? this.users.email : '',[Validators.required,Validators.pattern(FieldRegExConst.EMAIL)]],
+      contactNo: [this.users ? this.users.contactNo : '', [Validators.required,Validators.pattern(FieldRegExConst.MOBILE)]],
       roleId: [this.users ? this.users.roleId : null, Validators.required],
       turnOverId: [this.users ? this.users.TurnOverId : null],
       userId: [this.users ? this.users.userId : null],
