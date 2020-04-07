@@ -70,6 +70,7 @@ export class BOMAllMaterialComponent implements OnInit {
 
   ngOnChanges(): void {
     this.selectedCategory = [...this.category];
+    this.mappingMaterialWithQuantity();
     if (this.searchMat != null && this.searchMat != "") {
       this.bomService.searchText.next(this.searchMat);
     }
