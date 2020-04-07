@@ -192,6 +192,7 @@ export class ProfileComponent implements OnInit {
       this._userService.submitUserDetails(data).then(res => {
           if(this.url){
             this._userService.UpdateProfileImage.next(this.url);
+            localStorage.setItem('profileUrl',this.url);
         }
         this._router.navigate(['dashboard']);
       });
