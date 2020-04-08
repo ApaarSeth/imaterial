@@ -57,6 +57,9 @@
                   <mat-error *ngIf="userInfoForm.controls['email'].hasError('required')">
                     Email address is required
                   </mat-error>
+                   <mat-error *ngIf="userInfoForm.controls['email'].hasError('pattern') && userInfoForm.controls['email'].touched">
+                    Email address must be valid
+                  </mat-error>
                 </mat-error>
 
                 <mat-form-field class="border-input w-100">
@@ -65,6 +68,9 @@
                 <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
                     Phone number is required
+                  </mat-error>
+                   <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('pattern') && userInfoForm.controls['contactNo'].touched">
+                    Phone number must be valid
                   </mat-error>
                 </mat-error>
 
