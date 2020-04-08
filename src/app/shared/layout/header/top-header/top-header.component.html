@@ -63,7 +63,7 @@
             <span class="pull-right "> You have {{ unreadnotification.length }} unread notifications </span>
           </div>
           <ng-container *ngFor="let notification of unreadnotification">
-            <div class="p-l-10 p-r-10 p-t-20 unread-background  cursor-pointer">
+            <div class="p-l-10 p-r-10 p-t-10 p-b-10 unread-background  cursor-pointer">
               <span *ngIf="notification.notificationText" class="font-size-12">
                 {{ notification.notificationText }}
               </span>
@@ -82,7 +82,7 @@
             </span>
           </div>
           <ng-container *ngFor="let notification of readnotification">
-            <div class="read-background cursor-pointer">
+            <div class="p-l-10 p-r-10 p-t-10 p-b-10 read-background cursor-pointer">
               <span *ngIf="notification.notificationText" class="font-size-12">
                 {{ notification.notificationText }}
               </span>
