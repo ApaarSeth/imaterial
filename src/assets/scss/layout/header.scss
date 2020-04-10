@@ -108,6 +108,11 @@ color: #000000 !important;
      .whatsapp-icon-number{
        display: none;
      }
+      .logo-profile-header{
+            .username{
+              display: none;
+            }
+       }
     
   }
    @media only screen and (max-width: 440px) {
@@ -130,3 +135,5 @@ color: #000000 !important;
        }
        }
   }
+
+   
