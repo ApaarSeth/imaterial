@@ -176,21 +176,35 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   uploadExcel(files: FileList) {
-    this.loading.show();
     const data = new FormData();
     data.append("file", files[0]);
-    this.rfqService.postSupplierExcel(data, this.orgId).then(res => {
-      if (res) {
-        this._snackBar.open(res.message, "", {
-          duration: 2000,
-          panelClass: ["success-snackbar"],
-          verticalPosition: "bottom"
-        });
-        this.getAllSupplier();
-        this.loading.hide();
+      var fileSize =  files[0].size; // in bytes
+      if(fileSize < 5000000){
+       this.postSupplierExcel(data);
       }
-      this.myInputVariable.nativeElement.value = "";
-    });
+      else{
+        this._snackBar.open("File must be less than 5 mb", "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+      }   
+  }
+
+  postSupplierExcel(data){
+    this.loading.show();
+       this.rfqService.postSupplierExcel(data, this.orgId).then(res => {
+        if (res) {
+          this._snackBar.open(res.message, "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+          this.getAllSupplier();
+          this.loading.hide();
+        }
+        this.myInputVariable.nativeElement.value = "";
+      });
   }
 
   downloadExcel(url: string) {

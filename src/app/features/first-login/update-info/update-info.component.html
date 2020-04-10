@@ -207,20 +207,9 @@
                                 </mat-error>
                             </div> -->
 
-              <div class="text-center col-md-12 mt-4">
-                <ng-container *ngIf="imageFileSize && localImg;">
-                    <button class="btn btn-warning next-btn" [disabled]="!userInfoForm.valid">Next
-                  </button>
-                </ng-container>
-                <ng-container *ngIf="!imageFileSize && localImg">
-                    <button class="btn btn-warning next-btn" [disabled]="true">Next
+              <div class="text-center col-md-12 mt-4">        
+                    <button class="btn btn-warning next-btn" [disabled]="(!imageFileSize && localImg)?true:!userInfoForm.valid">Next
                     </button>
-                </ng-container>
-                 <ng-container *ngIf="!imageFileSize && !localImg">
-                    <button class="btn btn-warning next-btn" [disabled]="!userInfoForm.valid">Next
-                    </button>
-                </ng-container>
-
               </div>
             </div>
           </form>

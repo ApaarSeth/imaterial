@@ -17,6 +17,9 @@
             <input type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
             <span>Upload</span>
           </label>
+           <div class="text-align-center p-t-5 line-height-1">
+                  <small  class="error-msg">{{imageFileSizeError}}</small>
+            </div>
         </div>
       </div>
       <!-- new structure -->
@@ -214,7 +217,7 @@
   </div>
   <div mat-dialog-actions>
     <div class="col-sm-12 add-edit-dialog-button">
-      <button mat-raised-button [disabled]="!form.valid || (!validPincode) || sameStartEndDate" class="main-background-color main-button color-white pull-right">
+      <button mat-raised-button [disabled]="(!imageFileSize && localImg)?true:(!form.valid || (!validPincode) || sameStartEndDate)" class="main-background-color main-button color-white pull-right">
         <span *ngIf="!data.isEdit">Add</span>
         <span *ngIf="data.isEdit">Save</span>
       </button>
