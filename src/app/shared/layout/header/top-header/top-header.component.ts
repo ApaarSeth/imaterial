@@ -13,7 +13,6 @@ import { MatSnackBar } from '@angular/material';
 
 export class TopHeaderComponent implements OnInit {
 
-  @Output() public sidenavToggle = new EventEmitter();
   notifClicked: boolean = false;
   userId: number;
   unreadnotificationLength: number = null;
@@ -40,7 +39,6 @@ export class TopHeaderComponent implements OnInit {
     this.userId = Number(localStorage.getItem("userId"));
     this.userName = localStorage.getItem("userName");
     this.url = localStorage.getItem('profileUrl');
-    this.sidenavToggle.emit('loaded');
     
     this.getNotifications();
     this.startSubscriptions();
@@ -80,10 +78,6 @@ export class TopHeaderComponent implements OnInit {
      this.allnotificationLength = Number(localStorage.getItem("all_notification"));
      this.unreadnotificationLength = Number(localStorage.getItem("un_read_notification"));
   }
-
-  public onToggleSidenav = () => {
-    this.sidenavToggle.emit();
-  };
 
   logout() {
     this.router.navigate(['/auth/login']).then(_ => {

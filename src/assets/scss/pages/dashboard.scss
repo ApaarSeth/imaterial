@@ -318,3 +318,46 @@ body,
         margin-top: 0px;
     }
 }
+.app-dashboard{
+    margin-top: 120px;
+    margin-bottom : 4px;
+}
+
+@media only screen and (max-width: 800px) {
+    .app-dashboard{
+    margin-top: 106px;
+    margin-bottom : 4px;
+}
+    .dashboard{
+        .container-fluid.bg-gray{
+            background: #fff;
+            padding: 0%;
+            margin: 0%;
+            padding-top: 18px;
+            overflow: hidden;
+        }
+    }
+  .things-to-do, .statistics{
+      overflow-x: scroll;
+      .things-to-do__icons {
+          margin-right: 10px;
+      }
+     
+      .mat-tab-group{
+          padding-top: 50px;
+      }
+  }
+  @media only screen and (max-width: 715px) {
+       .things-to-do{
+        padding: 12px 20px 14px 10px;
+      }
+       .statistics__filter{
+          position: absolute;
+          top:0;
+          left: 0;
+      }
+  }
+  
+
+
+}

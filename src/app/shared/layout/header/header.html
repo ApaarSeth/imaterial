@@ -1,54 +1,18 @@
 <div class="header-fixed">
   <app-top-header></app-top-header>
 
+
   <div class="col-sm-12 blue-background-color" *ngIf="role">
+      <button class="hamburger color-white" fxShow="true" fxHide.gt-sm (click)="openMenu()" mat-icon-button>
+                    <mat-icon>menu</mat-icon>
+                </button>
     <ng-container *ngFor="let selectedHeader of headerConst">
-      <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]">
+      <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]" fxShow.gt-md="true"  fxShow.sm="false" fxShow.xs="false" fxShow="true" >
         <button [class.active]="buttonName === selectedHeader.name" class="color-white" mat-button>
           {{selectedHeader.name}}
         </button>
       </a>
     </ng-container>
-
-    <!-- <a href="javascript:void(0)" (click)="setButtonName('dashboard')">
-      <button [class.active]="buttonName == 'dashboard'" class="color-white" mat-button (click)="setButtonName('dashboard')">
-        Dashboard
-      </button>
-    </a>
-
-    <a href="javascript:void(0)" *ngIf="permissionObj.projectStoreFlag" (click)="setButtonName('projectStore')">
-      <button [class.active]="buttonName == 'projectStore'" class="color-white" mat-button (click)="setButtonName('projectStore')">
-        Project Store
-      </button>
-    </a>
-    <a href="javascript:void(0)" *ngIf="permissionObj.globalStoreFlag" (click)="setButtonName('globalStore')">
-      <button [class.active]="buttonName == 'globalStore'" class="color-white" mat-button (click)="setButtonName('globalStore')">
-        Global Store
-      </button>
-    </a>
-    <button *ngIf="permissionObj.rfqFlag" [class.active]="buttonName == 'requestForQuotation'" class="color-white" mat-button (click)="setButtonName('requestForQuotation')">
-      Request for Quotation
-    </button>
-
-    <button *ngIf="permissionObj.purchaseOrderFlag" [class.active]="buttonName == 'purchaseOrder'" class="color-white" mat-button (click)="setButtonName('purchaseOrder')">
-      Purchase Order
-    </button>
-
-    <button *ngIf="permissionObj.usersFlag" [class.active]="buttonName == 'users'" class="color-white" mat-button (click)="setButtonName('users')">
-      Users
-    </button>
-
-    <button *ngIf="permissionObj.supplierFlag" [class.active]="buttonName == 'supplier'" class="color-white" mat-button (click)="setButtonName('supplier')">
-      Supplier
-    </button> -->
-
-    <!-- <button class="color-white pull-right p-t-10" mat-button>
-
-      <a href="javascript:void(0)" (click)="openDiv()">
-        <mat-icon [ngClass]="{'bell-icon-active': notifClicked === true,'bell-icon':notifClicked === false }"
-          matBadge="{{unreadnotificationLength}}" matBadgeSize="small" matBadge="15" matBadgeColor="warn">notifications
-        </mat-icon>
-      </a>
-    </button> -->
   </div>
 </div>
+
