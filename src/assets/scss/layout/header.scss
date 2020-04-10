@@ -6,6 +6,9 @@
   mat-button:hover{
     background: none;
   }
+  .buildsupply-logo{
+    width: 200px;
+  }
 .blue-background-color{
   height: 50px;
     .mat-button-wrapper{
@@ -55,7 +58,7 @@ button.active {
 
 .notification-bell-icon.mat-button.mat-button-base{
   min-width: auto;
-  padding-top:5px;
+  padding-top:4px;
    .mat-icon{
      display: block;
    }
@@ -63,6 +66,7 @@ button.active {
 .notification-bell-icon.mat-button.mat-button-base:hover{
   background-color: none;
 }
+
 .whatsapp-icon{
   width: 20px;
   height: 20px;
@@ -88,9 +92,41 @@ color: #000000 !important;
 
     margin-top: 6px;
 }
+
 .agree-checkbox{
   display: flex;
   justify-content: center;
       padding-top: 10px;
     font-size: 14px;
 }
+.logo-profile-header{
+       button{
+         padding-right: 0%;
+       }
+       }
+ @media only screen and (max-width: 560px) {
+     .whatsapp-icon-number{
+       display: none;
+     }
+    
+  }
+   @media only screen and (max-width: 440px) {
+     .header-fixed .buildsupply-logo{
+       width: 140px;
+       padding-right: 5px;
+     }
+   }
+     @media only screen and (max-width: 360px) {
+     .notification-bell-icon.mat-button.mat-button-base{
+       padding-left: 2px;
+       padding-right:0px ;
+      }
+      .logo-profile-header{
+       button{
+         padding-left: 5px;
+       }
+       .username{
+         display: none;
+       }
+       }
+  }

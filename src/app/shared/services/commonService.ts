@@ -4,7 +4,8 @@ import { API } from '../constants/configuration-constants';
 import { DataService } from './data.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-
+import * as _ from 'lodash';
+import * as $ from 'jquery';
 @Injectable({
     providedIn: "root"
 })
@@ -19,6 +20,10 @@ export class CommonService {
   onUserUpdate$ = new Subject<number>();;
   constructor(private dataService: DataService,
     private _router: Router){}
+
+    static hideBodyOverFlow() {
+        $('body').addClass('overflowHidden');
+    }
 
     formatDate(oldDate): string {
         let newDate = new Date(oldDate);

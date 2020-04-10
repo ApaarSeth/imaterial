@@ -1,6 +1,10 @@
 <!-- <mat-sidenav #sidenav> -->
   <mat-nav-list>
+    <ng-container *ngFor="let selectedHeader of headerConst">
+         <a href="javascript:void(0)" *ngIf="selectedHeader.flag"  mat-list-item [routerLink]="[selectedHeader.link]">
+            {{selectedHeader.name}}
+        </a>
+    </ng-container>
     <a href="#" mat-list-item>My Account</a>
     <a href="#" mat-list-item>Logout</a>
   </mat-nav-list>
-<!-- </mat-sidenav> -->
