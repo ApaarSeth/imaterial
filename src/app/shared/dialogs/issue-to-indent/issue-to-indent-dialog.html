@@ -97,9 +97,9 @@
                   formControlName="issuedQty"
                   (input)="showQuantityInput()"
                   matInput
-                  type="number"
+                  type="text"
                   min="0"
-                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  appTwoDigitDecimaNumber
                   placeholder="Issue Quantity"
                 />
                 <!-- <mat-error *ngIf="materialForms.controls.forms.controls[i].controls['issuedQty'].hasError('max') &&  materialForms.controls.forms.controls[i].controls['issuedQty'].touched"

@@ -80,12 +80,10 @@
 
                             <mat-form-field class="border-input widthZero">
                               <input
-                                matInput
                                 class="p-b-5 shortWidth"
-                                type="number"
+                                appTwoDigitDecimaNumber matInput type="text"
                                 min="0"
                                 placeholder="Enter Quantity"
-                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                               />
                               <span class="p-b-15 p-l-5">{{ subcategory.materialUnit }}</span>
                             </mat-form-field>

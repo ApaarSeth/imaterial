@@ -65,10 +65,10 @@
                 <input
                   matInput
                   formControlName="certifiedQty"
-                  type="number"
+                  type="text"
                   placeholder="Received Quantity"
                   min="0"
-                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  appTwoDigitDecimaNumber
                 />
               </mat-form-field>
               <!-- {{ element.certifiedQuantity }} -->

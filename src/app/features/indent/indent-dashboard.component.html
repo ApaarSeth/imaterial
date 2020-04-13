@@ -50,7 +50,7 @@
 
             <td mat-cell *matCellDef="let element; let i = index" class="text-align-center">
               <mat-form-field [formGroupName]="i" class="border-input table-input">
-                <input matInput formControlName="quantity" type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Required Quantity" />
+                <input matInput formControlName="quantity" type="text" appTwoDigitDecimaNumber min="0" placeholder="Required Quantity" />
               </mat-form-field>
               {{ element.materialUnit }}
             </td>

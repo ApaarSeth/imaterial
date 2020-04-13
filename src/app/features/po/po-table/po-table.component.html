@@ -65,8 +65,9 @@
                 <ng-template #editRate>
                   <mat-form-field class="border-input width78Percent">
                     <input
-                      type="number"
+                    type="text"
                       matInput
+                      appTwoDigitDecimaNumber
                       #rate
                       formControlName="materialUnitPrice"
                       placeholder="rate"
@@ -82,13 +83,13 @@
                 <ng-template #editQuantity>
                   <mat-form-field class="border-input width50Percent">
                     <input
-                      type="number"
+                    type="text"
                       matInput
                       #quantity
+                      appTwoDigitDecimaNumber
                       formControlName="materialQuantity"
                       placeholder="quantity"
                       min="0"
-                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                     />
                   </mat-form-field>
                 </ng-template>
@@ -112,7 +113,8 @@
                   <mat-form-field class="border-input width50Percent">
                     <input
                       matInput
-                      type="number"
+                      type="text"
+                      appTwoDigitDecimaNumber
                       #gst
                       formControlName="gst"
                       placeholder="GST%"
