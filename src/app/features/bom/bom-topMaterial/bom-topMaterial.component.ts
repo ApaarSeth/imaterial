@@ -4,7 +4,8 @@ import {
   Input,
   ViewChild,
   Output,
-  EventEmitter
+  EventEmitter,
+  ElementRef
 } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
@@ -21,6 +22,7 @@ import {
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import { parse } from "querystring";
 import { Materials } from "src/app/shared/models/subcategory-materials";
+import { range } from 'rxjs';
 
 @Component({
   selector: "app-bom-topMaterial",
@@ -34,6 +36,7 @@ export class BomTopMaterialComponent implements OnInit {
   @Input("searchMat") searchMat: string;
   counter: number;
   orgId: number;
+  materialUnit: string[] = [];
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -62,6 +65,9 @@ export class BomTopMaterialComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"))
     // this.projectService.getProject(this.orgId, this.projectId).then(data => {
     // });
+    this.bomService.getMaterialUnit().then(res => {
+      this.materialUnit = res.data;
+    });
     this.selectedCategory = [...this.category];
     this.mappingMaterialWithQuantity()
     this.formInit();
@@ -197,6 +203,7 @@ export class BomTopMaterialComponent implements OnInit {
     }
   }
 
+
   getMaterialLength(minRequired = 1): ValidatorFn {
     return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
@@ -242,8 +249,23 @@ export class BomTopMaterialComponent implements OnInit {
       return { valid: false };
     }
   }
-
   saveCategory() {
     this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+  }
+
+  allowOnlyAmountAndDot(event, index1, index2) {
+    // // this.quantityForms.get('forms').get(index1).get("materialGroup").get(index2).get("estimatedQty").valueChanges(changes => {
+    // //   console.log("changes")
+    // // })
+
+    // (<FormGroup>(<FormArray>(<FormGroup>(<FormArray>this.quantityForms.get('forms')).controls[index1]).get('materialGroup')).controls[index2]).get("estimatedQty").valueChanges.subscribe(changes => {
+    //   console.log("changes")
+    // })
+    var rgx = /^\d+(\.\d{1,2})?$/;
+    // const inputChar = String.fromCharCode((event as KeyboardEvent).charCode);
+    if (!rgx.test(event.target.value)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
   }
 }

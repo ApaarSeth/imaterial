@@ -74,6 +74,10 @@ export class BomService {
     return this.dataService.sendPostRequest(API.PROJECTTRADES, tradeData)
   }
 
+  getMaterialUnit() {
+    return this.dataService.getRequest(API.MATERIALUNIT)
+  }
+
 
 
 }

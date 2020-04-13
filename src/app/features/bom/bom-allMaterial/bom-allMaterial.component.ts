@@ -46,6 +46,7 @@ export class BOMAllMaterialComponent implements OnInit {
   frmArr: FormGroup[];
   quantityForms: FormGroup;
   selectedCategory: categoryNestedLevel[] = [];
+  materialUnit: string[] = []
   // searchMaterial: string;
   // product: ProjectDetails;
   step = 0;
@@ -63,6 +64,9 @@ export class BOMAllMaterialComponent implements OnInit {
     // this.projectService.getProject(this.orgId, this.projectId).then(data => {
     // });
     this.selectedCategory = [...this.category];
+    this.bomService.getMaterialUnit().then(res => {
+      this.materialUnit = res.data;
+    });
     this.mappingMaterialWithQuantity()
     this.formInit();
     this.searchCategory();
