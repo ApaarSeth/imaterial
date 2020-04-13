@@ -23,10 +23,10 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     RouterModule,
     AppSharedModule,
     RFQSupplierDetailRoutingModule,
-     FroalaEditorModule.forRoot(),
+    FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot()
   ],
   providers: [RFQSupplierDetailResolver],
-  declarations: [RFQSupplierDetailComponent,RFQSupplierAfterBidComponent,RFQSupplierAddAddressComponent]
+  declarations: [RFQSupplierDetailComponent, RFQSupplierAfterBidComponent, RFQSupplierAddAddressComponent]
 })
-export class RFQSupplierDetailTemplateModule {}
+export class RFQSupplierDetailTemplateModule { }
