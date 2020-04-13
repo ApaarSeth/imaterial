@@ -6,33 +6,31 @@
         <div class="row p-b-10">
           <div class="col-md-6 col-sm-6 col-xs-12 p-t-10">
             <div>
-
               <label for="validity" class="pull-left p-t-20 p-r-10">Quote Valid till</label>
 
-            <mat-form-field class="border-input">
-              <!-- <span class="form-placeholder">{{ dateDue | date: "dd-MMM-yyy" }}</span> -->
-              <input
-                matInput
-                #quote
-                (dateChange)="duedatefunc($event,quote.value)"
-                [matDatepicker]="quoteValidTill"
-                placeholder="Quote Valid till"
-                [(ngModel)]="rfqSupplierDetailList.quoteValidTill"
-                (click)="quoteValidTill.open()"
-                readonly
-                [min]="rfqSupplierDetailList.dueDate"
-                required
-              />
+              <mat-form-field class="border-input">
+                <!-- <span class="form-placeholder">{{ dateDue | date: "dd-MMM-yyy" }}</span> -->
+                <input
+                  matInput
+                  #quote
+                  (dateChange)="duedatefunc($event, quote.value)"
+                  [matDatepicker]="quoteValidTill"
+                  placeholder="Quote Valid till"
+                  [(ngModel)]="rfqSupplierDetailList.quoteValidTill"
+                  (click)="quoteValidTill.open()"
+                  readonly
+                  [min]="rfqSupplierDetailList.dueDate"
+                  required
+                />
 
-              <mat-datepicker-toggle matSuffix [for]="quoteValidTill"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix [for]="quoteValidTill"></mat-datepicker-toggle>
 
-              <mat-datepicker #quoteValidTill startView="month" (keyup)="valueChange(rfqSupplierDetailList)"></mat-datepicker>
-              <!-- startView="month" [startAt]="dueDate" -->
-            </mat-form-field>
-
+                <mat-datepicker #quoteValidTill startView="month" (keyup)="valueChange(rfqSupplierDetailList)"></mat-datepicker>
+                <!-- startView="month" [startAt]="dueDate" -->
+              </mat-form-field>
             </div>
-            <div *ngIf="showDateError != '' && showDateError!= null">
-            <small class="error-msg white-space-nowrap p-l-10">{{showDateError}}</small>
+            <div *ngIf="showDateError != '' && showDateError != null">
+              <small class="error-msg white-space-nowrap p-l-10">{{ showDateError }}</small>
             </div>
           </div>
 
@@ -44,7 +42,7 @@
           </div> -->
 
           <div class="col-md-6 col-sm-6 col-xs-12 p-t-20">
-             <span class="pull-right text-semi-bold m-t-20"> RFQ Expiry Date :: {{ rfqSupplierDetailList.dueDate | date: "dd-MMM-yyy" }} </span>
+            <span class="pull-right text-semi-bold m-t-20"> RFQ Expiry Date :: {{ rfqSupplierDetailList.dueDate | date: "dd-MMM-yyy" }} </span>
             <!-- <button
               mat-raised-button
               [disabled]="!submitButtonValidationFlag"
@@ -77,7 +75,7 @@
           </span>
         </div>
 
-        <div style="width:100%;overflow-x:scroll">
+        <div style="width: 100%; overflow-x: scroll;">
           <table class="table rfq-bids-table" *ngFor="let projects of rfqSupplierDetailList.projectList">
             <!-- Project Name Header -->
             <tr class="blue-background-color color-white">
@@ -131,9 +129,9 @@
                       (keyup)="valueChange(rfqSupplierDetailList)"
                     />
                   </mat-form-field>
-                   <div class="d-flex justify-content-center" style="padding-left:50px !important;"> 
-                     <small *ngIf="!material.validGst" class="error-msg">Enter Valid GST%</small>
-                   </div> 
+                  <div class="d-flex justify-content-center" style="padding-left: 50px !important;">
+                    <small *ngIf="!material.validGst" class="error-msg">Enter Valid GST%</small>
+                  </div>
                 </td>
               </tr>
 
@@ -162,8 +160,7 @@
                         appTwoDigitDecimaNumber
                         (keyup)="valueChange(rfqSupplierDetailList)"
                       />
-                      <small *ngIf="!brand.validBrand"  class="error-msg">Enter Valid Rate</small>
-                      
+                      <small *ngIf="!brand.validBrand" class="error-msg">Enter Valid Rate</small>
                     </mat-form-field>
                   </td>
 
@@ -179,46 +176,44 @@
           </table>
         </div>
       </div>
-
     </div>
 
     <div class="row width-100 p-t-10">
-        <div class="col-md-12">
-          <div class="text-align-center font-size20 text-semi-bold">
-            Comments
-          </div>
-          <form [formGroup]="poTerms">
-            <textarea formControlName="textArea" [innerHTML]="terms && terms.termsDesc" [froalaEditor]="froala" [(froalaModel)]="poTerms['textArea']">Hello, Froala!</textarea>
-          </form>
+      <div class="col-md-12">
+        <div class="text-align-center font-size20 text-semi-bold">
+          Comments
         </div>
-        <div class="col-md-12 background-white-color border-radius parent">
-          <div class="word-wrap" *ngIf="rfqSupplierDetailList.comments && rfqSupplierDetailList.comments !== ''" [innerHTML]="rfqSupplierDetailList.comments"></div>
-          <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc == ''">No Comments To View</div>
-        
-        </div>
+        <form [formGroup]="poTerms">
+          <textarea formControlName="textArea" [innerHTML]="rfqSupplierDetailList && rfqSupplierDetailList.comments" [froalaEditor]="froala" [(froalaModel)]="poTerms['textArea']">
+Hello, Froala!</textarea
+          >
+        </form>
+      </div>
+      <div class="col-md-12 background-white-color border-radius parent">
+        <div class="word-wrap" *ngIf="rfqSupplierDetailList.comments && rfqSupplierDetailList.comments !== ''" [innerHTML]="rfqSupplierDetailList.comments"></div>
+        <div class="center-element" *ngIf="rfqSupplierDetailList && rfqSupplierDetailList.comments == ''">No Comments To View</div>
+      </div>
     </div>
 
-  <div class="row width-100 p-t-10">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <div>
-             <label for="bidCompletion" class="pull-left p-t-20 p-r-10">Bid Completion:</label>
-              <span class="pull-left text-semi-bold m-t-20">{{ brandCount }}/{{ materialCount }}</span>
-          </div>
-            <div class="p-t-10 pull-right">
-               <button
-              mat-raised-button
-              [disabled]="!submitButtonValidationFlag"
-              class="main-background-color main-button color-white pull-right"
-              (click)="postRFQDetailSupplier(rfqSupplierDetailList)"
-            >
-              Next
-            </button>
-            </div>
+    <div class="row width-100 p-t-10">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div>
+          <label for="bidCompletion" class="pull-left p-t-20 p-r-10">Bid Completion:</label>
+          <span class="pull-left text-semi-bold m-t-20">{{ brandCount }}/{{ materialCount }}</span>
         </div>
-        <div class="col-lg-3"></div>
+        <div class="p-t-10 pull-right">
+          <button
+            mat-raised-button
+            [disabled]="!submitButtonValidationFlag"
+            class="main-background-color main-button color-white pull-right"
+            (click)="postRFQDetailSupplier(rfqSupplierDetailList)"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-3"></div>
     </div>
-
-
   </div>
 </div>
