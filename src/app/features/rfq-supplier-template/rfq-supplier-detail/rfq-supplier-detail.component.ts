@@ -105,6 +105,20 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
 
   submitBid(rfqSupplierObj) {
+    rfqSupplierObj.projectList = rfqSupplierObj.projectList.map(rfqSupplier => {
+      rfqSupplier.materialList.map(material => {
+        material.materialGst = Number(material.materialGst);
+        material.materialIgst = Number(material.materialIgst);
+        material.Igst = Number(material.Igst);
+        material.rfqBrandList.map(brand => {
+          brand.brandRate = Number(brand.brandRate);
+          brand.tempRate = Number(brand.tempRate);
+          return brand
+        })
+        return material;
+      })
+      return rfqSupplier;
+    })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
     let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
