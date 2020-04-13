@@ -1,13 +1,13 @@
 <div class="header-fixed">
-  <app-top-header></app-top-header>
+  <app-top-header [menu]="menu"></app-top-header>
 
 
-  <div class="col-sm-12 blue-background-color" *ngIf="role">
-      <button class="hamburger color-white" fxShow="true" fxHide.gt-sm (click)="openMenu()" mat-icon-button>
+  <div class="col-sm-12 blue-background-color" fxShow.gt-md="true"  fxShow.sm="false" fxShow.xs="false" fxShow="true" *ngIf="role">
+      <!-- <button class="hamburger color-white" fxShow="true" fxHide.gt-sm (click)="openMenu()" mat-icon-button>
                     <mat-icon>menu</mat-icon>
-                </button>
+                </button> -->
     <ng-container *ngFor="let selectedHeader of headerConst">
-      <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]" fxShow.gt-md="true"  fxShow.sm="false" fxShow.xs="false" fxShow="true" >
+      <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]"  >
         <button [class.active]="buttonName === selectedHeader.name" class="color-white" mat-button>
           {{selectedHeader.name}}
         </button>

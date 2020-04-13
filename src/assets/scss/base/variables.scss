@@ -70,10 +70,12 @@ button:focus {
   outline: 0px;
   outline: 0px;
 }
-
-.page-start-point {
+@media only screen and (min-width: 958px) {
+  .page-start-point {
   padding-top: 120px !important;
   height: 100%;
+  }
+
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-underline {

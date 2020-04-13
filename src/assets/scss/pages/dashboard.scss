@@ -323,10 +323,14 @@ body,
     margin-bottom : 4px;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 958px) {
     .app-dashboard{
-    margin-top: 106px;
+    margin-top: 56px;
     margin-bottom : 4px;
+}
+.page-start-point{
+    padding-top: 65px !important;
+    height: 100%;
 }
     .dashboard{
         .container-fluid.bg-gray{
@@ -347,6 +351,7 @@ body,
           padding-top: 50px;
       }
   }
+
   @media only screen and (max-width: 715px) {
        .things-to-do{
         padding: 12px 20px 14px 10px;
@@ -356,8 +361,43 @@ body,
           top:0;
           left: 0;
       }
+
+      .things-to-do .add-project-img img{
+          height:48px;
+      }
+      .things-to-do__icons {
+            box-shadow: 4px 4px 6px #bfbfbf;
+            border-radius: 10px;
+            padding: 5px 0px 0;
+            min-width: 100px;
+            border: 1px solid #192135;
+        }
+        .things-to-do__img img {
+            min-height: 60px !important;
+            height: 0px ;
+            margin-bottom: 7px;
+        }
+        .things-to-do__icons h6{
+                font-weight: 400;
+                font-size: 13px;
+                padding: 7px 10px;
+                border-top: 2px solid #c4c4c4;
+        }
   }
-  
 
-
+}
+  @media only screen and (max-width: 560px) {
+        .things-to-do__icons {
+                    box-shadow: none;
+                    border-radius: 10px;
+                    padding: 5px 0px 0;
+                    min-width: 100px;
+                    border: 1px solid #192135;
+                }
+        .mat-icon-button{
+                width: 30px !important;
+            }
+  }
+  .mat-button-focus-overlay {
+    background-color: transparent!important;
 }
