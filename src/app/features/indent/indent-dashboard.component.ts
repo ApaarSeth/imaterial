@@ -83,8 +83,7 @@ export class IndentDashboardComponent implements OnInit {
           validators:
             [
               Validators.required,
-              Validators.max(subCat.estimatedQty),
-              Validators.min(1)
+              Validators.max(subCat.estimatedQty)
             ]
         })
       });
