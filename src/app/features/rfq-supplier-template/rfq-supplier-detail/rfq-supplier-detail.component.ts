@@ -109,6 +109,20 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
 
   submitBid(rfqSupplierObj) {
+    rfqSupplierObj.projectList = rfqSupplierObj.projectList.map(rfqSupplier => {
+      rfqSupplier.materialList.map(material => {
+        material.materialGst = Number(material.materialGst);
+        material.materialIgst = Number(material.materialIgst);
+        material.Igst = Number(material.Igst);
+        material.rfqBrandList.map(brand => {
+          brand.brandRate = Number(brand.brandRate);
+          brand.tempRate = Number(brand.tempRate);
+          return brand
+        })
+        return material;
+      })
+      return rfqSupplier;
+    })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
     rfqSupplierObj.comments = this.poTerms['textArea'];
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
@@ -157,7 +171,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     }
   }
 
-  duedatefunc(event,value) {
+  duedatefunc(event, value) {
 
     this.dateDue = event.target.value;
 
@@ -170,17 +184,17 @@ export class RFQSupplierDetailComponent implements OnInit {
     // const year = value.substring(y + 1, 10);
     // const endDate = year+ "-"+ month +"-"+ day;
     // this.endstring = endDate;
-     const  datePipe = new DatePipe('en-US');
-     const setDob = datePipe.transform(this.rfqSupplierDetailList.dueDate, 'dd-MMM-yyy');  
+    const datePipe = new DatePipe('en-US');
+    const setDob = datePipe.transform(this.rfqSupplierDetailList.dueDate, 'dd-MMM-yyy');
 
     if (this.dateDue != "" && this.dateDue != null) {
-      if(value == setDob){
+      if (value == setDob) {
         this.showDateError = "Quote Valid Till must be greater than RFQ Expiry Date";
-         this.dudateFlag = false;
+        this.dudateFlag = false;
       }
-      else{
-         this.showDateError = null;
-          this.dudateFlag = true;
+      else {
+        this.showDateError = null;
+        this.dudateFlag = true;
       }
     } else if (this.dateDue == "" || this.dateDue == null) {
       this.dudateFlag = false;
@@ -212,7 +226,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     this.brandCount = 0;
     this.oneBrandAtMaterialSelected = false;
     if (RFQsupplier.quoteValidTill) {
-      if(this.showDateError != null)
+      if (this.showDateError != null)
         this.dudateFlag = false;
       else
         this.dudateFlag = true;
@@ -238,13 +252,13 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialIgst = 0;
         }
         if (material.Igst >= 0 && material.Igst != null) {
-          if(material.Igst.toString().match(FieldRegExConst.RATES)){
+          if (material.Igst.toString().match(FieldRegExConst.RATES)) {
             material.validGst = true;
             this.gstValid = true;
           }
-          else{
-             material.validGst = false;
-             this.gstValid = false;
+          else {
+            material.validGst = false;
+            this.gstValid = false;
           }
           material.materialIGSTFlag = true;
           this.materialIGSTFlag = material.materialIGSTFlag;
@@ -256,14 +270,14 @@ export class RFQSupplierDetailComponent implements OnInit {
           brand.brandRate = brand.tempRate;
 
           if (brand.brandRate >= 0 && brand.brandRate != null) {
-             if(brand.brandRate.toString().match(FieldRegExConst.RATES)){
-                brand.validBrand = true;
-                this.rateValid = true;
-              }
-              else{
-               brand.validBrand = false;
-               this.rateValid = false;
-              }
+            if (brand.brandRate.toString().match(FieldRegExConst.RATES)) {
+              brand.validBrand = true;
+              this.rateValid = true;
+            }
+            else {
+              brand.validBrand = false;
+              this.rateValid = false;
+            }
             brand.brandRateFlag = true;
             this.brandRateFlag = brand.brandRateFlag;
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
@@ -281,10 +295,10 @@ export class RFQSupplierDetailComponent implements OnInit {
               this.sameGstAndBrandFilled = false;
               this.eitherOneGstOrBrand = true;
             }
-            if(this.gstValid && this.rateValid){
+            if (this.gstValid && this.rateValid) {
               this.ALLVALID = true;
             }
-            else if(!this.gstValid || !this.rateValid){
+            else if (!this.gstValid || !this.rateValid) {
               this.ALLVALID = false;
               this.eitherOneValidInMaterial = true;
             }

@@ -100,13 +100,13 @@
                                   <ng-container *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
                                     <mat-form-field class="border-input">
                                       <input
-                                        type="number"
+                                      type="text"
                                         class="quantity"
+                                        appTwoDigitDecimaNumber
                                         matInput
                                         formControlName="quantity"
                                         placeholder="qty"
                                         min="0"
-                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                       />
                                     </mat-form-field>
                                   </ng-container>

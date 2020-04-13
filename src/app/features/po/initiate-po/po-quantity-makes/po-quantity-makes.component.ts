@@ -45,7 +45,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
         }
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
-            materialUnitPrice: [item.estimatedRate,Validators.pattern(FieldRegExConst.RATES)],
+            materialUnitPrice: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
             materialQty: [item.quantity, Validators.required],
             brandNames: [item.makes],
             materialId: [item.materialId],
@@ -75,6 +75,8 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       this.initiatePoData.supplierName = this.poData.selectedSupplier.supplier_name;
       this.initiatePoData.rfqId = null;
       this.materialForms.value.forms = this.materialForms.value.forms.map(material => {
+        material.materialUnitPrice = Number(material.materialUnitPrice);
+        material.materialQty = Number(material.materialQty);
         if (material.fullfilmentDate === "" || material.fullfilmentDate === null) {
           material.fullfilmentDate = null;
         }

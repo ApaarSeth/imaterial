@@ -84,7 +84,7 @@
             <th mat-header-cell class="text-center" *matHeaderCellDef>Awarded Rate</th>
             <td mat-cell class="text-center" *matCellDef="let element; let i = index">
               <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input">
-                <input matInput formControlName="materialUnitPrice" type="number" placeholder="Awarded Rate" min="0" />
+                <input matInput formControlName="materialUnitPrice" appTwoDigitDecimaNumber type="text" placeholder="Awarded Rate" min="0" />
                 <small
                   *ngIf="
                     materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].hasError(
@@ -103,7 +103,7 @@
             <th mat-header-cell class="text-center" *matHeaderCellDef>Quantity</th>
             <td mat-cell class="text-center" *matCellDef="let element; let i = index">
               <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input">
-                <input matInput formControlName="materialQty" type="number" placeholder="Quantity" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                <input matInput formControlName="materialQty" type="text" placeholder="Quantity" min="0" appTwoDigitDecimaNumber />
               </mat-form-field>
             </td>
           </ng-container>

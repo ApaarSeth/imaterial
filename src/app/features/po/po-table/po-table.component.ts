@@ -163,6 +163,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getData(): PoMaterial[] {
     return this.poForms.value.forms.map(material => {
+
       if (material.fullfilmentDate === "" || material.fullfilmentDate === null) {
         material.fullfilmentDate = null;
       }
@@ -175,6 +176,9 @@ export class PoTableComponent implements OnInit, OnDestroy {
         material.fullfilmentDate = year + "-" + month + "-" + day;
       }
       material.purchaseOrderDetailList.map(purchaseOrderList => {
+        purchaseOrderList.materialQuantity = Number(purchaseOrderList.materialQuantity);
+        purchaseOrderList.materialUnitPrice = Number(purchaseOrderList.materialUnitPrice);
+        purchaseOrderList.gst = Number(purchaseOrderList.gst);
         if (this.gst === "IGST") {
           purchaseOrderList.materialIgst = purchaseOrderList.gst;
           purchaseOrderList.materialSgst = 0;

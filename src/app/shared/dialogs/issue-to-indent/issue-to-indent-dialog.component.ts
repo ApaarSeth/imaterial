@@ -28,7 +28,7 @@ export class IssueToIndentDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<IssueToIndentDialogComponent>, private activatedRoute: ActivatedRoute,
     private bomService: BomService,
-     @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder
   ) { }
 
@@ -58,36 +58,37 @@ export class IssueToIndentDialogComponent implements OnInit {
   }
 
   showIndent() {
-     this.dialogRef.close(this.raiseIndent());
+    this.dialogRef.close(this.raiseIndent());
   }
 
-showQuantityInput(){
-  this.sum=0;
-        this.materialForms.value.forms.forEach(element => {
-          if(element.issuedQty > 0){
-            this.sum = this.sum + element.issuedQty;
-          }
-        });
+  showQuantityInput() {
+    this.sum = 0;
+    this.materialForms.value.forms.forEach(element => {
+      if (element.issuedQty > 0) {
+        this.sum = this.sum + element.issuedQty;
+      }
+    });
 
-        const num = Number(this.issueToIndentDetails.availableStock);
-        if(this.sum < num){
-           this.errorMsg = false;
-        }
-         else if (this.sum > num){
-            this.errorMsg = true;
-          }
-}
-  raiseIndent(){
+    const num = Number(this.issueToIndentDetails.availableStock);
+    if (this.sum < num) {
+      this.errorMsg = false;
+    }
+    else if (this.sum > num) {
+      this.errorMsg = true;
+    }
+  }
+  raiseIndent() {
     const formValues: sendIssuedQuantityObj[] = [];
     this.materialForms.value.forms.forEach(element => {
-      if(element.issuedQty > 0){
-       formValues.push(element);
+      element.issuedQty = Number(element.issuedQty);
+      if (element.issuedQty > 0) {
+        formValues.push(element);
       }
     });
     this.bomService.postIssueToIndent(this.data.materialId, formValues).then(res => {
-          return res.data;
-          });
-    
+      return res.data;
+    });
+
   }
 
   getIndentDetails() {

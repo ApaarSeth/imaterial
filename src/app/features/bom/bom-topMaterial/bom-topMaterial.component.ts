@@ -235,6 +235,7 @@ export class BomTopMaterialComponent implements OnInit {
       return val.materialGroup.filter(inputData => inputData.estimatedQty)
         .map(inputdata => {
           inputdata.estimatedQty = Number(inputdata.estimatedQty);
+          inputdata.estimatedRate = Number(inputdata.estimatedRate);
           return inputdata;
         });
     }).flat()
