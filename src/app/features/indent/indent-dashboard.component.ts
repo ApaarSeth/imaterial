@@ -102,28 +102,32 @@ export class IndentDashboardComponent implements OnInit {
   }
 
   showIndent() {
+    this.materialForms.value.forms = this.materialForms.value.forms.map(material => {
+      material.quantity = Number(material.quantity)
+      return material;
+    })
     const formValues = this.materialForms.value.forms;
 
     const dataSource = this.subcategory.map((cat, i) => {
       return { ...cat, ...formValues[i] };
     });
     this.indentService.raiseIndent(this.projectId, dataSource).then(res => {
-       this._snackBar.open(res.message, "", {
-          duration: 2000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
-
-      if(res.status == 1){
-        this.navService.gaEvent({
-        action: 'submit',
-        category: 'indent_created',
-        label: null,
-        value: null
+      this._snackBar.open(res.message, "", {
+        duration: 2000,
+        panelClass: ["warning-snackbar"],
+        verticalPosition: "bottom"
       });
-      this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
+
+      if (res.status == 1) {
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'indent_created',
+          label: null,
+          value: null
+        });
+        this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
       }
-      
+
     });
   }
 
