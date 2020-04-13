@@ -43,10 +43,8 @@ showFiller = false;
     this.highlightButton(this.router.url);
     this.startSubscription();
   }
-
   openMenu() {
     this.menu.open();
-  //  CommonService.hideBodyOverFlow();
   }
   startSubscription(): void {
 

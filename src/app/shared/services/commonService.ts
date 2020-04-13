@@ -20,11 +20,7 @@ export class CommonService {
   onUserUpdate$ = new Subject<number>();;
   constructor(private dataService: DataService,
     private _router: Router){}
-
-    static hideBodyOverFlow() {
-        $('body').addClass('overflowHidden');
-    }
-
+    
     formatDate(oldDate): string {
         let newDate = new Date(oldDate);
         newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
