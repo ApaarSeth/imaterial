@@ -10,6 +10,7 @@ import { RFQSupplierDetailResolver } from "./rfq-supplier-detail/rfq-supplier-de
 import { RFQSupplierAfterBidComponent } from './rfq-supplier-after-bid/rfq-supplier-after-bid.component';
 import { RFQSupplierAddAddressComponent } from './rfq-supplier-add-address/rfq-supplier-add-address.component';
 import { AppSharedModule } from 'src/app/shared/app-shared-module';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 
 @NgModule({
@@ -21,7 +22,9 @@ import { AppSharedModule } from 'src/app/shared/app-shared-module';
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    RFQSupplierDetailRoutingModule
+    RFQSupplierDetailRoutingModule,
+     FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ],
   providers: [RFQSupplierDetailResolver],
   declarations: [RFQSupplierDetailComponent,RFQSupplierAfterBidComponent,RFQSupplierAddAddressComponent]

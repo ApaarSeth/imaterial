@@ -1,5 +1,6 @@
 export interface SendRfqObj {
   dueDate: Date;
+  comments?: string;
   quoteValidTill: Date;
   projectList: ProjectRfqObj[];
   terms?: any

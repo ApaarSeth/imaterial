@@ -7,11 +7,13 @@ import { ConfirmRfqBidComponent } from "src/app/shared/dialogs/confirm-rfq-bid/c
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { materialize } from 'rxjs/operators';
 import { formatDate, DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: "rfq-indent-detail",
   templateUrl: "./rfq-supplier-detail.component.html"
 })
 export class RFQSupplierDetailComponent implements OnInit {
+  
   rfqSupplierDetailList: SendRfqObj;
   dudateFlag: boolean = false;
   projectCount: number = 0;
@@ -36,12 +38,14 @@ export class RFQSupplierDetailComponent implements OnInit {
   eitherOneValidInMaterial: boolean;
   showDateError: string;
   endstring: string;
+  poTerms: FormGroup;
 
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
-    private router: Router
+    private router: Router,
+      private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -96,8 +100,8 @@ export class RFQSupplierDetailComponent implements OnInit {
             }
           }
         }
-
       });
+       this.formInit();
   }
 
   postRFQDetailSupplier(rfqSupplierObj) {
@@ -106,9 +110,11 @@ export class RFQSupplierDetailComponent implements OnInit {
 
   submitBid(rfqSupplierObj) {
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
+    rfqSupplierObj.comments = this.poTerms['textArea'];
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
     let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
+    //console.log(rfqSupplierObj);
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });
@@ -188,6 +194,12 @@ export class RFQSupplierDetailComponent implements OnInit {
     }
   }
 
+  formInit() {
+    this.poTerms = this.formBuilder.group({
+      textArea: []
+    })
+  }
+  
   valueChange(RFQsupplier: SendRfqObj) {
     this.submitButtonValidationFlag = false;
     this.brandRateFlag = false;
