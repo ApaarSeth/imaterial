@@ -163,6 +163,9 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getData(): PoMaterial[] {
     return this.poForms.value.forms.map(material => {
+      material.materialQuantity = Number(material.materialQuantity);
+      material.materialUnitPrice = Number(material.materialUnitPrice);
+      material.gst = Number(material.gst);
       if (material.fullfilmentDate === "" || material.fullfilmentDate === null) {
         material.fullfilmentDate = null;
       }

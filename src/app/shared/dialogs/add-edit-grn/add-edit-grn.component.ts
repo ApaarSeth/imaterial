@@ -106,6 +106,7 @@ export class AddEditGrnComponent implements OnInit {
   addGrn() {
     const formValues: GRNDetails[] = [];
     this.materialForms.value.forms.forEach((element, i) => {
+      element.certifiedQty = Number(element.certifiedQty)
       if (element.certifiedQty > 0) {
         formValues.push(element);
       }

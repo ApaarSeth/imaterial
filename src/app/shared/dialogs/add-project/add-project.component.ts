@@ -122,7 +122,7 @@ export class AddProjectComponent implements OnInit {
       ],
       area: [
         this.data.isEdit ? this.data.detail.area : "",
-       [Validators.required, Validators.pattern(FieldRegExConst.RATES)]
+        [Validators.required, Validators.pattern(FieldRegExConst.RATES)]
       ],
       startDate: [
         this.data.isEdit ? this.data.detail.startDate : "",
@@ -204,6 +204,8 @@ export class AddProjectComponent implements OnInit {
       this.form.value.endDate = this.formatDate(this.form.value.endDate);
       this.form.value.city = this.city;
       this.form.value.state = this.state;
+      this.form.value.cost = Number(this.form.value.cost)
+      this.form.value.area = Number(this.form.value.area)
       this.updateProjects(this.form.value);
     } else {
       this.form.value.city = this.city;
@@ -294,18 +296,18 @@ export class AddProjectComponent implements OnInit {
         this.localImg = (<FileReader>event.target).result;
       }
       const file = event.target.files[0];
-       var fileSize =  event.target.files[0].size; // in bytes
-      if(fileSize < 1000000){
+      var fileSize = event.target.files[0].size; // in bytes
+      if (fileSize < 1000000) {
         this.imageFileSizeError = "";
         this.imageFileSize = true;
         this.uploadImage(file);
       }
-      else{
-         this.imageFileSize = false;
-         this.imageFileSizeError = "Image must be less than 1 mb";
+      else {
+        this.imageFileSize = false;
+        this.imageFileSizeError = "Image must be less than 1 mb";
       }
 
-     // this.uploadImage(file);
+      // this.uploadImage(file);
     }
   }
 

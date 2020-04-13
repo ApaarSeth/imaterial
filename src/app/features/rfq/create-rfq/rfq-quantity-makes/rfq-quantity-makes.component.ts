@@ -53,7 +53,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   message: string;
   lastupdateValue: any;
   valid: boolean = false;
-  minDate=new Date();
+  minDate = new Date();
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -104,8 +104,8 @@ export class RfqQuantityMakesComponent implements OnInit {
         }
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
-            estimatedRate: [item.estimatedRate ,Validators.pattern(FieldRegExConst.RATES) ],
-            quantity: [item.quantity ? item.quantity : null, [Validators.required,this.quantityCheck(item.estimatedQty)]],
+            estimatedRate: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
+            quantity: [item.quantity ? item.quantity : null, [Validators.required, this.quantityCheck(item.estimatedQty)]],
             makes: [item.makes],
             fullfilmentDate: [item.fullfilmentDate],
             projId: [item.projectId],
@@ -179,7 +179,11 @@ export class RfqQuantityMakesComponent implements OnInit {
 
 
   materialAdded() {
-    const formValues = this.materialForms.value.forms;
+    const formValues = this.materialForms.value.forms.map(material => {
+      material.estimatedRate = Number(material.estimatedRate);
+      material.quantity = Number(material.quantity);
+      return material
+    })
     this.projectSelectedMaterials.forEach((project, i) => {
       project.projectMaterialList.forEach((material, j) => {
         formValues.forEach((val, k) => {
