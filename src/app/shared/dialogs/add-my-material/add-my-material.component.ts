@@ -6,10 +6,10 @@ import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants'
 import { Router } from '@angular/router';
 import { elementAt, count, take, startWith, map, filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BomService } from '../../services/bom/bom.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { orgTrades } from '../../models/trades';
+import { orgTrades, tradeRelatedCategory } from '../../models/trades';
 import { Subject, Observable, merge } from 'rxjs';
 
 export interface City {
@@ -40,8 +40,8 @@ export class AddMyMaterialComponent implements OnInit {
   check: boolean;
   materialUnit: string[]
   tradesList: orgTrades[] = [];
-  filteredOption: [string[]] = [null];
-  filterOptions: Observable<string[]>;
+  filteredOption: [tradeRelatedCategory[]] = [null];
+  filterOptions: Observable<tradeRelatedCategory[] | [string]>;
 
 
   constructor(private _userService: UserService,
@@ -51,6 +51,7 @@ export class AddMyMaterialComponent implements OnInit {
     private _router: Router,
     private navService: AppNavigationService,
     private dialogRef: MatDialogRef<AddMyMaterialComponent>,
+    private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit() {
@@ -104,18 +105,17 @@ export class AddMyMaterialComponent implements OnInit {
       myMaterial: this._formBuilder.array([])
     });
     (<FormArray>this.addMyMaterial.get("myMaterial")).push(this.addOtherFormGroup());
-    (<FormArray>this.addMyMaterial.get("myMaterial")).push(this.addOtherFormGroup());
   }
 
   addOtherFormGroup(): FormGroup {
     const formGrp = this._formBuilder.group({
-      materialName: [],
-      unit: [],
+      materialName: ['', Validators.required],
+      materialUnit: ['', Validators.required],
       index: [],
-      quantity: [],
-      unitRate: [],
-      trade: [],
-      category: [],
+      estimatedQty: ['', Validators.required],
+      estimatedPrice: [''],
+      trade: [''],
+      category: [''],
     });
 
     formGrp.get("index").patchValue(this.addMyMaterial.get('myMaterial')['controls'].length)
@@ -123,7 +123,7 @@ export class AddMyMaterialComponent implements OnInit {
       // this.filteredOption[formGrp.get("index").value] = this._filter(changes, formGrp.get("index").value)
       this.filterOptions = null;
       this.filterOptions = new Observable((observer) => {
-        const val: string[] = this._filter(changes, formGrp.get("index").value)
+        const val: tradeRelatedCategory[] | [string] = this._filter(changes, formGrp.get("index").value)
         // observable execution
         observer.next(val)
         observer.complete()
@@ -132,26 +132,27 @@ export class AddMyMaterialComponent implements OnInit {
       console.log('this.filteredOption', this.filteredOption[formGrp.get("index").value]);
     })
 
-    // formGrp.controls['trade'].valueChanges.subscribe(changes => {
-    //   this.bomService.getTradeCategory(changes.tradeName).then(res => {
-    //     this.filteredOption[formGrp.get("index").value] = [...res.data];
-    //     this.filterOptions = new Observable((observer) => {
-    //       const val: string[] = this._filter('', formGrp.get("index").value)
-    //       // observable execution
-    //       observer.next(val)
-    //       observer.complete()
-    //     })
-    //   })
-    // })
+    formGrp.controls['trade'].valueChanges.subscribe(changes => {
+      this.bomService.getTradeCategory(changes.tradeName).then(res => {
+        this.filteredOption[formGrp.get("index").value] = [...res.data];
+        this.filterOptions = new Observable((observer) => {
+          const val: tradeRelatedCategory[] | [string] = this._filter('', formGrp.get("index").value)
+          // observable execution
+          observer.next(val)
+          observer.complete()
+        })
+      })
+    })
     return formGrp;
   }
 
-  private _filter(value: string, index): string[] {
-    const filterValue = value.toLowerCase();
+  private _filter(value: string | tradeRelatedCategory, index) {
+
+    const filterValue = typeof (value) === "string" ? value.toLowerCase() : value.categoriesName.toLowerCase();
     if (filterValue === '') {
       return this.filteredOption[index];
     }
-    let filteredValue = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.toLowerCase().includes(filterValue));
+    let filteredValue: tradeRelatedCategory[] | [string] = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.categoriesName.toLowerCase().includes(filterValue));
     if (!filteredValue.length) {
       filteredValue = [filterValue + " (new value)"]
     }
@@ -163,13 +164,30 @@ export class AddMyMaterialComponent implements OnInit {
    * @description Append a new row after click on + button
    */
   onAddRow() {
-    (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-    // this.categoryChange();
-    this.addUserFormLength = this.addMyMaterial.get('myMaterial')['controls'].length;
-    if (this.index[this.addUserFormLength - 1] == 'false') {
-      this.index[this.addUserFormLength - 1] = 'true';
-    }
-    this.filteredOption[this.addUserFormLength - 1] = null
+    let currentIndex = this.addMyMaterial.get('myMaterial')['controls'].length - 1;
+    let { trade, materialName, category } = (<FormArray>this.addMyMaterial.get('myMaterial')).controls[currentIndex].value;
+    trade = !trade ? "" : trade.tradeName;
+    category = !category ? "" : category.categoryName;
+    this.bomService.getMaterialExist({ tradeName: trade, materialName, categoryName: category }).then(res => {
+      if (res.data) {
+        (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
+        // this.categoryChange();
+        this.addUserFormLength = this.addMyMaterial.get('myMaterial')['controls'].length;
+        if (this.index[this.addUserFormLength - 1] == 'false') {
+          this.index[this.addUserFormLength - 1] = 'true';
+        }
+        this.filteredOption[this.addUserFormLength - 1] = null
+      }
+      else {
+        this._snackBar.open("Material Name already exist in all material", "", {
+          duration: 2000,
+          panelClass: ["warning-snackbar"],
+          verticalPosition: "bottom"
+        });
+        (<FormArray>this.addMyMaterial.get('myMaterial')).controls[currentIndex].reset();
+      }
+    })
+
   }
 
   /**
@@ -181,29 +199,30 @@ export class AddMyMaterialComponent implements OnInit {
     this.filteredOption.splice(index, 1);
   }
 
+  displayFn(option: tradeRelatedCategory) {
+    return option && option.categoriesName ? option.categoriesName : ''
+  }
 
 
   /**
    * @description To submit the data after click on Done button
    */
   submit() {
-    const data = this.addMyMaterial.value.other;
-    data.map(user => {
-      this._userService.addUsers(user).then(res => {
-        if (res) {
-          this.navService.gaEvent({
-            action: 'submit',
-            category: 'Add_user_requested',
-            label: 'role/email-id',
-            value: null
-          });
-          this._router.navigate(['/dashboard']);
-        }
-      });
-    });
+    let myMaterial = this.addMyMaterial.get("myMaterial")['controls'].value.map(val => {
+      return {
+        estimatedPrice: val.estimatedPrice,
+        estimatedQty: val.estimatedQty,
+        materialName: val.materialName,
+        materialGroupCode: val.category.categoriesCode,
+        materialGroup: val.category.categoriesName,
+        materialUnit: val.materialUnit,
+        tradeId: val.trade.tradeId
+      }
+    })
   }
-
-  closeDialog(): void {
+  closeDialog() {
     this.dialogRef.close(null);
   }
+
+
 }

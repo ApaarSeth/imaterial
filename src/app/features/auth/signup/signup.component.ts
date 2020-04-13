@@ -135,7 +135,7 @@ export class SignupComponent implements OnInit {
         this.navService.gaEvent({
           action: 'submit',
           category: 'Signup_successfully',
-          label: this.signInDetails.email,
+          label: 'email-id',
           value: null
         });
         // localStorage.setItem("role", data.data.serviceRawResponse.data.role);

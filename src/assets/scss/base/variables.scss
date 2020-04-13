@@ -72,10 +72,9 @@ button:focus {
 }
 @media only screen and (min-width: 958px) {
   .page-start-point {
-  padding-top: 120px !important;
-  height: 100%;
+    padding-top: 120px !important;
+    height: 100%;
   }
-
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-underline {
@@ -140,11 +139,11 @@ input {
 .font-size14 {
   font-size: 14px;
 }
-.font-size9{
-   font-size: 9px;
+.font-size9 {
+  font-size: 9px;
 }
-.font-size10{
-   font-size: 10px;
+.font-size10 {
+  font-size: 10px;
 }
 .font-size12 {
   font-size: 12px;
@@ -164,13 +163,13 @@ input {
 .width50Percent {
   width: 50%;
 }
-.width78Percent{
-  width:78%;
+.width78Percent {
+  width: 78%;
 }
-.max-width-128{
+.max-width-128 {
   max-width: 128px;
 }
-.min-width-128{
+.min-width-128 {
   min-width: 128px;
 }
 
@@ -351,12 +350,11 @@ a:hover {
   width: 96%;
 }
 
-.width98Percent{
+.width98Percent {
   width: 98%;
 }
 
-
-.margin-0-auto{
+.margin-0-auto {
   margin: 0 auto;
 }
 
@@ -453,6 +451,11 @@ mat-accordion {
 .width-100 {
   width: 100%;
 }
+
+.width-90 {
+  width: 90%;
+}
+
 .width-15-px {
   img {
     width: 15px;
@@ -481,9 +484,9 @@ mat-accordion {
 .error-msg {
   color: red;
 }
-.error-msg.sameStartEndDate{
+.error-msg.sameStartEndDate {
   padding-left: 4px;
-  color : red;
+  color: red;
 }
 
 .justify-center {
@@ -562,12 +565,12 @@ mat-accordion {
   word-wrap: break-word;
 }
 
-.text-align-justify{
+.text-align-justify {
   text-align: justify !important;
 }
-.line-height-1{
+.line-height-1 {
   line-height: 1;
 }
-.justify-content-flex-end{
+.justify-content-flex-end {
   justify-content: flex-end;
 }

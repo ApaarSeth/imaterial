@@ -70,11 +70,17 @@
             </div>
           </div>
         </form>
-        <div class="row display-flex m-t-20">
-          <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
-            <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
+        <div class="row">
+          <div class="col-xs-10 display-flex m-t-20">
+            <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
+              <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <a href="javascript:void(0)" class="main-color" (click)="openAddMyMaterial()">+ Add Custom Material</a>
           </div>
         </div>
+
         <div *ngIf="showTable">
           <mat-tab-group (selectedTabChange)="tabClick($event)">
             <mat-tab label="Top Materials">

@@ -105,10 +105,8 @@ export const API = {
   VERIFYFORGETPASSWORDOTP: (phone, otp, clientId) => `api/auth/otp/verify?phone=${phone}&otp=${otp}&tokenRequired=true&client_id=${clientId}`,
   FORGOTPASSWORD: `api/user/resetPassword`,
   CHECKTERMS: `get/isuser/terms/accepted`,
-<<<<<<< HEAD
   MATERIALUNIT: `material/get/unit`,
-  DOWNLOADPO: purchaseOrderId => `po/download/${purchaseOrderId}`
-=======
-  MATERIALUNIT: `material/get/unit`
->>>>>>> bd3e091... decimal number directive, rate & unit changes
+  DOWNLOADPO: purchaseOrderId => `po/download/${purchaseOrderId}`,
+  TRADERELATEDCATEGORY: (tradeName) => `trade/get/categories/${tradeName}`,
+  MATERIALEXIST: `material/search/materialexist`
 };

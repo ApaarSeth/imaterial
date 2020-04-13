@@ -78,6 +78,12 @@ export class BomService {
     return this.dataService.getRequest(API.MATERIALUNIT)
   }
 
+  getTradeCategory(tradeName) {
+    return this.dataService.getRequestMaster(API.TRADERELATEDCATEGORY(tradeName))
+  }
 
+  getMaterialExist(data) {
+    return this.dataService.sendPostRequest(API.MATERIALEXIST, data)
+  }
 
 }

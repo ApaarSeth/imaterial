@@ -11,11 +11,11 @@
       </div>
     </div>
   </div>
-  <form *ngIf="addMyMaterial" [formGroup]="addMyMaterial" class="width-100">
+  <form *ngIf="addMyMaterial" [formGroup]="addMyMaterial" (ngSubmit)="submit()" class="width-100">
     <div formArrayName="myMaterial" *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
       <div class="row" [formGroupName]="i">
         <div class="col-xs-2">
-          <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 7px;">
+          <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 3px;">
             <mat-label>*Material Name</mat-label>
             <textarea matInput formControlName="materialName" class="text-area-border"></textarea>
           </mat-form-field>
@@ -24,9 +24,12 @@
           </mat-error> -->
           <!-- myMaterial.controls.myMaterial.controls.email.errors -->
         </div>
-        <div class="col-xs-1 text-right">
-          <mat-form-field class="border-select width-75-px mat-form-field-padding" style="padding-top: 7px;">
-            <mat-select placeholder="Unit*" formControlName="unit">
+        <div class="col-xs-1 text-right p-l-0">
+          <mat-form-field
+            class="border-select width-90 mat-form-field-infix-padding mat-select-placeholder-padding mat-form-field-flex-padding mat-form-field-padding"
+            style="padding-top: 7px;"
+          >
+            <mat-select placeholder="Unit*" formControlName="materialUnit">
               <mat-option *ngFor="let unit of materialUnit" [value]="unit">
                 <span>
                   {{ unit }}
@@ -38,14 +41,14 @@
         <div class="col-xs-2 text-center">
           <span>
             <mat-form-field class="border-input width-90">
-              <input formControlName="quantity" appTwoDigitDecimaNumber matInput type="text" placeholder="Quantity*" />
+              <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text" placeholder="Quantity*" />
             </mat-form-field>
           </span>
         </div>
         <div class="col-xs-2 text-center">
           <span>
             <mat-form-field class="border-input width-90">
-              <input formControlName="unitRate" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Rate(₹)" />
+              <input formControlName="estimatedPrice" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Rate(₹)" />
             </mat-form-field>
           </span>
         </div>
@@ -60,11 +63,11 @@
           </mat-form-field>
         </div>
         <div class="col-xs-2">
-          <mat-form-field class="example-full-width">
+          <mat-form-field class="border-input">
             <input type="text" placeholder="Pick one" matInput formControlName="category" [matAutocomplete]="auto" />
-            <mat-autocomplete #auto="matAutocomplete">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngFor="let option of this.filterOptions | async" [value]="option">
-                {{ option }}
+                {{ option.categoriesName }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
@@ -92,8 +95,7 @@
       <hr *ngIf="i < addMyMaterial.get('myMaterial').value.length - 1" />
     </div>
     <div class="text-center col-md-12 mt-4">
-      <button class="btn btn-outline-warning mr-3" [routerLink]="['/dashboard']">Skip</button>
-      <button class="btn btn-warning next-btn" (click)="submit()" [disabled]="!addMyMaterial.valid || !emailVerified || count > 0">Done</button>
+      <button class="btn btn-warning next-btn" [disabled]="!addMyMaterial.valid">Send For Approval</button>
     </div>
   </form>
 </div>

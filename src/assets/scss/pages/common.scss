@@ -1,3 +1,30 @@
-.mat-dialog-container{
-    border-radius: 10px !important;
+.mat-dialog-container {
+  border-radius: 10px !important;
+}
+
+.text-area-border {
+  border-top: 0px !important;
+  border-left: 0px !important;
+  border-right: 0px !important;
+  border-bottom: 2px solid #b8b8b8 !important;
+}
+
+.mat-form-field-flex-padding {
+  .mat-form-field-wrapper .mat-form-field-flex {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-top: 11px !important;
+  }
+}
+
+.mat-form-field-infix-padding {
+  .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    padding-bottom: 0px !important ;
+  }
+}
+
+.mat-select-placeholder-padding {
+  .mat-form-field-infix .mat-select-placeholder {
+    padding-bottom: 4px !important;
+  }
 }

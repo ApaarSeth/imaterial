@@ -24,7 +24,8 @@ import {
   MatStepperModule,
   MatSnackBarModule,
   MatSortModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatAutocompleteModule
 } from "@angular/material";
 
 @NgModule({
@@ -52,7 +53,8 @@ import {
     MatTooltipModule,
     MatSnackBarModule,
     MatSortModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatAutocompleteModule
   ]
 })
 export class MaterialModule { }

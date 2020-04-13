@@ -28,7 +28,7 @@ import { range } from 'rxjs';
   selector: "app-my-topMaterial",
   templateUrl: "./bom-myMaterial.component.html",
 })
-export class BomTopMaterialComponent implements OnInit {
+export class BomMyMaterialComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
   @Output("searchData") searchData = new EventEmitter();
   @Input("category") category: categoryNestedLevel[];

@@ -26,7 +26,8 @@ import { range } from 'rxjs';
 
 @Component({
   selector: "app-bom-topMaterial",
-  templateUrl: "./bom-topMaterial.component.html"
+  templateUrl: "./bom-topMaterial.component.html",
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class BomTopMaterialComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
@@ -203,11 +204,7 @@ export class BomTopMaterialComponent implements OnInit {
   }
 
 
-<<<<<<< HEAD
-  getMaterialLength(): ValidatorFn {
-=======
   getMaterialLength(minRequired = 1): ValidatorFn {
->>>>>>> bd3e091... decimal number directive, rate & unit changes
     return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
       for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {
