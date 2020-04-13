@@ -204,7 +204,7 @@ export class BomTopMaterialComponent implements OnInit {
   }
 
 
-  getMaterialLength(minRequired = 1): ValidatorFn {
+  getMaterialLength(): ValidatorFn {
     return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
       for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {
