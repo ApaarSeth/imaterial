@@ -104,5 +104,6 @@ export const API = {
   VERIFYMOBILE: mobile => `verify/contact?contact=${mobile}`,
   VERIFYFORGETPASSWORDOTP: (phone, otp, clientId) => `api/auth/otp/verify?phone=${phone}&otp=${otp}&tokenRequired=true&client_id=${clientId}`,
   FORGOTPASSWORD: `api/user/resetPassword`,
-  CHECKTERMS: `get/isuser/terms/accepted`
+  CHECKTERMS: `get/isuser/terms/accepted`,
+  MATERIALUNIT: `material/get/unit`
 };

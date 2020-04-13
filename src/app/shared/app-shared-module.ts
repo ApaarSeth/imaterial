@@ -11,15 +11,17 @@ import { SearchMaterialPipe } from './pipes/searchMaterial';
 import { RouterModule } from '@angular/router';
 import { PickDateAdapter, PICK_FORMATS } from './services/date.service';
 import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
+import { OnlyNumberDirective } from './directives/number-only2.directive';
+import { TwoDigitDecimaNumberDirective } from './directives/appTwoDigit';
 
 @NgModule({
   imports: [CommonModule, RouterModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule],
   providers: [DataService,
-   {provide: DateAdapter, useClass: PickDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
+    { provide: DateAdapter, useClass: PickDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
   ],
-  declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe],
-  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe],
+  declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, OnlyNumberDirective,TwoDigitDecimaNumberDirective],
+  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe,OnlyNumberDirective,TwoDigitDecimaNumberDirective],
   entryComponents: [...SharedDialogs]
 })
 

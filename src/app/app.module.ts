@@ -36,6 +36,8 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './features/auth/auth.module';
 import { PICK_FORMATS, PickDateAdapter } from './shared/services/date.service';
+import { TwoDigitDecimaNumberDirective } from './shared/directives/appTwoDigit';
+import { OnlyNumberDirective } from './shared/directives/number-only2.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,8 +83,8 @@ import { PICK_FORMATS, PickDateAdapter } from './shared/services/date.service';
     AfterSignUpGuardService,
     GuidedTourService,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-     {provide: DateAdapter, useClass: PickDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
+    { provide: DateAdapter, useClass: PickDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
   ],
   bootstrap: [AppComponent]
 })
