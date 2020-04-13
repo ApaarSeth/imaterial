@@ -1,9 +1,6 @@
 <mat-toolbar color="background-white-color">
   <mat-toolbar-row>
-    <button mat-icon-button (click)="onToggleSidenav()" fxShow="true" fxHide.gt-sm>
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span><img width="200" src="../../../../assets/images/loginLogo.png" alt="logo"/></span>
+    <span><img class="buildsupply-logo" src="../../../../assets/images/loginLogo.png" alt="logo"/></span>
     <span class="menu-spacer"></span>
 
  <a href="https://api.whatsapp.com/send?phone=+918512060007" target="_blank">
@@ -32,10 +29,10 @@
       </a>
     </button>
 
-    <div fxShow="true" fxHide.lt-md>
+    <div class="logo-profile-header">
       <button mat-button [matMenuTriggerFor]="logIn">
         <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
-        <span>
+        <span class="username">
           {{userName}}
         </span>
         <mat-icon aria-hidden="false" aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
@@ -63,7 +60,7 @@
             <span class="pull-right "> You have {{ unreadnotification.length }} unread notifications </span>
           </div>
           <ng-container *ngFor="let notification of unreadnotification">
-            <div class="p-l-10 p-r-10 p-t-20 unread-background  cursor-pointer">
+            <div class="p-l-10 p-r-10 p-t-10 p-b-10 unread-background  cursor-pointer">
               <span *ngIf="notification.notificationText" class="font-size-12">
                 {{ notification.notificationText }}
               </span>
@@ -82,7 +79,7 @@
             </span>
           </div>
           <ng-container *ngFor="let notification of readnotification">
-            <div class="read-background cursor-pointer">
+            <div class="p-l-10 p-r-10 p-t-10 p-b-10 read-background cursor-pointer">
               <span *ngIf="notification.notificationText" class="font-size-12">
                 {{ notification.notificationText }}
               </span>

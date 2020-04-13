@@ -16,7 +16,7 @@ import {
 } from "src/app/shared/models/project-details";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import { BomTopMaterialComponent } from "./bom-topMaterial/bom-topMaterial.component";
 import {
@@ -115,7 +115,8 @@ export class BomComponent implements OnInit {
     private userGuideService: UserGuideService,
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
-    private globalLoader: GlobalLoaderService
+    private globalLoader: GlobalLoaderService,
+    private _snackBar: MatSnackBar
   ) {
   }
 
@@ -175,12 +176,32 @@ export class BomComponent implements OnInit {
     });
   }
   uploadExcel(files: FileList) {
-    this.loading.show();
     const data = new FormData();
     data.append("file", files[0]);
-    this.bomService.postMaterialExcel(data, this.projectId).then(res => {
+     var fileSize =  files[0].size; // in bytes
+      if(fileSize < 5000000){
+       this.postMaterialExcel(data);
+      }
+      else{
+        this._snackBar.open("File must be less than 5 mb", "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+      } 
+
+   
+  }
+  postMaterialExcel(data){
+    this.loading.show();
+     this.bomService.postMaterialExcel(data, this.projectId).then(res => {
       this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
       this.loading.hide();
+       this._snackBar.open(res.message, "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
     });
   }
   downloadExcel(url: string) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, SimpleChanges } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, SimpleChanges, Input } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { PermissionService } from "../../services/permission.service";
 import { Subscription } from 'rxjs';
@@ -6,12 +6,13 @@ import { filter } from 'rxjs/operators';
 import { HeaderConstants, ConfigurationConstants } from '../../constants/configuration-constants';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
 import { IfStmt } from '@angular/compiler';
+import { MatSidenav } from '@angular/material';
 @Component({
   selector: "app-header",
   templateUrl: "./header.html"
 })
 export class HeaderLayoutComponent implements OnInit {
-
+showFiller = false;
   @Output() public sidenavToggle = new EventEmitter();
   public buttonName: string = "dashboard";
   orgId: Number;
@@ -19,6 +20,7 @@ export class HeaderLayoutComponent implements OnInit {
   permissionObj: any;
   notifClicked: boolean = false;
   userId: number;
+   @Input('menu') menu: MatSidenav;
   subsriptions: Subscription[] = [];
   headerConst: { name: string, link: string }[]
 
@@ -41,6 +43,11 @@ export class HeaderLayoutComponent implements OnInit {
     this.highlightButton(this.router.url);
     this.startSubscription();
   }
+
+  openMenu() {
+    this.menu.open();
+  //  CommonService.hideBodyOverFlow();
+  }
   startSubscription(): void {
 
     this.subsriptions.push(
@@ -54,6 +61,10 @@ export class HeaderLayoutComponent implements OnInit {
         })
     )
   }
+
+  public onToggleSidenav = () => {
+    this.sidenavToggle.emit();
+  };
 
   highlightButton(url: string) {
     if (url.includes('dashboard') && !url.includes('project-dashboard')) {
