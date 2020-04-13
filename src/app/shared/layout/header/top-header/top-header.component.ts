@@ -1,10 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { NotificationInt } from 'src/app/shared/models/notification';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { Subscription, interval } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatSidenav } from '@angular/material';
 
 @Component({
   selector: "app-top-header",
@@ -15,6 +15,7 @@ export class TopHeaderComponent implements OnInit {
 
   notifClicked: boolean = false;
   userId: number;
+  @Input('menu') menu: MatSidenav;
   unreadnotificationLength: number = null;
   allnotificationLength: number = null;
   userName: string;
@@ -79,6 +80,9 @@ export class TopHeaderComponent implements OnInit {
      this.unreadnotificationLength = Number(localStorage.getItem("un_read_notification"));
   }
 
+  openMenu() {
+    this.menu.open();
+  }
   logout() {
     this.router.navigate(['/auth/login']).then(_ => {
       localStorage.clear();
