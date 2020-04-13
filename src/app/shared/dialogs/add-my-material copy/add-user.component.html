@@ -1,0 +1,83 @@
+<section class="update-info add-user">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 terms-margin-set-width col-md-8 offset-md-2">
+        <div class="update-info__popup p-4 mt-5 invite-users">
+          <form class="update-info__form" *ngIf="addUserForm" [formGroup]="addUserForm">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="user-profile text-center text-uppercase pt-2 pb-4">Invite Team Members</h3>
+              </div>
+            </div>
+
+            <div formArrayName="other" *ngFor="let other of addUserForm.get('other')['controls']; let i = index">
+              <div class="row add-invite-user-form" [formGroupName]="i">
+                <div class="col-md-5">
+                  <mat-form-field class="border-input w-100">
+                    <input matInput type="email" placeholder="*Email" (input)="verifyEmail($event,other.controls['email'],i)" formControlName="email" />
+                  </mat-form-field>
+
+                  <mat-error
+                    *ngIf="other.controls['email'].hasError('required') && other.controls['email'].touched"
+                  >
+                    Email is required
+                  </mat-error>
+                  <mat-error
+                    *ngIf="other.controls['email'].hasError('pattern') && other.controls['email'].touched"
+                  >
+                    Enter Valid Email
+                  </mat-error>
+                   <small class="form-error-msg" *ngIf="(index[i]==='false')">Email already in use.</small>
+                  <!-- other.controls.other.controls.email.errors -->
+                </div>
+
+                <!-- <div class="col-md-2">
+                  <mat-form-field class="border-input w-100">
+                    <input matInput type="text" placeholder="Phone number" formControlName="contactNo" />
+                  </mat-form-field>
+                  <mat-error
+                    *ngIf="other.controls['contactNo'].hasError('pattern') && other.controls['contactNo'].touched"
+                  >
+                    Enter Valid Phone No
+                  </mat-error>
+                </div> -->
+
+                <div class="col-md-4">
+                  <mat-form-field class="border-select w-100 role-input">
+                    <mat-label>*Role</mat-label>
+                    <mat-select formControlName="roleId">
+                      <mat-option *ngFor="let role of roles" [value]="role.roleId">
+                        {{ role.roleDescription }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-error
+                    *ngIf="other.controls['roleId'].hasError('required') && other.controls['roleId'].touched"
+                  >
+                    Role is required
+                  </mat-error>
+                </div>
+                <div class="col-md-1 text-center p-t-15">
+                  <a *ngIf="addUserForm.get('other').value.length > 1" class="width-15-px p-l-5 cursor-pointer float-right-invite-delBtn" matTooltip="Delete" (click)="onDelete(i)">
+                    <img src="../../../../assets/images/delete-button.png" />
+                  </a>
+                </div>
+                <div class="col-md-2 text-align-center p-t-10 p-l-0" *ngIf="i === addUserForm.get('other').value.length - 1">
+                  <button mat-raised-button class="main-background-color main-button color-white" (click)="onAddRow()">+ Add User</button>
+                </div>
+              </div>
+              <hr  *ngIf="i<(addUserForm.get('other').value.length - 1)">
+            </div>
+              <div class="text-center col-md-12 mt-4">
+                 <small class="form-error-msg" *ngIf="(count > 0)">You can't add duplicate email address.</small>
+              </div>
+            <div class="text-center col-md-12 mt-4">
+              <button class="btn btn-outline-warning mr-3" [routerLink]="['/dashboard']">Skip</button>
+              <button class="btn btn-warning next-btn" (click)="submit()" [disabled]="!addUserForm.valid || (!emailVerified) || (count>0)">Done</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

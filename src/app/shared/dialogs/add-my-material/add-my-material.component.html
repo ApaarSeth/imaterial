@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-xs-12 header-border p-t-10">
+    <div class="row">
+      <div class="col-xs-10">
+        <h1 mat-dialog-title>Add Good Receive Note</h1>
+      </div>
+      <div class="col-xs-2">
+        <button type="button" class="close pull-right p-t-5" (click)="closeDialog()" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <form *ngIf="addMyMaterial" [formGroup]="addMyMaterial" class="width-100">
+    <div formArrayName="myMaterial" *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
+      <div class="row" [formGroupName]="i">
+        <div class="col-xs-2">
+          <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 7px;">
+            <mat-label>*Material Name</mat-label>
+            <textarea matInput formControlName="materialName" class="text-area-border"></textarea>
+          </mat-form-field>
+          <!-- <mat-error *ngIf="myMaterial.controls['email'].hasError('required') && myMaterial.controls['email'].touched">
+            Email is required
+          </mat-error> -->
+          <!-- myMaterial.controls.myMaterial.controls.email.errors -->
+        </div>
+        <div class="col-xs-1 text-right">
+          <mat-form-field class="border-select width-75-px mat-form-field-padding" style="padding-top: 7px;">
+            <mat-select placeholder="Unit*" formControlName="unit">
+              <mat-option *ngFor="let unit of materialUnit" [value]="unit">
+                <span>
+                  {{ unit }}
+                </span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-xs-2 text-center">
+          <span>
+            <mat-form-field class="border-input width-90">
+              <input formControlName="quantity" appTwoDigitDecimaNumber matInput type="text" placeholder="Quantity*" />
+            </mat-form-field>
+          </span>
+        </div>
+        <div class="col-xs-2 text-center">
+          <span>
+            <mat-form-field class="border-input width-90">
+              <input formControlName="unitRate" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Rate(₹)" />
+            </mat-form-field>
+          </span>
+        </div>
+        <div class="col-xs-2">
+          <mat-form-field class="border-select role-input width-90">
+            <mat-label>*Trade</mat-label>
+            <mat-select formControlName="trade">
+              <mat-option *ngFor="let trade of tradesList" [value]="trade">
+                {{ trade.tradeName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-xs-2">
+          <mat-form-field class="example-full-width">
+            <input type="text" placeholder="Pick one" matInput formControlName="category" [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of this.filterOptions | async" [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-xs-1 text-center p-t-15">
+          <div class="p-t-10">
+            <span *ngIf="addMyMaterial.get('myMaterial').value.length > 1" class="p-r-5">
+              <a class="width-15-px cursor-pointer float-right-invite-delBtn" matTooltip="Delete" (click)="onDelete(i)">
+                <!-- <img src="../../../../assets/images/delete-button.png" /> -->
+                <span class="material-icons main-color">
+                  delete_outline
+                </span>
+              </a>
+            </span>
+            <span>
+              <a href="javascript:void(0)" (click)="onAddRow()" class="p-t-5">
+                <span class="material-icons main-color">
+                  add_circle
+                </span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <hr *ngIf="i < addMyMaterial.get('myMaterial').value.length - 1" />
+    </div>
+    <div class="text-center col-md-12 mt-4">
+      <button class="btn btn-outline-warning mr-3" [routerLink]="['/dashboard']">Skip</button>
+      <button class="btn btn-warning next-btn" (click)="submit()" [disabled]="!addMyMaterial.valid || !emailVerified || count > 0">Done</button>
+    </div>
+  </form>
+</div>
