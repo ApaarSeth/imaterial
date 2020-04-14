@@ -180,6 +180,9 @@
     }
   }
 }
+ .buildsupply-logo{
+    width: 200px;
+  }
 
 .update-info-profile {
   background-image: url("/assets/images/background-image-overlay.jpg");
@@ -473,6 +476,9 @@
    width:100%;
    .user-profile{
      padding-bottom: 0px !important;
+   }
+   .profile{
+     padding-left : 47px;
    }
    .choose-trades{
      padding-top: 20px;
