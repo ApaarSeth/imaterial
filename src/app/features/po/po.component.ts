@@ -75,6 +75,7 @@ export class PoComponent implements OnInit {
     }
   };
   userId: number;
+  qtyValid: boolean;
 
 
   constructor(
@@ -239,7 +240,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
       } else {
@@ -266,7 +267,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
         this.router.navigate(["po/detail-list"]);
@@ -284,5 +285,8 @@ export class PoComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
-
+  QuantityAmountValidation(event){
+       this.isPoValid = event;
+       this.startSubscription() ;
+  }
 }

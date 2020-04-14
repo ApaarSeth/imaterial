@@ -48,7 +48,11 @@
               </ng-template>
             </span>
             <span class="mat-cell"></span>
-            <span class="mat-cell text-center">{{ getMaterialQuantity(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell text-center max-width-128">{{ getMaterialQuantity(m) | number: "1.2-2" }}
+              <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9">
+                Must be less than {{material.poAvailableQty}}
+              </span>
+            </span>
             <span class="mat-cell text-right p-r-20">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
             <span class="mat-cell"></span>
             <span class="mat-cell">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>

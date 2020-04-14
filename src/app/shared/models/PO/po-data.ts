@@ -41,6 +41,8 @@ export interface PoMaterial {
   availableStock: number;
   indentDetailList: null;
   fullfilmentDate: string;
+  poAvailableQty?: number;
+  validQuantity?: boolean;
   purchaseOrderDetailList: PurchaseOrder[];
 }
 

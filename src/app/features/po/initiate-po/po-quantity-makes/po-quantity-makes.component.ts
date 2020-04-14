@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter } from "@angular/core";
 import { RfqMaterialResponse, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
-import { FormBuilder, Validators, FormGroup, FormArray } from "@angular/forms";
+import { FormBuilder, Validators, FormGroup, FormArray, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { initiatePo, initiatePoData } from "src/app/shared/models/PO/po-data";
 import { POService } from "src/app/shared/services/po/po.service";
@@ -9,6 +9,7 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { isPlatformBrowser } from "@angular/common";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   materialForms: FormGroup;
   minDate = new Date();
   checkedMaterialsList: RfqMaterialResponse[];
-  constructor(private commonService: CommonService, private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder) { }
+  constructor(private commonService: CommonService, private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
 
   ngOnInit() { }
 
@@ -46,7 +47,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
             materialUnitPrice: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
-            materialQty: [item.quantity, Validators.required],
+            materialQty: [item.quantity, [Validators.required,this.quantityCheck(item.poAvailableQty)]],
             brandNames: [item.makes],
             materialId: [item.materialId],
             fullfilmentDate: [item.dueDate]
@@ -57,6 +58,24 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
     this.materialForms = this.formBuilder.group({});
     this.materialForms.addControl("forms", new FormArray(frmArr));
 
+  }
+  quantityCheck(availableQuantity): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (availableQuantity < control.value) {
+        this._snackBar.open(
+          "Cannot add quantity greater than "+availableQuantity,
+          "",
+          {
+            duration: 2000,
+            panelClass: ["warning-snackbar"],
+            verticalPosition: "bottom"
+          }
+        );
+        control.setValue(0)
+        return { 'nameIsForbidden': true };
+      }
+      return null;
+    }
   }
 
   makesUpdate(data: string[], grpIndex: number) {
