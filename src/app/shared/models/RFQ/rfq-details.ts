@@ -22,6 +22,7 @@ export interface RfqMat {
   // to do change name makes to brands
   makes?: string[];
   materialUnit?: string;
+  poAvailableQty?: number;
 }
 export interface Address {
   projectId?: number;

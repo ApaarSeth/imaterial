@@ -75,6 +75,7 @@ export class PoComponent implements OnInit {
     }
   };
   userId: number;
+  ValidPOTemp: boolean;
 
 
   constructor(
@@ -239,7 +240,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
       } else {
@@ -266,7 +267,7 @@ export class PoComponent implements OnInit {
           {
             duration: 2000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
         this.router.navigate(["po/detail-list"]);
@@ -278,11 +279,18 @@ export class PoComponent implements OnInit {
     this.subscriptions.push(
       combineLatest([this.poService.billingRole$, this.poService.projectRole$, this.poService.billingAddress$, this.poService.supplierAddress$, this.poService.poNumber$]).subscribe(values => {
         this.isPoValid = true;
+        this.ValidPOTemp = true;
       })
     );
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
-
+  QuantityAmountValidation(event){ 
+    if(this.ValidPOTemp) 
+       this.isPoValid = event; 
+   
+    if(!this.ValidPOTemp)
+      this.isPoValid = false;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, ViewChild, Output, EventEmitter } from "@angular/core";
 import { PoMaterial, PurchaseOrder } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
 import { ignoreElements, debounceTime } from "rxjs/operators";
@@ -7,6 +7,7 @@ import { ActivatedRoute } from "@angular/router";
 import { POService } from "src/app/shared/services/po/po.service";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: "app-po-table",
@@ -15,9 +16,11 @@ import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants'
 export class PoTableComponent implements OnInit, OnDestroy {
   @Input("poTableData") poTableData: PoMaterial[];
   @Input("mode") modes: string;
+  @Output("QuantityAmountValidation") QuantityAmountValidation = new EventEmitter();
   gst: string = '';
   words: string = "";
-  constructor(private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+
+  constructor(private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar:MatSnackBar) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
@@ -197,11 +200,26 @@ export class PoTableComponent implements OnInit, OnDestroy {
   getMaterialQuantity(m) {
     if (this.mode != "edit") {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
-        return (total += purchase.materialQuantity);
+        return (total += Number(purchase.materialQuantity));
       }, 0);
     } else {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
-        return (total += purchase.qty);
+         total += Number(purchase.qty);
+        if(total > this.poTableData[m].poAvailableQty){
+          this.poTableData[m].validQuantity = false;
+         }
+         else{
+           this.poTableData[m].validQuantity = true;
+         }
+          let isValidQty : boolean = true;
+          this.poTableData.forEach(element => {
+              if(!element.validQuantity)
+                  isValidQty = false;
+          });
+         
+         this.QuantityAmountValidation.emit(isValidQty);
+
+        return total; 
       }, 0);
     }
   }
