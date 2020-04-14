@@ -49,7 +49,7 @@
             </span>
             <span class="mat-cell"></span>
             <span class="mat-cell text-center max-width-128">{{ getMaterialQuantity(m) | number: "1.2-2" }}
-              <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9">
+              <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
                 Must be less than {{material.poAvailableQty}}
               </span>
             </span>
