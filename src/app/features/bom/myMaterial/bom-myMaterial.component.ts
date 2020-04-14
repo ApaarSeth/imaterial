@@ -25,8 +25,8 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 import { range } from 'rxjs';
 
 @Component({
-  selector: "app-bom-topMaterial",
-  templateUrl: "./bom-topMaterial.component.html"
+  selector: "app-my-topMaterial",
+  templateUrl: "./bom-myMaterial.component.html",
 })
 export class BomTopMaterialComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();

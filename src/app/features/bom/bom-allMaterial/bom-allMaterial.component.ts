@@ -24,8 +24,7 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 
 @Component({
   selector: "app-bom-allMaterial",
-  templateUrl: "./bom-allMaterial.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./bom-allMaterial.component.html"
 })
 export class BOMAllMaterialComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
