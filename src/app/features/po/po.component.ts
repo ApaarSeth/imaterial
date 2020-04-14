@@ -75,7 +75,7 @@ export class PoComponent implements OnInit {
     }
   };
   userId: number;
-  qtyValid: boolean;
+  ValidPOTemp: boolean;
 
 
   constructor(
@@ -279,14 +279,18 @@ export class PoComponent implements OnInit {
     this.subscriptions.push(
       combineLatest([this.poService.billingRole$, this.poService.projectRole$, this.poService.billingAddress$, this.poService.supplierAddress$, this.poService.poNumber$]).subscribe(values => {
         this.isPoValid = true;
+        this.ValidPOTemp = true;
       })
     );
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
-  QuantityAmountValidation(event){
-       this.isPoValid = event;
-       this.startSubscription() ;
+  QuantityAmountValidation(event){ 
+    if(this.ValidPOTemp) 
+       this.isPoValid = event; 
+   
+    if(!this.ValidPOTemp)
+      this.isPoValid = false;
   }
 }
