@@ -8,12 +8,13 @@ import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants'
 import { materialize } from 'rxjs/operators';
 import { formatDate, DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Froala } from 'src/app/shared/constants/configuration-constants';
 @Component({
   selector: "rfq-indent-detail",
   templateUrl: "./rfq-supplier-detail.component.html"
 })
 export class RFQSupplierDetailComponent implements OnInit {
-  
+
   rfqSupplierDetailList: SendRfqObj;
   dudateFlag: boolean = false;
   projectCount: number = 0;
@@ -45,8 +46,17 @@ export class RFQSupplierDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private router: Router,
-      private formBuilder: FormBuilder
+    private formBuilder: FormBuilder
   ) { }
+
+  public froala: Object = {
+
+    placeholder: "Edit Me",
+    imageUpload: false,
+    imageBrowse: false,
+    key: Froala.key
+  }
+
 
   ngOnInit() {
     this.rfqService
@@ -101,7 +111,7 @@ export class RFQSupplierDetailComponent implements OnInit {
           }
         }
       });
-       this.formInit();
+    this.formInit();
   }
 
   postRFQDetailSupplier(rfqSupplierObj) {
@@ -213,7 +223,7 @@ export class RFQSupplierDetailComponent implements OnInit {
       textArea: []
     })
   }
-  
+
   valueChange(RFQsupplier: SendRfqObj) {
     this.submitButtonValidationFlag = false;
     this.brandRateFlag = false;

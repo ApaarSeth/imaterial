@@ -210,6 +210,8 @@ export class AddProjectComponent implements OnInit {
     } else {
       this.form.value.city = this.city;
       this.form.value.state = this.state;
+      this.form.value.cost = Number(this.form.value.cost)
+      this.form.value.area = Number(this.form.value.area)
       this.form.value.startDate = this.formatDate(this.form.value.startDate);
       this.form.value.endDate = this.formatDate(this.form.value.endDate);
       this.addProjects(this.form.value);
