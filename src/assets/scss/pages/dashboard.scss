@@ -359,7 +359,7 @@ body,
        .statistics__filter{
           position: absolute;
           top:0;
-          left: 0;
+          right: 0;
       }
 
       .things-to-do .add-project-img img{
@@ -397,7 +397,28 @@ body,
         .mat-icon-button{
                 width: 30px !important;
             }
+
+            .statistics .stats__content h2{
+                font-size: 15px;
+            }
   }
+
+@media only screen and (max-width: 378px) {
+    .statistics{
+        .row{
+            .col-md-12.d-flex.justify-content-between{
+                padding:0px;
+            }
+        }
+        .mat-tab-label{
+            padding: 0px 10px;
+        }
+    }
+    .statistics .stats__content p{
+        font-size: 12px;
+    }
+}
+
   .mat-button-focus-overlay {
     background-color: transparent!important;
 }

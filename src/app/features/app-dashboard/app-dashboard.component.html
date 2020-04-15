@@ -53,7 +53,7 @@
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-between">
                             <mat-tab-group class="mat-tabs-button">
-                                <mat-tab label="Purchase Orders" *ngIf="permissionObj.rfqFlag && poData">
+                                <mat-tab label="{{tab1}}" *ngIf="permissionObj.rfqFlag && poData">
                                     <div class="statistics__purchase-order d-flex">
                                         <div class="statistics__tile stats mr-3">
                                             <!-- <div class="stats__icon">
@@ -79,7 +79,7 @@
                                     </div>
                                 </mat-tab>
 
-                                <mat-tab label="Request for Quotations" *ngIf="permissionObj.rfqFlag && rfqData">
+                                <mat-tab label="{{tab2}}" *ngIf="permissionObj.rfqFlag && rfqData">
                                     <div class="statistics__purchase-order d-flex">
                                         <div class="statistics__tile stats mr-3">
                                             <!-- <div class="stats__icon">
@@ -130,6 +130,7 @@
                                         </div>
                                     </div>
                                 </mat-tab>
+
                             </mat-tab-group>
 
                             <div class="statistics__filter">

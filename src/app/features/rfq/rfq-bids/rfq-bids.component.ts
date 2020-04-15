@@ -13,6 +13,8 @@ import { map } from "rxjs/operators";
 import { Materials } from "src/app/shared/models/subcategory-materials";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { MatDialog } from '@angular/material';
+import { ShowSupplierRemarksandDocs } from 'src/app/shared/dialogs/show-supplier-remarks-documents/show-supplier-remarks-documents.component';
 
 @Component({
   selector: "app-rfq-bids",
@@ -23,6 +25,7 @@ export class RfqBidsComponent implements OnInit {
     private router: Router,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
+    public dialog: MatDialog,
     private route: ActivatedRoute,
     private navService: AppNavigationService
   ) { }
@@ -227,5 +230,16 @@ export class RfqBidsComponent implements OnInit {
                
           });
         });
+  }
+
+  viewRemarks(){
+     
+      const dialogRef = this.dialog.open(ShowSupplierRemarksandDocs, {
+        width: "1000px"
+      });
+      dialogRef
+        .afterClosed()
+        .toPromise()
+        .then(result => {});
   }
 }
