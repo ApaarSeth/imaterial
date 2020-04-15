@@ -165,7 +165,7 @@ export class AppDashboardComponent implements OnInit {
       sizeChange(event) {
        if(event.currentTarget.innerWidth <= 494){
           this.tab1 = "P.O.";
-          this.tab2 = "RFQ for Quotations";
+          this.tab2 = "RFQ";
         }else{
           this.tab1 = "Purchase Orders";
           this.tab2 = "Request for Quotations";
