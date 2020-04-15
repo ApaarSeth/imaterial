@@ -3,11 +3,15 @@
     <form *ngIf="rfqProjects.length" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
       <div class="row p-t-10 p-b-10">
         <div class="col-sm-12">
+         
           <span>
             <button mat-raised-button class="main-background-color main-button color-white pull-right" [disabled]="( getFormValidation() ? (getFormQtyValidation() ? true : false) :  true )">
               Create P.O
             </button>
           </span>
+           <div class="pull-right color-main p-r-20 p-t-10 text-semi-bold cursor-pointer" (click)="viewRemarks()">
+              View Remarks
+          </div>
         </div>
       </div>
       <div formArrayName="forms">

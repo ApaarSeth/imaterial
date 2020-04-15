@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { MatDialog } from "@angular/material";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
 import { Router } from '@angular/router';
@@ -29,6 +29,8 @@ export class AppDashboardComponent implements OnInit {
   label: string;
   userGuidedata: GuideTourModel[] = [];
   permissionObj: permission;
+  tab1: string;
+  tab2: string;
   constructor(public dialog: MatDialog,
     private router: Router,
     private _userService: UserService,
@@ -44,10 +46,12 @@ export class AppDashboardComponent implements OnInit {
       this.orgId = Number(localStorage.getItem("orgId"));
     }
     this.userId = Number(localStorage.getItem("userId"));
+     
     this.getDashboardInfo('po');
     this.getDashboardInfo('rfq');
     this.getDashboardInfo('indent');
 
+    window.dispatchEvent(new Event('resize'));
 
     this.userguideservice.getUserGuideFlag().then(res => {
       this.userGuidedata = res.data;
@@ -147,4 +151,24 @@ export class AppDashboardComponent implements OnInit {
     });
 
   }
+  // onResize(event) {
+  //  if(event.target.innerWidth <= 494){
+  //    this.tab1 = "P.O.";
+  //    this.tab2 = "RFQ for Quotations";
+  //  }else{
+  //    this.tab1 = "Purchase Orders";
+  //    this.tab2 = "Request for Quotations";
+  //  }
+  // }
+ 
+  @HostListener('window:resize', ['$event'])
+      sizeChange(event) {
+       if(event.currentTarget.innerWidth <= 494){
+          this.tab1 = "P.O.";
+          this.tab2 = "RFQ for Quotations";
+        }else{
+          this.tab1 = "Purchase Orders";
+          this.tab2 = "Request for Quotations";
+        }
+    }
 }
