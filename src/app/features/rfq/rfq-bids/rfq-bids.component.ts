@@ -88,7 +88,7 @@ export class RfqBidsComponent implements OnInit {
     );
     this.rfqForms = this.formBuilder.group({});
     this.rfqForms.addControl("forms", new FormArray(frmArr));
-    console.log(this.rfqForms.value);
+   // console.log(this.rfqForms.value);
   }
 
   allocateQuantity() {
