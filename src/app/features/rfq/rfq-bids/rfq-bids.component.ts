@@ -70,6 +70,8 @@ export class RfqBidsComponent implements OnInit {
             return this.formBuilder.group({
               materialId: material.materialId,
               materialQty: material.materialQty,
+              materialpoAvailableQty: material.poAvailableQty,
+              validQtyBoolean : true,
               materialUnitPrice: material.materialUnitPrice,
               supplierList: this.formBuilder.array(supplierGrp)
             });
@@ -86,6 +88,7 @@ export class RfqBidsComponent implements OnInit {
     );
     this.rfqForms = this.formBuilder.group({});
     this.rfqForms.addControl("forms", new FormArray(frmArr));
+   // console.log(this.rfqForms.value);
   }
 
   allocateQuantity() {
@@ -193,10 +196,36 @@ export class RfqBidsComponent implements OnInit {
       return value.materialList.some(materials => {
         return materials.supplierList.some(supplier => {
           return supplier.brandGroup.some(brand => {
-            return brand.quantity != null;
+            return (brand.quantity > 0);
           });
         });
       });
     });
+  }
+    getFormQtyValidation() {
+    return this.rfqForms.value.forms.some(value => {
+      return value.materialList.some(materials => {
+             return (materials.validQtyBoolean === false) ;
+      });
+    });
+  }
+
+    getQuanityValidation(p,m) {
+      this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(true);
+       console.log(this.rfqForms.value);
+       let total: number = 0; 
+
+     this.rfqForms.value.forms[p].materialList[m].supplierList.forEach(supplier => {
+                  total= 0;
+          supplier.brandGroup.forEach((brand) => {
+                if(brand.quantity != null){
+                     total = total + Number(brand.quantity);
+                      if(total > this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty){
+                      this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(false);
+                  }
+                } 
+               
+          });
+        });
   }
 }
