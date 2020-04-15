@@ -61,6 +61,7 @@ export interface RfqProject {
 }
 
 export interface RfqMaterialList {
+  poAvailableQty?: number;
   id: number;
   status: number;
   createdBy: string;
