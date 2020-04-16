@@ -9,6 +9,7 @@ import { RFQSupplierDetailComponent } from "./rfq-supplier-detail/rfq-supplier-d
 import { RFQSupplierDetailResolver } from "./rfq-supplier-detail/rfq-supplier-detail.resolver";
 import { RFQSupplierAfterBidComponent } from './rfq-supplier-after-bid/rfq-supplier-after-bid.component';
 import { RFQSupplierAddAddressComponent } from './rfq-supplier-add-address/rfq-supplier-add-address.component';
+import { RFQDocumentsComponent } from './rfq-bid-documents/rfq-bid-documents.component';
 import { AppSharedModule } from 'src/app/shared/app-shared-module';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
@@ -27,6 +28,6 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     FroalaViewModule.forRoot()
   ],
   providers: [RFQSupplierDetailResolver],
-  declarations: [RFQSupplierDetailComponent, RFQSupplierAfterBidComponent, RFQSupplierAddAddressComponent]
+  declarations: [RFQSupplierDetailComponent, RFQDocumentsComponent, RFQSupplierAfterBidComponent, RFQSupplierAddAddressComponent]
 })
 export class RFQSupplierDetailTemplateModule { }

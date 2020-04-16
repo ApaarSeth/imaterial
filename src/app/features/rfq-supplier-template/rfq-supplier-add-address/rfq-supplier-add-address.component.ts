@@ -6,9 +6,10 @@ import { MatDialog } from '@angular/material';
 import { ConfirmRfqBidComponent } from 'src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { POService } from 'src/app/shared/services/po/po.service';
-import { SupplierAddress } from 'src/app/shared/models/PO/po-data';
+import { SupplierAddress, SupplierSelectedAddress } from 'src/app/shared/models/PO/po-data';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
+import { SelectSupplierAddressDialogComponent } from 'src/app/shared/dialogs/select-supplier-address/select-supplier-address.component';
 @Component({
   selector: "rfq-supplier-add-address",
   templateUrl: "./rfq-supplier-add-address.component.html"
@@ -27,6 +28,8 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   pincodeLength: number;
   validPincode: boolean;
   addSupplierAddress: boolean;
+  selectedAddress: any;
+  AddressValid: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -48,9 +51,15 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     this.poService.getSupplierAddress(this.supplierId).then(data => {
     
       this.supplierAddress = data;
-      if(this.supplierAddress.data[0].supplierAddressId == 0 || this.supplierAddress.data[0].addressId == null || this.supplierAddress.data[0].addressId == ""){
+       if(this.supplierAddress && this.supplierAddress.data.length < 2 && this.supplierAddress.data[0].supplierAddressId == 0){
+               this.AddressValid = false;
+            }
+            else{
+               this.AddressValid = true;
+            }
 
-            this.addSupplierAddress = false;
+      if(this.supplierAddress && this.supplierAddress.data[0].supplierAddressId == 0 || this.supplierAddress.data[0].addressId == null || this.supplierAddress.data[0].addressId == ""){
+ 
             this.initForm();
             
              this.form.controls.supplierName.setValidators([Validators.required]);
@@ -94,32 +103,34 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     this.form = this.formBuilder.group({
       
       supplierName: [
-        { value : this.supplierAddress.data ? this.supplierAddress.data[0].supplier_name : "", disabled:this.addSupplierAddress}
+        { value : this.supplierAddress.data ? this.supplierAddress.data[0].supplier_name : "", disabled:true}
       ],
       contactNo: [
-        {value : this.supplierAddress.data ? this.supplierAddress.data[0].contact_no : "", disabled:this.addSupplierAddress}
+        {value : this.supplierAddress.data ? this.supplierAddress.data[0].contact_no : "", disabled:true}
       ],
       email: [
-        {value : this.supplierAddress.data ? this.supplierAddress.data[0].email : "",disabled:this.addSupplierAddress}
+        {value : this.supplierAddress.data ? this.supplierAddress.data[0].email : "",disabled:true}
       ],
 
       addressLine1: [
-        {value : this.supplierAddress.data ? this.supplierAddress.data[0].addressLine1 : "", disabled : this.addSupplierAddress}
+        {value :  (this.selectedAddress && this.selectedAddress.addressLine1) ?  this.selectedAddress.addressLine1 : "", disabled : false}
       ],
-      addressLine2: [{ value : this.supplierAddress.data ? this.supplierAddress.data[0].addressLine2 : "", disabled: this.addSupplierAddress}],
+      addressLine2: [{ value : ( this.selectedAddress && this.selectedAddress.addressLine2) ?  this.selectedAddress.addressLine2 : "", disabled: false}],
       pinCode: [
-        {value : this.supplierAddress.data ? this.supplierAddress.data[0].pinCode : "", disabled:this.addSupplierAddress}
+        {value :  ( this.selectedAddress && this.selectedAddress.pinCode) ? this.selectedAddress.pinCode : "", disabled:false},
+        [Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]
       ],
       state: [
-        {value:this.supplierAddress.data ? this.supplierAddress.data[0].state : "",disabled:true},
+        {value: ( this.selectedAddress && this.selectedAddress.state) ? this.selectedAddress.state : "",disabled:true},
         Validators.required
       ],
       city: [
-        {value:this.supplierAddress.data ? this.supplierAddress.data[0].city : "",disabled:true},
+        {value: ( this.selectedAddress && this.selectedAddress.city) ? this.selectedAddress.city : "",disabled:true},
         Validators.required
       ],
       gstNo: [
-        {value : this.supplierAddress.data ? this.supplierAddress.data[0].gstNo : "",disabled:this.addSupplierAddress}
+        {value : ( this.selectedAddress && this.selectedAddress.gstNo) ? this.selectedAddress.gstNo : "",disabled:false},
+        [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]
       ]
     });
 
@@ -129,13 +140,6 @@ export class RFQSupplierAddAddressComponent implements OnInit {
 
   saveAddress() {
     this.openDialog();
-    // this.openDialog(this.rfqSupplierObj, this.form.value);
-    
-    // this.poService.addAddress(this.supplierId, this.form.value).then(res => {
-    //   if (res.data) {
-    //     this.openDialog(this.rfqSupplierObj);
-    //   }
-    // })
   }
   getPincode(event){
         this.validPincode = false;
@@ -146,7 +150,12 @@ export class RFQSupplierAddAddressComponent implements OnInit {
         this.pincodeLength = event.target.value.length;
         
      if (event.target.value.length == 6) {
-         this.projectService.getPincode(event.target.value).then(res =>{
+         this.getCityAndState(event.target.value);
+     }
+
+}
+getCityAndState(pincode){
+  this.projectService.getPincode(pincode).then(res =>{
            if(res.data){
              this.city = res.data[0].districtName;
              this.state = res.data[0].stateName;
@@ -158,18 +167,15 @@ export class RFQSupplierAddAddressComponent implements OnInit {
              this.form.get('state').setValue(res.data[0].stateName);
            }
          });
-     }
-
 }
 
   openDialog(): void {
-
-    if(!this.addSupplierAddress){
-      this.form.value.city = this.city;
-       this.form.value.state = this.state;
-    }
+      if(this.city && this.state){
+          this.form.value.city = this.city;
+          this.form.value.state = this.state;
+      }
        
-
+      //console.log(this.form.value);
     const dialogRef = this.dialog.open(ConfirmRfqBidComponent, {
       data: { rfqSupplierData: this.rfqSupplierObj, supplierAddress: this.form.value, supplierId: this.supplierId },
       width: "800px"
@@ -189,5 +195,49 @@ export class RFQSupplierAddAddressComponent implements OnInit {
             "rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
         }*/
       });
+  }
+
+  openAddressDialog(): void {
+    if(this.AddressValid){
+        const dialogRef = this.dialog.open(SelectSupplierAddressDialogComponent, {
+      data: {  supplierAddresses: this.supplierAddress },
+      width: "800px"
+    });
+
+    dialogRef
+      .afterClosed()
+      .toPromise()
+      .then(res => {
+          console.log(res.data);
+          this.supplierAddress.data.forEach(element => {
+            if(element.addressId == res.data){
+              this.selectedAddress = element;
+              this.getCityAndState(element.pinCode);
+            }
+          });
+          this.initForm();
+      });
+    }
+  
+  }
+  reset(){
+    this.form.controls.addressLine1.setValue(null);
+  //  this.form.controls.addressLine1.setErrors(null);
+  
+    this.form.controls.addressLine2.setValue(null);
+    this.form.controls.addressLine2.setErrors(null);
+    
+    this.form.controls.pinCode.setValue(null);
+  //  this.form.controls.pinCode.setErrors(null);
+
+    this.form.controls.state.setValue(null);
+    this.form.controls.state.setErrors(null);
+
+    this.form.controls.city.setValue(null);
+    this.form.controls.city.setErrors(null);
+
+    this.form.controls.gstNo.setValue(null);
+   // this.form.controls.gstNo.setErrors(null);
+    
   }
 }
