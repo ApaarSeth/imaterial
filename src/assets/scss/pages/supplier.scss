@@ -521,6 +521,10 @@ mat-icon {
     //     overflow-y: auto;
     // }
 }
+.show-address-supplier-modal{
+    max-height: 235px;
+    overflow-y: scroll;
+}
 
 .send-btn-select-po {
     display: block;

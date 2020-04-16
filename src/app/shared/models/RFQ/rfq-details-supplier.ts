@@ -1,9 +1,12 @@
+import { DocumentList } from '../PO/po-data';
+
 export interface SendRfqObj {
   dueDate: Date;
   comments?: string;
   quoteValidTill: Date;
   projectList: ProjectRfqObj[];
-  terms?: any
+  terms?: any;
+  DocumentsList?: DocumentList[];
 }
 export interface ProjectRfqObj {
   projectId: number;

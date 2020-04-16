@@ -188,3 +188,31 @@
 .white-space-nowrap{
   white-space: nowrap;
 }
+
+.select-address-tag{
+  float: left;
+    width: auto;
+    padding-left: 28px;
+    font-size: 14px;
+    color: #f47721;
+  text-decoration: underline;
+  font-weight: 550;
+  cursor: pointer;
+}
+.select-address-tag-disabled{
+    float: left;
+   width: auto;
+    padding-left: 28px;
+    font-size: 14px;
+    color: #d0d0dd;
+    text-decoration: underline;
+    font-weight: 550;
+}
+.reset-form-tag{
+    float: right;
+    width: 24%;
+    font-size: 14px;
+    color: #f47721;
+    font-weight: 550;
+    cursor: pointer;
+ }
