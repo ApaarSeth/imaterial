@@ -2,7 +2,7 @@ export interface GaEventsData {
     action: string;
     category?: string;
     label?: string;
-    value?: string;
+    value?: number;
     interaction?: boolean;
 }
 
