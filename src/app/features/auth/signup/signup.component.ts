@@ -136,7 +136,7 @@ export class SignupComponent implements OnInit {
           action: 'submit',
           category: 'Signup_successfully',
           label: 'email-id',
-          value: null
+          value: this.signInDetails.email
         });
         // localStorage.setItem("role", data.data.serviceRawResponse.data.role);
         // localStorage.setItem("accessToken", data.data.serviceRawResponse.data.serviceToken);
