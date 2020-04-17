@@ -207,4 +207,7 @@ export class PODetailComponent implements OnInit {
         this.PoData();
       });
   }
+  downloadPo(purchaseOrderId){
+      this.poDetailService.downloadPo(purchaseOrderId).then(res => res);
+  }
 }
