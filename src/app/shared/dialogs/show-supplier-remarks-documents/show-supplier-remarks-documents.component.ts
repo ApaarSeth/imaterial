@@ -12,6 +12,7 @@ import { DocumentUploadService } from 'src/app/shared/services/document-download
 import { Router } from '@angular/router';
 import { AppNavigationService } from '../../services/navigation.service';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
+import { supplierRemarkList } from '../../models/RFQ/rfqBids';
 
 export interface City {
   value: string;
@@ -50,11 +51,13 @@ export class ShowSupplierRemarksandDocs implements OnInit {
   pincodeLength: number;
   imageFileSizeError: string = "";
   imageFileSize: boolean = false;
+  supplierList: supplierRemarkList[];
+  index: number = 0;
 
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<ShowSupplierRemarksandDocs>,
-    @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
+    @Inject(MAT_DIALOG_DATA) public data: supplierRemarkList[],
     private _uploadImageService: DocumentUploadService,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -66,10 +69,28 @@ export class ShowSupplierRemarksandDocs implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
+    this.supplierList = this.data;
   }
 
   closeDialog(): void {
     this.dialogRef.close(null);
   }
+  showSupplierDetails(index){
+    this.index = index;
+  }
+  downloadDoc(url: string) {
+    var win = window.open(url, "_blank");
+    win.focus();
+  }
+
+  downloadURI(uri, name) {
+  let link = document.createElement("a");
+  link.download = name;
+  link.href = uri;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+}
 
 }

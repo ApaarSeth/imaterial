@@ -80,7 +80,7 @@ export class PoDocumentsComponent implements OnInit {
           {
             duration: 4000,
             panelClass: ["warning-snackbar"],
-            verticalPosition: "top"
+            verticalPosition: "bottom"
           }
         );
       });
@@ -96,8 +96,6 @@ export class PoDocumentsComponent implements OnInit {
           }
         );
       }
-
-      
     }
   }
 
