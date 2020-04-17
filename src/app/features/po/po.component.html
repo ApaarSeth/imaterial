@@ -3,14 +3,31 @@
     <div class="row">
       <div class="col-sm-12 m-t-5 text-semi-bold text-left" *ngIf="this.mode === 'view'">
         PO is Approved by {{ this.poData.poStatusChangedBy }} on {{ this.poData.poStatusChangedOn | date: "dd-MMM-yyy" }}
+
+        <div *ngIf="this.mode === 'view'" class="float-right">
+            <span class="text-semi-bold color-main cursor-pointer"
+                      ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15">Download P.O</span></a
+                    ></span>
+        </div>
+
       </div>
       <div class="col-sm-12 m-t-5 text-right">
-        <div *ngIf="this.mode === 'edit'">
+        <div *ngIf="this.mode === 'edit'" class="display-flex justify-content-flex-end">
+           <div class="p-r-10 p-t-10">
+            <span class="text-semi-bold color-main cursor-pointer"
+                      ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15">Download P.O</span></a
+                    ></span>
+        </div>
           <button mat-raised-button class="main-background-color main-button color-white send-for-approval-btn" (click)="selectApprover()" [disabled]="!isPoValid">
             Send P.O For Approval
           </button>
         </div>
-        <div *ngIf="this.mode === 'requiredApproval'">
+        <div *ngIf="this.mode === 'requiredApproval'" class="display-flex justify-content-flex-end">
+            <div class="p-r-10 p-t-10">
+            <span class="text-semi-bold color-main cursor-pointer"
+                      ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15">Download P.O</span></a
+                    ></span>
+        </div>
           <button mat-raised-button class="background-color-white main-button main-color m-r-5" (click)="poApproval('rejected')">
             Reject
           </button>

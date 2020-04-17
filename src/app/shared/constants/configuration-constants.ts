@@ -105,5 +105,6 @@ export const API = {
   VERIFYFORGETPASSWORDOTP: (phone, otp, clientId) => `api/auth/otp/verify?phone=${phone}&otp=${otp}&tokenRequired=true&client_id=${clientId}`,
   FORGOTPASSWORD: `api/user/resetPassword`,
   CHECKTERMS: `get/isuser/terms/accepted`,
-  MATERIALUNIT: `material/get/unit`
+  MATERIALUNIT: `material/get/unit`,
+  DOWNLOADPO: purchaseOrderId => `po/download/${purchaseOrderId}`
 };

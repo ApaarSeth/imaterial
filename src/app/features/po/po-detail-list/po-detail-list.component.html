@@ -176,7 +176,7 @@
                       ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'edit']">Review Draft P.O.</a></span
                     >
                     <span>&nbsp;</span>
-                    <span class="p-r-10 float-right"
+                    <span class="p-r-10 float-right cursor-pointer"
                       ><a (click)="deleteDraftedPo(element)" matTooltip="Delete"> <img src="../../../../assets/images/delete-button.png" /> </a
                     ></span>
                   </td>
@@ -188,6 +188,11 @@
                     <span class="p-r-10">
                       <a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'requiredApproval']">View P.O</a>
                     </span>
+
+                    <span>&nbsp;</span>
+                     <span class="p-r-10 float-right cursor-pointer"
+                      ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
+                    ></span>
                   </td>
                 </ng-container>
 
@@ -247,8 +252,11 @@
                       ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'edit']">Review Draft P.O.</a></span
                     >
                     <span>&nbsp;</span>
-                    <span class="p-r-10 float-right"
+                    <span class="p-r-10 float-right cursor-pointer"
                       ><a (click)="deleteDraftedPo(element)" matTooltip="Delete"> <img src="../../../../assets/images/delete-button.png" /> </a
+                    ></span>
+                     <span class="p-r-10 float-right cursor-pointer"
+                      ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
                     ></span>
                   </td>
                 </ng-container>
@@ -315,6 +323,9 @@
                     >
                     <!-- <span>&nbsp;</span> -->
                     <span class="p-r-10"><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/view-grn/', element.purchaseOrderId]">Add/View GRN</a></span>
+                    <span class="p-r-10 float-right cursor-pointer"
+                      ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
+                    ></span>
 
                     <!-- <span class="p-r-10"
                       ><a style="color: #f47721" href="javascript:void(0)" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
