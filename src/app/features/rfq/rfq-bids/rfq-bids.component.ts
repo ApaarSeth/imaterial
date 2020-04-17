@@ -242,7 +242,8 @@ export class RfqBidsComponent implements OnInit {
   viewRemarks(){
      
       const dialogRef = this.dialog.open(ShowSupplierRemarksandDocs, {
-        width: "1000px"
+        width: "1000px",
+        data : this.rfqProjects[0].supplierRemarkList
       });
       dialogRef
         .afterClosed()
