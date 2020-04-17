@@ -256,4 +256,16 @@ export class PoTableComponent implements OnInit, OnDestroy {
       }, 0);
     }
   }
+  
+  checkQty(m,p,materialAvailableQty,event){
+    this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
+    let totalQty = this.getMaterialQuantity(m);
+    if(totalQty > materialAvailableQty){
+       this._snackBar.open("Net Quantity must be less than "+materialAvailableQty , "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+    }
+  }
 }
