@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material';
 export class UploadComponent implements OnInit {
   fileToUpload: FileList;
   @Input() documentListLength: number;
+  fileTypes : string[] = ['application/pdf','application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/docx', 'image/jpeg','image/jpg', 'image/png'];
 
   deletedDocs: number[] = [];
   uploadedDocs: DocumentDetails[];
@@ -20,6 +21,7 @@ export class UploadComponent implements OnInit {
   @Input("filesRemoved") filesRemoved: boolean;
   @Input('updateInfo') userInfo: boolean;
   @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
+  filetype: string;
   constructor(private documentUploadService: DocumentUploadService,
     private _snackBar:MatSnackBar
     ) { }
@@ -41,11 +43,20 @@ export class UploadComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
 
   }
+
+
+
   uploadFiles(files: FileList) {
     let newFiles = new DataTransfer();
-    var filesize = files[0].size;
+    let filesize = files[0].size;
+    //.pdf, .doc, .docx, .jpeg, .png
+    let filetype = files[0].type;
      if(filesize < 5000000){
-            Object.keys(files).forEach(key => {
+     
+       if(this.fileTypes.some(element => {
+         return element === filetype
+       })){
+             Object.keys(files).forEach(key => {
             newFiles.items.add(files[key]);
           });
 
@@ -56,6 +67,15 @@ export class UploadComponent implements OnInit {
           }
           this.fileToUpload = newFiles.files;
           this.onFileUpdate.emit(this.fileToUpload);
+       }
+       else{
+           this._snackBar.open("This file cannot be uploaded", "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+       }
+           
       }
       else{
            this._snackBar.open("File must be less than 5 mb", "", {

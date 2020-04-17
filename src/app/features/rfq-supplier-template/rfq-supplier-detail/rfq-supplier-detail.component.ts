@@ -151,7 +151,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
-  //  console.log(rfqSupplierObj);
+    //console.log(rfqSupplierObj);
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });

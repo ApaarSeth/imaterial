@@ -293,4 +293,7 @@ export class PoComponent implements OnInit {
     if(!this.ValidPOTemp)
       this.isPoValid = false;
   }
+    downloadPo(){
+      this.poService.downloadPo(this.poId).then(res => res);
+  }
 }
