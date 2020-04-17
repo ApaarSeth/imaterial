@@ -53,7 +53,10 @@ export class PoDocumentsComponent implements OnInit {
       const data = new FormData();
       const fileArr: File[] = [];
       data.append(`file`, this.docs[0]);
-      return this.documentUploadService.postDocumentUpload(data).then(res => {
+      if(!(this.documentList.some(element => {
+       return element.documentName == this.docs[0].name;
+      }))){
+          return this.documentUploadService.postDocumentUpload(data).then(res => {
         this.filesRemoved = false;
         let name: string = res.data;
         let firstName: number = res.data.fileName.indexOf("_");
@@ -81,6 +84,20 @@ export class PoDocumentsComponent implements OnInit {
           }
         );
       });
+      }
+      else{
+         this._snackBar.open(
+         'Duplicate files are not allowed',
+          "",
+          {
+            duration: 4000,
+            panelClass: ["warning-snackbar"],
+            verticalPosition: "bottom"
+          }
+        );
+      }
+
+      
     }
   }
 

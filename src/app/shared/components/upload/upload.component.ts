@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material';
 export class UploadComponent implements OnInit {
   fileToUpload: FileList;
   @Input() documentListLength: number;
-  fileTypes : string[] = ['application/pdf','application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/docx', 'image/jpeg','image/jpg', 'image/png'];
+  fileTypes : string[] = ['application/zip','application/gzip'];
 
   deletedDocs: number[] = [];
   uploadedDocs: DocumentDetails[];
@@ -21,7 +21,6 @@ export class UploadComponent implements OnInit {
   @Input("filesRemoved") filesRemoved: boolean;
   @Input('updateInfo') userInfo: boolean;
   @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
-  filetype: string;
   constructor(private documentUploadService: DocumentUploadService,
     private _snackBar:MatSnackBar
     ) { }
@@ -53,9 +52,9 @@ export class UploadComponent implements OnInit {
     let filetype = files[0].type;
      if(filesize < 5000000){
      
-       if(this.fileTypes.some(element => {
+       if(!(this.fileTypes.some(element => {
          return element === filetype
-       })){
+       }))){
              Object.keys(files).forEach(key => {
             newFiles.items.add(files[key]);
           });
