@@ -21,6 +21,8 @@ import { SelectProjectComponent } from './select-project/select-project.componen
 import { GSTINMissingComponent } from './gstin-missing/gstin-missing.component';
 import { ViewVideoComponent } from './video-video/view-video.component';
 import { AddBomWarningComponent } from './add-bom-warning/add-bom-warning.component';
+import { ShowSupplierRemarksandDocs } from './show-supplier-remarks-documents/show-supplier-remarks-documents.component';
+import { SelectSupplierAddressDialogComponent } from './select-supplier-address/select-supplier-address.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -45,5 +47,7 @@ export const SharedDialogs = [
   SelectProjectComponent,
   ViewVideoComponent,
   GSTINMissingComponent,
-  AddBomWarningComponent
+  AddBomWarningComponent,
+  ShowSupplierRemarksandDocs,
+  SelectSupplierAddressDialogComponent
 ];

@@ -1,16 +1,16 @@
-<div class="row">
-  <mat-card class="width96Percent radius-10">
+<div class="row p-t-25">
+  <mat-card class="width98Percent margin-0-auto radius-10">
     <mat-card-header class="upload-documents-mat-header">
-      <span class="text-semi-bold" *ngIf="mode === 'edit'">
+      <span class="text-semi-bold width100Percent">
         <app-upload #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"> </app-upload>
       </span>
-      <span *ngIf="mode !== 'edit'" class="col-xs-12 text-align-center text-semi-bold">
+      <!-- <span class="col-xs-12 text-align-center text-semi-bold">
         View Document
-      </span>
+      </span> -->
     </mat-card-header>
     <mat-card-content>
       <mat-list class="pt-10">
-        <span *ngIf="mode != 'edit' && documentData">
+        <span *ngIf="documentData">
           <mat-list-item class="files-list" *ngFor="let file of documentData; let i = index">
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />
@@ -22,14 +22,14 @@
             </a>
           </mat-list-item>
         </span>
-        <span *ngIf="mode != 'edit' && !documentData">
+        <span *ngIf="!documentData">
           <mat-list-item>
             <div class="col-xs-12 text-align-center">
               No files to preview
             </div>
           </mat-list-item>
         </span>
-        <span *ngIf="mode === 'edit'">
+        <span>
           <mat-list-item class="files-list" *ngFor="let file of documentList; let i = index">
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />

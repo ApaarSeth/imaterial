@@ -170,6 +170,9 @@ input {
 .max-width-128{
   max-width: 128px;
 }
+.min-width-128{
+  min-width: 128px;
+}
 
 .brand-view-style {
   background-color: $background-table-color-grey;
@@ -346,6 +349,15 @@ a:hover {
 
 .width96Percent {
   width: 96%;
+}
+
+.width98Percent{
+  width: 98%;
+}
+
+
+.margin-0-auto{
+  margin: 0 auto;
 }
 
 .mat-form-field textarea,

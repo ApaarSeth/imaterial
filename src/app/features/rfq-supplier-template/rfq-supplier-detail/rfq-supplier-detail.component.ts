@@ -1,20 +1,26 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SendRfqObj } from "src/app/shared/models/RFQ/rfq-details-supplier";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { ConfirmRfqBidComponent } from "src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component";
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { materialize } from 'rxjs/operators';
 import { formatDate, DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Froala } from 'src/app/shared/constants/configuration-constants';
+import { DocumentList } from 'src/app/shared/models/PO/po-data';
+import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
+import { RFQDocumentsComponent } from '../rfq-bid-documents/rfq-bid-documents.component';
 @Component({
   selector: "rfq-indent-detail",
   templateUrl: "./rfq-supplier-detail.component.html"
 })
 export class RFQSupplierDetailComponent implements OnInit {
 
+   @Input("documentListLength") public documentListLength: number;
+  @Input("documentData") documentData: DocumentList[];
+  @ViewChild("rfqDocument", { static: false }) rfqDocument: RFQDocumentsComponent;
   rfqSupplierDetailList: SendRfqObj;
   dudateFlag: boolean = false;
   projectCount: number = 0;
@@ -40,12 +46,18 @@ export class RFQSupplierDetailComponent implements OnInit {
   showDateError: string;
   endstring: string;
   poTerms: FormGroup;
+  docs: FileList;
+  filesRemoved: boolean;
+  documentList: DocumentList[] = [];
+  documentsName: string[] = [];
 
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
+    private documentUploadService: DocumentUploadService,
     private router: Router,
+    private _snackBar : MatSnackBar,
     private formBuilder: FormBuilder
   ) { }
 
@@ -138,7 +150,8 @@ export class RFQSupplierDetailComponent implements OnInit {
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
     let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
-    //console.log(rfqSupplierObj);
+    rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
+  //  console.log(rfqSupplierObj);
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });
@@ -184,16 +197,6 @@ export class RFQSupplierDetailComponent implements OnInit {
   duedatefunc(event, value) {
 
     this.dateDue = event.target.value;
-
-    // const x =  this.dateDue.indexOf('/');
-    // const day =  this.dateDue.substring(0, x);
-    // const y =  this.dateDue.indexOf('/');
-    // const month =  this.dateDue.substring(x + 1, y);
-
-
-    // const year = value.substring(y + 1, 10);
-    // const endDate = year+ "-"+ month +"-"+ day;
-    // this.endstring = endDate;
     const datePipe = new DatePipe('en-US');
     const setDob = datePipe.transform(this.rfqSupplierDetailList.dueDate, 'dd-MMM-yyy');
 
@@ -340,8 +343,6 @@ export class RFQSupplierDetailComponent implements OnInit {
     ) {
       this.submitButtonValidationFlag = true;
     }
-
-
 
   }
 

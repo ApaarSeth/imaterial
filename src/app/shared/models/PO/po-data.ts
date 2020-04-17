@@ -99,6 +99,15 @@ export interface SupplierAddress {
   gstNo: string;
 }
 
+export interface SupplierSelectedAddress {
+  
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  pinCode: string;
+  gstNo: string;
+}
 export interface ProjectAddress {
   projectAddressId: number;
   supplierId: number;
