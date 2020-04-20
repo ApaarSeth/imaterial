@@ -388,7 +388,25 @@ body,
   }
 
 }
+
+@media only screen and (min-width: 560px) {
+ .project-dashboard{
+          padding-left: 20px;
+          padding-right: 20px;
+          }
+}
   @media only screen and (max-width: 560px) {
+      .project-dashboard{
+          padding-left: 7px;
+          padding-right: 7px;
+            .example-form-field {
+                 width: 100%;
+            }
+              .add-project-btn{
+                 padding-top: 10px;
+             }
+        }
+      
         .things-to-do__icons {
                     box-shadow: none;
                     border-radius: 10px;

@@ -1,37 +1,50 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, NavigationEnd } from '@angular/router';
+import { UserService } from '../../services/userDashboard/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: "app-main-layout",
   templateUrl: "./main-layout.component.html"
 })
 export class MainLayoutComponent implements OnInit {
-  mySubscription: any;
+  subscription : Subscription;
+  subscriptions: Subscription[] = [];
+  userId: number;
+  userName: string;
+  url: string;
 
-  constructor(private router: Router) {
-    // this.router.routeReuseStrategy.shouldReuseRoute = function () {
-    //   return false;
-    // };
-
-    // this.mySubscription = this.router.events.subscribe((event) => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.router.navigated = false;
-    //   }
-    // });
-  }
+  constructor(private router: Router, private _userService: UserService) {}
 
   loaded = '';
-  ngOnInit() { }
+  ngOnInit() { 
+    this.userId = Number(localStorage.getItem("userId"));
+    this.userName = localStorage.getItem("userName");
+    this.url = localStorage.getItem('profileUrl');
+    this.startSubscriptions();
+  }
 
 
   isLoaded(event) {
     this.loaded = event
   }
+  
+  goToProfile(){
+  this.router.navigate(['/profile-account']);
+  }
+  
+  startSubscriptions(){
+      this.subscriptions.push(
+            this._userService.UpdateProfileImage.subscribe(image => {
+              this.url = image;
+              localStorage.setItem('profileUrl',this.url);
+            })
+        );
+  }
+
 
 
   ngOnDestroy() {
-    if (this.mySubscription) {
-      this.mySubscription.unsubscribe();
-    }
+     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
 }

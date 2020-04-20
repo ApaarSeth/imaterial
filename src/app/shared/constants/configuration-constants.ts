@@ -14,13 +14,13 @@ export class Froala {
 export const HeaderConstants = {
   PERMISSIONHEADER: (permissionObj, orgId) => {
     return [
-      { name: 'Dashboard', link: '/dashboard', flag: true },
-      { name: 'Project Store', link: '/project-dashboard', flag: permissionObj.projectStoreFlag },
-      { name: 'Global Store', link: '/globalStore/' + orgId, flag: permissionObj.globalStoreFlag },
-      { name: 'Request For Quotation', link: '/rfq/rfq-detail', flag: permissionObj.rfqFlag },
-      { name: 'Users', link: '/users/user-detail', flag: permissionObj.usersFlag },
-      { name: 'Purchase Order', link: '/po/detail-list', flag: permissionObj.purchaseOrderFlag },
-      { name: 'Supplier', link: '/supplier/detail', flag: permissionObj.supplierFlag }
+      { name: 'Dashboard', link: '/dashboard', image:'../../../assets/images/dashboard-hamburger.svg', flag: true },
+      { name: 'Project Store', link: '/project-dashboard', image:'../../../assets/images/Add-Project-hamburger.png', flag: permissionObj.projectStoreFlag },
+      { name: 'Global Store', link: '/globalStore/' + orgId, image:'../../../assets/images/global-store-hamburger.png', flag: permissionObj.globalStoreFlag },
+      { name: 'Request For Quotation', link: '/rfq/rfq-detail', image:'../../../assets/images/create-RFQ-hambuger.png', flag: permissionObj.rfqFlag },
+      { name: 'Users', link: '/users/user-detail', image:'../../../assets/images/user-hamburger.svg', flag: permissionObj.usersFlag },
+      { name: 'Purchase Order', link: '/po/detail-list', image:'../../../assets/images/po-hamburger.png', flag: permissionObj.purchaseOrderFlag },
+      { name: 'Supplier', link: '/supplier/detail', image:'../../../assets/images/supplier-hamburger.svg', flag: permissionObj.supplierFlag }
     ]
 
   }
