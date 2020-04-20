@@ -1,6 +1,5 @@
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height">
-    <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
     <div class="p-t-10">
       <mat-card class="parent">
         <form [formGroup]="form">
@@ -31,7 +30,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <!-- <p>Please select categories to add materials in Bill of Materials</p> -->
+              <p>Please select categories to add materials in Bill of Materials</p>
             </div>
             <div class="col-xs-6 text-right d-flex justify-content-end" appDnd>
               <div class="mr-3">
@@ -76,36 +75,19 @@
               <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
             </div>
           </div>
-          <div class="col-xs-2 p-t-20">
-            <a href="javascript:void(0)" class="main-color text-semi-bold" (click)="openAddMyMaterial()">+ Add Custom Material</a>
+          <div class="col-xs-2">
+            <a href="javascript:void(0)" class="main-color" (click)="openAddMyMaterial()">+ Add Custom Material</a>
           </div>
         </div>
 
         <div *ngIf="showTable">
           <mat-tab-group (selectedTabChange)="tabClick($event)">
-            <mat-tab label="Top Materials">
-              <app-bom-topMaterial
-                *ngIf="showTopMaterial"
-                #preview
-                [category]="topMaterialData"
-                [searchMat]="searchAgain"
-                (searchData)="searchData($event)"
-                (inputEntered)="checkValidations($event)"
-              ></app-bom-topMaterial
-            ></mat-tab>
-            <mat-tab label="All Materials"
-              ><app-bom-allMaterial
-                *ngIf="showAllMaterial"
-                #preview1
-                [category]="allMaterialData"
-                [searchMat]="searchAgain"
-                (searchData)="searchData($event)"
-                (inputEntered)="checkValidationsAll($event)"
-              ></app-bom-allMaterial
-            ></mat-tab>
+            <mat-tab label="Top Materials"> <app-my-material-tab></app-my-material-tab></mat-tab>
+            <mat-tab label="All Materials"><app-unapproved-material-tab></app-unapproved-material-tab></mat-tab>
           </mat-tab-group>
         </div>
       </mat-card>
     </div>
   </div>
 </div>
+-->

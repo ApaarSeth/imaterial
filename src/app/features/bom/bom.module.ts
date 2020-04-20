@@ -13,8 +13,9 @@ import { IssueToIndentResolver } from 'src/app/shared/dialogs/issue-to-indent/is
 import { SharedComponentsModule } from 'src/app/shared/components/shared-component.modules';
 import { BOMAllMaterialComponent } from './bom-allMaterial/bom-allMaterial.component';
 import { OnlyNumberDirective } from 'src/app/shared/directives/number-only2.directive';
+import { BomMyMaterialComponent } from './bom-myMaterial/bom-myMaterial.component';
 @NgModule({
-  declarations: [BomComponent, BomTopMaterialComponent, BOMAllMaterialComponent, BomTableComponent],
+  declarations: [BomComponent, BomTopMaterialComponent, BOMAllMaterialComponent, BomTableComponent, BomMyMaterialComponent],
   imports: [
     CommonModule,
     BomRoutingModule,
