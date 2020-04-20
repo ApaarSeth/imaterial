@@ -25,11 +25,10 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 import { range } from 'rxjs';
 
 @Component({
-  selector: "app-bom-topMaterial",
-  templateUrl: "./bom-topMaterial.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  selector: "app-my-topMaterial",
+  templateUrl: "./bom-myMaterial.component.html",
 })
-export class BomTopMaterialComponent implements OnInit {
+export class BomMyMaterialComponent implements OnInit {
   @Output() inputEntered = new EventEmitter();
   @Output("searchData") searchData = new EventEmitter();
   @Input("category") category: categoryNestedLevel[];
@@ -204,7 +203,7 @@ export class BomTopMaterialComponent implements OnInit {
   }
 
 
-  getMaterialLength(minRequired = 1): ValidatorFn {
+  getMaterialLength(): ValidatorFn {
     return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
       for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {

@@ -38,9 +38,11 @@ export class TokenInterceptor implements HttpInterceptor {
                     request.url.indexOf('user/info/') > -1 ||
                     request.url.indexOf('material/get/trades') > -1 ||
                     request.url.indexOf('rfq/details/supplier/') > -1 ||
-                    request.url.indexOf('api/user/resetPassword') > -1) {
+                    request.url.indexOf('api/user/resetPassword') > -1 ||
+                    request.url.indexOf('trade/get/categories/') > -1) {
                     return next.handle(request)
                 }
+
                 else if (headers) {
                     let modifiedRequest = request.clone({
                         headers: request.headers.set(

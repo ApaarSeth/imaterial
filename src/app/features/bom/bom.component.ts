@@ -33,6 +33,7 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 import { AddBomWarningComponent } from 'src/app/shared/dialogs/add-bom-warning/add-bom-warning.component';
 import { BOMAllMaterialComponent } from './bom-allMaterial/bom-allMaterial.component';
+import { AddMyMaterialComponent } from 'src/app/shared/dialogs/add-my-material/add-my-material.component';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -178,30 +179,30 @@ export class BomComponent implements OnInit {
   uploadExcel(files: FileList) {
     const data = new FormData();
     data.append("file", files[0]);
-     var fileSize =  files[0].size; // in bytes
-      if(fileSize < 5000000){
-       this.postMaterialExcel(data);
-      }
-      else{
-        this._snackBar.open("File must be less than 5 mb", "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
-      } 
+    var fileSize = files[0].size; // in bytes
+    if (fileSize < 5000000) {
+      this.postMaterialExcel(data);
+    }
+    else {
+      this._snackBar.open("File must be less than 5 mb", "", {
+        duration: 2000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "bottom"
+      });
+    }
 
-   
+
   }
-  postMaterialExcel(data){
+  postMaterialExcel(data) {
     this.loading.show();
-     this.bomService.postMaterialExcel(data, this.projectId).then(res => {
+    this.bomService.postMaterialExcel(data, this.projectId).then(res => {
       this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
       this.loading.hide();
-       this._snackBar.open(res.message, "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
+      this._snackBar.open(res.message, "", {
+        duration: 2000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "bottom"
+      });
     });
   }
   downloadExcel(url: string) {
@@ -318,6 +319,14 @@ export class BomComponent implements OnInit {
     }
   }
 
+
+  openAddMyMaterial() {
+    let data = this.projectId
+    const dialogRef = this.dialog.open(AddMyMaterialComponent, {
+      width: "1400px",
+      data
+    });
+  }
   openAddBomDialog(index: number) {
     const dialogRef = this.dialog.open(AddBomWarningComponent, {
       width: "400px",

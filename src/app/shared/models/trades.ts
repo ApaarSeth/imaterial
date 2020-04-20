@@ -11,3 +11,8 @@ export interface orgTrades {
     isAttatched: boolean
     organizationId: number
 }
+
+export interface tradeRelatedCategory {
+    categoriesName: string,
+    categoriesCode: string
+}
