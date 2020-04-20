@@ -85,5 +85,7 @@ export class BomService {
   getMaterialExist(data) {
     return this.dataService.sendPostRequest(API.MATERIALEXIST, data)
   }
-
+  addMyMaterial(projectId, data) {
+    return this.dataService.sendPostRequest(API.ADDMYMATERIAL(projectId), data)
+  }
 }

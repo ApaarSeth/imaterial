@@ -96,10 +96,6 @@ export class AddMyMaterialComponent implements OnInit {
     });
   }
 
-
-  /**
-   * @description Create fromcontrols for existing row
-   */
   formInit() {
     this.addMyMaterial = this._formBuilder.group({
       myMaterial: this._formBuilder.array([])
@@ -133,36 +129,35 @@ export class AddMyMaterialComponent implements OnInit {
     })
 
     formGrp.controls['trade'].valueChanges.subscribe(changes => {
-      this.bomService.getTradeCategory(changes.tradeName).then(res => {
-        this.filteredOption[formGrp.get("index").value] = [...res.data];
-        this.filterOptions = new Observable((observer) => {
-          const val: tradeRelatedCategory[] | [string] = this._filter('', formGrp.get("index").value)
-          // observable execution
-          observer.next(val)
-          observer.complete()
+      if (changes) {
+        this.bomService.getTradeCategory(changes.tradeName).then(res => {
+          this.filteredOption[formGrp.get("index").value] = [...res.data];
+          this.filterOptions = new Observable((observer) => {
+            const val: tradeRelatedCategory[] | [string] = this._filter('', formGrp.get("index").value)
+            // observable execution
+            observer.next(val)
+            observer.complete()
+          })
         })
-      })
+      }
     })
     return formGrp;
   }
 
   private _filter(value: string | tradeRelatedCategory, index) {
-
-    const filterValue = typeof (value) === "string" ? value.toLowerCase() : value.categoriesName.toLowerCase();
-    if (filterValue === '') {
-      return this.filteredOption[index];
+    if (value || value === "") {
+      const filterValue = typeof (value) === "string" ? value.toLowerCase() : value.categoriesName.toLowerCase();
+      if (filterValue === '') {
+        return this.filteredOption[index];
+      }
+      let filteredValue: tradeRelatedCategory[] | [string] = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.categoriesName.toLowerCase().includes(filterValue));
+      if (!filteredValue.length) {
+        filteredValue = [filterValue + " (new value)"]
+      }
+      return filteredValue;
     }
-    let filteredValue: tradeRelatedCategory[] | [string] = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.categoriesName.toLowerCase().includes(filterValue));
-    if (!filteredValue.length) {
-      filteredValue = [filterValue + " (new value)"]
-    }
-    return filteredValue;
   }
 
-
-  /**
-   * @description Append a new row after click on + button
-   */
   onAddRow() {
     let currentIndex = this.addMyMaterial.get('myMaterial')['controls'].length - 1;
     let { trade, materialName, category } = (<FormArray>this.addMyMaterial.get('myMaterial')).controls[currentIndex].value;
@@ -180,7 +175,7 @@ export class AddMyMaterialComponent implements OnInit {
       }
       else {
         this._snackBar.open("Material Name already exist in all material", "", {
-          duration: 2000,
+          duration: 4000,
           panelClass: ["warning-snackbar"],
           verticalPosition: "bottom"
         });
@@ -189,10 +184,6 @@ export class AddMyMaterialComponent implements OnInit {
     })
 
   }
-
-  /**
-   * @description Create formcontrols after click on + button
-   */
 
   onDelete(index) {
     (<FormArray>this.addMyMaterial.get('other')).removeAt(index);
@@ -208,10 +199,10 @@ export class AddMyMaterialComponent implements OnInit {
    * @description To submit the data after click on Done button
    */
   submit() {
-    let myMaterial = this.addMyMaterial.get("myMaterial")['controls'].value.map(val => {
+    let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
       return {
-        estimatedPrice: val.estimatedPrice,
-        estimatedQty: val.estimatedQty,
+        estimatedPrice: Number(val.estimatedPrice),
+        estimatedQty: Number(val.estimatedQty),
         materialName: val.materialName,
         materialGroupCode: val.category.categoriesCode,
         materialGroup: val.category.categoriesName,
@@ -219,6 +210,7 @@ export class AddMyMaterialComponent implements OnInit {
         tradeId: val.trade.tradeId
       }
     })
+    this.bomService.addMyMaterial(this.data, myMaterial);
   }
   closeDialog() {
     this.dialogRef.close(null);

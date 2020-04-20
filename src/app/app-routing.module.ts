@@ -123,6 +123,13 @@ const routes: Routes = [
           import("./features/supplier/supplier.module").then(
             m => m.SupplierDashboardModule
           )
+      },
+      {
+        path: "myMaterial",
+        loadChildren: () =>
+          import("./features/my-material/myMaterial.module").then(
+            m => m.MyMaterialModule
+          )
       }
     ]
   },

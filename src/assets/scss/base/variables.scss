@@ -45,6 +45,10 @@ a:hover {
 .main-color {
   color: $main-color;
 }
+.main-color-faded {
+  color: $main-color;
+  opacity: 0.6;
+}
 
 .main-background-color {
   background-color: $main-color;

@@ -108,5 +108,6 @@ export const API = {
   MATERIALUNIT: `material/get/unit`,
   DOWNLOADPO: purchaseOrderId => `po/download/${purchaseOrderId}`,
   TRADERELATEDCATEGORY: (tradeName) => `trade/get/categories/${tradeName}`,
-  MATERIALEXIST: `material/search/materialexist`
+  MATERIALEXIST: `material/search/materialexist`,
+  ADDMYMATERIAL: projectId => `material/add/custom/${projectId}`
 };
