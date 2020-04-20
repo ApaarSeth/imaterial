@@ -137,3 +137,20 @@ color: #000000 !important;
   }
 
    
+   .mat-drawer-inner-container{ overflow-y: hidden }
+   .mat-drawer:not(.mat-drawer-side){ width: 100%}
+
+   .side-navbar-header{
+     padding: 15px 5px 15px 15px;
+     background:  #efefefd1;
+
+     .user-name{
+       padding-left: 15px;
+       font-weight: 500;
+       font-size: 16px;
+       cursor: pointer;
+     }
+     .menu-close{
+       margin-top: -4px;
+     }
+   }

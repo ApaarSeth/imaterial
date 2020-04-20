@@ -21,37 +21,4 @@
     <input accept=".pdf, .doc, .docx, .jpeg, .png " type="file" #fileDropRef id="fileDropRef" class="drag-and-drop" title="" multiple (change)="uploadFiles($event.target.files)" />
     <span>Drag and drop or <span for="fileDropRef" class="main-color">Browse</span> files to upload</span>
   </div>
-
-  <div class="col-xs-12 upload-document-label" *ngIf="fileToUpload && fileToUpload.length && documentListLength > 0">
-    <!-- {{ fileToUpload[fileToUpload.length - 1].name }} -->
-    File has been successfully uploaded
-  </div>
 </div>
-
-<!-- <mat-card *ngIf="userInfo" class="p-0">
-  <mat-list class="pt-0">
-      
-          <ng-container *ngFor="let file of fileToUpload; let i = index">
-              
-              <mat-list-item>
-                  <div class="file-details">
-                      <img [src]="fileExtension === 'pdf' ? 'assets/img/file.png' : 'assets/img/icon-image.png'" alt="pdf file" class="fileExtImg">
-                      <span class="file-name">{{file.name}}</span>
-                  </div>
-                  
-                  <div class="file-actions">
-                      <ng-container *ngIf="isViewShow">
-                          <span class="attachment-name blue-link-color" (click)="viewFile(file.name)">View</span>
-                      </ng-container>
-
-                      <button type="button" (click)="removeFile(i)" mat-icon-button>
-                          <mat-icon class="font-size-16">cancel</mat-icon>
-                      </button>
-                  </div>
-                  
-              </mat-list-item>
-
-          </ng-container>
-  </mat-list>
-</mat-card>
-<input (change)="uploadFiles($event.target.files)" [hidden]="true" [id]="label" multiple type="file" /> -->

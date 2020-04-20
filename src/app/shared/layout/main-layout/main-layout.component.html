@@ -1,8 +1,17 @@
 <mat-sidenav-container>
   <mat-sidenav class="sidenav" #sidenav [fixedInViewport]="true" [mode]="'over'">
-    <button class="menu-close float-right" (click)="sidenav.close()" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
+     
+     <div class="side-navbar-header">
+        <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
+        <span class="user-name" (click)="goToProfile()">
+          {{userName}}
+        </span>
+
+      <button class="menu-close float-right" (click)="sidenav.close()" mat-icon-button>
+       <mat-icon>close</mat-icon>
+      </button>
+
+      </div>
     <app-sidenav-list></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>

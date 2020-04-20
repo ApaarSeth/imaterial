@@ -199,13 +199,13 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getMaterialQuantity(m) {
     if (this.mode != "edit") {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+      return this.poTableData[m].purchaseOrderDetailList.reduce((total:number, purchase: PurchaseOrder) => {
         return (total += Number(purchase.materialQuantity));
       }, 0);
     } else {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
          total += Number(purchase.qty);
-        if(total > this.poTableData[m].poAvailableQty){
+        if(Number(total.toFixed(2)) > Number(this.poTableData[m].poAvailableQty)){
           this.poTableData[m].validQuantity = false;
          }
          else{
@@ -260,7 +260,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   checkQty(m,p,materialAvailableQty,event){
     this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
     let totalQty = this.getMaterialQuantity(m);
-    if(totalQty > materialAvailableQty){
+    if(totalQty.toFixed(2) > materialAvailableQty){
        this._snackBar.open("Net Quantity must be less than "+materialAvailableQty , "", {
             duration: 2000,
             panelClass: ["success-snackbar"],

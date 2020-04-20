@@ -33,7 +33,7 @@
     </button>
 
     <div class="logo-profile-header">
-      <button mat-button [matMenuTriggerFor]="logIn">
+      <button mat-button [matMenuTriggerFor]="logIn" fxShow.gt-md="true"  fxShow.sm="false" fxShow.xs="false" fxShow="true">
         <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
         <span class="username">
           {{userName}}

@@ -70,6 +70,11 @@ export class RFQDocumentsComponent implements OnInit {
         this.documentListLength = this.documentList.length;
         subFileName = "";
         this.filesRemoved = true;
+        this._snackBar.open("File has been successfully uploaded", "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
       }).catch(err => {
         this.filesRemoved = true;
         this.docs = null;
