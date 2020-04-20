@@ -727,10 +727,6 @@ h3 {
     color:#3b5998;
     text-decoration:underline;
 }
-.body-of-notification{
-    //max-height: 288px;
-   // overflow-y: scroll;
-}
 
 .read-unread-heading{
     background: #d8d8d857;
@@ -768,4 +764,60 @@ h3 {
     display:block;
     color:#f47721;
 }
-    
+  .remarks-suppliers .suppliers-list {
+    border-right: 1px solid #d0d0d0;
+    padding:0px;
+    .heading{
+            font-size: 22px;
+            font-weight: 500;
+            color: #484444;
+            padding: 17px 0px 5px 10px;
+    }
+    .supplier-list-name{
+         max-height: 350px;
+         overflow-y: auto;
+    }
+    .list-of-suppliers{
+         font-size: 15px;
+         color: #484444;
+         cursor: pointer;
+          padding: 2.5px 0px 2.5px 10px;
+        
+    }
+    .active{
+        background: #f3f3f7;
+    }
+}
+ .remarks-suppliers .suppliers-details{
+     padding: 0px 8px 0px 50px;
+     color: #716d6d;
+     .comments-of-supplier{
+         padding-top: 10px;
+         max-height: 170px;
+         overflow-y: auto;
+     }
+      .heading{
+            font-size: 22px;
+            font-weight: 500;
+            color: #484444;
+             padding: 17px 0px 5px 0px;
+    }
+    .show-download{
+        a{
+                -webkit-appearance: none !important;
+                i{
+                    color:#f47721;
+                }
+        }
+    }
+    .documents-show-div{
+        max-height: 170px;
+        overflow-y: auto;
+    }
+    .documents-name{
+        padding-top: 8px;
+        span{
+            font-size: 16px;
+        }
+    }
+ }

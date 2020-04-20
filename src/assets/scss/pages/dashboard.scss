@@ -146,9 +146,11 @@ body,
         }
         &__content {
             h2 {
-                font-size: 30px;
+                font-size: 25px;
                 color: #f4793d;
                 font-weight: 600;
+                max-width:250px;
+                word-wrap:break-word;
             }
             p {
                 font-size: 14px;

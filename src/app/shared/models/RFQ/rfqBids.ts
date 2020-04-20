@@ -1,3 +1,5 @@
+import { DocumentList } from '../PO/po-data';
+
 export interface RfqProjects {
   rfqProjects: RfqProject[];
 }
@@ -58,8 +60,19 @@ export interface RfqProject {
   matCount: null;
   unit: null;
   materialList: RfqMaterialList[];
+  supplierRemarkList: supplierRemarkList[];
 }
-
+export interface supplierRemarkList{
+      DocumentDesc?: string; 
+      DocumentUrl?: string;
+      comments?: string;
+      documentId?: number;
+      documentType?: string;
+      documentsList?: DocumentList[]
+      rfqSupplierId?: number;
+      supplierId?: number;
+      supplierName?: string;
+}
 export interface RfqMaterialList {
   poAvailableQty?: number;
   id: number;

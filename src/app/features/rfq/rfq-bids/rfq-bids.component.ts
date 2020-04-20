@@ -13,7 +13,7 @@ import { map } from "rxjs/operators";
 import { Materials } from "src/app/shared/models/subcategory-materials";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShowSupplierRemarksandDocs } from 'src/app/shared/dialogs/show-supplier-remarks-documents/show-supplier-remarks-documents.component';
 
 @Component({
@@ -27,7 +27,8 @@ export class RfqBidsComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private _snackBar: MatSnackBar
   ) { }
   rfqProjects: RfqProject[] = [];
   rfqForms: FormGroup;
@@ -225,6 +226,12 @@ export class RfqBidsComponent implements OnInit {
                      total = total + Number(brand.quantity);
                       if(total > this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty){
                       this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(false);
+                       this._snackBar.open("Net Quantity must be less than "+this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty , "", {
+                                duration: 2000,
+                                panelClass: ["success-snackbar"],
+                                verticalPosition: "bottom"
+                              });
+                      
                   }
                 } 
                
@@ -235,7 +242,8 @@ export class RfqBidsComponent implements OnInit {
   viewRemarks(){
      
       const dialogRef = this.dialog.open(ShowSupplierRemarksandDocs, {
-        width: "1000px"
+        width: "1000px",
+        data : this.rfqProjects[0].supplierRemarkList
       });
       dialogRef
         .afterClosed()
