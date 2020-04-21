@@ -105,11 +105,11 @@ export class AddMyMaterialComponent implements OnInit {
 
   addOtherFormGroup(): FormGroup {
     const formGrp = this._formBuilder.group({
-      materialName: [null, Validators.required],
-      materialUnit: [null, Validators.required],
+      materialName: ['', Validators.required],
+      materialUnit: ['', Validators.required],
       index: [],
-      estimatedQty: [null, Validators.required],
-      estimatedPrice: [null],
+      estimatedQty: ['', Validators.required],
+      estimatedPrice: [''],
       trade: [''],
       category: [''],
     });
@@ -152,23 +152,25 @@ export class AddMyMaterialComponent implements OnInit {
       }
       let filteredValue: tradeRelatedCategory[] | [string] = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.categoriesName.toLowerCase().includes(filterValue));
       if (!filteredValue.length) {
-        filteredValue = [filterValue + " (new value)"]
+        filteredValue = [{ categoriesName: filterValue + " (new value)", categoriesCode: null }]
       }
       return filteredValue;
     }
   }
 
-  onAddRow() {
+  get currentData() {
     let currentIndex = this.addMyMaterial.get('myMaterial')['controls'].length - 1;
     let { trade, materialName, category } = (<FormArray>this.addMyMaterial.get('myMaterial')).controls[currentIndex].value;
     trade = !trade ? "" : trade.tradeName;
     category = !category ? "" : category.categoryName;
-    this.bomService.getMaterialExist({ tradeName: trade, materialName, categoryName: category }).then(res => {
+    return { trade, category, materialName }
+  }
+
+  onAddRow() {
+    let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
+    this.bomService.getMaterialExist(checkData).then(res => {
       if (res.data) {
         (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-        currentIndex = this.addMyMaterial.get('myMaterial')['controls'].length - 1;
-        (<FormArray>this.addMyMaterial.get('myMaterial')).controls[currentIndex].markAsUntouched();
-
         this.filteredOption[this.addUserFormLength - 1] = null
       }
       else {
@@ -177,7 +179,7 @@ export class AddMyMaterialComponent implements OnInit {
           panelClass: ["warning-snackbar"],
           verticalPosition: "bottom"
         });
-        (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[currentIndex]).controls['materialName'].reset();
+        (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
       }
     })
 
@@ -196,28 +198,46 @@ export class AddMyMaterialComponent implements OnInit {
   /**
    * @description To submit the data after click on Done button
    */
+  get currentIndex() {
+    return this.addMyMaterial.get('myMaterial')['controls'].length - 1;
+  }
+
   submit() {
-    let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
-      return {
-        estimatedPrice: Number(val.estimatedPrice),
-        estimatedQty: Number(val.estimatedQty),
-        materialName: val.materialName,
-        materialGroupCode: val.category.categoriesCode,
-        materialGroup: val.category.categoriesName,
-        materialUnit: val.materialUnit,
-        tradeId: val.trade.tradeId
+    let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
+    this.bomService.getMaterialExist(checkData).then(res => {
+      if (res.data) {
+        let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
+          return {
+            estimatedPrice: Number(val.estimatedPrice),
+            estimatedQty: Number(val.estimatedQty),
+            materialName: val.materialName,
+            materialGroupCode: val.category.categoriesCode,
+            materialGroup: val.category.categoriesName,
+            materialUnit: val.materialUnit,
+            tradeId: val.trade.tradeId
+          }
+        })
+        this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
+          if (res.message = "done") {
+            this._snackBar.open("My Materials Added", "", {
+              duration: 4000,
+              panelClass: ["warning-snackbar"],
+              verticalPosition: "bottom"
+            });
+          }
+          this.dialogRef.close(null);
+        });
       }
-    })
-    this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
-      if (res.message = "done") {
-        this._snackBar.open("My Materials Added", "", {
+      else {
+        this._snackBar.open("Material Name already exist in all material", "", {
           duration: 4000,
           panelClass: ["warning-snackbar"],
           verticalPosition: "bottom"
         });
+        (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
       }
-      this.dialogRef.close(null);
-    });
+    })
+
 
   }
   closeDialog() {
