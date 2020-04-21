@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PermissionService } from '../../services/permission.service';
 import { HeaderConstants } from '../../constants/configuration-constants';
+import { Router } from '@angular/router';
  
 @Component({
   selector: 'app-sidenav-list',
@@ -17,7 +18,7 @@ export class SidenavListComponent implements OnInit {
   @Output() sidenavClose = new EventEmitter();
   orgId: number;
  
-  constructor( private permissionService: PermissionService,) { }
+  constructor( private permissionService: PermissionService, private router: Router) { }
  
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -31,5 +32,9 @@ export class SidenavListComponent implements OnInit {
   public onSidenavClose = () => {
     this.sidenavClose.emit();
   }
- 
+   logout() {
+    this.router.navigate(['/auth/login']).then(_ => {
+      localStorage.clear();
+    });
+  }
 }

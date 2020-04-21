@@ -224,7 +224,7 @@ export class RfqBidsComponent implements OnInit {
           supplier.brandGroup.forEach((brand) => {
                 if(brand.quantity != null){
                      total = total + Number(brand.quantity);
-                      if(total > this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty){
+                      if(total.toFixed(2) > this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty){
                       this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(false);
                        this._snackBar.open("Net Quantity must be less than "+this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty , "", {
                                 duration: 2000,

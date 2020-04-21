@@ -1,8 +1,21 @@
 <!-- <mat-sidenav #sidenav> -->
-  <mat-nav-list class="p-t-20">
+  <mat-nav-list>
     <ng-container *ngFor="let selectedHeader of headerConst">
+      <div class="display-flex">
          <a href="javascript:void(0)" *ngIf="selectedHeader.flag"  mat-list-item [routerLink]="[selectedHeader.link]">
-            {{selectedHeader.name}}
+            <img [src]="selectedHeader.image" alt=""/>
+           <span class="p-l-15">
+             {{selectedHeader.name}}
+           </span> 
         </a>
+      </div>
     </ng-container>
+     <div class="display-flex">
+         <a href="javascript:void(0)"  mat-list-item  (click)="logout()">
+            <img src="../../../assets/images/logout-hamburger.svg" alt=""/>
+             <span class="p-l-15">
+             Logout
+           </span> 
+        </a>
+      </div>
   </mat-nav-list>

@@ -19,6 +19,8 @@ import { Subscription } from "rxjs";
 import { ProjectDetails } from "../../models/project-details";
 import { PermissionService } from "../../services/permission.service";
 import { Orientation, GuidedTour, GuidedTourService } from 'ngx-guided-tour';
+import { DisplayProjectDetailsComponent } from "../../dialogs/display-project-details/display-project-details.component";
+import { MatDialog } from "@angular/material";
 
 @Component({
   selector: "card-layout",
@@ -32,6 +34,8 @@ export class ProjectItemComponent implements OnInit {
   constructor(
     private permissionService: PermissionService,
     private router: Router,
+    public dialog: MatDialog,
+
     private activatedRoute: ActivatedRoute,
     private guidedTourService: GuidedTourService
   ) { }
@@ -74,4 +78,15 @@ export class ProjectItemComponent implements OnInit {
     this.router.navigate(["/indent/" + id + "/indent-detail"]);
     // this.router.navigate(['/indent/1/indent-detail']);
   }
+
+  showDetails(data): void {
+      const dialogRef = this.dialog.open(DisplayProjectDetailsComponent, {
+        data
+      });
+
+      dialogRef
+        .afterClosed()
+        .toPromise()
+        .then(result => result);
+    } 
 }
