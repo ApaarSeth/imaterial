@@ -208,7 +208,17 @@ export class AddMyMaterialComponent implements OnInit {
         tradeId: val.trade.tradeId
       }
     })
-    this.bomService.addMyMaterial(this.data, myMaterial);
+    this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
+      if (res.message = "done") {
+        this._snackBar.open("My Materials Added", "", {
+          duration: 4000,
+          panelClass: ["warning-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
+      this.dialogRef.close(null);
+    });
+
   }
   closeDialog() {
     this.dialogRef.close(null);

@@ -88,6 +88,7 @@
             </span>
             <span *ngIf="i == addMyMaterial.get('myMaterial').value.length - 1">
               <button
+                type="button"
                 [disabled]="!addMyMaterial.valid"
                 (click)="onAddRow()"
                 class="p-t-5 material-icons cursor button-background"
