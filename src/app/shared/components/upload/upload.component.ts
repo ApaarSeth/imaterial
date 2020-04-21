@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material';
 export class UploadComponent implements OnInit {
   fileToUpload: FileList;
   @Input() documentListLength: number;
-  fileTypes : string[] = ['application/zip','application/gzip'];
+  fileTypes : string[] = ['pdf', 'doc', 'docx', 'jpeg', 'png'];
 
   deletedDocs: number[] = [];
   uploadedDocs: DocumentDetails[];
@@ -48,13 +48,14 @@ export class UploadComponent implements OnInit {
   uploadFiles(files: FileList) {
     let newFiles = new DataTransfer();
     let filesize = files[0].size;
+    let fileType = files[0].name.split('.').pop();
     //.pdf, .doc, .docx, .jpeg, .png
-    let filetype = files[0].type;
+    // let filetype = files[0].type;
      if(filesize < 5000000){
      
-       if(!(this.fileTypes.some(element => {
-         return element === filetype
-       }))){
+       if(this.fileTypes.some(element => {
+         return element === fileType
+       })){
              Object.keys(files).forEach(key => {
             newFiles.items.add(files[key]);
           });
@@ -68,7 +69,7 @@ export class UploadComponent implements OnInit {
           this.onFileUpdate.emit(this.fileToUpload);
        }
        else{
-           this._snackBar.open("This file cannot be uploaded", "", {
+           this._snackBar.open("We don't support "+fileType+" in Document upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
             duration: 2000,
             panelClass: ["success-snackbar"],
             verticalPosition: "bottom"
