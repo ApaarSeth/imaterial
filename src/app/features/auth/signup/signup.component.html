@@ -37,6 +37,7 @@
     <input
       matInput
       type="number"
+      #otp
       min="0"
       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
       formControlName="otp"
@@ -44,7 +45,7 @@
       placeholder="Enter the OTP"
     />
     <small *ngIf="signupForm.controls['otp'].hasError('required') && signupForm.controls['otp'].touched" class="signupForm-error-msg"> OTP No is required </small>
-    <small *ngIf="!lessOTPDigits && otpLength == 4" class="signupForm-error-msg"> Enter Valid OTP</small>
+    <small *ngIf="!lessOTPDigits && (otp.value.length == 4)" class="signupForm-error-msg"> Enter Valid OTP</small>
     <!-- <small class="signupForm-error-msg green-colour"> Resend OTP </small> -->
   </mat-form-field>
 
