@@ -222,10 +222,9 @@ export class SignupComponent implements OnInit {
     });
   }
   enterOTP(event) {
-
     const otp = event.target.value;
     if (event.target.value.length == 4) {
-      this.otpLength = event.target.value.length;
+      //this.otpLength = event.target.value.length;
       this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
         if (res.data) {
           this.lessOTPDigits = res.data.success;
