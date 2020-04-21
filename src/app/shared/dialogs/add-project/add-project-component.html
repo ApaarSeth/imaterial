@@ -217,7 +217,7 @@
   </div>
   <div mat-dialog-actions>
     <div class="col-sm-12 col-md-12 add-edit-dialog-button">
-      <button mat-raised-button [disabled]="(!imageFileSize && localImg)?true:(!form.valid || (!validPincode) || sameStartEndDate)" class="main-background-color main-button color-white pull-right">
+      <button mat-raised-button [disabled]="(!imageFileSize && localImg)?true:(!form.valid || (!validPincode) || sameStartEndDate)" class="main-background-color main-button color-white">
         <span *ngIf="!data.isEdit">Add</span>
         <span *ngIf="data.isEdit">Save</span>
       </button>

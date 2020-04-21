@@ -66,13 +66,16 @@
         
     }
 
-    .add-edit-dialog-button{
-    button{
-        margin-right: 28px;
-    } 
-    }
+    
 
 }
+
+ @media only screen and (min-width: 768px){
+     .add-edit-dialog-button{
+         display: flex;
+        justify-content: flex-end; 
+    }
+ }
 
   .header-add-edit-dialog{
         display: flex;
@@ -102,4 +105,13 @@
             width : 100%;
             }
         } 
+
  }
+
+  @media only screen and (max-width: 768px) {
+
+        .add-edit-dialog-button{
+         display: flex;
+        justify-content: space-around;
+      }
+  }
