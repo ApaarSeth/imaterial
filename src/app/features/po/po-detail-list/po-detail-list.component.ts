@@ -15,7 +15,6 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { permission } from 'src/app/shared/models/permissionObject';
 import { DownloadData } from 'src/app/shared/models/PO/po-data';
-import * as fileSaver from 'file-saver';
 
 @Component({
   selector: "po-detail-list",
@@ -216,9 +215,7 @@ export class PODetailComponent implements OnInit {
   }
   downloadFile(data : DownloadData) {
            var win = window.open(data.url, '_blank');
-           //win.focus();
-
-           win.blur();
+            win.blur();
             setTimeout(win.focus, 0);
   }
 }
