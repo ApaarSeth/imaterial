@@ -54,9 +54,6 @@
                         <mat-form-field class="border-input widthZero">
                           <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text" class="p-b-5 shortWidth" placeholder="Enter Quantity" />
                         </mat-form-field>
-                        <span class="p-l-10 p-t-25">
-                          {{ subcategory.materialUnit }}
-                        </span>
                       </span>
                     </div>
                     <div class="col-xs-2 text-center">
@@ -79,12 +76,7 @@
                       </mat-form-field> -->
 
                             <mat-form-field class="border-input widthZero">
-                              <input
-                                class="p-b-5 shortWidth"
-                                appTwoDigitDecimaNumber matInput type="text"
-                                min="0"
-                                placeholder="Enter Quantity"
-                              />
+                              <input class="p-b-5 shortWidth" appTwoDigitDecimaNumber matInput type="text" min="0" placeholder="Enter Quantity" />
                               <span class="p-b-15 p-l-5">{{ subcategory.materialUnit }}</span>
                             </mat-form-field>
                           </span>
