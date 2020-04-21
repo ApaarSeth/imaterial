@@ -58,7 +58,7 @@
             class="border-select width-90 mat-form-field-flex-padding mat-form-field-padding mat-form-field-infix-padding mat-select-placeholder-padding"
             style="padding-top: 6px;"
           >
-            <mat-label>*Trade</mat-label>
+            <mat-label>Trade</mat-label>
             <mat-select formControlName="trade">
               <mat-option *ngFor="let trade of tradesList" [value]="trade">
                 {{ trade.tradeName }}
@@ -67,7 +67,7 @@
           </mat-form-field>
         </div>
         <div class="col-xs-2">
-          <mat-form-field class="border-input">
+          <mat-form-field class="border-input width-90">
             <input type="text" placeholder="Category" matInput formControlName="category" [matAutocomplete]="auto" />
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngFor="let option of this.filterOptions | async" [value]="option">
@@ -86,8 +86,9 @@
                 </span>
               </a>
             </span>
-            <span>
+            <span *ngIf="i == addMyMaterial.get('myMaterial').value.length - 1">
               <button
+                type="button"
                 [disabled]="!addMyMaterial.valid"
                 (click)="onAddRow()"
                 class="p-t-5 material-icons cursor button-background"
