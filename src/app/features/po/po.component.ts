@@ -6,7 +6,8 @@ import {
   CardData,
   poApproveReject,
   DocumentList,
-  terms
+  terms,
+  DownloadData
 } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
@@ -294,6 +295,14 @@ export class PoComponent implements OnInit {
       this.isPoValid = false;
   }
     downloadPo(){
-      this.poService.downloadPo(this.poId).then(res => res);
+      this.poService.downloadPo(this.poId).then(res =>{
+        this.downloadFile(res.data);
+      });
+  }
+
+  downloadFile(data : DownloadData) {
+           var win = window.open(data.url, '_blank');
+            win.blur();
+            setTimeout(win.focus, 0);
   }
 }
