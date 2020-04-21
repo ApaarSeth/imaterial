@@ -170,8 +170,22 @@ export class AddMyMaterialComponent implements OnInit {
     let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
     this.bomService.getMaterialExist(checkData).then(res => {
       if (res.data) {
-        (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-        this.filteredOption[this.addUserFormLength - 1] = null
+        let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
+
+        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.find(val => {
+          return val.materialName === currentMaterialName
+        }))
+        if (!alreadyPresent) {
+          (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
+          this.filteredOption[this.currentIndex] = null
+        }
+        else {
+          this._snackBar.open("Set New Material Name", "", {
+            duration: 4000,
+            panelClass: ["warning-snackbar"],
+            verticalPosition: "bottom"
+          });
+        }
       }
       else {
         this._snackBar.open("Material Name already exist in all material", "", {
@@ -195,9 +209,6 @@ export class AddMyMaterialComponent implements OnInit {
   }
 
 
-  /**
-   * @description To submit the data after click on Done button
-   */
   get currentIndex() {
     return this.addMyMaterial.get('myMaterial')['controls'].length - 1;
   }
