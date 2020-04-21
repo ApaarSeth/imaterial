@@ -1,8 +1,8 @@
 <!-- <mat-sidenav #sidenav> -->
   <mat-nav-list>
     <ng-container *ngFor="let selectedHeader of headerConst">
-      <div class="display-flex">
-         <a href="javascript:void(0)" *ngIf="selectedHeader.flag"  mat-list-item [routerLink]="[selectedHeader.link]">
+      <div [ngClass]="(buttonName && (buttonName === selectedHeader.name)) ? 'display-flex active' : 'display-flex'" >
+         <a href="javascript:void(0)" *ngIf="selectedHeader.flag" mat-list-item (click)="redirect(selectedHeader.link)">
             <img [src]="selectedHeader.image" alt=""/>
            <span class="p-l-15">
              {{selectedHeader.name}}
