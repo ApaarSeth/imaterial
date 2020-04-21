@@ -32,6 +32,8 @@ export class SidenavListComponent implements OnInit {
       this.permissionObj = this.permissionService.checkPermission(this.role);
       this.headerConst = HeaderConstants.PERMISSIONHEADER(this.permissionObj, this.orgId);
     }
+    this.highlightButton(this.router.url);
+    this.startSubscription();
   }
  
    startSubscription(): void {
@@ -49,22 +51,22 @@ export class SidenavListComponent implements OnInit {
     if (url.includes('dashboard') && !url.includes('project-dashboard')) {
       this.buttonName = 'Dashboard'
     } else if (url.includes('project-dashboard')) {
-      this.buttonName = 'Project Store'
+      this.buttonName = 'Project Store';
     }
     else if (url.includes('globalStore')) {
-      this.buttonName = 'Global Store'
+      this.buttonName = 'Global Store';
     }
     else if (url.includes('rfq')) {
-      this.buttonName = 'Request For Quotation'
+      this.buttonName = 'Request For Quotation';
     }
     else if (url.includes('user-detail')) {
-      this.buttonName = 'Users'
+      this.buttonName = 'Users';
     }
     else if (url.includes('po')) {
-      this.buttonName = 'Purchase Order'
+      this.buttonName = 'Purchase Order';
     }
     else if (url.includes('supplier')) {
-      this.buttonName = 'Supplier'
+      this.buttonName = 'Supplier';
     }
   }
 
@@ -73,7 +75,6 @@ export class SidenavListComponent implements OnInit {
   }
   redirect(path){
      this.router.navigate([path]).then(_ =>{
-        this.startSubscription();
        this.sidenav.close();
      })
   }

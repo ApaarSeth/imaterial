@@ -821,3 +821,15 @@ h3 {
         }
     }
  }
+
+ @media only screen and (max-width: 768px) {
+     .remarks-suppliers .suppliers-list {
+            border-right: none;
+            border-bottom: 1px solid #d0d0d0;
+    
+    }
+.remarks-suppliers .suppliers-details{
+     padding: 0px 8px 0px 8px;
+     color: #716d6d;
+     }
+ }

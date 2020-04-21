@@ -66,13 +66,16 @@
         
     }
 
-    .add-edit-dialog-button{
-    button{
-        margin-right: 28px;
-    } 
-    }
+    
 
 }
+
+ @media only screen and (min-width: 768px){
+     .add-edit-dialog-button{
+         display: flex;
+        justify-content: flex-end; 
+    }
+ }
 
   .header-add-edit-dialog{
         display: flex;
@@ -88,3 +91,27 @@
 .padding-for-dialog-after-header{
     padding-top:14px !important;
 }
+
+ @media only screen and (max-width: 576px) {
+        .add-project-component-dialog .add-edit-form-dialog{
+
+          .col-sm-3 mat-form-field{
+            width: 100%
+          }
+          .col-sm-6 mat-form-field{
+            width: 100%;
+             }
+         .col-sm-6.date-dialog-add-edit mat-form-field{
+            width : 100%;
+            }
+        } 
+
+ }
+
+  @media only screen and (max-width: 768px) {
+
+        .add-edit-dialog-button{
+         display: flex;
+        justify-content: space-around;
+      }
+  }

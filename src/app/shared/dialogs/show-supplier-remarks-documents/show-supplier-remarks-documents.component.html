@@ -58,6 +58,17 @@
         </div>
           
       </ng-container>
+
+      <ng-container *ngIf="supplierList[index] && !supplierList[index].comments && !supplierList[index].documentsList">
+        <div class="p-t-50 display-flex justify-content-center">
+          <img src="../../../../assets/images/supplier-remarks-image.png">
+        </div>
+        <div>
+          <span  class="p-t-10 p-b-50 display-flex justify-content-center text-align-justify">
+            Supplier has not sent any terms & conditions and documents for review !
+          </span>
+        </div>
+      </ng-container>
     </div>
   </div>
   </div>
