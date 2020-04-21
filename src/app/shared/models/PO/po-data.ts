@@ -217,3 +217,7 @@ export interface initiatePoData {
   selectedMaterial: RfqMaterialResponse[],
   selectedSupplier: Suppliers
 }
+export interface DownloadData{
+  fileName ?:string;
+  url?: string;
+}
