@@ -38,9 +38,9 @@
                         <span class="p-r-5">{{ trades }}<span *ngIf="subcategory.tradeList.length > 1 && i !== subcategory.tradeList.length - 1">,</span> </span>
                       </span>
                     </div>
-                    <div class="col-xs-2">
-                      <mat-form-field class="border-select">
-                        <mat-select formControlName="materialUnit" placeholder="Select material unit">
+                    <div class="col-xs-2 text-right">
+                      <mat-form-field class="border-select shortWidth">
+                        <mat-select formControlName="materialUnit" placeholder="Unit">
                           <mat-option *ngFor="let unit of materialUnit" [value]="unit">
                             <span>
                               {{ unit }}
@@ -49,17 +49,14 @@
                         </mat-select>
                       </mat-form-field>
                     </div>
-                    <div class="col-xs-2">
-                      <span class="pull-right">
+                    <div class="col-xs-2 text-center p-l-25">
+                      <span>
                         <mat-form-field class="border-input widthZero">
                           <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text" class="p-b-5 shortWidth" placeholder="Enter Quantity" />
                         </mat-form-field>
-                        <span class="p-l-10 p-t-25">
-                          {{ subcategory.materialUnit }}
-                        </span>
                       </span>
                     </div>
-                    <div class="col-xs-2 text-center">
+                    <div class="col-xs-2 text-center p-l-25">
                       <span>
                         <mat-form-field class="border-input widthZero">
                           <input formControlName="estimatedRate" appTwoDigitDecimaNumber matInput type="text" class="p-b-5 shortWidth" placeholder="Enter Rate" />
@@ -80,10 +77,12 @@
 
                             <mat-form-field class="border-input widthZero">
                               <input
+                                matInput
                                 class="p-b-5 shortWidth"
-                                appTwoDigitDecimaNumber matInput type="text"
+                                type="number"
                                 min="0"
                                 placeholder="Enter Quantity"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                               />
                               <span class="p-b-15 p-l-5">{{ subcategory.materialUnit }}</span>
                             </mat-form-field>
