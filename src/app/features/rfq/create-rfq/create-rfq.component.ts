@@ -40,38 +40,38 @@ export class CreateRfqComponent implements OnInit {
   finalRfq: AddRFQ;
   completed: boolean = false;
 
-     public RfqProjectTour: GuidedTour = {
-        tourId: 'rfq-project-tour',
-        useOrb: false,
-        
-        steps: [
-            {
-              title:'Search Project',
-              selector: '.select-project',
-              content: 'Select one/multiple projects to add material in the RFQ.',
-              orientation: Orientation.Left
-            }
-        ],
-          skipCallback: () => {
-      this.setLocalStorage()
-      }
-    };
+  public RfqProjectTour: GuidedTour = {
+    tourId: 'rfq-project-tour',
+    useOrb: false,
 
- public RfqSupplierTour: GuidedTour = {
-        tourId: 'rfq-supplier-tour',
-        useOrb: false,
-        steps: [
-             {
-              title:'Add Supplier',
-              selector: '.add-supplier-btn',
-              content: 'Add supplier to whom RFQ needs to be floated.',
-              orientation: Orientation.Left
-            }
-        ],
-      skipCallback: () => {
-      this.setLocalStorage()
+    steps: [
+      {
+        title: 'Search Project',
+        selector: '.select-project',
+        content: 'Select one/multiple projects to add material in the RFQ.',
+        orientation: Orientation.Left
       }
-    };
+    ],
+    skipCallback: () => {
+      this.setLocalStorage()
+    }
+  };
+
+  public RfqSupplierTour: GuidedTour = {
+    tourId: 'rfq-supplier-tour',
+    useOrb: false,
+    steps: [
+      {
+        title: 'Add Supplier',
+        selector: '.add-supplier-btn',
+        content: 'Add supplier to whom RFQ needs to be floated.',
+        orientation: Orientation.Left
+      }
+    ],
+    skipCallback: () => {
+      this.setLocalStorage()
+    }
+  };
   orgId: number;
   userId: number;
   constructor(
@@ -79,32 +79,32 @@ export class CreateRfqComponent implements OnInit {
     private rfqService: RFQService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-     private guidedTourService: GuidedTourService,
-     private userGuideService: UserGuideService
-  ) { 
-     
+    private guidedTourService: GuidedTourService,
+    private userGuideService: UserGuideService
+  ) {
+
   }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
 
-    
+
     if (this.stepper) {
       this.stepper.selectedIndex = history.state.selectedIndex;
-      if(this.stepper.selectedIndex == 0){
-         if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
-            setTimeout(() => {
+      if (this.stepper.selectedIndex == 0) {
+        if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
+          setTimeout(() => {
             this.guidedTourService.startTour(this.RfqProjectTour);
-            }, 1000);
-         }
+          }, 1000);
+        }
       }
-       if(this.stepper.selectedIndex == 2){
-           if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
+      if (this.stepper.selectedIndex == 2) {
+        if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
           setTimeout(() => {
             this.guidedTourService.startTour(this.RfqSupplierTour);
-            }, 1000);
-           }
+          }, 1000);
+        }
       }
       if (history.state.rfqData) {
         this.rfqMaterial = history.state.rfqData.data;
@@ -125,17 +125,17 @@ export class CreateRfqComponent implements OnInit {
     this.rfqMaterial = updatedRfq
   }
 
-   setLocalStorage() {
-        const popovers ={
-        "userId":this.userId,
-        "moduleName":"rfq",
-        "enableGuide":1
+  setLocalStorage() {
+    const popovers = {
+      "userId": this.userId,
+      "moduleName": "rfq",
+      "enableGuide": 1
     };
-        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
-          if(res){
-            localStorage.setItem('rfq', '1');
-          }
-        })
+    this.userGuideService.sendUserGuideFlag(popovers).then(res => {
+      if (res) {
+        localStorage.setItem('rfq', '1');
+      }
+    })
   }
 
 
@@ -166,22 +166,22 @@ export class CreateRfqComponent implements OnInit {
     });
   }
 
-selectionChange(event){
-  if(event.selectedIndex == 0){
-     if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
-  setTimeout(() => {
-            this.guidedTourService.startTour(this.RfqProjectTour);
-            }, 1000);
-   }
-  }
-    if(event.selectedIndex == 2){
-       if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
-  setTimeout(() => {
-            this.guidedTourService.startTour(this.RfqSupplierTour);
-            }, 1000);
+  selectionChange(event) {
+    if (event.selectedIndex == 0) {
+      if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
+        setTimeout(() => {
+          this.guidedTourService.startTour(this.RfqProjectTour);
+        }, 1000);
+      }
+    }
+    if (event.selectedIndex == 2) {
+      if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
+        setTimeout(() => {
+          this.guidedTourService.startTour(this.RfqSupplierTour);
+        }, 1000);
+      }
     }
   }
-}
   goBack(stepper: MatStepper) {
     stepper.previous();
   }
@@ -191,7 +191,7 @@ selectionChange(event){
   }
 
   reviewRfq() {
-  //  this.rfqSupplier.reviewRfq();
+    //  this.rfqSupplier.reviewRfq();
   }
 
   checkSupplStatus() {
