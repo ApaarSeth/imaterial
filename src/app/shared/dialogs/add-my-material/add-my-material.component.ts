@@ -105,11 +105,11 @@ export class AddMyMaterialComponent implements OnInit {
 
   addOtherFormGroup(): FormGroup {
     const formGrp = this._formBuilder.group({
-      materialName: ['', Validators.required],
-      materialUnit: ['', Validators.required],
+      materialName: [null, Validators.required],
+      materialUnit: [null, Validators.required],
       index: [],
-      estimatedQty: ['', Validators.required],
-      estimatedPrice: [''],
+      estimatedQty: [null, Validators.required],
+      estimatedPrice: [null],
       trade: [''],
       category: [''],
     });
@@ -166,11 +166,9 @@ export class AddMyMaterialComponent implements OnInit {
     this.bomService.getMaterialExist({ tradeName: trade, materialName, categoryName: category }).then(res => {
       if (res.data) {
         (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-        // this.categoryChange();
-        this.addUserFormLength = this.addMyMaterial.get('myMaterial')['controls'].length;
-        if (this.index[this.addUserFormLength - 1] == 'false') {
-          this.index[this.addUserFormLength - 1] = 'true';
-        }
+        currentIndex = this.addMyMaterial.get('myMaterial')['controls'].length - 1;
+        (<FormArray>this.addMyMaterial.get('myMaterial')).controls[currentIndex].markAsUntouched();
+
         this.filteredOption[this.addUserFormLength - 1] = null
       }
       else {
@@ -179,14 +177,14 @@ export class AddMyMaterialComponent implements OnInit {
           panelClass: ["warning-snackbar"],
           verticalPosition: "bottom"
         });
-        (<FormArray>this.addMyMaterial.get('myMaterial')).controls[currentIndex].reset();
+        (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[currentIndex]).controls['materialName'].reset();
       }
     })
 
   }
 
   onDelete(index) {
-    (<FormArray>this.addMyMaterial.get('other')).removeAt(index);
+    (<FormArray>this.addMyMaterial.get('myMaterial')).removeAt(index);
     this.filteredOption.splice(index, 1);
   }
 
@@ -210,7 +208,17 @@ export class AddMyMaterialComponent implements OnInit {
         tradeId: val.trade.tradeId
       }
     })
-    this.bomService.addMyMaterial(this.data, myMaterial);
+    this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
+      if (res.message = "done") {
+        this._snackBar.open("My Materials Added", "", {
+          duration: 4000,
+          panelClass: ["warning-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
+      this.dialogRef.close(null);
+    });
+
   }
   closeDialog() {
     this.dialogRef.close(null);
