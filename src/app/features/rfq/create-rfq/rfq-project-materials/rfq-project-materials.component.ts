@@ -274,7 +274,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
                 project.projectMaterialList.forEach((mat: RfqMat) => {
                   if (mat.materialId === element.material.materialId) {
                     // mat.fullfilmentDate = element.material.dueDate;
-                    projectMaterial.push({ ...mat, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null });
+                    projectMaterial.push({ ...mat, fullfilmentDate: mat.fullfilmentDate ? mat.fullfilmentDate : null });
                     materialAddedFlag = true;
                   }
                 })

@@ -1,4 +1,4 @@
-<div class="page-start-point ">
+<div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20">
     <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="projectData" [disableEditDelete]="true"></card-layout>
     <div class="row">
@@ -37,7 +37,7 @@
           </button>
         </span> -->
         <span *ngIf="this.permissionObj.rfqFlag">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right " (click)="addMaterial()">
+          <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="addMaterial()">
             Add/Edit Material
           </button>
         </span>
@@ -62,24 +62,30 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="unit">
+          <th *matHeaderCellDef class="text-align-center justify-center">
+            Unit
+          </th>
+          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.materialUnit }}</td>
+        </ng-container>
         <ng-container matColumnDef="estimatedQty">
           <th *matHeaderCellDef class="text-align-center justify-center">
             Estimated Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }} {{ element.materialUnit }}</td>
+          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.estimatedQty }}</td>
         </ng-container>
         <ng-container matColumnDef="indentedQuantity">
           <th *matHeaderCellDef class="text-align-center justify-center">
             Indented Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }} {{ element.materialUnit }}</td>
+          <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }}</td>
         </ng-container>
         <ng-container matColumnDef="issueToProject">
           <th *matHeaderCellDef class="text-align-center justify-center">
             Issued To Project
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element">
-            <ng-container *ngIf="element.issueToProject; else showZEroDataIP"> {{ element.issueToProject }} {{ element.materialUnit }} </ng-container>
+            <ng-container *ngIf="element.issueToProject; else showZEroDataIP"> {{ element.issueToProject }}</ng-container>
             <ng-template #showZEroDataIP> 0 {{ element.materialUnit }} </ng-template>
           </td>
         </ng-container>
@@ -109,7 +115,7 @@
               <img src="../../../../assets/images/issue_to_indent.png" />
             </a>
 
-            <a *ngIf="permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)" class="width-15-px p-r-10  issue-to-indent-icon">
+            <a *ngIf="permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)" class="width-15-px p-r-10 issue-to-indent-icon">
               <img src="../../../../assets/images/issue_to_indent_disabled.png" />
             </a>
 
@@ -126,7 +132,7 @@
               <img src="../../../../assets/images/delete-button.png" />
             </a>
             <a
-              class="width-15-px p-l-5 "
+              class="width-15-px p-l-5"
               *ngIf="
                 !(
                   (element.requestedQuantity === 0 || element.requestedQuantity === null) &&
@@ -198,7 +204,7 @@
                       </ng-template>
                     </td>
                   </ng-container>
-                  <tr style="opacity: 0;height: 0px;" mat-header-row *matHeaderRowDef="innerDisplayedColumns"></tr>
+                  <tr style="opacity: 0; height: 0px;" mat-header-row *matHeaderRowDef="innerDisplayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: innerDisplayedColumns"></tr>
                 </table>
               </div>
