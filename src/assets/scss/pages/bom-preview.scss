@@ -42,3 +42,9 @@ input[type=file]::-webkit-file-upload-button {
   cursor: pointer;
   color: transparent;
 }
+
+.mat-form-field-unit-padding {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-top: 8px !important;
+  }
+}
