@@ -2,7 +2,7 @@
   <div class="p-l-20 p-r-20 p-b-20">
     <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="projectData" [disableEditDelete]="true"></card-layout>
     <div class="row">
-      <div class="col-xs-12 col-md-3">
+      <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input">
           <input matInput placeholder="Search Materials" type="search" (keyup)="applyFilter($event)" />
           <button mat-button matSuffix mat-icon-button>
@@ -10,8 +10,8 @@
           </button>
         </mat-form-field>
       </div>
-      <div class="col-xs-12 col-md-9 p-t-10 text-right">
-        <span class="" *ngIf="this.permissionObj.rfqFlag">
+      <div class="col-xs-9 p-t-10 text-right">
+        <span *ngIf="this.permissionObj.rfqFlag">
           <button
             mat-raised-button
             class="main-background-color main-button color-white pull-right create-rfq-btn"
@@ -44,8 +44,8 @@
       </div>
     </div>
 
-    <div class="example-container mat-elevation-z8 bom-details-table-div-part">
-      <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+    <div class="row bom-details-table-div-part">
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="col-sm-12 bom-material-table">
         <ng-container matColumnDef="materialName">
           <th *matHeaderCellDef class="first-column-row-header">
             Material Name
