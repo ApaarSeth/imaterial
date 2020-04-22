@@ -25,7 +25,7 @@ import { Materials } from "src/app/shared/models/subcategory-materials";
 import { range } from 'rxjs';
 
 @Component({
-  selector: "app-my-topMaterial",
+  selector: "app-bom-myMaterial",
   templateUrl: "./bom-myMaterial.component.html",
 })
 export class BomMyMaterialComponent implements OnInit {

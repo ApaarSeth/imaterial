@@ -34,6 +34,7 @@ import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 import { AddBomWarningComponent } from 'src/app/shared/dialogs/add-bom-warning/add-bom-warning.component';
 import { BOMAllMaterialComponent } from './bom-allMaterial/bom-allMaterial.component';
 import { AddMyMaterialComponent } from 'src/app/shared/dialogs/add-my-material/add-my-material.component';
+import { BomMyMaterialComponent } from './bom-myMaterial/bom-myMaterial.component';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -46,6 +47,7 @@ export class BomComponent implements OnInit {
   categoryList: string[] = [];
   topMaterialData: categoryNestedLevel[] = [];
   allMaterialData: categoryNestedLevel[] = [];
+  myMaterialData: categoryNestedLevel[] = [];
   value = "";
   projectId: number;
   searchText: string = null;
@@ -54,6 +56,7 @@ export class BomComponent implements OnInit {
   selectedCategory: categoryLevel[] = [];
   @ViewChild("preview", { static: false }) topMaterial: BomTopMaterialComponent;
   @ViewChild("preview1", { static: false }) allMaterial: BOMAllMaterialComponent;
+  @ViewChild("preview2", { static: false }) myMaterial: BomMyMaterialComponent;
   @ViewChild("text", { static: false }) text: ElementRef;
   selectedTrades: string[];
   categoriesInputData: QtyData[];
@@ -75,6 +78,8 @@ export class BomComponent implements OnInit {
   valueChangedAll: boolean = false;
   showTopMaterial: boolean = true;
   showAllMaterial: boolean = true;
+  showMyMaterial: boolean = true;
+
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
     useOrb: false,
@@ -190,9 +195,8 @@ export class BomComponent implements OnInit {
         verticalPosition: "bottom"
       });
     }
-
-
   }
+
   postMaterialExcel(data) {
     this.loading.show();
     this.bomService.postMaterialExcel(data, this.projectId).then(res => {
@@ -258,42 +262,25 @@ export class BomComponent implements OnInit {
           this.showTable = true;
         });
       }
-      else {
-      }
     }
-    else {
+    else if (this.buttonName == 1) {
       if (this.selectedTrades.length) {
         this.bomService.getTrades({ tradeNames: [...this.selectedTrades] }).then(res => {
-          this.allMaterialData = [...res];
+          this.myMaterialData = [...res];
           this.searchAgain = this.text.nativeElement.value
-          this.showTable = true;
         });
       }
-      else {
+    }
+    else if (this.buttonName == 2) {
+      if (this.selectedTrades.length) {
+        this.bomService.getMyMaterial().then(res => {
+          this.myMaterialData = [...res.data];
+          this.searchAgain = this.text.nativeElement.value
+        });
       }
     }
   }
 
-  setButtonName(name: string) {
-    // this.globalLoader.show();
-    // let dataPresent: boolean;
-    // if (this.buttonName === "25Material") {
-    //   dataPresent = this.topMaterial ? (<QtyData[]>this.topMaterial.getData()).some(data => {
-    //     return data.estimatedQty > 0
-    //   }) : false;
-    // }
-    // else {
-    //   dataPresent = this.allMaterial ? (<QtyData[]>this.allMaterial.getData()).some(data => {
-    //     return data.estimatedQty > 0
-    //   }) : false;
-    // }
-    // if (dataPresent) {
-    //   this.openAddBomDialog(name);
-    // } else {
-    //   this.buttonName = name;
-    //   this.callApi()
-    // }
-  }
 
   tabClick(event) {
     this.text.nativeElement.value = ""
@@ -309,7 +296,14 @@ export class BomComponent implements OnInit {
     if (dataPresent) {
       this.valueChanged = false;
       this.valueChangedAll = false;
-      this.currentIndex === 0 ? this.showTopMaterial === false : this.showAllMaterial === false
+      if (this.currentIndex === 0)
+        this.showTopMaterial === false
+      else if (this.currentIndex == 1) {
+        this.showAllMaterial === false
+      }
+      else if (this.currentIndex == 2) {
+        this.showMyMaterial === false
+      }
       this.openAddBomDialog(event.index);
     } else {
       this.buttonName = this.currentIndex;
@@ -335,10 +329,19 @@ export class BomComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        // this.previousIndex === 0 ? this.showTopMaterial === true : this.previousIndex === 1 ? this.showAllMaterial === true : this.showMyMaterial === true;
         this.saveCategory();
       }
       else {
-        index === 0 ? this.showTopMaterial === true : this.showAllMaterial === true
+        if (this.currentIndex === 0)
+          this.showTopMaterial === true
+        else if (this.currentIndex == 1) {
+          this.showAllMaterial === true
+        }
+        else if (this.currentIndex == 2) {
+          this.showMyMaterial === true
+        }
+        // index === 0 ? this.showTopMaterial === true : (index === 1 ? this.showAllMaterial === true : this.showMyMaterial === true);
         this.buttonName = index;
         this.callApi();
       }
@@ -374,9 +377,13 @@ export class BomComponent implements OnInit {
       this.categoriesInputData =
         this.topMaterial.getData();
     }
-    else {
+    else if (this.buttonName === 1) {
       this.categoriesInputData =
         this.allMaterial.getData();
+    }
+    else if (this.buttonName === 2) {
+      this.categoriesInputData =
+        this.myMaterial.getData();
     }
 
     for (let data of this.categoriesInputData) {
