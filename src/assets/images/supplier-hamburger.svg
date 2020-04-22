@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="17.445" height="19.937" viewBox="0 0 17.445 19.937"><defs><style>.a{fill:#0c3d56;}</style></defs><path class="a" d="M8.722,9.968A4.984,4.984,0,1,0,3.738,4.984,4.984,4.984,0,0,0,8.722,9.968Zm3.73,1.269-1.861,7.453L9.345,13.4l1.246-2.181H6.853L8.1,13.4l-1.246,5.3L4.992,11.238A5.224,5.224,0,0,0,0,16.448v1.62a1.87,1.87,0,0,0,1.869,1.869H15.576a1.87,1.87,0,0,0,1.869-1.869v-1.62a5.224,5.224,0,0,0-4.992-5.21Z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="supplier-hamburger" transform="translate(-363 -355)">
+    <rect id="Rectangle_1971" data-name="Rectangle 1971" width="28" height="28" transform="translate(363 355)" fill="none"/>
+    <path id="Icon_awesome-user-tie" data-name="Icon awesome-user-tie" d="M8.568,9.792a4.9,4.9,0,1,0-4.9-4.9A4.9,4.9,0,0,0,8.568,9.792Zm3.665,1.247L10.4,18.361l-1.224-5.2L10.4,11.017H6.732l1.224,2.142-1.224,5.2L4.9,11.039A5.132,5.132,0,0,0,0,16.158v1.591a1.837,1.837,0,0,0,1.836,1.836H15.3a1.837,1.837,0,0,0,1.836-1.836V16.158a5.132,5.132,0,0,0-4.9-5.118Z" transform="translate(368 359)" fill="#0c3d56"/>
+  </g>
+</svg>

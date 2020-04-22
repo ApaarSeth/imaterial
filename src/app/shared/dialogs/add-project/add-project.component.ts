@@ -50,6 +50,7 @@ export class AddProjectComponent implements OnInit {
   pincodeLength: number;
   imageFileSizeError: string = "";
   imageFileSize: boolean = false;
+   fileTypes : string[] = ['png', 'jpeg', 'jpg'];
 
   constructor(
     private projectService: ProjectService,
@@ -292,22 +293,38 @@ export class AddProjectComponent implements OnInit {
 
   onFileSelect(event) {
     if (event.target.files.length > 0) {
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event) => {
+      const file = event.target.files[0];
+      let fileSize = event.target.files[0].size; // in bytes
+      let fileType = event.target.files[0].name.split('.').pop();
+     
+      if(this.fileTypes.some(element => {
+         return element === fileType
+       })){
+          if (fileSize < 1000000) {
+             reader.onload = (event) => {
         this.localImg = (<FileReader>event.target).result;
       }
-      const file = event.target.files[0];
-      var fileSize = event.target.files[0].size; // in bytes
-      if (fileSize < 1000000) {
-        this.imageFileSizeError = "";
-        this.imageFileSize = true;
-        this.uploadImage(file);
-      }
-      else {
-        this.imageFileSize = false;
-        this.imageFileSizeError = "Image must be less than 1 mb";
-      }
+             this.imageFileSizeError = "";
+              this.imageFileSize = true;
+              this.uploadImage(file);
+          }
+          else {
+            this.imageFileSize = false;
+            this.imageFileSizeError = "Image must be less than 1 mb";
+          }
+       }
+       else{
+         if(this.data && this.data.detail && this.data.detail.imageUrl)
+         this.localImg = this.data.detail.imageUrl;
+         
+          this._snackBar.open("We don't support "+fileType+" in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+       }
 
       // this.uploadImage(file);
     }

@@ -1,9 +1,9 @@
 <div class="header-add-edit-dialog p-r-0">
   <div class="row width-100">
-    <div class="col-sm-10">
+    <div class="col-xs-10 col-sm-10">
       <h1 mat-dialog-title>Add Good Receive Note</h1>
     </div>
-    <div class="col-sm-2">
+    <div class="col-xs-2 col-sm-2">
       <button type="button" class="close pull-right p-t-5" (click)="closeDialog()" aria-label="Close">
         <span aria-hidden="true">×</span>
       </button>
@@ -12,13 +12,12 @@
 </div>
 
 <form *ngIf="materialForms" [formGroup]="materialForms" (ngSubmit)="addGrn()">
-  <div class="row m-t-10">
-    <div class="col-sm-12">
-      <div formArrayName="forms" class="row form-add-edit-grn-div">
-        <table mat-table [dataSource]="dataSource" class="col-sm-12">
+
+      <div formArrayName="forms" class="add-grn-container mat-elevation-z8 form-add-edit-grn-div">
+        <table mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="Material Name">
             <th mat-header-cell *matHeaderCellDef>Material Name</th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="grn-material-name">
               <div class="limited-character global">
                 {{ element.materialName }}
               </div>
@@ -79,8 +78,7 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
       </div>
-    </div>
-  </div>
+   
 
   <div mat-dialog-actions>
     <div class="col-sm-12 save-btn-add-edit-user-modal">

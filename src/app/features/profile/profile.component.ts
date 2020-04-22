@@ -4,6 +4,7 @@ import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/
 import { Router } from '@angular/router';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
+import { MatSnackBar } from '@angular/material';
 
 export interface City {
   value: string;
@@ -41,9 +42,12 @@ export class ProfileComponent implements OnInit {
   url: any;
   imageFileSizeError: string = "";
   imageFileSize: boolean = false;
+   fileTypes : string[] = ['png', 'jpeg', 'jpg'];
+  tradeDescription: string;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar,
     private _router: Router,
     private _uploadImageService: DocumentUploadService) { }
 
@@ -70,6 +74,10 @@ export class ProfileComponent implements OnInit {
       if(res.data[0].trade){
            res.data[0].trade.forEach(element => {
             this.usersTrade.push(element.tradeId);
+            if(element.tradeId == 13){
+              if(element.tradeDescription)
+                this.tradeDescription = element.tradeDescription;
+            }
           });
           this.getTradesList();
       }
@@ -157,20 +165,41 @@ export class ProfileComponent implements OnInit {
     if (event.target.files.length > 0) {
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event) => {
-        this.localImg = (<FileReader>event.target).result;
-      }
+      // reader.onload = (event) => {
+      //   this.localImg = (<FileReader>event.target).result;
+      // }
       const file = event.target.files[0];
       var fileSize =  event.target.files[0].size; // in bytes
-      if(fileSize < 1000000){
-        this.imageFileSizeError = "";
-        this.imageFileSize = true;
-        this.uploadImage(file);
+    let fileType = event.target.files[0].name.split('.').pop();
+     
+      if(this.fileTypes.some(element => {
+         return element === fileType
+       })){
+          if (fileSize < 1000000) {
+             reader.onload = (event) => {
+        this.localImg = (<FileReader>event.target).result;
       }
-      else{
-         this.imageFileSize = false;
-         this.imageFileSizeError = "Image must be less than 1 mb";
-      }
+             this.imageFileSizeError = "";
+              this.imageFileSize = true;
+              this.uploadImage(file);
+          }
+          else {
+            this.imageFileSize = false;
+            this.imageFileSizeError = "Image must be less than 1 mb";
+          }
+       }
+       else{
+         if(this.localImg)
+          this.localImg = this.localImg;
+        else if(this.users.profileUrl) 
+         this.localImg = this.localImg; 
+
+          this._snackBar.open("We don't support "+fileType+" in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+       }
     }
   }
 

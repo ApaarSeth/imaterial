@@ -29,8 +29,11 @@ export class MainLayoutComponent implements OnInit {
     this.loaded = event
   }
   
-  goToProfile(){
-  this.router.navigate(['/profile-account']);
+  goToProfile(sidenav){
+  this.router.navigate(['/profile-account']).then(_=>{
+    sidenav.close();
+  });
+  
   }
   
   startSubscriptions(){
