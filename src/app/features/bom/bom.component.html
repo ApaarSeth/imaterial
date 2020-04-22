@@ -103,6 +103,16 @@
                 (inputEntered)="checkValidationsAll($event)"
               ></app-bom-allMaterial
             ></mat-tab>
+            <mat-tab label="My Materials"
+              ><app-bom-myMaterial
+                *ngIf="showMyMaterial"
+                #preview2
+                [category]="myMaterialData"
+                [searchMat]="searchAgain"
+                (searchData)="searchData($event)"
+                (inputEntered)="checkValidationsAll($event)"
+              ></app-bom-myMaterial
+            ></mat-tab>
           </mat-tab-group>
         </div>
       </mat-card>
