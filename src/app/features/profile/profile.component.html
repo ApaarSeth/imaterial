@@ -114,11 +114,11 @@
                   >
                     {{ trade.tradeName }}
                   </mat-chip>
-                  <!-- <form [formGroup]="customTrade">
-                    <mat-form-field *ngIf="selectedTradesId.indexOf(OthersId) > -1" class="border-input p-l-10">
-                      <input matInput formControlName="trade" type="text" placeholder="Enter Trade" />
+                 
+                    <mat-form-field *ngIf="tradeDescription" class="border-input p-l-10 font-size14">
+                      <input matInput type="text" [value]="tradeDescription" placeholder="Other trade"  disabled/>
                     </mat-form-field>
-                  </form> -->
+                 
                 </mat-chip-list>
               </div>
 

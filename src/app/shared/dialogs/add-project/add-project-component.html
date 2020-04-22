@@ -7,7 +7,7 @@
   </div>
   <div mat-dialog-content>
     <div class="row m-t-20">
-      <div class="col-xs-12 col-sm-2 col-md-2">
+      <div class="col-xs-8 col-sm-2 col-md-2 image-project-div">
         <div class="project-profile">
           <img *ngIf="data.detail" [src]="localImg || data.detail.imageUrl || '../../../../assets/images/project-default-image.png'" />
           <img *ngIf="!data.detail" [src]="localImg || '../../../../assets/images/project-default-image.png'" />
@@ -96,7 +96,7 @@
 
         <!-- fourth row -->
         <div class="row">
-          <div class="col-sm-6 date-dialog-add-edit">
+          <div class="col-xs-6 col-sm-6 date-dialog-add-edit">
             <!-- start date -->
 
             <!-- <mat-form-field class="mr-5 w-75">
@@ -116,7 +116,7 @@
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
           </div>
-          <div class="col-sm-6 date-dialog-add-edit">
+          <div class="col-xs-6 col-sm-6 date-dialog-add-edit">
             <!-- end date -->
             <mat-form-field class="border-input">
               <mat-label>Project End Date*</mat-label>
@@ -152,7 +152,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-xs-6 col-sm-3">
             <!-- project area -->
             <mat-form-field class="border-input">
               <mat-label>Area</mat-label>
@@ -163,7 +163,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-xs-6 col-sm-3">
             <!-- project unit -->
             <mat-form-field class="border-select">
               <mat-label>Unit *</mat-label>
@@ -177,7 +177,7 @@
         </div>
         <!-- sixth row -->
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-xs-6 col-sm-3">
             <!-- construction cost -->
             <mat-form-field class="border-input">
               <mat-label>Construction Cost &#x20b9;</mat-label>
@@ -187,7 +187,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-xs-6 col-sm-3">
             <!-- project area -->
             <mat-form-field class="border-select">
               <mat-label>Unit</mat-label>

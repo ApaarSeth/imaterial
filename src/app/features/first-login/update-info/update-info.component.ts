@@ -7,6 +7,7 @@ import { DocumentUploadService } from 'src/app/shared/services/document-download
 import { debug } from 'util';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { MatSnackBar } from '@angular/material';
 
 export interface City {
   value: string;
@@ -43,9 +44,13 @@ export class UpdateInfoComponent implements OnInit {
   OthersId: number;
   imageFileSizeError: string;
   imageFileSize: boolean = false;
+   fileTypes : string[] = ['png', 'jpeg', 'jpg'];
+
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
+      private _snackBar: MatSnackBar,
+
     private _router: Router,
     private _uploadImageService: DocumentUploadService,
     private navService: AppNavigationService) { }
@@ -160,20 +165,37 @@ export class UpdateInfoComponent implements OnInit {
     if (event.target.files.length > 0) {
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event) => {
-        this.localImg = (<FileReader>event.target).result;
-      }
+      // reader.onload = (event) => {
+      //   this.localImg = (<FileReader>event.target).result;
+      // }
       const file = event.target.files[0];
         var fileSize =  event.target.files[0].size; // in bytes
-       if(fileSize < 1000000){
-        this.imageFileSizeError = "";
-        this.imageFileSize = true;
-        this.uploadImage(file);
+      let fileType = event.target.files[0].name.split('.').pop();
+     
+      if(this.fileTypes.some(element => {
+         return element === fileType
+       })){
+          if (fileSize < 1000000) {
+             reader.onload = (event) => {
+        this.localImg = (<FileReader>event.target).result;
       }
-      else{
-         this.imageFileSize = false;
-         this.imageFileSizeError = "Image must be less than 1 mb";
-      }
+             this.imageFileSizeError = "";
+              this.imageFileSize = true;
+              this.uploadImage(file);
+          }
+          else {
+            this.imageFileSize = false;
+            this.imageFileSizeError = "Image must be less than 1 mb";
+          }
+       }
+       else{
+         this.localImg = '';
+          this._snackBar.open("We don't support "+fileType+" in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
+            duration: 2000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+       }
     }
   }
 

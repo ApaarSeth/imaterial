@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><defs><style>.a{fill:none;}.b{fill:#f47822;}.c{fill:#0c3d56;}</style></defs><g transform="translate(1059 -1453)"><circle class="a" cx="14" cy="14" r="14" transform="translate(-1059 1453)"/><path class="b" d="M4.5,14.332h7.866V4.5H4.5Zm0,7.866h7.866V16.3H4.5Zm9.832,0H22.2V12.366H14.332Zm0-17.7v5.9H22.2V4.5Z" transform="translate(-1058.5 1453.5)"/><rect class="c" width="9" height="6" transform="translate(-1045 1458)"/><rect class="c" width="8" height="7" transform="translate(-1054 1469)"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="dashboard-hamburger" transform="translate(-363 -464)">
+    <rect id="Rectangle_1978" data-name="Rectangle 1978" width="28" height="28" transform="translate(363 464)" fill="none"/>
+    <g id="Dashboard_icon" data-name="Dashboard icon" transform="translate(-1789 -1381)">
+      <rect id="Rectangle_1956" data-name="Rectangle 1956" width="20" height="20" transform="translate(2156 1849)" fill="none"/>
+      <g id="Group_319" data-name="Group 319" transform="translate(2138 1724)">
+        <path id="Icon_material-dashboard" data-name="Icon material-dashboard" d="M4.5,14.332h7.866V4.5H4.5Zm0,7.866h7.866V16.3H4.5Zm9.832,0H22.2V12.366H14.332Zm0-17.7v5.9H22.2V4.5Z" transform="translate(14.5 121.5)" fill="#f47822"/>
+        <rect id="Rectangle_1930" data-name="Rectangle 1930" width="9" height="6" transform="translate(28 126)" fill="#0c3d56"/>
+        <rect id="Rectangle_1931" data-name="Rectangle 1931" width="8" height="7" transform="translate(19 137)" fill="#0c3d56"/>
+      </g>
+    </g>
+  </g>
+</svg>

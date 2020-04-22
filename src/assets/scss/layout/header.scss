@@ -116,8 +116,16 @@ color: #000000 !important;
               display: none;
             }
        }
-    
+     .cdk-overlay-container{
+        .cdk-overlay-pane{
+          max-width: 98% !important;
+        }
+    }
+    .mat-dialog-content{
+      padding: 0 9px !important;
+    }
   }
+
    @media only screen and (max-width: 440px) {
      .header-fixed .buildsupply-logo{
        width: 140px;

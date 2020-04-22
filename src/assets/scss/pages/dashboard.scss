@@ -333,6 +333,7 @@ body,
 .page-start-point{
     padding-top: 65px !important;
     height: 100%;
+    overflow-x:hidden;
 }
     .dashboard{
         .container-fluid.bg-gray{
@@ -394,7 +395,33 @@ body,
           padding-left: 20px;
           padding-right: 20px;
           }
+          .grn-dashboard{
+             padding-left: 20px;
+             padding-right: 20px;
+          }
+         .create-po-dashboard{
+             padding-left: 20px;
+             padding-right: 20px;
+              .mat-expansion-panel-header-title{
+                 font-size: 15px !important;
+             }
+        }
+         .back-btn-grn{
+            display: block;
+        }
 }
+  @media only screen and (max-width: 432px){
+ .create-po-dashboard{
+             .mat-expansion-panel-header-title{
+                .approved{
+                    padding-top: 8px;
+                }
+                .grn-note{
+                    padding-top: 5px;
+                }
+             }
+        }
+  }
   @media only screen and (max-width: 560px) {
       .project-dashboard{
           padding-left: 7px;
@@ -406,6 +433,26 @@ body,
                  padding-top: 10px;
              }
         }
+          .grn-dashboard{
+             padding-left: 7px;
+             padding-right: 7px;
+          }
+        .back-btn-grn{
+            display: none;
+        }
+        .create-po-dashboard{
+             padding-left: 7px;
+             padding-right: 7px;
+             .mat-expansion-panel-header-title{
+                font-size: 14px !important;
+             }
+        }
+          .example-form-field {
+                 width: 100%;
+            }
+            .create-po-btn{
+                padding-top: 10px;
+            }
       
         .things-to-do__icons {
                     box-shadow: none;
