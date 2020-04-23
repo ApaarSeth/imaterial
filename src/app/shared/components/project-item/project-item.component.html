@@ -12,8 +12,8 @@
               <div class="row">
                    <div class="col-xs-3 image-small-screen">
                      <div>
-                        <img style="width:100%" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl" alt="project image" />
-                        <img style="width:100%"  *ngIf="!projectDetails.imageUrl" [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
+                        <img class="image-project-card" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl" alt="project image" />
+                        <img  *ngIf="!projectDetails.imageUrl" [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
                      </div>
                     </div>
                     <div class="col-xs-9">

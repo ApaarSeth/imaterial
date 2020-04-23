@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import { RfqMaterialResponse, Address } from "../../models/RFQ/rfq-details";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AddAddressService } from "../../services/add-address/add-address.service";
@@ -25,7 +25,8 @@ export class AddAddressPoDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
     private addAddressService: AddAddressService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private _snackBar: MatSnackBar
   ) { }
 
   selectAddressFrm: FormGroup;
@@ -87,7 +88,15 @@ export class AddAddressPoDialogComponent {
     this.addAddressService
       .postAddAddress(role, this.data.id, address)
       .then(res => {
-        this.dialogRef.close([this.data.roleType, { address: res.data }]);
+        if(res.status == 0){
+            this._snackBar.open(res.message, "", {
+                duration: 2000, panelClass: ["success-snackbar"],
+                verticalPosition: "bottom"
+              });
+        }
+        else{
+          this.dialogRef.close([this.data.roleType, { address: res.data }]);
+        }
       });
   }
 
