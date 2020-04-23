@@ -93,6 +93,19 @@
             {{ element.estimatedQty }}
           </td>
         </ng-container>
+        <ng-container matColumnDef="estimatedRate">
+          <th *matHeaderCellDef class="text-align-center justify-center">
+            Estimated Rate
+          </th>
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
+            {{ element.estimatedRate }}
+          </td>
+        </ng-container>
         <ng-container matColumnDef="indentedQuantity">
           <th *matHeaderCellDef class="text-align-center justify-center">
             Indented Quantity
@@ -117,7 +130,7 @@
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
           >
             <ng-container *ngIf="element.issueToProject; else showZEroDataIP"> {{ element.issueToProject }}</ng-container>
-            <ng-template #showZEroDataIP> 0 {{ element.materialUnit }} </ng-template>
+            <ng-template #showZEroDataIP> 0 </ng-template>
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
@@ -131,8 +144,8 @@
             *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
           >
-            <ng-container *ngIf="element.availableStock; else showZEroData"> {{ element.availableStock }} {{ element.materialUnit }} </ng-container>
-            <ng-template #showZEroData> 0 {{ element.materialUnit }} </ng-template>
+            <ng-container *ngIf="element.availableStock; else showZEroData"> {{ element.availableStock }}</ng-container>
+            <ng-template #showZEroData> 0 </ng-template>
           </td>
         </ng-container>
 
