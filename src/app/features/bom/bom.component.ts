@@ -166,6 +166,18 @@ export class BomComponent implements OnInit {
     this.bomService.searchText.next(event);
   }
 
+  get status() {
+    if (this.currentIndex == 0) {
+      return this.topMaterial ? this.topMaterial.quantityForms.invalid : true
+    }
+    else if (this.currentIndex == 1) {
+      return this.allMaterial ? this.allMaterial.quantityForms.invalid : true
+    }
+    else if (this.currentIndex == 2) {
+      return this.myMaterial ? this.myMaterial.quantityForms.invalid : true
+    }
+  }
+
   formInit() {
     this.form = this.fomBuilder.group({
       selectedTrades: ['']

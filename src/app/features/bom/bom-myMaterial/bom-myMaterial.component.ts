@@ -185,22 +185,6 @@ export class BomMyMaterialComponent implements OnInit {
   }
 
 
-  enteredInput() {
-    this.counter = 0;
-    if (this.counter > 0) {
-      this.counter++;
-      this.inputEntered.emit(true);
-    }
-    for (let val of this.quantityForms.value.forms) {
-      let result = val.materialGroup.some(mat => {
-        return mat.estimatedQty && mat.estimatedQty >= 0
-      })
-      if (result) {
-        this.inputEntered.emit(true);
-        break;
-      }
-    }
-  }
 
 
   getMaterialLength(): ValidatorFn {
@@ -253,19 +237,4 @@ export class BomMyMaterialComponent implements OnInit {
     this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
   }
 
-  allowOnlyAmountAndDot(event, index1, index2) {
-    // // this.quantityForms.get('forms').get(index1).get("materialGroup").get(index2).get("estimatedQty").valueChanges(changes => {
-    // //   console.log("changes")
-    // // })
-
-    // (<FormGroup>(<FormArray>(<FormGroup>(<FormArray>this.quantityForms.get('forms')).controls[index1]).get('materialGroup')).controls[index2]).get("estimatedQty").valueChanges.subscribe(changes => {
-    //   console.log("changes")
-    // })
-    var rgx = /^\d+(\.\d{1,2})?$/;
-    // const inputChar = String.fromCharCode((event as KeyboardEvent).charCode);
-    if (!rgx.test(event.target.value)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
-  }
 }
