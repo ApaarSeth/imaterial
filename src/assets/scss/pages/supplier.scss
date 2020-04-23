@@ -536,6 +536,9 @@ mat-icon {
     .mat-row .mat-cell {
         min-width: 80px;
     }
+    .mat-row .actions-cell.mat-cell{
+         min-width: 220px;
+    }
 }
 
 

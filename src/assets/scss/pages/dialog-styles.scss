@@ -94,6 +94,10 @@
 
  @media only screen and (max-width: 576px) {
         .add-project-component-dialog .add-edit-form-dialog{
+          .col-sm-6{
+                  padding-right: 10px !important;
+                  padding-left: 10px !important;
+          }
 
           .col-sm-3 mat-form-field{
             width: 100%
@@ -102,9 +106,13 @@
             width: 100%;
              }
          .col-sm-6.date-dialog-add-edit mat-form-field{
-            width : 100%;
+            width : 98%;
             }
         } 
+          .image-project-div{
+                margin: auto;
+            }
+
 
  }
 
