@@ -23,7 +23,8 @@ import { ViewVideoComponent } from './video-video/view-video.component';
 import { AddBomWarningComponent } from './add-bom-warning/add-bom-warning.component';
 import { ShowSupplierRemarksandDocs } from './show-supplier-remarks-documents/show-supplier-remarks-documents.component';
 import { SelectSupplierAddressDialogComponent } from './select-supplier-address/select-supplier-address.component';
-import { DisplayProjectDetailsComponent } from "./display-project-details/display-project-details.component";
+import { AddMyMaterialBomComponent } from './add-my-material-Bom/add-my-material-bom.component';
+import { DisplayProjectDetailsComponent } from './display-project-details/display-project-details.component';
 import { AddMyMaterialComponent } from './add-my-material/add-my-material.component';
 
 export const SharedDialogs = [
@@ -53,5 +54,6 @@ export const SharedDialogs = [
   AddBomWarningComponent,
   ShowSupplierRemarksandDocs,
   SelectSupplierAddressDialogComponent,
+  AddMyMaterialBomComponent,
   AddMyMaterialComponent
 ];
