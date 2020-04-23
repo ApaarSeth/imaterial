@@ -52,7 +52,17 @@ export class ConfirmRfqBidComponent implements OnInit {
   }
 
   submit(){
-    return Promise.all([
+    if(this.data.disabledAddress){
+     // console.log("chooched");
+         return Promise.all([
+         this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
+                this.dialogRef.close(data);
+            })
+         ]);
+    }
+    else{
+    //   console.log("added");
+       return Promise.all([
       this.poService.addAddress(this.data.supplierId, this.data.supplierAddress).then(res => {
           if(res.status != 0){
             this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
@@ -68,6 +78,8 @@ export class ConfirmRfqBidComponent implements OnInit {
           }
       })
     ])
+    }
+   
   }
 }
 
