@@ -50,8 +50,13 @@
           <th *matHeaderCellDef class="first-column-row-header">
             Material Name
           </th>
-          <td class="text-left" mat-cell *matCellDef="let element" [ngClass]="[element.materialCustomFlag && element.isApproved ? 'background-color-light-grey' : '']">
-            <mat-checkbox #ch (change)="getElemenetChecked(ch, element)" [checked]="element.checked" [disabled]="element.materialCustomFlag && element.isApproved">
+          <td class="text-left" mat-cell *matCellDef="let element" [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+            <mat-checkbox
+              #ch
+              (change)="getElemenetChecked(ch, element)"
+              [checked]="element.checked"
+              [disabled]="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false"
+            >
               <div class="limited-character bom" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
               <div class="limited-character bom" matTooltip=" {{ element.materialGroup }}">
                 <span class="category-name">
@@ -66,7 +71,12 @@
           <th *matHeaderCellDef class="text-align-center justify-center">
             Unit
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element" [ngClass]="[element.materialCustomFlag && element.isApproved ? 'background-color-light-grey' : '']">
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             {{ element.materialUnit }}
           </td>
         </ng-container>
@@ -74,15 +84,38 @@
           <th *matHeaderCellDef class="text-align-center justify-center">
             Estimated Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element" [ngClass]="[element.materialCustomFlag && element.isApproved ? 'background-color-light-grey' : '']">
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             {{ element.estimatedQty }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="estimatedRate">
+          <th *matHeaderCellDef class="text-align-center justify-center">
+            Estimated Rate
+          </th>
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
+            {{ element.estimatedRate }}
           </td>
         </ng-container>
         <ng-container matColumnDef="indentedQuantity">
           <th *matHeaderCellDef class="text-align-center justify-center">
             Indented Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element" [ngClass]="[element.materialCustomFlag && element.isApproved ? 'background-color-light-grey' : '']">
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             {{ element.requestedQuantity }}
           </td>
         </ng-container>
@@ -90,9 +123,14 @@
           <th *matHeaderCellDef class="text-align-center justify-center">
             Issued To Project
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element" [ngClass]="[element.materialCustomFlag && element.isApproved ? 'background-color-light-grey' : '']">
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             <ng-container *ngIf="element.issueToProject; else showZEroDataIP"> {{ element.issueToProject }}</ng-container>
-            <ng-template #showZEroDataIP> 0 {{ element.materialUnit }} </ng-template>
+            <ng-template #showZEroDataIP> 0 </ng-template>
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
@@ -104,56 +142,67 @@
             mat-cell
             [hidden]="!permissionObj.rfqFlag"
             *matCellDef="let element"
-            [ngClass]="[element.materialCustomFlag && element.isApproved ? 'background-color-light-grey' : '']"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
           >
-            <ng-container *ngIf="element.availableStock; else showZEroData"> {{ element.availableStock }} {{ element.materialUnit }} </ng-container>
-            <ng-template #showZEroData> 0 {{ element.materialUnit }} </ng-template>
+            <ng-container *ngIf="element.availableStock; else showZEroData"> {{ element.availableStock }}</ng-container>
+            <ng-template #showZEroData> 0 </ng-template>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="customColumn">
           <th *matHeaderCellDef></th>
-          <td class="text-right p-b-20" mat-cell *matCellDef="let element" [ngClass]="[element.materialCustomFlag && element.isApproved ? 'background-color-light-grey' : '']">
+          <td
+            class="text-right p-b-20"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             <!-- <a>
               <mat-icon>edit</mat-icon>
             </a> -->
-            <button class="button-display-none" [disabled]="element.materialCustomFlag && element.isApproved">
-              <a (click)="issueToIndent(element.materialId, projectId)" class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Issue to Indent">
-                <img
-                  [src]="
-                    permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)
-                      ? '../../../../assets/images/issue_to_indent_disabled.png'
-                      : '../../../../assets/images/issue_to_indent.png'
-                  "
-                />
-              </a>
-            </button>
+
+            <a
+              (click)="(element.materialCustomFlag === 1 ? element.isApproved !== 1 : false) ? null : issueToIndent(element.materialId, projectId)"
+              class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"
+              matTooltip="Issue to Indent"
+            >
+              <img
+                [src]="
+                  permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)
+                    ? '../../../../assets/images/issue_to_indent_disabled.png'
+                    : '../../../../assets/images/issue_to_indent.png'
+                "
+              />
+            </a>
 
             <!-- <a *ngIf="permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)" class="width-15-px p-r-10 issue-to-indent-icon">
               <img src="../../../../assets/images/issue_to_indent_disabled.png" />
             </a> -->
-            <button class="button-display-none" [disabled]="element.materialCustomFlag && element.isApproved">
-              <a
-                class="width-15-px p-l-5 cursor-pointer"
-                matTooltip="Delete"
-                *ngIf="
+
+            <a
+              class="width-15-px p-l-5 cursor-pointer"
+              matTooltip="Delete"
+              *ngIf="
+                (element.requestedQuantity === 0 || element.requestedQuantity === null) &&
+                (element.availableStock === 0 || element.availableStock === null) &&
+                (element.issueToProject === 0 || element.issueToProject === null)
+              "
+              (click)="
+                (element.materialCustomFlag === 1 ? element.isApproved !== 1 : false)
+                  ? null
+                  : deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)
+              "
+            >
+              <img
+                [src]="
                   (element.requestedQuantity === 0 || element.requestedQuantity === null) &&
                   (element.availableStock === 0 || element.availableStock === null) &&
                   (element.issueToProject === 0 || element.issueToProject === null)
+                    ? '../../../../assets/images/delete-button.png'
+                    : '../../../../assets/images/delete-button_disable.png'
                 "
-                (click)="deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)"
-              >
-                <img
-                  [src]="
-                    (element.requestedQuantity === 0 || element.requestedQuantity === null) &&
-                    (element.availableStock === 0 || element.availableStock === null) &&
-                    (element.issueToProject === 0 || element.issueToProject === null)
-                      ? '../../../../assets/images/delete-button.png'
-                      : '../../../../assets/images/delete-button_disable.png'
-                  "
-                />
-              </a>
-            </button>
+              />
+            </a>
 
             <!-- <a
               class="width-15-px p-l-5"

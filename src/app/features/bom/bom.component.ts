@@ -332,6 +332,9 @@ export class BomComponent implements OnInit {
       width: "1400px",
       data
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getProject(this.projectId);
+    })
   }
   openAddBomDialog(index: number) {
     const dialogRef = this.dialog.open(AddBomWarningComponent, {
