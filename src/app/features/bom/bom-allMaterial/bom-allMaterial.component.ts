@@ -184,22 +184,6 @@ export class BOMAllMaterialComponent implements OnInit {
   }
 
 
-  enteredInput() {
-    this.counter = 0;
-    if (this.counter > 0) {
-      this.counter++;
-      this.inputEntered.emit(true);
-    }
-    for (let val of this.quantityForms.value.forms) {
-      let result = val.materialGroup.some(mat => {
-        return mat.estimatedQty && mat.estimatedQty >= 0
-      })
-      if (result) {
-        this.inputEntered.emit(true);
-        break;
-      }
-    }
-  }
 
   getMaterialLength(minRequired = 1): ValidatorFn {
     // if (!control.touched) {

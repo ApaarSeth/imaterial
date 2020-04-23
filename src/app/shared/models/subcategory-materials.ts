@@ -20,6 +20,8 @@ export interface Subcategory {
   availableStock: number;
   quantity: number;
   dueDate: Date;
+  isApproved?: number;
+
 }
 
 export interface Materials {
