@@ -406,6 +406,10 @@ body,
                  font-size: 15px !important;
              }
         }
+          .users-dashboard{
+             padding-left: 20px;
+          padding-right: 20px;
+        }
          .back-btn-grn{
             display: block;
         }
@@ -432,6 +436,10 @@ body,
               .add-project-btn{
                  padding-top: 10px;
              }
+        }
+        .users-dashboard{
+             padding-left: 7px;
+          padding-right: 7px;
         }
           .grn-dashboard{
              padding-left: 7px;
@@ -493,4 +501,8 @@ body,
 
   .mat-button-focus-overlay {
     background-color: transparent!important;
+}
+.image-project-card{
+    width:100%;
+    border-radius: 5px;
 }

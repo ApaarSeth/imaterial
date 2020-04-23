@@ -91,14 +91,8 @@
   }
 }
 .user-details-table-div-active-inactive-single {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 350px;
-  overflow-x: hidden;
-  width: 99.5%;
-
-  table {
-    border-left: 1px solid #d6d6d6;
-  }
 }
 
 .btn-project-user-details {
@@ -106,17 +100,23 @@
   margin: 3px 1px;
   cursor: default;
 }
-.project-user-details-width {
+.add-user-container {
+  .project-user-details-width {
   max-width: 400px;
+  overflow-x: auto !important;
 }
-.edit-disable-user-details-width {
-  mat-icon {
-    float: right;
-  }
-  i {
-    float: right;
-  }
+    .edit-disable-user-details-width {
+      min-width: 100px;
+      mat-icon {
+        float: right;
+      }
+      i {
+        float: right;
+      }
+    }
 }
+
+
 .add-user-details-button-right {
   padding-bottom: 8px;
 }
@@ -502,4 +502,35 @@
 .form-add-edit-grn-div{
   max-height: 350px;
   overflow-y: auto;
+}
+
+.add-user-container {
+  width: 100%;
+  min-width: 0px;
+  overflow-x: auto;
+
+.mat-table {
+      overflow-x: scroll;
+    }
+
+.mat-cell,
+.mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 10px;
+    line-break: unset;
+    text-align: left;
+    width: 2%;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+    font-weight: 500;
+}
+.mat-row,
+.mat-header-row {
+    display: table-row;
+}
+.grn-material-name{
+  text-align: left;
+}
 }

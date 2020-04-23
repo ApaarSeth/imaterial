@@ -22,12 +22,14 @@
               <mat-radio-group aria-label="Select an option" name="address" formControlName="address">
                 <div class="p-t-10 p-b-10 gray-border" *ngFor="let add of address">
                   <mat-radio-button class="p-l-25" [value]="add" [checked]="add.primaryAddress===1">
-                    <span *ngIf="add.addressLine1">{{add.addressLine1}}</span>
-                    <span *ngIf="add.addressLine2">, {{add.addressLine2}}</span>
-                    <span *ngIf="add.city">, {{add.city}}</span>
-                    <span *ngIf="add.state">, {{add.state}}</span>
-                    <span *ngIf="add.pinCode">, {{add.pinCode}}</span>
-                    <span *ngIf="add.gstNo"> | {{add.gstNo}}</span>
+                    <div class="max-width-of-select-address">
+                      <span *ngIf="add.addressLine1">{{add.addressLine1}}</span>
+                      <span *ngIf="add.addressLine2">, {{add.addressLine2}}</span>
+                      <span *ngIf="add.city">, {{add.city}}</span>
+                      <span *ngIf="add.state">, {{add.state}}</span>
+                      <span *ngIf="add.pinCode">, {{add.pinCode}}</span>
+                      <span *ngIf="add.gstNo"> | {{add.gstNo}}</span>
+                    </div>
                   </mat-radio-button>
                 </div>
               </mat-radio-group>
