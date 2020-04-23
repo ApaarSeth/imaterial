@@ -11,9 +11,10 @@
   </div>
 </div>
 
+
 <form *ngIf="materialForms" [formGroup]="materialForms" (ngSubmit)="addGrn()">
 
-      <div formArrayName="forms" class="add-grn-container mat-elevation-z8 form-add-edit-grn-div">
+      <div *ngIf="showtable" formArrayName="forms" class="add-grn-container-popup mat-elevation-z8 form-add-edit-grn-div">
         <table mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="Material Name">
             <th mat-header-cell *matHeaderCellDef>Material Name</th>
@@ -78,6 +79,56 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
       </div>
+
+      <div *ngIf="!showtable" formArrayName="forms" class="add-grn-responsive-div">
+        <ng-container *ngFor="let data of dataSource; let i=index">
+             <mat-accordion class="add-edit-grn-popup-accordian">
+                <mat-expansion-panel class="myPanel" [expanded]="false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <div class="row width100Percent">
+                        <div class="col-xs-8 col-md-8 p-t-10 p-b-10 font-size-vary-grn">
+                          {{data.materialName}} 
+                          </div>
+                        <div class="col-xs-4 col-md-4">
+                           <mat-form-field [formGroupName]="i" class="border-input table-input add-grn-popup">
+                                <input
+                                  matInput
+                                  formControlName="certifiedQty"
+                                  type="text"
+                                  placeholder="Received Quantity"
+                                  min="0"
+                                  appTwoDigitDecimaNumber
+                                />
+                              </mat-form-field>
+                        </div>
+                      </div>
+                      </mat-panel-title>
+                            
+                  </mat-expansion-panel-header>
+                    <div class="row width100Percent">
+                        <div class="col-xs-12 font-size-vary-grn p-t-10 p-l-15">
+                           Unit : {{data.materialUnit}}
+                          </div>
+                    </div>
+                      <div class="row width100Percent">
+                   
+                         <div class="col-xs-6 font-size-vary-grn p-t-10 p-b-10 p-l-15">
+                          Awarded Quantity : {{data.materialQuantity}}
+                          </div>
+                          <div class="col-xs-6 font-size-vary-grn text-align-right p-t-10 p-b-10">
+                            Delivered Quantity : {{data.deliveredQty}}
+                          </div>
+                      
+                      </div>
+
+                </mat-expansion-panel>
+             </mat-accordion>
+             <div class="p-1"></div>
+        </ng-container>
+         
+      </div>
+
    
 
   <div mat-dialog-actions>

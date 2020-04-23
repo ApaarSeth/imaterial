@@ -153,6 +153,14 @@ s .validTill {
   }
 }
 
+.add-grn-container-popup{
+      width: 100%;
+.mat-table {
+      width: 100%;
+      overflow-x: scroll;
+    }
+
+}
 
 .add-grn-container {
   width: 100%;
@@ -211,5 +219,31 @@ s .validTill {
     display: table-row;
 }
 
+}
+
+@media only screen and (max-width : 576px){
+  .example-container {
+    .mat-cell,
+    .mat-header-cell {
+      font-size: 12px;
+    }
+  }
+  .add-grn-container {
+    .mat-cell,
+    .mat-header-cell {
+      font-size: 12px;
+    }
+  }
+  .po-number-grn{
+    font-size: 14px;
+  }
+  .font-size-vary-grn{
+    font-size: 12px;
+  }
+}
+@media only screen and (min-width:576){
+  .font-size-vary-grn{
+    font-size: 14px;
+  }
 }
 

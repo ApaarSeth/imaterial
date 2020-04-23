@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, HostListener } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from "@angular/forms";
 import { GRNService } from "../../services/grn/grn.service";
@@ -33,6 +33,7 @@ export class AddEditGrnComponent implements OnInit {
   purchaseOrderId: any;
   valid: boolean;
   status: boolean = false;
+  showtable: boolean;
 
   constructor(
     private grnService: GRNService,
@@ -49,6 +50,8 @@ export class AddEditGrnComponent implements OnInit {
       this.dataSource = res.data;
       this.formsInit();
     });
+     window.dispatchEvent(new Event('resize'));
+
     this.purchaseOrderId = this.data.pID;
   }
 
@@ -139,6 +142,15 @@ export class AddEditGrnComponent implements OnInit {
     });
   }
 
+ @HostListener('window:resize', ['$event'])
+      sizeChange(event) {
+       if(event.currentTarget.innerWidth >= 962){
+          this.showtable = true;
+        }else{
+        this.showtable = false;
+        }
+    }
+    
   closeDialog(): void {
     this.dialogRef.close(null);
   }

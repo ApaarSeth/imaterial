@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -39,6 +39,7 @@ export class ConfirmRfqBidComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private router: Router,
+    private _snackBar: MatSnackBar,
     private rfqService: RFQService
   ) {}
 
@@ -52,12 +53,23 @@ export class ConfirmRfqBidComponent implements OnInit {
 
   submit(){
     return Promise.all([
-      this.poService.addAddress(this.data.supplierId, this.data.supplierAddress),
-      this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData)
-    ]).then(data => {
-        this.dialogRef.close(data);
-    });
+      this.poService.addAddress(this.data.supplierId, this.data.supplierAddress).then(res => {
+          if(res.status != 0){
+            this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
+                this.dialogRef.close(data);
+            });
+          }
+          else{
+              this._snackBar.open(res.message, "", {
+                duration: 2000, panelClass: ["success-snackbar"],
+                verticalPosition: "bottom"
+              });
+             this.dialogRef.close(null);
+          }
+      })
+    ])
   }
+}
 
  
-}
+

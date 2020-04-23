@@ -185,15 +185,9 @@ getCityAndState(pincode){
       .afterClosed()
       .toPromise()
       .then(data => {
-        if(data[0].statusCode === 201){
+        if(data!= null && data.status == 1){
           this.router.navigate(["/rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
         }
-        /*if (data.data == "close") {
-        }
-        if (data.data == "submit") {
-          this.router.navigate([
-            "rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
-        }*/
       });
   }
 
