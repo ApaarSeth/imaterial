@@ -278,7 +278,7 @@ export class BomComponent implements OnInit {
     else if (this.buttonName == 1) {
       if (this.selectedTrades.length) {
         this.bomService.getTrades({ tradeNames: [...this.selectedTrades] }).then(res => {
-          this.myMaterialData = [...res];
+          this.allMaterialData = [...res];
           this.searchAgain = this.text.nativeElement.value
         });
       }

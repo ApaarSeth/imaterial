@@ -6,6 +6,7 @@ $icon-color-gray: #b8b8b8;
 $black-color: #000000;
 $alert-color: #ff5353;
 $background-color-grey: #979797;
+$background-color-light-grey: #b8b8b8;
 $background-table-color-grey: #ececec;
 $green-color: #7ed321;
 $skyblue-color: #2197bb;
@@ -16,6 +17,9 @@ a:hover {
 
 .background-color-grey {
   background-color: $background-color-grey;
+}
+.background-color-light-grey {
+  background-color: $background-color-light-grey;
 }
 
 .background-color-skyblue {
@@ -576,7 +580,7 @@ mat-accordion {
 .line-height-1 {
   line-height: 1;
 }
-.line-height-1-6{
+.line-height-1-6 {
   line-height: 1.6;
 }
 
@@ -586,12 +590,17 @@ mat-accordion {
 .justify-content-space-around {
   justify-content: space-around;
 }
-.justify-content-space-between{
-   justify-content: space-between;
+.justify-content-space-between {
+  justify-content: space-between;
 }
-.max-width-96{
-    max-width: 96px;
+.max-width-96 {
+  max-width: 96px;
 }
-.word-break-word{
+.word-break-word {
   word-break: break-word;
+}
+
+.button-display-none {
+  background-color: transparent;
+  border: none;
 }

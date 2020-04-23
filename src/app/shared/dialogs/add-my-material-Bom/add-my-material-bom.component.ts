@@ -312,8 +312,8 @@ export class AddMyMaterialBomComponent implements OnInit {
               estimatedPrice: Number(val.estimatedPrice),
               estimatedQty: Number(val.estimatedQty),
               materialName: val.materialName,
-              materialGroupCode: val.category.categoriesCode,
-              materialGroup: val.category.categoriesName,
+              materialGroupCode: typeof (val.category) === 'string' ? null : val.category.categoriesCode,
+              materialGroup: typeof (val.category) === 'string' ? val.category : val.category.categoriesName,
               materialUnit: val.materialUnit,
               tradeId: val.trade.tradeId
             }

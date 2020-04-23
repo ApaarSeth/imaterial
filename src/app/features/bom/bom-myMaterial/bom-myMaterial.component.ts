@@ -184,9 +184,6 @@ export class BomMyMaterialComponent implements OnInit {
       });
   }
 
-
-
-
   getMaterialLength(): ValidatorFn {
     return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
