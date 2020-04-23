@@ -56,14 +56,7 @@
                 >
               </div>
               <div>
-                <button
-                  mat-raised-button
-                  class="main-background-color main-button color-white pull-right save-material-button"
-                  (click)="saveCategory()"
-                  [disabled]="
-                    this.currentIndex === 0 ? (this.topMaterial ? this.topMaterial.quantityForms.invalid : true) : this.allMaterial ? this.allMaterial.quantityForms.invalid : true
-                  "
-                >
+                <button mat-raised-button class="main-background-color main-button color-white pull-right save-material-button" (click)="saveCategory()" [disabled]="status">
                   Add to BOM
                 </button>
               </div>

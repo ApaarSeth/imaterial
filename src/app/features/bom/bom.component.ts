@@ -166,6 +166,18 @@ export class BomComponent implements OnInit {
     this.bomService.searchText.next(event);
   }
 
+  get status() {
+    if (this.currentIndex == 0) {
+      return this.topMaterial ? this.topMaterial.quantityForms.invalid : true
+    }
+    else if (this.currentIndex == 1) {
+      return this.allMaterial ? this.allMaterial.quantityForms.invalid : true
+    }
+    else if (this.currentIndex == 2) {
+      return this.myMaterial ? this.myMaterial.quantityForms.invalid : true
+    }
+  }
+
   formInit() {
     this.form = this.fomBuilder.group({
       selectedTrades: ['']
@@ -266,7 +278,7 @@ export class BomComponent implements OnInit {
     else if (this.buttonName == 1) {
       if (this.selectedTrades.length) {
         this.bomService.getTrades({ tradeNames: [...this.selectedTrades] }).then(res => {
-          this.myMaterialData = [...res];
+          this.allMaterialData = [...res];
           this.searchAgain = this.text.nativeElement.value
         });
       }

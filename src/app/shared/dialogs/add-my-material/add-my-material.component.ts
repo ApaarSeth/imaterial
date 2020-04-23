@@ -166,36 +166,79 @@ export class AddMyMaterialComponent implements OnInit {
     return { trade, category, materialName }
   }
 
-  onAddRow() {
+  checkMaterialExist(): { alreadyUsedBefore: boolean, alreadyPresentInDb: boolean } {
+    let val;
     let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
     this.bomService.getMaterialExist(checkData).then(res => {
       if (res.data) {
         let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-
         let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.find(val => {
           return val.materialName === currentMaterialName
         }))
         if (!alreadyPresent) {
-          (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-          this.filteredOption[this.currentIndex] = null
+          val = { alreadyUsedBefore: false, alreadyPresentInDb: false }
         }
         else {
-          this._snackBar.open("Set New Material Name", "", {
-            duration: 4000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          });
+          val = { alreadyUsedBefore: true, alreadyPresentInDb: false }
         }
       }
       else {
-        this._snackBar.open("Material Name already exist in all material", "", {
-          duration: 4000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
-        (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+        val = { alreadyUsedBefore: false, alreadyPresentInDb: true }
       }
     })
+    return val
+  }
+  onAddRow() {
+    let check = this.checkMaterialExist();
+    if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
+      (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
+      this.filteredOption[this.currentIndex] = null
+    }
+    else if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
+      this._snackBar.open("Set New Material Name", "", {
+        duration: 4000,
+        panelClass: ["warning-snackbar"],
+        verticalPosition: "bottom"
+      });
+      (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+    }
+    else {
+      this._snackBar.open("Material Name already exist in all material", "", {
+        duration: 4000,
+        panelClass: ["warning-snackbar"],
+        verticalPosition: "bottom"
+      });
+      (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+    }
+    //     let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
+    // this.bomService.getMaterialExist(checkData).then(res => {
+    //   if (res.data) {
+    //     let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
+
+    //     let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.find(val => {
+    //       return val.materialName === currentMaterialName
+    //     }))
+    //     if (!alreadyPresent) {
+    //       (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
+    //       this.filteredOption[this.currentIndex] = null
+    //     }
+    //     else {
+    //       this._snackBar.open("Set New Material Name", "", {
+    //         duration: 4000,
+    //         panelClass: ["warning-snackbar"],
+    //         verticalPosition: "bottom"
+    //       });
+    //     }
+    //   }
+    //   else {
+    //     this._snackBar.open("Material Name already exist in all material", "", {
+    //       duration: 4000,
+    //       panelClass: ["warning-snackbar"],
+    //       verticalPosition: "bottom"
+    //     });
+    //     (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+    //   }
+    // })
 
   }
 
@@ -214,40 +257,81 @@ export class AddMyMaterialComponent implements OnInit {
   }
 
   submit() {
-    let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
-    this.bomService.getMaterialExist(checkData).then(res => {
-      if (res.data) {
-        let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
-          return {
-            estimatedPrice: Number(val.estimatedPrice),
-            estimatedQty: Number(val.estimatedQty),
-            materialName: val.materialName,
-            materialGroupCode: val.category.categoriesCode,
-            materialGroup: val.category.categoriesName,
-            materialUnit: val.materialUnit,
-            tradeId: val.trade.tradeId
-          }
-        })
-        this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
-          if (res.message = "done") {
-            this._snackBar.open("My Materials Added", "", {
-              duration: 4000,
-              panelClass: ["warning-snackbar"],
-              verticalPosition: "bottom"
-            });
-          }
-          this.dialogRef.close(null);
-        });
-      }
-      else {
-        this._snackBar.open("Material Name already exist in all material", "", {
-          duration: 4000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
-        (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
-      }
-    })
+    let check = this.checkMaterialExist()
+    if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
+      let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
+        return {
+          estimatedPrice: Number(val.estimatedPrice),
+          estimatedQty: Number(val.estimatedQty),
+          materialName: val.materialName,
+          materialGroupCode: val.category.categoriesCode,
+          materialGroup: val.category.categoriesName,
+          materialUnit: val.materialUnit,
+          tradeId: val.trade.tradeId
+        }
+      })
+      this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
+        if (res.message = "done") {
+          this._snackBar.open("My Materials Added", "", {
+            duration: 4000,
+            panelClass: ["warning-snackbar"],
+            verticalPosition: "bottom"
+          });
+        }
+        this.dialogRef.close(null);
+      });
+    }
+
+    else if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
+      this._snackBar.open("Set New Material Name", "", {
+        duration: 4000,
+        panelClass: ["warning-snackbar"],
+        verticalPosition: "bottom"
+      });
+      (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+    }
+    else {
+      this._snackBar.open("Material Name already exist in all material", "", {
+        duration: 4000,
+        panelClass: ["warning-snackbar"],
+        verticalPosition: "bottom"
+      });
+      (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+    }
+    // let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
+    // this.bomService.getMaterialExist(checkData).then(res => {
+    //   if (res.data) {
+    //     let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
+    //       return {
+    //         estimatedPrice: Number(val.estimatedPrice),
+    //         estimatedQty: Number(val.estimatedQty),
+    //         materialName: val.materialName,
+    //         materialGroupCode: val.category.categoriesCode,
+    //         materialGroup: val.category.categoriesName,
+    //         materialUnit: val.materialUnit,
+    //         tradeId: val.trade.tradeId
+    //       }
+    //     })
+    //     this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
+    //       if (res.message = "done") {
+    //         this._snackBar.open("My Materials Added", "", {
+    //           duration: 4000,
+    //           panelClass: ["warning-snackbar"],
+    //           verticalPosition: "bottom"
+    //         });
+    //       }
+    //       this.dialogRef.close(null);
+    //     });
+    //   }
+    //   else {
+    //     this._snackBar.open("Material Name already exist in all material", "", {
+    //       duration: 4000,
+    //       panelClass: ["warning-snackbar"],
+    //       verticalPosition: "bottom"
+    //     });
+    //     (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+    //   }
+    // })
 
 
   }
