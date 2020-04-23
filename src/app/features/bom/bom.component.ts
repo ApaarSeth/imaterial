@@ -33,8 +33,8 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 import { AddBomWarningComponent } from 'src/app/shared/dialogs/add-bom-warning/add-bom-warning.component';
 import { BOMAllMaterialComponent } from './bom-allMaterial/bom-allMaterial.component';
-import { AddMyMaterialComponent } from 'src/app/shared/dialogs/add-my-material/add-my-material.component';
 import { BomMyMaterialComponent } from './bom-myMaterial/bom-myMaterial.component';
+import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -316,7 +316,7 @@ export class BomComponent implements OnInit {
 
   openAddMyMaterial() {
     let data = this.projectId
-    const dialogRef = this.dialog.open(AddMyMaterialComponent, {
+    const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: "1400px",
       data
     });
