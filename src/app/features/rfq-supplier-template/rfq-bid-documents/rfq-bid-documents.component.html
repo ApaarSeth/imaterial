@@ -15,11 +15,14 @@
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />
             <span>{{ file.DocumentDesc }}</span>
-            <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
-              <i class="material-icons">
-                remove_red_eye
-              </i>
-            </a>
+              <span class="show-download">
+                 <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
+                  <i class="material-icons">
+                    remove_red_eye
+                  </i>
+                </a>
+              </span>
+           
           </mat-list-item>
         </span>
         <span *ngIf="!documentData">

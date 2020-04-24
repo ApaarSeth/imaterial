@@ -1,4 +1,7 @@
 .customPo {
+  td.mat-cell, td.mat-footer-cell, th.mat-header-cell{
+    border-bottom: none;
+  }
   .mat-accordion .mat-header-row {
     padding-left: 1.5rem;
     padding-right: 2rem;
