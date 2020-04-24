@@ -1,4 +1,4 @@
-<form [formGroup]="projectDetails" (ngSubmit)="submit()">
+<form [formGroup]="projectDetails" (ngSubmit)="submit()" *ngIf="!showResponsiveDesign">
   <div class="row">
     <span class="col-xs-6">
       <span class="m-r-35 p-l-15">
@@ -223,3 +223,242 @@
     </mat-grid-tile>
   </mat-grid-list>
 </form>
+
+  <!-- for responsive design -->
+
+<form [formGroup]="projectDetails" (ngSubmit)="submit()" class="po-view" *ngIf="showResponsiveDesign">
+  <div class="row p-b-10 border-bottom-po-view">
+    <div class="col-xs-6 col-sm-6 display-flex">
+        <div class="text-semi-bold font-size12"> P.O. No.:</div>
+        <div class="text-semi-bold font-size12" *ngIf="mode != 'edit'; else editBlock">{{ cardData.poNumber }}</div>
+        <ng-template #editBlock>
+          <mat-form-field class="border-input width60Percent p-t-0">
+            <input matInput type="string" formControlName="orderNo" placeholder="P.O. No." class="width60Percent" />
+          </mat-form-field>
+        </ng-template>
+    </div>
+      <div class="col-xs-6 col-sm-6  display-flex date-dialog-add-edit">
+      <div class="text-semi-bold font-size12" *ngIf="mode !== 'edit'; else editDateBlock">
+        P.O. Valid Till: <span class="p-l-5 font-size12">{{ cardData.poValidUpto | date: "dd-MMM-yyy" }}</span>
+      </div>
+      <ng-template #editDateBlock>
+        <div class="text-semi-bold  font-size12">
+          P.O. Valid Till:
+        </div>
+          <mat-form-field class="border-input width60Percent p-t-0">
+            <mat-label>Valid Till</mat-label>
+            <!-- <span class="form-placeholder">{{ projectDetails["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
+            <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly [min]="minDate"  class="width60Percent"/>
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate startView="month"></mat-datepicker>
+          </mat-form-field>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="row p-t-10 p-b-10 border-bottom-po-view">
+     <div class="col-xs-6 col-sm-6 font-size12">
+              <div class="header-card-po border-none">Contract Detail</div>
+                <div class="width100Percent">
+                <span class="text-size-light">Project Name:</span>
+                <span class="text-very-light word-break-all">{{ cardData.projectAddress.projectName }}</span>
+                </div>
+
+                <div class="width100Percent">
+                   <span class="text-size-light">
+                  Contact Person:
+                </span>
+                <span class="text-very-light word-break-all">
+                  {{ cardData.projectAddress.firstName }}
+                  {{ cardData.projectAddress.lastName }}</span
+                >
+                <span *ngIf="mode === 'edit'">
+                  <a href="javascript:void(0)" (click)="openDialog('projectUserId', cardData.projectId)"
+                    ><i class="material-icons main-color font-size14">
+                      edit
+                    </i></a
+                  >
+                </span>
+                </div>
+               
+             <div class="width100Percent">
+                <span class="text-size-light">
+                  Phone No.:
+                </span>
+                <span class="text-very-light word-break-all">{{ cardData.projectAddress.contactNo }}</span>
+             </div>
+             <div class="width100Percent">
+                <span class="text-size-light">
+                  Email:
+                </span>
+                <span class="text-very-light word-break-all"> {{ cardData.projectAddress.email }}</span>
+             </div>
+             
+          </div>
+          <div class="col-xs-6 col-sm-6 font-size12">
+             <div class="header-card-po border-none text-align-right">Delivery Address</div>
+                
+            <div class="text-align-right">
+              <div class="width100Percent">
+                  <span class="text-very-light word-break-all">{{ cardData.projectAddress.addressLine1 }}</span>
+              </div>
+                <div class="width100Percent" *ngIf="cardData.projectAddress.addressLine2">
+                   <span *ngIf="cardData.projectAddress.addressLine2" class="text-very-light word-break-all">{{ cardData.projectAddress.addressLine2 }}</span>
+                </div>
+             
+              <div class="width100Percent">
+                <span class="text-very-light word-break-all">{{ cardData.projectAddress.city }},{{ cardData.projectAddress.state }}</span>
+              </div>
+ 
+              
+               <div class="width100Percent">
+                  <span class="text-very-light word-break-all">{{ cardData.projectAddress.pinCode }}</span>
+               </div>
+            </div>
+             
+          </div>
+  </div>
+
+  <div class="row p-t-10 p-b-10 border-bottom-po-view">
+     <div class="col-xs-12 col-sm-12  font-size12 pull-left">
+ 
+         <div class="header-card-po border-none">Billing Address</div>
+
+                 <div class="width100Percent">
+                    <span class="text-size-light">
+                      Company Name:
+                    </span>
+                    <span  class="text-very-light word-break-all">{{ cardData.billingAddress.companyName }}</span>
+                </div>
+
+             
+                 <div class="width100Percent">
+                <span class="text-size-light">
+                  Contact Person:
+                </span>
+                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.firstName }} {{ cardData.billingAddress.lastName }}</span>
+                <span *ngIf="mode === 'edit'">
+                  <a href="javascript:void(0)" (click)="openDialog('projectBillingUserId', cardData.projectId)"
+                    ><i class="material-icons main-color font-size14">
+                      edit
+                    </i></a
+                  >
+                </span>
+                </div>
+             
+                 <div class="width100Percent">
+                <span class="text-size-light">
+                  Phone No.:
+                </span>
+
+                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.contactNo }}</span>
+             </div>
+                 <div class="width100Percent">
+                <span class="text-size-light">
+                  Email:
+                </span>
+                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.email }}</span>
+         </div>
+                 <div class="width100Percent">
+                <span class="text-size-light">
+                  Street Address:
+                </span>
+                <span  class="text-very-light word-break-all"> {{ cardData.billingAddress.addressLine1 }} {{ cardData.billingAddress.addressLine2 }}</span>
+                <span *ngIf="mode === 'edit'">
+                  <a href="javascript:void(0)" (click)="openaddressDialog('projectBillingAddressId', cardData.projectId)"
+                    ><i class="material-icons main-color font-size14">
+                      edit
+                    </i></a
+                  ></span
+                >
+                </div>
+             
+                 <div class="width100Percent">
+                <span class="text-size-light">
+                  Pin Code:
+                </span>
+
+                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.pinCode }}</span>
+             </div>
+                 <div class="width100Percent">
+                <span class="text-size-light">
+                  City:
+                </span>
+                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.city }}</span>
+            </div>
+                 <div class="width100Percent">
+                <span class="text-size-light">
+                  GSTIN:
+                </span>
+                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.gstNo }}</span>
+             </div>
+          </div>
+      
+  </div>
+  
+
+
+  <div class="row p-t-10 p-b-10 border-bottom-po-view">
+     <div class="col-xs-12 col-sm-12  font-size12 pull-left">
+       <div class="header-card-po border-none">Purchase Order Details</div>
+
+        <div class="width100Percent">
+        <span class="text-size-light">
+              Supplier Name:
+            </span>
+            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.supplierName }}</span>
+          </div>
+
+            <div class="width100Percent">
+            <span class="text-size-light">
+              Contact Person:
+            </span>
+            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.supplierName }}</span>
+         </div>
+
+            <div class="width100Percent">
+            <span class="text-size-light">
+              Phone No.:
+            </span>
+            <span class="text-very-light word-break-all"> {{ cardData.supplierAddress.contactNo }}</span>
+         </div>
+
+            <div class="width100Percent">
+            <span class="text-size-light">
+              Street Address:
+            </span>
+            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.addressLine1 }} {{ cardData.supplierAddress.addressLine2 }}</span>
+            <span *ngIf="mode === 'edit'">
+              <a href="javascript:void(0)" (click)="openaddressDialog('supplierAddressId', cardData.supplierAddress.supplierId)"
+                ><i class="material-icons main-color font-size14">
+                  edit
+                </i></a
+              >
+            </span>
+         </div>
+
+            <div class="width100Percent">
+            <span class="text-size-light">
+              Pin Code:
+            </span>
+            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.pinCode }}</span>
+         </div>
+
+            <div class="width100Percent">
+            <span class="text-size-light">
+              City:
+            </span>
+            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.city }} </span>
+         </div>
+
+            <div class="width100Percent">
+            <span class="text-size-light">
+              GSTIN:
+            </span>
+            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.gstNo }}</span>
+          </div>
+
+     </div>
+  </div>
+
+  </form>

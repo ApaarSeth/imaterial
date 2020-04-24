@@ -1,7 +1,7 @@
-<div class="row">
-  <mat-card class="width96Percent radius-10">
+<div class="row margin-auto">
+  <mat-card class="width100Percent radius-10 p-t-10">
     <mat-card-header class="upload-documents-mat-header">
-      <span class="text-semi-bold" *ngIf="mode === 'edit'">
+      <span class="text-semi-bold margin-auto" *ngIf="mode === 'edit'">
         <app-upload #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"> </app-upload>
       </span>
       <span *ngIf="mode !== 'edit'" class="col-xs-12 text-align-center text-semi-bold">

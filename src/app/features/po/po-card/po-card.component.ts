@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, HostListener } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
   ProjectAddress,
@@ -25,6 +25,7 @@ export class PoCardComponent implements OnInit {
   projectDetails: FormGroup;
   isPoNoAndDateValid: boolean = false
   minDate = new Date();
+  showResponsiveDesign: boolean;
 
   constructor(
     private poService: POService,
@@ -36,6 +37,7 @@ export class PoCardComponent implements OnInit {
 
   ngOnInit() {
     this.formInit();
+    window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
       this.mode = params.mode;
     });
@@ -155,4 +157,15 @@ export class PoCardComponent implements OnInit {
 
     });
   }
+
+   
+    @HostListener('window:resize', ['$event'])
+      sizeChange(event) {
+       if(event.currentTarget.innerWidth <= 768){
+          this.showResponsiveDesign = true;
+        }else{
+          this.showResponsiveDesign = false;
+        }
+    }
+
 }
