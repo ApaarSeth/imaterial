@@ -112,11 +112,6 @@ export class BomTableComponent implements OnInit {
     this.getMaterialWithQuantity();
     const role = localStorage.getItem("role")
     this.permissionObj = this.permissionService.checkPermission(role);
-    // if (this.permissionObj.rfqFlag) {
-    //   this.columnsToDisplay.push("availableStock");
-    //   this.innerDisplayedColumns.push("availableStock");
-    // }
-    //this.product = history.state.projectDetails;
   }
 
   setLocalStorage() {
@@ -138,6 +133,11 @@ export class BomTableComponent implements OnInit {
       width: "1400px",
       data
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'done')
+        this.getMaterialWithQuantity();
+    })
   }
 
 
@@ -166,8 +166,6 @@ export class BomTableComponent implements OnInit {
 
       this.getProject(this.projectId);
       this.dataSource = new MatTableDataSource(this.subcategoryData);
-      // this.dataSource = res.data;
-      // this.dataSource.sort = this.sort;
       this.loading.hide();
     });
   }
@@ -196,11 +194,6 @@ export class BomTableComponent implements OnInit {
   }
   raiseIndent() {
     let projectDetails = this.projectData;
-    // this.checkedSubcategory = this.subcategoryData.filter(sub => {
-    //   if (sub.checked === true) {
-    //     return sub;
-    //   }
-    // });
     if (this.checkedSubcategory.length) {
       let checkedList = this.checkedSubcategory;
       this.router.navigate(["/indent/" + this.projectId], {
@@ -221,11 +214,6 @@ export class BomTableComponent implements OnInit {
   }
 
   createRfq() {
-    // this.checkedSubcategory = this.subcategoryData.filter(sub => {
-    //   if (sub.checked === true) {
-    //     return sub;
-    //   }
-    // });
     let materialList: RfqMat[] = [];
     this.checkedSubcategory.forEach((category: Subcategory, i) => {
       let mat: RfqMat = {};
@@ -339,6 +327,7 @@ export class BomTableComponent implements OnInit {
   }
   addMaterial() {
     this.router.navigate(["/bom/" + this.projectId]);
+
   }
 
   issueToIndent(materialId, projectId): void {

@@ -35,6 +35,7 @@ import { AddBomWarningComponent } from 'src/app/shared/dialogs/add-bom-warning/a
 import { BOMAllMaterialComponent } from './bom-allMaterial/bom-allMaterial.component';
 import { BomMyMaterialComponent } from './bom-myMaterial/bom-myMaterial.component';
 import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
+import { CommonService } from 'src/app/shared/services/commonService';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html",
@@ -122,7 +123,8 @@ export class BomComponent implements OnInit {
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
     private globalLoader: GlobalLoaderService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService
   ) {
   }
 
@@ -289,7 +291,7 @@ export class BomComponent implements OnInit {
       this.showAllMaterial = false;
       this.showTopMaterial = false;
       this.showMyMaterial = true;
-      this.bomService.getMyMaterial().then(res => {
+      this.commonService.getMyMaterial('all').then(res => {
         this.myMaterialData = [...res.data];
         this.searchAgain = this.text.nativeElement.value
       });

@@ -2,7 +2,7 @@
   <div class="col-xs-12 header-border p-t-10">
     <div class="row">
       <div class="col-xs-10">
-        <h1 mat-dialog-title>Add Material</h1>
+        <h1 mat-dialog-title>{{ data.type === "edit" ? "Edit Material" : "Add To My Material" }}</h1>
       </div>
       <div class="col-xs-2">
         <button type="button" class="close pull-right p-t-5" (click)="closeDialog()" aria-label="Close">
@@ -13,9 +13,9 @@
   </div>
   <mat-divider></mat-divider>
   <div class="container">
-    <form *ngIf="addMyMaterial" [formGroup]="addMyMaterial" (ngSubmit)="submit()">
+    <form *ngIf="data" [formGroup]="editMaterialForm" (ngSubmit)="submit()">
       <div class="row my-material-dialog-length">
-        <div formArrayName="myMaterial" *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
+        <div formArrayName="forms" *ngFor="let myMaterial of data.materialList; let i = index">
           <div class="row p-t-10" [formGroupName]="i">
             <div class="col-xs-3">
               <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 3px;">
@@ -60,33 +60,21 @@
             </div>
             <div class="col-xs-1 text-center p-t-15">
               <div class="p-t-10">
-                <span *ngIf="addMyMaterial.get('myMaterial').value.length > 1" class="p-r-5">
+                <span *ngIf="i > 1" class="p-r-5">
                   <a class="width-15-px cursor-pointer float-right-invite-delBtn" matTooltip="Delete" (click)="onDelete(i)">
                     <span class="material-icons main-color">
                       delete_outline
                     </span>
                   </a>
                 </span>
-                <span *ngIf="i == addMyMaterial.get('myMaterial').value.length - 1">
-                  <button
-                    type="button"
-                    [disabled]="!addMyMaterial.valid"
-                    (click)="onAddRow()"
-                    class="p-t-5 material-icons cursor button-background"
-                    [ngClass]="[!addMyMaterial.valid ? 'main-color-faded' : 'main-color']"
-                  >
-                    add_circle
-                  </button>
-                </span>
               </div>
             </div>
           </div>
-          <hr *ngIf="i < addMyMaterial.get('myMaterial').value.length - 1" />
         </div>
       </div>
 
       <div class="text-right col-xs-12 mt-4">
-        <button class="btn btn-warning next-btn" [disabled]="!addMyMaterial.valid">Add Material</button>
+        <button class="btn btn-warning next-btn">Save</button>
       </div>
     </form>
   </div>

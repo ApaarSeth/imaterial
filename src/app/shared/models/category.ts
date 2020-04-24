@@ -36,10 +36,11 @@ export interface material {
   estimatedQty?: number;
   estimatedRate?: number;
   materialId?: number;
-  treadId: number;
+  tradeId: number;
   tradeName: string;
   tradeList: string[]
   isNull?: boolean;
+  materialGroupCode?: string
 }
 
 export interface categoryNestedLevel {
