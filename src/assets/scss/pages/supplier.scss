@@ -579,6 +579,13 @@ mat-icon {
     align-items: center;
 }
 
+.project-name-div{
+      display: flex;
+    justify-content: left;
+    align-items: center;
+    position: relative;
+}
+
 .show-detail-supplier.rfq-icon-material-i {
     position: absolute;
     margin-left: 25px;
@@ -701,6 +708,140 @@ mat-icon {
         float: right;
     }
 }
+
+
+#project-names{
+     display: block;
+    background-color: #ffffff;
+    color: #000000;
+    z-index: 999;
+    font-size: 10px;
+    width: 100%;
+    &:before {         
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        color: transparent;
+        border: 10px solid #CCC;
+        border-color: transparent transparent #FFF;
+        margin-top: -11px;
+        margin-right: 26px;
+        float: right;
+    }
+
+}
+
+.header-project-menu .main-div-bell.mat-menu-item {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    overflow-y: scroll;
+    padding-left:1px;
+    padding-right: 0px;
+    white-space: pre-line;
+    line-height: 15px;
+}
+
+  .header-project-menu.mat-menu-panel{
+                width : 250px;
+            }
+            .header-project-menu .main-div-bell .body-of-notification button{
+                    font-size: 12px;
+                    text-align: left;
+                    max-width: 95%;
+                    min-width: 95%;
+                    white-space: pre-line;
+            }
+
+
+.header-project-menu button.mat-menu-item:hover{
+    background: none !important;
+}
+
+
+    .header-project-menu.mat-menu-item {
+        height: auto;
+    }
+    .header-project-menu{
+        .mat-menu-content{
+             padding: 0px !important;
+        }
+    }
+
+.show-rfq-names.rfq-icon-material-i {
+    position: absolute;
+    right: 10%; 
+    font-size : 14px;
+    img {
+        z-index: 10;
+    }
+}
+
+
+    @media only screen and (max-width : 576px){
+            .header-project-menu.mat-menu-panel{
+                width : 200px;
+            }
+            .header-project-menu .main-div-bell .body-of-notification button{
+                    font-size: 12px;
+                    text-align: left;
+                    max-width: 95%;
+                    min-width: 95%;
+                    white-space: pre-line;
+            }
+            .header-project-menu .main-div-bell.mat-menu-item{
+                    max-height: 250px;
+            }
+
+            .show-rfq-names.rfq-icon-material-i {
+                    position: absolute;
+                    right: 0%;
+                    font-size : 12px;
+                    img {
+                        z-index: 10;
+                    }
+                }
+            
+    }
+    @media only screen and (min-width : 576px) and (max-width: 768px){
+         .header-project-menu.mat-menu-panel{
+                width : 200px;
+            }
+            .header-project-menu .main-div-bell .body-of-notification button{
+                    font-size: 12px;
+                    text-align: left;
+                    max-width: 95%;
+                    min-width: 95%;
+                    white-space: pre-line;
+            }
+            .header-project-menu .main-div-bell.mat-menu-item{
+                    max-height: 250px;
+            }
+            .show-rfq-names.rfq-icon-material-i {
+                position: absolute;
+                right: 0%;
+                font-size : 14px;
+                img {
+                    z-index: 10;
+                }
+            }
+    }
+
+   .header-project-menu .main-div-bell .body-of-notification{
+       text-align: left;
+       button{
+           
+           font-size: 12px;
+            text-align: left;
+            max-width: 80px;
+            div{
+                white-space: pre-line;
+            }
+            white-space: pre-line;
+       }
+   }
+
         
 h3 {
     display:block;
