@@ -15,7 +15,8 @@ export class CommonService {
   unreadnotification: NotificationInt[] = [];
   allnotificationLength: number = null;
   unreadnotificationLength: number = null;
-  onUserUpdate$ = new Subject<number>();;
+  onUserUpdate$ = new Subject<number>();
+  materialAdded = new Subject<boolean>();
   constructor(private dataService: DataService,
     private _router: Router) { }
 
