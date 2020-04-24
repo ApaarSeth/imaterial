@@ -105,7 +105,7 @@ export class AddMyMaterialComponent implements OnInit {
 
   addOtherFormGroup(): FormGroup {
     const formGrp = this._formBuilder.group({
-      materialName: ['', Validators.required],
+      materialName: ['', [Validators.required, Validators.maxLength(300)]],
       materialUnit: ['', Validators.required],
       index: [],
       trade: [''],

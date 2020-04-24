@@ -16,6 +16,10 @@ a:hover {
   text-decoration: none;
 }
 
+.warning-color {
+  color: $alert-color;
+}
+
 .background-color-grey {
   background-color: $background-color-grey;
 }
@@ -445,10 +449,10 @@ a:hover {
 .width98Percent {
   width: 98%;
 }
-.width80Percent{
+.width80Percent {
   width: 80%;
 }
-.width60Percent{
+.width60Percent {
   width: 60%;
 }
 .margin-0-auto {
@@ -703,6 +707,6 @@ mat-accordion {
   }
 }
 
-.color-brand{
-  color:#6b6969;
+.color-brand {
+  color: #6b6969;
 }

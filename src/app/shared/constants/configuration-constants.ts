@@ -106,7 +106,7 @@ export const API = {
   FORGOTPASSWORD: `api/user/resetPassword`,
   CHECKTERMS: `get/isuser/terms/accepted`,
   MATERIALUNIT: `material/get/unit`,
-  MYCUSTOMMATERIAL: `material/get/custom/all`,
+  MYCUSTOMMATERIAL: (type) => `material/get/custom/${type}`,
   DOWNLOADPO: purchaseOrderId => `po/download/${purchaseOrderId}`,
   TRADERELATEDCATEGORY: (tradeName) => `trade/get/categories/${tradeName}`,
   MATERIALEXIST: `material/search/materialexist`,

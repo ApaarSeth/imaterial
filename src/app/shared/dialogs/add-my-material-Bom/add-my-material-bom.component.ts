@@ -105,7 +105,7 @@ export class AddMyMaterialBomComponent implements OnInit {
 
   addOtherFormGroup(): FormGroup {
     const formGrp = this._formBuilder.group({
-      materialName: ['', Validators.required],
+      materialName: ['', [Validators.required, Validators.maxLength(300)]],
       materialUnit: ['', Validators.required],
       index: [],
       estimatedQty: ['', Validators.required],
@@ -326,7 +326,7 @@ export class AddMyMaterialBomComponent implements OnInit {
                 verticalPosition: "bottom"
               });
             }
-            this.dialogRef.close(null);
+            this.dialogRef.close('done');
           });
         }
         else {

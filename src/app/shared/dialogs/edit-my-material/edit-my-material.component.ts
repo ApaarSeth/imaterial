@@ -54,7 +54,7 @@ export class EditMyMaterialComponent implements OnInit {
     private navService: AppNavigationService,
     private dialogRef: MatDialogRef<EditMyMaterialComponent>,
     private _snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data) { }
+    @Inject(MAT_DIALOG_DATA) public data: { materialList: material[], type: string }) { }
 
   ngOnInit() {
 
@@ -68,7 +68,7 @@ export class EditMyMaterialComponent implements OnInit {
 
 
   getTrades() {
-    this.bomService.getOrgTrades(this.data).then(res => {
+    this.userService.getTrades().then(res => {
       this.tradesList = res.data as orgTrades[];
     });
   }
@@ -99,34 +99,25 @@ export class EditMyMaterialComponent implements OnInit {
   }
 
   formInit() {
-    const addOtherFormGroup = this.data.map((data: material) => {
+    const addOtherFormGroup = this.data.materialList.map((data: material) => {
       let frmGrp = this._formBuilder.group({
         materialName: [data.materialName, Validators.required],
         materialUnit: [data.materialUnit, Validators.required],
         index: [],
-        trade: [data.tradeName],
-        category: [data.materialGroup],
+        trade: [{ tradeName: data.tradeName, tradeId: data.tradeId }],
+        category: [{ categoriesCode: data.materialGroupCode, categoriesName: data.materialGroup }],
       });
-      frmGrp.get("index").patchValue(this.addMyMaterial.get('myMaterial')['controls'].length)
-      frmGrp.controls['category'].valueChanges.subscribe(changes => {
-        // this.filteredOption[formGrp.get("index").value] = this._filter(changes, formGrp.get("index").value)
-        this.filterOptions = null;
-        this.filterOptions = new Observable((observer) => {
-          const val: tradeRelatedCategory[] | [string] = this._filter(changes, frmGrp.get("index").value);
-          // observable execution
-          observer.next(val);
-          observer.complete();
-        });
-        console.log('this.filteredOption', frmGrp.get("index").value);
-        console.log('this.filteredOption', this.filteredOption[frmGrp.get("index").value]);
-      })
-
-      frmGrp.controls['trade'].valueChanges.subscribe(changes => {
+      return frmGrp;
+    });
+    this.editMaterialForm = this._formBuilder.group({});
+    this.editMaterialForm.addControl('forms', new FormArray(addOtherFormGroup));
+    (<FormArray>this.editMaterialForm.get('forms')).controls.map((control: FormGroup, i) => {
+      control.controls['trade'].valueChanges.subscribe(changes => {
         if (changes) {
           this.bomService.getTradeCategory(changes.tradeName).then(res => {
-            this.filteredOption[frmGrp.get("index").value] = [...res.data];
+            this.filteredOption[i] = [...res.data];
             this.filterOptions = new Observable((observer) => {
-              const val: tradeRelatedCategory[] | [string] = this._filter('', frmGrp.get("index").value);
+              const val: tradeRelatedCategory[] | [string] = this._filter('', i);
               // observable execution
               observer.next(val);
               observer.complete();
@@ -134,10 +125,16 @@ export class EditMyMaterialComponent implements OnInit {
           });
         }
       })
-      return frmGrp;
-    });
-    this.editMaterialForm = this._formBuilder.group({});
-    this.editMaterialForm.addControl('forms', new FormArray(addOtherFormGroup));
+      control.controls['category'].valueChanges.subscribe(changes => {
+        this.filterOptions = null;
+        this.filterOptions = new Observable((observer) => {
+          const val: tradeRelatedCategory[] | [string] = this._filter(changes, i);
+          observer.next(val);
+          observer.complete();
+        });
+      })
+    })
+    console.log(this.editMaterialForm)
   }
 
   private _filter(value: string | tradeRelatedCategory, index) {
@@ -162,89 +159,14 @@ export class EditMyMaterialComponent implements OnInit {
     return { trade, category, materialName };
   }
 
-  checkMaterialExist() {
-    let val;
-    let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category };
-    return this.bomService.getMaterialExist(checkData).then(res => {
-      if (res.data) {
-        let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.find(val => {
-          return val.materialName === currentMaterialName;
-        }));
-        if (!alreadyPresent) {
-          val = { alreadyUsedBefore: false, alreadyPresentInDb: false };
-        }
-        else {
-          val = { alreadyUsedBefore: true, alreadyPresentInDb: false };
-        }
-      }
-      else {
-        val = { alreadyUsedBefore: false, alreadyPresentInDb: true };
-      }
-    });
-    return val;
-  }
 
-  onAddRow() {
-    // let check = this.checkMaterialExist();
-    // if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
-    //   (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-    //   this.filteredOption[this.currentIndex] = null
-    // }
-    // else if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
-    //   this._snackBar.open("Set New Material Name", "", {
-    //     duration: 4000,
-    //     panelClass: ["warning-snackbar"],
-    //     verticalPosition: "bottom"
-    //   });
-    //   (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
-    // }
-    // else {
-    //   this._snackBar.open("Material Name already exist in all material", "", {
-    //     duration: 4000,
-    //     panelClass: ["warning-snackbar"],
-    //     verticalPosition: "bottom"
-    //   });
-    //   (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
-    // }
-    // let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category };
-    // this.bomService.getMaterialExist(checkData).then(res => {
-    //   if (res.data) {
-    //     let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-
-    //     let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.find(val => {
-    //       return val.materialName === currentMaterialName;
-    //     }));
-    //     if (!alreadyPresent) {
-    //       (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-    //       this.filteredOption[this.currentIndex] = null;
-    //     }
-    //     else {
-    //       this._snackBar.open("Set New Material Name", "", {
-    //         duration: 4000,
-    //         panelClass: ["warning-snackbar"],
-    //         verticalPosition: "bottom"
-    //       });
-    //     }
-    //   }
-    //   else {
-    //     this._snackBar.open("Material Name already exist in all material", "", {
-    //       duration: 4000,
-    //       panelClass: ["warning-snackbar"],
-    //       verticalPosition: "bottom"
-    //     });
-    //     (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
-    //   }
-    // });
-
-  }
-  // onDelete(index) {
-  //   (<FormArray>this.addMyMaterial.get('myMaterial')).removeAt(index);
-  //   this.filteredOption.splice(index, 1);
-  // }
 
   displayFn(option: tradeRelatedCategory) {
     return option && option.categoriesName ? option.categoriesName : '';
+  }
+
+  onDelete(i) {
+
   }
 
 
@@ -253,55 +175,34 @@ export class EditMyMaterialComponent implements OnInit {
   }
 
   submit() {
-    let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category };
-    this.bomService.getMaterialExist(checkData).then(res => {
-      if (res.data) {
-        let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
 
-        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.find(val => {
-          return val.materialName === currentMaterialName;
-        }));
-        if (!alreadyPresent) {
-          let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
-            return {
-              estimatedPrice: null,
-              estimatedQty: null,
-              materialName: val.materialName,
-              materialGroupCode: typeof (val.category) === 'string' ? null : val.category.categoriesCode,
-              materialGroup: typeof (val.category) === 'string' ? val.category : val.category.categoriesName,
-              materialUnit: val.materialUnit,
-              tradeId: val.trade.tradeId
-            };
-          });
-          this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
-            if (res.message = "done") {
-              this._snackBar.open("My Materials Added", "", {
-                duration: 4000,
-                panelClass: ["warning-snackbar"],
-                verticalPosition: "bottom"
-              });
-            }
-            this.dialogRef.close(null);
-          });
-        }
-        else {
-          this._snackBar.open("Set New Material Name", "", {
+    let myMaterial = this.editMaterialForm.get("forms").value.map(val => {
+      return {
+        estimatedPrice: null,
+        estimatedQty: null,
+        materialName: val.materialName,
+        materialGroupCode: typeof (val.category) === 'string' ? null : val.category.categoriesCode,
+        materialGroup: typeof (val.category) === 'string' ? val.category : val.category.categoriesName,
+        materialUnit: val.materialUnit,
+        tradeId: val.trade.tradeId
+      };
+    });
+
+    if (this.data.type = 'edit') {
+      this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
+        if (res.message = "done") {
+          this._snackBar.open("My Materials Added", "", {
             duration: 4000,
             panelClass: ["warning-snackbar"],
             verticalPosition: "bottom"
-          });
+          }); this.dialogRef.close(null);
         }
-      }
-      else {
-        this._snackBar.open("Material Name already exist in all material", "", {
-          duration: 4000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
-        (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
-      }
-    });
-
+        else {
+          (<FormGroup>(<FormArray>this.editMaterialForm.get("forms")).controls[0]).controls['materialName'].reset()
+        }
+        this.dialogRef.close(null);
+      });
+    }
 
   }
   closeDialog() {

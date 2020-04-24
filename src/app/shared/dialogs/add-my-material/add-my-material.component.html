@@ -20,7 +20,12 @@
             <div class="col-xs-3">
               <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 3px;">
                 <mat-label>*Material Name</mat-label>
-                <textarea matInput formControlName="materialName" class="text-area-border"></textarea>
+                <textarea maxlength="300" matInput formControlName="materialName" class="text-area-border"></textarea>
+                <small
+                  *ngIf="addMyMaterial.controls['myMaterial'].controls[i].controls['materialName'].errors?.maxlength && signupForm.controls['password'].touched"
+                  class="signupForm-error-msg"
+                  >maximun characters allowed is 300</small
+                >
               </mat-form-field>
               <!-- <mat-error *ngIf="myMaterial.controls['email'].hasError('required') && myMaterial.controls['email'].touched">
                   Email is required
