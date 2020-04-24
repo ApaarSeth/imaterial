@@ -66,7 +66,8 @@ export class PoDocumentsComponent implements OnInit {
           documentType: "PO",
           DocumentDesc: subFileName,
           DocumentUrl: res.data.fileName,
-          documentName: subFileName
+          documentName: subFileName,
+          Url: res.data.url
         });
         this.documentListLength = this.documentList.length;
         subFileName = "";

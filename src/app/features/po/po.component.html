@@ -45,15 +45,15 @@
     </div>
 
       <div class="row doc-froala-div">
-        <div class="col-sm-12 col-md-4">
+        <div class="col-sm-12 col-md-4 p-t-10">
           <app-po-documents #poDocument [documentData]="documentList"></app-po-documents>
         </div>
-        <div class="col-sm-12 col-md-8 hidePoweredBy" *ngIf="mode === 'edit'">
+        <div class="col-sm-12 col-md-8 hidePoweredBy p-t-10" *ngIf="mode === 'edit'">
           <form [formGroup]="poTerms">
             <textarea formControlName="textArea" [innerHTML]="terms && terms.termsDesc" [froalaEditor]="froala" [(froalaModel)]="poTerms['textArea']">Hello, Froala!</textarea>
           </form>
-        </div>
-        <div class="col-sm-12 col-md-8 background-white-color border-radius parent">
+        </div> 
+        <div class="col-sm-12 col-md-8 background-white-color border-radius parent p-t-10" *ngIf="mode === 'view'">
           <div class="word-wrap" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc !== ''" [innerHTML]="terms.termsDesc"></div>
           <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc == ''">No Term To View</div>
         </div>

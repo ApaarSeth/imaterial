@@ -164,6 +164,7 @@ export interface DocumentList {
   DocumentDesc: string;
   DocumentUrl: string;
   documentName?: string;
+  Url?: string;
 }
 
 export interface ApproverData {
