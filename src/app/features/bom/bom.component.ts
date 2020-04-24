@@ -267,29 +267,32 @@ export class BomComponent implements OnInit {
 
   callApi() {
     if (this.buttonName === 0) {
-      if (this.selectedTrades.length) {
-        this.bomService.get25Trades({ tradeNames: [...this.selectedTrades] }).then(res => {
-          this.topMaterialData = [...res];
-          this.searchAgain = this.text.nativeElement.value
-          this.showTable = true;
-        });
-      }
+      this.showAllMaterial = false;
+      this.showMyMaterial = false;
+      this.showTopMaterial = true;
+      this.bomService.get25Trades({ tradeNames: this.selectedTrades.length ? [...this.selectedTrades] : null }).then(res => {
+        this.topMaterialData = [...res];
+        this.searchAgain = this.text.nativeElement.value
+        this.showTable = true;
+      });
     }
     else if (this.buttonName == 1) {
-      if (this.selectedTrades.length) {
-        this.bomService.getTrades({ tradeNames: [...this.selectedTrades] }).then(res => {
-          this.allMaterialData = [...res];
-          this.searchAgain = this.text.nativeElement.value
-        });
-      }
+      this.showTopMaterial = false;
+      this.showMyMaterial = false;
+      this.showAllMaterial = true;
+      this.bomService.getTrades({ tradeNames: this.selectedTrades.length ? [...this.selectedTrades] : null }).then(res => {
+        this.allMaterialData = [...res];
+        this.searchAgain = this.text.nativeElement.value
+      });
     }
     else if (this.buttonName == 2) {
-      if (this.selectedTrades.length) {
-        this.bomService.getMyMaterial().then(res => {
-          this.myMaterialData = [...res.data];
-          this.searchAgain = this.text.nativeElement.value
-        });
-      }
+      this.showAllMaterial = false;
+      this.showTopMaterial = false;
+      this.showMyMaterial = true;
+      this.bomService.getMyMaterial().then(res => {
+        this.myMaterialData = [...res.data];
+        this.searchAgain = this.text.nativeElement.value
+      });
     }
   }
 
