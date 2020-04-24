@@ -445,7 +445,12 @@ a:hover {
 .width98Percent {
   width: 98%;
 }
-
+.width80Percent{
+  width: 80%;
+}
+.width60Percent{
+  width: 60%;
+}
 .margin-0-auto {
   margin: 0 auto;
 }
@@ -696,4 +701,8 @@ mat-accordion {
   .mat-icon-button {
     width: 40px !important;
   }
+}
+
+.color-brand{
+  color:#6b6969;
 }
