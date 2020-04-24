@@ -169,6 +169,7 @@ export class BOMAllMaterialComponent implements OnInit {
                   ) {
                     subcategory.estimatedQty = data.estimatedQty;
                     subcategory.materialId = data.materialId;
+                    subcategory.estimatedRate = data.estimatedRate;
                   }
                 }
                 return subcategory;

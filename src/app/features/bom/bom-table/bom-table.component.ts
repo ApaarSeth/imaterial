@@ -21,6 +21,7 @@ import { PermissionService } from "src/app/shared/services/permission.service";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { permission } from 'src/app/shared/models/permissionObject';
+import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
 
 @Component({
   selector: "app-bom-table",
@@ -130,6 +131,16 @@ export class BomTableComponent implements OnInit {
       }
     })
   }
+
+  openAddMyMaterial() {
+    let data = this.projectId
+    const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
+      width: "1400px",
+      data
+    });
+  }
+
+
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
