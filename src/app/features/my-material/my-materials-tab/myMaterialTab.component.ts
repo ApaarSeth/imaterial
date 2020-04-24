@@ -3,6 +3,7 @@ import { BomService } from 'src/app/shared/services/bom/bom.service';
 import { categoryNestedLevel } from 'src/app/shared/models/category';
 import { MatDialog } from '@angular/material';
 import { EditMyMaterialComponent } from 'src/app/shared/dialogs/edit-my-material/edit-my-material.component';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
 	selector: 'app-my-material-tab',
@@ -12,19 +13,19 @@ export class MyMaterialTabComponent implements OnInit {
 	selectedCategory: categoryNestedLevel[];
 	isSearching: boolean;
 
-	constructor(private bomService: BomService, private dialogRef: MatDialog) { }
+	constructor(private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
 
 	ngOnInit() {
-		this.bomService.getMyMaterial().then(res => {
+		this.commonService.getMyMaterial('approved').then(res => {
 			this.selectedCategory = [...res.data];
 			this.searchCategory();
 		});
 	}
 
 	openEditDialog(c, sc) {
-		let data = [this.selectedCategory[c].materialList[sc]]
+		let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'edit' }
 		this.dialogRef.open(EditMyMaterialComponent, {
-			width: "1400px",
+			width: "750px",
 			data
 		})
 	}
