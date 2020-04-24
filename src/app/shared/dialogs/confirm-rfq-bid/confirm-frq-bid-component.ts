@@ -54,13 +54,11 @@ export class ConfirmRfqBidComponent implements OnInit {
   submit(){
     if(this.data.disabledAddress){
      // console.log("chooched");
-         return Promise.all([
          this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
                 this.dialogRef.close(data);
-            })
-         ]);
+            });
     }
-    else{
+    else if(!this.data.disabledAddress){
     //   console.log("added");
        return Promise.all([
       this.poService.addAddress(this.data.supplierId, this.data.supplierAddress).then(res => {
