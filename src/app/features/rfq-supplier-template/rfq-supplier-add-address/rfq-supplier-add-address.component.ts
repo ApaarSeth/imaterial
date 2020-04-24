@@ -30,6 +30,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   addSupplierAddress: boolean;
   selectedAddress: any;
   AddressValid: boolean;
+  disabledAddress: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -92,6 +93,11 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       }else{
         this.addSupplierAddress = true;
         this.initForm();
+           this.form.controls.state.setValidators([Validators.required]);
+           this.form.controls.state.updateValueAndValidity();
+
+           this.form.controls.city.setValidators([Validators.required]);
+           this.form.controls.city.updateValueAndValidity();
       }
       
     })
@@ -113,11 +119,11 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       ],
 
       addressLine1: [
-        {value :  (this.selectedAddress && this.selectedAddress.addressLine1) ?  this.selectedAddress.addressLine1 : "", disabled : false}
+        {value :  (this.selectedAddress && this.selectedAddress.addressLine1) ?  this.selectedAddress.addressLine1 : "", disabled : this.disabledAddress}
       ],
-      addressLine2: [{ value : ( this.selectedAddress && this.selectedAddress.addressLine2) ?  this.selectedAddress.addressLine2 : "", disabled: false}],
+      addressLine2: [{ value : ( this.selectedAddress && this.selectedAddress.addressLine2) ?  this.selectedAddress.addressLine2 : "", disabled: this.disabledAddress}],
       pinCode: [
-        {value :  ( this.selectedAddress && this.selectedAddress.pinCode) ? this.selectedAddress.pinCode : "", disabled:false},
+        {value :  ( this.selectedAddress && this.selectedAddress.pinCode) ? this.selectedAddress.pinCode : "", disabled:this.disabledAddress},
         [Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]
       ],
       state: [
@@ -129,7 +135,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
         Validators.required
       ],
       gstNo: [
-        {value : ( this.selectedAddress && this.selectedAddress.gstNo) ? this.selectedAddress.gstNo : "",disabled:false},
+        {value : ( this.selectedAddress && this.selectedAddress.gstNo) ? this.selectedAddress.gstNo : "",disabled:this.disabledAddress},
         [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]
       ]
     });
@@ -155,8 +161,9 @@ export class RFQSupplierAddAddressComponent implements OnInit {
 
 }
 getCityAndState(pincode){
+   this.validPincode = false;
   this.projectService.getPincode(pincode).then(res =>{
-           if(res.data){
+           if(res.data && res.data[0].districtName && res.data[0].stateName){
              this.city = res.data[0].districtName;
              this.state = res.data[0].stateName;
            if(this.city && this.state)
@@ -177,7 +184,7 @@ getCityAndState(pincode){
        
       //console.log(this.form.value);
     const dialogRef = this.dialog.open(ConfirmRfqBidComponent, {
-      data: { rfqSupplierData: this.rfqSupplierObj, supplierAddress: this.form.value, supplierId: this.supplierId },
+      data: { rfqSupplierData: this.rfqSupplierObj, disabledAddress : this.disabledAddress, supplierAddress: this.form.value, supplierId: this.supplierId },
       width: "800px"
     });
 
@@ -205,6 +212,7 @@ getCityAndState(pincode){
           console.log(res.data);
           this.supplierAddress.data.forEach(element => {
             if(element.addressId == res.data){
+              this.disabledAddress = true;
               this.selectedAddress = element;
               this.getCityAndState(element.pinCode);
             }
@@ -215,6 +223,8 @@ getCityAndState(pincode){
   
   }
   reset(){
+    this.disabledAddress = false;
+     this.initForm();
     this.form.controls.addressLine1.setValue(null);
   //  this.form.controls.addressLine1.setErrors(null);
   
