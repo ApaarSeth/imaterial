@@ -337,6 +337,7 @@ export class BomComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.getProject(this.projectId);
+      this.callApi()
     })
   }
   openAddBomDialog(index: number) {
