@@ -38,9 +38,6 @@ export class BomService {
     return this.dataService.getRequestMaster(API.GETBOMTRADES, tradeList)
   }
 
-  getMyMaterial() {
-    return this.dataService.getRequest(API.MYCUSTOMMATERIAL)
-  }
 
   sumbitCategory(userId: number, projectId: number, materialsQuantity) {
     return this.dataService.sendPostRequest(

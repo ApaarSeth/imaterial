@@ -16,11 +16,22 @@ export class MyMaterialTabComponent implements OnInit {
 	constructor(private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
 
 	ngOnInit() {
+		this.getMyMaterial();
+
+		this.commonService.materialAdded.subscribe(val => {
+			if (val) {
+				this.getMyMaterial();
+			}
+		})
+	}
+
+	getMyMaterial() {
 		this.commonService.getMyMaterial('approved').then(res => {
 			this.selectedCategory = [...res.data];
 			this.searchCategory();
 		});
 	}
+
 
 	openEditDialog(c, sc) {
 		let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'edit' }

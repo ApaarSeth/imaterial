@@ -324,7 +324,7 @@ export class AddMyMaterialComponent implements OnInit {
                 verticalPosition: "bottom"
               });
             }
-            this.dialogRef.close(null);
+            this.dialogRef.close(true);
           });
         }
         else {
