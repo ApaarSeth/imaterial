@@ -112,7 +112,7 @@
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Pincode" formControlName="pinCode" (input)="getPincode($event)" required />
+                  <input matInput type="text" placeholder="Pincode" #pincode formControlName="pinCode" (input)="getPincode($event)" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">pinCode is Required</mat-error> -->
                   <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
                     class="form-error-msg"> Pincode is required </small>
@@ -121,6 +121,9 @@
                    <small *ngIf="form.controls['pinCode'].touched && (!validPincode) && form.controls['pinCode'].hasError('pattern')" class="error-msg">
                       Enter Valid Pincode
                    </small> 
+                   <small *ngIf="form.controls['pinCode'].touched && (!validPincode) && !form.controls['pinCode'].hasError('pattern') && !validPincode && (pincode.value.length > 0) " class="error-msg">
+                     Enter Valid Pincode
+                   </small>
                 </mat-form-field>
               </div>
           
@@ -165,18 +168,14 @@
 
           <div mat-dialog-actions>
             <div class="col-sm-12 save-btn-add-edit-user-modal rfq-bid-address">
-              <button mat-raised-button [disabled]="(!form.valid)" (click)="saveAddress()"
+              <button mat-raised-button [disabled]="(disabledAddress ? false : ( validPincode ? (!form.valid) : true))" (click)="saveAddress()"
                 class="main-background-color main-button color-white pull-right">
                 Submit
               </button>
             </div>
           </div>
         </form>
-
-
-
       </div>
     </div>
-
   </div>
 </div>
