@@ -44,7 +44,7 @@ export class TopHeaderComponent implements OnInit {
     this.getNotifications();
     this.startSubscriptions();
     
-    const source = interval(10000);
+    const source = interval(30000);
     this.subscription = source.subscribe(val => {this.getNotifications();this.startSubscriptions()});
   }
   startSubscriptions(){

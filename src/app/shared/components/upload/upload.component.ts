@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material';
 export class UploadComponent implements OnInit {
   fileToUpload: FileList;
   @Input() documentListLength: number;
-  fileTypes : string[] = ['pdf', 'doc', 'docx', 'jpeg', 'png'];
+  fileTypes : string[] = ['pdf', 'doc', 'docx', 'jpeg', 'png', 'jpg'];
 
   deletedDocs: number[] = [];
   uploadedDocs: DocumentDetails[];

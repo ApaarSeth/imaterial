@@ -65,7 +65,8 @@ export class RFQDocumentsComponent implements OnInit {
           documentType: "RFQ",
           DocumentDesc: subFileName,
           DocumentUrl: res.data.fileName,
-          documentName: subFileName
+          documentName: subFileName,
+          Url : res.data.url
         });
         this.documentListLength = this.documentList.length;
         subFileName = "";

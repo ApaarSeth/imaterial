@@ -34,6 +34,13 @@
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />
             <span>{{ file.documentName }}</span>
+            <span class="show-download">
+              <a type="button" target="_blank"  [href]="file.Url" mat-icon-button>
+              <i class="material-icons">
+                remove_red_eye
+              </i>
+            </a>
+            </span>
             <button type="button" (click)="removeFile(i)" mat-icon-button>
               <mat-icon class="font-size-16">cancel</mat-icon>
             </button>
