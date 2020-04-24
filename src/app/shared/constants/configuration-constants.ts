@@ -20,7 +20,9 @@ export const HeaderConstants = {
       { name: 'Request For Quotation', link: '/rfq/rfq-detail', image: '../../../assets/images/create-RFQ-hambuger.svg', flag: permissionObj.rfqFlag },
       { name: 'Users', link: '/users/user-detail', image: '../../../assets/images/user-hamburger.svg', flag: permissionObj.usersFlag },
       { name: 'Purchase Order', link: '/po/detail-list', image: '../../../assets/images/po-hamburger.svg', flag: permissionObj.purchaseOrderFlag },
-      { name: 'Supplier', link: '/supplier/detail', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.supplierFlag }
+      { name: 'Supplier', link: '/supplier/detail', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.supplierFlag },
+      { name: 'My Materials', link: '/myMaterial', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.rfqFlag }
+
     ]
 
   }

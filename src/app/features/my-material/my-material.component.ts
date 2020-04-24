@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BomService } from 'src/app/shared/services/bom/bom.service';
 import { MatDialog } from '@angular/material';
 import { AddMyMaterialComponent } from 'src/app/shared/dialogs/add-my-material/add-my-material.component';
+import { Subject } from 'rxjs';
+import { CommonService } from '../../shared/services/commonService';
 
 @Component({
   selector: 'app-my-material',
@@ -9,16 +11,22 @@ import { AddMyMaterialComponent } from 'src/app/shared/dialogs/add-my-material/a
 })
 export class MyMaterialComponent implements OnInit {
 
-  constructor(private bomService: BomService, public dialog: MatDialog, ) { }
+  constructor(private bomService: BomService, public dialog: MatDialog, private commonService: CommonService) { }
   tradeNames: string[] = [];
   showMyMaterial = true
   showUnapprovedMaterial = false;
   currentIndex: number = 0;
+
   ngOnInit() {
     this.tradeNames = ['civil', 'piping']
   }
   openAddMaterial() {
-    this.dialog.open(AddMyMaterialComponent)
+    const dialogRef = this.dialog.open(AddMyMaterialComponent)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.commonService.materialAdded.next(true)
+      }
+    })
   }
 
   searchMaterial(event) {
