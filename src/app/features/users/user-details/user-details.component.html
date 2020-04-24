@@ -86,11 +86,44 @@
                 <ng-container matColumnDef="Project">
                   <th mat-header-cell *matHeaderCellDef class="project-user-details-width">Project</th>
                   <td mat-cell *matCellDef="let element" class="project-user-details-width">
-                    <ng-container *ngFor="let x of element.ProjectList">
-                      <button mat-button class="btn-project-user-details">
-                        {{ x.projectName }}
-                      </button>
-                    </ng-container>
+                   <div class="project-name-div">
+                       
+                          <ng-container *ngFor="let x of element.ProjectList; let i=index;">
+                          <button mat-button class="btn-project-user-details" *ngIf="i < 2">
+                            <div>
+                             {{ x.projectName }}
+                           </div>
+                          </button>
+                        </ng-container>
+                        
+
+                    <div class="show-rfq-names rfq-icon-material-i" *ngIf="element.ProjectList && (element.ProjectList.length > 2)">
+                      <!-- <img src="../../../../assets/images/i_icon.png" /> -->
+                      <!-- <mat-icon class="material-info" [matMenuTriggerFor]="projectnames">info</mat-icon> -->
+                      <span class="material-info color-main" [matMenuTriggerFor]="projectnames" >
+                        More
+                      </span>
+                      <mat-menu #projectnames="matMenu" class="header-project-menu">
+                        <div class="main-div-bell" mat-menu-item [disableRipple]="true">
+                          <div id="project-names">
+                            <h3>Project Names</h3>
+                            <div class="body-of-notification">
+                               <ng-container *ngFor="let x of element.ProjectList; let i=index;">
+                                  <button mat-button class="btn-project-user-details">
+                                    <div>
+                                      {{ x.projectName }}
+                                    </div>
+                                  </button>
+                                </ng-container>
+                             
+                            </div>
+                            <!-- <div class="seeAll"><a href="#">View All</a></div> -->
+                          </div>
+                        </div>
+                      </mat-menu>
+
+                    </div>
+                  </div>
                   </td>
                 </ng-container>
 
@@ -169,11 +202,45 @@
                 <ng-container matColumnDef="Project">
                   <th mat-header-cell *matHeaderCellDef class="project-user-details-width">Project</th>
                   <td mat-cell *matCellDef="let element" class="project-user-details-width">
-                    <ng-container *ngFor="let x of element.ProjectList">
-                      <button mat-button class="btn-project-user-details">
-                        {{ x.projectName }}
-                      </button>
-                    </ng-container>
+                   <div class="project-name-div">
+                       
+                          <ng-container *ngFor="let x of element.ProjectList; let i=index;">
+                          <button mat-button class="btn-project-user-details" *ngIf="i < 2">
+                           <div>
+                             {{ x.projectName }}
+                           </div>
+                              
+                          </button>
+                        </ng-container>
+                        
+
+                    <div class="show-rfq-names rfq-icon-material-i" *ngIf="element.ProjectList && (element.ProjectList.length > 2)">
+                      <!-- <img src="../../../../assets/images/i_icon.png" /> -->
+                      <!-- <mat-icon class="material-info" [matMenuTriggerFor]="projectnames">info</mat-icon> -->
+                      <span class="material-info color-main font-size12" [matMenuTriggerFor]="projectnames" >
+                        More
+                      </span>
+                      <mat-menu #projectnames="matMenu" class="header-project-menu">
+                        <div class="main-div-bell" mat-menu-item [disableRipple]="true">
+                          <div id="project-names">
+                            <h3>Project Names</h3>
+                            <div class="body-of-notification">
+                               <ng-container *ngFor="let x of element.ProjectList; let i=index;">
+                                  <button mat-button class="btn-project-user-details">
+                                    <div>
+                                      {{ x.projectName }}
+                                    </div>
+                                  </button>
+                                </ng-container>
+                             
+                            </div>
+                            <!-- <div class="seeAll"><a href="#">View All</a></div> -->
+                          </div>
+                        </div>
+                      </mat-menu>
+
+                    </div>
+                  </div>
                   </td>
                 </ng-container>
                 <!-- 

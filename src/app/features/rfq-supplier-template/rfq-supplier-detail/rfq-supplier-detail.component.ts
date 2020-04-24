@@ -264,6 +264,9 @@ export class RFQSupplierDetailComponent implements OnInit {
           material.materialCgst = material.materialGst / 2;
           material.materialIgst = 0;
         }
+        if(material.Igst != null  && material.Igst.toString() == ''){
+            material.Igst = null;
+        }
         if (material.Igst >= 0 && material.Igst != null) {
           if (material.Igst.toString().match(FieldRegExConst.RATES)) {
             material.validGst = true;
@@ -281,7 +284,9 @@ export class RFQSupplierDetailComponent implements OnInit {
 
         for (let brand of material.rfqBrandList) {
           brand.brandRate = brand.tempRate;
-
+           if (brand.brandRate != null && brand.brandRate.toString() == '') {
+             brand.brandRate = null;
+           }
           if (brand.brandRate >= 0 && brand.brandRate != null) {
             if (brand.brandRate.toString().match(FieldRegExConst.RATES)) {
               brand.validBrand = true;
