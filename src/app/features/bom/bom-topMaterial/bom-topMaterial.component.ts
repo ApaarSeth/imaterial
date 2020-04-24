@@ -170,6 +170,7 @@ export class BomTopMaterialComponent implements OnInit {
                     data.estimatedQty > 0
                   ) {
                     subcategory.estimatedQty = data.estimatedQty;
+                    subcategory.estimatedRate = data.estimatedRate;
                     subcategory.materialId = data.materialId;
                   }
                 }

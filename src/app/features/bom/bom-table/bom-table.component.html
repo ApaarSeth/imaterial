@@ -41,6 +41,10 @@
             Add/Edit Material
           </button>
         </span>
+
+        <span>
+          <a href="javascript:void(0)" class="main-color text-semi-bold pull-right p-r-10 p-t-10" (click)="openAddMyMaterial()">+ Add Custom Material</a>
+        </span>
       </div>
     </div>
 
@@ -160,7 +164,7 @@
             <!-- <a>
               <mat-icon>edit</mat-icon>
             </a> -->
-
+            <span *ngIf="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false" class="p-r-20 p-t-10 display-inline-block color-grey">Pending</span>
             <a
               (click)="(element.materialCustomFlag === 1 ? element.isApproved !== 1 : false) ? null : issueToIndent(element.materialId, projectId)"
               class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"

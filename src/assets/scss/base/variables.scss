@@ -3,6 +3,7 @@ $main-color: #f47721;
 $blue-color: #192135;
 $white-color: #ffffff;
 $icon-color-gray: #b8b8b8;
+$plain-grey: #808080;
 $black-color: #000000;
 $alert-color: #ff5353;
 $background-color-grey: #979797;
@@ -44,6 +45,10 @@ a:hover {
 
 .color-black {
   color: $black-color;
+}
+
+.color-grey {
+  color: $plain-grey;
 }
 
 .main-color {
