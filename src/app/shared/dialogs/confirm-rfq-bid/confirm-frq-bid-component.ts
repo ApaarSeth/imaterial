@@ -60,7 +60,6 @@ export class ConfirmRfqBidComponent implements OnInit {
     }
     else if(!this.data.disabledAddress){
     //   console.log("added");
-       return Promise.all([
       this.poService.addAddress(this.data.supplierId, this.data.supplierAddress).then(res => {
           if(res.status != 0){
             this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
@@ -74,8 +73,7 @@ export class ConfirmRfqBidComponent implements OnInit {
               });
              this.dialogRef.close(null);
           }
-      })
-    ])
+      });
     }
    
   }

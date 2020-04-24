@@ -99,11 +99,20 @@
   background: #f0f0f0;
   margin: 3px 1px;
   cursor: default;
+   font-size: 12px;  
+   div{
+     max-width: 200px;
+      white-space: pre-line;
+       word-break: break-all;
+   }        
+   max-width: 200px;
+   white-space: pre-line;
 }
 .add-user-container {
   .project-user-details-width {
-  max-width: 400px;
-  overflow-x: auto !important;
+   max-width: 400px;
+   min-width: 400px !important;
+  //overflow-x: auto !important;
 }
     .edit-disable-user-details-width {
       min-width: 100px;
