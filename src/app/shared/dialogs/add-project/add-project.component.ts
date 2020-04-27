@@ -106,9 +106,9 @@ export class AddProjectComponent implements OnInit {
       ],
       addressLine1: [
         this.data.isEdit ? this.data.detail.addressLine1 : "",
-        Validators.required
+        [Validators.required,Validators.maxLength(120)]
       ],
-      addressLine2: [this.data.isEdit ? this.data.detail.addressLine2 : ""],
+      addressLine2: [this.data.isEdit ? this.data.detail.addressLine2 : "",Validators.maxLength(120)],
       pinCode: [
         this.data.isEdit ? this.data.detail.pinCode : "",
         [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]

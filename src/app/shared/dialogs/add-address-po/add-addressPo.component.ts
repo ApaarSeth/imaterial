@@ -64,8 +64,8 @@ export class AddAddressPoDialogComponent {
 
     // new address form
     this.newAddressForm = this.formBuilder.group({
-      addressLine1: ["", Validators.required],
-      addressLine2: [""],
+      addressLine1: ["", [Validators.required, Validators.maxLength(120)]],
+      addressLine2: ["",Validators.maxLength(120)],
       pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
       state: [{ value: "", disabled: true }, Validators.required],
       city: [{ value: "", disabled: true }, Validators.required],

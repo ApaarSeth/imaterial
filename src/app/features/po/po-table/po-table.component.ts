@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, ViewChild, Output, EventEmitter, HostListener } from "@angular/core";
 import { PoMaterial, PurchaseOrder } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
 import { ignoreElements, debounceTime } from "rxjs/operators";
@@ -19,15 +19,18 @@ export class PoTableComponent implements OnInit, OnDestroy {
   @Output("QuantityAmountValidation") QuantityAmountValidation = new EventEmitter();
   gst: string = '';
   words: string = "";
+  showResponsiveDesign: boolean;
 
   constructor(private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar:MatSnackBar) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
   isPoValid: boolean
+  a: number = 0;
   subscriptions: Subscription[] = [];
   minDate = new Date();
   ngOnInit() {
+      window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
       this.mode = params.mode;
     });
@@ -268,4 +271,13 @@ export class PoTableComponent implements OnInit, OnDestroy {
           });
     }
   }
+
+   @HostListener('window:resize', ['$event'])
+      sizeChange(event) {
+       if(event.currentTarget.innerWidth <= 1100){
+          this.showResponsiveDesign = true;
+        }else{
+          this.showResponsiveDesign = false;
+        }
+    }
 }
