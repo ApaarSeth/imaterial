@@ -21,7 +21,9 @@ export class MyMaterialComponent implements OnInit {
     this.tradeNames = ['civil', 'piping']
   }
   openAddMaterial() {
-    const dialogRef = this.dialog.open(AddMyMaterialComponent)
+    const dialogRef = this.dialog.open(AddMyMaterialComponent, {
+      width: '700px'
+    })
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.commonService.materialAdded.next(true)
