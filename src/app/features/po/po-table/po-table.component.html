@@ -323,8 +323,8 @@
           <td class="mat-cell"></td>
           <td class="mat-cell"></td>
           <td class="mat-cell"></td>
-          <td class="mat-cell"><span>GST Amount ₹</span> <br />{{ gstTotalAmount | number: "1.2-2" }}</td>
-          <td class="mat-cell"><span>Total Amount ₹</span> <br />{{ totalAmount | number: "1.2-2" }}</td>
+          <td class="mat-cell total-amount"><span>GST Amount ₹</span> <br />{{ gstTotalAmount | number: "1.2-2" }}</td>
+          <td class="mat-cell total-amount"><span>Total Amount ₹</span> <br />{{ totalAmount | number: "1.2-2" }}</td>
         </tr>
         <tr class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35">
          <td class="text-semi-bold"> Net Payable Amount in Words :Rupees {{ totalAmount | numberToWords | async | titlecase }} Only /-</td>

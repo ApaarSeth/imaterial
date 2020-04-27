@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewChildren, HostListener } from "@angular/core";
 import { POService } from "src/app/shared/services/po/po.service";
 import {
   POData,
@@ -77,6 +77,7 @@ export class PoComponent implements OnInit {
   };
   userId: number;
   ValidPOTemp: boolean;
+  showResponsiveDesign: boolean;
 
 
   constructor(
@@ -95,7 +96,7 @@ export class PoComponent implements OnInit {
   poId: number;
   mode: string;
   ngOnInit() {
-
+   window.dispatchEvent(new Event('resize'));
 
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
@@ -305,4 +306,12 @@ export class PoComponent implements OnInit {
             win.blur();
             setTimeout(win.focus, 0);
   }
+   @HostListener('window:resize', ['$event'])
+      sizeChange(event) {
+       if(event.currentTarget.innerWidth <= 576){
+          this.showResponsiveDesign = true;
+        }else{
+          this.showResponsiveDesign = false;
+        }
+    }
 }

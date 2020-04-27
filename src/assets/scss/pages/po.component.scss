@@ -186,6 +186,9 @@ s .validTill {
     vertical-align: middle;
     font-weight: 500;
 }
+  .brand-name{
+      text-align: left;
+    }
 .mat-row,
 .mat-header-row {
     display: table-row;
@@ -235,6 +238,9 @@ s .validTill {
     .mat-cell,
     .mat-header-cell {
       font-size: 12px;
+    }
+    .brand-name{
+      text-align: left;
     }
   }
   .add-user-container{
@@ -289,4 +295,9 @@ s .validTill {
 }
 .customPo .po-table .material-row .mat-cell{
   min-width: 100px;
+}
+.customPo .po-table{
+  .total-amount{
+    margin-right: -15px;
+  }
 }
