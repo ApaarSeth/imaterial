@@ -86,7 +86,7 @@
                     class="form-error-msg"> Address Line1 is required </small>
                      <small *ngIf="form.controls['addressLine1'].value.length > 120 && form.controls['addressLine1'].touched"
                     class="form-error-msg">
-                      The text entered exceeds the maximum length
+                     Address should be less than 120 characters
                       </small>
                 </mat-form-field>
               </div>
@@ -104,7 +104,7 @@
                     class="form-error-msg"> Enter Valid Address Line 2</small>
                      <small *ngIf="form.controls['addressLine2'].value.length > 120  && form.controls['addressLine2'].touched"
                     class="form-error-msg">
-                      The text entered exceeds the maximum length
+                      Address should be less than 120 characters
                       </small>
                 </mat-form-field>
               </div>

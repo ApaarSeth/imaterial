@@ -43,7 +43,7 @@
             <mat-form-field class="border-input">
               <mat-label>Address 1*</mat-label>
               <input matInput type="text" formControlName="addressLine1"/>
-              <small *ngIf="form.controls['addressLine1'].hasError('maxlength') && form.controls['addressLine1'].touched" class="form-error-msg"> The text entered exceeds the maximum length </small>
+              <small *ngIf="form.controls['addressLine1'].hasError('maxlength') && form.controls['addressLine1'].touched" class="form-error-msg">  Address should be less than 120 characters </small>
             </mat-form-field>
           </div>
           <div class="col-sm-6">
@@ -51,7 +51,7 @@
             <mat-form-field class="border-input">
               <mat-label>Address 2</mat-label>
               <input matInput type="text" formControlName="addressLine2" />
-               <small *ngIf="form.controls['addressLine2'].hasError('maxlength') && form.controls['addressLine2'].touched" class="form-error-msg"> The text entered exceeds the maximum length </small>
+               <small *ngIf="form.controls['addressLine2'].hasError('maxlength') && form.controls['addressLine2'].touched" class="form-error-msg">  Address should be less than 120 characters </small>
             </mat-form-field>
           </div>
         </div>
