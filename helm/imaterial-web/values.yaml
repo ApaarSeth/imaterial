@@ -1,0 +1,52 @@
+# Default values for imaterial-web.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Default values for commerce-seller.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: prod
+
+deployment:
+  name: im-web
+  replicaCount: 2
+  minReadySeconds: 60
+  image:
+    repo: 317596419736.dkr.ecr.ap-south-1.amazonaws.com/imaterial/im-web
+    tag: '3.0'
+    pullPolicy: Always
+  port: 8000
+  healthPath: /
+  initialDelay: 60
+  liveness:
+    period: 30
+    timeout: 5
+    successThreshold: 1
+    failureThreshold: 3
+  readiness:
+    period: 20
+    timeout: 5
+    successThreshold: 3
+    failureThreshold: 2
+  shutdownTime: 60
+  nodeKey: kubernetes.io/cluster-name
+  nodeValue: prod-ecom-im-cluster
+
+service:
+  name: imweb-service
+  portName: nginx
+  port: 8080
+  type: ClusterIP
+  protocol: TCP
+
+ingress:
+  name: imweb-ingress
+  path: /
+  host: materialmanageraws.buildsupply.io
+  sslRedirect: true
+  tlsSecret: tls-secret
+  
+disruptionBudget:
+  name: im-web-disruptionbudget
+  minAvailable: 2
