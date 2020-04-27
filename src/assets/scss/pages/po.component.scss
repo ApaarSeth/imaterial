@@ -1,4 +1,7 @@
 .customPo {
+  td.mat-cell, td.mat-footer-cell, th.mat-header-cell{
+    border-bottom: none;
+  }
   .mat-accordion .mat-header-row {
     padding-left: 1.5rem;
     padding-right: 2rem;
@@ -183,6 +186,9 @@ s .validTill {
     vertical-align: middle;
     font-weight: 500;
 }
+  .brand-name{
+      text-align: left;
+    }
 .mat-row,
 .mat-header-row {
     display: table-row;
@@ -233,6 +239,9 @@ s .validTill {
     .mat-header-cell {
       font-size: 12px;
     }
+    .brand-name{
+      text-align: left;
+    }
   }
   .add-user-container{
      .mat-cell,
@@ -278,4 +287,24 @@ s .validTill {
 
 }
 
+}
+
+
+.customPo .mat-cell, .customPo .mat-header-cell{
+  min-width: 100px;
+}
+.customPo .po-table .material-row .mat-cell{
+  min-width: 100px;
+}
+.customPo .po-table{
+  .total-amount{
+    margin-right: -15px;
+  }
+}
+.froala-design{
+  padding: 0;
+  padding-bottom: 10px;
+}
+.no-terms-window{
+  min-height: 100px;
 }
