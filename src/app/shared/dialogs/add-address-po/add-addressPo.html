@@ -61,7 +61,7 @@
                   Address Line1 is required
                 </small>
                 <small *ngIf="newAddressForm.controls['addressLine1'].value.length > 120 && newAddressForm.controls['addressLine1'].touched" class="form-error-msg p-l-15">
-                 The text entered exceeds the maximum length
+                  Address should be less than 120 characters
                 </small>
               </div>
             </div>
@@ -70,7 +70,7 @@
                 <mat-form-field class="col-xs-12">
                   <input matInput type="text" placeholder="Address Line 2" formControlName="addressLine2" />
                    <small *ngIf="newAddressForm.controls['addressLine2'].value.length > 120 && newAddressForm.controls['addressLine2'].touched" class="form-error-msg p-l-15">
-                 The text entered exceeds the maximum length
+                  Address should be less than 120 characters
                 </small>
                 </mat-form-field>
               </div>
