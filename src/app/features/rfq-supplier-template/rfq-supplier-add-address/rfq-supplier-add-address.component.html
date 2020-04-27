@@ -84,9 +84,10 @@
                   <small
                     *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched"
                     class="form-error-msg"> Address Line1 is required </small>
-                  <small
-                    *ngIf="form.controls['addressLine1'].hasError('pattern') && form.controls['addressLine1'].touched"
-                    class="form-error-msg"> Enter Valid Address Line1</small>
+                     <small *ngIf="form.controls['addressLine1'].value.length > 120 && form.controls['addressLine1'].touched"
+                    class="form-error-msg">
+                      The text entered exceeds the maximum length
+                      </small>
                 </mat-form-field>
               </div>
 
@@ -101,6 +102,10 @@
                   <small
                     *ngIf="form.controls['addressLine2'].hasError('pattern') && form.controls['addressLine2'].touched"
                     class="form-error-msg"> Enter Valid Address Line 2</small>
+                     <small *ngIf="form.controls['addressLine2'].value.length > 120  && form.controls['addressLine2'].touched"
+                    class="form-error-msg">
+                      The text entered exceeds the maximum length
+                      </small>
                 </mat-form-field>
               </div>
 

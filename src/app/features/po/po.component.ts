@@ -78,6 +78,7 @@ export class PoComponent implements OnInit {
   userId: number;
   ValidPOTemp: boolean;
   showResponsiveDesign: boolean;
+  showResponsiveDesignDown: boolean;
 
 
   constructor(
@@ -312,6 +313,12 @@ export class PoComponent implements OnInit {
           this.showResponsiveDesign = true;
         }else{
           this.showResponsiveDesign = false;
+        }
+
+         if(event.currentTarget.innerWidth <= 1028){
+          this.showResponsiveDesignDown = true;
+        }else{
+          this.showResponsiveDesignDown = false;
         }
     }
 }

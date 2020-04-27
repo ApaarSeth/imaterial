@@ -75,8 +75,11 @@ export class RFQSupplierAddAddressComponent implements OnInit {
            this.form.controls.contactNo.setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE)]);
            this.form.controls.contactNo.updateValueAndValidity();
 
-           this.form.controls.addressLine1.setValidators([Validators.required]);
+           this.form.controls.addressLine1.setValidators([Validators.required,Validators.maxLength(120)]);
            this.form.controls.addressLine1.updateValueAndValidity();
+
+            this.form.controls.addressLine2.setValidators([Validators.maxLength(120)]);
+           this.form.controls.addressLine2.updateValueAndValidity();
 
            this.form.controls.pinCode.setValidators([Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]);
            this.form.controls.pinCode.updateValueAndValidity();
@@ -119,9 +122,9 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       ],
 
       addressLine1: [
-        {value :  (this.selectedAddress && this.selectedAddress.addressLine1) ?  this.selectedAddress.addressLine1 : "", disabled : this.disabledAddress}
+        {value :  (this.selectedAddress && this.selectedAddress.addressLine1) ?  this.selectedAddress.addressLine1 : "", disabled : this.disabledAddress},Validators.maxLength(120)
       ],
-      addressLine2: [{ value : ( this.selectedAddress && this.selectedAddress.addressLine2) ?  this.selectedAddress.addressLine2 : "", disabled: this.disabledAddress}],
+      addressLine2: [{ value : ( this.selectedAddress && this.selectedAddress.addressLine2) ?  this.selectedAddress.addressLine2 : "", disabled: this.disabledAddress},Validators.maxLength(120)],
       pinCode: [
         {value :  ( this.selectedAddress && this.selectedAddress.pinCode) ? this.selectedAddress.pinCode : "", disabled:this.disabledAddress},
         [Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]
@@ -139,7 +142,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
         [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]
       ]
     });
-
+console.log(this.form);
    if(this.form.value.pinCode)
     this.validPincode = true;
   }

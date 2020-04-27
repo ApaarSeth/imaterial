@@ -60,12 +60,18 @@
                 <small *ngIf="newAddressForm.controls['addressLine1'].hasError('required') && newAddressForm.controls['addressLine1'].touched" class="form-error-msg p-l-15">
                   Address Line1 is required
                 </small>
+                <small *ngIf="newAddressForm.controls['addressLine1'].value.length > 120 && newAddressForm.controls['addressLine1'].touched" class="form-error-msg p-l-15">
+                 The text entered exceeds the maximum length
+                </small>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="row border-input p-t-0">
                 <mat-form-field class="col-xs-12">
                   <input matInput type="text" placeholder="Address Line 2" formControlName="addressLine2" />
+                   <small *ngIf="newAddressForm.controls['addressLine2'].value.length > 120 && newAddressForm.controls['addressLine2'].touched" class="form-error-msg p-l-15">
+                 The text entered exceeds the maximum length
+                </small>
                 </mat-form-field>
               </div>
             </div>
