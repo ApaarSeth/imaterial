@@ -291,13 +291,27 @@ s .validTill {
 
 
 .customPo .mat-cell, .customPo .mat-header-cell{
-  min-width: 100px;
+  min-width: 130px;
+  padding: 0 5px;
 }
+.customPo .mat-cell, .customPo .mat-header-cell.widthReduce{
+  min-width: 50px;
+  padding: 0 5px;
+}
+
+.customPo .po-table .material-row .mat-cell.widthReduce{
+  min-width: 50px;
+  padding: 0 5px;
+}
+
+
 .customPo .po-table .material-row .mat-cell{
-  min-width: 100px;
+  min-width: 130px;
+  padding: 0 5px;
 }
 .customPo .po-table{
   .total-amount{
+    padding-right: 0px;
     margin-right: -15px;
   }
 }
