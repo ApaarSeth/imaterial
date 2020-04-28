@@ -120,6 +120,7 @@ export class EditMyMaterialComponent implements OnInit {
       control.controls['trade'].valueChanges.subscribe(changes => {
         if (changes) {
           this.bomService.getTradeCategory(changes.tradeName).then(res => {
+            // control.controls['category'].reset();
             this.filteredOption[i] = [...res.data];
             this.filterOptions = new Observable((observer) => {
               const val: tradeRelatedCategory[] | [string] = this._filter('', i);
@@ -218,8 +219,8 @@ export class EditMyMaterialComponent implements OnInit {
         this.checkMaterialExist(myMaterial)
       }
       else {
-        myMaterial.isAllChange = tradeChange || categoryChange;
-        myMaterial.isNameChange = false;
+        myMaterial[0].isAllChange = tradeChange || categoryChange;
+        myMaterial[0].isNameChange = true;
         this.addMaterial(myMaterial);
       }
     }
@@ -258,8 +259,22 @@ export class EditMyMaterialComponent implements OnInit {
   }
 
   addMaterial(myMaterial) {
-
+    let updateMaterial = {
+      tradeId: myMaterial[0].tradeId,
+      tradeName: myMaterial[0].tradeName, isAllChange: myMaterial[0].isAllChange, isNameChange: myMaterial[0].isNameChange, materialGroup: myMaterial[0].materialGroup, materialGroupCode: myMaterial[0].materialGroupCode, materialName: myMaterial[0].materialName, materialUnit: myMaterial[0].materialUnit, customMaterialId: myMaterial[0].customMaterialId
+    }
+    this.myMaterialService.approveMyMaterial([updateMaterial]).then(res => {
+      if (res.message = "done") {
+        this._snackBar.open("Materials Approved", "", {
+          duration: 4000,
+          panelClass: ["warning-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
+      this.dialogRef.close('done');
+    });
   }
+
   closeDialog() {
     this.dialogRef.close(null);
   }

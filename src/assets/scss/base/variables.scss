@@ -398,7 +398,11 @@ a:hover {
   top: 45px;
 }
 .border-radius {
-  border-radius: 10px;
+  border-radius: 10px !important;
+}
+
+.border-radius-panel {
+  border-radius: 7px 7px 0px 0px !important;
 }
 //Muskaan's edit
 .round-button {

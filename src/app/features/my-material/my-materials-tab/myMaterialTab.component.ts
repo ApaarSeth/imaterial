@@ -45,6 +45,9 @@ export class MyMaterialTabComponent implements OnInit {
 			}
 		})
 	}
+	onDelete(i) {
+		this.selectedCategory.splice(i, 1)
+	}
 
 	searchCategory() {
 		this.bomService.searchText.subscribe(val => {
