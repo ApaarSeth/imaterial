@@ -14,4 +14,8 @@ export class MyMaterialService {
     updateMyMaterial(data) {
         return this.dataService.sendPostRequest(API.UPDATEMYMATERIAL, data)
     }
+
+    approveMyMaterial(data) {
+        return this.dataService.sendPostRequest(API.APPROVEMYMATERIAL, data)
+    }
 }

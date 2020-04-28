@@ -258,8 +258,19 @@ export class EditMyMaterialComponent implements OnInit {
   }
 
   addMaterial(myMaterial) {
-
+    let updateMaterial = { materialGroup: myMaterial[0].materialGroup, materialGroupCode: myMaterial[0].materialGroupCode, materialName: myMaterial[0].materialName, materialUnit: myMaterial[0].materialUnit, customMaterialId: myMaterial[0].customMaterialId }
+    this.myMaterialService.approveMyMaterial([updateMaterial]).then(res => {
+      if (res.message = "done") {
+        this._snackBar.open("Materials Approved", "", {
+          duration: 4000,
+          panelClass: ["warning-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
+      this.dialogRef.close('done');
+    });
   }
+
   closeDialog() {
     this.dialogRef.close(null);
   }
