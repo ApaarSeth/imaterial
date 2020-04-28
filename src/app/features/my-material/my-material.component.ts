@@ -22,7 +22,7 @@ export class MyMaterialComponent implements OnInit {
   }
   openAddMaterial() {
     const dialogRef = this.dialog.open(AddMyMaterialComponent, {
-      width: '700px'
+      width: '720px'
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {

@@ -28,21 +28,15 @@
             <div class="col-xs-3 text-left p-t-5">
               <span>{{ subcategory.materialUnit }}</span>
             </div>
-            <div class="col-xs-2 text-right p-t-5">
-              <span class="p-r-10">
-                <a href="javascript:void(0)" class="width-15-px" matTooltip="Delete" (click)="openEditDialog(c, sc)">
-                  <span class="material-icons main-color">
-                    edit
-                  </span>
-                </a>
-              </span>
-              <span>
-                <a href="javascript:void(0)" matTooltip="Delete" (click)="onDelete(i)">
-                  <span class="material-icons main-color">
-                    delete_outline
-                  </span>
-                </a>
-              </span>
+            <div class="col-xs-1 text-right p-t-5">
+              <button class="material-icons cursor button-background main-color" matTooltip="edit" (click)="openEditDialog(c, sc)">
+                edit
+              </button>
+            </div>
+            <div class="col-xs-1 p-t-5">
+              <a href="javascript:void(0)" class="width-15-px cursor-pointer" (click)="onDelete(i)">
+                <img src="../../../../assets/images/delete-button.png/" />
+              </a>
             </div>
           </div>
         </div>

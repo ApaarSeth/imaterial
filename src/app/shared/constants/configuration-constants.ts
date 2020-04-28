@@ -112,5 +112,6 @@ export const API = {
   DOWNLOADPO: purchaseOrderId => `po/download/${purchaseOrderId}`,
   TRADERELATEDCATEGORY: (tradeName) => `trade/get/categories/${tradeName}`,
   MATERIALEXIST: `material/search/materialexist`,
-  ADDMYMATERIAL: projectId => `material/add/custom/${projectId}`
+  ADDMYMATERIAL: projectId => `material/add/custom/${projectId}`,
+  UPDATEMYMATERIAL: `material/update/approved/custom`
 };

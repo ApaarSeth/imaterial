@@ -41,6 +41,7 @@ export interface material {
   tradeList: string[]
   isNull?: boolean;
   materialGroupCode?: string
+  customMaterialId?: number
 }
 
 export interface categoryNestedLevel {
