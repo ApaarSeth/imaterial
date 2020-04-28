@@ -18,4 +18,8 @@ export class MyMaterialService {
     approveMyMaterial(data) {
         return this.dataService.sendPostRequest(API.APPROVEMYMATERIAL, data)
     }
+
+    deleteApi(id: number) {
+        return this.dataService.sendDeleteRequest(API.DELETEMYMATERIAL(id), null)
+    }
 }

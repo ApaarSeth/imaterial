@@ -116,5 +116,6 @@ export const API = {
   GETRELEASENOTES : `user/get/releaseNote`,
   UPDATEMYMATERIAL: `material/update/approved/custom`,
   APPROVEMYMATERIAL: `material/update/approve/custom`,
-  SENDRELEASENOTE: `user/add/releaseNote`
+  SENDRELEASENOTE: `user/add/releaseNote`,
+  DELETEMYMATERIAL: (id) => `material/delete/custom/${id}`
 };
