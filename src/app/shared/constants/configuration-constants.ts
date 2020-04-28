@@ -113,5 +113,7 @@ export const API = {
   TRADERELATEDCATEGORY: (tradeName) => `trade/get/categories/${tradeName}`,
   MATERIALEXIST: `material/search/materialexist`,
   ADDMYMATERIAL: projectId => `material/add/custom/${projectId}`,
-  GETRELEASENOTES : `user/get/releaseNote`
+  GETRELEASENOTES : `user/get/releaseNote`,
+  UPDATEMYMATERIAL: `material/update/approved/custom`,
+  APPROVEMYMATERIAL: `material/update/approve/custom`
 };

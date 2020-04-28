@@ -10,8 +10,10 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BomService } from '../../services/bom/bom.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { orgTrades, tradeRelatedCategory } from '../../models/trades';
+import { MyMaterialPost } from '../../models/myMaterial';
 import { Subject, Observable, merge } from 'rxjs';
 import { categoryNestedLevel, material } from '../../models/category';
+import { MyMaterialService } from '../../services/myMaterial.service';
 
 export interface City {
   value: string;
@@ -48,6 +50,7 @@ export class EditMyMaterialComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private userService: UserService,
     private bomService: BomService,
+    private myMaterialService: MyMaterialService,
     private _router: Router,
     private navService: AppNavigationService,
     private dialogRef: MatDialogRef<EditMyMaterialComponent>,
@@ -102,6 +105,7 @@ export class EditMyMaterialComponent implements OnInit {
   formInit() {
     const addOtherFormGroup = this.data.materialList.map((data: material) => {
       let frmGrp = this._formBuilder.group({
+        customMaterialId: data.customMaterialId,
         materialName: [data.materialName, Validators.required],
         materialUnit: [data.materialUnit, Validators.required],
         index: [],
@@ -116,6 +120,7 @@ export class EditMyMaterialComponent implements OnInit {
       control.controls['trade'].valueChanges.subscribe(changes => {
         if (changes) {
           this.bomService.getTradeCategory(changes.tradeName).then(res => {
+            // control.controls['category'].reset();
             this.filteredOption[i] = [...res.data];
             this.filterOptions = new Observable((observer) => {
               const val: tradeRelatedCategory[] | [string] = this._filter('', i);
@@ -182,15 +187,17 @@ export class EditMyMaterialComponent implements OnInit {
 
   submit() {
 
-    let myMaterial = this.editMaterialForm.get("forms").value.map(val => {
+    let myMaterial: MyMaterialPost = this.editMaterialForm.get("forms").value.map(val => {
       return {
+        customMaterialId: val.customMaterialId,
         estimatedPrice: null,
         estimatedQty: null,
         materialName: val.materialName,
         materialGroupCode: typeof (val.category) === 'string' ? null : val.category.categoriesCode,
         materialGroup: typeof (val.category) === 'string' ? val.category : val.category.categoriesName,
         materialUnit: val.materialUnit,
-        tradeId: val.trade.tradeId
+        tradeId: val.trade.tradeId,
+        tradeName: val.trade.tradeName
       };
     });
 
@@ -212,15 +219,16 @@ export class EditMyMaterialComponent implements OnInit {
         this.checkMaterialExist(myMaterial)
       }
       else {
-        myMaterial.isAllChange = tradeChange || categoryChange;
-        myMaterial.isNameChange = false;
+        myMaterial[0].isAllChange = tradeChange || categoryChange;
+        myMaterial[0].isNameChange = true;
         this.addMaterial(myMaterial);
       }
     }
   }
 
-  checkMaterialExist(myMaterial) {
-    this.bomService.getMaterialExist(myMaterial[0].materialName).then(res => {
+  checkMaterialExist(myMaterial: MyMaterialPost) {
+    let checkData = { tradeName: myMaterial.tradeName, materialName: myMaterial.materialName, categoryName: myMaterial.materialGroup }
+    this.bomService.getMaterialExist(checkData).then(res => {
       if (res.data) {
         this.data.type === 'edit' ? this.editMaterial(myMaterial) : this.addMaterial(myMaterial)
       }
@@ -236,8 +244,9 @@ export class EditMyMaterialComponent implements OnInit {
     });
   }
 
-  editMaterial(myMaterial) {
-    this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
+  editMaterial(myMaterial: MyMaterialPost) {
+    let updateMaterial = { materialName: myMaterial[0].materialName, materialUnit: myMaterial[0].materialUnit, customMaterialId: myMaterial[0].customMaterialId }
+    this.myMaterialService.updateMyMaterial(updateMaterial).then(res => {
       if (res.message = "done") {
         this._snackBar.open("My Materials Added", "", {
           duration: 4000,
@@ -250,8 +259,22 @@ export class EditMyMaterialComponent implements OnInit {
   }
 
   addMaterial(myMaterial) {
-
+    let updateMaterial = {
+      tradeId: myMaterial[0].tradeId,
+      tradeName: myMaterial[0].tradeName, isAllChange: myMaterial[0].isAllChange, isNameChange: myMaterial[0].isNameChange, materialGroup: myMaterial[0].materialGroup, materialGroupCode: myMaterial[0].materialGroupCode, materialName: myMaterial[0].materialName, materialUnit: myMaterial[0].materialUnit, customMaterialId: myMaterial[0].customMaterialId
+    }
+    this.myMaterialService.approveMyMaterial([updateMaterial]).then(res => {
+      if (res.message = "done") {
+        this._snackBar.open("Materials Approved", "", {
+          duration: 4000,
+          panelClass: ["warning-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
+      this.dialogRef.close('done');
+    });
   }
+
   closeDialog() {
     this.dialogRef.close(null);
   }

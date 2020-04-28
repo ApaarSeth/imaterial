@@ -398,7 +398,11 @@ a:hover {
   top: 45px;
 }
 .border-radius {
-  border-radius: 10px;
+  border-radius: 10px !important;
+}
+
+.border-radius-panel {
+  border-radius: 7px 7px 0px 0px !important;
 }
 //Muskaan's edit
 .round-button {
@@ -563,6 +567,10 @@ mat-accordion {
   width: 90%;
 }
 
+.width-95 {
+  width: 95%;
+}
+
 .width-15-px {
   img {
     width: 15px;
@@ -700,7 +708,7 @@ mat-accordion {
 .word-break-all {
   word-break: break-all;
 }
-.margin-auto{
+.margin-auto {
   margin: auto;
 }
 

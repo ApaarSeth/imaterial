@@ -34,11 +34,19 @@ export class MyMaterialTabComponent implements OnInit {
 
 
 	openEditDialog(c, sc) {
-		let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'add' }
-		this.dialogRef.open(EditMyMaterialComponent, {
+		let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'edit' }
+		const dialogRef = this.dialogRef.open(EditMyMaterialComponent, {
 			width: "750px",
 			data
 		})
+		dialogRef.afterClosed().subscribe(result => {
+			if (result === 'done') {
+				this.getMyMaterial()
+			}
+		})
+	}
+	onDelete(i) {
+		this.selectedCategory.splice(i, 1)
 	}
 
 	searchCategory() {

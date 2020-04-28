@@ -1,22 +1,22 @@
 <span *ngFor="let category of selectedCategory; let c = index">
   <mat-accordion>
     <div #myele *ngIf="!isSearching ? true : !category.allNull">
-      <mat-expansion-panel class="m-b-5 m-t-5 bom-qty-page" [expanded]="true">
-        <mat-expansion-panel-header class="background-color-bom-category row">
-          <div class="col-xs-6 text-left">
-            <mat-panel-title>
-              Category Name
+      <mat-expansion-panel class="m-b-5 m-t-5 border-radius-panel bom-qty-page mat-expansion-panel-header-wrapper" [expanded]="true">
+        <mat-expansion-panel-header class="background-color-skyblue row">
+          <div class="col-xs-6 text-left p-l-25">
+            <mat-panel-title class="color-white">
+              {{ category.groupName }}
             </mat-panel-title>
           </div>
           <div class="col-xs-3 text-left">
-            <mat-panel-title>
+            <mat-panel-title class="color-white">
               Unit
             </mat-panel-title>
           </div>
           <div class="col-xs-3"></div>
         </mat-expansion-panel-header>
         <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index">
-          <div class="row" *ngIf="!subcategory.isNull">
+          <div class="row p-t-5 p-b-5" *ngIf="!subcategory.isNull">
             <div class="col-xs-3">
               <span class="pull-left p-l-40 p-t-5">{{ subcategory.materialName }}</span>
             </div>
@@ -25,25 +25,22 @@
                 <span class="p-r-5">{{ trades }}<span *ngIf="subcategory.tradeList.length > 1 && i !== subcategory.tradeList.length - 1">,</span> </span>
               </span>
             </div>
-            <div class="col-xs-3 text-left p-t-5">
+            <div class="col-xs-2 text-left p-t-5">
               <span>{{ subcategory.materialUnit }}</span>
             </div>
-            <div class="col-xs-2 text-right p-t-5">
-              <span class="p-r-10">
-                <a href="javascript:void(0)" class="width-15-px" matTooltip="Delete" (click)="openEditDialog(c, sc)">
-                  <span class="material-icons main-color">
-                    edit
-                  </span>
-                </a>
-              </span>
-              <span>
-                <a href="javascript:void(0)" matTooltip="Delete" (click)="onDelete(i)">
-                  <span class="material-icons main-color">
-                    delete_outline
-                  </span>
-                </a>
-              </span>
+            <div class="col-xs-2 text-right p-t-5 p-b-5">
+              <!-- <button class="material-icons cursor button-background main-color" (click)="openEditDialog(c, sc)">
+                +Add to My Materials
+              </button> -->
+              <a href="javascript:void(0)" class="cursor-pointer main-color" (click)="openEditDialog(c, sc)">
+                +Add to My Materials
+              </a>
             </div>
+            <!-- <div class="col-xs-1 p-t-5">
+              <a href="javascript:void(0)" class="width-15-px cursor-pointer" (click)="onDelete(i)">
+                <img src="../../../../assets/images/delete-button.png/" />
+              </a>
+            </div> -->
           </div>
         </div>
       </mat-expansion-panel>

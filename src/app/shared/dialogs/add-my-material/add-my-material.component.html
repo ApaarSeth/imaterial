@@ -17,7 +17,7 @@
       <div class="row my-material-dialog-length">
         <div formArrayName="myMaterial" *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
           <div class="row p-t-10" [formGroupName]="i">
-            <div class="col-xs-3">
+            <div class="col-xs-3 p-r-0">
               <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 3px;">
                 <mat-label>*Material Name</mat-label>
                 <textarea maxlength="300" matInput formControlName="materialName" class="text-area-border"></textarea>
@@ -43,7 +43,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-3 p-l-20 p-r-0">
               <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
                 <mat-label>Trade</mat-label>
                 <mat-select formControlName="trade">
@@ -53,8 +53,8 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-xs-3">
-              <mat-form-field class="border-input width-90">
+            <div class="col-xs-3 p-r-0">
+              <mat-form-field class="border-input width-95">
                 <input type="text" placeholder="Category" matInput formControlName="category" [matAutocomplete]="auto" />
                 <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
                   <mat-option matTooltip=" {{ option.categoriesName }}" *ngFor="let option of this.filterOptions | async" [value]="option">
@@ -63,17 +63,16 @@
                 </mat-autocomplete>
               </mat-form-field>
             </div>
-            <div class="col-xs-1 text-center p-t-15">
-              <div class="p-t-10">
-                <span *ngIf="addMyMaterial.get('myMaterial').value.length > 1" class="p-r-5">
-                  <a class="width-15-px cursor-pointer float-right-invite-delBtn" matTooltip="Delete" (click)="onDelete(i)">
-                    <span class="material-icons main-color">
-                      delete_outline
-                    </span>
+            <div class="col-xs-1 text-center p-t-15 p-l-5">
+              <div class="row">
+                <div class="col-xs-1 p-t-5">
+                  <a href="javascript:void(0)" *ngIf="addMyMaterial.get('myMaterial').value.length > 1" class="width-15-px cursor-pointer" (click)="onDelete(i)">
+                    <img src="../../../../assets/images/delete-button.png" />
                   </a>
-                </span>
-                <span *ngIf="i == addMyMaterial.get('myMaterial').value.length - 1">
+                </div>
+                <div class="col-xs-1">
                   <button
+                    *ngIf="i == addMyMaterial.get('myMaterial').value.length - 1"
                     type="button"
                     [disabled]="!addMyMaterial.valid"
                     (click)="onAddRow()"
@@ -82,7 +81,7 @@
                   >
                     add_circle
                   </button>
-                </span>
+                </div>
               </div>
             </div>
           </div>

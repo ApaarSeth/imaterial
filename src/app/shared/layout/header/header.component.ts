@@ -12,7 +12,7 @@ import { MatSidenav } from '@angular/material';
   templateUrl: "./header.html"
 })
 export class HeaderLayoutComponent implements OnInit {
-showFiller = false;
+  showFiller = false;
   @Output() public sidenavToggle = new EventEmitter();
   public buttonName: string = "dashboard";
   orgId: Number;
@@ -20,7 +20,7 @@ showFiller = false;
   permissionObj: any;
   notifClicked: boolean = false;
   userId: number;
-   @Input('menu') menu: MatSidenav;
+  @Input('menu') menu: MatSidenav;
   subsriptions: Subscription[] = [];
   headerConst: { name: string, link: string }[]
 
@@ -84,6 +84,9 @@ showFiller = false;
     }
     else if (url.includes('supplier')) {
       this.buttonName = 'Supplier'
+    }
+    else if (url.includes('myMaterial')) {
+      this.buttonName = 'My Materials'
     }
   }
 
