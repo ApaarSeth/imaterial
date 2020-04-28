@@ -172,7 +172,7 @@ export class AddMyMaterialBomComponent implements OnInit {
     return this.bomService.getMaterialExist(checkData).then(res => {
       if (res.data) {
         let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.find(val => {
+        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some(val => {
           return val.materialName === currentMaterialName
         }))
         if (!alreadyPresent) {
@@ -215,8 +215,8 @@ export class AddMyMaterialBomComponent implements OnInit {
     this.bomService.getMaterialExist(checkData).then(res => {
       if (res.data) {
         let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.forEach((val, i) => {
-          return val.materialName === currentMaterialName ? true : false
+        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some((val, i) => {
+          return val.materialName === currentMaterialName;
         }))
         if (!alreadyPresent) {
           (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
