@@ -29,7 +29,7 @@
               </mat-expansion-panel-header>
               <ng-container formArrayName="materialGroup">
                 <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index" [formGroupName]="sc">
-                  <div class="row" *ngIf="!subcategory.isNull">
+                  <div class="row p-t-10" *ngIf="!subcategory.isNull">
                     <div class="col-xs-3">
                       <span class="pull-left p-l-40 p-t-20">{{ subcategory.materialName }}</span>
                     </div>
@@ -66,14 +66,14 @@
                     </div>
                     <div class="col-xs-2 text-center p-l-25">
                       <span>
-                        <mat-form-field class="border-input widthZero">
+                        <mat-form-field class="border-input widthZero mat-form-field-padding">
                           <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text" class="p-b-5 shortWidth" placeholder="Enter Quantity" />
                         </mat-form-field>
                       </span>
                     </div>
                     <div class="col-xs-2 text-center p-l-25">
                       <span>
-                        <mat-form-field class="border-input widthZero">
+                        <mat-form-field class="border-input widthZero mat-form-field-padding">
                           <input formControlName="estimatedRate" appTwoDigitDecimaNumber matInput type="text" class="p-b-5 shortWidth" placeholder="Enter Rate" />
                         </mat-form-field>
                       </span>

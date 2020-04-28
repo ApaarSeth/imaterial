@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BomService } from 'src/app/shared/services/bom/bom.service';
 import { categoryNestedLevel } from 'src/app/shared/models/category';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditMyMaterialComponent } from 'src/app/shared/dialogs/edit-my-material/edit-my-material.component';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { MyMaterialService } from 'src/app/shared/services/myMaterial.service';
 
 @Component({
 	selector: 'app-my-material-tab',
@@ -13,7 +14,7 @@ export class MyMaterialTabComponent implements OnInit {
 	selectedCategory: categoryNestedLevel[];
 	isSearching: boolean;
 
-	constructor(private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
+	constructor(private snackBar: MatSnackBar, private materialService: MyMaterialService, private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
 
 	ngOnInit() {
 		this.getMyMaterial();
@@ -45,8 +46,18 @@ export class MyMaterialTabComponent implements OnInit {
 			}
 		})
 	}
-	onDelete(i) {
-		this.selectedCategory.splice(i, 1)
+	onDelete(c, sc) {
+		this.materialService.deleteApi(this.selectedCategory[c].materialList[sc].customMaterialId).then(res => {
+			if (res.statusCode = '201') {
+				this.snackBar.open("Material Successfully Deleted", "", {
+					duration: 4000,
+					panelClass: ["warning-snackbar"],
+					verticalPosition: "bottom"
+				});
+				this.selectedCategory[c].materialList.splice(sc, 1)
+			}
+		})
+
 	}
 
 	searchCategory() {
