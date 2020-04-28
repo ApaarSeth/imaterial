@@ -181,7 +181,7 @@
         <tr matSort class="mat-elevation-z2 mat-header-row" >
           <thead class="mat-header-cell widthReduce" mat-sort-header="vesselName">S.No</thead>
           <thead class="mat-header-cell">Material Name</thead>
-          <thead class="mat-header-cell">Makes</thead>
+          <thead class="mat-header-cell p-l-15">Makes</thead>
           <thead class="mat-header-cell">Fullfillment Date</thead>
           <thead class="mat-header-cell">Supplier Rate</thead>
           <thead class="mat-header-cell">Awarded quantity</thead>
@@ -232,7 +232,7 @@
             <div class="mat-row" *ngFor="let purchaseOrder of material.purchaseOrderDetailList; let p = index" [formGroupName]="p">
               <span class="mat-cell widthReduce"></span>
               <span class=" mat-cell"></span>
-              <span class="mat-cell">{{ purchaseOrder.materialBrand }}</span>
+              <span class="mat-cell  p-l-15">{{ purchaseOrder.materialBrand }}</span>
               <span class="mat-cell"></span>
               <span class="mat-cell">
                 <ng-container *ngIf="mode != 'edit'; else editRate"> {{ purchaseOrder.materialUnitPrice }}</ng-container>
