@@ -65,5 +65,12 @@
   .mat-expansion-panel-header.mat-expanded:focus,
   .mat-expansion-panel-header.mat-expanded:hover {
     background: $skyblue-color !important;
+    border-radius: 18px 18px 0px 0px !important;
+  }
+}
+.mat-expansion-panel-header-not-expand {
+  .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
+    background: $skyblue-color !important;
+    border-radius: 7px !important;
   }
 }
