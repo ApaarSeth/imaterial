@@ -15,13 +15,13 @@
             <button mat-raised-button class="main-color main-background-color main-button color-white" (click)="openAddMaterial()">+Add Material</button>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-12 display-flex m-t-20">
-            <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
-              <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
-            </div>
-          </div>
-        </div>
+        <!-- <div class="col-sm-12 col-md-12 choose-trades">
+          <mat-chip-list multiple id="chipList" [selectable]="true">
+            <mat-chip *ngFor="let trade of tradeList" [selected]="trade.tradeId" (click)="trade.selected = !trade.selected; changeSelected('s', trade)">
+              {{ trade.tradeName }}
+            </mat-chip>
+          </mat-chip-list>
+        </div> -->
 
         <mat-tab-group (selectedTabChange)="tabClick($event)">
           <mat-tab label="Top Materials"> <app-my-material-tab *ngIf="showMyMaterial"></app-my-material-tab></mat-tab>

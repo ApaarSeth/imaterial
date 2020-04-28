@@ -31,16 +31,14 @@ export class EditMyMaterialComponent implements OnInit {
   rows: FormArray;
   emailVerified: boolean = true;
   emailMessage: string;
-
   creatorId: number;
   index: string[] = [];
-
   emails: string[] = [];
   count: any;
   addUserFormLength: number;
   check: boolean;
   materialUnit: string[];
-  tradesList: orgTrades[] = [];
+  tradesList: { tradeName: string, tradeId: number }[] = [];
   filteredOption: [tradeRelatedCategory[]] = [null];
   filterOptions: Observable<tradeRelatedCategory[] | [string]>;
   addOtherFormGroup: FormGroup;
@@ -59,6 +57,7 @@ export class EditMyMaterialComponent implements OnInit {
   ngOnInit() {
 
     this.creatorId = Number(localStorage.getItem("userId"));
+    this.formInit();
     this.getUserData(this.creatorId);
     this.getUserRoles();
     this.getMaterialUnit();
@@ -67,10 +66,16 @@ export class EditMyMaterialComponent implements OnInit {
   }
 
 
+
   getTrades() {
     this.userService.getTrades().then(res => {
-      this.tradesList = res.data as orgTrades[];
-    });
+      this.tradesList = res.data;
+      (<FormArray>this.editMaterialForm.get('forms')).controls.map((control: FormGroup, i) => {
+        control.controls['trade'].setValue(
+          this.tradesList.find(trade => trade.tradeId === this.data.materialList[i].tradeId))
+        console.log(this.tradesList)
+      });
+    })
   }
 
 
@@ -79,16 +84,12 @@ export class EditMyMaterialComponent implements OnInit {
       this.materialUnit = res.data;
     });
   }
-  /**
-   * @description Get all user roles
-   */
+
   getUserRoles() {
     this._userService.getRoles().then(res => {
       this.roles = res.data;
     });
   }
-
-
 
   getUserData(userId) {
     this._userService.getUserInfo(userId).then(res => {
@@ -105,7 +106,7 @@ export class EditMyMaterialComponent implements OnInit {
         materialUnit: [data.materialUnit, Validators.required],
         index: [],
         trade: [{ tradeName: data.tradeName, tradeId: data.tradeId }],
-        category: [{ categoriesCode: data.materialGroupCode, categoriesName: data.materialGroup }],
+        category: [{ categoriesCode: data.materialGroupCode, categoriesName: data.materialGroup }]
       });
       return frmGrp;
     });
@@ -165,6 +166,11 @@ export class EditMyMaterialComponent implements OnInit {
     return option && option.categoriesName ? option.categoriesName : '';
   }
 
+  displayFn1(trade) {
+    return trade && trade.tradeName ? trade.tradeName : '';
+  }
+
+
   onDelete(i) {
 
   }
@@ -188,21 +194,62 @@ export class EditMyMaterialComponent implements OnInit {
       };
     });
 
-    if (this.data.type = 'edit') {
-      this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
-        if (res.message = "done") {
-          this._snackBar.open("My Materials Added", "", {
-            duration: 4000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          }); this.dialogRef.close(null);
-        }
-        else {
-          (<FormGroup>(<FormArray>this.editMaterialForm.get("forms")).controls[0]).controls['materialName'].reset()
-        }
-        this.dialogRef.close(null);
-      });
+    if (this.data.type === 'edit') {
+      if (this.data.materialList[0].materialName === myMaterial[0].materialName) {
+        this.editMaterial(myMaterial)
+      }
+      else {
+        this.checkMaterialExist(myMaterial)
+      }
     }
+    else {
+      let tradeChange = this.data.materialList[0].tradeId !== myMaterial[0].tradeId;
+      let categoryChange = this.data.materialList[0].materialGroup !== myMaterial[0].materialGroup;
+      let materialNameChange = this.data.materialList[0].materialName !== myMaterial[0].materialName;
+      if (materialNameChange) {
+        myMaterial.isAllChange = tradeChange || categoryChange;
+        myMaterial.isNameChange = true;
+        this.checkMaterialExist(myMaterial)
+      }
+      else {
+        myMaterial.isAllChange = tradeChange || categoryChange;
+        myMaterial.isNameChange = false;
+        this.addMaterial(myMaterial);
+      }
+    }
+  }
+
+  checkMaterialExist(myMaterial) {
+    this.bomService.getMaterialExist(myMaterial[0].materialName).then(res => {
+      if (res.data) {
+        this.data.type === 'edit' ? this.editMaterial(myMaterial) : this.addMaterial(myMaterial)
+      }
+      else {
+        this._snackBar.open("Set New Material Name", "", {
+          duration: 4000,
+          panelClass: ["warning-snackbar"],
+          verticalPosition: "bottom"
+        });
+        (<FormGroup>(<FormArray>this.editMaterialForm.get("forms")).controls[0]).controls['materialName'].reset()
+      }
+      this.dialogRef.close(null);
+    });
+  }
+
+  editMaterial(myMaterial) {
+    this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
+      if (res.message = "done") {
+        this._snackBar.open("My Materials Added", "", {
+          duration: 4000,
+          panelClass: ["warning-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
+      this.dialogRef.close('done');
+    });
+  }
+
+  addMaterial(myMaterial) {
 
   }
   closeDialog() {

@@ -23,7 +23,7 @@ export class UnapprovedMaterialTabComponent implements OnInit {
     }
 
     openEditDialog(c, sc) {
-        let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'edit' }
+        let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'add' }
         this.dialogRef.open(EditMyMaterialComponent, {
             width: "750px",
             data
