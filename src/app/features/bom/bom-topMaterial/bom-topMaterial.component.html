@@ -28,10 +28,10 @@
                 </div>
               </mat-expansion-panel-header>
               <ng-container formArrayName="materialGroup">
-                <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index" [formGroupName]="sc">
-                  <div class="row" *ngIf="!subcategory.isNull">
+                <div class="background-color-bom-sub-category" *ngFor="let subcategory of category.materialList; let sc = index" [formGroupName]="sc">
+                  <div class="row p-t-10" *ngIf="!subcategory.isNull">
                     <div class="col-xs-3">
-                      <span class="pull-left p-l-40 p-t-20">{{ subcategory.materialName }}</span>
+                      <span class="pull-left p-l-40 p-t-10">{{ subcategory.materialName }}</span>
                     </div>
                     <div class="col-xs-3 p-t-10">
                       <span class="text-semi-bold" *ngFor="let trades of subcategory.tradeList; let i = index">
@@ -59,21 +59,21 @@
                         </mat-form-field>
                       </span>
                       <ng-template #elseBlock>
-                        <div class="p-r-35 p-t-15">
+                        <div class="p-r-35 p-t-10">
                           {{ subcategory.materialUnit }}
                         </div>
                       </ng-template>
                     </div>
                     <div class="col-xs-2 text-center p-l-25">
                       <span>
-                        <mat-form-field class="border-input widthZero">
+                        <mat-form-field class="border-input widthZero mat-form-field-padding">
                           <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text" class="p-b-5 shortWidth" placeholder="Enter Quantity" />
                         </mat-form-field>
                       </span>
                     </div>
                     <div class="col-xs-2 text-center p-l-25">
                       <span>
-                        <mat-form-field class="border-input widthZero">
+                        <mat-form-field class="border-input widthZero mat-form-field-padding">
                           <input formControlName="estimatedRate" appTwoDigitDecimaNumber matInput type="text" class="p-b-5 shortWidth" placeholder="Enter Rate" />
                         </mat-form-field>
                       </span>

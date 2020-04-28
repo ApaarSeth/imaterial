@@ -114,5 +114,6 @@ export const API = {
   MATERIALEXIST: `material/search/materialexist`,
   ADDMYMATERIAL: projectId => `material/add/custom/${projectId}`,
   UPDATEMYMATERIAL: `material/update/approved/custom`,
-  APPROVEMYMATERIAL: `material/update/approve/custom`
+  APPROVEMYMATERIAL: `material/update/approve/custom`,
+  DELETEMYMATERIAL: (id) => `material/delete/custom/${id}`
 };
