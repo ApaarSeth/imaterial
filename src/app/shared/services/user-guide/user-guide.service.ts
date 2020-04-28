@@ -27,4 +27,9 @@ export class UserGuideService {
     });
   }
 
+    userGetReleaseNote(){
+        return this.dataService.getRequest(API.GETRELEASENOTES).then(res =>{
+          return res;
+        });
+    }
 }

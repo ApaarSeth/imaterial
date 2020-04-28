@@ -1,0 +1,30 @@
+ <div class="header-add-edit-dialog">
+      <h1 mat-dialog-title>{{notes.headerText}}</h1>
+      <button type="button" class="close" (click)="close()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+  </div>
+   <div class="row release-notes ">
+     <div class="notes-description">
+       {{notes.description}}
+     </div>
+     <ng-container *ngFor="let note of notes.releaseList">
+       <div class="col-sm-12 heading-div">
+         <span class="heading">
+         {{note.releaseHead}}
+         </span>
+       </div>
+       <div class="col-sm-12 list-of-notes">
+         <ol>
+           <li *ngFor="let item of note.items">
+             {{item.description}}
+           </li>
+         </ol>
+       </div>
+        <!-- <div class="col-sm-12 display-flex justify-content-center">
+          <button mat-raised-button (click)="addProject()" class="main-background-color main-button color-white">
+            Download Release Note
+          </button>
+        </div> -->
+       </ng-container>
+   </div>

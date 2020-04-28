@@ -27,6 +27,7 @@ import { AddMyMaterialBomComponent } from './add-my-material-Bom/add-my-material
 import { DisplayProjectDetailsComponent } from './display-project-details/display-project-details.component';
 import { AddMyMaterialComponent } from './add-my-material/add-my-material.component';
 import { EditMyMaterialComponent } from './edit-my-material/edit-my-material.component';
+import { ReleaseNoteComponent } from './release-notes/release-notes.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -57,5 +58,6 @@ export const SharedDialogs = [
   SelectSupplierAddressDialogComponent,
   AddMyMaterialBomComponent,
   AddMyMaterialComponent,
-  EditMyMaterialComponent
+  EditMyMaterialComponent,
+  ReleaseNoteComponent
 ];
