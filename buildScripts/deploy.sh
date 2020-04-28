@@ -7,6 +7,6 @@ echo $COMMIT_ID-$BUILD_NUMBER
 
 ls helm/imaterial-web/
 #updating kubeconfig
-#aws eks --region ap-south-1 update-kubeconfig --name prod-ecom-im-cluster
+kubectl config use-context arn:aws:eks:ap-south-1:317596419736:cluster/dev-ecom-im-cluster
 #deploy on kubernetes using helm
-#helm upgrade commerce-report helm/commerce-report/ --set=deployment.image.tag=$COMMIT_ID-$BUILD_NUMBER -n prod
+#helm upgrade imaterial-web helm/imaterial-web/ --set=deployment.image.tag=$COMMIT_ID-$BUILD_NUMBER -n dev
