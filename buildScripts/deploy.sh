@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+set -xe
 pwd
 COMMIT_ID=$(git rev-parse --short $GIT_COMMIT)
 echo $COMMIT_ID-$BUILD_NUMBER

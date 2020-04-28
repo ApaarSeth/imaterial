@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+set -xe
 pwd
 #loging into Ecr
 aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 317596419736.dkr.ecr.ap-south-1.amazonaws.com/imaterial/im-web
