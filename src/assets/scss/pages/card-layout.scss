@@ -145,3 +145,17 @@
     }
 }
 
+
+
+@media only screen and (min-width: 1275px){
+    .card-project-dashboard{
+        .tiles{
+            padding-left: 25px;
+        }   
+        .last-row{
+            .color-text-card{
+                 padding-left: 25px;
+            }
+        }
+    }
+}

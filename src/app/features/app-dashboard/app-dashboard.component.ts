@@ -13,6 +13,7 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { ViewVideoComponent } from 'src/app/shared/dialogs/video-video/view-video.component';
 import { permission } from 'src/app/shared/models/permissionObject';
+import { ReleaseNoteComponent } from 'src/app/shared/dialogs/release-notes/release-notes.component';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -52,7 +53,22 @@ export class AppDashboardComponent implements OnInit {
     this.getDashboardInfo('indent');
 
     window.dispatchEvent(new Event('resize'));
+  if(!localStorage.getItem('ReleaseNotes') || (localStorage.getItem('ReleaseNotes') != '1')){
+    localStorage.setItem('ReleaseNotes','0');
+  }
 
+  if(localStorage.getItem('ReleaseNotes') == '0') {
+   this.userguideservice.userGetReleaseNote().then(res => {
+      if(res.status == 1){
+        this.openReleaseNote(res.data.releasText,res.data.releaseNoteId);
+      }
+        if(res.status == 0){
+        localStorage.setItem('ReleaseNotes','1');
+        }
+    });
+ }
+    
+    
     this.userguideservice.getUserGuideFlag().then(res => {
       this.userGuidedata = res.data;
       this.userGuidedata.forEach(element => {
@@ -84,6 +100,26 @@ export class AppDashboardComponent implements OnInit {
     });
   }
 
+ openReleaseNote(data,releaseNoteId) {
+ 
+    const dialogRef = this.dialog.open(ReleaseNoteComponent,  { disableClose: true ,
+     width: "500px", data
+});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null && result == 'closed')
+         {
+           // post api hit user/add/releaseNote
+           const obj = {
+             "releaseNoteId" : releaseNoteId
+           }
+           this.userguideservice.sendReleaseNoteData(obj).then(res => {
+             console.log(result + " " +releaseNoteId);
+              localStorage.setItem('ReleaseNotes','1') ;
+           })
+         }
+    });
+  }
   getDashboardInfo(label) {
     const data = {
       "orgId": this.orgId,
