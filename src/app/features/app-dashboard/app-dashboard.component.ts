@@ -53,13 +53,16 @@ export class AppDashboardComponent implements OnInit {
     this.getDashboardInfo('indent');
 
     window.dispatchEvent(new Event('resize'));
+  if(!localStorage.getItem('ReleaseNotes') || (localStorage.getItem('ReleaseNotes') != '1')){
+    localStorage.setItem('ReleaseNotes','0');
+  }
 
   if(localStorage.getItem('ReleaseNotes') == '0') {
    this.userguideservice.userGetReleaseNote().then(res => {
-      if(res.data != null && res.data != []){
+      if(res.status == 1){
         this.openReleaseNote(res.data.releasText,res.data.releaseNoteId);
       }
-        if(res.data == null || res.data == []){
+        if(res.status == 0){
         localStorage.setItem('ReleaseNotes','1');
         }
     });
@@ -101,14 +104,19 @@ export class AppDashboardComponent implements OnInit {
  
     const dialogRef = this.dialog.open(ReleaseNoteComponent,  { disableClose: true ,
      width: "500px", data
-    });
+});
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null && result == 'closed')
          {
-           // post api hit
-           console.log(result + " " +releaseNoteId);
+           // post api hit user/add/releaseNote
+           const obj = {
+             "releaseNoteId" : releaseNoteId
+           }
+           this.userguideservice.sendReleaseNoteData(obj).then(res => {
+             console.log(result + " " +releaseNoteId);
               localStorage.setItem('ReleaseNotes','1') ;
+           })
          }
     });
   }

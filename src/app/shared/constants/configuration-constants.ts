@@ -115,5 +115,6 @@ export const API = {
   ADDMYMATERIAL: projectId => `material/add/custom/${projectId}`,
   GETRELEASENOTES : `user/get/releaseNote`,
   UPDATEMYMATERIAL: `material/update/approved/custom`,
-  APPROVEMYMATERIAL: `material/update/approve/custom`
+  APPROVEMYMATERIAL: `material/update/approve/custom`,
+  SENDRELEASENOTE: `user/add/releaseNote`
 };

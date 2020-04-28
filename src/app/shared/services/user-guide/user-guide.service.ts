@@ -32,4 +32,9 @@ export class UserGuideService {
           return res;
         });
     }
+    sendReleaseNoteData(obj){
+       return this.dataService.sendPostRequest(API.SENDRELEASENOTE,obj).then(res =>{
+          return res;
+        });
+    }
 }
