@@ -27,4 +27,14 @@ export class UserGuideService {
     });
   }
 
+    userGetReleaseNote(){
+        return this.dataService.getRequest(API.GETRELEASENOTES).then(res =>{
+          return res;
+        });
+    }
+    sendReleaseNoteData(obj){
+       return this.dataService.sendPostRequest(API.SENDRELEASENOTE,obj).then(res =>{
+          return res;
+        });
+    }
 }

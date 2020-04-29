@@ -29,7 +29,7 @@ import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
 import { HeaderSharedModule } from './shared/layout/header/header-shared.module';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
-import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { environment } from 'src/environments/environment';
 import { ProfileComponent } from './features/profile/profile.component';
@@ -56,6 +56,7 @@ import { OnlyNumberDirective } from './shared/directives/number-only2.directive'
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
+    MatDialogModule,
     // AuthModule,
     LayoutModule,
     DashboardModule,
@@ -82,6 +83,8 @@ import { OnlyNumberDirective } from './shared/directives/number-only2.directive'
     UserDataGuardService,
     AfterSignUpGuardService,
     GuidedTourService,
+      { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: PickDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }

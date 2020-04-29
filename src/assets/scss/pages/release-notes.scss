@@ -1,0 +1,33 @@
+.release-notes{
+    color: #828282;
+     padding-left: 10px;
+
+    max-height: 350px;
+    overflow-y: auto;
+
+    font-size: 14px;
+    .notes-description{
+        padding: 5px 0px;
+    }
+    .heading-div{
+         padding: 10px 0px;
+         .heading{
+            padding-left: 0px;
+            background: #66BF00;
+            padding: 5px 20px;
+            border-radius: 7px;
+            color: #ffffff;
+         }
+     }
+    
+    .list-of-notes{
+        padding-left: 20px;
+            ol{
+                padding-left: 0px;
+                li{
+                    padding-left: 0px;
+                }
+            }  
+   
+}
+}
