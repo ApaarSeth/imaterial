@@ -81,7 +81,9 @@ export class BomMyMaterialComponent implements OnInit {
       if (val && val !== '') {
         this.isSearching = true;
         for (let category of this.selectedCategory) {
+          console.log('category', category)
           for (let mat of category.materialList) {
+
             if (mat.materialName.toLowerCase().indexOf(val.trim().toLowerCase()) > -1) {
               mat.isNull = false;
             }
