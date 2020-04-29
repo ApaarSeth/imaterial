@@ -38,7 +38,7 @@ export class PoComponent implements OnInit {
     placeholder: "Edit Me",
     imageUpload: false,
     imageBrowse: false,
-    apikey: Froala.key
+    key: Froala.key
   }
 
   poData: POData = {} as POData;
