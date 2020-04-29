@@ -27,7 +27,7 @@ export class CommonService {
   }
 
   getNotification(userId) {
-    this.dataService.getRequest(API.GET_NOTIFICATIONS(userId)).then(res => {
+    this.dataService.getRequest(API.GET_NOTIFICATIONS(userId),null,{skipLoader : true}).then(res => {
       this.notificationObj = res.data;
       this.unreadnotification = [];
       this.readnotification = [];
@@ -62,7 +62,7 @@ export class CommonService {
     })
   }
   getNotificationData(userId) {
-    return this.dataService.getRequest(API.GET_NOTIFICATIONS(userId));
+    return this.dataService.getRequest(API.GET_NOTIFICATIONS(userId),null,{skipLoader : true});
   }
 
   getMyMaterial(type: string) {
