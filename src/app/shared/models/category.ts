@@ -42,6 +42,9 @@ export interface material {
   isNull?: boolean;
   materialGroupCode?: string
   customMaterialId?: number
+  requestedQuantity: number;
+  availableStock: number;
+  issueToProject: number;
 }
 
 export interface categoryNestedLevel {
