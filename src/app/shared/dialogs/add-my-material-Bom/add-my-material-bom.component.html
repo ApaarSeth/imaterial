@@ -21,7 +21,7 @@
               <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 3px;">
                 <mat-label>*Material Name</mat-label>
                 <textarea matInput formControlName="materialName" class="text-area-border"></textarea>
-                <small *ngIf="addMyMaterial.controls['myMaterial'].controls[i].controls['materialName'].errors?.maxlength" class="warning-color"
+                <small *ngIf="addMyMaterial.get('myMaterial')['controls'][i]['controls']['materialName'].errors?.maxlength" class="warning-color"
                   >maximun characters allowed is 300</small
                 >
               </mat-form-field>
@@ -57,7 +57,7 @@
             </div>
             <div class="col-xs-2">
               <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                <mat-label>Trade</mat-label>
+                <mat-label>*Trade</mat-label>
                 <mat-select formControlName="trade">
                   <mat-option *ngFor="let trade of tradesList" [value]="trade">
                     {{ trade.tradeName }}
@@ -66,14 +66,28 @@
               </mat-form-field>
             </div>
             <div class="col-xs-2 p-r-0">
-              <mat-form-field class="border-input width-95">
+              <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
+                <mat-label>*Category</mat-label>
+                <mat-select formControlName="category">
+                  <div class="display-flex">
+                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Category" [(ngModel)]="searchCategory" [ngModelOptions]="{standalone: true}" />
+                    <button mat-button matSuffix mat-icon-button>
+                      <mat-icon>search</mat-icon>
+                    </button>
+                  </div>
+                  <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:'categoriesName'" [value]="option" matTooltip=" {{ option.categoriesName }}">
+                    {{ option.categoriesName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!-- <mat-form-field class="border-input width-95">
                 <input type="text" placeholder="Category" matInput formControlName="category" [matAutocomplete]="auto" />
                 <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
                   <mat-option matTooltip=" {{ option.categoriesName }}" *ngFor="let option of this.filterOptions | async" [value]="option">
                     {{ option.categoriesName }}
                   </mat-option>
                 </mat-autocomplete>
-              </mat-form-field>
+              </mat-form-field> -->
             </div>
             <div class="col-xs-1 text-center p-t-15 p-l-5">
               <div class="row">

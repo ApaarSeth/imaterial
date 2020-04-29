@@ -8,7 +8,8 @@ export const ConfigurationConstants = {
 }
 
 export class Froala {
-  public static key: String = 'iMFIZJNKLDXIREJI==';
+  public static key: string = 'iMFIZJNKLDXIREJI==';
+
 }
 
 export const HeaderConstants = {
@@ -113,9 +114,10 @@ export const API = {
   TRADERELATEDCATEGORY: (tradeName) => `trade/get/categories/${tradeName}`,
   MATERIALEXIST: `material/search/materialexist`,
   ADDMYMATERIAL: projectId => `material/add/custom/${projectId}`,
-  GETRELEASENOTES : `user/get/releaseNote`,
+  GETRELEASENOTES: `user/get/releaseNote`,
   UPDATEMYMATERIAL: `material/update/approved/custom`,
   APPROVEMYMATERIAL: `material/update/approve/custom`,
   SENDRELEASENOTE: `user/add/releaseNote`,
-  DELETEMYMATERIAL: (id) => `material/delete/custom/${id}`
+  DELETEMYMATERIAL: (id) => `material/delete/custom/${id}`,
+  ALLCATEGORY: `trade/get/all/categories`
 };

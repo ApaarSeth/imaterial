@@ -60,7 +60,7 @@
               </span>
               <ng-template #elseTradeBlock>
                 <span class="p-t-20 display-inline-block">
-                  {{ editMaterialForm.controls["forms"].controls[i].controls["trade"].value.tradeName }}
+                  {{ editMaterialForm["controls"]["forms"]["controls"][i]["controls"]["trade"].value.tradeName }}
                 </span>
               </ng-template>
             </div>
@@ -77,7 +77,7 @@
               </span>
               <ng-template #elseBlock>
                 <span class="p-t-20 display-inline-block">
-                  {{ editMaterialForm.controls["forms"].controls[i].controls["category"].value.categoriesName }}
+                  {{ editMaterialForm["controls"]["forms"]["controls"][i]["controls"]["category"].value.categoriesName }}
                 </span>
               </ng-template>
             </div>

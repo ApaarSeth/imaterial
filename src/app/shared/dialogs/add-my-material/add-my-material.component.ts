@@ -30,10 +30,9 @@ export class AddMyMaterialComponent implements OnInit {
   rows: FormArray;
   emailVerified: boolean = true;
   emailMessage: string;
-
   creatorId: number;
   index: string[] = [];
-
+  searchCategory: string = ""
   emails: string[] = [];
   count: any;
   addUserFormLength: number;
@@ -41,7 +40,7 @@ export class AddMyMaterialComponent implements OnInit {
   materialUnit: string[]
   tradesList: orgTrades[] = [];
   filteredOption: [tradeRelatedCategory[]] = [null];
-  filterOptions: Observable<tradeRelatedCategory[] | [string]>;
+  // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
 
 
   constructor(private _userService: UserService,
@@ -55,15 +54,20 @@ export class AddMyMaterialComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit() {
-
     this.creatorId = Number(localStorage.getItem("userId"));
     this.getUserData(this.creatorId);
     this.getUserRoles();
     this.getMaterialUnit();
     this.getTrades();
+    this.getCategories();
     this.formInit();
   }
 
+  getCategories() {
+    this.bomService.getAllCategories().then(res => {
+      this.filteredOption = res.data
+    })
+  }
 
   getTrades() {
     this.bomService.getOrgTrades(this.data).then(res => {
@@ -108,53 +112,48 @@ export class AddMyMaterialComponent implements OnInit {
       materialName: ['', [Validators.required, Validators.maxLength(300)]],
       materialUnit: ['', Validators.required],
       index: [],
-      trade: [''],
-      category: [''],
+      trade: ['', Validators.required],
+      category: ['', Validators.required],
     });
 
     formGrp.get("index").patchValue(this.addMyMaterial.get('myMaterial')['controls'].length)
-    formGrp.controls['category'].valueChanges.subscribe(changes => {
-      // this.filteredOption[formGrp.get("index").value] = this._filter(changes, formGrp.get("index").value)
-      this.filterOptions = null;
-      this.filterOptions = new Observable((observer) => {
-        const val: tradeRelatedCategory[] | [string] = this._filter(changes, formGrp.get("index").value)
-        // observable execution
-        observer.next(val)
-        observer.complete()
-      })
-      console.log('this.filteredOption', formGrp.get("index").value);
-      console.log('this.filteredOption', this.filteredOption[formGrp.get("index").value]);
-    })
+    // formGrp.controls['category'].valueChanges.subscribe(changes => {
+    //   this.filterOptions = null;
+    //   this.filterOptions = new Observable((observer) => {
+    //     const val: tradeRelatedCategory[] | [string] = this._filter(changes, formGrp.get("index").value)
+    //     observer.next(val)
+    //     observer.complete()
+    //   })
+    // })
 
-    formGrp.controls['trade'].valueChanges.subscribe(changes => {
-      if (changes) {
-        this.bomService.getTradeCategory(changes.tradeName).then(res => {
-          this.filteredOption[formGrp.get("index").value] = [...res.data];
-          this.filterOptions = new Observable((observer) => {
-            const val: tradeRelatedCategory[] | [string] = this._filter('', formGrp.get("index").value)
-            // observable execution
-            observer.next(val)
-            observer.complete()
-          })
-        })
-      }
-    })
+    // formGrp.controls['trade'].valueChanges.subscribe(changes => {
+    //   if (changes) {
+    //     this.bomService.getTradeCategory(changes.tradeName).then(res => {
+    //       this.filteredOption[formGrp.get("index").value] = [...res.data];
+    //       this.filterOptions = new Observable((observer) => {
+    //         const val: tradeRelatedCategory[] | [string] = this._filter('', formGrp.get("index").value)
+    //         observer.next(val)
+    //         observer.complete()
+    //       })
+    //     })
+    //   }
+    // })
     return formGrp;
   }
 
-  private _filter(value: string | tradeRelatedCategory, index) {
-    if (value || value === "") {
-      const filterValue = typeof (value) === "string" ? value.toLowerCase() : value.categoriesName.toLowerCase();
-      if (filterValue === '') {
-        return this.filteredOption[index];
-      }
-      let filteredValue: tradeRelatedCategory[] | [string] = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.categoriesName.toLowerCase().includes(filterValue));
-      if (!filteredValue.length) {
-        filteredValue = [{ categoriesName: filterValue + " (new value)", categoriesCode: null }]
-      }
-      return filteredValue;
-    }
-  }
+  // private _filter(value: string | tradeRelatedCategory, index) {
+  //   if (value || value === "") {
+  //     const filterValue = typeof (value) === "string" ? value.toLowerCase() : value.categoriesName.toLowerCase();
+  //     if (filterValue === '') {
+  //       return this.filteredOption[index];
+  //     }
+  //     let filteredValue: tradeRelatedCategory[] | [string] = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.categoriesName.toLowerCase().includes(filterValue));
+  //     if (!filteredValue.length) {
+  //       filteredValue = [{ categoriesName: filterValue + " (new value)", categoriesCode: null }]
+  //     }
+  //     return filteredValue;
+  //   }
+  // }
 
   get currentData() {
     let currentIndex = this.addMyMaterial.get('myMaterial')['controls'].length - 1;
