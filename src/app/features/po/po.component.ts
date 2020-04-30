@@ -35,7 +35,6 @@ import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gsti
 })
 export class PoComponent implements OnInit {
   public froala: Object = {
-
     placeholder: "Edit Me",
     imageUpload: false,
     imageBrowse: false,
@@ -97,7 +96,7 @@ export class PoComponent implements OnInit {
   poId: number;
   mode: string;
   ngOnInit() {
-   window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event('resize'));
 
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
@@ -124,8 +123,8 @@ export class PoComponent implements OnInit {
       // if (this.poData.projectAddress.gstNo === "" || this.poData.projectAddress.gstNo === null) {
       //   this.openProjectDialog(this.poData)
       // }
-      if(this.cardData.billingAddress.gstNo.toString() == '' || this.cardData.billingAddress.gstNo == null){
-         this.openProjectDialog(this.poData)
+      if (this.cardData.billingAddress.gstNo.toString() == '' || this.cardData.billingAddress.gstNo == null) {
+        this.openProjectDialog(this.poData)
       }
     });
     this.formInit();
@@ -292,36 +291,36 @@ export class PoComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
-  QuantityAmountValidation(event){ 
-    if(this.ValidPOTemp) 
-       this.isPoValid = event; 
-   
-    if(!this.ValidPOTemp)
+  QuantityAmountValidation(event) {
+    if (this.ValidPOTemp)
+      this.isPoValid = event;
+
+    if (!this.ValidPOTemp)
       this.isPoValid = false;
   }
-    downloadPo(){
-      this.poService.downloadPo(this.poId).then(res =>{
-        this.downloadFile(res.data);
-      });
+  downloadPo() {
+    this.poService.downloadPo(this.poId).then(res => {
+      this.downloadFile(res.data);
+    });
   }
 
-  downloadFile(data : DownloadData) {
-           var win = window.open(data.url, '_blank');
-            win.blur();
-            setTimeout(win.focus, 0);
+  downloadFile(data: DownloadData) {
+    var win = window.open(data.url, '_blank');
+    win.blur();
+    setTimeout(win.focus, 0);
   }
-   @HostListener('window:resize', ['$event'])
-      sizeChange(event) {
-       if(event.currentTarget.innerWidth <= 576){
-          this.showResponsiveDesign = true;
-        }else{
-          this.showResponsiveDesign = false;
-        }
-
-         if(event.currentTarget.innerWidth <= 1028){
-          this.showResponsiveDesignDown = true;
-        }else{
-          this.showResponsiveDesignDown = false;
-        }
+  @HostListener('window:resize', ['$event'])
+  sizeChange(event) {
+    if (event.currentTarget.innerWidth <= 576) {
+      this.showResponsiveDesign = true;
+    } else {
+      this.showResponsiveDesign = false;
     }
+
+    if (event.currentTarget.innerWidth <= 1028) {
+      this.showResponsiveDesignDown = true;
+    } else {
+      this.showResponsiveDesignDown = false;
+    }
+  }
 }

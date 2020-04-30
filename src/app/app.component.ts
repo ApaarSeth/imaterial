@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacebookPixelService } from './shared/services/fb-pixel.service';
 import { environment } from 'src/environments/environment';
+import { API, Froala } from './shared/constants/configuration-constants';
 
 @Component({
   selector: "app-root",
@@ -20,6 +21,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.location = window.location.href;
+    localStorage.setItem('frolaKey', Froala.key)
     this.fbPixel.load();
     if (this.location.includes('rfq-bids/supplier/') || this.location.includes('rfq-bids/after-submit/')) {
       this.hideHeader = true;

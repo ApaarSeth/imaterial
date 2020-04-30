@@ -5,48 +5,48 @@
         PO is Approved by {{ this.poData.poStatusChangedBy }} on {{ this.poData.poStatusChangedOn | date: "dd-MMM-yyy" }}
 
         <div *ngIf="this.mode === 'view'" class="float-right">
-            <span class="text-semi-bold color-main cursor-pointer"
-                      ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15"  *ngIf="!showResponsiveDesign">Download P.O</span></a
-                    ></span>
+          <span class="text-semi-bold color-main cursor-pointer"
+            ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO">
+              <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15" *ngIf="!showResponsiveDesign">Download P.O</span></a
+            ></span
+          >
         </div>
-
       </div>
 
-       <div class="col-md-8 col-lg-8"  *ngIf="this.mode === 'edit'" ></div>
-      <div class="col-sm-12 col-md-4 col-lg-4 m-t-5 text-right"  *ngIf="this.mode === 'edit'" >
-
+      <div class="col-md-8 col-lg-8" *ngIf="this.mode === 'edit'"></div>
+      <div class="col-sm-12 col-md-4 col-lg-4 m-t-5 text-right" *ngIf="this.mode === 'edit'">
         <div class="display-flex justify-content-space-between">
-           <div class="p-r-10 p-t-10">
+          <div class="p-r-10 p-t-10">
             <span class="text-semi-bold color-main cursor-pointer"
-                      ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15" *ngIf="!showResponsiveDesign">Download P.O</span></a
-                    ></span>
-        </div>
+              ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO">
+                <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15" *ngIf="!showResponsiveDesign">Download P.O</span></a
+              ></span
+            >
+          </div>
           <button mat-raised-button class="main-background-color main-button color-white send-for-approval-btn" (click)="selectApprover()" [disabled]="!isPoValid">
             Send P.O For Approval
           </button>
         </div>
-
       </div>
-
 
       <div class="col-md-7 col-lg-8" *ngIf="this.mode === 'requiredApproval'"></div>
       <div class="col-sm-12 col-md-5 col-lg-4 m-t-5 text-right" *ngIf="this.mode === 'requiredApproval'">
-        <div class="display-flex  justify-content-space-between">
-            <div class="p-r-10 p-t-10">
+        <div class="display-flex justify-content-space-between">
+          <div class="p-r-10 p-t-10">
             <span class="text-semi-bold color-main cursor-pointer"
-                      ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" />
-                      <span class="p-l-5 font-size15" *ngIf="!showResponsiveDesign">Download P.O</span></a
-                    ></span>
-        </div>
-        <div>
-          <button mat-raised-button class="background-color-white main-button main-color m-r-5" (click)="poApproval('rejected')">
-            Reject
-          </button>
-          <button mat-raised-button class="main-background-color main-button color-white " (click)="poApproval('approved')">
-            Approve
-          </button>
-        </div>
-          
+              ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO">
+                <img src="../../../../assets/images/download-po.png" /> <span class="p-l-5 font-size15" *ngIf="!showResponsiveDesign">Download P.O</span></a
+              ></span
+            >
+          </div>
+          <div>
+            <button mat-raised-button class="background-color-white main-button main-color m-r-5" (click)="poApproval('rejected')">
+              Reject
+            </button>
+            <button mat-raised-button class="main-background-color main-button color-white" (click)="poApproval('approved')">
+              Approve
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -54,22 +54,29 @@
       <div class="main-div-po m-b-45">
         <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData"> </app-po-card>
       </div>
-      <app-po-table #poTable *ngIf="tableData.length" (QuantityAmountValidation)=QuantityAmountValidation($event) [poTableData]="tableData"> </app-po-table>
+      <app-po-table #poTable *ngIf="tableData.length" (QuantityAmountValidation)="QuantityAmountValidation($event)" [poTableData]="tableData"> </app-po-table>
     </div>
 
-      <div class="row doc-froala-div">
-        <div [ngClass]="showResponsiveDesignDown ? 'col-sm-12 col-md-4 froala-design' : 'col-sm-12 col-md-4 p-b-0'">
-          <app-po-documents #poDocument [documentData]="documentList"></app-po-documents>
-        </div>
-        <div [ngClass]="showResponsiveDesignDown ? 'col-sm-12 col-md-8 hidePoweredBy froala-design' : 'col-sm-12 col-md-8 hidePoweredBy p-b-0' " *ngIf="mode === 'edit'">
-          <form [formGroup]="poTerms">
-            <textarea formControlName="textArea" [innerHTML]="terms && terms.termsDesc" [froalaEditor]="froala" [(froalaModel)]="poTerms['textArea']">Hello, Froala!</textarea>
-          </form>
-        </div> 
-        <div [ngClass]="showResponsiveDesignDown ? 'col-sm-12 col-md-8 background-white-color border-radius parent no-terms-window' : 'col-sm-12 col-md-8 background-white-color border-radius parent' " *ngIf="mode === 'view' || mode === 'requiredApproval'">
-          <div class="word-wrap" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc !== ''" [innerHTML]="terms.termsDesc"></div>
-          <div class="center-element" *ngIf="mode !== 'edit' && this.terms && terms.termsDesc == ''">No Term To View</div>
-        </div>
+    <div class="row doc-froala-div">
+      <div [ngClass]="showResponsiveDesignDown ? 'col-sm-12 col-md-4 froala-design' : 'col-sm-12 col-md-4 p-b-0'">
+        <app-po-documents #poDocument [documentData]="documentList"></app-po-documents>
+      </div>
+      <div [ngClass]="showResponsiveDesignDown ? 'col-sm-12 col-md-8 hidePoweredBy froala-design' : 'col-sm-12 col-md-8 hidePoweredBy p-b-0'" *ngIf="mode === 'edit'">
+        <form [formGroup]="poTerms">
+          <textarea formControlName="textArea" [innerHTML]="terms && terms.termsDesc" [froalaEditor]="froala" [(froalaModel)]="poTerms['textArea']">Hello, Froala!</textarea>
+        </form>
+      </div>
+      <div
+        [ngClass]="
+          showResponsiveDesignDown
+            ? 'col-sm-12 col-md-8 background-white-color border-radius parent no-terms-window'
+            : 'col-sm-12 col-md-8 background-white-color border-radius parent'
+        "
+        *ngIf="mode === 'view' || mode === 'requiredApproval'"
+      >
+        <div class="word-wrap" *ngIf="this.terms && terms.termsDesc !== '' ? true : false" [innerHTML]="terms.termsDesc"></div>
+        <div class="center-element" *ngIf="this.terms && terms.termsDesc !== '' ? true : false">No Term To View</div>
       </div>
     </div>
+  </div>
 </div>

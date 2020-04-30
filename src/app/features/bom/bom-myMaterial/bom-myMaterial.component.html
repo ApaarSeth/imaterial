@@ -31,7 +31,7 @@
                 <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index" [formGroupName]="sc">
                   <div class="row p-t-10" *ngIf="!subcategory.isNull">
                     <div class="col-xs-3">
-                      <span class="pull-left p-l-40 p-t-20">{{ subcategory.materialName }}</span>
+                      <span class="pull-left p-l-40">{{ subcategory.materialName }}</span>
                     </div>
                     <div class="col-xs-3 p-t-10">
                       <span class="text-semi-bold" *ngFor="let trades of subcategory.tradeList; let i = index">
@@ -42,13 +42,11 @@
                       <span
                         *ngIf="
                           (subcategory.requestedQuantity === 0 || subcategory.requestedQuantity === null) &&
-                            (subcategory.availableStock === 0 || subcategory.availableStock === null) &&
                             (subcategory.issueToProject === 0 || subcategory.issueToProject === null);
                           else elseBlock
                         "
-                        formControlName="materialUnit"
                       >
-                        <mat-form-field class="border-select shortWidth mat-form-field-flex-top-padding">
+                        <mat-form-field class="border-select shortWidth mat-form-field-padding mat-form-field-flex-mm-padding">
                           <mat-select formControlName="materialUnit" placeholder="Unit">
                             <mat-option *ngFor="let unit of materialUnit" [value]="unit">
                               <span>
@@ -59,7 +57,7 @@
                         </mat-form-field>
                       </span>
                       <ng-template #elseBlock>
-                        <div class="p-r-35 p-t-15">
+                        <div class="p-r-35 p-t-10">
                           {{ subcategory.materialUnit }}
                         </div>
                       </ng-template>

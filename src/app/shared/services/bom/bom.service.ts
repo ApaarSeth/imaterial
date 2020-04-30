@@ -89,4 +89,10 @@ export class BomService {
   addMyMaterial(projectId, data) {
     return this.dataService.sendPostRequest(API.ADDMYMATERIAL(projectId), data)
   }
+  getAllCategories() {
+    return this.dataService.getRequestMaster(API.ALLCATEGORY)
+  }
+
+
+
 }

@@ -82,6 +82,7 @@ export class BomTopMaterialComponent implements OnInit {
       if (val && val !== '') {
         this.isSearching = true;
         for (let category of this.selectedCategory) {
+          console.log('category', category)
           for (let mat of category.materialList) {
             if (mat.materialName.toLowerCase().indexOf(val.trim().toLowerCase()) > -1) {
               mat.isNull = false;
@@ -169,9 +170,17 @@ export class BomTopMaterialComponent implements OnInit {
                     subcategory.materialName === data.materialName &&
                     data.estimatedQty > 0
                   ) {
+                    subcategory.requestedQuantity = data.requestedQuantity
+                    subcategory.availableStock = data.availableStock
+                    subcategory.issueToProject = data.issueToProject
                     subcategory.estimatedQty = data.estimatedQty;
                     subcategory.estimatedRate = data.estimatedRate;
                     subcategory.materialId = data.materialId;
+                  }
+                  else {
+                    subcategory.requestedQuantity = null;
+                    subcategory.availableStock = null;
+                    subcategory.issueToProject = null;
                   }
                 }
                 return subcategory;

@@ -167,9 +167,17 @@ export class BOMAllMaterialComponent implements OnInit {
                     subcategory.materialName === data.materialName &&
                     data.estimatedQty > 0
                   ) {
+                    subcategory.requestedQuantity = data.requestedQuantity
+                    subcategory.availableStock = data.availableStock
+                    subcategory.issueToProject = data.issueToProject
                     subcategory.estimatedQty = data.estimatedQty;
                     subcategory.materialId = data.materialId;
                     subcategory.estimatedRate = data.estimatedRate;
+                  }
+                  else {
+                    subcategory.requestedQuantity = null;
+                    subcategory.availableStock = null;
+                    subcategory.issueToProject = null;
                   }
                 }
                 return subcategory;
@@ -232,6 +240,7 @@ export class BOMAllMaterialComponent implements OnInit {
       return val.materialGroup.filter(inputData => inputData.estimatedQty)
         .map(inputdata => {
           inputdata.estimatedQty = Number(inputdata.estimatedQty);
+          inputdata.estimatedRate = Number(inputdata.estimatedRate);
           return inputdata;
         });
     }).flat()
