@@ -17,24 +17,24 @@
         </mat-expansion-panel-header>
         <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index">
           <div class="row" *ngIf="!subcategory.isNull">
-            <div class="col-xs-3">
-              <span class="pull-left p-l-40 p-t-5">{{ subcategory.materialName }}</span>
+            <div class="col-xs-3 text-left p-t-10">
+              <span class="limitcharacter-myMaterialName p-l-40" matTooltip="{{ subcategory.materialName }}">{{ subcategory.materialName }}</span>
             </div>
             <div class="col-xs-3 p-t-10">
               <span class="text-semi-bold">
                 <span class="p-r-5">{{ subcategory.tradeName }}</span>
               </span>
             </div>
-            <div class="col-xs-3 text-left p-t-5">
+            <div class="col-xs-3 text-left p-t-10">
               <span>{{ subcategory.materialUnit }}</span>
             </div>
-            <div class="col-xs-1 text-right p-t-5">
+            <div class="col-xs-1 text-right p-t-10">
               <button class="material-icons cursor button-background main-color" matTooltip="Edit" (click)="openEditDialog(c, sc)">
                 edit
               </button>
             </div>
-            <div class="col-xs-1 p-t-5">
-              <a href="javascript:void(0)" class="width-15-px cursor-pointer" (click)="onDelete(c, sc)">
+            <div class="col-xs-1 p-t-10">
+              <a href="javascript:void(0)" class="width-15-px cursor-pointer" matTooltip="Delete" (click)="onDelete(c, sc)">
                 <img src="../../../../assets/images/delete-button.png" />
               </a>
             </div>

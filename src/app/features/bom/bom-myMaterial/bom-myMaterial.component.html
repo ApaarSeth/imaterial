@@ -30,12 +30,12 @@
               <ng-container formArrayName="materialGroup">
                 <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index" [formGroupName]="sc">
                   <div class="row p-t-10" *ngIf="!subcategory.isNull">
-                    <div class="col-xs-3">
-                      <span class="pull-left p-l-40">{{ subcategory.materialName }}</span>
+                    <div class="col-xs-3 text-left">
+                      <span class="limitcharacter-myMaterialName p-l-25" matTooltip="{{ subcategory.materialName }}">{{ subcategory.materialName }}</span>
                     </div>
-                    <div class="col-xs-3 p-t-10">
-                      <span class="text-semi-bold" *ngFor="let trades of subcategory.tradeList; let i = index">
-                        <span class="p-r-5">{{ trades }}<span *ngIf="subcategory.tradeList.length > 1 && i !== subcategory.tradeList.length - 1">,</span> </span>
+                    <div class="col-xs-3 p-t-10 text-center">
+                      <span class="text-semi-bold">
+                        <span class="p-r-5">{{ subcategory.tradeName }}</span>
                       </span>
                     </div>
                     <div class="col-xs-2 text-right">

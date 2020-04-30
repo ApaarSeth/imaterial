@@ -76,3 +76,15 @@
     border-radius: 18px 18px 0px 0px !important;
   }
 }
+
+.limitcharacter-myMaterialName {
+  display: inline-block;
+  width: 187px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+div.limited-character.po-p-m {
+  width: 187px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
