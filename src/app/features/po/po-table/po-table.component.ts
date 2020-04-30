@@ -70,7 +70,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
           gstTotal: [],
           total: [{ value: "", disabled: false }]
         });
-        this.gst = purchaseorder.materialIgst > 0 ? 'IGST' : 'CGST & SGST'
+        this.gst = ((purchaseorder.materialCgst > 0) && (purchaseorder.materialSgst > 0)) ? 'CGST & SGST' : 'IGST';
         this.subscriptions.push(
           frmGrp.valueChanges.pipe(debounceTime(200)).subscribe(formVal => {
             updateTableValue(formVal);
