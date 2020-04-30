@@ -33,7 +33,7 @@
                     <div class="col-xs-3 text-left">
                       <span class="p-l-25 p-t-10">{{ subcategory.materialName }}</span>
                     </div>
-                    <div class="col-xs-3 p-t-10">
+                    <div class="col-xs-3 p-t-10 text-center">
                       <span class="text-semi-bold" *ngFor="let trades of subcategory.tradeList; let i = index">
                         <span class="p-r-5">{{ trades }}<span *ngIf="subcategory.tradeList.length > 1 && i !== subcategory.tradeList.length - 1">,</span> </span>
                       </span>
