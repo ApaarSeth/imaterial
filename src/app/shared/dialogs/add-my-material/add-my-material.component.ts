@@ -39,7 +39,7 @@ export class AddMyMaterialComponent implements OnInit {
   check: boolean;
   materialUnit: string[]
   tradesList: orgTrades[] = [];
-  filteredOption: [tradeRelatedCategory[]] = [null];
+  filteredOption: tradeRelatedCategory[] = [];
   // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
 
 
@@ -212,8 +212,8 @@ export class AddMyMaterialComponent implements OnInit {
     this.bomService.getMaterialExist(checkData).then(res => {
       if (res.data) {
         let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some(val => {
-          return val.materialName === currentMaterialName
+        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some((val, i) => {
+          return (i !== this.currentIndex && val.materialName === currentMaterialName)
         }))
         if (!alreadyPresent) {
           (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
@@ -296,9 +296,8 @@ export class AddMyMaterialComponent implements OnInit {
     this.bomService.getMaterialExist(checkData).then(res => {
       if (res.data) {
         let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-
-        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some(val => {
-          return val.materialName === currentMaterialName
+        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some((val, i) => {
+          return (i !== this.currentIndex && val.materialName === currentMaterialName)
         }))
         if (!alreadyPresent) {
           let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
