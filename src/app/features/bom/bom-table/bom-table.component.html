@@ -166,12 +166,18 @@ dd
               <mat-icon>edit</mat-icon>
             </a> -->
             <span *ngIf="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false" class="p-r-20 p-t-10 display-inline-block color-grey">Pending</span>
-            <a
+            <!-- <a
               (click)="(element.materialCustomFlag === 1 ? element.isApproved !== 1 : false) ? null : issueToIndent(element.materialId, projectId)"
               class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"
               matTooltip="Issue to Indent"
-            >
+            > -->
+            <a
+            class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"
+            matTooltip="Issue to Indent"
+          >
               <img
+              (click)="(permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)) ? null : issueToIndent(element.materialId, projectId)"
+
                 [src]="
                   permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)
                     ? '../../../../assets/images/issue_to_indent_disabled.png'
