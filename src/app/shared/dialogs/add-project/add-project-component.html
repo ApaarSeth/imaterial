@@ -110,7 +110,7 @@
             <mat-form-field class="border-input">
               <mat-label>Project Start Date*</mat-label>
               <!-- <span class="form-placeholder">{{form["controls"]["startDate"].value | date: "dd-MMM-yyy" }}</span> -->
-              <input matInput [matDatepicker]="startDate" [max]="minDate" formControlName="startDate" #ref (dateChange)="getStart(ref.value)" (click)="startDate.open()" readonly />
+              <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref (dateChange)="getStart(ref.value)" (click)="startDate.open()" readonly />
 
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
