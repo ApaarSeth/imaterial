@@ -1,9 +1,19 @@
 # ============================================================================= 
-#
+# Build image
+# ============================================================================= 
+
+FROM node:13.13.0-alpine as build
+WORKDIR /opt/node/
+COPY . /opt/node/
+RUN npm install
+RUN npm install -g @angular/cli@8.3.21
+RUN npm run build
+
+# ============================================================================= 
+# Deploy image
 # ============================================================================= 
 
 FROM nginx:alpine
- 
 MAINTAINER Keshav <keshavt@umbrellainfocare.com> 
 
 # ----------------------------------------------------------------------------- 
@@ -20,7 +30,7 @@ RUN adduser -D -g 'alpine' alpine
 # Copy content 
 # ----------------------------------------------------------------------------- 
 
-COPY dist/imaterial/ /usr/share/nginx/html/
+COPY --from=build /opt/node/dist/imaterial/ /usr/share/nginx/html/
 COPY buildScripts/nginx.conf /etc/nginx/conf.d/default.conf
 
 # ----------------------------------------------------------------------------- 
