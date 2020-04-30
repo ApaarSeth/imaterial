@@ -66,13 +66,19 @@
             </div>
             <div class="col-xs-3 text-center">
               <span *ngIf="data.type !== 'edit'; else elseBlock">
-                <mat-form-field class="border-input width-90">
-                  <input type="text" placeholder="Category" matInput formControlName="category" [matAutocomplete]="auto" />
-                  <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
-                    <mat-option matTooltip=" {{ option.categoriesName }}" *ngFor="let option of this.filterOptions | async" [value]="option">
+                <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
+                  <mat-label>Category*</mat-label>
+                  <mat-select formControlName="category">
+                    <div class="display-flex">
+                      <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Category" [(ngModel)]="searchCategory" [ngModelOptions]="{standalone: true}" />
+                      <button mat-button matSuffix mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                      </button>
+                    </div>
+                    <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:'categoriesName'" [value]="option" matTooltip=" {{ option.categoriesName }}">
                       {{ option.categoriesName }}
                     </mat-option>
-                  </mat-autocomplete>
+                  </mat-select>
                 </mat-form-field>
               </span>
               <ng-template #elseBlock>
