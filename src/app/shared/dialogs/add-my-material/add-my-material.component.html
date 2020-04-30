@@ -19,7 +19,7 @@
           <div class="row p-t-10" [formGroupName]="i">
             <div class="col-xs-3 p-r-0">
               <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 3px;">
-                <mat-label>*Material Name</mat-label>
+                <mat-label>Material Name*</mat-label>
                 <textarea maxlength="300" matInput formControlName="materialName" class="text-area-border"></textarea>
                 <small *ngIf="addMyMaterial['controls']['myMaterial']['controls'][i]['controls']['materialName'].errors?.maxlength" class="signupForm-error-msg"
                   >maximun characters allowed is 300</small
@@ -32,7 +32,7 @@
             </div>
             <div class="col-xs-2 text-right p-l-0 p-r-0">
               <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                <mat-select placeholder="*Unit" formControlName="materialUnit">
+                <mat-select placeholder="Unit*" formControlName="materialUnit">
                   <mat-option *ngFor="let unit of materialUnit" [value]="unit">
                     <span>
                       {{ unit }}
@@ -43,7 +43,7 @@
             </div>
             <div class="col-xs-3 p-l-20 p-r-0">
               <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                <mat-label>Trade</mat-label>
+                <mat-label>Trade*</mat-label>
                 <mat-select formControlName="trade">
                   <mat-option *ngFor="let trade of tradesList" [value]="trade">
                     {{ trade.tradeName }}
@@ -53,7 +53,7 @@
             </div>
             <div class="col-xs-3 p-r-0">
               <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                <mat-label>*Category</mat-label>
+                <mat-label>Category*</mat-label>
                 <mat-select formControlName="category">
                   <div class="display-flex">
                     <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Category" [(ngModel)]="searchCategory" [ngModelOptions]="{standalone: true}" />
@@ -61,7 +61,7 @@
                       <mat-icon>search</mat-icon>
                     </button>
                   </div>
-                  <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:'categoriesName'" [value]="option">
+                  <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:'categoriesName'" matToolTip="{{option.categoriesName}" [value]="option">
                     {{ option.categoriesName }}
                   </mat-option>
                 </mat-select>

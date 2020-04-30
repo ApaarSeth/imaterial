@@ -58,10 +58,10 @@ export class AddMyMaterialBomComponent implements OnInit {
 
     this.creatorId = Number(localStorage.getItem("userId"));
     this.getUserData(this.creatorId);
+    this.getCategories();
     this.getUserRoles();
     this.getMaterialUnit();
     this.getTrades();
-    this.getCategories();
     this.formInit();
   }
 
@@ -226,7 +226,6 @@ export class AddMyMaterialBomComponent implements OnInit {
         }))
         if (!alreadyPresent) {
           (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-          this.filteredOption[this.currentIndex] = null
         }
         else {
           this._snackBar.open("Set New Material Name", "", {
@@ -249,7 +248,6 @@ export class AddMyMaterialBomComponent implements OnInit {
   }
   onDelete(index) {
     (<FormArray>this.addMyMaterial.get('myMaterial')).removeAt(index);
-    this.filteredOption.splice(index, 1);
   }
 
   displayFn(option: tradeRelatedCategory) {
