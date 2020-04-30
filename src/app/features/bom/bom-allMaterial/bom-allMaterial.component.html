@@ -30,8 +30,8 @@
               <ng-container formArrayName="materialGroup">
                 <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index" [formGroupName]="sc">
                   <div class="row p-t-10" *ngIf="!subcategory.isNull">
-                    <div class="col-xs-3">
-                      <span class="pull-left p-l-40 p-t-10">{{ subcategory.materialName }}</span>
+                    <div class="col-xs-3 text-left">
+                      <span class="p-l-25 p-t-10">{{ subcategory.materialName }}</span>
                     </div>
                     <div class="col-xs-3 p-t-10">
                       <span class="text-semi-bold" *ngFor="let trades of subcategory.tradeList; let i = index">
