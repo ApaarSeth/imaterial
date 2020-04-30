@@ -44,10 +44,15 @@ export class ProjectItemComponent implements OnInit {
   @Output("onDelete") onDelete = new EventEmitter<number>();
   @Input("projectDetails") projectDetails: ProjectDetails;
   @Input("disableEditDelete") disableEditDelete: boolean;
+  // tslint:disable-next-line: no-output-rename
+  @Output('startDate') startDate = new EventEmitter<Date>();
 
   ngOnInit(): void {
     const role = localStorage.getItem("role")
     this.permissionObj = this.permissionService.checkPermission(role);
+    if ( this.projectDetails.startDate ) {
+      this.startDate.emit(this.projectDetails.startDate);
+    }
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.url = this.router.url;
