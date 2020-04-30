@@ -10,8 +10,10 @@
 }
 
 .indent-table {
-  .mat-column-materialName {
+  .mat-column-Material-Name {
     width: 10% !important;
     max-width: 264px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
