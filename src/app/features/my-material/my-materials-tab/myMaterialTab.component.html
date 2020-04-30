@@ -18,7 +18,7 @@
         <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index">
           <div class="row" *ngIf="!subcategory.isNull">
             <div class="col-xs-3 text-left p-t-10">
-              <span class="limitcharacter-myMaterialName p-l-40">{{ subcategory.materialName }}</span>
+              <span class="limitcharacter-myMaterialName p-l-40" matTooltip="{{ subcategory.materialName }}">{{ subcategory.materialName }}</span>
             </div>
             <div class="col-xs-3 p-t-10">
               <span class="text-semi-bold">
