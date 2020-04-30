@@ -19,7 +19,6 @@ import {
   FormControl
 } from "@angular/forms";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { eventNames } from "cluster";
 
 export interface PeriodicElement {
   materialName: string;
