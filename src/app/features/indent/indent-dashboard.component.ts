@@ -19,6 +19,7 @@ import {
   FormControl
 } from "@angular/forms";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { eventNames } from "cluster";
 
 export interface PeriodicElement {
   materialName: string;
@@ -53,6 +54,7 @@ export class IndentDashboardComponent implements OnInit {
 
   materialForms: FormGroup;
   orgId: Number;
+  startDateOfProject: Date;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -193,5 +195,8 @@ export class IndentDashboardComponent implements OnInit {
   }
   getStart(date, i) {
     this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
+  }
+  startDate(event){
+    this.startDateOfProject = event;
   }
 }
