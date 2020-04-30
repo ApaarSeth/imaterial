@@ -38,6 +38,7 @@ import { AuthModule } from './features/auth/auth.module';
 import { PICK_FORMATS, PickDateAdapter } from './shared/services/date.service';
 import { TwoDigitDecimaNumberDirective } from './shared/directives/appTwoDigit';
 import { OnlyNumberDirective } from './shared/directives/number-only2.directive';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +84,7 @@ import { OnlyNumberDirective } from './shared/directives/number-only2.directive'
     UserDataGuardService,
     AfterSignUpGuardService,
     GuidedTourService,
-      { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: PickDateAdapter },

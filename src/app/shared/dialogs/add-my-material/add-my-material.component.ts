@@ -65,7 +65,8 @@ export class AddMyMaterialComponent implements OnInit {
 
   getCategories() {
     this.bomService.getAllCategories().then(res => {
-      this.filteredOption = res.data
+      this.filteredOption = res.data;
+      this.filteredOption.push({ categoriesCode: null, categoriesName: 'Others' })
     })
   }
 

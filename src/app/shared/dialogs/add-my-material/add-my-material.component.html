@@ -61,7 +61,7 @@
                       <mat-icon>search</mat-icon>
                     </button>
                   </div>
-                  <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:'categoriesName'" matToolTip="{{option.categoriesName}" [value]="option">
+                  <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:'categoriesName'" [value]="option" matTooltip="{{ option.categoriesName }}">
                     {{ option.categoriesName }}
                   </mat-option>
                 </mat-select>

@@ -26,7 +26,7 @@ export interface City {
 })
 
 export class EditMyMaterialComponent implements OnInit {
-
+  searchCategory: string = "";
   roles: UserRoles;
   addMyMaterial: FormGroup;
   users: UserDetails;
@@ -42,7 +42,7 @@ export class EditMyMaterialComponent implements OnInit {
   materialUnit: string[];
   tradesList: { tradeName: string, tradeId: number }[] = [];
   filteredOption: [tradeRelatedCategory[]] = [null];
-  filterOptions: Observable<tradeRelatedCategory[] | [string]>;
+  // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
   addOtherFormGroup: FormGroup;
   editMaterialForm: FormGroup;
 
@@ -116,46 +116,46 @@ export class EditMyMaterialComponent implements OnInit {
     });
     this.editMaterialForm = this._formBuilder.group({});
     this.editMaterialForm.addControl('forms', new FormArray(addOtherFormGroup));
-    (<FormArray>this.editMaterialForm.get('forms')).controls.map((control: FormGroup, i) => {
-      control.controls['trade'].valueChanges.subscribe(changes => {
-        if (changes) {
-          this.bomService.getTradeCategory(changes.tradeName).then(res => {
-            // control.controls['category'].reset();
-            this.filteredOption[i] = [...res.data];
-            this.filterOptions = new Observable((observer) => {
-              const val: tradeRelatedCategory[] | [string] = this._filter('', i);
-              // observable execution
-              observer.next(val);
-              observer.complete();
-            });
-          });
-        }
-      })
-      control.controls['category'].valueChanges.subscribe(changes => {
-        this.filterOptions = null;
-        this.filterOptions = new Observable((observer) => {
-          const val: tradeRelatedCategory[] | [string] = this._filter(changes, i);
-          observer.next(val);
-          observer.complete();
-        });
-      })
-    })
-    console.log(this.editMaterialForm)
+    // (<FormArray>this.editMaterialForm.get('forms')).controls.map((control: FormGroup, i) => {
+    //   control.controls['trade'].valueChanges.subscribe(changes => {
+    //     if (changes) {
+    //       this.bomService.getTradeCategory(changes.tradeName).then(res => {
+    //         // control.controls['category'].reset();
+    //         this.filteredOption[i] = [...res.data];
+    //         this.filterOptions = new Observable((observer) => {
+    //           const val: tradeRelatedCategory[] | [string] = this._filter('', i);
+    //           // observable execution
+    //           observer.next(val);
+    //           observer.complete();
+    //         });
+    //       });
+    //     }
+    //   })
+    //   control.controls['category'].valueChanges.subscribe(changes => {
+    //     this.filterOptions = null;
+    //     this.filterOptions = new Observable((observer) => {
+    //       const val: tradeRelatedCategory[] | [string] = this._filter(changes, i);
+    //       observer.next(val);
+    //       observer.complete();
+    //     });
+    //   })
+    // })
+    // console.log(this.editMaterialForm)
   }
 
-  private _filter(value: string | tradeRelatedCategory, index) {
-    if (value || value === "") {
-      const filterValue = typeof (value) === "string" ? value.toLowerCase() : value.categoriesName.toLowerCase();
-      if (filterValue === '') {
-        return this.filteredOption[index];
-      }
-      let filteredValue: tradeRelatedCategory[] | [string] = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.categoriesName.toLowerCase().includes(filterValue));
-      if (!filteredValue.length) {
-        filteredValue = [{ categoriesName: filterValue + " (new value)", categoriesCode: null }];
-      }
-      return filteredValue;
-    }
-  }
+  // private _filter(value: string | tradeRelatedCategory, index) {
+  //   if (value || value === "") {
+  //     const filterValue = typeof (value) === "string" ? value.toLowerCase() : value.categoriesName.toLowerCase();
+  //     if (filterValue === '') {
+  //       return this.filteredOption[index];
+  //     }
+  //     let filteredValue: tradeRelatedCategory[] | [string] = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.categoriesName.toLowerCase().includes(filterValue));
+  //     if (!filteredValue.length) {
+  //       filteredValue = [{ categoriesName: filterValue + " (new value)", categoriesCode: null }];
+  //     }
+  //     return filteredValue;
+  //   }
+  // }
 
   get currentData() {
     let currentIndex = this.addMyMaterial.get('myMaterial')['controls'].length - 1;
