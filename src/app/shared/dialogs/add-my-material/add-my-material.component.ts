@@ -217,7 +217,6 @@ export class AddMyMaterialComponent implements OnInit {
         }))
         if (!alreadyPresent) {
           (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-          this.filteredOption[this.currentIndex] = null
         }
         else {
           this._snackBar.open("Set New Material Name", "", {
@@ -240,7 +239,6 @@ export class AddMyMaterialComponent implements OnInit {
   }
   onDelete(index) {
     (<FormArray>this.addMyMaterial.get('myMaterial')).removeAt(index);
-    this.filteredOption.splice(index, 1);
   }
 
   displayFn(option: tradeRelatedCategory) {
