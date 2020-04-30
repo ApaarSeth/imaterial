@@ -10,7 +10,7 @@ import {
   Validators,
   FormControl
 } from "@angular/forms";
-
+import { AppNavigationService } from '../../services/navigation.service';
 @Component({
   selector: "issue-to-indent",
   templateUrl: "./issue-to-indent-dialog.html",
@@ -29,7 +29,8 @@ export class IssueToIndentDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<IssueToIndentDialogComponent>, private activatedRoute: ActivatedRoute,
     private bomService: BomService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private navService: AppNavigationService,
   ) { }
 
   ngOnInit() {
@@ -86,6 +87,14 @@ export class IssueToIndentDialogComponent implements OnInit {
       }
     });
     this.bomService.postIssueToIndent(this.data.materialId, formValues).then(res => {
+      if ( res.status == 1 ){
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'issue_to_indent',
+          label: null,
+          value: null
+        });
+      }
       return res.data;
     });
 

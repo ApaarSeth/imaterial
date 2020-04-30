@@ -7,6 +7,7 @@ import { HeaderConstants, ConfigurationConstants } from '../../constants/configu
 import { FacebookPixelService } from '../../services/fb-pixel.service';
 import { IfStmt } from '@angular/compiler';
 import { MatSidenav } from '@angular/material';
+import { AppNavigationService } from '../../services/navigation.service';
 @Component({
   selector: "app-header",
   templateUrl: "./header.html"
@@ -27,7 +28,8 @@ export class HeaderLayoutComponent implements OnInit {
   constructor(
     private permissionService: PermissionService,
     private router: Router,
-    private fbPixel: FacebookPixelService
+    private fbPixel: FacebookPixelService,
+    private navService: AppNavigationService
   ) { }
 
   ngOnInit() {
@@ -71,7 +73,15 @@ export class HeaderLayoutComponent implements OnInit {
       this.buttonName = 'Project Store'
     }
     else if (url.includes('globalStore')) {
-      this.buttonName = 'Global Store'
+
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'global_store',
+          label: null,
+          value: null
+        });
+
+        this.buttonName = 'Global Store';
     }
     else if (url.includes('rfq')) {
       this.buttonName = 'Request For Quotation'
