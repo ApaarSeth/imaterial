@@ -1,9 +1,19 @@
 .completed-indent-tbl,
-.ongoing-indent-tbl{
-    .mat-header-cell, .mat-cell{
-        font-size: 14px;
-        &:not(:first-child){
-            text-align: center;
-        }
+.ongoing-indent-tbl {
+  .mat-header-cell,
+  .mat-cell {
+    font-size: 14px;
+    &:not(:first-child) {
+      text-align: center;
     }
+  }
+}
+
+.indent-table {
+  .mat-column-Material-Name {
+    width: 10% !important;
+    max-width: 264px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
