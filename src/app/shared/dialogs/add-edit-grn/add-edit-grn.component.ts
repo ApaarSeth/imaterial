@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from "@angular/forms";
 import { GRNService } from "../../services/grn/grn.service";
 import { GRNDetails, GRNPopupData } from "../../models/grn";
+import { AppNavigationService } from '../../services/navigation.service';
 
 export interface City {
   value: string;
@@ -37,6 +38,7 @@ export class AddEditGrnComponent implements OnInit {
 
   constructor(
     private grnService: GRNService,
+    private navService: AppNavigationService,
     private dialogRef: MatDialogRef<AddEditGrnComponent>,
     @Inject(MAT_DIALOG_DATA) public data: GRNPopupData,
     private formBuilder: FormBuilder,
@@ -89,11 +91,22 @@ export class AddEditGrnComponent implements OnInit {
 
   postGRNDetails(grnDetailsObj: GRNDetails[]) {
     this.grnService.addGRN(grnDetailsObj).then(data => {
-      this._snackBar.open(data.message, "", {
-        duration: 2000, panelClass: ["success-snackbar"],
-        verticalPosition: "bottom"
-      });
-      this.dialogRef.close(data);
+
+        this._snackBar.open(data.message, "", {
+          duration: 2000, panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+        this.dialogRef.close(data);
+
+        if ( data.status == 1 ){
+          this.navService.gaEvent({
+            action: 'submit',
+            category: 'add_grn',
+            label: null,
+            value: null
+          });
+        }
+
     });
   }
 
