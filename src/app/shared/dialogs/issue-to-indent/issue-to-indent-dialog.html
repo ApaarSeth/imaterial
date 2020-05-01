@@ -5,10 +5,8 @@
         Issue to Indent
       </div>
 
-      <div class="col-xs-5 mid-head-top">
-        <span>
-          {{issueToIndentDetails.materialName}}
-        </span>
+      <div class="col-xs-5 mid-head-top limited-character universal" matTooltip="{{issueToIndentDetails.materialName}}">
+        {{issueToIndentDetails.materialName}}
       </div>
       <div class="col-xs-4 mid-head-top">
         <span>
@@ -91,17 +89,9 @@
                 </div>
               </div>
             </div>
-            <div class=" col-xs-3 formGroup">
+            <div class="col-xs-3 formGroup">
               <mat-form-field class="col-xs-12 border-input" [formGroupName]="i">
-                <input
-                  formControlName="issuedQty"
-                  (input)="showQuantityInput()"
-                  matInput
-                  type="text"
-                  min="0"
-                  appTwoDigitDecimaNumber
-                  placeholder="Issue Quantity"
-                />
+                <input formControlName="issuedQty" (input)="showQuantityInput()" matInput type="text" min="0" appTwoDigitDecimaNumber placeholder="Issue Quantity" />
                 <!-- <mat-error *ngIf="materialForms.controls.forms.controls[i].controls['issuedQty'].hasError('max') &&  materialForms.controls.forms.controls[i].controls['issuedQty'].touched"
                 class="error-msg p-t-5"> Quantity should be less than available stocks. </mat-error> -->
               </mat-form-field>
