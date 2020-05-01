@@ -12,8 +12,12 @@ else
 fi
 echo $TAG
 
-ls helm/imaterial-web/
+rm -rf /home/jenkins/helm/
+
+#clone helm charts from repo
+git clone git@code.buildsupply.com:devops/helm.git /home/jenkins/helm/
+ls /home/jenkins/helm/dev/imaterial-web/
 #updating kubeconfig
 kubectl config use-context arn:aws:eks:ap-south-1:317596419736:cluster/dev-ecom-im-cluster
 #deploy on kubernetes using helm
-#helm upgrade imaterial-web helm/imaterial-web/ --set=deployment.image.tag=$TAG -n dev
+#helm upgrade imaterial-web /home/jenkins/helm/dev/imaterial-web/ --set=deployment.image.tag=$TAG -n dev
