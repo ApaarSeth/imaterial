@@ -1,7 +1,7 @@
-<div class="row ">
+<div class="row">
   <div class="col-xs-6 p-t-10">
-    <mat-form-field class="input-search-padding-zero  border-input ">
-      <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+    <mat-form-field class="input-search-padding-zero border-input">
+      <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()" />
       <button mat-button matSuffix mat-icon-button>
         <mat-icon>search</mat-icon>
       </button>
@@ -9,7 +9,7 @@
   </div>
   <div class="col-xs-6 text-right">
     <span class="p-r-5">
-      <span class=" m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer add-supplier-btn" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
+      <span class="m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer add-supplier-btn" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
         <span class="font-size20">
           +
         </span>

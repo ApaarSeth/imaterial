@@ -108,6 +108,12 @@ export class AddMyMaterialComponent implements OnInit {
     (<FormArray>this.addMyMaterial.get("myMaterial")).push(this.addOtherFormGroup());
   }
 
+
+
+  onKey(value) {
+    this.searchCategory = value;
+  }
+
   addOtherFormGroup(): FormGroup {
     const formGrp = this._formBuilder.group({
       materialName: ['', [Validators.required, Validators.maxLength(300)]],
