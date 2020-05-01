@@ -73,9 +73,9 @@
                     <input
                       class="p-l-10 p-b-5"
                       matInput
-                      type="text"
+                      type="search"
                       placeholder="Search Category"
-                      [ngModel]="searchCategory"
+                      [(ngModel)]="searchCategory"
                       [ngModelOptions]="{standalone: true}"
                       (keydown)="$event.stopPropagation()"
                     />
