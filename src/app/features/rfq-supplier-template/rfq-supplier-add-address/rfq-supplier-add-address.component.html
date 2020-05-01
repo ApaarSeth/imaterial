@@ -79,12 +79,12 @@
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Address Line1" formControlName="addressLine1" required />
+                  <input matInput type="text" placeholder="Address Line1" #FormaddressLine1 formControlName="addressLine1" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine1 is Required</mat-error> -->
                   <small
                     *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched"
                     class="form-error-msg"> Address Line1 is required </small>
-                     <small *ngIf="form.controls['addressLine1'].value.length > 120 && form.controls['addressLine1'].touched"
+                     <small *ngIf="FormaddressLine1.value.length > 120 && form.controls['addressLine1'].touched"
                     class="form-error-msg">
                      Address should be less than 120 characters
                       </small>
@@ -94,7 +94,7 @@
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Address Line2" formControlName="addressLine2" />
+                  <input matInput type="text" placeholder="Address Line2" #FormaddressLine2 formControlName="addressLine2" />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine2 is Required</mat-error> -->
                   <!-- <small
                     *ngIf="form.controls['addressLine2'].hasError('required') && form.controls['addressLine2'].touched"
@@ -102,7 +102,7 @@
                   <small
                     *ngIf="form.controls['addressLine2'].hasError('pattern') && form.controls['addressLine2'].touched"
                     class="form-error-msg"> Enter Valid Address Line 2</small>
-                     <small *ngIf="form.controls['addressLine2'].value.length > 120  && form.controls['addressLine2'].touched"
+                     <small *ngIf="FormaddressLine2.value.length > 120  && form.controls['addressLine2'].touched"
                     class="form-error-msg">
                       Address should be less than 120 characters
                       </small>
