@@ -138,7 +138,7 @@
                 </ng-template>
               </span>
               <span class="mat-cell">
-                <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total }} </ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total | number: "1.2-2" }} </ng-container>
                 <ng-template #editTotal>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["total"].value | number: "1.2-2" }}
                 </ng-template>
