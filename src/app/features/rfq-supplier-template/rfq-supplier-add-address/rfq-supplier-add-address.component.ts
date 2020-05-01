@@ -166,7 +166,7 @@ console.log(this.form);
 getCityAndState(pincode){
    this.validPincode = false;
   this.projectService.getPincode(pincode).then(res =>{
-           if(res.data && res.data[0].districtName && res.data[0].stateName){
+           if(res.data && res.data.length > 0){
              this.city = res.data[0].districtName;
              this.state = res.data[0].stateName;
            if(this.city && this.state)
@@ -225,6 +225,7 @@ getCityAndState(pincode){
     }
   
   }
+ 
   reset(){
     this.disabledAddress = false;
      this.initForm();
