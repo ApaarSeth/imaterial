@@ -12,7 +12,15 @@
       <mat-form-field class="border-select select-project">
         <mat-select formControlName="selectedProject" placeholder="Search project Name" (selectionChange)="choosenProject($event)">
           <div class="display-flex">
-            <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+            <input
+              class="p-l-10 p-b-5"
+              matInput
+              type="search"
+              placeholder="Search project Name"
+              [(ngModel)]="searchText"
+              [ngModelOptions]="{standalone: true}"
+              (keydown)="$event.stopPropagation()"
+            />
             <button mat-button matSuffix mat-icon-button>
               <mat-icon>search</mat-icon>
             </button>
