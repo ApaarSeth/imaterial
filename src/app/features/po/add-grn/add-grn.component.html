@@ -35,8 +35,8 @@
             <table mat-table [dataSource]="dataSource" class="col-sm-12">
               <ng-container matColumnDef="Material Name">
                 <th mat-header-cell *matHeaderCellDef>Material Name</th>
-                <td mat-cell *matCellDef="let element">
-                  <div class="limited-character universal">
+                <td mat-cell *matCellDef="let element" matTooltip="{{ element.materialName }}">
+                  <div class="limited-character global">
                     {{ element.materialName }}
                   </div>
                 </td>
