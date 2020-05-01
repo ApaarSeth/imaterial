@@ -18,7 +18,15 @@
                 <mat-label *ngIf="!formArray.length">Select Trades</mat-label>
                 <mat-select formControlName="selectedTrades" multiple>
                   <div class="display-flex">
-                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Trade" [(ngModel)]="searchTrade" [ngModelOptions]="{standalone: true}" />
+                    <input
+                      class="p-l-10 p-b-5"
+                      matInput
+                      type="search"
+                      placeholder="Search Trade"
+                      [(ngModel)]="searchTrade"
+                      [ngModelOptions]="{standalone: true}"
+                      (keydown)="$event.stopPropagation()"
+                    />
                     <button mat-button matSuffix mat-icon-button>
                       <mat-icon>search</mat-icon>
                     </button>
