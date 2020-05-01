@@ -47,28 +47,28 @@ export class AppDashboardComponent implements OnInit {
       this.orgId = Number(localStorage.getItem("orgId"));
     }
     this.userId = Number(localStorage.getItem("userId"));
-     
+
     this.getDashboardInfo('po');
     this.getDashboardInfo('rfq');
     this.getDashboardInfo('indent');
 
     window.dispatchEvent(new Event('resize'));
-  if(!localStorage.getItem('ReleaseNotes') || (localStorage.getItem('ReleaseNotes') != '1')){
-    localStorage.setItem('ReleaseNotes','0');
-  }
+    if (!localStorage.getItem('ReleaseNotes') || (localStorage.getItem('ReleaseNotes') != '1')) {
+      localStorage.setItem('ReleaseNotes', '0');
+    }
 
-  if(localStorage.getItem('ReleaseNotes') == '0') {
-   this.userguideservice.userGetReleaseNote().then(res => {
-      if(res.status == 1){
-        this.openReleaseNote(res.data.releasText,res.data.releaseNoteId);
-      }
-        if(res.status == 0){
-        localStorage.setItem('ReleaseNotes','1');
+    if (localStorage.getItem('ReleaseNotes') == '0') {
+      this.userguideservice.userGetReleaseNote().then(res => {
+        if (res.status == 1) {
+          this.openReleaseNote(res.data.releasText, res.data.releaseNoteId);
         }
-    });
- }
-    
-    
+        if (res.status == 0) {
+          localStorage.setItem('ReleaseNotes', '1');
+        }
+      });
+    }
+
+
     this.userguideservice.getUserGuideFlag().then(res => {
       this.userGuidedata = res.data;
       this.userGuidedata.forEach(element => {
@@ -100,24 +100,24 @@ export class AppDashboardComponent implements OnInit {
     });
   }
 
- openReleaseNote(data,releaseNoteId) {
- 
-    const dialogRef = this.dialog.open(ReleaseNoteComponent,  { disableClose: true ,
-     width: "500px", data
-});
+  openReleaseNote(data, releaseNoteId) {
+
+    const dialogRef = this.dialog.open(ReleaseNoteComponent, {
+      disableClose: true,
+      width: "500px", data
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != null && result == 'closed')
-         {
-           // post api hit user/add/releaseNote
-           const obj = {
-             "releaseNoteId" : releaseNoteId
-           }
-           this.userguideservice.sendReleaseNoteData(obj).then(res => {
-             console.log(result + " " +releaseNoteId);
-              localStorage.setItem('ReleaseNotes','1') ;
-           })
-         }
+      if (result != null && result == 'closed') {
+        // post api hit user/add/releaseNote
+        const obj = {
+          "releaseNoteId": releaseNoteId
+        }
+        this.userguideservice.sendReleaseNoteData(obj).then(res => {
+          console.log(result + " " + releaseNoteId);
+          localStorage.setItem('ReleaseNotes', '1');
+        })
+      }
     });
   }
   getDashboardInfo(label) {
@@ -196,15 +196,15 @@ export class AppDashboardComponent implements OnInit {
   //    this.tab2 = "Request for Quotations";
   //  }
   // }
- 
+
   @HostListener('window:resize', ['$event'])
-      sizeChange(event) {
-       if(event.currentTarget.innerWidth <= 494){
-          this.tab1 = "P.O.";
-          this.tab2 = "RFQ";
-        }else{
-          this.tab1 = "Purchase Orders";
-          this.tab2 = "Request for Quotations";
-        }
+  sizeChange(event) {
+    if (event.currentTarget.innerWidth <= 494) {
+      this.tab1 = "P.O.";
+      this.tab2 = "RFQ";
+    } else {
+      this.tab1 = "Purchase Orders";
+      this.tab2 = "Request for Quotations";
     }
+  }
 }

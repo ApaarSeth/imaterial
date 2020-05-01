@@ -1,5 +1,5 @@
 <section class="select-project">
-  <ng-container *ngIf="data && (data.length > 0); else noProjects">
+  <ng-container *ngIf="data && data.length > 0; else noProjects">
     <div class="select-project__title d-flex justify-content-between align-items-center">
       <h1 mat-dialog-title class="mb-0">Project List</h1>
       <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
