@@ -4,7 +4,7 @@ import { HeaderConstants } from '../../constants/configuration-constants';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
- 
+import { AppNavigationService } from '../../services/navigation.service';
 @Component({
   selector: 'app-sidenav-list',
   templateUrl: './sidenav-list.html',
@@ -23,7 +23,11 @@ export class SidenavListComponent implements OnInit {
   subsriptions: Subscription[] = [];
   buttonName: string ;
  
-  constructor( private permissionService: PermissionService, private router: Router) { }
+  constructor( 
+    private permissionService: PermissionService,
+    private navService: AppNavigationService,
+    private router: Router
+    ){ }
  
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -54,6 +58,13 @@ export class SidenavListComponent implements OnInit {
       this.buttonName = 'Project Store';
     }
     else if (url.includes('globalStore')) {
+      this.navService.gaEvent({
+        action: 'submit',
+        category: 'global_store',
+        label: null,
+        value: null
+      });
+
       this.buttonName = 'Global Store';
     }
     else if (url.includes('rfq')) {

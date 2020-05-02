@@ -75,7 +75,7 @@
         *ngIf="mode === 'view' || mode === 'requiredApproval'"
       >
         <div class="word-wrap" *ngIf="this.terms && terms.termsDesc !== '' ? true : false" [innerHTML]="terms.termsDesc"></div>
-        <div class="center-element" *ngIf="this.terms && terms.termsDesc !== '' ? true : false">No Term To View</div>
+        <div class="center-element" *ngIf="this.terms && terms.termsDesc !== '' ? false : true">No Term To View</div>
       </div>
     </div>
   </div>

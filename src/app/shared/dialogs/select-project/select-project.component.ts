@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
-import { ProjetPopupData } from "../../models/project-details";
+import { ProjetPopupData, ProjectDetails } from "../../models/project-details";
 import { Router } from '@angular/router';
 import { UserService } from '../../services/userDashboard/user.service';
 import { ProjectService } from '../../services/projectDashboard/project.service';
@@ -18,7 +18,7 @@ export class SelectProjectComponent implements OnInit {
 
     constructor(
         private dialogRef: MatDialogRef<SelectProjectComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
+        @Inject(MAT_DIALOG_DATA) public data: ProjectDetails[] | ProjetPopupData[],
         private _router: Router,
         public _dialog: MatDialog,
         private _userService: UserService,
@@ -28,6 +28,7 @@ export class SelectProjectComponent implements OnInit {
     ngOnInit() {
         this.orgId = Number(localStorage.getItem("orgId"));
         this.userId = Number(localStorage.getItem("userId"));
+        // this.data = this.data;
     }
 
     closeDialog(): void {

@@ -56,11 +56,20 @@
                 <mat-label>Category*</mat-label>
                 <mat-select formControlName="category">
                   <div class="display-flex">
-                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Category" [(ngModel)]="searchCategory" [ngModelOptions]="{standalone: true}" />
+                    <input
+                      class="p-l-10 p-b-5"
+                      matInput
+                      type="search"
+                      placeholder="Search Category"
+                      [(ngModel)]="searchCategory"
+                      [ngModelOptions]="{standalone: true}"
+                      (keydown)="$event.stopPropagation()"
+                    />
                     <button mat-button matSuffix mat-icon-button>
                       <mat-icon>search</mat-icon>
                     </button>
                   </div>
+
                   <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:'categoriesName'" [value]="option" matTooltip="{{ option.categoriesName }}">
                     {{ option.categoriesName }}
                   </mat-option>

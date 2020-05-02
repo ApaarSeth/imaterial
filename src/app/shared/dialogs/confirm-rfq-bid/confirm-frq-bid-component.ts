@@ -13,6 +13,7 @@ import { UserService } from '../../services/userDashboard/user.service';
 import { Router } from '@angular/router';
 import { POService } from '../../services/po/po.service';
 import { RFQService } from '../../services/rfq/rfq.service';
+import { AppNavigationService } from '../../services/navigation.service';
 
 export interface City {
   value: string;
@@ -39,6 +40,7 @@ export class ConfirmRfqBidComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private router: Router,
+    private navService: AppNavigationService,
     private _snackBar: MatSnackBar,
     private rfqService: RFQService
   ) {}
@@ -55,6 +57,14 @@ export class ConfirmRfqBidComponent implements OnInit {
     if(this.data.disabledAddress){
      // console.log("chooched");
          this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
+                if ( data.status == 1 ){
+                  this.navService.gaEvent({
+                    action: 'submit',
+                    category: 'submit_bid',
+                    label: null,
+                    value: null
+                  });
+                }
                 this.dialogRef.close(data);
             });
     }
@@ -63,6 +73,16 @@ export class ConfirmRfqBidComponent implements OnInit {
       this.poService.addAddress(this.data.supplierId, this.data.supplierAddress).then(res => {
           if(res.status != 0){
             this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
+
+              if ( data.status == 1 ){
+                this.navService.gaEvent({
+                  action: 'submit',
+                  category: 'submit_bid',
+                  label: null,
+                  value: null
+                });
+              }
+
                 this.dialogRef.close(data);
             });
           }

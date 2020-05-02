@@ -39,6 +39,7 @@ import { PICK_FORMATS, PickDateAdapter } from './shared/services/date.service';
 import { TwoDigitDecimaNumberDirective } from './shared/directives/appTwoDigit';
 import { OnlyNumberDirective } from './shared/directives/number-only2.directive';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+
 @NgModule({
   declarations: [
     AppComponent,

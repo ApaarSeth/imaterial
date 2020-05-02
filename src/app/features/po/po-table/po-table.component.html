@@ -101,7 +101,7 @@
                 </ng-template>
               </span>
               <span class="mat-cell text-right p-r-20">
-                <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount }} </ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount | number: "1.2-2" }} </ng-container>
                 <ng-template #editAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
                 </ng-template>
@@ -109,10 +109,10 @@
               <span class="mat-cell text-center">
                 <span *ngIf="mode != 'edit'; else editGst">
                   <span *ngIf="purchaseOrder && purchaseOrder.materialCgst == 0 && purchaseOrder.materialSgst === 0">
-                    {{ purchaseOrder.materialIgst }}
+                    {{ purchaseOrder.materialIgst | number: "1.2-2"  }}
                   </span>
                   <span *ngIf="purchaseOrder && purchaseOrder.materialCgst != 0 && purchaseOrder.materialSgst != 0">
-                    {{ purchaseOrder.materialCgst + purchaseOrder.materialSgst }}
+                    {{ purchaseOrder.materialCgst + purchaseOrder.materialSgst | number: "1.2-2"  }}
                   </span>
                 </span>
                 <ng-template #editGst>
@@ -138,7 +138,7 @@
                 </ng-template>
               </span>
               <span class="mat-cell">
-                <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total }} </ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total | number: "1.2-2" }} </ng-container>
                 <ng-template #editTotal>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["total"].value | number: "1.2-2" }}
                 </ng-template>
@@ -235,7 +235,7 @@
               <span class="mat-cell  p-l-15">{{ purchaseOrder.materialBrand }}</span>
               <span class="mat-cell"></span>
               <span class="mat-cell">
-                <ng-container *ngIf="mode != 'edit'; else editRate"> {{ purchaseOrder.materialUnitPrice }}</ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editRate"> {{ purchaseOrder.materialUnitPrice | number: "1.2-2" }}</ng-container>
                 <ng-template #editRate>
                   <mat-form-field class="border-input width78Percent">
                     <input
@@ -253,7 +253,7 @@
                 </ng-template>
               </span>
               <span class="mat-cell  text-center">
-                <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity }}</ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity | number: "1.2-2" }}</ng-container>
                 <ng-template #editQuantity>
                   <mat-form-field class="border-input width50Percent">
                     <input
@@ -270,7 +270,7 @@
                 </ng-template>
               </span>
               <span class="mat-cell text-right p-r-20">
-                <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount }} </ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount | number: "1.2-2" }} </ng-container>
                 <ng-template #editAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
                 </ng-template>
@@ -278,10 +278,10 @@
               <span class="mat-cell text-center">
                 <span *ngIf="mode != 'edit'; else editGst">
                   <span *ngIf="purchaseOrder && purchaseOrder.materialCgst == 0 && purchaseOrder.materialSgst === 0">
-                    {{ purchaseOrder.materialIgst }}
+                    {{ purchaseOrder.materialIgst | number: "1.2-2" }}
                   </span>
                   <span *ngIf="purchaseOrder && purchaseOrder.materialCgst != 0 && purchaseOrder.materialSgst != 0">
-                    {{ purchaseOrder.materialCgst + purchaseOrder.materialSgst }}
+                    {{ purchaseOrder.materialCgst + purchaseOrder.materialSgst | number: "1.2-2" }}
                   </span>
                 </span>
                 <ng-template #editGst>
@@ -307,7 +307,7 @@
                 </ng-template>
               </span>
               <span class="mat-cell">
-                <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total }} </ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total | number: "1.2-2" }} </ng-container>
                 <ng-template #editTotal>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["total"].value | number: "1.2-2" }}
                 </ng-template>

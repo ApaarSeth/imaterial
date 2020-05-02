@@ -176,6 +176,7 @@ export class AppDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getProjectsNumber() ;
       return;
     });
   }
