@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { AddMyMaterialComponent } from 'src/app/shared/dialogs/add-my-material/add-my-material.component';
 import { Subject } from 'rxjs';
 import { CommonService } from '../../shared/services/commonService';
+import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
 
 @Component({
   selector: 'app-my-material',
@@ -21,7 +22,7 @@ export class MyMaterialComponent implements OnInit {
     this.tradeNames = ['civil', 'piping']
   }
   openAddMaterial() {
-    const dialogRef = this.dialog.open(AddMyMaterialComponent, {
+    const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: '720px'
     })
     dialogRef.afterClosed().subscribe(result => {

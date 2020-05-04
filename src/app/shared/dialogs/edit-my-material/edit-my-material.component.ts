@@ -233,26 +233,28 @@ export class EditMyMaterialComponent implements OnInit {
         this.data.type === 'edit' ? this.editMaterial(myMaterial) : this.addMaterial(myMaterial)
       }
       else {
-        this._snackBar.open("Set New Material Name", "", {
-          duration: 4000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
-        (<FormGroup>(<FormArray>this.editMaterialForm.get("forms")).controls[0]).controls['materialName'].reset()
+        this.resetMaterialName("Set New Material Name")
       }
       this.dialogRef.close(null);
     });
+  }
+
+
+  resetMaterialName(message) {
+    this._snackBar.open(message, "", {
+      duration: 4000,
+      panelClass: ["warning-snackbar"],
+      verticalPosition: "bottom"
+    });
+    (<FormGroup>(<FormArray>this.editMaterialForm.get("forms")).controls[0]).controls['materialName'].reset()
+
   }
 
   editMaterial(myMaterial: MyMaterialPost) {
     let updateMaterial = { materialName: myMaterial[0].materialName, materialUnit: myMaterial[0].materialUnit, customMaterialId: myMaterial[0].customMaterialId }
     this.myMaterialService.updateMyMaterial(updateMaterial).then(res => {
       if (res.message = "done") {
-        this._snackBar.open("My Materials Added", "", {
-          duration: 4000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
+        this.resetMaterialName("My Materials Added")
       }
       this.dialogRef.close('done');
     });
@@ -265,11 +267,7 @@ export class EditMyMaterialComponent implements OnInit {
     }
     this.myMaterialService.approveMyMaterial([updateMaterial]).then(res => {
       if (res.message = "done") {
-        this._snackBar.open("Materials Approved", "", {
-          duration: 4000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
+        this.resetMaterialName("Materials Approved")
       }
       this.dialogRef.close('done');
     });

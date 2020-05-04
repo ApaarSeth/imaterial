@@ -63,7 +63,8 @@
       </div>
       <div [ngClass]="showResponsiveDesignDown ? 'col-sm-12 col-md-8 hidePoweredBy froala-design' : 'col-sm-12 col-md-8 hidePoweredBy p-b-0'" *ngIf="mode === 'edit'">
         <form [formGroup]="poTerms">
-          <textarea formControlName="textArea" [innerHTML]="terms && terms.termsDesc" [froalaEditor]="froala" [(froalaModel)]="poTerms['textArea']">Hello, Froala!</textarea>
+          <angular-editor formControlName="textArea" [config]="config"></angular-editor>
+          <!-- <textarea formControlName="textArea" [innerHTML]="terms && terms.termsDesc" [froalaEditor]="froala" [(froalaModel)]="poTerms['textArea']">Hello, Froala!</textarea> -->
         </form>
       </div>
       <div
