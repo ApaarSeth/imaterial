@@ -17,7 +17,7 @@ export class Utils {
     //     // return string;
     // }
 
-    static baseUrl(): string {
+    static baseFallBackUrl(): string {
         return ((window.location.host.split('.').length < 3 && window.location.host.split('.').length !== 1) ?
             (window.location.protocol + '//api.' + window.location.host) : (window.location.host.split('.').length > 1) ?
                 (
@@ -25,6 +25,12 @@ export class Utils {
                     window.location.host.split('.')[window.location.host.split('.').length - 2]
                     + '.' + window.location.host.split('.')[window.location.host.split('.').length - 1]
                 ) : "https:" + '//api.yeho.ga') + '/';
+    }
+
+    static baseUrl(): string {
+
+        return window[ 'env' ][ 'api_url' ] || this.baseFallBackUrl();
+
     }
 
     // static formatCardNumber(type, card) {
