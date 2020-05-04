@@ -17,4 +17,12 @@ export class DocumentUploadService {
         return res;
       });
   }
+
+  POSTSUPPLIERDOCUMENTUPLOAD(data){
+    return this.dataService
+    .sendPostRequest(API.POSTSUPPLIERDOCUMENTUPLOAD, data)
+    .then(res => {
+      return res;
+    });
+  }
 }
