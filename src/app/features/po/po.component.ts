@@ -24,6 +24,7 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gstin-missing.component';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: "app-po",
@@ -40,7 +41,7 @@ export class PoComponent implements OnInit {
     imageBrowse: false,
     apiKey: Froala.key
   }
-
+  jsonDoc = null;
   poData: POData = {} as POData;
   tableData: PoMaterial[] = [];
   cardData: CardData;
@@ -78,7 +79,19 @@ export class PoComponent implements OnInit {
   ValidPOTemp: boolean;
   showResponsiveDesign: boolean;
   showResponsiveDesignDown: boolean;
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    minHeight: '9rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      ['backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript']
+    ],
 
+  };
 
   constructor(
     private router: Router,
@@ -115,6 +128,7 @@ export class PoComponent implements OnInit {
       };
       this.documentList = this.poData.DocumentsList;
       this.terms = this.poData.Terms;
+      this.terms && this.terms.termsDesc ? this.poTerms.get('textArea').setValue(this.terms.termsDesc) : null
       if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {
         setTimeout(() => {
           this.guidedTourService.startTour(this.POPreviewTour);
@@ -169,8 +183,7 @@ export class PoComponent implements OnInit {
 
       DocumentsList: this.poDocument.getData(),
       Terms: {
-
-        termsDesc: this.poTerms['textArea'],
+        termsDesc: this.poTerms.value['textArea'],
         termsType: 'PO'
       },
       comments: "good",

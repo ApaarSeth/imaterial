@@ -12,6 +12,7 @@ import { RFQSupplierAddAddressComponent } from './rfq-supplier-add-address/rfq-s
 import { RFQDocumentsComponent } from './rfq-bid-documents/rfq-bid-documents.component';
 import { AppSharedModule } from 'src/app/shared/app-shared-module';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 @NgModule({
@@ -24,8 +25,7 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     RouterModule,
     AppSharedModule,
     RFQSupplierDetailRoutingModule,
-    FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
+    AngularEditorModule
   ],
   providers: [RFQSupplierDetailResolver],
   declarations: [RFQSupplierDetailComponent, RFQDocumentsComponent, RFQSupplierAfterBidComponent, RFQSupplierAddAddressComponent]
