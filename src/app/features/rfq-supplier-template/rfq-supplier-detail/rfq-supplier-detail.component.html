@@ -179,17 +179,17 @@
     </div>
 
     <div class="row width-100 p-t-10">
-        <div class="col-md-4 col-sm-12">
-             <app-rfq-bid-documents #rfqDocument [documentData]="documentList"></app-rfq-bid-documents>
+      <div class="col-md-4 col-sm-12">
+        <app-rfq-bid-documents #rfqDocument [documentData]="documentList"></app-rfq-bid-documents>
       </div>
       <div class="col-md-8 col-sm-12">
         <div class="text-align-center font-size16 text-semi-bold">
           Comments
         </div>
-        <form [formGroup]="poTerms">
-          <textarea formControlName="textArea" [innerHTML]="rfqSupplierDetailList && rfqSupplierDetailList.comments" [froalaEditor]="froala" [(froalaModel)]="poTerms['textArea']">
-Hello, Froala!</textarea
-          >
+        <form [formGroup]="rfqTerms">
+          <angular-editor formControlName="textArea" [config]="config"></angular-editor>
+          <!-- <textarea formControlName="textArea" [innerHTML]="rfqSupplierDetailList && rfqSupplierDetailList.comments" [froalaEditor]="froala" [(froalaModel)]="poTerms['textArea']">
+Hello, Froala!</textarea -->
         </form>
       </div>
       <div class="col-md-12">
