@@ -55,7 +55,7 @@ export class RFQDocumentsComponent implements OnInit {
       if(!(this.documentList.some(element => {
        return element.documentName == this.docs[0].name;
       }))){
-         return this.documentUploadService.postDocumentUpload(data).then(res => {
+         return this.documentUploadService.POSTSUPPLIERDOCUMENTUPLOAD(data).then(res => {
         this.filesRemoved = false;
         let name: string = res.data;
         let firstName: number = res.data.fileName.indexOf("_");
