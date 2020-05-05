@@ -1,23 +1,16 @@
 <div class="page-start-point">
-  <div class="row" class="p-l-20 p-r-20 p-b-20 min-height parent">
+  <div class="row" class="suppliers-dashboard p-b-20 min-height parent">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 p-l-10 p-r-10">
         <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product"></card-layout>
       </div>
     </div>
-    <div class="row p-t-10 p-b-10">
-      <!-- <div class="col-sm-12">
-                <mat-toolbar>
-                    <span>Indent 1 Created by Rahul Singh on 30:01:2020</span>
-                </mat-toolbar>
-            </div> -->
-    </div>
 
     <!-- table structure -->
-    <div class="row" *ngIf="singleIndentDetails">
+    <div class="add-supplier-container mat-elevation-z8" *ngIf="singleIndentDetails">
       <!-- <div class="col-sm-12"> -->
       <!-- table structure -->
-      <table mat-table [dataSource]="singleIndentDetails" class="mat-elevation-z8 col-sm-12 indent-table">
+      <table mat-table [dataSource]="singleIndentDetails">
         <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
 
