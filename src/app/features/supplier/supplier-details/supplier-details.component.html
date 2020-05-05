@@ -39,7 +39,7 @@
 
   <ng-container *ngIf="dataSourceTemp && dataSourceTemp.length>0">
    
-    <div class="row" class="suppliers-dashboard p-b-20 min-height parent">
+    <div class="row" class="dashboard-unique p-b-20 min-height parent">
       <!-- <div class="text-right add-user-details-button-right">
           <button mat-raised-button (click)="addSupplier()"
             class="main-background-color main-button color-white">
@@ -99,7 +99,7 @@
       <!-- first table structure -->
         <!-- <div class="col-sm-12"> -->
         <!-- table structure -->
-        <div class="supplier-details-table-div add-supplier-container mat-elevation-z8 " *ngIf="dataSourceTemp && dataSourceTemp.length>0">
+        <div class="supplier-details-table-div add-unique-container mat-elevation-z8 " *ngIf="dataSourceTemp && dataSourceTemp.length>0">
           <table mat-table [dataSource]="dataSource" >
             <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
