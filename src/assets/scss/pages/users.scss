@@ -543,3 +543,33 @@
   text-align: left;
 }
 }
+
+
+
+.add-supplier-container {
+  width: 100%;
+  min-width: 0px;
+  overflow-x: auto;
+
+.mat-table {
+      overflow-x: scroll;
+    }
+
+.mat-cell,
+.mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 10px;
+    line-break: unset;
+    text-align: left;
+    width: 2%;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+    font-weight: 500;
+}
+.mat-row,
+.mat-header-row {
+    display: table-row;
+}
+}
