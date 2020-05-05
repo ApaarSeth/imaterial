@@ -12,6 +12,7 @@ import { Froala } from 'src/app/shared/constants/configuration-constants';
 import { DocumentList } from 'src/app/shared/models/PO/po-data';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { RFQDocumentsComponent } from '../rfq-bid-documents/rfq-bid-documents.component';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 @Component({
   selector: "rfq-indent-detail",
   templateUrl: "./rfq-supplier-detail.component.html"
@@ -45,7 +46,7 @@ export class RFQSupplierDetailComponent implements OnInit {
   eitherOneValidInMaterial: boolean;
   showDateError: string;
   endstring: string;
-  poTerms: FormGroup;
+  rfqTerms: FormGroup;
   docs: FileList;
   filesRemoved: boolean;
   documentList: DocumentList[] = [];
@@ -67,6 +68,20 @@ export class RFQSupplierDetailComponent implements OnInit {
     imageBrowse: false,
     key: Froala.key
   }
+
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    minHeight: '9rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      ['backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript']
+    ],
+
+  };
 
 
   ngOnInit() {
@@ -146,7 +161,7 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.poTerms['textArea'];
+    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
     let supplierId = this.activatedRoute.snapshot.params["supplierId"];
     let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
@@ -222,7 +237,7 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
 
   formInit() {
-    this.poTerms = this.formBuilder.group({
+    this.rfqTerms = this.formBuilder.group({
       textArea: []
     })
   }
