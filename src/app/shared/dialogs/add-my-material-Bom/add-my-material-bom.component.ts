@@ -111,59 +111,21 @@ export class AddMyMaterialBomComponent implements OnInit {
   }
 
   addOtherFormGroup(): FormGroup {
+
     const formGrp = this._formBuilder.group({
       materialName: ['', [Validators.required, Validators.maxLength(300)]],
       materialUnit: ['', Validators.required],
       index: [],
-      estimatedQty: ['', Validators.required],
+      estimatedQty: ['', this.data ? Validators.required : null],
       estimatedPrice: [''],
       trade: ['', Validators.required],
       category: ['', Validators.required],
     });
 
     formGrp.get("index").patchValue(this.addMyMaterial.get('myMaterial')['controls'].length)
-    // formGrp.controls['category'].valueChanges.subscribe(changes => {
-    //   // this.filteredOption[formGrp.get("index").value] = this._filter(changes, formGrp.get("index").value)
-    //   this.filterOptions = null;
-    //   this.filterOptions = new Observable((observer) => {
-    //     const val: tradeRelatedCategory[] | [string] = this._filter(changes, formGrp.get("index").value)
-    //     // observable execution
-    //     observer.next(val)
-    //     observer.complete()
-    //   })
-    //   console.log('this.filteredOption', formGrp.get("index").value);
-    //   console.log('this.filteredOption', this.filteredOption[formGrp.get("index").value]);
-    // })
-
-    // formGrp.controls['trade'].valueChanges.subscribe(changes => {
-    //   if (changes) {
-    //     this.bomService.getTradeCategory(changes.tradeName).then(res => {
-    //       this.filteredOption[formGrp.get("index").value] = [...res.data];
-    //       this.filterOptions = new Observable((observer) => {
-    //         const val: tradeRelatedCategory[] | [string] = this._filter('', formGrp.get("index").value)
-    //         // observable execution
-    //         observer.next(val)
-    //         observer.complete()
-    //       })
-    //     })
-    //   }
-    // })
     return formGrp;
   }
 
-  // private _filter(value: string | tradeRelatedCategory, index) {
-  //   if (value || value === "") {
-  //     const filterValue = typeof (value) === "string" ? value.toLowerCase() : value.categoriesName.toLowerCase();
-  //     if (filterValue === '') {
-  //       return this.filteredOption[index];
-  //     }
-  //     let filteredValue: tradeRelatedCategory[] | [string] = !this.filteredOption[index] ? [] : this.filteredOption[index].filter(option => option.categoriesName.toLowerCase().includes(filterValue));
-  //     if (!filteredValue.length) {
-  //       filteredValue = [{ categoriesName: filterValue + " (new value)", categoriesCode: null }]
-  //     }
-  //     return filteredValue;
-  //   }
-  // }
 
   get currentData() {
     let currentIndex = this.addMyMaterial.get('myMaterial')['controls'].length - 1;
@@ -173,78 +135,53 @@ export class AddMyMaterialBomComponent implements OnInit {
     return { trade, category, materialName }
   }
 
-  checkMaterialExist() {
-    let val;
+  async checkMaterialExist(): Promise<{ notUsedBefore: string, notPresentInDb: string }> {
     let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
-    return this.bomService.getMaterialExist(checkData).then(res => {
-      if (res.data) {
-        let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some((val, i) => {
-          return (i !== this.currentIndex && val.materialName === currentMaterialName)
-        }))
-        if (!alreadyPresent) {
-          val = { alreadyUsedBefore: false, alreadyPresentInDb: false }
-        }
-        else {
-          val = { alreadyUsedBefore: true, alreadyPresentInDb: false }
-        }
+    const res = await this.bomService.getMaterialExist(checkData);
+    let val;
+    if (res.data) {
+      let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
+      let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some((val_1, i) => {
+        return (i !== this.currentIndex && val_1.materialName === currentMaterialName);
+      }));
+      if (!alreadyPresent) {
+        val = { notUsedBefore: true, notPresentInDb: true };
       }
       else {
-        val = { alreadyUsedBefore: false, alreadyPresentInDb: true }
+        val = { notUsedBefore: false, notPresentInDb: true };
       }
-    })
-    return val
+    }
+    else {
+      val = { notUsedBefore: null, notPresentInDb: false };
+    }
+    return val;
+
+  }
+
+  resetMaterialName(message) {
+    this._snackBar.open(message, "", {
+      duration: 4000,
+      panelClass: ["warning-snackbar"],
+      verticalPosition: "bottom"
+    });
+    (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+
   }
 
   onAddRow() {
-    // let check = this.checkMaterialExist();
-    // if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
-    //   (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-    //   this.filteredOption[this.currentIndex] = null
-    // }
-    // else if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
-    //   this._snackBar.open("Set New Material Name", "", {
-    //     duration: 4000,
-    //     panelClass: ["warning-snackbar"],
-    //     verticalPosition: "bottom"
-    //   });
-    //   (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
-    // }
-    // else {
-    //   this._snackBar.open("Material Name already exist in all material", "", {
-    //     duration: 4000,
-    //     panelClass: ["warning-snackbar"],
-    //     verticalPosition: "bottom"
-    //   });
-    //   (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
-    // }
-    let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
-    this.bomService.getMaterialExist(checkData).then(res => {
-      if (res.data) {
-        let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some((val, i) => {
-          return (i !== this.currentIndex && val.materialName === currentMaterialName)
-        }))
-        if (!alreadyPresent) {
+    this.checkMaterialExist().then(check => {
+      if (check.notPresentInDb) {
+        if (check.notUsedBefore)
           (<FormArray>this.addMyMaterial.get('myMaterial')).push(this.addOtherFormGroup());
-        }
         else {
-          this._snackBar.open("Set New Material Name", "", {
-            duration: 4000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          });
+          this.resetMaterialName("Set New Material Name");
         }
       }
       else {
-        this._snackBar.open("Material Name already exist in all material", "", {
-          duration: 4000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
-        (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+        this.resetMaterialName("Material Name already exist in all material");
       }
-    })
+    });
+
 
   }
   onDelete(index) {
@@ -261,63 +198,16 @@ export class AddMyMaterialBomComponent implements OnInit {
   }
 
   submit() {
-    // let check = this.checkMaterialExist()
-    // if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
-    //   let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
-    //     return {
-    //       estimatedPrice: Number(val.estimatedPrice),
-    //       estimatedQty: Number(val.estimatedQty),
-    //       materialName: val.materialName,
-    //       materialGroupCode: val.category.categoriesCode,
-    //       materialGroup: val.category.categoriesName,
-    //       materialUnit: val.materialUnit,
-    //       tradeId: val.trade.tradeId
-    //     }
-    //   })
-    //   this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
-    //     if (res.message = "done") {
-    //       this._snackBar.open("My Materials Added", "", {
-    //         duration: 4000,
-    //         panelClass: ["warning-snackbar"],
-    //         verticalPosition: "bottom"
-    //       });
-    //     }
-    //     this.dialogRef.close(null);
-    //   });
-    // }
-
-    // else if (!check.alreadyUsedBefore && !check.alreadyPresentInDb) {
-    //   this._snackBar.open("Set New Material Name", "", {
-    //     duration: 4000,
-    //     panelClass: ["warning-snackbar"],
-    //     verticalPosition: "bottom"
-    //   });
-    //   (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
-    // }
-    // else {
-    //   this._snackBar.open("Material Name already exist in all material", "", {
-    //     duration: 4000,
-    //     panelClass: ["warning-snackbar"],
-    //     verticalPosition: "bottom"
-    //   });
-    //   (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
-    // }
-    let checkData = { tradeName: this.currentData.trade, materialName: this.currentData.materialName, categoryName: this.currentData.category }
-    this.bomService.getMaterialExist(checkData).then(res => {
-      if (res.data) {
-        let currentMaterialName = (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).value['materialName'];
-
-        let alreadyPresent = this.currentIndex == 0 ? false : (this.addMyMaterial.get("myMaterial").value.some((val, i) => {
-          return (i !== this.currentIndex && val.materialName === currentMaterialName)
-        }))
-        if (!alreadyPresent) {
+    this.checkMaterialExist().then(check => {
+      if (check.notPresentInDb) {
+        if (check.notUsedBefore) {
           let myMaterial = this.addMyMaterial.get("myMaterial").value.map(val => {
             return {
-              estimatedPrice: Number(val.estimatedPrice),
-              estimatedQty: Number(val.estimatedQty),
+              estimatedPrice: this.data ? Number(val.estimatedPrice) : null,
+              estimatedQty: this.data ? Number(val.estimatedQty) : null,
               materialName: val.materialName,
-              materialGroupCode: typeof (val.category) === 'string' ? null : val.category.categoriesCode,
-              materialGroup: typeof (val.category) === 'string' ? val.category : val.category.categoriesName,
+              materialGroupCode: val.category.categoriesCode,
+              materialGroup: val.category.categoriesName,
               materialUnit: val.materialUnit,
               tradeId: val.trade.tradeId
             }
@@ -330,32 +220,20 @@ export class AddMyMaterialBomComponent implements OnInit {
                 verticalPosition: "bottom"
               });
             }
-            this.dialogRef.close('done');
+            this.dialogRef.close(null);
           });
         }
         else {
-          this._snackBar.open("Set New Material Name", "", {
-            duration: 4000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          });
+          this.resetMaterialName("Set New Material Name");
         }
       }
       else {
-        this._snackBar.open("Material Name already exist in all material", "", {
-          duration: 4000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
-        (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
+        this.resetMaterialName("Material Name already exist in all material");
       }
     })
-
-
   }
+
   closeDialog() {
     this.dialogRef.close(null);
   }
-
-
 }

@@ -100,7 +100,7 @@ export interface SupplierAddress {
 }
 
 export interface SupplierSelectedAddress {
-  
+
   addressLine1: string;
   addressLine2?: string;
   city: string;
@@ -218,7 +218,7 @@ export interface initiatePoData {
   selectedMaterial: RfqMaterialResponse[],
   selectedSupplier: Suppliers
 }
-export interface DownloadData{
-  fileName ?:string;
+export interface DownloadData {
+  fileName?: string;
   url?: string;
 }

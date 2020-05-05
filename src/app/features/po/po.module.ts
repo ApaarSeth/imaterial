@@ -23,6 +23,9 @@ import { PoQuantityMakesComponent } from "./initiate-po/po-quantity-makes/po-qua
 import { ViewGrnResolver } from "./add-grn/resolver/get-grn.resolver";
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NgxEditorModule } from 'ngx-editor';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +53,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     RouterModule,
     AppSharedModule,
     FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
+    FroalaViewModule.forRoot(),
+    NgxEditorModule,
+    AngularEditorModule
   ],
   providers: [PODetailListResolver, InitiatePoResolver, ViewGrnResolver]
 })
