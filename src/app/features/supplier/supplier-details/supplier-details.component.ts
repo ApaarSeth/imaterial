@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, HostListener } from "@angular/core";
 import { MatDialog, MatTableDataSource, MatDialogRef, MatSnackBar } from "@angular/material";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
@@ -64,6 +64,8 @@ export class SupplierDetailComponent implements OnInit {
     }
   };
   userId: number;
+  showResponsiveDesign: boolean;
+  showResponsiveDesignIcons: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -79,7 +81,7 @@ export class SupplierDetailComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-
+    window.dispatchEvent(new Event('resize'));
     this.getNotifications();
     this.getAllSupplier();
   }
@@ -210,5 +212,20 @@ export class SupplierDetailComponent implements OnInit {
   downloadExcel(url: string) {
     var win = window.open(url, "_blank");
     win.focus();
+  }
+  @HostListener('window:resize', ['$event'])
+  sizeChange(event) {
+    if (event.currentTarget.innerWidth <= 1025) {
+     this.showResponsiveDesignIcons = true;
+    } else {
+      this.showResponsiveDesignIcons = false;
+    }
+
+    if (event.currentTarget.innerWidth <= 576) {
+      this.showResponsiveDesign = true;
+     } else {
+       this.showResponsiveDesign = false;
+     }
+    
   }
 }
