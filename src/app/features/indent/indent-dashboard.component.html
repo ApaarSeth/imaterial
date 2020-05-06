@@ -1,13 +1,13 @@
 <!-- <fix-header></fix-header> -->
 <div class="page-start-point">
-  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+  <div class="dashboard-unique p-b-20 min-height parent">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 p-l-10 p-r-10">
         <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" (startDate)="startDate($event)" [projectDetails]="product"></card-layout>
       </div>
     </div>
     <div class="row p-t-10 p-b-10">
-      <div class="col-sm-12">
+      <div class="col-sm-12 p-r-10">
         <button (click)="showIndent()" mat-raised-button [disabled]="!materialForms.valid" class="main-background-color main-button color-white pull-right">
           Raise Indent
         </button>
@@ -15,10 +15,10 @@
     </div>
     <!-- first table structure -->
     <form [formGroup]="materialForms">
-      <div formArrayName="forms" class="row" *ngIf="subcategory">
+      <div formArrayName="forms" class="add-unique-container mat-elevation-z8" *ngIf="subcategory">
         <!-- <div class="col-sm-12"> -->
         <!-- table structure -->
-        <table mat-table [dataSource]="subcategory" class="mat-elevation-z8 col-sm-12">
+        <table mat-table [dataSource]="subcategory">
           <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
