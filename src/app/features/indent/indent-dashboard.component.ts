@@ -70,7 +70,10 @@ export class IndentDashboardComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
-    this.subcategory = history.state.checkedList;
+    this.route.queryParamMap.subscribe(data => {
+      this.subcategory = data['checkedList'];
+    })
+
     this.getProject(this.projectId);
     this.formsInit();
   }
@@ -195,7 +198,7 @@ export class IndentDashboardComponent implements OnInit {
   getStart(date, i) {
     this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
   }
-  startDate(event){
+  startDate(event) {
     this.startDateOfProject = event;
   }
 }

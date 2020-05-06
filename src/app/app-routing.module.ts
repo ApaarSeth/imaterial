@@ -67,7 +67,7 @@ const routes: Routes = [
       {
         path: "project-dashboard",
         component: DashboardComponent,
-        data: { title: 'Project Dashboard' }
+        data: { title: 'Project Dashboard', breadcrumb: 'Project-Store' }
         // resolve: { dashBoardData: DashBoardResolver }
       },
       {
@@ -78,16 +78,18 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: AppDashboardComponent,
-        data: { title: 'Dashboard' }
+        data: { title: 'Dashboard', breadcrumb: 'Dashboard' }
       },
       {
         path: "bom/:id",
         resolve: { bomCategory: BomResolver },
+        data: { breadcrumb: 'BOM' },
         loadChildren: () =>
           import("./features/bom/bom.module").then(m => m.BomModule)
       },
       {
         path: "indent/:id",
+        data: { breadcrumb: 'Indent' },
         loadChildren: () =>
           import("./features/indent/indent-dashboard.module").then(
             m => m.IndentDashboardModule

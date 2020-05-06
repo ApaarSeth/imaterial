@@ -11,10 +11,12 @@ const routes: Routes = [
   {
     path: "indent-detail",
     resolve: { indentList: IndentResolver },
+    data: { breadcrumb: 'All Detail' },
     component: IndentDetailComponent
   },
   {
     path: "single-indent/:indentId",
+    data: { breadcrumb: 'Specific Detail' },
     component: SingleIndentDetailsComponent
   }
 ];

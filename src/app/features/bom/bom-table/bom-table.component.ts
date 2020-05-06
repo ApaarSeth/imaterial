@@ -197,7 +197,7 @@ export class BomTableComponent implements OnInit {
     if (this.checkedSubcategory.length) {
       let checkedList = this.checkedSubcategory;
       this.router.navigate(["/indent/" + this.projectId], {
-        state: { checkedList }
+        queryParams: { checkedList }
       });
     }
   }
