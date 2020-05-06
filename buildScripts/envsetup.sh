@@ -5,3 +5,4 @@ echo "(function(window) {window.env = {}; window.env.api_url = '"$BUILDSUPPLY_IM
 echo "})(this);"  >> /usr/share/nginx/html/assets/env.js
 
 
+CMD ["nginx" "-g" "daemon off;"]
