@@ -89,7 +89,7 @@ button:focus {
 }
 @media only screen and (min-width: 958px) {
   .page-start-point {
-    padding-top: 170px !important;
+    padding-top: 150px !important;
     height: 100%;
     overflow-x: hidden;
   }
@@ -152,6 +152,7 @@ input {
     border-radius: 25px;
     padding: 0px 12px;
     font-weight: 500;
+    max-height: 40px;
   }
 }
 .text-bold {

@@ -61,7 +61,7 @@ export class AddGRNComponent implements OnInit {
 
   postGRNDetails(grnDetailsObj: GRNDetails[]) {
     this.grnService.addGRN(grnDetailsObj).then(data => {
-      this.route.navigate(['po/detail-list']);
+      this.route.navigate(['po']);
     })
   }
 
@@ -87,6 +87,6 @@ export class AddGRNComponent implements OnInit {
   }
 
   goBack() {
-    this.route.navigate(['po/detail-list']);
+    this.route.navigate(['po']);
   }
 }

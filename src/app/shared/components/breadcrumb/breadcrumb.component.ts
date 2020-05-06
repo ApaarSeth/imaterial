@@ -24,7 +24,6 @@ export class BreadcrumbComponent implements OnInit {
             distinctUntilChanged(),
         ).subscribe(() => {
             this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
-            console.log(this.breadcrumbs)
         })
     }
 
@@ -47,7 +46,8 @@ export class BreadcrumbComponent implements OnInit {
             if (isDynamicRoute && !!data) {
                 const paramName = lastRoutePart.split(':')[1];
                 path = path.replace(lastRoutePart, data[paramName]);
-                label = label === "" ? data[paramName] : label + "-" + data[paramName];
+                let newParamName = String(data[paramName])[0].toUpperCase() + String(data[paramName]).slice(1)
+                label = label === "" ? data[paramName] : label + "-" + newParamName;
             }
         })
         // if (isDynamicRoute && !!route.snapshot) {

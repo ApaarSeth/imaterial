@@ -50,7 +50,7 @@ export class ProjectItemComponent implements OnInit {
   ngOnInit(): void {
     const role = localStorage.getItem("role")
     this.permissionObj = this.permissionService.checkPermission(role);
-    if ( this.projectDetails.startDate ) {
+    if (this.projectDetails.startDate) {
       this.startDate.emit(this.projectDetails.startDate);
     }
   }
@@ -77,7 +77,7 @@ export class ProjectItemComponent implements OnInit {
   }
 
   redirectToPurchaseOrder() {
-    this.router.navigate(["po/detail-list"]);
+    this.router.navigate(["po"]);
   }
   redirectToOpenIndentCount(id: number, projectDetails: ProjectDetails) {
     this.router.navigate(["/indent/" + id + "/indent-detail"]);
@@ -85,13 +85,13 @@ export class ProjectItemComponent implements OnInit {
   }
 
   showDetails(data): void {
-      const dialogRef = this.dialog.open(DisplayProjectDetailsComponent, {
-        data
-      });
+    const dialogRef = this.dialog.open(DisplayProjectDetailsComponent, {
+      data
+    });
 
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => result);
-    } 
+    dialogRef
+      .afterClosed()
+      .toPromise()
+      .then(result => result);
+  }
 }

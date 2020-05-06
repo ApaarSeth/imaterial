@@ -394,6 +394,13 @@ body,
     padding-left: 20px;
     padding-right: 20px;
   }
+  .dashboard-unique {
+    padding-left: 20px;
+    padding-right: 20px;
+    .example-form-field {
+      width: 100% !important;
+    }
+  }
   .grn-dashboard {
     padding-left: 20px;
     padding-right: 20px;
@@ -440,6 +447,17 @@ body,
     padding-left: 7px;
     padding-right: 7px;
   }
+  .dashboard-unique {
+    padding-left: 7px;
+    padding-right: 7px;
+
+    .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+      padding-top: 0px !important;
+    }
+    .example-form-field {
+      width: 100% !important;
+    }
+  }
   .grn-dashboard {
     padding-left: 7px;
     padding-right: 7px;
@@ -459,6 +477,17 @@ body,
   }
   .create-po-btn {
     padding-top: 10px;
+  }
+
+  .things-to-do__icons {
+    box-shadow: none;
+    border-radius: 10px;
+    padding: 5px 0px 0;
+    min-width: 100px;
+    border: 1px solid #192135;
+  }
+  .mat-icon-button {
+    width: 30px !important;
   }
 
   .things-to-do__icons {

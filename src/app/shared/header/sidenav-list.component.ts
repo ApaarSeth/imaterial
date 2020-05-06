@@ -69,7 +69,7 @@ export class SidenavListComponent implements OnInit {
     else if (url.includes('rfq')) {
       this.buttonName = 'Request For Quotation';
     }
-    else if (url.includes('user-detail')) {
+    else if (url.includes('users')) {
       this.buttonName = 'Users';
     }
     else if (url.includes('po')) {

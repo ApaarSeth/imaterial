@@ -173,10 +173,10 @@ export class PODetailComponent implements OnInit {
   }
 
   viewPO(purchaseOrderId) {
-    this.route.navigate(["../../po/po-generate/" + purchaseOrderId + "/view"]);
+    this.route.navigate(["./po-generate/" + purchaseOrderId + "/view"]);
   }
   viewPODEdit(purchaseOrderId) {
-    this.route.navigate(["../../po/po-generate/" + purchaseOrderId + "/edit"]);
+    this.route.navigate(["./po-generate/" + purchaseOrderId + "/edit"]);
   }
   applyFilter(filterValue: string) {
     this.acceptedRejectedPOList.filter = filterValue.trim().toLowerCase();
@@ -208,14 +208,14 @@ export class PODetailComponent implements OnInit {
         this.PoData();
       });
   }
-  downloadPo(purchaseOrderId){
-      this.poDetailService.downloadPo(purchaseOrderId).then(res =>{
-        this.downloadFile(res.data);
-      });
+  downloadPo(purchaseOrderId) {
+    this.poDetailService.downloadPo(purchaseOrderId).then(res => {
+      this.downloadFile(res.data);
+    });
   }
-  downloadFile(data : DownloadData) {
-           var win = window.open(data.url, '_blank');
-            win.blur();
-            setTimeout(win.focus, 0);
+  downloadFile(data: DownloadData) {
+    var win = window.open(data.url, '_blank');
+    win.blur();
+    setTimeout(win.focus, 0);
   }
 }

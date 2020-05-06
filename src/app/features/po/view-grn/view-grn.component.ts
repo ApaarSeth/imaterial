@@ -53,28 +53,28 @@ export class ViewGRNComponent implements OnInit {
     };
     userId: number;
 
-    constructor(private poService: POService, private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog, private guidedTourService: GuidedTourService, private userGuideService: UserGuideService,private commonService: CommonService) {
+    constructor(private poService: POService, private activatedRoute: ActivatedRoute, private grnService: GRNService, private route: Router, public dialog: MatDialog, private guidedTourService: GuidedTourService, private userGuideService: UserGuideService, private commonService: CommonService) {
     }
 
     ngOnInit() {
-     
+
         this.activatedRoute.params.subscribe(res => {
             this.poId = Number(res["poId"]);
             this.poService.getPoGenerateData(this.poId).then(res => {
                 this.poData = res.data;
-                  if ((localStorage.getItem('grn') == "null") || (localStorage.getItem('grn') == '0')) {
+                if ((localStorage.getItem('grn') == "null") || (localStorage.getItem('grn') == '0')) {
                     setTimeout(() => {
                         this.guidedTourService.startTour(this.GRNTour);
                     }, 1000);
-                    }
+                }
             })
             this.getGRNDetails(Number(res["poId"]));
         })
         this.getNotifications();
     }
-getNotifications(){
-    this.commonService.getNotification(this.userId);
-  }
+    getNotifications() {
+        this.commonService.getNotification(this.userId);
+    }
     setLocalStorage() {
         this.userId = Number(localStorage.getItem("userId"));
         const popovers = {
@@ -101,7 +101,7 @@ getNotifications(){
     }
 
     viewBack() {
-        this.route.navigate(['po/detail-list']);
+        this.route.navigate(['po']);
     }
     addGRN() {
         const data: GRNPopupData = {

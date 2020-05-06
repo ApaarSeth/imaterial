@@ -97,15 +97,16 @@ div.limited-character.universal {
 
 .breadcrumb {
   background: none;
-  font-size: 0.8em;
+  font-size: 0.9em;
   margin: 0;
-  a,
+  padding: 0px 0px 0px 17px !important;
+  background-color: #ffffff;
   span {
-    color: darkgrey;
+    color: #192135;
   }
   a:hover,
   span:hover {
-    color: dimgrey;
+    color: $main-color;
     text-decoration: none;
   }
   li {
