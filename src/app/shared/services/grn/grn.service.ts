@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
-import { GRNDetails, GRN } from '../../models/grn';
+import { GRNDetails, GRN, GRNList } from '../../models/grn';
 
 @Injectable({
     providedIn: "root"
@@ -23,7 +23,7 @@ export class GRNService {
         });
     }
 
-    addGRN(grn: GRN[]) {
+    addGRN(grn: GRNList) {
         return this.dataService.sendPostRequest(API.ADDGRN, grn).then(res => {
             return res;
         });

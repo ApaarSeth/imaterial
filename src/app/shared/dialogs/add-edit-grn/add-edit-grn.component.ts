@@ -1,9 +1,11 @@
-import { Component, Inject, OnInit, HostListener } from "@angular/core";
+import { Component, Inject, OnInit, HostListener, ViewChild, Input } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from "@angular/forms";
 import { GRNService } from "../../services/grn/grn.service";
-import { GRNDetails, GRNPopupData } from "../../models/grn";
+import { GRNDetails, GRNPopupData, GRNList } from "../../models/grn";
 import { AppNavigationService } from '../../services/navigation.service';
+import { DocumentList } from '../../models/PO/po-data';
+import { GRNDocumentsComponent } from './grn-documents.component';
 
 export interface City {
   value: string;
@@ -23,6 +25,10 @@ export interface Unit {
   templateUrl: "add-edit-grn-component.html"
 })
 export class AddEditGrnComponent implements OnInit {
+  @Input("documentListLength") public documentListLength: number;
+  @Input("documentData") documentData: DocumentList[];
+  @ViewChild("grnDocument", { static: false }) grnDocument: GRNDocumentsComponent;
+  grnDetailsObj: GRNList = { GrnList : [] , DocumentsList : []};
   grnDetails: GRNDetails;
   grnId: number;
   dataSource: GRNDetails[];
@@ -89,25 +95,28 @@ export class AddEditGrnComponent implements OnInit {
     // });
   }
 
-  postGRNDetails(grnDetailsObj: GRNDetails[]) {
-    this.grnService.addGRN(grnDetailsObj).then(data => {
+  postGRNDetails(formValues : GRNDetails[]) {
+    this.grnDetailsObj.GrnList = formValues;
+    this.grnDetailsObj.DocumentsList = this.grnDocument.getData();
+    console.log(this.grnDetailsObj);
+    // this.grnService.addGRN(this.grnDetailsObj).then(data => {
 
-        this._snackBar.open(data.message, "", {
-          duration: 2000, panelClass: ["success-snackbar"],
-          verticalPosition: "bottom"
-        });
-        this.dialogRef.close(data);
+    //     this._snackBar.open(data.message, "", {
+    //       duration: 2000, panelClass: ["success-snackbar"],
+    //       verticalPosition: "bottom"
+    //     });
+    //     this.dialogRef.close(data);
 
-        if ( data.status == 1 ){
-          this.navService.gaEvent({
-            action: 'submit',
-            category: 'add_grn',
-            label: null,
-            value: null
-          });
-        }
+    //     if ( data.status == 1 ){
+    //       this.navService.gaEvent({
+    //         action: 'submit',
+    //         category: 'add_grn',
+    //         label: null,
+    //         value: null
+    //       });
+    //     }
 
-    });
+    // });
   }
 
   // getGRNDetails(grnId: number) {
@@ -127,6 +136,7 @@ export class AddEditGrnComponent implements OnInit {
         formValues.push(element);
       }
     });
+    this.grnDetailsObj.GrnList = formValues;
     this.postGRNDetails(formValues);
   }
 
