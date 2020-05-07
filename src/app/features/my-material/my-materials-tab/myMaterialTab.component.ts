@@ -18,7 +18,6 @@ export class MyMaterialTabComponent implements OnInit {
 
 	ngOnInit() {
 		this.getMyMaterial();
-
 		this.commonService.materialAdded.subscribe(val => {
 			if (val) {
 				this.getMyMaterial();

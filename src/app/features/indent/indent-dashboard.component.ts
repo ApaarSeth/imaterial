@@ -37,7 +37,7 @@ export interface PeriodicElement {
 })
 export class IndentDashboardComponent implements OnInit {
   dueDate = new Date(1990, 0, 1);
-  subcategory: Subcategory[];
+  subcategory: Subcategory[] = [];
   userId: 1;
   searchText: string = null;
   projectId: number;
@@ -69,10 +69,11 @@ export class IndentDashboardComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"))
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
+      this.getProject(this.projectId);
     });
-    this.subcategory = history.state.checkedList;
-    this.getProject(this.projectId);
+    this.subcategory = this.indentService.raiseIndentData;
     this.formsInit();
+
   }
 
   formsInit() {
@@ -195,7 +196,7 @@ export class IndentDashboardComponent implements OnInit {
   getStart(date, i) {
     this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
   }
-  startDate(event){
+  startDate(event) {
     this.startDateOfProject = event;
   }
 }

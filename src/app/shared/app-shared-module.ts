@@ -20,8 +20,8 @@ import { TwoDigitDecimaNumberDirective } from './directives/appTwoDigit';
     { provide: DateAdapter, useClass: PickDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
   ],
-  declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, OnlyNumberDirective,TwoDigitDecimaNumberDirective],
-  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe,OnlyNumberDirective,TwoDigitDecimaNumberDirective],
+  declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective],
+  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective],
   entryComponents: [...SharedDialogs]
 })
 

@@ -84,20 +84,20 @@ export class AddEditUserComponent implements OnInit {
 
     this.form = new FormGroup({
       firstName: new FormControl(
-         {value : this.data.isEdit ? this.data.detail.firstName : "", disabled: ( this.data.isEdit && (this.data.detail.accountStatus==1))? true:false},
+        { value: this.data.isEdit ? this.data.detail.firstName : "", disabled: (this.data.isEdit && (this.data.detail.accountStatus == 1)) ? true : false },
         Validators.required
       ),
       lastName: new FormControl(
-        {value : this.data.isEdit ? this.data.detail.lastName : "", disabled: ( this.data.isEdit && (this.data.detail.accountStatus==1))? true:false},
+        { value: this.data.isEdit ? this.data.detail.lastName : "", disabled: (this.data.isEdit && (this.data.detail.accountStatus == 1)) ? true : false },
         Validators.required
       ),
       email: new FormControl(
-        {value : this.data.isEdit ? this.data.detail.email : "", disabled: ( this.data.isEdit && (this.data.detail.accountStatus==1))? true:false},
+        { value: this.data.isEdit ? this.data.detail.email : "", disabled: (this.data.isEdit && (this.data.detail.accountStatus == 1)) ? true : false },
         [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]),
 
       contactNo: new FormControl(
-         {value : this.data.isEdit ? this.data.detail.contactNo : "", disabled: ( this.data.isEdit && (this.data.detail.accountStatus==1))? true:false},
-         [Validators.pattern(FieldRegExConst.MOBILE)]
+        { value: this.data.isEdit ? this.data.detail.contactNo : "", disabled: (this.data.isEdit && (this.data.detail.accountStatus == 1)) ? true : false },
+        [Validators.pattern(FieldRegExConst.MOBILE)]
       ),
       roleId: new FormControl(
         this.data.isEdit ? this.data.detail.roleId : "",
@@ -168,20 +168,20 @@ export class AddEditUserComponent implements OnInit {
     const email = event.target.value;
     this.emailVerified = true;
     if (email.match(FieldRegExConst.EMAIL)) {
-      if(!((this.data.isEdit) && (this.data.detail.email=== email))){
-          this.userService.verifyEMAIL(this.form.value.email).then(res => {
-        if (res) {
-          this.emailVerified = res.data;
-          this.emailMessage = res.message;
-        }
-      });
+      if (!((this.data.isEdit) && (this.data.detail.email === email))) {
+        this.userService.verifyEMAIL(this.form.value.email).then(res => {
+          if (res) {
+            this.emailVerified = res.data;
+            this.emailMessage = res.message;
+          }
+        });
       }
-    
+
     }
   }
 
   userDetailsNavigate() {
-    this.router.navigate(["users/user-detail"]);
+    this.router.navigate(["/users"]);
   }
 
   closeDialog() {
