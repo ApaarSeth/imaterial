@@ -11,7 +11,7 @@
         </div>
         <button
           mat-raised-button
-          [routerLink]="['../../po/initiate-po']"
+          [routerLink]="['./initiate-po']"
           class="main-background-color main-button color-white"
           matTooltip="Issue P.O. to supplier without Request For Quotations"
         >
@@ -20,12 +20,11 @@
       </div>
     </div>
   </div>
-  <div class="p-b-20 min-height parent create-po-dashboard" *ngIf="poApprovalDetailsTemp || poDraftedDetailsTemp || acceptedRejectedPOListTemp">
+  <div class="p-b-20 p-t-10 min-height parent create-po-dashboard" *ngIf="poApprovalDetailsTemp || poDraftedDetailsTemp || acceptedRejectedPOListTemp">
     <div class="row">
-
-       <div class="col-xs-7">
+      <div class="col-xs-7">
         <mat-form-field class="example-form-field border-input project p-l-10">
-           <input matInput placeholder="Search PO" type="search" (keyup)="applyFilter($event.target.value)" />
+          <input matInput placeholder="Search PO" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
@@ -33,13 +32,13 @@
       </div>
       <div class="text-right col-xs-5 create-po-btn p-r-20">
         <button
-            mat-raised-button
-            class="main-background-color main-button color-white demo-title"
-            [routerLink]="['../../po/initiate-po']"
-            matTooltip="Issue P.O. to supplier without Request For Quotations"
-          >
-            Create P.O.
-          </button>
+          mat-raised-button
+          class="main-background-color main-button color-white demo-title"
+          [routerLink]="['./initiate-po']"
+          matTooltip="Issue P.O. to supplier without Request For Quotations"
+        >
+          Create P.O.
+        </button>
       </div>
     </div>
 
@@ -173,11 +172,11 @@
                   <th mat-header-cell class="text-align-center" *matHeaderCellDef></th>
                   <td mat-cell class="text-align-center actions-cell" *matCellDef="let element">
                     <span class="p-r-10">
-                      <a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'requiredApproval']">View P.O</a>
+                      <a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./po-generate/', element.purchaseOrderId, 'requiredApproval']">View P.O</a>
                     </span>
 
                     <span>&nbsp;</span>
-                     <span class="p-r-10 float-right cursor-pointer"
+                    <span class="p-r-10 float-right cursor-pointer"
                       ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
                     ></span>
                   </td>
@@ -236,13 +235,13 @@
                   <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
                   <td mat-cell class="text-align-center" *matCellDef="let element" class="actions-cell">
                     <span class="p-r-10"
-                      ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'edit']">Review Draft P.O.</a></span
+                      ><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./po-generate/', element.purchaseOrderId, 'edit']">Review Draft P.O.</a></span
                     >
                     <span>&nbsp;</span>
                     <span class="p-r-10 float-right cursor-pointer"
                       ><a (click)="deleteDraftedPo(element)" matTooltip="Delete"> <img src="../../../../assets/images/delete-button.png" /> </a
                     ></span>
-                     <span class="p-r-10 float-right cursor-pointer"
+                    <span class="p-r-10 float-right cursor-pointer"
                       ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
                     ></span>
                   </td>
@@ -306,10 +305,10 @@
                   <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let element" class="actions-cell">
                     <span class="p-r-10"
-                      ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
+                      ><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
                     >
                     <!-- <span>&nbsp;</span> -->
-                    <span class="p-r-10"><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/view-grn/', element.purchaseOrderId]">Add/View GRN</a></span>
+                    <span class="p-r-10"><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./view-grn/', element.purchaseOrderId]">Add/View GRN</a></span>
                     <span class="p-r-10 float-right cursor-pointer"
                       ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
                     ></span>

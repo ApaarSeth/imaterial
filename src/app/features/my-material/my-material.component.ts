@@ -26,7 +26,7 @@ export class MyMaterialComponent implements OnInit {
       width: '720px'
     })
     dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
+      if (result === 'done') {
         this.commonService.materialAdded.next(true)
       }
     })

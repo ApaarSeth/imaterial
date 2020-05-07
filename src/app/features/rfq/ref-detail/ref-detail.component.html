@@ -138,13 +138,13 @@
               <ng-container matColumnDef="action1">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                 <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                  <a [routerLink]="['../rfq-view', element.rfqId]" style="color: #f47721">View RFQ</a>
+                  <a [routerLink]="['./rfq-view', element.rfqId]" style="color: #f47721;">View RFQ</a>
                 </td>
               </ng-container>
               <ng-container matColumnDef="action2">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center">
-                  <a [routerLink]="['../rfq-bid/', element.rfqId]" class="text-align-center" style="color: #f47721">View Bids</a>
+                  <a [routerLink]="['./rfq-bid/', element.rfqId]" class="text-align-center" style="color: #f47721;">View Bids</a>
                 </td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -153,7 +153,7 @@
           </div>
         </mat-expansion-panel>
       </mat-accordion>
-<br>
+      <br />
       <mat-accordion *ngIf="nonSubmittedRfqListTemp">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header>
@@ -228,7 +228,7 @@
               <ng-container matColumnDef="action1">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                 <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                  <a (click)="viewRfq(element)" class="cursor" style="color: #f47721">{{ element.rfqStatus === 0 ? "Complete RFQ" : "View RFQ" }}</a>
+                  <a (click)="viewRfq(element)" class="cursor" style="color: #f47721;">{{ element.rfqStatus === 0 ? "Complete RFQ" : "View RFQ" }}</a>
                 </td>
               </ng-container>
               <ng-container matColumnDef="action2">

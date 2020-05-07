@@ -11,19 +11,22 @@ import { CreateRfqComponent } from "./create-rfq/create-rfq.component";
 
 const routes: Routes = [
   {
-    path: "rfq-detail",
+    path: "",
     component: RefDetailComponent
   },
   {
     path: "rfq-bid/:id",
+    data: { breadcrumb: 'RFQ Bid' },
     component: RfqBidsComponent
   },
   {
     path: "review/:rfqId",
+    data: { breadcrumb: 'RFQ Review' },
     component: ReviewComponent
   },
   {
     path: "rfq-view/:id",
+    data: { breadcrumb: 'RFQ View' },
     component: RFQViewComponent
   },
   {

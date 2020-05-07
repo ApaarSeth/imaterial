@@ -67,7 +67,7 @@ const routes: Routes = [
       {
         path: "project-dashboard",
         component: DashboardComponent,
-        data: { title: 'Project Dashboard' }
+        data: { title: 'Project Dashboard', breadcrumb: 'Project-Store' }
         // resolve: { dashBoardData: DashBoardResolver }
       },
       {
@@ -78,16 +78,18 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: AppDashboardComponent,
-        data: { title: 'Dashboard' }
+        data: { title: 'Dashboard', breadcrumb: 'Dashboard' }
       },
       {
         path: "bom/:id",
         resolve: { bomCategory: BomResolver },
+        data: { breadcrumb: 'BOM' },
         loadChildren: () =>
           import("./features/bom/bom.module").then(m => m.BomModule)
       },
       {
         path: "indent/:id",
+        data: { breadcrumb: 'Indent' },
         loadChildren: () =>
           import("./features/indent/indent-dashboard.module").then(
             m => m.IndentDashboardModule
@@ -95,6 +97,7 @@ const routes: Routes = [
       },
       {
         path: "globalStore/:id",
+        data: { breadcrumb: 'Global Store' },
         loadChildren: () =>
           import("./features/global-store/global-store.module").then(
             m => m.GlobalStoreModule
@@ -102,16 +105,19 @@ const routes: Routes = [
       },
       {
         path: "rfq",
+        data: { breadcrumb: 'RFQ' },
         loadChildren: () =>
           import("./features/rfq/rfq.module").then(m => m.RFQModule)
       },
       {
         path: "po",
+        data: { breadcrumb: 'PO' },
         loadChildren: () =>
           import("./features/po/po.module").then(m => m.POModule)
       },
       {
         path: "users",
+        data: { breadcrumb: 'Users' },
         loadChildren: () =>
           import("./features/users/user-dashboard.module").then(
             m => m.UserDashboardModule
@@ -119,6 +125,7 @@ const routes: Routes = [
       },
       {
         path: "supplier",
+        data: { breadcrumb: 'Supplier' },
         loadChildren: () =>
           import("./features/supplier/supplier.module").then(
             m => m.SupplierDashboardModule
@@ -126,6 +133,7 @@ const routes: Routes = [
       },
       {
         path: "myMaterial",
+        data: { breadcrumb: 'My Material' },
         loadChildren: () =>
           import("./features/my-material/myMaterial.module").then(
             m => m.MyMaterialModule

@@ -1,34 +1,32 @@
-
 .header-fixed {
   position: fixed;
   width: 100%;
   z-index: 120;
-  mat-button:hover{
+  mat-button:hover {
     background: none;
   }
-  .buildsupply-logo{
+  .buildsupply-logo {
     width: 200px;
   }
-.blue-background-color{
-  height: 50px;
-    .mat-button-wrapper{
-             font-size: 16px !important;
-        }
-        .color-white.active{
-          border-bottom: 5px solid $main-color;
-      }
+  .blue-background-color {
+    height: 50px;
+    .mat-button-wrapper {
+      font-size: 16px !important;
+    }
+    .color-white.active {
+      border-bottom: 5px solid $main-color;
+    }
 
-  a{
+    a {
       line-height: 3.4;
-      .mat-button-wrapper{
-             font-size: 16px !important;
-        }
-      .color-white.active{
-          border-bottom: 5px solid $main-color;
+      .mat-button-wrapper {
+        font-size: 16px !important;
       }
-  } 
-}
-     
+      .color-white.active {
+        border-bottom: 5px solid $main-color;
+      }
+    }
+  }
 }
 
 .menu-spacer {
@@ -56,117 +54,119 @@ button.active {
   background: $white-color !important;
 }
 
-.notification-bell-icon.mat-button.mat-button-base{
+.notification-bell-icon.mat-button.mat-button-base {
   min-width: auto;
-  padding-top:4px;
-   .mat-icon{
-     display: block;
-   }
+  padding-top: 4px;
+  .mat-icon {
+    display: block;
+  }
 }
-.notification-bell-icon.mat-button.mat-button-base:hover{
+.notification-bell-icon.mat-button.mat-button-base:hover {
   background-color: none;
 }
 
-.whatsapp-icon{
+.whatsapp-icon {
   width: 20px;
   height: 20px;
 }
-.whatsapp-icon-number{
-font-size: 14px;
-padding-left:5px;
-color: #000000 !important;
+.whatsapp-icon-number {
+  font-size: 14px;
+  padding-left: 5px;
+  color: #000000 !important;
 }
-.whatsapp-div-header{
+.whatsapp-div-header {
   display: flex;
   padding: 2px 10px;
   background: #e4dfdf7a;
   border-radius: 5px;
-  margin-top:5px;
+  margin-top: 5px;
 }
-.font-signup{
-  font-size:13px;
-  font-weight:500;
+.font-signup {
+  font-size: 13px;
+  font-weight: 500;
   color: #192135;
 }
-.three-months-signup-text{
-
-    margin-top: 6px;
+.three-months-signup-text {
+  margin-top: 6px;
 }
 
-.agree-checkbox{
+.agree-checkbox {
   display: flex;
   justify-content: center;
-      padding-top: 10px;
-    font-size: 14px;
+  padding-top: 10px;
+  font-size: 14px;
 }
-.logo-profile-header{
-       button{
-         padding-right: 0%;
-       }
-       }
- @media only screen and (max-width: 560px) {
-     .whatsapp-icon-number{
-       display: none;
-     }
-     .whatsapp-div-header{
-       background: none;
-     }
-      .logo-profile-header{
-            .username{
-              display: none;
-            }
-       }
-     .cdk-overlay-container{
-        .cdk-overlay-pane{
-          max-width: 98% !important;
-        }
-    }
-    .mat-dialog-content{
-      padding: 0 9px !important;
+.logo-profile-header {
+  button {
+    padding-right: 0%;
+  }
+}
+@media only screen and (max-width: 560px) {
+  .whatsapp-icon-number {
+    display: none;
+  }
+  .whatsapp-div-header {
+    background: none;
+  }
+  .logo-profile-header {
+    .username {
+      display: none;
     }
   }
-
-   @media only screen and (max-width: 440px) {
-     .header-fixed .buildsupply-logo{
-       width: 140px;
-       padding-right: 5px;
-     }
-   }
-     @media only screen and (max-width: 360px) {
-     .notification-bell-icon.mat-button.mat-button-base{
-       padding-left: 2px;
-       padding-right:0px ;
-      }
-      .logo-profile-header{
-       button{
-         padding-left: 5px;
-       }
-       .username{
-         display: none;
-       }
-       }
+  .cdk-overlay-container {
+    .cdk-overlay-pane {
+      max-width: 98% !important;
+    }
   }
+  .mat-dialog-content {
+    padding: 0 9px !important;
+  }
+}
 
-   
-   .mat-drawer-inner-container{ overflow-y: hidden }
-   .mat-drawer:not(.mat-drawer-side){ width: 100%}
+@media only screen and (max-width: 440px) {
+  .header-fixed .buildsupply-logo {
+    width: 140px;
+    padding-right: 5px;
+  }
+}
+@media only screen and (max-width: 360px) {
+  .notification-bell-icon.mat-button.mat-button-base {
+    padding-left: 2px;
+    padding-right: 0px;
+  }
+  .logo-profile-header {
+    button {
+      padding-left: 5px;
+    }
+    .username {
+      display: none;
+    }
+  }
+}
 
-   .side-navbar-header{
-     padding: 15px 5px 15px 15px;
-     background:  #efefefd1;
+.mat-drawer-inner-container {
+  overflow-y: hidden;
+}
+.mat-drawer:not(.mat-drawer-side) {
+  width: 100%;
+}
 
-     .user-name{
-       padding-left: 15px;
-       font-weight: 500;
-       font-size: 16px;
-       cursor: pointer;
-     }
-     .menu-close{
-       margin-top: -4px;
-     }
-   }
-   .sidenav{
-     .active{
-       background: #efefefd1;
-     }
-   }
+.side-navbar-header {
+  padding: 15px 5px 15px 15px;
+  background: #efefefd1;
+
+  .user-name {
+    padding-left: 15px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .menu-close {
+    margin-top: -4px;
+  }
+}
+.sidenav {
+  .active {
+    background: #efefefd1;
+  }
+}

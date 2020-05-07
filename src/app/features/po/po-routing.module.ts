@@ -13,26 +13,30 @@ import { ViewGrnResolver } from "./add-grn/resolver/get-grn.resolver";
 
 const routes: Routes = [
   {
-    path: "detail-list",
+    path: "",
     resolve: { poDetailList: PODetailListResolver },
     component: PODetailComponent
   },
   {
     path: "po-generate/:id/:mode",
+    data: { breadcrumb: 'PO' },
     component: PoComponent
   },
   {
     path: "initiate-po",
+    data: { breadcrumb: 'Create PO' },
     resolve: { inititatePo: InitiatePoResolver },
     component: InitiatePoComponent
   },
   {
     path: "add-grn/:poId",
+    data: { breadcrumb: 'ADD GRN' },
     resolve: { viewGRN: ViewGrnResolver },
     component: AddGRNComponent
   },
   {
     path: "view-grn/:poId",
+    data: { breadcrumb: 'View GRN' },
     component: ViewGRNComponent
   }
 ];
@@ -40,4 +44,4 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
-export class PORoutingModule {}
+export class PORoutingModule { }

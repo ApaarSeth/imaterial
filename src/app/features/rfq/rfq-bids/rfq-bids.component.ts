@@ -75,7 +75,7 @@ export class RfqBidsComponent implements OnInit {
               materialId: material.materialId,
               materialQty: material.materialQty,
               materialpoAvailableQty: material.poAvailableQty,
-              validQtyBoolean : true,
+              validQtyBoolean: true,
               materialUnitPrice: material.materialUnitPrice,
               supplierList: this.formBuilder.array(supplierGrp)
             });
@@ -92,7 +92,7 @@ export class RfqBidsComponent implements OnInit {
     );
     this.rfqForms = this.formBuilder.group({});
     this.rfqForms.addControl("forms", new FormArray(frmArr));
-   // console.log(this.rfqForms.value);
+    // console.log(this.rfqForms.value);
   }
 
   allocateQuantity() {
@@ -191,7 +191,7 @@ export class RfqBidsComponent implements OnInit {
           label: 'material name',
           value: null
         });
-        this.router.navigate(["po/detail-list"]);
+        this.router.navigate(["po"]);
       }
     });
   }
@@ -206,48 +206,48 @@ export class RfqBidsComponent implements OnInit {
       });
     });
   }
-    getFormQtyValidation() {
+  getFormQtyValidation() {
     return this.rfqForms.value.forms.some(value => {
       return value.materialList.some(materials => {
-             return (materials.validQtyBoolean === false) ;
+        return (materials.validQtyBoolean === false);
       });
     });
   }
 
-    getQuanityValidation(p,m) {
-      this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(true);
-       console.log(this.rfqForms.value);
-       let total: number = 0; 
+  getQuanityValidation(p, m) {
+    this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(true);
+    console.log(this.rfqForms.value);
+    let total: number = 0;
 
-     this.rfqForms.value.forms[p].materialList[m].supplierList.forEach(supplier => {
-                  total= 0;
-          supplier.brandGroup.forEach((brand) => {
-                if(brand.quantity != null){
-                     total = total + Number(brand.quantity);
-                      if(total.toFixed(2) > this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty){
-                      this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(false);
-                       this._snackBar.open("Net Quantity must be less than "+this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty , "", {
-                                duration: 2000,
-                                panelClass: ["success-snackbar"],
-                                verticalPosition: "bottom"
-                              });
-                      
-                  }
-                } 
-               
-          });
-        });
+    this.rfqForms.value.forms[p].materialList[m].supplierList.forEach(supplier => {
+      total = 0;
+      supplier.brandGroup.forEach((brand) => {
+        if (brand.quantity != null) {
+          total = total + Number(brand.quantity);
+          if (total.toFixed(2) > this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty) {
+            this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(false);
+            this._snackBar.open("Net Quantity must be less than " + this.rfqForms.value.forms[p].materialList[m].materialpoAvailableQty, "", {
+              duration: 2000,
+              panelClass: ["success-snackbar"],
+              verticalPosition: "bottom"
+            });
+
+          }
+        }
+
+      });
+    });
   }
 
-  viewRemarks(){
-     
-      const dialogRef = this.dialog.open(ShowSupplierRemarksandDocs, {
-        width: "1000px",
-        data : this.rfqProjects[0].supplierRemarkList
-      });
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => {});
+  viewRemarks() {
+
+    const dialogRef = this.dialog.open(ShowSupplierRemarksandDocs, {
+      width: "1000px",
+      data: this.rfqProjects[0].supplierRemarkList
+    });
+    dialogRef
+      .afterClosed()
+      .toPromise()
+      .then(result => { });
   }
 }

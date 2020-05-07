@@ -18,10 +18,10 @@ export const HeaderConstants = {
       { name: 'Dashboard', link: '/dashboard', image: '../../../assets/images/dashboard-hamburger.svg', flag: true },
       { name: 'Project Store', link: '/project-dashboard', image: '../../../assets/images/Add-Project-hamburger.svg', flag: permissionObj.projectStoreFlag },
       { name: 'Global Store', link: '/globalStore/' + orgId, image: '../../../assets/images/global-store-hamburger.svg', flag: permissionObj.globalStoreFlag },
-      { name: 'Request For Quotation', link: '/rfq/rfq-detail', image: '../../../assets/images/create-RFQ-hambuger.svg', flag: permissionObj.rfqFlag },
-      { name: 'Users', link: '/users/user-detail', image: '../../../assets/images/user-hamburger.svg', flag: permissionObj.usersFlag },
-      { name: 'Purchase Order', link: '/po/detail-list', image: '../../../assets/images/po-hamburger.svg', flag: permissionObj.purchaseOrderFlag },
-      { name: 'Supplier', link: '/supplier/detail', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.supplierFlag },
+      { name: 'Request For Quotation', link: '/rfq', image: '../../../assets/images/create-RFQ-hambuger.svg', flag: permissionObj.rfqFlag },
+      { name: 'Users', link: '/users/', image: '../../../assets/images/user-hamburger.svg', flag: permissionObj.usersFlag },
+      { name: 'Purchase Order', link: '/po', image: '../../../assets/images/po-hamburger.svg', flag: permissionObj.purchaseOrderFlag },
+      { name: 'Supplier', link: '/supplier', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.supplierFlag },
       { name: 'My Materials', link: '/myMaterial', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.rfqFlag }
 
     ]
@@ -60,7 +60,7 @@ export const API = {
   POSTADDADDRESS: (type, id) => `address/add/${type}/${id}`,
   GETPOADDADDRESS: (type, id) => `address/get/${type}/${id}`,
   POSTDOCUMENTUPLOAD: `documents/upload`,
-  POSTSUPPLIERDOCUMENTUPLOAD : `supplier/documents/upload`,
+  POSTSUPPLIERDOCUMENTUPLOAD: `supplier/documents/upload`,
   SIGNUP: `api/auth/signup`,
   SIGNIN: `oauth/token`,
   GETISSUETOINDENT: (materialId, projectId) => `materials/updateStock/${materialId}/${projectId}`,

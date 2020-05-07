@@ -220,7 +220,7 @@ export class AddMyMaterialBomComponent implements OnInit {
                 verticalPosition: "bottom"
               });
             }
-            this.dialogRef.close(null);
+            this.dialogRef.close('done');
           });
         }
         else {
