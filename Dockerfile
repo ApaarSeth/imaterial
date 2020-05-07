@@ -1,13 +1,65 @@
-FROM node:latest as node
-WORKDIR /app
-COPY package.json /app
+# ============================================================================= 
+# Build image
+# ============================================================================= 
+
+FROM node:13.13.0-alpine as build
+WORKDIR /opt/node/
+COPY . /opt/node/
 RUN npm install
 RUN npm install -g @angular/cli@8.3.21
-COPY . /app/
 RUN npm run build
-# RUN npm run build -- --prod
-# RUN npm run build --configuration=production
-# stage 2
+
+# ============================================================================= 
+# Deploy image
+# ============================================================================= 
+
 FROM nginx:alpine
-COPY --from=node /app/dist/imaterial /usr/share/nginx/html/
-COPY --from=node /app/nginx.conf /etc/nginx/conf.d/default.conf
+MAINTAINER Nikhil <nikhil.gupta@buildsupply.com> 
+
+# ----------------------------------------------------------------------------- 
+# Create new user and group
+# ------------------------------------------------------------------------------
+
+RUN adduser -D -g 'alpine' alpine
+
+# ----------------------------------------------------------------------------- 
+# Install 
+# ----------------------------------------------------------------------------- 
+  
+# ----------------------------------------------------------------------------- 
+# Copy content 
+# ----------------------------------------------------------------------------- 
+
+COPY --from=build /opt/node/dist/imaterial/ /usr/share/nginx/html/
+COPY buildScripts/nginx.conf /etc/nginx/conf.d/default.conf
+
+
+# ----------------------------------------------------------------------------- 
+# Change owner and permission 
+# ----------------------------------------------------------------------------- 
+
+
+RUN chown alpine:alpine /usr/share/nginx/html/ -R
+RUN chown alpine:alpine /etc/nginx/ -R
+RUN chown alpine:alpine /var/log/nginx/ -R
+RUN chmod 755 /var/log/nginx/ -R
+RUN chown alpine:alpine /var/cache/nginx/ -R
+RUN chown alpine:alpine /var/run/ -R
+
+# ----------------------------------------------------------------------------- 
+# Switch user
+# ----------------------------------------------------------------------------- 
+
+USER alpine
+
+WORKDIR /usr/share/nginx/html/
+
+# ----------------------------------------------------------------------------- 
+# Remove extra files 
+# ----------------------------------------------------------------------------- 
+
+# ----------------------------------------------------------------------------- 
+# Set ports 
+# ----------------------------------------------------------------------------- 
+
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
