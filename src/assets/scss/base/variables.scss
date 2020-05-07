@@ -339,8 +339,8 @@ a:hover {
   }
 }
 .add-grn-responsive-div {
-  max-height: 220px; 
-  overflow-y: scroll;
+  max-height: 270px; 
+  overflow-y: auto;
   .add-edit-grn-popup-accordian.mat-accordion {
     .mat-expansion-panel-header {
       min-height: 72px;
@@ -373,7 +373,7 @@ a:hover {
 @media only screen and (min-width: 576px) {
   .add-grn-responsive-div {
     max-height: 220px;
-    overflow-y: scroll;
+    overflow-y: auto;
     .add-edit-grn-popup-accordian.mat-accordion {
       .mat-expansion-panel-header {
         min-height: 72px;
