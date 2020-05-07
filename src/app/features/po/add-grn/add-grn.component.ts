@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { GRNDetails } from 'src/app/shared/models/grn';
+import { GRNDetails, GRNList } from 'src/app/shared/models/grn';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GRNService } from 'src/app/shared/services/grn/grn.service';
 import { Validators, FormArray, FormGroup, FormControl, FormBuilder } from '@angular/forms';
@@ -59,8 +59,9 @@ export class AddGRNComponent implements OnInit {
     });
   }
 
-  postGRNDetails(grnDetailsObj: GRNDetails[]) {
-    this.grnService.addGRN(grnDetailsObj).then(data => {
+  postGRNDetails(formValues: GRNDetails[]) {
+    this.grnDetailsObj.GrnList = formValues;
+    this.grnService.addGRN(this.grnDetailsObj).then(data => {
       this.route.navigate(['po']);
     })
   }

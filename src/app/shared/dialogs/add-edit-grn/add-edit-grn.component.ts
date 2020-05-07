@@ -5,8 +5,7 @@ import { GRNService } from "../../services/grn/grn.service";
 import { GRNDetails, GRNPopupData, GRNList } from "../../models/grn";
 import { AppNavigationService } from '../../services/navigation.service';
 import { DocumentList } from '../../models/PO/po-data';
-import { GRNDocumentsComponent } from './grn-documents.component';
-
+import { GRNDocumentsComponent } from './grn-documents/grn-documents.component';
 export interface City {
   value: string;
   viewValue: string;
