@@ -26,7 +26,7 @@ import { UserDashboardModule } from "./features/users/user-dashboard.module";
 import { UserDataGuardService } from "./shared/guards/user-data.guards";
 import { RouterModule } from '@angular/router';
 import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
-import { HeaderSharedModule } from './shared/layout/header/header-shared.module';
+import { HeaderSharedModule } from './shared/header/header-shared.module';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -39,6 +39,7 @@ import { PICK_FORMATS, PickDateAdapter } from './shared/services/date.service';
 import { TwoDigitDecimaNumberDirective } from './shared/directives/appTwoDigit';
 import { OnlyNumberDirective } from './shared/directives/number-only2.directive';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [

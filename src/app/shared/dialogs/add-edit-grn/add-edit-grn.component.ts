@@ -28,7 +28,7 @@ export class AddEditGrnComponent implements OnInit {
   @Input("documentListLength") public documentListLength: number;
   @Input("documentData") documentData: DocumentList[];
   @ViewChild("grnDocument", { static: false }) grnDocument: GRNDocumentsComponent;
-  grnDetailsObj: GRNList = { GrnList : [] , DocumentsList : []};
+  grnDetailsObj: GRNList = { GrnList: [], DocumentsList: [] };
   grnDetails: GRNDetails;
   grnId: number;
   dataSource: GRNDetails[];
@@ -41,7 +41,7 @@ export class AddEditGrnComponent implements OnInit {
   valid: boolean;
   status: boolean = false;
   showtable: boolean;
-
+  documentList
   constructor(
     private grnService: GRNService,
     private navService: AppNavigationService,
@@ -58,7 +58,7 @@ export class AddEditGrnComponent implements OnInit {
       this.dataSource = res.data;
       this.formsInit();
     });
-     window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event('resize'));
 
     this.purchaseOrderId = this.data.pID;
   }
@@ -95,26 +95,26 @@ export class AddEditGrnComponent implements OnInit {
     // });
   }
 
-  postGRNDetails(formValues : GRNDetails[]) {
+  postGRNDetails(formValues: GRNDetails[]) {
     this.grnDetailsObj.GrnList = formValues;
     this.grnDetailsObj.DocumentsList = this.grnDocument.getData();
     console.log(this.grnDetailsObj);
     this.grnService.addGRN(this.grnDetailsObj).then(data => {
 
-        this._snackBar.open(data.message, "", {
-          duration: 2000, panelClass: ["success-snackbar"],
-          verticalPosition: "bottom"
-        });
-        this.dialogRef.close(data);
+      this._snackBar.open(data.message, "", {
+        duration: 2000, panelClass: ["success-snackbar"],
+        verticalPosition: "bottom"
+      });
+      this.dialogRef.close(data);
 
-        if ( data.status == 1 ){
-          this.navService.gaEvent({
-            action: 'submit',
-            category: 'add_grn',
-            label: null,
-            value: null
-          });
-        }
+      if (data.status == 1) {
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'add_grn',
+          label: null,
+          value: null
+        });
+      }
 
     });
   }
@@ -165,15 +165,15 @@ export class AddEditGrnComponent implements OnInit {
     });
   }
 
- @HostListener('window:resize', ['$event'])
-      sizeChange(event) {
-       if(event.currentTarget.innerWidth >= 962){
-          this.showtable = true;
-        }else{
-        this.showtable = false;
-        }
+  @HostListener('window:resize', ['$event'])
+  sizeChange(event) {
+    if (event.currentTarget.innerWidth >= 962) {
+      this.showtable = true;
+    } else {
+      this.showtable = false;
     }
-    
+  }
+
   closeDialog(): void {
     this.dialogRef.close(null);
   }

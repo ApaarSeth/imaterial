@@ -1,13 +1,13 @@
 import { Component, OnInit, Output, EventEmitter, SimpleChanges, Input } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
-import { PermissionService } from "../../services/permission.service";
+import { PermissionService } from "../services/permission.service";
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { HeaderConstants, ConfigurationConstants } from '../../constants/configuration-constants';
-import { FacebookPixelService } from '../../services/fb-pixel.service';
+import { HeaderConstants, ConfigurationConstants } from '../constants/configuration-constants';
+import { FacebookPixelService } from '../services/fb-pixel.service';
 import { IfStmt } from '@angular/compiler';
 import { MatSidenav } from '@angular/material';
-import { AppNavigationService } from '../../services/navigation.service';
+import { AppNavigationService } from '../services/navigation.service';
 @Component({
   selector: "app-header",
   templateUrl: "./header.html"
@@ -23,7 +23,7 @@ export class HeaderLayoutComponent implements OnInit {
   userId: number;
   @Input('menu') menu: MatSidenav;
   subsriptions: Subscription[] = [];
-  headerConst: { name: string, link: string }[]
+  headerConst: { name: string, link: string, flag: boolean }[]
 
   constructor(
     private permissionService: PermissionService,
@@ -74,19 +74,19 @@ export class HeaderLayoutComponent implements OnInit {
     }
     else if (url.includes('globalStore')) {
 
-        this.navService.gaEvent({
-          action: 'submit',
-          category: 'global_store',
-          label: null,
-          value: null
-        });
+      this.navService.gaEvent({
+        action: 'submit',
+        category: 'global_store',
+        label: null,
+        value: null
+      });
 
-        this.buttonName = 'Global Store';
+      this.buttonName = 'Global Store';
     }
     else if (url.includes('rfq')) {
       this.buttonName = 'Request For Quotation'
     }
-    else if (url.includes('user-detail')) {
+    else if (url.includes('users')) {
       this.buttonName = 'Users'
     }
     else if (url.includes('po')) {

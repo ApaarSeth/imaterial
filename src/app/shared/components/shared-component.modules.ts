@@ -7,8 +7,9 @@ import { ProjectItemComponent } from "./project-item/project-item.component";
 import { ChipComponent } from "./chip/chip.component";
 import { UploadComponent } from "./upload/upload.component";
 import { GlobalLoaderComponent } from './global-loader/global-loader.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
-const components = [ProjectItemComponent, ChipComponent, UploadComponent,  GlobalLoaderComponent];
+const components = [ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent];
 
 @NgModule({
   imports: [
@@ -23,4 +24,4 @@ const components = [ProjectItemComponent, ChipComponent, UploadComponent,  Globa
   entryComponents: [],
   exports: components
 })
-export class SharedComponentsModule {}
+export class SharedComponentsModule { }

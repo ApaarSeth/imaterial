@@ -6,11 +6,16 @@ import { BomTableComponent } from "./bom-table/bom-table.component";
 import { IssueToIndentResolver } from 'src/app/shared/dialogs/issue-to-indent/issue-to-indent-resolver';
 
 const routes: Routes = [
-  { path: "", component: BomComponent },
+  {
+    path: "", component: BomComponent
+  },
   {
     path: "bom-detail",
     // resolve: { issueToIndent: IssueToIndentResolver },
-    component: BomTableComponent
+    component: BomTableComponent,
+    data: {
+      breadcrumb: 'Detail'
+    }
   }
 ];
 

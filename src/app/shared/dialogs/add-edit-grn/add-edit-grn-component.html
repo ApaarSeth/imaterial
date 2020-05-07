@@ -23,12 +23,12 @@
             </div>
           </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="Brand Name">
           <th mat-header-cell *matHeaderCellDef>Brand Name</th>
           <td mat-cell *matCellDef="let element">{{ element.materialBrand }}</td>
         </ng-container>
-  
+
         <ng-container matColumnDef="Unit">
           <th mat-header-cell *matHeaderCellDef class="text-align-center">Unit</th>
           <td mat-cell *matCellDef="let element" class="text-align-center">
@@ -40,38 +40,38 @@
             </span>
           </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="Awarded Quantity">
           <th mat-header-cell *matHeaderCellDef class="text-align-center">Awarded Quantity</th>
           <td mat-cell *matCellDef="let element" class="text-align-center">
             {{ element.materialQuantity }}
           </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="Delivered Quantity">
           <th mat-header-cell *matHeaderCellDef class="text-align-center">Delivered Quantity</th>
           <td mat-cell *matCellDef="let element" class="text-align-center">
             {{ element.deliveredQty }}
           </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="Received Quantity">
           <th mat-header-cell *matHeaderCellDef>Received Quantity</th>
           <td mat-cell *matCellDef="let element;let i = index" class="border-input">
             <!-- <input matInput type="number" placeholder="Quantity"> -->
-  
+
             <mat-form-field [formGroupName]="i" class="border-input table-input">
               <input matInput formControlName="certifiedQty" type="text" placeholder="Received Quantity" min="0" appTwoDigitDecimaNumber />
             </mat-form-field>
             <!-- {{ element.certifiedQuantity }} -->
           </td>
         </ng-container>
-  
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
-  
+
     <div *ngIf="!showtable" formArrayName="forms" class="add-grn-responsive-div">
       <ng-container *ngFor="let data of dataSource; let i=index">
         <mat-accordion class="add-edit-grn-popup-accordian">
@@ -111,16 +111,15 @@
         <div class="p-1"></div>
       </ng-container>
     </div>
-  
+
     <grn-documents #grnDocument [documentData]="documentList"></grn-documents>
-  
-  
+
     <div mat-dialog-actions>
       <div class="col-sm-12 save-btn-add-edit-user-modal">
-        <button mat-raised-button (click)="closeDialog()" class="main-background-color main-button color-white pull-left">
+        <button mat-raised-button type="button" (click)="closeDialog()" class="main-background-color main-button color-white pull-left">
           Cancel
         </button>
-  
+
         <button mat-raised-button type="submit" class="main-background-color main-button color-white pull-right" [disabled]="!valueEntered()">
           Save
         </button>
@@ -128,4 +127,3 @@
     </div>
   </form>
 </div>
-

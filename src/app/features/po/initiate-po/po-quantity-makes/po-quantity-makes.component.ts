@@ -47,7 +47,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
         return subCat.projectMaterialList.map(item => {
           return this.formBuilder.group({
             materialUnitPrice: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
-            materialQty: [item.quantity, [Validators.required,this.quantityCheck(item.poAvailableQty)]],
+            materialQty: [item.quantity, [Validators.required, this.quantityCheck(item.poAvailableQty)]],
             brandNames: [item.makes],
             materialId: [item.materialId],
             fullfilmentDate: [item.dueDate]
@@ -63,7 +63,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       if (availableQuantity < control.value) {
         this._snackBar.open(
-          "Cannot add quantity greater than "+availableQuantity,
+          "Cannot add quantity greater than " + availableQuantity,
           "",
           {
             duration: 2000,
@@ -119,7 +119,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
         label: 'material name',
         value: null
       });
-      this.router.navigate(["/po/po-generate/" + res.data[0] + "/edit"]);
+      this.router.navigate(["./po-generate/" + res.data[0] + "/edit"]);
     });
   }
   sendDataBack() {
