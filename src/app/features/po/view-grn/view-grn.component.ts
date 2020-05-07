@@ -117,7 +117,7 @@ getNotifications(){
     }
     openDocuments(data){
         const dialogRef = this.dialog.open(ShowDocumentComponent, {
-            width: "300px",
+            width: "500px",
             data
         });
         dialogRef.afterClosed().toPromise().then(result => {
