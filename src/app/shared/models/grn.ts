@@ -1,3 +1,9 @@
+import { Documents } from './RFQ/rfq-view';
+
+export interface GRNList {
+  GrnList : GRNDetails[];
+  DocumentsList : Documents[];
+}
 export interface GRNDetails {
 
     purchaseOrderDetailId: number,

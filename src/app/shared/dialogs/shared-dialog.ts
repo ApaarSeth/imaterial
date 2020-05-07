@@ -28,6 +28,7 @@ import { DisplayProjectDetailsComponent } from './display-project-details/displa
 import { AddMyMaterialComponent } from './add-my-material/add-my-material.component';
 import { EditMyMaterialComponent } from './edit-my-material/edit-my-material.component';
 import { ReleaseNoteComponent } from './release-notes/release-notes.component';
+import { GRNDocumentsComponent } from './add-edit-grn/grn-documents.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -59,5 +60,6 @@ export const SharedDialogs = [
   AddMyMaterialBomComponent,
   AddMyMaterialComponent,
   EditMyMaterialComponent,
-  ReleaseNoteComponent
+  ReleaseNoteComponent,
+  GRNDocumentsComponent
 ];
