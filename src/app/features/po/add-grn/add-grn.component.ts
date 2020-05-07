@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { GRNDetails } from 'src/app/shared/models/grn';
+import { GRNDetails, GRNList } from 'src/app/shared/models/grn';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GRNService } from 'src/app/shared/services/grn/grn.service';
 import { Validators, FormArray, FormGroup, FormControl, FormBuilder } from '@angular/forms';
@@ -16,7 +16,7 @@ export class AddGRNComponent implements OnInit {
   grnDetails: GRNDetails;
   grnId: number;
   dataSource: GRNDetails[];
-
+  grnDetailsObj: GRNList = { GrnList : [] , DocumentsList : []};
   displayedColumns: string[] = [
     "Material Name",
     "Brand Name",
@@ -59,8 +59,11 @@ export class AddGRNComponent implements OnInit {
     });
   }
 
-  postGRNDetails(grnDetailsObj: GRNDetails[]) {
-    this.grnService.addGRN(grnDetailsObj).then(data => {
+  postGRNDetails(formValues: GRNDetails[]) {
+    this.grnDetailsObj.GrnList = formValues;
+   // this.grnDetailsObj.DocumentsList = this.grnDocument.getData();
+    console.log(this.grnDetailsObj);
+    this.grnService.addGRN(this.grnDetailsObj).then(data => {
       this.route.navigate(['po/detail-list']);
     })
   }
