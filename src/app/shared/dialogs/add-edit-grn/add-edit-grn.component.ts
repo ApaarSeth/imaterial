@@ -99,24 +99,24 @@ export class AddEditGrnComponent implements OnInit {
     this.grnDetailsObj.GrnList = formValues;
     this.grnDetailsObj.DocumentsList = this.grnDocument.getData();
     console.log(this.grnDetailsObj);
-    // this.grnService.addGRN(this.grnDetailsObj).then(data => {
+    this.grnService.addGRN(this.grnDetailsObj).then(data => {
 
-    //     this._snackBar.open(data.message, "", {
-    //       duration: 2000, panelClass: ["success-snackbar"],
-    //       verticalPosition: "bottom"
-    //     });
-    //     this.dialogRef.close(data);
+        this._snackBar.open(data.message, "", {
+          duration: 2000, panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+        this.dialogRef.close(data);
 
-    //     if ( data.status == 1 ){
-    //       this.navService.gaEvent({
-    //         action: 'submit',
-    //         category: 'add_grn',
-    //         label: null,
-    //         value: null
-    //       });
-    //     }
+        if ( data.status == 1 ){
+          this.navService.gaEvent({
+            action: 'submit',
+            category: 'add_grn',
+            label: null,
+            value: null
+          });
+        }
 
-    // });
+    });
   }
 
   // getGRNDetails(grnId: number) {
