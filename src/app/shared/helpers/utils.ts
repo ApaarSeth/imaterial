@@ -28,7 +28,7 @@ export class Utils {
     // }
     static baseUrl(): string {
 
-        return (window[ 'env' ] && window[ 'env' ][ 'api_url' ]) || 'https://api.yeho.ga/';
+        return (window[ 'env' ] && window[ 'env' ][ 'api_url' ]) || 'https://dev-api.buildsupply.io/';
 
     }
 
