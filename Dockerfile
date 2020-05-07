@@ -32,13 +32,13 @@ RUN adduser -D -g 'alpine' alpine
 
 COPY --from=build /opt/node/dist/imaterial/ /usr/share/nginx/html/
 COPY buildScripts/nginx.conf /etc/nginx/conf.d/default.conf
-COPY buildScripts/envsetup.sh /usr/share/nginx/html/
+
 
 # ----------------------------------------------------------------------------- 
 # Change owner and permission 
 # ----------------------------------------------------------------------------- 
 
-RUN chmod +x /usr/share/nginx/html/envsetup.sh
+
 RUN chown alpine:alpine /usr/share/nginx/html/ -R
 RUN chown alpine:alpine /etc/nginx/ -R
 RUN chown alpine:alpine /var/log/nginx/ -R
@@ -51,8 +51,6 @@ RUN chown alpine:alpine /var/run/ -R
 # ----------------------------------------------------------------------------- 
 
 USER alpine
-
-CMD /usr/share/nginx/html/envsetup.sh
 
 WORKDIR /usr/share/nginx/html/
 
