@@ -119,7 +119,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
         label: 'material name',
         value: null
       });
-      this.router.navigate(["./po-generate/" + res.data[0] + "/edit"]);
+      this.router.navigate(["/po/po-generate/" + res.data[0] + "/edit"]);
     });
   }
   sendDataBack() {

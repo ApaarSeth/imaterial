@@ -169,7 +169,7 @@ export class ReviewComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.statusCode === 201) {
-          this.router.navigate(["rfq/rfq-detail"]);
+          this.router.navigate(["rfq"]);
         }
       });
     }

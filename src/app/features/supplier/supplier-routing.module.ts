@@ -4,7 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { SupplierDetailComponent } from './supplier-details/supplier-details.component';
 const routes: Routes = [
   {
-    path: "detail",
+    path: "",
     component: SupplierDetailComponent
   }
 ];
