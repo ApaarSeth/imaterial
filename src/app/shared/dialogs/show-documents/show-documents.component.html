@@ -1,0 +1,34 @@
+
+  <div class="header-add-edit-dialog">
+      <h1 mat-dialog-title>Attached Documents</h1>
+      <button type="button" class="close" (click)="onNoClick()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+  </div>
+
+<div mat-dialog-content *ngIf="data">
+  <div class="row display-flex justify-content-center">
+    <!-- Documents -->
+  
+      <ng-container class="files-list"*ngFor="let file of documentList">
+      <div class="display-flex width94Percent justify-content-space-between">
+          <div class="documents-name p-t-10">
+            <img class="file-icon" src="../../../../assets/images/file-doc.png" />
+            <span class="word-break-all">{{ file.DocumentDesc }}</span>
+          </div>
+
+          <div class="show-download">
+            <!-- <img src="../../../../assets/images/download-po.png" (click)="downloadURI(file.DocumentUrl,file.DocumentDesc)"/> -->
+              <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
+              <i class="material-icons">
+                remove_red_eye
+              </i>
+            </a>
+          </div>
+      </div>
+      </ng-container>
+
+    
+        </div>
+      </div>
+   

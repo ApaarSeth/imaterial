@@ -114,6 +114,10 @@ input {
   display: flex;
 }
 
+.display-flex-important{
+  display: flex !important;
+}
+
 .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button .mat-icon {
   font-size: 30px !important;
   color: $icon-color-gray;
@@ -320,9 +324,22 @@ a:hover {
     left: -5%;
   }
 }
-
+.color-6d6a6a{
+  color:#6d6a6a !important;
+}
+.text-decoration-underline{
+  text-decoration: underline;
+}
+.padd-box-none{
+  padding : 0 !important;
+  box-shadow: none !important;
+  .upload-documents-mat-header{
+    padding: 0px !important;
+    overflow-x: hidden;
+  }
+}
 .add-grn-responsive-div {
-  max-height: 400px;
+  max-height: 220px; 
   overflow-y: scroll;
   .add-edit-grn-popup-accordian.mat-accordion {
     .mat-expansion-panel-header {
@@ -355,7 +372,7 @@ a:hover {
 
 @media only screen and (min-width: 576px) {
   .add-grn-responsive-div {
-    max-height: 400px;
+    max-height: 220px;
     overflow-y: scroll;
     .add-edit-grn-popup-accordian.mat-accordion {
       .mat-expansion-panel-header {
@@ -460,7 +477,9 @@ a:hover {
 .width96Percent {
   width: 96%;
 }
-
+.width94Percent{
+  width: 94%;
+}
 .width98Percent {
   width: 98%;
 }

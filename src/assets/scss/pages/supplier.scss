@@ -297,7 +297,30 @@ body {
 .files-list {
   font-size: 12px;
 }
-
+.grn-responsive-file-list{
+  max-height: 175px;
+  overflow-y: auto;
+  font-size : 12px;
+}
+.grn-responsive-file-list-down{
+  max-height: 75px;
+  overflow-y: auto;
+}
+@media only screen and (max-height: 450px){
+  .add-grn-responsive-div{
+    max-height: 175px;
+    overflow-y: auto;
+  }
+  .grn-responsive-file-list{
+    max-height: 75px;
+    overflow-y: auto;
+    font-size : 12px;
+  }
+  .grn-responsive-file-list-down{
+    max-height: 100%;
+    overflow-y: hidden;
+  }
+}
 .show-detail-qty:hover #detail-qty {
   display: block;
 }

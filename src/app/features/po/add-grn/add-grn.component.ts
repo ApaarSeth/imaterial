@@ -16,7 +16,7 @@ export class AddGRNComponent implements OnInit {
   grnDetails: GRNDetails;
   grnId: number;
   dataSource: GRNDetails[];
-
+  grnDetailsObj: GRNList = { GrnList: [], DocumentsList: [] };
   displayedColumns: string[] = [
     "Material Name",
     "Brand Name",
