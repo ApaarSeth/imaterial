@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class UploadComponent implements OnInit {
   fileToUpload: FileList;
+  @Input("grnResponsive") public grnResponsive: boolean;
   @Input() documentListLength: number;
   fileTypes : string[] = ['pdf', 'doc', 'docx', 'jpeg', 'png', 'jpg'];
 
