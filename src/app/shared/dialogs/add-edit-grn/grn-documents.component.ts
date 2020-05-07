@@ -66,7 +66,7 @@ export class GRNDocumentsComponent implements OnInit {
         let subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
           this.documentsName.push(subFileName);
           this.documentList.push({
-            documentType: "RFQ",
+            documentType: "GRN",
             DocumentDesc: subFileName,
             DocumentUrl: res.data.fileName,
             documentName: subFileName,

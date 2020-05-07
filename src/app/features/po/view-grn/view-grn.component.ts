@@ -9,6 +9,9 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { POService } from 'src/app/shared/services/po/po.service';
 import { POData } from 'src/app/shared/models/PO/po-data';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { ShowDocumentComponent } from 'src/app/shared/dialogs/show-documents/show-documents.component';
+
+
 
 @Component({
     selector: "view-grn",
@@ -112,7 +115,17 @@ getNotifications(){
         };
         this.openDialog(data);
     }
-
+    openDocuments(data){
+        const dialogRef = this.dialog.open(ShowDocumentComponent, {
+            width: "300px",
+            data
+        });
+        dialogRef.afterClosed().toPromise().then(result => {
+            if (result) {
+                this.getGRNDetails(this.poId);
+            }
+        });
+    }
     openDialog(data: GRNPopupData): void {
         if (data.isDelete == false) {
             const dialogRef = this.dialog.open(AddEditGrnComponent, {
