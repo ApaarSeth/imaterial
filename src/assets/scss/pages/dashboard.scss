@@ -320,17 +320,20 @@ body,
   }
 }
 .app-dashboard {
-  margin-top: 173px;
+ // margin-top: 173px;
+  margin-top: 160px;
   margin-bottom: 4px;
 }
 
 @media only screen and (max-width: 958px) {
   .app-dashboard {
-    margin-top: 56px;
-    margin-bottom: 4px;
+   // margin-top: 56px;
+   margin-top: 78px;
+   margin-bottom: 4px;
   }
   .page-start-point {
-    padding-top: 65px !important;
+   // padding-top: 65px !important;
+    padding-top: 84px !important;
     height: 100%;
     overflow-x: hidden;
   }
