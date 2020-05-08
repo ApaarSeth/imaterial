@@ -791,7 +791,12 @@ mat-icon {
     max-height: 75px;
     overflow-y: auto;
   }
-
+  .grn-doc{
+    .mat-list-item-content{
+      padding: 0px !important;
+    }
+  }
+  
   .header-project-menu .main-div-bell.mat-menu-item {
     max-height: 250px;
   }

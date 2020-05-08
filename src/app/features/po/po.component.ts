@@ -288,7 +288,7 @@ export class PoComponent implements OnInit {
             verticalPosition: "bottom"
           }
         );
-        this.router.navigate(["po/detail-list"]);
+        this.router.navigate(["po"]);
       }
     });
   }

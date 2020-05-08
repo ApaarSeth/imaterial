@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div>
+<div class="p-t-10">
   <form *ngIf="materialForms" [formGroup]="materialForms" (ngSubmit)="addGrn()">
     <div *ngIf="showtable" formArrayName="forms" class="add-grn-container-popup mat-elevation-z8 form-add-edit-grn-div">
       <table mat-table [dataSource]="dataSource">

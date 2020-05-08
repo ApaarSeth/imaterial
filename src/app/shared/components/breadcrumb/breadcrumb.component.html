@@ -1,10 +1,10 @@
 <ol class="breadcrumb">
   <li>
-    <span [routerLink]="['/dashboard']"> Home </span>
+    <span class="cursor-pointer font-size-vary-grn" [routerLink]="['/dashboard']"> Home </span>
   </li>
   <ng-container *ngFor="let breadcrumb of breadcrumbs">
     <li *ngIf="breadcrumbs[0].label !== 'Dashboard'">
-      <span [routerLink]="breadcrumb.url"> {{ breadcrumb.label }} </span>
+      <span class="cursor-pointer font-size-vary-grn" [routerLink]="breadcrumb.url"> {{ breadcrumb.label }} </span>
     </li>
   </ng-container>
 </ol>
