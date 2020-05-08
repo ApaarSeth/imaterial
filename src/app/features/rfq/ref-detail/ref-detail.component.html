@@ -17,50 +17,20 @@
     </div>
   </div>
 
-  <div class="dashboard-unique p-b-20 min-height parent" *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp">
+  <div class="create-po-dashboard p-b-20 min-height parent" *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp">
     <div class="row">
-      <div class="col-xs-12">
-        <!-- <mat-card>
-          <div class="row">
-            <div class="right-pipe" style="width: 20%;">
-              <span class="p-l-30 p-r-20 pull-left">23</span>
-              <span class="pull-left">Low Stock Material</span>
-            </div>
-            <div class="right-pipe" style="width: 20%;">
-              <span class="p-l-10 p-r-20 pull-left">23</span>
-              <span class="pull-left">Low Stock Material</span>
-            </div>
-            <div class="right-pipe" style="width: 20%;">
-              <span class="p-l-10 p-r-20 pull-left">23</span>
-              <span class="pull-left">Low Stock Material</span>
-            </div>
-            <div class="right-pipe" style="width: 20%;">
-              <span class="p-l-10 p-r-20 pull-left">23</span>
-              <span class="pull-left">Low Stock Material</span>
-            </div>
-            <div style="width: 20%;">
-              <span class="p-l-10 p-r-20 pull-left">23</span>
-              <span class="pull-left">Low Stock Material</span>
-            </div>
-          </div>
-        </mat-card> -->
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-3">
-        <mat-form-field class="example-form-field border-input p-l-20">
+      <div class="col-xs-7">
+        <mat-form-field class="example-form-field border-input project ">
           <input matInput placeholder="Search RFQ" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
         </mat-form-field>
       </div>
-      <div class="col-xs-9">
-        <div class="text-right add-user-details-button-right p-t-10 p-r-20">
-          <button mat-raised-button class="main-background-color main-button color-white m-b-5" (click)="createRfq()">
+      <div class="text-right col-xs-5 create-po-btn p-r-20 p-t-10">
+          <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="createRfq()">
             Create RFQ
           </button>
-        </div>
       </div>
     </div>
 

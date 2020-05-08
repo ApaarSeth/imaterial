@@ -544,8 +544,6 @@
 }
 }
 
-
-
 .add-unique-container {
   width: 100%;
   min-width: 0px;
@@ -572,4 +570,12 @@
 .mat-header-row {
     display: table-row;
 }
+}
+
+@media only screen and (max-width : 900px){
+  .raise-indent-table{
+    .mat-table .mat-cell{
+        height: 58px !important;
+    }
+  }
 }
