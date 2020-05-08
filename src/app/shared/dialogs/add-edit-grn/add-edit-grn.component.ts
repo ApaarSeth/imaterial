@@ -143,7 +143,7 @@ export class AddEditGrnComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       if (control.value > deliverableQty) {
         this._snackBar.open(
-          "Certified quantity cannot be greater than delivered qty",
+          "Received quantity cannot be greater than delivered qty",
           "",
           {
             duration: 2000,

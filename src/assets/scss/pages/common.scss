@@ -100,9 +100,10 @@ div.limited-character.universal {
   font-size: 0.9em;
   margin: 0;
   padding: 0px 0px 0px 17px !important;
-  background-color: #ffffff;
+  //background-color: #ffffff;
   span {
-    color: #192135;
+   color: #565655;
+    outline: none;
   }
   a:hover,
   span:hover {
@@ -113,12 +114,13 @@ div.limited-character.universal {
     list-style: none;
     float: left;
     margin: 5px;
+    outline: none;
   }
   li:last-child {
     margin-right: 20px;
   }
   li::after {
-    content: "->";
+    content: "/";
     color: darkgrey;
   }
   li:last-child::after {

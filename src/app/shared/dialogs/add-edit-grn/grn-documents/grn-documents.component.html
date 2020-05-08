@@ -29,7 +29,7 @@
         <span *ngIf="documentList.length > 0">
           <div *ngIf="showResponsive" class="font-size16 p-l-15 color-6d6a6a"> Uploaded Documents </div>
           <div class="grn-responsive-file-list-down">
-            <mat-list-item class="files-list" *ngFor="let file of documentList; let i = index">
+            <mat-list-item class="files-list grn-doc" *ngFor="let file of documentList; let i = index">
               <!-- <mat-icon>file_copy</mat-icon> -->
               <img class="file-icon" src="../../../../assets/images/file-doc.png" />
               <span class="color-6d6a6a">{{ file.documentName }}</span>
