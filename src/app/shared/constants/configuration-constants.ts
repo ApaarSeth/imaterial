@@ -22,7 +22,7 @@ export const HeaderConstants = {
       { name: 'Users', link: '/users/', image: '../../../assets/images/user-hamburger.svg', flag: permissionObj.usersFlag },
       { name: 'Purchase Order', link: '/po', image: '../../../assets/images/po-hamburger.svg', flag: permissionObj.purchaseOrderFlag },
       { name: 'Supplier', link: '/supplier', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.supplierFlag },
-      { name: 'My Materials', link: '/myMaterial', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.rfqFlag }
+      { name: 'My Materials', link: '/myMaterial', image: '../../../assets/images/my-materials-hamburger.svg', flag: permissionObj.rfqFlag }
 
     ]
 
