@@ -48,7 +48,7 @@
         </div> -->
  <div class="row">
       <div [ngClass]="!showResponsiveDesign ? 'col-xs-6 col-md-3' : 'col-xs-12'" *ngIf="!showResponsiveDesign">
-        <mat-form-field class="example-form-field border-input p-l-20">
+        <mat-form-field class="example-form-field border-input">
           <input matInput placeholder="Search Suppliers" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
