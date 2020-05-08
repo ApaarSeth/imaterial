@@ -42,7 +42,7 @@ export class RefDetailComponent implements OnInit {
 
       this.submittedRfqList.filterPredicate = (data, filterValue) => {
         const dataStr =
-          data.rfqName +
+          (data.rfqName != null) ? data.rfqName.toLowerCase() :'' +
           data.createdAt.toString() +
           data.rfqDueDate.toString() +
           data.projectCount.toString() +
@@ -51,13 +51,15 @@ export class RefDetailComponent implements OnInit {
       };
 
       this.nonSubmittedRfqList.filterPredicate = (data, filterValue) => {
-        const dataStr =
-          data.rfqName +
+        if(data){
+          const dataStr =
+          (data.rfqName != null) ? data.rfqName.toLowerCase() :'' +
           data.createdAt.toString() +
-          data.rfqDueDate.toString() +
+        //  data.rfqDueDate.toString() +
           data.projectCount.toString() +
           data.materialCount.toString();
         return dataStr.indexOf(filterValue) != -1;
+        }
       };
     });
       this.getNotifications();
