@@ -12,7 +12,7 @@ import { TokenService } from "./shared/services/token.service";
 import { GlobalLoaderService } from "./shared/services/global-loader.service";
 import { LayoutModule } from "./shared/layout/layout-module";
 import { DashBoardResolver } from "./features/dashboard/resolver/dashboard.resolver";
-import { BomResolver } from "./features/bom/bom.resolver";
+import { BomResolver } from "./features/dashboard/bom/bom.resolver";
 import { RFQResolver } from "./features/rfq/resolver/rfq.resolver";
 import { PODetailListResolver } from "./features/po/resolver/po-detail-list-resolver";
 import { AuthLayoutComponent } from "./shared/layout/auth-layout/auth-layout.component";

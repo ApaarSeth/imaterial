@@ -46,7 +46,7 @@
   </div>
 </form>
 <mat-accordion *ngIf="poDetails" class="accordion-padding-zero">
-  <form [formGroup]="materialForm">
+  <form *ngIf="poDetails.length" [formGroup]="materialForm">
     <mat-expansion-panel class="myPanel" [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>

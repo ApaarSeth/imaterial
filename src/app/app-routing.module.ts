@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { DashboardComponent } from "./features/dashboard/dashboard.component";
-import { BomResolver } from "./features/bom/bom.resolver";
+import { BomResolver } from "./features/dashboard/bom/bom.resolver";
 import { AuthLayoutComponent } from "./shared/layout/auth-layout/auth-layout.component";
 import { MainLayoutComponent } from "./shared/layout/main-layout/main-layout.component";
 import { NotFoundComponent } from "./features/not-found/not-found.component";
@@ -66,10 +66,11 @@ const routes: Routes = [
     children: [
       {
         path: "project-dashboard",
-        component: DashboardComponent,
-        data: { title: 'Project Dashboard', breadcrumb: 'Project-Store' }
-        // resolve: { dashBoardData: DashBoardResolver }
+        data: { title: 'Project Dashboard', breadcrumb: 'Project Store' },
+        loadChildren: () =>
+          import("./features/dashboard/dashboard.module").then(m => m.DashboardModule)
       },
+      // resolve: { dashBoardData: DashBoardResolver }
       {
         path: 'profile-account',
         component: ProfileComponent,
@@ -80,13 +81,13 @@ const routes: Routes = [
         component: AppDashboardComponent,
         data: { title: 'Dashboard', breadcrumb: 'Dashboard' }
       },
-      {
-        path: "bom/:id",
-        resolve: { bomCategory: BomResolver },
-        data: { breadcrumb: 'BOM' },
-        loadChildren: () =>
-          import("./features/bom/bom.module").then(m => m.BomModule)
-      },
+      // {
+      //   path: "bom/:id",
+      //   resolve: { bomCategory: BomResolver },
+      //   data: { breadcrumb: 'BOM' },
+      //   loadChildren: () =>
+      //     import("./features/bom/bom.module").then(m => m.BomModule)
+      // },
       {
         path: "indent/:id",
         data: { breadcrumb: 'Indent' },
@@ -133,7 +134,7 @@ const routes: Routes = [
       },
       {
         path: "myMaterial",
-        data: { breadcrumb: 'My Material' },
+        data: { breadcrumb: 'My Materials ' },
         loadChildren: () =>
           import("./features/my-material/myMaterial.module").then(
             m => m.MyMaterialModule

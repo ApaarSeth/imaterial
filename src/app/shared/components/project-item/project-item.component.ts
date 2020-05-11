@@ -70,9 +70,9 @@ export class ProjectItemComponent implements OnInit {
 
   navigationToBOM(id: number, projectDetails: ProjectDetails) {
     if (projectDetails.matCount > 0) {
-      this.router.navigate(["/bom/" + id + "/bom-detail"]);
+      this.router.navigate(["/project-dashboard/bom/" + id + "/bom-detail"]);
     } else {
-      this.router.navigate(["/bom/" + id], { state: { projectDetails } });
+      this.router.navigate(["/project-dashboard/bom/" + id], { state: { projectDetails } });
     }
   }
 
