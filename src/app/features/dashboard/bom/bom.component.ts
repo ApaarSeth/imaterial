@@ -38,8 +38,7 @@ import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-materia
 import { CommonService } from 'src/app/shared/services/commonService';
 @Component({
   selector: "app-bom",
-  templateUrl: "./bom.component.html",
-  styleUrls: ["../../../assets/scss/main.scss"]
+  templateUrl: "./bom.component.html"
 })
 export class BomComponent implements OnInit {
   Object = Object;

@@ -7,6 +7,13 @@ import { CommonModule } from "@angular/common";
 import { AppSharedModule } from "src/app/shared/app-shared-module";
 import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
+import { DashboardRoutingModule } from './dashboard-routing.module';
+import { BomComponent } from './bom/bom.component';
+import { BomTopMaterialComponent } from './bom/bom-topMaterial/bom-topMaterial.component';
+import { BOMAllMaterialComponent } from './bom/bom-allMaterial/bom-allMaterial.component';
+import { BomTableComponent } from './bom/bom-table/bom-table.component';
+import { BomMyMaterialComponent } from './bom/bom-myMaterial/bom-myMaterial.component';
+import { SharedComponentsModule } from 'src/app/shared/components/shared-component.modules';
 
 @NgModule({
   imports: [
@@ -17,9 +24,15 @@ import { RouterModule } from "@angular/router";
     ReactiveFormsModule,
     MatInputModule,
     RouterModule,
-    AppSharedModule
+    AppSharedModule,
+    DashboardRoutingModule,
+    SharedComponentsModule
   ],
   providers: [],
-  declarations: [DashboardComponent]
+  declarations: [DashboardComponent, BomComponent,
+    BomTopMaterialComponent,
+    BOMAllMaterialComponent,
+    BomTableComponent,
+    BomMyMaterialComponent]
 })
-export class DashboardModule {}
+export class DashboardModule { }

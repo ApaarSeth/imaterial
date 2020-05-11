@@ -326,7 +326,7 @@ export class BomTableComponent implements OnInit {
     }
   }
   addMaterial() {
-    this.router.navigate(["/bom/" + this.projectId]);
+    this.router.navigate(["/project-dashboard/bom/" + this.projectId]);
 
   }
 

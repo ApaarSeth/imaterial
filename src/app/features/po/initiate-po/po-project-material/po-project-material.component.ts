@@ -25,7 +25,7 @@ export class PoProjectMaterialComponent implements OnInit {
   materialForm: FormGroup;
   allProjects: ProjectDetails[];
   projectIds: number;
-  poDetails: RfqMaterialResponse[];
+  poDetails: RfqMaterialResponse[] = [];
   searchProject: string;
   searchMaterial: string;
   constructor(private poService: POService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) { }
@@ -61,12 +61,17 @@ export class PoProjectMaterialComponent implements OnInit {
   choosenProject(event) {
     this.projectIds = this.form.value.selectedProject.projectId;
     this.poService.projectMaterials(this.projectIds).then(res => {
-      this.poDetails = [...res.data];
-      this.poDetails.map((project: RfqMaterialResponse) => {
-        let proj = this.getCheckedMaterial(project);
-        return proj;
-      })
-      this.materialsForm();
+      if (res.data) {
+        this.poDetails = [...res.data];
+        this.poDetails.map((project: RfqMaterialResponse) => {
+          let proj = this.getCheckedMaterial(project);
+          return proj;
+        })
+        this.materialsForm();
+      }
+      else {
+        this.poDetails = [];
+      }
     });
   }
   checkExistingData() {
