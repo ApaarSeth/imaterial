@@ -61,7 +61,7 @@ export class RfqSupplierComponent implements OnInit {
     this.rfqData = this.finalRfq;
     if (this.rfqData) {
       this.allSuppliers = this.allSuppliers.map((supplier: Suppliers) => {
-        if (this.finalRfq.supplierId.includes(supplier.supplierId)) {
+        if (this.finalRfq.supplierId && this.finalRfq.supplierId.includes(supplier.supplierId)) {
           supplier.checked = true;
           this.supplierCounter++;
         }

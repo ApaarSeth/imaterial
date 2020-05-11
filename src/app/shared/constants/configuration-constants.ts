@@ -16,13 +16,13 @@ export const HeaderConstants = {
   PERMISSIONHEADER: (permissionObj, orgId) => {
     return [
       { name: 'Dashboard', link: '/dashboard', image: '../../../assets/images/dashboard-hamburger.svg', flag: true },
-      { name: 'Project Store', link: '/project-dashboard', image: '../../../assets/images/Add-Project-hamburger.svg', flag: permissionObj.projectStoreFlag },
       { name: 'Global Store', link: '/globalStore/' + orgId, image: '../../../assets/images/global-store-hamburger.svg', flag: permissionObj.globalStoreFlag },
+      { name: 'Project Store', link: '/project-dashboard', image: '../../../assets/images/Add-Project-hamburger.svg', flag: permissionObj.projectStoreFlag },
       { name: 'Request For Quotation', link: '/rfq', image: '../../../assets/images/create-RFQ-hambuger.svg', flag: permissionObj.rfqFlag },
-      { name: 'Users', link: '/users/', image: '../../../assets/images/user-hamburger.svg', flag: permissionObj.usersFlag },
       { name: 'Purchase Order', link: '/po', image: '../../../assets/images/po-hamburger.svg', flag: permissionObj.purchaseOrderFlag },
+      { name: 'My Materials', link: '/myMaterial', image: '../../../assets/images/my-materials-hamburger.svg', flag: permissionObj.rfqFlag },
       { name: 'Supplier', link: '/supplier', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.supplierFlag },
-      { name: 'My Materials', link: '/myMaterial', image: '../../../assets/images/my-materials-hamburger.svg', flag: permissionObj.rfqFlag }
+      { name: 'Users', link: '/users/', image: '../../../assets/images/user-hamburger.svg', flag: permissionObj.usersFlag }
 
     ]
 

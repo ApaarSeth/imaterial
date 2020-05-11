@@ -20,6 +20,7 @@ import {
 import { MatDialog, MatCheckbox } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-rfq-project-materials",
@@ -59,7 +60,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private commonService: CommonService
   ) { }
   form: FormGroup;
 
@@ -272,9 +274,21 @@ export class RfqProjectMaterialsComponent implements OnInit {
               if (project.projectId === rfqDetail.projectId) {
                 let materialAddedFlag = false;
                 project.projectMaterialList.forEach((mat: RfqMat) => {
+                  let fullfilmentDate = null;
                   if (mat.materialId === element.material.materialId) {
                     // mat.fullfilmentDate = element.material.dueDate;
-                    projectMaterial.push({ ...mat, fullfilmentDate: mat.fullfilmentDate ? mat.fullfilmentDate : null });
+                    if (mat.fullfilmentDate === "" || mat.fullfilmentDate === null) {
+                      fullfilmentDate = null;
+                    }
+                    else {
+                      let date = new Date(this.commonService.formatDate(mat.fullfilmentDate))
+                      let dummyMonth = date.getMonth() + 1;
+                      const year = date.getFullYear().toString();
+                      const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+                      const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+                      fullfilmentDate = year + "-" + month + "-" + day;
+                    }
+                    projectMaterial.push({ ...mat, fullfilmentDate });
                     materialAddedFlag = true;
                   }
                 })
