@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from "../../../environments/environment";
+import { Utils } from '../helpers/utils';
 @Injectable({ providedIn: "root" })
 
 export class FacebookPixelService {
     constructor() { }
     load() {
-        if (environment.production) {
+        if (Utils.isLive()) {
 
             (function (f: any, b, e, v, n, t, s) {
                 if (f.fbq) return; n = f.fbq = function () {
@@ -24,7 +25,7 @@ export class FacebookPixelService {
     }
 
     fire(eventName) {
-        if (environment.production) {
+        if (Utils.isLive()) {
             const win = window as any;
             if (win.fbq) {
                 (window as any).fbq('track', eventName);
