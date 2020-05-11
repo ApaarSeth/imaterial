@@ -26,11 +26,12 @@ export class SignInSignUpComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.fbPixel.load();
+    this.fbPixel.load(); 
     this.fbPixel.fire('PageView');
     if (localStorage.getItem("accessToken")) {
       this.router.navigate(['/dashboard'])
     }
+    
     this._activatedRoute.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       this.index = this.uniqueCode ? 1 : 0;
