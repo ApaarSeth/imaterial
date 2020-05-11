@@ -16,7 +16,7 @@ const routes: Routes = [
         // resolve: { issueToIndent: IssueToIndentResolver },
         component: BomTableComponent,
         data: {
-            breadcrumb: 'Detail'
+            breadcrumb: 'BOM-Detail'
         }
     }
 ];
