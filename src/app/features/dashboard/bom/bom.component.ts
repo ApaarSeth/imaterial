@@ -426,7 +426,7 @@ export class BomComponent implements OnInit {
           label: 'material name',
           value: null
         });
-        this.router.navigate(["bom/" + this.projectId + "/bom-detail"]);
+        this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
       });
   }
 
