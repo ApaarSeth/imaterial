@@ -139,7 +139,8 @@ export class PODetailComponent implements OnInit {
         data.approvedOn +
         data.poAmount.toString() +
         data.poName +
-        data.poNumber.toString() +
+        data.supplierName.toLowerCase() +
+        data.poNumber.toString().trim().toLowerCase() +
         data.totalMaterials.toString() +
         data.poStatus +
         data.approvedBy;
@@ -151,7 +152,8 @@ export class PODetailComponent implements OnInit {
         data.approvedOn +
         data.poAmount.toString() +
         data.poName +
-        data.poNumber.toString() +
+        data.supplierName.toLowerCase() +
+        data.poNumber.toString().trim().toLowerCase() +
         data.totalMaterials.toString() +
         data.poStatus +
         data.approvedBy;
@@ -163,7 +165,8 @@ export class PODetailComponent implements OnInit {
         data.approvedOn +
         data.poAmount.toString() +
         data.poName +
-        data.poNumber.toString() +
+        data.supplierName.toLowerCase() +
+        data.poNumber.toString().trim().toLowerCase() +
         data.totalMaterials.toString() +
         data.poStatus +
         data.approvedBy;
