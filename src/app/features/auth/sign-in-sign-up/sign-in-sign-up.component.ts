@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { SignupComponent } from '../signup/signup.component';
+import { FacebookPixelService } from "../../../shared/services/fb-pixel.service";
 
 export interface OrganisationType {
   value: string;
@@ -20,10 +21,13 @@ export class SignInSignUpComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private fbPixel: FacebookPixelService
   ) { }
 
   ngOnInit() {
+    this.fbPixel.load();
+    this.fbPixel.fire('PageView');
     if (localStorage.getItem("accessToken")) {
       this.router.navigate(['/dashboard'])
     }
