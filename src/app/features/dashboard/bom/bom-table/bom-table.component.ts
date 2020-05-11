@@ -222,6 +222,7 @@ export class BomTableComponent implements OnInit {
       mat.materialName = category.materialName;
       mat.requestedQty = category.requestedQuantity;
       mat.estimatedQty = category.estimatedQty;
+      mat.estimatedRate = category.estimatedRate;
       mat.dueDate = category.dueDate;
       mat.fullfilmentDate = String(category.dueDate) === "" ? null : String(category.dueDate);
       mat.materialUnit = category.materialUnit;
