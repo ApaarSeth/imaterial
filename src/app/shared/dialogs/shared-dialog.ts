@@ -30,6 +30,7 @@ import { EditMyMaterialComponent } from './edit-my-material/edit-my-material.com
 import { ReleaseNoteComponent } from './release-notes/release-notes.component';
 import { GRNDocumentsComponent } from './add-edit-grn/grn-documents/grn-documents.component';
 import { ShowDocumentComponent } from './show-documents/show-documents.component';
+import { PaymentRecordComponent } from './payment-record/paymentRecord.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -63,5 +64,6 @@ export const SharedDialogs = [
   EditMyMaterialComponent,
   ReleaseNoteComponent,
   GRNDocumentsComponent,
-  ShowDocumentComponent
+  ShowDocumentComponent,
+  PaymentRecordComponent
 ];

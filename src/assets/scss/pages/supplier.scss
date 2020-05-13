@@ -297,29 +297,29 @@
 .files-list {
   font-size: 12px;
 }
-.grn-responsive-file-list{
+.grn-responsive-file-list {
   max-height: 175px;
   overflow-y: auto;
-  font-size : 12px;
+  font-size: 12px;
 }
-.grn-responsive-file-list-down{
+.grn-responsive-file-list-down {
   max-height: 125px;
   overflow-y: auto;
 }
-@media only screen and (max-height: 450px){
-  .add-grn-responsive-div{
+@media only screen and (max-height: 450px) {
+  .add-grn-responsive-div {
     max-height: 175px;
     overflow-y: auto;
   }
-  .save-btn-add-edit-user-modal{
+  .save-btn-add-edit-user-modal {
     padding: 0;
   }
-  .grn-responsive-file-list{
+  .grn-responsive-file-list {
     max-height: 75px;
     overflow-y: auto;
-    font-size : 12px;
+    font-size: 12px;
   }
-  .grn-responsive-file-list-down{
+  .grn-responsive-file-list-down {
     max-height: 100%;
     overflow-y: hidden;
   }
@@ -787,16 +787,16 @@ mat-icon {
     min-width: 95%;
     white-space: pre-line;
   }
-  .grn-responsive-file-list-down{
+  .grn-responsive-file-list-down {
     max-height: 75px;
     overflow-y: auto;
   }
-  .grn-doc{
-    .mat-list-item-content{
+  .grn-doc {
+    .mat-list-item-content {
       padding: 0px !important;
     }
   }
-  
+
   .header-project-menu .main-div-bell.mat-menu-item {
     max-height: 250px;
   }
