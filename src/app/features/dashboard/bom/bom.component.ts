@@ -213,7 +213,7 @@ export class BomComponent implements OnInit {
   postMaterialExcel(data) {
     this.loading.show();
     this.bomService.postMaterialExcel(data, this.projectId).then(res => {
-      this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
+      this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
       this.loading.hide();
       this._snackBar.open(res.message, "", {
         duration: 2000,

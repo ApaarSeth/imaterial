@@ -20,7 +20,7 @@
   <div class="create-po-dashboard p-b-20 min-height parent" *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp">
     <div class="row">
       <div class="col-xs-7">
-        <mat-form-field class="example-form-field border-input project ">
+        <mat-form-field class="example-form-field border-input project">
           <input matInput placeholder="Search RFQ" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
@@ -28,9 +28,9 @@
         </mat-form-field>
       </div>
       <div class="text-right col-xs-5 create-po-btn p-r-20 p-t-10">
-          <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="createRfq()">
-            Create RFQ
-          </button>
+        <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="createRfq()">
+          Create RFQ
+        </button>
       </div>
     </div>
 
@@ -87,7 +87,7 @@
 
                     <div class="show-detail-supplier rfq-icon-material-i" *ngIf="element.supplierList.length > 0">
                       <!-- <img src="../../../../assets/images/i_icon.png" /> -->
-                      <mat-icon class="material-info">info</mat-icon>
+                      <i class="material-icons md-24" style="padding-top: 0px;">info</i>
                       <div id="detail-supplier">
                         <div class="row">
                           <div class="col-sm-12">
