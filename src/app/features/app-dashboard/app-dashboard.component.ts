@@ -1,9 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { PurchaseOrderData } from 'src/app/shared/models/po-details/po-details-list';
+import { Range } from 'src/app/shared/models/datePicker';
 import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
 import { SelectProjectComponent } from 'src/app/shared/dialogs/select-project/select-project.component';
 import { ProjectDetails } from 'src/app/shared/models/project-details';
@@ -14,12 +15,14 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { ViewVideoComponent } from 'src/app/shared/dialogs/video-video/view-video.component';
 import { permission } from 'src/app/shared/models/permissionObject';
 import { ReleaseNoteComponent } from 'src/app/shared/dialogs/release-notes/release-notes.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
 })
 export class AppDashboardComponent implements OnInit {
-
+  @ViewChild('dateRangePicker', { static: false }) dateRangePicker;
   orgId: number;
   poData: PurchaseOrderData;
   rfqData: PurchaseOrderData;
@@ -32,31 +35,40 @@ export class AppDashboardComponent implements OnInit {
   permissionObj: permission;
   tab1: string;
   tab2: string;
+  allProjects: ProjectDetails[];
+  searchText = '';
+  filterForm: FormGroup;
+  currentIndex: number = 0;
   constructor(public dialog: MatDialog,
     private router: Router,
+    private formbuilder: FormBuilder,
     private _userService: UserService,
     private userguideservice: UserGuideService,
     private _projectService: ProjectService,
     private commonService: CommonService,
     private permissionService: PermissionService) { }
 
+  range: Range = { fromDate: new Date(), toDate: new Date() };
+  options: NgxDrpOptions;
+  presets: Array<PresetItem> = [];
+
+
   ngOnInit() {
+    this.formInit()
+    this.datePickerConfig();
     const role = localStorage.getItem("role")
     if (role) {
       this.permissionObj = this.permissionService.checkPermission(role);
       this.orgId = Number(localStorage.getItem("orgId"));
     }
     this.userId = Number(localStorage.getItem("userId"));
-
     this.getDashboardInfo('po');
     this.getDashboardInfo('rfq');
     this.getDashboardInfo('indent');
-
     window.dispatchEvent(new Event('resize'));
     if (!localStorage.getItem('ReleaseNotes') || (localStorage.getItem('ReleaseNotes') != '1')) {
       localStorage.setItem('ReleaseNotes', '0');
     }
-
     if (localStorage.getItem('ReleaseNotes') == '0') {
       this.userguideservice.userGetReleaseNote().then(res => {
         if (res.status == 1) {
@@ -67,8 +79,6 @@ export class AppDashboardComponent implements OnInit {
         }
       });
     }
-
-
     this.userguideservice.getUserGuideFlag().then(res => {
       this.userGuidedata = res.data;
       this.userGuidedata.forEach(element => {
@@ -76,9 +86,81 @@ export class AppDashboardComponent implements OnInit {
       });
 
     })
-
     this.getProjectsNumber();
     this.getNotifications();
+  }
+
+  ngOnChanges(): void {
+
+  }
+
+  datePickerConfig() {
+    const today = new Date();
+    const tempDate = new Date();
+    const fromMin = new Date(today.getFullYear(), today.getMonth() - 2, 1);
+    const fromMax = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const toMin = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    const toMax = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+    this.setupPresets();
+    this.options = {
+      presets: this.presets,
+      format: 'mediumDate',
+      range: { fromDate: new Date(tempDate.setDate(tempDate.getDate() - 30)), toDate: today },
+      applyLabel: 'Submit',
+      placeholder: 'Choose Date',
+      calendarOverlayConfig: {
+        shouldCloseOnBackdropClick: true,
+        hasBackdrop: true
+      }
+      // cancelLabel: "Cancel",
+      // excludeWeekends:true,
+      // fromMinMax: {fromDate:fromMin, toDate:fromMax},
+      // toMinMax: {fromDate:toMin, toDate:toMax}
+    };
+  }
+
+  updateRange(range: Range) {
+    this.range = range;
+    this.getDashboardInfo(this.label);
+    console.log(this.dateRangePicker)
+    console.log(this.dateRangePicker.calendarInput.nativeElement.value)
+  }
+
+  setupPresets() {
+
+    const backDate = (numOfDays) => {
+      const today = new Date();
+      return new Date(today.setDate(today.getDate() - numOfDays));
+    }
+
+    const today = new Date();
+    const yesterday = backDate(1);
+    const minus7 = backDate(7)
+    const minus30 = backDate(30);
+    const currMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    const currMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const lastMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
+
+    this.presets = [
+      { presetLabel: "Yesterday", range: { fromDate: yesterday, toDate: today } },
+      { presetLabel: "Last 7 Days", range: { fromDate: minus7, toDate: today } },
+      { presetLabel: "Last 30 Days", range: { fromDate: minus30, toDate: today } },
+      { presetLabel: "This Month", range: { fromDate: currMonthStart, toDate: currMonthEnd } },
+      { presetLabel: "Last Month", range: { fromDate: lastMonthStart, toDate: lastMonthEnd } }
+    ]
+  }
+
+  formInit() {
+    this.filterForm = this.formbuilder.group({
+      projectFilter: []
+    })
+    this.filterForm.get('projectFilter').valueChanges.subscribe(val => {
+      this.getDashboardInfo(this.label)
+    })
+    // this.filterForm.get('termFilter').valueChanges.subscribe(val => {
+    //   this.getDashboardInfo(this.label)
+    // })
   }
 
   getNotifications() {
@@ -120,14 +202,28 @@ export class AppDashboardComponent implements OnInit {
       }
     });
   }
+
+  getFormatedDate(formatdate) {
+    let date = new Date(this.commonService.formatDate(formatdate))
+    let dummyMonth = date.getMonth() + 1;
+    const year = date.getFullYear().toString();
+    const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+    const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+    return year + "-" + month + "-" + day;
+  }
+
   getDashboardInfo(label) {
+    let projectIds = this.filterForm.get("projectFilter").value && this.filterForm.get("projectFilter").value.map(val => {
+      return val.projectId;
+    })
     const data = {
       "orgId": this.orgId,
-      "startDate": "2020-01-01T18:30:00.000Z",
-      "endDate": "2020-09-28T18:30:00.000Z",
-      "dataSource": label
+      "startDate": this.getFormatedDate(this.range.fromDate),
+      "endDate": this.getFormatedDate(this.range.toDate),
+      "dataSource": label,
+      "range": "Custom",
+      "projectList": projectIds ? projectIds : []
     }
-
     this._userService.getDashboardData(data).then(res => {
       if (label == 'po')
         this.poData = res.data;
@@ -141,8 +237,8 @@ export class AppDashboardComponent implements OnInit {
   }
 
   onTabChanged($event) {
-    let clickedIndex = $event.index;
-    switch (clickedIndex) {
+    this.currentIndex = $event.index;
+    switch (this.currentIndex) {
       case 0: {
         this.label = 'po';
         break;
@@ -164,6 +260,7 @@ export class AppDashboardComponent implements OnInit {
 
   getProjectsNumber() {
     this._projectService.getProjects(this.orgId, this.userId).then(res => {
+      this.allProjects = res.data
       this.projectCount = res.data ? res.data.length : 0;
       this.projectLists = res.data;
     });
@@ -176,7 +273,7 @@ export class AppDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getProjectsNumber() ;
+      this.getProjectsNumber();
       return;
     });
   }

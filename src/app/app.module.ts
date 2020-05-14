@@ -40,6 +40,7 @@ import { TwoDigitDecimaNumberDirective } from './shared/directives/appTwoDigit';
 import { OnlyNumberDirective } from './shared/directives/number-only2.directive';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
+import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.c
     FlexLayoutModule,
     HttpClientModule,
     MatDialogModule,
+    NgxMatDrpModule,
     // AuthModule,
     LayoutModule,
     DashboardModule,

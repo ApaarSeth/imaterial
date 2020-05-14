@@ -1,0 +1,5 @@
+<div class="text-center">
+  <div *ngFor="let key of objectKeys(data)">
+    <span *ngIf="key !== 'Total No of Rows'">{{ key }} :{{ data[key] }}</span>
+  </div>
+</div>

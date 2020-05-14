@@ -159,3 +159,7 @@ div.limited-character.universal {
 .info {
   position: absolute;
 }
+
+.hideCalender ngx-mat-drp-picker-overlay .ngx-mat-drp-calendar-item {
+  display: none;
+}

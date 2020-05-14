@@ -33,7 +33,6 @@ export class SupplierDetailComponent implements OnInit {
   dataSourceTemp = ELEMENT_DATA;
   dataSourceDeactivate = ELEMENT_DATA;
   @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
-
   deactivateUsers: Array<SupplierAdd> = new Array<SupplierAdd>();
   activateUsers: Array<SupplierAdd> = new Array<SupplierAdd>();
 
@@ -91,7 +90,6 @@ export class SupplierDetailComponent implements OnInit {
   }
   getAllSupplier() {
     this.rfqService.getSuppliers(this.orgId).then(data => {
-
       this.dataSource = new MatTableDataSource(data.data);
       this.dataSourceTemp = data.data;
       if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
@@ -180,33 +178,47 @@ export class SupplierDetailComponent implements OnInit {
   uploadExcel(files: FileList) {
     const data = new FormData();
     data.append("file", files[0]);
-      var fileSize =  files[0].size; // in bytes
-      if(fileSize < 5000000){
-       this.postSupplierExcel(data);
-      }
-      else{
-        this._snackBar.open("File must be less than 5 mb", "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
-      }   
+    var fileSize = files[0].size; // in bytes
+    if (fileSize < 5000000) {
+      this.postSupplierExcel(data);
+    }
+    else {
+      this._snackBar.open("File must be less than 5 mb", "", {
+        duration: 2000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "bottom"
+      });
+    }
   }
 
-  postSupplierExcel(data){
+  postSupplierExcel(data) {
     this.loading.show();
-       this.rfqService.postSupplierExcel(data, this.orgId).then(res => {
-        if (res) {
-          this._snackBar.open(res.message, "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
-          this.getAllSupplier();
-          this.loading.hide();
-        }
-        this.myInputVariable.nativeElement.value = "";
+    this.rfqService.postSupplierExcel(data, this.orgId).then(res => {
+      if (res.statusCode === 201) {
+        this._snackBar.open(res.message, "", {
+          duration: 2000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+        this.myInputVariable.nativeElement.value = ""
+        this.getAllSupplier();
+        this.loading.hide();
+      }
+      else {
+        this._snackBar.open(res.message, "", {
+          duration: 5000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
+    }).catch(err => {
+      this.myInputVariable.nativeElement.value = "";
+      this._snackBar.open(err.error.message, "", {
+        duration: 5000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "bottom"
       });
+    });
   }
 
   downloadExcel(url: string) {
@@ -216,16 +228,16 @@ export class SupplierDetailComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 1025) {
-     this.showResponsiveDesignIcons = true;
+      this.showResponsiveDesignIcons = true;
     } else {
       this.showResponsiveDesignIcons = false;
     }
 
     if (event.currentTarget.innerWidth <= 576) {
       this.showResponsiveDesign = true;
-     } else {
-       this.showResponsiveDesign = false;
-     }
-    
+    } else {
+      this.showResponsiveDesign = false;
+    }
+
   }
 }
