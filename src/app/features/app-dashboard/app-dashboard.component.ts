@@ -122,8 +122,6 @@ export class AppDashboardComponent implements OnInit {
   updateRange(range: Range) {
     this.range = range;
     this.getDashboardInfo(this.label);
-    console.log(this.dateRangePicker)
-    console.log(this.dateRangePicker.calendarInput.nativeElement.value)
   }
 
   setupPresets() {
