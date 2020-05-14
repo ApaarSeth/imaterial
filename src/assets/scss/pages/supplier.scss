@@ -736,7 +736,7 @@ mat-icon {
   width: 100%;
   height: auto;
   max-height: 250px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-left: 1px;
   padding-right: 0px;
   white-space: pre-line;
@@ -746,6 +746,15 @@ mat-icon {
 .header-project-menu.mat-menu-panel {
   width: 250px;
 }
+.header-project-menu.show-amount.mat-menu-panel{
+  width: 125px;
+}
+.header-project-menu.show-amount .main-div-bell .body-of-notification{
+  div:hover{
+    background: #d0d0d0;
+  }
+}
+
 .header-project-menu .main-div-bell .body-of-notification button {
   font-size: 12px;
   text-align: left;
@@ -780,6 +789,7 @@ mat-icon {
   .header-project-menu.mat-menu-panel {
     width: 200px;
   }
+
   .header-project-menu .main-div-bell .body-of-notification button {
     font-size: 12px;
     text-align: left;
@@ -985,6 +995,28 @@ h3 {
     -webkit-appearance: none !important;
     i {
       color: #f47721;
+    }
+  }
+}
+
+@media only screen and (max-width: 576px){
+  .supplier-screen{
+    .column-1{
+      order:2;
+      width: 60%;
+    } 
+    .column-2{
+      order:1;
+    }
+  }
+}
+@media only screen and (min-width: 576px){
+  .supplier-screen{
+    .column-1{
+      order:1;
+    } 
+    .column-2{
+      order:1;
     }
   }
 }

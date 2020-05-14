@@ -39,6 +39,7 @@
     align-items: center;
     padding: 0 $mat-row-horizontal-padding;
     box-sizing: border-box;
+    width: 100%;
   }
 
   .mat-cell,
@@ -66,7 +67,7 @@
     .mat-row {
       border-bottom: 0.5px solid #979797;
       min-height: 50px;
-
+      width: 100%;
       .mat-cell {
         color: #707070;
       }
@@ -74,6 +75,7 @@
 
     .material-row {
       border-bottom: 0.5px solid #979797;
+      width: 100%;
       .mat-cell {
         color: #707070;
       }
@@ -321,12 +323,6 @@ s .validTill {
 .customPo .po-table .material-row .mat-cell{
   min-width: 130px;
   padding: 0 5px;
-}
-.customPo .po-table{
-  .total-amount{
-    padding-right: 0px;
-    margin-right: -15px;
-  }
 }
 .froala-design{
   padding: 0;

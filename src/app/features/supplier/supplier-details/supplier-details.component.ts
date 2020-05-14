@@ -64,7 +64,6 @@ export class SupplierDetailComponent implements OnInit {
     }
   };
   userId: number;
-  showResponsiveDesign: boolean;
   showResponsiveDesignIcons: boolean;
 
   constructor(
@@ -196,6 +195,7 @@ export class SupplierDetailComponent implements OnInit {
   postSupplierExcel(data){
     this.loading.show();
        this.rfqService.postSupplierExcel(data, this.orgId).then(res => {
+         console.log(res);
         if (res) {
           this._snackBar.open(res.message, "", {
             duration: 2000,
@@ -203,6 +203,9 @@ export class SupplierDetailComponent implements OnInit {
             verticalPosition: "bottom"
           });
           this.getAllSupplier();
+          this.loading.hide();
+        }
+        else{
           this.loading.hide();
         }
         this.myInputVariable.nativeElement.value = "";
@@ -220,12 +223,6 @@ export class SupplierDetailComponent implements OnInit {
     } else {
       this.showResponsiveDesignIcons = false;
     }
-
-    if (event.currentTarget.innerWidth <= 576) {
-      this.showResponsiveDesign = true;
-     } else {
-       this.showResponsiveDesign = false;
-     }
     
   }
 }

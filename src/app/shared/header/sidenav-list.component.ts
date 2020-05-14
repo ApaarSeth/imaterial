@@ -66,6 +66,9 @@ export class SidenavListComponent implements OnInit {
 
       this.buttonName = 'Global Store';
     }
+    else if (url.includes('reports')) {
+      this.buttonName = 'Reports'
+    }
     else if (url.includes('rfq')) {
       this.buttonName = 'Request For Quotation';
     }

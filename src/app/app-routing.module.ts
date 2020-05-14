@@ -139,6 +139,14 @@ const routes: Routes = [
           import("./features/my-material/myMaterial.module").then(
             m => m.MyMaterialModule
           )
+      },
+      {
+        path: "reports",
+        data : { breadcrumb: 'Reports' },
+        loadChildren: () => 
+          import("./features/reports/report-dashboard.module").then(
+            m => m.ReportDashboardModule
+          )
       }
     ]
   },

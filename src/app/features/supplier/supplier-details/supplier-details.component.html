@@ -39,7 +39,7 @@
 
   <ng-container *ngIf="dataSourceTemp && dataSourceTemp.length>0">
    
-    <div class="row" class="dashboard-unique p-b-20 min-height parent">
+    <div class="row" class="dashboard-unique p-b-20 min-height parent supplier-screen">
       <!-- <div class="text-right add-user-details-button-right">
           <button mat-raised-button (click)="addSupplier()"
             class="main-background-color main-button color-white">
@@ -47,7 +47,7 @@
           </button>
         </div> -->
  <div class="row">
-      <div [ngClass]="!showResponsiveDesign ? 'col-xs-6 col-md-3' : 'col-xs-12'" *ngIf="!showResponsiveDesign">
+      <div class="col-sm-4 col-md-3 column-1">
         <mat-form-field class="example-form-field border-input">
           <input matInput placeholder="Search Suppliers" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
@@ -55,7 +55,7 @@
           </button>
         </mat-form-field>
       </div>
-      <div  [ngClass]="!showResponsiveDesign ? 'col-xs-6 col-md-9' : 'col-xs-12'" >
+      <div class="col-sm-8 col-md-9 column-2">
         <div [ngClass]="showResponsiveDesignIcons ? 'text-right add-user-details-button-right p-t-10' : 'text-right add-user-details-button-right p-t-10 p-r-20'">
           <div class="text-right d-flex justify-content-end" appDnd>
             <div class="mr-3 p-t-10">
@@ -83,14 +83,6 @@
               </button>
           </div>
         </div>
-      </div>
-      <div class="col-xs-7" *ngIf="showResponsiveDesign">
-        <mat-form-field class="example-form-field border-input">
-          <input matInput placeholder="Search Suppliers" type="search" (keyup)="applyFilter($event.target.value)" />
-          <button mat-button matSuffix mat-icon-button>
-            <mat-icon>search</mat-icon>
-          </button>
-        </mat-form-field>
       </div>
     </div>
 
