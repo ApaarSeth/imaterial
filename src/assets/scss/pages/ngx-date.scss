@@ -1,0 +1,46 @@
+.widthWrapper {
+  .ngx-mat-drp-date-display {
+    min-width: 70% !important;
+    width: 70% !important;
+    padding-left: 20px;
+  }
+
+  .ngx-mat-drp-date-input {
+    color: $main-color !important;
+  }
+}
+
+ngx-mat-drp-picker-overlay .ngx-mat-drp-calendar-item .mat-calendar-header {
+  padding: 0px !important;
+}
+
+ngx-mat-drp-picker-overlay {
+  .ngx-mat-drp-date-input,
+  .ngx-mat-drp-presets-list,
+  .ngx-mat-drp-calendar-container {
+    color: $main-color !important;
+  }
+}
+
+.ngx-mat-drp-menu ul.ngx-mat-drp-presets-list li {
+  color: $main-color !important;
+}
+
+.ngx-mat-drp-menu ul.ngx-mat-drp-presets-list li:hover,
+.ngx-mat-drp-menu ul.ngx-mat-drp-presets-list li:active,
+.ngx-mat-drp-menu ul.ngx-mat-drp-presets-list li:focus {
+  color: $white-color !important;
+  background-color: $skyblue-color !important;
+}
+
+td .mat-calendar-body-selected {
+  background-color: $main-color !important;
+}
+
+.ngx-mat-drp-controls .mat-button.mat-primary {
+  color: $main-color !important;
+}
+
+.mat-calendar-table-header th {
+  padding: 0px !important;
+}

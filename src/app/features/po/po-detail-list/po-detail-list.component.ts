@@ -15,6 +15,7 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { permission } from 'src/app/shared/models/permissionObject';
 import { DownloadData } from 'src/app/shared/models/PO/po-data';
+import { PaymentRecordComponent } from 'src/app/shared/dialogs/payment-record/paymentRecord.component';
 
 @Component({
   selector: "po-detail-list",
@@ -193,6 +194,11 @@ export class PODetailComponent implements OnInit {
       isDelete: true,
       detail: element
     } as ProjetPopupData);
+  }
+  openPaymentRecord() {
+    const dialogRef = this.dialog.open(PaymentRecordComponent, {
+      width: "800px"
+    });
   }
 
   openDialogDeactiveUser(data: ProjetPopupData): void {

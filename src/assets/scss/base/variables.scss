@@ -481,6 +481,10 @@ a:hover {
   width: 100%;
 }
 
+.width103Percent {
+  width: 103%;
+}
+
 .width96Percent {
   width: 96%;
 }
@@ -767,4 +771,8 @@ mat-accordion {
 
 .angular-editor-textarea {
   background-color: #ffffff !important;
+}
+
+.material-info-padding.material-info {
+  padding-top: 0px;
 }

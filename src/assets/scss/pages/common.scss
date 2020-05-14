@@ -102,7 +102,7 @@ div.limited-character.universal {
   padding: 0px 0px 0px 17px !important;
   background-color: #ffffff;
   span {
-   color: #565655;
+    color: #565655;
     outline: none;
   }
   a:hover,
@@ -126,4 +126,40 @@ div.limited-character.universal {
   li:last-child::after {
     content: "";
   }
+}
+.tab-body-padding {
+  .mat-tab-body-wrapper {
+    padding-top: 10px !important;
+  }
+}
+
+.info:hover #infoIcon {
+  display: block;
+}
+
+.info #infoIcon {
+  display: none;
+  background-color: #ffffff;
+  color: #000000;
+  z-index: 999;
+  top: -36px;
+  position: relative;
+  font-size: 10px;
+  padding: 5px 30px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  border: 1px solid #d0d0d0;
+  overflow-x: hidden;
+  max-height: 18vh;
+  overflow-y: auto;
+  .row {
+    width: 175px;
+  }
+}
+
+.info {
+  position: absolute;
+}
+
+.hideCalender ngx-mat-drp-picker-overlay .ngx-mat-drp-calendar-item {
+  display: none;
 }
