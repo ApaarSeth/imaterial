@@ -15,6 +15,12 @@ a:hover {
   color: $main-color !important;
   text-decoration: none;
 }
+.backgound-none{
+  background: none;
+}
+.backgound-none-important{
+  background: none !important;
+}
 
 .warning-color {
   color: $alert-color;
@@ -148,6 +154,7 @@ input {
   border-radius: 25px;
   padding: 0px 18px;
   font-weight: 600;
+  height: 40px;
 }
 @media only screen and (max-width: 576px) {
   .main-button.mat-button-base {
@@ -248,7 +255,7 @@ input {
 }
 
 .min-height {
-  min-height: calc(100vh - 130px);
+  min-height: calc(100vh - 140px);
 }
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {

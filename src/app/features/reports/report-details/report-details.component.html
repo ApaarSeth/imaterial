@@ -1,0 +1,172 @@
+<div class="page-start-point">
+  <form *ngIf="allProjects" [formGroup]="form">
+    <div class="row" class="users-dashboard p-b-20 min-height parent report">
+      <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
+      <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-3 text-left showResponsiveReport column-1">
+          <mat-form-field class="border-select select-project  width100Percent font-size-vary-grn">
+            <mat-label>Select Project</mat-label>
+            <mat-select formControlName="selectedProject" multiple>
+              <div class="display-flex">
+                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
+                  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                <button mat-button matSuffix mat-icon-button>
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+              <!-- <mat-select-trigger>
+                    <mat-label>Select Project</mat-label>
+                  </mat-select-trigger> -->
+              <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:'projectName'" [value]="project"
+                selected="project.clicked" (click)="choosenProject()">{{ project.projectName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-xs-5 col-sm-4 col-md-3  text-left showResponsiveReport column-2">
+          <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
+            <mat-label>Select Supplier</mat-label>
+            <mat-select formControlName="selectedSupplier" multiple>
+              <div class="display-flex">
+                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Supplier Name"
+                  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                <button mat-button matSuffix mat-icon-button>
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+              <!-- <mat-select-trigger>
+                    <mat-label>Select Supplier</mat-label>
+                  </mat-select-trigger> -->
+              <mat-option *ngFor="let supplier of allSuppliers | SearchPipe: searchText:'supplier_name'"
+                [value]="supplier" selected="supplier.clicked" (click)="choosenSupplier()">{{ supplier.supplier_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-6 p-t-10 add-project-btn display-flex justify-content-flex-end column-3">
+          <div class="p-r-20 p-t-10">
+            <a class="font-size16 cursor-pointer" matTooltip="Download">
+              <img src="../../../../assets/images/download-po.png" /></a>
+          </div>
+          <button mat-raised-button class="main-background-color main-button color-white demo-title cursor-pointer">
+            Generate Report
+          </button>
+        </div>
+        <div class="col-xs-3 col-sm-12 add-project-btn display-flex justify-content-flex-end showResponsiveReport column-4">
+          <div class="show-amount text-semi-bold main-color font-size-vary-grn cursor-pointer" [matMenuTriggerFor]="amount">
+            show amount
+          </div>
+        </div>
+      </div>
+
+      <!-- mat-menu that opens up after we click show-amount   -->
+      <mat-menu #amount="matMenu" class="header-project-menu show-amount">
+        <div class="main-div-bell" mat-menu-item [disableRipple]="true">
+          <div class="body-of-notification">
+            <div class="p-5">
+              Full figures
+            </div>
+            <div class="p-5">
+              Lakhs
+            </div>
+            <div class="p-5">
+              Crores
+            </div>
+          </div>
+        </div>
+      </mat-menu>
+
+
+      <!-- Report Default Image If No data is Present -->
+      <ng-container>
+        <div class="wrapper-btn-center">
+          <div class="report-image">
+            <img src="../../../../assets/images/report-main.svg" alt="BuildSupply_Logo" />
+            <div>
+              <p class="p-t-10 font-size-vary-grn">
+                You have not selected any project or supplier yet. <br />
+                Please select any one from the above to see the report.
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- table For Showing Reports-->
+      <ng-container>
+        <div class="reportTablePo">
+          <table class="report-table">
+            <tr matSort class="mat-elevation-z2 mat-header-row">
+              <thead class="mat-header-cell material">
+                Supplier Name
+              </thead>
+              <thead class="mat-header-cell material">
+                PO Awarded <br> Value (INR)
+              </thead>
+              <thead class="mat-header-cell material">
+                GRN Amount (INR)
+              </thead>
+              <thead class="mat-header-cell material">
+                Amount Paid <br> till date (INR)
+              </thead>
+              <thead class="mat-header-cell material">
+                Yet to be <br> paid (INR)
+              </thead>
+            </tr>
+            <mat-accordion>
+              <!-- Supplier List -->
+              <mat-expansion-panel>
+                <mat-expansion-panel-header class="border-row background-supplier">
+                  <tr class="material-row backgound-none-important p-r-10">
+                    <td class="mat-cell">Supplier Name 1</td>
+                    <td class="mat-cell">34,52,552</td>
+                    <td class="mat-cell">7,52,552</td>
+                    <td class="mat-cell">3,52,552</td>
+                    <td class="mat-cell">4,52,552</td>
+                  </tr>
+                </mat-expansion-panel-header>
+                <!-- Project List -->
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header class="border-row background-project">
+                    <tr class="material-row backgound-none-important p-r-10">
+                      <td class="mat-cell">Project Name Name 1</td>
+                      <td class="mat-cell">34,52,552</td>
+                      <td class="mat-cell">7,52,552</td>
+                      <td class="mat-cell">3,52,552</td>
+                      <td class="mat-cell">4,52,552</td>
+                    </tr>
+                  </mat-expansion-panel-header>
+                  <!-- Project Details Of an Individual Project -->
+                  <tr class="material-row border-row background-project-list">
+                    <td class="mat-cell">PRJ 12</td>
+                    <td class="mat-cell">34,52,552</td>
+                    <td class="mat-cell">7,52,552</td>
+                    <td class="mat-cell">3,52,552</td>
+                    <td class="mat-cell">4,52,552</td>
+                  </tr>
+                  <tr class="material-row border-row background-project-list">
+                    <td class="mat-cell">PRooJ 52</td>
+                    <td class="mat-cell">34,52,552</td>
+                    <td class="mat-cell">7,52,552</td>
+                    <td class="mat-cell">3,52,552</td>
+                    <td class="mat-cell">4,52,552</td>
+                  </tr>
+
+                </mat-expansion-panel>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <!-- Total Amount Footer -->
+            <tr class="material-row backgound-total-amount">
+              <td class="mat-cell">Total</td>
+              <td class="mat-cell">34,52,552</td>
+              <td class="mat-cell">7,52,552</td>
+              <td class="mat-cell">3,52,552</td>
+              <td class="mat-cell">4,52,552</td>
+            </tr>
+          </table>
+        </div>
+      </ng-container>
+
+    </div>
+  </form>
+</div>

@@ -63,7 +63,6 @@ export class SupplierDetailComponent implements OnInit {
     }
   };
   userId: number;
-  showResponsiveDesign: boolean;
   showResponsiveDesignIcons: boolean;
 
   constructor(
@@ -210,6 +209,7 @@ export class SupplierDetailComponent implements OnInit {
           panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
+        this.loading.hide();
       }
     }).catch(err => {
       this.myInputVariable.nativeElement.value = "";
@@ -218,6 +218,7 @@ export class SupplierDetailComponent implements OnInit {
         panelClass: ["success-snackbar"],
         verticalPosition: "bottom"
       });
+      this.loading.hide();
     });
   }
 
@@ -226,18 +227,13 @@ export class SupplierDetailComponent implements OnInit {
     win.focus();
   }
   @HostListener('window:resize', ['$event'])
+  
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 1025) {
       this.showResponsiveDesignIcons = true;
     } else {
       this.showResponsiveDesignIcons = false;
     }
-
-    if (event.currentTarget.innerWidth <= 576) {
-      this.showResponsiveDesign = true;
-    } else {
-      this.showResponsiveDesign = false;
-    }
-
+    
   }
 }
