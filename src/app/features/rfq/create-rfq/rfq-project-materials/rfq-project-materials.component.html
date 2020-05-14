@@ -48,7 +48,7 @@
 <form *ngIf="rfqDetails.length" [formGroup]="materialForm">
   <span formArrayName="forms">
     <div *ngFor="let project of rfqDetails | SearchPipe: searchProject:'projectName'; let p = index" [formGroupName]="p">
-      <mat-accordion *ngIf="rfqDetails && project.projectMaterialList.length" class="rfq-detail-body">
+      <mat-accordion *ngIf="rfqDetails" class="rfq-detail-body">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -64,6 +64,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <table
+            #table
             mat-table
             [dataSource]="project.projectMaterialList | SearchPipe: searchMaterial:'materialName'"
             class="mat-elevation-z8 col-sm-12 po-custom-mat-width"
