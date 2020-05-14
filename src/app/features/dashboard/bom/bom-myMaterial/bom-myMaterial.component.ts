@@ -170,6 +170,7 @@ export class BomMyMaterialComponent implements OnInit {
                     subcategory.materialName === data.materialName &&
                     data.estimatedQty > 0
                   ) {
+                    subcategory.materialUnit = data.materialUnit;
                     subcategory.requestedQuantity = data.requestedQuantity
                     subcategory.availableStock = data.availableStock
                     subcategory.issueToProject = data.issueToProject
@@ -188,6 +189,17 @@ export class BomMyMaterialComponent implements OnInit {
             return category;
           })
           this.formInit();
+        } else {
+          this.selectedCategory.map((category: categoryNestedLevel) => {
+            category.materialList = category.materialList.map(
+              subcategory => {
+                subcategory.requestedQuantity = null;
+                subcategory.availableStock = null;
+                subcategory.issueToProject = null;
+                return subcategory;
+              });
+            return category;
+          })
         }
         // this.searchData.emit(this.selectedCategory);
       })
