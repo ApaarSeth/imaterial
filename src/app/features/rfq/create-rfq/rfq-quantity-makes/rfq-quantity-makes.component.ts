@@ -141,6 +141,7 @@ export class RfqQuantityMakesComponent implements OnInit {
       return null;
     }
   }
+
   makesUpdate(data: string[], grpIndex: number) {
     const forms = this.materialForms.get("forms") as FormArray;
     if (data.length <= 4) {

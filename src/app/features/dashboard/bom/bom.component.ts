@@ -36,6 +36,7 @@ import { BOMAllMaterialComponent } from './bom-allMaterial/bom-allMaterial.compo
 import { BomMyMaterialComponent } from './bom-myMaterial/bom-myMaterial.component';
 import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { SnackbarComponent } from 'src/app/shared/dialogs/snackbar/snackbar.compnent';
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html"
@@ -215,11 +216,20 @@ export class BomComponent implements OnInit {
     this.bomService.postMaterialExcel(data, this.projectId).then(res => {
       this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
       this.loading.hide();
-      this._snackBar.open(res.message, "", {
-        duration: 2000,
-        panelClass: ["success-snackbar"],
-        verticalPosition: "bottom"
-      });
+      if (res.statusCode === 201) {
+        this._snackBar.openFromComponent(SnackbarComponent, {
+          data: res.data,
+          duration: 6000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+      } else {
+        this._snackBar.open(res.message, "", {
+          duration: 2000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
     });
   }
   downloadExcel(url: string) {
