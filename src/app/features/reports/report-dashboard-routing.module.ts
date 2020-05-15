@@ -6,7 +6,8 @@ import { SupplierLiabilityReportResolver } from "./resolver/supplier-liability-r
 
 const routes: Routes = [
   {
-    path: "",
+    path: "supplier-liability",
+    data : { breadcrumb: 'Supplier-Liability' },
     resolve: { SupplierLiabilityReportResolver: SupplierLiabilityReportResolver },
     component: SupplierLiabilityReportDetailComponent
   }
@@ -16,4 +17,4 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
 
-export class SupplierLiabilityReportRoutingModule { }
+export class ReportRoutingModule { }

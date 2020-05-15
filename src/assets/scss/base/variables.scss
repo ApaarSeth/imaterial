@@ -73,6 +73,26 @@ a:hover {
   background-color: $main-color;
 }
 
+.max-height-300{
+  max-height: 300px;
+} 
+.overflow-y-auto{
+  overflow-y: auto;
+}
+.overflow-x-auto{
+  overflow-x: auto;
+}
+.overflow-y-hidden{
+  overflow-y: hidden !important;
+}
+.overflow-x-hidden{
+  overflow-x: hidden !important;
+}
+.border-bottom-grey{
+ border-bottom : 1px solid #d8d8d8;
+}
+
+
 .blue-color {
   color: $blue-color;
 }
@@ -502,6 +522,9 @@ a:hover {
 }
 .width60Percent {
   width: 60%;
+}
+.Width99Percent{
+  width: 99%;
 }
 .margin-0-auto {
   margin: 0 auto;
