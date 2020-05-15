@@ -30,6 +30,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
   @Input() existingRfq: AddRFQ;
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   @ViewChild("ch", { static: true }) ch: HTMLElement;
+  @ViewChild("table", { static: true }) table;
+
   searchProject: string = null;
   searchMaterial: string = null;
   userId: 1;
@@ -99,6 +101,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.checkExistingData();
+    console.log(this.table);
   }
 
   checkExistingData() {
