@@ -1,22 +1,21 @@
 <mat-toolbar color="background-white-color">
   <mat-toolbar-row>
-     <button class="hamburger" fxShow="true" fxHide.gt-sm (click)="openMenu()" mat-icon-button>
-                    <mat-icon>menu</mat-icon>
-                </button>
-    <span><img class="buildsupply-logo" src="../../../../assets/images/loginLogo.png" alt="logo"/></span>
+    <button class="hamburger" fxShow="true" fxHide.gt-sm (click)="openMenu()" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span><img class="buildsupply-logo" src="../../../../assets/images/loginLogo.png" alt="logo" /></span>
     <span class="menu-spacer"></span>
 
- <a href="https://api.whatsapp.com/send?phone=+918512060007" target="_blank">
-   <div class="whatsapp-div-header">
-         <div>
-          <img src="../../../../assets/images/whatsapp-main.png" class="whatsapp-icon">
+    <a href="https://api.whatsapp.com/send?phone=+918512060007" target="_blank">
+      <div class="whatsapp-div-header">
+        <div>
+          <img src="../../../../assets/images/whatsapp-main.png" class="whatsapp-icon" />
         </div>
         <div class="whatsapp-icon-number">
           +91 8512060007
         </div>
-    </div>
- </a>
-  
+      </div>
+    </a>
 
     <button class="pull-right p-t-10 notification-bell-icon" mat-button [matMenuTriggerFor]="notifs">
       <a href="javascript:void(0)" (click)="openDiv()">
@@ -33,15 +32,15 @@
     </button>
 
     <div class="logo-profile-header">
-      <button mat-button [matMenuTriggerFor]="logIn" fxShow.gt-md="true"  fxShow.sm="false" fxShow.xs="false" fxShow="true">
+      <button mat-button [matMenuTriggerFor]="logIn" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false" fxShow="true">
         <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
         <span class="username">
-          {{userName}}
+          {{ userName }}
         </span>
         <mat-icon aria-hidden="false" aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
       </button>
       <mat-menu #logIn="matMenu">
-        <button mat-menu-item class="background-white-color" (click)="goToProfile()" >
+        <button mat-menu-item class="background-white-color" (click)="goToProfile()">
           My Account
         </button>
         <button mat-menu-item class="background-white-color" (click)="logout()" routerLinkActive="router-link-active">Logout</button>
@@ -60,10 +59,10 @@
             <span>
               Recent
             </span>
-            <span class="pull-right "> You have {{ unreadnotification.length }} unread notifications </span>
+            <span class="pull-right"> You have {{ unreadnotification.length }} unread notifications </span>
           </div>
           <ng-container *ngFor="let notification of unreadnotification">
-            <div class="p-l-10 p-r-10 p-t-10 p-b-10 unread-background  cursor-pointer">
+            <div class="p-l-10 p-r-10 p-t-10 p-b-10 unread-background cursor-pointer">
               <span *ngIf="notification.notificationText" class="font-size-12">
                 {{ notification.notificationText }}
               </span>

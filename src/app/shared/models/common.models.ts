@@ -13,4 +13,10 @@ export interface GaPageViewData {
     options?: Object;
 }
 
+export interface GaTagData {
+    action: string;
+    command?: string;
+    options?: any;
+}
+
 

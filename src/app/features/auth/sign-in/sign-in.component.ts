@@ -2,13 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, Navigation } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
 import { UserService } from "src/app/shared/services/userDashboard/user.service";
 import { MatSnackBar } from '@angular/material';
 import { TokenService } from 'src/app/shared/services/token.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 
 @Component({
@@ -23,16 +24,17 @@ export class SigninComponent implements OnInit {
     private signInSignupService: SignInSignupService,
     private formBuilder: FormBuilder,
     private _userService: UserService,
-      private route: ActivatedRoute,
-      private dataService: DataService,
-    private _snackBar: MatSnackBar) { }
+    private route: ActivatedRoute,
+    private dataService: DataService,
+    private _snackBar: MatSnackBar,
+    private navigationService: AppNavigationService) { }
 
   showPassWordString: boolean = false;
   signinForm: FormGroup;
   signInData = {} as SignInData;
   acceptTerms: boolean;
   ngOnInit() {
-     this.route.params.subscribe(param => {
+    this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
 
@@ -66,6 +68,7 @@ export class SigninComponent implements OnInit {
       else if (data.serviceRawResponse.data) {
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
         this.getUserInfo(data.serviceRawResponse.data.userId);
+        this.navigationService.gaTag({ action: 'event', command: 'login', options: { 'method': this.tokenService.getOrgId() } })
         // const role = data.serviceRawResponse.data.role;
 
         // if (role) {
@@ -86,7 +89,7 @@ export class SigninComponent implements OnInit {
     this._userService.getUserInfo(userId).then(res => {
       if (res.data[0].firstName)
         localStorage.setItem("userName", res.data[0].firstName);
-        localStorage.setItem("profileUrl", res.data[0].profileUrl);
+      localStorage.setItem("profileUrl", res.data[0].profileUrl);
       // if (res && (res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
 
 
@@ -115,12 +118,12 @@ export class SigninComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
-  goToForgetPass(){
-    if(this.uniqueCode){
-       this.router.navigate(['auth/forgot-password/'+this.uniqueCode]);
+  goToForgetPass() {
+    if (this.uniqueCode) {
+      this.router.navigate(['auth/forgot-password/' + this.uniqueCode]);
     }
-    else{
-       this.router.navigate(['auth/forgot-password']);
+    else {
+      this.router.navigate(['auth/forgot-password']);
     }
   }
 }
