@@ -144,8 +144,8 @@ const routes: Routes = [
         path: "reports",
         data : { breadcrumb: 'Reports' },
         loadChildren: () => 
-          import("./features/supplier-liability-reports/supplier-liability-report-dashboard.module").then(
-            m => m.SupplierLiabilityReportDashboardModule
+          import("./features/reports/report-dashboard.module").then(
+            m => m.ReportDashboardModule
           )
       }
     ]

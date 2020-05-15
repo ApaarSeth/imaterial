@@ -15,7 +15,7 @@
 
       <div class="col-md-8 col-lg-8" *ngIf="this.mode === 'edit'"></div>
       <div class="col-sm-12 col-md-4 col-lg-4 m-t-5 text-right" *ngIf="this.mode === 'edit'">
-        <div class="display-flex justify-content-space-between">
+        <div [ngClass]="!showResponsiveDesign ? 'display-flex justify-content-flex-end' : 'display-flex justify-content-space-between'">
           <div class="p-r-10 p-t-10">
             <span class="text-semi-bold color-main cursor-pointer"
               ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO">

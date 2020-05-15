@@ -40,4 +40,7 @@ export class SelectPoRoleComponent implements OnInit {
   selectRole() {
     this.dialogRef.close([this.data.roleType, this.approverFrm.value]);
   }
+  closeDialog(){
+    this.dialogRef.close();
+  }
 }

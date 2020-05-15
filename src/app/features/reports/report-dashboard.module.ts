@@ -10,7 +10,7 @@ import { MaterialModule } from "../../shared/material-modules";
 import { AppSharedModule } from "../../shared/app-shared-module";
 import { SupplierLiabilityReportResolver } from "./resolver/supplier-liability-report.resolver";
 import { SupplierLiabilityReportDetailComponent } from "./supplier-liability-report-details/supplier-liability-report-details.component";
-import { SupplierLiabilityReportRoutingModule } from "./supplier-liability-report-dashboard-routing.module";
+import { ReportRoutingModule } from './report-dashboard-routing.module';
 
 @NgModule({
   imports: [
@@ -22,7 +22,7 @@ import { SupplierLiabilityReportRoutingModule } from "./supplier-liability-repor
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    SupplierLiabilityReportRoutingModule
+    ReportRoutingModule
   ],
   providers : [ SupplierLiabilityReportResolver ],
   declarations: [
@@ -30,4 +30,4 @@ import { SupplierLiabilityReportRoutingModule } from "./supplier-liability-repor
   ]
 })
 
-export class SupplierLiabilityReportDashboardModule { }
+export class ReportDashboardModule { }
