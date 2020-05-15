@@ -5,12 +5,12 @@ import { CommonModule } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { LayoutModule } from "@angular/cdk/layout";
-import { ReportRoutingModule } from "./report-dashboard-routing.module";
-import { ReportDetailComponent } from './report-details/report-details.component';
 
 import { MaterialModule } from "../../shared/material-modules";
 import { AppSharedModule } from "../../shared/app-shared-module";
-import { ReportResolver } from "./resolver/report.resolver";
+import { SupplierLiabilityReportResolver } from "./resolver/supplier-liability-report.resolver";
+import { SupplierLiabilityReportDetailComponent } from "./supplier-liability-report-details/supplier-liability-report-details.component";
+import { SupplierLiabilityReportRoutingModule } from "./supplier-liability-report-dashboard-routing.module";
 
 @NgModule({
   imports: [
@@ -22,12 +22,12 @@ import { ReportResolver } from "./resolver/report.resolver";
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    ReportRoutingModule
+    SupplierLiabilityReportRoutingModule
   ],
-  providers : [ ReportResolver ],
+  providers : [ SupplierLiabilityReportResolver ],
   declarations: [
-    ReportDetailComponent
+    SupplierLiabilityReportDetailComponent
   ]
 })
 
-export class ReportDashboardModule { }
+export class SupplierLiabilityReportDashboardModule { }

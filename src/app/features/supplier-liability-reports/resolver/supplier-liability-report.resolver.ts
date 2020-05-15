@@ -4,7 +4,7 @@ import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
 
 @Injectable()
-export class ReportResolver implements Resolve<any> {
+export class SupplierLiabilityReportResolver implements Resolve<any> {
   constructor(
     private projectService: ProjectService,
     private rfqService: RFQService
