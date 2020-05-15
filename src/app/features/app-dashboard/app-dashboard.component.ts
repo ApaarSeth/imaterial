@@ -17,6 +17,7 @@ import { permission } from 'src/app/shared/models/permissionObject';
 import { ReleaseNoteComponent } from 'src/app/shared/dialogs/release-notes/release-notes.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
+import { TokenService } from 'src/app/shared/services/token.service';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -46,6 +47,7 @@ export class AppDashboardComponent implements OnInit {
     private userguideservice: UserGuideService,
     private _projectService: ProjectService,
     private commonService: CommonService,
+    private tokenService: TokenService,
     private permissionService: PermissionService) { }
 
   range: Range = { fromDate: new Date(), toDate: new Date() };
@@ -238,7 +240,8 @@ export class AppDashboardComponent implements OnInit {
     this.currentIndex = $event.index;
     switch (this.currentIndex) {
       case 0: {
-        this.label = 'po';
+        this.tokenService.getRole()
+        this.label = this.tokenService.getRole().toLowerCase() !== 'l3' ? 'po' : 'indent';
         break;
       }
       case 1: {

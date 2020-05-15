@@ -5,6 +5,7 @@ import { UserService } from 'src/app/shared/services/userDashboard/user.service'
 import { CommonService } from 'src/app/shared/services/commonService';
 import { Subscription, interval } from 'rxjs';
 import { MatSnackBar, MatSidenav } from '@angular/material';
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-top-header',
@@ -32,7 +33,8 @@ export class TopHeaderComponent implements OnInit {
     private commonService: CommonService,
     private _snackBar: MatSnackBar,
     private _userService: UserService,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() {
@@ -58,7 +60,7 @@ export class TopHeaderComponent implements OnInit {
           this.newunreadMessage = notificationLength - this.unreadnotificationLength;
           this._snackBar.open('You have ' + this.newunreadMessage + ' new notifications', '', {
             duration: 2000,
-            panelClass: [ 'success-snackbar' ],
+            panelClass: ['success-snackbar'],
             verticalPosition: 'bottom'
           });
         }
@@ -84,12 +86,13 @@ export class TopHeaderComponent implements OnInit {
     this.menu.open();
   }
   logout() {
-    this.router.navigate([ '/auth/login' ]).then(_ => {
+    this.router.navigate(['/auth/login']).then(_ => {
       localStorage.clear();
+      // this.tokenService.setAuthResponseData({ serviceToken: null, role: null, userId: null, orgId: null });
     });
   }
   goToProfile() {
-    this.router.navigate([ '/profile-account' ]);
+    this.router.navigate(['/profile-account']);
   }
   openDiv() {
     if (this.notifClicked == true) {

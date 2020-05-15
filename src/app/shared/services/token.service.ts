@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { auth } from '../models/auth';
+import { Subject } from 'rxjs';
 // import {DynamicRoutesTypes} from '../../core/shared/constants/dynamic-routes-types';
 
 @Injectable()
 export class TokenService {
-
+    headerRole = new Subject<string>();
 
     /**
      * @important - Do not use any other service in Token Service - can cause circular dependency issue
@@ -36,13 +37,12 @@ export class TokenService {
     /**
      * @description set access token
      * */
-    saveAccessToken(token): string {
+    saveAccessToken(token) {
         if (token) {
             localStorage.setItem('accessToken', token);
         } else {
             localStorage.removeItem('accessToken');
         }
-        return this.getToken();
     }
 
     /**
@@ -52,38 +52,37 @@ export class TokenService {
         return localStorage.getItem('accessToken');
     }
 
-    saverole(role): string {
+    saverole(role) {
         if (role) {
             localStorage.setItem('role', role);
         } else {
             localStorage.removeItem('role');
         }
-        return this.getRole();
+        // return this.getRole();
     }
+
 
     getRole(): string {
 
         return localStorage.getItem('role');
     }
-    saveUserId(userId): number {
+    saveUserId(userId) {
         if (userId) {
             localStorage.setItem('userId', userId);
         } else {
             localStorage.removeItem('userId');
         }
-        return this.getUserId();
     }
     getUserId(): number {
         return Number(localStorage.getItem('userId'));
     }
 
-    saveOrgId(orgId): number {
+    saveOrgId(orgId) {
         if (orgId) {
             localStorage.setItem('orgId', orgId);
         } else {
             localStorage.removeItem('orgId');
         }
-        return this.getOrgId();
     }
     getOrgId(): number {
         return Number(localStorage.getItem('orgId'));
@@ -99,10 +98,9 @@ export class TokenService {
     /**
      * @description set logged in status
      * */
-    saveLoginStatus(status: boolean): boolean {
+    saveLoginStatus(status: boolean) {
         localStorage.setItem('is_loggedIn', (status) ? 'true' : 'false');
         //  this._isLoggedIn = status;
-        return this.getLoggedIn();
     }
 
 

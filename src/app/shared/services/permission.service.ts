@@ -26,7 +26,7 @@ export class PermissionService {
   }
 
   checkPermission(role: string) {
-    if (role == "l1") {
+    if (role.toLowerCase() == "l1") {
       this.permissionObj.projectStoreFlag = true;
       this.permissionObj.globalStoreFlag = true;
       this.permissionObj.rfqFlag = true;
@@ -37,7 +37,7 @@ export class PermissionService {
       this.permissionObj.addProject = true;
       this.permissionObj.poApprovalFlag = true;
     }
-    else if (role == "l2") {
+    else if (role.toLowerCase() == "l2") {
       this.permissionObj.projectStoreFlag = true;
       this.permissionObj.globalStoreFlag = true;
       this.permissionObj.rfqFlag = true;
@@ -49,6 +49,13 @@ export class PermissionService {
     }
     else {
       this.permissionObj.projectStoreFlag = true;
+      this.permissionObj.globalStoreFlag = false;
+      this.permissionObj.rfqFlag = false;
+      this.permissionObj.purchaseOrderFlag = false;
+      this.permissionObj.usersFlag = false;
+      this.permissionObj.supplierFlag = false;
+      this.permissionObj.projectEdit = false;
+      this.permissionObj.addProject = false;
     }
     return this.permissionObj;
   }
