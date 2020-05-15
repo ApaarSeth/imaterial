@@ -128,7 +128,7 @@
                                                 <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
                       <div class="stats__content">
-                        <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue | number: "1.2-2" }}</h2>
+                        <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue }}</h2>
                         <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
                         <p class="mb-0">Raised Indents</p>
                       </div>

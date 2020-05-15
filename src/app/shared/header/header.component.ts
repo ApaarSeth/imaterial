@@ -8,6 +8,7 @@ import { FacebookPixelService } from '../services/fb-pixel.service';
 import { IfStmt } from '@angular/compiler';
 import { MatSidenav } from '@angular/material';
 import { AppNavigationService } from '../services/navigation.service';
+import { TokenService } from '../services/token.service';
 @Component({
   selector: "app-header",
   templateUrl: "./header.html"
@@ -29,22 +30,27 @@ export class HeaderLayoutComponent implements OnInit {
     private permissionService: PermissionService,
     private router: Router,
     private fbPixel: FacebookPixelService,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.role = localStorage.getItem("role");
+    this.role = this.tokenService.getRole();
     this.sidenavToggle.emit('loaded');
     if (this.role) {
+      // this.tokenService.headerRole.subscribe(role => {
       this.permissionObj = this.permissionService.checkPermission(this.role);
       this.headerConst = HeaderConstants.PERMISSIONHEADER(this.permissionObj, this.orgId);
+      // })
+
     }
 
     this.highlightButton(this.router.url);
     this.startSubscription();
   }
+
   openMenu() {
     this.menu.open();
   }

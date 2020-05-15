@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Router } from '@angular/router';
 import { Utils } from '../helpers/utils';
-import { GaEventsData, GaPageViewData } from '../models/common.models';
+import { GaEventsData, GaPageViewData, GaTagData } from '../models/common.models';
 
 
 @Injectable({ providedIn: "root" })
@@ -31,6 +31,12 @@ export class AppNavigationService {
     gaPageView(data: GaPageViewData) {
         if (Utils.isLive()) {
             this.ga.pageView(data.path, data.title, data.location, data.options)
+        }
+    }
+
+    gaTag(data: GaTagData) {
+        if (Utils.isLive()) {
+            this.ga.gtag(data.action, data.command, data.options)
         }
     }
 
