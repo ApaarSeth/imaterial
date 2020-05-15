@@ -40,12 +40,12 @@ export interface Fruit {
 const ELEMENT_DATA: AllUserDetails[] = [];
 
 @Component({
-  selector: "report-details",
-  templateUrl: "./report-details.component.html"
+  selector: "supplier-liability-report-details",
+  templateUrl: "./supplier-liability-report-details.component.html"
 })
 
 
-export class ReportDetailComponent implements OnInit {
+export class SupplierLiabilityReportDetailComponent implements OnInit {
   displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
   displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
 
@@ -85,7 +85,7 @@ export class ReportDetailComponent implements OnInit {
   alreadySelectedId: number[];
   checkedProjectList: RfqMaterialResponse[] = [];
   checkedProjectIds: number[] = [];
-  
+  searchText: string = null;
   projects: FormControl;
   selectedProjects: ProjectDetails[] = [];
   projectIds: number[] = [];
@@ -116,8 +116,8 @@ export class ReportDetailComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.allSuppliers = this.activatedRoute.snapshot.data.ReportResolver[0].data;
-    this.allProjects = this.activatedRoute.snapshot.data.ReportResolver[1].data;
+    this.allSuppliers = this.activatedRoute.snapshot.data.SupplierLiabilityReportResolver[0].data;
+    this.allProjects = this.activatedRoute.snapshot.data.SupplierLiabilityReportResolver[1].data;
 
     this.formInit();
     this.getNotifications();
