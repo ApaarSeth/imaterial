@@ -222,3 +222,17 @@ export interface DownloadData {
   fileName?: string;
   url?: string;
 }
+
+export interface PaymentHistory {
+  id: number, status: number, createdBy: string, createdAt: string, lastUpdatedBy: string, lastUpdatedAt: string, supplierPaymentId: number, purchaseOrderId: number, supplierId: number, amountPaid: number, transactionId: string, paymentDate: string
+}
+
+export interface SavePaymnetRecord {
+  amountPaid: number,
+  paymentDate: string,
+  TransactionId: string
+}
+
+export interface PoPayementDetail {
+  purchaseOrderId: number, materialBrand: string, poAmount: number, grnAmount: number, gstAmount: number, paymentRecived: number
+}

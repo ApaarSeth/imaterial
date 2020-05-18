@@ -55,7 +55,17 @@ export class POService {
   getNumberToWords(currency: number) {
     return this.dataService.getRequest(API.NUMBERTOWORDS(currency));
   }
-  downloadPo(purchaseOrderId){
-     return this.dataService.getRequest(API.DOWNLOADPO(purchaseOrderId));
+  downloadPo(purchaseOrderId) {
+    return this.dataService.getRequest(API.DOWNLOADPO(purchaseOrderId));
   }
+  paymentRecord(poId, data) {
+    return this.dataService.sendPostRequest(API.PAYMENTRECORD(poId), data)
+  }
+  paymentHistory(poId) {
+    return this.dataService.getRequest(API.PAYMENTHISTORY(poId))
+  }
+  paymentDetail(poId) {
+    return this.dataService.getRequest(API.PAYMENTDETAIL(poId))
+  }
+
 }

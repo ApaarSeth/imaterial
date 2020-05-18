@@ -91,8 +91,8 @@
                                                 <img src="assets/images/icon6.png" alt="Awarded Purchase Order" class="img-fluid">
                                             </div> -->
                       <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="rfqData.totalCount">{{ rfqData?.totalCount }}</h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="!rfqData.totalCount">0</h2>
+                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalCount">{{ rfqData?.totalCount }}</h2>
+                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalCount">0</h2>
                         <p class="mb-0">Number of RFQ</p>
                       </div>
                     </div>
@@ -102,8 +102,8 @@
                                                 <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                             </div> -->
                       <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="rfqData.totalValue">₹ {{ rfqData?.totalValue | number: "1.2-2" }}</h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq/rfq-detail']" *ngIf="!rfqData.totalValue">₹ 0</h2>
+                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalValue">₹ {{ rfqData?.totalValue | number: "1.2-2" }}</h2>
+                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalValue">₹ 0</h2>
                         <p class="mb-0">RFQ Amount</p>
                       </div>
                     </div>

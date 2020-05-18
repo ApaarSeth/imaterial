@@ -68,5 +68,15 @@ export class CommonService {
   getMyMaterial(type: string) {
     return this.dataService.getRequest(API.MYCUSTOMMATERIAL(type))
   }
+  getFormatedDate(formatdate) {
+    let date = new Date(this.formatDate(formatdate))
+    let dummyMonth = date.getMonth() + 1;
+    const year = date.getFullYear().toString();
+    const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+    const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+    return year + "-" + month + "-" + day;
+  }
+
 }
+
 
