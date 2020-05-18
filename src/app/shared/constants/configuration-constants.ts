@@ -23,7 +23,7 @@ export const HeaderConstants = {
       { name: 'My Materials', link: '/myMaterial', image: '../../../assets/images/my-materials-hamburger.svg', flag: permissionObj.rfqFlag },
       { name: 'Supplier', link: '/supplier', image: '../../../assets/images/supplier-hamburger.svg', flag: permissionObj.supplierFlag },
       { name: 'Users', link: '/users/', image: '../../../assets/images/user-hamburger.svg', flag: permissionObj.usersFlag }
-    //   { name: 'Reports', link: '/reports/', image: '../../../assets/images/report-hamburger.svg', flag: permissionObj.usersFlag }
+      //   { name: 'Reports', link: '/reports/', image: '../../../assets/images/report-hamburger.svg', flag: permissionObj.usersFlag }
 
     ]
 
@@ -121,5 +121,8 @@ export const API = {
   APPROVEMYMATERIAL: `material/update/approve/custom`,
   SENDRELEASENOTE: `user/add/releaseNote`,
   DELETEMYMATERIAL: (id) => `material/delete/custom/${id}`,
-  ALLCATEGORY: `trade/get/all/categories`
+  ALLCATEGORY: `trade/get/all/categories`,
+  PAYMENTRECORD: (poId) => `po/add/payment/${poId}`,
+  PAYMENTHISTORY: (poId) => `po/get/payment/${poId}`,
+  PAYMENTDETAIL: (poId) => `po/get/payment/indetail/${poId}`
 };

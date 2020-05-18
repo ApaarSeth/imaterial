@@ -195,9 +195,10 @@ export class PODetailComponent implements OnInit {
       detail: element
     } as ProjetPopupData);
   }
-  openPaymentRecord() {
+  openPaymentRecord(poId) {
     const dialogRef = this.dialog.open(PaymentRecordComponent, {
-      width: "800px"
+      width: "800px",
+      data: poId
     });
   }
 
