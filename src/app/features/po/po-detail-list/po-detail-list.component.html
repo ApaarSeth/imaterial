@@ -304,16 +304,18 @@
                 <ng-container matColumnDef="Action">
                   <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let element" class="actions-cell">
-                    <span class="p-r-10"
+                    <span class="p-r-10 display-inline-block p-t-5"
                       ><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
                     >
-                    <!-- <span>&nbsp;</span> -->
-                    <span class="p-r-10"><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./view-grn/', element.purchaseOrderId]">Add/View GRN</a></span>
-                    <!-- <span class="p-r-10 cursor-pointer material-icons main-color"
-                      ><a (click)="openPaymentRecord(element.purchaseOrderId)" matTooltip="Payment Record">attach_money</a></span
-                    > -->
-                    <span class="p-r-10 cursor-pointer"
+                    <span class="p-r-10 display-inline-block p-t-5"
+                      ><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./view-grn/', element.purchaseOrderId]">Add/View GRN</a></span
+                    >
+                    <span>&nbsp;</span>
+                    <span class="p-r-10 cursor-pointer float-right display-inline-block p-t-5"
                       ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
+                    ></span>
+                    <span class="p-r-10 cursor-pointer float-right"
+                      ><a (click)="openPaymentRecord(element.purchaseOrderId)" matTooltip="Payment Record"><img src="../../../../assets/images/trackpayment.svg" /></a
                     ></span>
 
                     <!-- <span class="p-r-10"

@@ -1,31 +1,54 @@
 <form [formGroup]="signinForm" (ngSubmit)="signin()" class="sign-in-form">
-  <div style="min-height:221px">
-       <mat-form-field class="col-xs-12 border-input">
-          <input matInput formControlName="phone" type="number" min="0"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Phone No." />
-           <small
-                    *ngIf="signinForm.controls['phone'].hasError('required') && signinForm.controls['phone'].touched"
-                    class="signinForm-error-msg"> Phone No is required </small>
-                    <small
-                    *ngIf="signinForm.controls['phone'].hasError('pattern') && signinForm.controls['phone'].touched"
-                    class="signinForm-error-msg"> Enter Valid Phone No</small>
+  <div style="min-height: 221px;">
+    <div class="row">
+      <!-- <div class="col-xs-3">
+        <mat-form-field class="border-select p-t-5 mat-form-field-infix-padding mat-form-field-flex-mm-padding">
+          <mat-select formControlName="countryCode">
+            <div class="display-flex">
+              <input
+                class="p-l-10 p-b-5"
+                matInput
+                type="search"
+                placeholder="Search Country"
+                [(ngModel)]="searchCountry"
+                [ngModelOptions]="{standalone: true}"
+                (keydown)="$event.stopPropagation()"
+              />
+              <button mat-button matSuffix mat-icon-button>
+                <mat-icon>search</mat-icon>
+              </button>
+            </div>
+            <mat-select-trigger>
+              <mat-label>Select Country</mat-label>
+            </mat-select-trigger>
+            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country" selected="trade.isAttatched"
+              >{{ country.countryName }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
-
-        <mat-form-field class="col-xs-12 border-input">
-          <input matInput [type]="showPassWordString? 'text': 'password'" formControlName="password" placeholder="Password" />
-          <a>
-            <mat-icon class="password-eye" (click)="showPassWord()">remove_red_eye</mat-icon>
-          </a>
-          <div class="main-color">
-            <a class="pull-right p-t-20 cursor-pointer" (click)="goToForgetPass()">Forgot Password</a>
-          </div>
+      </div> -->
+      <div class="col-xs-12">
+        <mat-form-field class="border-input p-l-0 p-r-0">
+          <input matInput formControlName="phone" type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Phone No." />
+          <small *ngIf="signinForm.controls['phone'].hasError('required') && signinForm.controls['phone'].touched" class="signinForm-error-msg"> Phone No is required </small>
+          <small *ngIf="signinForm.controls['phone'].hasError('pattern') && signinForm.controls['phone'].touched" class="signinForm-error-msg"> Enter Valid Phone No</small>
         </mat-form-field>
-
-        <div mat-dialog-actions class="col-xs-12 p-t-10">
-          <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
-            style="width: 100%;" [disabled]="!signinForm.valid">
-            Sign In
-          </button>
+      </div>
+      <mat-form-field class="col-xs-12 border-input">
+        <input matInput [type]="showPassWordString ? 'text' : 'password'" formControlName="password" placeholder="Password" />
+        <a>
+          <mat-icon class="password-eye" (click)="showPassWord()">remove_red_eye</mat-icon>
+        </a>
+        <div class="main-color">
+          <a class="pull-right p-t-20 cursor-pointer" (click)="goToForgetPass()">Forgot Password</a>
         </div>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions class="col-xs-12 p-t-10">
+      <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial style="width: 100%;" [disabled]="!signinForm.valid">
+        Sign In
+      </button>
+    </div>
   </div>
-       
 </form>

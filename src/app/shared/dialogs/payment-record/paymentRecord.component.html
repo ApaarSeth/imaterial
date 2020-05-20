@@ -14,23 +14,23 @@
   <div class="col-xs-12 p-t-20">
     <mat-card class="width78Percent gray-border" *ngIf="paymentDetail">
       <div class="row">
-        <div class="col-xs-5">Total PO Amount : {{ paymentDetail.poAmount }}</div>
+        <div class="col-xs-5">Total PO Amount : ₹ {{ paymentDetail.poAmount }}</div>
         <div class="col-xs-1 p-l-0">
           <div class="info">
             <mat-icon class="material-info-padding round-button color-white main-background-color">info</mat-icon>
             <div id="infoIcon">
               <div class="row">
-                <div class="col-sm-12">Total Amount : {{ paymentDetail.poAmount - paymentDetail.gstAmount }}</div>
-                <div class="col-sm-12">GST Amount :{{ paymentDetail.gstAmount }}</div>
+                <div class="col-sm-12">Total Amount : ₹ {{ paymentDetail.poAmount - paymentDetail.gstAmount }}</div>
+                <div class="col-sm-12">GST Amount : ₹ {{ paymentDetail.gstAmount }} INR</div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xs-6">Amount Paid till date : {{ paymentDetail.paymentRecived }}</div>
+        <div class="col-xs-6">Amount Paid till date : ₹ {{ paymentDetail.paymentRecived }}</div>
       </div>
       <div class="row">
-        <div class="col-xs-6">GRN Amount : {{ paymentDetail.grnAmount }}</div>
-        <div class="col-xs-6">Amount Due : {{ paymentDetail.poAmount - paymentDetail.paymentRecived }}</div>
+        <div class="col-xs-6">GRN Amount : ₹ {{ paymentDetail.grnAmount }}</div>
+        <div class="col-xs-6">Amount Due : ₹ {{ paymentDetail.poAmount - paymentDetail.paymentRecived }}</div>
       </div>
     </mat-card>
   </div>
