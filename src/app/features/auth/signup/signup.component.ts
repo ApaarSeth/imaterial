@@ -37,6 +37,8 @@ export class SignupComponent implements OnInit {
   verifiedMobile: boolean = false;
   value: any;
   organisationDisabled: boolean = false;
+  searchCountry: string = '';
+  countryList: any;
 
   constructor(
     private tokenService: TokenService,
@@ -55,6 +57,7 @@ export class SignupComponent implements OnInit {
   signInDetails = {} as SignINDetailLists;
 
   ngOnInit() {
+    this.countryList = [{ countryName: 'India' }];
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       if (this.uniqueCode) {
@@ -86,6 +89,7 @@ export class SignupComponent implements OnInit {
 
   formInit() {
     this.signupForm = this.formBuilder.group({
+      countryCode: [],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
       organisationName: [{ value: this.user ? this.user.companyName : '', disabled: this.organisationDisabled }, Validators.required],
