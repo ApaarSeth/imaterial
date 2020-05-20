@@ -28,12 +28,14 @@ export class SigninComponent implements OnInit {
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private navigationService: AppNavigationService) { }
-
+  searchCountry: string = '';
   showPassWordString: boolean = false;
   signinForm: FormGroup;
   signInData = {} as SignInData;
   acceptTerms: boolean;
+  countryList: any
   ngOnInit() {
+    this.countryList = [{ countryName: 'India' }];
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
@@ -44,6 +46,7 @@ export class SigninComponent implements OnInit {
 
   formInit() {
     this.signinForm = this.formBuilder.group({
+      // countryCode: [],
       phone: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
       password: ["", Validators.required]
     });

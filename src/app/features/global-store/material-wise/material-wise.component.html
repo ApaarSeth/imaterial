@@ -21,7 +21,7 @@
     <mat-expansion-panel *ngFor="let material of newMaterialData | SearchPipe: searchMaterial:'GlobalMaterial':'materialName'" class="myPanel">
       <mat-expansion-panel-header class="mat-row material-row">
         <span class="mat-cell" matTooltip="{{ material.GlobalMaterial.materialName }}">
-          <div class="limited-character global">
+          <div class="limited-character globalStore">
             {{ material.GlobalMaterial.materialName }}
           </div>
         </span>

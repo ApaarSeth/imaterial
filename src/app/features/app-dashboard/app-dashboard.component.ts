@@ -90,6 +90,10 @@ export class AppDashboardComponent implements OnInit {
     })
     this.getProjectsNumber();
     this.getNotifications();
+
+    this.dateRangePicker.valueChanges.subscribe(data => {
+      console.log(data)
+    })
   }
 
   ngOnChanges(): void {
