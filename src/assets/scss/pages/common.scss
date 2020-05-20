@@ -163,3 +163,12 @@ div.limited-character.universal {
 .hideCalender ngx-mat-drp-picker-overlay .ngx-mat-drp-calendar-item {
   display: none;
 }
+
+.mat-form-field-flex-mm-padding {
+  .mat-form-field-wrapper .mat-form-field-flex {
+    padding-top: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 3px !important;
+  }
+}
