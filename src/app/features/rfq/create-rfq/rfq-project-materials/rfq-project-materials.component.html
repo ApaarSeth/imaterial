@@ -37,6 +37,7 @@
     </div>
 
     <div class="col-xs-4 text-right">
+      <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
       <span>
         <button mat-raised-button matStepperNext [disabled]="!(form.valid && counter > 0)" (click)="materialAdded()" class="main-background-color main-button color-white">
           Next

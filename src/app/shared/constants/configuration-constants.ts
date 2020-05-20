@@ -124,5 +124,6 @@ export const API = {
   ALLCATEGORY: `trade/get/all/categories`,
   PAYMENTRECORD: (poId) => `po/add/payment/${poId}`,
   PAYMENTHISTORY: (poId) => `po/get/payment/${poId}`,
-  PAYMENTDETAIL: (poId) => `po/get/payment/indetail/${poId}`
+  PAYMENTDETAIL: (poId) => `po/get/payment/indetail/${poId}`,
+  GETCURRENCY : `get/currency`
 };

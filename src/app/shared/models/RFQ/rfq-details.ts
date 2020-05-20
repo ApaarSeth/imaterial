@@ -71,8 +71,16 @@ export interface AddRFQ {
   documentsList: DocumentDetails[];
   selectBuildsupplyAsSupplier?: boolean
   terms: Terms;
+  rfqCurrency ?: rfqCurrency[];
 }
 
+export interface  rfqCurrency{
+  primaryCurrencyId : number,
+	exchangeCurrencyId : number,
+	primaryCurrencyName : string,
+	exchangeCurrencyName : string,
+	exchangeValue : number
+}
 export interface DocumentDetails {
   documentType: string;
   documentDesc: string;
@@ -84,4 +92,13 @@ export interface Terms {
   termsDesc: string;
   termsType: string;
   otherDesc?: string;
+}
+
+export interface CountryCurrency{
+  countryId ?: number,
+  currency ?: string,
+  currencyCode ?: string,
+  currencyId ?: number,
+  imageUrl ?: string,
+  symbol ?: string
 }
