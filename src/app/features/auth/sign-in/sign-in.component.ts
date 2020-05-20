@@ -10,6 +10,8 @@ import { TokenService } from 'src/app/shared/services/token.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 
 @Component({
@@ -27,23 +29,29 @@ export class SigninComponent implements OnInit {
     private route: ActivatedRoute,
     private dataService: DataService,
     private _snackBar: MatSnackBar,
-    private navigationService: AppNavigationService) { }
+    private navigationService: AppNavigationService,
+    private commonService: CommonService) { }
 
   showPassWordString: boolean = false;
   signinForm: FormGroup;
   signInData = {} as SignInData;
   acceptTerms: boolean;
-  countryList: any
+  countryList: CountryCode;
   searchCountry: string = '';
 
   ngOnInit() {
-    this.countryList = [{ countryName: 'India' }];
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
 
-
+    this.getCountryCode();
     this.formInit();
+  }
+
+  getCountryCode() {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+    })
   }
 
   formInit() {
@@ -56,6 +64,7 @@ export class SigninComponent implements OnInit {
 
   signin() {
     let params = new URLSearchParams();
+    // params.append('countryCode', this.signinForm.value.countryCode);
     params.append("username", this.signinForm.value.phone);
     params.append("password", this.signinForm.value.password);
     params.append("grant_type", "password");

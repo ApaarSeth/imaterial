@@ -45,6 +45,10 @@ a:hover {
   border: 2px solid $main-color;
 }
 
+.full-border-main {
+  border: 2px solid $main-color;
+}
+
 .full-border.mat-form-field input {
   border: 2px solid $icon-color-gray;
 }
@@ -230,8 +234,15 @@ input {
   width: 35%;
 }
 
+.width17Percent {
+  width: 17%;
+}
+
 .width50Percent {
   width: 50%;
+}
+.width70Percent {
+  width: 70%;
 }
 .width78Percent {
   width: 78%;
@@ -675,6 +686,10 @@ mat-accordion {
 
 .mat-dialog-container {
   padding-top: 5px !important;
+}
+
+.font-size {
+  font-size: 15px;
 }
 
 .mat-header-cell {

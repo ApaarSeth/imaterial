@@ -143,6 +143,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   sendotp(value) {
+
     this.signInSignupService.sendOTP(value).then(res => {
       if (res.data)
         this.showOtp = res.data.success;

@@ -22,7 +22,7 @@
               <mat-label>Select Country</mat-label>
             </mat-select-trigger> -->
             <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country" selected="trade.isAttatched"
-              >{{ country.countryName }}
+              >{{ country.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>

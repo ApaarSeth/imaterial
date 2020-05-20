@@ -15,7 +15,7 @@ export class SignInSignupService implements OnInit {
     return this.dataService.sendPostRequestSso(API.SIGNUP, data)
   }
 
-  forgotPassword(data){
+  forgotPassword(data) {
     return this.dataService.resetPasswordSSOPOST(API.FORGOTPASSWORD, data);
   }
 
@@ -45,8 +45,8 @@ export class SignInSignupService implements OnInit {
   verifyOTP(phone, otp) {
     return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYOTP(phone, otp), {}).then(res => { return res });
   }
-  verifyForgetPasswordOTP(phone, otp, clientId){
-     return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYFORGETPASSWORDOTP(phone, otp, clientId), {}).then(res => { return res });
+  verifyForgetPasswordOTP(phone, otp, clientId) {
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYFORGETPASSWORDOTP(phone, otp, clientId), {}).then(res => { return res });
   }
   verifyEMAIL(email) {
     return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => { return res });
@@ -54,4 +54,5 @@ export class SignInSignupService implements OnInit {
   VerifyMobile(mobile) {
     return this.dataService.getRequest(API.VERIFYMOBILE(mobile)).then(res => { return res });
   }
+
 }

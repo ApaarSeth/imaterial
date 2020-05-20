@@ -14,6 +14,8 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 export interface OrganisationType {
   value: string;
@@ -38,7 +40,7 @@ export class SignupComponent implements OnInit {
   value: any;
   organisationDisabled: boolean = false;
   searchCountry: string = '';
-  countryList: any;
+  countryList: CountryCode;
 
   constructor(
     private tokenService: TokenService,
@@ -50,14 +52,14 @@ export class SignupComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
-    private dataService: DataService
+    private dataService: DataService,
+    private commonService: CommonService
   ) { }
   acceptTerms: boolean;
   signupForm: FormGroup;
   signInDetails = {} as SignINDetailLists;
 
   ngOnInit() {
-    this.countryList = [{ countryName: 'India' }];
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       if (this.uniqueCode) {
@@ -68,9 +70,18 @@ export class SignupComponent implements OnInit {
         this.formInit();
       }
     });
+    this.getCountryCode();
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
+  }
+
+
+
+  getCountryCode() {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+    })
   }
 
   getUserInfo(code) {
@@ -104,6 +115,7 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
+    // this.signInDetails.countryCode = this.signupForm.value.countryCode;
     this.signInDetails.password = this.signupForm.value.password;
     this.signInDetails.confirmPassword = this.signupForm.value.password;
     this.signInDetails.phone = this.signupForm.value.phone;
@@ -115,6 +127,7 @@ export class SignupComponent implements OnInit {
     }
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
+      countryCode: this.signupForm.value.countryCode,
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
       organizationId: this.user ? this.user.organizationId.toString() : null,
