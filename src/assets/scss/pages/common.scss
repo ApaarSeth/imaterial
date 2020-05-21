@@ -22,6 +22,11 @@
     padding-bottom: 0px !important ;
   }
 }
+.mat-form-field-arrow-padding {
+  .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select-arrow-wrapper {
+    padding-top: 0px !important ;
+  }
+}
 
 .mat-select-placeholder-padding {
   .mat-form-field-infix .mat-select-placeholder {
@@ -162,4 +167,13 @@ div.limited-character.universal {
 
 .hideCalender ngx-mat-drp-picker-overlay .ngx-mat-drp-calendar-item {
   display: none;
+}
+
+.mat-form-field-flex-mm-padding {
+  .mat-form-field-wrapper .mat-form-field-flex {
+    padding-top: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 3px !important;
+  }
 }

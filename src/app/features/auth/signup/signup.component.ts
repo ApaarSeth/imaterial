@@ -14,6 +14,8 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 export interface OrganisationType {
   value: string;
@@ -37,6 +39,8 @@ export class SignupComponent implements OnInit {
   verifiedMobile: boolean = false;
   value: any;
   organisationDisabled: boolean = false;
+  searchCountry: string = '';
+  countryList: CountryCode;
 
   constructor(
     private tokenService: TokenService,
@@ -48,7 +52,8 @@ export class SignupComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
-    private dataService: DataService
+    private dataService: DataService,
+    private commonService: CommonService
   ) { }
   acceptTerms: boolean;
   signupForm: FormGroup;
@@ -65,9 +70,22 @@ export class SignupComponent implements OnInit {
         this.formInit();
       }
     });
+    this.getCountryCode();
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
+  }
+
+
+  get selectedCountry() {
+    return this.signupForm.get('countryCode').value;
+  }
+
+
+  getCountryCode() {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+    })
   }
 
   getUserInfo(code) {
@@ -86,6 +104,7 @@ export class SignupComponent implements OnInit {
 
   formInit() {
     this.signupForm = this.formBuilder.group({
+      countryCode: [],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
       organisationName: [{ value: this.user ? this.user.companyName : '', disabled: this.organisationDisabled }, Validators.required],
@@ -100,6 +119,7 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
+    // this.signInDetails.countryCode = this.signupForm.value.countryCode;
     this.signInDetails.password = this.signupForm.value.password;
     this.signInDetails.confirmPassword = this.signupForm.value.password;
     this.signInDetails.phone = this.signupForm.value.phone;
@@ -111,6 +131,7 @@ export class SignupComponent implements OnInit {
     }
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
+      countryCode: this.signupForm.value.countryCode,
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
       organizationId: this.user ? this.user.organizationId.toString() : null,

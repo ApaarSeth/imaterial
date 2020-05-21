@@ -15,7 +15,7 @@ export interface ForgetPassDetails {
   password: string;
   confirmPassword: string;
   clientId?: string;
-    customData: CustonDataDetails;
+  customData: CustonDataDetails;
 }
 
 export interface SignInData {
@@ -26,6 +26,7 @@ export interface SignInData {
   userType: string;
 }
 export interface CustonDataDetails {
+  countryCode: string;
   uniqueCode: string;
   organizationName: string;
   organizationType: string;

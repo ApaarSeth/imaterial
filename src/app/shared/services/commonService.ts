@@ -77,6 +77,14 @@ export class CommonService {
     return year + "-" + month + "-" + day;
   }
 
+  getCurrency() {
+    return this.dataService.getRequest(API.CURRENCY);
+  }
+
+  getCountry() {
+    return this.dataService.getRequest(API.COUNTRYCODE);
+  }
+
 }
 
 

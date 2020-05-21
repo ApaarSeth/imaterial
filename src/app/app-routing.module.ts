@@ -49,7 +49,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileLayoutComponent,
-    canActivate: [AuthGuardService, UserDataGuardService],
+    // canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
         path: "profile",
@@ -142,8 +142,8 @@ const routes: Routes = [
       },
       {
         path: "reports",
-        data : { breadcrumb: 'Reports' },
-        loadChildren: () => 
+        data: { breadcrumb: 'Reports' },
+        loadChildren: () =>
           import("./features/reports/report-dashboard.module").then(
             m => m.ReportDashboardModule
           )
