@@ -25,7 +25,7 @@
                 <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country" selected="trade.isAttatched"
+            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country.callingCode" selected="trade.isAttatched"
               ><span
                 ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
                 <span>{{ country.countryCode }}</span>

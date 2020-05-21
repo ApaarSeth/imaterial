@@ -250,6 +250,7 @@ export class UpdateInfoComponent implements OnInit {
       })
       this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
       // this.userInfoForm.value.tradeId = [...this.selectedTrades];
+
       const data: UserDetails = this.userInfoForm.value;
       this._userService.submitUserDetails(data).then(res => {
         this.navService.gaEvent({
