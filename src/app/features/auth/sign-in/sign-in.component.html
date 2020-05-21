@@ -26,7 +26,10 @@
               </span>
             </mat-select-trigger>
             <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country" selected="trade.isAttatched"
-              >{{ country.name }}
+              ><span
+                ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                <span>{{ country.countryCode }}</span>
+              </span>
             </mat-option>
           </mat-select>
         </mat-form-field>

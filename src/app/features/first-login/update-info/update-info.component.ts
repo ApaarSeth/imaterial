@@ -46,8 +46,8 @@ export class UpdateInfoComponent implements OnInit {
   imageFileSizeError: string;
   imageFileSize: boolean = false;
   fileTypes: string[] = ['png', 'jpeg', 'jpg'];
-  currencyList: Currency;
-  countryList: CountryCode
+  currencyList: Currency[] = [];
+  countryList: CountryCode[] = [];
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,

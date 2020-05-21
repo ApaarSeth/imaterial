@@ -40,7 +40,7 @@ export class SignupComponent implements OnInit {
   value: any;
   organisationDisabled: boolean = false;
   searchCountry: string = '';
-  countryList: CountryCode;
+  countryList: CountryCode[] = [];
 
   constructor(
     private tokenService: TokenService,

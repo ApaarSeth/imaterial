@@ -36,7 +36,7 @@ export class SigninComponent implements OnInit {
   signinForm: FormGroup;
   signInData = {} as SignInData;
   acceptTerms: boolean;
-  countryList: CountryCode;
+  countryList: CountryCode[] = [];
   searchCountry: string = '';
 
   ngOnInit() {
