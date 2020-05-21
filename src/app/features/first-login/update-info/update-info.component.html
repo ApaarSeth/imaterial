@@ -63,7 +63,8 @@
                 </mat-error>
                 <div class="row">
                   <div class="col-xs-5">
-                    <mat-form-field class="width100Percent p-t-5 border-select mat-form-field-flex-mm-padding mat-form-field-infix-padding">
+                    <mat-form-field class="width100Percent border-select mat-form-field-flex-mm-padding">
+                      <mat-label>*Country Code</mat-label>
                       <mat-select formControlName="countryCode">
                         <div class="display-flex">
                           <input
@@ -81,12 +82,12 @@
                         </div>
                         <mat-select-trigger>
                           <span
-                            ><img class="width55Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                            ><img class="width35Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                             <span class="p-r-5">{{ selectedCountry && selectedCountry.countryCode }}</span>
                             <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
                           </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country.callingCode"
+                        <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country"
                           ><span
                             ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
                             <span>{{ country.countryCode }}</span>

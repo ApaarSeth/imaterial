@@ -18,7 +18,7 @@ export class VisitorService {
 
     getIpAddress() {
         return this.http
-            .get('https://api.ipify.org/?format=json')
+            .get("https://cors-anywhere.herokuapp.com/http://api.ipify.org/?format=json")
             .pipe(
                 catchError(this.handleError)
             );
