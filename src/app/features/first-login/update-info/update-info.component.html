@@ -62,7 +62,7 @@
                   </mat-error>
                 </mat-error>
                 <div class="row">
-                  <div class="col-xs-3">
+                  <div class="col-xs-4">
                     <mat-form-field class="width100Percent border-select mat-form-field-flex-mm-padding">
                       <mat-select formControlName="countryCode">
                         <div class="display-flex">
@@ -79,16 +79,22 @@
                             <mat-icon>search</mat-icon>
                           </button>
                         </div>
-                        <!-- <mat-select-trigger>
-                          <mat-label>Select Country</mat-label>
-                        </mat-select-trigger> -->
+                        <mat-select-trigger>
+                          <span
+                            ><img class="width55Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                            <span>{{ selectedCountry && selectedCountry.countryCode }}</span>
+                          </span>
+                        </mat-select-trigger>
                         <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country" selected="trade.isAttatched"
-                          >{{ country.countryName }}
+                          ><span
+                            ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                            <span>{{ country.countryCode }}</span>
+                          </span>
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
-                  <div class="col-xs-9">
+                  <div class="col-xs-8">
                     <mat-form-field class="border-input w-100">
                       <input matInput type="text" placeholder="Phone No." formControlName="contactNo" />
                     </mat-form-field>
@@ -130,11 +136,11 @@
                 <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')">Annual Turn over is required</mat-error>
                 </mat-error>
-                <div class="row width70Percent p-t-5 full-border-main">
-                  <div class="col-xs-6 font-size">Base Currency</div>
-                  <div class="col-xs-6">
-                    <mat-form-field class="width100Percent border-select mat-form-field-infix-padding mat-form-field-flex-mm-padding">
-                      <mat-select formControlName="countryCode">
+                <div class="row height12Percent m-t-10 border-round width78Percent p-t-5 full-border-main">
+                  <div class="col-xs-6 p-t-10 color-grey text-semi-bold p-r-0 font-size">Base Currency</div>
+                  <div class="col-xs-6 p-l-0">
+                    <mat-form-field class="width100Percent border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
+                      <mat-select formControlName="baseCurrency">
                         <div class="display-flex">
                           <input
                             class="p-l-10 p-b-5"
@@ -149,17 +155,22 @@
                             <mat-icon>search</mat-icon>
                           </button>
                         </div>
-                        <!-- <mat-select-trigger>
-                          <mat-label>Select Country</mat-label>
-                        </mat-select-trigger> -->
-                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCountry:'countryName'" [value]="currency" selected="trade.isAttatched"
+                        <mat-select-trigger>
+                          <span
+                            ><img class="width55Percent p-r-10" [src]="selectedBaseCurrency && selectedBaseCurrency.imageUrl" alt="" />
+                            <span class="p-r-5">{{ selectedBaseCurrency && selectedBaseCurrency.currencyCode }}</span>
+                            <span>
+                              {{ selectedBaseCurrency && selectedBaseCurrency.symbol }}
+                            </span>
+                          </span>
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCountry:'countryName'" [value]="currency"
                           ><span
                             ><img class="width17Percent p-r-10" [src]="currency.imageUrl" alt="" />
-                            {{ currency.currencyCode }}
                             <span class="p-r-5">{{ currency.currencyCode }}</span>
-                            <!-- <span>
+                            <span>
                               {{ currency.symbol }}
-                            </span> -->
+                            </span>
                           </span>
                         </mat-option>
                       </mat-select>

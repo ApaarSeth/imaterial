@@ -70,14 +70,22 @@ export class UpdateInfoComponent implements OnInit {
 
   getCurrency() {
     this.commonService.getCurrency().then(res => {
-      this.countryList = res.data;
+      this.currencyList = res.data;
     })
   }
 
   getCountryCode() {
     this.commonService.getCountry().then(res => {
-      this.currencyList = res.data;
+      this.countryList = res.data;
     })
+  }
+
+  get selectedCountry() {
+    return this.userInfoForm.get('countryCode').value;
+  }
+
+  get selectedBaseCurrency() {
+    return this.userInfoForm.get('baseCurrency').value;
   }
 
   getUserRoles() {
