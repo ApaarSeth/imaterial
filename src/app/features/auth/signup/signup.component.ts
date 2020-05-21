@@ -77,6 +77,10 @@ export class SignupComponent implements OnInit {
   }
 
 
+  get selectedCountry() {
+    return this.signupForm.get('countryCode').value;
+  }
+
 
   getCountryCode() {
     this.commonService.getCountry().then(res => {

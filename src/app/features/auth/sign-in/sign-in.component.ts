@@ -62,6 +62,10 @@ export class SigninComponent implements OnInit {
     });
   }
 
+  get selectedCountry() {
+    return this.signinForm.get('countryCode').value;
+  }
+
   signin() {
     let params = new URLSearchParams();
     // params.append('countryCode', this.signinForm.value.countryCode);

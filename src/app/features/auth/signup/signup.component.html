@@ -24,9 +24,13 @@
                 <mat-icon>search</mat-icon>
               </button>
             </div>
-            <!-- <mat-select-trigger>
-              <mat-label>Select Country</mat-label>
-            </mat-select-trigger> -->
+            <mat-select-trigger>
+              <span
+                ><img class="width55Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                <span class="p-r-5">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
+              </span>
+            </mat-select-trigger>
             <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country" selected="trade.isAttatched"
               >{{ country.countryName }}
             </mat-option>
