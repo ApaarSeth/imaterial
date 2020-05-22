@@ -34,7 +34,7 @@
             <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country"
               ><span
                 ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                <span>{{ country.countryCode }}</span>
+                <span matTooltip="{{ country.name }}">{{ country.name }}</span>
               </span>
             </mat-option>
           </mat-select>

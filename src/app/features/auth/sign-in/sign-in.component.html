@@ -28,7 +28,7 @@
             <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country" selected="trade.isAttatched"
               ><span
                 ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                <span>{{ country.countryCode }}</span>
+                <span>{{ country.name }}</span>
               </span>
             </mat-option>
           </mat-select>
