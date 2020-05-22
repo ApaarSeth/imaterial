@@ -28,8 +28,8 @@ export class CommonService {
     return String(newDate);
   }
 
-  setBaseCurrency(curr: Currency) {
-    this.baseCurrency.next(curr);
+  getBaseCurrency() {
+    return this.dataService.getRequest(API.BASECURRENCY)
   }
   getNotification(userId) {
     this.dataService.getRequest(API.GET_NOTIFICATIONS(userId), null, { skipLoader: true }).then(res => {

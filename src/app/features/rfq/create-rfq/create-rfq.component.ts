@@ -95,14 +95,7 @@ export class CreateRfqComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.commonService.baseCurrency
-      // .filter(value => value !== null) // filter out the initial null value to avoid problems if you did not emit anything before subscribing
-      .subscribe((value) => {
-        console.log(value); // logs your album
-      })
-    // this.commonService.baseCurrency.subscribe(val => {
-    //   console.log(val)
-    // })
+
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     if (this.stepper) {

@@ -259,7 +259,7 @@ export class UpdateInfoComponent implements OnInit {
         }
         return trade;
       })
-      this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
+      // this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
       this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
       // this.userInfoForm.value.tradeId = [...this.selectedTrades];
       let countryCode = this.userInfoForm.value.countryCode.callingCode
