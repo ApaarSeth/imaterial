@@ -40,7 +40,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="phone-number col-xs-8">
+      <div class="phone-number col-xs-8" [ngClass]="{'p-t-10': lessOTPDigits}">
         <mat-form-field class="border-input display-flex">
           <input
             matInput
