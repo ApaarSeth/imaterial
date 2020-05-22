@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12 terms-margin-set-width col-md-8 offset-md-2">
         <div class="update-info__popup p-4">
-          <form class="update-info__form" *ngIf="userInfoForm" [formGroup]="userInfoForm" (ngSubmit)="submit()">
+          <form class="update-info__form" *ngIf="userInfoForm && users" [formGroup]="userInfoForm" (ngSubmit)="submit()">
             <div class="row">
               <div class="col-sm-12 col-md-12">
                 <h3 class="user-profile text-center text-uppercase pt-2 pb-4" *ngIf="users">{{ users.organizationName }}</h3>
@@ -12,7 +12,7 @@
               <div class="col-sm-12 col-md-6">
                 <div class="phot-title"></div>
                 <div class="user-photo">
-                  <img [src]=" localImg || 'assets/images/default-image.png'" class="img-fluid user_photo" alt="" />
+                  <img [src]="localImg || 'assets/images/default-image.png'" class="img-fluid user_photo" alt="" />
                 </div>
 
                 <div class="browser-method">
@@ -20,8 +20,8 @@
                     <input type="file" title="" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelect($event)" />
                     <span>Upload</span>
                   </label>
-                   <div class="text-align-center">
-                     <small  class="error-msg">{{imageFileSizeError}}</small>
+                  <div class="text-align-center">
+                    <small class="error-msg">{{ imageFileSizeError }}</small>
                   </div>
                 </div>
               </div>
@@ -57,22 +57,59 @@
                   <mat-error *ngIf="userInfoForm.controls['email'].hasError('required')">
                     Email address is required
                   </mat-error>
-                   <mat-error *ngIf="userInfoForm.controls['email'].hasError('pattern') && userInfoForm.controls['email'].touched">
+                  <mat-error *ngIf="userInfoForm.controls['email'].hasError('pattern') && userInfoForm.controls['email'].touched">
                     Email address must be valid
                   </mat-error>
                 </mat-error>
-
-                <mat-form-field class="border-input w-100">
-                  <input matInput type="text" placeholder="Phone No." formControlName="contactNo" />
-                </mat-form-field>
-                <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
-                  <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
-                    Phone number is required
-                  </mat-error>
-                   <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('pattern') && userInfoForm.controls['contactNo'].touched">
-                    Phone number must be valid
-                  </mat-error>
-                </mat-error>
+                <div class="row">
+                  <div class="col-xs-5">
+                    <mat-form-field class="width100Percent border-select mat-form-field-flex-mm-padding">
+                      <mat-label>*Country Code</mat-label>
+                      <mat-select formControlName="countryCode">
+                        <div class="display-flex">
+                          <input
+                            class="p-l-10 p-b-5"
+                            matInput
+                            type="search"
+                            placeholder="Search Country"
+                            [(ngModel)]="searchCountry"
+                            [ngModelOptions]="{standalone: true}"
+                            (keydown)="$event.stopPropagation()"
+                          />
+                          <button mat-button matSuffix mat-icon-button>
+                            <mat-icon>search</mat-icon>
+                          </button>
+                        </div>
+                        <mat-select-trigger>
+                          <span
+                            ><img class="width35Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                            <span class="p-r-5">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                            <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
+                          </span>
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country"
+                          ><span
+                            ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                            <span>{{ country.countryCode }}</span>
+                          </span>
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xs-7">
+                    <mat-form-field class="border-input w-100">
+                      <input matInput type="text" placeholder="Phone No." formControlName="contactNo" />
+                    </mat-form-field>
+                    <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
+                      <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
+                        Phone number is required
+                      </mat-error>
+                      <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('pattern') && userInfoForm.controls['contactNo'].touched">
+                        Phone number must be valid
+                      </mat-error>
+                    </mat-error>
+                  </div>
+                </div>
 
                 <mat-form-field class="border-select w-100" *ngIf="users.roleName != 'l3'">
                   <mat-label>Role</mat-label>
@@ -82,7 +119,7 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                  <mat-form-field class="border-select w-100" *ngIf="users.roleName === 'l3'">
+                <mat-form-field class="border-select w-100" *ngIf="users.roleName === 'l3'">
                   <input matInput type="text" placeholder="Role" formControlName="roleDescription" />
                 </mat-form-field>
 
@@ -90,8 +127,7 @@
                   <mat-error *ngIf="userInfoForm.controls['roleId'].hasError('required')"> Role is required</mat-error>
                 </mat-error>
 
-
-                  <mat-form-field class="border-select w-100" *ngIf="users.roleName === 'l1'">
+                <mat-form-field class="border-select w-100" *ngIf="users.roleName === 'l1'">
                   <mat-label>Select Annual Turn Over</mat-label>
                   <mat-select formControlName="turnOverId">
                     <mat-option *ngFor="let turnOver of turnOverList" [value]="turnOver.turnOverId">
@@ -99,11 +135,50 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                 <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
-                  <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')">Annual Turn 
-                  over is required</mat-error>
+                <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')">Annual Turn over is required</mat-error>
                 </mat-error>
-
+                <div class="row height12Percent m-t-10 border-round width78Percent p-t-5 full-border-main">
+                  <div class="col-xs-6 p-t-10 color-grey text-semi-bold p-r-0 font-size">Base Currency</div>
+                  <div class="col-xs-6 p-l-0">
+                    <mat-form-field class="width100Percent border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
+                      <mat-select formControlName="baseCurrency">
+                        <div class="display-flex">
+                          <input
+                            class="p-l-10 p-b-5"
+                            matInput
+                            type="search"
+                            placeholder="Search Country"
+                            [(ngModel)]="searchCountry"
+                            [ngModelOptions]="{standalone: true}"
+                            (keydown)="$event.stopPropagation()"
+                          />
+                          <button mat-button matSuffix mat-icon-button>
+                            <mat-icon>search</mat-icon>
+                          </button>
+                        </div>
+                        <mat-select-trigger>
+                          <span
+                            ><img class="width55Percent p-r-10" [src]="selectedBaseCurrency && selectedBaseCurrency.imageUrl" alt="" />
+                            <span class="p-r-5">{{ selectedBaseCurrency && selectedBaseCurrency.currencyCode }}</span>
+                            <span>
+                              {{ selectedBaseCurrency && selectedBaseCurrency.symbol }}
+                            </span>
+                          </span>
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCountry:'countryName'" [value]="currency"
+                          ><span
+                            ><img class="width17Percent p-r-10" [src]="currency.imageUrl" alt="" />
+                            <span class="p-r-5">{{ currency.currencyCode }}</span>
+                            <span>
+                              {{ currency.symbol }}
+                            </span>
+                          </span>
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
               </div>
 
               <!-- <div class="col-md-12">
@@ -124,7 +199,8 @@
                     *ngFor="let trade of tradeList"
                     [selected]="trade.tradeId"
                     [ngClass]="[trade.selected && trade.tradeId !== OthersId ? 'active' : '', trade.tradeId === OthersId ? 'user-Other-Trade' : '']"
-                    (click)="trade.selected = !trade.selected; changeSelected('s', trade)">
+                    (click)="trade.selected = !trade.selected; changeSelected('s', trade)"
+                  >
                     {{ trade.tradeName }}
                   </mat-chip>
                   <form [formGroup]="customTrade">
@@ -207,9 +283,8 @@
                                 </mat-error>
                             </div> -->
 
-              <div class="text-center col-md-12 mt-4">        
-                    <button class="btn btn-warning next-btn" [disabled]="(!imageFileSize && localImg)?true:!userInfoForm.valid">Next
-                    </button>
+              <div class="text-center col-md-12 mt-4">
+                <button class="btn btn-warning next-btn" [disabled]="!imageFileSize && localImg ? true : !userInfoForm.valid">Next</button>
               </div>
             </div>
           </form>

@@ -14,6 +14,8 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 export interface OrganisationType {
   value: string;
@@ -37,7 +39,9 @@ export class SignupComponent implements OnInit {
   verifiedMobile: boolean = false;
   value: any;
   organisationDisabled: boolean = false;
-
+  searchCountry: string = '';
+  countryList: CountryCode[] = [];
+  primaryCallingCode: string = '';
   constructor(
     private tokenService: TokenService,
     private route: ActivatedRoute,
@@ -48,15 +52,18 @@ export class SignupComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
-    private dataService: DataService
+    private dataService: DataService,
+    private commonService: CommonService
   ) { }
   acceptTerms: boolean;
   signupForm: FormGroup;
   signInDetails = {} as SignINDetailLists;
-
+  livingCountry: CountryCode[] = [];
   ngOnInit() {
+    this.primaryCallingCode = localStorage.getItem('callingCode')
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
+
       if (this.uniqueCode) {
         // this.lessOTPDigits = true;
         this.organisationDisabled = true;
@@ -65,12 +72,30 @@ export class SignupComponent implements OnInit {
         this.formInit();
       }
     });
+    this.getCountryCode();
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
   }
 
+
+  get selectedCountry() {
+    return this.signupForm.get('countryCode').value;
+  }
+
+
+  getCountryCode() {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+      this.livingCountry = this.countryList.filter(val => {
+        return val.callingCode === this.primaryCallingCode;
+      })
+      this.signupForm.get('countryCode').setValue(this.livingCountry[0])
+    })
+  }
+
   getUserInfo(code) {
+
     this._userService.getUserInfoUniqueCode(code).then(res => {
       this.user = res.data[0];
       if (res.data[0].firstName)
@@ -86,6 +111,7 @@ export class SignupComponent implements OnInit {
 
   formInit() {
     this.signupForm = this.formBuilder.group({
+      countryCode: [],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
       organisationName: [{ value: this.user ? this.user.companyName : '', disabled: this.organisationDisabled }, Validators.required],
@@ -100,6 +126,7 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
+    // this.signInDetails.countryCode = this.signupForm.value.countryCode.callingCode;
     this.signInDetails.password = this.signupForm.value.password;
     this.signInDetails.confirmPassword = this.signupForm.value.password;
     this.signInDetails.phone = this.signupForm.value.phone;
@@ -111,6 +138,7 @@ export class SignupComponent implements OnInit {
     }
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
+      // countryCode: this.signupForm.value.countryCode,
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
       organizationId: this.user ? this.user.organizationId.toString() : null,

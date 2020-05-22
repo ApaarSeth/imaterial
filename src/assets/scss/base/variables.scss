@@ -15,10 +15,10 @@ a:hover {
   color: $main-color !important;
   text-decoration: none;
 }
-.backgound-none{
+.backgound-none {
   background: none;
 }
-.backgound-none-important{
+.backgound-none-important {
   background: none !important;
 }
 
@@ -42,6 +42,10 @@ a:hover {
 }
 
 .full-border.mat-form-field.mat-focused input {
+  border: 2px solid $main-color;
+}
+
+.full-border-main {
   border: 2px solid $main-color;
 }
 
@@ -73,25 +77,24 @@ a:hover {
   background-color: $main-color;
 }
 
-.max-height-300{
+.max-height-300 {
   max-height: 300px;
-} 
-.overflow-y-auto{
+}
+.overflow-y-auto {
   overflow-y: auto;
 }
-.overflow-x-auto{
+.overflow-x-auto {
   overflow-x: auto;
 }
-.overflow-y-hidden{
+.overflow-y-hidden {
   overflow-y: hidden !important;
 }
-.overflow-x-hidden{
+.overflow-x-hidden {
   overflow-x: hidden !important;
 }
-.border-bottom-grey{
- border-bottom : 1px solid #d8d8d8;
+.border-bottom-grey {
+  border-bottom: 1px solid #d8d8d8;
 }
-
 
 .blue-color {
   color: $blue-color;
@@ -231,12 +234,32 @@ input {
   width: 35%;
 }
 
+.width17Percent {
+  width: 17%;
+}
+
+.width55Percent {
+  width: 50%;
+}
+
 .width50Percent {
   width: 50%;
+}
+.width70Percent {
+  width: 70%;
 }
 .width78Percent {
   width: 78%;
 }
+
+.width80Percent {
+  width: 80%;
+}
+
+.height12Percent {
+  height: 12%;
+}
+
 .max-width-128 {
   max-width: 128px;
 }
@@ -336,6 +359,10 @@ a:hover {
   color: $white-color !important;
 }
 
+.dropdown-padding.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
 .mat-form-field-appearance-legacy .mat-form-field-wrapper {
   padding-top: 15px !important;
   padding-bottom: 0px !important;
@@ -449,6 +476,9 @@ a:hover {
 .border-radius {
   border-radius: 10px !important;
 }
+.border-round {
+  border-radius: 10px !important;
+}
 
 .border-radius-panel {
   border-radius: 7px 7px 0px 0px !important;
@@ -511,6 +541,9 @@ a:hover {
 .width40Percent {
   width: 40%;
 }
+.width50Percent {
+  width: 50%;
+}
 .width94Percent {
   width: 94%;
 }
@@ -523,7 +556,7 @@ a:hover {
 .width60Percent {
   width: 60%;
 }
-.Width99Percent{
+.Width99Percent {
   width: 99%;
 }
 .margin-0-auto {
@@ -676,6 +709,10 @@ mat-accordion {
 
 .mat-dialog-container {
   padding-top: 5px !important;
+}
+
+.font-size {
+  font-size: 15px;
 }
 
 .mat-header-cell {

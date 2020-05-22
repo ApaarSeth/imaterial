@@ -86,10 +86,6 @@ export class RFQService {
   }
   
   getCurrency(){
-    return this.dataService.getRequest(API.GETCURRENCY);
-  }
-
-  getBaseCurrency(){
-    return this.dataService.getRequest(API.GETBASECURRENCY);
+    return this.dataService.getRequest(API.CURRENCY);
   }
 }

@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { RFQService } from '../../services/rfq/rfq.service';
 import { rfqCurrency, CountryCurrency } from '../../models/RFQ/rfq-details';
+import { CommonService } from '../../services/commonService';
 
 
 export interface City {
@@ -46,7 +47,8 @@ export class SelectCurrencyComponent implements OnInit {
     private router: Router,
     private _snackBar: MatSnackBar,
     private rfqservice : RFQService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private commonService : CommonService
   ) { }
 
   ngOnInit() {
@@ -55,7 +57,7 @@ export class SelectCurrencyComponent implements OnInit {
   }
 
   getCurrencyApi(){
-    this.rfqservice.getBaseCurrency().then(res => {
+    this.commonService.getBaseCurrency().then(res => {
       this.primaryImageUrl = res.data.imageUrl
       this.primaryCurrencyName = res.data.currencyCode;
     })

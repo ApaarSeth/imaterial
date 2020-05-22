@@ -8,6 +8,8 @@ import { debug } from 'util';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { MatSnackBar } from '@angular/material';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { Currency, CountryCode } from 'src/app/shared/models/currency';
 
 export interface City {
   value: string;
@@ -32,8 +34,7 @@ export class UpdateInfoComponent implements OnInit {
   filename: string;
   role: string;
   roleId: number;
-
-
+  searchCountry: string = '';
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
     { value: "Delhi", viewValue: "Delhi" },
@@ -44,24 +45,49 @@ export class UpdateInfoComponent implements OnInit {
   OthersId: number;
   imageFileSizeError: string;
   imageFileSize: boolean = false;
-   fileTypes : string[] = ['png', 'jpeg', 'jpg'];
-
+  fileTypes: string[] = ['png', 'jpeg', 'jpg'];
+  currencyList: Currency[] = [];
+  countryList: CountryCode[] = [];
+  livingCountry: CountryCode[] = [];
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
-      private _snackBar: MatSnackBar,
-
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService,
     private _router: Router,
     private _uploadImageService: DocumentUploadService,
     private navService: AppNavigationService) { }
 
   ngOnInit() {
-    const userId = localStorage.getItem("userId");
     this.role = localStorage.getItem("role");
+    this.formInit();
     this.getUserRoles();
-    this.getUserInformation(userId);
     this.getTradesList();
     this.getTurnOverList();
+    this.getCurrency();
+    this.getCountryCode();
+  }
+
+  getCurrency() {
+    this.commonService.getCurrency().then(res => {
+      this.currencyList = res.data;
+    })
+  }
+
+  getCountryCode() {
+    this.commonService.getCountry().then(res => {
+      const userId = localStorage.getItem("userId");
+      this.countryList = res.data;
+      this.getUserInformation(userId);
+    })
+  }
+
+  get selectedCountry() {
+    return this.userInfoForm.get('countryCode').value;
+  }
+
+  get selectedBaseCurrency() {
+    return this.userInfoForm.get('baseCurrency').value;
   }
 
   getUserRoles() {
@@ -76,12 +102,17 @@ export class UpdateInfoComponent implements OnInit {
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
       this.users = res.data ? res.data[0] : null;
+      if (this.users.roleName === 'l1') {
+        this.userInfoForm.controls.turnOverId.setValidators([Validators.required]);
+        this.userInfoForm.controls.turnOverId.updateValueAndValidity();
+      }
+      if (this.countryList) {
+        this.livingCountry = this.countryList.filter(val => {
+          return val.callingCode === this.users.countryCode;
+        })
+        this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
+      }
       this.formInit();
-      if(this.users.roleName === 'l1')
-       {
-           this.userInfoForm.controls.turnOverId.setValidators([Validators.required]);
-         this.userInfoForm.controls.turnOverId.updateValueAndValidity();
-       }
     });
   }
   getTurnOverList() {
@@ -93,33 +124,34 @@ export class UpdateInfoComponent implements OnInit {
   getTradesList() {
     this._userService.getTrades().then(res => {
       this.tradeList = res.data;
-      if(res.data){
+      if (res.data) {
         res.data.forEach(element => {
-          if(element.tradeName == 'Others'){
-            this.OthersId = element.tradeId; 
+          if (element.tradeName == 'Others') {
+            this.OthersId = element.tradeId;
           }
-      });
+        });
       }
     })
   }
 
   formInit() {
     this.userInfoForm = this._formBuilder.group({
+      baseCurrency: [],
+      countryCode: [],
       organizationName: [this.users ? this.users.organizationName : ''],
       organizationId: [this.users ? this.users.organizationId : ''],
       firstName: [this.users ? this.users.firstName : '', Validators.required],
       lastName: [this.users ? this.users.lastName : '', Validators.required],
-      email: [this.users ? this.users.email : '',[Validators.required,Validators.pattern(FieldRegExConst.EMAIL)]],
-      contactNo: [this.users ? this.users.contactNo : '', [Validators.required,Validators.pattern(FieldRegExConst.MOBILE)]],
+      email: [this.users ? this.users.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      contactNo: [this.users ? this.users.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
       roleId: [this.users ? this.users.roleId : null, Validators.required],
       turnOverId: [this.users ? this.users.TurnOverId : null],
       userId: [this.users ? this.users.userId : null],
-      roleDescription: [{value : this.users ? this.users.roleDescription : null,disabled : true}],
+      roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: true }],
       ssoId: [this.users ? this.users.ssoId : null],
       country: ['India'],
       trade: [],
       profileUrl: [''],
-
       // addressLine1: ['', Validators.required],
       // addressLine2: [''],
       // state: ['', Validators.required],
@@ -136,6 +168,14 @@ export class UpdateInfoComponent implements OnInit {
     });
     this.customTrade = this._formBuilder.group({
       trade: []
+    })
+
+    this.userInfoForm.get('countryCode').valueChanges.subscribe(country => {
+      let newcurrencyList = this.currencyList.filter(val => {
+        return val.countryId === country.countryId
+      })
+
+      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList[0])
     })
   }
 
@@ -169,33 +209,33 @@ export class UpdateInfoComponent implements OnInit {
       //   this.localImg = (<FileReader>event.target).result;
       // }
       const file = event.target.files[0];
-        var fileSize =  event.target.files[0].size; // in bytes
+      var fileSize = event.target.files[0].size; // in bytes
       let fileType = event.target.files[0].name.split('.').pop();
-     
-      if(this.fileTypes.some(element => {
-         return element === fileType
-       })){
-          if (fileSize < 1000000) {
-             reader.onload = (event) => {
-        this.localImg = (<FileReader>event.target).result;
+
+      if (this.fileTypes.some(element => {
+        return element === fileType
+      })) {
+        if (fileSize < 1000000) {
+          reader.onload = (event) => {
+            this.localImg = (<FileReader>event.target).result;
+          }
+          this.imageFileSizeError = "";
+          this.imageFileSize = true;
+          this.uploadImage(file);
+        }
+        else {
+          this.imageFileSize = false;
+          this.imageFileSizeError = "Image must be less than 1 mb";
+        }
       }
-             this.imageFileSizeError = "";
-              this.imageFileSize = true;
-              this.uploadImage(file);
-          }
-          else {
-            this.imageFileSize = false;
-            this.imageFileSizeError = "Image must be less than 1 mb";
-          }
-       }
-       else{
-         this.localImg = '';
-          this._snackBar.open("We don't support "+fileType+" in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
-       }
+      else {
+        this.localImg = '';
+        this._snackBar.open("We don't support " + fileType + " in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
+          duration: 2000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
     }
   }
 
@@ -212,7 +252,6 @@ export class UpdateInfoComponent implements OnInit {
 
 
   submit() {
-
     if (this.userInfoForm.valid) {
       this.selectedTrades = this.selectedTrades.map((trade: TradeList) => {
         if (trade.tradeId === this.OthersId) {
@@ -220,11 +259,12 @@ export class UpdateInfoComponent implements OnInit {
         }
         return trade;
       })
+      // this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
       this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
-
       // this.userInfoForm.value.tradeId = [...this.selectedTrades];
-      const data: UserDetails = this.userInfoForm.value;
-
+      let countryCode = this.userInfoForm.value.countryCode.callingCode
+      let organizationId = Number(this.userInfoForm.value.organizationId)
+      const data: UserDetails = { ...this.userInfoForm.value, countryCode, organizationId };
       this._userService.submitUserDetails(data).then(res => {
         this.navService.gaEvent({
           action: 'submit',
@@ -232,20 +272,16 @@ export class UpdateInfoComponent implements OnInit {
           label: 'profile-completed',
           value: null
         });
-
-        localStorage.setItem("userName",this.userInfoForm.value.firstName);
-        if(this.url){
-        
-           this._userService.UpdateProfileImage.next(this.url);
-           localStorage.setItem('profileUrl',this.url);
+        localStorage.setItem("userName", this.userInfoForm.value.firstName);
+        if (this.url) {
+          this._userService.UpdateProfileImage.next(this.url);
+          localStorage.setItem('profileUrl', this.url);
         }
-
         if (this.users.roleName === 'l1')
           this._router.navigate(['profile/add-user']);
         else if (this.users.roleName != 'l1')
           this._router.navigate(['dashboard']);
       });
-
     }
   }
 }

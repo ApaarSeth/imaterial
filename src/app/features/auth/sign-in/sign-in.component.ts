@@ -10,6 +10,8 @@ import { TokenService } from 'src/app/shared/services/token.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 
 @Component({
@@ -18,7 +20,6 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 })
 
 export class SigninComponent implements OnInit {
-  uniqueCode: string = "";
 
   constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
@@ -27,33 +28,54 @@ export class SigninComponent implements OnInit {
     private route: ActivatedRoute,
     private dataService: DataService,
     private _snackBar: MatSnackBar,
-    private navigationService: AppNavigationService) { }
-  searchCountry: string = '';
+    private navigationService: AppNavigationService,
+    private commonService: CommonService) { }
+
+  uniqueCode: string = "";
+  loginCountry: string = "";
+  livingCountry: CountryCode[] = [];
   showPassWordString: boolean = false;
   signinForm: FormGroup;
   signInData = {} as SignInData;
   acceptTerms: boolean;
-  countryList: any
+  countryList: CountryCode[] = [];
+  searchCountry: string = '';
+  primaryCallingCode: string = ''
   ngOnInit() {
-    this.countryList = [{ countryName: 'India' }];
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
-
-
+    this.primaryCallingCode = localStorage.getItem('callingCode')
     this.formInit();
+    this.getCountryCode();
+
+  }
+
+  getCountryCode() {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+      this.livingCountry = this.countryList.filter(val => {
+        return val.callingCode === this.primaryCallingCode;
+      })
+      this.signinForm.get('countryCode').setValue(this.livingCountry[0])
+    })
   }
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      // countryCode: [],
+      countryCode: [],
       phone: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
       password: ["", Validators.required]
     });
   }
 
+  get selectedCountry() {
+    return this.signinForm.get('countryCode').value;
+  }
+
   signin() {
     let params = new URLSearchParams();
+    // params.append('countryCode', this.signinForm.value.countryCode.callingCode);
     params.append("username", this.signinForm.value.phone);
     params.append("password", this.signinForm.value.password);
     params.append("grant_type", "password");

@@ -3,7 +3,8 @@ import { NotificationInt } from '../models/notification';
 import { API } from '../constants/configuration-constants';
 import { DataService } from './data.service';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { Currency } from '../models/currency';
 @Injectable({
   providedIn: "root"
 })
@@ -17,6 +18,7 @@ export class CommonService {
   unreadnotificationLength: number = null;
   onUserUpdate$ = new Subject<number>();
   materialAdded = new Subject<boolean>();
+  baseCurrency = new BehaviorSubject(null);
   constructor(private dataService: DataService,
     private _router: Router) { }
 
@@ -26,6 +28,9 @@ export class CommonService {
     return String(newDate);
   }
 
+  getBaseCurrency() {
+    return this.dataService.getRequest(API.BASECURRENCY)
+  }
   getNotification(userId) {
     this.dataService.getRequest(API.GET_NOTIFICATIONS(userId), null, { skipLoader: true }).then(res => {
       this.notificationObj = res.data;
@@ -75,6 +80,14 @@ export class CommonService {
     const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
     const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
     return year + "-" + month + "-" + day;
+  }
+
+  getCurrency() {
+    return this.dataService.getRequest(API.CURRENCY);
+  }
+
+  getCountry() {
+    return this.dataService.getRequest(API.COUNTRYCODE);
   }
 
 }
