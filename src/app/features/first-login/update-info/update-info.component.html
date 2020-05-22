@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12 terms-margin-set-width col-md-8 offset-md-2">
         <div class="update-info__popup p-4">
-          <form class="update-info__form" *ngIf="userInfoForm" [formGroup]="userInfoForm" (ngSubmit)="submit()">
+          <form class="update-info__form" *ngIf="userInfoForm && users" [formGroup]="userInfoForm" (ngSubmit)="submit()">
             <div class="row">
               <div class="col-sm-12 col-md-12">
                 <h3 class="user-profile text-center text-uppercase pt-2 pb-4" *ngIf="users">{{ users.organizationName }}</h3>

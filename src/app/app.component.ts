@@ -38,15 +38,8 @@ export class AppComponent {
     this.visitorsService.getIpAddress().subscribe(res => {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-
-        // this.latitude = res['latitude'];
-        // this.longitude = res['longitude'];
-        // this.currency = res['currency']['code'];
-        // this.currencysymbol = res['currency']['symbol'];
-        // this.city = res['city'];
-        // this.country = res['country_code3'];
-        // this.isp = res['isp'];
-        console.log(res['country_code3']);
+        localStorage.setItem('callingCode', res['calling_code'])
+        console.log(res);
       });
       //console.log(res);
 

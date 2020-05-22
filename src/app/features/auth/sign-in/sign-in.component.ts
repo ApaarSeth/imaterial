@@ -20,7 +20,6 @@ import { CountryCode } from 'src/app/shared/models/currency';
 })
 
 export class SigninComponent implements OnInit {
-  uniqueCode: string = "";
 
   constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
@@ -32,25 +31,33 @@ export class SigninComponent implements OnInit {
     private navigationService: AppNavigationService,
     private commonService: CommonService) { }
 
+  uniqueCode: string = "";
+  loginCountry: string = "";
+  livingCountry: CountryCode[] = [];
   showPassWordString: boolean = false;
   signinForm: FormGroup;
   signInData = {} as SignInData;
   acceptTerms: boolean;
   countryList: CountryCode[] = [];
   searchCountry: string = '';
-
+  primaryCallingCode: string = ''
   ngOnInit() {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
-
-    this.getCountryCode();
+    this.primaryCallingCode = localStorage.getItem('callingCode')
     this.formInit();
+    this.getCountryCode();
+
   }
 
   getCountryCode() {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
+      this.livingCountry = this.countryList.filter(val => {
+        return val.callingCode === this.primaryCallingCode;
+      })
+      this.signinForm.get('countryCode').setValue(this.livingCountry[0])
     })
   }
 
@@ -68,7 +75,7 @@ export class SigninComponent implements OnInit {
 
   signin() {
     let params = new URLSearchParams();
-    // params.append('countryCode', this.signinForm.value.countryCode);
+    // params.append('countryCode', this.signinForm.value.countryCode.callingCode);
     params.append("username", this.signinForm.value.phone);
     params.append("password", this.signinForm.value.password);
     params.append("grant_type", "password");

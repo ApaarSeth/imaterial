@@ -1,7 +1,7 @@
 <form [formGroup]="signinForm" (ngSubmit)="signin()" class="sign-in-form">
   <div style="min-height: 221px;">
     <div class="row">
-      <div class="col-xs-3">
+      <div class="col-xs-4">
         <mat-form-field class="border-select mat-form-field-flex-mm-padding">
           <mat-select formControlName="countryCode">
             <div class="display-flex">
@@ -19,13 +19,13 @@
               </button>
             </div>
             <mat-select-trigger>
-              <span
-                ><img class="width55Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-                <span class="p-r-5">{{ selectedCountry && selectedCountry.countryCode }}</span>
-                <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
+              <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
+                ><img class="width35Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country.callingCode" selected="trade.isAttatched"
+            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country" selected="trade.isAttatched"
               ><span
                 ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
                 <span>{{ country.countryCode }}</span>
@@ -34,7 +34,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-xs-9">
+      <div class="col-xs-7">
         <mat-form-field class="border-input">
           <input matInput formControlName="phone" type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Phone No." />
           <small *ngIf="signinForm.controls['phone'].hasError('required') && signinForm.controls['phone'].touched" class="signinForm-error-msg"> Phone No is required </small>

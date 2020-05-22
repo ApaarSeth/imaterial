@@ -20,6 +20,7 @@ import { RfqSupplierComponent } from "./rfq-supplier/rfq-supplier.component";
 import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
 import { AddRFQConfirmationComponent } from 'src/app/shared/dialogs/add-rfq-confirmation/add-rfq-double-confirmation.component';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-create-rfq",
@@ -76,6 +77,7 @@ export class CreateRfqComponent implements OnInit {
   userId: number;
   constructor(
     private router: Router,
+    private commonService: CommonService,
     private rfqService: RFQService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -85,11 +87,24 @@ export class CreateRfqComponent implements OnInit {
 
   }
 
+  ngOnChanges(): void {
+
+    this.commonService.baseCurrency.subscribe(val => {
+      console.log(val)
+    })
+  }
+
   ngOnInit() {
+    this.commonService.baseCurrency
+      // .filter(value => value !== null) // filter out the initial null value to avoid problems if you did not emit anything before subscribing
+      .subscribe((value) => {
+        console.log(value); // logs your album
+      })
+    // this.commonService.baseCurrency.subscribe(val => {
+    //   console.log(val)
+    // })
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-
-
     if (this.stepper) {
       this.stepper.selectedIndex = history.state.selectedIndex;
       if (this.stepper.selectedIndex == 0) {
