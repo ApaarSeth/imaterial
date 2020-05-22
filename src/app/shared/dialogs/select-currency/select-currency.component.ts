@@ -58,7 +58,7 @@ export class SelectCurrencyComponent implements OnInit {
 
   getCurrencyApi(){
     this.commonService.getBaseCurrency().then(res => {
-      this.primaryImageUrl = res.data.imageUrl
+      this.primaryImageUrl = res.data.imageUrl;
       this.primaryCurrencyName = res.data.currencyCode;
     })
     this.form.get('primaryCurrencyFlag').setValue(this.primaryImageUrl);
