@@ -36,7 +36,8 @@ export class SelectCurrencyComponent implements OnInit {
   currencyFields: rfqCurrency;
   exchangeCurrencyName: string;
   primaryCurrencyName: string; 
-  ;
+  searchText: string = null;
+  primaryImageUrl: string;
   
   constructor(
 
@@ -54,7 +55,12 @@ export class SelectCurrencyComponent implements OnInit {
   }
 
   getCurrencyApi(){
-    this.primaryCurrencyName = "INR";
+    this.rfqservice.getBaseCurrency().then(res => {
+      this.primaryImageUrl = res.data.imageUrl
+      this.primaryCurrencyName = res.data.currencyCode;
+    })
+    this.form.get('primaryCurrencyFlag').setValue(this.primaryImageUrl);
+    
     this.rfqservice.getCurrency().then(res => {
       this.currencies = res.data;
       let existingCurrency = this.currencies.filter(value => {

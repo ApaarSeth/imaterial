@@ -125,5 +125,6 @@ export const API = {
   PAYMENTRECORD: (poId) => `po/add/payment/${poId}`,
   PAYMENTHISTORY: (poId) => `po/get/payment/${poId}`,
   PAYMENTDETAIL: (poId) => `po/get/payment/indetail/${poId}`,
-  GETCURRENCY : `get/currency`
+  GETCURRENCY : `get/currency`,
+  GETBASECURRENCY : `get/basecurrency`
 };
