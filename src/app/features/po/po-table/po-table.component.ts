@@ -21,7 +21,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   words: string = "";
   showResponsiveDesign: boolean;
 
-  constructor(private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar:MatSnackBar) { }
+  constructor(private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
@@ -30,7 +30,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   minDate = new Date();
   ngOnInit() {
-      window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
       this.mode = params.mode;
     });
@@ -43,7 +43,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
           id: [purchaseorder.materialId],
           status: [purchaseorder.status],
           created_by: [purchaseorder.created_by],
-          created_at: [purchaseorder.created_at],
+          created_at: [purchaseorder.createdAt],
           last_updated_by: [purchaseorder.last_updated_by],
           last_updated_at: [purchaseorder.last_updated_at],
           projectName: [purchaseorder.projectName],
@@ -202,27 +202,27 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getMaterialQuantity(m) {
     if (this.mode != "edit") {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total:number, purchase: PurchaseOrder) => {
+      return this.poTableData[m].purchaseOrderDetailList.reduce((total: number, purchase: PurchaseOrder) => {
         return (total += Number(purchase.materialQuantity));
       }, 0);
     } else {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
-         total += Number(purchase.qty);
-        if(Number(total.toFixed(2)) > Number(this.poTableData[m].poAvailableQty)){
+        total += Number(purchase.qty);
+        if (Number(total.toFixed(2)) > Number(this.poTableData[m].poAvailableQty)) {
           this.poTableData[m].validQuantity = false;
-         }
-         else{
-           this.poTableData[m].validQuantity = true;
-         }
-          let isValidQty : boolean = true;
-          this.poTableData.forEach(element => {
-              if(!element.validQuantity)
-                  isValidQty = false;
-          });
-         
-         this.QuantityAmountValidation.emit(isValidQty);
+        }
+        else {
+          this.poTableData[m].validQuantity = true;
+        }
+        let isValidQty: boolean = true;
+        this.poTableData.forEach(element => {
+          if (!element.validQuantity)
+            isValidQty = false;
+        });
 
-        return total; 
+        this.QuantityAmountValidation.emit(isValidQty);
+
+        return total;
       }, 0);
     }
   }
@@ -259,25 +259,25 @@ export class PoTableComponent implements OnInit, OnDestroy {
       }, 0);
     }
   }
-  
-  checkQty(m,p,materialAvailableQty,event){
+
+  checkQty(m, p, materialAvailableQty, event) {
     this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
     let totalQty = this.getMaterialQuantity(m);
-    if(totalQty.toFixed(2) > materialAvailableQty){
-       this._snackBar.open("Net Quantity must be less than "+materialAvailableQty , "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
+    if (totalQty.toFixed(2) > materialAvailableQty) {
+      this._snackBar.open("Net Quantity must be less than " + materialAvailableQty, "", {
+        duration: 2000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "bottom"
+      });
     }
   }
 
-   @HostListener('window:resize', ['$event'])
-      sizeChange(event) {
-       if(event.currentTarget.innerWidth <= 1100){
-          this.showResponsiveDesign = true;
-        }else{
-          this.showResponsiveDesign = false;
-        }
+  @HostListener('window:resize', ['$event'])
+  sizeChange(event) {
+    if (event.currentTarget.innerWidth <= 1100) {
+      this.showResponsiveDesign = true;
+    } else {
+      this.showResponsiveDesign = false;
     }
+  }
 }
