@@ -21,6 +21,7 @@ import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/ad
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -66,6 +67,25 @@ export class RfqQuantityMakesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.rfqData = {
+      id: null,
+      status: null,
+      createdBy: null,
+      createdAt: null,
+      lastUpdatedBy: null,
+      lastUpdatedAt: null,
+      rfqId: null,
+      rfq_status: null,
+      rfqName: null,
+      dueDate: null,
+      supplierId: null,
+      supplierDetails: null,
+      rfqProjectsList: [],
+      documentsList: null,
+      terms: null,
+      rfqCurrency: [],
+    };
+
     if (history.state.rfqData) {
       this.rfqData = history.state.rfqData.data;
       this.projectSelectedMaterials =
@@ -224,5 +244,19 @@ export class RfqQuantityMakesComponent implements OnInit {
       this.rfqData.rfqProjectsList = checkedMaterials;
       this.updatedRfq.emit(this.rfqData);
     }
+  }
+
+  selectCurrency(data){
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true ,
+      width: "600px",
+      data : this.rfqData.rfqCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if(data != null){
+        this.rfqData.rfqCurrency = data;
+      }
+    });
   }
 }

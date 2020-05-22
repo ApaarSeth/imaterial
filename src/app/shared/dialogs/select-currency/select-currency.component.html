@@ -6,13 +6,14 @@
   </div>
   <form  [formGroup]="form" (ngSubmit)="submit()">
     <div class="row select-currency p-t-10">
-      <div class="col-xs-12 col-sm-4 col-md-4">
+      <div class="col-xs-12 col-sm-5 col-md-5">
         <div class="base-currency">
            <span class="text-semi-bold font-size-vary-grn color-6d6a6a">
              Base Currency
            </span> 
            <span class="p-l-10">
-              {{primaryCurrencyName}}
+            <img *ngIf="currencyFields.primaryCurrencyFlag" [src]="currencyFields.primaryCurrencyFlag" width="25px"> 
+            {{primaryCurrencyName}}
            </span>
         </div>
       </div>
@@ -36,7 +37,8 @@
               <mat-icon>search</mat-icon>
             </button>
           </div>
-          <mat-option *ngFor="let cur of currencies | SearchPipe: searchText:'currency'" [value]="cur">
+          <mat-option *ngFor="let cur of currencies | SearchPipe: searchText:'currency'" [value]="cur" 
+          > 
             <div class="display-flex justify-content-space-between">
               <div class="display-flex">
                 <div class="p-t-0">
@@ -59,7 +61,7 @@
      <div class="col-xs-6 col-sm-6 col-md-6 conversion-rate">
        <mat-form-field class="border-input width100Percent">
          <mat-label>Conversion Rate </mat-label>
-         <input matInput type="number" #conversionValue appTwoDigitDecimaNumber formControlName="exchangeValue" min="0" required />
+         <input matInput type="text" appTwoDigitDecimaNumber #conversionValue appTwoDigitDecimaNumber formControlName="exchangeValue" min="0" required />
          <!-- <small *ngIf="form.controls['cost'].hasError('required') && form.controls['cost'].touched" class="error-msg"> Construction cost is required </small>
              <small *ngIf="form.controls['cost'].hasError('pattern') && form.controls['cost'].touched" class="error-msg"> Enter valid construction cost </small> -->
         <small *ngIf="conversionValue.value.length > 0 && exchangeCurrencyName" class="success-msg"> 1 {{exchangeCurrencyName}} = {{conversionValue.value}} {{primaryCurrencyName}} </small>

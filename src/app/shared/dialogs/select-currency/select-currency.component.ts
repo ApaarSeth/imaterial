@@ -35,7 +35,8 @@ export class SelectCurrencyComponent implements OnInit {
   form : FormGroup;
   currencyFields: rfqCurrency;
   exchangeCurrencyName: string;
-  primaryCurrencyName: string;
+  primaryCurrencyName: string; 
+  ;
   
   constructor(
 
@@ -48,34 +49,54 @@ export class SelectCurrencyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.currencyForm();
+    this.getCurrencyApi();
+  }
+
+  getCurrencyApi(){
     this.primaryCurrencyName = "INR";
     this.rfqservice.getCurrency().then(res => {
       this.currencies = res.data;
+      let existingCurrency = this.currencies.filter(value => {
+        return value.currencyId === this.data.exchangeCurrencyId
+      })
+     this.form.get('exchangeCurrencyId').setValue(existingCurrency[0]);
     });
+
     this.currencyFields = this.data;
-    this.currencyForm();
+    this.exchangeCurrencyName = this.data.exchangeCurrencyName;
   }
   
   currencyForm(){
     this.form = this.formBuilder.group({
        exchangeCurrencyId: [
-        this.data.exchangeCurrencyId ? this.data.exchangeCurrencyId : "",
+        '',
         Validators.required
       ],
+      exchangeCurrencyName : [''],
       exchangeValue: [
         this.data.exchangeValue ? this.data.exchangeValue : "",
         Validators.required
       ],
-      primaryCurrencyId: [this.data.primaryCurrencyId ? this.data.primaryCurrencyId: ""]
+      primaryCurrencyId: [this.data.primaryCurrencyId ? this.data.primaryCurrencyId: 3],
+      primaryCurrencyName: [''],
+      exchangeCurrencyFlag : [''],
+      primaryCurrencyFlag : [''],
     });
-
   }
   setExchangeCurrency(event){
     this.exchangeCurrencyName = event.value.currencyCode;
+    console.log("NEW Value ::", event.value);
+    console.log(this.form);
   }
   submit(){
+    this.form.value.exchangeCurrencyName = this.form.value.exchangeCurrencyId.currencyCode;
+    this.form.value.primaryCurrencyName = this.primaryCurrencyName;
+    this.form.value.exchangeCurrencyFlag = this.form.value.exchangeCurrencyId.imageUrl;
+    this.form.value.primaryCurrencyFlag = this.data.primaryCurrencyFlag;
+    this.form.value.exchangeValue = Number(this.form.value.exchangeValue);
     this.form.value.exchangeCurrencyId = this.form.value.exchangeCurrencyId.currencyId;
-    console.log(this.form.value);
+    this.dialogRef.close(this.form.value);
   }
   close() {
     this.dialogRef.close(null);

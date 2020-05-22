@@ -15,6 +15,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 @Component({
   selector: "review",
@@ -173,5 +174,18 @@ export class ReviewComponent implements OnInit {
         }
       });
     }
+  }
+  selectCurrency(data){
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true ,
+      width: "600px",
+      data : this.finalRfq.rfqCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if(data != null){
+        this.finalRfq.rfqCurrency = data;
+      }
+    });
   }
 }

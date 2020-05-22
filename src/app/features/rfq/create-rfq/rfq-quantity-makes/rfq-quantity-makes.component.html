@@ -17,6 +17,7 @@
     </div>
 
     <div class="col-xs-6 text-right p-t-10 p-b-10">
+      <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
       <span class="p-r-5">
         <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="materialAdded()" type="button">Back</button>
       </span>
@@ -27,23 +28,22 @@
       </span>
     </div>
   </div>
-  <div class="row ">
-    <!-- <div class="col-xs-12 text-right p-t-10 border-input">
-      <span class="p-r-20">
-        <mat-form-field class="input-search-padding-zero">
-          <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
-          <button mat-button matSuffix mat-icon-button>
-            <mat-icon>search</mat-icon>
-          </button>
-        </mat-form-field>
-      </span>
-      <mat-form-field class="input-search-padding-zero">
-        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" [ngModelOptions]="{standalone: true}" />
-        <button mat-button matSuffix mat-icon-button>
-          <mat-icon>search</mat-icon>
-        </button>
-      </mat-form-field>
-    </div> -->
+  <div class="row select-currency p-t-10 p-b-10" *ngIf="rfqData.rfqCurrency.exchangeCurrencyName">
+    <div class="col-sm-10 col-md-9"></div>
+    <div class="col-xs-12 col-sm-3 col-md-3">
+      <div class="base-currency">
+         <span class="text-semi-bold font-size-vary-grn color-6d6a6a">
+           <img width="25px" [src]="rfqData.rfqCurrency.exchangeCurrencyFlag">
+           {{rfqData.rfqCurrency.exchangeCurrencyName}} 
+         </span> 
+         <span class="p-l-5"> = </span>
+         <span class="p-l-5"> {{rfqData.rfqCurrency.exchangeValue}} </span>
+         <span class="p-l-5">
+          <img width="25px" [src]="rfqData.rfqCurrency.primaryCurrencyFlag">
+            {{rfqData.rfqCurrency.primaryCurrencyName}}
+         </span>
+      </div>
+    </div>
   </div>
   <div *ngFor="let material of projectSelectedMaterials | SearchPipe: searchProject:'projectName'; let mati = index">
     <ng-container *ngIf="material.projectMaterialList.length">

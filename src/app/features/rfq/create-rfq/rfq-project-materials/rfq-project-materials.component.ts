@@ -88,7 +88,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
       supplierDetails: null,
       rfqProjectsList: [],
       documentsList: null,
-      terms: null
+      terms: null,
+      rfqCurrency: [],
     };
     if (this.rfqId) {
       this.rfqService.getDraftRfq(this.rfqId).then(res => {
@@ -318,11 +319,13 @@ export class RfqProjectMaterialsComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true ,
       width: "600px",
-      data
+      data : this.addRfq.rfqCurrency
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      
+    dialogRef.afterClosed().subscribe(data => {
+      if(data != null){
+        this.addRfq.rfqCurrency = data;
+      }
     });
   }
 }

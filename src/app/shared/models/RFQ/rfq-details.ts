@@ -79,7 +79,15 @@ export interface  rfqCurrency{
 	exchangeCurrencyId : number,
 	primaryCurrencyName : string,
 	exchangeCurrencyName : string,
-	exchangeValue : number
+  exchangeValue : number,
+  exchangeCurrencyFlag : string,  
+  primaryCurrencyFlag : string,
+  exchangeCountryId: number,
+  exchangeCurrency: string,
+  exchangeCurrencySymbol: string,
+  primaryContryId: number,
+  primaryCurrency: string,
+  primaryCurrencySymbol: string,
 }
 export interface DocumentDetails {
   documentType: string;
