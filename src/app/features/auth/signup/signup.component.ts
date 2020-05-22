@@ -138,7 +138,7 @@ export class SignupComponent implements OnInit {
     }
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
-      // countryCode: this.signupForm.value.countryCode,
+      countryCode: this.signupForm.value.countryCode.callingCode,
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
       organizationId: this.user ? this.user.organizationId.toString() : null,

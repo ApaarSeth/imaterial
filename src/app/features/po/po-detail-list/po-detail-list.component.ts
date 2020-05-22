@@ -195,10 +195,10 @@ export class PODetailComponent implements OnInit {
       detail: element
     } as ProjetPopupData);
   }
-  openPaymentRecord(poId) {
+  openPaymentRecord(poDetail: PurchaseOrder) {
     const dialogRef = this.dialog.open(PaymentRecordComponent, {
       width: "800px",
-      data: poId
+      data: poDetail
     });
   }
 
