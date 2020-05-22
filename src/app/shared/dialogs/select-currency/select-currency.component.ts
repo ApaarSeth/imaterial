@@ -101,13 +101,16 @@ export class SelectCurrencyComponent implements OnInit {
     this.form.value.exchangeCurrencyName = this.form.value.exchangeCurrencyId.currencyCode;
     this.form.value.primaryCurrencyName = this.primaryCurrencyName;
     this.form.value.exchangeCurrencyFlag = this.form.value.exchangeCurrencyId.imageUrl;
-    this.form.value.primaryCurrencyFlag = this.data.primaryCurrencyFlag;
+    this.form.value.primaryCurrencyFlag = this.primaryImageUrl;
     this.form.value.exchangeValue = Number(this.form.value.exchangeValue);
     this.form.value.exchangeCurrencyId = this.form.value.exchangeCurrencyId.currencyId;
     this.dialogRef.close(this.form.value);
   }
   close() {
     this.dialogRef.close(null);
+  }
+  get selectedCountry() {
+    return this.form.get('exchangeCurrencyId').value;
   }
 
 }
