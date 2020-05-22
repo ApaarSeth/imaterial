@@ -11,6 +11,7 @@ import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/su
 import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
 import { Subject, Observable } from 'rxjs';
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 @Component({
   selector: "app-rfq-supplier",
@@ -48,6 +49,25 @@ export class RfqSupplierComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.rfqData = {
+      id: null,
+      status: null,
+      createdBy: null,
+      createdAt: null,
+      lastUpdatedBy: null,
+      lastUpdatedAt: null,
+      rfqId: null,
+      rfq_status: null,
+      rfqName: null,
+      dueDate: null,
+      supplierId: null,
+      supplierDetails: null,
+      rfqProjectsList: [],
+      documentsList: null,
+      terms: null,
+      rfqCurrency: null,
+    };
+
     this.orgId = Number(localStorage.getItem("orgId"));
     if (this.activatedRoute.snapshot.data.createRfq[0].data) {
       this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
@@ -188,6 +208,20 @@ export class RfqSupplierComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       // data.defaultAddress = result[1];
+    });
+  }
+
+  selectCurrency(){
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true ,
+      width: "600px",
+      data : this.rfqData.rfqCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if(data != null){
+        this.rfqData.rfqCurrency = data;
+      }
     });
   }
 }
