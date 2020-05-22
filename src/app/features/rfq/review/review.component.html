@@ -5,14 +5,16 @@
         <div class="col-md-12">
           <div class="row ">
             <div class="col-xs-12 p-t-10">
-              <button mat-raised-button class="main-background-color main-button color-white pull-right m-r-30 float-rfq-btn" [disabled]="!form.valid">
+             
+              <button mat-raised-button class="main-background-color main-button color-white pull-right float-rfq-btn" [disabled]="!form.valid">
                 Float RFQ
               </button>
+              <span (click)="selectCurrency()" class="text-decoration-underline main-color pull-right font-size-vary-grn p-t-10 p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
             </div>
           </div>
           <!-- first row -->
           <div class="row m-b-10">
-            <div class="col-md-3">
+            <div class="col-xs-3">
               <mat-form-field class="border-input">
                 <input class="p-b-10" matInput type="text" formControlName="rfqName" placeholder="*RFQ Name" />
               </mat-form-field>
@@ -47,8 +49,21 @@
                   View Terms & Conditions/Documents
                 </button>
               </div> -->
-          </div>
-
+              <div class="col-xs-3 select-currency p-t-10 p-b-10" *ngIf="finalRfq.rfqCurrency!=null && finalRfq.rfqCurrency.exchangeCurrencyName">
+                  <div class="base-currency">
+                     <span class="text-semi-bold font-size-vary-grn color-6d6a6a">
+                       <img width="25px" [src]="finalRfq.rfqCurrency.exchangeCurrencyFlag">
+                       {{finalRfq.rfqCurrency.exchangeCurrencyName}} 
+                     </span> 
+                     <span class="p-l-5"> = </span>
+                     <span class="p-l-5"> {{finalRfq.rfqCurrency.exchangeValue}} </span>
+                     <span class="p-l-5">
+                      <img width="25px" [src]="finalRfq.rfqCurrency.primaryCurrencyFlag">
+                        {{finalRfq.rfqCurrency.primaryCurrencyName}}
+                     </span>
+                  </div>
+              </div>
+        </div>
           <!-- second row -->
           <div class="row m-b-10">
             <div class="col-md-3" *ngFor="let supplier of selectedSuppliersList">

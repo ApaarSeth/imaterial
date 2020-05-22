@@ -8,6 +8,7 @@
     </mat-form-field>
   </div>
   <div class="col-xs-6 text-right">
+    <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
     <span class="p-r-5">
       <span class="m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer add-supplier-btn" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
         <span class="font-size20">
@@ -27,6 +28,23 @@
         Next
       </button>
     </span>
+  </div>
+</div>
+<div class="row select-currency p-t-10 p-b-10" *ngIf="rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null">
+  <div class="col-sm-10 col-md-9"></div>
+  <div class="col-xs-12 col-sm-3 col-md-3">
+    <div class="base-currency">
+       <span class="text-semi-bold font-size-vary-grn color-6d6a6a">
+         <img width="25px" [src]="rfqData.rfqCurrency.exchangeCurrencyFlag">
+         {{rfqData.rfqCurrency.exchangeCurrencyName}} 
+       </span> 
+       <span class="p-l-5"> = </span>
+       <span class="p-l-5"> {{rfqData.rfqCurrency.exchangeValue}} </span>
+       <span class="p-l-5">
+        <img width="25px" [src]="rfqData.rfqCurrency.primaryCurrencyFlag">
+          {{rfqData.rfqCurrency.primaryCurrencyName}}
+       </span>
+    </div>
   </div>
 </div>
 <form *ngIf="allSuppliers.length" [formGroup]="supplierForm">

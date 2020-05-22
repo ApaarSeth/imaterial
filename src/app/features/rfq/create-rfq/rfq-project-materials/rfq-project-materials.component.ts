@@ -21,6 +21,7 @@ import { MatDialog, MatCheckbox } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { CommonService } from 'src/app/shared/services/commonService';
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 @Component({
   selector: "app-rfq-project-materials",
@@ -87,7 +88,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
       supplierDetails: null,
       rfqProjectsList: [],
       documentsList: null,
-      terms: null
+      terms: null,
+      rfqCurrency: null,
     };
     if (this.rfqId) {
       this.rfqService.getDraftRfq(this.rfqId).then(res => {
@@ -311,5 +313,19 @@ export class RfqProjectMaterialsComponent implements OnInit {
     });
     this.addRfq.rfqProjectsList = newRfqDetails;
     this.updatedRfq.emit(this.addRfq);
+  }
+  
+  selectCurrency(){
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true ,
+      width: "600px",
+      data : this.addRfq.rfqCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if(data != null){
+        this.addRfq.rfqCurrency = data;
+      }
+    });
   }
 }

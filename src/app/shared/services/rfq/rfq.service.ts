@@ -84,4 +84,8 @@ export class RFQService {
   getDraftRfq(rfqId: number) {
     return this.dataService.getRequest(API.GETADDEDRFQ(rfqId));
   }
+  
+  getCurrency(){
+    return this.dataService.getRequest(API.CURRENCY);
+  }
 }
