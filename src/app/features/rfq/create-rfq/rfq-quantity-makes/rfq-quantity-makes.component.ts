@@ -83,7 +83,7 @@ export class RfqQuantityMakesComponent implements OnInit {
       rfqProjectsList: [],
       documentsList: null,
       terms: null,
-      rfqCurrency: [],
+      rfqCurrency: null,
     };
 
     if (history.state.rfqData) {

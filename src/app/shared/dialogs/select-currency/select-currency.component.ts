@@ -52,11 +52,17 @@ export class SelectCurrencyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     this.currencyForm();
     this.getCurrencyApi();
   }
 
   getCurrencyApi(){
+    this.currencyFields = this.data;
+    if(this.data ! =null ){
+      this.exchangeCurrencyName = this.data.exchangeCurrencyName;
+    }
+
     this.commonService.getBaseCurrency().then(res => {
       this.primaryImageUrl = res.data.imageUrl;
       this.primaryCurrencyName = res.data.currencyCode;
@@ -66,13 +72,11 @@ export class SelectCurrencyComponent implements OnInit {
     this.rfqservice.getCurrency().then(res => {
       this.currencies = res.data;
       let existingCurrency = this.currencies.filter(value => {
-        return value.currencyId === this.data.exchangeCurrencyId
+        return value.currencyId === this.currencyFields.exchangeCurrencyId;
       })
      this.form.get('exchangeCurrencyId').setValue(existingCurrency[0]);
-    });
-
-    this.currencyFields = this.data;
-    this.exchangeCurrencyName = this.data.exchangeCurrencyName;
+    });   
+    
   }
   
   currencyForm(){
@@ -83,10 +87,10 @@ export class SelectCurrencyComponent implements OnInit {
       ],
       exchangeCurrencyName : [''],
       exchangeValue: [
-        this.data.exchangeValue ? this.data.exchangeValue : "",
+        this.data != null && this.data.exchangeValue ? this.data.exchangeValue : "",
         Validators.required
       ],
-      primaryCurrencyId: [this.data.primaryCurrencyId ? this.data.primaryCurrencyId: 3],
+      primaryCurrencyId: [this.data != null && this.data.primaryCurrencyId ? this.data.primaryCurrencyId: 3],
       primaryCurrencyName: [''],
       exchangeCurrencyFlag : [''],
       primaryCurrencyFlag : [''],
@@ -110,6 +114,7 @@ export class SelectCurrencyComponent implements OnInit {
     this.dialogRef.close(null);
   }
   get selectedCountry() {
+    if(this.currencies)
     return this.form.get('exchangeCurrencyId').value;
   }
 

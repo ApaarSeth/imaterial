@@ -89,7 +89,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
       rfqProjectsList: [],
       documentsList: null,
       terms: null,
-      rfqCurrency: [],
+      rfqCurrency: null,
     };
     if (this.rfqId) {
       this.rfqService.getDraftRfq(this.rfqId).then(res => {

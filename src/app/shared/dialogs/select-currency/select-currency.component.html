@@ -40,8 +40,8 @@
           <mat-select-trigger>
             <span matTooltip="{{ selectedCountry && selectedCountry.currency }} {{ selectedCountry && selectedCountry.currencyCode }}"
               ><img width="25px" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-              <span class="p-r-5 font-size-vary-grn">{{ selectedCountry && selectedCountry.currency }}</span>
-              <span class="font-size-vary-grn text-semi-bold">{{ selectedCountry && selectedCountry.currencyCode }}</span>
+              <span class="p-r-5 p-l-10 font-size-vary-grn">{{ selectedCountry && selectedCountry.currency }}</span>
+              <span class="p-l-5 font-size-vary-grn text-semi-bold">{{ selectedCountry && selectedCountry.currencyCode }}</span>
             </span>
           </mat-select-trigger>
           <mat-option *ngFor="let cur of currencies | SearchPipe: searchText:'currency'" [value]="cur" 

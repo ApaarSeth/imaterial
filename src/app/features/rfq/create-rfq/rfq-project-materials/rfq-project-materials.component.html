@@ -45,7 +45,7 @@
       </span>
     </div>
   </div>
-    <div class="row select-currency p-t-10 p-b-10" *ngIf="addRfq.rfqCurrency.exchangeCurrencyName">
+    <div class="row select-currency p-t-10 p-b-10" *ngIf="(addRfq.rfqCurrency != null && addRfq.rfqCurrency.exchangeCurrencyName != null)">
       <div class="col-sm-10 col-md-9"></div>
       <div class="col-xs-12 col-sm-3 col-md-3">
         <div class="base-currency">

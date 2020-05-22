@@ -65,7 +65,7 @@ export class RfqSupplierComponent implements OnInit {
       rfqProjectsList: [],
       documentsList: null,
       terms: null,
-      rfqCurrency: [],
+      rfqCurrency: null,
     };
 
     this.orgId = Number(localStorage.getItem("orgId"));

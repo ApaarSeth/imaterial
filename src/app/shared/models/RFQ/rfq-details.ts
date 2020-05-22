@@ -71,7 +71,7 @@ export interface AddRFQ {
   documentsList: DocumentDetails[];
   selectBuildsupplyAsSupplier?: boolean
   terms: Terms;
-  rfqCurrency ?: rfqCurrency[];
+  rfqCurrency ?: rfqCurrency;
 }
 
 export interface  rfqCurrency{
