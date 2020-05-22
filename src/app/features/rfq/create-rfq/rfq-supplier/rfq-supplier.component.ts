@@ -211,7 +211,7 @@ export class RfqSupplierComponent implements OnInit {
     });
   }
 
-  selectCurrency(data){
+  selectCurrency(){
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true ,
       width: "600px",
