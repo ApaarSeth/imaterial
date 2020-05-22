@@ -50,7 +50,7 @@ export interface PurchaseOrder {
   id: number;
   status: number;
   created_by: string;
-  created_at: string;
+  createdAt: string;
   last_updated_by: string;
   last_updated_at: string;
   projectName: string;
@@ -75,6 +75,7 @@ export interface PurchaseOrder {
   gstAmount: number;
   total: number;
   qty?: number;
+  validUpto?: string;
 }
 export interface terms {
   termsId?: number;

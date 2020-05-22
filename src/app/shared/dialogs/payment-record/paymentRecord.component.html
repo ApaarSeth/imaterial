@@ -14,22 +14,22 @@
   <div class="col-xs-12 p-t-20">
     <mat-card class="width78Percent gray-border" *ngIf="paymentDetail">
       <div class="row">
-        <div class="col-xs-5">Total PO Amount : ₹ {{ paymentDetail.poAmount }}</div>
+        <div class="col-xs-5">Total PO Amount : ₹ {{ paymentDetail.poAmount ? (paymentDetail.poAmount | number: "1.2-2") : 0 }}</div>
         <div class="col-xs-1 p-l-0">
           <div class="info">
             <mat-icon class="material-info-padding round-button color-white main-background-color">info</mat-icon>
             <div id="infoIcon">
               <div class="row">
-                <div class="col-sm-12">Total Amount : ₹ {{ paymentDetail.poAmount - paymentDetail.gstAmount }}</div>
-                <div class="col-sm-12">GST Amount : ₹ {{ paymentDetail.gstAmount }} INR</div>
+                <div class="col-sm-12">Total Amount : ₹ {{ paymentDetail.poAmount - paymentDetail.gstAmount | number: "1.2-2" }}</div>
+                <div class="col-sm-12">GST Amount : ₹ {{ paymentDetail.gstAmount ? (paymentDetail.gstAmount | number: "1.2-2") : 0 }} INR</div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xs-6">Amount Paid till date : ₹ {{ paymentDetail.paymentRecived }}</div>
+        <div class="col-xs-6">Amount Paid till date : ₹ {{ paymentDetail.paymentRecived | number: "1.2-2" }}</div>
       </div>
       <div class="row">
-        <div class="col-xs-6">GRN Amount : ₹ {{ paymentDetail.grnAmount }}</div>
+        <div class="col-xs-6">GRN Amount : ₹ {{ paymentDetail.grnAmount | number: "1.2-2" }}</div>
         <div class="col-xs-6">Amount Due : ₹ {{ paymentDetail.poAmount - paymentDetail.paymentRecived }}</div>
       </div>
     </mat-card>
@@ -37,7 +37,7 @@
   <div class="col-xs-12 tab-body-padding">
     <mat-tab-group (selectedTabChange)="tabClick($event)">
       <mat-tab label="Add Payment">
-        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <form *ngIf="paymentForm" [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
           <div class="row width100Percent">
             <div class="col-xs-4">
               <mat-form-field class="border-input width-90">
@@ -46,9 +46,18 @@
             </div>
             <div class="col-xs-4">
               <mat-form-field class="border-input">
-                <input matInput [matDatepicker]="dueDate" placeholder="Date of Payment" formControlName="paymentDate" (click)="dueDate.open()" readonly />
+                <input
+                  matInput
+                  [min]="startDate"
+                  [max]="endDate"
+                  [matDatepicker]="dueDate"
+                  placeholder="Date of Payment*"
+                  formControlName="paymentDate"
+                  (click)="dueDate.open()"
+                  readonly
+                />
                 <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
-                <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
+                <mat-datepicker #dueDate startView="month" [startAt]="startDate"></mat-datepicker>
               </mat-form-field>
             </div>
             <div class="col-xs-4 text-center">

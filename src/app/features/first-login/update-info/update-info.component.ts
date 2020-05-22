@@ -110,9 +110,9 @@ export class UpdateInfoComponent implements OnInit {
         this.livingCountry = this.countryList.filter(val => {
           return val.callingCode === this.users.countryCode;
         })
-        this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
       }
       this.formInit();
+      this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
     });
   }
   getTurnOverList() {
