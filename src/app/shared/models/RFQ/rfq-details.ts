@@ -75,19 +75,21 @@ export interface AddRFQ {
 }
 
 export interface  rfqCurrency{
-  primaryCurrencyId : number,
-	exchangeCurrencyId : number,
-	primaryCurrencyName : string,
-	exchangeCurrencyName : string,
-  exchangeValue : number,
-  exchangeCurrencyFlag : string,  
-  primaryCurrencyFlag : string,
-  exchangeCountryId: number,
-  exchangeCurrency: string,
-  exchangeCurrencySymbol: string,
-  primaryContryId: number,
-  primaryCurrency: string,
-  primaryCurrencySymbol: string,
+	exchangeCurrencyId : number;
+	exchangeCurrencyName : string;
+  exchangeCurrencyFlag : string;  
+  exchangeCountryId : number;
+  exchangeCurrency : string;
+  exchangeCurrencySymbol: string;
+
+  exchangeValue : number;
+
+  primaryCurrencyId : number;
+  primaryCurrencyName : string;
+  primaryContryId: number;
+  primaryCurrency: string;
+  primaryCurrencySymbol: string;
+  primaryCurrencyFlag : string;
 }
 export interface DocumentDetails {
   documentType: string;
