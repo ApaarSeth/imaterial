@@ -48,6 +48,7 @@ export class UpdateInfoComponent implements OnInit {
   fileTypes: string[] = ['png', 'jpeg', 'jpg'];
   currencyList: Currency[] = [];
   countryList: CountryCode[] = [];
+  livingCountry: CountryCode[] = [];
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -58,10 +59,9 @@ export class UpdateInfoComponent implements OnInit {
     private navService: AppNavigationService) { }
 
   ngOnInit() {
-    const userId = localStorage.getItem("userId");
     this.role = localStorage.getItem("role");
+    this.formInit();
     this.getUserRoles();
-    this.getUserInformation(userId);
     this.getTradesList();
     this.getTurnOverList();
     this.getCurrency();
@@ -76,7 +76,9 @@ export class UpdateInfoComponent implements OnInit {
 
   getCountryCode() {
     this.commonService.getCountry().then(res => {
+      const userId = localStorage.getItem("userId");
       this.countryList = res.data;
+      this.getUserInformation(userId);
     })
   }
 
@@ -100,11 +102,17 @@ export class UpdateInfoComponent implements OnInit {
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
       this.users = res.data ? res.data[0] : null;
-      this.formInit();
       if (this.users.roleName === 'l1') {
         this.userInfoForm.controls.turnOverId.setValidators([Validators.required]);
         this.userInfoForm.controls.turnOverId.updateValueAndValidity();
       }
+      if (this.countryList) {
+        this.livingCountry = this.countryList.filter(val => {
+          return val.callingCode === this.users.countryCode;
+        })
+        this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
+      }
+      this.formInit();
     });
   }
   getTurnOverList() {
@@ -144,7 +152,6 @@ export class UpdateInfoComponent implements OnInit {
       country: ['India'],
       trade: [],
       profileUrl: [''],
-
       // addressLine1: ['', Validators.required],
       // addressLine2: [''],
       // state: ['', Validators.required],
@@ -163,8 +170,12 @@ export class UpdateInfoComponent implements OnInit {
       trade: []
     })
 
-    this.userInfoForm.get('countryCode').valueChanges.subscribe(val => {
-      // this.userInfoForm.get('baseCurrency').setValue()
+    this.userInfoForm.get('countryCode').valueChanges.subscribe(country => {
+      let newcurrencyList = this.currencyList.filter(val => {
+        return val.countryId === country.countryId
+      })
+
+      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList[0])
     })
   }
 
@@ -248,9 +259,12 @@ export class UpdateInfoComponent implements OnInit {
         }
         return trade;
       })
+      // this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
       this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
       // this.userInfoForm.value.tradeId = [...this.selectedTrades];
-      const data: UserDetails = this.userInfoForm.value;
+      let countryCode = this.userInfoForm.value.countryCode.callingCode
+      let organizationId = Number(this.userInfoForm.value.organizationId)
+      const data: UserDetails = { ...this.userInfoForm.value, countryCode, organizationId };
       this._userService.submitUserDetails(data).then(res => {
         this.navService.gaEvent({
           action: 'submit',
@@ -263,13 +277,11 @@ export class UpdateInfoComponent implements OnInit {
           this._userService.UpdateProfileImage.next(this.url);
           localStorage.setItem('profileUrl', this.url);
         }
-
         if (this.users.roleName === 'l1')
           this._router.navigate(['profile/add-user']);
         else if (this.users.roleName != 'l1')
           this._router.navigate(['dashboard']);
       });
-
     }
   }
 }

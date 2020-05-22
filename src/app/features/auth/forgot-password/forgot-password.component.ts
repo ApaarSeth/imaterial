@@ -11,6 +11,7 @@ import { OrganisationType } from '../signup/signup.component';
 import { auth } from 'src/app/shared/models/auth';
 import { UserDetails } from 'src/app/shared/models/user-details';
 import { SignINDetailLists, ForgetPassDetails } from 'src/app/shared/models/signIn/signIn-detail-list';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "forgot-password",
@@ -39,7 +40,8 @@ export class ForgotPasswordComponent implements OnInit {
   otpMessageVerify: string = "";
   countryList: any
   searchCountry: string = '';
-
+  primaryCallingCode: string = '';
+  livingCountry: string = '';
   constructor(
     private tokenService: TokenService,
     private route: ActivatedRoute,
@@ -48,10 +50,12 @@ export class ForgotPasswordComponent implements OnInit {
     private signInSignupService: SignInSignupService,
     private _userService: UserService,
     private _snackBar: MatSnackBar,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    this.primaryCallingCode = localStorage.getItem('callingCode')
     this.countryList = [{ countryName: 'India' }];
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
@@ -60,11 +64,28 @@ export class ForgotPasswordComponent implements OnInit {
       } else {
         this.formInit();
       }
+      this.getCountryCode();
     });
+
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
   }
+
+  getCountryCode() {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+      this.livingCountry = this.countryList.filter(val => {
+        return val.callingCode === this.primaryCallingCode;
+      })
+      this.forgetPassForm.get('countryCode').setValue(this.livingCountry[0])
+    })
+  }
+
+  get selectedCountry() {
+    return this.forgetPassForm.get('countryCode').value;
+  }
+
 
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {

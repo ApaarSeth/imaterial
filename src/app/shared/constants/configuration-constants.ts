@@ -126,5 +126,6 @@ export const API = {
   PAYMENTHISTORY: (poId) => `po/get/payment/${poId}`,
   PAYMENTDETAIL: (poId) => `po/get/payment/indetail/${poId}`,
   CURRENCY: `get/currency`,
-  COUNTRYCODE: `get/country`
+  COUNTRYCODE: `get/country`,
+  BASECURRENCY: `get/basecurrency`
 };

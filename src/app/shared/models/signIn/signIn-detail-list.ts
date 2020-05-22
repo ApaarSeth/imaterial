@@ -26,7 +26,7 @@ export interface SignInData {
   userType: string;
 }
 export interface CustonDataDetails {
-  countryCode: string;
+  countryCode?: string;
   uniqueCode: string;
   organizationName: string;
   organizationType: string;

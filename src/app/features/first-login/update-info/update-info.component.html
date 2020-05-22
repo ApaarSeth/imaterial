@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12 terms-margin-set-width col-md-8 offset-md-2">
         <div class="update-info__popup p-4">
-          <form class="update-info__form" *ngIf="userInfoForm" [formGroup]="userInfoForm" (ngSubmit)="submit()">
+          <form class="update-info__form" *ngIf="userInfoForm && users" [formGroup]="userInfoForm" (ngSubmit)="submit()">
             <div class="row">
               <div class="col-sm-12 col-md-12">
                 <h3 class="user-profile text-center text-uppercase pt-2 pb-4" *ngIf="users">{{ users.organizationName }}</h3>
@@ -62,8 +62,9 @@
                   </mat-error>
                 </mat-error>
                 <div class="row">
-                  <div class="col-xs-4">
+                  <div class="col-xs-5">
                     <mat-form-field class="width100Percent border-select mat-form-field-flex-mm-padding">
+                      <mat-label>*Country Code</mat-label>
                       <mat-select formControlName="countryCode">
                         <div class="display-flex">
                           <input
@@ -81,7 +82,7 @@
                         </div>
                         <mat-select-trigger>
                           <span
-                            ><img class="width55Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                            ><img class="width35Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                             <span class="p-r-5">{{ selectedCountry && selectedCountry.countryCode }}</span>
                             <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
                           </span>
@@ -95,7 +96,7 @@
                       </mat-select>
                     </mat-form-field>
                   </div>
-                  <div class="col-xs-8">
+                  <div class="col-xs-7">
                     <mat-form-field class="border-input w-100">
                       <input matInput type="text" placeholder="Phone No." formControlName="contactNo" />
                     </mat-form-field>

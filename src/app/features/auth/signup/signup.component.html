@@ -7,8 +7,8 @@
                 </mat-form-field> -->
   <div style="min-height: 311px;">
     <div class="row">
-      <div class="col-xs-3">
-        <mat-form-field class="border-select p-t-10 mat-form-field-flex-mm-padding">
+      <div class="col-xs-4">
+        <mat-form-field class="border-select p-t-10 p-r-0 mat-form-field-flex-mm-padding">
           <mat-select formControlName="countryCode">
             <div class="display-flex">
               <input
@@ -25,10 +25,10 @@
               </button>
             </div>
             <mat-select-trigger>
-              <span
-                ><img class="width55Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-                <span class="p-r-5">{{ selectedCountry && selectedCountry.countryCode }}</span>
-                <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
+              <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
+                ><img class="width35Percent p-r-5" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                <span class="font-size12">{{ selectedCountry && selectedCountry.callingCode }}</span>
               </span>
             </mat-select-trigger>
             <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country"
@@ -40,7 +40,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="phone-number col-xs-9">
+      <div class="phone-number col-xs-8">
         <mat-form-field class="border-input display-flex">
           <input
             matInput
