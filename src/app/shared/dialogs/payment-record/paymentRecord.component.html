@@ -37,7 +37,7 @@
   <div class="col-xs-12 tab-body-padding">
     <mat-tab-group (selectedTabChange)="tabClick($event)">
       <mat-tab label="Add Payment">
-        <form *ngIf="paymentForm" [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <form *ngIf="paymentDetail != null" [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
           <div class="row width100Percent">
             <div class="col-xs-4">
               <mat-form-field class="border-input width-90">
@@ -85,7 +85,7 @@
 
             <ng-container matColumnDef="Date">
               <th mat-header-cell *matHeaderCellDef>Date</th>
-              <td mat-cell *matCellDef="let element">{{ element.paymentDate }}</td>
+              <td mat-cell *matCellDef="let element">{{ element.paymentDate | date: "dd MMM yyy" }}</td>
             </ng-container>
 
             <ng-container matColumnDef="Transaction ID">

@@ -65,7 +65,7 @@
                   <div class="col-xs-5">
                     <mat-form-field class="width100Percent border-select mat-form-field-flex-mm-padding">
                       <mat-label>*Country Code</mat-label>
-                      <mat-select formControlName="countryCode">
+                      <mat-select [disabled]="!permissionObj.rfqFlag" formControlName="countryCode">
                         <div class="display-flex">
                           <input
                             class="p-l-10 p-b-5"
@@ -87,10 +87,10 @@
                             <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
                           </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'countryName'" [value]="country"
+                        <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country"
                           ><span
                             ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                            <span>{{ country.countryCode }}</span>
+                            <span matTooltip="{{ country.name }}" class="limited-character universal">{{ country.name }}</span>
                           </span>
                         </mat-option>
                       </mat-select>
@@ -138,11 +138,11 @@
                 <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')">Annual Turn over is required</mat-error>
                 </mat-error>
-                <div class="row height12Percent m-t-10 border-round width78Percent p-t-5 full-border-main">
+                <div class="row height12Percent m-t-10 border-round w-70 p-t-5 full-border-main">
                   <div class="col-xs-6 p-t-10 color-grey text-semi-bold p-r-0 font-size">Base Currency</div>
                   <div class="col-xs-6 p-l-0">
-                    <mat-form-field class="width100Percent border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
-                      <mat-select formControlName="baseCurrency">
+                    <mat-form-field class="w-90 border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
+                      <mat-select [disabled]="!permissionObj.rfqFlag" formControlName="baseCurrency">
                         <div class="display-flex">
                           <input
                             class="p-l-10 p-b-5"
@@ -161,18 +161,12 @@
                           <span
                             ><img class="width55Percent p-r-10" [src]="selectedBaseCurrency && selectedBaseCurrency.imageUrl" alt="" />
                             <span class="p-r-5">{{ selectedBaseCurrency && selectedBaseCurrency.currencyCode }}</span>
-                            <span>
-                              {{ selectedBaseCurrency && selectedBaseCurrency.symbol }}
-                            </span>
                           </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCountry:'countryName'" [value]="currency"
+                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCountry:'currency'" [value]="currency"
                           ><span
-                            ><img class="width17Percent p-r-10" [src]="currency.imageUrl" alt="" />
-                            <span class="p-r-5">{{ currency.currencyCode }}</span>
-                            <span>
-                              {{ currency.symbol }}
-                            </span>
+                            ><img class="w-17 p-r-10" [src]="currency.imageUrl" alt="" />
+                            <span class="p-r-5">{{ currency.currency }}</span>
                           </span>
                         </mat-option>
                       </mat-select>

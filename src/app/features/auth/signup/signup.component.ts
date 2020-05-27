@@ -16,6 +16,7 @@ import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { CountryCode } from 'src/app/shared/models/currency';
+import { VisitorService } from 'src/app/shared/services/visitor.service';
 
 export interface OrganisationType {
   value: string;
@@ -53,10 +54,12 @@ export class SignupComponent implements OnInit {
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
     private dataService: DataService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private visitorsService: VisitorService
   ) { }
   acceptTerms: boolean;
   signupForm: FormGroup;
+  ipaddress: string;
   signInDetails = {} as SignINDetailLists;
   livingCountry: CountryCode[] = [];
   ngOnInit() {
@@ -72,7 +75,8 @@ export class SignupComponent implements OnInit {
         this.formInit();
       }
     });
-    this.getCountryCode();
+    this.getLocation();
+    // this.getCountryCode();
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
@@ -84,11 +88,20 @@ export class SignupComponent implements OnInit {
   }
 
 
-  getCountryCode() {
+  getLocation() {
+    this.visitorsService.getIpAddress().subscribe(res => {
+      this.ipaddress = res['ip'];
+      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+        this.getCountryCode(res['calling_code'])
+      });
+    });
+  }
+
+  getCountryCode(callingCode) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === this.primaryCallingCode;
+        return val.callingCode === callingCode;
       })
       this.signupForm.get('countryCode').setValue(this.livingCountry[0])
     })
@@ -113,7 +126,7 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       countryCode: [],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
+      phone: [this.user ? this.user.contactNo : '', [Validators.required]],
       organisationName: [{ value: this.user ? this.user.companyName : '', disabled: this.organisationDisabled }, Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", [Validators.required, Validators.minLength(6)]],
@@ -131,7 +144,8 @@ export class SignupComponent implements OnInit {
     this.signInDetails.confirmPassword = this.signupForm.value.password;
     this.signInDetails.phone = this.signupForm.value.phone;
     this.signInDetails.email = this.signupForm.value.email;
-    this.signInDetails.clientId = "fooClientIdPassword";
+    this.signInDetails.countryCode = this.signupForm.value.countryCode.callingCode,
+      this.signInDetails.clientId = "fooClientIdPassword";
     if (this.uniqueCode) {
       this.signInDetails.firstName = this.user.firstName ? this.user.firstName : null;
       this.signInDetails.lastName = this.user.lastName ? this.user.lastName : null;
@@ -224,7 +238,8 @@ export class SignupComponent implements OnInit {
   }
 
   sendotp(value) {
-    this.signInSignupService.sendOTP(value).then(res => {
+    let countryCode = this.signupForm.get('countryCode').value.callingCode;
+    this.signInSignupService.sendOTP(value, countryCode).then(res => {
       if (res.data)
         this.showOtp = res.data.success;
       this._snackBar.open("OTP has been sent on your phone number", "", {
@@ -250,10 +265,11 @@ export class SignupComponent implements OnInit {
     });
   }
   enterOTP(event) {
+    let countryCode = this.signupForm.get('countryCode').value.callingCode;
     const otp = event.target.value;
     if (event.target.value.length == 4) {
       //this.otpLength = event.target.value.length;
-      this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
+      this.signInSignupService.verifyOTP(this.signupForm.value.phone, countryCode, otp).then(res => {
         if (res.data) {
           this.lessOTPDigits = res.data.success;
         }

@@ -39,14 +39,14 @@ export class SignInSignupService implements OnInit {
         }
       });
   }
-  sendOTP(phone) {
-    return this.dataService.sendPostRequestSsoEncodedUrl(API.SENDOTP(phone), {}).then(res => { return res });
+  sendOTP(phone, callingCode) {
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.SENDOTP(phone, callingCode), {}).then(res => { return res });
   }
-  verifyOTP(phone, otp) {
-    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYOTP(phone, otp), {}).then(res => { return res });
+  verifyOTP(phone, countryCode, otp) {
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYOTP(phone, countryCode, otp), {}).then(res => { return res });
   }
-  verifyForgetPasswordOTP(phone, otp, clientId) {
-    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYFORGETPASSWORDOTP(phone, otp, clientId), {}).then(res => { return res });
+  verifyForgetPasswordOTP(phone, otp, clientId, countryCode) {
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYFORGETPASSWORDOTP(phone, otp, clientId, countryCode), {}).then(res => { return res });
   }
   verifyEMAIL(email) {
     return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => { return res });

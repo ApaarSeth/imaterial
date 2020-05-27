@@ -7,6 +7,7 @@ export interface SignINDetailLists {
   middleName: string;
   lastName: string;
   email: string;
+  countryCode: string;
   customData: CustonDataDetails;
 }
 
