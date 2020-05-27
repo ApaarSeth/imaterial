@@ -93,10 +93,7 @@ export class SignupComponent implements OnInit {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
         this.getCountryCode(res['calling_code'])
-        // localStorage.setItem('callingCode', res['calling_code'])
-        // console.log(res);
       });
-      //console.log(res);
     });
   }
 
@@ -129,7 +126,7 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       countryCode: [],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
+      phone: [this.user ? this.user.contactNo : '', [Validators.required]],
       organisationName: [{ value: this.user ? this.user.companyName : '', disabled: this.organisationDisabled }, Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", [Validators.required, Validators.minLength(6)]],

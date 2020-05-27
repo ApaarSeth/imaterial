@@ -32,6 +32,7 @@ export class SigninComponent implements OnInit {
     private navigationService: AppNavigationService,
     private commonService: CommonService,
     private visitorsService: VisitorService) { }
+
   ipaddress: string;
   uniqueCode: string = "";
   loginCountry: string = "";
@@ -43,6 +44,7 @@ export class SigninComponent implements OnInit {
   countryList: CountryCode[] = [];
   searchCountry: string = '';
   primaryCallingCode: string = ''
+
   ngOnInit() {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
@@ -50,19 +52,14 @@ export class SigninComponent implements OnInit {
     this.primaryCallingCode = localStorage.getItem('callingCode')
     this.formInit();
     this.getLocation();
-    // this.getCountryCode();
-
   }
+
   getLocation() {
     this.visitorsService.getIpAddress().subscribe(res => {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
         this.getCountryCode(res['calling_code'])
-        // localStorage.setItem('callingCode', res['calling_code'])
-        // console.log(res);
       });
-      //console.log(res);
-
     });
   }
 
@@ -79,7 +76,7 @@ export class SigninComponent implements OnInit {
   formInit() {
     this.signinForm = this.formBuilder.group({
       countryCode: [],
-      phone: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
+      phone: ["", [Validators.required]],
       password: ["", Validators.required]
     });
   }
