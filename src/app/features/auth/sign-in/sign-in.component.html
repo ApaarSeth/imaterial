@@ -20,7 +20,7 @@
             </div>
             <mat-select-trigger>
               <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-                ><img class="width35Percent p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                ><img class="width35Percent" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                 <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
                 <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
               </span>

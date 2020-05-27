@@ -164,8 +164,8 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   sendotp(value) {
-
-    this.signInSignupService.sendOTP(value).then(res => {
+    let countryCode = this.forgetPassForm.get('countryCode').value.callingCode;
+    this.signInSignupService.sendOTP(value, countryCode).then(res => {
       if (res.data)
         this.showOtp = res.data.success;
       this._snackBar.open("OTP has been sent on your phone number", "", {
@@ -198,7 +198,8 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
   verifyOTP(otp) {
-    this.signInSignupService.verifyForgetPasswordOTP(this.forgetPassForm.value.phone, otp, 'fooClientIdPassword').then(res => {
+    let countryCode = this.forgetPassForm.get('countryCode').value.callingCode;
+    this.signInSignupService.verifyForgetPasswordOTP(this.forgetPassForm.value.phone, otp, 'fooClientIdPassword', countryCode).then(res => {
       if (res.data) {
         this.lessOTPDigits = res.data.success;
         this.otpMessageVerify = res.data.message;
@@ -220,6 +221,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.otpMessageVerify = "";
       this.otpLength = 0;
       this.lastFourDigit = this.value.substring(6, 10);
+      this.getCountryCode
       this.sendotp(this.value);
     }
 

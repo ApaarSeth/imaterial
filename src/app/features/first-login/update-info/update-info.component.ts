@@ -10,6 +10,8 @@ import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants'
 import { MatSnackBar } from '@angular/material';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { Currency, CountryCode } from 'src/app/shared/models/currency';
+import { PermissionService } from 'src/app/shared/services/permission.service';
+import { permission } from 'src/app/shared/models/permissionObject';
 
 export interface City {
   value: string;
@@ -49,9 +51,10 @@ export class UpdateInfoComponent implements OnInit {
   currencyList: Currency[] = [];
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
-
+  permissionObj: permission;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
+    private permissionService: PermissionService,
     private _snackBar: MatSnackBar,
     private commonService: CommonService,
     private _router: Router,
@@ -60,6 +63,7 @@ export class UpdateInfoComponent implements OnInit {
 
   ngOnInit() {
     this.role = localStorage.getItem("role");
+    this.permissionObj = this.permissionService.checkPermission(this.role);
     this.formInit();
     this.getUserRoles();
     this.getTradesList();

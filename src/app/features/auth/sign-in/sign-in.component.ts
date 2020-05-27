@@ -12,6 +12,7 @@ import { API } from 'src/app/shared/constants/configuration-constants';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { CountryCode } from 'src/app/shared/models/currency';
+import { VisitorService } from 'src/app/shared/services/visitor.service';
 
 
 @Component({
@@ -29,8 +30,9 @@ export class SigninComponent implements OnInit {
     private dataService: DataService,
     private _snackBar: MatSnackBar,
     private navigationService: AppNavigationService,
-    private commonService: CommonService) { }
-
+    private commonService: CommonService,
+    private visitorsService: VisitorService) { }
+  ipaddress: string;
   uniqueCode: string = "";
   loginCountry: string = "";
   livingCountry: CountryCode[] = [];
@@ -47,15 +49,28 @@ export class SigninComponent implements OnInit {
     });
     this.primaryCallingCode = localStorage.getItem('callingCode')
     this.formInit();
-    this.getCountryCode();
+    this.getLocation();
+    // this.getCountryCode();
 
   }
+  getLocation() {
+    this.visitorsService.getIpAddress().subscribe(res => {
+      this.ipaddress = res['ip'];
+      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+        this.getCountryCode(res['calling_code'])
+        // localStorage.setItem('callingCode', res['calling_code'])
+        // console.log(res);
+      });
+      //console.log(res);
 
-  getCountryCode() {
+    });
+  }
+
+  getCountryCode(callingCode) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === this.primaryCallingCode;
+        return val.callingCode === callingCode;
       })
       this.signinForm.get('countryCode').setValue(this.livingCountry[0])
     })
