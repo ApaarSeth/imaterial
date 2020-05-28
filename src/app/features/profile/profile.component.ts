@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit {
   usersTrade: number[] = [];
   OthersId: any;
   url: any;
+  userId
   imageFileSizeError: string = "";
   imageFileSize: boolean = false;
   fileTypes: string[] = ['png', 'jpeg', 'jpg'];
@@ -56,15 +57,15 @@ export class ProfileComponent implements OnInit {
     private _uploadImageService: DocumentUploadService) { }
 
   ngOnInit() {
-    const userId = localStorage.getItem("userId");
+    this.userId = localStorage.getItem("userId");
     this.role = localStorage.getItem("role");
     this.formInit();
     this.getUserRoles();
 
     // this.getUserInformation(userId);
     this.getTurnOverList();
-    this.getCurrency();
-    this.getCountryCode();
+    this.getCurrencyAndCountry();
+    // this.getCountryCode();
   }
 
   getBaseCurrency() {
@@ -81,20 +82,17 @@ export class ProfileComponent implements OnInit {
       this.roleId = id[0].roleId;
     })
   }
-  getCurrency() {
-    this.commonService.getCurrency().then(res => {
-      this.currencyList = res.data;
+
+  getCurrencyAndCountry() {
+    Promise.all([
+      this.commonService.getCurrency(),
+      this.commonService.getCountry()
+    ]).then(res => {
+      this.currencyList = res[0].data;
+      this.countryList = res[1].data;
+      this.getUserInformation(this.userId);
     })
   }
-
-  getCountryCode() {
-    this.commonService.getCountry().then(res => {
-      const userId = localStorage.getItem("userId");
-      this.countryList = res.data;
-      this.getUserInformation(userId);
-    })
-  }
-
 
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
@@ -109,15 +107,20 @@ export class ProfileComponent implements OnInit {
         });
         this.getTradesList();
       }
-      if (this.countryList) {
-        this.livingCountry = this.countryList.filter(val => {
-          return val.callingCode === this.users.countryCode;
-        })
-      }
       this.formInit();
-      this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
-      // this.getBaseCurrency();
+      this.setCountryAndCurrency()
     });
+  }
+
+  setCountryAndCurrency() {
+    this.livingCountry = this.countryList.filter(val => {
+      return val.callingCode === this.users.countryCode;
+    })
+    let newCurrencyList = this.currencyList.filter(val => {
+      return val.currencyId === this.users.baseCurrency.currencyId;
+    })
+    this.userInfoForm.get('baseCurrency').setValue(newCurrencyList[0])
+    this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
   }
 
   getTurnOverList() {
@@ -179,13 +182,6 @@ export class ProfileComponent implements OnInit {
     });
     this.customTrade = this._formBuilder.group({
       trade: []
-    })
-    this.userInfoForm.get('countryCode').valueChanges.subscribe(country => {
-      let newcurrencyList = this.currencyList.filter(val => {
-        return val.countryId === country.countryId
-      })
-
-      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList[0])
     })
   }
 

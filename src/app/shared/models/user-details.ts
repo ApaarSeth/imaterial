@@ -1,4 +1,5 @@
 import { ProjectDetails } from './project-details';
+import { Currency } from './currency';
 
 export interface AllUserDetails {
   firstName?: string,
@@ -96,7 +97,8 @@ export interface UserDetails {
   countryCode?: string;
   uniqueCode?: string;
   companyName?: string;
-    TurnOverId?: number;
+  TurnOverId?: number;
+  baseCurrency: Currency
 }
 
 export interface TradeList {
@@ -111,15 +113,15 @@ export interface TradeList {
   tradeDescription: string;
   selected?: boolean;
 }
-export interface TurnOverList{
-  id ?: number;
-  status ?: number;
-  createdBy ?: string;
-  createdAt ?: string;
-  lastUpdatedBy ?:  string;
-  lastUpdatedAt ?:  string;
-  turnOverId ?:  number;
-  shortName ?:  string;
-  longName ?:  string;
- 
+export interface TurnOverList {
+  id?: number;
+  status?: number;
+  createdBy?: string;
+  createdAt?: string;
+  lastUpdatedBy?: string;
+  lastUpdatedAt?: string;
+  turnOverId?: number;
+  shortName?: string;
+  longName?: string;
+
 }

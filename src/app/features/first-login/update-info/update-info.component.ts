@@ -37,6 +37,7 @@ export class UpdateInfoComponent implements OnInit {
   role: string;
   roleId: number;
   searchCountry: string = '';
+  searchCurrency: string = '';
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
     { value: "Delhi", viewValue: "Delhi" },
