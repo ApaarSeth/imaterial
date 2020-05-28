@@ -224,7 +224,7 @@ export class SignupComponent implements OnInit {
   }
 
   sendOtpBtn() {
-    if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
+    if (this.value.length == 10) {
       if (!this.uniqueCode) {
         this.verifyMobile(this.value);
       }

@@ -12,6 +12,7 @@ import { auth } from 'src/app/shared/models/auth';
 import { UserDetails } from 'src/app/shared/models/user-details';
 import { SignINDetailLists, ForgetPassDetails } from 'src/app/shared/models/signIn/signIn-detail-list';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { VisitorService } from 'src/app/shared/services/visitor.service';
 
 @Component({
   selector: "forgot-password",
@@ -42,6 +43,7 @@ export class ForgotPasswordComponent implements OnInit {
   searchCountry: string = '';
   primaryCallingCode: string = '';
   livingCountry: string = '';
+  ipaddress: string = '';
   constructor(
     private tokenService: TokenService,
     private route: ActivatedRoute,
@@ -51,7 +53,8 @@ export class ForgotPasswordComponent implements OnInit {
     private _userService: UserService,
     private _snackBar: MatSnackBar,
     private navService: AppNavigationService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private visitorsService: VisitorService
   ) { }
 
   ngOnInit() {
@@ -63,8 +66,9 @@ export class ForgotPasswordComponent implements OnInit {
         this.getUserInfo(this.uniqueCode);
       } else {
         this.formInit();
+
       }
-      this.getCountryCode();
+      this.getLocation();
     });
 
     // let urlLength = this.router.url.toString().length;
@@ -72,11 +76,21 @@ export class ForgotPasswordComponent implements OnInit {
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
   }
 
-  getCountryCode() {
+
+  getLocation() {
+    this.visitorsService.getIpAddress().subscribe(res => {
+      this.ipaddress = res['ip'];
+      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+        this.getCountryCode(res['calling_code'])
+      });
+    });
+  }
+
+  getCountryCode(callingCode) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === this.primaryCallingCode;
+        return val.callingCode === callingCode;
       })
       this.forgetPassForm.get('countryCode').setValue(this.livingCountry[0])
     })

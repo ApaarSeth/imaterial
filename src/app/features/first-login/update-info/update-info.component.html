@@ -148,8 +148,8 @@
                             class="p-l-10 p-b-5"
                             matInput
                             type="search"
-                            placeholder="Search Country"
-                            [(ngModel)]="searchCountry"
+                            placeholder="Search Currency"
+                            [(ngModel)]="searchCurrency"
                             [ngModelOptions]="{standalone: true}"
                             (keydown)="$event.stopPropagation()"
                           />
@@ -163,7 +163,7 @@
                             <span class="p-r-5">{{ selectedBaseCurrency && selectedBaseCurrency.currencyCode }}</span>
                           </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCountry:'currency'" [value]="currency"
+                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCurrency:'currency'" [value]="currency"
                           ><span
                             ><img class="w-17 p-r-10" [src]="currency.imageUrl" alt="" />
                             <span class="p-r-5">{{ currency.currency }}</span>
