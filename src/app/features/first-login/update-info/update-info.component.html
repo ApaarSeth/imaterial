@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 terms-margin-set-width col-md-8 offset-md-2">
-        <div class="update-info__popup p-4">
+        <div class="update-info__popup p-20">
           <form class="update-info__form" *ngIf="userInfoForm && users" [formGroup]="userInfoForm" (ngSubmit)="submit()">
             <div class="row">
               <div class="col-sm-12 col-md-12">
@@ -138,10 +138,10 @@
                 <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')">Annual Turn over is required</mat-error>
                 </mat-error>
-                <div class="row height12Percent m-t-10 border-round w-70-p p-t-5 full-border-main">
+                <div class="row height12Percent m-t-10 border-round width-70 p-t-5 full-border-main">
                   <div class="col-xs-6 p-t-10 color-grey text-semi-bold p-r-0 font-size">Base Currency</div>
                   <div class="col-xs-6 p-l-0">
-                    <mat-form-field class="w-90-p border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
+                    <mat-form-field class="width-90 border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
                       <mat-select [disabled]="!permissionObj.rfqFlag" formControlName="baseCurrency">
                         <div class="display-flex">
                           <input
@@ -159,13 +159,13 @@
                         </div>
                         <mat-select-trigger>
                           <span
-                            ><img class="width55Percent p-r-10" [src]="selectedBaseCurrency && selectedBaseCurrency.imageUrl" alt="" />
+                            ><img class="width-55 p-r-10" [src]="selectedBaseCurrency && selectedBaseCurrency.imageUrl" alt="" />
                             <span class="p-r-5">{{ selectedBaseCurrency && selectedBaseCurrency.currencyCode }}</span>
                           </span>
                         </mat-select-trigger>
                         <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCurrency:'currency'" [value]="currency"
                           ><span
-                            ><img class="w-17-p p-r-10" [src]="currency.imageUrl" alt="" />
+                            ><img class="width-17 p-r-10" [src]="currency.imageUrl" alt="" />
                             <span class="p-r-5">{{ currency.currency }}</span>
                           </span>
                         </mat-option>
