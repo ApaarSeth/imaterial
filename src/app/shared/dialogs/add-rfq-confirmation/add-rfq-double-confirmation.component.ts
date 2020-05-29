@@ -23,15 +23,29 @@ export class AddRFQConfirmationComponent implements OnInit {
   selectBuildsupplyAsSupplier: boolean = true;
   constructor(
     private dialogRef: MatDialogRef<AddRFQConfirmationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: { dataKey: AddRFQ },
     private rfqService: RFQService,
     private navService: AppNavigationService
   ) { }
 
   ngOnInit() {
-    this.rfqDetails = this.data;
+    this.rfqDetails = this.data.dataKey;
+    this.rfqDetails.rfqCurrency.exchangeValue
   }
 
+  get exchangeCurrency() {
+    return this.rfqDetails.rfqCurrency ? this.rfqDetails.rfqCurrency.exchangeCurrencyName : null
+  }
+
+  get primaryCurrency() {
+    return this.rfqDetails.rfqCurrency ? this.rfqDetails.rfqCurrency.primaryCurrencyName : null
+  }
+
+  get exchangeValue() {
+    return this.rfqDetails.rfqCurrency ? this.rfqDetails.rfqCurrency.exchangeValue : null
+  }
+
+  getExcha
   close(data) {
     this.dialogRef.close(data);
   }

@@ -6,7 +6,11 @@
 </div>
 <br />
 
-<div class="text-center">
+<div class="text-center p-b-10 color-grey font-size14" *ngIf="exchangeValue>0">
+  You are floating the RFQ in <span>{{exchangeCurrency}}</span> with conversion rate of <span>{{exchangeValue}} </span><span>{{primaryCurrency}}</span>.Also Supplier will have to
+  submit the quote in this selected currency
+</div>
+<div class="text-center text-semi-bold color-grey">
   Do you want to float the RFQ?
 </div>
 

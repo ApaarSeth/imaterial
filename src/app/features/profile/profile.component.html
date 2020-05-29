@@ -147,10 +147,10 @@
                 <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')">Annual Turn over is required</mat-error>
                 </mat-error>
-                <div class="row height12Percent m-t-10 border-round w-70 p-t-5 full-border-main">
+                <div class="row height12Percent m-t-10 border-round width-70 p-t-5 full-border-main">
                   <div class="col-xs-6 p-t-10 color-grey text-semi-bold p-r-0 font-size">Base Currency</div>
                   <div class="col-xs-6 p-l-0">
-                    <mat-form-field class="w-90 border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
+                    <mat-form-field class="width-90 border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
                       <mat-select [disabled]="true" formControlName="baseCurrency">
                         <div class="display-flex">
                           <input
@@ -174,7 +174,7 @@
                         </mat-select-trigger>
                         <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCountry:'currency'" [value]="currency"
                           ><span
-                            ><img class="w-17 p-r-10" [src]="currency.imageUrl" alt="" />
+                            ><img class="width-17 p-r-10" [src]="currency.imageUrl" alt="" />
                             <span class="p-r-5">{{ currency.currency }}</span>
                           </span>
                         </mat-option>
