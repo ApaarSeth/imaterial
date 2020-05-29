@@ -107,8 +107,8 @@ export class AddEditUserComponent implements OnInit {
         this.data.isEdit ? this.data.detail.projectIds : []
       ),
       creatorId: new FormControl(''),
-      userId: new FormControl(this.data.isEdit ? this.data.detail.userId : null)
-
+      userId: new FormControl(this.data.isEdit ? this.data.detail.userId : null),
+      countryCallingCode: new FormControl('+91')
     });
   }
 
