@@ -71,25 +71,23 @@ export interface AddRFQ {
   documentsList: DocumentDetails[];
   selectBuildsupplyAsSupplier?: boolean
   terms: Terms;
-  rfqCurrency ?: rfqCurrency;
+  rfqCurrency?: rfqCurrency;
 }
 
-export interface  rfqCurrency{
-	exchangeCurrencyId : number;
-	exchangeCurrencyName : string;
-  exchangeCurrencyFlag : string;  
-  exchangeCountryId : number;
-  exchangeCurrency : string;
+export interface rfqCurrency {
+  exchangeCurrencyId: number;
+  exchangeCurrencyName: string;
+  exchangeCurrencyFlag: string;
+  exchangeCountryId: string;
+  exchangeCurrency: string;
   exchangeCurrencySymbol: string;
-
-  exchangeValue : number;
-
-  primaryCurrencyId : number;
-  primaryCurrencyName : string;
-  primaryContryId: number;
+  exchangeValue: number;
+  primaryCurrencyId: number;
+  primaryCurrencyName: string;
+  primaryContryId: string;
   primaryCurrency: string;
   primaryCurrencySymbol: string;
-  primaryCurrencyFlag : string;
+  primaryCurrencyFlag: string;
 }
 export interface DocumentDetails {
   documentType: string;
@@ -104,11 +102,11 @@ export interface Terms {
   otherDesc?: string;
 }
 
-export interface CountryCurrency{
-  countryId ?: number,
-  currency ?: string,
-  currencyCode ?: string,
-  currencyId ?: number,
-  imageUrl ?: string,
-  symbol ?: string
+export interface CountryCurrency {
+  countryId?: number,
+  currency?: string,
+  currencyCode?: string,
+  currencyId?: number,
+  imageUrl?: string,
+  symbol?: string
 }

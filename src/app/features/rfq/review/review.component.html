@@ -1,15 +1,16 @@
 <form *ngIf="finalRfq" [formGroup]="form" (ngSubmit)="submit()">
   <div class="page-start-point">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-      <div class="row m-b-10 ">
+      <div class="row m-b-10">
         <div class="col-md-12">
-          <div class="row ">
+          <div class="row">
             <div class="col-xs-12 p-t-10">
-             
               <button mat-raised-button class="main-background-color main-button color-white pull-right float-rfq-btn" [disabled]="!form.valid">
                 Float RFQ
               </button>
-              <span (click)="selectCurrency()" class="text-decoration-underline main-color pull-right font-size-vary-grn p-t-10 p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
+              <span (click)="selectCurrency()" class="text-decoration-underline main-color pull-right font-size-vary-grn p-t-10 p-r-10 text-semi-bold cursor-pointer"
+                >Select Currency</span
+              >
             </div>
           </div>
           <!-- first row -->
@@ -49,21 +50,35 @@
                   View Terms & Conditions/Documents
                 </button>
               </div> -->
-              <div class="col-xs-3 select-currency p-t-10 p-b-10" *ngIf="finalRfq.rfqCurrency!=null && finalRfq.rfqCurrency.exchangeCurrencyName">
-                  <div class="base-currency">
-                     <span class="text-semi-bold font-size-vary-grn color-6d6a6a">
-                       <img width="25px" [src]="finalRfq.rfqCurrency.exchangeCurrencyFlag">
-                       {{finalRfq.rfqCurrency.exchangeCurrencyName}} 
-                     </span> 
-                     <span class="p-l-5"> = </span>
-                     <span class="p-l-5"> {{finalRfq.rfqCurrency.exchangeValue}} </span>
-                     <span class="p-l-5">
-                      <img width="25px" [src]="finalRfq.rfqCurrency.primaryCurrencyFlag">
-                        {{finalRfq.rfqCurrency.primaryCurrencyName}}
-                     </span>
-                  </div>
+            <div class="col-xs-3 p-t-10 p-b-20" *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null">
+              <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+                <span class="font-size-vary-grn color-grey">
+                  <img width="25px" *ngIf="finalRfq.rfqCurrency.exchangeCurrencyFlag" [src]="finalRfq.rfqCurrency.exchangeCurrencyFlag" />
+                  {{ finalRfq.rfqCurrency.exchangeCurrencyName }}
+                </span>
+                <span class="p-l-5"> = </span>
+                <span class="p-l-5 color-6d6a6a color-grey"> {{ finalRfq.rfqCurrency.exchangeValue }} </span>
+                <span class="p-l-5 color-grey">
+                  <img width="25px" *ngIf="finalRfq.rfqCurrency.primaryCurrencyFlag" [src]="finalRfq.rfqCurrency.primaryCurrencyFlag" />
+                  {{ finalRfq.rfqCurrency.primaryCurrencyName }}
+                </span>
+              </span>
+            </div>
+            <!-- <div class="col-xs-3 select-currency p-t-10 p-b-10" *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName">
+              <div class="base-currency">
+                <span class="text-semi-bold font-size-vary-grn color-6d6a6a">
+                  <img width="25px" [src]="finalRfq.rfqCurrency.exchangeCurrencyFlag" />
+                  {{ finalRfq.rfqCurrency.exchangeCurrencyName }}
+                </span>
+                <span class="p-l-5"> = </span>
+                <span class="p-l-5"> {{ finalRfq.rfqCurrency.exchangeValue }} </span>
+                <span class="p-l-5">
+                  <img width="25px" [src]="finalRfq.rfqCurrency.primaryCurrencyFlag" />
+                  {{ finalRfq.rfqCurrency.primaryCurrencyName }}
+                </span>
               </div>
-        </div>
+            </div> -->
+          </div>
           <!-- second row -->
           <div class="row m-b-10">
             <div class="col-md-3" *ngFor="let supplier of selectedSuppliersList">

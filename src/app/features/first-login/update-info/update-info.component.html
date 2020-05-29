@@ -90,7 +90,8 @@
                         <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country"
                           ><span
                             ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                            <span matTooltip="{{ country.name }}" class="limited-character universal">{{ country.name }}</span>
+                            <span matTooltip="{{ country.name }}" class="limited-character universal p-r-4">{{ country.name }}</span>
+                            <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
                           </span>
                         </mat-option>
                       </mat-select>
@@ -110,7 +111,6 @@
                     </mat-error>
                   </div>
                 </div>
-
                 <mat-form-field class="border-select w-100" *ngIf="users.roleName != 'l3'">
                   <mat-label>Role</mat-label>
                   <mat-select formControlName="roleId">
@@ -138,10 +138,10 @@
                 <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')">Annual Turn over is required</mat-error>
                 </mat-error>
-                <div class="row height12Percent m-t-10 border-round w-70 p-t-5 full-border-main">
+                <div class="row height12Percent m-t-10 border-round w-70-p p-t-5 full-border-main">
                   <div class="col-xs-6 p-t-10 color-grey text-semi-bold p-r-0 font-size">Base Currency</div>
                   <div class="col-xs-6 p-l-0">
-                    <mat-form-field class="w-90 border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
+                    <mat-form-field class="w-90-p border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
                       <mat-select [disabled]="!permissionObj.rfqFlag" formControlName="baseCurrency">
                         <div class="display-flex">
                           <input
@@ -165,7 +165,7 @@
                         </mat-select-trigger>
                         <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCurrency:'currency'" [value]="currency"
                           ><span
-                            ><img class="w-17 p-r-10" [src]="currency.imageUrl" alt="" />
+                            ><img class="w-17-p p-r-10" [src]="currency.imageUrl" alt="" />
                             <span class="p-r-5">{{ currency.currency }}</span>
                           </span>
                         </mat-option>
