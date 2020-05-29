@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { TokenService } from 'src/app/shared/services/token.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -116,7 +115,7 @@ export class ForgotPasswordComponent implements OnInit {
   formInit() {
     this.forgetPassForm = this.formBuilder.group({
       countryCode: [],
-      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
+      phone: [this.user ? this.user.contactNo : '', [Validators.required]],
       organisationType: ["Contractor", Validators.required],
       password: ["", [Validators.required, Validators.minLength(6)]],
       otp: [""]
@@ -155,7 +154,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.verifiedMobile = true;
     this.showOtp = false;
     this.value = numberPassed ? numberPassed : event.target.value;
-    if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
+    if (this.value.length == 10) {
       this.phoneNumberChecked = true;
       this.verifyMobile(this.value);
     }
@@ -164,7 +163,7 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
   sendOtpBtn() {
-    if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
+    if (this.value.length == 10) {
       if (!this.uniqueCode) {
         this.verifyMobile(this.value);
       }
