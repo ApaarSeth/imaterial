@@ -41,8 +41,8 @@ export class SuppliersDialogComponent {
       supplier_name: ["", Validators.required],
       email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
-      pan: [""]
-      // countryCode: ['+91']
+      pan: [""],
+      countryCallingCode: ['+91']
     });
   }
 
