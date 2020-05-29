@@ -314,16 +314,16 @@ export class RfqProjectMaterialsComponent implements OnInit {
     this.addRfq.rfqProjectsList = newRfqDetails;
     this.updatedRfq.emit(this.addRfq);
   }
-  
-  selectCurrency(){
+
+  selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
-      disableClose: true ,
-      width: "600px",
-      data : this.addRfq.rfqCurrency
+      disableClose: true,
+      width: "500px",
+      data: this.addRfq.rfqCurrency
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if(data != null){
+      if (data != null) {
         this.addRfq.rfqCurrency = data;
       }
     });

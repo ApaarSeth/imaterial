@@ -6,14 +6,14 @@
 </div>
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div class="row select-currency p-t-10">
-    <div class="col-xs-12 col-sm-5 col-md-5">
+    <div class="col-xs-12 col-sm-6 col-md-6">
       <div class="base-currency">
         <span class="text-semi-bold font-size-vary-grn color-6d6a6a">
           Base Currency
         </span>
         <span class="p-l-10">
-          <img *ngIf="primaryImageUrl" [src]="primaryImageUrl" width="25px" />
-          {{ primaryCurrencyName }}
+          <img *ngIf="this.primaryCurrencyData" [src]="this.primaryCurrencyData.imageUrl" width="25px" />
+          {{ this.primaryCurrencyData && this.primaryCurrencyData.currencyCode }}
         </span>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <mat-form-field class="border-select width100Percent">
         <mat-label class="value-currencies-label">Currency *</mat-label>
         <mat-select formControlName="exchangeCurrency" placeholder="Search Currency" (selectionChange)="setExchangeCurrency($event)">
-          <div class="display-flex">
+          <div class="display-flex" *ngIf="this.currencies">
             <input
               class="p-l-10 p-b-5"
               matInput

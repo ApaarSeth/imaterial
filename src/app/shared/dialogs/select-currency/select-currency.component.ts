@@ -35,7 +35,7 @@ export interface Unit {
 export class SelectCurrencyComponent implements OnInit {
   currencies: CountryCurrency[];
   form: FormGroup;
-  currencyFields: rfqCurrency;
+  currencyFields: rfqCurrency = {} as rfqCurrency;
   exchangeCurrencyName: string;
   primaryCurrencyName: string;
   searchText: string = null;
@@ -63,13 +63,13 @@ export class SelectCurrencyComponent implements OnInit {
 
 
   getCurrencyApi() {
-    this.currencyFields = this.data;
-    if (this.data! = null) {
-      this.exchangeCurrencyName = this.data.exchangeCurrencyName;
-    }
+    // this.currencyFields = this.data;
+    // if (this.data! = null) {
+    //   this.exchangeCurrencyName = this.data.exchangeCurrencyName;
+    // }
     Promise.all([this.commonService.getBaseCurrency(), this.rfqservice.getCurrency()]).then(res => {
       this.primaryCurrencyData = res[0].data as Currency;
-      this.currencyFields.primaryContryId = String(this.primaryCurrencyData.countryId);
+      this.currencyFields['primaryContryId'] = String(this.primaryCurrencyData.countryId);
       this.currencyFields.primaryCurrency = this.primaryCurrencyData.currency;
       this.currencyFields.primaryCurrencyFlag = this.primaryCurrencyData.imageUrl;
       this.currencyFields.primaryCurrencyId = this.primaryCurrencyData.currencyId;
@@ -80,10 +80,12 @@ export class SelectCurrencyComponent implements OnInit {
       this.currencies = res[1].data.filter(value => {
         return value.countryId !== this.primaryCurrencyData.countryId
       });
-      let existingCurrency = this.currencies.filter(value => {
-        return value.currencyId === this.currencyFields.exchangeCurrencyId;
-      })
-      this.form.get('exchangeCurrency').setValue(existingCurrency[0]);
+      if (this.data != null) {
+        let existingCurrency = this.currencies.filter(value => {
+          return value.currencyId === this.data.exchangeCurrencyId;
+        })
+        this.form.get('exchangeCurrency').setValue(existingCurrency[0]);
+      }
     });
   }
 

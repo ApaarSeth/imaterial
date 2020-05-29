@@ -148,7 +148,7 @@ export class UpdateInfoComponent implements OnInit {
       firstName: [this.users ? this.users.firstName : '', Validators.required],
       lastName: [this.users ? this.users.lastName : '', Validators.required],
       email: [this.users ? this.users.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      contactNo: [this.users ? this.users.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
+      contactNo: [this.users ? this.users.contactNo : '', [Validators.required]],
       roleId: [this.users ? this.users.roleId : null, Validators.required],
       turnOverId: [this.users ? this.users.TurnOverId : null],
       userId: [this.users ? this.users.userId : null],
