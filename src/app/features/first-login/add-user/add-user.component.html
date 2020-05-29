@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12 terms-margin-set-width col-md-8 offset-md-2">
-        <div class="update-info__popup p-4 mt-5 invite-users">
+        <div class="update-info__popup p-20 mt-5 invite-users">
           <form class="update-info__form" *ngIf="addUserForm" [formGroup]="addUserForm">
             <div class="row">
               <div class="col-md-12">
@@ -14,20 +14,16 @@
               <div class="row add-invite-user-form" [formGroupName]="i">
                 <div class="col-md-5">
                   <mat-form-field class="border-input w-100">
-                    <input matInput type="email" placeholder="*Email" (input)="verifyEmail($event,other.controls['email'],i)" formControlName="email" />
+                    <input matInput type="email" placeholder="*Email" (input)="verifyEmail($event, other.controls['email'], i)" formControlName="email" />
                   </mat-form-field>
 
-                  <mat-error
-                    *ngIf="other.controls['email'].hasError('required') && other.controls['email'].touched"
-                  >
+                  <mat-error *ngIf="other.controls['email'].hasError('required') && other.controls['email'].touched">
                     Email is required
                   </mat-error>
-                  <mat-error
-                    *ngIf="other.controls['email'].hasError('pattern') && other.controls['email'].touched"
-                  >
+                  <mat-error *ngIf="other.controls['email'].hasError('pattern') && other.controls['email'].touched">
                     Enter Valid Email
                   </mat-error>
-                   <small class="form-error-msg" *ngIf="(index[i]==='false')">Email already in use.</small>
+                  <small class="form-error-msg" *ngIf="index[i] === 'false'">Email already in use.</small>
                   <!-- other.controls.other.controls.email.errors -->
                 </div>
 
@@ -51,9 +47,7 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                  <mat-error
-                    *ngIf="other.controls['roleId'].hasError('required') && other.controls['roleId'].touched"
-                  >
+                  <mat-error *ngIf="other.controls['roleId'].hasError('required') && other.controls['roleId'].touched">
                     Role is required
                   </mat-error>
                 </div>
@@ -66,14 +60,14 @@
                   <button mat-raised-button class="main-background-color main-button color-white" (click)="onAddRow()">+ Add User</button>
                 </div>
               </div>
-              <hr  *ngIf="i<(addUserForm.get('other').value.length - 1)">
+              <hr *ngIf="i < addUserForm.get('other').value.length - 1" />
             </div>
-              <div class="text-center col-md-12 mt-4">
-                 <small class="form-error-msg" *ngIf="(count > 0)">You can't add duplicate email address.</small>
-              </div>
+            <div class="text-center col-md-12 mt-4">
+              <small class="form-error-msg" *ngIf="count > 0">You can't add duplicate email address.</small>
+            </div>
             <div class="text-center col-md-12 mt-4">
               <button class="btn btn-outline-warning mr-3" [routerLink]="['/dashboard']">Skip</button>
-              <button class="btn btn-warning next-btn" (click)="submit()" [disabled]="!addUserForm.valid || (!emailVerified) || (count>0)">Done</button>
+              <button class="btn btn-warning next-btn" (click)="submit()" [disabled]="!addUserForm.valid || !emailVerified || count > 0">Done</button>
             </div>
           </form>
         </div>

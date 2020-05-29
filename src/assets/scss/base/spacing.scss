@@ -119,10 +119,10 @@ $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.
   .radius-#{$space} {
     border-radius: #{$space}px !important;
   }
-  .w-#{$space}-p {
+  .width-#{$space} {
     width: #{$space}% !important;
   }
-  .h-#{$space}-p {
+  .height-#{$space} {
     height: #{$space}% !important;
   }
   .w-vw-#{$space} {
