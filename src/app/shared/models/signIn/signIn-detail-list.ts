@@ -9,6 +9,7 @@ export interface SignINDetailLists {
   email: string;
   countryCode: string;
   customData: CustonDataDetails;
+
 }
 
 export interface ForgetPassDetails {
@@ -28,6 +29,7 @@ export interface SignInData {
 }
 export interface CustonDataDetails {
   countryCode?: string;
+  countryId?: number;
   uniqueCode: string;
   organizationName: string;
   organizationType: string;
