@@ -29,7 +29,7 @@ export interface SignInData {
 }
 export interface CustonDataDetails {
   countryCode?: string;
-  countryId?: number;
+  countryId?: string;
   uniqueCode: string;
   organizationName: string;
   organizationType: string;
