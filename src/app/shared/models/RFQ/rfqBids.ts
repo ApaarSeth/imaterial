@@ -1,4 +1,5 @@
 import { DocumentList } from '../PO/po-data';
+import { rfqCurrency } from './rfq-details';
 
 export interface RfqProjects {
   rfqProjects: RfqProject[];
@@ -48,6 +49,7 @@ export interface RfqProject {
   status: number;
   createdBy: string;
   createdAt: string;
+  rfqCurrency: rfqCurrency;
   lowStockMaterialCount: string;
   purchaseOrderCount: string;
   purchaseOrderCost: string;
@@ -62,16 +64,16 @@ export interface RfqProject {
   materialList: RfqMaterialList[];
   supplierRemarkList: supplierRemarkList[];
 }
-export interface supplierRemarkList{
-      DocumentDesc?: string; 
-      DocumentUrl?: string;
-      comments?: string;
-      documentId?: number;
-      documentType?: string;
-      documentsList?: DocumentList[]
-      rfqSupplierId?: number;
-      supplierId?: number;
-      supplierName?: string;
+export interface supplierRemarkList {
+  DocumentDesc?: string;
+  DocumentUrl?: string;
+  comments?: string;
+  documentId?: number;
+  documentType?: string;
+  documentsList?: DocumentList[]
+  rfqSupplierId?: number;
+  supplierId?: number;
+  supplierName?: string;
 }
 export interface RfqMaterialList {
   poAvailableQty?: number;

@@ -34,7 +34,8 @@ export class RfqBidsComponent implements OnInit {
   rfqForms: FormGroup;
   rfqId: number;
   orgId: number;
-
+  ratesBaseCurr: boolean = false;
+  mainColor = '#f47721';
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.route.params.subscribe(rfqId => {
