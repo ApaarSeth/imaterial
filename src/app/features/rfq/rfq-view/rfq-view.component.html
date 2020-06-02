@@ -16,7 +16,7 @@
             <label class="text-bold">RFQ End Date: </label>
             {{ rfqDetails.dueDate | date: "dd-MMM-yyy" }}
           </div>
-          <div class="col-xs-4 p-l-0 p-t-20 p-b-25 text-right" *ngIf="rfqDetails.rfqCurrency != null && rfqDetails.rfqCurrency.exchangeCurrencyName != null">
+          <div class="col-xs-4 p-l-0 p-t-10 p-b-25 text-right" *ngIf="rfqDetails.rfqCurrency != null && rfqDetails.rfqCurrency.exchangeCurrencyName != null">
             <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
               <span class="font-size-vary-grn color-grey">
                 <img width="25px" *ngIf="rfqDetails.rfqCurrency.exchangeCurrencyFlag" [src]="rfqDetails.rfqCurrency.exchangeCurrencyFlag" />
