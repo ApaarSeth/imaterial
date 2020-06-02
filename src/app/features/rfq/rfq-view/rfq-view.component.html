@@ -5,16 +5,30 @@
     <div class="row m-b-10">
       <div class="col-md-12">
         <!-- first row -->
-        <div class="row">
-          <div class="col-xs-6 col-md-6">
+        <div class="row p-t-20">
+          <div class="col-xs-4 col-md-4">
             <div class="p-t-10">
               <label class="text-bold">RFQ Name: </label>
               {{ rfqDetails.rfqName }}
             </div>
           </div>
-        <div class="col-xs-6 col-md-6 p-t-10 text-align-right">
+          <div class="col-xs-4 col-md-4 p-t-10 text-left">
             <label class="text-bold">RFQ End Date: </label>
             {{ rfqDetails.dueDate | date: "dd-MMM-yyy" }}
+          </div>
+          <div class="col-xs-4 p-l-0 p-t-20 p-b-25 text-right" *ngIf="rfqDetails.rfqCurrency != null && rfqDetails.rfqCurrency.exchangeCurrencyName != null">
+            <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+              <span class="font-size-vary-grn color-grey">
+                <img width="25px" *ngIf="rfqDetails.rfqCurrency.exchangeCurrencyFlag" [src]="rfqDetails.rfqCurrency.exchangeCurrencyFlag" />
+                {{ rfqDetails.rfqCurrency.exchangeCurrencyName }}
+              </span>
+              <span class="p-l-5"> = </span>
+              <span class="p-l-5 color-6d6a6a color-grey"> {{ rfqDetails.rfqCurrency.exchangeValue }} </span>
+              <span class="p-l-5 color-grey">
+                <img width="25px" *ngIf="rfqDetails.rfqCurrency.primaryCurrencyFlag" [src]="rfqDetails.rfqCurrency.primaryCurrencyFlag" />
+                {{ rfqDetails.rfqCurrency.primaryCurrencyName }}
+              </span>
+            </span>
           </div>
 
           <!-- <div class="col-md-3 p-t-10 main-color">
@@ -71,46 +85,46 @@
 
           <!-- table -->
           <div class="add-unique-container mat-elevation-z8">
-          <table mat-table [dataSource]="project.projectMaterialList">
-            <!-- Material Name Column -->
-            <ng-container matColumnDef="Material Name">
-              <th class="font-size14" mat-header-cell *matHeaderCellDef>Material Name</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.materialName }}
-              </td>
-            </ng-container>
+            <table mat-table [dataSource]="project.projectMaterialList">
+              <!-- Material Name Column -->
+              <ng-container matColumnDef="Material Name">
+                <th class="font-size14" mat-header-cell *matHeaderCellDef>Material Name</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.materialName }}
+                </td>
+              </ng-container>
 
-            <!-- Date Column -->
-            <ng-container matColumnDef="Required Date">
-              <th class="font-size14" mat-header-cell *matHeaderCellDef>Required Date</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.fullfilmentDate | date: "dd-MMM-yyy" }}
-              </td>
-            </ng-container>
+              <!-- Date Column -->
+              <ng-container matColumnDef="Required Date">
+                <th class="font-size14" mat-header-cell *matHeaderCellDef>Required Date</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.fullfilmentDate | date: "dd-MMM-yyy" }}
+                </td>
+              </ng-container>
 
-            <!-- Quantity Column -->
-            <ng-container matColumnDef="Quantity">
-              <th class="font-size14" mat-header-cell *matHeaderCellDef class="text-align-center w-15">Quantity</th>
-              <td mat-cell *matCellDef="let element" class="text-align-center w-15">
-                {{ element.rfqMaterialQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
-              </td>
-            </ng-container>
+              <!-- Quantity Column -->
+              <ng-container matColumnDef="Quantity">
+                <th class="font-size14" mat-header-cell *matHeaderCellDef class="text-align-center w-15">Quantity</th>
+                <td mat-cell *matCellDef="let element" class="text-align-center w-15">
+                  {{ element.rfqMaterialQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
+                </td>
+              </ng-container>
 
-            <!-- Makes Column -->
-            <ng-container matColumnDef="Makes">
-              <th class="font-size14" mat-header-cell *matHeaderCellDef>Makes</th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="element.makes.length">
-                  <span class="brand-view-style m-r-5" *ngFor="let make of element.makes">
-                    {{ make }}
-                  </span>
-                </ng-container>
-              </td>
-            </ng-container>
+              <!-- Makes Column -->
+              <ng-container matColumnDef="Makes">
+                <th class="font-size14" mat-header-cell *matHeaderCellDef>Makes</th>
+                <td mat-cell *matCellDef="let element">
+                  <ng-container *ngIf="element.makes.length">
+                    <span class="brand-view-style m-r-5" *ngFor="let make of element.makes">
+                      {{ make }}
+                    </span>
+                  </ng-container>
+                </td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
           </div>
         </mat-expansion-panel>
       </ng-template>

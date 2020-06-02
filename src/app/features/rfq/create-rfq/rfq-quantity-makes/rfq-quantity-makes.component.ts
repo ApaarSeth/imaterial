@@ -50,6 +50,7 @@ export class RfqQuantityMakesComponent implements OnInit {
     "Makes"
   ];
   rfqId: any;
+  startDate: Date;
   rfqData: AddRFQ;
   message: string;
   lastupdateValue: any;
@@ -67,6 +68,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.startDate = new Date();
     this.rfqData = {
       id: null,
       status: null,
@@ -134,14 +136,43 @@ export class RfqQuantityMakesComponent implements OnInit {
         });
       })
       .flat();
-    this.materialForms = this.formBuilder.group({});
-    this.materialForms.addControl("forms", new FormArray(frmArr));
+    this.materialForms = this.formBuilder.group(
+      { forms: this.formBuilder.array(frmArr) }
+
+    );
+    //  this.materialForms.addControl("forms", new FormArray(frmArr));
     this.materialForms.valueChanges.subscribe(val => {
-      this.valid = val.forms.some(mat => {
-        return mat.quantity > 0;
-      })
-    });
+      console.log(this.materialForms)
+    })
   }
+
+  getMaterialLength(): ValidatorFn {
+    return (formGroup: FormGroup): { [key: string]: boolean } | null => {
+      let checked = false;
+      checked = (<FormArray>formGroup.get('forms')).controls.every((val: FormGroup) => {
+        return Number(val.value.quantity) > 0
+      })
+      // for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {
+      //   const control: FormArray = (<FormArray>formGroup.get('forms')).controls[key] as FormArray;
+      //   checked = control.value.quantity > 0
+      //   if (checked) {
+      //     break;
+      //   }
+      // }
+      // if (control.value) {
+      //   checked++;
+      // }
+
+      if (!checked) {
+        return {
+          requireCheckboxToBeChecked: true,
+        };
+      }
+
+      return null;
+    };
+  }
+
 
   quantityCheck(estimatedQty: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -246,15 +277,15 @@ export class RfqQuantityMakesComponent implements OnInit {
     }
   }
 
-  selectCurrency(){
+  selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
-      disableClose: true ,
+      disableClose: true,
       width: "600px",
-      data : this.rfqData.rfqCurrency
+      data: this.rfqData.rfqCurrency
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if(data != null){
+      if (data != null) {
         this.rfqData.rfqCurrency = data;
       }
     });
