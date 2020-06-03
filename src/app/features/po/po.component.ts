@@ -180,7 +180,7 @@ export class PoComponent implements OnInit {
       poNumber: this.poCard.getData().orderNo,
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
-
+      purchaseOrderCurrency: null,
       DocumentsList: this.poDocument.getData(),
       Terms: {
         termsDesc: this.poTerms.value['textArea'],

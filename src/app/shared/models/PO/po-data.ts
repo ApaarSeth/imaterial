@@ -13,6 +13,7 @@ export interface POData {
   poValidUpto: string;
   DocumentsList: DocumentList[];
   Terms: terms;
+  purchaseOrderCurrency: PurchaseOrderCurrency;
   comments: string;
   projectId: number;
   approverId?: number;
@@ -21,6 +22,24 @@ export interface POData {
   poStatusChangedOn?: string;
   approverName?: string;
   roleDescription?: string;
+}
+
+export interface PurchaseOrderCurrency {
+  UserId: string
+  exchangeCurrencyId: number;
+  exchangeCurrencyName: string;
+  exchangeCurrencyFlag: string;
+  exchangeCountryId: string;
+  exchangeCurrency: string;
+  exchangeCurrencySymbol: string;
+  exchangeValue: number;
+  primaryCurrencyId: number;
+  primaryCurrencyName: string;
+  primaryContryId: string;
+  primaryCurrency: string;
+  primaryCurrencySymbol: string;
+  primaryCurrencyFlag: string;
+  purchaseOrderId: 0
 }
 export interface PoMaterial {
   materialId: number;
