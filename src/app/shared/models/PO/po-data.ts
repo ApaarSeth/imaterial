@@ -1,4 +1,4 @@
-import { RfqMaterialResponse } from '../RFQ/rfq-details';
+import { RfqMaterialResponse, rfqCurrency } from '../RFQ/rfq-details';
 import { Suppliers } from '../RFQ/suppliers';
 
 export interface POData {
@@ -218,6 +218,7 @@ export interface poApproveReject {
 export interface initiatePoData {
   selectedMaterial: RfqMaterialResponse[],
   selectedSupplier: Suppliers
+  poCurrency: rfqCurrency
 }
 export interface DownloadData {
   fileName?: string;

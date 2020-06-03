@@ -1,4 +1,4 @@
-<div class="row ">
+<div class="row">
   <div class="col-xs-6">
     <mat-form-field class="example-form-field border-input p-l-20 border-input p-r-20">
       <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
@@ -17,7 +17,7 @@
         </mat-form-field> -->
     </span>
     <span class="p-r-5">
-      <span class=" m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer" (click)="openSupplierDialog()">
+      <span class="m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer" (click)="openSupplierDialog()">
         <span class="font-size20">
           +
         </span>
@@ -27,9 +27,24 @@
       </span>
     </span>
     <span>
+      <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
       <button [disabled]="!form.valid" mat-raised-button matStepperNext (click)="choosenSupplier()" class="main-background-color main-button color-white">
         Next
       </button>
+    </span>
+  </div>
+  <div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
+    <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+      <span class="font-size-vary-grn color-grey">
+        <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
+        {{ poCurrency.exchangeCurrencyName }}
+      </span>
+      <span class="p-l-5"> = </span>
+      <span class="p-l-5 color-6d6a6a color-grey"> {{ poCurrency.exchangeValue }} </span>
+      <span class="p-l-5 color-grey">
+        <img width="25px" *ngIf="poCurrency.primaryCurrencyFlag" [src]="poCurrency.primaryCurrencyFlag" />
+        {{ poCurrency.primaryCurrencyName }}
+      </span>
     </span>
   </div>
 </div>
