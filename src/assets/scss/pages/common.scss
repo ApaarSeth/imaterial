@@ -183,3 +183,10 @@ div.limited-character.universal {
     padding-bottom: 3px !important;
   }
 }
+
+.slideToggalColor {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar,
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: $main-color !important;
+  }
+}
