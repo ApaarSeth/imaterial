@@ -116,7 +116,7 @@ export class AddEditUserComponent implements OnInit {
 
     userDetails.creatorId = this.userId;
     userDetails.projects = userDetails.projectIds;
-    userDetails.countryId = '+91';
+    userDetails.countryCode = '+91';
 
     var form_data = new FormData();
 
