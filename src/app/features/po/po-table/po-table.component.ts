@@ -16,7 +16,7 @@ import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 })
 export class PoTableComponent implements OnInit, OnDestroy {
   @Input("poTableData") poTableData: PoMaterial[];
-  @Input("purchaseOrderCurrency") purchaseOrderCurrency: PurchaseOrderCurrency;
+  @Input("purchaseOrderCurrency") currency: { isInternational: number, purchaseOrderCurrency: PurchaseOrderCurrency };
   @Input("mode") modes: string;
   @Output("QuantityAmountValidation") QuantityAmountValidation = new EventEmitter();
   gst: string = '';
@@ -31,6 +31,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   a: number = 0;
   subscriptions: Subscription[] = [];
   minDate = new Date();
+  isInternational: number;
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
@@ -40,7 +41,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(): void {
-    this.poCurrency = this.purchaseOrderCurrency
+    this.isInternational = this.currency.isInternational;
+    this.poCurrency = this.currency.purchaseOrderCurrency
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
 

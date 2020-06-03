@@ -22,6 +22,7 @@ import { ProjectItemComponent } from 'src/app/shared/components/project-item/pro
   templateUrl: "./rfq-bids.component.html"
 })
 export class RfqBidsComponent implements OnInit {
+
   constructor(
     private router: Router,
     private rfqService: RFQService,
@@ -31,6 +32,7 @@ export class RfqBidsComponent implements OnInit {
     private navService: AppNavigationService,
     private _snackBar: MatSnackBar
   ) { }
+
   rfqProjects: RfqProject[] = [];
   rfqForms: FormGroup;
   rfqId: number;
@@ -140,8 +142,8 @@ export class RfqBidsComponent implements OnInit {
                     materialSgst: sup.materialSgst,
                     materialCgst: sup.materialCgst,
                     materialIgst: sup.materialIgst,
-                    taxInfo: mat.taxInfo,
-                    otherTaxInfo: mat.otherTaxInfo
+                    taxInfo: [mat.taxInfo],
+                    otherTaxInfo: [mat.otherTaxInfo]
                   };
                 });
               });

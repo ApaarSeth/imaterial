@@ -1,19 +1,22 @@
 <div class="row" *ngIf="!showResponsiveDesign">
   <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="mode === 'edit'">
-    <div *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null; else elseBlock">
-      <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
-        <span class="font-size-vary-grn color-grey">
-          <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
-          {{ poCurrency.exchangeCurrencyName }}
+    <div *ngIf="isInternational; else elseBlock">
+      <div *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
+        <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+          <span class="font-size-vary-grn color-grey">
+            <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
+            {{ poCurrency.exchangeCurrencyName }}
+          </span>
+          <span class="p-l-5"> = </span>
+          <span class="p-l-5 color-6d6a6a color-grey"> {{ poCurrency.exchangeValue }} </span>
+          <span class="p-l-5 color-grey">
+            <img width="25px" *ngIf="poCurrency.primaryCurrencyFlag" [src]="poCurrency.primaryCurrencyFlag" />
+            {{ poCurrency.primaryCurrencyName }}
+          </span>
         </span>
-        <span class="p-l-5"> = </span>
-        <span class="p-l-5 color-6d6a6a color-grey"> {{ poCurrency.exchangeValue }} </span>
-        <span class="p-l-5 color-grey">
-          <img width="25px" *ngIf="poCurrency.primaryCurrencyFlag" [src]="poCurrency.primaryCurrencyFlag" />
-          {{ poCurrency.primaryCurrencyName }}
-        </span>
-      </span>
+      </div>
     </div>
+
     <ng-template #elseBlock>
       <mat-radio-group *ngIf="poCurrency && poCurrency.exchangeCurrencyName == null" class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
         <mat-radio-button [checked]="gst === 'IGST'" value="IGST" class="p-r-5">IGST</mat-radio-button>

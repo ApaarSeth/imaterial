@@ -7,7 +7,8 @@ import {
   poApproveReject,
   DocumentList,
   terms,
-  DownloadData
+  DownloadData,
+  PurchaseOrderCurrency
 } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
@@ -92,6 +93,7 @@ export class PoComponent implements OnInit {
     ],
 
   };
+  currency: { isInternational: number, purchaseOrderCurrency: PurchaseOrderCurrency }
 
   constructor(
     private router: Router,
@@ -118,6 +120,7 @@ export class PoComponent implements OnInit {
     this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
       this.tableData = this.poData.materialData;
+      this.currency = { isInternational: this.poData.isInternational, purchaseOrderCurrency: this.poData.purchaseOrderCurrency }
       this.cardData = {
         supplierAddress: this.poData.supplierAddress,
         projectAddress: this.poData.projectAddress,
@@ -181,6 +184,7 @@ export class PoComponent implements OnInit {
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
       purchaseOrderCurrency: null,
+      isInternational: 0,
       DocumentsList: this.poDocument.getData(),
       Terms: {
         termsDesc: this.poTerms.value['textArea'],

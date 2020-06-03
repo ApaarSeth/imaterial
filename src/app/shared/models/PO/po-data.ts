@@ -22,6 +22,7 @@ export interface POData {
   poStatusChangedOn?: string;
   approverName?: string;
   roleDescription?: string;
+  isInternational: number;
 }
 
 export interface PurchaseOrderCurrency {
