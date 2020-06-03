@@ -25,6 +25,7 @@ import {
   MatSnackBarModule,
   MatSortModule,
   MatBadgeModule,
+  MatSlideToggleModule,
   MatAutocompleteModule
 } from "@angular/material";
 
@@ -54,7 +55,8 @@ import {
     MatSnackBarModule,
     MatSortModule,
     MatBadgeModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSlideToggleModule
   ]
 })
 export class MaterialModule { }

@@ -29,7 +29,7 @@
                 <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
               </mat-form-field>
             </div> -->
-            <div class="col-xs-6 date-dialog-add-edit p-t-6">
+            <div class="col-xs-6 date-dialog-add-edit p-t-5">
               <!-- end date -->
               <mat-form-field class="border-input">
                 <mat-label>RFQ End Date*</mat-label>
@@ -50,7 +50,17 @@
                   View Terms & Conditions/Documents
                 </button>
               </div> -->
-            <div class="col-xs-3 p-t-20 p-b-20 text-right" *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null">
+            <div class="col xs-1 text-right p-t-10 p-r-0" *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null">
+              <div class="info p-t-10 p-l-55">
+                <mat-icon class="material-info-padding round-button color-white main-background-color">info</mat-icon>
+                <div id="infoIcon">
+                  <div class="row text-center color-grey text-semi-bold width-110-px">
+                    Supplier will have to submit the quote in this selected currency
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-2 p-l-0 p-t-20 p-b-20 text-right" *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null">
               <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
                 <span class="font-size-vary-grn color-grey">
                   <img width="25px" *ngIf="finalRfq.rfqCurrency.exchangeCurrencyFlag" [src]="finalRfq.rfqCurrency.exchangeCurrencyFlag" />
@@ -64,6 +74,7 @@
                 </span>
               </span>
             </div>
+
             <!-- <div class="col-xs-3 select-currency p-t-10 p-b-10" *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName">
               <div class="base-currency">
                 <span class="text-semi-bold font-size-vary-grn color-6d6a6a">

@@ -22,7 +22,7 @@
         <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="materialAdded()" type="button">Back</button>
       </span>
       <span>
-        <button mat-raised-button matStepperNext [disabled]="!valid" (click)="materialAdded()" class="main-background-color main-button color-white">
+        <button mat-raised-button matStepperNext [disabled]="!materialForms.valid" (click)="materialAdded()" class="main-background-color main-button color-white">
           Next
         </button>
       </span>
@@ -89,9 +89,9 @@
                     materialForms["controls"]["forms"]["controls"][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]["controls"]["fullfilmentDate"].value
                       | date: "dd-MMM-yyy"
                   }}</span> -->
-                  <input matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" [min]="minDate" readonly />
+                  <input matInput [min]="startDate" [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" readonly />
                   <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
-                  <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
+                  <mat-datepicker #dueDate startView="month" [startAt]="startDate"></mat-datepicker>
                 </mat-form-field>
               </td>
             </ng-container>

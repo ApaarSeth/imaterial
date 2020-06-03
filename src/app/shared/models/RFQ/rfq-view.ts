@@ -1,4 +1,5 @@
-import { Address } from './rfq-details';
+import { Address, rfqCurrency } from './rfq-details';
+import { Currency } from '../currency';
 
 export interface Rfq {
     rfqName: string,
@@ -9,6 +10,7 @@ export interface Rfq {
     rfqProjectsList: RfqProjects[],
     documentsList: Documents[],
     terms: TermsObj
+    rfqCurrency: rfqCurrency;
 }
 
 export interface RfqProjects {

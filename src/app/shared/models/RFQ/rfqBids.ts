@@ -1,4 +1,6 @@
 import { DocumentList } from '../PO/po-data';
+import { rfqCurrency } from './rfq-details';
+import { Currency } from '../currency';
 
 export interface RfqProjects {
   rfqProjects: RfqProject[];
@@ -14,6 +16,8 @@ export interface RfqProjectSubmit {
   supplierName: string;
   rfqId: number;
   materialList: MaterialListSubmit[];
+  rfqCurrency: Currency
+  rfqOtherCostInfo: RfqOtherCostInfo
 }
 
 export interface MaterialListSubmit {
@@ -48,6 +52,7 @@ export interface RfqProject {
   status: number;
   createdBy: string;
   createdAt: string;
+  rfqCurrency: rfqCurrency;
   lowStockMaterialCount: string;
   purchaseOrderCount: string;
   purchaseOrderCost: string;
@@ -61,19 +66,47 @@ export interface RfqProject {
   unit: null;
   materialList: RfqMaterialList[];
   supplierRemarkList: supplierRemarkList[];
+  rfqOtherCostInfo: RfqOtherCostInfo;
 }
-export interface supplierRemarkList{
-      DocumentDesc?: string; 
-      DocumentUrl?: string;
-      comments?: string;
-      documentId?: number;
-      documentType?: string;
-      documentsList?: DocumentList[]
-      rfqSupplierId?: number;
-      supplierId?: number;
-      supplierName?: string;
+
+export interface RfqOtherCostInfo {
+  supplierId: number,
+  rfqSupplierId: number,
+  otherCostAmount: number,
+  otherCostId: number,
+  otherCostName: string
 }
+export interface supplierRemarkList {
+  DocumentDesc?: string;
+  DocumentUrl?: string;
+  comments?: string;
+  documentId?: number;
+  documentType?: string;
+  documentsList?: DocumentList[]
+  rfqSupplierId?: number;
+  supplierId?: number;
+  supplierName?: string;
+}
+export interface RfqTaxInfo {
+  rfqSupplierDetailTaxId: number,
+  rfqSupplierDetailId: number,
+  taxValue: number,
+  taxAmount: number,
+  taxId: number,
+  taxName: string
+}
+
+export interface OtherCostInfo {
+  rfqSupplierDetailOtherCostId: number,
+  rfqSupplierDetailId: number,
+  otherCostAmount: number,
+  otherCostId: number,
+  otherCostName: string
+}
+
 export interface RfqMaterialList {
+  taxInfo?: RfqTaxInfo[];
+  otherCostInfo?: OtherCostInfo[];
   poAvailableQty?: number;
   id: number;
   status: number;
