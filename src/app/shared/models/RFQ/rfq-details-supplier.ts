@@ -8,6 +8,7 @@ export interface SendRfqObj {
   terms?: any;
   DocumentsList?: DocumentList[];
   isInternational?: number;
+  rfqCurrency: any;
 }
 export interface ProjectRfqObj {
   projectId: number;
@@ -47,4 +48,11 @@ export interface BrandRfqObj {
   validBrand?: boolean;
   rfqDetailId: number;
   tempRate?: number;
+}
+
+export interface TaxAndOtherCost {
+  organizationId: number;
+  rfqId: number;
+  otherCostInfo: any;
+  taxInfo: any;
 }
