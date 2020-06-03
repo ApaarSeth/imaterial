@@ -53,8 +53,8 @@ export class RFQSupplierDetailComponent implements OnInit {
   filesRemoved: boolean;
   documentList: DocumentList[] = [];
   documentsName: string[] = [];
-  taxAndCostData = {};
-  otherCostData = {};
+  taxAndCostData: any = {};
+  otherCostData: any = {};
 
   constructor(
     public dialog: MatDialog,
