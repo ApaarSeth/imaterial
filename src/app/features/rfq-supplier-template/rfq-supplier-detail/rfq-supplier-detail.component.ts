@@ -13,6 +13,8 @@ import { DocumentList } from 'src/app/shared/models/PO/po-data';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { RFQDocumentsComponent } from '../rfq-bid-documents/rfq-bid-documents.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
+import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 @Component({
   selector: "rfq-indent-detail",
   templateUrl: "./rfq-supplier-detail.component.html"
@@ -51,6 +53,8 @@ export class RFQSupplierDetailComponent implements OnInit {
   filesRemoved: boolean;
   documentList: DocumentList[] = [];
   documentsName: string[] = [];
+  taxAndCostData = {};
+  otherCostData = {};
 
   constructor(
     public dialog: MatDialog,
@@ -78,7 +82,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     defaultParagraphSeparator: 'p',
     defaultFontName: 'Arial',
     toolbarHiddenButtons: [
-      ['backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript']
+      [ 'backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript' ]
     ],
 
   };
@@ -88,13 +92,13 @@ export class RFQSupplierDetailComponent implements OnInit {
 
     this.rfqService
       .getRFQDetailSupplier(
-        this.activatedRoute.snapshot.params["rfqId"],
-        this.activatedRoute.snapshot.params["supplierId"]
+        this.activatedRoute.snapshot.params[ "rfqId" ],
+        this.activatedRoute.snapshot.params[ "supplierId" ]
       )
       .then(data => {
 
         if (data.data.rfqSupplierBidFlag === 1) {
-          this.router.navigate(['/rfq-bids/finish']);
+          this.router.navigate([ '/rfq-bids/finish' ]);
         }
 
         this.rfqSupplierDetailList = data.data;
@@ -103,29 +107,37 @@ export class RFQSupplierDetailComponent implements OnInit {
           this.rfqSupplierDetailList.projectList.forEach(element => {
             this.materialCount =
               this.materialCount + element.materialList.length;
-            if (
-              element.gst == null ||
-              element.gst == undefined ||
-              element.gst == ""
-            ) {
-              element.gst = "IGST";
+
+            if (this.rfqSupplierDetailList.isInternational === 0) {
+              if (
+                element.gst == null ||
+                element.gst == undefined ||
+                element.gst == ""
+              ) {
+                element.gst = "IGST";
+              }
             }
+
           });
         }
 
         for (let project of this.rfqSupplierDetailList.projectList) {
           for (let material of project.materialList) {
-            material.validGst = true;
-            if (material.materialIgst == 0) {
-              material.Igst = material.materialCgst + material.materialSgst;
-              if (material.Igst == 0)
-                material.Igst = null
+
+            if (this.rfqSupplierDetailList.isInternational === 0) {
+              material.validGst = true;
+              if (material.materialIgst == 0) {
+                material.Igst = material.materialCgst + material.materialSgst;
+                if (material.Igst == 0)
+                  material.Igst = null
+              }
+              else {
+                material.Igst = material.materialIgst;
+                if (material.Igst == 0)
+                  material.Igst = null
+              }
             }
-            else {
-              material.Igst = material.materialIgst;
-              if (material.Igst == 0)
-                material.Igst = null
-            }
+
             for (let brand of material.rfqBrandList) {
               brand.validBrand = true;
               if (brand.brandRate == 0) {
@@ -142,7 +154,29 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
 
   postRFQDetailSupplier(rfqSupplierObj) {
-    this.submitBid(rfqSupplierObj);
+    if (this.rfqSupplierDetailList.isInternational === 1) {
+      rfqSupplierObj.projectList.forEach(itm => {
+        if (this.taxAndCostData.hasOwnProperty(itm.projectId)) {
+          itm = this.updateItemTaxInfo(itm);
+        }
+      });
+      if (Object.keys(this.otherCostData).length && this.otherCostData.hasOwnProperty('otherCostInfo')) {
+        rfqSupplierObj.otherCostRfqList = this.otherCostData[ 'otherCostInfo' ];
+      }
+      this.submitBidInternational(rfqSupplierObj);
+    } else {
+      this.submitBid(rfqSupplierObj);
+    }
+  }
+
+  updateItemTaxInfo(item) {
+    item.materialList.forEach(itm => {
+      if (this.taxAndCostData[ item.projectId ].hasOwnProperty(itm.materialId)) {
+        itm.taxInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ].taxInfo;
+        itm.otherCostInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ].otherCostInfo;
+      }
+    });
+    return item;
   }
 
   submitBid(rfqSupplierObj) {
@@ -161,12 +195,38 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
-    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
-    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
+    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
+    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
+    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
     //console.log(rfqSupplierObj);
+    this.router.navigate([
+      "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
+    ], { state: { supplierId, rfqSupplierObj } });
+
+  }
+
+  submitBidInternational(rfqSupplierObj) {
+    rfqSupplierObj.projectList = rfqSupplierObj.projectList.map(rfqSupplier => {
+      rfqSupplier.materialList.map(material => {
+        material.rfqBrandList.map(brand => {
+          brand.brandRate = Number(brand.brandRate);
+          brand.tempRate = Number(brand.tempRate);
+          return brand
+        })
+        return material;
+      })
+      return rfqSupplier;
+    })
+    rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
+    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
+    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
+    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
+    rfqSupplierObj.rfqId = rfqId;
+    rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
+    //console.log(rfqSupplierObj);
+
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });
@@ -229,10 +289,18 @@ export class RFQSupplierDetailComponent implements OnInit {
       this.submitButtonValidationFlag = false;
     }
 
-    if (this.dudateFlag && this.sameGstAndBrandFilled && !this.eitherOneGstOrBrand) {
-      this.submitButtonValidationFlag = true;
+    if (this.rfqSupplierDetailList.isInternational === 0) {
+      if (this.dudateFlag && this.sameGstAndBrandFilled && !this.eitherOneGstOrBrand) {
+        this.submitButtonValidationFlag = true;
+      } else {
+        this.submitButtonValidationFlag = false;
+      }
     } else {
-      this.submitButtonValidationFlag = false;
+      if (this.dudateFlag && this.eitherOneValidInMaterial) {
+        this.submitButtonValidationFlag = true;
+      } else {
+        this.submitButtonValidationFlag = false;
+      }
     }
   }
 
@@ -267,33 +335,38 @@ export class RFQSupplierDetailComponent implements OnInit {
 
         // material.materialSgst = 0;
         // material.materialCgst = 0;
-        material.materialIgst = material.Igst;
-        if (project.gst == "IGST") {
-          material.materialIgst = material.materialIgst;
-          material.materialSgst = 0;
-          material.materialCgst = 0;
 
-        } else if (project.gst == "CGST-SGST") {
-          material.materialGst = material.materialIgst;
-          material.materialSgst = material.materialGst / 2;
-          material.materialCgst = material.materialGst / 2;
-          material.materialIgst = 0;
-        }
-        if (material.Igst != null && material.Igst.toString() == '') {
-          material.Igst = null;
-        }
-        if (material.Igst >= 0 && material.Igst != null) {
-          if (material.Igst.toString().match(FieldRegExConst.RATES)) {
-            material.validGst = true;
-            this.gstValid = true;
+        if (this.rfqSupplierDetailList.isInternational === 0) {
+          material.materialIgst = material.Igst;
+          if (project.gst == "IGST") {
+            material.materialIgst = material.materialIgst;
+            material.materialSgst = 0;
+            material.materialCgst = 0;
+
+          } else if (project.gst == "CGST-SGST") {
+            material.materialGst = material.materialIgst;
+            material.materialSgst = material.materialGst / 2;
+            material.materialCgst = material.materialGst / 2;
+            material.materialIgst = 0;
           }
-          else {
-            material.validGst = false;
-            this.gstValid = false;
+          if (material.Igst != null && material.Igst.toString() == '') {
+            material.Igst = null;
           }
-          material.materialIGSTFlag = true;
-          this.materialIGSTFlag = material.materialIGSTFlag;
-          this.materialIndividualIGSTFlag = material.materialIGSTFlag;
+          if (material.Igst >= 0 && material.Igst != null) {
+            if (material.Igst.toString().match(FieldRegExConst.RATES)) {
+              material.validGst = true;
+              this.gstValid = true;
+            }
+            else {
+              material.validGst = false;
+              this.gstValid = false;
+            }
+            material.materialIGSTFlag = true;
+            this.materialIGSTFlag = material.materialIGSTFlag;
+            this.materialIndividualIGSTFlag = material.materialIGSTFlag;
+          }
+        } else {
+          this.materialIndividualIGSTFlag = true;
         }
 
 
@@ -316,38 +389,55 @@ export class RFQSupplierDetailComponent implements OnInit {
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
           }
 
-          if ((brand == material.rfqBrandList[material.rfqBrandList.length - 1])) {
-            if (this.materialIndividualIGSTFlag && this.brandRateFlag) {
-              this.sameGstAndBrandFilled = true;
-            } else if (this.materialIndividualIGSTFlag && !this.brandRateFlag) {
-              this.brandNotMatchedCount++;
-              this.sameGstAndBrandFilled = false;
-              this.eitherOneGstOrBrand = true;
-            } else if (!this.materialIndividualIGSTFlag && this.brandRateFlag) {
-              this.brandNotMatchedCount++;
-              this.sameGstAndBrandFilled = false;
-              this.eitherOneGstOrBrand = true;
+          if ((brand == material.rfqBrandList[ material.rfqBrandList.length - 1 ])) {
+
+            if (this.rfqSupplierDetailList.isInternational === 0) {
+
+              if (this.materialIndividualIGSTFlag && this.brandRateFlag) {
+                this.sameGstAndBrandFilled = true;
+              } else if (this.materialIndividualIGSTFlag && !this.brandRateFlag) {
+                this.brandNotMatchedCount++;
+                this.sameGstAndBrandFilled = false;
+                this.eitherOneGstOrBrand = true;
+              } else if (!this.materialIndividualIGSTFlag && this.brandRateFlag) {
+                this.brandNotMatchedCount++;
+                this.sameGstAndBrandFilled = false;
+                this.eitherOneGstOrBrand = true;
+              }
+              if (this.gstValid && this.rateValid) {
+                this.ALLVALID = true;
+              }
+              else if (!this.gstValid || !this.rateValid) {
+                this.ALLVALID = false;
+                this.eitherOneValidInMaterial = true;
+              }
+
+            } else {
+
+              if (this.brandRateFlag) {
+                this.ALLVALID = true;
+                this.eitherOneValidInMaterial = true;
+              }
+
             }
-            if (this.gstValid && this.rateValid) {
-              this.ALLVALID = true;
-            }
-            else if (!this.gstValid || !this.rateValid) {
-              this.ALLVALID = false;
-              this.eitherOneValidInMaterial = true;
-            }
+
           }
         }
 
         if (this.brandRateFlag && this.materialIndividualIGSTFlag) {
           this.gstAndBrandValue = true;
-          this.materialIndividualIGSTFlag = false;
+          if (this.rfqSupplierDetailList.isInternational === 0) {
+            this.materialIndividualIGSTFlag = false;
+          }
           this.brandRateFlag = false;
 
         } else {
           this.gstAndBrandValue = false;
           this.brandRateFlag = false;
           this.materialIGSTFlag = false;
-          this.materialIndividualIGSTFlag = false;
+          if (this.rfqSupplierDetailList.isInternational === 0) {
+            this.materialIndividualIGSTFlag = false;
+          }
         }
         if (this.oneBrandAtMaterialSelected) {
           this.brandCount++;
@@ -362,8 +452,55 @@ export class RFQSupplierDetailComponent implements OnInit {
       !this.eitherOneGstOrBrand && this.ALLVALID && !this.eitherOneValidInMaterial
     ) {
       this.submitButtonValidationFlag = true;
+    } else {
+      if (this.rfqSupplierDetailList.isInternational === 1) {
+        this.submitButtonValidationFlag = true;
+      }
     }
 
+  }
+
+  // taking tax and cost on item and on total item using dialog
+  openTaxesCostsDialog(type: string, pId?: number, mId?: number) {
+    const dialogRef = this.dialog.open(TaxCostComponent, {
+      width: "600px",
+      data: {
+        type,
+        rfqId: Number(this.activatedRoute.snapshot.params[ "rfqId" ])
+      }
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (type === 'texesAndCost') {
+        if (!this.taxAndCostData.hasOwnProperty(pId)) {
+          this.taxAndCostData[ pId ] = {};
+        }
+        this.taxAndCostData[ pId ][ mId ] = res;
+      }
+      if (type === 'otherCost') {
+        this.otherCostData = res;
+      }
+    });
+  }
+
+  // getting taxInfo total in ui
+  getTaxInfototal(data: any[]) {
+    let itmData = [];
+    data.forEach(itm => {
+      itmData.push(itm.taxValue);
+    });
+    return (itmData.reduce(this.getSum) / 100);
+  }
+
+  // getting other cost info total in ui
+  getotherCostInfoTotal(data: any[]) {
+    let itmData = [];
+    data.forEach(itm => {
+      itmData.push(itm.otherCostAmount);
+    });
+    return itmData.reduce(this.getSum);
+  }
+  getSum(total, num) {
+    return total + num;
   }
 
 }
