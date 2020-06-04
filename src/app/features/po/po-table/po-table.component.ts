@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild, Output, EventEmitter, HostListener } from "@angular/core";
-import { PoMaterial, PurchaseOrder } from "src/app/shared/models/PO/po-data";
+import { PoMaterial, PurchaseOrder, PurchaseOrderCurrency } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
 import { ignoreElements, debounceTime } from "rxjs/operators";
 import { Subscription, combineLatest } from "rxjs";
@@ -8,6 +8,7 @@ import { POService } from "src/app/shared/services/po/po.service";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { MatSnackBar } from '@angular/material';
+import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 
 @Component({
   selector: "app-po-table",
@@ -15,12 +16,13 @@ import { MatSnackBar } from '@angular/material';
 })
 export class PoTableComponent implements OnInit, OnDestroy {
   @Input("poTableData") poTableData: PoMaterial[];
+  @Input("purchaseOrderCurrency") currency: { isInternational: number, purchaseOrderCurrency: PurchaseOrderCurrency };
   @Input("mode") modes: string;
   @Output("QuantityAmountValidation") QuantityAmountValidation = new EventEmitter();
   gst: string = '';
   words: string = "";
   showResponsiveDesign: boolean;
-
+  poCurrency: PurchaseOrderCurrency
   constructor(private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
   poForms: FormGroup;
   mode: string;
@@ -29,12 +31,21 @@ export class PoTableComponent implements OnInit, OnDestroy {
   a: number = 0;
   subscriptions: Subscription[] = [];
   minDate = new Date();
+  isInternational: number;
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
       this.mode = params.mode;
     });
     this.formInit();
+  }
+
+  ngOnChanges(): void {
+    this.isInternational = this.currency.isInternational;
+    this.poCurrency = this.currency.purchaseOrderCurrency
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+
   }
   formInit() {
     const frmArr: FormGroup[] = this.poTableData.map((poMaterial: PoMaterial, i) => {
