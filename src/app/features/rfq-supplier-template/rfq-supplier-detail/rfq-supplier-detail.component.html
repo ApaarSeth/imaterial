@@ -136,7 +136,8 @@
                   {{ material.materialUnit }}
                 </td>
                 <td class="font-size14">Required Date : {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</td>
-                <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName">
+                <ng-container
+                  *ngIf="rfqSupplierDetailList.rfqCurrency && rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName">
                   <td class="font-size14">
                     <ng-container
                       *ngIf="taxAndCostData && taxAndCostData[projects.projectId] && taxAndCostData[projects.projectId][material.materialId] && taxAndCostData[projects.projectId][material.materialId].otherCostInfo && taxAndCostData[projects.projectId][material.materialId].otherCostInfo.length">
@@ -224,7 +225,7 @@
                         <div class="tooltip-table">
                           <p class="row mb-1"
                             *ngFor="let tInfo of taxAndCostData[projects.projectId][material.materialId].taxInfo">
-                            <strong class="col">{{tInfo.taxName}}</strong><span class="col">{{tInfo.taxValue}}</span>
+                            <strong class="col">{{tInfo.taxName}}</strong><span class="col">{{tInfo.taxValue}}%</span>
                           </p>
                         </div>
                       </span>

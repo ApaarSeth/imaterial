@@ -449,7 +449,12 @@ export class RFQSupplierDetailComponent implements OnInit {
       this.submitButtonValidationFlag = true;
     } else {
       if (this.rfqSupplierDetailList.isInternational === 1) {
-        this.submitButtonValidationFlag = true;
+
+        if (this.dudateFlag && this.eitherOneValidInMaterial) {
+          this.submitButtonValidationFlag = true;
+        } else {
+          this.submitButtonValidationFlag = false;
+        }
       }
     }
 
