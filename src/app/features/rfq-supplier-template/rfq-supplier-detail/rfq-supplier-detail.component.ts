@@ -96,20 +96,16 @@ export class RFQSupplierDetailComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.rfqService
       .getRFQDetailSupplier(
         this.activatedRoute.snapshot.params[ "rfqId" ],
         this.activatedRoute.snapshot.params[ "supplierId" ]
       )
       .then(data => {
-
         if (data.data.rfqSupplierBidFlag === 1) {
           this.router.navigate([ '/rfq-bids/finish' ]);
         }
-
         this.rfqSupplierDetailList = data.data;
-
         if (this.rfqSupplierDetailList.projectList) {
           this.rfqSupplierDetailList.projectList.forEach(element => {
             this.materialCount =
@@ -127,7 +123,6 @@ export class RFQSupplierDetailComponent implements OnInit {
 
           });
         }
-
         for (let project of this.rfqSupplierDetailList.projectList) {
           for (let material of project.materialList) {
 

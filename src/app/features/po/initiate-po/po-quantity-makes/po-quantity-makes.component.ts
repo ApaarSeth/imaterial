@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter } from "@angular/core";
-import { RfqMaterialResponse, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
+import { RfqMaterialResponse, RfqMat, rfqCurrency } from "src/app/shared/models/RFQ/rfq-details";
 import { FormBuilder, Validators, FormGroup, FormArray, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { initiatePo, initiatePoData } from "src/app/shared/models/PO/po-data";
@@ -9,7 +9,8 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { isPlatformBrowser } from "@angular/common";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 
 @Component({
@@ -25,11 +26,13 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   materialForms: FormGroup;
   minDate = new Date();
   checkedMaterialsList: RfqMaterialResponse[];
-  constructor(private commonService: CommonService, private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
+  poCurrency: rfqCurrency;
+  constructor(private dialog: MatDialog, private commonService: CommonService, private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
 
   ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.poCurrency = this.poData && this.poData.poCurrency;
     if (this.poData)
       this.checkedMaterialsList = [...this.poData.selectedMaterial];
     if (this.checkedMaterialsList) {
@@ -135,9 +138,24 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
     })
     const poData: initiatePoData = {
       selectedMaterial: this.poData.selectedMaterial,
-      selectedSupplier: this.poData.selectedSupplier
+      selectedSupplier: this.poData.selectedSupplier,
+      poCurrency: this.poCurrency
     }
     this.finalPoData.emit(poData)
+  }
+
+  selectCurrency() {
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true,
+      width: "500px",
+      data: this.poCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != null) {
+        this.poCurrency = data;
+      }
+    });
   }
 
 

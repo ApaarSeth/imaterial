@@ -6,9 +6,10 @@ import { FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { POService } from "src/app/shared/services/po/po.service";
 import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
-import { RfqMaterialResponse, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
+import { RfqMaterialResponse, RfqMat, rfqCurrency } from "src/app/shared/models/RFQ/rfq-details";
 import { initiatePoData } from 'src/app/shared/models/PO/po-data';
-import { MatCheckbox } from "@angular/material";
+import { MatCheckbox, MatDialog } from "@angular/material";
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 @Component({
   selector: "app-po-project-material",
@@ -28,7 +29,9 @@ export class PoProjectMaterialComponent implements OnInit {
   poDetails: RfqMaterialResponse[] = [];
   searchProject: string;
   searchMaterial: string;
-  constructor(private poService: POService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) { }
+  poCurrency: rfqCurrency;
+  constructor(public dialog: MatDialog
+    , private poService: POService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.allProjects = this.activatedRoute.snapshot.data.inititatePo[1].data;
@@ -36,6 +39,7 @@ export class PoProjectMaterialComponent implements OnInit {
   }
 
   ngOnChanges(): void {
+    this.poCurrency = this.existingPoData && this.existingPoData.poCurrency
     this.checkExistingData();
   }
   alreadySelectedId: number[];
@@ -153,7 +157,8 @@ export class PoProjectMaterialComponent implements OnInit {
     });
     let poData: initiatePoData = {
       selectedSupplier: this.existingPoData.selectedSupplier,
-      selectedMaterial: this.poDetails
+      selectedMaterial: this.poDetails,
+      poCurrency: this.poCurrency
     }
     this.selectedMaterial.emit(poData);
   }
@@ -171,5 +176,19 @@ export class PoProjectMaterialComponent implements OnInit {
       element.checked = false;
       fGrp.get("material").reset();
     }
+  }
+
+  selectCurrency() {
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true,
+      width: "500px",
+      data: this.poCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != null) {
+        this.poCurrency = data;
+      }
+    });
   }
 }

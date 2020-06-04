@@ -1,4 +1,4 @@
-import { RfqMaterialResponse } from '../RFQ/rfq-details';
+import { RfqMaterialResponse, rfqCurrency } from '../RFQ/rfq-details';
 import { Suppliers } from '../RFQ/suppliers';
 
 export interface POData {
@@ -13,6 +13,7 @@ export interface POData {
   poValidUpto: string;
   DocumentsList: DocumentList[];
   Terms: terms;
+  purchaseOrderCurrency: PurchaseOrderCurrency;
   comments: string;
   projectId: number;
   approverId?: number;
@@ -21,6 +22,25 @@ export interface POData {
   poStatusChangedOn?: string;
   approverName?: string;
   roleDescription?: string;
+  isInternational: number;
+}
+
+export interface PurchaseOrderCurrency {
+  UserId: string
+  exchangeCurrencyId: number;
+  exchangeCurrencyName: string;
+  exchangeCurrencyFlag: string;
+  exchangeCountryId: string;
+  exchangeCurrency: string;
+  exchangeCurrencySymbol: string;
+  exchangeValue: number;
+  primaryCurrencyId: number;
+  primaryCurrencyName: string;
+  primaryContryId: string;
+  primaryCurrency: string;
+  primaryCurrencySymbol: string;
+  primaryCurrencyFlag: string;
+  purchaseOrderId: 0
 }
 export interface PoMaterial {
   materialId: number;
@@ -218,6 +238,7 @@ export interface poApproveReject {
 export interface initiatePoData {
   selectedMaterial: RfqMaterialResponse[],
   selectedSupplier: Suppliers
+  poCurrency: rfqCurrency
 }
 export interface DownloadData {
   fileName?: string;
