@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormGroup, FormArray, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { TaxInfo, OtherCostInfo } from '../../models/tax-cost.model';
 import { TaxCostService } from '../../services/taxcost.service';
 
@@ -24,13 +24,57 @@ export class TaxCostComponent implements OnInit {
   ngOnInit() {
     if (this.data.type === 'taxesAndCost') {
       this.taxCostFormInit();
-      this.addNewTaxField();
-      this.addNewOtherField();
+      if ((this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[ this.data.prevData.pId ] && this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ])) {
+
+        if (this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].taxInfo.length) {
+          this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].taxInfo.forEach((itm, index) => {
+            this.addNewTaxField();
+            const txInfoArr = this.taxCostForm.get('taxInfo') as FormArray;
+            const txItem = txInfoArr.at(index);
+            txItem.get('taxName').setValue(itm.taxName);
+            txItem.get('taxValue').setValue(itm.taxValue);
+          });
+        } else {
+          this.addNewTaxField();
+        }
+
+        if (this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].otherCostInfo.length) {
+          this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].otherCostInfo.forEach((itm, index) => {
+            this.addNewOtherField();
+            let othInfoArr = this.taxCostForm.get('otherCostInfo') as FormArray;
+            let txItem = othInfoArr.at(index);
+            txItem.get('otherCostName').setValue(itm.otherCostName);
+            txItem.get('otherCostAmount').setValue(itm.otherCostAmount);
+          });
+        } else {
+          this.addNewOtherField();
+        }
+
+      } else {
+        this.addNewTaxField();
+        this.addNewOtherField();
+      }
       this.taxCostForm.setValidators(this.validationOnTaxCostForm);
     }
     if (this.data.type === 'otherCost') {
       this.otherCostFormInit();
-      this.addNewOtherField();
+      if (this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) {
+
+        if (this.data.prevData.dt.otherCostInfo.length) {
+          this.data.prevData.dt.otherCostInfo.forEach((itm, index) => {
+            this.addNewOtherField();
+            let othInfoArr = this.otherCostForm.get('otherCostInfo') as FormArray;
+            let txItem = othInfoArr.at(index);
+            txItem.get('otherCostName').setValue(itm.otherCostName);
+            txItem.get('otherCostAmount').setValue(itm.otherCostAmount);
+          });
+        } else {
+          this.addNewOtherField();
+        }
+
+      } else {
+        this.addNewOtherField();
+      }
       this.otherCostForm.setValidators(this.validationOnOtherCostForm);
     }
     this.rfqId = this.data.rfqId;
@@ -62,8 +106,7 @@ export class TaxCostComponent implements OnInit {
   taxCostFormInit() {
     this.taxCostForm = this.formBuilder.group({
       otherCostInfo: new FormArray([]),
-      taxInfo: new FormArray([]),
-
+      taxInfo: new FormArray([])
     });
   }
 
@@ -75,16 +118,16 @@ export class TaxCostComponent implements OnInit {
 
   addNewTaxField() {
     const control = this.formBuilder.group({
-      taxName: new FormControl(''),
-      taxValue: new FormControl(null)
+      taxName: [ '' ],
+      taxValue: [ null, { validators: [ Validators.min(1), Validators.max(100) ] } ]
     });
     (<FormArray>this.taxCostForm.get('taxInfo')).push(control);
   }
 
   addNewOtherField() {
     const control = this.formBuilder.group({
-      otherCostName: new FormControl(''),
-      otherCostAmount: new FormControl(null)
+      otherCostName: [ '' ],
+      otherCostAmount: [ null, { validators: [ Validators.min(1) ] } ]
     });
     if (this.data.type === 'taxesAndCost') {
       (<FormArray>this.taxCostForm.get('otherCostInfo')).push(control);
@@ -95,7 +138,26 @@ export class TaxCostComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close(null);
+    const checkdata = this.checkIfHaveDataAlready();
+    this.dialogRef.close(checkdata);
+  }
+
+  checkIfHaveDataAlready() {
+    let result;
+    if (this.data.type === 'texesAndCost') {
+      if ((this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[ this.data.prevData.pId ] && this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ])) {
+        result = this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ];
+      }
+    }
+    if (this.data.type === 'otherCost') {
+      if (this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) {
+        result = this.data.prevData.dt;
+      }
+    }
+    if (!result) {
+      result = null;
+    }
+    return result;
   }
 
   deleteField(type: string, i: number) {
