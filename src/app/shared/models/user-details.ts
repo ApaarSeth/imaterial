@@ -49,7 +49,7 @@ export interface UserAdd {
   projects?: number[],
   accountStatus?: number,
   countryCode?: string,
-  countryId: number
+  countryId?: number
 }
 
 export interface UserRoles {
