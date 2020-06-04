@@ -36,6 +36,17 @@
                                     <mat-form-field class="w-100 border-bottom">
                                         <input matInput type="number" placeholder="Value" formControlName="taxValue" />
                                     </mat-form-field>
+                                    <ng-container
+                                        *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').touched">
+                                        <mat-error class="mt-mns pt-1 pb-2 font-size11"
+                                            *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.max">
+                                            Max 100 qty is Allowed
+                                        </mat-error>
+                                        <mat-error class="mt-mns pt-1 pb-2 font-size11"
+                                            *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.min">
+                                            Min 1 qty is Allowed
+                                        </mat-error>
+                                    </ng-container>
                                 </div>
                                 <div class="col-1">
                                     <span matRipple class="cursor-pointer position-absolute pt-3"
@@ -68,6 +79,13 @@
                                         <input matInput type="number" placeholder="Amount"
                                             formControlName="otherCostAmount" />
                                     </mat-form-field>
+                                    <ng-container
+                                        *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
+                                        <mat-error class="mt-mns pt-1 pb-2 font-size11"
+                                            *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
+                                            Min 1 qty is Allowed
+                                        </mat-error>
+                                    </ng-container>
                                 </div>
                                 <div class="col-1">
                                     <span matRipple class="cursor-pointer position-absolute pt-3"
@@ -112,6 +130,13 @@
                             <mat-form-field class="w-100 border-bottom">
                                 <input matInput type="number" placeholder="Value" formControlName="otherCostAmount" />
                             </mat-form-field>
+                            <ng-container
+                                *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
+                                <mat-error class="mt-mns pt-1 pb-2 font-size11"
+                                    *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
+                                    Min 1 qty is Allowed
+                                </mat-error>
+                            </ng-container>
                         </div>
                         <div class="col-1">
                             <span matRipple class="cursor-pointer position-absolute pt-3"
