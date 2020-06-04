@@ -32,12 +32,13 @@
           <span class="mat-header-cell">Material Name</span>
           <span class="mat-header-cell">Makes</span>
           <span class="mat-header-cell">Fullfillment Date</span>
-          <span class="mat-header-cell">Supplier Rate</span>
+          <span class="mat-header-cell minwidth-75-px">Supplier Rate</span>
           <span class="mat-header-cell">Awarded quantity</span>
-          <span class="mat-header-cell text-right p-r-10">Amount ₹</span>
-          <span class="mat-header-cell text-center">GST %</span>
-          <span class="mat-header-cell">GST Amount ₹</span>
+          <span class="mat-header-cell text-left p-l-30">Amount ₹</span>
+          <span class="mat-header-cell text-left minwidth-60-px p-l-0">GST %</span>
+          <span class="mat-header-cell p-l-10">GST Amount ₹</span>
           <span class="mat-header-cell">Total Amount with GST ₹</span>
+          <span class="mat-header-cell" *ngIf="isInternational"></span>
         </section>
         <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
           <div class="material-row">
@@ -47,7 +48,7 @@
             <span class="mat-cell">
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
-                <mat-form-field class="border-input date-label date-button mat-form-field-padding" style="width: 77%;">
+                <mat-form-field class="border-input date-label date-button mat-form-field-padding width-85">
                   <mat-label *ngIf="!inputDate.value">Select Date</mat-label>
                   <span class="form-placeholder">{{ poForms["controls"]["forms"]["controls"][m]["controls"]["fullfilmentDate"].value | date: "dd-MMM-yyy" }}</span>
                   <input
@@ -66,28 +67,38 @@
                 </mat-form-field>
               </ng-template>
             </span>
-            <span class="mat-cell"></span>
+            <span class="mat-cell minwidth-75-px"></span>
             <span class="mat-cell text-center max-width-128"
               >{{ getMaterialQuantity(m) | number: "1.2-2" }}
               <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
                 Must be less than {{material.poAvailableQty}}
               </span> -->
             </span>
-            <span class="mat-cell text-right p-r-20">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
-            <span class="mat-cell"></span>
-            <span class="mat-cell">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
-            <span class="mat-cell">{{ getMaterialTotalAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell text-left p-l-37">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell minwidth-60-px"></span>
+            <span class="mat-cell text-center p-r-15">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell p-l-2">{{ getMaterialTotalAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell"
+              ><button
+                mat-button
+                matRipple
+                class="btn btn-link p-0 main-color text-decoration-underline"
+                (click)="openTaxesCostsDialog('taxesAndCost', material.projectId, material.materialId)"
+              >
+                Add Taxes & costs
+              </button></span
+            >
           </div>
           <ng-container formArrayName="purchaseOrderDetailList">
             <div class="mat-row" *ngFor="let purchaseOrder of material.purchaseOrderDetailList; let p = index" [formGroupName]="p">
               <span class="mat-cell widthReduce"></span>
-              <span class="mat-cell"></span>
-              <span class="mat-cell">{{ purchaseOrder.materialBrand }}</span>
-              <span class="mat-cell"></span>
-              <span class="mat-cell">
+              <span class="mat-cell" [ngClass]="{'maxwidth-135-px': isInternational}"></span>
+              <span class="mat-cell" [ngClass]="{'maxwidth-110-px': isInternational}">{{ purchaseOrder.materialBrand }}</span>
+              <span class="mat-cell" [ngClass]="{'maxwidth-150-px': isInternational}"></span>
+              <span class="mat-cell text-center" [ngClass]="{'minwidth-50-px maxwidth-75-px': isInternational}">
                 <ng-container *ngIf="mode != 'edit'; else editRate"> {{ purchaseOrder.materialUnitPrice }}</ng-container>
                 <ng-template #editRate>
-                  <mat-form-field class="border-input width78Percent">
+                  <mat-form-field class="border-input width-55-px">
                     <input type="text" matInput appTwoDigitDecimaNumber #rate formControlName="materialUnitPrice" placeholder="rate" min="0" />
                     <small
                       *ngIf="
@@ -102,7 +113,7 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell text-center">
+              <span class="mat-cell text-center" [ngClass]="{'minwidth-50-px': isInternational}">
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity }}</ng-container>
                 <ng-template #editQuantity>
                   <mat-form-field class="border-input width50Percent">
@@ -119,48 +130,55 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell text-right p-r-20">
+              <span class="mat-cell text-center" [ngClass]="{'minwidth-50-px maxwidth-110-px': isInternational}">
                 <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount | number: "1.2-2" }} </ng-container>
                 <ng-template #editAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
                 </ng-template>
               </span>
-              <span class="mat-cell text-center">
-                <span *ngIf="mode != 'edit'; else editGst">
-                  <span *ngIf="purchaseOrder && purchaseOrder.materialCgst == 0 && purchaseOrder.materialSgst === 0">
-                    {{ purchaseOrder.materialIgst | number: "1.2-2" }}
+              <span *ngIf="isInternational; else gstBlock" class="mat-cell text-left p-l-14 minwidth-50-px maxwidth-75-px"></span>
+              <ng-template #gstBlock>
+                <span class="mat-cell">
+                  <span *ngIf="mode != 'edit'; else editGst">
+                    <span *ngIf="purchaseOrder && purchaseOrder.materialCgst == 0 && purchaseOrder.materialSgst === 0">
+                      {{ purchaseOrder.materialIgst | number: "1.2-2" }}
+                    </span>
+                    <span *ngIf="purchaseOrder && purchaseOrder.materialCgst != 0 && purchaseOrder.materialSgst != 0">
+                      {{ purchaseOrder.materialCgst + purchaseOrder.materialSgst | number: "1.2-2" }}
+                    </span>
                   </span>
-                  <span *ngIf="purchaseOrder && purchaseOrder.materialCgst != 0 && purchaseOrder.materialSgst != 0">
-                    {{ purchaseOrder.materialCgst + purchaseOrder.materialSgst | number: "1.2-2" }}
-                  </span>
+                  <ng-template #editGst>
+                    <mat-form-field class="border-input width-55-px">
+                      <input matInput type="text" appTwoDigitDecimaNumber #gst formControlName="gst" placeholder="GST%" class="m-r-5" min="0" />
+                      <small
+                        *ngIf="
+                          poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['gst'].hasError('pattern') &&
+                          poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['gst'].touched
+                        "
+                        class="error-msg"
+                      >
+                        Invalid gst
+                      </small>
+                    </mat-form-field>
+                  </ng-template>
                 </span>
-                <ng-template #editGst>
-                  <mat-form-field class="border-input width50Percent">
-                    <input matInput type="text" appTwoDigitDecimaNumber #gst formControlName="gst" placeholder="GST%" class="m-r-5" min="0" />
-                    <small
-                      *ngIf="
-                        poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['gst'].hasError('pattern') &&
-                        poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['gst'].touched
-                      "
-                      class="error-msg"
-                    >
-                      Invalid gst
-                    </small>
-                  </mat-form-field>
-                </ng-template>
-              </span>
-              <span class="mat-cell">
-                <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
-                <ng-template #editgstAmount>
-                  {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["gstAmount"].value | number: "1.2-2" }}
-                </ng-template>
-              </span>
-              <span class="mat-cell">
+              </ng-template>
+              <span *ngIf="isInternational; else gstAmountBlock" class="mat-cell text-center p-r-15"></span>
+              <ng-template #gstAmountBlock>
+                <span class="mat-cell text-center">
+                  <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
+                  <ng-template #editgstAmount>
+                    {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["gstAmount"].value | number: "1.2-2" }}
+                  </ng-template>
+                </span>
+              </ng-template>
+              <span class="mat-cell p-l-15">
                 <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total | number: "1.2-2" }} </ng-container>
                 <ng-template #editTotal>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["total"].value | number: "1.2-2" }}
                 </ng-template>
               </span>
+              <span *ngIf="isInternational" class="mat-cell minwidth-40-px maxwidth-80-px"></span>
             </div>
           </ng-container>
         </div>

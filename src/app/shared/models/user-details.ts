@@ -48,7 +48,8 @@ export interface UserAdd {
   projectIds?: number[],
   projects?: number[],
   accountStatus?: number,
-  countryCode?: string
+  countryCode?: string,
+  countryId: number
 }
 
 export interface UserRoles {
@@ -60,6 +61,7 @@ export interface UserRoles {
 export interface UserDetails {
   id: number;
   status: number;
+  countryId: number;
   createdBy: string;
   createdAt: string;
   lastUpdatedBy: string;

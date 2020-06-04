@@ -101,6 +101,7 @@ $spaceamounts: (
   99,
   100,
   110,
+  135,
   150,
   180,
   300,
@@ -124,6 +125,12 @@ $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.
   }
   .width-#{$space}-px {
     width: #{$space}px !important;
+  }
+  .minwidth-#{$space}-px {
+    min-width: #{$space}px !important;
+  }
+  .maxwidth-#{$space}-px {
+    max-width: #{$space}px !important;
   }
   .height-#{$space} {
     height: #{$space}% !important;

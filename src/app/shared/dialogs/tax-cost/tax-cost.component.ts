@@ -22,7 +22,7 @@ export class TaxCostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.data.type === 'texesAndCost') {
+    if (this.data.type === 'taxesAndCost') {
       this.taxCostFormInit();
       this.addNewTaxField();
       this.addNewOtherField();
@@ -86,7 +86,7 @@ export class TaxCostComponent implements OnInit {
       otherCostName: new FormControl(''),
       otherCostAmount: new FormControl(null)
     });
-    if (this.data.type === 'texesAndCost') {
+    if (this.data.type === 'taxesAndCost') {
       (<FormArray>this.taxCostForm.get('otherCostInfo')).push(control);
     }
     if (this.data.type === 'otherCost') {
@@ -100,7 +100,7 @@ export class TaxCostComponent implements OnInit {
 
   deleteField(type: string, i: number) {
     let item;
-    if (this.data.type === 'texesAndCost') {
+    if (this.data.type === 'taxesAndCost') {
       item = this.taxCostForm.get(type) as FormArray;
     }
     if (this.data.type === 'otherCost') {
@@ -156,10 +156,18 @@ export class TaxCostComponent implements OnInit {
           }
         });
       }
-      this.taxcostService.postTaxCostData(data)
-        .then(res => {
-          this.dialogRef.close(res.data);
-        });
+      if (this.data.po) {
+        this.taxcostService.poTaxCostData(data)
+          .then(res => {
+            this.dialogRef.close(res.data);
+          });
+      } else {
+        this.taxcostService.postTaxCostData(data)
+          .then(res => {
+            this.dialogRef.close(res.data);
+          });
+      }
+
     }
   }
 

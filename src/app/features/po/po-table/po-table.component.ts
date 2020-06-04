@@ -7,8 +7,9 @@ import { ActivatedRoute } from "@angular/router";
 import { POService } from "src/app/shared/services/po/po.service";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
+import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 
 @Component({
   selector: "app-po-table",
@@ -23,7 +24,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   words: string = "";
   showResponsiveDesign: boolean;
   poCurrency: PurchaseOrderCurrency
-  constructor(private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
+  constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
@@ -32,6 +33,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   minDate = new Date();
   isInternational: number;
+  taxAndCostData
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
@@ -291,4 +293,25 @@ export class PoTableComponent implements OnInit, OnDestroy {
       this.showResponsiveDesign = false;
     }
   }
+
+  openTaxesCostsDialog(type: string, pId?: number, mId?: number) {
+    const dialogRef = this.dialog.open(TaxCostComponent, {
+      width: "600px",
+      data: {
+        type,
+        po: true,
+        rfqId: null
+      }
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (type === 'taxesAndCost') {
+
+        this.taxAndCostData[mId] = res;
+      }
+      // if (type === 'otherCost') {
+      //   this.otherCostData = res;
+      // }
+    });
+  }
+
 }

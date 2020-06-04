@@ -129,4 +129,5 @@ export const API = {
   COUNTRYCODE: `get/country`,
   BASECURRENCY: `get/basecurrency`,
   POSTTAXANDOTHERCOST: `organization/add/tax/otherCost`,
+  POTAXANDOTHERCOST: `po/organization/add/tax/otherCost`,
 };
