@@ -15,6 +15,13 @@ import { RFQDocumentsComponent } from '../rfq-bid-documents/rfq-bid-documents.co
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
+
+interface prevTaxCost {
+  dt: any;
+  pId?: number;
+  mId?: number;
+}
+
 @Component({
   selector: "rfq-indent-detail",
   templateUrl: "./rfq-supplier-detail.component.html"
@@ -462,11 +469,25 @@ export class RFQSupplierDetailComponent implements OnInit {
 
   // taking tax and cost on item and on total item using dialog
   openTaxesCostsDialog(type: string, pId?: number, mId?: number) {
+    let prevData;
+    if (type === 'texesAndCost') {
+      prevData = {
+        dt: this.taxAndCostData,
+        pId: pId,
+        mId: mId
+      } as prevTaxCost;
+    }
+    if (type === 'otherCost') {
+      prevData = {
+        dt: this.otherCostData,
+      } as prevTaxCost;
+    }
     const dialogRef = this.dialog.open(TaxCostComponent, {
       width: "600px",
       data: {
         type,
-        rfqId: Number(this.activatedRoute.snapshot.params[ "rfqId" ])
+        rfqId: Number(this.activatedRoute.snapshot.params[ "rfqId" ]),
+        prevData
       }
     });
     dialogRef.afterClosed().subscribe(res => {
