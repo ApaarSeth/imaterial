@@ -13,7 +13,7 @@ export class TaxCostComponent implements OnInit {
   taxCostForm: FormGroup;
   otherCostForm: FormGroup;
   rfqId: number;
-
+  i
   constructor(
     public dialogRef: MatDialogRef<TaxCostComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -218,10 +218,18 @@ export class TaxCostComponent implements OnInit {
           }
         });
       }
-      this.taxcostService.postTaxCostData(data)
-        .then(res => {
-          this.dialogRef.close(res.data);
-        });
+      if (this.data.po) {
+        this.taxcostService.poTaxCostData(data)
+          .then(res => {
+            this.dialogRef.close(res.data);
+          });
+      } else {
+        this.taxcostService.postTaxCostData(data)
+          .then(res => {
+            this.dialogRef.close(res.data);
+          });
+      }
+
     }
   }
 

@@ -50,8 +50,8 @@
                                 </div>
                                 <div class="col-1">
                                     <span matRipple class="cursor-pointer position-absolute pt-3"
-                                        (click)=" deleteField('taxInfo', i)">
-                                        <img src="../../../../assets/images/delete-button.png">
+                                        (click)="deleteField('taxInfo', i)">
+                                        <img src="../../../../assets/images/delete-button.png" />
                                     </span>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                 <div class="col-1">
                                     <span matRipple class="cursor-pointer position-absolute pt-3"
                                         (click)="deleteField('otherCostInfo', i)">
-                                        <img src="../../../../assets/images/delete-button.png">
+                                        <img src="../../../../assets/images/delete-button.png" />
                                     </span>
                                 </div>
                             </div>
@@ -100,7 +100,6 @@
                             (click)="addNewOtherField()">
                             add_circle
                         </span>
-
                     </div>
                 </mat-tab>
             </mat-tab-group>
@@ -108,11 +107,12 @@
         <div mat-dialog-actions class="flex-column">
             <button type="submit" mat-button mat-raised-button
                 class="main-background-color main-button color-white m-b-5 mb-0"
-                [disabled]="taxCostForm && !taxCostForm.valid">Save</button>
+                [disabled]="taxCostForm && !taxCostForm.valid">
+                Save
+            </button>
         </div>
     </form>
 </ng-container>
-
 
 <ng-container *ngIf="data.type === 'otherCost'">
     <form *ngIf="otherCostForm" [formGroup]="otherCostForm" (submit)="onSubmitOtherCost()">
@@ -140,8 +140,8 @@
                         </div>
                         <div class="col-1">
                             <span matRipple class="cursor-pointer position-absolute pt-3"
-                                (click)=" deleteField('otherCostInfo', i)">
-                                <img src="../../../../assets/images/delete-button.png">
+                                (click)="deleteField('otherCostInfo', i)">
+                                <img src="../../../../assets/images/delete-button.png" />
                             </span>
                         </div>
                     </div>
@@ -153,11 +153,29 @@
                 <p class="tctnc d-flex w-100 pt-4">* Total amount will be shown as overall other costs on all the
                     materials.</p>
             </div>
+            <div class="col-4">
+                <mat-form-field class="w-100 border-bottom">
+                    <input matInput type="number" placeholder="Value" formControlName="otherCostAmount" />
+                </mat-form-field>
+            </div>
+            <div class="col-1">
+                <span matRipple class="cursor-pointer position-absolute pt-3" (click)="deleteField('otherCostInfo', i)">
+                    <img src="../../../../assets/images/delete-button.png" />
+                </span>
+            </div>
         </div>
+
+        <span matRipple class="material-icons cursor-pointer main-color float-left mt-3" (click)="addNewOtherField()">
+            add_circle
+        </span>
+        <p class="tctnc d-flex w-100 pt-4">* Total amount will be shown as overall other costs on all the materials.</p>
+
         <div mat-dialog-actions class="flex-column">
             <button type="submit" mat-button mat-raised-button
                 class="main-background-color main-button color-white m-b-5 mb-0"
-                [disabled]="otherCostForm && !otherCostForm.valid">Save</button>
+                [disabled]="otherCostForm && !otherCostForm.valid">
+                Save
+            </button>
         </div>
     </form>
 </ng-container>

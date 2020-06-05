@@ -113,7 +113,7 @@ export class UpdateInfoComponent implements OnInit {
       }
       if (this.countryList) {
         this.livingCountry = this.countryList.filter(val => {
-          return val.callingCode === this.users.countryCode;
+          return val.countryId === this.users.countryId
         })
       }
       this.formInit();
