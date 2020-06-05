@@ -10,6 +10,7 @@ import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants'
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
+import { OverallOtherCost } from 'src/app/shared/models/common.models';
 
 @Component({
   selector: "app-po-table",
@@ -33,7 +34,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   minDate = new Date();
   isInternational: number;
-  taxAndCostData
+  taxAndCostData;
+  otherCostData: OverallOtherCost;
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
@@ -43,7 +45,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(): void {
-    this.isInternational = this.currency.isInternational;
+    // this.isInternational = this.currency.isInternational;
+    this.isInternational = 1;
     this.poCurrency = this.currency.purchaseOrderCurrency
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
@@ -134,6 +137,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     this.poForms.addControl("forms", new FormArray(frmArr));
   }
 
+
   get totalAmount(): number {
     let sum: number = 0;
     if (this.mode === "edit" && this.initialCounter != 0) {
@@ -182,7 +186,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getData(): PoMaterial[] {
     return this.poForms.value.forms.map(material => {
-
       if (material.fullfilmentDate === "" || material.fullfilmentDate === null) {
         material.fullfilmentDate = null;
       }
@@ -190,8 +193,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
         let date = new Date(this.commonService.formatDate(material.fullfilmentDate))
         let dummyMonth = date.getMonth() + 1;
         const year = date.getFullYear().toString();
-        const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-        const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+        const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+        const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
         material.fullfilmentDate = year + "-" + month + "-" + day;
       }
       material.purchaseOrderDetailList.map(purchaseOrderList => {
@@ -250,6 +253,9 @@ export class PoTableComponent implements OnInit, OnDestroy {
       }, 0);
     }
   }
+  getMaterialTax(m) {
+
+  }
   getMaterialGstAmount(m) {
     if (this.mode != "edit") {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
@@ -293,25 +299,87 @@ export class PoTableComponent implements OnInit, OnDestroy {
       this.showResponsiveDesign = false;
     }
   }
+  getPOListTax(m, p) {
+    let tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+    this.poTableData[m].purchaseOrderDetailList[p]['brandTax'] = this.poTableData[m].purchaseOrderDetailList[p].amount * (tax ? tax / 100 : 0)
+    return this.poTableData[m].purchaseOrderDetailList[p]['brandTax']
+  }
 
-  openTaxesCostsDialog(type: string, pId?: number, mId?: number) {
+  getTotalPOListTax(m) {
+    if (this.poTableData[m].purchaseOrderDetailList.length > 1) {
+      if (this.poTableData[m].purchaseOrderDetailList[0].brandTax)
+        return this.poTableData[m].purchaseOrderDetailList.map(val => val.brandTax).reduce((a, b) => (a + b))
+      else
+        return 0;
+    }
+    else {
+      return this.poTableData[m].purchaseOrderDetailList[0].brandTax ? this.poTableData[m].purchaseOrderDetailList[0].brandTax : 0;
+    }
+  }
+
+  getTotalOtherCost(m) {
+    if (this.poTableData[m].totalOtherCost) {
+      return this.poTableData[m].totalOtherCost;
+    }
+    else {
+      return 0;
+    }
+  }
+
+
+  openTaxesCostsDialog(type: string, mId?: number) {
+    let existingData = {
+      taxInfo: this.poTableData[mId].taxInfo ? this.poTableData[mId].taxInfo : null,
+      otherCostInfo: this.poTableData[mId].otherCostInfo ? this.poTableData[mId].otherCostInfo : null
+    }
     const dialogRef = this.dialog.open(TaxCostComponent, {
       width: "600px",
       data: {
+        dt: null,
         type,
         po: true,
-        rfqId: null
+        rfqId: null,
+        existingData
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
-
-        this.taxAndCostData[mId] = res;
+        this.poTableData[mId].taxInfo = res.taxInfo ? res.taxInfo : null;
+        this.poTableData[mId].otherCostInfo = res.otherCostInfo ? res.otherCostInfo : null;
+        calculateTaxInfo();
+        calculateOtherTaxInfo();
       }
-      // if (type === 'otherCost') {
-      //   this.otherCostData = res;
-      // }
+      if (type === 'otherCost') {
+        this.otherCostData = res.otherCostInfo;
+      }
     });
+    let calculateTaxInfo = () => {
+      if (this.poTableData[mId].taxInfo && this.poTableData[mId].taxInfo.length > 0) {
+        if (this.poTableData[mId].taxInfo.length > 1) {
+          this.poTableData[mId]['totalTax'] = this.poTableData[mId].taxInfo.map(val => { return val.taxValue }).reduce((a, b) => (a + b))
+        }
+        else {
+          this.poTableData[mId]['totalTax'] = this.poTableData[mId].taxInfo[0].taxValue
+        }
+      } else {
+        this.poTableData[mId]['totalTax'] = null
+      }
+
+
+    }
+    let calculateOtherTaxInfo = () => {
+      if (this.poTableData[mId].otherCostInfo && this.poTableData[mId].otherCostInfo.length > 0) {
+        if (this.poTableData[mId].otherCostInfo.length > 1) {
+          this.poTableData[mId]['totalOtherCost'] = this.poTableData[mId].otherCostInfo.map(val => { return val.otherCostAmount }).reduce((a, b) => (a + b))
+        }
+        else {
+          this.poTableData[mId]['totalOtherCost'] = this.poTableData[mId].otherCostInfo[0].otherCostAmount
+        }
+      } else {
+        this.poTableData[mId]['totalOtherCost'] = null
+      }
+    }
+
   }
 
 }

@@ -1,5 +1,7 @@
 import { RfqMaterialResponse, rfqCurrency } from '../RFQ/rfq-details';
 import { Suppliers } from '../RFQ/suppliers';
+import { OtherCostInfo } from '../tax-cost.model';
+import { TaxInfo } from '../common.models';
 
 export interface POData {
   supplierAddress: SupplierAddress;
@@ -64,6 +66,10 @@ export interface PoMaterial {
   poAvailableQty?: number;
   validQuantity?: boolean;
   purchaseOrderDetailList: PurchaseOrder[];
+  taxInfo: TaxInfo[];
+  otherCostInfo: OtherCostInfo[]
+  totalTax: number;
+  totalOtherCost: number;
 }
 
 export interface PurchaseOrder {
@@ -96,6 +102,7 @@ export interface PurchaseOrder {
   total: number;
   qty?: number;
   validUpto?: string;
+  brandTax?: number;
 }
 export interface terms {
   termsId?: number;

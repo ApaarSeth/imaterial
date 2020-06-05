@@ -24,6 +24,7 @@ export class TaxCostComponent implements OnInit {
   ngOnInit() {
     if (this.data.type === 'taxesAndCost') {
       this.taxCostFormInit();
+      this.setExistingValue()
       if ((this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
 
         if (this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.length) {
@@ -54,6 +55,7 @@ export class TaxCostComponent implements OnInit {
         this.addNewTaxField();
         this.addNewOtherField();
       }
+
       this.taxCostForm.setValidators(this.validationOnTaxCostForm);
     }
     if (this.data.type === 'otherCost') {
@@ -78,6 +80,29 @@ export class TaxCostComponent implements OnInit {
       this.otherCostForm.setValidators(this.validationOnOtherCostForm);
     }
     this.rfqId = this.data.rfqId;
+  }
+
+  setExistingValue() {
+    if (this.data.existingData && this.data.existingData.taxInfo) {
+      const txInfoArr = this.taxCostForm.get('taxInfo') as FormArray;
+      const othertxInfoArr = this.taxCostForm.get('otherCostInfo') as FormArray;
+      this.data.existingData.taxInfo.forEach((element, i) => {
+        if (i > 0) {
+          txInfoArr.push(this.addtaxesFormGroup());
+        }
+        const txItem = txInfoArr.at(i);
+        txItem.get('taxName').setValue(element.taxName);
+        txItem.get('taxValue').setValue(element.taxValue);
+      });
+      this.data.existingData.otherCostInfo.forEach((element, i) => {
+        if (i > 0) {
+          othertxInfoArr.push(this.addOtherCostFormGroup());
+        }
+        const txItem = othertxInfoArr.at(i);
+        txItem.get('otherCostName').setValue(element.otherCostName);
+        txItem.get('otherCostAmount').setValue(element.otherCostAmount);
+      });
+    }
   }
 
   validationOnTaxCostForm(form) {
@@ -105,9 +130,11 @@ export class TaxCostComponent implements OnInit {
 
   taxCostFormInit() {
     this.taxCostForm = this.formBuilder.group({
-      otherCostInfo: new FormArray([]),
-      taxInfo: new FormArray([])
+      otherCostInfo: this.formBuilder.array([]),
+      taxInfo: this.formBuilder.array([])
     });
+    (<FormArray>this.taxCostForm.get("taxInfo")).push(this.addtaxesFormGroup());
+    (<FormArray>this.taxCostForm.get("otherCostInfo")).push(this.addOtherCostFormGroup());
   }
 
   otherCostFormInit() {
@@ -116,24 +143,34 @@ export class TaxCostComponent implements OnInit {
     });
   }
 
-  addNewTaxField() {
-    const control = this.formBuilder.group({
+  addtaxesFormGroup() {
+    const frmGrp = this.formBuilder.group({
       taxName: [''],
       taxValue: [null, { validators: [Validators.min(1), Validators.max(100)] }]
     });
-    (<FormArray>this.taxCostForm.get('taxInfo')).push(control);
+    return frmGrp;
   }
 
-  addNewOtherField() {
-    const control = this.formBuilder.group({
+  addOtherCostFormGroup() {
+    const frmGrp = this.formBuilder.group({
       otherCostName: [''],
       otherCostAmount: [null, { validators: [Validators.min(1)] }]
     });
+    return frmGrp;
+  }
+
+
+  addNewTaxField() {
+    (<FormArray>this.taxCostForm.get('taxInfo')).push(this.addtaxesFormGroup());
+  }
+
+
+  addNewOtherField() {
     if (this.data.type === 'taxesAndCost') {
-      (<FormArray>this.taxCostForm.get('otherCostInfo')).push(control);
+      (<FormArray>this.taxCostForm.get('otherCostInfo')).push(this.addOtherCostFormGroup());
     }
     if (this.data.type === 'otherCost') {
-      (<FormArray>this.otherCostForm.get('otherCostInfo')).push(control);
+      (<FormArray>this.otherCostForm.get('otherCostInfo')).push(this.addOtherCostFormGroup());
     }
   }
 
@@ -259,10 +296,21 @@ export class TaxCostComponent implements OnInit {
           data.otherCostInfo.push(otItm);
         }
       });
-      this.taxcostService.postTaxCostData(data)
-        .then(res => {
-          this.dialogRef.close(res.data);
-        });
+
+
+      if (this.data.po) {
+        this.taxcostService.poTaxCostData(data)
+          .then(res => {
+            this.dialogRef.close(res.data);
+          });
+      }
+      else {
+        this.taxcostService.postTaxCostData(data)
+          .then(res => {
+            this.dialogRef.close(res.data);
+          });
+      }
+
     }
   }
 

@@ -77,8 +77,8 @@ export class CommonService {
     let date = new Date(this.formatDate(formatdate))
     let dummyMonth = date.getMonth() + 1;
     const year = date.getFullYear().toString();
-    const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-    const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+    const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+    const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
     return year + "-" + month + "-" + day;
   }
 

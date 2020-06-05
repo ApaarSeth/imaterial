@@ -35,8 +35,8 @@
           <span class="mat-header-cell minwidth-75-px">Supplier Rate</span>
           <span class="mat-header-cell">Awarded quantity</span>
           <span class="mat-header-cell text-left p-l-30">Amount ₹</span>
-          <span class="mat-header-cell text-left minwidth-60-px p-l-0">GST %</span>
-          <span class="mat-header-cell p-l-10">GST Amount ₹</span>
+          <span class="mat-header-cell text-left minwidth-60-px p-l-0">{{ isInternational ? "Tax Amount" : "GST %" }}</span>
+          <span class="mat-header-cell p-l-10">{{ isInternational ? "Other Cost" : "GST Amount" }}</span>
           <span class="mat-header-cell">Total Amount with GST ₹</span>
           <span class="mat-header-cell" *ngIf="isInternational"></span>
         </section>
@@ -74,18 +74,46 @@
                 Must be less than {{material.poAvailableQty}}
               </span> -->
             </span>
-            <span class="mat-cell text-left p-l-37">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
-            <span class="mat-cell minwidth-60-px"></span>
-            <span class="mat-cell text-center p-r-15">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
-            <span class="mat-cell p-l-2">{{ getMaterialTotalAmount(m) | number: "1.2-2" }}</span>
-            <span class="mat-cell"
-              ><button
-                mat-button
-                matRipple
-                class="btn btn-link p-0 main-color text-decoration-underline"
-                (click)="openTaxesCostsDialog('taxesAndCost', material.projectId, material.materialId)"
-              >
-                Add Taxes & costs
+            <span class="mat-cell text-center p-r-15">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell text-left minwidth-75-px" [ngClass]="getTotalPOListTax(m) > 0 ? 'p-l-0' : 'p-l-12'" *ngIf="isInternational; else gstTotalBlock"
+              >{{ getTotalPOListTax(m) | number: "1.2-2" }}
+              <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon info-tootip"
+                ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                <span class="info-tootip__content">
+                  <div class="tooltip-table">
+                    <p class="row mb-1" *ngFor="let tax of this.poTableData[m].taxInfo">
+                      <strong class="col">{{ tax.taxName }}</strong
+                      ><span class="col">{{ tax.taxValue }}%</span>
+                    </p>
+                  </div>
+                </span>
+              </span></span
+            >
+            <ng-template #gstTotalBlock>
+              <span class="mat-cell minwidth-60-px"></span>
+            </ng-template>
+            <span class="mat-cell text-left p-r-15" *ngIf="isInternational; else gstTotalAmountBlock">
+              {{ getTotalOtherCost(m) | number: "1.2-2" }}
+              <span *ngIf="this.poTableData[m].otherCostInfo && this.poTableData[m].otherCostInfo.length" class="info-icon info-tootip"
+                ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                <span class="info-tootip__content">
+                  <div class="tooltip-table">
+                    <p class="row mb-1" *ngFor="let cost of this.poTableData[m].otherCostInfo">
+                      <strong class="col">{{ cost.otherCostName }}</strong
+                      ><span class="col">{{ cost.otherCostAmount }}</span>
+                    </p>
+                  </div>
+                </span>
+              </span></span
+            >
+
+            <ng-template #gstTotalAmountBlock>
+              <span class="mat-cell text-left p-r-15">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
+            </ng-template>
+            <span class="mat-cell">{{ getMaterialTotalAmount(m) | number: "1.2-2" }}</span>
+            <span *ngIf="isInternational" class="mat-cell minwidth-100-px"
+              ><button mat-button matRipple class="btn btn-link taxButton p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('taxesAndCost', m)">
+                Add Taxes & cost
               </button></span
             >
           </div>
@@ -113,10 +141,10 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell text-center" [ngClass]="{'minwidth-50-px': isInternational}">
+              <span class="mat-cell text-right" [ngClass]="isInternational ? 'minwidth-50-px text-right' : 'text-center'">
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity }}</ng-container>
                 <ng-template #editQuantity>
-                  <mat-form-field class="border-input width50Percent">
+                  <mat-form-field class="border-input" [ngClass]="isInternational ? 'width-60' : 'width50Percent'">
                     <input
                       type="text"
                       matInput
@@ -130,13 +158,15 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell text-center" [ngClass]="{'minwidth-50-px maxwidth-110-px': isInternational}">
+              <span class="mat-cell text-center" [ngClass]="{'minwidth-50-px maxwidth-125-px': isInternational}">
                 <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount | number: "1.2-2" }} </ng-container>
                 <ng-template #editAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
                 </ng-template>
               </span>
-              <span *ngIf="isInternational; else gstBlock" class="mat-cell text-left p-l-14 minwidth-50-px maxwidth-75-px"></span>
+              <span *ngIf="isInternational; else gstBlock" class="mat-cell text-center minwidth-50-px maxwidth-75-px">
+                {{ getPOListTax(m, p) | number: "1.2-2" }}
+              </span>
               <ng-template #gstBlock>
                 <span class="mat-cell">
                   <span *ngIf="mode != 'edit'; else editGst">
@@ -172,7 +202,7 @@
                   </ng-template>
                 </span>
               </ng-template>
-              <span class="mat-cell p-l-15">
+              <span class="mat-cell">
                 <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total | number: "1.2-2" }} </ng-container>
                 <ng-template #editTotal>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["total"].value | number: "1.2-2" }}
@@ -181,6 +211,14 @@
               <span *ngIf="isInternational" class="mat-cell minwidth-40-px maxwidth-80-px"></span>
             </div>
           </ng-container>
+        </div>
+        <div class="material-row">
+          <span class="mat-cell text-right">
+            {{ otherCostData && otherCostData.otherCostAmount }}
+            <span
+              ><button mat-button matRipple class="btn btn-link p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('otherCost')">Add other costs</button>
+            </span>
+          </span>
         </div>
         <div class="mat-row footer">
           <span class="mat-cell widthReduce"></span>
