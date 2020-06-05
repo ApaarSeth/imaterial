@@ -470,7 +470,7 @@ export class RFQSupplierDetailComponent implements OnInit {
   // taking tax and cost on item and on total item using dialog
   openTaxesCostsDialog(type: string, pId?: number, mId?: number) {
     let prevData;
-    if (type === 'texesAndCost') {
+    if (type === 'taxesAndCost') {
       prevData = {
         dt: this.taxAndCostData,
         pId: pId,
@@ -491,7 +491,7 @@ export class RFQSupplierDetailComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(res => {
-      if (type === 'texesAndCost') {
+      if (type === 'taxesAndCost') {
         if (!this.taxAndCostData.hasOwnProperty(pId)) {
           this.taxAndCostData[ pId ] = {};
         }

@@ -24,10 +24,10 @@ export class TaxCostComponent implements OnInit {
   ngOnInit() {
     if (this.data.type === 'taxesAndCost') {
       this.taxCostFormInit();
-      if ((this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
+      if ((this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[ this.data.prevData.pId ] && this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ])) {
 
-        if (this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.length) {
-          this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.forEach((itm, index) => {
+        if (this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].taxInfo.length) {
+          this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].taxInfo.forEach((itm, index) => {
             this.addNewTaxField();
             const txInfoArr = this.taxCostForm.get('taxInfo') as FormArray;
             const txItem = txInfoArr.at(index);
@@ -38,8 +38,8 @@ export class TaxCostComponent implements OnInit {
           this.addNewTaxField();
         }
 
-        if (this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].otherCostInfo.length) {
-          this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].otherCostInfo.forEach((itm, index) => {
+        if (this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].otherCostInfo.length) {
+          this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].otherCostInfo.forEach((itm, index) => {
             this.addNewOtherField();
             let othInfoArr = this.taxCostForm.get('otherCostInfo') as FormArray;
             let txItem = othInfoArr.at(index);
@@ -58,7 +58,7 @@ export class TaxCostComponent implements OnInit {
     }
     if (this.data.type === 'otherCost') {
       this.otherCostFormInit();
-      if (this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) {
+      if (this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) {
 
         if (this.data.prevData.dt.otherCostInfo.length) {
           this.data.prevData.dt.otherCostInfo.forEach((itm, index) => {
@@ -118,16 +118,16 @@ export class TaxCostComponent implements OnInit {
 
   addNewTaxField() {
     const control = this.formBuilder.group({
-      taxName: [''],
-      taxValue: [null, { validators: [Validators.min(1), Validators.max(100)] }]
+      taxName: [ '' ],
+      taxValue: [ null, { validators: [ Validators.min(1), Validators.max(100) ] } ]
     });
     (<FormArray>this.taxCostForm.get('taxInfo')).push(control);
   }
 
   addNewOtherField() {
     const control = this.formBuilder.group({
-      otherCostName: [''],
-      otherCostAmount: [null, { validators: [Validators.min(1)] }]
+      otherCostName: [ '' ],
+      otherCostAmount: [ null, { validators: [ Validators.min(1) ] } ]
     });
     if (this.data.type === 'taxesAndCost') {
       (<FormArray>this.taxCostForm.get('otherCostInfo')).push(control);
@@ -144,13 +144,13 @@ export class TaxCostComponent implements OnInit {
 
   checkIfHaveDataAlready() {
     let result;
-    if (this.data.type === 'texesAndCost') {
-      if ((this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
-        result = this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId];
+    if (this.data.type === 'taxesAndCost') {
+      if ((this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[ this.data.prevData.pId ] && this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ])) {
+        result = this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ];
       }
     }
     if (this.data.type === 'otherCost') {
-      if (this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) {
+      if (this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) {
         result = this.data.prevData.dt;
       }
     }
