@@ -22,7 +22,7 @@ export class TaxCostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.data.type === 'texesAndCost') {
+    if (this.data.type === 'taxesAndCost') {
       this.taxCostFormInit();
       if ((this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[ this.data.prevData.pId ] && this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ])) {
 
@@ -129,7 +129,7 @@ export class TaxCostComponent implements OnInit {
       otherCostName: [ '' ],
       otherCostAmount: [ null, { validators: [ Validators.min(1) ] } ]
     });
-    if (this.data.type === 'texesAndCost') {
+    if (this.data.type === 'taxesAndCost') {
       (<FormArray>this.taxCostForm.get('otherCostInfo')).push(control);
     }
     if (this.data.type === 'otherCost') {
@@ -144,7 +144,7 @@ export class TaxCostComponent implements OnInit {
 
   checkIfHaveDataAlready() {
     let result;
-    if (this.data.type === 'texesAndCost') {
+    if (this.data.type === 'taxesAndCost') {
       if ((this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[ this.data.prevData.pId ] && this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ])) {
         result = this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ];
       }
@@ -162,7 +162,7 @@ export class TaxCostComponent implements OnInit {
 
   deleteField(type: string, i: number) {
     let item;
-    if (this.data.type === 'texesAndCost') {
+    if (this.data.type === 'taxesAndCost') {
       item = this.taxCostForm.get(type) as FormArray;
     }
     if (this.data.type === 'otherCost') {
