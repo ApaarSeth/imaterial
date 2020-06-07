@@ -24,9 +24,7 @@ export class TaxCostComponent implements OnInit {
   ngOnInit() {
     if (this.data.type === 'taxesAndCost') {
       this.taxCostFormInit();
-      this.setExistingValue()
-      if ((this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
-
+      if ((this.data.prevData && this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
         if (this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.length) {
           this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.forEach((itm, index) => {
             this.addNewTaxField();
@@ -39,7 +37,7 @@ export class TaxCostComponent implements OnInit {
           this.addNewTaxField();
         }
 
-        if (this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].otherCostInfo.length) {
+        if (this.data.prevData && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].otherCostInfo.length) {
           this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].otherCostInfo.forEach((itm, index) => {
             this.addNewOtherField();
             let othInfoArr = this.taxCostForm.get('otherCostInfo') as FormArray;
@@ -54,13 +52,14 @@ export class TaxCostComponent implements OnInit {
       } else {
         this.addNewTaxField();
         this.addNewOtherField();
+        this.setPoExistingValue()
       }
 
       this.taxCostForm.setValidators(this.validationOnTaxCostForm);
     }
     if (this.data.type === 'otherCost') {
       this.otherCostFormInit();
-      if (this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) {
+      if (this.data.prevData && this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) {
 
         if (this.data.prevData.dt.otherCostInfo.length) {
           this.data.prevData.dt.otherCostInfo.forEach((itm, index) => {
@@ -82,7 +81,7 @@ export class TaxCostComponent implements OnInit {
     this.rfqId = this.data.rfqId;
   }
 
-  setExistingValue() {
+  setPoExistingValue() {
     if (this.data.existingData && this.data.existingData.taxInfo) {
       const txInfoArr = this.taxCostForm.get('taxInfo') as FormArray;
       const othertxInfoArr = this.taxCostForm.get('otherCostInfo') as FormArray;
@@ -133,13 +132,11 @@ export class TaxCostComponent implements OnInit {
       otherCostInfo: this.formBuilder.array([]),
       taxInfo: this.formBuilder.array([])
     });
-    (<FormArray>this.taxCostForm.get("taxInfo")).push(this.addtaxesFormGroup());
-    (<FormArray>this.taxCostForm.get("otherCostInfo")).push(this.addOtherCostFormGroup());
   }
 
   otherCostFormInit() {
     this.otherCostForm = this.formBuilder.group({
-      otherCostInfo: new FormArray([])
+      otherCostInfo: this.formBuilder.array([])
     });
   }
 

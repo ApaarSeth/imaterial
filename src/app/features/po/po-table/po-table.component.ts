@@ -185,7 +185,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
   getData(): PoMaterial[] {
-    return this.poForms.value.forms.map(material => {
+    return this.poForms.value.forms.map((material, i) => {
       if (material.fullfilmentDate === "" || material.fullfilmentDate === null) {
         material.fullfilmentDate = null;
       }
@@ -197,6 +197,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
         const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
         material.fullfilmentDate = year + "-" + month + "-" + day;
       }
+      material.taxInfo = this.poTableData[i].taxInfo;
+      material.otherCostInfo = this.poTableData[i].otherCostInfo;
       material.purchaseOrderDetailList.map(purchaseOrderList => {
         purchaseOrderList.materialQuantity = Number(purchaseOrderList.materialQuantity);
         purchaseOrderList.materialUnitPrice = Number(purchaseOrderList.materialUnitPrice);
@@ -328,14 +330,18 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
 
   openTaxesCostsDialog(type: string, mId?: number) {
-    let existingData = {
-      taxInfo: this.poTableData[mId].taxInfo ? this.poTableData[mId].taxInfo : null,
-      otherCostInfo: this.poTableData[mId].otherCostInfo ? this.poTableData[mId].otherCostInfo : null
+    let existingData = null;
+    if (type === 'taxesAndCost') {
+      existingData = {
+        taxInfo: this.poTableData[mId].taxInfo ? this.poTableData[mId].taxInfo : null,
+        otherCostInfo: this.poTableData[mId].otherCostInfo ? this.poTableData[mId].otherCostInfo : null
+      }
     }
+
     const dialogRef = this.dialog.open(TaxCostComponent, {
       width: "600px",
       data: {
-        dt: null,
+        prevData: null,
         type,
         po: true,
         rfqId: null,

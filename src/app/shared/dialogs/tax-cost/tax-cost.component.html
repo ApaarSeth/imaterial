@@ -45,7 +45,7 @@
                   </ng-container>
                 </div>
                 <div class="col-1">
-                  <span matRipple class="cursor-pointer position-absolute pt-3" (click)="deleteField('taxInfo', i)">
+                  <span *ngIf="taxCostForm.get('taxInfo')['controls'].length > 1" matRipple class="cursor-pointer position-absolute pt-3" (click)="deleteField('taxInfo', i)">
                     <img src="../../../../assets/images/delete-button.png" />
                   </span>
                 </div>
@@ -77,7 +77,12 @@
                   </ng-container>
                 </div>
                 <div class="col-1">
-                  <span matRipple class="cursor-pointer position-absolute pt-3" (click)="deleteField('otherCostInfo', i)">
+                  <span
+                    *ngIf="taxCostForm.get('otherCostInfo')['controls'].length > 1"
+                    matRipple
+                    class="cursor-pointer position-absolute pt-3"
+                    (click)="deleteField('otherCostInfo', i)"
+                  >
                     <img src="../../../../assets/images/delete-button.png" />
                   </span>
                 </div>
@@ -121,7 +126,12 @@
               </ng-container>
             </div>
             <div class="col-1">
-              <span matRipple class="cursor-pointer position-absolute pt-3" (click)="deleteField('otherCostInfo', i)">
+              <span
+                *ngIf="otherCostForm.get('otherCostInfo')['controls'].length > 1"
+                matRipple
+                class="cursor-pointer position-absolute pt-3"
+                (click)="deleteField('otherCostInfo', i)"
+              >
                 <img src="../../../../assets/images/delete-button.png" />
               </span>
             </div>
@@ -138,7 +148,7 @@
         </mat-form-field>
       </div>
       <div class="col-1">
-        <span matRipple class="cursor-pointer position-absolute pt-3" (click)="deleteField('otherCostInfo', i)">
+        <span *ngIf="otherCostForm.get('otherCostInfo')['controls'].length" matRipple class="cursor-pointer position-absolute pt-3" (click)="deleteField('otherCostInfo', i)">
           <img src="../../../../assets/images/delete-button.png" />
         </span>
       </div>
