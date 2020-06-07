@@ -179,12 +179,12 @@ export class TaxCostComponent implements OnInit {
   checkIfHaveDataAlready() {
     let result;
     if (this.data.type === 'texesAndCost') {
-      if ((this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
+      if ((this.data.prevData && this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
         result = this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId];
       }
     }
     if (this.data.type === 'otherCost') {
-      if (this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) {
+      if (this.data.prevData && this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) {
         result = this.data.prevData.dt;
       }
     }

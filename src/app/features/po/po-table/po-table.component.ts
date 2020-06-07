@@ -356,7 +356,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
         calculateOtherTaxInfo();
       }
       if (type === 'otherCost') {
-        this.otherCostData = res.otherCostInfo;
+        this.otherCostData = res.otherCostInfo ? res.otherCostInfo : null;
       }
     });
     let calculateTaxInfo = () => {
