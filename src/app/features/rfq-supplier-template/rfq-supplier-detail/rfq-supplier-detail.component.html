@@ -67,7 +67,7 @@
             -
           </span>
 
-          <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1">
+          <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1 && rfqSupplierDetailList.rfqCurrency">
             <div class="float-right d-inline-block">
               <span class="base-currency pl-3 pr-3 border-dark p-t-10 p-b-10">
                 <span class="font-size-vary-grn color-grey">
@@ -136,22 +136,22 @@
                   {{ material.materialUnit }}
                 </td>
                 <td class="font-size14">Required Date : {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</td>
-                <ng-container
-                  *ngIf="rfqSupplierDetailList.rfqCurrency && rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName">
+                <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1">
                   <td class="font-size14">
                     <ng-container
                       *ngIf="taxAndCostData && taxAndCostData[projects.projectId] && taxAndCostData[projects.projectId][material.materialId] && taxAndCostData[projects.projectId][material.materialId].otherCostInfo && taxAndCostData[projects.projectId][material.materialId].otherCostInfo.length">
                       <strong>Other Cost: </strong> <span style="margin-right:5px;"
                         *ngIf="taxAndCostData && taxAndCostData[projects.projectId] && taxAndCostData[projects.projectId][material.materialId] && taxAndCostData[projects.projectId][material.materialId].otherCostInfo.length">{{ getotherCostInfoTotal(taxAndCostData[projects.projectId][material.materialId].otherCostInfo) }}
-                        {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}</span>
+                        <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                          {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}</ng-container></span>
                       <span class="info-icon info-tootip"><img src="./../../../../assets/images/i_icon.png"
                           class="img-responsive">
                         <span class="info-tootip__content">
                           <div class="tooltip-table">
                             <p class="row mb-1"
                               *ngFor="let otcost of taxAndCostData[projects.projectId][material.materialId].otherCostInfo">
-                              <strong class="col">{{otcost.otherCostName}}</strong><span
-                                class="col">{{otcost.otherCostAmount}}</span>
+                              <strong class="col">{{otcost.otherCostName}}</strong>
+                              <span class="col">{{otcost.otherCostAmount}}</span>
                             </p>
                           </div>
                         </span>
@@ -171,7 +171,7 @@
                   </ng-container>
                   <ng-template #txBtn>
                     <button mat-button matRipple class="btn btn-link p-0 main-color text-decoration-underline"
-                      (click)="openTaxesCostsDialog('texesAndCost', projects.projectId, material.materialId)">Add
+                      (click)="openTaxesCostsDialog('taxesAndCost', projects.projectId, material.materialId)">Add
                       Taxes
                       & costs</button>
                   </ng-template>
@@ -212,27 +212,35 @@
 
                 <tr matSort class="brand-name-rfq-supplies">
                   <th class="font-size14">Brand Name</th>
-                  <th class="font-size14">Unit Rate ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</th>
+                  <th class="font-size14">Unit Rate <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                      ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                  </th>
                   <th class="font-size14 text-align-right">Amount
-                    ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</th>
+                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                      ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                  </th>
                   <th class="font-size14 text-align-right">Tax Amount
-                    ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})
+                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                      ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
                     <span
                       *ngIf="taxAndCostData && taxAndCostData[projects.projectId] && taxAndCostData[projects.projectId][material.materialId] && taxAndCostData[projects.projectId][material.materialId].taxInfo && taxAndCostData[projects.projectId][material.materialId].taxInfo.length"
-                      class="info-icon info-tootip"><img src="./../../../../assets/images/i_icon.png"
+                      class="info-icon info-tootip ml-1"><img src="./../../../../assets/images/i_icon.png"
                         class="img-responsive">
                       <span class="info-tootip__content">
                         <div class="tooltip-table">
                           <p class="row mb-1"
                             *ngFor="let tInfo of taxAndCostData[projects.projectId][material.materialId].taxInfo">
-                            <strong class="col">{{tInfo.taxName}}</strong><span class="col">{{tInfo.taxValue}}%</span>
+                            <strong class="col">{{tInfo.taxName}}</strong><span
+                              class="col font-weight-normal">{{tInfo.taxValue}}%</span>
                           </p>
                         </div>
                       </span>
                     </span>
                   </th>
                   <th class="font-size14 text-align-right">Total Amount
-                    ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</th>
+                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                      ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                  </th>
                 </tr>
 
                 <!-- Brand-wise details -->
@@ -283,7 +291,8 @@
                     <strong>Other Cost: </strong>
                     <span style="margin-right:5px;">
                       {{ getotherCostInfoTotal(otherCostData.otherCostInfo) }}
-                      {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}</span>
+                      <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                        {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}</ng-container></span>
                     <span class="info-icon info-tootip"><img src="./../../../../assets/images/i_icon.png"
                         class="img-responsive">
                       <span class="info-tootip__content">
