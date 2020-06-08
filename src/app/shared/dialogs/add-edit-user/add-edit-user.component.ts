@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
 import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { ProjectService } from '../../services/projectDashboard/project.service';
 import { ProjectDetails } from '../../models/project-details';
+import { CountryCode } from '../../models/currency';
+import { VisitorService } from '../../services/visitor.service';
+import { CommonService } from '../../services/commonService';
 
 
 export interface City {
@@ -46,6 +49,10 @@ export class AddEditUserComponent implements OnInit {
   userId: number;
   emailVerified: boolean = true;
   emailMessage: string;
+  ipaddress: string;
+  countryList: CountryCode[] = [];
+  livingCountry: CountryCode[] = [];
+  searchCountry: string = '';
 
   constructor(
     private userService: UserService,
@@ -54,10 +61,13 @@ export class AddEditUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private projectService: ProjectService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private visitorsService: VisitorService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    this.getLocation();
     this.initForm();
     this.orgId = Number(localStorage.getItem("orgId"))
     this.userId = Number(localStorage.getItem("userId"))
@@ -68,6 +78,36 @@ export class AddEditUserComponent implements OnInit {
     this.userService.getRoles().then(data => {
       this.allRoles = data.data;
     });
+  }
+
+  getLocation() {
+    this.visitorsService.getIpAddress().subscribe(res => {
+      this.ipaddress = res['ip'];
+      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+        if(this.data.isEdit){
+          this.getCountryCode(this.data.detail.countryCode);
+        }else{
+          this.getCountryCode(res['calling_code']);
+        }
+      });
+    });
+  }
+
+  getCountryCode(callingCode) {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+      this.livingCountry = this.countryList.filter(val => {
+        return val.callingCode === callingCode;
+      })
+      this.form.get('countriesList').setValue(this.livingCountry[0])
+      if(this.data.isEdit){
+        this.form.get('countriesList').disable();
+      }
+    })
+  }
+
+  get selectedCountry() {
+    return this.form.get('countriesList').value;
   }
 
   close() {
@@ -82,7 +122,7 @@ export class AddEditUserComponent implements OnInit {
 
     this.isInputDisabled = this.data.isEdit;
 
-    this.form = new FormGroup({
+    this.form = this.formBuilder.group({
       firstName: new FormControl(
         { value: this.data.isEdit ? this.data.detail.firstName : "", disabled: (this.data.isEdit && (this.data.detail.accountStatus == 1)) ? true : false },
         Validators.required
@@ -108,7 +148,8 @@ export class AddEditUserComponent implements OnInit {
       ),
       creatorId: new FormControl(''),
       userId: new FormControl(this.data.isEdit ? this.data.detail.userId : null),
-      countryCallingCode: new FormControl('+91')
+      countryCode: [""],
+      countriesList: []
     });
   }
 
@@ -116,7 +157,6 @@ export class AddEditUserComponent implements OnInit {
 
     userDetails.creatorId = this.userId;
     userDetails.projects = userDetails.projectIds;
-    userDetails.countryCode = '+91';
 
     var form_data = new FormData();
 
@@ -160,10 +200,15 @@ export class AddEditUserComponent implements OnInit {
   }
 
   submit() {
+    let data = this.form.value;
+    data.countryId = this.form.get('countriesList').value.countryId;
+    data.countryCode = this.form.get('countriesList').value.callingCode;
+    delete data.countriesList;
+
     if (this.data.isEdit) {
-      this.updateUsers(this.form.value);
+      this.updateUsers(data);
     } else {
-      this.addUsers(this.form.value);
+      this.addUsers(data);
     }
   }
   verifyEmail(event) {
