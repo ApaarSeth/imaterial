@@ -49,7 +49,8 @@ export interface UserAdd {
   projects?: number[],
   accountStatus?: number,
   countryCode?: string,
-  countryId?: number
+  countryId?: number,
+  countryCallingCode?: string
 }
 
 export interface UserRoles {
