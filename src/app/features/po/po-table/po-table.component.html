@@ -24,7 +24,7 @@
     </ng-template>
   </div>
   <ng-template #viewMode>
-    <div *ngIf="isInternational; else elseBlock" class="text-right col-xs-12 p-r-10 p-b-10">
+    <div *ngIf="isInternational" class="text-right col-xs-12 p-r-10 p-b-10">
       <div *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
         <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
           <span class="font-size-vary-grn color-grey">

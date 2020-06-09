@@ -68,7 +68,7 @@
               <div class="row" [formGroupName]="i">
                 <div class="col-7">
                   <mat-form-field class="w-100 border-bottom">
-                    <input type="text" placeholder="Other Cost Name" matInput formControlName="otherCostName" [matAutocomplete]="auto" />
+                    <input type="text" placeholder="Cost Label" matInput formControlName="otherCostName" [matAutocomplete]="auto" />
                     <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFnOther">
                       <mat-option matTooltip=" {{ option.otherCostName }}" *ngFor="let option of this.filterOptionsOther | async" [value]="option">
                         {{ option.otherCostName }}
@@ -128,7 +128,7 @@
           <div class="row" [formGroupName]="i">
             <div class="col-7">
               <mat-form-field class="w-100 border-bottom">
-                <input type="text" placeholder="Other Cost Name" matInput formControlName="otherCostName" [matAutocomplete]="auto" />
+                <input type="text" placeholder="Cost Label" matInput formControlName="otherCostName" [matAutocomplete]="auto" />
                 <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFnOther">
                   <mat-option matTooltip=" {{ option.otherCostName }}" *ngFor="let option of this.filterOptionsOther | async" [value]="option">
                     {{ option.otherCostName }}
@@ -138,7 +138,7 @@
             </div>
             <div class="col-4">
               <mat-form-field class="w-100 border-bottom">
-                <input matInput type="number" placeholder="Value" formControlName="otherCostAmount" />
+                <input matInput type="number" placeholder="Amount" formControlName="otherCostAmount" />
               </mat-form-field>
               <ng-container *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
                 <mat-error class="mt-mns pt-1 pb-2 font-size11" *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
