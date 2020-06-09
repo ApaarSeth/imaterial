@@ -29,6 +29,18 @@
                 {{ rfqDetails.rfqCurrency.primaryCurrencyName }}
               </span>
             </span>
+            <div class="display-inline-block p-l-5">
+              <span *ngIf="rfqDetails.rfqCurrency != null && rfqDetails.rfqCurrency.exchangeCurrencyName != null" class="p-l-5 info-icon info-tootip"
+                ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                <span class="info-tootip__content">
+                  <div class="tooltip-table">
+                    <div class="row text-center color-grey text-semi-bold p-l-5 p-r-5">
+                      Supplier will have to submit the quote in this selected currency
+                    </div>
+                  </div>
+                </span>
+              </span>
+            </div>
           </div>
 
           <!-- <div class="col-md-3 p-t-10 main-color">

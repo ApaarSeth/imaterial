@@ -114,7 +114,7 @@ export class ProfileComponent implements OnInit {
 
   setCountryAndCurrency() {
     this.livingCountry = this.countryList.filter(val => {
-      return val.callingCode === this.users.countryCode;
+      return val.countryId === this.users.countryId;
     })
     let newCurrencyList = this.currencyList.filter(val => {
       return val.currencyId === this.users.baseCurrency.currencyId;
