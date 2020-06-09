@@ -21,19 +21,24 @@
 <ng-container *ngIf="data.type === 'taxesAndCost'">
   <form *ngIf="taxCostForm" [formGroup]="taxCostForm" (submit)="onSubmitTaxCost()">
     <div mat-dialog-content class="overflow-remove tx-cst">
-      <mat-tab-group>
+      <mat-tab-group (selectedTabChange)="onTabChanged($event)">
         <mat-tab label="Taxes" class="addressDialog">
           <div formArrayName="taxInfo">
             <div *ngFor="let tax of taxCostForm.get('taxInfo')['controls']; let i = index" class="float-left w-95">
               <div class="row" [formGroupName]="i">
                 <div class="col-7">
                   <mat-form-field class="w-100 border-bottom">
-                    <input matInput placeholder="Tax Name" formControlName="taxName" />
+                    <input type="text" placeholder="Tax Label" matInput formControlName="taxName" [matAutocomplete]="auto" />
+                    <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
+                      <mat-option matTooltip=" {{ option.taxName }}" *ngFor="let option of this.filterOptionsTax | async" [value]="option">
+                        {{ option.taxName }}
+                      </mat-option>
+                    </mat-autocomplete>
                   </mat-form-field>
                 </div>
                 <div class="col-4">
                   <mat-form-field class="w-100 border-bottom">
-                    <input matInput type="number" placeholder="Value" formControlName="taxValue" />
+                    <input matInput type="number" placeholder="Tax%" formControlName="taxValue" />
                   </mat-form-field>
                   <ng-container *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').touched">
                     <mat-error class="mt-mns pt-1 pb-2 font-size11" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.max">
@@ -51,7 +56,7 @@
                 </div>
               </div>
             </div>
-            <span matRipple class="material-icons cursor-pointer main-color float-left mt-3" (click)="addNewTaxField()">
+            <span [ngClass]="[!checkValidation ? 'main-color-faded' : 'main-color']" matRipple class="material-icons cursor-pointer float-left mt-3" (click)="addNewTaxField()">
               add_circle
             </span>
             <p class="tctnc d-flex w-100 pt-4">* Tax amount will be calculated on the basis of total tax %.</p>
@@ -63,7 +68,12 @@
               <div class="row" [formGroupName]="i">
                 <div class="col-7">
                   <mat-form-field class="w-100 border-bottom">
-                    <input matInput placeholder="Other Cost Name" formControlName="otherCostName" />
+                    <input type="text" placeholder="Other Cost Name" matInput formControlName="otherCostName" [matAutocomplete]="auto" />
+                    <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFnOther">
+                      <mat-option matTooltip=" {{ option.otherCostName }}" *ngFor="let option of this.filterOptionsOther | async" [value]="option">
+                        {{ option.otherCostName }}
+                      </mat-option>
+                    </mat-autocomplete>
                   </mat-form-field>
                 </div>
                 <div class="col-4">
@@ -88,7 +98,7 @@
                 </div>
               </div>
             </div>
-            <span matRipple class="material-icons cursor-pointer main-color float-left mt-3" (click)="addNewOtherField()">
+            <span [ngClass]="[!checkValidation ? 'main-color-faded' : 'main-color']" matRipple class="material-icons cursor-pointer float-left mt-3" (click)="addNewOtherField()">
               add_circle
             </span>
           </div>
@@ -96,7 +106,14 @@
       </mat-tab-group>
     </div>
     <div mat-dialog-actions class="flex-column">
-      <button type="submit" mat-button mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0" [disabled]="taxCostForm && !taxCostForm.valid">
+      <button
+        [disabled]="!checkValidation"
+        type="submit"
+        mat-button
+        mat-raised-button
+        class="main-background-color main-button color-white m-b-5 mb-0"
+        [disabled]="taxCostForm && !taxCostForm.valid"
+      >
         Save
       </button>
     </div>
@@ -111,7 +128,12 @@
           <div class="row" [formGroupName]="i">
             <div class="col-7">
               <mat-form-field class="w-100 border-bottom">
-                <input matInput placeholder="Other Cost Name" formControlName="otherCostName" />
+                <input type="text" placeholder="Other Cost Name" matInput formControlName="otherCostName" [matAutocomplete]="auto" />
+                <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFnOther">
+                  <mat-option matTooltip=" {{ option.otherCostName }}" *ngFor="let option of this.filterOptionsOther | async" [value]="option">
+                    {{ option.otherCostName }}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
             </div>
             <div class="col-4">
@@ -136,7 +158,12 @@
             </div>
           </div>
         </div>
-        <span matRipple class="material-icons cursor-pointer main-color float-left mt-3" (click)="addNewOtherField()">
+        <span
+          [ngClass]="[!checkValidationOther ? 'main-color-faded' : 'main-color']"
+          matRipple
+          class="material-icons cursor-pointer main-color float-left mt-3"
+          (click)="addNewOtherField()"
+        >
           add_circle
         </span>
         <p class="tctnc d-flex w-100 pt-4">* Total amount will be shown as overall other costs on all the materials.</p>
@@ -144,7 +171,14 @@
     </div>
 
     <div mat-dialog-actions class="flex-column">
-      <button type="submit" mat-button mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0" [disabled]="otherCostForm && !otherCostForm.valid">
+      <button
+        [disabled]="!checkValidationOther"
+        type="submit"
+        mat-button
+        mat-raised-button
+        class="main-background-color main-button color-white m-b-5 mb-0"
+        [disabled]="otherCostForm && !otherCostForm.valid"
+      >
         Save
       </button>
     </div>

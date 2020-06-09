@@ -1,6 +1,6 @@
 <div class="row" *ngIf="!showResponsiveDesign">
-  <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="mode === 'edit'">
-    <div *ngIf="isInternational; else elseBlock">
+  <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="mode === 'edit'; else viewMode">
+    <div *ngIf="isInternational; else elseBlock" class="p-r-10 p-b-10">
       <div *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
         <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
           <span class="font-size-vary-grn color-grey">
@@ -16,14 +16,31 @@
         </span>
       </div>
     </div>
-
     <ng-template #elseBlock>
-      <mat-radio-group *ngIf="poCurrency && poCurrency.exchangeCurrencyName == null" class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
+      <mat-radio-group class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
         <mat-radio-button [checked]="gst === 'IGST'" value="IGST" class="p-r-5">IGST</mat-radio-button>
         <mat-radio-button [checked]="gst === 'CGST & SGST'" value="CGST & SGST">CGST & SGST</mat-radio-button>
       </mat-radio-group>
     </ng-template>
   </div>
+  <ng-template #viewMode>
+    <div *ngIf="isInternational; else elseBlock" class="text-right col-xs-12 p-r-10 p-b-10">
+      <div *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
+        <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+          <span class="font-size-vary-grn color-grey">
+            <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
+            {{ poCurrency.exchangeCurrencyName }}
+          </span>
+          <span class="p-l-5"> = </span>
+          <span class="p-l-5 color-6d6a6a color-grey"> {{ poCurrency.exchangeValue }} </span>
+          <span class="p-l-5 color-grey">
+            <img width="25px" *ngIf="poCurrency.primaryCurrencyFlag" [src]="poCurrency.primaryCurrencyFlag" />
+            {{ poCurrency.primaryCurrencyName }}
+          </span>
+        </span>
+      </div>
+    </div>
+  </ng-template>
   <div class="col-xs-12 customPo">
     <form *ngIf="poTableData" [formGroup]="poForms" (ngSubmit)="sumbit()">
       <mat-accordion displayMode="flat" multi class="mat-table po-table" formArrayName="forms">
@@ -36,7 +53,7 @@
           <span class="mat-header-cell">Awarded quantity</span>
           <span class="mat-header-cell text-left p-l-30">Amount ₹</span>
           <span class="mat-header-cell text-left minwidth-60-px p-l-0">{{ isInternational ? "Tax Amount" : "GST %" }}</span>
-          <span class="mat-header-cell p-l-10">{{ isInternational ? "Other Cost" : "GST Amount" }}</span>
+          <span class="mat-header-cell p-l-10" [ngClass]="{'text-center': isInternational}">{{ isInternational ? "Other Cost" : "GST Amount" }}</span>
           <span class="mat-header-cell">Total Amount with GST ₹</span>
           <span class="mat-header-cell" *ngIf="isInternational"></span>
         </section>
@@ -92,7 +109,7 @@
             <ng-template #gstTotalBlock>
               <span class="mat-cell minwidth-60-px"></span>
             </ng-template>
-            <span class="mat-cell text-left p-r-15" *ngIf="isInternational; else gstTotalAmountBlock">
+            <span class="mat-cell text-center p-r-15" *ngIf="isInternational; else gstTotalAmountBlock">
               {{ getTotalOtherCost(m) | number: "1.2-2" }}
               <span *ngIf="this.poTableData[m].otherCostInfo && this.poTableData[m].otherCostInfo.length" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
@@ -108,7 +125,7 @@
             >
 
             <ng-template #gstTotalAmountBlock>
-              <span class="mat-cell text-left p-r-15">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
+              <span class="mat-cell text-left p-l-10 p-r-10">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
             </ng-template>
             <span class="mat-cell">{{ getMaterialTotalAmount(m) | number: "1.2-2" }}</span>
             <span *ngIf="isInternational" class="mat-cell minwidth-100-px"
@@ -195,7 +212,7 @@
               </ng-template>
               <span *ngIf="isInternational; else gstAmountBlock" class="mat-cell text-center p-r-15"></span>
               <ng-template #gstAmountBlock>
-                <span class="mat-cell text-center">
+                <span class="mat-cell text-left P-l-0">
                   <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
                   <ng-template #editgstAmount>
                     {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["gstAmount"].value | number: "1.2-2" }}
@@ -212,12 +229,31 @@
             </div>
           </ng-container>
         </div>
-        <div class="material-row">
+        <div class="material-row" *ngIf="isInternational">
           <span class="mat-cell text-right">
-            {{ otherCostData && otherCostData.otherCostAmount }}
-            <span
-              ><button mat-button matRipple class="btn btn-link p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('otherCost')">Add other costs</button>
-            </span>
+            <div class="row">
+              <div class="col-xs-10 p-r-75 p-t-10">
+                <span class="p-r-0">
+                  <span class="p-r-5"> {{ totalAdditionalCost | number: "1.2-2" }}</span>
+                  <span *ngIf="this.otherCostData && this.otherCostData.length" class="info-icon info-tootip"
+                    ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                    <span class="info-tootip__content">
+                      <div class="tooltip-table">
+                        <p class="row mb-1" *ngFor="let cost of this.otherCostData">
+                          <strong class="col">{{ cost.otherCostName }}</strong
+                          ><span class="col">{{ cost.otherCostAmount }}</span>
+                        </p>
+                      </div>
+                    </span></span
+                  >
+                </span>
+              </div>
+              <div class="col-xs-2">
+                <span
+                  ><button mat-button matRipple class="btn btn-link p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('otherCost')">Add other costs</button>
+                </span>
+              </div>
+            </div>
           </span>
         </div>
         <div class="mat-row footer">
@@ -227,9 +263,12 @@
           <span class="mat-cell"></span>
           <span class="mat-cell"></span>
           <span class="mat-cell"></span>
-          <span class="mat-cell"></span>
-          <span class="mat-cell"><span>GST Amount ₹</span> <br />{{ gstTotalAmount | number: "1.2-2" }}</span>
-          <span class="mat-cell"><span>Total Amount ₹</span> <br />{{ totalAmount | number: "1.2-2" }}</span>
+          <span class="mat-cell"><span>Tax Amount </span> <br />{{ totalTaxAmount | number: "1.2-2" }}</span>
+          <span class="mat-cell">
+            <span *ngIf="isInternational; else gstTotalAmount"> <span>Other Cost </span> <br />{{ totalOtherAmount | number: "1.2-2" }} </span>
+            <ng-template #gstTotalAmount> <span> GST Amount </span> <br />{{ gstTotalAmount | number: "1.2-2" }} </ng-template>
+          </span>
+          <span class="mat-cell"><span>Total Amount </span> <br />{{ totalAmount | number: "1.2-2" }}</span>
         </div>
         <div class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35 font-size-vary-grn">
           Net Payable Amount in Words :Rupees {{ totalAmount | numberToWords | async | titlecase }} <span class="text-semi-bold">Only /-</span>

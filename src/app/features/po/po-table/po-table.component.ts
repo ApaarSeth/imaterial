@@ -11,6 +11,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OverallOtherCost } from 'src/app/shared/models/common.models';
+import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 
 @Component({
   selector: "app-po-table",
@@ -35,7 +36,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
   minDate = new Date();
   isInternational: number;
   taxAndCostData;
-  otherCostData: OverallOtherCost;
+  otherCostData: OverallOtherCost[];
+  totalAdditionalCost: number = 0;
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
@@ -45,8 +47,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(): void {
-    // this.isInternational = this.currency.isInternational;
-    this.isInternational = 1;
+    this.isInternational = this.currency.isInternational;
     this.poCurrency = this.currency.purchaseOrderCurrency
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
@@ -158,6 +159,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
   }
 
+
   get gstTotalAmount() {
     let sum = 0;
     if (this.mode === "edit" && this.initialCounter != 0) {
@@ -182,6 +184,10 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
   sumbit() {
     this.getData();
+  }
+
+  getadditonalCost(): OtherCostInfo[] {
+    return this.otherCostData;
   }
 
   getData(): PoMaterial[] {
@@ -319,6 +325,30 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  get totalTaxAmount() {
+
+    let totalTax = 0;
+    this.poTableData.forEach((val, i) => {
+      if (val.purchaseOrderDetailList.length > 1) {
+        totalTax += val.purchaseOrderDetailList.map(val => val.brandTax).reduce((a, b) => (a + b))
+      }
+      else {
+        totalTax += val.purchaseOrderDetailList[0].brandTax ? val.purchaseOrderDetailList[0].brandTax : 0;
+      }
+    })
+    return totalTax;
+  }
+
+  get totalOtherAmount() {
+    let totalOtherTax = 0;
+    this.poTableData.forEach((val, i) => {
+      totalOtherTax += val.totalOtherCost ? val.totalOtherCost : 0;
+    })
+    return totalOtherTax + (this.totalAdditionalCost ? this.totalAdditionalCost : 0);
+  }
+
+
+
   getTotalOtherCost(m) {
     if (this.poTableData[m].totalOtherCost) {
       return this.poTableData[m].totalOtherCost;
@@ -335,6 +365,11 @@ export class PoTableComponent implements OnInit, OnDestroy {
       existingData = {
         taxInfo: this.poTableData[mId].taxInfo ? this.poTableData[mId].taxInfo : null,
         otherCostInfo: this.poTableData[mId].otherCostInfo ? this.poTableData[mId].otherCostInfo : null
+      }
+    }
+    else {
+      existingData = {
+        otherCostInfo: this.otherCostData
       }
     }
 
@@ -357,8 +392,22 @@ export class PoTableComponent implements OnInit, OnDestroy {
       }
       if (type === 'otherCost') {
         this.otherCostData = res.otherCostInfo ? res.otherCostInfo : null;
+        otherCost();
       }
     });
+
+    let otherCost = () => {
+      if (this.otherCostData && this.otherCostData.length > 0) {
+        if (this.otherCostData.length > 1) {
+          this.totalAdditionalCost = this.otherCostData.map(val => { return val.otherCostAmount }).reduce((a, b) => (a + b))
+        }
+        else {
+          this.totalAdditionalCost = this.otherCostData[0].otherCostAmount
+        }
+      } else {
+        this.totalAdditionalCost = 0
+      }
+    }
     let calculateTaxInfo = () => {
       if (this.poTableData[mId].taxInfo && this.poTableData[mId].taxInfo.length > 0) {
         if (this.poTableData[mId].taxInfo.length > 1) {
@@ -385,7 +434,5 @@ export class PoTableComponent implements OnInit, OnDestroy {
         this.poTableData[mId]['totalOtherCost'] = null
       }
     }
-
   }
-
 }

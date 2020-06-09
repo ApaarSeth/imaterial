@@ -178,6 +178,7 @@ export class PoComponent implements OnInit {
       projectAddress: this.poData.projectAddress,
       billingAddress: this.poData.billingAddress,
       materialData: this.poTable.getData() as PoMaterial[],
+      additionalOtherCostInfo: this.poTable.getadditonalCost() ? this.poTable.getadditonalCost() : null,
       purchaseOrderDetailId: 0,
       purchaseOrderId: this.poId,
       poNumber: this.poCard.getData().orderNo,

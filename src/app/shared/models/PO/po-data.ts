@@ -25,6 +25,7 @@ export interface POData {
   approverName?: string;
   roleDescription?: string;
   isInternational: number;
+  additionalOtherCostInfo: OtherCostInfo[];
 }
 
 export interface PurchaseOrderCurrency {
@@ -225,6 +226,7 @@ export interface initiatePo {
   supplierAddressId: number;
   supplierName: string;
   rfqId: null;
+  rfqCurrency: rfqCurrency;
   materialList: poMaterialList[];
 }
 

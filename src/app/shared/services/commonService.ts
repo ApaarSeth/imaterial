@@ -90,6 +90,11 @@ export class CommonService {
     return this.dataService.getRequest(API.COUNTRYCODE);
   }
 
+  taxesList() {
+    return this.dataService.getRequest(API.GETTAXESLIST)
+  }
+
+
 
 
 

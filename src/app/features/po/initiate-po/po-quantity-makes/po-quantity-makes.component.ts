@@ -89,6 +89,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   }
   materialAdded() {
     this.checkedMaterialsList.map(project => {
+      this.initiatePoData.rfqCurrency = this.poCurrency;
       this.initiatePoData.projectId = project.projectId;
       this.initiatePoData.projectName = project.projectName;
       this.initiatePoData.projectAddressId = project.defaultAddress.projectAddressId;

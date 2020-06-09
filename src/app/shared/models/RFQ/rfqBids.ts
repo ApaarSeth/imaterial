@@ -17,7 +17,7 @@ export interface RfqProjectSubmit {
   rfqId: number;
   materialList: MaterialListSubmit[];
   rfqCurrency: Currency
-  rfqOtherCostInfo: RfqOtherCostInfo
+  additionalOtherCostInfo: additionalOtherCost[]
 }
 
 export interface MaterialListSubmit {
@@ -66,10 +66,10 @@ export interface RfqProject {
   unit: null;
   materialList: RfqMaterialList[];
   supplierRemarkList: supplierRemarkList[];
-  rfqOtherCostInfo: RfqOtherCostInfo;
+  additionalOtherCostInfo: additionalOtherCost[];
 }
 
-export interface RfqOtherCostInfo {
+export interface additionalOtherCost {
   supplierId: number,
   rfqSupplierId: number,
   otherCostAmount: number,
