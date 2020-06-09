@@ -46,34 +46,27 @@
   <!-- fourth row -->
   <div class="row">
 
-    <div class="col-xs-4 col-sm-4">
+    <div class="col-xs-2 col-sm-2">
 
       <mat-form-field class="border-select mat-form-field-flex-mm-padding">
         <mat-select formControlName="countriesList">
           <div class="display-flex">
-            <input
-              class="p-l-10 p-b-5"
-              matInput
-              type="search"
-              placeholder="Search Country"
-              [(ngModel)]="searchCountry"
-              [ngModelOptions]="{standalone: true}"
-              (keydown)="$event.stopPropagation()"
-            />
+            <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country" [(ngModel)]="searchCountry"
+              [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()" />
             <button mat-button matSuffix mat-icon-button>
               <mat-icon>search</mat-icon>
             </button>
           </div>
           <mat-select-trigger>
-            <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-              ><img class="w-15 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+            <span
+              matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"><img
+                class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
               <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
               <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
             </span>
           </mat-select-trigger>
-          <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country" selected="trade.isAttatched"
-            ><span
-              ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+          <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country"
+            selected="trade.isAttatched"><span><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
               <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
               <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
             </span>
@@ -83,7 +76,7 @@
     </div>
 
 
-    <div class="col-xs-8 col-sm-8">
+    <div class="col-xs-10 col-sm-10">
       <!-- PinCode -->
       <mat-form-field class="border-input add-edit-user-form-modal">
         <input matInput type="text" placeholder="Phone No" formControlName="contactNo" />

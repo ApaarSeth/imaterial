@@ -150,8 +150,7 @@
                           <div class="tooltip-table">
                             <p class="row mb-1"
                               *ngFor="let otcost of taxAndCostData[projects.projectId][material.materialId].otherCostInfo">
-                              <strong class="col">{{otcost.otherCostName}}</strong>
-                              <span class="col">{{otcost.otherCostAmount}}</span>
+                              <strong>{{otcost.otherCostName}} <span>{{otcost.otherCostAmount}}</span></strong>
                             </p>
                           </div>
                         </span>
@@ -230,8 +229,8 @@
                         <div class="tooltip-table">
                           <p class="row mb-1"
                             *ngFor="let tInfo of taxAndCostData[projects.projectId][material.materialId].taxInfo">
-                            <strong class="col">{{tInfo.taxName}}</strong><span
-                              class="col font-weight-normal">{{tInfo.taxValue}}%</span>
+                            <strong>{{tInfo.taxName}} <span
+                              class="font-weight-normal">{{tInfo.taxValue}}%</span></strong>
                           </p>
                         </div>
                       </span>
@@ -298,8 +297,7 @@
                       <span class="info-tootip__content">
                         <div class="tooltip-table">
                           <p class="row mb-1" *ngFor="let otcost of otherCostData.otherCostInfo"> <strong
-                              class="col">{{otcost.otherCostName}}</strong><span
-                              class="col">{{otcost.otherCostAmount}}</span>
+                              >{{otcost.otherCostName}} <span>{{otcost.otherCostAmount}}</span></strong>
                           </p>
                         </div>
                       </span>

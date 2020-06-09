@@ -84,9 +84,9 @@ export class AddEditUserComponent implements OnInit {
     this.visitorsService.getIpAddress().subscribe(res => {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        if(this.data.isEdit){
+        if (this.data.isEdit) {
           this.getCountryCode(this.data.detail.countryCode);
-        }else{
+        } else {
           this.getCountryCode(res['calling_code']);
         }
       });
@@ -100,9 +100,9 @@ export class AddEditUserComponent implements OnInit {
         return val.callingCode === callingCode;
       })
       this.form.get('countriesList').setValue(this.livingCountry[0])
-      if(this.data.isEdit){
-        this.form.get('countriesList').disable();
-      }
+      // if(this.data.isEdit){
+      //   this.form.get('countriesList').disable();
+      // }
     })
   }
 

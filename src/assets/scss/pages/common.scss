@@ -241,19 +241,28 @@ div.limited-character.universal {
   max-width: 200px;
   background-color:#ffffff;
   border-radius:5px;
-  padding: 5px;
+  padding: 5px 5px 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   margin-top: 10px;
-  margin-left: -55%;
+  margin-left: -62%;
   font-size: 12px;
   text-align: left;
+  position: relative;
+  z-index: 9;
   p{
     border-bottom: 1px solid #e8e8e8;
     margin-left: 1px;
     margin-right: 1px;
+    &:last-of-type{
+      border-bottom: 0px;
+    }
   }
-  strong, span{
-    margin: 2px;
+  strong{
+    margin-bottom: 2px;
+  }
+  span{
+    margin-left: 3px;
+    font-weight: normal;
   }
 }
 .slideToggalColor {
