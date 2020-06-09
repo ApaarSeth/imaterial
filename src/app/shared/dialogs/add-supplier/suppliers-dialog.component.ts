@@ -5,6 +5,9 @@ import { Suppliers } from "../../models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { AppNavigationService } from '../../services/navigation.service';
+import { VisitorService } from '../../services/visitor.service';
+import { CommonService } from '../../services/commonService';
+import { CountryCode } from '../../models/currency';
 
 // Component for dialog box
 @Component({
@@ -17,6 +20,10 @@ export class SuppliersDialogComponent {
   suppliers: Suppliers;
   form: FormGroup;
   orgId: number;
+  ipaddress: string;
+  countryList: CountryCode[] = [];
+  livingCountry: CountryCode[] = [];
+  searchCountry: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<SuppliersDialogComponent>,
@@ -24,12 +31,38 @@ export class SuppliersDialogComponent {
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private visitorsService: VisitorService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    this.getLocation();
     this.initForm();
     this.orgId = Number(localStorage.getItem("orgId"))
+  }
+
+  getLocation() {
+    this.visitorsService.getIpAddress().subscribe(res => {
+      this.ipaddress = res['ip'];
+      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+        this.getCountryCode(res['calling_code'])
+      });
+    });
+  }
+
+  getCountryCode(callingCode) {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+      this.livingCountry = this.countryList.filter(val => {
+        return val.callingCode === callingCode;
+      })
+      this.form.get('countryCode').setValue(this.livingCountry[0])
+    })
+  }
+
+  get selectedCountry() {
+    return this.form.get('countryCode').value;
   }
 
   onNoClick(): void {
@@ -40,14 +73,18 @@ export class SuppliersDialogComponent {
     this.form = this.formBuilder.group({
       supplier_name: ["", Validators.required],
       email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
+      contact_no: ["", Validators.required],
       pan: [""],
-      countryCallingCode: ['+91']
+      countryCallingCode: [""],
+      countryCode: []
     });
   }
 
   submit() {
-    this.addSuppliers(this.data, this.form.value);
+    let data = this.form.value;
+    data['countryCallingCode'] = this.form.get('countryCode').value.callingCode;
+    delete data.countryCode;
+    this.addSuppliers(this.data, data);
   }
 
   addSuppliers(organisarionId: number, suppliers: Suppliers) {
