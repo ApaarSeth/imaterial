@@ -103,8 +103,9 @@
                             <span class="col-sm-1 text-center">
                               {{ brand }}
                             </span>
-                            <span class="col-sm-1 text-right margin-right">
+                            <span class="col-sm-2 text-left p-l-20 margin-right">
                               Supplier Rates
+                              <span *ngIf="this.rfqProjects[0].rfqCurrency" class="p-r-5 p-t-2">({{ currency }})</span>
                             </span>
 
                             <!-- <span class="col-sm-1"></span> -->

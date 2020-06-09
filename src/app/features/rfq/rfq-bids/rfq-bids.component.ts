@@ -102,6 +102,12 @@ export class RfqBidsComponent implements OnInit {
     // console.log(this.rfqForms.value);
   }
 
+  get currency() {
+    return this.ratesBaseCurr
+      ? this.rfqProjects[0].rfqCurrency.primaryCurrencyName
+      : this.rfqProjects[0].rfqCurrency.exchangeCurrencyName
+  }
+
   allocateQuantity() {
     const submitData: RfqProjectSubmit[] = this.rfqForms.value.forms.reduce(
       (data, proj) => {
