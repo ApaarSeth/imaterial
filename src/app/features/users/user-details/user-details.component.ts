@@ -213,6 +213,7 @@ export class UserDetailComponent implements OnInit {
     this.userDetailsTemp.roleId = data.ProjectUser.roleId;
     this.userDetailsTemp.userId = data.ProjectUser.userId;
     this.userDetailsTemp.accountStatus = data.ProjectUser.accountStatus;
+    this.userDetailsTemp.countryCode = data.ProjectUser.countryCode;
 
     data.ProjectList.forEach(element => {
       projectList.push(element.projectId);
