@@ -86,7 +86,6 @@
               </span>
             </div>
           </ng-container>
-
         </div>
 
         <div style="width: 100%; overflow-x: scroll;">
@@ -120,7 +119,6 @@
               <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1">
                 <th></th>
               </ng-container>
-
             </tr>
 
             <!-- Material Info -->
@@ -138,14 +136,25 @@
                 <td class="font-size14">Required Date : {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</td>
                 <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1">
                   <td class="font-size14">
-                    <ng-container
-                      *ngIf="taxAndCostData && taxAndCostData[projects.projectId] && taxAndCostData[projects.projectId][material.materialId] && taxAndCostData[projects.projectId][material.materialId].otherCostInfo && taxAndCostData[projects.projectId][material.materialId].otherCostInfo.length">
-                      <strong>Other Cost: </strong> <span style="margin-right:5px;"
-                        *ngIf="taxAndCostData && taxAndCostData[projects.projectId] && taxAndCostData[projects.projectId][material.materialId] && taxAndCostData[projects.projectId][material.materialId].otherCostInfo.length">{{ getotherCostInfoTotal(taxAndCostData[projects.projectId][material.materialId].otherCostInfo) }}
+                    <ng-container *ngIf="
+                        taxAndCostData &&
+                        taxAndCostData[projects.projectId] &&
+                        taxAndCostData[projects.projectId][material.materialId] &&
+                        taxAndCostData[projects.projectId][material.materialId].otherCostInfo &&
+                        taxAndCostData[projects.projectId][material.materialId].otherCostInfo.length
+                      ">
+                      <strong>Other Cost: </strong>
+                      <span style="margin-right: 5px;"
+                        *ngIf="
+                          taxAndCostData &&
+                          taxAndCostData[projects.projectId] &&
+                          taxAndCostData[projects.projectId][material.materialId] &&
+                          taxAndCostData[projects.projectId][material.materialId].otherCostInfo.length
+                        ">{{ getotherCostInfoTotal(taxAndCostData[projects.projectId][material.materialId].otherCostInfo) }}
                         <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
                           {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}</ng-container></span>
                       <span class="info-icon info-tootip"><img src="./../../../../assets/images/i_icon.png"
-                          class="img-responsive">
+                          class="img-responsive" />
                         <span class="info-tootip__content">
                           <div class="tooltip-table">
                             <p class="row mb-1"
@@ -158,7 +167,7 @@
                     </ng-container>
                   </td>
                 </ng-container>
-                <td class="text-align-right" [ngClass]="rfqSupplierDetailList.isInternational === 1 ? 'pt-1' : '' ">
+                <td class="text-align-right" [ngClass]="rfqSupplierDetailList.isInternational === 1 ? 'pt-1' : ''">
                   <ng-container *ngIf="rfqSupplierDetailList.isInternational === 0; else txBtn">
                     <mat-form-field class="border-input">
                       <input matInput type="text" title="" placeholder="GST %" [(ngModel)]="material.Igst" min="0"
@@ -170,9 +179,9 @@
                   </ng-container>
                   <ng-template #txBtn>
                     <button mat-button matRipple class="btn btn-link p-0 main-color text-decoration-underline"
-                      (click)="openTaxesCostsDialog('taxesAndCost', projects.projectId, material.materialId)">Add
-                      Taxes
-                      & costs</button>
+                      (click)="openTaxesCostsDialog('taxesAndCost', projects.projectId, material.materialId)">
+                      Add Taxes & costs
+                    </button>
                   </ng-template>
                 </td>
               </tr>
@@ -208,35 +217,42 @@
                 </tr>
               </ng-container>
               <ng-template #intBHeader>
-
                 <tr matSort class="brand-name-rfq-supplies">
                   <th class="font-size14">Brand Name</th>
-                  <th class="font-size14">Unit Rate <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                  <th class="font-size14">
+                    Unit Rate <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
                   </th>
-                  <th class="font-size14 text-align-right">Amount
+                  <th class="font-size14 text-align-right">
+                    Amount
                     <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
                   </th>
-                  <th class="font-size14 text-align-right">Tax Amount
+                  <th class="font-size14 text-align-right">
+                    Tax Amount
                     <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
-                    <span
-                      *ngIf="taxAndCostData && taxAndCostData[projects.projectId] && taxAndCostData[projects.projectId][material.materialId] && taxAndCostData[projects.projectId][material.materialId].taxInfo && taxAndCostData[projects.projectId][material.materialId].taxInfo.length"
-                      class="info-icon info-tootip ml-1"><img src="./../../../../assets/images/i_icon.png"
-                        class="img-responsive">
+                    <span *ngIf="
+                        taxAndCostData &&
+                        taxAndCostData[projects.projectId] &&
+                        taxAndCostData[projects.projectId][material.materialId] &&
+                        taxAndCostData[projects.projectId][material.materialId].taxInfo &&
+                        taxAndCostData[projects.projectId][material.materialId].taxInfo.length
+                      " class="info-icon info-tootip ml-1"><img src="./../../../../assets/images/i_icon.png"
+                        class="img-responsive" />
                       <span class="info-tootip__content">
                         <div class="tooltip-table">
                           <p class="row mb-1"
                             *ngFor="let tInfo of taxAndCostData[projects.projectId][material.materialId].taxInfo">
                             <strong>{{tInfo.taxName}} <span
-                              class="font-weight-normal">{{tInfo.taxValue}}%</span></strong>
+                                class="font-weight-normal">{{tInfo.taxValue}}%</span></strong>
                           </p>
                         </div>
                       </span>
                     </span>
                   </th>
-                  <th class="font-size14 text-align-right">Total Amount
+                  <th class="font-size14 text-align-right">
+                    Total Amount
                     <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
                   </th>
@@ -257,18 +273,35 @@
                   <td class="text-align-right">{{ brand.brandRate * material.materialQuantity | number: "1.2-2" }}</td>
 
                   <td class="text-align-right">
-                    <span
-                      *ngIf="brand.brandRate && taxAndCostData && taxAndCostData[projects.projectId] && taxAndCostData[projects.projectId][material.materialId] && taxAndCostData[projects.projectId][material.materialId].taxInfo && taxAndCostData[projects.projectId][material.materialId].taxInfo.length; else wotaxInfo">
-                      {{ ((brand.brandRate * material.materialQuantity) * getTaxInfototal(taxAndCostData[projects.projectId][material.materialId].taxInfo)) | number: "1.2-2" }}</span>
+                    <span *ngIf="
+                        brand.brandRate &&
+                          taxAndCostData &&
+                          taxAndCostData[projects.projectId] &&
+                          taxAndCostData[projects.projectId][material.materialId] &&
+                          taxAndCostData[projects.projectId][material.materialId].taxInfo &&
+                          taxAndCostData[projects.projectId][material.materialId].taxInfo.length;
+                        else wotaxInfo
+                      ">
+                      {{ brand.brandRate * material.materialQuantity * getTaxInfototal(taxAndCostData[projects.projectId][material.materialId].taxInfo) | number: "1.2-2" }}</span>
                     <ng-template #wotaxInfo>
                       <span>0.00</span>
                     </ng-template>
                   </td>
 
                   <td class="text-align-right">
-                    <span
-                      *ngIf="(brand.brandRate && taxAndCostData && taxAndCostData[projects.projectId] && taxAndCostData[projects.projectId][material.materialId] && taxAndCostData[projects.projectId][material.materialId].taxInfo && taxAndCostData[projects.projectId][material.materialId].taxInfo.length); else wotaxInfoTotal">
-                      {{ ((brand.brandRate * material.materialQuantity) * getTaxInfototal(taxAndCostData[projects.projectId][material.materialId].taxInfo)) + (brand.brandRate * material.materialQuantity) | number: "1.2-2" }}</span>
+                    <span *ngIf="
+                        brand.brandRate &&
+                          taxAndCostData &&
+                          taxAndCostData[projects.projectId] &&
+                          taxAndCostData[projects.projectId][material.materialId] &&
+                          taxAndCostData[projects.projectId][material.materialId].taxInfo &&
+                          taxAndCostData[projects.projectId][material.materialId].taxInfo.length;
+                        else wotaxInfoTotal
+                      ">
+                      {{
+                        brand.brandRate * material.materialQuantity * getTaxInfototal(taxAndCostData[projects.projectId][material.materialId].taxInfo) +
+                          brand.brandRate * material.materialQuantity | number: "1.2-2"
+                      }}</span>
                     <ng-template #wotaxInfoTotal>
                       <span *ngIf="!brand.brandRate">0.00</span>
                       <span
@@ -276,7 +309,6 @@
                     </ng-template>
                   </td>
                 </tr>
-
               </ng-template>
             </ng-container>
             <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1">
@@ -288,16 +320,16 @@
                   <ng-container
                     *ngIf="otherCostData && otherCostData.otherCostInfo && otherCostData.otherCostInfo.length">
                     <strong>Other Cost: </strong>
-                    <span style="margin-right:5px;">
+                    <span style="margin-right: 5px;">
                       {{ getotherCostInfoTotal(otherCostData.otherCostInfo) }}
                       <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
                         {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}</ng-container></span>
                     <span class="info-icon info-tootip"><img src="./../../../../assets/images/i_icon.png"
-                        class="img-responsive">
+                        class="img-responsive" />
                       <span class="info-tootip__content">
                         <div class="tooltip-table">
-                          <p class="row mb-1" *ngFor="let otcost of otherCostData.otherCostInfo"> <strong
-                              >{{otcost.otherCostName}} <span>{{otcost.otherCostAmount}}</span></strong>
+                          <p class="row mb-1" *ngFor="let otcost of otherCostData.otherCostInfo">
+                            <strong>{{otcost.otherCostName}} <span>{{otcost.otherCostAmount}}</span></strong>
                           </p>
                         </div>
                       </span>

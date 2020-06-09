@@ -93,7 +93,7 @@ export class RfqBidsComponent implements OnInit {
           addressId: project.projectAddressId,
           materialList: this.formBuilder.array(materialGrp),
           rfqCurrency: project.rfqCurrency,
-          rfqOtherCostInfo: project.rfqOtherCostInfo
+          additionalOtherCostInfo: project.additionalOtherCostInfo
         });
       }
     );
@@ -122,7 +122,7 @@ export class RfqBidsComponent implements OnInit {
             rfqId: this.rfqId,
             materialList,
             rfqCurrency: proj.rfqCurrency,
-            rfqOtherCostInfo: proj.rfqOtherCostInfo
+            additionalOtherCostInfo: proj.additionalOtherCostInfo
           };
         };
         const getMaterialsForUnicSupp = (suppId): MaterialListSubmit[] =>
