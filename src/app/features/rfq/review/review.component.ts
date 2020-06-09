@@ -81,7 +81,7 @@ export class ReviewComponent implements OnInit {
           this.finalRfq = res.data;
           this.checkedList = this.finalRfq.rfqProjectsList;
           this.selectedSuppliersList = this.finalRfq.supplierDetails;
-           if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
+          if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
             setTimeout(() => {
               this.guidedTourService.startTour(this.RfqPreviewTour);
             }, 1000);
@@ -128,8 +128,8 @@ export class ReviewComponent implements OnInit {
       let date = new Date(this.commonService.formatDate(this.form.value.dueDate))
       let dummyMonth = date.getMonth() + 1;
       const year = date.getFullYear().toString();
-      const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-      const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+      const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+      const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
 
       this.finalRfq.dueDate = year + "-" + month + "-" + day
     }
@@ -175,15 +175,15 @@ export class ReviewComponent implements OnInit {
       });
     }
   }
-  selectCurrency(){
+  selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
-      disableClose: true ,
+      disableClose: true,
       width: "600px",
-      data : this.finalRfq.rfqCurrency
+      data: this.finalRfq.rfqCurrency
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if(data != null){
+      if (data != null) {
         this.finalRfq.rfqCurrency = data;
       }
     });

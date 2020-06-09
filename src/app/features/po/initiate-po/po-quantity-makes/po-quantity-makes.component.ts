@@ -89,6 +89,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   }
   materialAdded() {
     this.checkedMaterialsList.map(project => {
+      this.initiatePoData.rfqCurrency = this.poCurrency;
       this.initiatePoData.projectId = project.projectId;
       this.initiatePoData.projectName = project.projectName;
       this.initiatePoData.projectAddressId = project.defaultAddress.projectAddressId;
@@ -106,8 +107,8 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
           let date = new Date(this.commonService.formatDate(material.fullfilmentDate))
           let dummyMonth = date.getMonth() + 1;
           const year = date.getFullYear().toString();
-          const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-          const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+          const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+          const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
           material.fullfilmentDate = year + "-" + month + "-" + day;
         }
         return material
