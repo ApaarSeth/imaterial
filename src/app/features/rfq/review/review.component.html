@@ -51,7 +51,7 @@
                 </button>
               </div> -->
 
-            <div class="col-xs-2 p-l-0 p-t-20 p-b-20 text-right" *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null">
+            <div class="col-xs-3 p-l-0 p-t-20 p-b-20 text-right" *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null">
               <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
                 <span class="font-size-vary-grn color-grey">
                   <img width="25px" *ngIf="finalRfq.rfqCurrency.exchangeCurrencyFlag" [src]="finalRfq.rfqCurrency.exchangeCurrencyFlag" />
@@ -64,16 +64,17 @@
                   {{ finalRfq.rfqCurrency.primaryCurrencyName }}
                 </span>
               </span>
-            </div>
-
-            <div class="col xs-1 text-right p-t-10 p-r-0" *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null">
-              <div class="info p-t-10 p-l-55">
-                <mat-icon class="material-info-padding round-button color-white main-background-color">info</mat-icon>
-                <div id="infoIcon">
-                  <div class="row text-center color-grey text-semi-bold width-110-px">
-                    Supplier will have to submit the quote in this selected currency
-                  </div>
-                </div>
+              <div class="display-inline-block p-l-5">
+                <span *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null" class="info-icon info-tootip"
+                  ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                  <span class="info-tootip__content">
+                    <div class="tooltip-table">
+                      <div class="row text-center color-grey text-semi-bold">
+                        Supplier will have to submit the quote in this selected currency
+                      </div>
+                    </div>
+                  </span>
+                </span>
               </div>
             </div>
 
