@@ -65,13 +65,13 @@
             <div class="row p-t-20">
               <div class="col-xs-6" (click)="openAddressDialog()">
                 <div [ngClass]="[AddressValid ? 'select-address-tag' : 'select-address-tag-disabled']">
-                   Select Address
+                  Select Address
                 </div>
               </div>
-               <div class="col-xs-6" (click)="reset()">
-                  <div class="reset-form-tag">    
-                      Reset
-                  </div>
+              <div class="col-xs-6" (click)="reset()">
+                <div class="reset-form-tag">
+                  Reset
+                </div>
               </div>
             </div>
             <!-- fourth row -->
@@ -79,22 +79,24 @@
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Address Line1" #FormaddressLine1 formControlName="addressLine1" required />
+                  <input matInput type="text" placeholder="Address Line1" #FormaddressLine1
+                    formControlName="addressLine1" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine1 is Required</mat-error> -->
                   <small
                     *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched"
                     class="form-error-msg"> Address Line1 is required </small>
-                     <small *ngIf="FormaddressLine1.value.length > 120 && form.controls['addressLine1'].touched"
+                  <small *ngIf="FormaddressLine1.value.length > 120 && form.controls['addressLine1'].touched"
                     class="form-error-msg">
-                     Address should be less than 120 characters
-                      </small>
+                    Address should be less than 120 characters
+                  </small>
                 </mat-form-field>
               </div>
 
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Address Line2" #FormaddressLine2 formControlName="addressLine2" />
+                  <input matInput type="text" placeholder="Address Line2" #FormaddressLine2
+                    formControlName="addressLine2" />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine2 is Required</mat-error> -->
                   <!-- <small
                     *ngIf="form.controls['addressLine2'].hasError('required') && form.controls['addressLine2'].touched"
@@ -102,37 +104,81 @@
                   <small
                     *ngIf="form.controls['addressLine2'].hasError('pattern') && form.controls['addressLine2'].touched"
                     class="form-error-msg"> Enter Valid Address Line 2</small>
-                     <small *ngIf="FormaddressLine2.value.length > 120  && form.controls['addressLine2'].touched"
+                  <small *ngIf="FormaddressLine2.value.length > 120  && form.controls['addressLine2'].touched"
                     class="form-error-msg">
-                      Address should be less than 120 characters
-                      </small>
+                    Address should be less than 120 characters
+                  </small>
                 </mat-form-field>
               </div>
 
             </div>
 
             <!-- fifth row-->
-             <!-- fourth row -->
+            <!-- fourth row -->
             <div class="row">
+
+              <div class="col-sm-6">
+                <!-- country -->
+                <mat-form-field class="border-select mat-form-field-flex-mm-padding w-vw-17 ml-4">
+                  <mat-select formControlName="countryCode" (selectionChange)="blankPincode()">
+                    <div class="display-flex">
+                      <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country"
+                        [(ngModel)]="searchCountry" [ngModelOptions]="{standalone: true}"
+                        (keydown)="$event.stopPropagation()" />
+                      <button mat-button matSuffix mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                      </button>
+                    </div>
+                    <mat-select-trigger>
+                      <span
+                        matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"><img
+                          class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                        <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.name }}</span>
+                        <!-- <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span> -->
+                      </span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country"
+                      selected="trade.isAttatched"><span><img class="width17Percent p-r-10" [src]="country.imageUrl"
+                          alt="" />
+                        <span matTooltip="{{ country.name }}"
+                          class="limited-character universal p-r-5">{{ country.name }}</span>
+                        <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
+                      </span>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Pincode" #pincode formControlName="pinCode" (input)="getPincode($event)" required />
+                  <input matInput type="text" placeholder="Pincode" #pincode formControlName="pinCode"
+                    (input)="getPincode($event)" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">pinCode is Required</mat-error> -->
                   <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
                     class="form-error-msg"> Pincode is required </small>
                   <!-- <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
                     class="form-error-msg"> Enter Valid pinCode</small> -->
-                   <small *ngIf="form.controls['pinCode'].touched && (!validPincode) && form.controls['pinCode'].hasError('pattern')" class="error-msg">
-                      Enter Valid Pincode
-                   </small> 
-                   <small *ngIf="form.controls['pinCode'].touched && (!validPincode) && !form.controls['pinCode'].hasError('pattern') && !validPincode && (pincode.value.length > 0) " class="error-msg">
-                     Enter Valid Pincode
-                   </small>
+                  <small
+                    *ngIf="form.controls['pinCode'].touched && (!validPincode) && form.controls['pinCode'].hasError('pattern')"
+                    class="error-msg">
+                    Enter Valid Pincode
+                  </small>
+                  <small
+                    *ngIf="form.controls['pinCode'].touched && (!validPincode) && !form.controls['pinCode'].hasError('pattern') && !validPincode && (pincode.value.length > 0) "
+                    class="error-msg">
+                    Enter Valid Pincode
+                  </small>
                 </mat-form-field>
               </div>
-          
-             <div class="col-sm-6">
+
+            </div>
+
+            <!-- fourth row -->
+            <div class="row">
+
+              <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
                   <input matInput type="text" placeholder="City" formControlName="city" required />
@@ -144,10 +190,6 @@
                 </mat-form-field>
               </div>
 
-            </div>
-            
-            <!-- fourth row -->
-            <div class="row">
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
@@ -160,21 +202,21 @@
                 </mat-form-field>
               </div>
               <div class="col-sm-6">
-                
+
               </div>
 
             </div>
 
             <!-- sixth row-->
-           
+
 
           </div>
           <!-- end structure -->
 
           <div mat-dialog-actions>
             <div class="col-sm-12 save-btn-add-edit-user-modal rfq-bid-address">
-              <button mat-raised-button [disabled]="(disabledAddress ? false : ( validPincode ? (!form.valid) : true))" (click)="saveAddress()"
-                class="main-background-color main-button color-white pull-right">
+              <button mat-raised-button [disabled]="(disabledAddress ? false : ( validPincode ? (!form.valid) : true))"
+                (click)="saveAddress()" class="main-background-color main-button color-white pull-right">
                 Submit
               </button>
             </div>

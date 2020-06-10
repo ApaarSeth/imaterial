@@ -12,6 +12,9 @@ import { DocumentUploadService } from 'src/app/shared/services/document-download
 import { Router } from '@angular/router';
 import { AppNavigationService } from '../../services/navigation.service';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
+import { CountryCode } from '../../models/currency';
+import { VisitorService } from '../../services/visitor.service';
+import { CommonService } from '../../services/commonService';
 
 export interface City {
   value: string;
@@ -50,7 +53,13 @@ export class AddProjectComponent implements OnInit {
   pincodeLength: number;
   imageFileSizeError: string = "";
   imageFileSize: boolean = false;
-   fileTypes : string[] = ['png', 'jpeg', 'jpg'];
+  fileTypes: string[] = ['png', 'jpeg', 'jpg'];
+
+  ipaddress: string;
+  countryList: CountryCode[] = [];
+  livingCountry: CountryCode[] = [];
+  searchCountry: string = '';
+  selectedCountryId: number;
 
   constructor(
     private projectService: ProjectService,
@@ -61,10 +70,13 @@ export class AddProjectComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private _router: Router,
     private navService: AppNavigationService,
-    private fbPixel: FacebookPixelService
+    private fbPixel: FacebookPixelService,
+    private visitorsService: VisitorService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.selectedConstructionUnit = "1";
@@ -75,6 +87,44 @@ export class AddProjectComponent implements OnInit {
       }
     }
 
+  }
+
+  getLocation() {
+    this.visitorsService.getIpAddress().subscribe(res => {
+      this.ipaddress = res['ip'];
+      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+        if (this.data.isEdit) {
+          this.getCountryCode(this.data.detail.callingCode);
+        } else {
+          this.getCountryCode(res['calling_code'])
+        }
+      });
+    });
+  }
+
+  blankPincode() {
+    this.form.get('pinCode').setValue('');
+    this.city = "";
+    this.state = "";
+    this.form.get('city').setValue("");
+    this.form.get('state').setValue("");
+  }
+
+  getCountryCode(callingCode) {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+      this.livingCountry = this.countryList.filter(val => {
+        return val.callingCode === callingCode;
+      })
+      this.form.get('countryCode').setValue(this.livingCountry[0]);
+    })
+  }
+
+  get selectedCountry() {
+    if (this.form.get('countryCode').value) {
+      this.selectedCountryId = this.form.get('countryCode').value.countryId;
+    }
+    return this.form.get('countryCode').value;
   }
 
   cities: City[] = [
@@ -106,12 +156,13 @@ export class AddProjectComponent implements OnInit {
       ],
       addressLine1: [
         this.data.isEdit ? this.data.detail.addressLine1 : "",
-        [Validators.required,Validators.maxLength(120)]
+        [Validators.required, Validators.maxLength(120)]
       ],
-      addressLine2: [this.data.isEdit ? this.data.detail.addressLine2 : "",Validators.maxLength(120)],
+      addressLine2: [this.data.isEdit ? this.data.detail.addressLine2 : "", Validators.maxLength(120)],
       pinCode: [
         this.data.isEdit ? this.data.detail.pinCode : "",
-        [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
+        // [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
+        [Validators.required]
       ],
       state: [
         { value: this.data.isEdit ? this.data.detail.state : "", disabled: true },
@@ -147,6 +198,8 @@ export class AddProjectComponent implements OnInit {
         [Validators.pattern(FieldRegExConst.GSTIN)]
       ],
       imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
+      countryId: [null],
+      countryCode: []
     });
   }
 
@@ -200,6 +253,8 @@ export class AddProjectComponent implements OnInit {
   }
 
   submit() {
+    this.form.value.countryId = this.form.get('countryCode').value.countryId;
+    delete this.form.value.countryCode;
     if (this.data.isEdit) {
       this.form.value.startDate = this.formatDate(this.form.value.startDate);
       this.form.value.endDate = this.formatDate(this.form.value.endDate);
@@ -231,14 +286,14 @@ export class AddProjectComponent implements OnInit {
     this.form.get('city').setValue("");
     this.form.get('state').setValue("");
     this.pincodeLength = event.target.value.length;
-    if (event.target.value.length == 6) {
+    if (event.target.value.length >= 5) {
       this.cityStateFetch(event.target.value);
     }
 
   }
   cityStateFetch(value) {
-    this.projectService.getPincode(value).then(res => {
-      if (res.data) {
+    this.projectService.getPincodeInternational(value, this.selectedCountryId).then(res => {
+      if (res.data && res.data.length) {
         this.city = res.data[0].districtName;
         this.state = res.data[0].stateName;
         if (this.city && this.state)
@@ -298,33 +353,33 @@ export class AddProjectComponent implements OnInit {
       const file = event.target.files[0];
       let fileSize = event.target.files[0].size; // in bytes
       let fileType = event.target.files[0].name.split('.').pop();
-     
-      if(this.fileTypes.some(element => {
-         return element === fileType
-       })){
-          if (fileSize < 1000000) {
-             reader.onload = (event) => {
-        this.localImg = (<FileReader>event.target).result;
+
+      if (this.fileTypes.some(element => {
+        return element === fileType
+      })) {
+        if (fileSize < 1000000) {
+          reader.onload = (event) => {
+            this.localImg = (<FileReader>event.target).result;
+          }
+          this.imageFileSizeError = "";
+          this.imageFileSize = true;
+          this.uploadImage(file);
+        }
+        else {
+          this.imageFileSize = false;
+          this.imageFileSizeError = "Image must be less than 1 mb";
+        }
       }
-             this.imageFileSizeError = "";
-              this.imageFileSize = true;
-              this.uploadImage(file);
-          }
-          else {
-            this.imageFileSize = false;
-            this.imageFileSizeError = "Image must be less than 1 mb";
-          }
-       }
-       else{
-         if(this.data && this.data.detail && this.data.detail.imageUrl)
-         this.localImg = this.data.detail.imageUrl;
-         
-          this._snackBar.open("We don't support "+fileType+" in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
-       }
+      else {
+        if (this.data && this.data.detail && this.data.detail.imageUrl)
+          this.localImg = this.data.detail.imageUrl;
+
+        this._snackBar.open("We don't support " + fileType + " in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
+          duration: 2000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
 
       // this.uploadImage(file);
     }

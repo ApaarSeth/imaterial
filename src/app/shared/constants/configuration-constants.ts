@@ -95,6 +95,7 @@ export const API = {
   GET_DASHBOARD_DATA: 'dashboard',
   UPLOADSUPPLIEREXCEL: organisationId => `projects/uploadSuppliers/${organisationId}`,
   GETCITYANDSTATE: pincode => `city-state/get/${pincode}`,
+  GETCITYANDSTATEBYCOUNTRY: (pincode, countryId) => `city-state/get/${pincode}/${countryId}`,
   SENDOTP: (phone, callingCode) => `api/auth/otp/create?phone=${encodeURI(phone)}&countryCode=${encodeURI(callingCode)}`,
   VERIFYOTP: (phone, countryCode, otp) => `api/auth/otp/verify?phone=${encodeURI(phone)}&countryCode=${encodeURI(countryCode)}&otp=${encodeURI(otp)}`,
   VERIFYEMAIL: email => `verify/email?email=${email}`,
