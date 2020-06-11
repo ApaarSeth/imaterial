@@ -33,7 +33,11 @@ export class SearchPipe implements PipeTransform {
         }
       }
 
-      return newSearchList;
+      if (newSearchList.length) {
+        return newSearchList;
+      } else {
+        return searchList;
+      }
     }
 
     return searchList;
