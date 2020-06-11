@@ -40,6 +40,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
   otherCostData: OverallOtherCost[];
   totalAdditionalCost: number = 0;
   additonalCost: { additionalOtherCostAmount: number, additionalOtherCostInfo: OverallOtherCost[] }
+  ratesBaseCurr: boolean = false;
+
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
