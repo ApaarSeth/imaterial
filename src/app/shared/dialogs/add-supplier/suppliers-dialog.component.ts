@@ -44,9 +44,9 @@ export class SuppliersDialogComponent {
 
   getLocation() {
     this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
+      this.ipaddress = res[ 'ip' ];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.getCountryCode(res['calling_code'])
+        this.getCountryCode(res[ 'calling_code' ])
       });
     });
   }
@@ -57,7 +57,7 @@ export class SuppliersDialogComponent {
       this.livingCountry = this.countryList.filter(val => {
         return val.callingCode === callingCode;
       })
-      this.form.get('countryCode').setValue(this.livingCountry[0])
+      this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
     })
   }
 
@@ -71,18 +71,18 @@ export class SuppliersDialogComponent {
 
   initForm() {
     this.form = this.formBuilder.group({
-      supplier_name: ["", Validators.required],
-      email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
-      pan: [""],
-      countryCallingCode: [""],
+      supplier_name: [ "", Validators.required ],
+      email: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ] ],
+      contact_no: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ] ],
+      pan: [ "" ],
+      countryCallingCode: [ "" ],
       countryCode: []
     });
   }
 
   submit() {
     let data = this.form.value;
-    data['countryCallingCode'] = this.form.get('countryCode').value.callingCode;
+    data[ 'countryCallingCode' ] = this.form.get('countryCode').value.callingCode;
     delete data.countryCode;
     this.addSuppliers(this.data, data);
   }
@@ -99,7 +99,7 @@ export class SuppliersDialogComponent {
         this.dialogRef.close(res.message);
         this._snackBar.open('Supplier Added', "", {
           duration: 2000,
-          panelClass: ["success-snackbar"],
+          panelClass: [ "success-snackbar" ],
           verticalPosition: "bottom"
         });
       }
