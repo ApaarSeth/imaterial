@@ -119,6 +119,7 @@ export class RfqBidsComponent implements OnInit {
           },
           materialList: MaterialListSubmit[]
         ): RfqProjectSubmit => {
+          let additionalOtherCost = proj.additionalOtherCostInfo.find(val => val.supplierId === supplierData.supplierId)
           return {
             projectId: proj.projectId,
             projectName: proj.projectName,
@@ -128,7 +129,7 @@ export class RfqBidsComponent implements OnInit {
             rfqId: this.rfqId,
             materialList,
             rfqCurrency: proj.rfqCurrency,
-            additionalOtherCostInfo: proj.additionalOtherCostInfo
+            additionalOtherCostInfo: proj.additionalOtherCost
           };
         };
         const getMaterialsForUnicSupp = (suppId): MaterialListSubmit[] =>
@@ -148,8 +149,8 @@ export class RfqBidsComponent implements OnInit {
                     materialSgst: sup.materialSgst,
                     materialCgst: sup.materialCgst,
                     materialIgst: sup.materialIgst,
-                    taxInfo: [mat.taxInfo],
-                    otherTaxInfo: [mat.otherTaxInfo]
+                    taxInfo: [...sup.taxInfo],
+                    otherTaxInfo: [...sup.otherTaxInfo]
                   };
                 });
               });
@@ -244,10 +245,8 @@ export class RfqBidsComponent implements OnInit {
               panelClass: ["success-snackbar"],
               verticalPosition: "bottom"
             });
-
           }
         }
-
       });
     });
   }

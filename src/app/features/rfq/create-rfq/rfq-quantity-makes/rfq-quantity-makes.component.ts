@@ -146,6 +146,18 @@ export class RfqQuantityMakesComponent implements OnInit {
     })
   }
 
+  dateCheck(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (control.value) {
+        if (new Date(control.value) < new Date()) {
+          control.setValue(null)
+          return { 'date Is useless': true };
+        }
+      }
+      return null;
+    }
+  }
+
   getMaterialLength(): ValidatorFn {
     return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;

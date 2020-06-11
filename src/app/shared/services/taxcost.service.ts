@@ -14,7 +14,7 @@ export class TaxCostService {
 
     postTaxCostData(data) {
         return this.dataService.sendPostRequest(API.POSTTAXANDOTHERCOST, data);
-    } POTAXANDOTHERCOST
+    }
 
     poTaxCostData(data) {
         return this.dataService.sendPostRequest(API.POTAXANDOTHERCOST, data);
