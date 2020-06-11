@@ -69,6 +69,8 @@ export class RfqBidsComponent implements OnInit {
                   materialIgst: supplier.materialIgst,
                   materialCgst: supplier.materialCgst,
                   materialSgst: supplier.materialSgst,
+                  taxInfo: supplier.taxInfo ? this.formBuilder.array(supplier.taxInfo) : null,
+                  otherCostInfo: supplier.otherCostInfo ? this.formBuilder.array(supplier.otherCostInfo) : null,
                   brandGroup: this.formBuilder.array(brandGrp)
                 });
               }
@@ -77,8 +79,6 @@ export class RfqBidsComponent implements OnInit {
             return this.formBuilder.group({
               materialId: material.materialId,
               materialQty: material.materialQty,
-              taxInfo: material.taxInfo,
-              otherTaxInfo: material.otherCostInfo,
               materialpoAvailableQty: material.poAvailableQty,
               validQtyBoolean: true,
               materialUnitPrice: material.materialUnitPrice,
@@ -93,7 +93,7 @@ export class RfqBidsComponent implements OnInit {
           addressId: project.projectAddressId,
           materialList: this.formBuilder.array(materialGrp),
           rfqCurrency: project.rfqCurrency,
-          additionalOtherCostInfo: project.additionalOtherCostInfo
+          additionalOtherCostInfo: this.formBuilder.array(project.additionalOtherCostInfo)
         });
       }
     );
@@ -149,8 +149,8 @@ export class RfqBidsComponent implements OnInit {
                     materialSgst: sup.materialSgst,
                     materialCgst: sup.materialCgst,
                     materialIgst: sup.materialIgst,
-                    taxInfo: [...sup.taxInfo],
-                    otherTaxInfo: [...sup.otherTaxInfo]
+                    taxInfo: sup.taxInfo ? [...sup.taxInfo] : null,
+                    otherCostInfo: sup.otherCostInfo ? [...sup.otherCostInfo] : null
                   };
                 });
               });
@@ -183,7 +183,6 @@ export class RfqBidsComponent implements OnInit {
             const matList = getMaterialsForUnicSupp(supp.supplierId).filter(
               material => material.materialQty != null
             );
-
             const suppData = {
               supplierId: supp.supplierId,
               supplierAddressId: supp.supplierAddressId,

@@ -115,8 +115,7 @@ export interface OtherCostInfo {
 }
 
 export interface RfqMaterialList {
-  taxInfo?: RfqTaxInfo[];
-  otherCostInfo?: OtherCostInfo[];
+
   poAvailableQty?: number;
   id: number;
   status: number;
@@ -159,6 +158,8 @@ export interface RfqSupplierList {
   materialCgst: number,
   materialIgst: number,
   brandDetailList: RfqBrandDetail[];
+  taxInfo?: RfqTaxInfo[];
+  otherCostInfo?: OtherCostInfo[];
 }
 
 export interface RfqBrandDetail {

@@ -101,11 +101,13 @@ export class PoTableComponent implements OnInit, OnDestroy {
         const updateTableValue = formVal => {
           this.poTableData[i].purchaseOrderDetailList[j].qty = formVal.materialQuantity;
           const amount = formVal.materialQuantity * formVal.materialUnitPrice;
+          const taxAmount = this.poTableData[i].purchaseOrderDetailList[j].taxAmount;
           const gstCalc = formVal.materialQuantity * formVal.materialUnitPrice * (formVal.gst / 100);
-          const calc = amount + gstCalc;
+          const calc = amount + gstCalc + (taxAmount && this.isInternational ? taxAmount : 0);
           this.poTableData[i].purchaseOrderDetailList[j].amount = amount;
           this.poTableData[i].purchaseOrderDetailList[j].gstAmount = gstCalc;
           this.poTableData[i].purchaseOrderDetailList[j].total = calc;
+
           frmGrp.get("amount").setValue(amount);
           frmGrp.get("total").setValue(calc);
           frmGrp.get("gstAmount").setValue(gstCalc);
@@ -184,6 +186,10 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  getMaterialOtherCost(m) {
+    return this.poTableData[m].otherCostAmount ? this.poTableData[m].otherCostAmount : 0;
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
@@ -258,10 +264,12 @@ export class PoTableComponent implements OnInit, OnDestroy {
   getMaterialAmount(m) {
     if (this.mode != "edit") {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+
         return (total += purchase.amount);
       }, 0);
     } else {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+
         return (total += purchase.amount);
       }, 0);
     }
@@ -332,8 +340,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
       return this.poTableData[m].purchaseOrderDetailList[0].taxAmount ? this.poTableData[m].purchaseOrderDetailList[0].taxAmount : 0;
     }
   }
-
-
 
   get totalTaxAmount() {
     let totalTax = 0;

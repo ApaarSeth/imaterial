@@ -52,7 +52,7 @@
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Fullfillment Date</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Supplier Rate</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Awarded quantity</span>
-          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-10': isInternational && mode === 'edit' && mode === 'edit'}">Amount ₹</span>
+          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-10': isInternational && mode === 'edit' && mode === 'edit'}">Amount</span>
           <span
             class="mat-header-cell"
             [ngClass]="{'text-center': isInternational && mode !== 'edit'}"
@@ -162,11 +162,13 @@
               <span class="mat-cell text-left p-l-10 p-r-10">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
             </ng-template>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">{{
-              ratesBaseCurr ? (getMaterialTotalAmount(m) * poCurrency.exchangeValue | number: "1.2-2") : (getMaterialTotalAmount(m) | number: "1.2-2")
+              ratesBaseCurr
+                ? (this.poTableData[m].otherCostAmount + getMaterialTotalAmount(m) * poCurrency.exchangeValue | number: "1.2-2")
+                : (this.poTableData[m].otherCostAmount + getMaterialTotalAmount(m) | number: "1.2-2")
             }}</span>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-4' : 'minwidth-4'" *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
               ><button mat-button matRipple class="btn btn-link taxButton p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('taxesAndCost', m)">
-                Add Taxes & cost
+                Add Taxes & Costs
               </button></span
             >
           </div>
@@ -384,10 +386,12 @@
             <ng-template #totalGstAmount> <span> GST Amount </span> <br />{{ gstTotalAmount | number: "1.2-2" }} </ng-template>
           </span>
           <span class="mat-cell"
-            ><span>Total Amount </span> <br />{{ ratesBaseCurr ? (totalAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalAmount | number: "1.2-2") }}</span
+            ><span>Total Amount </span> <br />{{
+              ratesBaseCurr ? ((totalAmount + totalOtherAmount) * poCurrency.exchangeValue | number: "1.2-2") : (totalAmount + totalOtherAmount | number: "1.2-2")
+            }}</span
           >
         </div>
-        <div class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35 font-size-vary-grn">
+        <div *ngIf="!isInternational" class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35 font-size-vary-grn">
           Net Payable Amount in Words :Rupees {{ totalAmount | numberToWords | async | titlecase }} <span class="text-semi-bold">Only /-</span>
         </div>
       </mat-accordion>
