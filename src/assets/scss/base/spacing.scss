@@ -101,8 +101,10 @@ $spaceamounts: (
   99,
   100,
   110,
+  117,
   120,
   125,
+  130,
   135,
   150,
   180,
@@ -131,8 +133,14 @@ $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.
   .minwidth-#{$space}-px {
     min-width: #{$space}px !important;
   }
+  .minwidth-#{$space} {
+    min-width: #{$space}% !important;
+  }
   .maxwidth-#{$space}-px {
     max-width: #{$space}px !important;
+  }
+  .maxwidth-#{$space} {
+    max-width: #{$space}% !important;
   }
   .height-#{$space} {
     height: #{$space}% !important;
@@ -142,6 +150,9 @@ $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.
   }
   .h-vh-#{$space} {
     height: #{$space}vh !important;
+  }
+  .fontsize-#{$space}-px {
+    font-size: #{$space}px !important ;
   }
   @each $side in $sides {
     .m-#{str-slice($side, 0, 1)}-#{$space} {

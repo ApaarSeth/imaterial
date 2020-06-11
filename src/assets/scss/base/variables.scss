@@ -11,10 +11,17 @@ $background-color-light-grey: #b8b8b8;
 $background-table-color-grey: #ececec;
 $green-color: #7ed321;
 $skyblue-color: #2197bb;
+$light-grey: #707070;
+
 a:hover {
   color: $main-color !important;
   text-decoration: none;
 }
+
+.light-grey {
+  color: $light-grey !important;
+}
+
 .backgound-none {
   background: none;
 }
@@ -693,7 +700,7 @@ mat-accordion {
 .error-msg {
   color: red;
 }
-.success-msg{
+.success-msg {
   color: green;
 }
 .error-msg.sameStartEndDate {

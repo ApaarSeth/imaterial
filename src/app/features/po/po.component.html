@@ -54,7 +54,14 @@
       <div class="main-div-po m-b-45">
         <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData"> </app-po-card>
       </div>
-      <app-po-table #poTable *ngIf="tableData.length" (QuantityAmountValidation)="QuantityAmountValidation($event)" [poTableData]="tableData" [purchaseOrderCurrency]="currency">
+      <app-po-table
+        #poTable
+        *ngIf="tableData.length"
+        (QuantityAmountValidation)="QuantityAmountValidation($event)"
+        [poTableData]="tableData"
+        [purchaseOrderCurrency]="currency"
+        [additionalOtherCostInfo]="additionalOtherCost"
+      >
       </app-po-table>
     </div>
 

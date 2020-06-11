@@ -31,7 +31,8 @@ export class TaxCostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.commonService.taxesList().then(res => {
+    let taxList = this.data.po ? this.commonService.poTaxesList() : this.commonService.taxesList(this.data.rfqId)
+    taxList.then(res => {
       this.filteredOptionsTax = res.data.taxInfo
       this.filteredOptionsOther = res.data.otherCostInfo;
       if (this.data.type === 'taxesAndCost') {
@@ -429,7 +430,6 @@ export class TaxCostComponent implements OnInit {
   }
 
   onSubmitTaxCost() {
-
     let data = {
       organizationId: 0,
       rfqId: this.rfqId,
