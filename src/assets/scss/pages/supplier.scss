@@ -429,7 +429,7 @@ div.limited-character.globalStore {
 }
 
 .material-row {
-  position: relative;
+  position: unset;
   z-index: 10;
   background: rgba(169, 174, 188, 0.5);
   border-radius: 0px;

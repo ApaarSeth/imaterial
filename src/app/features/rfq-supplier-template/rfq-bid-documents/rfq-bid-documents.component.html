@@ -2,7 +2,8 @@
   <mat-card class="width98Percent margin-0-auto radius-10">
     <mat-card-header class="upload-documents-mat-header">
       <span class="text-semi-bold width100Percent">
-        <app-upload #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"> </app-upload>
+        <app-upload #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved"
+          (onFileUpdate)="fileUpdate($event)"> </app-upload>
       </span>
       <!-- <span class="col-xs-12 text-align-center text-semi-bold">
         View Document
@@ -15,14 +16,14 @@
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />
             <span>{{ file.DocumentDesc }}</span>
-              <span class="show-download">
-                 <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
-                  <i class="material-icons">
-                    remove_red_eye
-                  </i>
-                </a>
-              </span>
-           
+            <span class="show-download">
+              <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
+                <i class="material-icons">
+                  remove_red_eye
+                </i>
+              </a>
+            </span>
+
           </mat-list-item>
         </span>
         <span *ngIf="!documentData">
@@ -33,16 +34,16 @@
           </mat-list-item>
         </span>
         <span>
-          <mat-list-item class="files-list" *ngFor="let file of documentList; let i = index">
+          <mat-list-item class="files-list mb-3" *ngFor="let file of documentList; let i = index">
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-            <span>{{ file.documentName }}</span>
+            <span class="word-break-all">{{ file.documentName }}</span>
             <span class="show-download">
-              <a type="button" target="_blank"  [href]="file.Url" mat-icon-button>
-              <i class="material-icons">
-                remove_red_eye
-              </i>
-            </a>
+              <a type="button" target="_blank" [href]="file.Url" mat-icon-button>
+                <i class="material-icons">
+                  remove_red_eye
+                </i>
+              </a>
             </span>
             <button type="button" (click)="removeFile(i)" mat-icon-button>
               <mat-icon class="font-size-16">cancel</mat-icon>
