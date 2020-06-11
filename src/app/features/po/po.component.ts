@@ -26,6 +26,7 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gstin-missing.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 
 @Component({
   selector: "app-po",
@@ -80,6 +81,7 @@ export class PoComponent implements OnInit {
   ValidPOTemp: boolean;
   showResponsiveDesign: boolean;
   showResponsiveDesignDown: boolean;
+  additionalOtherCost: { additionalOtherCostAmount: number, additionalOtherCostInfo: OtherCostInfo[] }
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -121,6 +123,7 @@ export class PoComponent implements OnInit {
       this.poData = res.data;
       this.tableData = this.poData.materialData;
       this.currency = { isInternational: this.poData.isInternational, purchaseOrderCurrency: this.poData.purchaseOrderCurrency }
+      this.additionalOtherCost = { additionalOtherCostAmount: this.poData.additionalOtherCostAmount, additionalOtherCostInfo: this.poData.additionalOtherCostInfo }
       this.cardData = {
         supplierAddress: this.poData.supplierAddress,
         projectAddress: this.poData.projectAddress,
@@ -184,7 +187,7 @@ export class PoComponent implements OnInit {
       poNumber: this.poCard.getData().orderNo,
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
-      purchaseOrderCurrency: null,
+      purchaseOrderCurrency: this.poData.purchaseOrderCurrency && this.poData.purchaseOrderCurrency.exchangeCurrency ? this.poData.purchaseOrderCurrency : null,
       isInternational: 0,
       DocumentsList: this.poDocument.getData(),
       Terms: {

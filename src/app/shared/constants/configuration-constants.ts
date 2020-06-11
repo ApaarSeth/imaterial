@@ -131,5 +131,6 @@ export const API = {
   BASECURRENCY: `get/basecurrency`,
   POSTTAXANDOTHERCOST: `organization/add/tax/otherCost`,
   POTAXANDOTHERCOST: `po/organization/add/tax/otherCost`,
-  GETTAXESLIST: 'po/tax/otherCost'
+  GETPOTAXESLIST: 'po/tax/otherCost',
+  GETTAXESLIST: (rfqId) => `supplier/tax/otherCost/${rfqId}`
 };

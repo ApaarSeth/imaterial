@@ -75,6 +75,16 @@ export interface additionalOtherCost {
   otherCostAmount: number,
   otherCostId: number,
   otherCostName: string
+  id: number,
+  status: number,
+  createdBy: string,
+  createdAt: string,
+  lastUpdatedBy: string,
+  lastUpdatedAt: string,
+  otherCostDescription: string,
+  organizationId: number,
+  purchaseOrderId: number,
+  rfqSupplierOtherCostId: number
 }
 export interface supplierRemarkList {
   DocumentDesc?: string;

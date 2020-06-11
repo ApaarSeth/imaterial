@@ -25,7 +25,8 @@ export interface POData {
   approverName?: string;
   roleDescription?: string;
   isInternational: number;
-  additionalOtherCostInfo: OtherCostInfo[];
+  additionalOtherCostInfo?: OtherCostInfo[];
+  additionalOtherCostAmount?: number;
 }
 
 export interface PurchaseOrderCurrency {
@@ -70,7 +71,8 @@ export interface PoMaterial {
   taxInfo: TaxInfo[];
   otherCostInfo: OtherCostInfo[]
   totalTax: number;
-  totalOtherCost: number;
+  taxAmount: number;
+  otherCostAmount: number;
 }
 
 export interface PurchaseOrder {
@@ -103,7 +105,7 @@ export interface PurchaseOrder {
   total: number;
   qty?: number;
   validUpto?: string;
-  brandTax?: number;
+  taxAmount?: number;
 }
 export interface terms {
   termsId?: number;
