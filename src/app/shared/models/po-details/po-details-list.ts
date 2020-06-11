@@ -21,6 +21,7 @@ export interface PurchaseOrder {
   poStatusChangedOn: string;
   poStatusChangedBy: string
   supplierName: string;
+  currencyCode: string;
 }
 
 export interface PurchaseOrderData {

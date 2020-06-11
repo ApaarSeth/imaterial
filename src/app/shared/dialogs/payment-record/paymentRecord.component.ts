@@ -36,21 +36,21 @@ export class PaymentRecordComponent implements OnInit {
     }
     formInit() {
         this.paymentForm = this.formBuilder.group({
-            amountPaid: ['', [Validators.required, this.quantityCheck(this.paymentDetail)]],
+            amountPaid: ['', [Validators.required, this.amountCheck(this.paymentDetail)]],
             paymentDate: ['', Validators.required],
             transactionId: []
         })
     }
 
-    quantityCheck(paymentDetail): ValidatorFn {
+    amountCheck(paymentDetail): ValidatorFn {
         return (control: AbstractControl): { [key: string]: boolean } | null => {
-            let checkValue = paymentDetail.poAmount;
+            let checkValue = paymentDetail.poAmount - paymentDetail.paymentRecived;
             if (checkValue < control.value) {
                 this._snackBar.open(
-                    "Cannot add quantity greater than " + checkValue,
+                    "Cannot add amount greater than " + checkValue,
                     "",
                     {
-                        duration: 2000,
+                        duration: 3000,
                         panelClass: ["warning-snackbar"],
                         verticalPosition: "bottom"
                     }

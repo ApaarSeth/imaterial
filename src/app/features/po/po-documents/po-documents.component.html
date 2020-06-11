@@ -15,12 +15,12 @@
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />
             <span>{{ file.DocumentDesc }}</span>
-             <span class="show-download">
-            <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
-              <i class="material-icons">
-                remove_red_eye
-              </i>
-            </a>
+            <span class="show-download">
+              <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
+                <i class="material-icons">
+                  remove_red_eye
+                </i>
+              </a>
             </span>
           </mat-list-item>
         </span>
@@ -35,15 +35,15 @@
           <mat-list-item class="files-list" *ngFor="let file of documentList; let i = index">
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-            <span>{{ file.documentName }}</span>
+            <div matTooltip="{{ file.documentName }}" class="limited-character global">{{ file.documentName }}</div>
             <span class="show-download">
-              <a type="button" target="_blank"  [href]="file.Url" mat-icon-button>
-              <i class="material-icons">
-                remove_red_eye
-              </i>
-            </a>
+              <a type="button" target="_blank" [href]="file.Url" mat-icon-button>
+                <i class="material-icons">
+                  remove_red_eye
+                </i>
+              </a>
             </span>
-            
+
             <button type="button" (click)="removeFile(i)" mat-icon-button>
               <mat-icon class="font-size-16">cancel</mat-icon>
             </button>
