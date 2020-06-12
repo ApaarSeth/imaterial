@@ -130,7 +130,8 @@ export class PoComponent implements OnInit {
         billingAddress: this.poData.billingAddress,
         poNumber: this.poData.poNumber,
         poValidUpto: this.poData.poValidUpto,
-        projectId: this.poData.projectId
+        projectId: this.poData.projectId,
+        isInternational: this.poData.isInternational
       };
       this.documentList = this.poData.DocumentsList;
       this.terms = this.poData.Terms;
@@ -215,11 +216,10 @@ export class PoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.poService.sendPoData(result).then(res => {
-        if (res.status === 0) {
-          if (res.message = "gst field missing from billing address") {
-            this.openProjectDialog(data);
-          }
+        if (res.status === 0 && res.message === "gst field missing from billing address") {
+          this.openProjectDialog(data);
         }
+
         else {
           this.navService.gaEvent({
             action: 'submit',

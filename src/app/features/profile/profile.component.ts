@@ -176,7 +176,7 @@ export class ProfileComponent implements OnInit {
       roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: true }],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
-      country: ['India'],
+      country: [],
       trade: [],
       profileUrl: [''],
     });
