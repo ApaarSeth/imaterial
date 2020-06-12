@@ -252,6 +252,7 @@ div.limited-character.universal {
   margin-top: 10px;
   margin-left: -62%;
   z-index: 9;
+  position: relative;
   p {
     border-bottom: 1px solid #e8e8e8;
     margin-left: 1px;
@@ -277,4 +278,8 @@ div.limited-character.universal {
 
 .mt6p {
   margin-top: 6px;
+}
+
+.rt-0{
+  right:0;
 }

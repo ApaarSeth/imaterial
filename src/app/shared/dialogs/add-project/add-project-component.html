@@ -227,9 +227,13 @@
             <!-- project area -->
             <mat-form-field class="border-select">
               <mat-label>Unit</mat-label>
-              <mat-select [value]="selectedConstructionUnit">
-                <mat-option value="1">
+              <!-- <mat-select [value]="selectedConstructionUnit"> -->
+              <!-- <mat-option value="1">
                   CR
+                </mat-option> -->
+              <mat-select formControlName="costUnit">
+                <mat-option *ngFor="let unit of costUnits" [value]="unit.value">
+                  {{unit.value}}
                 </mat-option>
               </mat-select>
             </mat-form-field>

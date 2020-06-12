@@ -54,6 +54,8 @@ export class AppDashboardComponent implements OnInit {
   options: NgxDrpOptions;
   presets: Array<PresetItem> = [];
 
+  currencyCode: string;
+
 
   ngOnInit() {
     this.formInit()
@@ -178,7 +180,7 @@ export class AppDashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result != null)
-        this.router.navigate(['/project-dashboard']);
+        this.router.navigate([ '/project-dashboard' ]);
     });
   }
 
@@ -225,6 +227,9 @@ export class AppDashboardComponent implements OnInit {
       "projectList": projectIds ? projectIds : []
     }
     this._userService.getDashboardData(data).then(res => {
+      if (res.data.currencyCode) {
+        this.currencyCode = res.data.currencyCode;
+      }
       if (label == 'po')
         this.poData = res.data;
 
@@ -296,7 +301,7 @@ export class AppDashboardComponent implements OnInit {
   //  }
   // }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', [ '$event' ])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 494) {
       this.tab1 = "P.O.";
