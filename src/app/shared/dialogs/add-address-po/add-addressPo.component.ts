@@ -5,6 +5,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AddAddressService } from "../../services/add-address/add-address.service";
 import { ProjectService } from '../../services/projectDashboard/project.service';
 import { FieldRegExConst } from '../../constants/field-regex-constants';
+import { VisitorService } from '../../services/visitor.service';
+import { CommonService } from '../../services/commonService';
+import { CountryCode } from '../../models/currency';
 
 export interface City {
   value: string;
@@ -19,14 +22,20 @@ export interface City {
 // Component class
 export class AddAddressPoDialogComponent {
   validPincode: boolean;
+  searchCountry: string = ''
   pincodeLength: number;
+  ipaddress: string;
+  countryList: CountryCode[] = [];
+  livingCountry: CountryCode[] = [];
   constructor(
     public dialogRef: MatDialogRef<AddAddressPoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
     private addAddressService: AddAddressService,
     private projectService: ProjectService,
-    private _snackBar: MatSnackBar
+    private visitorsService: VisitorService,
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService
   ) { }
 
   selectAddressFrm: FormGroup;
@@ -34,7 +43,8 @@ export class AddAddressPoDialogComponent {
   address: Address;
   city: string;
   state: string;
-
+  selectedCountryId: number;
+  currentIndex: number = 0;
   ngOnInit() {
     if (this.data.roleType === "projectBillingAddressId") {
       this.addAddressService
@@ -51,11 +61,56 @@ export class AddAddressPoDialogComponent {
     }
     this.formInit();
   }
+  tabClick($event) {
+    this.currentIndex = $event.index;
+    if (this.currentIndex === 1) {
+      this.getLocation()
+    }
+
+  }
+  getLocation() {
+    this.visitorsService.getIpAddress().subscribe(res => {
+      this.ipaddress = res['ip'];
+      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+        this.getCountryCode(res['calling_code'])
+      });
+    });
+  }
+
+
+
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
     { value: "Delhi-1", viewValue: "Delhi" },
     { value: "Karnal", viewValue: "Karnal" }
   ];
+
+  blankPincode() {
+    this.newAddressForm.get('pinCode').setValue('');
+    this.city = "";
+    this.state = "";
+    this.newAddressForm.get('city').setValue("");
+    this.newAddressForm.get('state').setValue("");
+  }
+
+  getCountryCode(callingCode) {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+      this.livingCountry = this.countryList.filter(val => {
+        return val.callingCode === callingCode;
+      })
+      this.newAddressForm.get('countryCode').setValue(this.livingCountry[0]);
+    })
+  }
+
+  get selectedCountry() {
+    if (this.newAddressForm.get('countryCode').value) {
+      this.selectedCountryId = this.newAddressForm.get('countryCode').value.countryId;
+    }
+    return this.newAddressForm.get('countryCode').value;
+  }
+
+
 
   formInit() {
     this.selectAddressFrm = this.formBuilder.group({
@@ -65,11 +120,14 @@ export class AddAddressPoDialogComponent {
     // new address form
     this.newAddressForm = this.formBuilder.group({
       addressLine1: ["", [Validators.required, Validators.maxLength(120)]],
-      addressLine2: ["",Validators.maxLength(120)],
+      addressLine2: ["", Validators.maxLength(120)],
       pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
       state: [{ value: "", disabled: true }, Validators.required],
       city: [{ value: "", disabled: true }, Validators.required],
-      gstNo: ["", [Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]]
+      gstNo: ["", [Validators.pattern(FieldRegExConst.GSTIN)]],
+      imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
+      countryId: [null],
+      countryCode: []
     });
   }
 
@@ -88,13 +146,13 @@ export class AddAddressPoDialogComponent {
     this.addAddressService
       .postAddAddress(role, this.data.id, address)
       .then(res => {
-        if(res.status == 0){
-            this._snackBar.open(res.message, "", {
-                duration: 2000, panelClass: ["success-snackbar"],
-                verticalPosition: "bottom"
-              });
+        if (res.status == 0) {
+          this._snackBar.open(res.message, "", {
+            duration: 2000, panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
         }
-        else{
+        else {
           this.dialogRef.close([this.data.roleType, { address: res.data }]);
         }
       });
@@ -107,20 +165,21 @@ export class AddAddressPoDialogComponent {
     this.newAddressForm.get('city').setValue("");
     this.newAddressForm.get('state').setValue("");
     this.pincodeLength = event.target.value.length;
-    if (event.target.value.length == 6) {
+    if (event.target.value.length >= 5) {
       this.cityStateFetch(event.target.value);
     }
   }
 
   cityStateFetch(value) {
-    this.projectService.getPincode(value).then(res => {
-      if (res.data) {
+    this.projectService.getPincodeInternational(value, this.selectedCountryId).then(res => {
+      if (res.data && res.data.length) {
         this.city = res.data[0].districtName;
         this.state = res.data[0].stateName;
         if (this.city && this.state)
           this.validPincode = true;
         else
           this.validPincode = false;
+
         this.newAddressForm.get('city').setValue(res.data[0].districtName);
         this.newAddressForm.get('state').setValue(res.data[0].stateName);
       }

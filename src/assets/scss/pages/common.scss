@@ -22,6 +22,12 @@
     padding-bottom: 0px !important ;
   }
 }
+
+.mat-form-field-infix-padding-top {
+  .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    padding-top: 0px !important ;
+  }
+}
 .mat-form-field-infix-padding-all {
   .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
     padding-bottom: 0px !important ;
@@ -239,25 +245,25 @@ div.limited-character.universal {
 .tooltip-table {
   display: block !important;
   max-width: 200px;
-  background-color:#ffffff;
-  border-radius:5px;
+  background-color: #ffffff;
+  border-radius: 5px;
   padding: 5px 5px 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   margin-top: 10px;
   margin-left: -62%;
   z-index: 9;
-  p{
+  p {
     border-bottom: 1px solid #e8e8e8;
     margin-left: 1px;
     margin-right: 1px;
-    &:last-of-type{
+    &:last-of-type {
       border-bottom: 0px;
     }
   }
-  strong{
+  strong {
     margin-bottom: 2px;
   }
-  span{
+  span {
     margin-left: 3px;
     font-weight: normal;
   }
@@ -269,6 +275,6 @@ div.limited-character.universal {
   }
 }
 
-.mt6p{
+.mt6p {
   margin-top: 6px;
 }

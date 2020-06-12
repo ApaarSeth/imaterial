@@ -118,6 +118,7 @@ export class UpdateInfoComponent implements OnInit {
       }
       this.formInit();
       this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
+      this.userInfoForm.get('countryId').setValue(this.livingCountry[0].countryId)
     });
   }
   getTurnOverList() {
@@ -154,7 +155,7 @@ export class UpdateInfoComponent implements OnInit {
       userId: [this.users ? this.users.userId : null],
       roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: true }],
       ssoId: [this.users ? this.users.ssoId : null],
-      country: ['India'],
+      countryId: [],
       trade: [],
       profileUrl: [''],
       // addressLine1: ['', Validators.required],
@@ -179,7 +180,6 @@ export class UpdateInfoComponent implements OnInit {
       let newcurrencyList = this.currencyList.filter(val => {
         return val.countryId === country.countryId
       })
-
       this.userInfoForm.get('baseCurrency').setValue(newcurrencyList[0])
     })
   }

@@ -188,6 +188,7 @@ export interface CardData {
   poNumber: number;
   poValidUpto: string;
   projectId: number;
+  isInternational?: number;
 }
 
 export interface DocumentList {

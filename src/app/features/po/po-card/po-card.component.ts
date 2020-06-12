@@ -115,9 +115,10 @@ export class PoCardComponent implements OnInit {
     });
   }
   openaddressDialog(roleType: string, id: number) {
+    let international = this.cardData.isInternational;
     const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
       width: "800px",
-      data: { roleType, id }
+      data: { roleType, id, international }
     });
 
     dialogRef.afterClosed().subscribe((result: Address) => {

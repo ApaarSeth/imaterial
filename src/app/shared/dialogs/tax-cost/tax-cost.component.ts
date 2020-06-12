@@ -43,7 +43,7 @@ export class TaxCostComponent implements OnInit {
               this.addNewTaxField();
               const txInfoArr = this.taxCostForm.get('taxInfo') as FormArray;
               const txItem = txInfoArr.at(index);
-              txItem.get('taxName').setValue(itm.taxName);
+              txItem.get('taxName').setValue(itm);
               txItem.get('taxValue').setValue(itm.taxValue);
             });
           } else {
@@ -55,7 +55,7 @@ export class TaxCostComponent implements OnInit {
               this.addNewOtherField();
               let othInfoArr = this.taxCostForm.get('otherCostInfo') as FormArray;
               let txItem = othInfoArr.at(index);
-              txItem.get('otherCostName').setValue(itm.otherCostName);
+              txItem.get('otherCostName').setValue(itm);
               txItem.get('otherCostAmount').setValue(itm.otherCostAmount);
             });
           } else {
@@ -78,7 +78,7 @@ export class TaxCostComponent implements OnInit {
               this.addNewOtherField();
               let othInfoArr = this.otherCostForm.get('otherCostInfo') as FormArray;
               let txItem = othInfoArr.at(index);
-              txItem.get('otherCostName').setValue(itm.otherCostName);
+              txItem.get('otherCostName').setValue(itm);
               txItem.get('otherCostAmount').setValue(itm.otherCostAmount);
             });
           } else {
