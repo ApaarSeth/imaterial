@@ -50,17 +50,17 @@
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Material Name</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Makes</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Fullfillment Date</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Supplier Rate</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Supplier Rate <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Awarded quantity</span>
-          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-10': isInternational && mode === 'edit' && mode === 'edit'}">Amount</span>
+          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-10': isInternational && mode === 'edit' && mode === 'edit'}">Amount <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span>
           <span
             class="mat-header-cell"
             [ngClass]="{'text-center': isInternational && mode !== 'edit'}"
             [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
-            >{{ isInternational ? "Tax Amount" : "GST %" }}</span
+            >{{ isInternational ? "Tax Amount ("+ (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) + ')' : "GST %" }}</span
           >
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">{{ isInternational ? "Other Cost" : "GST Amount" }}</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Total Amount</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">{{ isInternational ? "Other Cost (" + (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) + ')' : "GST Amount" }}</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Total Amount <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span>
           <span
             class="mat-header-cell"
             *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
@@ -178,11 +178,11 @@
               <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"></span>
               <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">{{ purchaseOrder.materialBrand }}</span>
               <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'"></span>
-              <span class="mat-cell text-center" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'">
+              <span class="mat-cell text-center supplier-rates" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'">
                 <ng-container *ngIf="mode != 'edit'; else editRate"> {{ purchaseOrder.materialUnitPrice }}</ng-container>
                 <ng-template #editRate>
                   <mat-form-field class="border-input width-55-px">
-                    <input type="text" matInput appTwoDigitDecimaNumber #rate formControlName="materialUnitPrice" placeholder="rate" min="0" />
+                    <input type="text" matInput appTwoDigitDecimaNumber #rate formControlName="materialUnitPrice" placeholder="rate" min="0" class="supplier-rate-input" />
                     <small
                       *ngIf="
                         poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['materialUnitPrice'].hasError('pattern') &&
@@ -376,20 +376,21 @@
           <span class="mat-cell"></span>
           <span class="mat-cell"
             ><span *ngIf="isInternational"
-              ><span>Tax Amount </span> <br />{{ ratesBaseCurr ? (totalTaxAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalTaxAmount | number: "1.2-2") }}</span
+              ><span>Tax Amount <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span> <br />{{ ratesBaseCurr ? (totalTaxAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalTaxAmount | number: "1.2-2") }}</span
             ></span
           >
           <span class="mat-cell">
             <span *ngIf="isInternational; else totalGstAmount">
-              <span>Other Cost </span> <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalOtherAmount | number: "1.2-2") }}
+              <span>Other Cost <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span> <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalOtherAmount | number: "1.2-2") }}
             </span>
             <ng-template #totalGstAmount> <span> GST Amount </span> <br />{{ gstTotalAmount | number: "1.2-2" }} </ng-template>
           </span>
           <span class="mat-cell"
-            ><span>Total Amount </span> <br />{{
+            ><span>Total Amount <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span> <br />{{
               ratesBaseCurr ? ((totalAmount + totalOtherAmount) * poCurrency.exchangeValue | number: "1.2-2") : (totalAmount + totalOtherAmount | number: "1.2-2")
             }}</span
           >
+          <span class="mat-cell mat-last-cell"></span>
         </div>
         <div *ngIf="!isInternational" class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35 font-size-vary-grn">
           Net Payable Amount in Words :Rupees {{ totalAmount | numberToWords | async | titlecase }} <span class="text-semi-bold">Only /-</span>
