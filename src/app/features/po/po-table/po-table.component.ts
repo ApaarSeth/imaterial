@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild, Output, EventEmitter, HostListener } from "@angular/core";
-import { PoMaterial, PurchaseOrder, PurchaseOrderCurrency } from "src/app/shared/models/PO/po-data";
+import { PoMaterial, PurchaseOrder, PurchaseOrderCurrency, POData } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
 import { ignoreElements, debounceTime } from "rxjs/operators";
 import { Subscription, combineLatest } from "rxjs";
@@ -19,6 +19,7 @@ import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 })
 export class PoTableComponent implements OnInit, OnDestroy {
   @Input("poTableData") poTableData: PoMaterial[];
+  @Input("poData") poData: POData;
   @Input("purchaseOrderCurrency") currency: { isInternational: number, purchaseOrderCurrency: PurchaseOrderCurrency };
   @Input("additionalOtherCostInfo") additionalOtherCostInfo: { additionalOtherCostAmount: number, additionalOtherCostInfo: OverallOtherCost[] };
   @Input("mode") modes: string;

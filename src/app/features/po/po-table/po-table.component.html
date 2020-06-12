@@ -49,18 +49,34 @@
           <span class="mat-header-cell widthReduce" mat-sort-header="vesselName">S.No</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Material Name</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Makes</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Fullfillment Date</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Supplier Rate <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Awarded quantity</span>
-          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-10': isInternational && mode === 'edit' && mode === 'edit'}">Amount <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Fullfillment <br/>Date</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Supplier Rate <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Awarded <br/>quantity</span>
+          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-10': isInternational && mode === 'edit' && mode === 'edit'}">Amount <span style="display: block;">({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span>
           <span
             class="mat-header-cell"
             [ngClass]="{'text-center': isInternational && mode !== 'edit'}"
-            [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
-            >{{ isInternational ? "Tax Amount ("+ (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) + ')' : "GST %" }}</span
-          >
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">{{ isInternational ? "Other Cost (" + (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) + ')' : "GST Amount" }}</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Total Amount <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span>
+            [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">
+            <!-- {{ isInternational ? "Tax Amount ("+ ((poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)) + ')' : "GST %" }} -->
+            <ng-container *ngIf="isInternational; else defaultCurr">
+              Tax Amount <br/> ({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})
+            </ng-container>
+
+            <ng-template #defaultCurr>
+              GST %
+            </ng-template>
+          </span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">
+            <!-- {{ isInternational ? "Other Cost (" + ((poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)) + ')' : "GST Amount" }} -->
+            <ng-container *ngIf="isInternational; else defaultCurr">
+              Other Cost <br/> ({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})
+            </ng-container>
+
+            <ng-template #defaultCurr>
+              GST Amount
+            </ng-template>
+          </span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Total Amount <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span>
           <span
             class="mat-header-cell"
             *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
@@ -376,17 +392,17 @@
           <span class="mat-cell"></span>
           <span class="mat-cell"
             ><span *ngIf="isInternational"
-              ><span>Tax Amount <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span> <br />{{ ratesBaseCurr ? (totalTaxAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalTaxAmount | number: "1.2-2") }}</span
+              ><span>Tax Amount <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span> <br />{{ ratesBaseCurr ? (totalTaxAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalTaxAmount | number: "1.2-2") }}</span
             ></span
           >
           <span class="mat-cell">
             <span *ngIf="isInternational; else totalGstAmount">
-              <span>Other Cost <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span> <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalOtherAmount | number: "1.2-2") }}
+              <span>Other Cost <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span> <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalOtherAmount | number: "1.2-2") }}
             </span>
             <ng-template #totalGstAmount> <span> GST Amount </span> <br />{{ gstTotalAmount | number: "1.2-2" }} </ng-template>
           </span>
           <span class="mat-cell"
-            ><span>Total Amount <span>({{ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName}})</span></span> <br />{{
+            ><span>Total Amount <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span> <br />{{
               ratesBaseCurr ? ((totalAmount + totalOtherAmount) * poCurrency.exchangeValue | number: "1.2-2") : (totalAmount + totalOtherAmount | number: "1.2-2")
             }}</span
           >
