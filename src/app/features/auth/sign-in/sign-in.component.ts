@@ -127,6 +127,9 @@ export class SigninComponent implements OnInit {
       if (res.data[ 0 ].firstName)
         localStorage.setItem("userName", res.data[ 0 ].firstName);
       localStorage.setItem("profileUrl", res.data[ 0 ].profileUrl);
+      localStorage.setItem("currencyCode", res.data[ 0 ].baseCurrency.currencyCode);
+      localStorage.setItem("countryCode", res.data[ 0 ].countryCode);
+
       // if (res && (res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
 
 
