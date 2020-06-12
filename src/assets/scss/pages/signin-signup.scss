@@ -31,10 +31,10 @@
 
   .main-button.mat-button-base {
     border: 2px solid #f47721 !important;
-    min-width: 58px;
+    // min-width: 58px;
     border-radius: 25px;
     font-weight: 500;
-    padding-right: 30px;
+    // padding-right: 30px;
     font-size: 12px;
   }
   .signupForm-error-msg.p-l-12 {
@@ -91,4 +91,11 @@
   padding-top: 10px;
   color: #f47721 !important;
   cursor: pointer;
+}
+
+.otp-btn{
+  min-width: 60px !important;
+  .mat-button-wrapper{
+    margin-right: 35px;
+  }
 }

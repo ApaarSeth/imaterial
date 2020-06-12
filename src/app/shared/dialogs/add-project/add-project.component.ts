@@ -79,9 +79,8 @@ export class AddProjectComponent implements OnInit {
     this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.selectedConstructionUnit = "1";
+    // this.selectedConstructionUnit = "1";
     this.initForm();
-    console.log(this.data.detail);
     if (this.data.isEdit) {
       if (this.data.detail.pinCode) {
         this.cityStateFetch(this.data.detail.pinCode);
@@ -144,7 +143,8 @@ export class AddProjectComponent implements OnInit {
     { type: "OTHERS" }
   ];
 
-  units: Unit[] = [ { value: "acres" }, { value: "sqm" }, { value: "sqft" } ];
+  units: Unit[] = [ { value: "acres" }, { value: "sqm" }, { value: "sqft" }, { value: "km" } ];
+  costUnits: Unit[] = [ { value: "CR" }, { value: "Million" }, { value: "Billion" } ];
 
   initForm() {
     this.projectDetails = this.data.isEdit
@@ -198,6 +198,7 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.gstNo : "",
         [ Validators.pattern(FieldRegExConst.GSTIN) ]
       ],
+      costUnit: [ this.data.isEdit ? this.data.detail.costUnit : "", Validators.required ],
       imageUrl: [ this.data.isEdit ? this.data.detail.imageFileName : "" ],
       countryId: [ null ],
       countryCode: []
