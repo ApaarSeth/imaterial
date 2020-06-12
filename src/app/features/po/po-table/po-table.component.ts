@@ -52,7 +52,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   ngOnChanges(): void {
     this.isInternational = this.currency.isInternational;
-    this.poCurrency = this.currency.purchaseOrderCurrency
+    this.poCurrency = this.currency.purchaseOrderCurrency;
     this.additonalCost = this.additionalOtherCostInfo;
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
