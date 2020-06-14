@@ -53,6 +53,7 @@ export class AddEditUserComponent implements OnInit {
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
   searchCountry: string = '';
+  calingCode: string;
 
   constructor(
     private userService: UserService,
@@ -67,6 +68,9 @@ export class AddEditUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('countryCode')) {
+      this.calingCode = localStorage.getItem('countryCode');
+    }
     this.getLocation();
     this.initForm();
     this.orgId = Number(localStorage.getItem("orgId"))
@@ -81,16 +85,18 @@ export class AddEditUserComponent implements OnInit {
   }
 
   getLocation() {
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res[ 'ip' ];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        if (this.data.isEdit && this.data.detail.countryCode) {
-          this.getCountryCode(this.data.detail.countryCode);
-        } else {
+    if (this.data.isEdit && this.data.detail.countryCode) {
+      this.getCountryCode(this.data.detail.countryCode);
+    } else if (this.calingCode) {
+      this.getCountryCode(this.calingCode);
+    } else {
+      this.visitorsService.getIpAddress().subscribe(res => {
+        this.ipaddress = res[ 'ip' ];
+        this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
           this.getCountryCode(res[ 'calling_code' ]);
-        }
+        });
       });
-    });
+    }
   }
 
   getCountryCode(callingCode) {

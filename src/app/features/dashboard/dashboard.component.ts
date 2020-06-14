@@ -16,7 +16,7 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
 @Component({
   selector: "dashboard",
   templateUrl: "./dashboard.component.html",
-  styleUrls: ["../../../assets/scss/main.scss"]
+  styleUrls: [ "../../../assets/scss/main.scss" ]
 })
 export class DashboardComponent implements OnInit {
   tourId: string;

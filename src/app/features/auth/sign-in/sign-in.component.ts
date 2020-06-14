@@ -47,7 +47,7 @@ export class SigninComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(param => {
-      this.uniqueCode = param["uniqueCode"];
+      this.uniqueCode = param[ "uniqueCode" ];
     });
     this.primaryCallingCode = localStorage.getItem('callingCode')
     this.formInit();
@@ -56,9 +56,9 @@ export class SigninComponent implements OnInit {
 
   getLocation() {
     this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
+      this.ipaddress = res[ 'ip' ];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.getCountryCode(res['calling_code'])
+        this.getCountryCode(res[ 'calling_code' ])
       });
     });
   }
@@ -69,15 +69,15 @@ export class SigninComponent implements OnInit {
       this.livingCountry = this.countryList.filter(val => {
         return val.callingCode === callingCode;
       })
-      this.signinForm.get('countryCode').setValue(this.livingCountry[0])
+      this.signinForm.get('countryCode').setValue(this.livingCountry[ 0 ])
     })
   }
 
   formInit() {
     this.signinForm = this.formBuilder.group({
       countryCode: [],
-      phone: ["", [Validators.required]],
-      password: ["", Validators.required]
+      phone: [ "", [ Validators.required ] ],
+      password: [ "", Validators.required ]
     });
   }
 
@@ -98,7 +98,7 @@ export class SigninComponent implements OnInit {
       if (data.errorMessage) {
         this._snackBar.open(data.errorMessage, "", {
           duration: 2000,
-          panelClass: ["warning-snackbar"],
+          panelClass: [ "warning-snackbar" ],
           verticalPosition: "bottom"
         });
       }
@@ -124,9 +124,12 @@ export class SigninComponent implements OnInit {
    */
   getUserInfo(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      if (res.data[0].firstName)
-        localStorage.setItem("userName", res.data[0].firstName);
-      localStorage.setItem("profileUrl", res.data[0].profileUrl);
+      if (res.data[ 0 ].firstName)
+        localStorage.setItem("userName", res.data[ 0 ].firstName);
+      localStorage.setItem("profileUrl", res.data[ 0 ].profileUrl);
+      localStorage.setItem("currencyCode", res.data[ 0 ].baseCurrency.currencyCode);
+      localStorage.setItem("countryCode", res.data[ 0 ].countryCode);
+
       // if (res && (res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
 
 
@@ -139,10 +142,10 @@ export class SigninComponent implements OnInit {
       this.dataService.getRequest(API.CHECKTERMS).then(res => {
         this.acceptTerms = res.data;
         if (!this.acceptTerms) {
-          this.router.navigate(["/profile/terms-conditions"]);
+          this.router.navigate([ "/profile/terms-conditions" ]);
         }
         else {
-          this.router.navigate(["/profile/update-info"]);
+          this.router.navigate([ "/profile/update-info" ]);
         }
       })
     })
@@ -157,10 +160,10 @@ export class SigninComponent implements OnInit {
   }
   goToForgetPass() {
     if (this.uniqueCode) {
-      this.router.navigate(['auth/forgot-password/' + this.uniqueCode]);
+      this.router.navigate([ 'auth/forgot-password/' + this.uniqueCode ]);
     }
     else {
-      this.router.navigate(['auth/forgot-password']);
+      this.router.navigate([ 'auth/forgot-password' ]);
     }
   }
 }

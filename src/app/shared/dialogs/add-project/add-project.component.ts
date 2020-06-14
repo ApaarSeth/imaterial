@@ -60,6 +60,7 @@ export class AddProjectComponent implements OnInit {
   livingCountry: CountryCode[] = [];
   searchCountry: string = '';
   selectedCountryId: number;
+  calingCode: string;
 
   constructor(
     private projectService: ProjectService,
@@ -76,12 +77,14 @@ export class AddProjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('countryCode')) {
+      this.calingCode = localStorage.getItem('countryCode');
+    }
     this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.selectedConstructionUnit = "1";
+    // this.selectedConstructionUnit = "1";
     this.initForm();
-    console.log(this.data.detail);
     if (this.data.isEdit) {
       if (this.data.detail.pinCode) {
         this.cityStateFetch(this.data.detail.pinCode);
@@ -91,16 +94,20 @@ export class AddProjectComponent implements OnInit {
   }
 
   getLocation() {
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res[ 'ip' ];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        if (this.data.isEdit) {
-          this.getCountryCode(this.data.detail.callingCode);
-        } else {
-          this.getCountryCode(res[ 'calling_code' ])
-        }
-      });
-    });
+    if (this.calingCode) {
+      this.getCountryCode(this.calingCode);
+    } else {
+      if (this.data.isEdit) {
+        this.getCountryCode(this.data.detail.callingCode);
+      } else {
+        this.visitorsService.getIpAddress().subscribe(res => {
+          this.ipaddress = res[ 'ip' ];
+          this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+            this.getCountryCode(res[ 'calling_code' ])
+          });
+        });
+      }
+    }
   }
 
   blankPincode() {
@@ -144,7 +151,8 @@ export class AddProjectComponent implements OnInit {
     { type: "OTHERS" }
   ];
 
-  units: Unit[] = [ { value: "acres" }, { value: "sqm" }, { value: "sqft" } ];
+  units: Unit[] = [ { value: "acres" }, { value: "sqm" }, { value: "sqft" }, { value: "km" } ];
+  costUnits: Unit[] = [ { value: "CR" }, { value: "Million" }, { value: "Billion" } ];
 
   initForm() {
     this.projectDetails = this.data.isEdit
@@ -198,6 +206,7 @@ export class AddProjectComponent implements OnInit {
         this.data.isEdit ? this.data.detail.gstNo : "",
         [ Validators.pattern(FieldRegExConst.GSTIN) ]
       ],
+      costUnit: [ this.data.isEdit ? this.data.detail.costUnit : "", Validators.required ],
       imageUrl: [ this.data.isEdit ? this.data.detail.imageFileName : "" ],
       countryId: [ null ],
       countryCode: []
