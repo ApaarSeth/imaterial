@@ -28,7 +28,8 @@
         </mat-form-field>
       </div>
       <div class="text-right col-xs-5 create-po-btn p-r-20 p-t-10">
-        <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="createRfq()">
+        <button mat-raised-button class="main-background-color main-button color-white demo-title"
+          (click)="createRfq()">
           Create RFQ
         </button>
       </div>
@@ -87,14 +88,13 @@
 
                     <div class="show-detail-supplier rfq-icon-material-i" *ngIf="element.supplierList.length > 0">
                       <!-- <img src="../../../../assets/images/i_icon.png" /> -->
-                      <i class="material-icons md-24" style="padding-top: 0px;">info</i>
+                      <i class="material-icons md-24 mt-2" style="padding-top: 0px;">info</i>
                       <div id="detail-supplier">
                         <div class="row">
                           <div class="col-sm-12">
                             <span class="supplier-name-tag">Supplier Name</span>
                             <ng-container *ngFor="let name of element.supplierList">
-                              <span
-                                ><br />
+                              <span><br />
                                 {{ name.supplierName }}
                               </span>
                             </ng-container>
@@ -114,7 +114,8 @@
               <ng-container matColumnDef="action2">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center">
-                  <a [routerLink]="['./rfq-bid/', element.rfqId]" class="text-align-center" style="color: #f47721;">View Bids</a>
+                  <a [routerLink]="['./rfq-bid/', element.rfqId]" class="text-align-center" style="color: #f47721;">View
+                    Bids</a>
                 </td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -177,14 +178,13 @@
 
                     <div class="show-detail-supplier rfq-icon-material-i" *ngIf="element.supplierList">
                       <!-- <img src="../../../../assets/images/i_icon.png" /> -->
-                      <mat-icon class="material-info">info</mat-icon>
+                      <mat-icon class="material-icons md-24 mt-2">info</mat-icon>
                       <div id="detail-supplier">
                         <div class="row">
                           <div class="col-sm-12">
                             <span class="supplier-name-tag">Supplier Name</span>
                             <ng-container *ngFor="let name of element.supplierList">
-                              <span
-                                ><br />
+                              <span><br />
                                 {{ name.supplierName }}
                               </span>
                             </ng-container>
@@ -198,7 +198,8 @@
               <ng-container matColumnDef="action1">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                 <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                  <a (click)="viewRfq(element)" class="cursor" style="color: #f47721;">{{ element.rfqStatus === 0 ? "Complete RFQ" : "View RFQ" }}</a>
+                  <a (click)="viewRfq(element)" class="cursor"
+                    style="color: #f47721;">{{ element.rfqStatus === 0 ? "Complete RFQ" : "View RFQ" }}</a>
                 </td>
               </ng-container>
               <ng-container matColumnDef="action2">

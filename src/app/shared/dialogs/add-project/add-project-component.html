@@ -192,8 +192,8 @@
               <input matInput type="text" formControlName="area" min="0" appTwoDigitDecimaNumber required />
               <small *ngIf="form.controls['area'].hasError('required') && form.controls['area'].touched"
                 class="error-msg"> Area is required </small>
-              <small *ngIf="form.controls['area'].hasError('pattern') && form.controls['area'].touched"
-                class="error-msg"> Enter valid area </small>
+              <!-- <small *ngIf="form.controls['area'].hasError('pattern') && form.controls['area'].touched"
+                class="error-msg"> Enter valid area </small> -->
             </mat-form-field>
           </div>
 
@@ -226,7 +226,7 @@
           <div class="col-xs-6 col-sm-3">
             <!-- project area -->
             <mat-form-field class="border-select">
-              <mat-label>Unit</mat-label>
+              <mat-label>Unit *</mat-label>
               <!-- <mat-select [value]="selectedConstructionUnit"> -->
               <!-- <mat-option value="1">
                   CR
