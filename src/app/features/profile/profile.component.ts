@@ -120,7 +120,7 @@ export class ProfileComponent implements OnInit {
       return val.currencyId === this.users.baseCurrency.currencyId;
     })
     this.userInfoForm.get('baseCurrency').setValue(newCurrencyList[0])
-    this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
+    this.userInfoForm.get('countryCode').setValue(this.livingCountry[0].callingCode)
   }
 
   getTurnOverList() {

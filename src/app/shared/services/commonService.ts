@@ -28,6 +28,14 @@ export class CommonService {
     return String(newDate);
   }
 
+  checkDate(data) {
+    let date = new Date(data)
+    let dummyMonth = date.getMonth() + 1;
+    const year = date.getFullYear().toString();
+    const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+    const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
+    return year + "-" + month + "-" + day;
+  }
   getBaseCurrency() {
     return this.dataService.getRequest(API.BASECURRENCY)
   }

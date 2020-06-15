@@ -1,67 +1,63 @@
- <div class="header-add-edit-dialog">
-      <h1 mat-dialog-title>{{projectDetails.projectName}}</h1>
-      <button type="button" class="close" (click)="close()" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
+<div class="header-add-edit-dialog">
+  <h1 mat-dialog-title>{{ projectDetails.projectName }}</h1>
+  <button type="button" class="close" (click)="close()" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<div class="padding-for-dialog-after-header text-align-center line-height-1-6">
+  <div class="row">
+    <div class="col-xs-12 display-flex">
+      <div class="font-size12 color-text-card text-left others">
+        <!-- <i class="material-icons font-size12 color-text-card">format_shapes</i> -->
+        <span
+          >Project Area:
+          <span class="text-semi-bold"> {{ projectDetails.area }} {{ projectDetails.unit }} </span>
+        </span>
+      </div>
+    </div>
   </div>
-   <div class="padding-for-dialog-after-header text-align-center line-height-1-6">
-                        <div class="row">
-                          <div class=" col-xs-12 display-flex">
-                            <div class="font-size12 color-text-card text-left others">
-                              <!-- <i class="material-icons font-size12 color-text-card">format_shapes</i> -->
-                              <span >Project Area: 
-                               <span class="text-semi-bold">
-                               {{ projectDetails.area }} {{ projectDetails.unit }}
-                               </span>  
-                                </span>
-                            </div>
-                          </div>
-                        </div>
 
-                        <div class="row">
-                          <div class=" col-xs-12 display-flex">
-                            <div class="font-size12 color-text-card text-left others">
-                              <!-- <i class="material-icons font-size12 color-text-card">today</i> -->
-                              Date : <span class="text-semi-bold">{{ projectDetails.startDate | date }} to
-                              {{ projectDetails.endDate | date: "dd MMM yyy" }}</span>
-                            </div>
-                          </div>
-                        </div>
+  <div class="row">
+    <div class="col-xs-12 display-flex">
+      <div class="font-size12 color-text-card text-left others">
+        <!-- <i class="material-icons font-size12 color-text-card">today</i> -->
+        Date : <span class="text-semi-bold">{{ projectDetails.startDate | date }} to {{ projectDetails.endDate | date: "dd MMM yyy" }}</span>
+      </div>
+    </div>
+  </div>
 
-                        <div class="row">
-                              <div class=" col-xs-12 display-flex">
-                                 <div class="font-size12 color-text-card text-left others">
-                                    <span > Construction Cost: 
-                                     <span class="text-semi-bold">
-                                         ₹ {{ projectDetails.cost | number: "1.2-2" }} Cr 
-                                     </span>
-                                      </span>
-                                      
-                                   </div>
-                              </div>
-                          </div>
+  <div class="row">
+    <div class="col-xs-12 display-flex">
+      <div class="font-size12 color-text-card text-left others">
+        <span>
+          Construction Cost:
+          <span class="text-semi-bold"> ₹ {{ projectDetails.cost | number: "1.2-2" }} Cr </span>
+        </span>
+      </div>
+    </div>
+  </div>
 
-                        <div class="row">
-                          <div class="col-xs-12 display-flex">
-                            <div class="font-size12 color-text-card text-left ">
-                              Created On : 
-                               <span class="text-semi-bold">
-                               {{ projectDetails.createdAt | date: "fullDate" }}
-                               </span>
-                               </div>
-                          </div>
-                        </div>  
+  <div class="row">
+    <div class="col-xs-12 display-flex">
+      <div class="font-size12 color-text-card text-left">
+        Created On :
+        <span class="text-semi-bold">
+          {{ projectDetails.createdAt | date: "fullDate" }}
+        </span>
+      </div>
+    </div>
+  </div>
 
-                         <div class="row">
-                          <div class="col-xs-12 display-flex">
-                            <div class="font-size12 color-text-card text-left">
-                             <span >
-                               Created By : 
-                                <span class="text-semi-bold">
-                                {{projectDetails.createdBy}}
-                                </span>
-                             </span> 
-                              </div>
-                          </div>
-                        </div>  
-   </div>
+  <div class="row">
+    <div class="col-xs-12 display-flex">
+      <div class="font-size12 color-text-card text-left">
+        <span>
+          Created By :
+          <span class="text-semi-bold">
+            {{ projectDetails.createdBy }}
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
