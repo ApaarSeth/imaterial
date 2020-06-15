@@ -27,6 +27,7 @@ export interface POData {
   isInternational: number;
   additionalOtherCostInfo?: OtherCostInfo[];
   additionalOtherCostAmount?: number;
+  currencyCode?: string;
 }
 
 export interface PurchaseOrderCurrency {
