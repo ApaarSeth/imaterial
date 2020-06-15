@@ -125,11 +125,12 @@ export class RfqQuantityMakesComponent implements OnInit {
           ].projectMaterialList.length;
         }
         return subCat.projectMaterialList.map(item => {
+          let fullfilmentDate = item.fullfilmentDate ? (new Date(item.fullfilmentDate) < new Date() ? null : item.fullfilmentDate) : null;
           return this.formBuilder.group({
             estimatedRate: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
             quantity: [item.quantity ? item.quantity : null, [Validators.required, this.quantityCheck(item.estimatedQty)]],
             makes: [item.makes],
-            fullfilmentDate: [item.fullfilmentDate],
+            fullfilmentDate: [fullfilmentDate],
             projId: [item.projectId],
             matId: [item.materialId],
           });

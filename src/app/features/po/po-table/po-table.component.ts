@@ -12,6 +12,7 @@ import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OverallOtherCost } from 'src/app/shared/models/common.models';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 @Component({
   selector: "app-po-table",
@@ -197,6 +198,9 @@ export class PoTableComponent implements OnInit, OnDestroy {
   sumbit() {
     this.getData();
   }
+  getUpdatedCurrency() {
+    return this.poCurrency
+  }
 
   getadditonalCost(): OtherCostInfo[] {
     return this.additonalCost.additionalOtherCostInfo;
@@ -309,6 +313,20 @@ export class PoTableComponent implements OnInit, OnDestroy {
         verticalPosition: "bottom"
       });
     }
+  }
+
+  selectCurrency() {
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true,
+      width: "500px",
+      data: this.poCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != null) {
+        this.poCurrency = data;
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])

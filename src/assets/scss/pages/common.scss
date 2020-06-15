@@ -78,6 +78,12 @@
   }
 }
 
+.date-picker-button-padding {
+  .mat-form-field-suffix .mat-button-wrapper {
+    padding-left: 16px !important;
+  }
+}
+
 .mat-expansion-panel-header-wrapper {
   .mat-expansion-panel-header.mat-expanded:focus,
   .mat-expansion-panel-header.mat-expanded:hover,
@@ -280,6 +286,6 @@ div.limited-character.universal {
   margin-top: 6px;
 }
 
-.rt-0{
-  right:0;
+.rt-0 {
+  right: 0;
 }

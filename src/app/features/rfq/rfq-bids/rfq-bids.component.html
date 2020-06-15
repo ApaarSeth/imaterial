@@ -148,8 +148,8 @@
                                   {{
                                     brandInfo.materialUnitPrice != null
                                       ? ratesBaseCurr
-                                        ? brandInfo.materialUnitPrice * project.rfqCurrency.exchangeValue
-                                        : brandInfo.materialUnitPrice
+                                        ? (brandInfo.materialUnitPrice * project.rfqCurrency.exchangeValue | number: "1.2-2")
+                                        : (brandInfo.materialUnitPrice | number: "1.2-2")
                                       : "--"
                                   }}
                                 </span>

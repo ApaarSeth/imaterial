@@ -188,7 +188,7 @@ export class PoComponent implements OnInit {
       poNumber: this.poCard.getData().orderNo,
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
-      purchaseOrderCurrency: this.poData.purchaseOrderCurrency && this.poData.purchaseOrderCurrency.exchangeCurrency ? this.poData.purchaseOrderCurrency : null,
+      purchaseOrderCurrency: this.poTable.getUpdatedCurrency() ? this.poTable.getUpdatedCurrency() : null,
       isInternational: 0,
       DocumentsList: this.poDocument.getData(),
       Terms: {

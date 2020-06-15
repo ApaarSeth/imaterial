@@ -48,12 +48,14 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
           subCat.prevMatListLength = this.checkedMaterialsList[i - 1].projectMaterialList.length;
         }
         return subCat.projectMaterialList.map(item => {
+          let dueDate = item.dueDate ? (new Date(item.dueDate) < new Date() ? null : item.dueDate) : null;
+
           return this.formBuilder.group({
             materialUnitPrice: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
             materialQty: [item.quantity, [Validators.required, this.quantityCheck(item.poAvailableQty)]],
             brandNames: [item.makes],
             materialId: [item.materialId],
-            fullfilmentDate: [item.dueDate]
+            fullfilmentDate: [dueDate]
           });
         });
       })

@@ -119,7 +119,7 @@ export class RfqBidsComponent implements OnInit {
           },
           materialList: MaterialListSubmit[]
         ): RfqProjectSubmit => {
-          let additionalOtherCost = proj.additionalOtherCostInfo.find(val => val.supplierId === supplierData.supplierId)
+          let additionalOtherCost = proj.additionalOtherCostInfo.filter(val => val.supplierId === supplierData.supplierId)
           return {
             projectId: proj.projectId,
             projectName: proj.projectName,
@@ -129,7 +129,7 @@ export class RfqBidsComponent implements OnInit {
             rfqId: this.rfqId,
             materialList,
             rfqCurrency: proj.rfqCurrency,
-            additionalOtherCostInfo: proj.additionalOtherCost
+            additionalOtherCostInfo: additionalOtherCost
           };
         };
         const getMaterialsForUnicSupp = (suppId): MaterialListSubmit[] =>
