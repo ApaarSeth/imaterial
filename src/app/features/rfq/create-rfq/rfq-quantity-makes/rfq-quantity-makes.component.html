@@ -2,14 +2,16 @@
   <div class="row">
     <div class="col-xs-6 p-t-10 border-input">
       <mat-form-field class="input-search-padding-zero">
-        <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
+        <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchProject"
+          [ngModelOptions]="{standalone: true}" />
         <button mat-button matSuffix mat-icon-button>
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field>
 
       <mat-form-field class="p-l-20 input-search-padding-zero">
-        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" [ngModelOptions]="{standalone: true}" />
+        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial"
+          [ngModelOptions]="{standalone: true}" />
         <button mat-button matSuffix mat-icon-button>
           <mat-icon>search</mat-icon>
         </button>
@@ -17,28 +19,35 @@
     </div>
 
     <div class="col-xs-6 text-right p-t-10 p-b-10">
-      <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
+      <span (click)="selectCurrency()"
+        class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select
+        Currency</span>
       <span class="p-r-5">
-        <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="materialAdded()" type="button">Back</button>
+        <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white"
+          (click)="materialAdded()" type="button">Back</button>
       </span>
       <span>
-        <button mat-raised-button matStepperNext [disabled]="!materialForms.valid" (click)="materialAdded()" class="main-background-color main-button color-white">
+        <button mat-raised-button matStepperNext [disabled]="!materialForms.valid" (click)="materialAdded()"
+          class="main-background-color main-button color-white">
           Next
         </button>
       </span>
     </div>
   </div>
 
-  <div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null">
+  <div class="col-xs-12 p-t-10 p-b-20 text-right"
+    *ngIf="rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null">
     <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
       <span class="font-size-vary-grn color-grey">
-        <img width="25px" *ngIf="rfqData.rfqCurrency.exchangeCurrencyFlag" [src]="rfqData.rfqCurrency.exchangeCurrencyFlag" />
+        <img width="25px" *ngIf="rfqData.rfqCurrency.exchangeCurrencyFlag"
+          [src]="rfqData.rfqCurrency.exchangeCurrencyFlag" />
         {{ rfqData.rfqCurrency.exchangeCurrencyName }}
       </span>
       <span class="p-l-5"> = </span>
       <span class="p-l-5 color-6d6a6a color-grey"> {{ rfqData.rfqCurrency.exchangeValue }} </span>
       <span class="p-l-5 color-grey">
-        <img width="25px" *ngIf="rfqData.rfqCurrency.primaryCurrencyFlag" [src]="rfqData.rfqCurrency.primaryCurrencyFlag" />
+        <img width="25px" *ngIf="rfqData.rfqCurrency.primaryCurrencyFlag"
+          [src]="rfqData.rfqCurrency.primaryCurrencyFlag" />
         {{ rfqData.rfqCurrency.primaryCurrencyName }}
       </span>
     </span>
@@ -51,8 +60,8 @@
           <mat-expansion-panel-header>
             <mat-panel-title>
               {{ material.projectName }}
-              <a href="javascript:void(0)" (click)="openDialog(material)" class="main-color p-l-15"
-                >{{ material.defaultAddress.addressLine1 }}
+              <a href="javascript:void(0)" (click)="openDialog(material)"
+                class="main-color p-l-15">{{ material.defaultAddress.addressLine1 }}
                 {{ material.defaultAddress.addressLine2 }}
                 {{ material.defaultAddress.city }}
                 {{ material.defaultAddress.state }}
@@ -61,11 +70,13 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <table mat-table [dataSource]="material.projectMaterialList | SearchPipe: searchMaterial:'materialName'" class="col-sm-12 rfq-custom-mat-width">
+          <table mat-table [dataSource]="material.projectMaterialList | SearchPipe: searchMaterial:'materialName'"
+            class="col-sm-12 rfq-custom-mat-width">
             <ng-container matColumnDef="Material Name">
               <th mat-header-cell *matHeaderCellDef>Material Name</th>
               <td mat-cell *matCellDef="let element">
-                <div class="limited-character global" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
+                <div class="limited-character global" matTooltip=" {{ element.materialName }}">
+                  {{ element.materialName }} <br /></div>
               </td>
             </ng-container>
             <ng-container matColumnDef="Estimated Qty">
@@ -83,13 +94,15 @@
             <ng-container matColumnDef="Fullfillment Date" class="date-dialog-add-edit">
               <th mat-header-cell *matHeaderCellDef>Fullfillment Date</th>
               <td mat-cell *matCellDef="let element; let i = index">
-                <mat-form-field class="border-input" [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)">
+                <mat-form-field class="border-input"
+                  [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)">
                   <!-- <mat-label>Fullfil </mat-label> -->
                   <!-- <span class="form-placeholder">{{
                     materialForms["controls"]["forms"]["controls"][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]["controls"]["fullfilmentDate"].value
                       | date: "dd-MMM-yyy"
                   }}</span> -->
-                  <input matInput [min]="startDate" [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" readonly />
+                  <input matInput [min]="startDate" [matDatepicker]="dueDate" formControlName="fullfilmentDate"
+                    (click)="dueDate.open()" readonly />
                   <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                   <mat-datepicker #dueDate startView="month" [startAt]="startDate"></mat-datepicker>
                 </mat-form-field>
@@ -98,16 +111,15 @@
             <ng-container matColumnDef="Estimated Rate">
               <th mat-header-cell *matHeaderCellDef>Estimated Rate</th>
               <td mat-cell *matCellDef="let element; let i = index">
-                <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)" class="border-input table-input">
-                  <input matInput formControlName="estimatedRate" type="text" appTwoDigitDecimaNumber placeholder="Estimated Rate" min="0" />
-                  <small
-                    *ngIf="
+                <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)"
+                  class="border-input table-input">
+                  <input matInput formControlName="estimatedRate" type="text" appTwoDigitDecimaNumber
+                    placeholder="Estimated Rate" min="0" />
+                  <small *ngIf="
                       materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['estimatedRate'].hasError(
                         'pattern'
                       ) && materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['estimatedRate'].touched
-                    "
-                    class="error-msg"
-                  >
+                    " class="error-msg">
                     Invalid estimated rate
                   </small>
                 </mat-form-field>
@@ -116,15 +128,19 @@
             <ng-container matColumnDef="Quantity">
               <th mat-header-cell *matHeaderCellDef>Quantity</th>
               <td mat-cell *matCellDef="let element; let i = index">
-                <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)" class="border-input table-input">
-                  <input matInput formControlName="quantity" type="text" placeholder="Quantity" min="0" appTwoDigitDecimaNumber />
+                <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)"
+                  class="border-input table-input">
+                  <input matInput formControlName="quantity" type="text" placeholder="Quantity" min="0"
+                    appTwoDigitDecimaNumber />
                 </mat-form-field>
               </td>
             </ng-container>
             <ng-container matColumnDef="Makes">
               <th mat-header-cell *matHeaderCellDef>Makes</th>
               <td mat-cell *matCellDef="let element; let i = index">
-                <app-chip [chips]="element.makes" (onUpdate)="makesUpdate($event, i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0))"> </app-chip>
+                <app-chip [chips]="element.makes"
+                  (onUpdate)="makesUpdate($event, i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0))"
+                  class="lh30"> </app-chip>
               </td>
             </ng-container>
 
