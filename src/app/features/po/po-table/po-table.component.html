@@ -4,7 +4,9 @@
       <div *ngIf="isInternational">
         <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
         <span *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
-          <span class="slideToggalColor p-r-10"><mat-slide-toggle [(ngModel)]="ratesBaseCurr" [ngModelOptions]="{standalone: true}"></mat-slide-toggle></span>
+          <span class="slideToggalColor p-r-10"
+            ><mat-slide-toggle (toggleChange)="changeCurrency($event)" [(ngModel)]="ratesBaseCurr" [ngModelOptions]="{standalone: true}"></mat-slide-toggle
+          ></span>
           <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
             <span class="font-size-vary-grn color-grey">
               <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
@@ -62,7 +64,7 @@
             ></span
           >
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Awarded <br />quantity</span>
-          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-10': isInternational && mode === 'edit' && mode === 'edit'}"
+          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-12 p-r-0': isInternational && mode === 'edit' && mode === 'edit'}"
             >Amount
             <span style="display: block;"
               >({{
@@ -138,7 +140,7 @@
               </ng-template>
             </span>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"></span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
+            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-l-0 p-r-0' : 'minwidth-8'"
               >{{ getMaterialQuantity(m) | number: "1.2-2" }}
               <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
                 Must be less than {{material.poAvailableQty}}
@@ -146,7 +148,7 @@
             </span>
             <span
               class="mat-cell"
-              [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
+              [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-l-0' : 'minwidth-8'"
               [ngClass]="isInternational && mode === 'edit' && mode != 'edit' ? 'p-r-0' : 'p-r-15'"
               >{{ ratesBaseCurr ? (getMaterialAmount(m) * poCurrency.exchangeValue | number: "1.2-2") : (getMaterialAmount(m) | number: "1.2-2") }}</span
             >
@@ -245,7 +247,7 @@
               </span>
               <span
                 class="mat-cell"
-                [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-r-0' : 'minwidth-8'"
+                [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-r-0 p-l-0' : 'minwidth-8'"
                 [ngClass]="isInternational && mode === 'edit' && mode === 'edit' ? 'text-right' : 'text-center'"
               >
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity | number: "1.2-2" }}</ng-container>
@@ -264,7 +266,7 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">
+              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-l-0' : 'minwidth-8'">
                 <ng-container *ngIf="mode != 'edit'; else editAmount"
                   >{{ ratesBaseCurr ? (purchaseOrder.amount * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.amount | number: "1.2-2") }}
                 </ng-container>
