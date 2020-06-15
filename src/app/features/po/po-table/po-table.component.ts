@@ -12,6 +12,7 @@ import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OverallOtherCost } from 'src/app/shared/models/common.models';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 @Component({
   selector: "app-po-table",
@@ -26,6 +27,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   @Output("QuantityAmountValidation") QuantityAmountValidation = new EventEmitter();
   gst: string = '';
   words: string = "";
+  toggleCounter: number = 0;
   showResponsiveDesign: boolean;
   poCurrency: PurchaseOrderCurrency
   constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
@@ -146,6 +148,26 @@ export class PoTableComponent implements OnInit, OnDestroy {
     this.poForms.addControl("forms", new FormArray(frmArr));
   }
 
+  changeCurrency(event) {
+    if (!this.ratesBaseCurr) {
+      (<FormArray>this.poForms.get('forms')).controls.map(frmGrp => {
+        (<FormArray>frmGrp.get('purchaseOrderDetailList')).controls.map(frmGrp => {
+          if (this.poCurrency && this.poCurrency.exchangeValue)
+            frmGrp.get('materialUnitPrice').setValue(frmGrp.get('materialUnitPrice').value * this.poCurrency.exchangeValue)
+        })
+      })
+      this.toggleCounter++;
+    }
+    else if (this.toggleCounter > 0) {
+      (<FormArray>this.poForms.get('forms')).controls.map(frmGrp => {
+        (<FormArray>frmGrp.get('purchaseOrderDetailList')).controls.map(frmGrp => {
+          if (this.poCurrency && this.poCurrency.exchangeValue)
+            frmGrp.get('materialUnitPrice').setValue(frmGrp.get('materialUnitPrice').value / this.poCurrency.exchangeValue)
+        })
+      })
+    }
+
+  }
 
   get totalAmount(): number {
     let sum: number = 0;
@@ -197,6 +219,11 @@ export class PoTableComponent implements OnInit, OnDestroy {
   sumbit() {
     this.getData();
   }
+  getUpdatedCurrency() {
+    return this.poCurrency
+  }
+
+
 
   getadditonalCost(): OtherCostInfo[] {
     return this.additonalCost.additionalOtherCostInfo;
@@ -309,6 +336,20 @@ export class PoTableComponent implements OnInit, OnDestroy {
         verticalPosition: "bottom"
       });
     }
+  }
+
+  selectCurrency() {
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true,
+      width: "500px",
+      data: this.poCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != null) {
+        this.poCurrency = data;
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
