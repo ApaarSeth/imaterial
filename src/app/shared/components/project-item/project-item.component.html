@@ -43,13 +43,10 @@
                       </div>
                     </div>
 
-
-
                     <div class="font-size12 color-text-card text-left others">
                       <i class="material-icons font-size12 color-text-card">format_shapes</i>
                       <span class="p-l-5">Project Area: {{ projectDetails.area }} {{ projectDetails.unit }}</span>
                     </div>
-
 
                   </div>
                 </div>
@@ -62,7 +59,14 @@
                       <span>{{ projectDetails.endDate | date: "dd MMM yyy" }}</span>
                     </div>
                     <div class="font-size12 color-text-card text-left others">
-                      <span>₹<span class="p-l-5"> Construction Cost: {{ projectDetails.cost | number: "1.2-2" }} Cr
+                      <span>
+                        <ng-container *ngIf="this.currencyCode">
+                          {{ this.currencyCode }}
+                        </ng-container>
+                        <span class="p-l-5"> Construction Cost: {{ projectDetails.cost | number: "1.2-2" }}
+                          <ng-container *ngIf="projectDetails.costUnit">
+                            {{ projectDetails.costUnit }}
+                          </ng-container>
                         </span>
                       </span>
                     </div>
@@ -166,8 +170,12 @@
                 </div>
                 <div>
                   <span class="font-size12 purchase-amount max-width-96 word-break-word"
-                    *ngIf="projectDetails.purchaseOrderCost"> ₹
-                    {{ projectDetails.purchaseOrderCost | number: "1.2-2" }} </span>
+                    *ngIf="projectDetails.purchaseOrderCost">
+                    <ng-container *ngIf="this.currencyCode">
+                      {{ this.currencyCode }}
+                    </ng-container>
+                    {{ projectDetails.purchaseOrderCost | number: "1.2-2" }}
+                  </span>
 
                   <!-- <span class="font-size12 purchase-amount max-width-96 word-break-word"> ₹ 6,54,354,35,464 </span> -->
                 </div>

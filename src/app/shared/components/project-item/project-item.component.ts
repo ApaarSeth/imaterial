@@ -30,6 +30,7 @@ export class ProjectItemComponent implements OnInit {
   id: number;
   permissionObj: any;
   url: string;
+  currencyCode: string;
 
   constructor(
     private permissionService: PermissionService,
@@ -48,6 +49,7 @@ export class ProjectItemComponent implements OnInit {
   @Output('startDate') startDate = new EventEmitter<Date>();
 
   ngOnInit(): void {
+    this.currencyCode = localStorage.getItem('currencyCode');
     const role = localStorage.getItem("role")
     this.permissionObj = this.permissionService.checkPermission(role);
     if (this.projectDetails.startDate) {
@@ -70,17 +72,17 @@ export class ProjectItemComponent implements OnInit {
 
   navigationToBOM(id: number, projectDetails: ProjectDetails) {
     if (projectDetails.matCount > 0) {
-      this.router.navigate(["/project-dashboard/bom/" + id + "/bom-detail"]);
+      this.router.navigate([ "/project-dashboard/bom/" + id + "/bom-detail" ]);
     } else {
-      this.router.navigate(["/project-dashboard/bom/" + id], { state: { projectDetails } });
+      this.router.navigate([ "/project-dashboard/bom/" + id ], { state: { projectDetails } });
     }
   }
 
   redirectToPurchaseOrder() {
-    this.router.navigate(["po"]);
+    this.router.navigate([ "po" ]);
   }
   redirectToOpenIndentCount(id: number, projectDetails: ProjectDetails) {
-    this.router.navigate(["/indent/" + id + "/indent-detail"]);
+    this.router.navigate([ "/indent/" + id + "/indent-detail" ]);
     // this.router.navigate(['/indent/1/indent-detail']);
   }
 

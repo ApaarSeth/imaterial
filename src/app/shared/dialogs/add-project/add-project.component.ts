@@ -296,7 +296,7 @@ export class AddProjectComponent implements OnInit {
     this.form.get('city').setValue("");
     this.form.get('state').setValue("");
     this.pincodeLength = event.target.value.length;
-    if (event.target.value.length >= 5) {
+    if (event.target.value.length >= 3) {
       this.cityStateFetch(event.target.value);
     }
 
