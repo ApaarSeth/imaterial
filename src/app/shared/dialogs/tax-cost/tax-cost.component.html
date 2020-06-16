@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-4">
                   <mat-form-field class="w-100 border-bottom">
-                    <input matInput type="number" placeholder="Amount" formControlName="otherCostAmount" />
+                    <input matInput type="number" placeholder="Other Cost %" formControlName="otherCostAmount" />
                   </mat-form-field>
                   <ng-container *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
                     <mat-error class="mt-mns pt-1 pb-2 font-size11" *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
@@ -101,6 +101,7 @@
             <span [ngClass]="[!checkValidation ? 'main-color-faded' : 'main-color']" matRipple class="material-icons cursor-pointer float-left mt-3" (click)="addNewOtherField()">
               add_circle
             </span>
+            <p class="tctnc d-flex w-100 pt-4">* Other Tax amount will be calculated on the basis of total tax %.</p>
           </div>
         </mat-tab>
       </mat-tab-group>

@@ -73,6 +73,7 @@ export interface PoMaterial {
   otherCostInfo: OtherCostInfo[]
   totalTax: number;
   taxAmount: number;
+  totalOtherTax: number;
   otherCostAmount: number;
 }
 
@@ -107,6 +108,7 @@ export interface PurchaseOrder {
   qty?: number;
   validUpto?: string;
   taxAmount?: number;
+  otherCostAmount?: number
 }
 export interface terms {
   termsId?: number;

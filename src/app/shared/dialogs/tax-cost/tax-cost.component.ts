@@ -109,7 +109,7 @@ export class TaxCostComponent implements OnInit {
       });
       this.data.existingData.otherCostInfo.forEach((element, i) => {
         if (i > 0) {
-          othertxInfoArr.push(this.addOtherCostFormGroup());
+          othertxInfoArr.push(this.addOtherCostPercentFormGroup());
         }
         const txItem = othertxInfoArr.at(i);
         txItem.get('otherCostName').setValue(element);
@@ -223,6 +223,23 @@ export class TaxCostComponent implements OnInit {
     })
     return frmGrp;
   }
+
+  addOtherCostPercentFormGroup() {
+    const frmGrp = this.formBuilder.group({
+      otherCostName: ['', Validators.required],
+      otherCostAmount: [null, { validators: [Validators.required, Validators.min(1), Validators.max(100)] }]
+    });
+    frmGrp.controls['otherCostName'].valueChanges.subscribe(changes => {
+      this.filterOptionsOther = null;
+      const val: OtherCostInfo[] = this.otherCostfilter(changes)
+      this.filterOptionsOther = new Observable((observer) => {
+        observer.next(val)
+        observer.complete()
+      })
+    })
+    return frmGrp;
+  }
+
 
   private otherCostfilter(value: string | OtherCostInfo): OtherCostInfo[] {
     if (value || value === "") {
@@ -345,7 +362,7 @@ export class TaxCostComponent implements OnInit {
     if (this.data.type === 'taxesAndCost') {
       if (this.checkValidation || len < 1) {
         if (!this.alreadyPresentOtherCost()) {
-          (<FormArray>this.taxCostForm.get('otherCostInfo')).push(this.addOtherCostFormGroup());
+          (<FormArray>this.taxCostForm.get('otherCostInfo')).push(this.addOtherCostPercentFormGroup());
           this.filterOptionsOther = null;
         }
         else {
