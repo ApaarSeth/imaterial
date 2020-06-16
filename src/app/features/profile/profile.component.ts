@@ -120,7 +120,7 @@ export class ProfileComponent implements OnInit {
       return val.currencyId === this.users.baseCurrency.currencyId;
     })
     this.userInfoForm.get('baseCurrency').setValue(newCurrencyList[0])
-    this.userInfoForm.get('countryCode').setValue(this.livingCountry[0].callingCode)
+    this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
   }
 
   getTurnOverList() {
@@ -176,7 +176,7 @@ export class ProfileComponent implements OnInit {
       roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: true }],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
-      country: [],
+      countryId: [],
       trade: [],
       profileUrl: [''],
     });
@@ -273,7 +273,8 @@ export class ProfileComponent implements OnInit {
       })
       this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
 
-      const data: UserDetails = this.userInfoForm.getRawValue();
+      let data: UserDetails = this.userInfoForm.getRawValue();
+      data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
 
       this._userService.submitUserDetails(data).then(res => {
         if (this.url) {
