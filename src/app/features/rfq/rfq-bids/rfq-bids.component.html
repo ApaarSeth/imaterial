@@ -77,16 +77,16 @@
 
                 <div>
                   <section class="mat-header-row">
-                    <span class="col-xs-2">Material Name</span>
-                    <span class="col-xs-2">Quantity</span>
-                    <span class="col-xs-8">Makes & Rates</span>
+                    <span class="mat-cell maxwidth-15">Material Name</span>
+                    <span class="mat-cell maxwidth-15">Quantity</span>
+                    <span class="mat-cell maxwidth-15">Makes & Rates</span>
                   </section>
                 </div>
 
                 <ng-container formArrayName="materialList">
                   <div class="p-0" *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
                     <section class="mat-row rfqbid-header-color">
-                      <span class="col-sm-2">
+                      <span class="col-sm-1">
                         <div class="limited-character" matTooltip=" {{ material.materialName }}">
                           {{ material.materialName }} <br />
                           <!-- <span *ngIf="!rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.value" class="error-msg font-size9"> Net Quantity Should be less than {{material.poAvailableQty}} </span> -->
@@ -97,7 +97,7 @@
                         <span class="p-l-5">{{ material.materialUnit }}</span>
                       </span>
 
-                      <span class="col-sm-9">
+                      <span class="col-sm-10">
                         <div class="row align-items-center">
                           <ng-container *ngFor="let brand of material.brandNames">
                             <span class="col-sm-1 text-center">

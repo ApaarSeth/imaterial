@@ -275,7 +275,7 @@ export class ProfileComponent implements OnInit {
 
       let data: UserDetails = this.userInfoForm.getRawValue();
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
-
+      data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
       this._userService.submitUserDetails(data).then(res => {
         if (this.url) {
           this._userService.UpdateProfileImage.next(this.url);
