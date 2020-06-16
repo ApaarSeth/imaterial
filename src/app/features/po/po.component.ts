@@ -177,6 +177,9 @@ export class PoComponent implements OnInit {
     })
   }
   collateResults() {
+    if (this.poTable.ratesBaseCurr) {
+      this.poTable.setRateBaseCurr(false);
+    }
     let poDataCollate: POData = {
       supplierAddress: this.poData.supplierAddress,
       projectAddress: this.poData.projectAddress,

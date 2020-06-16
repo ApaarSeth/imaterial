@@ -147,6 +147,18 @@ export class PoTableComponent implements OnInit, OnDestroy {
     this.poForms = this.formBuilder.group({});
     this.poForms.addControl("forms", new FormArray(frmArr));
   }
+  setRateBaseCurr(value) {
+    this.resetRate();
+  }
+
+  resetRate() {
+    (<FormArray>this.poForms.get('forms')).controls.map(frmGrp => {
+      (<FormArray>frmGrp.get('purchaseOrderDetailList')).controls.map(frmGrp => {
+        if (this.poCurrency && this.poCurrency.exchangeValue)
+          frmGrp.get('materialUnitPrice').setValue(frmGrp.get('materialUnitPrice').value / this.poCurrency.exchangeValue)
+      })
+    })
+  }
 
   changeCurrency(event) {
     if (!this.ratesBaseCurr) {
@@ -159,12 +171,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
       this.toggleCounter++;
     }
     else if (this.toggleCounter > 0) {
-      (<FormArray>this.poForms.get('forms')).controls.map(frmGrp => {
-        (<FormArray>frmGrp.get('purchaseOrderDetailList')).controls.map(frmGrp => {
-          if (this.poCurrency && this.poCurrency.exchangeValue)
-            frmGrp.get('materialUnitPrice').setValue(frmGrp.get('materialUnitPrice').value / this.poCurrency.exchangeValue)
-        })
-      })
+      this.resetRate()
     }
 
   }
@@ -289,6 +296,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
       }, 0);
     }
   }
+
   getMaterialAmount(m) {
     if (this.mode != "edit") {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
@@ -314,6 +322,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
       }, 0);
     }
   }
+
   getMaterialTotalAmount(m) {
     if (this.mode != "edit") {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
@@ -360,14 +369,40 @@ export class PoTableComponent implements OnInit, OnDestroy {
       this.showResponsiveDesign = false;
     }
   }
-  getPOListTax(m, p) {
-    let tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+
+  getPOListTax(m, p, type) {
+    let tax: number = 0;
+    if (type === 'edit') {
+      tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+    }
+    else {
+      this.calculateTaxInfo(m)
+      tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+    }
     if (tax) {
       this.poTableData[m].purchaseOrderDetailList[p]['taxAmount'] = this.poTableData[m].purchaseOrderDetailList[p].amount * (tax ? tax / 100 : 0)
       return this.poTableData[m].purchaseOrderDetailList[p]['taxAmount']
     }
     else {
       return this.poTableData[m].purchaseOrderDetailList[p]['taxAmount']
+    }
+  }
+
+  getPOListOtherCostTax(m, p, type) {
+    let tax: number = 0;
+    if (type === 'edit') {
+      tax = this.poTableData[m]['totalOtherTax'] ? this.poTableData[m]['totalOtherTax'] : null
+    }
+    else {
+      this.calculateOtherTaxInfo(m)
+      tax = this.poTableData[m]['totalOtherTax'] ? this.poTableData[m]['totalOtherTax'] : null
+    }
+    if (tax) {
+      this.poTableData[m]['otherCostAmount'] = this.poTableData[m].purchaseOrderDetailList[p].amount * (tax ? tax / 100 : 0)
+      return this.poTableData[m].purchaseOrderDetailList[p]['otherCostAmount']
+    }
+    else {
+      return this.poTableData[m].purchaseOrderDetailList[p]['otherCostAmount']
     }
   }
 
@@ -380,6 +415,18 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
     else {
       return this.poTableData[m].purchaseOrderDetailList[0].taxAmount ? this.poTableData[m].purchaseOrderDetailList[0].taxAmount : 0;
+    }
+  }
+
+  getTotalPoOtherListTax(m) {
+    if (this.poTableData[m].purchaseOrderDetailList.length > 1) {
+      if (this.poTableData[m].purchaseOrderDetailList[0].otherCostAmount)
+        return this.poTableData[m].purchaseOrderDetailList.map(val => val.otherCostAmount).reduce((a, b) => (a + b))
+      else
+        return 0;
+    }
+    else {
+      return this.poTableData[m].purchaseOrderDetailList[0].otherCostAmount ? this.poTableData[m].purchaseOrderDetailList[0].otherCostAmount : 0;
     }
   }
 
@@ -414,6 +461,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
       return 0;
     }
   }
+
   calculateTaxInfo(mId) {
     if (this.poTableData[mId].taxInfo && this.poTableData[mId].taxInfo.length > 0) {
       if (this.poTableData[mId].taxInfo.length > 1) {
@@ -426,16 +474,17 @@ export class PoTableComponent implements OnInit, OnDestroy {
       this.poTableData[mId]['totalTax'] = null
     }
   }
+
   calculateOtherTaxInfo(mId) {
     if (this.poTableData[mId].otherCostInfo && this.poTableData[mId].otherCostInfo.length > 0) {
       if (this.poTableData[mId].otherCostInfo.length > 1) {
-        this.poTableData[mId]['otherCostAmount'] = this.poTableData[mId].otherCostInfo.map(val => { return val.otherCostAmount }).reduce((a, b) => (a + b))
+        this.poTableData[mId]['totalOtherTax'] = this.poTableData[mId].otherCostInfo.map(val => { return val.otherCostAmount }).reduce((a, b) => (a + b))
       }
       else {
-        this.poTableData[mId]['otherCostAmount'] = this.poTableData[mId].otherCostInfo[0].otherCostAmount
+        this.poTableData[mId]['totalOtherTax'] = this.poTableData[mId].otherCostInfo[0].otherCostAmount
       }
     } else {
-      this.poTableData[mId]['otherCostAmount'] = null
+      this.poTableData[mId]['totalOtherTax'] = null
     }
   }
 
