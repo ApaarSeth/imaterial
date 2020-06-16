@@ -77,33 +77,33 @@
 
                 <div>
                   <section class="mat-header-row">
-                    <span class="col-xs-2">Material Name</span>
-                    <span class="col-xs-2">Quantity</span>
-                    <span class="col-xs-8">Makes & Rates</span>
+                    <span class="mat-cell maxwidth-15 p-l-25">Material Name</span>
+                    <span class="mat-cell maxwidth-10">Quantity</span>
+                    <span class="mat-cell maxwidth-15">Makes & Rates</span>
                   </section>
                 </div>
 
                 <ng-container formArrayName="materialList">
                   <div class="p-0" *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
                     <section class="mat-row rfqbid-header-color">
-                      <span class="col-sm-2">
+                      <span class="mat-cell maxwidth-15 p-l-25">
                         <div class="limited-character" matTooltip=" {{ material.materialName }}">
                           {{ material.materialName }} <br />
                           <!-- <span *ngIf="!rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.value" class="error-msg font-size9"> Net Quantity Should be less than {{material.poAvailableQty}} </span> -->
                         </div>
                       </span>
-                      <span class="col-sm-1">
+                      <span class="mat-cell maxwidth-10">
                         {{ material.rfqMaterialQty }}
                         <span class="p-l-5">{{ material.materialUnit }}</span>
                       </span>
 
-                      <span class="col-sm-9">
-                        <div class="row align-items-center">
+                      <span class="mat-cell maxwidth-75">
+                        <div class="mat-row align-items-center">
                           <ng-container *ngFor="let brand of material.brandNames">
-                            <span class="col-sm-1 text-center">
+                            <span class="mat-cell maxwidth-10 text-center">
                               {{ brand }}
                             </span>
-                            <span class="col-sm-2 text-left p-l-20 margin-right">
+                            <span class="mat-cell maxwidth-10 text-left">
                               Supplier Rates
                               <span *ngIf="this.rfqProjects[0].rfqCurrency" class="p-r-5 p-t-2">({{ currency }})</span>
                             </span>
@@ -116,14 +116,14 @@
 
                     <ng-container formArrayName="supplierList">
                       <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index" [formGroupName]="s">
-                        <span class="col-sm-2">{{ supplier.supplierName }} </span>
-                        <span class="col-sm-1"></span>
+                        <span class="mat-cell maxwidth-15 p-l-25 limited-character" matTooltip=" {{ supplier.supplierName }}">{{ supplier.supplierName }} </span>
+                        <span class="mat-cell maxwidth-10"></span>
 
-                        <div class="col-sm-9">
+                        <div class="mat-cell maxwidth-75">
                           <div class="row align-items-center">
                             <ng-container formArrayName="brandGroup">
                               <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index" [formGroupName]="i">
-                                <span class="col-sm-1 text-center">
+                                <span class="mat-cell maxwidth-10 text-center">
                                   <ng-container *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
                                     <mat-form-field class="border-input">
                                       <input
@@ -144,7 +144,7 @@
                                   </ng-template>
                                 </span>
 
-                                <span class="col-sm-2 p-l-20 text-left margin-right">
+                                <span class="mat-cell maxwidth-20 text-center">
                                   {{
                                     brandInfo.materialUnitPrice != null
                                       ? ratesBaseCurr
