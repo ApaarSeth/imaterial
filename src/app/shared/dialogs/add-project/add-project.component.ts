@@ -61,6 +61,7 @@ export class AddProjectComponent implements OnInit {
   searchCountry: string = '';
   selectedCountryId: number;
   calingCode: string;
+  currencyCode: string;
 
   constructor(
     private projectService: ProjectService,
@@ -77,6 +78,7 @@ export class AddProjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.currencyCode = localStorage.getItem('currencyCode');
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
@@ -94,19 +96,17 @@ export class AddProjectComponent implements OnInit {
   }
 
   getLocation() {
-    if (this.calingCode) {
+    if (this.data.isEdit && this.data.detail.callingCode) {
+      this.getCountryCode(this.data.detail.callingCode);
+    } else if (this.calingCode) {
       this.getCountryCode(this.calingCode);
     } else {
-      if (this.data.isEdit) {
-        this.getCountryCode(this.data.detail.callingCode);
-      } else {
-        this.visitorsService.getIpAddress().subscribe(res => {
-          this.ipaddress = res[ 'ip' ];
-          this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-            this.getCountryCode(res[ 'calling_code' ])
-          });
+      this.visitorsService.getIpAddress().subscribe(res => {
+        this.ipaddress = res[ 'ip' ];
+        this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+          this.getCountryCode(res[ 'calling_code' ]);
         });
-      }
+      });
     }
   }
 

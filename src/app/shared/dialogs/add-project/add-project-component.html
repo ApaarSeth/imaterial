@@ -214,7 +214,7 @@
           <div class="col-xs-6 col-sm-3">
             <!-- construction cost -->
             <mat-form-field class="border-input">
-              <mat-label>Construction Cost &#x20b9;</mat-label>
+              <mat-label>Construction Cost {{currencyCode}}</mat-label>
               <input matInput type="text" appTwoDigitDecimaNumber formControlName="cost" min="0" required />
               <small *ngIf="form.controls['cost'].hasError('required') && form.controls['cost'].touched"
                 class="error-msg"> Construction cost is required </small>
