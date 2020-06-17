@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-4">
                   <mat-form-field class="w-100 border-bottom">
-                    <input matInput type="number" placeholder="Other Cost %" formControlName="otherCostAmount" />
+                    <input matInput type="number" placeholder="Amount" formControlName="otherCostAmount" />
                   </mat-form-field>
                   <ng-container *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
                     <mat-error class="mt-mns pt-1 pb-2 font-size11" *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">

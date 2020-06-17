@@ -90,7 +90,6 @@ export class CreateRfqComponent implements OnInit {
   ngOnChanges(): void {
 
     this.commonService.baseCurrency.subscribe(val => {
-      console.log(val)
     })
   }
 

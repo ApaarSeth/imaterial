@@ -388,23 +388,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  getPOListOtherCostTax(m, p, type) {
-    let tax: number = 0;
-    if (type === 'edit') {
-      tax = this.poTableData[m]['totalOtherTax'] ? this.poTableData[m]['totalOtherTax'] : null
-    }
-    else {
-      this.calculateOtherTaxInfo(m)
-      tax = this.poTableData[m]['totalOtherTax'] ? this.poTableData[m]['totalOtherTax'] : null
-    }
-    if (tax) {
-      this.poTableData[m]['otherCostAmount'] = this.poTableData[m].purchaseOrderDetailList[p].amount * (tax ? tax / 100 : 0)
-      return this.poTableData[m].purchaseOrderDetailList[p]['otherCostAmount']
-    }
-    else {
-      return this.poTableData[m].purchaseOrderDetailList[p]['otherCostAmount']
-    }
-  }
+
 
   getTotalPOListTax(m) {
     if (this.poTableData[m].purchaseOrderDetailList.length > 1) {
@@ -418,17 +402,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  getTotalPoOtherListTax(m) {
-    if (this.poTableData[m].purchaseOrderDetailList.length > 1) {
-      if (this.poTableData[m].purchaseOrderDetailList[0].otherCostAmount)
-        return this.poTableData[m].purchaseOrderDetailList.map(val => val.otherCostAmount).reduce((a, b) => (a + b))
-      else
-        return 0;
-    }
-    else {
-      return this.poTableData[m].purchaseOrderDetailList[0].otherCostAmount ? this.poTableData[m].purchaseOrderDetailList[0].otherCostAmount : 0;
-    }
-  }
+
 
   get totalTaxAmount() {
     let totalTax = 0;
@@ -478,13 +452,13 @@ export class PoTableComponent implements OnInit, OnDestroy {
   calculateOtherTaxInfo(mId) {
     if (this.poTableData[mId].otherCostInfo && this.poTableData[mId].otherCostInfo.length > 0) {
       if (this.poTableData[mId].otherCostInfo.length > 1) {
-        this.poTableData[mId]['totalOtherTax'] = this.poTableData[mId].otherCostInfo.map(val => { return val.otherCostAmount }).reduce((a, b) => (a + b))
+        this.poTableData[mId]['otherCostAmount'] = this.poTableData[mId].otherCostInfo.map(val => { return val.otherCostAmount }).reduce((a, b) => (a + b))
       }
       else {
-        this.poTableData[mId]['totalOtherTax'] = this.poTableData[mId].otherCostInfo[0].otherCostAmount
+        this.poTableData[mId]['otherCostAmount'] = this.poTableData[mId].otherCostInfo[0].otherCostAmount
       }
     } else {
-      this.poTableData[mId]['totalOtherTax'] = null
+      this.poTableData[mId]['otherCostAmount'] = null
     }
   }
 

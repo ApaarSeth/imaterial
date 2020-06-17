@@ -9,36 +9,36 @@
 
 <mat-accordion displayMode="flat" multi class="mat-table" *ngIf="this.newMaterialData && this.newMaterialData.length > 0">
   <section matSort class="mat-elevation-z2 mat-header-row blue-background-color-color-white-section">
-    <span class="mat-header-cell material" mat-sort-header="name">Material Name</span>
-    <span class="mat-header-cell material" mat-sort-header="estimatedQty">Estimated Quantity</span>
-    <span class="mat-header-cell material" mat-sort-header="requestedQuantity">Indented Quantity</span>
-    <span class="mat-header-cell material" mat-sort-header="requiredDate">Required Date</span>
-    <span class="mat-header-cell material" mat-sort-header="requestedQuantity">Delivered Quantity</span>
-    <span class="mat-header-cell material" mat-sort-header="requestedQuantity">Awarded Quantity</span>
-    <span class="mat-header-cell material" mat-sort-header="availableQuantity">Available Stock</span>
+    <span class="mat-header-cell mat-header-cell maxwidth-14 material material-Name" mat-sort-header="name">Material Name</span>
+    <span class="mat-header-cell mat-header-cell maxwidth-14 material" mat-sort-header="estimatedQty">Estimated Quantity</span>
+    <span class="mat-header-cell mat-header-cell maxwidth-14 material" mat-sort-header="indentedQuantity">Indented Quantity</span>
+    <span class="mat-header-cell mat-header-cell maxwidth-14 material" mat-sort-header="requiredDate">Required Date</span>
+    <span class="mat-header-cell mat-header-cell maxwidth-14 material" mat-sort-header="deliveredQuantity">Delivered Quantity</span>
+    <span class="mat-header-cell mat-header-cell maxwidth-14 material" mat-sort-header="requestedQuantity">Awarded Quantity</span>
+    <span class="mat-header-cell mat-header-cell maxwidth-14 material" mat-sort-header="availableQuantity">Available Stock</span>
   </section>
   <div>
     <mat-expansion-panel *ngFor="let material of newMaterialData | SearchPipe: searchMaterial:'GlobalMaterial':'materialName'" class="myPanel">
       <mat-expansion-panel-header class="mat-row material-row">
-        <span class="mat-cell" matTooltip="{{ material.GlobalMaterial.materialName }}">
+        <span class="mat-cell maxwidth-14" matTooltip="{{ material.GlobalMaterial.materialName }}">
           <div class="limited-character globalStore">
             {{ material.GlobalMaterial.materialName }}
           </div>
         </span>
-        <span class="mat-cell">
+        <span class="mat-cell maxwidth-14 text-center">
           {{ material.GlobalMaterial.estimatedQty }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span>
         </span>
-        <span class="mat-cell"
+        <span class="mat-cell maxwidth-14 text-center"
           >{{ material.GlobalMaterial.sum }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
         >
-        <span class="mat-cell">{{ material.GlobalMaterial.nearDueDate | date: "dd MMM yyy" }}</span>
-        <span class="mat-cell"
+        <span class="mat-cell maxwidth-14 text-center">{{ material.GlobalMaterial.nearDueDate | date: "dd MMM yyy" }}</span>
+        <span class="mat-cell maxwidth-14 text-center"
           >{{ material.GlobalMaterial.deliveredQty != null ? material.GlobalMaterial.deliveredQty : 0 }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
         >
-        <span class="mat-cell"
+        <span class="mat-cell maxwidth-14 text-center"
           >{{ material.GlobalMaterial.issuedQty != null ? material.GlobalMaterial.issuedQty : 0 }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
         >
-        <span class="mat-cell"
+        <span class="mat-cell maxwidth-14 text-center"
           >{{
             material.GlobalMaterial.deliveredQty != null ? material.GlobalMaterial.deliveredQty - (material.GlobalMaterial.issuedQty ? material.GlobalMaterial.issuedQty : 0) : 0
           }}
@@ -47,31 +47,33 @@
       </mat-expansion-panel-header>
       <mat-expansion-panel *ngFor="let project of material.GlobalProject" class="myPanel">
         <mat-expansion-panel-header class="mat-row material-project">
-          <span class="mat-cell" matTooltip="{{ project.Projects.projectName }}">
+          <span class="mat-cell maxwidth-14" matTooltip="{{ project.Projects.projectName }}">
             <div class="limited-character global">
               {{ project.Projects.projectName }}
             </div>
           </span>
-          <span class="mat-cell">
+          <span class="mat-cell maxwidth-14 text-center">
             {{ project.ProjectEstimatedQnt }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
           >
-          <span class="mat-cell"
+          <span class="mat-cell maxwidth-14 text-center"
             >{{ project.Projects.sum }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
           >
-          <span class="mat-cell">{{ project.Projects.nearDueDate | date: "dd MMM yyy" }}</span>
-          <span class="mat-cell"></span>
-          <span class="mat-cell"></span>
-          <span class="mat-cell"></span>
+          <span class="mat-cell maxwidth-14 text-center">{{ project.Projects.nearDueDate | date: "dd MMM yyy" }}</span>
+          <span class="mat-cell maxwidth-14 text-center"></span>
+          <span class="mat-cell maxwidth-14 text-center"></span>
+          <span class="mat-cell maxwidth-14 text-center"></span>
         </mat-expansion-panel-header>
-        <div *ngFor="let material of project.Projects.indentMaterials">
+        <div *ngFor="let indentMaterial of project.Projects.indentMaterials">
           <mat-expansion-panel-header class="mat-row material-project-details">
-            <span class="mat-cell"></span>
-            <span class="mat-cell"></span>
-            <span class="mat-cell">{{ material.quantity }}</span>
-            <span class="mat-cell">{{ material.dueDate | date: "dd MMM yyy" }}</span>
-            <span class="mat-cell"></span>
-            <span class="mat-cell"></span>
-            <span class="mat-cell"></span>
+            <span class="mat-cell maxwidth-14 text-center"></span>
+            <span class="mat-cell maxwidth-14 text-center"></span>
+            <span class="mat-cell maxwidth-14 text-center"
+              >{{ indentMaterial.quantity }} <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
+            >
+            <span class="mat-cell maxwidth-14 text-center">{{ indentMaterial.dueDate | date: "dd MMM yyy" }}</span>
+            <span class="mat-cell maxwidth-14 text-center"></span>
+            <span class="mat-cell maxwidth-14 text-center"></span>
+            <span class="mat-cell maxwidth-14 text-center"></span>
           </mat-expansion-panel-header>
         </div>
       </mat-expansion-panel>

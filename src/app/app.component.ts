@@ -39,10 +39,7 @@ export class AppComponent {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
         localStorage.setItem('callingCode', res['calling_code'])
-        console.log(res);
       });
-      //console.log(res);
-
     });
   }
 }

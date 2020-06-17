@@ -8,6 +8,7 @@ import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { VisitorService } from '../../services/visitor.service';
 import { CommonService } from '../../services/commonService';
 import { CountryCode } from '../../models/currency';
+import { UserService } from '../../services/userDashboard/user.service';
 
 export interface City {
   value: string;
@@ -35,6 +36,7 @@ export class AddAddressPoDialogComponent {
     private projectService: ProjectService,
     private visitorsService: VisitorService,
     private _snackBar: MatSnackBar,
+    private _userService: UserService,
     private commonService: CommonService
   ) { }
 
@@ -45,7 +47,9 @@ export class AddAddressPoDialogComponent {
   state: string;
   selectedCountryId: number;
   currentIndex: number = 0;
+  countryCode: string
   ngOnInit() {
+    this.countryCode = localStorage.getItem('countryCode')
     if (this.data.roleType === "projectBillingAddressId") {
       this.addAddressService
         .getPoAddAddress("Project", this.data.id)
@@ -64,20 +68,12 @@ export class AddAddressPoDialogComponent {
   tabClick($event) {
     this.currentIndex = $event.index;
     if (this.currentIndex === 1) {
-      this.getLocation()
+      this._userService.getUserInfo(localStorage.getItem("userId")).then(res => {
+        this.getCountryCode(res.data[0].countryId)
+      })
     }
 
   }
-  getLocation() {
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res[ 'ip' ];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.getCountryCode(res[ 'calling_code' ])
-      });
-    });
-  }
-
-
 
   cities: City[] = [
     { value: "Gurgaon", viewValue: "Gurgaon" },
@@ -93,13 +89,13 @@ export class AddAddressPoDialogComponent {
     this.newAddressForm.get('state').setValue("");
   }
 
-  getCountryCode(callingCode) {
+  getCountryCode(countryId) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === callingCode;
+        return val.countryId === countryId;
       })
-      this.newAddressForm.get('countryCode').setValue(this.livingCountry[ 0 ]);
+      this.newAddressForm.get('countryCode').setValue(this.livingCountry[0]);
     })
   }
 
@@ -119,20 +115,20 @@ export class AddAddressPoDialogComponent {
 
     // new address form
     this.newAddressForm = this.formBuilder.group({
-      addressLine1: [ "", [ Validators.required, Validators.maxLength(120) ] ],
-      addressLine2: [ "", Validators.maxLength(120) ],
-      pinCode: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.PINCODE) ] ],
-      state: [ { value: "", disabled: true }, Validators.required ],
-      city: [ { value: "", disabled: true }, Validators.required ],
-      gstNo: [ "", [ Validators.pattern(FieldRegExConst.GSTIN) ] ],
-      imageUrl: [ this.data.isEdit ? this.data.detail.imageFileName : "" ],
-      countryId: [ null ],
+      addressLine1: ["", [Validators.required, Validators.maxLength(120)]],
+      addressLine2: ["", Validators.maxLength(120)],
+      pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
+      state: [{ value: "", disabled: true }, Validators.required],
+      city: [{ value: "", disabled: true }, Validators.required],
+      gstNo: ["", [Validators.pattern(FieldRegExConst.GSTIN)]],
+      imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
+      countryId: [null],
       countryCode: []
     });
   }
 
   onselectAddress(): void {
-    this.dialogRef.close([ this.data.roleType, this.selectAddressFrm.value ]);
+    this.dialogRef.close([this.data.roleType, this.selectAddressFrm.value]);
   }
 
   onAddAddress(): void {
@@ -148,12 +144,12 @@ export class AddAddressPoDialogComponent {
       .then(res => {
         if (res.status == 0) {
           this._snackBar.open(res.message, "", {
-            duration: 2000, panelClass: [ "success-snackbar" ],
+            duration: 2000, panelClass: ["success-snackbar"],
             verticalPosition: "bottom"
           });
         }
         else {
-          this.dialogRef.close([ this.data.roleType, { address: res.data } ]);
+          this.dialogRef.close([this.data.roleType, { address: res.data }]);
         }
       });
   }
@@ -173,15 +169,15 @@ export class AddAddressPoDialogComponent {
   cityStateFetch(value) {
     this.projectService.getPincodeInternational(value, this.selectedCountryId).then(res => {
       if (res.data && res.data.length) {
-        this.city = res.data[ 0 ].districtName;
-        this.state = res.data[ 0 ].stateName;
+        this.city = res.data[0].districtName;
+        this.state = res.data[0].stateName;
         if (this.city && this.state)
           this.validPincode = true;
         else
           this.validPincode = false;
 
-        this.newAddressForm.get('city').setValue(res.data[ 0 ].districtName);
-        this.newAddressForm.get('state').setValue(res.data[ 0 ].stateName);
+        this.newAddressForm.get('city').setValue(res.data[0].districtName);
+        this.newAddressForm.get('state').setValue(res.data[0].stateName);
       }
     });
   }

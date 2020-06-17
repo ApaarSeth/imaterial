@@ -89,7 +89,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     defaultParagraphSeparator: 'p',
     defaultFontName: 'Arial',
     toolbarHiddenButtons: [
-      [ 'backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript' ]
+      ['backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript']
     ],
 
   };
@@ -98,12 +98,12 @@ export class RFQSupplierDetailComponent implements OnInit {
   ngOnInit() {
     this.rfqService
       .getRFQDetailSupplier(
-        this.activatedRoute.snapshot.params[ "rfqId" ],
-        this.activatedRoute.snapshot.params[ "supplierId" ]
+        this.activatedRoute.snapshot.params["rfqId"],
+        this.activatedRoute.snapshot.params["supplierId"]
       )
       .then(data => {
         if (data.data.rfqSupplierBidFlag === 1) {
-          this.router.navigate([ '/rfq-bids/finish' ]);
+          this.router.navigate(['/rfq-bids/finish']);
         }
         this.rfqSupplierDetailList = data.data;
         if (this.rfqSupplierDetailList.projectList) {
@@ -163,7 +163,7 @@ export class RFQSupplierDetailComponent implements OnInit {
         }
       });
       if (Object.keys(this.otherCostData).length && this.otherCostData.hasOwnProperty('otherCostInfo')) {
-        rfqSupplierObj.otherCostRfqList = this.otherCostData[ 'otherCostInfo' ];
+        rfqSupplierObj.otherCostRfqList = this.otherCostData['otherCostInfo'];
       }
       this.submitBidInternational(rfqSupplierObj);
     } else {
@@ -173,9 +173,9 @@ export class RFQSupplierDetailComponent implements OnInit {
 
   updateItemTaxInfo(item) {
     item.materialList.forEach(itm => {
-      if (this.taxAndCostData[ item.projectId ].hasOwnProperty(itm.materialId)) {
-        itm.taxInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ].taxInfo;
-        itm.otherCostInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ].otherCostInfo;
+      if (this.taxAndCostData[item.projectId].hasOwnProperty(itm.materialId)) {
+        itm.taxInfo = this.taxAndCostData[item.projectId][itm.materialId].taxInfo;
+        itm.otherCostInfo = this.taxAndCostData[item.projectId][itm.materialId].otherCostInfo;
       }
     });
     return item;
@@ -197,12 +197,11 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
-    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
-    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
+    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
+    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
+    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
-    //console.log(rfqSupplierObj);
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });
@@ -222,13 +221,11 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
-    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
-    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
+    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
+    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
+    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
-    //console.log(rfqSupplierObj);
-
     this.router.navigate([
       "rfq-bids/add-address/" + this.brandCount + "/" + this.materialCount
     ], { state: { supplierId, rfqSupplierObj } });
@@ -391,7 +388,7 @@ export class RFQSupplierDetailComponent implements OnInit {
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
           }
 
-          if ((brand == material.rfqBrandList[ material.rfqBrandList.length - 1 ])) {
+          if ((brand == material.rfqBrandList[material.rfqBrandList.length - 1])) {
 
             if (this.rfqSupplierDetailList.isInternational === 0) {
 
@@ -486,16 +483,16 @@ export class RFQSupplierDetailComponent implements OnInit {
       width: "600px",
       data: {
         type,
-        rfqId: Number(this.activatedRoute.snapshot.params[ "rfqId" ]),
+        rfqId: Number(this.activatedRoute.snapshot.params["rfqId"]),
         prevData
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
         if (!this.taxAndCostData.hasOwnProperty(pId)) {
-          this.taxAndCostData[ pId ] = {};
+          this.taxAndCostData[pId] = {};
         }
-        this.taxAndCostData[ pId ][ mId ] = res;
+        this.taxAndCostData[pId][mId] = res;
       }
       if (type === 'otherCost') {
         this.otherCostData = res;

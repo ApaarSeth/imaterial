@@ -76,7 +76,6 @@ export class EditMyMaterialComponent implements OnInit {
       (<FormArray>this.editMaterialForm.get('forms')).controls.map((control: FormGroup, i) => {
         control.controls['trade'].setValue(
           this.tradesList.find(trade => trade.tradeId === this.data.materialList[i].tradeId))
-        console.log(this.tradesList)
       });
     })
   }
@@ -140,7 +139,6 @@ export class EditMyMaterialComponent implements OnInit {
     //     });
     //   })
     // })
-    // console.log(this.editMaterialForm)
   }
 
   // private _filter(value: string | tradeRelatedCategory, index) {

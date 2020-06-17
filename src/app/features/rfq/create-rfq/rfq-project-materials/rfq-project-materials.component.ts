@@ -103,7 +103,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.checkExistingData();
-    console.log(this.table);
   }
 
   checkExistingData() {
