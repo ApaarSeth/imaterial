@@ -1,4 +1,5 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
+import { CountryCode } from './currency';
 
 export interface ProjectDetails {
   addressLine1: string;
@@ -43,6 +44,7 @@ export interface ProjetPopupData {
   isDelete?: boolean;
   isEdit: boolean;
   detail?: ProjectDetails;
+  countryList?: CountryCode[];
 }
 
 export interface ProjectIds {
