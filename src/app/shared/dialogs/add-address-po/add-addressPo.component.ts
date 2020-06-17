@@ -45,7 +45,9 @@ export class AddAddressPoDialogComponent {
   state: string;
   selectedCountryId: number;
   currentIndex: number = 0;
+  calingCode: string;
   ngOnInit() {
+    this.calingCode = localStorage.getItem('countryCode');
     if (this.data.roleType === "projectBillingAddressId") {
       this.addAddressService
         .getPoAddAddress("Project", this.data.id)
@@ -69,12 +71,18 @@ export class AddAddressPoDialogComponent {
 
   }
   getLocation() {
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res[ 'ip' ];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.getCountryCode(res[ 'calling_code' ])
+    if (this.data.isEdit && this.data.detail.countryCode) {
+      this.getCountryCode(this.data.detail.countryCode);
+    } else if (this.calingCode) {
+      this.getCountryCode(this.calingCode);
+    } else {
+      this.visitorsService.getIpAddress().subscribe(res => {
+        this.ipaddress = res[ 'ip' ];
+        this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+          this.getCountryCode(res[ 'calling_code' ]);
+        });
       });
-    });
+    }
   }
 
 

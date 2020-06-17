@@ -286,6 +286,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   }
 
   reset() {
+    this.getLocation();
     this.disabledAddress = false;
     this.initForm();
     this.form.controls.addressLine1.setValue(null);

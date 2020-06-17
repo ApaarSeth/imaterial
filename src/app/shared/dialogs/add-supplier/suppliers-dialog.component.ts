@@ -83,16 +83,19 @@ export class SuppliersDialogComponent {
     this.form = this.formBuilder.group({
       supplier_name: [ "", Validators.required ],
       email: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ] ],
-      contact_no: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ] ],
+      // contact_no: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ] ],
+      contact_no: [ null ],
       pan: [ "" ],
-      countryCallingCode: [ "" ],
+      countryCallingCode: [ null ],
       countryCode: []
     });
   }
 
   submit() {
     let data = this.form.value;
-    data[ 'countryCallingCode' ] = this.form.get('countryCode').value.callingCode;
+    if (data.contact_no) {
+      data[ 'countryCallingCode' ] = this.form.get('countryCode').value.callingCode;
+    }
     delete data.countryCode;
     this.addSuppliers(this.data, data);
   }
