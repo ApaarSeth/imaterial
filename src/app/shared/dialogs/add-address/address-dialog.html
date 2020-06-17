@@ -26,8 +26,12 @@
               <div class="row border-input">
                 <mat-form-field class="col-xs-12 p-r-150 p-l-150">
                   <input matInput type="text" placeholder="Address Line 1" formControlName="addressLine1" />
-                   <small *ngIf="newAddressForm.controls['addressLine1'].value.length > 120 && newAddressForm.controls['addressLine1'].touched" class="form-error-msg">  Address should be less than 120 characters </small>
-                    <small *ngIf="newAddressForm.controls['addressLine1'].hasError('required') && newAddressForm.controls['addressLine1'].touched" class="form-error-msg"> Address Line 1 is required </small>
+                  <small
+                    *ngIf="newAddressForm.controls['addressLine1'].value.length > 120 && newAddressForm.controls['addressLine1'].touched"
+                    class="form-error-msg"> Address should be less than 120 characters </small>
+                  <small
+                    *ngIf="newAddressForm.controls['addressLine1'].hasError('required') && newAddressForm.controls['addressLine1'].touched"
+                    class="form-error-msg"> Address Line 1 is required </small>
                 </mat-form-field>
               </div>
               <div class="row border-input">
@@ -52,7 +56,9 @@
               <div class="row border-input">
                 <mat-form-field class="col-xs-12 p-r-300">
                   <input matInput type="text" placeholder="Address Line 2" formControlName="addressLine2" />
-                  <small *ngIf="newAddressForm.controls['addressLine2'].value.length > 120 && newAddressForm.controls['addressLine2'].touched" class="form-error-msg">  Address should be less than 120 characters </small>
+                  <small
+                    *ngIf="newAddressForm.controls['addressLine2'].value.length > 120 && newAddressForm.controls['addressLine2'].touched"
+                    class="form-error-msg"> Address should be less than 120 characters </small>
                 </mat-form-field>
               </div>
               <div class="row border-input">

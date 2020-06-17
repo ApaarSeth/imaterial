@@ -61,6 +61,7 @@ export class AddProjectComponent implements OnInit {
   searchCountry: string = '';
   selectedCountryId: number;
   calingCode: string;
+  currencyCode: string;
 
   constructor(
     private projectService: ProjectService,
@@ -77,14 +78,16 @@ export class AddProjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.countryList = this.data.countryList;
+    this.currencyCode = localStorage.getItem('currencyCode');
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
-    this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     // this.selectedConstructionUnit = "1";
     this.initForm();
+    this.getLocation();
     if (this.data.isEdit) {
       if (this.data.detail.pinCode) {
         this.cityStateFetch(this.data.detail.pinCode);
@@ -94,19 +97,17 @@ export class AddProjectComponent implements OnInit {
   }
 
   getLocation() {
-    if (this.calingCode) {
+    if (this.data.isEdit && this.data.detail.callingCode) {
+      this.getCountryCode(this.data.detail.callingCode);
+    } else if (this.calingCode) {
       this.getCountryCode(this.calingCode);
     } else {
-      if (this.data.isEdit) {
-        this.getCountryCode(this.data.detail.callingCode);
-      } else {
-        this.visitorsService.getIpAddress().subscribe(res => {
-          this.ipaddress = res[ 'ip' ];
-          this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-            this.getCountryCode(res[ 'calling_code' ])
-          });
+      this.visitorsService.getIpAddress().subscribe(res => {
+        this.ipaddress = res[ 'ip' ];
+        this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+          this.getCountryCode(res[ 'calling_code' ]);
         });
-      }
+      });
     }
   }
 
@@ -119,13 +120,18 @@ export class AddProjectComponent implements OnInit {
   }
 
   getCountryCode(callingCode) {
-    this.commonService.getCountry().then(res => {
-      this.countryList = res.data;
-      this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === callingCode;
-      })
-      this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
+    // this.commonService.getCountry().then(res => {
+    //   this.countryList = res.data;
+    //   this.livingCountry = this.countryList.filter(val => {
+    //     return val.callingCode === callingCode;
+    //   })
+    //   this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
+    // })
+    this.livingCountry = this.countryList.filter(val => {
+      return val.callingCode === callingCode;
     })
+    console.log(this.livingCountry[ 0 ]);
+    this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
   }
 
   get selectedCountry() {

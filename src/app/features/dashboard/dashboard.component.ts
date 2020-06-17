@@ -12,6 +12,7 @@ import { GuidedTourService, OrientationConfiguration, Orientation, GuidedTour } 
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { PermissionService } from 'src/app/shared/services/permission.service';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 @Component({
   selector: "dashboard",
@@ -31,6 +32,7 @@ export class DashboardComponent implements OnInit {
   orgId: Number;
   userId: Number;
   permissionObj: any;
+  countryList: CountryCode[] = [];
 
   public dashboardTour: GuidedTour = {
     tourId: 'purchases-tour',
@@ -112,6 +114,7 @@ export class DashboardComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.getAllProjects();
+    this.countryList = this.route.snapshot.data.countryList;
 
   }
 
@@ -156,7 +159,8 @@ export class DashboardComponent implements OnInit {
     const data: ProjetPopupData = {
       isEdit: true,
       isDelete: false,
-      detail: this.allProjects.find(pro => pro.projectId === projectId)
+      detail: this.allProjects.find(pro => pro.projectId === projectId),
+      countryList: this.countryList
     };
 
     this.openDialog(data);
@@ -165,7 +169,8 @@ export class DashboardComponent implements OnInit {
   addProject() {
     this.openDialog({
       isEdit: false,
-      isDelete: false
+      isDelete: false,
+      countryList: this.countryList
     } as ProjetPopupData);
     // this.getAllProjects();
   }
