@@ -78,15 +78,16 @@ export class AddProjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.countryList = this.data.countryList;
     this.currencyCode = localStorage.getItem('currencyCode');
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
-    this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     // this.selectedConstructionUnit = "1";
     this.initForm();
+    this.getLocation();
     if (this.data.isEdit) {
       if (this.data.detail.pinCode) {
         this.cityStateFetch(this.data.detail.pinCode);
@@ -119,13 +120,18 @@ export class AddProjectComponent implements OnInit {
   }
 
   getCountryCode(callingCode) {
-    this.commonService.getCountry().then(res => {
-      this.countryList = res.data;
-      this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === callingCode;
-      })
-      this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
+    // this.commonService.getCountry().then(res => {
+    //   this.countryList = res.data;
+    //   this.livingCountry = this.countryList.filter(val => {
+    //     return val.callingCode === callingCode;
+    //   })
+    //   this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
+    // })
+    this.livingCountry = this.countryList.filter(val => {
+      return val.callingCode === callingCode;
     })
+    console.log(this.livingCountry[ 0 ]);
+    this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
   }
 
   get selectedCountry() {
