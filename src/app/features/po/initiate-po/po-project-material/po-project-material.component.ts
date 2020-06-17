@@ -127,6 +127,7 @@ export class PoProjectMaterialComponent implements OnInit {
               material.quantity = mat.quantity;
               material.makes = mat.makes;
               material.estimatedRate = mat.estimatedRate;
+              material.dueDate = mat.fullfilmentDate ? new Date(mat.fullfilmentDate) : null;
               material.checked = true;
             } else {
               material.checked = false;

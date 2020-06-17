@@ -1,47 +1,42 @@
 <div class="row" *ngIf="!showResponsiveDesign">
-  <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="mode === 'edit'; else viewMode">
-    <div *ngIf="isInternational && mode === 'edit'; else elseBlock" class="p-r-10 p-b-10">
-      <div *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
-        <span class="slideToggalColor p-r-10"><mat-slide-toggle [(ngModel)]="ratesBaseCurr" [ngModelOptions]="{standalone: true}"></mat-slide-toggle></span>
-        <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
-          <span class="font-size-vary-grn color-grey">
-            <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
-            {{ poCurrency.exchangeCurrencyName }}
-          </span>
-          <span class="p-l-5"> = </span>
-          <span class="p-l-5 color-6d6a6a color-grey"> {{ poCurrency.exchangeValue }} </span>
-          <span class="p-l-5 color-grey">
-            <img width="25px" *ngIf="poCurrency.primaryCurrencyFlag" [src]="poCurrency.primaryCurrencyFlag" />
-            {{ poCurrency.primaryCurrencyName }}
+  <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="isInternational; else elseBlock">
+    <div class="p-r-10 p-b-10">
+      <div *ngIf="isInternational">
+        <span
+          *ngIf="isInternational && mode === 'edit'"
+          (click)="selectCurrency()"
+          class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer"
+          >Select Currency</span
+        >
+        <span *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
+          <span class="slideToggalColor p-r-10"
+            ><mat-slide-toggle (toggleChange)="changeCurrency($event)" [(ngModel)]="ratesBaseCurr" [ngModelOptions]="{standalone: true}"></mat-slide-toggle
+          ></span>
+          <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+            <span class="font-size-vary-grn color-grey">
+              <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
+              {{ poCurrency.exchangeCurrencyName }}
+            </span>
+            <span class="p-l-5"> = </span>
+            <span class="p-l-5 color-6d6a6a color-grey"> {{ poCurrency.exchangeValue }} </span>
+            <span class="p-l-5 color-grey">
+              <img width="25px" *ngIf="poCurrency.primaryCurrencyFlag" [src]="poCurrency.primaryCurrencyFlag" />
+              {{ poCurrency.primaryCurrencyName }}
+            </span>
           </span>
         </span>
       </div>
     </div>
-    <ng-template #elseBlock>
+  </div>
+  <ng-template #elseBlock>
+    <span *ngIf="mode === 'edit'">
       <mat-radio-group class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
         <mat-radio-button [checked]="gst === 'IGST'" value="IGST" class="p-r-5">IGST</mat-radio-button>
         <mat-radio-button [checked]="gst === 'CGST & SGST'" value="CGST & SGST">CGST & SGST</mat-radio-button>
       </mat-radio-group>
-    </ng-template>
-  </div>
-  <ng-template #viewMode>
-    <div *ngIf="isInternational && mode === 'edit'" class="text-right col-xs-12 p-r-10 p-b-10">
-      <div *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
-        <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
-          <span class="font-size-vary-grn color-grey">
-            <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
-            {{ poCurrency.exchangeCurrencyName }}
-          </span>
-          <span class="p-l-5"> = </span>
-          <span class="p-l-5 color-6d6a6a color-grey"> {{ poCurrency.exchangeValue }} </span>
-          <span class="p-l-5 color-grey">
-            <img width="25px" *ngIf="poCurrency.primaryCurrencyFlag" [src]="poCurrency.primaryCurrencyFlag" />
-            {{ poCurrency.primaryCurrencyName }}
-          </span>
-        </span>
-      </div>
-    </div>
+    </span>
   </ng-template>
+
   <div class="col-xs-12 customPo">
     <form *ngIf="poTableData" [formGroup]="poForms" (ngSubmit)="sumbit()">
       <mat-accordion displayMode="flat" multi class="mat-table po-table" formArrayName="forms">
@@ -49,17 +44,33 @@
           <span class="mat-header-cell widthReduce" mat-sort-header="vesselName">S.No</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Material Name</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Makes</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Fullfillment <br/>Date</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Supplier Rate <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Awarded <br/>quantity</span>
-          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-10': isInternational && mode === 'edit' && mode === 'edit'}">Amount <span style="display: block;">({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 text-center' : 'minwidth-8'">Fullfillment <br />Date</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 text-center' : 'minwidth-8'"
+            >Supplier Rate
+            <span
+              >({{
+                poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
+              }})</span
+            ></span
+          >
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Awarded <br />quantity</span>
+          <span class="mat-header-cell" [ngClass]="{'minwidth-8 p-l-12 p-r-0': isInternational && mode === 'edit' && mode === 'edit'}"
+            >Amount
+            <span style="display: block;"
+              >({{
+                poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
+              }})</span
+            ></span
+          >
           <span
             class="mat-header-cell"
             [ngClass]="{'text-center': isInternational && mode !== 'edit'}"
-            [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">
+            [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
+          >
             <!-- {{ isInternational ? "Tax Amount ("+ ((poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)) + ')' : "GST %" }} -->
             <ng-container *ngIf="isInternational; else defaultCurr">
-              Tax Amount <br/> ({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})
+              Tax Amount <br />
+              ({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})
             </ng-container>
 
             <ng-template #defaultCurr>
@@ -69,14 +80,22 @@
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">
             <!-- {{ isInternational ? "Other Cost (" + ((poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)) + ')' : "GST Amount" }} -->
             <ng-container *ngIf="isInternational; else defaultCurr">
-              Other Cost <br/> ({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})
+              Other Cost <br />
+              ({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})
             </ng-container>
 
             <ng-template #defaultCurr>
               GST Amount
             </ng-template>
           </span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">Total Amount <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
+            >Total Amount
+            <span
+              >({{
+                poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
+              }})</span
+            ></span
+          >
           <span
             class="mat-header-cell"
             *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
@@ -88,10 +107,10 @@
             <span class="mat-cell widthReduce">{{ m + 1 }}</span>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">{{ material.materialName }}</span>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'"></span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'">
+            <span class="mat-cell p-l-0" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'">
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
-                <mat-form-field class="border-input date-label date-button mat-form-field-padding width-85">
+                <mat-form-field class="border-input date-label date-picker-button-padding date-button mat-form-field-padding width-80 p-l-0">
                   <mat-label *ngIf="!inputDate.value">Select Date</mat-label>
                   <span class="form-placeholder">{{ poForms["controls"]["forms"]["controls"][m]["controls"]["fullfilmentDate"].value | date: "dd-MMM-yyy" }}</span>
                   <input
@@ -111,7 +130,7 @@
               </ng-template>
             </span>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"></span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
+            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-l-0 p-r-0' : 'minwidth-8'"
               >{{ getMaterialQuantity(m) | number: "1.2-2" }}
               <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
                 Must be less than {{material.poAvailableQty}}
@@ -119,24 +138,16 @@
             </span>
             <span
               class="mat-cell"
-              [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
+              [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-l-0' : 'minwidth-8'"
               [ngClass]="isInternational && mode === 'edit' && mode != 'edit' ? 'p-r-0' : 'p-r-15'"
-              >{{ ratesBaseCurr ? (getMaterialAmount(m) * poCurrency.exchangeValue | number: "1.2-2") : (getMaterialAmount(m) | number: "1.2-2") }}</span
+              >{{ getMaterialAmount(m) | number: "1.2-2" }}</span
             >
             <span
               class="mat-cell"
               [ngClass]="{'text-center': isInternational && mode !== 'edit'}"
               [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
               *ngIf="isInternational; else gstTotalBlock"
-              >{{
-                isInternational && mode === "edit"
-                  ? ratesBaseCurr
-                    ? (getTotalPOListTax(m) * poCurrency.exchangeValue | number: "1.2-2")
-                    : (getTotalPOListTax(m) | number: "1.2-2")
-                  : ratesBaseCurr
-                  ? (this.poTableData[m].taxAmount * poCurrency.exchangeValue | number: "1.2-2")
-                  : (this.poTableData[m].taxAmount | number: "1.2-2")
-              }}
+              >{{ getTotalPOListTax(m) | number: "1.2-2" }}
               <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                 <span class="info-tootip__content">
@@ -153,22 +164,14 @@
               <span class="mat-cell minwidth-60-px"></span>
             </ng-template>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'" *ngIf="isInternational; else gstTotalAmountBlock">
-              {{
-                isInternational && mode === "edit"
-                  ? ratesBaseCurr
-                    ? (getTotalOtherCost(m) * poCurrency.exchangeValue | number: "1.2-2")
-                    : (getTotalOtherCost(m) | number: "1.2-2")
-                  : ratesBaseCurr
-                  ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue | number: "1.2-2")
-                  : (this.poTableData[m].otherCostAmount | number: "1.2-2")
-              }}
+              {{ getTotalPoOtherListTax(m) | number: "1.2-2" }}
               <span *ngIf="this.poTableData[m].otherCostInfo && this.poTableData[m].otherCostInfo.length" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                 <span class="info-tootip__content">
                   <div class="tooltip-table">
                     <p class="row mb-1" *ngFor="let cost of this.poTableData[m].otherCostInfo">
                       <strong class="col">{{ cost.otherCostName }}</strong
-                      ><span class="col">{{ cost.otherCostAmount }}</span>
+                      ><span class="col">{{ cost.otherCostValue }}%</span>
                     </p>
                   </div>
                 </span>
@@ -179,7 +182,7 @@
             </ng-template>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">{{
               ratesBaseCurr
-                ? (this.poTableData[m].otherCostAmount + getMaterialTotalAmount(m) * poCurrency.exchangeValue | number: "1.2-2")
+                ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue + getMaterialTotalAmount(m) | number: "1.2-2")
                 : (this.poTableData[m].otherCostAmount + getMaterialTotalAmount(m) | number: "1.2-2")
             }}</span>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-4' : 'minwidth-4'" *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
@@ -194,10 +197,14 @@
               <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"></span>
               <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">{{ purchaseOrder.materialBrand }}</span>
               <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'"></span>
-              <span class="mat-cell text-center supplier-rates" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'">
-                <ng-container *ngIf="mode != 'edit'; else editRate"> {{ purchaseOrder.materialUnitPrice }}</ng-container>
+              <span class="mat-cell supplier-rates" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10 text-left' : 'minwidth-10'">
+                <ng-container *ngIf="mode != 'edit'; else editRate">
+                  {{
+                    ratesBaseCurr ? (purchaseOrder.materialUnitPrice * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.materialUnitPrice | number: "1.2-2")
+                  }}</ng-container
+                >
                 <ng-template #editRate>
-                  <mat-form-field class="border-input width-55-px">
+                  <mat-form-field class="border-input width-65-px">
                     <input type="text" matInput appTwoDigitDecimaNumber #rate formControlName="materialUnitPrice" placeholder="rate" min="0" class="supplier-rate-input" />
                     <small
                       *ngIf="
@@ -214,7 +221,7 @@
               </span>
               <span
                 class="mat-cell"
-                [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-r-0' : 'minwidth-8'"
+                [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-r-0 p-l-0' : 'minwidth-8'"
                 [ngClass]="isInternational && mode === 'edit' && mode === 'edit' ? 'text-right' : 'text-center'"
               >
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity | number: "1.2-2" }}</ng-container>
@@ -233,17 +240,10 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'">
-                <ng-container *ngIf="mode != 'edit'; else editAmount"
-                  >{{ ratesBaseCurr ? (purchaseOrder.amount * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.amount | number: "1.2-2") }}
-                </ng-container>
+              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-l-0' : 'minwidth-8'">
+                <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount | number: "1.2-2" }} </ng-container>
                 <ng-template #editAmount>
-                  {{
-                    ratesBaseCurr
-                      ? (poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value * poCurrency.exchangeValue
-                        | number: "1.2-2")
-                      : (poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2")
-                  }}
+                  {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
                 </ng-template>
               </span>
               <span
@@ -252,15 +252,7 @@
                 [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
                 *ngIf="isInternational; else gstBlock"
               >
-                {{
-                  isInternational && mode === "edit"
-                    ? ratesBaseCurr
-                      ? (getPOListTax(m, p) * poCurrency.exchangeValue | number: "1.2-2")
-                      : (getPOListTax(m, p) | number: "1.2-2")
-                    : ratesBaseCurr
-                    ? (this.poTableData[m].purchaseOrderDetailList[p].taxAmount * poCurrency.exchangeValue | number: "1.2-2")
-                    : (this.poTableData[m].purchaseOrderDetailList[p].taxAmount | number: "1.2-2")
-                }}
+                {{ isInternational && mode === "edit" ? (getPOListTax(m, p, "edit") | number: "1.2-2") : (getPOListTax(m, p, "view") | number: "1.2-2") }}
               </span>
               <ng-template #gstBlock>
                 <span class="mat-cell">
@@ -288,11 +280,9 @@
                   </ng-template>
                 </span>
               </ng-template>
-              <span
-                *ngIf="isInternational; else gstAmountBlock"
-                [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'"
-                class="mat-cell text-center p-r-15"
-              ></span>
+              <span *ngIf="isInternational; else gstAmountBlock" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'" class="mat-cell text-center p-r-15">
+                {{ getPOListOtherCostTax(m, p, "edit") }}</span
+              >
               <ng-template #gstAmountBlock>
                 <span class="mat-cell text-left P-l-0">
                   <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
@@ -302,16 +292,9 @@
                 </span>
               </ng-template>
               <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8 p-l-13 p-r-0' : 'minwidth-8'">
-                <ng-container *ngIf="mode != 'edit'; else editTotal"
-                  >{{ ratesBaseCurr ? (purchaseOrder.total * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.total | number: "1.2-2") }}
-                </ng-container>
+                <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total | number: "1.2-2" }} </ng-container>
                 <ng-template #editTotal>
-                  {{
-                    ratesBaseCurr
-                      ? (poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["total"].value * poCurrency.exchangeValue
-                        | number: "1.2-2")
-                      : (poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["total"].value | number: "1.2-2")
-                  }}
+                  {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["total"].value | number: "1.2-2" }}
                 </ng-template>
               </span>
               <span
@@ -392,19 +375,41 @@
           <span class="mat-cell"></span>
           <span class="mat-cell"
             ><span *ngIf="isInternational"
-              ><span>Tax Amount <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span> <br />{{ ratesBaseCurr ? (totalTaxAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalTaxAmount | number: "1.2-2") }}</span
+              ><span
+                >Tax Amount
+                <span
+                  >({{
+                    poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
+                  }})</span
+                ></span
+              >
+              <br />{{ totalTaxAmount | number: "1.2-2" }}</span
             ></span
           >
           <span class="mat-cell">
             <span *ngIf="isInternational; else totalGstAmount">
-              <span>Other Cost <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span> <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalOtherAmount | number: "1.2-2") }}
+              <span
+                >Other Cost
+                <span
+                  >({{
+                    poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
+                  }})</span
+                ></span
+              >
+              <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalOtherAmount | number: "1.2-2") }}
             </span>
             <ng-template #totalGstAmount> <span> GST Amount </span> <br />{{ gstTotalAmount | number: "1.2-2" }} </ng-template>
           </span>
           <span class="mat-cell"
-            ><span>Total Amount <span>({{(poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)}})</span></span> <br />{{
-              ratesBaseCurr ? ((totalAmount + totalOtherAmount) * poCurrency.exchangeValue | number: "1.2-2") : (totalAmount + totalOtherAmount | number: "1.2-2")
-            }}</span
+            ><span
+              >Total Amount
+              <span
+                >({{
+                  poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
+                }})</span
+              ></span
+            >
+            <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue + totalAmount | number: "1.2-2") : (totalAmount + totalOtherAmount | number: "1.2-2") }}</span
           >
           <span class="mat-cell mat-last-cell"></span>
         </div>

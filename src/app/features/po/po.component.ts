@@ -177,6 +177,9 @@ export class PoComponent implements OnInit {
     })
   }
   collateResults() {
+    if (this.poTable.ratesBaseCurr) {
+      this.poTable.setRateBaseCurr(false);
+    }
     let poDataCollate: POData = {
       supplierAddress: this.poData.supplierAddress,
       projectAddress: this.poData.projectAddress,
@@ -188,7 +191,7 @@ export class PoComponent implements OnInit {
       poNumber: this.poCard.getData().orderNo,
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
-      purchaseOrderCurrency: this.poData.purchaseOrderCurrency && this.poData.purchaseOrderCurrency.exchangeCurrency ? this.poData.purchaseOrderCurrency : null,
+      purchaseOrderCurrency: this.poTable.getUpdatedCurrency() ? this.poTable.getUpdatedCurrency() : null,
       isInternational: 0,
       DocumentsList: this.poDocument.getData(),
       Terms: {

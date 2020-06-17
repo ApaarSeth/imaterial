@@ -24,4 +24,5 @@ export class OtherCostInfo {
     otherCostDescription: any;
     otherCostAmount: number;
     organizationId: number;
+    otherCostValue?: number;
 }

@@ -48,12 +48,14 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
           subCat.prevMatListLength = this.checkedMaterialsList[i - 1].projectMaterialList.length;
         }
         return subCat.projectMaterialList.map(item => {
+          let dueDate = item.dueDate ? (new Date(item.dueDate) < new Date() ? null : item.dueDate) : null;
+
           return this.formBuilder.group({
             materialUnitPrice: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
             materialQty: [item.quantity, [Validators.required, this.quantityCheck(item.poAvailableQty)]],
             brandNames: [item.makes],
             materialId: [item.materialId],
-            fullfilmentDate: [item.dueDate]
+            fullfilmentDate: [dueDate]
           });
         });
       })
@@ -104,12 +106,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
           material.fullfilmentDate = null;
         }
         else {
-          let date = new Date(this.commonService.formatDate(material.fullfilmentDate))
-          let dummyMonth = date.getMonth() + 1;
-          const year = date.getFullYear().toString();
-          const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-          const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
-          material.fullfilmentDate = year + "-" + month + "-" + day;
+          material.fullfilmentDate = this.commonService.checkDate(material.fullfilmentDate);
         }
         return material
       });
@@ -133,6 +130,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
           mat.quantity = material.materialQty;
           mat.makes = material.brandNames;
           mat.estimatedRate = material.materialUnitPrice
+          mat.fullfilmentDate = material.fullfilmentDate ? this.commonService.checkDate(material.fullfilmentDate) : null;
         }
       }
       return mat;
