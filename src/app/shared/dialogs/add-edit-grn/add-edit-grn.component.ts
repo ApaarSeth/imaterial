@@ -97,7 +97,6 @@ export class AddEditGrnComponent implements OnInit {
   postGRNDetails(formValues: GRNDetails[]) {
     this.grnDetailsObj.GrnList = formValues;
     this.grnDetailsObj.DocumentsList = this.grnDocument.getData();
-    console.log(this.grnDetailsObj);
     this.grnService.addGRN(this.grnDetailsObj).then(data => {
 
       this._snackBar.open(data.message, "", {

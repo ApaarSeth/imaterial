@@ -51,3 +51,12 @@ $mat-row-horizontal-padding: 24px;
   word-wrap: break-word;
   color: black !important;
 }
+
+.mat-header-cell {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-header-cell.material-Name {
+  justify-content: start;
+}

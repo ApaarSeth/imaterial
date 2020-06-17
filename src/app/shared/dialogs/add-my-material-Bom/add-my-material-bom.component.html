@@ -51,7 +51,7 @@
             <div *ngIf="this.data" class="col-xs-2 text-center">
               <span>
                 <mat-form-field class="border-input width-90">
-                  <input formControlName="estimatedPrice" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Rate" />
+                  <input formControlName="estimatedPrice" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Rate({{ this.currencyCode }})" />
                 </mat-form-field>
               </span>
             </div>

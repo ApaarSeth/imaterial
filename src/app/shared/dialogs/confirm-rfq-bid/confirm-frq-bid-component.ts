@@ -43,61 +43,59 @@ export class ConfirmRfqBidComponent implements OnInit {
     private navService: AppNavigationService,
     private _snackBar: MatSnackBar,
     private rfqService: RFQService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    
+
   }
 
-  cancel(){
-     this.dialogRef.close({ data: 'close' });
+  cancel() {
+    this.dialogRef.close({ data: 'close' });
   }
 
-  submit(){
-    if(this.data.disabledAddress){
-     // console.log("chooched");
-         this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
-                if ( data.status == 1 ){
-                  this.navService.gaEvent({
-                    action: 'submit',
-                    category: 'submit_bid',
-                    label: null,
-                    value: null
-                  });
-                }
-                this.dialogRef.close(data);
-            });
-    }
-    else if(!this.data.disabledAddress){
-    //   console.log("added");
-      this.poService.addAddress(this.data.supplierId, this.data.supplierAddress).then(res => {
-          if(res.status != 0){
-            this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
-
-              if ( data.status == 1 ){
-                this.navService.gaEvent({
-                  action: 'submit',
-                  category: 'submit_bid',
-                  label: null,
-                  value: null
-                });
-              }
-
-                this.dialogRef.close(data);
-            });
-          }
-          else{
-              this._snackBar.open(res.message, "", {
-                duration: 2000, panelClass: ["success-snackbar"],
-                verticalPosition: "bottom"
-              });
-             this.dialogRef.close(null);
-          }
+  submit() {
+    if (this.data.disabledAddress) {
+      this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
+        if (data.status == 1) {
+          this.navService.gaEvent({
+            action: 'submit',
+            category: 'submit_bid',
+            label: null,
+            value: null
+          });
+        }
+        this.dialogRef.close(data);
       });
     }
-   
+    else if (!this.data.disabledAddress) {
+      this.poService.addAddress(this.data.supplierId, this.data.supplierAddress).then(res => {
+        if (res.status != 0) {
+          this.rfqService.postRFQDetailSupplier(this.data.supplierId, this.data.rfqSupplierData).then(data => {
+
+            if (data.status == 1) {
+              this.navService.gaEvent({
+                action: 'submit',
+                category: 'submit_bid',
+                label: null,
+                value: null
+              });
+            }
+
+            this.dialogRef.close(data);
+          });
+        }
+        else {
+          this._snackBar.open(res.message, "", {
+            duration: 2000, panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+          this.dialogRef.close(null);
+        }
+      });
+    }
+
   }
 }
 
- 
+
 

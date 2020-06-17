@@ -171,19 +171,8 @@ dd
               class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"
               matTooltip="Issue to Indent"
             > -->
-            <a
-            class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"
-            matTooltip="Issue to Indent"
-          >
-              <img
-              (click)="(permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)) ? null : issueToIndent(element.materialId, projectId)"
-
-                [src]="
-                  permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)
-                    ? '../../../../assets/images/issue_to_indent_disabled.png'
-                    : '../../../../assets/images/issue_to_indent.png'
-                "
-              />
+            <a class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Issue to Indent">
+              <img (click)="openIssueTOIndent(element)" [src]="indentButtonColor(element)" />
             </a>
 
             <!-- <a *ngIf="permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)" class="width-15-px p-r-10 issue-to-indent-icon">
