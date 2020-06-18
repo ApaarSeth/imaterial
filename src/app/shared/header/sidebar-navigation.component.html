@@ -1,0 +1,29 @@
+<div class="sideNavigation">
+    <span class="material-icons mat-arrow-icon cursor" (click)="collapseSideMenu()" [ngClass]="{'no-collapsed':!isCollapseMenu, 'collapsed':isCollapseMenu}">
+        {{!isCollapseMenu ? 'keyboard_arrow_left' : 'keyboard_arrow_right'}}
+    </span>
+    <ng-container class="" *ngIf="!isCollapseMenu; else iconSidebar">
+        <div class="blue-background-color sidebar-navigation" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false" fxShow="true"
+            *ngIf="role">
+            <ng-container *ngFor="let selectedHeader of headerConst">
+                <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]">
+                    <button [class.active]="buttonName === selectedHeader.name" class="color-white header-links" mat-button>
+                        {{selectedHeader.name}}
+                    </button>
+                </a>
+            </ng-container>
+        </div>
+    </ng-container>
+    
+    
+    <ng-template #iconSidebar>
+        <ul class="blue-background-color collapsed-navigation" style="list-style: none;">
+            <li><img src="assets/images/Add-Project-White.png" style="width: 30px;" /></li>
+            <li><img src="assets/images/Add-Project-White.png" style="width: 30px;" /></li>
+            <li><img src="assets/images/Add-Project-White.png" style="width: 30px;" /></li>
+            <li><img src="assets/images/Add-Project-White.png" style="width: 30px;" /></li>
+            <li><img src="assets/images/Add-Project-White.png" style="width: 30px;" /></li>
+            <li><img src="assets/images/Add-Project-White.png" style="width: 30px;" /></li>
+        </ul>
+    </ng-template>
+</div>
