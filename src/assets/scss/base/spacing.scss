@@ -145,14 +145,24 @@ $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.
   .height-#{$space} {
     height: #{$space}% !important;
   }
+  .height-#{$space}-px {
+    height: #{$space}px !important;
+  }
   .w-vw-#{$space} {
     width: #{$space}vw !important;
   }
   .h-vh-#{$space} {
     height: #{$space}vh !important;
   }
+  .line-vh-#{$space} {
+    line-height: #{$space}vh !important;
+  }
   .fontsize-#{$space}-px {
     font-size: #{$space}px !important ;
+  }
+
+  .border-radius-#{$space} {
+    border-radius: #{$space}px !important ;
   }
   @each $side in $sides {
     .m-#{str-slice($side, 0, 1)}-#{$space} {

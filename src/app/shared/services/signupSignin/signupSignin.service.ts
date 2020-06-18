@@ -54,5 +54,7 @@ export class SignInSignupService implements OnInit {
   VerifyMobile(mobile, countryCode) {
     return this.dataService.getRequest(API.VERIFYMOBILE(mobile, countryCode)).then(res => { return res });
   }
+  checkTerms() { return this.dataService.getRequest(API.CHECKTERMS) }
+
 
 }
