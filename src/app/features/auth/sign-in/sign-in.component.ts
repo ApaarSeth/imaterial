@@ -124,30 +124,32 @@ export class SigninComponent implements OnInit {
    */
   getUserInfo(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      if (res.data[ 0 ].firstName)
+      if (res.data[ 0 ].firstName) {
         localStorage.setItem("userName", res.data[ 0 ].firstName);
-      localStorage.setItem("profileUrl", res.data[ 0 ].profileUrl);
-      localStorage.setItem("currencyCode", res.data[ 0 ].baseCurrency.currencyCode);
-      localStorage.setItem("countryCode", res.data[ 0 ].countryCode);
+        localStorage.setItem("profileUrl", res.data[ 0 ].profileUrl);
+        localStorage.setItem("currencyCode", res.data[ 0 ].baseCurrency.currencyCode);
+        localStorage.setItem("countryCode", res.data[ 0 ].countryCode);
+        localStorage.setItem('countryId', res.data[ 0 ].countryId);
 
-      // if (res && (res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
+        // if (res && (res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
 
 
-      //   this.router.navigate(["/profile/terms-conditions"]);
-      //   // this.router.navigate(['/profile/update-info']);
-      // }
-      // else {
-      //   this.router.navigate(['/dashboard']);
-      // }
-      this.dataService.getRequest(API.CHECKTERMS).then(res => {
-        this.acceptTerms = res.data;
-        if (!this.acceptTerms) {
-          this.router.navigate([ "/profile/terms-conditions" ]);
-        }
-        else {
-          this.router.navigate([ "/profile/update-info" ]);
-        }
-      })
+        //   this.router.navigate(["/profile/terms-conditions"]);
+        //   // this.router.navigate(['/profile/update-info']);
+        // }
+        // else {
+        //   this.router.navigate(['/dashboard']);
+        // }
+        this.dataService.getRequest(API.CHECKTERMS).then(res => {
+          this.acceptTerms = res.data;
+          if (!this.acceptTerms) {
+            this.router.navigate([ "/profile/terms-conditions" ]);
+          }
+          else {
+            this.router.navigate([ "/profile/update-info" ]);
+          }
+        })
+      }
     })
   }
 

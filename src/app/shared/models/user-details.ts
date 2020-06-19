@@ -24,6 +24,7 @@ export interface UserDetailsPopUpData {
   isDelete?: boolean;
   isEdit: boolean;
   detail?: UserAdd;
+  countryList?: any;
 }
 
 export interface UserIds {
