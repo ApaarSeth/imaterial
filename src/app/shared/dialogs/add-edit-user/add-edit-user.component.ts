@@ -54,6 +54,7 @@ export class AddEditUserComponent implements OnInit {
   livingCountry: CountryCode[] = [];
   searchCountry: string = '';
   calingCode: string;
+  cntryId: number;
 
   constructor(
     private userService: UserService,
@@ -71,8 +72,10 @@ export class AddEditUserComponent implements OnInit {
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
-    this.getLocation();
+    this.cntryId = Number(localStorage.getItem('countryId'));
+    this.countryList = this.data.countryList;
     this.initForm();
+    this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"))
     this.userId = Number(localStorage.getItem("userId"))
     this.projectService.getUserProjects().then(data => {
@@ -85,31 +88,43 @@ export class AddEditUserComponent implements OnInit {
   }
 
   getLocation() {
-    if (this.data.isEdit && this.data.detail.countryCode) {
-      this.getCountryCode(this.data.detail.countryCode);
-    } else if (this.calingCode) {
-      this.getCountryCode(this.calingCode);
+    if (this.data.isEdit && this.data.detail.countryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.data.detail.countryId });
+    } else if (this.cntryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.cntryId });
     } else {
       this.visitorsService.getIpAddress().subscribe(res => {
         this.ipaddress = res[ 'ip' ];
         this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-          this.getCountryCode(res[ 'calling_code' ]);
+          this.getCountryCode({ callingCode: res[ 'calling_code' ] });
         });
       });
     }
   }
 
-  getCountryCode(callingCode) {
-    this.commonService.getCountry().then(res => {
-      this.countryList = res.data;
-      this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === callingCode;
-      })
-      this.form.get('countriesList').setValue(this.livingCountry[ 0 ])
-      if (this.data.isEdit && (this.data.detail.accountStatus == 1)) {
-        this.form.get('countriesList').disable();
+  getCountryCode(obj) {
+    // this.commonService.getCountry().then(res => {
+    //   this.countryList = res.data;
+    //   this.livingCountry = this.countryList.filter(val => {
+    //     return val.callingCode === callingCode;
+    //   })
+    //   this.form.get('countriesList').setValue(this.livingCountry[ 0 ])
+    //   if (this.data.isEdit && (this.data.detail.accountStatus == 1)) {
+    //     this.form.get('countriesList').disable();
+    //   }
+    // })
+
+    this.livingCountry = this.countryList.filter(val => {
+      if (obj.countryId) {
+        return val.countryId === obj.countryId;
+      } else {
+        return val.callingCode === obj.callingCode;
       }
     })
+    this.form.get('countriesList').setValue(this.livingCountry[ 0 ])
+    if (this.data.isEdit && (this.data.detail.accountStatus == 1)) {
+      this.form.get('countriesList').disable();
+    }
   }
 
   get selectedCountry() {

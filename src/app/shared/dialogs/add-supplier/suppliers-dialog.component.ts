@@ -25,6 +25,8 @@ export class SuppliersDialogComponent {
   livingCountry: CountryCode[] = [];
   searchCountry: string = '';
   calingCode: string;
+  cntryId: number;
+  isNational: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<SuppliersDialogComponent>,
@@ -38,37 +40,49 @@ export class SuppliersDialogComponent {
   ) { }
 
   ngOnInit() {
+    this.countryList = this.data.countryList;
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
-    this.getLocation();
+    this.cntryId = Number(localStorage.getItem('countryId'));
+    localStorage.getItem('callingCode') === '+91' ? this.isNational = true : this.isNational = false;
     this.initForm();
+    this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"))
   }
 
   getLocation() {
-    if (this.data.isEdit && this.data.detail.countryCode) {
-      this.getCountryCode(this.data.detail.countryCode);
-    } else if (this.calingCode) {
-      this.getCountryCode(this.calingCode);
+    if (this.cntryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.cntryId });
     } else {
       this.visitorsService.getIpAddress().subscribe(res => {
         this.ipaddress = res[ 'ip' ];
         this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-          this.getCountryCode(res[ 'calling_code' ]);
+          this.getCountryCode({ callingCode: res[ 'calling_code' ] });
         });
       });
     }
   }
 
-  getCountryCode(callingCode) {
-    this.commonService.getCountry().then(res => {
-      this.countryList = res.data;
-      this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === callingCode;
-      })
-      this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
+  getCountryCode(obj) {
+    // this.commonService.getCountry().then(res => {
+    //   this.countryList = res.data;
+    //   this.livingCountry = this.countryList.filter(val => {
+    //     return val.callingCode === callingCode;
+    //   })
+    //   this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
+    // })
+
+
+    this.livingCountry = this.countryList.filter(val => {
+      if (obj.countryId) {
+        return val.countryId === obj.countryId;
+      } else {
+        return val.callingCode === obj.callingCode;
+      }
     })
+    this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
+
   }
 
   get selectedCountry() {
@@ -89,6 +103,9 @@ export class SuppliersDialogComponent {
       countryCallingCode: [ null ],
       countryCode: []
     });
+    if (this.isNational) {
+      this.form.get('contact_no').setValidators([ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ]);
+    }
   }
 
   submit() {

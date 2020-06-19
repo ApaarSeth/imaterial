@@ -55,7 +55,6 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getLocation();
     this.rfqSupplierObj = history.state.rfqSupplierObj;
     this.supplierId = history.state.supplierId;
     this.brandCount = this.activatedRoute.snapshot.params[ "brandList" ];
@@ -64,6 +63,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     this.poService.getSupplierAddress(this.supplierId).then(data => {
 
       this.supplierAddress = data;
+      this.getLocation();
       if (this.supplierAddress && this.supplierAddress.data.length < 2 && this.supplierAddress.data[ 0 ].supplierAddressId == 0) {
         this.AddressValid = false;
       }
@@ -120,23 +120,29 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   }
 
   getLocation() {
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res[ 'ip' ];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        if (this.isCallingCode) {
-          this.getCountryCode(this.isCallingCode);
-        } else {
-          this.getCountryCode(res[ 'calling_code' ]);
-        }
+    if (this.selectedAddress && this.selectedAddress.countryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.selectedAddress.countryId });
+    } else if (this.supplierAddress.data.length && this.supplierAddress.data[ 0 ].countryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.supplierAddress.data[ 0 ].countryId });
+    } else {
+      this.visitorsService.getIpAddress().subscribe(res => {
+        this.ipaddress = res[ 'ip' ];
+        this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+          this.getCountryCode({ callingCode: res[ 'calling_code' ] });
+        });
       });
-    });
+    }
   }
 
-  getCountryCode(callingCode) {
+  getCountryCode(obj) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === callingCode;
+        if (obj.countryId) {
+          return val.countryId === obj.countryId;
+        } else {
+          return val.callingCode === obj.callingCode;
+        }
       })
       this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
     })
