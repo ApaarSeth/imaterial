@@ -37,6 +37,7 @@ export class SelectSupplierAddressDialogComponent {
 
   ngOnInit() {
     this.supplierAddresses = this.data.supplierAddresses.data;
+<<<<<<< HEAD
     console.log();
   }
 
@@ -47,6 +48,16 @@ export class SelectSupplierAddressDialogComponent {
   onselectAddress() {
     this.dialogRef.close({ data: this.addressId })
   }
+=======
+  }
+
+  onChange(event) {
+    this.addressId = event.value.addressId;
+  }
+  onselectAddress() {
+    this.dialogRef.close({ data: this.addressId })
+  }
+>>>>>>> c67d2a26d9c158fb091e61cab6f9494d1f06d542
   close() {
     this.dialogRef.close(null);
   }

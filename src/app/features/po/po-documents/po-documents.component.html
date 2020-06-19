@@ -14,7 +14,7 @@
           <mat-list-item class="files-list" *ngFor="let file of documentData; let i = index">
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-            <span>{{ file.DocumentDesc }}</span>
+            <div class="limited-character global" matTooltip="{{ file.DocumentDesc }}">{{ file.DocumentDesc }}</div>
             <span class="show-download">
               <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
                 <i class="material-icons">

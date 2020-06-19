@@ -248,7 +248,6 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     this.form.value.countryId = this.form.get('countryCode').value.countryId;
     delete this.form.value.countryCode;
 
-    //console.log(this.form.value);
     const dialogRef = this.dialog.open(ConfirmRfqBidComponent, {
       data: { rfqSupplierData: this.rfqSupplierObj, disabledAddress: this.disabledAddress, supplierAddress: this.form.value, supplierId: this.supplierId },
       width: "800px"
@@ -275,7 +274,6 @@ export class RFQSupplierAddAddressComponent implements OnInit {
         .afterClosed()
         .toPromise()
         .then(res => {
-          // console.log(res.data);
           this.supplierAddress.data.forEach(element => {
             if (element.addressId == res.data) {
               this.disabledAddress = true;

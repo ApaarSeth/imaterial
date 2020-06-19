@@ -115,6 +115,7 @@ export class BomTableComponent implements OnInit {
     this.permissionObj = this.permissionService.checkPermission(role);
   }
 
+
   setLocalStorage() {
     const popovers = {
       "userId": this.userId,
@@ -169,6 +170,29 @@ export class BomTableComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.subcategoryData);
       this.loading.hide();
     });
+  }
+
+  openIssueTOIndent(element) {
+    let check = Number(element.requestedQuantity) > 0 && Number(element.issueToProject) > 0 ? (Number(element.requestedQuantity) > Number(element.issueToProject) ? true : false) : true
+    if (this.permissionObj.rfqFlag && check) {
+      if (Number(element.availableStock) !== 0 || element.availableStock != null) {
+        this.issueToIndent(element.materialId, this.projectId)
+      }
+    }
+  }
+  indentButtonColor(element) {
+    let check = Number(element.requestedQuantity) > 0 && Number(element.issueToProject) > 0 ? (Number(element.requestedQuantity) > Number(element.issueToProject) ? true : false) : true
+    if (this.permissionObj.rfqFlag && check) {
+      if (element.availableStock === 0 || element.availableStock === null) {
+        return '../../../../assets/images/issue_to_indent_disabled.png'
+      }
+      else {
+        return '../../../../assets/images/issue_to_indent.png'
+      }
+    }
+    else {
+      return '../../../../assets/images/issue_to_indent_disabled.png'
+    }
   }
 
   applyFilter(event: Event) {

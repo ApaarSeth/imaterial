@@ -180,7 +180,7 @@ export class AppDashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result != null)
-        this.router.navigate([ '/project-dashboard' ]);
+        this.router.navigate(['/project-dashboard']);
     });
   }
 
@@ -198,7 +198,6 @@ export class AppDashboardComponent implements OnInit {
           "releaseNoteId": releaseNoteId
         }
         this.userguideservice.sendReleaseNoteData(obj).then(res => {
-          console.log(result + " " + releaseNoteId);
           localStorage.setItem('ReleaseNotes', '1');
         })
       }
@@ -301,7 +300,7 @@ export class AppDashboardComponent implements OnInit {
   //  }
   // }
 
-  @HostListener('window:resize', [ '$event' ])
+  @HostListener('window:resize', ['$event'])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 494) {
       this.tab1 = "P.O.";

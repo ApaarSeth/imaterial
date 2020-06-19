@@ -94,11 +94,11 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   materialForm: FormGroup;
   counter: number;
   addRfq: AddRFQ;
-  
+
   allSuppliers: SupplierAdd[];
   selectedSupplier: SupplierAdd[] = [];
   alreadySelectedSupplierId: number[];
-  
+
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -108,7 +108,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private userService: UserService,
     private guidedTourService: GuidedTourService,
-    private userGuideService : UserGuideService,
+    private userGuideService: UserGuideService,
     private commonService: CommonService
   ) {
   }
@@ -122,7 +122,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     this.formInit();
     this.getNotifications();
   }
- 
+
 
   formInit() {
     this.form = this.formBuilder.group({
@@ -131,8 +131,8 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     });
   }
   choosenProject() {
-     this.projectIds = [];
-     this.projectIds = this.form.value.selectedProject.map(
+    this.projectIds = [];
+    this.projectIds = this.form.value.selectedProject.map(
       selectedProject => selectedProject.projectId
     );
     this.sendProjectSuppierData();
@@ -146,19 +146,18 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     this.sendProjectSuppierData();
   }
 
-  sendProjectSuppierData(){
+  sendProjectSuppierData() {
     const obj = {
-      "projectIds":this.projectIds,
-      "supplierIds":this.supplierIds
+      "projectIds": this.projectIds,
+      "supplierIds": this.supplierIds
     }
-    console.log(obj);
   }
 
- getNotifications(){
+  getNotifications() {
     this.commonService.getNotification(this.userId);
   }
 
   setLocalStorage() {
   }
-  
+
 }

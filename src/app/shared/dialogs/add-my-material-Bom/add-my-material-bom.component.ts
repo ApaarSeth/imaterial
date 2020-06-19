@@ -53,9 +53,9 @@ export class AddMyMaterialBomComponent implements OnInit {
     private dialogRef: MatDialogRef<AddMyMaterialBomComponent>,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data) { }
-
+  currencyCode: String
   ngOnInit() {
-
+    this.currencyCode = localStorage.getItem('currencyCode')
     this.creatorId = Number(localStorage.getItem("userId"));
     this.getUserData(this.creatorId);
     this.getCategories();

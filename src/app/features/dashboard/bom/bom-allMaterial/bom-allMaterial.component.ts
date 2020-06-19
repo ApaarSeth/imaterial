@@ -54,6 +54,7 @@ export class BOMAllMaterialComponent implements OnInit {
     this.step = index;
   }
 
+  currencyCode: string;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -69,6 +70,8 @@ export class BOMAllMaterialComponent implements OnInit {
     this.mappingMaterialWithQuantity()
     this.formInit();
     this.searchCategory();
+    this.currencyCode = localStorage.getItem('currencyCode')
+
   }
 
   ngOnChanges(): void {

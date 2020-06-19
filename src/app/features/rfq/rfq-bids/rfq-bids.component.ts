@@ -99,7 +99,6 @@ export class RfqBidsComponent implements OnInit {
     );
     this.rfqForms = this.formBuilder.group({});
     this.rfqForms.addControl("forms", new FormArray(frmArr));
-    // console.log(this.rfqForms.value);
   }
 
   get currency() {
@@ -229,7 +228,6 @@ export class RfqBidsComponent implements OnInit {
 
   getQuanityValidation(p, m) {
     this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(true);
-    console.log(this.rfqForms.value);
     let total: number = 0;
 
     this.rfqForms.value.forms[p].materialList[m].supplierList.forEach(supplier => {

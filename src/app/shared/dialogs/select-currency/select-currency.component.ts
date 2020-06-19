@@ -105,8 +105,6 @@ export class SelectCurrencyComponent implements OnInit {
 
   setExchangeCurrency(event) {
     this.exchangeCurrencyName = event.value.currencyCode;
-    console.log("NEW Value ::", event.value);
-    console.log(this.form);
   }
 
   submit() {

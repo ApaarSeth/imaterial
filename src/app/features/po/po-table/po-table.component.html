@@ -164,14 +164,14 @@
               <span class="mat-cell minwidth-60-px"></span>
             </ng-template>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'" *ngIf="isInternational; else gstTotalAmountBlock">
-              {{ getTotalPoOtherListTax(m) | number: "1.2-2" }}
-              <span *ngIf="this.poTableData[m].otherCostInfo && this.poTableData[m].otherCostInfo.length" class="info-icon info-tootip"
+              {{ this.poTableData[m].otherCostAmount | number: "1.2-2" }}
+              <span *ngIf="this.poTableData[m].otherCostAmount" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                 <span class="info-tootip__content">
                   <div class="tooltip-table">
                     <p class="row mb-1" *ngFor="let cost of this.poTableData[m].otherCostInfo">
                       <strong class="col">{{ cost.otherCostName }}</strong
-                      ><span class="col">{{ cost.otherCostValue }}%</span>
+                      ><span class="col">{{ cost.otherCostAmount }}</span>
                     </p>
                   </div>
                 </span>
@@ -281,8 +281,7 @@
                 </span>
               </ng-template>
               <span *ngIf="isInternational; else gstAmountBlock" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-8' : 'minwidth-8'" class="mat-cell text-center p-r-15">
-                {{ getPOListOtherCostTax(m, p, "edit") }}</span
-              >
+              </span>
               <ng-template #gstAmountBlock>
                 <span class="mat-cell text-left P-l-0">
                   <ng-container *ngIf="mode != 'edit'; else editgstAmount">{{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
