@@ -2,5 +2,6 @@ export interface auth {
     role: string;
     serviceToken: string;
     userId: string;
-    orgId: string
+    orgId: string;
+    accountStatus: number;
 }

@@ -12,6 +12,7 @@ import { UserDetails } from 'src/app/shared/models/user-details';
 import { SignINDetailLists, ForgetPassDetails } from 'src/app/shared/models/signIn/signIn-detail-list';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { VisitorService } from 'src/app/shared/services/visitor.service';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
   selector: "forgot-password",
@@ -24,7 +25,7 @@ export class ForgotPasswordComponent implements OnInit {
   user: UserDetails;
   lessOTPDigits: string = "";
   showOtp: boolean = false;
-  emailVerified: boolean = true;
+  emailVerified: boolean = false;
   emailMessage: string;
   otpLength: number = 0;
   verifiedMobile: boolean = true;
@@ -43,6 +44,8 @@ export class ForgotPasswordComponent implements OnInit {
   primaryCallingCode: string = '';
   livingCountry: string = '';
   ipaddress: string = '';
+  callingCode: string = '+91';
+  emailSendMessage: boolean = false
   constructor(
     private tokenService: TokenService,
     private route: ActivatedRoute,
@@ -75,12 +78,38 @@ export class ForgotPasswordComponent implements OnInit {
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
   }
 
+  verifyEmail(event) {
+    const email = event.target.value
+    if (email.match(FieldRegExConst.EMAIL)) {
+      this.signInSignupService.verifyEMAIL(this.forgetPassForm.value.email).then(res => {
+        if (res) {
+          this.emailVerified = !res.data;
+          this.emailMessage = res.message;
+        }
+      });
+    }
+  }
+
+
 
   getLocation() {
+    let emailValidator = [
+      Validators.required,
+      Validators.pattern(FieldRegExConst.EMAIL)
+    ]
     this.visitorsService.getIpAddress().subscribe(res => {
       this.ipaddress = res['ip'];
+      this.callingCode = res['calling_code'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
         this.getCountryCode(res['calling_code'])
+        if (this.callingCode === '+91') {
+          this.forgetPassForm.get('email').setValidators(emailValidator)
+          this.forgetPassForm.get('phone').setValidators(Validators.required)
+        }
+        else {
+          this.forgetPassForm.get('email').setValidators(emailValidator)
+
+        }
       });
     });
   }
@@ -115,10 +144,11 @@ export class ForgotPasswordComponent implements OnInit {
   formInit() {
     this.forgetPassForm = this.formBuilder.group({
       countryCode: [],
-      phone: [this.user ? this.user.contactNo : '', [Validators.required]],
-      organisationType: ["Contractor", Validators.required],
+      phone: [this.user ? this.user.contactNo : ''],
+      organisationType: ["Contractor"],
       password: ["", [Validators.required, Validators.minLength(6)]],
-      otp: [""]
+      otp: [""],
+      email: [''],
     });
 
     if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
@@ -227,7 +257,7 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
   submitNumber() {
-    if (!this.verifiedMobile) {
+    if (this.callingCode === '+91' && !this.verifiedMobile) {
       this.OtpscreenShow = true;
       this.phonescreenShow = false;
       this.passscreenShow = false;
@@ -237,6 +267,13 @@ export class ForgotPasswordComponent implements OnInit {
       this.lastFourDigit = this.value.substring(6, 10);
       this.getCountryCode
       this.sendotp(this.value);
+    }
+    else {
+
+      this.signInSignupService.verifyResetEmail(this.forgetPassForm.get('email').value, 'fooClientIdPassword').then(res => {
+        this.emailSendMessage = true;
+        console.log(res)
+      })
     }
 
   }

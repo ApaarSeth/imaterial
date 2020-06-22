@@ -4,6 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { UpdateInfoComponent } from './update-info/update-info.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { EmailVerificationComponent } from './email-verification/email-verificatiion.component';
 
 const routes: Routes = [
     {
@@ -19,6 +20,11 @@ const routes: Routes = [
     {
         path: 'terms-conditions',
         component: TermsConditionsComponent
+    },
+
+    {
+        path: 'email-verification',
+        component: EmailVerificationComponent
     }
 
 
