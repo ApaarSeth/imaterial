@@ -62,7 +62,7 @@ export class SigninComponent implements OnInit {
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
     this.visitorsService.getIpAddress().subscribe(res => {
-      this.callingCode = res['calling_code'];
+      // this.callingCode = res['calling_code'];
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
         this.getCountryCode(res['calling_code'])
@@ -92,7 +92,7 @@ export class SigninComponent implements OnInit {
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      countryCode: [],
+      countryCode: [{ value: '', disabled: true }],
       phone: [""],
       password: ["", Validators.required],
       email: [''],
@@ -123,7 +123,7 @@ export class SigninComponent implements OnInit {
       }
       else if (data.serviceRawResponse.data) {
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
-        if (localStorage.getItem('accountStatus') && Number(localStorage.getItem('accountStatus')) === 0) {
+        if (localStorage.getItem('accountStatus') && Number(localStorage.getItem('accountStatus'))) {
           this.router.navigate(["/profile/email-verification"]);
         }
         else {

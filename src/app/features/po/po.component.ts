@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, HostListener } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewChildren, HostListener, ChangeDetectorRef } from "@angular/core";
 import { POService } from "src/app/shared/services/po/po.service";
 import {
   POData,
@@ -98,6 +98,7 @@ export class PoComponent implements OnInit {
   currency: { isInternational: number, purchaseOrderCurrency: PurchaseOrderCurrency }
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -309,6 +310,7 @@ export class PoComponent implements OnInit {
       combineLatest([this.poService.billingRole$, this.poService.projectRole$, this.poService.billingAddress$, this.poService.supplierAddress$, this.poService.poNumber$]).subscribe(values => {
         this.isPoValid = true;
         this.ValidPOTemp = true;
+        this.cdr.detectChanges();
       })
     );
   }

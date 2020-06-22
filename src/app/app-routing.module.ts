@@ -30,6 +30,13 @@ const routes: Routes = [
           import(
             "./features/rfq-supplier-template/rfq-supplier-detail-template.module"
           ).then(m => m.RFQSupplierDetailTemplateModule)
+      },
+      {
+        path: "verify-email",
+        loadChildren: () =>
+          import(
+            "./features/verify-email/verify-email.module"
+          ).then(m => m.VerifyEmailModule)
       }
     ]
   },
