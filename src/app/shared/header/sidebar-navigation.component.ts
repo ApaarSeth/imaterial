@@ -27,7 +27,7 @@ export class SidebarNavigationComponent implements OnInit {
   subsriptions: Subscription[] = [];
   headerConst: { name: string, link: string, flag: boolean }[]
 
-  isCollapseMenu: boolean;
+  isCollapseMenu: boolean = true;
   @Output('collapseMenu') sideNavCollapse = new EventEmitter<boolean>();
 
   constructor(

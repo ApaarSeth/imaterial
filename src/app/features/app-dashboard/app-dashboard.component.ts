@@ -40,7 +40,7 @@ export class AppDashboardComponent implements OnInit {
   searchText = '';
   filterForm: FormGroup;
   currentIndex: number = 0;
-  isSideNavCollapsed: boolean;
+  // isSideNavCollapsed: boolean;
   constructor(public dialog: MatDialog,
     private router: Router,
     private formbuilder: FormBuilder,
@@ -312,7 +312,7 @@ export class AppDashboardComponent implements OnInit {
     }
   }
 
-  isSidebarCollapsed(e){
-    this.isSideNavCollapsed = e;
-  }
+  // isSidebarCollapsed(e){
+  //   this.isSideNavCollapsed = e;
+  // }
 }

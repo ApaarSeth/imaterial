@@ -198,8 +198,8 @@ button.active {
 .mat-arrow-icon{
   background-color: #fff;
   border-radius: 50%;
-  position: absolute;
-  top: 0%;
+  position: fixed;
+  top: 74px;
   z-index: 999;
   box-shadow: 0 0 10px #8e8e8e;
   border: 1px solid #e1e1e1;

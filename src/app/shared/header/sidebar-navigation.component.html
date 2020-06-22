@@ -6,7 +6,7 @@
         <div class="blue-background-color sidebar-navigation" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false" fxShow="true"
             *ngIf="role">
             <ng-container *ngFor="let selectedHeader of headerConst">
-                <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]">
+                <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]" (click)="isCollapseMenu = true">
                     <button [class.active]="buttonName === selectedHeader.name" class="color-white header-links" mat-button>
                         {{selectedHeader.name}}
                     </button>
