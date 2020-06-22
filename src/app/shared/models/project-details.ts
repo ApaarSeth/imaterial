@@ -38,6 +38,7 @@ export interface ProjectDetails {
   imageFileName?: string;
   callingCode?: string;
   costUnit?: string;
+  countryId: number;
 }
 
 export interface ProjetPopupData {

@@ -12,6 +12,7 @@ import { UserDataGuardService } from './shared/guards/user-data.guards';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 import { ProfileComponent } from './features/profile/profile.component';
+import { CountryResolver } from './shared/resolver/country.resolver';
 
 const routes: Routes = [
   {
@@ -30,6 +31,13 @@ const routes: Routes = [
           import(
             "./features/rfq-supplier-template/rfq-supplier-detail-template.module"
           ).then(m => m.RFQSupplierDetailTemplateModule)
+      },
+      {
+        path: "verify-email",
+        loadChildren: () =>
+          import(
+            "./features/verify-email/verify-email.module"
+          ).then(m => m.VerifyEmailModule)
       }
     ]
   },
@@ -118,6 +126,9 @@ const routes: Routes = [
       },
       {
         path: "users",
+        resolve: {
+          countryList: CountryResolver
+        },
         data: { breadcrumb: 'Users' },
         loadChildren: () =>
           import("./features/users/user-dashboard.module").then(
@@ -126,6 +137,9 @@ const routes: Routes = [
       },
       {
         path: "supplier",
+        resolve: {
+          countryList: CountryResolver
+        },
         data: { breadcrumb: 'Supplier' },
         loadChildren: () =>
           import("./features/supplier/supplier.module").then(
@@ -162,7 +176,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [CountryResolver]
 })
 
 export class AppRoutingModule { }

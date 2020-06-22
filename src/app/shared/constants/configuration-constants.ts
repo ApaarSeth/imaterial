@@ -36,6 +36,7 @@ export const API = {
   GETPROJECT: (organizationId, projectId) => `project/${organizationId}/${projectId}`,
   GETCATERGORY: `material/groups`,
   ADDPROJECT: `addProject`,
+  VERIFYRESETEMAIL: (email, clientId) => `api/auth/forgotPassword?emailId=${encodeURI(email)}&client_id=${clientId}`,
   UPDATEPROJECT: (organizationId, projectId) => `updateProjectDetails/${organizationId}/${projectId}`,
   RAISEINDENT: projectId => `indent/raise/${projectId}`,
   DELETE: (organizationId, projectId) => `deleteProject/${organizationId}/${projectId}`,
@@ -60,6 +61,7 @@ export const API = {
   GETAPPROVER: (organizationId, projectId) => `po/users/${organizationId}/${projectId}`,
   POSTADDADDRESS: (type, id) => `address/add/${type}/${id}`,
   GETPOADDADDRESS: (type, id) => `address/get/${type}/${id}`,
+  VERIFYRESETPASSWORD: (token, clientId) => `api/auth/verifyResetPassword?token=${token}&client_id=${clientId}`,
   POSTDOCUMENTUPLOAD: `documents/upload`,
   POSTSUPPLIERDOCUMENTUPLOAD: `supplier/documents/upload`,
   SIGNUP: `api/auth/signup`,
@@ -132,5 +134,8 @@ export const API = {
   POSTTAXANDOTHERCOST: `organization/add/tax/otherCost`,
   POTAXANDOTHERCOST: `po/organization/add/tax/otherCost`,
   GETPOTAXESLIST: 'po/tax/otherCost',
-  GETTAXESLIST: (rfqId) => `supplier/tax/otherCost/${rfqId}`
+  GETTAXESLIST: (rfqId) => `supplier/tax/otherCost/${rfqId}`,
+  RESENDEMAIL: `email/resend`,
+  EMAILVERFICATIONSTATUS: `email/verification/status`,
+  EMAILVERFICATION: (token) => `emailVerification/${token}`
 };

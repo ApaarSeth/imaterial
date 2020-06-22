@@ -10,6 +10,7 @@ import { UpdateInfoComponent } from './update-info/update-info.component';
 import { FirstLoginRoutingModule } from './first-login.routing';
 import { AddUserComponent } from './add-user/add-user.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { EmailVerificationComponent } from './email-verification/email-verificatiion.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     declarations: [
         UpdateInfoComponent,
         AddUserComponent,
-        TermsConditionsComponent
+        TermsConditionsComponent,
+        EmailVerificationComponent
     ]
 })
 

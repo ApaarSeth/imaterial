@@ -1,7 +1,7 @@
 <div class="row" *ngIf="!showResponsiveDesign">
   <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="isInternational; else elseBlock">
     <div class="p-r-10 p-b-10">
-      <div *ngIf="isInternational">
+      <div>
         <span
           *ngIf="isInternational && mode === 'edit'"
           (click)="selectCurrency()"
@@ -29,7 +29,7 @@
     </div>
   </div>
   <ng-template #elseBlock>
-    <span *ngIf="mode === 'edit'">
+    <span *ngIf="mode === 'edit'" class="col-xs-12 text-right">
       <mat-radio-group class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
         <mat-radio-button [checked]="gst === 'IGST'" value="IGST" class="p-r-5">IGST</mat-radio-button>
         <mat-radio-button [checked]="gst === 'CGST & SGST'" value="CGST & SGST">CGST & SGST</mat-radio-button>

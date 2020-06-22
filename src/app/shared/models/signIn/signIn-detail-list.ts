@@ -9,7 +9,7 @@ export interface SignINDetailLists {
   email: string;
   countryCode: string;
   customData: CustonDataDetails;
-
+  loginIdType: string;
 }
 
 export interface ForgetPassDetails {

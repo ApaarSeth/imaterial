@@ -40,13 +40,13 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 @Component({
   selector: "user-details",
   templateUrl: "./user-details.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  styleUrls: [ "../../../../assets/scss/main.scss" ]
 })
 
 
 export class UserDetailComponent implements OnInit {
-  displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
-  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
+  displayedColumns: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star' ];
+  displayedColumnsDeactivate: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project' ];
 
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;
@@ -60,6 +60,7 @@ export class UserDetailComponent implements OnInit {
   addUserBtn: boolean = false;
   allUsers: AllUserDetails;
   orgId: number;
+  countryList: any[];
 
   public UserDashboardTour: GuidedTour = {
     tourId: 'supplier-tour',
@@ -99,6 +100,8 @@ export class UserDetailComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
 
+    this.countryList = this.activatedRoute.snapshot.data.countryList;
+
     this.getAllUsers();
     this.getNotifications();
   }
@@ -115,7 +118,7 @@ export class UserDetailComponent implements OnInit {
 
         this.dataSourceActivateTemp = data.data.activatedProjectList;
         this.dataSourceDeactivateTemp = data.data.deactivatedProjectList;
-        
+
 
         if ((localStorage.getItem('user') == "null") || (localStorage.getItem('user') == '0')) {
           setTimeout(() => {
@@ -162,6 +165,7 @@ export class UserDetailComponent implements OnInit {
     this.openDialog({
       isEdit: false,
       isDelete: false,
+      countryList: this.countryList
 
     } as UserDetailsPopUpData);
   }
@@ -186,7 +190,8 @@ export class UserDetailComponent implements OnInit {
     this.openDialogDeactiveUser({
       isEdit: false,
       isDelete: true,
-      detail: this.userDetailsTemp
+      detail: this.userDetailsTemp,
+      countryList: this.countryList
     } as UserDetailsPopUpData);
   }
 
@@ -205,6 +210,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   editProject(data) {
+    console.log(data.ProjectUser);
     const projectList: Array<number> = new Array<number>();
     this.userDetailsTemp.firstName = data.ProjectUser.firstName;
     this.userDetailsTemp.lastName = data.ProjectUser.lastName;
@@ -214,6 +220,7 @@ export class UserDetailComponent implements OnInit {
     this.userDetailsTemp.userId = data.ProjectUser.userId;
     this.userDetailsTemp.accountStatus = data.ProjectUser.accountStatus;
     this.userDetailsTemp.countryCode = data.ProjectUser.countryCode;
+    this.userDetailsTemp.countryId = data.ProjectUser.countryId;
 
     data.ProjectList.forEach(element => {
       projectList.push(element.projectId);
@@ -223,7 +230,8 @@ export class UserDetailComponent implements OnInit {
     this.openDialog({
       isEdit: true,
       isDelete: false,
-      detail: this.userDetailsTemp
+      detail: this.userDetailsTemp,
+      countryList: this.countryList
     } as UserDetailsPopUpData);
   }
   applyFilteqqr(event: Event) {

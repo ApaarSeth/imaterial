@@ -12,6 +12,18 @@ $background-table-color-grey: #ececec;
 $green-color: #7ed321;
 $skyblue-color: #2197bb;
 $light-grey: #707070;
+$dark-blue: #0c3d56;
+.ink-color {
+  color: $dark-blue;
+}
+
+.navy-blue-color {
+  color: #193764;
+}
+
+.off-white-background {
+  background-color: #f1f1f1;
+}
 
 a:hover {
   color: $main-color !important;
@@ -341,6 +353,10 @@ input {
   text-align: right;
 }
 
+.text-webkit-center {
+  text-align: -webkit-center;
+}
+
 .pull-left {
   float: left;
 }
@@ -568,6 +584,10 @@ a:hover {
 }
 .margin-0-auto {
   margin: 0 auto;
+}
+
+.margin-auto {
+  margin: auto;
 }
 
 .mat-form-field textarea,
