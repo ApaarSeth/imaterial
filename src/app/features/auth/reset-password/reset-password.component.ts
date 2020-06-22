@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: "reset-password",
@@ -11,10 +12,20 @@ export class ResetPasswordComponent implements OnInit {
   forgetPassForm: FormGroup;
   showPassWordString: boolean = false;
   showRetypePassWordString: boolean = false;
-  constructor(private formBuilder: FormBuilder, private signInSignupService: SignInSignupService) { }
+  token: string
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private signInSignupService: SignInSignupService) { }
   passwordMatch = false;
   ngOnInit() {
-    this.formInit()
+    this.formInit();
+    this.route.params.subscribe(param => {
+      this.token = param['token']
+      this.verifyResetPassword()
+    })
+
+  }
+
+  verifyResetPassword() {
+    this.signInSignupService.verifyResetPassword(this.token, 'fooClientIdPassword')
   }
 
   formInit() {

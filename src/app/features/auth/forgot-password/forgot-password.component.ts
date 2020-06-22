@@ -44,7 +44,7 @@ export class ForgotPasswordComponent implements OnInit {
   primaryCallingCode: string = '';
   livingCountry: string = '';
   ipaddress: string = '';
-  callingCode: string = '+1'
+  callingCode: string = '+91';
   emailSendMessage: boolean = false
   constructor(
     private tokenService: TokenService,
@@ -269,8 +269,9 @@ export class ForgotPasswordComponent implements OnInit {
       this.sendotp(this.value);
     }
     else {
-      this.emailSendMessage = true;
+
       this.signInSignupService.verifyResetEmail(this.forgetPassForm.get('email').value, 'fooClientIdPassword').then(res => {
+        this.emailSendMessage = true;
         console.log(res)
       })
     }

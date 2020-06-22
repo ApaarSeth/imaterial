@@ -52,6 +52,11 @@ export class SignInSignupService implements OnInit {
   verifyForgetPasswordOTP(phone, otp, clientId, countryCode) {
     return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYFORGETPASSWORDOTP(phone, otp, clientId, countryCode), {}).then(res => { return res });
   }
+
+  verifyResetPassword(token, clientId) {
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYRESETPASSWORD(token, clientId), {})
+  }
+
   verifyEMAIL(email) {
     return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => { return res });
   }
