@@ -5,7 +5,7 @@ import { GlobalStoreMaterial, GlobalProject } from "src/app/shared/models/Global
 @Component({
   selector: "app-material-wise",
   templateUrl: "./material-wise.component.html",
-  styleUrls: ["./material-wise.component.scss"]
+  styleUrls: [ "./material-wise.component.scss" ]
 })
 export class MaterialWiseComponent implements OnInit {
   @Input("materialData") materialData: GlobalStoreMaterial[];
