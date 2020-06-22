@@ -97,8 +97,8 @@ export class SignupComponent implements OnInit {
     this.visitorsService.getIpAddress().subscribe(res => {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.callingCode = res['calling_code'];
         this.getCountryCode(res['calling_code'])
+        this.callingCode = res['calling_code'];
         if (this.callingCode === '+91') {
           this.signupForm.get('email').setValidators(emailValidator)
           this.signupForm.get('phone').setValidators(Validators.required)

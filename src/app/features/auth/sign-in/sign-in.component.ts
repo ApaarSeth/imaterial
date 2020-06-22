@@ -62,9 +62,9 @@ export class SigninComponent implements OnInit {
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
     this.visitorsService.getIpAddress().subscribe(res => {
-      this.callingCode = res['calling_code'];
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+        this.callingCode = res['calling_code'];
         this.getCountryCode(res['calling_code'])
         if (this.callingCode === '+91') {
           this.signinForm.get('email').setValidators(emailValidator)
@@ -149,7 +149,6 @@ export class SigninComponent implements OnInit {
    */
   getUserInfo(userId) {
     this._userService.getUserInfo(userId).then(res => {
-<<<<<<< HEAD
       if (res.data[0].firstName)
         localStorage.setItem("userName", res.data[0].firstName);
       localStorage.setItem("profileUrl", res.data[0].profileUrl);
@@ -166,34 +165,6 @@ export class SigninComponent implements OnInit {
           this.router.navigate(["/profile/update-info"]);
         }
       })
-=======
-      if (res.data[ 0 ].firstName) {
-        localStorage.setItem("userName", res.data[ 0 ].firstName);
-        localStorage.setItem("profileUrl", res.data[ 0 ].profileUrl);
-        localStorage.setItem("currencyCode", res.data[ 0 ].baseCurrency.currencyCode);
-        localStorage.setItem("countryCode", res.data[ 0 ].countryCode);
-        localStorage.setItem('countryId', res.data[ 0 ].countryId);
-
-        // if (res && (res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
-
-
-        //   this.router.navigate(["/profile/terms-conditions"]);
-        //   // this.router.navigate(['/profile/update-info']);
-        // }
-        // else {
-        //   this.router.navigate(['/dashboard']);
-        // }
-        this.dataService.getRequest(API.CHECKTERMS).then(res => {
-          this.acceptTerms = res.data;
-          if (!this.acceptTerms) {
-            this.router.navigate([ "/profile/terms-conditions" ]);
-          }
-          else {
-            this.router.navigate([ "/profile/update-info" ]);
-          }
-        })
-      }
->>>>>>> 912bcf3c07bc473acb5bc0d18bcfa3036a86eb3a
     })
   }
 
