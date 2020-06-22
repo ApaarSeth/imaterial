@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router'; import { IndentDashboard
 import { DashboardComponent } from './dashboard.component';
 import { BomComponent } from './bom/bom.component';
 import { BomTableComponent } from './bom/bom-table/bom-table.component';
-import { CountryResolver } from './resolver/country.resolver';
+import { CountryResolver } from 'src/app/shared/resolver/country.resolver';
 
 const routes: Routes = [
     {

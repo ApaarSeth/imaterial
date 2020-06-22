@@ -213,7 +213,7 @@
         <div class="row">
           <div class="col-xs-6 col-sm-3">
             <!-- construction cost -->
-            <mat-form-field class="border-input">
+            <mat-form-field class="border-input" matTooltip="Construction Cost {{ currencyCode }}">
               <mat-label>Construction Cost {{currencyCode}}</mat-label>
               <input matInput type="text" appTwoDigitDecimaNumber formControlName="cost" min="0" required />
               <small *ngIf="form.controls['cost'].hasError('required') && form.controls['cost'].touched"

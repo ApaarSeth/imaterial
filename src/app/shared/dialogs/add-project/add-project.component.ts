@@ -61,6 +61,7 @@ export class AddProjectComponent implements OnInit {
   searchCountry: string = '';
   selectedCountryId: number;
   calingCode: string;
+  cntryId: number;
   currencyCode: string;
 
   constructor(
@@ -80,6 +81,7 @@ export class AddProjectComponent implements OnInit {
   ngOnInit() {
     this.countryList = this.data.countryList;
     this.currencyCode = localStorage.getItem('currencyCode');
+    this.cntryId = Number(localStorage.getItem('countryId'));
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
@@ -97,15 +99,15 @@ export class AddProjectComponent implements OnInit {
   }
 
   getLocation() {
-    if (this.data.isEdit && this.data.detail.callingCode) {
-      this.getCountryCode(this.data.detail.callingCode);
-    } else if (this.calingCode) {
-      this.getCountryCode(this.calingCode);
+    if (this.data.isEdit && this.data.detail.countryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.data.detail.countryId });
+    } else if (this.cntryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.cntryId });
     } else {
       this.visitorsService.getIpAddress().subscribe(res => {
         this.ipaddress = res[ 'ip' ];
         this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-          this.getCountryCode(res[ 'calling_code' ]);
+          this.getCountryCode({ callingCode: res[ 'calling_code' ] });
         });
       });
     }
@@ -119,18 +121,14 @@ export class AddProjectComponent implements OnInit {
     this.form.get('state').setValue("");
   }
 
-  getCountryCode(callingCode) {
-    // this.commonService.getCountry().then(res => {
-    //   this.countryList = res.data;
-    //   this.livingCountry = this.countryList.filter(val => {
-    //     return val.callingCode === callingCode;
-    //   })
-    //   this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
-    // })
+  getCountryCode(obj) {
     this.livingCountry = this.countryList.filter(val => {
-      return val.callingCode === callingCode;
+      if (obj.countryId) {
+        return val.countryId === obj.countryId;
+      } else {
+        return val.callingCode === obj.callingCode;
+      }
     })
-    console.log(this.livingCountry[ 0 ]);
     this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
   }
 
