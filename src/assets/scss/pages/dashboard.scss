@@ -353,9 +353,9 @@ body,
       margin-right: 10px;
     }
 
-    .mat-tab-group {
-      padding-top: 50px;
-    }
+    // .mat-tab-group {
+    //   padding-top: 50px;
+    // }
   }
 
   @media only screen and (max-width: 715px) {
@@ -433,6 +433,20 @@ body,
         padding-top: 5px;
       }
     }
+  }
+  .sml-db{
+    flex-wrap: wrap;
+    justify-content: flex-start !important;
+    margin-left: 6px;
+    .things-to-do, .things-to-do__icons{
+      margin-right: 0px;
+      margin-bottom: 10px;
+    }
+  }
+  .things-to-do.sml-d1{
+    padding: 10px !important;
+    align-items: center;
+    overflow: hidden;
   }
 }
 @media only screen and (max-width: 560px) {
@@ -536,4 +550,17 @@ body,
 .image-project-card {
   width: 100%;
   border-radius: 5px;
+}
+
+
+.wdrpr-mb{
+  .ngx-mat-drp-date-input{
+    min-width: 90% !important;
+    width: 90% !important;
+  }
+  .ngx-mat-drp-date-display{
+    min-width: 50% !important;
+    max-width: 100% !important;
+    padding-left: 15px;
+  }
 }
