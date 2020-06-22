@@ -31,6 +31,13 @@ const routes: Routes = [
           import(
             "./features/rfq-supplier-template/rfq-supplier-detail-template.module"
           ).then(m => m.RFQSupplierDetailTemplateModule)
+      },
+      {
+        path: "verify-email",
+        loadChildren: () =>
+          import(
+            "./features/verify-email/verify-email.module"
+          ).then(m => m.VerifyEmailModule)
       }
     ]
   },
@@ -50,7 +57,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileLayoutComponent,
-    canActivate: [ AuthGuardService, UserDataGuardService ],
+    canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
         path: "profile",
@@ -63,7 +70,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [ AuthGuardService, AfterSignUpGuardService ],
+    canActivate: [AuthGuardService, AfterSignUpGuardService],
     children: [
       {
         path: "project-dashboard",
@@ -168,9 +175,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }) ],
-  exports: [ RouterModule ],
-  providers: [ CountryResolver ]
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  exports: [RouterModule],
+  providers: [CountryResolver]
 })
 
 export class AppRoutingModule { }
