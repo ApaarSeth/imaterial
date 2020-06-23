@@ -15,7 +15,6 @@ export class EmailVerificationComponent implements OnInit {
     checkAccountStatus: number = 0;
     ngOnInit() {
         this.email = localStorage.getItem('email')
-        this.resendEmail();
         const source = interval(10000);
         this.subscription = source.subscribe(val => { this.emailVerificationStatus() });
 

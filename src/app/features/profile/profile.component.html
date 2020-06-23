@@ -113,12 +113,19 @@
                 </div>
 
                 <mat-form-field class="border-input w-100">
-                  <input matInput type="text" placeholder="Phone No." formControlName="contactNo" />
+                  <input matInput type="text" placeholder="Pincode" formControlName="contactNo" />
                 </mat-form-field>
                 <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
                     Phone number is required
                   </mat-error>
+                </mat-error>
+
+                <mat-form-field class="border-input w-100">
+                  <input matInput type="text" placeholder="Pincode" formControlName="orgPincode" />
+                </mat-form-field>
+                <mat-error *ngIf="userInfoForm.controls['orgPincode'].errors?.maxlength && userInfoForm.controls['orgPincode'].touched">
+                  maximum characters allowed is 6
                 </mat-error>
 
                 <mat-form-field class="border-select w-100" *ngIf="users.roleName != 'l3'">

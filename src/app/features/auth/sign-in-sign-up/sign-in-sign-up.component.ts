@@ -20,6 +20,7 @@ export class SignInSignUpComponent implements OnInit {
   uniqueCode: string;
   index: number;
   callingCode: string;
+  countryCode: string;
   constructor(
     private visitorsService: VisitorService,
     private router: Router,
@@ -44,6 +45,7 @@ export class SignInSignUpComponent implements OnInit {
       this.visitorsService.getGEOLocation(res['ip']).subscribe(res => {
         localStorage.setItem('callingCode', res['calling_code'])
         this.callingCode = res['calling_code']
+        this.countryCode = res['country_code2']
       })
     })
   }

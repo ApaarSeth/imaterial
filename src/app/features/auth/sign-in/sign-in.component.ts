@@ -22,6 +22,8 @@ import { VisitorService } from 'src/app/shared/services/visitor.service';
 
 export class SigninComponent implements OnInit {
   @Input("callingCode") actualCallingCode: string;
+  @Input("countryCode") countryCode: string;
+
   constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
     private formBuilder: FormBuilder,
@@ -70,22 +72,24 @@ export class SigninComponent implements OnInit {
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-
-    this.getCountryCode(this.callingCode)
+    this.getCountryCode(this.callingCode, this.countryCode)
     if (this.callingCode === '+91') {
-      this.signinForm.get('email').setValidators(emailValidator)
-      this.signinForm.get('phone').setValidators(Validators.required)
+      // this.signinForm.get('email').setValidators(emailValidator)
+      this.signinForm.get('phone').setValidators([Validators.required])
     }
-    else {
+    else if (this.callingCode) {
       this.signinForm.get('email').setValidators(emailValidator)
 
     }
   }
 
-  getCountryCode(callingCode) {
+  getCountryCode(callingCode, countryCode) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
+        if (callingCode === '+1') {
+          return val.callingCode === callingCode && val.countryCode === countryCode
+        }
         return val.callingCode === callingCode;
       })
       this.signinForm.get('countryCode').setValue(this.livingCountry[0])

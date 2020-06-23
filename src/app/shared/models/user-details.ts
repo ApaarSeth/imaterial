@@ -104,6 +104,7 @@ export interface UserDetails {
   companyName?: string;
   TurnOverId?: number;
   baseCurrency: Currency
+  orgPincode: string;
 }
 
 export interface TradeList {
