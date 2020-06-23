@@ -21,7 +21,7 @@ export class TokenInterceptor implements HttpInterceptor {
             mergeMap(headers => {
                 const authorizationKey = `Bearer ${this.tokenService.getToken()}`;
 
-                if (this.tokenService.getToken()) {
+                if (!this.tokenService.getToken()) {
                     return next.handle(request)
                 }
 
