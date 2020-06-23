@@ -62,7 +62,7 @@ export class SignupComponent implements OnInit {
   ipaddress: string;
   signInDetails = {} as SignINDetailLists;
   livingCountry: CountryCode[] = [];
-  callingCode: string;
+  callingCode: string = '+91';
   ngOnInit() {
     this.primaryCallingCode = localStorage.getItem('callingCode')
     this.route.params.subscribe(param => {
@@ -98,7 +98,7 @@ export class SignupComponent implements OnInit {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
         this.getCountryCode(res['calling_code'])
-        this.callingCode = res['calling_code'];
+        // this.callingCode = res['calling_code'];
         if (this.callingCode === '+91') {
           this.signupForm.get('email').setValidators(emailValidator)
           this.signupForm.get('phone').setValidators(Validators.required)
@@ -169,7 +169,7 @@ export class SignupComponent implements OnInit {
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
       countryCode: this.callingCode === '+91' ? '+91' : null,
-      countryId: null,
+      countryId: this.callingCode === '+91' ? '7' : null,
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
       organizationId: this.user ? this.user.organizationId.toString() : null,

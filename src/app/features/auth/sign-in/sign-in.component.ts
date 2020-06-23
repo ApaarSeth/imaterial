@@ -46,7 +46,7 @@ export class SigninComponent implements OnInit {
   countryList: CountryCode[] = [];
   searchCountry: string = '';
   primaryCallingCode: string = ''
-  callingCode: string
+  callingCode: string = "+91"
   ngOnInit() {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
@@ -64,7 +64,7 @@ export class SigninComponent implements OnInit {
     this.visitorsService.getIpAddress().subscribe(res => {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.callingCode = res['calling_code'];
+        // this.callingCode = res['calling_code'];
         this.getCountryCode(res['calling_code'])
         if (this.callingCode === '+91') {
           this.signinForm.get('email').setValidators(emailValidator)
@@ -77,8 +77,6 @@ export class SigninComponent implements OnInit {
       });
     });
   }
-
-
 
   getCountryCode(callingCode) {
     this.commonService.getCountry().then(res => {
@@ -123,7 +121,7 @@ export class SigninComponent implements OnInit {
       }
       else if (data.serviceRawResponse.data) {
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
-        if (localStorage.getItem('accountStatus') && Number(localStorage.getItem('accountStatus'))) {
+        if (localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
           this.router.navigate(["/profile/email-verification"]);
         }
         else {

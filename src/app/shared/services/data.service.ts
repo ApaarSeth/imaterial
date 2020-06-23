@@ -328,8 +328,6 @@ export class DataService {
     reqOptions: DataServiceOptions = null
   ): Promise<any> {
     let headers = new HttpHeaders();
-    headers = headers.append("accept", "*/*");
-    //headers = headers.append( 'Authorization', 'admin');
     headers = headers.append(
       "Authorization",
       "Basic " + btoa("fooClientIdPassword:secret")
