@@ -179,6 +179,7 @@ export class ProfileComponent implements OnInit {
       countryId: [],
       trade: [],
       profileUrl: [''],
+      orgPincode: [this.users ? this.users.orgPincode : null]
     });
     this.customTrade = this._formBuilder.group({
       trade: []

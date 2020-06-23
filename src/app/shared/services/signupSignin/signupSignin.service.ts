@@ -76,7 +76,7 @@ export class SignInSignupService implements OnInit {
   }
 
   emailVerificationStatus() {
-    return this.dataService.getRequest(API.EMAILVERFICATIONSTATUS)
+    return this.dataService.getRequest(API.EMAILVERFICATIONSTATUS, null, { skipLoader: true })
   }
 
   emailVerification(token) {

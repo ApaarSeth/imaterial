@@ -30,6 +30,7 @@ export interface OrganisationType {
 
 export class SignupComponent implements OnInit {
   @Input("callingCode") actualCallingCode: string;
+  @Input("countryCode") countryCode: string;
   showPassWordString: boolean = false;
   uniqueCode: string = "";
   user: UserDetails;
@@ -104,7 +105,7 @@ export class SignupComponent implements OnInit {
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.getCountryCode(this.callingCode)
+    this.getCountryCode(this.callingCode, this.countryCode)
     if (this.callingCode === '+91') {
       this.signupForm.get('email').setValidators(emailValidator)
       this.signupForm.get('phone').setValidators(Validators.required)
@@ -116,10 +117,13 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  getCountryCode(callingCode) {
+  getCountryCode(callingCode, countryCode) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
+        if (callingCode === '+1') {
+          return val.callingCode === callingCode && val.countryCode === countryCode
+        }
         return val.callingCode === callingCode;
       })
       this.signupForm.get('countryCode').setValue(this.livingCountry[0])
