@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SignINDetailLists } from "../../../shared/models/signIn/signIn-detail-list";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
@@ -29,6 +29,8 @@ export interface OrganisationType {
 })
 
 export class SignupComponent implements OnInit {
+  @Input("callingCode") actualCallingCode: string;
+  @Input("countryCode") countryCode: string;
   showPassWordString: boolean = false;
   uniqueCode: string = "";
   user: UserDetails;
@@ -76,11 +78,21 @@ export class SignupComponent implements OnInit {
         this.formInit();
       }
     });
-    this.getLocation();
+
     // this.getCountryCode();
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
+  }
+
+  ngOnChanges(): void {
+    this.callingCode = this.actualCallingCode
+    // this.callingCode = '+1'
+    // this.countryCode = 'CA'
+    console.log("callingCode", this.callingCode)
+    if (this.callingCode) {
+      this.getLocation();
+    }
   }
 
 
@@ -94,28 +106,26 @@ export class SignupComponent implements OnInit {
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.getCountryCode(res['calling_code'])
-        this.callingCode = res['calling_code'];
-        if (this.callingCode === '+91') {
-          this.signupForm.get('email').setValidators(emailValidator)
-          this.signupForm.get('phone').setValidators(Validators.required)
-          this.signupForm.get('otp').setValidators(Validators.required)
-        }
-        else {
-          this.signupForm.get('email').setValidators(emailValidator)
+    this.getCountryCode(this.callingCode, this.countryCode)
+    if (this.callingCode === '+91') {
+      this.signupForm.get('email').setValidators(emailValidator)
+      this.signupForm.get('phone').setValidators(Validators.required)
+      this.signupForm.get('otp').setValidators(Validators.required)
+    }
+    else {
+      this.signupForm.get('email').setValidators(emailValidator)
 
-        }
-      });
-    });
+    }
   }
 
-  getCountryCode(callingCode) {
+  getCountryCode(callingCode, countryCode) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
+        if (callingCode === '+1') {
+          if (val.callingCode === callingCode && val.countryCode === countryCode)
+            return val;
+        }
         return val.callingCode === callingCode;
       })
       this.signupForm.get('countryCode').setValue(this.livingCountry[0])
@@ -154,14 +164,13 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-    // this.signInDetails.countryCode = this.signupForm.value.countryCode.callingCode;
     this.signInDetails.password = this.signupForm.value.password;
     this.signInDetails.confirmPassword = this.signupForm.value.password;
     this.signInDetails.phone = this.callingCode === '+91' ? this.signupForm.value.phone : null;
     this.signInDetails.email = this.signupForm.value.email;
-    this.signInDetails.countryCode = this.callingCode === '+91' ? '+91' : '+1',
-      this.signInDetails.loginIdType = this.callingCode === '+91' ? 'PHONE' : 'EMAIL',
-      this.signInDetails.clientId = "fooClientIdPassword";
+    this.signInDetails.countryCode = this.livingCountry[0].callingCode;
+    this.signInDetails.loginIdType = this.callingCode === '+91' ? 'PHONE' : 'EMAIL';
+    this.signInDetails.clientId = "fooClientIdPassword";
     if (this.uniqueCode) {
       this.signInDetails.firstName = this.user.firstName ? this.user.firstName : null;
       this.signInDetails.lastName = this.user.lastName ? this.user.lastName : null;
@@ -169,14 +178,11 @@ export class SignupComponent implements OnInit {
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
       countryCode: this.callingCode === '+91' ? '+91' : null,
-      countryId: null,
+      countryId: String(this.livingCountry[0].countryId),
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
       organizationId: this.user ? this.user.organizationId.toString() : null,
       userId: this.user ? this.user.userId.toString() : null,
-
-      // organizationId: this.user ? this.user.organizationId : 0,
-      // userId: this.user ? this.user.userId : 0
     };
 
     this.signInSignupService.signUp(this.signInDetails).then(data => {

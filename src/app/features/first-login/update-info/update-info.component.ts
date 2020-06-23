@@ -118,7 +118,7 @@ export class UpdateInfoComponent implements OnInit {
       }
       this.formInit();
       this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
-      this.userInfoForm.get('countryId').setValue(this.livingCountry[0].countryId)
+      this.userInfoForm.get('countryId').setValue(this.livingCountry[0] ? this.livingCountry[0].countryId : null)
     });
   }
   getTurnOverList() {
@@ -142,8 +142,8 @@ export class UpdateInfoComponent implements OnInit {
 
   formInit() {
     this.userInfoForm = this._formBuilder.group({
-      baseCurrency: [],
-      countryCode: [],
+      baseCurrency: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
+      countryCode: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
       organizationName: [this.users ? this.users.organizationName : ''],
       organizationId: [this.users ? this.users.organizationId : ''],
       firstName: [this.users ? this.users.firstName : '', Validators.required],
@@ -158,6 +158,7 @@ export class UpdateInfoComponent implements OnInit {
       countryId: [],
       trade: [],
       profileUrl: [''],
+      orgPincode: ['', Validators.maxLength(6)]
       // addressLine1: ['', Validators.required],
       // addressLine2: [''],
       // state: ['', Validators.required],
@@ -177,11 +178,17 @@ export class UpdateInfoComponent implements OnInit {
     })
 
     this.userInfoForm.get('countryCode').valueChanges.subscribe(country => {
-      let newcurrencyList = this.currencyList.filter(val => {
-        return val.countryId === country.countryId
-      })
-      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList[0])
+      let newcurrencyList: Currency[] = [];
+      if (country) {
+        newcurrencyList = this.currencyList.filter(val => {
+          return val.countryId === country.countryId
+        })
+      }
+
+      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     })
+
+    console.log(this.userInfoForm)
   }
 
   changeSelected(parameter: string, trade: TradeList) {

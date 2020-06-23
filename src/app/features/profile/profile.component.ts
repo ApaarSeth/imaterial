@@ -167,18 +167,19 @@ export class ProfileComponent implements OnInit {
       countryCode: [],
       organizationName: [this.users ? this.users.organizationName : ''],
       organizationId: [this.users ? this.users.organizationId : ''],
-      firstName: [{ value: this.users ? this.users.firstName : '', disabled: true }, Validators.required],
-      lastName: [{ value: this.users ? this.users.lastName : '', disabled: true }, Validators.required],
+      firstName: [{ value: this.users ? this.users.firstName : '', disabled: false }, Validators.required],
+      lastName: [{ value: this.users ? this.users.lastName : '', disabled: false }, Validators.required],
       email: [{ value: this.users ? this.users.email : '', disabled: true }, Validators.required],
       contactNo: [{ value: this.users ? this.users.contactNo : '', disabled: true }, Validators.required],
-      roleId: [{ value: this.users ? this.users.roleId : null, disabled: true }, Validators.required],
-      turnOverId: [{ value: this.users ? this.users.TurnOverId : null, disabled: true }, Validators.required],
-      roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: true }],
+      roleId: [{ value: this.users ? this.users.roleId : null, disabled: false }, Validators.required],
+      turnOverId: [{ value: this.users ? this.users.TurnOverId : null, disabled: false }, Validators.required],
+      roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: false }],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       countryId: [],
       trade: [],
       profileUrl: [''],
+      orgPincode: [this.users ? this.users.orgPincode : null]
     });
     this.customTrade = this._formBuilder.group({
       trade: []

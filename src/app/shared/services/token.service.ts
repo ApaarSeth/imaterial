@@ -28,6 +28,7 @@ export class TokenService {
     }
 
     setAuthResponseData(data: auth) {
+        this.setEmail(data.email)
         this.saceAcountStatus(data.accountStatus)
         this.saveAccessToken(data.serviceToken);
         this.saverole(data.role);
@@ -35,6 +36,14 @@ export class TokenService {
         this.saveOrgId(data.orgId);
     }
 
+    setEmail(email) {
+        if (email) {
+            localStorage.setItem('email', email);
+        } else {
+            localStorage.removeItem('email');
+        }
+
+    }
     saceAcountStatus(accountStatus) {
         if (accountStatus) {
             localStorage.setItem('accountStatus', accountStatus);

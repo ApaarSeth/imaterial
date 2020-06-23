@@ -108,7 +108,6 @@ export class ForgotPasswordComponent implements OnInit {
         }
         else {
           this.forgetPassForm.get('email').setValidators(emailValidator)
-
         }
       });
     });
@@ -269,7 +268,6 @@ export class ForgotPasswordComponent implements OnInit {
       this.sendotp(this.value);
     }
     else {
-
       this.signInSignupService.verifyResetEmail(this.forgetPassForm.get('email').value, 'fooClientIdPassword').then(res => {
         this.emailSendMessage = true;
         console.log(res)

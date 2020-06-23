@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
@@ -21,6 +21,8 @@ import { VisitorService } from 'src/app/shared/services/visitor.service';
 })
 
 export class SigninComponent implements OnInit {
+  @Input("callingCode") actualCallingCode: string;
+  @Input("countryCode") countryCode: string;
 
   constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
@@ -53,7 +55,16 @@ export class SigninComponent implements OnInit {
     });
     this.primaryCallingCode = localStorage.getItem('callingCode')
     this.formInit();
-    this.getLocation();
+  }
+  ngOnChanges(): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    this.callingCode = this.actualCallingCode
+    // this.callingCode = "+1"
+    console.log("callingCode", this.callingCode)
+    if (this.callingCode) {
+      this.getLocation();
+    }
   }
 
   getLocation() {
@@ -61,29 +72,25 @@ export class SigninComponent implements OnInit {
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.callingCode = res['calling_code'];
-        this.getCountryCode(res['calling_code'])
-        if (this.callingCode === '+91') {
-          this.signinForm.get('email').setValidators(emailValidator)
-          this.signinForm.get('phone').setValidators(Validators.required)
-        }
-        else {
-          this.signinForm.get('email').setValidators(emailValidator)
+    this.getCountryCode(this.callingCode, this.countryCode)
+    if (this.callingCode === '+91') {
+      // this.signinForm.get('email').setValidators(emailValidator)
+      this.signinForm.get('phone').setValidators([Validators.required])
+    }
+    else {
+      this.signinForm.get('email').setValidators(emailValidator)
 
-        }
-      });
-    });
+    }
   }
 
-
-
-  getCountryCode(callingCode) {
+  getCountryCode(callingCode, countryCode) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
+        if (callingCode === '+1') {
+          if (val.callingCode === callingCode && val.countryCode === countryCode)
+            return val;
+        }
         return val.callingCode === callingCode;
       })
       this.signinForm.get('countryCode').setValue(this.livingCountry[0])
@@ -106,7 +113,7 @@ export class SigninComponent implements OnInit {
   signin() {
     let params = new URLSearchParams();
     params.append("loginIdType", this.callingCode === '+91' ? 'PHONE' : 'EMAIL');
-    params.append('countryCode', this.callingCode === '+91' ? '+91' : '+1');
+    params.append('countryCode', this.callingCode);
     params.append("username", this.callingCode === '+91' ? this.signinForm.value.phone : this.signinForm.value.email);
     params.append("password", this.signinForm.value.password);
     params.append("grant_type", "password");
@@ -123,7 +130,7 @@ export class SigninComponent implements OnInit {
       }
       else if (data.serviceRawResponse.data) {
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
-        if (localStorage.getItem('accountStatus') && Number(localStorage.getItem('accountStatus'))) {
+        if (localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
           this.router.navigate(["/profile/email-verification"]);
         }
         else {
