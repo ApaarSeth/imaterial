@@ -87,7 +87,8 @@ export class SignupComponent implements OnInit {
 
   ngOnChanges(): void {
     this.callingCode = this.actualCallingCode
-    // this.callingCode = '+51'
+    // this.callingCode = '+1'
+    // this.countryCode = 'CA'
     console.log("callingCode", this.callingCode)
     if (this.callingCode) {
       this.getLocation();
@@ -122,7 +123,8 @@ export class SignupComponent implements OnInit {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
         if (callingCode === '+1') {
-          return val.callingCode === callingCode && val.countryCode === countryCode
+          if (val.callingCode === callingCode && val.countryCode === countryCode)
+            return val;
         }
         return val.callingCode === callingCode;
       })
