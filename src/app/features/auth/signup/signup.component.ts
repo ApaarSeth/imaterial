@@ -77,7 +77,7 @@ export class SignupComponent implements OnInit {
         this.formInit();
       }
     });
-    this.getLocation();
+
     // this.getCountryCode();
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
@@ -85,10 +85,11 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     this.callingCode = this.actualCallingCode
-    console.log(this.callingCode)
+    console.log("callingCode", this.callingCode)
+    if (this.callingCode) {
+      this.getLocation();
+    }
   }
 
 

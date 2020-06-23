@@ -59,6 +59,10 @@ export class SigninComponent implements OnInit {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     this.callingCode = this.actualCallingCode
+    console.log("callingCode", this.callingCode)
+    if (this.callingCode) {
+      this.getLocation();
+    }
   }
 
   getLocation() {
