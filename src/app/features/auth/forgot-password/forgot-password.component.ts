@@ -44,7 +44,7 @@ export class ForgotPasswordComponent implements OnInit {
   primaryCallingCode: string = '';
   livingCountry: string = '';
   ipaddress: string = '';
-  callingCode: string = '+91';
+  callingCode: string;
   emailSendMessage: boolean = false
   constructor(
     private tokenService: TokenService,
@@ -99,8 +99,8 @@ export class ForgotPasswordComponent implements OnInit {
     ]
     this.visitorsService.getIpAddress().subscribe(res => {
       this.ipaddress = res['ip'];
-      this.callingCode = res['calling_code'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+        this.callingCode = res['calling_code'];
         this.getCountryCode(res['calling_code'])
         if (this.callingCode === '+91') {
           this.forgetPassForm.get('email').setValidators(emailValidator)
