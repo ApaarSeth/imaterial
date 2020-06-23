@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { PurchaseOrderData } from 'src/app/shared/models/po-details/po-details-list';
 import { Range } from 'src/app/shared/models/datePicker';
@@ -41,6 +41,7 @@ export class AppDashboardComponent implements OnInit {
   filterForm: FormGroup;
   currentIndex: number = 0;
   isMobile: boolean;
+  cntryList: any[];
   constructor(public dialog: MatDialog,
     private router: Router,
     private formbuilder: FormBuilder,
@@ -49,7 +50,8 @@ export class AppDashboardComponent implements OnInit {
     private _projectService: ProjectService,
     private commonService: CommonService,
     private tokenService: TokenService,
-    private permissionService: PermissionService) { }
+    private permissionService: PermissionService,
+    private activatedRoute: ActivatedRoute) { }
 
   range: Range = { fromDate: new Date(), toDate: new Date() };
   options: NgxDrpOptions;
@@ -59,6 +61,7 @@ export class AppDashboardComponent implements OnInit {
 
 
   ngOnInit() {
+    this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
     this.isMobile = this.commonService.isMobile().matches;
@@ -173,7 +176,8 @@ export class AppDashboardComponent implements OnInit {
   openProject() {
     let data = {
       isEdit: false,
-      isDelete: false
+      isDelete: false,
+      countryList: this.cntryList
     };
     const dialogRef = this.dialog.open(AddProjectComponent, {
       width: "1000px",
