@@ -65,6 +65,7 @@ export class SignupComponent implements OnInit {
   signInDetails = {} as SignINDetailLists;
   livingCountry: CountryCode[] = [];
   callingCode: string;
+
   ngOnInit() {
     this.primaryCallingCode = localStorage.getItem('callingCode')
     this.route.params.subscribe(param => {
