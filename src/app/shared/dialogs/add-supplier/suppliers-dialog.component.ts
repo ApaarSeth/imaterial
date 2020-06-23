@@ -65,15 +65,6 @@ export class SuppliersDialogComponent {
   }
 
   getCountryCode(obj) {
-    // this.commonService.getCountry().then(res => {
-    //   this.countryList = res.data;
-    //   this.livingCountry = this.countryList.filter(val => {
-    //     return val.callingCode === callingCode;
-    //   })
-    //   this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
-    // })
-
-
     this.livingCountry = this.countryList.filter(val => {
       if (obj.countryId) {
         return val.countryId === obj.countryId;
