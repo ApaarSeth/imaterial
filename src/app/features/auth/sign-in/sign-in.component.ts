@@ -55,12 +55,12 @@ export class SigninComponent implements OnInit {
     });
     this.primaryCallingCode = localStorage.getItem('callingCode')
     this.formInit();
-    this.getLocation();
   }
   ngOnChanges(): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     this.callingCode = this.actualCallingCode
+    // this.callingCode = "+1"
     console.log("callingCode", this.callingCode)
     if (this.callingCode) {
       this.getLocation();
@@ -77,7 +77,7 @@ export class SigninComponent implements OnInit {
       // this.signinForm.get('email').setValidators(emailValidator)
       this.signinForm.get('phone').setValidators([Validators.required])
     }
-    else if (this.callingCode) {
+    else {
       this.signinForm.get('email').setValidators(emailValidator)
 
     }
@@ -88,7 +88,8 @@ export class SigninComponent implements OnInit {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
         if (callingCode === '+1') {
-          return val.callingCode === callingCode && val.countryCode === countryCode
+          if (val.callingCode === callingCode && val.countryCode === countryCode)
+            return val;
         }
         return val.callingCode === callingCode;
       })

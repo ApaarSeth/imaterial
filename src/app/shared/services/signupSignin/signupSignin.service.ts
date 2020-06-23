@@ -33,8 +33,13 @@ export class SignInSignupService implements OnInit {
       .catch(e => {
         if (e.error.error === 'invalid_grant' || e.error.error === 'unauthorized') {
           let data: any = {};
-          data.erroType = 'Invalid Credentials',
+          data.erroType = 'Invalid Credentials';
+          if (localStorage.getItem('callingCode') === '+91') {
             data.errorMessage = 'Phone No. or Password Incorrect';
+          }
+          else {
+            data.errorMessage = 'Email or Password Incorrect';
+          }
           return data;
         }
       });
