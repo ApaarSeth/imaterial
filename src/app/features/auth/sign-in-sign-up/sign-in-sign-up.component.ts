@@ -42,6 +42,7 @@ export class SignInSignUpComponent implements OnInit {
 
     this.visitorsService.getIpAddress().subscribe(res => {
       this.visitorsService.getGEOLocation(res['ip']).subscribe(res => {
+        localStorage.setItem('callingCode', res['calling_code'])
         this.callingCode = res['calling_code']
       })
     })

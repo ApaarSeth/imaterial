@@ -16,7 +16,6 @@ export class AppComponent {
   hideHeader: boolean = false;
   ipaddress: number;
   constructor(
-    private visitorsService: VisitorService,
     private _activatedRoute: ActivatedRoute,
     private fbPixel: FacebookPixelService
   ) {
@@ -31,15 +30,5 @@ export class AppComponent {
     else {
       this.hideHeader = false;
     }
-    this.getLocation()
-  }
-
-  getLocation() {
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        localStorage.setItem('callingCode', res['calling_code'])
-      });
-    });
   }
 }

@@ -55,12 +55,7 @@ export class SuppliersDialogComponent {
     if (this.cntryId) {
       this.getCountryCode({ callingCode: null, countryId: this.cntryId });
     } else {
-      this.visitorsService.getIpAddress().subscribe(res => {
-        this.ipaddress = res[ 'ip' ];
-        this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-          this.getCountryCode({ callingCode: res[ 'calling_code' ] });
-        });
-      });
+      this.getCountryCode({ callingCode: localStorage.getItem('callingCode') });
     }
   }
 
@@ -81,7 +76,7 @@ export class SuppliersDialogComponent {
         return val.callingCode === obj.callingCode;
       }
     })
-    this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
+    this.form.get('countryCode').setValue(this.livingCountry[0])
 
   }
 
@@ -95,23 +90,23 @@ export class SuppliersDialogComponent {
 
   initForm() {
     this.form = this.formBuilder.group({
-      supplier_name: [ "", Validators.required ],
-      email: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ] ],
+      supplier_name: ["", Validators.required],
+      email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       // contact_no: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ] ],
-      contact_no: [ null ],
-      pan: [ "" ],
-      countryCallingCode: [ null ],
+      contact_no: [null],
+      pan: [""],
+      countryCallingCode: [null],
       countryCode: []
     });
     if (this.isNational) {
-      this.form.get('contact_no').setValidators([ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ]);
+      this.form.get('contact_no').setValidators([Validators.required, Validators.pattern(FieldRegExConst.MOBILE3)]);
     }
   }
 
   submit() {
     let data = this.form.value;
     if (data.contact_no) {
-      data[ 'countryCallingCode' ] = this.form.get('countryCode').value.callingCode;
+      data['countryCallingCode'] = this.form.get('countryCode').value.callingCode;
     }
     delete data.countryCode;
     this.addSuppliers(this.data, data);
@@ -129,7 +124,7 @@ export class SuppliersDialogComponent {
         this.dialogRef.close(res.message);
         this._snackBar.open('Supplier Added', "", {
           duration: 2000,
-          panelClass: [ "success-snackbar" ],
+          panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
       }
