@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
@@ -21,7 +21,7 @@ import { VisitorService } from 'src/app/shared/services/visitor.service';
 })
 
 export class SigninComponent implements OnInit {
-
+  @Input("callingCode") actualCallingCode: string;
   constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
     private formBuilder: FormBuilder,
@@ -55,27 +55,30 @@ export class SigninComponent implements OnInit {
     this.formInit();
     this.getLocation();
   }
+  ngOnChanges(): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    this.callingCode = this.actualCallingCode
+  }
 
   getLocation() {
     let emailValidator = [
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.callingCode = res['calling_code'];
-        this.getCountryCode(res['calling_code'])
-        if (this.callingCode === '+91') {
-          this.signinForm.get('email').setValidators(emailValidator)
-          this.signinForm.get('phone').setValidators(Validators.required)
-        }
-        else {
-          this.signinForm.get('email').setValidators(emailValidator)
+    // this.visitorsService.getIpAddress().subscribe(res => {
+    //   this.ipaddress = res['ip'];
+    //   this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+    //     this.callingCode = res['calling_code'];
+    this.getCountryCode(this.callingCode)
+    if (this.callingCode === '+91') {
+      this.signinForm.get('email').setValidators(emailValidator)
+      this.signinForm.get('phone').setValidators(Validators.required)
+    }
+    else {
+      this.signinForm.get('email').setValidators(emailValidator)
 
-        }
-      });
-    });
+    }
   }
 
   getCountryCode(callingCode) {

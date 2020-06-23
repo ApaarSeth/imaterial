@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SignINDetailLists } from "../../../shared/models/signIn/signIn-detail-list";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
@@ -29,6 +29,7 @@ export interface OrganisationType {
 })
 
 export class SignupComponent implements OnInit {
+  @Input("callingCode") actualCallingCode: string;
   showPassWordString: boolean = false;
   uniqueCode: string = "";
   user: UserDetails;
@@ -83,6 +84,13 @@ export class SignupComponent implements OnInit {
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
   }
 
+  ngOnChanges(): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    this.callingCode = this.actualCallingCode
+    console.log(this.callingCode)
+  }
+
 
   get selectedCountry() {
     return this.signupForm.get('countryCode').value;
@@ -94,22 +102,16 @@ export class SignupComponent implements OnInit {
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.getCountryCode(res['calling_code'])
-        this.callingCode = res['calling_code'];
-        if (this.callingCode === '+91') {
-          this.signupForm.get('email').setValidators(emailValidator)
-          this.signupForm.get('phone').setValidators(Validators.required)
-          this.signupForm.get('otp').setValidators(Validators.required)
-        }
-        else {
-          this.signupForm.get('email').setValidators(emailValidator)
+    this.getCountryCode(this.callingCode)
+    if (this.callingCode === '+91') {
+      this.signupForm.get('email').setValidators(emailValidator)
+      this.signupForm.get('phone').setValidators(Validators.required)
+      this.signupForm.get('otp').setValidators(Validators.required)
+    }
+    else {
+      this.signupForm.get('email').setValidators(emailValidator)
 
-        }
-      });
-    });
+    }
   }
 
   getCountryCode(callingCode) {
