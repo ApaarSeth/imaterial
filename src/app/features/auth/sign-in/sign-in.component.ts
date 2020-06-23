@@ -46,7 +46,7 @@ export class SigninComponent implements OnInit {
   countryList: CountryCode[] = [];
   searchCountry: string = '';
   primaryCallingCode: string = ''
-  callingCode: string = "+91"
+  callingCode: string
   ngOnInit() {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
@@ -64,7 +64,7 @@ export class SigninComponent implements OnInit {
     this.visitorsService.getIpAddress().subscribe(res => {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        // this.callingCode = res['calling_code'];
+        this.callingCode = res['calling_code'];
         this.getCountryCode(res['calling_code'])
         if (this.callingCode === '+91') {
           this.signinForm.get('email').setValidators(emailValidator)
@@ -104,7 +104,7 @@ export class SigninComponent implements OnInit {
   signin() {
     let params = new URLSearchParams();
     params.append("loginIdType", this.callingCode === '+91' ? 'PHONE' : 'EMAIL');
-    params.append('countryCode', this.callingCode === '+91' ? '+91' : '+1');
+    params.append('countryCode', this.callingCode);
     params.append("username", this.callingCode === '+91' ? this.signinForm.value.phone : this.signinForm.value.email);
     params.append("password", this.signinForm.value.password);
     params.append("grant_type", "password");

@@ -20,30 +20,8 @@ export class TokenInterceptor implements HttpInterceptor {
         return this.getAuthHeaders().pipe(
             mergeMap(headers => {
                 const authorizationKey = `Bearer ${this.tokenService.getToken()}`;
-                //  const authorizationKey = `Bearer ${this.tokenService.getToken()}`;
 
-                // if (!request.headers.has('Content-Type')) {
-                //     // request = request.clone({
-                //     //   headers: request.headers.set('Content-Type', 'application/json')
-                //     // });
-                // }
-
-                if (request.url.indexOf('api/auth/signup') > -1 ||
-                    request.url.indexOf('oauth/token') > -1 ||
-                    request.url.indexOf('material/materialsSpecs') > -1 ||
-                    request.url.indexOf('api/auth/otp/create') > -1 ||
-                    request.url.indexOf('api/auth/otp/verify') > -1 ||
-                    request.url.indexOf('verify/email') > -1 ||
-                    request.url.indexOf('material/groups') > -1 ||
-                    request.url.indexOf('user/info/') > -1 ||
-                    request.url.indexOf('material/get/trades') > -1 ||
-                    request.url.indexOf('rfq/details/supplier/') > -1 ||
-                    request.url.indexOf('api/user/resetPassword') > -1 ||
-                    request.url.indexOf('trade/get/all/categories') > -1 ||
-                    request.url.indexOf('api/auth/forgotPassword') > -1 ||
-                    // request.url.indexOf('get/country') > -1 ||
-                    // request.url.indexOf('get/currency') > -1 ||
-                    request.url.indexOf('supplier/documents/upload') > -1) {
+                if (this.tokenService.getToken()) {
                     return next.handle(request)
                 }
 
@@ -54,10 +32,6 @@ export class TokenInterceptor implements HttpInterceptor {
                             .set('userId', this.tokenService.getUserId().toString())
                             .set('orgId', this.tokenService.getOrgId().toString())
                     });
-
-                    // let modifiedRequest = request.clone({
-                    //     setHeaders: headers
-                    // });
                     return next.handle(modifiedRequest);
                 }
             }));
