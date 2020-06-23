@@ -57,7 +57,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileLayoutComponent,
-    canActivate: [AuthGuardService, UserDataGuardService],
+    canActivate: [ AuthGuardService, UserDataGuardService ],
     children: [
       {
         path: "profile",
@@ -70,7 +70,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [AuthGuardService, AfterSignUpGuardService],
+    canActivate: [ AuthGuardService, AfterSignUpGuardService ],
     children: [
       {
         path: "project-dashboard",
@@ -87,6 +87,9 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: AppDashboardComponent,
+        resolve: {
+          countryList: CountryResolver
+        },
         data: { title: 'Dashboard', breadcrumb: 'Dashboard' }
       },
       // {
@@ -175,9 +178,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
-  exports: [RouterModule],
-  providers: [CountryResolver]
+  imports: [ RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }) ],
+  exports: [ RouterModule ],
+  providers: [ CountryResolver ]
 })
 
 export class AppRoutingModule { }
