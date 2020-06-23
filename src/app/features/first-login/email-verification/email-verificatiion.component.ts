@@ -12,9 +12,9 @@ export class EmailVerificationComponent implements OnInit {
     constructor(private router: Router, private signInSignUpService: SignInSignupService) { }
     email: string = "";
     subscription: Subscription;
-
+    checkAccountStatus: number = 0;
     ngOnInit() {
-        this.email = "apaarseth@gmail.com"
+        this.email = localStorage.getItem('email')
         this.resendEmail();
         const source = interval(10000);
         this.subscription = source.subscribe(val => { this.emailVerificationStatus() });
@@ -27,8 +27,9 @@ export class EmailVerificationComponent implements OnInit {
         })
     }
     emailVerificationStatus() {
-        if (Number(localStorage.getItem('accountStatus'))) {
+        if (!this.checkAccountStatus) {
             this.signInSignUpService.emailVerificationStatus().then(data => {
+                this.checkAccountStatus = Number(data);
                 localStorage.setItem('accountStatus', data);
                 this.router.navigate(["/profile/terms-conditions"])
             })

@@ -269,7 +269,6 @@ export class ForgotPasswordComponent implements OnInit {
       this.sendotp(this.value);
     }
     else {
-
       this.signInSignupService.verifyResetEmail(this.forgetPassForm.get('email').value, 'fooClientIdPassword').then(res => {
         this.emailSendMessage = true;
         console.log(res)

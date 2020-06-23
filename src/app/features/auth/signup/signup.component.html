@@ -92,7 +92,6 @@
         <input matInput type="email" formControlName="email" (input)="verifyEmail($event)" placeholder="Email" />
         <small *ngIf="signupForm.controls['email'].hasError('required') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Email is required </small>
         <small *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Enter Valid Email</small>
-
         <small *ngIf="!emailVerified">Email already in use.</small>
       </mat-form-field>
 

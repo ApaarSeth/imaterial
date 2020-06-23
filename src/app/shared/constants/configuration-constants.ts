@@ -37,6 +37,8 @@ export const API = {
   GETCATERGORY: `material/groups`,
   ADDPROJECT: `addProject`,
   VERIFYRESETEMAIL: (email, clientId) => `api/auth/forgotPassword?emailId=${encodeURI(email)}&client_id=${clientId}`,
+  // VERIFYRESETEMAIL: `api/auth/forgotPassword`,
+  EMAILRESETPASSWORD: `api/user/resetPassword`,
   UPDATEPROJECT: (organizationId, projectId) => `updateProjectDetails/${organizationId}/${projectId}`,
   RAISEINDENT: projectId => `indent/raise/${projectId}`,
   DELETE: (organizationId, projectId) => `deleteProject/${organizationId}/${projectId}`,

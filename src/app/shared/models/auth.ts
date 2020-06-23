@@ -4,4 +4,5 @@ export interface auth {
     userId: string;
     orgId: string;
     accountStatus: number;
+    email: string;
 }
