@@ -62,7 +62,7 @@ export class SignupComponent implements OnInit {
   ipaddress: string;
   signInDetails = {} as SignINDetailLists;
   livingCountry: CountryCode[] = [];
-  callingCode: string = '+91';
+  callingCode: string;
   ngOnInit() {
     this.primaryCallingCode = localStorage.getItem('callingCode')
     this.route.params.subscribe(param => {
@@ -98,7 +98,7 @@ export class SignupComponent implements OnInit {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
         this.getCountryCode(res['calling_code'])
-        // this.callingCode = res['calling_code'];
+        this.callingCode = res['calling_code'];
         if (this.callingCode === '+91') {
           this.signupForm.get('email').setValidators(emailValidator)
           this.signupForm.get('phone').setValidators(Validators.required)
@@ -154,14 +154,13 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-    // this.signInDetails.countryCode = this.signupForm.value.countryCode.callingCode;
     this.signInDetails.password = this.signupForm.value.password;
     this.signInDetails.confirmPassword = this.signupForm.value.password;
     this.signInDetails.phone = this.callingCode === '+91' ? this.signupForm.value.phone : null;
     this.signInDetails.email = this.signupForm.value.email;
-    this.signInDetails.countryCode = this.callingCode === '+91' ? '+91' : '+1',
-      this.signInDetails.loginIdType = this.callingCode === '+91' ? 'PHONE' : 'EMAIL',
-      this.signInDetails.clientId = "fooClientIdPassword";
+    this.signInDetails.countryCode = this.livingCountry[0].callingCode;
+    this.signInDetails.loginIdType = this.callingCode === '+91' ? 'PHONE' : 'EMAIL';
+    this.signInDetails.clientId = "fooClientIdPassword";
     if (this.uniqueCode) {
       this.signInDetails.firstName = this.user.firstName ? this.user.firstName : null;
       this.signInDetails.lastName = this.user.lastName ? this.user.lastName : null;
@@ -169,14 +168,11 @@ export class SignupComponent implements OnInit {
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
       countryCode: this.callingCode === '+91' ? '+91' : null,
-      countryId: this.callingCode === '+91' ? '7' : null,
+      countryId: String(this.livingCountry[0].countryId),
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
       organizationId: this.user ? this.user.organizationId.toString() : null,
       userId: this.user ? this.user.userId.toString() : null,
-
-      // organizationId: this.user ? this.user.organizationId : 0,
-      // userId: this.user ? this.user.userId : 0
     };
 
     this.signInSignupService.signUp(this.signInDetails).then(data => {
