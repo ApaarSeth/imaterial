@@ -70,10 +70,7 @@ export class SigninComponent implements OnInit {
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    // this.visitorsService.getIpAddress().subscribe(res => {
-    //   this.ipaddress = res['ip'];
-    //   this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-    //     this.callingCode = res['calling_code'];
+
     this.getCountryCode(this.callingCode)
     if (this.callingCode === '+91') {
       this.signinForm.get('email').setValidators(emailValidator)

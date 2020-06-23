@@ -86,6 +86,7 @@ export class SignupComponent implements OnInit {
 
   ngOnChanges(): void {
     this.callingCode = this.actualCallingCode
+    // this.callingCode = '+51'
     console.log("callingCode", this.callingCode)
     if (this.callingCode) {
       this.getLocation();

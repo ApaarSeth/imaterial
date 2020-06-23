@@ -108,7 +108,6 @@ export class ForgotPasswordComponent implements OnInit {
         }
         else {
           this.forgetPassForm.get('email').setValidators(emailValidator)
-
         }
       });
     });

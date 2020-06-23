@@ -30,8 +30,10 @@ export class EmailVerificationComponent implements OnInit {
         if (!this.checkAccountStatus) {
             this.signInSignUpService.emailVerificationStatus().then(data => {
                 this.checkAccountStatus = Number(data);
-                localStorage.setItem('accountStatus', data);
-                this.router.navigate(["/profile/terms-conditions"])
+                if (this.checkAccountStatus) {
+                    localStorage.setItem('accountStatus', data);
+                    this.router.navigate(["/profile/terms-conditions"])
+                }
             })
         }
     }
