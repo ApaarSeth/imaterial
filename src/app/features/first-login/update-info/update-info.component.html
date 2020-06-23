@@ -112,12 +112,12 @@
                   </div>
                 </div>
                 <mat-form-field class="border-input w-100">
-                  <input matInput type="text" placeholder="Pincode" formControlName="pincode" />
+                  <input matInput type="text" placeholder="Pincode" formControlName="orgPincode" />
                 </mat-form-field>
-                <mat-error *ngIf="userInfoForm.controls['pincode'].errors?.maxlength && userInfoForm.controls['pincode'].touched">
+                <mat-error *ngIf="userInfoForm.controls['orgPincode'].errors?.maxlength && userInfoForm.controls['orgPincode'].touched">
                   maximum characters allowed is 6
                 </mat-error>
-                <small *ngIf="userInfoForm.controls['pincode'].errors?.maxlength && userInfoForm.controls['pincode'].touched" class="signupForm-error-msg"></small>
+                <small *ngIf="userInfoForm.controls['orgPincode'].errors?.maxlength && userInfoForm.controls['orgPincode'].touched" class="signupForm-error-msg"></small>
                 <mat-form-field class="border-select w-100" *ngIf="users.roleName != 'l3'">
                   <mat-label>Role</mat-label>
                   <mat-select formControlName="roleId">

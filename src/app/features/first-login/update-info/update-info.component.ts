@@ -158,7 +158,7 @@ export class UpdateInfoComponent implements OnInit {
       countryId: [],
       trade: [],
       profileUrl: [''],
-      pincode: ['', Validators.maxLength(6)]
+      orgPincode: ['', Validators.maxLength(6)]
       // addressLine1: ['', Validators.required],
       // addressLine2: [''],
       // state: ['', Validators.required],

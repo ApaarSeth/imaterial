@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SignINDetailLists } from "../../../shared/models/signIn/signIn-detail-list";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
@@ -29,6 +29,7 @@ export interface OrganisationType {
 })
 
 export class SignupComponent implements OnInit {
+  @Input("callingCode") actualCallingCode: string;
   showPassWordString: boolean = false;
   uniqueCode: string = "";
   user: UserDetails;
@@ -76,11 +77,19 @@ export class SignupComponent implements OnInit {
         this.formInit();
       }
     });
-    this.getLocation();
+
     // this.getCountryCode();
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
+  }
+
+  ngOnChanges(): void {
+    this.callingCode = this.actualCallingCode
+    console.log("callingCode", this.callingCode)
+    if (this.callingCode) {
+      this.getLocation();
+    }
   }
 
 
@@ -94,22 +103,16 @@ export class SignupComponent implements OnInit {
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.getCountryCode(res['calling_code'])
-        this.callingCode = res['calling_code'];
-        if (this.callingCode === '+91') {
-          this.signupForm.get('email').setValidators(emailValidator)
-          this.signupForm.get('phone').setValidators(Validators.required)
-          this.signupForm.get('otp').setValidators(Validators.required)
-        }
-        else {
-          this.signupForm.get('email').setValidators(emailValidator)
+    this.getCountryCode(this.callingCode)
+    if (this.callingCode === '+91') {
+      this.signupForm.get('email').setValidators(emailValidator)
+      this.signupForm.get('phone').setValidators(Validators.required)
+      this.signupForm.get('otp').setValidators(Validators.required)
+    }
+    else {
+      this.signupForm.get('email').setValidators(emailValidator)
 
-        }
-      });
-    });
+    }
   }
 
   getCountryCode(callingCode) {
