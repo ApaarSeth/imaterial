@@ -158,7 +158,7 @@ export class UpdateInfoComponent implements OnInit {
       countryId: [],
       trade: [],
       profileUrl: [''],
-      orgPincode: ['', Validators.maxLength(6)]
+      orgPincode: ['', Validators.max(999999)]
       // addressLine1: ['', Validators.required],
       // addressLine2: [''],
       // state: ['', Validators.required],
@@ -276,7 +276,8 @@ export class UpdateInfoComponent implements OnInit {
       // this.userInfoForm.value.tradeId = [...this.selectedTrades];
       let countryCode = this.userInfoForm.value.countryCode.callingCode
       let organizationId = Number(this.userInfoForm.value.organizationId)
-      const data: UserDetails = { ...this.userInfoForm.value, countryCode, organizationId };
+      let orgPincode = String(this.userInfoForm.value.orgPincode)
+      const data: UserDetails = { ...this.userInfoForm.value, orgPincode, countryCode, organizationId };
       this._userService.submitUserDetails(data).then(res => {
         this.navService.gaEvent({
           action: 'submit',
