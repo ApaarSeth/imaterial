@@ -99,4 +99,15 @@ export class ProjectService {
         return res;
       });
   }
+
+  /**
+   * @description To get the dashboard videos
+   */
+  getVideos() {
+    return this.dataService
+      .getRequest(API.DASHBOARD_VIDEOS)
+      .then(res => {
+        return res;
+      });
+  }
 }
