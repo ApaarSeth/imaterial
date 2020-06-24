@@ -159,7 +159,7 @@ export class SigninComponent implements OnInit {
       if (res.data[0].firstName)
         localStorage.setItem("userName", res.data[0].firstName);
       localStorage.setItem("profileUrl", res.data[0].profileUrl);
-      // localStorage.setItem("currencyCode", res.data[0].baseCurrency.currencyCode);
+      localStorage.setItem("currencyCode", res.data[0].baseCurrency.currencyCode);
       localStorage.setItem("countryCode", res.data[0].countryCode);
 
 
