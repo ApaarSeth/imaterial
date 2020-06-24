@@ -145,7 +145,7 @@ export class PoComponent implements OnInit {
       // if (this.poData.projectAddress.gstNo === "" || this.poData.projectAddress.gstNo === null) {
       //   this.openProjectDialog(this.poData)
       // }
-      if (this.cardData.billingAddress.gstNo.toString() == '' || this.cardData.billingAddress.gstNo == null) {
+      if (this.cardData.billingAddress.gstNo && this.cardData.billingAddress.gstNo.toString() == '') {
         this.openProjectDialog(this.poData)
       }
     });
