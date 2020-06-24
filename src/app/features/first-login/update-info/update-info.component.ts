@@ -53,6 +53,7 @@ export class UpdateInfoComponent implements OnInit {
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
   permissionObj: permission;
+  isMobile: boolean;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private permissionService: PermissionService,
@@ -65,6 +66,7 @@ export class UpdateInfoComponent implements OnInit {
   ngOnInit() {
     this.role = localStorage.getItem("role");
     this.permissionObj = this.permissionService.checkPermission(this.role);
+    this.isMobile = this.commonService.isMobile().matches;
     this.formInit();
     this.getUserRoles();
     this.getTradesList();

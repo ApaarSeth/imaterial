@@ -180,7 +180,6 @@ export class AddAddressPoDialogComponent {
         this.newAddressForm.get('city').setValue(res.data[ 0 ].districtName);
         this.newAddressForm.get('state').setValue(res.data[ 0 ].stateName);
       }
-      console.log(this.newAddressForm);
     });
 
   }
