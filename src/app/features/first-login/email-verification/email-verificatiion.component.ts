@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
 import { Subscription, interval } from 'rxjs';
 import { RouterLink, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-email-verification',
@@ -9,7 +10,7 @@ import { RouterLink, Router } from '@angular/router';
 })
 
 export class EmailVerificationComponent implements OnInit {
-    constructor(private router: Router, private signInSignUpService: SignInSignupService) { }
+    constructor(private snackbar: MatSnackBar, private router: Router, private signInSignUpService: SignInSignupService) { }
     email: string = "";
     subscription: Subscription;
     checkAccountStatus: number = 0;
@@ -22,7 +23,11 @@ export class EmailVerificationComponent implements OnInit {
 
     resendEmail() {
         this.signInSignUpService.resendEmail().then(data => {
-            // localStorage.setItem('accountStatus', data);
+            this.snackbar.open("Account Verification Email Sent", "", {
+                duration: 2000,
+                panelClass: ["warning-snackbar"],
+                verticalPosition: "bottom"
+            });
         })
     }
     emailVerificationStatus() {

@@ -100,7 +100,8 @@ export class CommonService {
   }
 
   getCountry() {
-    return this.dataService.getRequest(API.COUNTRYCODE);
+    let callingCode = localStorage.getItem('callingCode')
+    return this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: callingCode === '+91' ? false : true });
   }
 
   poTaxesList() {
