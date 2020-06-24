@@ -8,6 +8,7 @@ import { ReviewComponent } from "./review/review.component";
 import { RFQViewComponent } from "./rfq-view/rfq-view.component";
 import { CreateRfqResolver } from "./create-rfq/resolver/createRfq.resolver";
 import { CreateRfqComponent } from "./create-rfq/create-rfq.component";
+import { CountryResolver } from 'src/app/shared/resolver/country.resolver';
 
 const routes: Routes = [
   {
@@ -31,12 +32,12 @@ const routes: Routes = [
   },
   {
     path: "createRfq/:rfqId",
-    resolve: { createRfq: CreateRfqResolver },
+    resolve: { createRfq: CreateRfqResolver, countryList: CountryResolver },
     component: CreateRfqComponent
   },
   {
     path: "createRfq",
-    resolve: { createRfq: CreateRfqResolver },
+    resolve: { createRfq: CreateRfqResolver, countryList: CountryResolver },
     component: CreateRfqComponent
   }
 ];

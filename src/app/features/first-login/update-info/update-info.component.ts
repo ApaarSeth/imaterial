@@ -123,9 +123,18 @@ export class UpdateInfoComponent implements OnInit {
       this.userInfoForm.get('countryId').setValue(this.livingCountry[0] ? this.livingCountry[0].countryId : null)
     });
   }
+
   getTurnOverList() {
     this._userService.getTurnOverList().then(res => {
-      this.turnOverList = res.data;
+      let callingCode = localStorage.getItem('callingCode')
+      this.turnOverList = res.data.filter(data => {
+        if (callingCode === '+91' && data.isInternational === 0) {
+          return data
+        }
+        else if (callingCode !== '+91' && data.isInternational === 1) {
+          return data
+        }
+      })
     })
   }
 
@@ -276,6 +285,8 @@ export class UpdateInfoComponent implements OnInit {
       // this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
       this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
       // this.userInfoForm.value.tradeId = [...this.selectedTrades];
+      localStorage.setItem("currencyCode", this.userInfoForm.value.baseCurrency.currencyCode);
+
       let countryCode = this.userInfoForm.value.countryCode.callingCode
       let organizationId = Number(this.userInfoForm.value.organizationId)
       let orgPincode = String(this.userInfoForm.value.orgPincode)

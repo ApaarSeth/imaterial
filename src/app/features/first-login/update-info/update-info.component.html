@@ -111,7 +111,7 @@
                     </mat-error>
                   </div>
                 </div>
-                <mat-form-field class="border-input w-100">
+                <mat-form-field *ngIf="users.roleName != 'l3'" class="border-input w-100">
                   <input matInput type="number" placeholder="Pincode" formControlName="orgPincode" />
                 </mat-form-field>
                 <mat-error *ngIf="userInfoForm.controls['orgPincode'].errors?.max && userInfoForm.controls['orgPincode'].touched">
@@ -181,18 +181,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <div class="col-md-12">
-                                <p>Choose Trades</p>
-                                <div class="trade-list d-flex align-items-center flex-wrap">
-                                    <div class="trades" *ngFor="let trade of tradeList; let i = index"
-                                        [ngClass]="{'active': clickedItem === i }"
-                                        (click)="clickedItem = i">
-                                        <h6 class="trade-tile">{{ trade.tradeName }}</h6>
-                                    </div>
-                                </div>
-                    </div> -->
-
               <div class="col-sm-12 col-md-12 choose-trades" *ngIf="users.roleName === 'l1'">
                 <p style="font-weight: 600;">Choose Trades</p>
                 <mat-chip-list multiple id="chipList" [selectable]="true">
@@ -211,78 +199,6 @@
                   </form>
                 </mat-chip-list>
               </div>
-
-              <!-- <div class="col-md-6">
-
-                                <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" formControlName="addressLine1" placeholder="Address Line 1">
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['addressLine1'].errors && (userInfoForm.controls['addressLine1'].dirty || userInfoForm.controls['addressLine1'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['addressLine1'].hasError('required')">
-                                        Address line 1 is required
-                                    </mat-error>
-                                </mat-error>
-
-
-
-                                <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" formControlName="state" placeholder="State">
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['addressLine2'].errors && (userInfoForm.controls['addressLine2'].dirty || userInfoForm.controls['addressLine2'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['addressLine2'].hasError('required')">
-                                        Address line 2 is required
-                                    </mat-error>
-                                </mat-error>
-
-
-
-                                <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" formControlName="pinCode" placeholder="Pin No.">
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['pinCode'].errors && (userInfoForm.controls['pinCode'].dirty || userInfoForm.controls['pinCode'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['pinCode'].hasError('required')">
-                                        Pincode is required
-                                    </mat-error>
-                                    <mat-error *ngIf="userInfoForm.controls['pinCode'].hasError('pattern')">
-                                        Pincode is invalid</mat-error>
-                                </mat-error>
-
-                            </div> -->
-
-              <!-- <div class="col-md-6">
-                                <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" formControlName="addressLine2" placeholder="Address Line 2">
-                                </mat-form-field>
-
-                                <mat-form-field class="border-select w-100 city-input">
-                                    <mat-label>City*</mat-label>
-                                    <mat-select formControlName="city">
-                                        <mat-option *ngFor="let city of cities" [value]="city.value">
-                                          {{city.viewValue}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['city'].errors && (userInfoForm.controls['city'].dirty || userInfoForm.controls['city'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['city'].hasError('required')">
-                                        City is required
-                                    </mat-error>
-                                </mat-error>
-
-
-
-                                <mat-form-field class="border-input w-100">
-                                    <input matInput type="text" formControlName="gstNo" placeholder="GST No.">
-                                </mat-form-field>
-                                <mat-error
-                                    *ngIf="userInfoForm.controls['gstNo'].errors && (userInfoForm.controls['gstNo'].dirty || userInfoForm.controls['gstNo'].touched)">
-                                    <mat-error *ngIf="userInfoForm.controls['gstNo'].hasError('pattern')">
-                                        GST No is invalid</mat-error>
-                                </mat-error>
-                            </div> -->
 
               <div class="text-center col-md-12 mt-4">
                 <button class="btn btn-warning next-btn" [disabled]="!imageFileSize && localImg ? true : !userInfoForm.valid">Next</button>

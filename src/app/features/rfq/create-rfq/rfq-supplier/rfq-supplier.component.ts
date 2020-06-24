@@ -38,7 +38,7 @@ export class RfqSupplierComponent implements OnInit {
   supplierForm: FormGroup;
   supplierCounter: number = 0;
   newAddedId: number;
-
+  countryist: any;
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -75,6 +75,8 @@ export class RfqSupplierComponent implements OnInit {
     } else {
       this.allSuppliers = [];
     }
+
+    this.countryist = this.activatedRoute.snapshot.data.countryList
     this.formInit();
   }
   ngOnChanges(changes: SimpleChanges) {
@@ -170,9 +172,11 @@ export class RfqSupplierComponent implements OnInit {
   }
 
   openSupplierDialog(projectId) {
+    let data = { projectId, countryList: this.countryist }
+
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "660px",
-      data: projectId
+      data
     });
     dialogRef
       .afterClosed()
@@ -211,15 +215,15 @@ export class RfqSupplierComponent implements OnInit {
     });
   }
 
-  selectCurrency(){
+  selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
-      disableClose: true ,
+      disableClose: true,
       width: "600px",
-      data : this.rfqData.rfqCurrency
+      data: this.rfqData.rfqCurrency
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if(data != null){
+      if (data != null) {
         this.rfqData.rfqCurrency = data;
       }
     });

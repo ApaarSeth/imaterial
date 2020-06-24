@@ -40,7 +40,7 @@ export class SuppliersDialogComponent {
   ) { }
 
   ngOnInit() {
-    this.countryList = this.data.countryList;
+    this.countryList = this.data ? this.data.countryList : null;
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
