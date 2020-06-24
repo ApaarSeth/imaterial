@@ -125,7 +125,15 @@ export class ProfileComponent implements OnInit {
 
   getTurnOverList() {
     this._userService.getTurnOverList().then(res => {
-      this.turnOverList = res.data;
+      let callingCode = localStorage.getItem('callingCode')
+      this.turnOverList = res.data.filter(data => {
+        if (callingCode === '+91' && data.isInternational === 0) {
+          return data
+        }
+        else if (callingCode !== '+91' && data.isInternational === 1) {
+          return data
+        }
+      })
     })
   }
 
@@ -163,8 +171,8 @@ export class ProfileComponent implements OnInit {
 
   formInit() {
     this.userInfoForm = this._formBuilder.group({
-      baseCurrency: [],
-      countryCode: [],
+      baseCurrency: [{ value: '', disabled: true }],
+      countryCode: [{ value: '', disabled: true }],
       organizationName: [this.users ? this.users.organizationName : ''],
       organizationId: [this.users ? this.users.organizationId : ''],
       firstName: [{ value: this.users ? this.users.firstName : '', disabled: false }, Validators.required],
@@ -177,9 +185,9 @@ export class ProfileComponent implements OnInit {
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       countryId: [],
-      trade: [],
+      trade: [this.users ? this.users.trade : null],
       profileUrl: [''],
-      orgPincode: [this.users ? this.users.orgPincode : null]
+      orgPincode: [this.users ? this.users.orgPincode : null, Validators.max(999999)]
     });
     this.customTrade = this._formBuilder.group({
       trade: []
@@ -204,7 +212,6 @@ export class ProfileComponent implements OnInit {
         this.customTrade.get("trade").disable()
       }
     }
-
     this.selectedTradesId = this.selectedTrades.map((trades: TradeList) => trades.tradeId).flat()
   }
 
@@ -264,7 +271,6 @@ export class ProfileComponent implements OnInit {
 
 
   submit() {
-
     if (this.userInfoForm.valid) {
       this.selectedTrades = this.selectedTrades.map((trade: TradeList) => {
         if (trade.tradeId === this.OthersId) {
@@ -272,11 +278,12 @@ export class ProfileComponent implements OnInit {
         }
         return trade;
       })
-      this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
 
       let data: UserDetails = this.userInfoForm.getRawValue();
+      data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
+      data.orgPincode = String(this.userInfoForm.getRawValue().orgPincode)
       this._userService.submitUserDetails(data).then(res => {
         if (this.url) {
           this._userService.UpdateProfileImage.next(this.url);

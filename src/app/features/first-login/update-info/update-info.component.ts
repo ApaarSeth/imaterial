@@ -48,7 +48,7 @@ export class UpdateInfoComponent implements OnInit {
   OthersId: number;
   imageFileSizeError: string;
   imageFileSize: boolean = false;
-  fileTypes: string[] = [ 'png', 'jpeg', 'jpg' ];
+  fileTypes: string[] = ['png', 'jpeg', 'jpg'];
   currencyList: Currency[] = [];
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
@@ -102,15 +102,15 @@ export class UpdateInfoComponent implements OnInit {
       this.roles = res.data;
       this.roles.splice(2, 1);
       const id = this.roles.filter(opt => opt.roleName === this.role);
-      this.roleId = id[ 0 ].roleId;
+      this.roleId = id[0].roleId;
     })
   }
 
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      this.users = res.data ? res.data[ 0 ] : null;
+      this.users = res.data ? res.data[0] : null;
       if (this.users.roleName === 'l1') {
-        this.userInfoForm.controls.turnOverId.setValidators([ Validators.required ]);
+        this.userInfoForm.controls.turnOverId.setValidators([Validators.required]);
         this.userInfoForm.controls.turnOverId.updateValueAndValidity();
       }
       if (this.countryList) {
@@ -119,8 +119,8 @@ export class UpdateInfoComponent implements OnInit {
         })
       }
       this.formInit();
-      this.userInfoForm.get('countryCode').setValue(this.livingCountry[ 0 ])
-      this.userInfoForm.get('countryId').setValue(this.livingCountry[ 0 ] ? this.livingCountry[ 0 ].countryId : null)
+      this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
+      this.userInfoForm.get('countryId').setValue(this.livingCountry[0] ? this.livingCountry[0].countryId : null)
     });
   }
   getTurnOverList() {
@@ -144,23 +144,23 @@ export class UpdateInfoComponent implements OnInit {
 
   formInit() {
     this.userInfoForm = this._formBuilder.group({
-      baseCurrency: [ { value: '', disabled: this.permissionObj.rfqFlag ? false : true } ],
-      countryCode: [ { value: '', disabled: this.permissionObj.rfqFlag ? false : true } ],
-      organizationName: [ this.users ? this.users.organizationName : '' ],
-      organizationId: [ this.users ? this.users.organizationId : '' ],
-      firstName: [ this.users ? this.users.firstName : '', Validators.required ],
-      lastName: [ this.users ? this.users.lastName : '', Validators.required ],
-      email: [ this.users ? this.users.email : '', [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ] ],
-      contactNo: [ this.users ? this.users.contactNo : '', [ Validators.required ] ],
-      roleId: [ this.users ? this.users.roleId : null, Validators.required ],
-      turnOverId: [ this.users ? this.users.TurnOverId : null ],
-      userId: [ this.users ? this.users.userId : null ],
-      roleDescription: [ { value: this.users ? this.users.roleDescription : null, disabled: true } ],
-      ssoId: [ this.users ? this.users.ssoId : null ],
+      baseCurrency: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
+      countryCode: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
+      organizationName: [this.users ? this.users.organizationName : ''],
+      organizationId: [this.users ? this.users.organizationId : ''],
+      firstName: [this.users ? this.users.firstName : '', Validators.required],
+      lastName: [this.users ? this.users.lastName : '', Validators.required],
+      email: [this.users ? this.users.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      contactNo: [this.users ? this.users.contactNo : '', [Validators.required]],
+      roleId: [this.users ? this.users.roleId : null, Validators.required],
+      turnOverId: [this.users ? this.users.TurnOverId : null],
+      userId: [this.users ? this.users.userId : null],
+      roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: true }],
+      ssoId: [this.users ? this.users.ssoId : null],
       countryId: [],
       trade: [],
-      profileUrl: [ '' ],
-      orgPincode: [ '', Validators.maxLength(6) ]
+      profileUrl: [''],
+      orgPincode: ['', Validators.max(999999)]
       // addressLine1: ['', Validators.required],
       // addressLine2: [''],
       // state: ['', Validators.required],
@@ -187,7 +187,7 @@ export class UpdateInfoComponent implements OnInit {
         })
       }
 
-      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[ 0 ] : null)
+      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     })
 
     console.log(this.userInfoForm)
@@ -218,13 +218,13 @@ export class UpdateInfoComponent implements OnInit {
   onFileSelect(event) {
     if (event.target.files.length > 0) {
       var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[ 0 ]);
+      reader.readAsDataURL(event.target.files[0]);
       // reader.onload = (event) => {
       //   this.localImg = (<FileReader>event.target).result;
       // }
-      const file = event.target.files[ 0 ];
-      var fileSize = event.target.files[ 0 ].size; // in bytes
-      let fileType = event.target.files[ 0 ].name.split('.').pop();
+      const file = event.target.files[0];
+      var fileSize = event.target.files[0].size; // in bytes
+      let fileType = event.target.files[0].name.split('.').pop();
 
       if (this.fileTypes.some(element => {
         return element === fileType
@@ -246,7 +246,7 @@ export class UpdateInfoComponent implements OnInit {
         this.localImg = '';
         this._snackBar.open("We don't support " + fileType + " in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
           duration: 2000,
-          panelClass: [ "success-snackbar" ],
+          panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
       }
@@ -274,11 +274,12 @@ export class UpdateInfoComponent implements OnInit {
         return trade;
       })
       // this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
-      this.userInfoForm.get('trade').setValue([ ...this.selectedTrades ]);
+      this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
       // this.userInfoForm.value.tradeId = [...this.selectedTrades];
       let countryCode = this.userInfoForm.value.countryCode.callingCode
       let organizationId = Number(this.userInfoForm.value.organizationId)
-      const data: UserDetails = { ...this.userInfoForm.value, countryCode, organizationId };
+      let orgPincode = String(this.userInfoForm.value.orgPincode)
+      const data: UserDetails = { ...this.userInfoForm.value, orgPincode, countryCode, organizationId };
       this._userService.submitUserDetails(data).then(res => {
         this.navService.gaEvent({
           action: 'submit',
@@ -292,9 +293,9 @@ export class UpdateInfoComponent implements OnInit {
           localStorage.setItem('profileUrl', this.url);
         }
         if (this.users.roleName === 'l1')
-          this._router.navigate([ 'profile/add-user' ]);
+          this._router.navigate(['profile/add-user']);
         else if (this.users.roleName != 'l1')
-          this._router.navigate([ 'dashboard' ]);
+          this._router.navigate(['dashboard']);
       });
     }
   }
