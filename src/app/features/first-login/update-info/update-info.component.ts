@@ -199,7 +199,6 @@ export class UpdateInfoComponent implements OnInit {
       this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     })
 
-    console.log(this.userInfoForm)
   }
 
   changeSelected(parameter: string, trade: TradeList) {
