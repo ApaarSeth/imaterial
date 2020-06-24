@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { initiatePo, initiatePoData } from 'src/app/shared/models/PO/po-data';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 @Component({
   selector: "app-po-supplier",
@@ -22,7 +23,7 @@ export class PoSupplierComponent implements OnInit {
   form: FormGroup;
   displayedColumns: string[] = ["Supplier Name", "Email", "Phone No."];
   poCurrency: rfqCurrency;
-
+  countryist: CountryCode[];
   constructor(private formBuilder: FormBuilder,
     private rfqService: RFQService,
     public dialog: MatDialog,
@@ -30,6 +31,8 @@ export class PoSupplierComponent implements OnInit {
 
   ngOnInit() {
     this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data;
+    this.countryist = this.activatedRoute.snapshot.data.countryList
+
     this.formInit();
   }
 
@@ -70,8 +73,10 @@ export class PoSupplierComponent implements OnInit {
 
 
   openSupplierDialog() {
+    let data = { countryList: this.countryist }
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
-      width: "660px"
+      width: "660px",
+      data
     });
     dialogRef
       .afterClosed()
