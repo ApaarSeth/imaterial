@@ -126,8 +126,9 @@ export class SignupComponent implements OnInit {
         if (callingCode === '+1') {
           if (val.callingCode === callingCode && val.countryCode === countryCode)
             return val;
+        } else {
+          return val.callingCode === callingCode;
         }
-        return val.callingCode === callingCode;
       })
       this.signupForm.get('countryCode').setValue(this.livingCountry[0])
     })
