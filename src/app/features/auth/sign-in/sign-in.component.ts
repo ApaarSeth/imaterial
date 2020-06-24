@@ -61,7 +61,6 @@ export class SigninComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
     this.callingCode = this.actualCallingCode
     // this.callingCode = "+1"
-    console.log("callingCode", this.callingCode)
     if (this.callingCode) {
       this.getLocation();
     }
