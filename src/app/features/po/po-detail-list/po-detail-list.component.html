@@ -298,11 +298,11 @@
                     <span class="p-r-10 display-inline-block p-t-5"><a href="javascript:void(0)" style="color: #f47721;"
                         [routerLink]="['./view-grn/', element.purchaseOrderId]">Add/View GRN</a></span>
                     <span>&nbsp;</span>
-                    <span class="p-r-10 cursor-pointer float-right display-inline-block p-t-5"><a
+                    <span class="p-r-10 cursor-pointer"><a (click)="openPaymentRecord(element)"
+                        matTooltip="Payment Record"><img src="../../../../assets/images/trackpayment.svg" /></a></span>
+                    <span class="p-r-10 cursor-pointer display-inline-block p-t-5"><a
                         (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img
                           src="../../../../assets/images/download-po.png" /> </a></span>
-                    <span class="p-r-10 cursor-pointer float-right"><a (click)="openPaymentRecord(element)"
-                        matTooltip="Payment Record"><img src="../../../../assets/images/trackpayment.svg" /></a></span>
 
                     <!-- <span class="p-r-10"
                       ><a style="color: #f47721" href="javascript:void(0)" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
