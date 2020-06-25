@@ -53,7 +53,7 @@ export class SigninComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
-    this.primaryCallingCode = localStorage.getItem('callingCode')
+    this.primaryCallingCode = localStorage.getItem('countryCode')
     this.formInit();
   }
   ngOnChanges(): void {
@@ -152,6 +152,7 @@ export class SigninComponent implements OnInit {
       localStorage.setItem("profileUrl", res.data[0].profileUrl);
       localStorage.setItem("currencyCode", res.data[0].baseCurrency ? res.data[0].baseCurrency.currencyCode : null);
       localStorage.setItem("countryCode", res.data[0].countryCode);
+      localStorage.setItem("countryId", res.data[0].countryId)
       this.dataService.getRequest(API.CHECKTERMS).then(res => {
         this.acceptTerms = res.data;
         if (!this.acceptTerms) {

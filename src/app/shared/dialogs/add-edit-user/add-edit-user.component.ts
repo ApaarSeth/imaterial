@@ -93,7 +93,7 @@ export class AddEditUserComponent implements OnInit {
     } else if (this.cntryId) {
       this.getCountryCode({ callingCode: null, countryId: this.cntryId });
     } else {
-      this.getCountryCode({ callingCode: localStorage.getItem('callingCode') });
+      this.getCountryCode({ countryId: localStorage.getItem('countryId') });
     }
   }
 
@@ -111,7 +111,7 @@ export class AddEditUserComponent implements OnInit {
 
     this.livingCountry = this.countryList.filter(val => {
       if (obj.countryId) {
-        return val.countryId === obj.countryId;
+        return val.countryId === Number(obj.countryId);
       } else {
         return val.callingCode === obj.callingCode;
       }

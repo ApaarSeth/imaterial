@@ -33,7 +33,7 @@
                 <!-- </mat-form-field> -->
 
                 <mat-form-field class="border-input w-100">
-                  <input matInput type="text" placeholder="*First Name" formControlName="firstName" />
+                  <input matInput type="text" placeholder="First Name*" formControlName="firstName" />
                 </mat-form-field>
                 <mat-error *ngIf="userInfoForm.controls['firstName'].errors && (userInfoForm.controls['firstName'].dirty || userInfoForm.controls['firstName'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['firstName'].hasError('required')">
@@ -42,7 +42,7 @@
                 </mat-error>
 
                 <mat-form-field class="border-input w-100">
-                  <input matInput type="text" placeholder="*Last Name" formControlName="lastName" />
+                  <input matInput type="text" placeholder="Last Name*" formControlName="lastName" />
                 </mat-form-field>
                 <mat-error *ngIf="userInfoForm.controls['lastName'].errors && (userInfoForm.controls['lastName'].dirty || userInfoForm.controls['lastName'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['lastName'].hasError('required')">
@@ -99,7 +99,7 @@
                   </div>
                   <div class="col-xs-7 p-t-1">
                     <mat-form-field class="border-input w-100">
-                      <input matInput type="text" placeholder="*Phone No." formControlName="contactNo" />
+                      <input matInput type="text" placeholder="Phone No.*" formControlName="contactNo" />
                     </mat-form-field>
                     <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
                       <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
