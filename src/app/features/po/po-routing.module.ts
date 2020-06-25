@@ -31,18 +31,18 @@ const routes: Routes = [
   },
   {
     path: "add-grn/:poId",
-    data: { breadcrumb: 'ADD GRN' },
+    data: { breadcrumb: 'ADD Receipts' },
     resolve: { viewGRN: ViewGrnResolver },
     component: AddGRNComponent
   },
   {
     path: "view-grn/:poId",
-    data: { breadcrumb: 'View GRN' },
+    data: { breadcrumb: 'View Receipts' },
     component: ViewGRNComponent
   }
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes)]
+  imports: [ CommonModule, RouterModule.forChild(routes) ]
 })
 export class PORoutingModule { }

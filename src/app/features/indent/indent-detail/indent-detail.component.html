@@ -2,7 +2,8 @@
   <div class="dashboard-unique p-b-20 min-height parent">
     <div class="row">
       <div class="col-sm-12 p-l-10 p-r-10">
-        <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
+        <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product"
+          [disableEditDelete]="true"></card-layout>
       </div>
     </div>
 
@@ -11,7 +12,7 @@
         <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
           <div class="row">
             <div class="col-sm-12">
-              <span>Ongoing Indent</span>
+              <span>Ongoing Purchase Requisition</span>
             </div>
           </div>
         </mat-expansion-panel-header>
@@ -89,7 +90,7 @@
         <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
           <div class="row">
             <div class="col-sm-12">
-              <span>Completed Indent</span>
+              <span>Completed Purchase Requisition</span>
             </div>
           </div>
         </mat-expansion-panel-header>
@@ -97,7 +98,7 @@
         <div class="add-unique-container mat-elevation-z8">
           <!-- <div class="col-sm-12"> -->
           <!-- table structure -->
-          <table mat-table [dataSource]="dataSource2" >
+          <table mat-table [dataSource]="dataSource2">
             <!--- Note that these columns can be defined in any order.
                           The actual rendered columns are set as a property on the row definition" -->
 

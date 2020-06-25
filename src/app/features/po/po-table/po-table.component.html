@@ -375,14 +375,14 @@
 </div>
 
 <ng-container *ngIf="showResponsiveDesign">
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-xs-12 text-right m-t-10 m-b-5" *ngIf="mode === 'edit'">
       <mat-radio-group class="radio-btn-group-po-table p-r-20" aria-label="Select an option" [(ngModel)]="gst">
         <mat-radio-button [checked]="gst === 'IGST'" value="IGST" class="p-r-5">IGST</mat-radio-button>
         <mat-radio-button [checked]="gst === 'CGST & SGST'" value="CGST & SGST">CGST & SGST</mat-radio-button>
       </mat-radio-group>
     </div>
-  </div>
+  </div> -->
   <div class="customPo" style="width: 100%; overflow-x: scroll;" *ngIf="a == 0">
     <form *ngIf="poTableData" [formGroup]="poForms" (ngSubmit)="sumbit()">
       <table formArrayName="forms" class="po-table" style="width: 100%;">

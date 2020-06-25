@@ -9,12 +9,14 @@
         </span>
       </div>
       <div class="col-xs-6">
-        <button (click)="viewBack()" mat-raised-button class="background-white-color main-color main-button back-btn-grn pull-right">
+        <button (click)="viewBack()" mat-raised-button
+          class="background-white-color main-color main-button back-btn-grn pull-right">
           Back
         </button>
 
-        <button mat-raised-button class="main-background-color main-button color-white pull-right m-r-10 add-grn-btn" (click)="addGRN()">
-          Add GRN
+        <button mat-raised-button class="main-background-color main-button color-white pull-right m-r-10 add-grn-btn"
+          (click)="addGRN()">
+          Add Receipts
         </button>
       </div>
     </div>
@@ -27,11 +29,12 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="row width100Percent">
-                  <div class="col-xs-4 col-md-4 col-lg-4 font-size-vary-grn">GRN - {{ grnHeader.grnId }}</div>
+                  <div class="col-xs-4 col-md-4 col-lg-4 font-size-vary-grn">Receipts - {{ grnHeader.grnId }}</div>
                   <div class="col-xs-4 col-md-4 col-lg-4 font-size-vary-grn">
                     {{ grnHeader.grnDate | date: "dd-MMM-yyy" }}
                   </div>
-                  <div class="col-xs-4 col-md-4 col-lg-4 display-flex justify-content-flex-end p-0" (click)="openDocuments(grnHeader.documentList);mep.expanded = false">
+                  <div class="col-xs-4 col-md-4 col-lg-4 display-flex justify-content-flex-end p-0"
+                    (click)="openDocuments(grnHeader.documentList);mep.expanded = false">
                     <img class="file-icon" src="../../../../assets/images/file-doc.png" />
                     <span class="font-size-vary-grn main-color text-decoration-underline">Documents</span>
                   </div>
@@ -55,7 +58,8 @@
               <table mat-table [dataSource]="getData(grnHeader.poMaterialList)">
                 <ng-container matColumnDef="Material Name">
                   <th mat-header-cell *matHeaderCellDef>Material Name</th>
-                  <td mat-cell *matCellDef="let element" class="grn-material-name" matTooltip="{{ element.materialName }}">
+                  <td mat-cell *matCellDef="let element" class="grn-material-name"
+                    matTooltip="{{ element.materialName }}">
                     <div class="limited-character global">
                       {{ element.materialName }}
                     </div>
@@ -69,12 +73,14 @@
 
                 <ng-container matColumnDef="Awarded Quantity">
                   <th mat-header-cell *matHeaderCellDef class="text-align-center">Awarded Quantity</th>
-                  <td mat-cell *matCellDef="let element" class="text-align-center">{{ element.materialQuantity }} {{ element.materialUnit }}</td>
+                  <td mat-cell *matCellDef="let element" class="text-align-center">{{ element.materialQuantity }}
+                    {{ element.materialUnit }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="Delivered Quantity">
                   <th mat-header-cell *matHeaderCellDef class="text-align-center">Delivered Quantity</th>
-                  <td mat-cell *matCellDef="let element" class="text-align-center">{{ element.deliveredQty }} {{ element.materialUnit }}</td>
+                  <td mat-cell *matCellDef="let element" class="text-align-center">{{ element.deliveredQty }}
+                    {{ element.materialUnit }}</td>
                 </ng-container>
 
                 <!-- <ng-container matColumnDef="Date">

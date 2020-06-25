@@ -10,19 +10,26 @@
 <mat-accordion displayMode="flat" multi class="mat-table res-table"
   *ngIf="this.newMaterialData && this.newMaterialData.length > 0">
   <section matSort class="mat-elevation-z2 mat-header-row blue-background-color-color-white-section">
-    <span class="mat-header-cell mat-header-cell maxwidth-20 material material-Name" mat-sort-header="name">Material
+    <span class="mat-header-cell mat-header-cell maxwidth-20 material material-Name" mat-sort-header="name"
+      [ngClass]="isMobile ? 'text-center ml-1 mr-1' : '' ">Material
       Name</span>
-    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="estimatedQty">Estimated
+    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="estimatedQty"
+      [ngClass]="isMobile ? 'text-center ml-1 mr-1' : '' ">Estimated
       Quantity</span>
-    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="indentedQuantity">Indented
+    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="indentedQuantity"
+      [ngClass]="isMobile ? 'text-center ml-1 mr-1' : '' ">Indented
       Quantity</span>
-    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="requiredDate">Required
+    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="requiredDate"
+      [ngClass]="isMobile ? 'text-center ml-1 mr-1' : '' ">Required
       Date</span>
-    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="deliveredQuantity">Delivered
+    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="deliveredQuantity"
+      [ngClass]="isMobile ? 'text-center ml-1 mr-1' : '' ">Delivered
       Quantity</span>
-    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="requestedQuantity">Awarded
+    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="requestedQuantity"
+      [ngClass]="isMobile ? 'text-center' : '' ">Awarded
       Quantity</span>
-    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="availableQuantity">Available
+    <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="availableQuantity"
+      [ngClass]="isMobile ? 'text-center' : '' ">Available
       Stock</span>
   </section>
   <div class="res-td">
