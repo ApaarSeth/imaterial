@@ -221,18 +221,27 @@
                 <tr matSort class="brand-name-rfq-supplies">
                   <th class="font-size14">Brand Name</th>
                   <th class="font-size14">
-                    Unit Rate <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                    Unit Rate <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                    <ng-template #bsCrCode>
+                      {{ rfqSupplierDetailList.baseCurrencyCode }}
+                    </ng-template>
                   </th>
                   <th class="font-size14 text-align-right">
                     Amount
-                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                    <ng-template #bsCrCode>
+                      {{ rfqSupplierDetailList.baseCurrencyCode }}
+                    </ng-template>
                   </th>
                   <th class="font-size14 text-align-right">
                     Tax Amount
-                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                    <ng-template #bsCrCode>
+                      {{ rfqSupplierDetailList.baseCurrencyCode }}
+                    </ng-template>
                     <span *ngIf="
                         taxAndCostData &&
                         taxAndCostData[projects.projectId] &&
@@ -254,8 +263,11 @@
                   </th>
                   <th class="font-size14 text-align-right">
                     Total Amount
-                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                    <ng-template #bsCrCode>
+                      {{ rfqSupplierDetailList.baseCurrencyCode }}
+                    </ng-template>
                   </th>
                 </tr>
 

@@ -9,6 +9,7 @@ export interface SendRfqObj {
   DocumentsList?: DocumentList[];
   isInternational?: number;
   rfqCurrency: any;
+  baseCurrencyCode?: string;
 }
 export interface ProjectRfqObj {
   projectId: number;
