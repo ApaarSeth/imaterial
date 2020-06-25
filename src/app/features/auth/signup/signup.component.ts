@@ -67,7 +67,7 @@ export class SignupComponent implements OnInit {
   callingCode: string;
 
   ngOnInit() {
-    this.primaryCallingCode = localStorage.getItem('callingCode')
+    this.primaryCallingCode = localStorage.getItem('countryCode')
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       if (this.uniqueCode) {

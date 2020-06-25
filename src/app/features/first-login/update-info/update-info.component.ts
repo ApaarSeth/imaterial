@@ -107,6 +107,9 @@ export class UpdateInfoComponent implements OnInit {
 
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
+      if (!localStorage.getItem('countryId')) {
+        localStorage.setItem('countryId', res.data[0].countryId)
+      }
       this.users = res.data ? res.data[0] : null;
       if (this.users.roleName === 'l1') {
         this.userInfoForm.controls.turnOverId.setValidators([Validators.required]);
@@ -128,7 +131,7 @@ export class UpdateInfoComponent implements OnInit {
   getTurnOverList() {
     if (this.users.roleName !== "l3") {
       this._userService.getTurnOverList().then(res => {
-        let callingCode = localStorage.getItem('callingCode')
+        let callingCode = localStorage.getItem('countryCode')
         this.turnOverList = res.data.filter(data => {
           if (callingCode === '+91' && data.isInternational === 0) {
             return data
@@ -182,7 +185,7 @@ export class UpdateInfoComponent implements OnInit {
       let newcurrencyList: Currency[] = [];
       if (country) {
         newcurrencyList = this.currencyList.filter(val => {
-          return val.countryId === country.countryId
+          return val.countryId === Number(country.countryId)
         })
       }
 

@@ -125,7 +125,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     } else if (this.supplierAddress.data.length && this.supplierAddress.data[ 0 ].countryId) {
       this.getCountryCode({ callingCode: null, countryId: this.supplierAddress.data[ 0 ].countryId });
     } else {
-      this.getCountryCode({ callingCode: localStorage.getItem('callingCode') });
+      this.getCountryCode({ countryId: localStorage.getItem('countryId') });
     }
   }
 
@@ -134,7 +134,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
         if (obj.countryId) {
-          return val.countryId === obj.countryId;
+          return val.countryId === Number(obj.countryId);
         } else {
           return val.callingCode === obj.callingCode;
         }

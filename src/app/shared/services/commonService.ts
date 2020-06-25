@@ -100,7 +100,7 @@ export class CommonService {
   }
 
   getCountry() {
-    let callingCode = localStorage.getItem('callingCode')
+    let callingCode = localStorage.getItem('countryCode')
     return this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: callingCode === '+91' ? false : true });
   }
 

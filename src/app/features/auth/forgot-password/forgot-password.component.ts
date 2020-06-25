@@ -60,7 +60,7 @@ export class ForgotPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.primaryCallingCode = localStorage.getItem('callingCode')
+    this.primaryCallingCode = localStorage.getItem("countryCode")
     this.countryList = [{ countryName: 'India' }];
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
@@ -101,7 +101,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.ipaddress = res['ip'];
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
         this.callingCode = res['calling_code'];
-        this.getCountryCode(res['calling_code'])
+        this.getCountryCode(localStorage.getItem('countryId'))
         if (this.callingCode === '+91') {
           this.forgetPassForm.get('email').setValidators(emailValidator)
           this.forgetPassForm.get('phone').setValidators(Validators.required)
@@ -113,11 +113,11 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
 
-  getCountryCode(callingCode) {
+  getCountryCode(countryId) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === callingCode;
+        return val.countryId === Number(countryId);
       })
       this.forgetPassForm.get('countryCode').setValue(this.livingCountry[0])
     })
