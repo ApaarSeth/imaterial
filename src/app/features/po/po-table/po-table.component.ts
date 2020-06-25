@@ -59,7 +59,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
     this.additonalCost = this.additionalOtherCostInfo;
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-
   }
   formInit() {
     const frmArr: FormGroup[] = this.poTableData.map((poMaterial: PoMaterial, i) => {
