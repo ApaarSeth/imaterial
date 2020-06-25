@@ -59,41 +59,40 @@ export class PoTableComponent implements OnInit, OnDestroy {
     this.additonalCost = this.additionalOtherCostInfo;
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-
   }
   formInit() {
     const frmArr: FormGroup[] = this.poTableData.map((poMaterial: PoMaterial, i) => {
       let purchaseGrp: FormGroup[] = poMaterial.purchaseOrderDetailList.map((purchaseorder: PurchaseOrder, j) => {
         const frmGrp: FormGroup = this.formBuilder.group({
-          id: [purchaseorder.materialId],
-          status: [purchaseorder.status],
-          created_by: [purchaseorder.created_by],
-          created_at: [purchaseorder.createdAt],
-          last_updated_by: [purchaseorder.last_updated_by],
-          last_updated_at: [purchaseorder.last_updated_at],
-          projectName: [purchaseorder.projectName],
-          addressId: [purchaseorder.addressId],
-          addressLine1: [purchaseorder.addressLine1],
-          addressLine2: [purchaseorder.addressLine2],
-          city: [purchaseorder.city],
-          state: [purchaseorder.state],
-          countrypurchaseOrderDetailList: [purchaseorder.country],
-          pinCode: [purchaseorder.pinCode],
-          purchaseOrderDetailId: [purchaseorder.purchaseOrderDetailId],
-          purchaseOrderId: [purchaseorder.purchaseOrderId],
-          materialId: [purchaseorder.materialId],
-          materialBrand: [purchaseorder.materialBrand],
-          materialQuantity: [purchaseorder.materialQuantity],
+          id: [ purchaseorder.materialId ],
+          status: [ purchaseorder.status ],
+          created_by: [ purchaseorder.created_by ],
+          created_at: [ purchaseorder.createdAt ],
+          last_updated_by: [ purchaseorder.last_updated_by ],
+          last_updated_at: [ purchaseorder.last_updated_at ],
+          projectName: [ purchaseorder.projectName ],
+          addressId: [ purchaseorder.addressId ],
+          addressLine1: [ purchaseorder.addressLine1 ],
+          addressLine2: [ purchaseorder.addressLine2 ],
+          city: [ purchaseorder.city ],
+          state: [ purchaseorder.state ],
+          countrypurchaseOrderDetailList: [ purchaseorder.country ],
+          pinCode: [ purchaseorder.pinCode ],
+          purchaseOrderDetailId: [ purchaseorder.purchaseOrderDetailId ],
+          purchaseOrderId: [ purchaseorder.purchaseOrderId ],
+          materialId: [ purchaseorder.materialId ],
+          materialBrand: [ purchaseorder.materialBrand ],
+          materialQuantity: [ purchaseorder.materialQuantity ],
           materialUnit: [],
-          materialUnitPrice: [purchaseorder.materialUnitPrice, Validators.pattern(FieldRegExConst.RATES)],
-          materialIgst: [1],
-          materialSgst: [2],
+          materialUnitPrice: [ purchaseorder.materialUnitPrice, Validators.pattern(FieldRegExConst.RATES) ],
+          materialIgst: [ 1 ],
+          materialSgst: [ 2 ],
           materialCgst: [],
           amount: [],
           gstAmount: [],
-          gst: [(purchaseorder.materialSgst != 0 && purchaseorder.materialCgst != 0 ? purchaseorder.materialSgst + purchaseorder.materialCgst : purchaseorder.materialIgst), Validators.pattern(FieldRegExConst.RATES)],
+          gst: [ (purchaseorder.materialSgst != 0 && purchaseorder.materialCgst != 0 ? purchaseorder.materialSgst + purchaseorder.materialCgst : purchaseorder.materialIgst), Validators.pattern(FieldRegExConst.RATES) ],
           gstTotal: [],
-          total: [{ value: "", disabled: false }]
+          total: [ { value: "", disabled: false } ]
         });
         this.gst = ((purchaseorder.materialCgst > 0) && (purchaseorder.materialSgst > 0)) ? 'CGST & SGST' : 'IGST';
         this.subscriptions.push(
@@ -102,14 +101,14 @@ export class PoTableComponent implements OnInit, OnDestroy {
           }),
         );
         const updateTableValue = formVal => {
-          this.poTableData[i].purchaseOrderDetailList[j].qty = formVal.materialQuantity;
+          this.poTableData[ i ].purchaseOrderDetailList[ j ].qty = formVal.materialQuantity;
           const amount = formVal.materialQuantity * formVal.materialUnitPrice;
-          const taxAmount = this.poTableData[i].purchaseOrderDetailList[j].taxAmount;
+          const taxAmount = this.poTableData[ i ].purchaseOrderDetailList[ j ].taxAmount;
           const gstCalc = formVal.materialQuantity * formVal.materialUnitPrice * (formVal.gst / 100);
           const calc = amount + gstCalc + (taxAmount && this.isInternational ? taxAmount : 0);
-          this.poTableData[i].purchaseOrderDetailList[j].amount = amount;
-          this.poTableData[i].purchaseOrderDetailList[j].gstAmount = gstCalc;
-          this.poTableData[i].purchaseOrderDetailList[j].total = calc;
+          this.poTableData[ i ].purchaseOrderDetailList[ j ].amount = amount;
+          this.poTableData[ i ].purchaseOrderDetailList[ j ].gstAmount = gstCalc;
+          this.poTableData[ i ].purchaseOrderDetailList[ j ].total = calc;
 
           frmGrp.get("amount").setValue(amount);
           frmGrp.get("total").setValue(calc);
@@ -123,24 +122,24 @@ export class PoTableComponent implements OnInit, OnDestroy {
       });
 
       return this.formBuilder.group({
-        materialId: [poMaterial.materialId],
-        materialCode: [poMaterial.materialCode],
-        projectId: [poMaterial.projectId],
-        materialName: [poMaterial.materialName],
-        materialGroup: [poMaterial.materialGroup],
-        materialUnit: [poMaterial.materialUnit],
-        estimatedQty: [poMaterial.estimatedQty],
-        estimatedRate: [poMaterial.estimatedRate],
-        materialCustomFlag: [poMaterial.materialCustomFlag],
-        materialCustomId: [poMaterial.materialCustomId],
-        materialSubGroup: [poMaterial.materialSubGroup],
-        materialSpecs: [poMaterial.materialSpecs],
-        requestedQuantity: [poMaterial.requestedQuantity],
+        materialId: [ poMaterial.materialId ],
+        materialCode: [ poMaterial.materialCode ],
+        projectId: [ poMaterial.projectId ],
+        materialName: [ poMaterial.materialName ],
+        materialGroup: [ poMaterial.materialGroup ],
+        materialUnit: [ poMaterial.materialUnit ],
+        estimatedQty: [ poMaterial.estimatedQty ],
+        estimatedRate: [ poMaterial.estimatedRate ],
+        materialCustomFlag: [ poMaterial.materialCustomFlag ],
+        materialCustomId: [ poMaterial.materialCustomId ],
+        materialSubGroup: [ poMaterial.materialSubGroup ],
+        materialSpecs: [ poMaterial.materialSpecs ],
+        requestedQuantity: [ poMaterial.requestedQuantity ],
         checked: false,
-        issueToProject: [poMaterial.issueToProject],
-        availableStock: [poMaterial.availableStock],
+        issueToProject: [ poMaterial.issueToProject ],
+        availableStock: [ poMaterial.availableStock ],
         indentDetailList: null,
-        fullfilmentDate: [poMaterial.fullfilmentDate],
+        fullfilmentDate: [ poMaterial.fullfilmentDate ],
         purchaseOrderDetailList: this.formBuilder.array(purchaseGrp)
       });
     });
@@ -217,7 +216,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
   getMaterialOtherCost(m) {
-    return this.poTableData[m].otherCostAmount ? this.poTableData[m].otherCostAmount : 0;
+    return this.poTableData[ m ].otherCostAmount ? this.poTableData[ m ].otherCostAmount : 0;
   }
 
   ngOnDestroy(): void {
@@ -249,8 +248,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
         const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
         material.fullfilmentDate = year + "-" + month + "-" + day;
       }
-      material.taxInfo = this.poTableData[i].taxInfo;
-      material.otherCostInfo = this.poTableData[i].otherCostInfo;
+      material.taxInfo = this.poTableData[ i ].taxInfo;
+      material.otherCostInfo = this.poTableData[ i ].otherCostInfo;
       material.purchaseOrderDetailList.map(purchaseOrderList => {
         purchaseOrderList.materialQuantity = Number(purchaseOrderList.materialQuantity);
         purchaseOrderList.materialUnitPrice = Number(purchaseOrderList.materialUnitPrice);
@@ -272,17 +271,17 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getMaterialQuantity(m) {
     if (this.mode != "edit") {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total: number, purchase: PurchaseOrder) => {
+      return this.poTableData[ m ].purchaseOrderDetailList.reduce((total: number, purchase: PurchaseOrder) => {
         return (total += Number(purchase.materialQuantity));
       }, 0);
     } else {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+      return this.poTableData[ m ].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
         total += Number(purchase.qty);
-        if (Number(total.toFixed(2)) > Number(this.poTableData[m].poAvailableQty)) {
-          this.poTableData[m].validQuantity = false;
+        if (Number(total.toFixed(2)) > Number(this.poTableData[ m ].poAvailableQty)) {
+          this.poTableData[ m ].validQuantity = false;
         }
         else {
-          this.poTableData[m].validQuantity = true;
+          this.poTableData[ m ].validQuantity = true;
         }
         let isValidQty: boolean = true;
         this.poTableData.forEach(element => {
@@ -299,12 +298,12 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getMaterialAmount(m) {
     if (this.mode != "edit") {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+      return this.poTableData[ m ].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
 
         return (total += purchase.amount);
       }, 0);
     } else {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+      return this.poTableData[ m ].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
 
         return (total += purchase.amount);
       }, 0);
@@ -313,11 +312,11 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getMaterialGstAmount(m) {
     if (this.mode != "edit") {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+      return this.poTableData[ m ].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
         return (total += purchase.gstAmount);
       }, 0);
     } else {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+      return this.poTableData[ m ].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
         return (total += purchase.gstAmount);
       }, 0);
     }
@@ -325,23 +324,23 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getMaterialTotalAmount(m) {
     if (this.mode != "edit") {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+      return this.poTableData[ m ].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
         return (total += purchase.total);
       }, 0);
     } else {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
+      return this.poTableData[ m ].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
         return (total += purchase.total);
       }, 0);
     }
   }
 
   checkQty(m, p, materialAvailableQty, event) {
-    this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
+    this.poTableData[ m ].purchaseOrderDetailList[ p ].qty = event.target.value;
     let totalQty = this.getMaterialQuantity(m);
     if (totalQty.toFixed(2) > materialAvailableQty) {
       this._snackBar.open("Net Quantity must be less than " + materialAvailableQty, "", {
         duration: 2000,
-        panelClass: ["success-snackbar"],
+        panelClass: [ "success-snackbar" ],
         verticalPosition: "bottom"
       });
     }
@@ -361,7 +360,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', [ '$event' ])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 1100) {
       this.showResponsiveDesign = true;
@@ -373,32 +372,32 @@ export class PoTableComponent implements OnInit, OnDestroy {
   getPOListTax(m, p, type) {
     let tax: number = 0;
     if (type === 'edit') {
-      tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+      tax = this.poTableData[ m ][ 'totalTax' ] ? this.poTableData[ m ][ 'totalTax' ] : null
     }
     else {
       this.calculateTaxInfo(m)
-      tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+      tax = this.poTableData[ m ][ 'totalTax' ] ? this.poTableData[ m ][ 'totalTax' ] : null
     }
     if (tax) {
-      this.poTableData[m].purchaseOrderDetailList[p]['taxAmount'] = this.poTableData[m].purchaseOrderDetailList[p].amount * (tax ? tax / 100 : 0)
-      return this.poTableData[m].purchaseOrderDetailList[p]['taxAmount']
+      this.poTableData[ m ].purchaseOrderDetailList[ p ][ 'taxAmount' ] = this.poTableData[ m ].purchaseOrderDetailList[ p ].amount * (tax ? tax / 100 : 0)
+      return this.poTableData[ m ].purchaseOrderDetailList[ p ][ 'taxAmount' ]
     }
     else {
-      return this.poTableData[m].purchaseOrderDetailList[p]['taxAmount']
+      return this.poTableData[ m ].purchaseOrderDetailList[ p ][ 'taxAmount' ]
     }
   }
 
 
 
   getTotalPOListTax(m) {
-    if (this.poTableData[m].purchaseOrderDetailList.length > 1) {
-      if (this.poTableData[m].purchaseOrderDetailList[0].taxAmount)
-        return this.poTableData[m].purchaseOrderDetailList.map(val => val.taxAmount).reduce((a, b) => (a + b))
+    if (this.poTableData[ m ].purchaseOrderDetailList.length > 1) {
+      if (this.poTableData[ m ].purchaseOrderDetailList[ 0 ].taxAmount)
+        return this.poTableData[ m ].purchaseOrderDetailList.map(val => val.taxAmount).reduce((a, b) => (a + b))
       else
         return 0;
     }
     else {
-      return this.poTableData[m].purchaseOrderDetailList[0].taxAmount ? this.poTableData[m].purchaseOrderDetailList[0].taxAmount : 0;
+      return this.poTableData[ m ].purchaseOrderDetailList[ 0 ].taxAmount ? this.poTableData[ m ].purchaseOrderDetailList[ 0 ].taxAmount : 0;
     }
   }
 
@@ -411,7 +410,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
         totalTax += val.purchaseOrderDetailList.map(val => val.taxAmount).reduce((a, b) => (a + b))
       }
       else {
-        totalTax += val.purchaseOrderDetailList[0].taxAmount ? val.purchaseOrderDetailList[0].taxAmount : 0;
+        totalTax += val.purchaseOrderDetailList[ 0 ].taxAmount ? val.purchaseOrderDetailList[ 0 ].taxAmount : 0;
       }
     })
     return totalTax;
@@ -428,8 +427,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
 
   getTotalOtherCost(m) {
-    if (this.poTableData[m].otherCostAmount) {
-      return this.poTableData[m].otherCostAmount;
+    if (this.poTableData[ m ].otherCostAmount) {
+      return this.poTableData[ m ].otherCostAmount;
     }
     else {
       return 0;
@@ -437,28 +436,28 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
   calculateTaxInfo(mId) {
-    if (this.poTableData[mId].taxInfo && this.poTableData[mId].taxInfo.length > 0) {
-      if (this.poTableData[mId].taxInfo.length > 1) {
-        this.poTableData[mId]['totalTax'] = this.poTableData[mId].taxInfo.map(val => { return val.taxValue }).reduce((a, b) => (a + b))
+    if (this.poTableData[ mId ].taxInfo && this.poTableData[ mId ].taxInfo.length > 0) {
+      if (this.poTableData[ mId ].taxInfo.length > 1) {
+        this.poTableData[ mId ][ 'totalTax' ] = this.poTableData[ mId ].taxInfo.map(val => { return val.taxValue }).reduce((a, b) => (a + b))
       }
       else {
-        this.poTableData[mId]['totalTax'] = this.poTableData[mId].taxInfo[0].taxValue
+        this.poTableData[ mId ][ 'totalTax' ] = this.poTableData[ mId ].taxInfo[ 0 ].taxValue
       }
     } else {
-      this.poTableData[mId]['totalTax'] = null
+      this.poTableData[ mId ][ 'totalTax' ] = null
     }
   }
 
   calculateOtherTaxInfo(mId) {
-    if (this.poTableData[mId].otherCostInfo && this.poTableData[mId].otherCostInfo.length > 0) {
-      if (this.poTableData[mId].otherCostInfo.length > 1) {
-        this.poTableData[mId]['otherCostAmount'] = this.poTableData[mId].otherCostInfo.map(val => { return val.otherCostAmount }).reduce((a, b) => (a + b))
+    if (this.poTableData[ mId ].otherCostInfo && this.poTableData[ mId ].otherCostInfo.length > 0) {
+      if (this.poTableData[ mId ].otherCostInfo.length > 1) {
+        this.poTableData[ mId ][ 'otherCostAmount' ] = this.poTableData[ mId ].otherCostInfo.map(val => { return val.otherCostAmount }).reduce((a, b) => (a + b))
       }
       else {
-        this.poTableData[mId]['otherCostAmount'] = this.poTableData[mId].otherCostInfo[0].otherCostAmount
+        this.poTableData[ mId ][ 'otherCostAmount' ] = this.poTableData[ mId ].otherCostInfo[ 0 ].otherCostAmount
       }
     } else {
-      this.poTableData[mId]['otherCostAmount'] = null
+      this.poTableData[ mId ][ 'otherCostAmount' ] = null
     }
   }
 
@@ -466,8 +465,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
     let existingData = null;
     if (type === 'taxesAndCost') {
       existingData = {
-        taxInfo: this.poTableData[mId].taxInfo ? this.poTableData[mId].taxInfo : null,
-        otherCostInfo: this.poTableData[mId].otherCostInfo ? this.poTableData[mId].otherCostInfo : null
+        taxInfo: this.poTableData[ mId ].taxInfo ? this.poTableData[ mId ].taxInfo : null,
+        otherCostInfo: this.poTableData[ mId ].otherCostInfo ? this.poTableData[ mId ].otherCostInfo : null
       }
     }
     else {
@@ -488,8 +487,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
-        this.poTableData[mId].taxInfo = res.taxInfo ? res.taxInfo : null;
-        this.poTableData[mId].otherCostInfo = res.otherCostInfo ? res.otherCostInfo : null;
+        this.poTableData[ mId ].taxInfo = res.taxInfo ? res.taxInfo : null;
+        this.poTableData[ mId ].otherCostInfo = res.otherCostInfo ? res.otherCostInfo : null;
         this.calculateTaxInfo(mId);
         this.calculateOtherTaxInfo(mId);
       }
@@ -505,7 +504,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
           this.additonalCost.additionalOtherCostAmount = this.additonalCost.additionalOtherCostInfo.map(val => { return val.otherCostAmount }).reduce((a, b) => (a + b))
         }
         else {
-          this.additonalCost.additionalOtherCostAmount = this.additonalCost.additionalOtherCostInfo[0].otherCostAmount
+          this.additonalCost.additionalOtherCostAmount = this.additonalCost.additionalOtherCostInfo[ 0 ].otherCostAmount
         }
       } else {
         this.additonalCost.additionalOtherCostAmount = 0
