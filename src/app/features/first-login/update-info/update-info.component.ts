@@ -173,19 +173,6 @@ export class UpdateInfoComponent implements OnInit {
       trade: [],
       profileUrl: [''],
       orgPincode: ['', Validators.max(999999)]
-      // addressLine1: ['', Validators.required],
-      // addressLine2: [''],
-      // state: ['', Validators.required],
-      // city: ['', Validators.required],
-      // pinCode: ['', {
-      //   validators: [
-      //     Validators.required,
-      //     Validators.pattern(FieldRegExConst.PINCODE)
-      //   ]
-      // }],
-      // pan: [''],
-      // gstNo: [''],
-      // file: ['']
     });
     this.customTrade = this._formBuilder.group({
       trade: []
