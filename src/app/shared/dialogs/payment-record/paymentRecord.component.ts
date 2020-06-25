@@ -23,22 +23,24 @@ export class PaymentRecordComponent implements OnInit {
         private poService: POService,
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<PaymentRecordComponent>,
-        @Inject(MAT_DIALOG_DATA) public poDetail: PurchaseOrder) { }
+        @Inject(MAT_DIALOG_DATA) public data: { poDetail: PurchaseOrder, paymentDetail: PoPayementDetail }) { }
 
 
     ngOnInit() {
-        this.startDate = new Date(this.poDetail.createdAt);
-        this.endDate = this.poDetail.validUpto ? new Date(this.poDetail.validUpto) : null;
-        this.poService.paymentDetail(this.poDetail.purchaseOrderId).then(res => {
-            this.paymentDetail = res.data[0];
-            this.formInit()
-        })
+        this.startDate = new Date(this.data.poDetail.createdAt);
+        this.endDate = this.data.poDetail.validUpto ? new Date(this.data.poDetail.validUpto) : null;
+        this.paymentDetail = this.data.paymentDetail
+        if (this.paymentDetail.purchaseOrderCurrency) {
+            this.displayedColumns.splice(1, 0, "Exchange Rate")
+        }
+        this.formInit()
     }
     formInit() {
         this.paymentForm = this.formBuilder.group({
             amountPaid: ['', [Validators.required, this.amountCheck(this.paymentDetail)]],
             paymentDate: ['', Validators.required],
-            transactionId: []
+            transactionId: [],
+            exchangeRate: ['', this.paymentDetail.purchaseOrderCurrency ? Validators.required : null]
         })
     }
 
@@ -67,8 +69,7 @@ export class PaymentRecordComponent implements OnInit {
 
     tabClick(event) {
         if (event.index === 1) {
-            this.poService.paymentHistory(this.poDetail.purchaseOrderId).then(res => {
-
+            this.poService.paymentHistory(this.data.poDetail.purchaseOrderId).then(res => {
                 this.dataSource = res.data as PaymentHistory[];
             });
             // this.dataSource = [{ amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }, { amountPaid: 455, date: '25 - 08 - 20', transactionId: 13123123, addedBy: 'Rikesh' }]
@@ -79,7 +80,7 @@ export class PaymentRecordComponent implements OnInit {
         let submitData: SavePaymnetRecord = this.paymentForm.value;
         submitData.amountPaid = Number(submitData.amountPaid)
         submitData.paymentDate = this.commonService.getFormatedDate(submitData.paymentDate)
-        this.poService.paymentRecord(this.poDetail.purchaseOrderId, submitData)
+        this.poService.paymentRecord(this.data.poDetail.purchaseOrderId, submitData)
         this.dialogRef.close(null);
     }
 }
