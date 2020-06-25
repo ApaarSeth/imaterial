@@ -97,9 +97,9 @@
                       </mat-select>
                     </mat-form-field>
                   </div>
-                  <div class="col-xs-7 p-t-3">
+                  <div class="col-xs-7 p-t-1">
                     <mat-form-field class="border-input w-100">
-                      <input matInput type="text" placeholder="Phone No.*" formControlName="contactNo" />
+                      <input matInput type="text" placeholder="*Phone No." formControlName="contactNo" />
                     </mat-form-field>
                     <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
                       <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
@@ -112,10 +112,13 @@
                   </div>
                 </div>
                 <mat-form-field *ngIf="users.roleName != 'l3'" class="border-input w-100">
-                  <input matInput type="number" placeholder="Pincode" formControlName="orgPincode" />
+                  <input matInput type="text" placeholder="Pincode" formControlName="orgPincode" />
                 </mat-form-field>
                 <mat-error *ngIf="userInfoForm.controls['orgPincode'].errors?.max && userInfoForm.controls['orgPincode'].touched">
                   maximum characters allowed is 6
+                </mat-error>
+                <mat-error *ngIf="userInfoForm.controls['orgPincode'].hasError('pattern') && userInfoForm.controls['orgPincode'].touched">
+                  Only Number Allowed
                 </mat-error>
                 <small *ngIf="userInfoForm.controls['orgPincode'].errors?.maxlength && userInfoForm.controls['orgPincode'].touched" class="signupForm-error-msg"></small>
                 <mat-form-field class="border-select w-100" *ngIf="users.roleName != 'l3'">
@@ -201,7 +204,7 @@
               </div>
 
               <div class="text-center col-md-12 mt-4">
-                <button class="btn btn-warning next-btn" [disabled]="!imageFileSize && localImg ? true : !userInfoForm.valid">Next</button>
+                <button class="btn btn-warning next-btn" [disabled]="imageFileSizeCheck && userInfoForm.valid ? false : true">Next</button>
               </div>
             </div>
           </form>

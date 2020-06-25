@@ -47,7 +47,7 @@ export class UpdateInfoComponent implements OnInit {
   url: string;
   OthersId: number;
   imageFileSizeError: string;
-  imageFileSize: boolean = false;
+  imageFileSizeCheck: boolean = true;
   fileTypes: string[] = ['png', 'jpeg', 'jpg'];
   currencyList: Currency[] = [];
   countryList: CountryCode[] = [];
@@ -172,7 +172,7 @@ export class UpdateInfoComponent implements OnInit {
       countryId: [],
       trade: [],
       profileUrl: [''],
-      orgPincode: ['', Validators.max(999999)]
+      orgPincode: ['', [Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS)]]
     });
     this.customTrade = this._formBuilder.group({
       trade: []
@@ -217,9 +217,6 @@ export class UpdateInfoComponent implements OnInit {
     if (event.target.files.length > 0) {
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      // reader.onload = (event) => {
-      //   this.localImg = (<FileReader>event.target).result;
-      // }
       const file = event.target.files[0];
       var fileSize = event.target.files[0].size; // in bytes
       let fileType = event.target.files[0].name.split('.').pop();
@@ -232,11 +229,11 @@ export class UpdateInfoComponent implements OnInit {
             this.localImg = (<FileReader>event.target).result;
           }
           this.imageFileSizeError = "";
-          this.imageFileSize = true;
+          this.imageFileSizeCheck = true;
           this.uploadImage(file);
         }
         else {
-          this.imageFileSize = false;
+          this.imageFileSizeCheck = false;
           this.imageFileSizeError = "Image must be less than 1 mb";
         }
       }
