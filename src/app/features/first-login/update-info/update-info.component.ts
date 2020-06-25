@@ -53,6 +53,7 @@ export class UpdateInfoComponent implements OnInit {
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
   permissionObj: permission;
+  isMobile: boolean;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private permissionService: PermissionService,
@@ -65,10 +66,10 @@ export class UpdateInfoComponent implements OnInit {
   ngOnInit() {
     this.role = localStorage.getItem("role");
     this.permissionObj = this.permissionService.checkPermission(this.role);
+    this.isMobile = this.commonService.isMobile().matches;
     this.formInit();
     this.getUserRoles();
     this.getTradesList();
-    this.getTurnOverList();
     this.getCurrency();
     this.getCountryCode();
   }
@@ -100,7 +101,7 @@ export class UpdateInfoComponent implements OnInit {
       this.roles = res.data;
       this.roles.splice(2, 1);
       const id = this.roles.filter(opt => opt.roleName === this.role);
-      this.roleId = id[0].roleId;
+      this.roleId = id.length && id[0].roleId;
     })
   }
 
@@ -117,14 +118,27 @@ export class UpdateInfoComponent implements OnInit {
         })
       }
       this.formInit();
+      this.getTurnOverList()
       this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
       this.userInfoForm.get('countryId').setValue(this.livingCountry[0] ? this.livingCountry[0].countryId : null)
+
     });
   }
+
   getTurnOverList() {
-    this._userService.getTurnOverList().then(res => {
-      this.turnOverList = res.data;
-    })
+    if (this.users.roleName !== "l3") {
+      this._userService.getTurnOverList().then(res => {
+        let callingCode = localStorage.getItem('callingCode')
+        this.turnOverList = res.data.filter(data => {
+          if (callingCode === '+91' && data.isInternational === 0) {
+            return data
+          }
+          else if (callingCode !== '+91' && data.isInternational === 1) {
+            return data
+          }
+        })
+      })
+    }
   }
 
   getTradesList() {
@@ -158,20 +172,7 @@ export class UpdateInfoComponent implements OnInit {
       countryId: [],
       trade: [],
       profileUrl: [''],
-      orgPincode: ['', Validators.maxLength(6)]
-      // addressLine1: ['', Validators.required],
-      // addressLine2: [''],
-      // state: ['', Validators.required],
-      // city: ['', Validators.required],
-      // pinCode: ['', {
-      //   validators: [
-      //     Validators.required,
-      //     Validators.pattern(FieldRegExConst.PINCODE)
-      //   ]
-      // }],
-      // pan: [''],
-      // gstNo: [''],
-      // file: ['']
+      orgPincode: ['', Validators.max(999999)]
     });
     this.customTrade = this._formBuilder.group({
       trade: []
@@ -188,7 +189,6 @@ export class UpdateInfoComponent implements OnInit {
       this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     })
 
-    console.log(this.userInfoForm)
   }
 
   changeSelected(parameter: string, trade: TradeList) {
@@ -274,9 +274,18 @@ export class UpdateInfoComponent implements OnInit {
       // this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
       this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
       // this.userInfoForm.value.tradeId = [...this.selectedTrades];
-      let countryCode = this.userInfoForm.value.countryCode.callingCode
+      let countryCode = null;
+      if (this.users.roleName === "l3") {
+        countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
+        localStorage.setItem("currencyCode", this.userInfoForm.getRawValue().baseCurrency.currencyCode);
+      }
+      else {
+        countryCode = this.userInfoForm.value.countryCode.callingCode
+        localStorage.setItem("currencyCode", this.userInfoForm.value.baseCurrency.currencyCode);
+      }
       let organizationId = Number(this.userInfoForm.value.organizationId)
-      const data: UserDetails = { ...this.userInfoForm.value, countryCode, organizationId };
+      let orgPincode = String(this.userInfoForm.value.orgPincode)
+      const data: UserDetails = { ...this.userInfoForm.value, orgPincode, countryCode, organizationId };
       this._userService.submitUserDetails(data).then(res => {
         this.navService.gaEvent({
           action: 'submit',

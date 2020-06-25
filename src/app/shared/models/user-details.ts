@@ -1,5 +1,6 @@
 import { ProjectDetails } from './project-details';
 import { Currency } from './currency';
+import { orgTrades } from './trades';
 
 export interface AllUserDetails {
   firstName?: string,
@@ -105,6 +106,7 @@ export interface UserDetails {
   TurnOverId?: number;
   baseCurrency: Currency
   orgPincode: string;
+  trade: orgTrades[];
 }
 
 export interface TradeList {

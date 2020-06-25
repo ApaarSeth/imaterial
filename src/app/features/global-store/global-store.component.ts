@@ -7,24 +7,26 @@ import { CommonService } from 'src/app/shared/services/commonService';
 @Component({
   selector: "app-global-store",
   templateUrl: "./global-store.component.html",
-  styleUrls: ["../../../assets/scss/main.scss"]
+  styleUrls: [ "../../../assets/scss/main.scss" ]
 })
 export class GlobalStoreComponent implements OnInit {
-  
+
   buttonName: string = "materialWise";
   globalStoreData: [];
   projectWiseData: GlobalProject[] = [];
   materialDataLength: number;
   projectDataLength: number;
   userId: number;
+  isMobile: boolean;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private globalStoreService: GlobalStoreService,
-    private commonService : CommonService
-    ) { }
+    private commonService: CommonService
+  ) { }
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.userId = Number(localStorage.getItem("userId"));
     this.route.data.subscribe(data => {
       this.globalStoreData = data.globalData.data;
@@ -32,7 +34,7 @@ export class GlobalStoreComponent implements OnInit {
     this.getNotifications();
   }
 
- getNotifications(){
+  getNotifications() {
     this.commonService.getNotification(this.userId);
   }
   setButtonName(name: string) {
@@ -51,12 +53,12 @@ export class GlobalStoreComponent implements OnInit {
   }
 
   createRfq() {
-    this.router.navigate(['/rfq/createRfq']);
+    this.router.navigate([ '/rfq/createRfq' ]);
   }
-  materialShowDataLength(event){
+  materialShowDataLength(event) {
     this.materialDataLength = event;
   }
-  projectShowDataLength(event){
-       this.projectDataLength = event;
+  projectShowDataLength(event) {
+    this.projectDataLength = event;
   }
 }

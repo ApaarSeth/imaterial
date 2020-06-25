@@ -61,7 +61,6 @@ export class SigninComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
     this.callingCode = this.actualCallingCode
     // this.callingCode = "+1"
-    console.log("callingCode", this.callingCode)
     if (this.callingCode) {
       this.getLocation();
     }
@@ -113,7 +112,7 @@ export class SigninComponent implements OnInit {
   signin() {
     let params = new URLSearchParams();
     params.append("loginIdType", this.callingCode === '+91' ? 'PHONE' : 'EMAIL');
-    params.append('countryCode', this.callingCode);
+    this.callingCode === '+91' ? params.append('countryCode', this.callingCode) : null;
     params.append("username", this.callingCode === '+91' ? this.signinForm.value.phone : this.signinForm.value.email);
     params.append("password", this.signinForm.value.password);
     params.append("grant_type", "password");
@@ -136,15 +135,7 @@ export class SigninComponent implements OnInit {
         else {
           this.getUserInfo(data.serviceRawResponse.data.userId);
         }
-
         this.navigationService.gaTag({ action: 'event', command: 'login', options: { 'method': this.tokenService.getOrgId() } })
-        // const role = data.serviceRawResponse.data.role;
-
-        // if (role) {
-        //   this.router.navigate(["/dashboard"]);
-        // } else {
-        //   this.router.navigate(["/users/organisation/update-info"]);
-        // }
       }
     });
   }
@@ -159,10 +150,8 @@ export class SigninComponent implements OnInit {
       if (res.data[0].firstName)
         localStorage.setItem("userName", res.data[0].firstName);
       localStorage.setItem("profileUrl", res.data[0].profileUrl);
-      localStorage.setItem("currencyCode", res.data[0].baseCurrency.currencyCode);
+      localStorage.setItem("currencyCode", res.data[0].baseCurrency ? res.data[0].baseCurrency.currencyCode : null);
       localStorage.setItem("countryCode", res.data[0].countryCode);
-
-
       this.dataService.getRequest(API.CHECKTERMS).then(res => {
         this.acceptTerms = res.data;
         if (!this.acceptTerms) {
@@ -174,7 +163,6 @@ export class SigninComponent implements OnInit {
       })
     })
   }
-
   showPassWord() {
     if (!this.showPassWordString) {
       this.showPassWordString = true;

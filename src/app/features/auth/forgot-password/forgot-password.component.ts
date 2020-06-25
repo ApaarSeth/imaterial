@@ -269,7 +269,14 @@ export class ForgotPasswordComponent implements OnInit {
     }
     else {
       this.signInSignupService.verifyResetEmail(this.forgetPassForm.get('email').value, 'fooClientIdPassword').then(res => {
-        this.emailSendMessage = true;
+        if (res.data.success) {
+          this._snackBar.open(`Password change email is sent to ${this.forgetPassForm.get('email').value}`, "", {
+            duration: 4000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+
+        }
         console.log(res)
       })
     }

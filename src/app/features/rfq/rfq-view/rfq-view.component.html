@@ -6,38 +6,38 @@
       <div class="col-md-12">
         <!-- first row -->
         <div class="row p-t-20">
-          <div class="col-xs-4 col-md-4">
+          <div class="col-xs-6 col-md-4" [ngClass]="isMobile ? 'font-size14' : ''">
             <div class="p-t-10">
-              <label class="text-bold">RFQ Name: </label>
+              <label class="text-bold" [ngClass]="isMobile ? 'd-block mb-1' : ''">RFQ Name: </label>
               {{ rfqDetails.rfqName }}
             </div>
           </div>
-          <div class="col-xs-4 col-md-4 p-t-10 text-left">
-            <label class="text-bold">RFQ End Date: </label>
+          <div class="col-xs-6 col-md-4 p-t-10 text-left" [ngClass]="isMobile ? 'font-size14' : ''">
+            <label class="text-bold" [ngClass]="isMobile ? 'd-block mb-1' : ''">RFQ End Date: </label>
             {{ rfqDetails.dueDate | date: "dd-MMM-yyy" }}
           </div>
-          <div class="col-xs-4 p-l-0 p-t-10 p-b-25 text-right"
-            *ngIf="rfqDetails.rfqCurrency != null && rfqDetails.rfqCurrency.exchangeCurrencyName != null">
+          <div
+            class="col-xs-12 p-l-0 p-t-10 p-b-25 text-right"
+            [ngClass]="isMobile ? 'mt-2' : ''"
+            *ngIf="rfqDetails.rfqCurrency != null && rfqDetails.rfqCurrency.exchangeCurrencyName != null"
+          >
             <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
               <span class="font-size-vary-grn color-grey">
-                <img width="25px" *ngIf="rfqDetails.rfqCurrency.exchangeCurrencyFlag"
-                  [src]="rfqDetails.rfqCurrency.exchangeCurrencyFlag" />
+                <img width="25px" *ngIf="rfqDetails.rfqCurrency.exchangeCurrencyFlag" [src]="rfqDetails.rfqCurrency.exchangeCurrencyFlag" />
                 {{ rfqDetails.rfqCurrency.exchangeCurrencyName }}
               </span>
               <span class="p-l-5"> = </span>
               <span class="p-l-5 color-6d6a6a color-grey"> {{ rfqDetails.rfqCurrency.exchangeValue }} </span>
               <span class="p-l-5 color-grey">
-                <img width="25px" *ngIf="rfqDetails.rfqCurrency.primaryCurrencyFlag"
-                  [src]="rfqDetails.rfqCurrency.primaryCurrencyFlag" />
+                <img width="25px" *ngIf="rfqDetails.rfqCurrency.primaryCurrencyFlag" [src]="rfqDetails.rfqCurrency.primaryCurrencyFlag" />
                 {{ rfqDetails.rfqCurrency.primaryCurrencyName }}
               </span>
             </span>
             <div class="display-inline-block p-l-5">
-              <span *ngIf="rfqDetails.rfqCurrency != null && rfqDetails.rfqCurrency.exchangeCurrencyName != null"
-                class="p-l-5 info-icon info-tootip"><img src="./../../../../assets/images/i_icon.png"
-                  class="img-responsive" />
+              <span *ngIf="rfqDetails.rfqCurrency != null && rfqDetails.rfqCurrency.exchangeCurrencyName != null" class="p-l-5 info-icon info-tootip"
+                ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                 <span class="info-tootip__content rt-0">
-                  <div class="tooltip-table ml-0">
+                  <div class="tooltip-table ml-0" [ngClass]="isMobile ? 'mr-2 p-10 font-size14' : ''">
                     <div class="row text-center color-grey text-semi-bold p-l-5 p-r-5">
                       Supplier will have to submit the quote in this selected currency
                     </div>
@@ -66,7 +66,7 @@
                 <label for="email" class="word-break-all">{{ supplier.email }}</label>
               </div>
               <div class="col-md-12">
-                <label for="phoneNumber" class="word-break-all">{{ supplier.contact_no }}</label>
+                <label for="phoneNumber" class="word-break-all"> {{ supplier.countryCallingCode }}-{{ supplier.contact_no }} </label>
               </div>
             </mat-card>
           </div>
@@ -74,7 +74,8 @@
       </div>
     </div>
 
-    <mat-card class="m-b-10 p-b-10" *ngIf="this.rfqDetails.terms">Payment Terms:
+    <mat-card class="m-b-10 p-b-10" *ngIf="this.rfqDetails.terms"
+      >Payment Terms:
       <span classs="p-l-15">
         {{ this.rfqDetails.terms.termsDesc.trim() === "Others" ? this.rfqDetails.terms.otherDesc : this.rfqDetails.terms.termsDesc }}
       </span>

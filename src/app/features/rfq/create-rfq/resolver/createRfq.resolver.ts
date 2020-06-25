@@ -8,7 +8,7 @@ export class CreateRfqResolver implements Resolve<any> {
   constructor(
     private projectService: ProjectService,
     private rfqService: RFQService
-  ) {}
+  ) { }
 
   resolve() {
     let userId = Number(localStorage.getItem("userId"));
