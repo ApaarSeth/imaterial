@@ -115,7 +115,7 @@ export class ProfileComponent implements OnInit {
 
   setCountryAndCurrency() {
     this.livingCountry = this.countryList.filter(val => {
-      return val.countryId === this.users.countryId;
+      return val.countryId === Number(this.users.countryId);
     })
     let newCurrencyList = this.currencyList.filter(val => {
       return val.currencyId === this.users.baseCurrency.currencyId;
@@ -126,7 +126,7 @@ export class ProfileComponent implements OnInit {
 
   getTurnOverList() {
     this._userService.getTurnOverList().then(res => {
-      let callingCode = localStorage.getItem('callingCode')
+      let callingCode = localStorage.getItem('countryCode')
       this.turnOverList = res.data.filter(data => {
         if (callingCode === '+91' && data.isInternational === 0) {
           return data
