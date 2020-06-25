@@ -3,6 +3,7 @@ import { SignInSignupService } from 'src/app/shared/services/signupSignin/signup
 import { Subscription, interval } from 'rxjs';
 import { RouterLink, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { TokenService } from 'src/app/shared/services/token.service';
 
 @Component({
     selector: 'app-email-verification',
@@ -10,15 +11,16 @@ import { MatSnackBar } from '@angular/material';
 })
 
 export class EmailVerificationComponent implements OnInit {
-    constructor(private snackbar: MatSnackBar, private router: Router, private signInSignUpService: SignInSignupService) { }
+    constructor(private tokenService: TokenService, private snackbar: MatSnackBar, private router: Router, private signInSignUpService: SignInSignupService) { }
     email: string = "";
     subscription: Subscription;
     checkAccountStatus: number = 0;
     ngOnInit() {
         this.email = localStorage.getItem('email')
         const source = interval(10000);
-        this.subscription = source.subscribe(val => { this.emailVerificationStatus() });
-
+        if (this.tokenService.getToken()) {
+            this.subscription = source.subscribe(val => { this.emailVerificationStatus() });
+        }
     }
 
     resendEmail() {

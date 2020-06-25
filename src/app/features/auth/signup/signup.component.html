@@ -92,7 +92,16 @@
         <input matInput type="email" formControlName="email" (input)="verifyEmail($event)" placeholder="Email" />
         <small *ngIf="signupForm.controls['email'].hasError('required') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Email is required </small>
         <small *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Enter Valid Email</small>
-        <small *ngIf="!emailVerified">Email already in use.</small>
+        <small
+          *ngIf="
+            !emailVerified &&
+            emailEnteredCounter &&
+            !signupForm.controls['email'].hasError('required') &&
+            !signupForm.controls['email'].hasError('pattern') &&
+            signupForm.controls['email'].touched
+          "
+          >Email already in use.
+        </small>
       </mat-form-field>
 
       <!-- <mat-form-field class="col-xs-12 border-select">
@@ -122,7 +131,7 @@
           class="main-background-color main-button color-white m-b-5"
           cdkFocusInitial
           style="width: 100%;"
-          [disabled]="this.callingCode === '+91' ? !signupForm.valid || !lessOTPDigits || !emailVerified : !signupForm.valid || !emailVerified"
+          [disabled]="this.callingCode === '+91' ? !signupForm.valid || !lessOTPDigits || !emailVerified : !signupForm.valid && !emailVerified"
         >
           Sign Up
         </button>
