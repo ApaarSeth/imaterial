@@ -70,27 +70,17 @@ export class SignupComponent implements OnInit {
     this.primaryCallingCode = localStorage.getItem('callingCode')
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
-
       if (this.uniqueCode) {
-        // this.lessOTPDigits = true;
         this.organisationDisabled = true;
         this.getUserInfo(this.uniqueCode);
       } else {
         this.formInit();
       }
     });
-
-    // this.getCountryCode();
-    // let urlLength = this.router.url.toString().length;
-    // let lastSlash = this.router.url.toString().lastIndexOf("/");
-    // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
   }
 
   ngOnChanges(): void {
     this.callingCode = this.actualCallingCode
-    // this.callingCode = '+1'
-    // this.countryCode = 'CA'
-    console.log("callingCode", this.callingCode)
     if (this.callingCode) {
       this.getLocation();
     }
@@ -170,7 +160,7 @@ export class SignupComponent implements OnInit {
     this.signInDetails.confirmPassword = this.signupForm.value.password;
     this.signInDetails.phone = this.callingCode === '+91' ? this.signupForm.value.phone : null;
     this.signInDetails.email = this.signupForm.value.email;
-    this.signInDetails.countryCode = this.livingCountry[0].callingCode;
+    this.signInDetails.countryCode = this.callingCode === '+91' ? this.livingCountry[0].callingCode : null;
     this.signInDetails.loginIdType = this.callingCode === '+91' ? 'PHONE' : 'EMAIL';
     this.signInDetails.clientId = "fooClientIdPassword";
     if (this.uniqueCode) {
