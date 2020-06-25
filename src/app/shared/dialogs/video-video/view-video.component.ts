@@ -14,7 +14,6 @@ import { Video } from "src/app/shared/models/video";
 export class ViewVideoComponent implements OnInit {
 vid : any;
 safeURL: any;
-dashboardVideo: Video;
 
   constructor(
     private dialogRef: MatDialogRef<ViewVideoComponent>,
@@ -44,7 +43,7 @@ dashboardVideo: Video;
       }
 
       const videoId = dashboardVideo[0].videoUrl.split('/')[3].split("=")[1];
-      videoURL = "http://www.youtube.com/embed/"+videoId;
+      videoURL = "https://www.youtube.com/embed/"+videoId;
 
       // Final video url
       this.safeURL = this._sanitizer.bypassSecurityTrustResourceUrl(videoURL);
