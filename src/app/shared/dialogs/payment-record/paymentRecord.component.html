@@ -12,7 +12,21 @@
     </div>
   </div>
   <div class="col-xs-12 p-t-20">
-    <mat-card class="width78Percent gray-border" *ngIf="paymentDetail">
+    <span class="row p-l-10 m-b-10 text-left" *ngIf="paymentDetail.purchaseOrderCurrency && paymentDetail.purchaseOrderCurrency.exchangeCurrencyName != null">
+      <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+        <span class="font-size-vary-grn color-grey">
+          <img width="25px" *ngIf="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" [src]="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" />
+          {{ paymentDetail.purchaseOrderCurrency.exchangeCurrencyName }}
+        </span>
+        <span class="p-l-5"> = </span>
+        <span class="p-l-5 color-6d6a6a color-grey"> {{ paymentDetail.purchaseOrderCurrency.exchangeValue }} </span>
+        <span class="p-l-5 color-grey">
+          <img width="25px" *ngIf="paymentDetail.purchaseOrderCurrency.primaryCurrencyFlag" [src]="paymentDetail.purchaseOrderCurrency.primaryCurrencyFlag" />
+          {{ paymentDetail.purchaseOrderCurrency.primaryCurrencyName }}
+        </span>
+      </span>
+    </span>
+    <mat-card class="width78Percent gray-border">
       <div class="row">
         <div class="col-xs-6">
           Total PO Amount :

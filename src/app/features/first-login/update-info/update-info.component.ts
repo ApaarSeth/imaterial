@@ -188,7 +188,7 @@ export class UpdateInfoComponent implements OnInit {
           return val.countryId === Number(country.countryId)
         })
       }
-
+      this.userInfoForm.get('countryId').setValue(newcurrencyList.length ? newcurrencyList[0].countryId : null)
       this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     })
 

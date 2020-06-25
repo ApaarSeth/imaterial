@@ -36,7 +36,8 @@ export class SignupComponent implements OnInit {
   user: UserDetails;
   lessOTPDigits: boolean = false;
   showOtp: boolean = false;
-  emailVerified: boolean = true;
+  emailVerified: boolean = false;
+  emailEnteredCounter: number = 0;
   emailMessage: string;
   otpLength: number = 0;
   verifiedMobile: boolean = false;
@@ -65,6 +66,7 @@ export class SignupComponent implements OnInit {
   signInDetails = {} as SignINDetailLists;
   livingCountry: CountryCode[] = [];
   callingCode: string;
+  locationCounter: number = 0;
 
   ngOnInit() {
     this.primaryCallingCode = localStorage.getItem('countryCode')
@@ -73,15 +75,15 @@ export class SignupComponent implements OnInit {
       if (this.uniqueCode) {
         this.organisationDisabled = true;
         this.getUserInfo(this.uniqueCode);
-      } else {
-        this.formInit();
       }
     });
   }
 
   ngOnChanges(): void {
     this.callingCode = this.actualCallingCode
-    if (this.callingCode) {
+    if (this.callingCode && !this.locationCounter) {
+      this.locationCounter++;
+      this.formInit();
       this.getLocation();
     }
   }
@@ -97,16 +99,15 @@ export class SignupComponent implements OnInit {
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.getCountryCode(this.callingCode, this.countryCode)
     if (this.callingCode === '+91') {
       this.signupForm.get('email').setValidators(emailValidator)
-      this.signupForm.get('phone').setValidators(Validators.required)
-      this.signupForm.get('otp').setValidators(Validators.required)
+      this.signupForm.get('phone').setValidators([Validators.required])
+      this.signupForm.get('otp').setValidators([Validators.required])
     }
     else {
-      this.signupForm.get('email').setValidators(emailValidator)
-
+      this.signupForm.get('email').setValidators([...emailValidator])
     }
+    this.getCountryCode(this.callingCode, this.countryCode)
   }
 
   getCountryCode(callingCode, countryCode) {
@@ -148,11 +149,9 @@ export class SignupComponent implements OnInit {
       password: ["", [Validators.required, Validators.minLength(6)]],
       otp: [""]
     });
-
     if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
       this.enterPhone(event, this.user.contactNo)
     }
-    console.log(this.signupForm)
   }
 
   signup() {
@@ -169,7 +168,7 @@ export class SignupComponent implements OnInit {
     }
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
-      countryCode: this.callingCode === '+91' ? '+91' : null,
+      countryCode: this.livingCountry[0].callingCode,
       countryId: String(this.livingCountry[0].countryId),
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
@@ -233,7 +232,6 @@ export class SignupComponent implements OnInit {
 
   enterPhone(event, numberPassed?: string) {
     this.lessOTPDigits = false;
-
     this.verifiedMobile = false;
     this.showOtp = false;
     this.value = numberPassed ? numberPassed : event.target.value;
@@ -299,10 +297,14 @@ export class SignupComponent implements OnInit {
     if (email.match(FieldRegExConst.EMAIL)) {
       this.signInSignupService.verifyEMAIL(this.signupForm.value.email).then(res => {
         if (res) {
+          this.emailEnteredCounter++;
           this.emailVerified = res.data;
           this.emailMessage = res.message;
         }
       });
+    } else {
+      this.emailEnteredCounter++;
+      this.emailVerified = false;
     }
   }
 
