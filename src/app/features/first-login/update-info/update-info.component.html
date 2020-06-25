@@ -117,7 +117,7 @@
 
 
                 <mat-form-field *ngIf="users.roleName != 'l3'" class="border-input w-100">
-                  <input matInput type="number" placeholder="Pincode" formControlName="orgPincode" />
+                  <input matInput type="text" placeholder="Pincode" formControlName="orgPincode" />
                 </mat-form-field>
                 <mat-error
                   *ngIf="userInfoForm.controls['orgPincode'].errors?.max && userInfoForm.controls['orgPincode'].touched">
@@ -203,8 +203,12 @@
               </div>
 
               <div class="text-center col-md-12 mt-4">
-                <button class="btn btn-warning next-btn"
+                <<<<<<< HEAD <button class="btn btn-warning next-btn"
                   [disabled]="!imageFileSize && localImg ? true : !userInfoForm.valid">Next</button>
+                  =======
+                  <button class="btn btn-warning next-btn"
+                    [disabled]="imageFileSizeCheck && userInfoForm.valid ? false : true">Next</button>
+                  >>>>>>> 0657967f4c482db3f7429b349210dfcfb1e59383
               </div>
             </div>
           </form>

@@ -7,6 +7,7 @@ import { UserService } from 'src/app/shared/services/userDashboard/user.service'
 import { MatSnackBar } from '@angular/material';
 import { Currency, CountryCode } from 'src/app/shared/models/currency';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 export interface City {
   value: string;
@@ -42,7 +43,7 @@ export class ProfileComponent implements OnInit {
   url: any;
   userId
   imageFileSizeError: string = "";
-  imageFileSize: boolean = false;
+  imageFileSizeCheck: boolean = true;
   fileTypes: string[] = ['png', 'jpeg', 'jpg'];
   tradeDescription: string;
   currencyList: Currency[] = [];
@@ -187,7 +188,7 @@ export class ProfileComponent implements OnInit {
       countryId: [],
       trade: [this.users ? this.users.trade : null],
       profileUrl: [''],
-      orgPincode: [this.users ? this.users.orgPincode : null, Validators.max(999999)]
+      orgPincode: [this.users ? this.users.orgPincode : null, [Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS)]]
     });
     this.customTrade = this._formBuilder.group({
       trade: []
@@ -234,11 +235,11 @@ export class ProfileComponent implements OnInit {
             this.localImg = (<FileReader>event.target).result;
           }
           this.imageFileSizeError = "";
-          this.imageFileSize = true;
+          this.imageFileSizeCheck = true;
           this.uploadImage(file);
         }
         else {
-          this.imageFileSize = false;
+          this.imageFileSizeCheck = false;
           this.imageFileSizeError = "Image must be less than 1 mb";
         }
       }
