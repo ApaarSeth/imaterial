@@ -112,7 +112,7 @@ export class SigninComponent implements OnInit {
   signin() {
     let params = new URLSearchParams();
     params.append("loginIdType", this.callingCode === '+91' ? 'PHONE' : 'EMAIL');
-    params.append('countryCode', this.callingCode);
+    this.callingCode === '+91' ? params.append('countryCode', this.callingCode) : null;
     params.append("username", this.callingCode === '+91' ? this.signinForm.value.phone : this.signinForm.value.email);
     params.append("password", this.signinForm.value.password);
     params.append("grant_type", "password");
@@ -135,15 +135,7 @@ export class SigninComponent implements OnInit {
         else {
           this.getUserInfo(data.serviceRawResponse.data.userId);
         }
-
         this.navigationService.gaTag({ action: 'event', command: 'login', options: { 'method': this.tokenService.getOrgId() } })
-        // const role = data.serviceRawResponse.data.role;
-
-        // if (role) {
-        //   this.router.navigate(["/dashboard"]);
-        // } else {
-        //   this.router.navigate(["/users/organisation/update-info"]);
-        // }
       }
     });
   }
@@ -174,7 +166,6 @@ export class SigninComponent implements OnInit {
       })
     })
   }
-
   showPassWord() {
     if (!this.showPassWordString) {
       this.showPassWordString = true;

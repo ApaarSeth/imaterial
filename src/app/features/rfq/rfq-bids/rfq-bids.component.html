@@ -120,10 +120,10 @@
                         <span class="mat-cell maxwidth-10"></span>
 
                         <div class="mat-cell maxwidth-75">
-                          <div class="row align-items-center">
+                          <div class="mat-row align-items-center">
                             <ng-container formArrayName="brandGroup">
                               <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index" [formGroupName]="i">
-                                <span class="mat-cell maxwidth-8 text-center">
+                                <div class="mat-cell maxwidth-10 text-center" style="overflow: initial;">
                                   <ng-container *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
                                     <mat-form-field class="border-input">
                                       <input
@@ -142,9 +142,9 @@
                                   <ng-template #dashedLine>
                                     <span>--</span>
                                   </ng-template>
-                                </span>
+                                </div>
 
-                                <span class="mat-cell maxwidth-12 text-center">
+                                <span class="mat-cell maxwidth-10 text-center">
                                   {{
                                     brandInfo.materialUnitPrice != null
                                       ? ratesBaseCurr

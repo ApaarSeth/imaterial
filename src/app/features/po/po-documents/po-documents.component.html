@@ -11,17 +11,21 @@
     <mat-card-content>
       <mat-list class="pt-10">
         <span *ngIf="mode != 'edit' && documentData">
-          <mat-list-item class="files-list" *ngFor="let file of documentData; let i = index">
+          <mat-list-item class="row height-100" *ngFor="let file of documentData; let i = index">
             <!-- <mat-icon>file_copy</mat-icon> -->
-            <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-            <div class="limited-character global" matTooltip="{{ file.DocumentDesc }}">{{ file.DocumentDesc }}</div>
-            <span class="show-download">
-              <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
-                <i class="material-icons">
-                  remove_red_eye
-                </i>
-              </a>
-            </span>
+            <div class="col-x-10">
+              <img class="file-icon" src="../../../../assets/images/file-doc.png" />
+              <span>{{ file.DocumentDesc }}</span>
+            </div>
+            <div class="col-xs-2">
+              <span class="show-download">
+                <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
+                  <i class="material-icons">
+                    remove_red_eye
+                  </i>
+                </a>
+              </span>
+            </div>
           </mat-list-item>
         </span>
         <span *ngIf="mode != 'edit' && !documentData">
@@ -32,21 +36,24 @@
           </mat-list-item>
         </span>
         <span *ngIf="mode === 'edit'">
-          <mat-list-item class="files-list" *ngFor="let file of documentList; let i = index">
+          <mat-list-item class="row height-100" *ngFor="let file of documentList; let i = index">
             <!-- <mat-icon>file_copy</mat-icon> -->
-            <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-            <div matTooltip="{{ file.documentName }}" class="limited-character global">{{ file.documentName }}</div>
-            <span class="show-download">
-              <a type="button" target="_blank" [href]="file.Url" mat-icon-button>
-                <i class="material-icons">
-                  remove_red_eye
-                </i>
-              </a>
-            </span>
-
-            <button type="button" (click)="removeFile(i)" mat-icon-button>
-              <mat-icon class="font-size-16">cancel</mat-icon>
-            </button>
+            <div class="col-x-9">
+              <img class="file-icon" src="../../../../assets/images/file-doc.png" />
+              <span class="overflow-break">{{ file.documentName }}</span>
+            </div>
+            <div class="col-xs-3">
+              <span class="show-download">
+                <a type="button" target="_blank" class="width-40 p-r-5" [href]="file.Url" mat-icon-button>
+                  <i class="material-icons">
+                    remove_red_eye
+                  </i>
+                </a>
+                <button type="button" class="width-21" (click)="removeFile(i)" mat-icon-button>
+                  <mat-icon class="font-size-16">cancel</mat-icon>
+                </button>
+              </span>
+            </div>
           </mat-list-item>
         </span>
       </mat-list>

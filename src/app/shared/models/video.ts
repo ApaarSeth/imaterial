@@ -1,0 +1,20 @@
+export interface Video{
+    id: number,
+    status: number,
+    createdBy: string,
+    createdAt: string,
+    lastUpdatedBy: string,
+    lastUpdatedAt: string,
+    marketingAssetId: number,
+    contentType: string,
+    title: string,
+    description: string,
+    imageUrl: string,
+    videoUrl: string,
+    countryId: number,
+    contentPage: string,
+    isDefault: number
+    countryCode: string,
+    countryName: string,
+    callingCode: string,
+  }

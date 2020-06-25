@@ -325,6 +325,11 @@ body,
   margin-bottom: 4px;
 }
 
+.email-verification .buildsupply-logo {
+  display: block;
+  margin: auto;
+}
+
 @media only screen and (max-width: 958px) {
   .app-dashboard {
    // margin-top: 56px;
@@ -526,6 +531,56 @@ body,
   //         border-left: 5px solid #1896BA;
 
   // }
+}
+
+@media only screen and (max-width: 1023px){
+  .off-white-background{
+    height: 10vh !important;
+  }
+
+  .off-white-background .ink-color {
+    font-size: 24px;
+    line-height: 10vh !important;
+  }
+
+  .email-verification, .terms-conditions {
+    padding: 10px 0 50px !important;
+  }
+
+  .email-verification .width-60 {
+    width: 75% !important;
+  }
+
+  .email-verification .col-md-12 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .email-verification .width-60 {
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 445px){
+  .email-verification .width-60 {
+    width: 100% !important;
+    padding: 20px 10px !important;
+  }
+
+  .off-white-background .ink-color {
+    font-size: 18px;
+  }
+
+  .email-verification .col-md-12 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .email-verification .fontsize-18-px {
+    font-size: 14px !important;
+  }
 }
 
 @media only screen and (max-width: 378px) {

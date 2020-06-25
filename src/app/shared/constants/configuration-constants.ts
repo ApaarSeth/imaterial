@@ -139,5 +139,6 @@ export const API = {
   GETTAXESLIST: (rfqId) => `supplier/tax/otherCost/${rfqId}`,
   RESENDEMAIL: `email/resend`,
   EMAILVERFICATIONSTATUS: `email/verification/status`,
-  EMAILVERFICATION: (token) => `emailVerification/${token}`
+  EMAILVERFICATION: (token) => `emailVerification/${token}`,
+  DASHBOARD_VIDEOS: 'marketing/dashboardVideo'
 };
