@@ -60,19 +60,15 @@ export class ForgotPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.primaryCallingCode = localStorage.getItem("countryCode")
-    this.countryList = [{ countryName: 'India' }];
+    this.callingCode = localStorage.getItem("countryCode")
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
+      this.formInit();
       if (this.uniqueCode) {
         this.getUserInfo(this.uniqueCode);
-      } else {
-        this.formInit();
-
       }
       this.getLocation();
     });
-
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
@@ -90,34 +86,26 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
-
-
   getLocation() {
     let emailValidator = [
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.callingCode = res['calling_code'];
-        this.getCountryCode(localStorage.getItem('countryId'))
-        if (this.callingCode === '+91') {
-          this.forgetPassForm.get('email').setValidators(emailValidator)
-          this.forgetPassForm.get('phone').setValidators(Validators.required)
-        }
-        else {
-          this.forgetPassForm.get('email').setValidators(emailValidator)
-        }
-      });
-    });
+    this.getCountryCode(this.callingCode)
+    if (this.callingCode === '+91') {
+      this.forgetPassForm.get('email').setValidators(emailValidator)
+      this.forgetPassForm.get('phone').setValidators(Validators.required)
+    }
+    else {
+      this.forgetPassForm.get('email').setValidators(emailValidator)
+    }
   }
 
-  getCountryCode(countryId) {
+  getCountryCode(callingCode) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
-        return val.countryId === Number(countryId);
+        return val.callingCode === callingCode;
       })
       this.forgetPassForm.get('countryCode').setValue(this.livingCountry[0])
     })
@@ -131,7 +119,7 @@ export class ForgotPasswordComponent implements OnInit {
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {
       this.user = res.data[0];
-      this.formInit();
+      this.forgetPassForm.patchValue({ phone: this.user ? this.user.contactNo : '' })
     });
   }
 
@@ -143,7 +131,7 @@ export class ForgotPasswordComponent implements OnInit {
   formInit() {
     this.forgetPassForm = this.formBuilder.group({
       countryCode: [],
-      phone: [this.user ? this.user.contactNo : ''],
+      phone: [],
       organisationType: ["Contractor"],
       password: ["", [Validators.required, Validators.minLength(6)]],
       otp: [""],

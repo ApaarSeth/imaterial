@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
-import { Router, ActivatedRoute, Navigation } from "@angular/router";
+import { Router, ActivatedRoute, Navigation, ActivatedRouteSnapshot } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
 import { UserService } from "src/app/shared/services/userDashboard/user.service";
 import { MatSnackBar } from '@angular/material';
@@ -13,6 +13,7 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { CommonService } from 'src/app/shared/services/commonService';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { VisitorService } from 'src/app/shared/services/visitor.service';
+import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 
 
 @Component({
@@ -23,9 +24,11 @@ import { VisitorService } from 'src/app/shared/services/visitor.service';
 export class SigninComponent implements OnInit {
   @Input("callingCode") actualCallingCode: string;
   @Input("countryCode") countryCode: string;
+  @Input("countryList") actualCountryList: CountryCode[]
 
   constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
+    private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private _userService: UserService,
     private route: ActivatedRoute,
@@ -33,7 +36,8 @@ export class SigninComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private navigationService: AppNavigationService,
     private commonService: CommonService,
-    private visitorsService: VisitorService) { }
+    private visitorsService: VisitorService,
+    private loader: GlobalLoaderService) { }
 
   ipaddress: string;
   emailVerified: boolean = true;
@@ -47,20 +51,16 @@ export class SigninComponent implements OnInit {
   acceptTerms: boolean;
   countryList: CountryCode[] = [];
   searchCountry: string = '';
-  primaryCallingCode: string = ''
-  callingCode: string
+  primaryCallingCode: string = '';
+  callingCode: string;
+
   ngOnInit() {
+    this.countryList = this.actualCountryList
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
-    this.primaryCallingCode = localStorage.getItem('countryCode')
-    this.formInit();
-  }
-  ngOnChanges(): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     this.callingCode = this.actualCallingCode
-    // this.callingCode = "+1"
+    this.formInit();
     if (this.callingCode) {
       this.getLocation();
     }
@@ -83,17 +83,14 @@ export class SigninComponent implements OnInit {
   }
 
   getCountryCode(callingCode, countryCode) {
-    this.commonService.getCountry().then(res => {
-      this.countryList = res.data;
-      this.livingCountry = this.countryList.filter(val => {
-        if (callingCode === '+1') {
-          if (val.callingCode === callingCode && val.countryCode === countryCode)
-            return val;
-        }
-        return val.callingCode === callingCode;
-      })
-      this.signinForm.get('countryCode').setValue(this.livingCountry[0])
+    this.livingCountry = this.countryList.filter(val => {
+      if (callingCode === '+1') {
+        if (val.callingCode === callingCode && val.countryCode === countryCode)
+          return val;
+      }
+      return val.callingCode === callingCode;
     })
+    this.signinForm.get('countryCode').setValue(this.livingCountry[0])
   }
 
   formInit() {
@@ -110,6 +107,7 @@ export class SigninComponent implements OnInit {
   }
 
   signin() {
+    this.loader.show()
     let params = new URLSearchParams();
     params.append("loginIdType", this.callingCode === '+91' ? 'PHONE' : 'EMAIL');
     this.callingCode === '+91' ? params.append('countryCode', this.callingCode) : null;
@@ -120,17 +118,22 @@ export class SigninComponent implements OnInit {
     params.append("userType", "BUYER");
 
     this.signInSignupService.signIn(params.toString()).then(data => {
+
       if (data.errorMessage) {
+        this.loader.hide()
         this._snackBar.open(data.errorMessage, "", {
           duration: 2000,
           panelClass: ["warning-snackbar"],
           verticalPosition: "bottom"
         });
       }
+
       else if (data.serviceRawResponse.data) {
+
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
         if (localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
           this.router.navigate(["/profile/email-verification"]);
+          this.loader.hide()
         }
         else {
           this.getUserInfo(data.serviceRawResponse.data.userId);
@@ -146,14 +149,14 @@ export class SigninComponent implements OnInit {
    * @description Function will get the data of logged in user
    */
   getUserInfo(userId) {
-    this._userService.getUserInfo(userId).then(res => {
+    this.dataService.getRequest(API.GET_USER_PROFILE(userId), null, { skipLoader: true }).then(res => {
       if (res.data[0].firstName)
         localStorage.setItem("userName", res.data[0].firstName);
       localStorage.setItem("profileUrl", res.data[0].profileUrl);
       localStorage.setItem("currencyCode", res.data[0].baseCurrency ? res.data[0].baseCurrency.currencyCode : null);
       localStorage.setItem("countryCode", res.data[0].countryCode);
       localStorage.setItem("countryId", res.data[0].countryId)
-      this.dataService.getRequest(API.CHECKTERMS).then(res => {
+      this.dataService.getRequest(API.CHECKTERMS, null, { skipLoader: true }).then(res => {
         this.acceptTerms = res.data;
         if (!this.acceptTerms) {
           this.router.navigate(["/profile/terms-conditions"]);
