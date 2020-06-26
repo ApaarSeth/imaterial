@@ -181,7 +181,7 @@ export class ProfileComponent implements OnInit {
       email: [{ value: this.users ? this.users.email : '', disabled: true }, Validators.required],
       contactNo: [{ value: this.users ? this.users.contactNo : '', disabled: true }, Validators.required],
       roleId: [{ value: this.users ? this.users.roleId : null, disabled: false }, Validators.required],
-      turnOverId: [{ value: this.users ? this.users.TurnOverId : null, disabled: false }, Validators.required],
+      turnOverId: [{ value: this.users ? this.users.TurnOverId : null, disabled: false }],
       roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: false }],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
