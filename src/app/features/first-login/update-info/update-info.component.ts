@@ -285,7 +285,7 @@ export class UpdateInfoComponent implements OnInit {
       }
       let organizationId = Number(this.userInfoForm.value.organizationId)
       let orgPincode = String(this.userInfoForm.value.orgPincode)
-      const data: UserDetails = { ...this.userInfoForm.value, orgPincode, countryCode, organizationId };
+      const data: UserDetails = { ...this.userInfoForm.value, myAccountUpdate: true, orgPincode, countryCode, organizationId };
       this._userService.submitUserDetails(data).then(res => {
         this.navService.gaEvent({
           action: 'submit',

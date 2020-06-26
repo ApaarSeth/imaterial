@@ -55,6 +55,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   message: string;
   lastupdateValue: any;
   valid: boolean = false;
+  primaryCurrencyCode: string;
   minDate = new Date();
   constructor(
     public dialog: MatDialog,
@@ -68,6 +69,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.primaryCurrencyCode = localStorage.getItem('currencyCode')
     this.startDate = new Date();
     this.rfqData = {
       id: null,

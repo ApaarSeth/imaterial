@@ -165,7 +165,6 @@ export class CreateRfqComponent implements OnInit {
         this.rfqMaterial = res.data as AddRFQ;
         if (!rfqId) {
           this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
-
             state: { rfqData: res, selectedIndex: 1 }
           });
         }
