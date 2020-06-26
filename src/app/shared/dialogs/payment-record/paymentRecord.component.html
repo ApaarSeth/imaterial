@@ -30,21 +30,31 @@
       <div class="row">
         <div class="col-xs-6">
           Total PO Amount :
-          {{ paymentDetail.poAmount ? (paymentDetail.poAmount | number: "1.2-2") : (0 | number: "1.2-2") }}
+          {{ paymentDetail.totalPoAmount ? (paymentDetail.totalPoAmount | number: "1.2-2") : (0 | number: "1.2-2") }}
           {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
 
           <span class="info-icon info-tootip"
             ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
             <span class="info-tootip__content">
-              <div class="tooltip-table maxwidth-250-px">
+              <div class="tooltip-table maxwidth-270-px">
                 <div class="row mb-1">
-                  <div class="col-sm-12 text-center">
-                    Total Amount : {{ paymentDetail.poAmount - paymentDetail.gstAmount | number: "1.2-2" }}
-                    {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
+                  <div class="col-sm-12">
+                    <span class="p-r-0"> Total Amount : {{ paymentDetail.poAmount - paymentDetail.gstAmount | number: "1.2-2" }}</span>
+                    <span class="p-l-0 m-l-0">{{
+                      paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode
+                    }}</span>
                   </div>
-                  <div class="col-sm-12 text-center">
-                    <span>GST Amount : {{ paymentDetail.gstAmount ? (paymentDetail.gstAmount | number: "1.2-2") : (0 | number: "1.2-2") }}</span>
-                    <span>{{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}</span>
+                  <div class="col-sm-12">
+                    <span class="p-r-0">Total Tax Amount : {{ paymentDetail.totalTaxAmount + paymentDetail.gstAmount | number: "1.2-2" }}</span>
+                    <span class="p-l-0 m-l-0">{{
+                      paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode
+                    }}</span>
+                  </div>
+                  <div class="col-sm-12" *ngIf="paymentDetail.otherCost">
+                    <span class="p-r-0">Other Cost Amount : {{ paymentDetail.otherCost | number: "1.2-2" }}</span>
+                    <span class="p-l-0 m-l-0">{{
+                      paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -66,7 +76,7 @@
           {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
         </div>
         <div class="col-xs-6">
-          Amount Due : {{ paymentDetail.poAmount - paymentDetail.paymentRecived | number: "1.2-2" }}
+          Amount Due : {{ paymentDetail.totalPoAmount - paymentDetail.paymentRecived | number: "1.2-2" }}
           {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
         </div>
       </div>

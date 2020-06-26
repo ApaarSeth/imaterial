@@ -281,6 +281,7 @@ export class ProfileComponent implements OnInit {
       })
 
       let data: UserDetails = this.userInfoForm.getRawValue();
+      data.myAccountUpdate = false;
       data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
