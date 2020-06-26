@@ -43,16 +43,7 @@
       </div>
       <div *ngIf="this.callingCode === '+91'" class="phone-number col-xs-8" [ngClass]="{'p-t-10': lessOTPDigits}">
         <mat-form-field class="border-input display-flex">
-          <input
-            matInput
-            type="number"
-            min="0"
-            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-            formControlName="phone"
-            #phone
-            placeholder="Phone No."
-            (input)="enterPhone($event)"
-          />
+          <input matInput type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" #phone placeholder="Phone No." />
           <button
             type="button"
             *ngIf="!lessOTPDigits"
@@ -89,7 +80,7 @@
         <input matInput type="text" formControlName="organisationName" placeholder="Company Name" />
       </mat-form-field>
       <mat-form-field class="col-xs-12 border-input">
-        <input matInput type="email" formControlName="email" (input)="verifyEmail($event)" placeholder="Email" />
+        <input matInput type="email" formControlName="email" placeholder="Email" />
         <small *ngIf="signupForm.controls['email'].hasError('required') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Email is required </small>
         <small *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Enter Valid Email</small>
         <small

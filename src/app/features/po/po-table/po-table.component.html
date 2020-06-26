@@ -68,12 +68,11 @@
           <span class="mat-header-cell" [ngClass]="{'text-center': isInternational && mode !== 'edit'}"
             [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'">
             <!-- {{ isInternational ? "Tax Amount ("+ ((poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)) + ')' : "GST %" }} -->
-            <ng-container *ngIf="isInternational; else defaultCurr">
+            <ng-container *ngIf="isInternational; else defaultGstPercent">
               Tax Amount <br />
               ({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})
             </ng-container>
-
-            <ng-template #defaultCurr>
+            <ng-template #defaultGstPercent>
               GST %
             </ng-template>
           </span>
@@ -83,7 +82,6 @@
               Other Cost <br />
               ({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})
             </ng-container>
-
             <ng-template #defaultCurr>
               GST Amount
             </ng-template>

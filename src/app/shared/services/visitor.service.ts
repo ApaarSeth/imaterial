@@ -25,14 +25,13 @@ export class VisitorService {
     }
 
     getGEOLocation(ip) {
-
         //let headers = new HttpHeaders();
         let url = "https://api.ipgeolocation.io/ipgeo?apiKey=0f4e06b0721a4a2b82bce38abc80b31a&ip=" + ip;
         return this.http
             .get(url)
             .pipe(
                 catchError(this.handleError)
-            );
+            ).toPromise();
     }
 
     private handleError(error: HttpErrorResponse) {

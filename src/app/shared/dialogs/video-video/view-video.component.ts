@@ -29,12 +29,12 @@ safeURL: any;
   }
 
   getVideo(){
-    const countryCode = localStorage.getItem("callingCode");
+    const countryId = Number(localStorage.getItem("countryId"));
 
     this.projectService.getVideos().then(res => {
 
       // get the video object if callingCode is equal to registered user countryCode
-      var dashboardVideo: Video[] = res.data.filter(video => video.callingCode === countryCode);
+      var dashboardVideo: Video[] = res.data.filter(video => video.countryId === countryId);
       var videoURL: string;
       
       // If callingCode does not match with registered user countryCode then set default video url
@@ -47,6 +47,7 @@ safeURL: any;
 
       // Final video url
       this.safeURL = this._sanitizer.bypassSecurityTrustResourceUrl(videoURL);
+      console.log(this.safeURL)
     });
   }
   
