@@ -41,6 +41,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   searchCountry: string = '';
   selectedCountryId: number;
   isCallingCode: string;
+  isInternational: number;
 
   constructor(
     public dialog: MatDialog,
@@ -59,6 +60,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     this.supplierId = history.state.supplierId;
     this.brandCount = this.activatedRoute.snapshot.params[ "brandList" ];
     this.materialCount = this.activatedRoute.snapshot.params[ "MaterialList" ];
+    this.isInternational = Number(localStorage.getItem('isInternational'));
 
     this.poService.getSupplierAddress(this.supplierId).then(data => {
 
@@ -102,7 +104,11 @@ export class RFQSupplierAddAddressComponent implements OnInit {
         this.form.controls.city.setValidators([ Validators.required ]);
         this.form.controls.city.updateValueAndValidity();
 
-        this.form.controls.gstNo.setValidators([ Validators.required, Validators.pattern(FieldRegExConst.GSTIN) ]);
+        if (this.isInternational === 0) {
+          this.form.controls.gstNo.setValidators([ Validators.required, Validators.pattern(FieldRegExConst.GSTIN) ]);
+        } else {
+          this.form.controls.gstNo.setValidators([ Validators.pattern(FieldRegExConst.GSTIN) ]);
+        }
         this.form.controls.gstNo.updateValueAndValidity();
 
       } else {
@@ -191,13 +197,18 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       ],
       gstNo: [
         { value: (this.selectedAddress && this.selectedAddress.gstNo) ? this.selectedAddress.gstNo : "", disabled: this.disabledAddress },
-        [ Validators.required, Validators.pattern(FieldRegExConst.GSTIN) ]
+        [ Validators.pattern(FieldRegExConst.GSTIN) ]
       ],
       countryId: [ null ],
       countryCode: []
     });
     if (this.form.value.pinCode)
       this.validPincode = true;
+
+    if (this.isInternational === 0) {
+      this.form.get('gstNo').setValidators([ Validators.required, Validators.pattern(FieldRegExConst.GSTIN) ]);
+    }
+
   }
 
   saveAddress() {
@@ -253,6 +264,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       .toPromise()
       .then(data => {
         if (data != null && data.status == 1) {
+          localStorage.clear();
           this.router.navigate([ "/rfq-bids/finish/" + this.brandCount + "/" + this.materialCount ]);
         }
       });
