@@ -62,14 +62,16 @@
         <div class="col-xs-8 col-md-10">
           <mat-form-field class="border-input">
             <ng-container *ngIf="isNational; else nonInt">
-              <input matInput type="number" formControlName="contact_no" placeholder="Phone No. *" />
+              <input matInput type="text" formControlName="contact_no" placeholder="Phone No. *" />
               <small *ngIf="form.controls['contact_no'].hasError('required') && form.controls['contact_no'].touched"
                 class="form-error-msg"> Phone No is required </small>
               <small *ngIf="form.controls['contact_no'].hasError('pattern') && form.controls['contact_no'].touched"
                 class="form-error-msg"> Enter Valid Phone No</small>
             </ng-container>
             <ng-template #nonInt>
-              <input matInput type="number" formControlName="contact_no" placeholder="Phone No." />
+              <input matInput type="text" formControlName="contact_no" placeholder="Phone No." />
+              <small *ngIf="form.controls['contact_no'].hasError('pattern') && form.controls['contact_no'].touched"
+                class="form-error-msg"> Enter Valid Phone No</small>
             </ng-template>
           </mat-form-field>
         </div>

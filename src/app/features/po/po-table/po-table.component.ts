@@ -44,12 +44,14 @@ export class PoTableComponent implements OnInit, OnDestroy {
   totalAdditionalCost: number = 0;
   additonalCost: { additionalOtherCostAmount: number, additionalOtherCostInfo: OverallOtherCost[] }
   ratesBaseCurr: boolean = false;
+  isMobile: boolean;
 
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
       this.mode = params.mode;
     });
+    this.isMobile = this.commonService.isMobile().matches;
     this.formInit();
   }
 

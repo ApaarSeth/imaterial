@@ -335,3 +335,8 @@ s .validTill {
 .overflow-anywhere {
   overflow-wrap: anywhere !important;
 }
+
+.mpo-table{
+  width: 100%;
+  overflow-x: scroll;
+}
