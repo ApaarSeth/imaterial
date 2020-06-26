@@ -191,9 +191,17 @@
               <ng-container *ngIf="rfqSupplierDetailList.isInternational === 0; else intBHeader">
                 <tr matSort class="brand-name-rfq-supplies">
                   <th class="font-size14">Brand Name</th>
-                  <th class="font-size14">Rate</th>
-                  <th class="font-size14 text-align-right">Total Amount</th>
-                  <th class="font-size14 text-align-right">GST Amount</th>
+                  <th class="font-size14">Rate <ng-container *ngIf="rfqSupplierDetailList.baseCurrencyCode">
+                      ({{ rfqSupplierDetailList.baseCurrencyCode }})</ng-container>
+                  </th>
+                  <th class="font-size14 text-align-right">Total Amount <ng-container
+                      *ngIf="rfqSupplierDetailList.baseCurrencyCode">
+                      ({{ rfqSupplierDetailList.baseCurrencyCode }})</ng-container>
+                  </th>
+                  <th class="font-size14 text-align-right">GST Amount <ng-container
+                      *ngIf="rfqSupplierDetailList.baseCurrencyCode">
+                      ({{ rfqSupplierDetailList.baseCurrencyCode }})</ng-container>
+                  </th>
                 </tr>
 
                 <!-- Brand-wise details -->
