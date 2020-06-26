@@ -107,6 +107,7 @@ export interface UserDetails {
   baseCurrency: Currency
   orgPincode: string;
   trade: orgTrades[];
+  myAccountUpdate: boolean;
 }
 
 export interface TradeList {

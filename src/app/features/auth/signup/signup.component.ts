@@ -85,18 +85,10 @@ export class SignupComponent implements OnInit {
       if (this.callingCode) {
         this.getLocation();
       }
-
     });
   }
 
-  ngOnChanges(): void {
-    this.callingCode = this.actualCallingCode
-    if (this.callingCode && !this.locationCounter) {
-      this.locationCounter++;
-      this.formInit();
-      this.getLocation();
-    }
-  }
+
 
 
   get selectedCountry() {
@@ -141,7 +133,7 @@ export class SignupComponent implements OnInit {
         this.verifyEmail(this.user.email)
       }
       this.signupForm.setValue({
-        countryCode: '',
+        countryCode: this.signupForm.get('countryCode').value,
         email: this.user ? this.user.email : '',
         phone: this.user ? this.user.contactNo : '',
         organisationName: this.user ? this.user.companyName : '',

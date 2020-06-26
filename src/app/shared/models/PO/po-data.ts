@@ -274,5 +274,11 @@ export interface PoPayementDetail {
   purchaseOrderCurrency: rfqCurrency,
   purchaseOrderId: number,
   currencyCode: string,
-  materialBrand: string, poAmount: number, grnAmount: number, gstAmount: number, paymentRecived: number
+  poAmount: number,
+  grnAmount: number,
+  gstAmount: number,
+  paymentRecived: number
+  totalTaxAmount: 0,
+  totalPoAmount: 3300000,
+  otherCost: 0,
 }
