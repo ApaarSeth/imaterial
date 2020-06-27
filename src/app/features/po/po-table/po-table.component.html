@@ -174,7 +174,7 @@
                 ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue + getMaterialTotalAmount(m) | number: "1.2-2")
                 : (this.poTableData[m].otherCostAmount + getMaterialTotalAmount(m) | number: "1.2-2")
             }}</span>
-            <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : '' "
+            <span class="mat-cell minwidth-11 text-align-right" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : '' "
               *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
               [ngClass]="isMobile ? 'fontsize-10-px' : '' "><button mat-button matRipple
                 class="btn btn-link taxButton p-0 main-color text-decoration-underline"
