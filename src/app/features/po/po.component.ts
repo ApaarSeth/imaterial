@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren, HostListener } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewChildren, HostListener, ChangeDetectorRef } from "@angular/core";
 import { POService } from "src/app/shared/services/po/po.service";
 import {
   POData,
@@ -7,7 +7,8 @@ import {
   poApproveReject,
   DocumentList,
   terms,
-  DownloadData
+  DownloadData,
+  PurchaseOrderCurrency
 } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
@@ -25,6 +26,7 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gstin-missing.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 
 @Component({
   selector: "app-po",
@@ -79,6 +81,7 @@ export class PoComponent implements OnInit {
   ValidPOTemp: boolean;
   showResponsiveDesign: boolean;
   showResponsiveDesignDown: boolean;
+  additionalOtherCost: { additionalOtherCostAmount: number, additionalOtherCostInfo: OtherCostInfo[] }
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -92,8 +95,10 @@ export class PoComponent implements OnInit {
     ],
 
   };
+  currency: { isInternational: number, purchaseOrderCurrency: PurchaseOrderCurrency }
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -118,13 +123,16 @@ export class PoComponent implements OnInit {
     this.poService.getPoGenerateData(this.poId).then(res => {
       this.poData = res.data;
       this.tableData = this.poData.materialData;
+      this.currency = { isInternational: this.poData.isInternational, purchaseOrderCurrency: this.poData.purchaseOrderCurrency }
+      this.additionalOtherCost = { additionalOtherCostAmount: this.poData.additionalOtherCostAmount, additionalOtherCostInfo: this.poData.additionalOtherCostInfo }
       this.cardData = {
         supplierAddress: this.poData.supplierAddress,
         projectAddress: this.poData.projectAddress,
         billingAddress: this.poData.billingAddress,
         poNumber: this.poData.poNumber,
         poValidUpto: this.poData.poValidUpto,
-        projectId: this.poData.projectId
+        projectId: this.poData.projectId,
+        isInternational: this.poData.isInternational
       };
       this.documentList = this.poData.DocumentsList;
       this.terms = this.poData.Terms;
@@ -137,7 +145,7 @@ export class PoComponent implements OnInit {
       // if (this.poData.projectAddress.gstNo === "" || this.poData.projectAddress.gstNo === null) {
       //   this.openProjectDialog(this.poData)
       // }
-      if (this.cardData.billingAddress.gstNo.toString() == '' || this.cardData.billingAddress.gstNo == null) {
+      if (this.cardData.billingAddress.gstNo && this.cardData.billingAddress.gstNo.toString() == '') {
         this.openProjectDialog(this.poData)
       }
     });
@@ -170,17 +178,22 @@ export class PoComponent implements OnInit {
     })
   }
   collateResults() {
+    if (this.poTable.ratesBaseCurr) {
+      this.poTable.setRateBaseCurr(false);
+    }
     let poDataCollate: POData = {
       supplierAddress: this.poData.supplierAddress,
       projectAddress: this.poData.projectAddress,
       billingAddress: this.poData.billingAddress,
       materialData: this.poTable.getData() as PoMaterial[],
+      additionalOtherCostInfo: this.poTable.getadditonalCost() ? this.poTable.getadditonalCost() : null,
       purchaseOrderDetailId: 0,
       purchaseOrderId: this.poId,
       poNumber: this.poCard.getData().orderNo,
       poName: "",
       poValidUpto: this.poCard.getData().endDate,
-
+      purchaseOrderCurrency: this.poTable.getUpdatedCurrency() ? this.poTable.getUpdatedCurrency() : null,
+      isInternational: 0,
       DocumentsList: this.poDocument.getData(),
       Terms: {
         termsDesc: this.poTerms.value['textArea'],
@@ -207,11 +220,10 @@ export class PoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.poService.sendPoData(result).then(res => {
-        if (res.status === 0) {
-          if (res.message = "gst field missing from billing address") {
-            this.openProjectDialog(data);
-          }
+        if (res.status === 0 && res.message === "gst field missing from billing address") {
+          this.openProjectDialog(data);
         }
+
         else {
           this.navService.gaEvent({
             action: 'submit',
@@ -298,6 +310,7 @@ export class PoComponent implements OnInit {
       combineLatest([this.poService.billingRole$, this.poService.projectRole$, this.poService.billingAddress$, this.poService.supplierAddress$, this.poService.poNumber$]).subscribe(values => {
         this.isPoValid = true;
         this.ValidPOTemp = true;
+        this.cdr.detectChanges();
       })
     );
   }

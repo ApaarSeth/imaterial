@@ -5,6 +5,9 @@ import { Suppliers } from "../../models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { AppNavigationService } from '../../services/navigation.service';
+import { VisitorService } from '../../services/visitor.service';
+import { CommonService } from '../../services/commonService';
+import { CountryCode } from '../../models/currency';
 
 // Component for dialog box
 @Component({
@@ -17,6 +20,13 @@ export class SuppliersDialogComponent {
   suppliers: Suppliers;
   form: FormGroup;
   orgId: number;
+  ipaddress: string;
+  countryList: CountryCode[] = [];
+  livingCountry: CountryCode[] = [];
+  searchCountry: string = '';
+  calingCode: string;
+  cntryId: number;
+  isNational: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<SuppliersDialogComponent>,
@@ -24,12 +34,45 @@ export class SuppliersDialogComponent {
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private visitorsService: VisitorService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    this.countryList = this.data ? this.data.countryList : null;
+    if (localStorage.getItem('countryCode')) {
+      this.calingCode = localStorage.getItem('countryCode');
+    }
+    this.cntryId = Number(localStorage.getItem('countryId'));
+    localStorage.getItem('countryCode') === '+91' ? this.isNational = true : this.isNational = false;
     this.initForm();
+    this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"))
+  }
+
+  getLocation() {
+    if (this.cntryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.cntryId });
+    } else {
+      this.getCountryCode({ countryId: localStorage.getItem('countryId') });
+    }
+  }
+
+  getCountryCode(obj) {
+    this.livingCountry = this.countryList.filter(val => {
+      if (obj.countryId) {
+        return val.countryId === Number(obj.countryId);
+      } else {
+        return val.callingCode === obj.callingCode;
+      }
+    })
+    this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
+
+  }
+
+  get selectedCountry() {
+    return this.form.get('countryCode').value;
   }
 
   onNoClick(): void {
@@ -38,15 +81,26 @@ export class SuppliersDialogComponent {
 
   initForm() {
     this.form = this.formBuilder.group({
-      supplier_name: ["", Validators.required],
-      email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      contact_no: ["", [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
-      pan: [""]
+      supplier_name: [ "", Validators.required ],
+      email: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ] ],
+      // contact_no: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ] ],
+      contact_no: [ null, [ Validators.pattern(FieldRegExConst.MOBILE3) ] ],
+      pan: [ "" ],
+      countryCallingCode: [ null ],
+      countryCode: []
     });
+    if (this.isNational) {
+      this.form.get('contact_no').setValidators([ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ]);
+    }
   }
 
   submit() {
-    this.addSuppliers(this.data, this.form.value);
+    let data = this.form.value;
+    if (data.contact_no) {
+      data[ 'countryCallingCode' ] = this.form.get('countryCode').value.callingCode;
+    }
+    delete data.countryCode;
+    this.addSuppliers(this.data, data);
   }
 
   addSuppliers(organisarionId: number, suppliers: Suppliers) {
@@ -61,7 +115,7 @@ export class SuppliersDialogComponent {
         this.dialogRef.close(res.message);
         this._snackBar.open('Supplier Added', "", {
           duration: 2000,
-          panelClass: ["success-snackbar"],
+          panelClass: [ "success-snackbar" ],
           verticalPosition: "bottom"
         });
       }

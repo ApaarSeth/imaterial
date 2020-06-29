@@ -53,9 +53,9 @@ export class AddMyMaterialBomComponent implements OnInit {
     private dialogRef: MatDialogRef<AddMyMaterialBomComponent>,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data) { }
-
+  currencyCode: String
   ngOnInit() {
-
+    this.currencyCode = localStorage.getItem('currencyCode')
     this.creatorId = Number(localStorage.getItem("userId"));
     this.getUserData(this.creatorId);
     this.getCategories();
@@ -214,7 +214,7 @@ export class AddMyMaterialBomComponent implements OnInit {
           })
           this.bomService.addMyMaterial(this.data, myMaterial).then(res => {
             if (res.message = "done") {
-              this._snackBar.open("My Materials Added", "", {
+              this._snackBar.open('Materials Added in BOM successfully', "", {
                 duration: 4000,
                 panelClass: ["warning-snackbar"],
                 verticalPosition: "bottom"

@@ -23,6 +23,23 @@
   }
 }
 
+.mat-form-field-infix-padding-top {
+  .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    padding-top: 0px !important ;
+  }
+}
+.mat-form-field-infix-padding-all {
+  .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    padding-bottom: 0px !important ;
+    padding-top: 0px !important ;
+  }
+}
+.mat-form-field-arrow-padding {
+  .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select-arrow-wrapper {
+    padding-top: 0px !important ;
+  }
+}
+
 .mat-select-placeholder-padding {
   .mat-form-field-infix .mat-select-placeholder {
     padding-bottom: 4px !important;
@@ -58,6 +75,12 @@
   .mat-form-field-wrapper .mat-form-field-flex {
     padding-top: 0px !important;
     padding-bottom: 3px !important;
+  }
+}
+
+.date-picker-button-padding {
+  .mat-form-field-suffix .mat-button-wrapper {
+    padding-left: 16px !important;
   }
 }
 
@@ -171,4 +194,210 @@ div.limited-character.universal {
     padding-right: 0px !important;
     padding-bottom: 3px !important;
   }
+}
+
+.tx-cst {
+  .mat-tab-body-content {
+    padding-bottom: 10px;
+  }
+}
+
+.w-95 {
+  width: 95% !important;
+}
+
+.mt-56px {
+  margin-bottom: 56px;
+}
+
+.adtbtn {
+  bottom: 0;
+  padding-bottom: 17px;
+  // position:absolute;
+  margin-left: 5px;
+}
+
+.tctnc {
+  font-size: 12px;
+  color: #888888;
+}
+
+.info-icon {
+  display: inline-flex;
+  text-align: center;
+  border: 2px solid #f47720;
+  border-radius: 50%;
+  padding: 2px 5px;
+  cursor: pointer;
+  img {
+    height: 9px;
+  }
+}
+
+.info-tootip {
+  $this: &;
+  &:hover {
+    #{$this}__content {
+      display: block;
+    }
+  }
+  &__content {
+    display: none;
+    margin-top: 10px;
+    position: absolute;
+  }
+}
+
+.tooltip-table {
+  display: block !important;
+  max-width: 200px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 5px 2px 0px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+  margin-left: -62%;
+  z-index: 9;
+  position: relative;
+  text-align: left;
+  p {
+    border-bottom: 1px solid #e8e8e8;
+    margin-left: 1px;
+    margin-right: 1px;
+    &:last-of-type {
+      border-bottom: 0px;
+    }
+  }
+  strong {
+    margin-bottom: 2px;
+  }
+  span {
+    margin-left: 3px;
+    font-weight: normal;
+    text-align: right;
+  }
+  span,
+  strong {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
+.slideToggalColor {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar,
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: $main-color !important;
+  }
+}
+
+.mt6p {
+  margin-top: 6px;
+}
+
+.rt-0 {
+  right: 0;
+}
+
+.lh30 {
+  input {
+    line-height: 30px;
+  }
+}
+
+.main-flex {
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  flex-direction: row;
+  & > div {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    flex-direction: row;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .res-table {
+    overflow-x: auto;
+    display: flex;
+    section {
+      display: inline-flex !important;
+      span {
+        font-size: 10px;
+        padding-right: 2px !important;
+        padding-left: 2px !important;
+      }
+    }
+    .mat-expansion-panel {
+      display: grid !important;
+      width: 100%;
+    }
+  }
+  .res-td {
+    display: inline-table;
+    width: max-content;
+    span {
+      font-size: 10px;
+      white-space: nowrap;
+      font-weight: normal;
+      div,
+      .mat-cell {
+        font-weight: normal;
+        padding-right: 10px;
+      }
+    }
+  }
+  .mat-table .mat-cell {
+    height: auto;
+    margin-top: auto;
+    border-bottom: 0px;
+    text-align: left;
+  }
+  .mat-expansion-panel-header {
+    min-height: auto !important;
+    height: auto !important;
+    max-height: auto !important;
+  }
+  // .mat-expansion-indicator{
+  //   margin-top: -50px;
+  // }
+  .fr-row {
+    text-align: left;
+    width: auto;
+    overflow: visible;
+  }
+}
+
+ngx-mat-drp-picker-overlay {
+  overflow: auto;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-grid {
+  display: grid !important;
+}
+
+.overflow-break {
+  overflow-wrap: break-word !important;
+}
+.actv-btn.active {
+  font-weight: 500 !important;
 }

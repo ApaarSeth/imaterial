@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SignINDetailLists } from "../../../shared/models/signIn/signIn-detail-list";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
 import { UserService } from "src/app/shared/services/userDashboard/user.service";
 import { UserDetails } from 'src/app/shared/models/user-details';
@@ -14,6 +14,9 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { CountryCode } from 'src/app/shared/models/currency';
+import { VisitorService } from 'src/app/shared/services/visitor.service';
 
 export interface OrganisationType {
   value: string;
@@ -26,18 +29,25 @@ export interface OrganisationType {
 })
 
 export class SignupComponent implements OnInit {
+  @Input("callingCode") actualCallingCode: string;
+  @Input("countryCode") countryCode: string;
+  @Input("countryList") actualCountryList: CountryCode[]
+
   showPassWordString: boolean = false;
   uniqueCode: string = "";
   user: UserDetails;
   lessOTPDigits: boolean = false;
   showOtp: boolean = false;
-  emailVerified: boolean = true;
+  emailVerified: boolean = false;
+  emailEnteredCounter: number = 0;
   emailMessage: string;
   otpLength: number = 0;
   verifiedMobile: boolean = false;
   value: any;
   organisationDisabled: boolean = false;
-
+  searchCountry: string = '';
+  countryList: CountryCode[] = [];
+  primaryCallingCode: string = '';
   constructor(
     private tokenService: TokenService,
     private route: ActivatedRoute,
@@ -48,26 +58,70 @@ export class SignupComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
-    private dataService: DataService
+    private dataService: DataService,
+    private commonService: CommonService,
+    private visitorsService: VisitorService,
+    private activatedRoute: ActivatedRoute
   ) { }
   acceptTerms: boolean;
   signupForm: FormGroup;
+  ipaddress: string;
   signInDetails = {} as SignINDetailLists;
+  livingCountry: CountryCode[] = [];
+  callingCode: string;
+  locationCounter: number = 0;
 
   ngOnInit() {
+    this.countryList = this.actualCountryList;
+    this.primaryCallingCode = localStorage.getItem('countryCode')
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
+      this.callingCode = this.actualCallingCode
+      this.formInit();
       if (this.uniqueCode) {
-        // this.lessOTPDigits = true;
         this.organisationDisabled = true;
         this.getUserInfo(this.uniqueCode);
-      } else {
-        this.formInit();
+      }
+      if (this.callingCode) {
+        this.getLocation();
       }
     });
-    // let urlLength = this.router.url.toString().length;
-    // let lastSlash = this.router.url.toString().lastIndexOf("/");
-    // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
+  }
+
+
+
+
+  get selectedCountry() {
+    return this.signupForm.get('countryCode').value;
+  }
+
+
+  getLocation() {
+    let emailValidator = [
+      Validators.required,
+      Validators.pattern(FieldRegExConst.EMAIL)
+    ]
+    if (this.callingCode === '+91') {
+      this.signupForm.get('email').setValidators(emailValidator)
+      this.signupForm.get('phone').setValidators([Validators.required])
+      this.signupForm.get('otp').setValidators([Validators.required])
+    }
+    else {
+      this.signupForm.get('email').setValidators([...emailValidator])
+    }
+    this.getCountryCode(this.callingCode, this.countryCode)
+  }
+
+  getCountryCode(callingCode, countryCode) {
+    this.livingCountry = this.countryList.filter(val => {
+      if (callingCode === '+1') {
+        if (val.callingCode === callingCode && val.countryCode === countryCode)
+          return val;
+      } else {
+        return val.callingCode === callingCode;
+      }
+    })
+    this.signupForm.get('countryCode').setValue(this.livingCountry[0])
   }
 
   getUserInfo(code) {
@@ -75,7 +129,18 @@ export class SignupComponent implements OnInit {
       this.user = res.data[0];
       if (res.data[0].firstName)
         localStorage.setItem("userName", res.data[0].firstName);
-      this.formInit();
+      if (this.user.email) {
+        this.verifyEmail(this.user.email)
+      }
+      this.signupForm.setValue({
+        countryCode: this.signupForm.get('countryCode').value,
+        email: this.user ? this.user.email : '',
+        phone: this.user ? this.user.contactNo : '',
+        organisationName: this.user ? this.user.companyName : '',
+        organisationType: "Contractor",
+        password: "",
+        otp: ""
+      });
     });
   }
 
@@ -86,24 +151,30 @@ export class SignupComponent implements OnInit {
 
   formInit() {
     this.signupForm = this.formBuilder.group({
-      email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
-      organisationName: [{ value: this.user ? this.user.companyName : '', disabled: this.organisationDisabled }, Validators.required],
+      countryCode: [{ value: '', disabled: true }],
+      email: [],
+      phone: [],
+      organisationName: [{ value: '', disabled: this.organisationDisabled }, Validators.required],
       organisationType: ["Contractor", Validators.required],
       password: ["", [Validators.required, Validators.minLength(6)]],
-      otp: ["", Validators.required]
+      otp: []
     });
 
-    if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
-      this.enterPhone(event, this.user.contactNo)
-    }
+    this.signupForm.get('email').valueChanges.subscribe(data => {
+      this.verifyEmail(data)
+    })
+    this.signupForm.get('phone').valueChanges.subscribe(data => {
+
+    })
   }
 
   signup() {
     this.signInDetails.password = this.signupForm.value.password;
     this.signInDetails.confirmPassword = this.signupForm.value.password;
-    this.signInDetails.phone = this.signupForm.value.phone;
+    this.signInDetails.phone = this.callingCode === '+91' ? this.signupForm.value.phone : null;
     this.signInDetails.email = this.signupForm.value.email;
+    this.signInDetails.countryCode = this.callingCode === '+91' ? this.livingCountry[0].callingCode : null;
+    this.signInDetails.loginIdType = this.callingCode === '+91' ? 'PHONE' : 'EMAIL';
     this.signInDetails.clientId = "fooClientIdPassword";
     if (this.uniqueCode) {
       this.signInDetails.firstName = this.user.firstName ? this.user.firstName : null;
@@ -111,18 +182,17 @@ export class SignupComponent implements OnInit {
     }
     this.signInDetails.customData = {
       uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
+      countryCode: this.livingCountry[0].callingCode,
+      countryId: String(this.livingCountry[0].countryId),
       organizationName: this.signupForm.value.organisationName,
       organizationType: this.signupForm.value.organisationType,
       organizationId: this.user ? this.user.organizationId.toString() : null,
       userId: this.user ? this.user.userId.toString() : null,
-
-      // organizationId: this.user ? this.user.organizationId : 0,
-      // userId: this.user ? this.user.userId : 0
     };
 
     this.signInSignupService.signUp(this.signInDetails).then(data => {
       if (data.status === 1002) {
-        this._snackBar.open("Phone Number already used", "", {
+        this._snackBar.open(this.callingCode === "+91" ? "Phone Number already used" : "Email already used", "", {
           duration: 2000,
           panelClass: ["warning-snackbar"],
           verticalPosition: "bottom"
@@ -148,19 +218,20 @@ export class SignupComponent implements OnInit {
           localStorage.setItem("uniqueCode", this.uniqueCode);
         }
 
-
-
-        this.dataService.getRequest(API.CHECKTERMS).then(res => {
-          this.acceptTerms = res.data;
-          if (!this.acceptTerms) {
-            this.router.navigate(["/profile/terms-conditions"]);
-          }
-          else {
-            this.router.navigate(["/profile/update-info"]);
-          }
-        })
-
-
+        if (localStorage.getItem('accountStatus') && Number(localStorage.getItem('accountStatus')) === 0) {
+          this.router.navigate(["/profile/email-verification"]);
+        }
+        else {
+          this.signInSignupService.checkTerms().then(res => {
+            this.acceptTerms = res.data;
+            if (!this.acceptTerms) {
+              this.router.navigate(["/profile/terms-conditions"]);
+            }
+            else {
+              this.router.navigate(["/profile/update-info"]);
+            }
+          })
+        }
       }
     });
   }
@@ -173,30 +244,22 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  enterPhone(event, numberPassed?: string) {
-    this.lessOTPDigits = false;
-
-    this.verifiedMobile = false;
-    this.showOtp = false;
-    this.value = numberPassed ? numberPassed : event.target.value;
-  }
-
   sendOtpBtn() {
-    if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
-      if (!this.uniqueCode) {
-        this.verifyMobile(this.value);
-      }
-      if ((this.uniqueCode) && (this.user.contactNo == this.value)) {
-        this.sendotp(this.value);
-      }
-      else if ((this.uniqueCode) && (this.user.contactNo != this.value)) {
-        this.verifyMobile(this.value);
-      }
+    this.value = this.signupForm.get('phone').value;
+    if (!this.uniqueCode) {
+      this.verifyMobile(this.value);
+    }
+    if ((this.uniqueCode) && (this.user.contactNo == this.value)) {
+      this.sendotp(this.value);
+    }
+    else if ((this.uniqueCode) && (this.user.contactNo != this.value)) {
+      this.verifyMobile(this.value);
     }
   }
 
   sendotp(value) {
-    this.signInSignupService.sendOTP(value).then(res => {
+    let countryCode = this.signupForm.get('countryCode').value.callingCode;
+    this.signInSignupService.sendOTP(value, countryCode).then(res => {
       if (res.data)
         this.showOtp = res.data.success;
       this._snackBar.open("OTP has been sent on your phone number", "", {
@@ -209,7 +272,8 @@ export class SignupComponent implements OnInit {
   }
 
   verifyMobile(mobile) {
-    this.signInSignupService.VerifyMobile(mobile).then(res => {
+    let countryCode = this.signupForm.get('countryCode').value.callingCode;
+    this.signInSignupService.VerifyMobile(mobile, countryCode).then(res => {
       this.verifiedMobile = res.data;
       this._snackBar.open(res.message, "", {
         duration: 2000,
@@ -222,10 +286,11 @@ export class SignupComponent implements OnInit {
     });
   }
   enterOTP(event) {
+    let countryCode = this.signupForm.get('countryCode').value.callingCode;
     const otp = event.target.value;
     if (event.target.value.length == 4) {
       //this.otpLength = event.target.value.length;
-      this.signInSignupService.verifyOTP(this.signupForm.value.phone, otp).then(res => {
+      this.signInSignupService.verifyOTP(this.signupForm.value.phone, countryCode, otp).then(res => {
         if (res.data) {
           this.lessOTPDigits = res.data.success;
         }
@@ -233,17 +298,18 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  verifyEmail(event) {
-    const email = event.target.value
+  verifyEmail(email) {
     if (email.match(FieldRegExConst.EMAIL)) {
       this.signInSignupService.verifyEMAIL(this.signupForm.value.email).then(res => {
         if (res) {
+          this.emailEnteredCounter++;
           this.emailVerified = res.data;
           this.emailMessage = res.message;
         }
       });
+    } else {
+      this.emailEnteredCounter++;
+      this.emailVerified = false;
     }
   }
-
-
 }

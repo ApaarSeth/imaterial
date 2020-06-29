@@ -28,10 +28,28 @@ export class TokenService {
     }
 
     setAuthResponseData(data: auth) {
+        this.setEmail(data.email)
+        this.saceAcountStatus(data.accountStatus)
         this.saveAccessToken(data.serviceToken);
         this.saverole(data.role);
         this.saveUserId(data.userId);
         this.saveOrgId(data.orgId);
+    }
+
+    setEmail(email) {
+        if (email) {
+            localStorage.setItem('email', email);
+        } else {
+            localStorage.removeItem('email');
+        }
+
+    }
+    saceAcountStatus(accountStatus) {
+        if (accountStatus) {
+            localStorage.setItem('accountStatus', accountStatus);
+        } else {
+            localStorage.removeItem('accountStatus');
+        }
     }
 
     /**
@@ -63,7 +81,6 @@ export class TokenService {
 
 
     getRole(): string {
-
         return localStorage.getItem('role');
     }
     saveUserId(userId) {

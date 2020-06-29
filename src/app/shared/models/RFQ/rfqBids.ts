@@ -1,4 +1,6 @@
 import { DocumentList } from '../PO/po-data';
+import { rfqCurrency } from './rfq-details';
+import { Currency } from '../currency';
 
 export interface RfqProjects {
   rfqProjects: RfqProject[];
@@ -14,6 +16,8 @@ export interface RfqProjectSubmit {
   supplierName: string;
   rfqId: number;
   materialList: MaterialListSubmit[];
+  rfqCurrency: Currency
+  additionalOtherCostInfo: additionalOtherCost[]
 }
 
 export interface MaterialListSubmit {
@@ -48,6 +52,7 @@ export interface RfqProject {
   status: number;
   createdBy: string;
   createdAt: string;
+  rfqCurrency: rfqCurrency;
   lowStockMaterialCount: string;
   purchaseOrderCount: string;
   purchaseOrderCost: string;
@@ -61,19 +66,56 @@ export interface RfqProject {
   unit: null;
   materialList: RfqMaterialList[];
   supplierRemarkList: supplierRemarkList[];
+  additionalOtherCostInfo: additionalOtherCost[];
 }
-export interface supplierRemarkList{
-      DocumentDesc?: string; 
-      DocumentUrl?: string;
-      comments?: string;
-      documentId?: number;
-      documentType?: string;
-      documentsList?: DocumentList[]
-      rfqSupplierId?: number;
-      supplierId?: number;
-      supplierName?: string;
+
+export interface additionalOtherCost {
+  supplierId: number,
+  rfqSupplierId: number,
+  otherCostAmount: number,
+  otherCostId: number,
+  otherCostName: string
+  id: number,
+  status: number,
+  createdBy: string,
+  createdAt: string,
+  lastUpdatedBy: string,
+  lastUpdatedAt: string,
+  otherCostDescription: string,
+  organizationId: number,
+  purchaseOrderId: number,
+  rfqSupplierOtherCostId: number
 }
+export interface supplierRemarkList {
+  DocumentDesc?: string;
+  DocumentUrl?: string;
+  comments?: string;
+  documentId?: number;
+  documentType?: string;
+  documentsList?: DocumentList[]
+  rfqSupplierId?: number;
+  supplierId?: number;
+  supplierName?: string;
+}
+export interface RfqTaxInfo {
+  rfqSupplierDetailTaxId: number,
+  rfqSupplierDetailId: number,
+  taxValue: number,
+  taxAmount: number,
+  taxId: number,
+  taxName: string
+}
+
+export interface OtherCostInfo {
+  rfqSupplierDetailOtherCostId: number,
+  rfqSupplierDetailId: number,
+  otherCostAmount: number,
+  otherCostId: number,
+  otherCostName: string
+}
+
 export interface RfqMaterialList {
+
   poAvailableQty?: number;
   id: number;
   status: number;
@@ -116,6 +158,8 @@ export interface RfqSupplierList {
   materialCgst: number,
   materialIgst: number,
   brandDetailList: RfqBrandDetail[];
+  taxInfo?: RfqTaxInfo[];
+  otherCostInfo?: OtherCostInfo[];
 }
 
 export interface RfqBrandDetail {

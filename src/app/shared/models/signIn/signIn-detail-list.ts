@@ -7,7 +7,9 @@ export interface SignINDetailLists {
   middleName: string;
   lastName: string;
   email: string;
+  countryCode: string;
   customData: CustonDataDetails;
+  loginIdType: string;
 }
 
 export interface ForgetPassDetails {
@@ -15,7 +17,7 @@ export interface ForgetPassDetails {
   password: string;
   confirmPassword: string;
   clientId?: string;
-    customData: CustonDataDetails;
+  customData: CustonDataDetails;
 }
 
 export interface SignInData {
@@ -26,6 +28,8 @@ export interface SignInData {
   userType: string;
 }
 export interface CustonDataDetails {
+  countryCode?: string;
+  countryId?: string;
   uniqueCode: string;
   organizationName: string;
   organizationType: string;

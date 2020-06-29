@@ -4,24 +4,28 @@ import { ViewDocumentsDialogComponent } from "src/app/shared/dialogs/view-docume
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { ActivatedRoute } from '@angular/router';
 import { Rfq, Documents, TermsObj } from 'src/app/shared/models/RFQ/rfq-view';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
     selector: "rfq-view",
     templateUrl: "./rfq-view.component.html",
-    styleUrls: ["../../../../assets/scss/main.scss"]
+    styleUrls: [ "../../../../assets/scss/main.scss" ]
 })
 export class RFQViewComponent implements OnInit {
-    displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Makes"];
+    displayedColumns: string[] = [ "Material Name", "Required Date", "Quantity", "Makes" ];
     rfqDetails: Rfq = {} as Rfq;
     rfqId: number;
     terms: TermsObj;
+    isMobile: boolean;
 
     constructor(public dialog: MatDialog,
         private route: ActivatedRoute,
-        private rfqService: RFQService
+        private rfqService: RFQService,
+        private commonService: CommonService
     ) { }
 
     ngOnInit() {
+        this.isMobile = this.commonService.isMobile().matches;
         this.route.params.subscribe(rfqId => {
             this.rfqId = Number(rfqId.id);
             this.getRFQDetails(this.rfqId);

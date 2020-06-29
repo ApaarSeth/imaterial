@@ -8,6 +8,7 @@
     </mat-form-field>
   </div>
   <div class="col-xs-6 text-right">
+    <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
     <span class="p-r-5">
       <span class="m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer add-supplier-btn" (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)">
         <span class="font-size20">
@@ -19,7 +20,7 @@
       </span>
     </span>
     <span class="p-r-5">
-      <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" type="button">Back</button>
+      <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="changeRfq()" type="button">Back</button>
     </span>
     <!-- (click)="navigateToUploadPage()" -->
     <span>
@@ -29,6 +30,22 @@
     </span>
   </div>
 </div>
+
+<div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null">
+  <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+    <span class="font-size-vary-grn color-grey">
+      <img width="25px" *ngIf="rfqData.rfqCurrency.exchangeCurrencyFlag" [src]="rfqData.rfqCurrency.exchangeCurrencyFlag" />
+      {{ rfqData.rfqCurrency.exchangeCurrencyName }}
+    </span>
+    <span class="p-l-5"> = </span>
+    <span class="p-l-5 color-6d6a6a color-grey"> {{ rfqData.rfqCurrency.exchangeValue }} </span>
+    <span class="p-l-5 color-grey">
+      <img width="25px" *ngIf="rfqData.rfqCurrency.primaryCurrencyFlag" [src]="rfqData.rfqCurrency.primaryCurrencyFlag" />
+      {{ rfqData.rfqCurrency.primaryCurrencyName }}
+    </span>
+  </span>
+</div>
+
 <form *ngIf="allSuppliers.length" [formGroup]="supplierForm">
   <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'" formArrayName="forms" class="mat-elevation-z4 col-sm-12 mt-3">
     <ng-container matColumnDef="Supplier Name">

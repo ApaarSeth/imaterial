@@ -15,12 +15,14 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShowSupplierRemarksandDocs } from 'src/app/shared/dialogs/show-supplier-remarks-documents/show-supplier-remarks-documents.component';
+import { ProjectItemComponent } from 'src/app/shared/components/project-item/project-item.component';
 
 @Component({
   selector: "app-rfq-bids",
   templateUrl: "./rfq-bids.component.html"
 })
 export class RfqBidsComponent implements OnInit {
+
   constructor(
     private router: Router,
     private rfqService: RFQService,
@@ -30,11 +32,12 @@ export class RfqBidsComponent implements OnInit {
     private navService: AppNavigationService,
     private _snackBar: MatSnackBar
   ) { }
+
   rfqProjects: RfqProject[] = [];
   rfqForms: FormGroup;
   rfqId: number;
   orgId: number;
-
+  ratesBaseCurr: boolean = false;
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.route.params.subscribe(rfqId => {
@@ -66,6 +69,8 @@ export class RfqBidsComponent implements OnInit {
                   materialIgst: supplier.materialIgst,
                   materialCgst: supplier.materialCgst,
                   materialSgst: supplier.materialSgst,
+                  taxInfo: supplier.taxInfo ? this.formBuilder.array(supplier.taxInfo) : null,
+                  otherCostInfo: supplier.otherCostInfo ? this.formBuilder.array(supplier.otherCostInfo) : null,
                   brandGroup: this.formBuilder.array(brandGrp)
                 });
               }
@@ -86,13 +91,20 @@ export class RfqBidsComponent implements OnInit {
           projectName: project.projectName,
           projectAddressId: project.projectAddressId,
           addressId: project.projectAddressId,
-          materialList: this.formBuilder.array(materialGrp)
+          materialList: this.formBuilder.array(materialGrp),
+          rfqCurrency: project.rfqCurrency,
+          additionalOtherCostInfo: this.formBuilder.array(project.additionalOtherCostInfo)
         });
       }
     );
     this.rfqForms = this.formBuilder.group({});
     this.rfqForms.addControl("forms", new FormArray(frmArr));
-    // console.log(this.rfqForms.value);
+  }
+
+  get currency() {
+    return this.ratesBaseCurr
+      ? this.rfqProjects[0].rfqCurrency.primaryCurrencyName
+      : this.rfqProjects[0].rfqCurrency.exchangeCurrencyName
   }
 
   allocateQuantity() {
@@ -106,6 +118,7 @@ export class RfqBidsComponent implements OnInit {
           },
           materialList: MaterialListSubmit[]
         ): RfqProjectSubmit => {
+          let additionalOtherCost = proj.additionalOtherCostInfo.filter(val => val.supplierId === supplierData.supplierId)
           return {
             projectId: proj.projectId,
             projectName: proj.projectName,
@@ -113,10 +126,11 @@ export class RfqBidsComponent implements OnInit {
             addressId: proj.projectAddressId,
             ...supplierData,
             rfqId: this.rfqId,
-            materialList
+            materialList,
+            rfqCurrency: proj.rfqCurrency,
+            additionalOtherCostInfo: additionalOtherCost
           };
         };
-
         const getMaterialsForUnicSupp = (suppId): MaterialListSubmit[] =>
           proj.materialList
             .map(mat => {
@@ -133,13 +147,14 @@ export class RfqBidsComponent implements OnInit {
                     materialUnitPrice: brandData.brand.materialUnitPrice,
                     materialSgst: sup.materialSgst,
                     materialCgst: sup.materialCgst,
-                    materialIgst: sup.materialIgst
+                    materialIgst: sup.materialIgst,
+                    taxInfo: sup.taxInfo ? [...sup.taxInfo] : null,
+                    otherCostInfo: sup.otherCostInfo ? [...sup.otherCostInfo] : null
                   };
                 });
               });
             })
             .flat(2);
-
         const getAllSupplierProj = (proj: RfqProject) => {
           let suppList = [];
           proj.materialList.forEach(mat => {
@@ -161,14 +176,12 @@ export class RfqBidsComponent implements OnInit {
           });
           return suppList;
         };
-
         const project = () => {
           let supplierList = getAllSupplierProj(proj);
           return supplierList.map(supp => {
             const matList = getMaterialsForUnicSupp(supp.supplierId).filter(
               material => material.materialQty != null
             );
-
             const suppData = {
               supplierId: supp.supplierId,
               supplierAddressId: supp.supplierAddressId,
@@ -177,7 +190,6 @@ export class RfqBidsComponent implements OnInit {
             return createProject(suppData, matList);
           });
         };
-
         data.push(project());
         return data;
       },
@@ -216,7 +228,6 @@ export class RfqBidsComponent implements OnInit {
 
   getQuanityValidation(p, m) {
     this.rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.setValue(true);
-    console.log(this.rfqForms.value);
     let total: number = 0;
 
     this.rfqForms.value.forms[p].materialList[m].supplierList.forEach(supplier => {
@@ -231,10 +242,8 @@ export class RfqBidsComponent implements OnInit {
               panelClass: ["success-snackbar"],
               verticalPosition: "bottom"
             });
-
           }
         }
-
       });
     });
   }

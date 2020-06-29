@@ -73,8 +73,8 @@ export class PoCardComponent implements OnInit {
       let date = new Date(this.commonService.formatDate(this.projectDetails.get("endDate").value))
       let dummyMonth = date.getMonth() + 1;
       const year = date.getFullYear().toString();
-      const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-      const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+      const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+      const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
       this.projectDetails.get("endDate").setValue(year + "-" + month + "-" + day)
     }
     return this.projectDetails.value;
@@ -115,9 +115,10 @@ export class PoCardComponent implements OnInit {
     });
   }
   openaddressDialog(roleType: string, id: number) {
+    let international = this.cardData.isInternational;
     const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
       width: "800px",
-      data: { roleType, id }
+      data: { roleType, id, international }
     });
 
     dialogRef.afterClosed().subscribe((result: Address) => {
@@ -158,14 +159,14 @@ export class PoCardComponent implements OnInit {
     });
   }
 
-   
-    @HostListener('window:resize', ['$event'])
-      sizeChange(event) {
-       if(event.currentTarget.innerWidth <= 768){
-          this.showResponsiveDesign = true;
-        }else{
-          this.showResponsiveDesign = false;
-        }
+
+  @HostListener('window:resize', ['$event'])
+  sizeChange(event) {
+    if (event.currentTarget.innerWidth <= 768) {
+      this.showResponsiveDesign = true;
+    } else {
+      this.showResponsiveDesign = false;
     }
+  }
 
 }

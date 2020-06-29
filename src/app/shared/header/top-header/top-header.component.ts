@@ -25,7 +25,6 @@ export class TopHeaderComponent implements OnInit {
   notificationObj: NotificationInt[] = [];
   readnotification: NotificationInt[] = [];
   unreadnotification: NotificationInt[] = [];
-
   subscription: Subscription;
   subscriptions: Subscription[] = [];
   newunreadMessage: number = null;

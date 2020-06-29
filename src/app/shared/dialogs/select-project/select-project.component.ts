@@ -39,7 +39,7 @@ export class SelectProjectComponent implements OnInit {
         const id = event.value;
         const project = Object.entries(this.data).flat().filter(op => op.projectId === id);
         if (project[0].matCount === 0 || project[0].matCount === null) {
-            this._router.navigate([`bom/${project[0].projectId}`]);
+            this._router.navigate([`project-dashboard/bom/${project[0].projectId}`]);
         } else {
             this._router.navigate([`project-dashboard/bom/${project[0].projectId}/bom-detail`]);
         }

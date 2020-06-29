@@ -40,13 +40,13 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 @Component({
   selector: "user-details",
   templateUrl: "./user-details.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  styleUrls: [ "../../../../assets/scss/main.scss" ]
 })
 
 
 export class UserDetailComponent implements OnInit {
-  displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
-  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
+  displayedColumns: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star' ];
+  displayedColumnsDeactivate: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project' ];
 
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;
@@ -60,6 +60,7 @@ export class UserDetailComponent implements OnInit {
   addUserBtn: boolean = false;
   allUsers: AllUserDetails;
   orgId: number;
+  countryList: any[];
 
   public UserDashboardTour: GuidedTour = {
     tourId: 'supplier-tour',
@@ -72,7 +73,7 @@ export class UserDetailComponent implements OnInit {
         orientation: Orientation.Left
       }
     ],
-      skipCallback: () => {
+    skipCallback: () => {
       this.setLocalStorage()
     },
     completeCallback: () => {
@@ -90,7 +91,7 @@ export class UserDetailComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private userService: UserService,
     private guidedTourService: GuidedTourService,
-    private userGuideService : UserGuideService,
+    private userGuideService: UserGuideService,
     private commonService: CommonService
   ) {
   }
@@ -98,12 +99,14 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    
+
+    this.countryList = this.activatedRoute.snapshot.data.countryList;
+
     this.getAllUsers();
-   this.getNotifications();
+    this.getNotifications();
   }
 
- getNotifications(){
+  getNotifications() {
     this.commonService.getNotification(this.userId);
   }
 
@@ -116,11 +119,12 @@ export class UserDetailComponent implements OnInit {
         this.dataSourceActivateTemp = data.data.activatedProjectList;
         this.dataSourceDeactivateTemp = data.data.deactivatedProjectList;
 
-          if ((localStorage.getItem('user') == "null") || (localStorage.getItem('user') == '0')) {
-            setTimeout(() => {
-              this.guidedTourService.startTour(this.UserDashboardTour);
-            }, 1000);
-          }
+
+        if ((localStorage.getItem('user') == "null") || (localStorage.getItem('user') == '0')) {
+          setTimeout(() => {
+            this.guidedTourService.startTour(this.UserDashboardTour);
+          }, 1000);
+        }
 
         this.dataSourceActivate.filterPredicate = (data, filterValue) => {
           const username = data.ProjectUser.firstName.toLowerCase() + " " + data.ProjectUser.lastName.toLowerCase();
@@ -129,7 +133,7 @@ export class UserDetailComponent implements OnInit {
         }
 
         this.dataSourceDeactivate.filterPredicate = (data, filterValue) => {
-           const username = data.ProjectUser.firstName.toLowerCase() + " " + data.ProjectUser.lastName.toLowerCase();
+          const username = data.ProjectUser.firstName.toLowerCase() + " " + data.ProjectUser.lastName.toLowerCase();
 
           const dataStr = username + data.ProjectUser.email.toLowerCase() + data.ProjectUser.contactNo + data.ProjectUser.roleId + data.roleName + data.ProjectList;
           return dataStr.indexOf(filterValue) != -1;
@@ -145,22 +149,23 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
-    setLocalStorage() {
-        const popovers ={
-        "userId":this.userId,
-        "moduleName":"user",
-        "enableGuide":1
+  setLocalStorage() {
+    const popovers = {
+      "userId": this.userId,
+      "moduleName": "user",
+      "enableGuide": 1
     };
-        this.userGuideService.sendUserGuideFlag(popovers).then(res=>{
-          if(res){
-            localStorage.setItem('user', '1');
-          }
-        })
+    this.userGuideService.sendUserGuideFlag(popovers).then(res => {
+      if (res) {
+        localStorage.setItem('user', '1');
+      }
+    })
   }
   addUser() {
     this.openDialog({
       isEdit: false,
       isDelete: false,
+      countryList: this.countryList
 
     } as UserDetailsPopUpData);
   }
@@ -185,7 +190,8 @@ export class UserDetailComponent implements OnInit {
     this.openDialogDeactiveUser({
       isEdit: false,
       isDelete: true,
-      detail: this.userDetailsTemp
+      detail: this.userDetailsTemp,
+      countryList: this.countryList
     } as UserDetailsPopUpData);
   }
 
@@ -204,6 +210,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   editProject(data) {
+    console.log(data.ProjectUser);
     const projectList: Array<number> = new Array<number>();
     this.userDetailsTemp.firstName = data.ProjectUser.firstName;
     this.userDetailsTemp.lastName = data.ProjectUser.lastName;
@@ -212,7 +219,9 @@ export class UserDetailComponent implements OnInit {
     this.userDetailsTemp.roleId = data.ProjectUser.roleId;
     this.userDetailsTemp.userId = data.ProjectUser.userId;
     this.userDetailsTemp.accountStatus = data.ProjectUser.accountStatus;
-    
+    this.userDetailsTemp.countryCode = data.ProjectUser.countryCode;
+    this.userDetailsTemp.countryId = data.ProjectUser.countryId;
+
     data.ProjectList.forEach(element => {
       projectList.push(element.projectId);
     });
@@ -221,7 +230,8 @@ export class UserDetailComponent implements OnInit {
     this.openDialog({
       isEdit: true,
       isDelete: false,
-      detail: this.userDetailsTemp
+      detail: this.userDetailsTemp,
+      countryList: this.countryList
     } as UserDetailsPopUpData);
   }
   applyFilteqqr(event: Event) {

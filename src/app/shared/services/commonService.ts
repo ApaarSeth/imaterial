@@ -3,7 +3,9 @@ import { NotificationInt } from '../models/notification';
 import { API } from '../constants/configuration-constants';
 import { DataService } from './data.service';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { Currency } from '../models/currency';
+import { MediaMatcher } from '@angular/cdk/layout';
 @Injectable({
   providedIn: "root"
 })
@@ -17,8 +19,13 @@ export class CommonService {
   unreadnotificationLength: number = null;
   onUserUpdate$ = new Subject<number>();
   materialAdded = new Subject<boolean>();
-  constructor(private dataService: DataService,
-    private _router: Router) { }
+  baseCurrency = new BehaviorSubject(null);
+  XSmall: string = '(max-width: 599px)';
+  constructor(
+    private dataService: DataService,
+    private _router: Router,
+    private mediaMatcher: MediaMatcher
+  ) { }
 
   formatDate(oldDate): string {
     let newDate = new Date(oldDate);
@@ -26,6 +33,17 @@ export class CommonService {
     return String(newDate);
   }
 
+  checkDate(data) {
+    let date = new Date(data)
+    let dummyMonth = date.getMonth() + 1;
+    const year = date.getFullYear().toString();
+    const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+    const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
+    return year + "-" + month + "-" + day;
+  }
+  getBaseCurrency() {
+    return this.dataService.getRequest(API.BASECURRENCY)
+  }
   getNotification(userId) {
     this.dataService.getRequest(API.GET_NOTIFICATIONS(userId), null, { skipLoader: true }).then(res => {
       this.notificationObj = res.data;
@@ -72,10 +90,31 @@ export class CommonService {
     let date = new Date(this.formatDate(formatdate))
     let dummyMonth = date.getMonth() + 1;
     const year = date.getFullYear().toString();
-    const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-    const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+    const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+    const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
     return year + "-" + month + "-" + day;
   }
+
+  getCurrency() {
+    return this.dataService.getRequest(API.CURRENCY);
+  }
+
+  getCountry() {
+    let callingCode = localStorage.getItem('countryCode')
+    return this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: callingCode === '+91' ? false : true });
+  }
+
+  poTaxesList() {
+    return this.dataService.getRequest(API.GETPOTAXESLIST)
+  }
+  taxesList(rfqId) {
+    return this.dataService.getRequest(API.GETTAXESLIST(rfqId))
+  }
+
+  isMobile() {
+    return this.mediaMatcher.matchMedia(this.XSmall);
+  }
+
 
 }
 

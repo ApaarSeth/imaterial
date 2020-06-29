@@ -1,32 +1,10 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-
-import { Roles, AllUserDetails, UserDetailsPopUpData, UserAdd } from '../../models/user-details';
-import { UserService } from '../../services/userDashboard/user.service';
+import { UserDetailsPopUpData } from '../../models/user-details';
 import { Router } from '@angular/router';
-import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { ProjectService } from '../../services/projectDashboard/project.service';
-import { ProjectDetails } from '../../models/project-details';
-
-
-export interface City {
-  value: string;
-  viewValue: string;
-}
-
-export interface ProjectType {
-  type: string;
-}
-
-export interface Unit {
-  value: string;
-}
+import { DomSanitizer } from '@angular/platform-browser';
+import { Video } from "src/app/shared/models/video";
 
 @Component({
   selector: "view-video-dialog",
@@ -35,18 +13,42 @@ export interface Unit {
 
 export class ViewVideoComponent implements OnInit {
 vid : any;
-
+safeURL: any;
 
   constructor(
-
     private dialogRef: MatDialogRef<ViewVideoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserDetailsPopUpData,
     private router: Router,
     private projectService: ProjectService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
+    this.getVideo();
+  }
+
+  getVideo(){
+    const countryId = Number(localStorage.getItem("countryId"));
+
+    this.projectService.getVideos().then(res => {
+
+      // get the video object if callingCode is equal to registered user countryCode
+      var dashboardVideo: Video[] = res.data.filter(video => video.countryId === countryId);
+      var videoURL: string;
+      
+      // If callingCode does not match with registered user countryCode then set default video url
+      if(dashboardVideo === [] || dashboardVideo.length === 0){
+        dashboardVideo = res.data.filter(video => video.isDefault === 1);
+      }
+
+      const videoId = dashboardVideo[0].videoUrl.split('/')[3].split("=")[1];
+      videoURL = "https://www.youtube.com/embed/"+videoId;
+
+      // Final video url
+      this.safeURL = this._sanitizer.bypassSecurityTrustResourceUrl(videoURL);
+      console.log(this.safeURL)
+    });
   }
   
   close() {

@@ -11,7 +11,7 @@ import { IndentVO } from "../../models/indent";
   providedIn: "root"
 })
 export class ProjectService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
 
   getProjects(organizationId: Number, userId: Number) {
     return this.dataService
@@ -43,7 +43,7 @@ export class ProjectService {
   //   });
   // }
 
-  addProjects(projectData: ProjectDetails,organizationId:number,userId:number) {
+  addProjects(projectData: ProjectDetails, organizationId: number, userId: number) {
     projectData.userId = userId;
     projectData.organizationId = organizationId;
     return this.dataService
@@ -61,7 +61,7 @@ export class ProjectService {
       });
   }
 
-  deleteDraftedPo(purchaseOrderId:Number) {
+  deleteDraftedPo(purchaseOrderId: Number) {
     return this.dataService
       .sendDeleteRequest(API.DELETEDRAFTEDPO(purchaseOrderId), "")
       .then(res => {
@@ -84,9 +84,28 @@ export class ProjectService {
       });
   }
 
-  getPincode(pin:number){
-     return this.dataService
+  getPincode(pin: number) {
+    return this.dataService
       .getRequest(API.GETCITYANDSTATE(pin))
+      .then(res => {
+        return res;
+      });
+  }
+
+  getPincodeInternational(pin: number, cId: number) {
+    return this.dataService
+      .getRequest(API.GETCITYANDSTATEBYCOUNTRY(pin, cId))
+      .then(res => {
+        return res;
+      });
+  }
+
+  /**
+   * @description To get the dashboard videos
+   */
+  getVideos() {
+    return this.dataService
+      .getRequest(API.DASHBOARD_VIDEOS)
       .then(res => {
         return res;
       });

@@ -9,6 +9,7 @@ import { RouterModule } from "@angular/router";
 import { SupplierDetailComponent } from './supplier-details/supplier-details.component';
 import { SupplierRoutingModule } from './supplier-routing.module';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { SearchPipe } from 'src/app/shared/pipes/searchPipe';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     AppSharedModule,
     SupplierRoutingModule
   ],
-  declarations: [SupplierDetailComponent]
+  declarations: [SupplierDetailComponent],
+  providers:[SearchPipe]
 })
 export class SupplierDashboardModule {}

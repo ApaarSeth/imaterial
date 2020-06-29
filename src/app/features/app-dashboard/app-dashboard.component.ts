@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { PurchaseOrderData } from 'src/app/shared/models/po-details/po-details-list';
 import { Range } from 'src/app/shared/models/datePicker';
@@ -40,6 +40,8 @@ export class AppDashboardComponent implements OnInit {
   searchText = '';
   filterForm: FormGroup;
   currentIndex: number = 0;
+  isMobile: boolean;
+  cntryList: any[];
   constructor(public dialog: MatDialog,
     private router: Router,
     private formbuilder: FormBuilder,
@@ -48,16 +50,21 @@ export class AppDashboardComponent implements OnInit {
     private _projectService: ProjectService,
     private commonService: CommonService,
     private tokenService: TokenService,
-    private permissionService: PermissionService) { }
+    private permissionService: PermissionService,
+    private activatedRoute: ActivatedRoute) { }
 
   range: Range = { fromDate: new Date(), toDate: new Date() };
   options: NgxDrpOptions;
   presets: Array<PresetItem> = [];
 
+  currencyCode: string;
+
 
   ngOnInit() {
+    this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
+    this.isMobile = this.commonService.isMobile().matches;
     const role = localStorage.getItem("role")
     if (role) {
       this.permissionObj = this.permissionService.checkPermission(role);
@@ -90,10 +97,6 @@ export class AppDashboardComponent implements OnInit {
     })
     this.getProjectsNumber();
     this.getNotifications();
-
-    this.dateRangePicker.valueChanges.subscribe(data => {
-      console.log(data)
-    })
   }
 
   ngOnChanges(): void {
@@ -173,7 +176,8 @@ export class AppDashboardComponent implements OnInit {
   openProject() {
     let data = {
       isEdit: false,
-      isDelete: false
+      isDelete: false,
+      countryList: this.cntryList
     };
     const dialogRef = this.dialog.open(AddProjectComponent, {
       width: "1000px",
@@ -182,7 +186,7 @@ export class AppDashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result != null)
-        this.router.navigate(['/project-dashboard']);
+        this.router.navigate([ '/project-dashboard' ]);
     });
   }
 
@@ -200,7 +204,6 @@ export class AppDashboardComponent implements OnInit {
           "releaseNoteId": releaseNoteId
         }
         this.userguideservice.sendReleaseNoteData(obj).then(res => {
-          console.log(result + " " + releaseNoteId);
           localStorage.setItem('ReleaseNotes', '1');
         })
       }
@@ -211,8 +214,8 @@ export class AppDashboardComponent implements OnInit {
     let date = new Date(this.commonService.formatDate(formatdate))
     let dummyMonth = date.getMonth() + 1;
     const year = date.getFullYear().toString();
-    const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-    const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+    const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+    const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
     return year + "-" + month + "-" + day;
   }
 
@@ -229,6 +232,9 @@ export class AppDashboardComponent implements OnInit {
       "projectList": projectIds ? projectIds : []
     }
     this._userService.getDashboardData(data).then(res => {
+      if (res.data.currencyCode) {
+        this.currencyCode = res.data.currencyCode;
+      }
       if (label == 'po')
         this.poData = res.data;
 
@@ -300,7 +306,7 @@ export class AppDashboardComponent implements OnInit {
   //  }
   // }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', [ '$event' ])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 494) {
       this.tab1 = "P.O.";

@@ -56,3 +56,12 @@ $mat-row-horizontal-padding: 24px;
   flex: none;
   // padding-left: 45px;
 }
+
+.mat-header-cell {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-header-cell.material-Name {
+  justify-content: start;
+}

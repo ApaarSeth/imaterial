@@ -1,6 +1,6 @@
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
-    <div class="row">
+    <div class="row p-t-20">
       <div class="col-sm-12 col-md-12 m-t-5 text-semi-bold text-left" *ngIf="this.mode === 'view'">
         PO is Approved by {{ this.poData.poStatusChangedBy }} on {{ this.poData.poStatusChangedOn | date: "dd-MMM-yyy" }}
 
@@ -54,7 +54,16 @@
       <div class="main-div-po m-b-45">
         <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData"> </app-po-card>
       </div>
-      <app-po-table #poTable *ngIf="tableData.length" (QuantityAmountValidation)="QuantityAmountValidation($event)" [poTableData]="tableData"> </app-po-table>
+      <app-po-table
+        #poTable
+        *ngIf="tableData.length"
+        (QuantityAmountValidation)="QuantityAmountValidation($event)"
+        [poTableData]="tableData"
+        [purchaseOrderCurrency]="currency"
+        [additionalOtherCostInfo]="additionalOtherCost"
+        [poData]="poData"
+      >
+      </app-po-table>
     </div>
 
     <div class="row doc-froala-div">

@@ -11,8 +11,9 @@ import { SigninComponent } from "./sign-in/sign-in.component";
 import { AuthRoutingModule } from "./auth-routing.module";
 import { OTPComponent } from "./otp/otp.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
-import { ChangePasswordComponent } from "./change-password/change-password.component";
 import { SignInSignUpComponent } from './sign-in-sign-up/sign-in-sign-up.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { InitialCountryResolver } from './sign-in-sign-up/resolver/initial-country.resolver';
 
 @NgModule({
   imports: [
@@ -24,15 +25,16 @@ import { SignInSignUpComponent } from './sign-in-sign-up/sign-in-sign-up.compone
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    AuthRoutingModule
+    AuthRoutingModule,
   ],
+  providers: [InitialCountryResolver],
   declarations: [
     SignupComponent,
     SigninComponent,
     OTPComponent,
     ForgotPasswordComponent,
-    ChangePasswordComponent,
+    ResetPasswordComponent,
     SignInSignUpComponent
   ]
 })
-export class AuthModule {}
+export class AuthModule { }

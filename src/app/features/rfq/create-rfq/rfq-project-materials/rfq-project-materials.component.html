@@ -37,12 +37,27 @@
     </div>
 
     <div class="col-xs-4 text-right">
+      <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
       <span>
         <button mat-raised-button matStepperNext [disabled]="!(form.valid && counter > 0)" (click)="materialAdded()" class="main-background-color main-button color-white">
           Next
         </button>
       </span>
     </div>
+  </div>
+  <div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="addRfq.rfqCurrency != null && addRfq.rfqCurrency.exchangeCurrencyName != null">
+    <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+      <span class="font-size-vary-grn color-grey">
+        <img width="25px" *ngIf="addRfq.rfqCurrency.exchangeCurrencyFlag" [src]="addRfq.rfqCurrency.exchangeCurrencyFlag" />
+        {{ addRfq.rfqCurrency.exchangeCurrencyName }}
+      </span>
+      <span class="p-l-5"> = </span>
+      <span class="p-l-5 color-6d6a6a color-grey"> {{ addRfq.rfqCurrency.exchangeValue }} </span>
+      <span class="p-l-5 color-grey">
+        <img width="25px" *ngIf="addRfq.rfqCurrency.primaryCurrencyFlag" [src]="addRfq.rfqCurrency.primaryCurrencyFlag" />
+        {{ addRfq.rfqCurrency.primaryCurrencyName }}
+      </span>
+    </span>
   </div>
 </form>
 <form *ngIf="rfqDetails.length" [formGroup]="materialForm">

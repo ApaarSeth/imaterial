@@ -1,5 +1,7 @@
-import { RfqMaterialResponse } from '../RFQ/rfq-details';
+import { RfqMaterialResponse, rfqCurrency } from '../RFQ/rfq-details';
 import { Suppliers } from '../RFQ/suppliers';
+import { OtherCostInfo } from '../tax-cost.model';
+import { TaxInfo } from '../common.models';
 
 export interface POData {
   supplierAddress: SupplierAddress;
@@ -13,6 +15,7 @@ export interface POData {
   poValidUpto: string;
   DocumentsList: DocumentList[];
   Terms: terms;
+  purchaseOrderCurrency: PurchaseOrderCurrency;
   comments: string;
   projectId: number;
   approverId?: number;
@@ -21,6 +24,28 @@ export interface POData {
   poStatusChangedOn?: string;
   approverName?: string;
   roleDescription?: string;
+  isInternational: number;
+  additionalOtherCostInfo?: OtherCostInfo[];
+  additionalOtherCostAmount?: number;
+  currencyCode?: string;
+}
+
+export interface PurchaseOrderCurrency {
+  UserId: string
+  exchangeCurrencyId: number;
+  exchangeCurrencyName: string;
+  exchangeCurrencyFlag: string;
+  exchangeCountryId: string;
+  exchangeCurrency: string;
+  exchangeCurrencySymbol: string;
+  exchangeValue: number;
+  primaryCurrencyId: number;
+  primaryCurrencyName: string;
+  primaryContryId: string;
+  primaryCurrency: string;
+  primaryCurrencySymbol: string;
+  primaryCurrencyFlag: string;
+  purchaseOrderId: 0
 }
 export interface PoMaterial {
   materialId: number;
@@ -44,13 +69,19 @@ export interface PoMaterial {
   poAvailableQty?: number;
   validQuantity?: boolean;
   purchaseOrderDetailList: PurchaseOrder[];
+  taxInfo: TaxInfo[];
+  otherCostInfo: OtherCostInfo[]
+  totalTax: number;
+  taxAmount: number;
+  totalOtherTax: number;
+  otherCostAmount: number;
 }
 
 export interface PurchaseOrder {
   id: number;
   status: number;
   created_by: string;
-  created_at: string;
+  createdAt: string;
   last_updated_by: string;
   last_updated_at: string;
   projectName: string;
@@ -75,6 +106,9 @@ export interface PurchaseOrder {
   gstAmount: number;
   total: number;
   qty?: number;
+  validUpto?: string;
+  taxAmount?: number;
+  otherCostAmount?: number
 }
 export interface terms {
   termsId?: number;
@@ -157,6 +191,7 @@ export interface CardData {
   poNumber: number;
   poValidUpto: string;
   projectId: number;
+  isInternational?: number;
 }
 
 export interface DocumentList {
@@ -197,6 +232,7 @@ export interface initiatePo {
   supplierAddressId: number;
   supplierName: string;
   rfqId: null;
+  rfqCurrency: rfqCurrency;
   materialList: poMaterialList[];
 }
 
@@ -217,6 +253,7 @@ export interface poApproveReject {
 export interface initiatePoData {
   selectedMaterial: RfqMaterialResponse[],
   selectedSupplier: Suppliers
+  poCurrency: rfqCurrency
 }
 export interface DownloadData {
   fileName?: string;
@@ -224,7 +261,7 @@ export interface DownloadData {
 }
 
 export interface PaymentHistory {
-  id: number, status: number, createdBy: string, createdAt: string, lastUpdatedBy: string, lastUpdatedAt: string, supplierPaymentId: number, purchaseOrderId: number, supplierId: number, amountPaid: number, transactionId: string, paymentDate: string
+  exchangeRate: string, exchangeValue: number, id: number, status: number, createdBy: string, createdAt: string, lastUpdatedBy: string, lastUpdatedAt: string, supplierPaymentId: number, purchaseOrderId: number, supplierId: number, amountPaid: number, transactionId: string, paymentDate: string
 }
 
 export interface SavePaymnetRecord {
@@ -234,5 +271,14 @@ export interface SavePaymnetRecord {
 }
 
 export interface PoPayementDetail {
-  purchaseOrderId: number, materialBrand: string, poAmount: number, grnAmount: number, gstAmount: number, paymentRecived: number
+  purchaseOrderCurrency: rfqCurrency,
+  purchaseOrderId: number,
+  currencyCode: string,
+  poAmount: number,
+  grnAmount: number,
+  gstAmount: number,
+  paymentRecived: number
+  totalTaxAmount: 0,
+  totalPoAmount: 3300000,
+  otherCost: 0,
 }

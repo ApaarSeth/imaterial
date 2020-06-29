@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
 import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
-import { Router, ActivatedRoute, Navigation } from "@angular/router";
+import { Router, ActivatedRoute, Navigation, ActivatedRouteSnapshot } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
 import { UserService } from "src/app/shared/services/userDashboard/user.service";
 import { MatSnackBar } from '@angular/material';
@@ -10,6 +10,10 @@ import { TokenService } from 'src/app/shared/services/token.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { CountryCode } from 'src/app/shared/models/currency';
+import { VisitorService } from 'src/app/shared/services/visitor.service';
+import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 
 
 @Component({
@@ -18,67 +22,122 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 })
 
 export class SigninComponent implements OnInit {
-  uniqueCode: string = "";
+  @Input("callingCode") actualCallingCode: string;
+  @Input("countryCode") countryCode: string;
+  @Input("countryList") actualCountryList: CountryCode[]
 
   constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
+    private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private _userService: UserService,
     private route: ActivatedRoute,
     private dataService: DataService,
     private _snackBar: MatSnackBar,
-    private navigationService: AppNavigationService) { }
-  searchCountry: string = '';
+    private navigationService: AppNavigationService,
+    private commonService: CommonService,
+    private visitorsService: VisitorService,
+    private loader: GlobalLoaderService) { }
+
+  ipaddress: string;
+  emailVerified: boolean = true;
+  emailMessage: string;
+  uniqueCode: string = "";
+  loginCountry: string = "";
+  livingCountry: CountryCode[] = [];
   showPassWordString: boolean = false;
   signinForm: FormGroup;
   signInData = {} as SignInData;
   acceptTerms: boolean;
-  countryList: any
+  countryList: CountryCode[] = [];
+  searchCountry: string = '';
+  primaryCallingCode: string = '';
+  callingCode: string;
+
   ngOnInit() {
-    this.countryList = [{ countryName: 'India' }];
+    this.countryList = this.actualCountryList
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
-
-
+    this.callingCode = this.actualCallingCode
     this.formInit();
+    if (this.callingCode) {
+      this.getLocation();
+    }
+  }
+
+  getLocation() {
+    let emailValidator = [
+      Validators.required,
+      Validators.pattern(FieldRegExConst.EMAIL)
+    ]
+    this.getCountryCode(this.callingCode, this.countryCode)
+    if (this.callingCode === '+91') {
+      // this.signinForm.get('email').setValidators(emailValidator)
+      this.signinForm.get('phone').setValidators([Validators.required])
+    }
+    else {
+      this.signinForm.get('email').setValidators(emailValidator)
+
+    }
+  }
+
+  getCountryCode(callingCode, countryCode) {
+    this.livingCountry = this.countryList.filter(val => {
+      if (callingCode === '+1') {
+        if (val.callingCode === callingCode && val.countryCode === countryCode)
+          return val;
+      }
+      return val.callingCode === callingCode;
+    })
+    this.signinForm.get('countryCode').setValue(this.livingCountry[0])
   }
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      // countryCode: [],
-      phone: ["", [Validators.required, Validators.pattern(FieldRegExConst.PHONE)]],
-      password: ["", Validators.required]
+      countryCode: [{ value: '', disabled: true }],
+      phone: [""],
+      password: ["", Validators.required],
+      email: [''],
     });
   }
 
+  get selectedCountry() {
+    return this.signinForm.get('countryCode').value;
+  }
+
   signin() {
+    this.loader.show()
     let params = new URLSearchParams();
-    params.append("username", this.signinForm.value.phone);
+    params.append("loginIdType", this.callingCode === '+91' ? 'PHONE' : 'EMAIL');
+    this.callingCode === '+91' ? params.append('countryCode', this.callingCode) : null;
+    params.append("username", this.callingCode === '+91' ? this.signinForm.value.phone : this.signinForm.value.email);
     params.append("password", this.signinForm.value.password);
     params.append("grant_type", "password");
     params.append("client_id", "fooClientIdPassword");
     params.append("userType", "BUYER");
 
     this.signInSignupService.signIn(params.toString()).then(data => {
+
       if (data.errorMessage) {
+        this.loader.hide()
         this._snackBar.open(data.errorMessage, "", {
           duration: 2000,
           panelClass: ["warning-snackbar"],
           verticalPosition: "bottom"
         });
       }
+
       else if (data.serviceRawResponse.data) {
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
-        this.getUserInfo(data.serviceRawResponse.data.userId);
+        if (localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
+          this.router.navigate(["/profile/email-verification"]);
+          this.loader.hide()
+        }
+        else {
+          this.getUserInfo(data.serviceRawResponse.data.userId);
+        }
         this.navigationService.gaTag({ action: 'event', command: 'login', options: { 'method': this.tokenService.getOrgId() } })
-        // const role = data.serviceRawResponse.data.role;
-
-        // if (role) {
-        //   this.router.navigate(["/dashboard"]);
-        // } else {
-        //   this.router.navigate(["/users/organisation/update-info"]);
-        // }
       }
     });
   }
@@ -89,20 +148,14 @@ export class SigninComponent implements OnInit {
    * @description Function will get the data of logged in user
    */
   getUserInfo(userId) {
-    this._userService.getUserInfo(userId).then(res => {
+    this.dataService.getRequest(API.GET_USER_PROFILE(userId), null, { skipLoader: true }).then(res => {
       if (res.data[0].firstName)
         localStorage.setItem("userName", res.data[0].firstName);
       localStorage.setItem("profileUrl", res.data[0].profileUrl);
-      // if (res && (res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) {
-
-
-      //   this.router.navigate(["/profile/terms-conditions"]);
-      //   // this.router.navigate(['/profile/update-info']);
-      // }
-      // else {
-      //   this.router.navigate(['/dashboard']);
-      // }
-      this.dataService.getRequest(API.CHECKTERMS).then(res => {
+      localStorage.setItem("currencyCode", res.data[0].baseCurrency ? res.data[0].baseCurrency.currencyCode : null);
+      localStorage.setItem("countryCode", res.data[0].countryCode);
+      localStorage.setItem("countryId", res.data[0].countryId)
+      this.dataService.getRequest(API.CHECKTERMS, null, { skipLoader: true }).then(res => {
         this.acceptTerms = res.data;
         if (!this.acceptTerms) {
           this.router.navigate(["/profile/terms-conditions"]);
@@ -113,7 +166,6 @@ export class SigninComponent implements OnInit {
       })
     })
   }
-
   showPassWord() {
     if (!this.showPassWordString) {
       this.showPassWordString = true;
@@ -129,4 +181,5 @@ export class SigninComponent implements OnInit {
       this.router.navigate(['auth/forgot-password']);
     }
   }
+
 }

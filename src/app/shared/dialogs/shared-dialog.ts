@@ -32,6 +32,8 @@ import { GRNDocumentsComponent } from './add-edit-grn/grn-documents/grn-document
 import { ShowDocumentComponent } from './show-documents/show-documents.component';
 import { PaymentRecordComponent } from './payment-record/paymentRecord.component';
 import { SnackbarComponent } from './snackbar/snackbar.compnent';
+import { SelectCurrencyComponent } from './select-currency/select-currency.component';
+import { TaxCostComponent } from './tax-cost/tax-cost.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -67,5 +69,7 @@ export const SharedDialogs = [
   GRNDocumentsComponent,
   ShowDocumentComponent,
   PaymentRecordComponent,
-  SnackbarComponent
+  SnackbarComponent,
+  SelectCurrencyComponent,
+  TaxCostComponent
 ];

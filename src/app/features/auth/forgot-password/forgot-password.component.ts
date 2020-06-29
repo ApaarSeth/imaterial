@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { TokenService } from 'src/app/shared/services/token.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -11,6 +10,9 @@ import { OrganisationType } from '../signup/signup.component';
 import { auth } from 'src/app/shared/models/auth';
 import { UserDetails } from 'src/app/shared/models/user-details';
 import { SignINDetailLists, ForgetPassDetails } from 'src/app/shared/models/signIn/signIn-detail-list';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { VisitorService } from 'src/app/shared/services/visitor.service';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
   selector: "forgot-password",
@@ -23,12 +25,12 @@ export class ForgotPasswordComponent implements OnInit {
   user: UserDetails;
   lessOTPDigits: string = "";
   showOtp: boolean = false;
-  emailVerified: boolean = true;
+  emailVerified: boolean = false;
   emailMessage: string;
   otpLength: number = 0;
   verifiedMobile: boolean = true;
   value: any;
-    forgetPassForm: FormGroup;
+  forgetPassForm: FormGroup;
   forgetPassDetails = {} as ForgetPassDetails;
   phoneNumberChecked: boolean = false;
   OtpscreenShow: boolean = false;
@@ -37,36 +39,87 @@ export class ForgotPasswordComponent implements OnInit {
   lastFourDigit: any;
   otpValue: number;
   otpMessageVerify: string = "";
-
+  countryList: any
+  searchCountry: string = '';
+  primaryCallingCode: string = '';
+  livingCountry: string = '';
+  ipaddress: string = '';
+  callingCode: string;
+  emailSendMessage: boolean = false
   constructor(
-       private tokenService: TokenService,
+    private tokenService: TokenService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private signInSignupService: SignInSignupService,
     private _userService: UserService,
     private _snackBar: MatSnackBar,
-    private navService: AppNavigationService
-  ) {}
+    private navService: AppNavigationService,
+    private commonService: CommonService,
+    private visitorsService: VisitorService
+  ) { }
 
-   ngOnInit() {
+  ngOnInit() {
+    this.callingCode = localStorage.getItem("countryCode")
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
+      this.formInit();
       if (this.uniqueCode) {
         this.getUserInfo(this.uniqueCode);
-      } else {
-        this.formInit();
       }
+      this.getLocation();
     });
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
   }
 
+  verifyEmail(event) {
+    const email = event.target.value
+    if (email.match(FieldRegExConst.EMAIL)) {
+      this.signInSignupService.verifyEMAIL(this.forgetPassForm.value.email).then(res => {
+        if (res) {
+          this.emailVerified = !res.data;
+          this.emailMessage = res.message;
+        }
+      });
+    }
+  }
+
+  getLocation() {
+    let emailValidator = [
+      Validators.required,
+      Validators.pattern(FieldRegExConst.EMAIL)
+    ]
+    this.getCountryCode(this.callingCode)
+    if (this.callingCode === '+91') {
+      this.forgetPassForm.get('email').setValidators(emailValidator)
+      this.forgetPassForm.get('phone').setValidators(Validators.required)
+    }
+    else {
+      this.forgetPassForm.get('email').setValidators(emailValidator)
+    }
+  }
+
+  getCountryCode(callingCode) {
+    this.commonService.getCountry().then(res => {
+      this.countryList = res.data;
+      this.livingCountry = this.countryList.filter(val => {
+        return val.callingCode === callingCode;
+      })
+      this.forgetPassForm.get('countryCode').setValue(this.livingCountry[0])
+    })
+  }
+
+  get selectedCountry() {
+    return this.forgetPassForm.get('countryCode').value;
+  }
+
+
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {
       this.user = res.data[0];
-      this.formInit();
+      this.forgetPassForm.patchValue({ phone: this.user ? this.user.contactNo : '' })
     });
   }
 
@@ -77,10 +130,12 @@ export class ForgotPasswordComponent implements OnInit {
 
   formInit() {
     this.forgetPassForm = this.formBuilder.group({
-      phone: [this.user ? this.user.contactNo : '', [Validators.required, Validators.pattern(FieldRegExConst.MOBILE)]],
-      organisationType: ["Contractor", Validators.required],
+      countryCode: [],
+      phone: [],
+      organisationType: ["Contractor"],
       password: ["", [Validators.required, Validators.minLength(6)]],
-      otp: [""]
+      otp: [""],
+      email: [''],
     });
 
     if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
@@ -93,15 +148,15 @@ export class ForgotPasswordComponent implements OnInit {
     this.forgetPassDetails.confirmPassword = this.forgetPassForm.value.password;
 
     this.signInSignupService.forgotPassword(this.forgetPassDetails).then(res => {
-     if(res.data.success){
+      if (res.data.success) {
         this._snackBar.open("Your password has been reset successfully", "", {
-                duration: 2000,
-                panelClass: ["success-snackbar"],
-                verticalPosition: "bottom"
-              });
-       this.router.navigate(['auth/login']);
-       localStorage.clear();
-     }
+          duration: 2000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+        this.router.navigate(['auth/login']);
+        localStorage.clear();
+      }
     });
   }
 
@@ -116,52 +171,54 @@ export class ForgotPasswordComponent implements OnInit {
     this.verifiedMobile = true;
     this.showOtp = false;
     this.value = numberPassed ? numberPassed : event.target.value;
-     if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
-       this.phoneNumberChecked = true;
-       this.verifyMobile(this.value);
-     }
-     else{
-         this.phoneNumberChecked = false;
-     }
+    if (this.value.length == 10) {
+      this.phoneNumberChecked = true;
+      this.verifyMobile(this.value);
+    }
+    else {
+      this.phoneNumberChecked = false;
+    }
   }
-  sendOtpBtn(){
-      if ((this.value.match(FieldRegExConst.MOBILE)) && (this.value.length == 10)) {
-       if (!this.uniqueCode) {
-          this.verifyMobile(this.value);
-       }
-       if((this.uniqueCode) && (this.user.contactNo == this.value)){
-          this.sendotp(this.value);
-        }
-        else if((this.uniqueCode) && (this.user.contactNo != this.value)){
-           this.verifyMobile(this.value);
-        }
+  sendOtpBtn() {
+    if (this.value.length == 10) {
+      if (!this.uniqueCode) {
+        this.verifyMobile(this.value);
+      }
+      if ((this.uniqueCode) && (this.user.contactNo == this.value)) {
+        this.sendotp(this.value);
+      }
+      else if ((this.uniqueCode) && (this.user.contactNo != this.value)) {
+        this.verifyMobile(this.value);
+      }
     }
   }
 
-  sendotp(value){
-     this.signInSignupService.sendOTP(value).then(res => {
-              if (res.data)
-                this.showOtp = res.data.success;
-              this._snackBar.open("OTP has been sent on your phone number", "", {
-                duration: 2000,
-                panelClass: ["success-snackbar"],
-                verticalPosition: "bottom"
-              });
+  sendotp(value) {
+    let countryCode = this.forgetPassForm.get('countryCode').value.callingCode;
+    this.signInSignupService.sendOTP(value, countryCode).then(res => {
+      if (res.data)
+        this.showOtp = res.data.success;
+      this._snackBar.open("OTP has been sent on your phone number", "", {
+        duration: 2000,
+        panelClass: ["success-snackbar"],
+        verticalPosition: "bottom"
+      });
 
-            });
+    });
   }
 
-  verifyMobile(mobile){
-     this.signInSignupService.VerifyMobile(mobile).then(res => {
-            this.verifiedMobile = res.data;
-            if(this.verifiedMobile){
-               this._snackBar.open("User is not registered. Please Sign up", "", {
-                duration: 2000,
-                panelClass: ["success-snackbar"],
-                verticalPosition: "bottom"
-              });
-            }
-     });
+  verifyMobile(mobile) {
+    let countryCode = this.forgetPassForm.get('countryCode').value.callingCode;
+    this.signInSignupService.VerifyMobile(mobile, countryCode).then(res => {
+      this.verifiedMobile = res.data;
+      if (this.verifiedMobile) {
+        this._snackBar.open("User is not registered. Please Sign up", "", {
+          duration: 2000,
+          panelClass: ["success-snackbar"],
+          verticalPosition: "bottom"
+        });
+      }
+    });
   }
   enterOTP(event) {
     const otp = event.target.value;
@@ -171,56 +228,71 @@ export class ForgotPasswordComponent implements OnInit {
       this.otpValue = event.target.value;
     }
   }
-  verifyOTP(otp){
-   this.signInSignupService.verifyForgetPasswordOTP(this.forgetPassForm.value.phone, otp, 'fooClientIdPassword').then(res => {
-        if (res.data) {
-          this.lessOTPDigits = res.data.success;
-          this.otpMessageVerify = res.data.message;
-          localStorage.setItem('SSO_ACCESS_TOKEN',res.data.access_token);
-          if(this.lessOTPDigits){
-            this.OtpscreenShow = false;
-            this.phonescreenShow = false;
-            this.passscreenShow = true;
-          }
+  verifyOTP(otp) {
+    let countryCode = this.forgetPassForm.get('countryCode').value.callingCode;
+    this.signInSignupService.verifyForgetPasswordOTP(this.forgetPassForm.value.phone, otp, 'fooClientIdPassword', countryCode).then(res => {
+      if (res.data) {
+        this.lessOTPDigits = res.data.success;
+        this.otpMessageVerify = res.data.message;
+        localStorage.setItem('SSO_ACCESS_TOKEN', res.data.access_token);
+        if (this.lessOTPDigits) {
+          this.OtpscreenShow = false;
+          this.phonescreenShow = false;
+          this.passscreenShow = true;
         }
-      });
+      }
+    });
   }
-submitNumber(){
-    if(!this.verifiedMobile){
+  submitNumber() {
+    if (this.callingCode === '+91' && !this.verifiedMobile) {
       this.OtpscreenShow = true;
       this.phonescreenShow = false;
       this.passscreenShow = false;
       this.forgetPassForm.value.otp = null;
       this.otpMessageVerify = "";
       this.otpLength = 0;
-      this.lastFourDigit = this.value.substring(6,10);
+      this.lastFourDigit = this.value.substring(6, 10);
+      this.getCountryCode
       this.sendotp(this.value);
     }
-  
-}
-resendOtp(){
-   this.sendotp(this.value);
-}
-submitOTP(){
-  this.verifyOTP(this.otpValue); 
-}
-submitPass(){
-this.forgetPasswordSubmit();
-}
-goBackToNumber(){
-      this.OtpscreenShow = false;
-      this.phonescreenShow = true;
-      this.passscreenShow = false;  
-}
+    else {
+      this.signInSignupService.verifyResetEmail(this.forgetPassForm.get('email').value, 'fooClientIdPassword').then(res => {
+        if (res.data.success) {
+          this._snackBar.open(`Password change email is sent to ${this.forgetPassForm.get('email').value}`, "", {
+            duration: 4000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
 
-reDirectToSignIn(){
-  if(this.uniqueCode){
-       this.router.navigate(['auth/login/'+this.uniqueCode]);
+        }
+        console.log(res)
+      })
     }
-    else{
-       this.router.navigate(['auth/login']);
+
+  }
+  resendOtp() {
+    this.sendotp(this.value);
+  }
+  submitOTP() {
+    this.verifyOTP(this.otpValue);
+  }
+  submitPass() {
+    this.forgetPasswordSubmit();
+  }
+  goBackToNumber() {
+    this.OtpscreenShow = false;
+    this.phonescreenShow = true;
+    this.passscreenShow = false;
+  }
+
+  reDirectToSignIn() {
+    if (this.uniqueCode) {
+      this.router.navigate(['auth/login/' + this.uniqueCode]);
     }
-}
+    else {
+      this.router.navigate(['auth/login']);
+    }
+  }
 
 }
 

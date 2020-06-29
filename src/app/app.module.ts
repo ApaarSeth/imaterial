@@ -41,6 +41,7 @@ import { OnlyNumberDirective } from './shared/directives/number-only2.directive'
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
+import { TaxCostService } from './shared/services/taxcost.service';
 
 @NgModule({
   declarations: [
@@ -92,8 +93,9 @@ import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: PickDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    TaxCostService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

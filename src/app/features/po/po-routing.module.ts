@@ -10,6 +10,7 @@ import { ViewGRNComponent } from "./view-grn/view-grn.component";
 import { AddGRNComponent } from "./add-grn/add-grn.component";
 import { InitiatePoComponent } from "./initiate-po/initiate-po.component";
 import { ViewGrnResolver } from "./add-grn/resolver/get-grn.resolver";
+import { CountryResolver } from 'src/app/shared/resolver/country.resolver';
 
 const routes: Routes = [
   {
@@ -25,23 +26,23 @@ const routes: Routes = [
   {
     path: "initiate-po",
     data: { breadcrumb: 'Create PO' },
-    resolve: { inititatePo: InitiatePoResolver },
+    resolve: { inititatePo: InitiatePoResolver, countryList: CountryResolver },
     component: InitiatePoComponent
   },
   {
     path: "add-grn/:poId",
-    data: { breadcrumb: 'ADD GRN' },
+    data: { breadcrumb: 'ADD Receipts' },
     resolve: { viewGRN: ViewGrnResolver },
     component: AddGRNComponent
   },
   {
     path: "view-grn/:poId",
-    data: { breadcrumb: 'View GRN' },
+    data: { breadcrumb: 'View Receipts' },
     component: ViewGRNComponent
   }
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes)]
+  imports: [ CommonModule, RouterModule.forChild(routes) ]
 })
 export class PORoutingModule { }

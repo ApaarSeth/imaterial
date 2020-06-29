@@ -15,7 +15,7 @@ export class SignInSignupService implements OnInit {
     return this.dataService.sendPostRequestSso(API.SIGNUP, data)
   }
 
-  forgotPassword(data){
+  forgotPassword(data) {
     return this.dataService.resetPasswordSSOPOST(API.FORGOTPASSWORD, data);
   }
 
@@ -33,25 +33,60 @@ export class SignInSignupService implements OnInit {
       .catch(e => {
         if (e.error.error === 'invalid_grant' || e.error.error === 'unauthorized') {
           let data: any = {};
-          data.erroType = 'Invalid Credentials',
+          data.erroType = 'Invalid Credentials';
+          if (localStorage.getItem('countryCode') === '+91') {
             data.errorMessage = 'Phone No. or Password Incorrect';
+          }
+          else {
+            data.errorMessage = 'Email or Password Incorrect';
+          }
           return data;
         }
       });
   }
-  sendOTP(phone) {
-    return this.dataService.sendPostRequestSsoEncodedUrl(API.SENDOTP(phone), {}).then(res => { return res });
+  sendOTP(phone, callingCode) {
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.SENDOTP(phone, callingCode), {}).then(res => { return res });
   }
-  verifyOTP(phone, otp) {
-    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYOTP(phone, otp), {}).then(res => { return res });
+  verifyOTP(phone, countryCode, otp) {
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYOTP(phone, countryCode, otp), {}).then(res => { return res });
   }
-  verifyForgetPasswordOTP(phone, otp, clientId){
-     return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYFORGETPASSWORDOTP(phone, otp, clientId), {}).then(res => { return res });
+  verifyResetEmail(email, clientId) {
+    let data = { emailId: email, client_id: clientId }
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYRESETEMAIL(email, clientId), {})
+    // return this.dataService.sendPostRequestSso(API.VERIFYRESETEMAIL, data)
+
   }
+
+  emailResetPassword(data) {
+    return this.dataService.resetPasswordSSOPOST(API.EMAILRESETPASSWORD, data)
+  }
+  verifyForgetPasswordOTP(phone, otp, clientId, countryCode) {
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYFORGETPASSWORDOTP(phone, otp, clientId, countryCode), {}).then(res => { return res });
+  }
+
+  verifyResetPassword(token, clientId) {
+    return this.dataService.sendPostRequestSsoEncodedUrl(API.VERIFYRESETPASSWORD(token, clientId), {})
+  }
+
   verifyEMAIL(email) {
-    return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => { return res });
+    return this.dataService.getRequest(API.VERIFYEMAIL(email), null, { skipLoader: true }).then(res => { return res });
   }
-  VerifyMobile(mobile) {
-    return this.dataService.getRequest(API.VERIFYMOBILE(mobile)).then(res => { return res });
+  VerifyMobile(mobile, countryCode) {
+    return this.dataService.getRequest(API.VERIFYMOBILE(mobile, countryCode)).then(res => { return res });
   }
+  checkTerms() { return this.dataService.getRequest(API.CHECKTERMS) }
+
+  resendEmail() {
+    return this.dataService.getRequest(API.RESENDEMAIL)
+  }
+
+  emailVerificationStatus() {
+    return this.dataService.getRequest(API.EMAILVERFICATIONSTATUS, null, { skipLoader: true })
+  }
+
+  emailVerification(token) {
+    return this.dataService.getRequest(API.EMAILVERFICATION(token))
+  }
+
+
 }

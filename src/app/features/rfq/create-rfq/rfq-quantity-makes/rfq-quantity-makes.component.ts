@@ -21,6 +21,7 @@ import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/ad
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -49,10 +50,12 @@ export class RfqQuantityMakesComponent implements OnInit {
     "Makes"
   ];
   rfqId: any;
+  startDate: Date;
   rfqData: AddRFQ;
   message: string;
   lastupdateValue: any;
   valid: boolean = false;
+  primaryCurrencyCode: string;
   minDate = new Date();
   constructor(
     public dialog: MatDialog,
@@ -66,6 +69,27 @@ export class RfqQuantityMakesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.primaryCurrencyCode = localStorage.getItem('currencyCode')
+    this.startDate = new Date();
+    this.rfqData = {
+      id: null,
+      status: null,
+      createdBy: null,
+      createdAt: null,
+      lastUpdatedBy: null,
+      lastUpdatedAt: null,
+      rfqId: null,
+      rfq_status: null,
+      rfqName: null,
+      dueDate: null,
+      supplierId: null,
+      supplierDetails: null,
+      rfqProjectsList: [],
+      documentsList: null,
+      terms: null,
+      rfqCurrency: null,
+    };
+
     if (history.state.rfqData) {
       this.rfqData = history.state.rfqData.data;
       this.projectSelectedMaterials =
@@ -103,25 +127,66 @@ export class RfqQuantityMakesComponent implements OnInit {
           ].projectMaterialList.length;
         }
         return subCat.projectMaterialList.map(item => {
+          let fullfilmentDate = item.fullfilmentDate ? (new Date(item.fullfilmentDate) < new Date() ? null : item.fullfilmentDate) : null;
           return this.formBuilder.group({
             estimatedRate: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
             quantity: [item.quantity ? item.quantity : null, [Validators.required, this.quantityCheck(item.estimatedQty)]],
             makes: [item.makes],
-            fullfilmentDate: [item.fullfilmentDate],
+            fullfilmentDate: [fullfilmentDate],
             projId: [item.projectId],
             matId: [item.materialId],
           });
         });
       })
       .flat();
-    this.materialForms = this.formBuilder.group({});
-    this.materialForms.addControl("forms", new FormArray(frmArr));
+    this.materialForms = this.formBuilder.group(
+      { forms: this.formBuilder.array(frmArr) }
+
+    );
+    //  this.materialForms.addControl("forms", new FormArray(frmArr));
     this.materialForms.valueChanges.subscribe(val => {
-      this.valid = val.forms.some(mat => {
-        return mat.quantity > 0;
-      })
-    });
+    })
   }
+
+  dateCheck(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (control.value) {
+        if (new Date(control.value) < new Date()) {
+          control.setValue(null)
+          return { 'date Is useless': true };
+        }
+      }
+      return null;
+    }
+  }
+
+  getMaterialLength(): ValidatorFn {
+    return (formGroup: FormGroup): { [key: string]: boolean } | null => {
+      let checked = false;
+      checked = (<FormArray>formGroup.get('forms')).controls.every((val: FormGroup) => {
+        return Number(val.value.quantity) > 0
+      })
+      // for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {
+      //   const control: FormArray = (<FormArray>formGroup.get('forms')).controls[key] as FormArray;
+      //   checked = control.value.quantity > 0
+      //   if (checked) {
+      //     break;
+      //   }
+      // }
+      // if (control.value) {
+      //   checked++;
+      // }
+
+      if (!checked) {
+        return {
+          requireCheckboxToBeChecked: true,
+        };
+      }
+
+      return null;
+    };
+  }
+
 
   quantityCheck(estimatedQty: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
@@ -170,7 +235,7 @@ export class RfqQuantityMakesComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        data.defaultAddress = result[1].address;
+        data.defaultAddress = result ? result[1].address : data.defaultAddress;
       });
     }
   }
@@ -203,8 +268,8 @@ export class RfqQuantityMakesComponent implements OnInit {
               let date = new Date(this.commonService.formatDate(val.fullfilmentDate))
               let dummyMonth = date.getMonth() + 1;
               const year = date.getFullYear().toString();
-              const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-              const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+              const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+              const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
               this.projectSelectedMaterials[i].projectMaterialList[
                 j
               ].fullfilmentDate = year + "-" + month + "-" + day;
@@ -224,5 +289,19 @@ export class RfqQuantityMakesComponent implements OnInit {
       this.rfqData.rfqProjectsList = checkedMaterials;
       this.updatedRfq.emit(this.rfqData);
     }
+  }
+
+  selectCurrency() {
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true,
+      width: "600px",
+      data: this.rfqData.rfqCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != null) {
+        this.rfqData.rfqCurrency = data;
+      }
+    });
   }
 }

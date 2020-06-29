@@ -19,4 +19,46 @@ export interface GaTagData {
     options?: any;
 }
 
+export interface TaxInfo {
+    createdAt: string
+    createdBy: string
+    id: number
+    lastUpdatedAt: string
+    lastUpdatedBy: string
+    organizationId: number
+    status: number
+    taxDescription: null
+    taxId: number
+    taxName: string
+    taxValue: number
+}
 
+export interface OtherCostInfo {
+    createdAt: string
+    createdBy: string
+    id: number
+    lastUpdatedAt: string
+    lastUpdatedBy: string
+    organizationId: number
+    otherCostAmount: number
+    otherCostDescription: string
+    otherCostId: number
+    otherCostName: string
+    rfqSupplierId: number
+    status: number
+}
+
+export interface OverallOtherCost {
+    createdAt: string
+    createdBy: string
+    id: number
+    lastUpdatedAt: string
+    lastUpdatedBy: string
+    organizationId: number
+    otherCostAmount: number
+    otherCostDescription: string
+    otherCostId: number
+    otherCostName: string
+    rfqSupplierId: number
+    status: number
+}

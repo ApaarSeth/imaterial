@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
 import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { ProjectService } from '../../services/projectDashboard/project.service';
 import { ProjectDetails } from '../../models/project-details';
+import { CountryCode } from '../../models/currency';
+import { VisitorService } from '../../services/visitor.service';
+import { CommonService } from '../../services/commonService';
 
 
 export interface City {
@@ -46,6 +49,12 @@ export class AddEditUserComponent implements OnInit {
   userId: number;
   emailVerified: boolean = true;
   emailMessage: string;
+  ipaddress: string;
+  countryList: CountryCode[] = [];
+  livingCountry: CountryCode[] = [];
+  searchCountry: string = '';
+  calingCode: string;
+  cntryId: number;
 
   constructor(
     private userService: UserService,
@@ -54,11 +63,19 @@ export class AddEditUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private projectService: ProjectService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private visitorsService: VisitorService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('countryCode')) {
+      this.calingCode = localStorage.getItem('countryCode');
+    }
+    this.cntryId = Number(localStorage.getItem('countryId'));
+    this.countryList = this.data.countryList;
     this.initForm();
+    this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"))
     this.userId = Number(localStorage.getItem("userId"))
     this.projectService.getUserProjects().then(data => {
@@ -68,6 +85,45 @@ export class AddEditUserComponent implements OnInit {
     this.userService.getRoles().then(data => {
       this.allRoles = data.data;
     });
+  }
+
+  getLocation() {
+    if (this.data.isEdit && this.data.detail.countryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.data.detail.countryId });
+    } else if (this.cntryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.cntryId });
+    } else {
+      this.getCountryCode({ countryId: localStorage.getItem('countryId') });
+    }
+  }
+
+  getCountryCode(obj) {
+    // this.commonService.getCountry().then(res => {
+    //   this.countryList = res.data;
+    //   this.livingCountry = this.countryList.filter(val => {
+    //     return val.callingCode === callingCode;
+    //   })
+    //   this.form.get('countriesList').setValue(this.livingCountry[ 0 ])
+    //   if (this.data.isEdit && (this.data.detail.accountStatus == 1)) {
+    //     this.form.get('countriesList').disable();
+    //   }
+    // })
+
+    this.livingCountry = this.countryList.filter(val => {
+      if (obj.countryId) {
+        return val.countryId === Number(obj.countryId);
+      } else {
+        return val.callingCode === obj.callingCode;
+      }
+    })
+    this.form.get('countriesList').setValue(this.livingCountry[0])
+    if (this.data.isEdit && (this.data.detail.accountStatus == 1)) {
+      this.form.get('countriesList').disable();
+    }
+  }
+
+  get selectedCountry() {
+    return this.form.get('countriesList').value;
   }
 
   close() {
@@ -82,7 +138,7 @@ export class AddEditUserComponent implements OnInit {
 
     this.isInputDisabled = this.data.isEdit;
 
-    this.form = new FormGroup({
+    this.form = this.formBuilder.group({
       firstName: new FormControl(
         { value: this.data.isEdit ? this.data.detail.firstName : "", disabled: (this.data.isEdit && (this.data.detail.accountStatus == 1)) ? true : false },
         Validators.required
@@ -97,7 +153,7 @@ export class AddEditUserComponent implements OnInit {
 
       contactNo: new FormControl(
         { value: this.data.isEdit ? this.data.detail.contactNo : "", disabled: (this.data.isEdit && (this.data.detail.accountStatus == 1)) ? true : false },
-        [Validators.pattern(FieldRegExConst.MOBILE)]
+        [Validators.pattern(FieldRegExConst.MOBILE3)]
       ),
       roleId: new FormControl(
         this.data.isEdit ? this.data.detail.roleId : "",
@@ -107,8 +163,9 @@ export class AddEditUserComponent implements OnInit {
         this.data.isEdit ? this.data.detail.projectIds : []
       ),
       creatorId: new FormControl(''),
-      userId: new FormControl(this.data.isEdit ? this.data.detail.userId : null)
-
+      userId: new FormControl(this.data.isEdit ? this.data.detail.userId : null),
+      countryCode: [""],
+      countriesList: []
     });
   }
 
@@ -116,6 +173,7 @@ export class AddEditUserComponent implements OnInit {
 
     userDetails.creatorId = this.userId;
     userDetails.projects = userDetails.projectIds;
+
     var form_data = new FormData();
 
     for (var key in userDetails) {
@@ -158,12 +216,23 @@ export class AddEditUserComponent implements OnInit {
   }
 
   submit() {
-    if (this.data.isEdit) {
-      this.updateUsers(this.form.value);
+    let data = this.form.value;
+    if (data.contactNo) {
+      data.countryId = this.form.get('countriesList').value.countryId;
+      data.countryCode = this.form.get('countriesList').value.callingCode;
     } else {
-      this.addUsers(this.form.value);
+      data.countryId = null;
+      data.countryCode = '';
+    }
+    delete data.countriesList;
+
+    if (this.data.isEdit) {
+      this.updateUsers(data);
+    } else {
+      this.addUsers(data);
     }
   }
+
   verifyEmail(event) {
     const email = event.target.value;
     this.emailVerified = true;

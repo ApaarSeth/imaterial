@@ -55,9 +55,10 @@ export class BomTopMaterialComponent implements OnInit {
   setStep(index: number) {
     this.step = index;
   }
-
+  currencyCode: string;
 
   ngOnInit() {
+    this.currencyCode = localStorage.getItem('currencyCode')
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
@@ -81,7 +82,6 @@ export class BomTopMaterialComponent implements OnInit {
       if (val && val !== '') {
         this.isSearching = true;
         for (let category of this.selectedCategory) {
-          console.log('category', category)
           for (let mat of category.materialList) {
             if (mat.materialName.toLowerCase().indexOf(val.trim().toLowerCase()) > -1) {
               mat.isNull = false;
@@ -277,11 +277,9 @@ export class BomTopMaterialComponent implements OnInit {
 
   allowOnlyAmountAndDot(event, index1, index2) {
     // // this.quantityForms.get('forms').get(index1).get("materialGroup").get(index2).get("estimatedQty").valueChanges(changes => {
-    // //   console.log("changes")
     // // })
 
     // (<FormGroup>(<FormArray>(<FormGroup>(<FormArray>this.quantityForms.get('forms')).controls[index1]).get('materialGroup')).controls[index2]).get("estimatedQty").valueChanges.subscribe(changes => {
-    //   console.log("changes")
     // })
     var rgx = /^\d+(\.\d{1,2})?$/;
     // const inputChar = String.fromCharCode((event as KeyboardEvent).charCode);

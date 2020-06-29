@@ -1,5 +1,7 @@
 .customPo {
-  td.mat-cell, td.mat-footer-cell, th.mat-header-cell{
+  td.mat-cell,
+  td.mat-footer-cell,
+  th.mat-header-cell {
     border-bottom: none;
   }
   .mat-accordion .mat-header-row {
@@ -158,13 +160,12 @@ s .validTill {
   }
 }
 
-.add-grn-container-popup{
-      width: 100%;
-.mat-table {
-      width: 100%;
-      overflow-x: scroll;
-    }
-
+.add-grn-container-popup {
+  width: 100%;
+  .mat-table {
+    width: 100%;
+    overflow-x: scroll;
+  }
 }
 
 .add-grn-container {
@@ -172,12 +173,12 @@ s .validTill {
   min-width: 0px;
   overflow-x: auto;
 
-.mat-table {
-      overflow-x: scroll;
-    }
+  .mat-table {
+    overflow-x: scroll;
+  }
 
-.mat-cell,
-.mat-header-cell {
+  .mat-cell,
+  .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
     padding: 0px 10px;
@@ -187,31 +188,30 @@ s .validTill {
     overflow: hidden;
     vertical-align: middle;
     font-weight: 500;
-}
-  .brand-name{
-      text-align: left;
-    }
-.mat-row,
-.mat-header-row {
+  }
+  .brand-name {
+    text-align: left;
+  }
+  .mat-row,
+  .mat-header-row {
     display: table-row;
+  }
+  .grn-material-name {
+    text-align: left;
+  }
 }
-.grn-material-name{
-  text-align: left;
-}
-}
-
 
 .example-container {
   width: 100%;
   min-width: 0px;
   overflow-x: auto;
 
-.mat-table {
-      overflow-x: scroll;
-    }
+  .mat-table {
+    overflow-x: scroll;
+  }
 
-.mat-cell,
-.mat-header-cell {
+  .mat-cell,
+  .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
     padding: 0px 10px;
@@ -221,15 +221,14 @@ s .validTill {
     overflow: hidden;
     vertical-align: middle;
     font-weight: 500;
-}
-.mat-row,
-.mat-header-row {
+  }
+  .mat-row,
+  .mat-header-row {
     display: table-row;
+  }
 }
 
-}
-
-@media only screen and (max-width : 576px){
+@media only screen and (max-width: 576px) {
   .example-container {
     .mat-cell,
     .mat-header-cell {
@@ -241,93 +240,117 @@ s .validTill {
     .mat-header-cell {
       font-size: 12px;
     }
-    .brand-name{
+    .brand-name {
       text-align: left;
     }
   }
-  .add-user-container{
-     .mat-cell,
+  .add-user-container {
+    .mat-cell,
     .mat-header-cell {
       font-size: 12px;
     }
-    .project-user-details-width{
-      button{
+    .project-user-details-width {
+      button {
         font-size: 12px;
+      }
     }
   }
-  }
 
-  .add-unique-container{
+  .add-unique-container {
     .mat-cell,
-   .mat-header-cell {
-     font-size: 12px;
-   }
-   .project-user-details-width{
-     button{
-       font-size: 12px;
-   }
- }
- }
+    .mat-header-cell {
+      font-size: 12px;
+    }
+    .project-user-details-width {
+      button {
+        font-size: 12px;
+      }
+    }
+  }
 
-  .po-number-grn{
+  .po-number-grn {
     font-size: 14px;
   }
-  .font-size-vary-grn{
+  .font-size-vary-grn {
     font-size: 12px;
   }
 }
-@media only screen and (min-width:576){
-  .font-size-vary-grn{
+@media only screen and (min-width: 576) {
+  .font-size-vary-grn {
     font-size: 14px;
   }
 }
 
-
-
-.po-view{
-  .mat-form-field-appearance-legacy .mat-form-field-wrapper{
-    padding-top : 0px !important;
+.po-view {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-top: 0px !important;
     font-size: 12px;
-     .mat-form-field-infix{
-       margin-top: -10px;
-   }
+    .mat-form-field-infix {
+      margin-top: -10px;
+    }
   }
-  .border-bottom-po-view{
+  .border-bottom-po-view {
     border-bottom: 1px solid #000000;
   }
- .header-card-po {
-    color: #5F5F5F;
+  .header-card-po {
+    color: #5f5f5f;
     font-weight: 500;
     font-size: 16px;
-
+  }
 }
 
-}
-
-
-.customPo .mat-cell, .customPo .mat-header-cell{
-  min-width: 130px;
+.customPo .mat-cell,
+.customPo .mat-header-cell {
+  min-width: 100px;
   padding: 0 5px;
 }
-.customPo .mat-cell, .customPo .mat-header-cell.widthReduce{
+.customPo .mat-cell,
+.customPo .mat-header-cell.widthReduce {
   min-width: 50px;
   padding: 0 5px;
 }
 
-.customPo .po-table .material-row .mat-cell.widthReduce{
+.customPo .po-table .material-row .mat-cell.widthReduce {
   min-width: 50px;
   padding: 0 5px;
 }
 
-
-.customPo .po-table .material-row .mat-cell{
-  min-width: 130px;
+.customPo .po-table .material-row .mat-cell {
+  min-width: 100px;
   padding: 0 5px;
 }
-.froala-design{
+.froala-design {
   padding: 0;
   padding-bottom: 10px;
 }
-.no-terms-window{
+.no-terms-window {
   min-height: 100px;
+}
+
+.taxButton {
+  white-space: normal !important;
+  line-height: initial !important;
+}
+
+.overflow-anywhere {
+  overflow-wrap: anywhere !important;
+}
+
+.mpo-table{
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.txt-nwrp{
+  white-space: normal !important;
+  font-weight: normal !important;
+}
+
+.mpo-mh{
+  height: 30px;
+  padding-top: 10px !important;
+}
+
+.mpo-mh{
+  height: 30px;
 }

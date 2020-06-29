@@ -5,13 +5,16 @@ import { SignupComponent } from "./signup/signup.component";
 import { SigninComponent } from "./sign-in/sign-in.component";
 import { OTPComponent } from "./otp/otp.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
-import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { SignInSignUpComponent } from "./sign-in-sign-up/sign-in-sign-up.component";
+import { CountryResolver } from 'src/app/shared/resolver/country.resolver';
+import { InitialCountryResolver } from './sign-in-sign-up/resolver/initial-country.resolver';
 
 const routes: Routes = [
   {
     path: "login",
-    component: SignInSignUpComponent
+    component: SignInSignUpComponent,
+    resolve: { countryList: InitialCountryResolver }
   },
   {
     path: "login/:uniqueCode",
@@ -38,8 +41,8 @@ const routes: Routes = [
     component: ForgotPasswordComponent
   },
   {
-    path: "change-password",
-    component: ChangePasswordComponent
+    path: "reset-password/:token",
+    component: ResetPasswordComponent
   }
 ];
 

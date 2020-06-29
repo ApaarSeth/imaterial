@@ -21,6 +21,7 @@ import { MatDialog, MatCheckbox } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { CommonService } from 'src/app/shared/services/commonService';
+import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 
 @Component({
   selector: "app-rfq-project-materials",
@@ -87,7 +88,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
       supplierDetails: null,
       rfqProjectsList: [],
       documentsList: null,
-      terms: null
+      terms: null,
+      rfqCurrency: null,
     };
     if (this.rfqId) {
       this.rfqService.getDraftRfq(this.rfqId).then(res => {
@@ -101,7 +103,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.checkExistingData();
-    console.log(this.table);
   }
 
   checkExistingData() {
@@ -287,8 +288,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
                       let date = new Date(this.commonService.formatDate(mat.fullfilmentDate))
                       let dummyMonth = date.getMonth() + 1;
                       const year = date.getFullYear().toString();
-                      const month = dummyMonth > 10 ? dummyMonth.toString() : "0" + dummyMonth.toString();
-                      const day = date.getDate() > 10 ? date.getDate().toString() : "0" + date.getDate().toString();
+                      const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
+                      const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
                       fullfilmentDate = year + "-" + month + "-" + day;
                     }
                     projectMaterial.push({ ...mat, fullfilmentDate });
@@ -311,5 +312,19 @@ export class RfqProjectMaterialsComponent implements OnInit {
     });
     this.addRfq.rfqProjectsList = newRfqDetails;
     this.updatedRfq.emit(this.addRfq);
+  }
+
+  selectCurrency() {
+    const dialogRef = this.dialog.open(SelectCurrencyComponent, {
+      disableClose: true,
+      width: "500px",
+      data: this.addRfq.rfqCurrency
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != null) {
+        this.addRfq.rfqCurrency = data;
+      }
+    });
   }
 }

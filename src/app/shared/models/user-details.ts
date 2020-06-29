@@ -1,4 +1,6 @@
 import { ProjectDetails } from './project-details';
+import { Currency } from './currency';
+import { orgTrades } from './trades';
 
 export interface AllUserDetails {
   firstName?: string,
@@ -23,6 +25,7 @@ export interface UserDetailsPopUpData {
   isDelete?: boolean;
   isEdit: boolean;
   detail?: UserAdd;
+  countryList?: any;
 }
 
 export interface UserIds {
@@ -47,6 +50,9 @@ export interface UserAdd {
   projectIds?: number[],
   projects?: number[],
   accountStatus?: number,
+  countryCode?: string,
+  countryId?: number,
+  countryCallingCode?: string
 }
 
 export interface UserRoles {
@@ -58,6 +64,7 @@ export interface UserRoles {
 export interface UserDetails {
   id: number;
   status: number;
+  countryId: number;
   createdBy: string;
   createdAt: string;
   lastUpdatedBy: string;
@@ -96,7 +103,11 @@ export interface UserDetails {
   countryCode?: string;
   uniqueCode?: string;
   companyName?: string;
-    TurnOverId?: number;
+  TurnOverId?: number;
+  baseCurrency: Currency
+  orgPincode: string;
+  trade: orgTrades[];
+  myAccountUpdate: boolean;
 }
 
 export interface TradeList {
@@ -111,15 +122,15 @@ export interface TradeList {
   tradeDescription: string;
   selected?: boolean;
 }
-export interface TurnOverList{
-  id ?: number;
-  status ?: number;
-  createdBy ?: string;
-  createdAt ?: string;
-  lastUpdatedBy ?:  string;
-  lastUpdatedAt ?:  string;
-  turnOverId ?:  number;
-  shortName ?:  string;
-  longName ?:  string;
- 
+export interface TurnOverList {
+  id?: number;
+  status?: number;
+  createdBy?: string;
+  createdAt?: string;
+  lastUpdatedBy?: string;
+  lastUpdatedAt?: string;
+  turnOverId?: number;
+  shortName?: string;
+  longName?: string;
+
 }
