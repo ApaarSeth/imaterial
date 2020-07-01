@@ -11,3 +11,162 @@
        font-weight: 500 !important;
     }
 }
+
+.rating {
+    float:left;
+    margin-top: 7px;
+}
+
+.supplier-ratings .rating{
+    float: none;
+}
+
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0.1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+    color:#ddd;
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating > input:checked ~ label {
+    color: #f70;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+
+
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+}
+
+.supplier-rating-dialog.mat-dialog-content{
+    padding: 0;
+}
+
+.supplier-rating-dialog{
+    
+    .modal-content{
+        border: none;
+    }
+
+    &__para{
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+
+    .rating:not(:checked) > label{
+        font-size: 275%;
+        margin-bottom: 20px;
+    }
+
+    .save-button{
+        background-color: #f4783d;
+        color: #fff;
+        padding: 6px 30px;
+        border-radius: 50px;
+    }
+}
+
+.orange-text{
+    color: #f47721;
+    text-decoration: underline;
+}
+
+/* Ratings widget */
+.rfq-rates {
+    margin-left: 0.35rem;
+    .rate {
+        display: inline-block;
+        border: 0;
+        pointer-events: none;
+        position: relative;
+    }
+}
+/* Hide radio */
+.rfq-rates .rate > input {
+    display: none;
+}
+/* Order correctly by floating highest to the right */
+.rfq-rates .rate > label {
+    float: right;
+}
+
+input:not(:checked) ~ label {
+    color: #cccccc;
+}
+
+/* The star of the show */
+.rfq-rates .rate > label:before {
+    display: inline-block;
+    font-size: 1.1rem;
+    padding: .3rem .2rem;
+    margin: 0;
+    cursor: pointer;
+    font-family: FontAwesome;
+    content: "\f005 ";
+}
+/* Zero stars rating */
+.rfq-rates .rate > label:last-child:before {
+    content: "\f006 ";
+}
+/* Half star trick */
+.rfq-rates .rate .half:before {
+    content: "\f089 ";
+    position: absolute;
+    padding-right: 0;
+}
+/* Click + hover color */
+input:checked ~ label,
+label:hover, label:hover ~ label { color: #f47721;  }
+
+/* Hover highlights */
+input:checked + label:hover, input:checked ~ label:hover,
+input:checked ~ label:hover ~ label,
+label:hover ~ input:checked ~ label { color: #f47721;  }
+
+.rating-value{
+    margin: -6px 0 0 10px;
+    font-size: 14px;
+}
+
+.supplier-rates {
+    margin-top: -4px;
+    .rfq-rates{
+        margin-left: 0 !important;
+    }
+}
+
+.supplier-name {
+    margin-left: 4px;
+}
+
+.rfq-supplier-rates{
+    margin-top: -12px;
+    .rfq-rates {
+        margin-left: 18px !important;
+    }
+}
+
+.po-supplier-rates .rfq-rates{
+    margin-left: 28px !important;
+}

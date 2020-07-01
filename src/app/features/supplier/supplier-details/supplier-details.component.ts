@@ -94,7 +94,9 @@ export class SupplierDetailComponent implements OnInit {
   getAllSupplier() {
     this.rfqService.getSuppliers(this.orgId).then(data => {
       this.dataSource = new MatTableDataSource(data.data);
+
       this.dataSourceTemp = data.data;
+
       if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
         setTimeout(() => {
           this.guidedTourService.startTour(this.SupplierDashboardTour);

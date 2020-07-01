@@ -6,13 +6,13 @@ import {
   CardData
 } from "src/app/shared/models/PO/po-data";
 import { MatDialog } from "@angular/material";
-import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 import { SelectPoRoleComponent } from "src/app/shared/dialogs/select-po-role/select-po-role.component";
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { Address } from "src/app/shared/models/RFQ/rfq-details";
 import { ActivatedRoute } from "@angular/router";
 import { POService } from 'src/app/shared/services/po/po.service';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { SupplierRatingComponent } from "src/app/shared/dialogs/supplier-rating/supplier-rating.component";
 
 @Component({
   selector: "app-po-card",
@@ -26,6 +26,9 @@ export class PoCardComponent implements OnInit {
   isPoNoAndDateValid: boolean = false
   minDate = new Date();
   showResponsiveDesign: boolean;
+  rating: number;
+  poId: number;
+  userId: number;
 
   constructor(
     private poService: POService,
@@ -37,8 +40,13 @@ export class PoCardComponent implements OnInit {
 
   ngOnInit() {
     this.formInit();
+    this.userId = Number(localStorage.getItem("userId"));
+    if(this.cardData.poStatus === '3' && this.cardData.poCreatedBy === this.userId && (this.cardData.sellerPORating === null || this.cardData.sellerPORating === undefined)){
+      this.openSupplierRating();
+    }
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
+      this.poId = Number(params.id);
       this.mode = params.mode;
     });
     this.cardData.projectAddress.projectUserId && this.poService.projectRole$.next();
@@ -169,4 +177,37 @@ export class PoCardComponent implements OnInit {
     }
   }
 
+  /**
+   * @description function will call if rating selected or if clear button clicked
+   * @param rating number of rating which selected
+   */
+  checkRating(rating: number): void {
+    const data = {
+      supplierId: this.cardData.supplierAddress.supplierId,
+      rating,
+      purchaseOrderId: this.poId
+    }
+    
+    this.poService.submitSupplierRating(data).then(res => {
+      this.cardData.sellerPORating = rating;
+    });
+
+    this.rating = rating;
+  }
+
+  /**
+   * @description function to call and open the supplier rating dialog
+   */
+  openSupplierRating() {
+    const dialogRef = this.dialog.open(SupplierRatingComponent, {
+      disableClose: true,
+      width: "500px",
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== 'closed') {
+        this.checkRating(result);
+      }
+    });
+  }
 }

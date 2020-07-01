@@ -28,6 +28,9 @@ export interface POData {
   additionalOtherCostInfo?: OtherCostInfo[];
   additionalOtherCostAmount?: number;
   currencyCode?: string;
+  sellerPORating?: number;
+  poCreatedBy?: number;
+  poStatus?: string;
 }
 
 export interface PurchaseOrderCurrency {
@@ -192,6 +195,9 @@ export interface CardData {
   poValidUpto: string;
   projectId: number;
   isInternational?: number;
+  sellerPORating?: number;
+  poCreatedBy?: number;
+  poStatus?: string;
 }
 
 export interface DocumentList {

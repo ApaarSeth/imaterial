@@ -57,17 +57,21 @@
 
         <!-- second row -->
         <div class="row m-b-10">
-          <div class="supplier-list-rfq-view col-md-3 main-flex" *ngFor="let supplier of rfqDetails.supplierDetails">
+          <div class="supplier-list-rfq-view col-md-3 main-flex" *ngFor="let supplier of rfqDetails.supplierDetails; let i = index">
             <mat-card class="w-100">
-              <div class="col-md-12 text-bold">
+              <div class="col-md-12 text-bold supplier-company">
                 <label for="company " class="word-break-all">{{ supplier.supplier_name }}</label>
               </div>
+
+              <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplier_rating"></view-rating>
+
               <div class="col-md-12">
                 <label for="email" class="word-break-all">{{ supplier.email }}</label>
               </div>
               <div class="col-md-12">
                 <label for="phoneNumber" class="word-break-all"> {{ supplier.countryCallingCode }}-{{ supplier.contact_no }} </label>
               </div>
+              
             </mat-card>
           </div>
         </div>
