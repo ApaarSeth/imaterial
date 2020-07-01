@@ -23,6 +23,7 @@ import { RfqQuantityMakesComponent } from "./create-rfq/rfq-quantity-makes/rfq-q
 import { RfqProjectMaterialsComponent } from "./create-rfq/rfq-project-materials/rfq-project-materials.component";
 import { RfqSupplierComponent } from "./create-rfq/rfq-supplier/rfq-supplier.component";
 import { CreateRfqResolver } from "./create-rfq/resolver/createRfq.resolver";
+import { SharedComponentsModule } from 'src/app/shared/components/shared-component.modules';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { CreateRfqResolver } from "./create-rfq/resolver/createRfq.resolver";
     MatGridListModule,
     MatDialogModule,
     FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
+    FroalaViewModule.forRoot(),
+    SharedComponentsModule
   ],
   providers: [RFQResolver, CreateRfqResolver],
   declarations: [

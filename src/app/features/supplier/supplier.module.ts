@@ -10,7 +10,7 @@ import { SupplierDetailComponent } from './supplier-details/supplier-details.com
 import { SupplierRoutingModule } from './supplier-routing.module';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { SearchPipe } from 'src/app/shared/pipes/searchPipe';
-
+import { SharedComponentsModule } from 'src/app/shared/components/shared-component.modules';
 @NgModule({
   imports: [
     CommonModule,
@@ -21,7 +21,8 @@ import { SearchPipe } from 'src/app/shared/pipes/searchPipe';
     MatInputModule,
     RouterModule,
     AppSharedModule,
-    SupplierRoutingModule
+    SupplierRoutingModule,
+    SharedComponentsModule
   ],
   declarations: [SupplierDetailComponent],
   providers:[SearchPipe]
