@@ -160,6 +160,13 @@ label:hover ~ input:checked ~ label { color: #f47721;  }
     margin-left: 4px;
 }
 
-.rfq-aupplier-rates{
+.rfq-supplier-rates{
     margin-top: -12px;
+    .rfq-rates {
+        margin-left: 18px !important;
+    }
+}
+
+.po-supplier-rates .rfq-rates{
+    margin-left: 28px !important;
 }

@@ -62,44 +62,8 @@
               <div class="col-md-12 text-bold supplier-company">
                 <label for="company " class="word-break-all">{{ supplier.supplier_name }}</label>
               </div>
-              
-              <!-- <div class="ratings">
-                <fieldset class="rating">
-                  <input type="radio" id="{{supplier.supplierId}}" [name]="supplier.supplierId" value="5" [checked]="supplier.supplier_ratings===5" />
-                  <label title="1">5</label>
-        
-                  <input type="radio" id="{{supplier.supplierId + 1}}" [name]="supplier.supplierId" value="4" [checked]="supplier.supplier_ratings===4" />
-                  <label title="2">4</label>
-        
-                  <input type="radio" id="{{supplier.supplierId + 2}}" [name]="supplier.supplierId" value="3" [checked]="supplier.supplier_ratings===3" />
-                  <label title="3">3</label>
-        
-                  <input type="radio" id="{{supplier.supplierId + 3}}" [name]="supplier.supplierId" value="2" [checked]="supplier.supplier_ratings===2" />
-                  <label title="4">2</label>
-        
-                  <input type="radio" id="{{supplier.supplierId + 4}}" [name]="supplier.supplierId" value="1" [checked]="supplier.supplier_ratings===1" />
-                  <label title="5">1</label>
-                </fieldset>
-              </div> -->
 
-              <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplier_ratings"></view-rating>
-
-              <!-- <div class="d-flex align-items-center rfq-rates">
-                <fieldset class="rate">
-                  <input type="radio" id="rating10" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 4.6 && supplier.supplier_ratings <= 5.0" /><label for="rating10" title="5 stars"></label>
-                  <input type="radio" id="rating9" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 4.0 && supplier.supplier_ratings <= 4.6" /><label class="half" for="rating9" title="4 1/2 stars"></label>
-                  <input type="radio" id="rating8" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 3.6 && supplier.supplier_ratings <= 4.0" /><label for="rating8" title="4 stars"></label>
-                  <input type="radio" id="rating7" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 3.0 && supplier.supplier_ratings <= 3.6" /><label class="half" for="rating7" title="3 1/2 stars"></label>
-                  <input type="radio" id="rating6" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 2.6 && supplier.supplier_ratings <= 3.0" /><label for="rating6" title="3 stars"></label>
-                  <input type="radio" id="rating5" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 2.0 && supplier.supplier_ratings <= 2.6" /><label class="half" for="rating5" title="2 1/2 stars"></label>
-                  <input type="radio" id="rating4" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 1.6 && supplier.supplier_ratings <= 2.0" /><label for="rating4" title="2 stars"></label>
-                  <input type="radio" id="rating3" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 1.0 && supplier.supplier_ratings <= 1.6" /><label class="half" for="rating3" title="1 1/2 stars"></label>
-                  <input type="radio" id="rating2" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 0.6 && supplier.supplier_ratings <= 1.0" /><label for="rating2" title="1 star"></label>
-                  <input type="radio" id="rating1" [name]="supplier.supplierId" [checked]="supplier.supplier_ratings > 0.0 && supplier.supplier_ratings <= 0.6" /><label class="half" for="rating1" title="1/2 star"></label>
-                </fieldset>
-                  
-                <span class="rating-value">({{ supplier.supplier_ratings }})</span>
-              </div> -->
+              <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplier_rating"></view-rating>
 
               <div class="col-md-12">
                 <label for="email" class="word-break-all">{{ supplier.email }}</label>

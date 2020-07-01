@@ -94,11 +94,6 @@ export class SupplierDetailComponent implements OnInit {
   getAllSupplier() {
     this.rfqService.getSuppliers(this.orgId).then(data => {
       this.dataSource = new MatTableDataSource(data.data);
-      
-      // data.data.forEach(opt => {
-      //   opt.supplier_rating = 4.6778990;
-      //   opt.supplier_rating = opt.supplier_rating.toFixed(2);
-      // });
 
       this.dataSourceTemp = data.data;
 
