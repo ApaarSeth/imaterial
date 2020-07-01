@@ -8,6 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 export class SupplierRatingComponent implements OnInit {
 
+  supplierId: number;
+
   constructor(
     private dialogRef: MatDialogRef<SupplierRatingComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -16,7 +18,7 @@ export class SupplierRatingComponent implements OnInit {
   rating: number;
 
   ngOnInit() {
-
+    this.supplierId = this.data;
   }
   
   closeDialog() {
