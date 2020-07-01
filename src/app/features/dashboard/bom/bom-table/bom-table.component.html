@@ -1,8 +1,7 @@
 dd
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20">
-    <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()"
-      [projectDetails]="projectData" [disableEditDelete]="true"></card-layout>
+    <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="projectData" [disableEditDelete]="true"></card-layout>
     <div class="row">
       <div class="col-xs-3">
         <mat-form-field class="example-form-field border-input">
@@ -12,36 +11,55 @@ dd
           </button>
         </mat-form-field>
       </div>
+
       <div class="col-xs-9 p-t-10 text-right">
-        <span *ngIf="this.permissionObj.rfqFlag">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right create-rfq-btn"
-            [disabled]="!this.checkedSubcategory.length" (click)="createRfq()">
-            Create RFQ
-          </button>
-        </span>
-        <span class="p-l-5">
-          <button mat-raised-button
-            class="mx-3 main-background-color main-button color-white pull-right raise-indent-btn"
-            [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
-            Raise Indent
-          </button>
-        </span>
-        <!-- <span *ngIf="projectData.openIndentCount > 0" >
-          <button mat-raised-button class="m-l-15 main-background-color main-button color-white pull-right " (click)="viewIndent()">
-            View Indent
-          </button>
-        </span> -->
-        <span>
-          <button mat-raised-button class="main-background-color main-button color-white pull-right"
-            (click)="addMaterial()">
+        <mat-form-field class="t-0 width-15 label-adjust">
+          <mat-label
+            ><img src="../../../assets/images/create-icon.svg" alt="" />
+            <span class="main-color p-l-5">Create</span>
+          </mat-label>
+          <mat-select class="hide-select-arrow">
+            <mat-optgroup class="option-select-height" label="Create GRN">
+              <mat-option (click)="openGrnDialog()" class="height-2-em" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+                Via System
+              </mat-option>
+              <mat-option class="height-2-em" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+                Via Excel
+              </mat-option>
+            </mat-optgroup>
+            <mat-optgroup class="option-select-height" label="Other Actions">
+              <mat-option class="height-2-em" (click)="createRfq()" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+                Create RFQ
+              </mat-option>
+              <mat-option class="height-2-em" (click)="raiseIndent()" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+                Raise Indent
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="t-0 width-16 label-adjust">
+          <mat-label
+            ><img src="../../../assets/images/create-icon.svg" alt="" />
+            <span class="main-color p-l-5">+Add/Edit</span>
+          </mat-label>
+          <mat-select class="hide-select-arrow">
+            <mat-option class="height-2-em" class="main-color" (click)="addMaterial()">
+              Add/Edit Material
+            </mat-option>
+            <mat-option class="height-2-em" class="main-color" (click)="openAddMyMaterial()">
+              + Add Custom Material
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- <span>
+          <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="addMaterial()">
             Add/Edit Material
           </button>
         </span>
 
         <span>
-          <a href="javascript:void(0)" class="main-color text-semi-bold pull-right p-r-10 p-t-10"
-            (click)="openAddMyMaterial()">+ Add Custom Material</a>
-        </span>
+          <a href="javascript:void(0)" class="main-color text-semi-bold pull-right p-r-10 p-t-10" (click)="openAddMyMaterial()">+ Add Custom Material</a>
+        </span> -->
       </div>
     </div>
 
@@ -51,12 +69,14 @@ dd
           <th *matHeaderCellDef class="first-column-row-header">
             Material Name
           </th>
-          <td class="text-left" mat-cell *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
-            <mat-checkbox #ch (change)="getElemenetChecked(ch, element)" [checked]="element.checked"
-              [disabled]="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false">
-              <div class="limited-character bom" matTooltip=" {{ element.materialName }}">{{ element.materialName }}
-                <br /></div>
+          <td class="text-left" mat-cell *matCellDef="let element" [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+            <mat-checkbox
+              #ch
+              (change)="getElemenetChecked(ch, element)"
+              [checked]="element.checked"
+              [disabled]="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false"
+            >
+              <div class="limited-character bom" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
               <div class="limited-character bom" matTooltip=" {{ element.materialGroup }}">
                 <span class="category-name">
                   {{ element.materialGroup }}
@@ -70,8 +90,12 @@ dd
           <th *matHeaderCellDef class="text-align-center justify-center">
             Unit
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             {{ element.materialUnit }}
           </td>
         </ng-container>
@@ -79,8 +103,12 @@ dd
           <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
             Estimated Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             {{ element.estimatedQty }}
           </td>
         </ng-container>
@@ -88,8 +116,12 @@ dd
           <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
             Estimated Rate
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             {{ element.estimatedRate }}
           </td>
         </ng-container>
@@ -97,8 +129,12 @@ dd
           <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
             Indented Quantity
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             {{ element.requestedQuantity }}
           </td>
         </ng-container>
@@ -106,20 +142,27 @@ dd
           <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
             Issued To Project
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
-            <ng-container *ngIf="element.issueToProject; else showZEroDataIP"> {{ element.issueToProject }}
-            </ng-container>
+          <td
+            class="text-align-center"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
+            <ng-container *ngIf="element.issueToProject; else showZEroDataIP"> {{ element.issueToProject }} </ng-container>
             <ng-template #showZEroDataIP> 0 </ng-template>
           </td>
         </ng-container>
         <ng-container matColumnDef="availableStock">
-          <th *matHeaderCellDef [hidden]="!permissionObj.rfqFlag"
-            class="text-align-center justify-center minwidth-110-px">
+          <th *matHeaderCellDef [hidden]="!permissionObj.rfqFlag" class="text-align-center justify-center minwidth-110-px">
             Available In Stock
           </th>
-          <td class="text-align-center" mat-cell [hidden]="!permissionObj.rfqFlag" *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+          <td
+            class="text-align-center"
+            mat-cell
+            [hidden]="!permissionObj.rfqFlag"
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             <ng-container *ngIf="element.availableStock; else showZEroData"> {{ element.availableStock }}</ng-container>
             <ng-template #showZEroData> 0 </ng-template>
           </td>
@@ -127,13 +170,16 @@ dd
 
         <ng-container matColumnDef="customColumn">
           <th *matHeaderCellDef></th>
-          <td class="text-right p-b-20" mat-cell *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+          <td
+            class="text-right p-b-20"
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+          >
             <!-- <a>
               <mat-icon>edit</mat-icon>
             </a> -->
-            <span *ngIf="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false"
-              class="p-r-20 p-t-10 display-inline-block color-grey">Pending</span>
+            <span *ngIf="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false" class="p-r-20 p-t-10 display-inline-block color-grey">Pending</span>
             <!-- <a
               (click)="(element.materialCustomFlag === 1 ? element.isApproved !== 1 : false) ? null : issueToIndent(element.materialId, projectId)"
               class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"
@@ -147,22 +193,29 @@ dd
               <img src="../../../../assets/images/issue_to_indent_disabled.png" />
             </a> -->
 
-            <a class="width-15-px p-l-5 cursor-pointer" matTooltip="Delete" *ngIf="
+            <a
+              class="width-15-px p-l-5 cursor-pointer"
+              matTooltip="Delete"
+              *ngIf="
                 (element.requestedQuantity === 0 || element.requestedQuantity === null) &&
                 (element.availableStock === 0 || element.availableStock === null) &&
                 (element.issueToProject === 0 || element.issueToProject === null)
-              " (click)="
+              "
+              (click)="
                 (element.materialCustomFlag === 1 ? element.isApproved !== 1 : false)
                   ? null
                   : deleteBom(element.materialId, element.projectId, element.requestedQuantity === 0 && element.availableStock === 0 && element.issueToProject === 0)
-              ">
-              <img [src]="
+              "
+            >
+              <img
+                [src]="
                   (element.requestedQuantity === 0 || element.requestedQuantity === null) &&
                   (element.availableStock === 0 || element.availableStock === null) &&
                   (element.issueToProject === 0 || element.issueToProject === null)
                     ? '../../../../assets/images/delete-button.png'
                     : '../../../../assets/images/delete-button_disable.png'
-                " />
+                "
+              />
             </a>
 
             <!-- <a
@@ -182,8 +235,7 @@ dd
 
         <ng-container matColumnDef="expandedDetail">
           <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-            <div class="example-element-detail" *ngIf="element.materialSpecs"
-              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="example-element-detail" *ngIf="element.materialSpecs" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
               <div class="inner-table mat-elevation-z8 row" *ngIf="expandedElement">
                 <table class="col-sm-12" mat-table [dataSource]="element.materialSpecs">
                   <ng-container matColumnDef="materialName">
@@ -216,8 +268,7 @@ dd
                     <th *matHeaderCellDef class="text-align-center">
                       Requested Material
                     </th>
-                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }}
-                    </td>
+                    <td class="text-align-center" mat-cell *matCellDef="let element">{{ element.requestedQuantity }}</td>
                   </ng-container>
                   <ng-container matColumnDef="issueToProject">
                     <th *matHeaderCellDef class="text-align-center">

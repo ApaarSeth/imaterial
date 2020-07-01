@@ -23,6 +23,7 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { permission } from 'src/app/shared/models/permissionObject';
 import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
 import { IndentService } from 'src/app/shared/services/indent/indent.service';
+import { AddGrnComponent } from 'src/app/shared/dialogs/add-grn/add-grn.component';
 
 @Component({
   selector: "app-bom-table",
@@ -107,8 +108,6 @@ export class BomTableComponent implements OnInit {
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-
-
     this.getProject(this.projectId);
     this.getMaterialWithQuantity();
     const role = localStorage.getItem("role")
@@ -217,12 +216,22 @@ export class BomTableComponent implements OnInit {
       }
     });
   }
+
+  openGrnDialog() {
+    const dialogRef = this.dialog.open(AddGrnComponent, {
+      width: "1000px",
+      data: this.projectId
+    });
+  }
+
   raiseIndent() {
-    let projectDetails = this.projectData;
     if (this.checkedSubcategory.length) {
-      let checkedList = this.checkedSubcategory;
-      this.indentService.raiseIndentData = checkedList;
-      this.router.navigate(["/indent/" + this.projectId]);
+      let projectDetails = this.projectData;
+      if (this.checkedSubcategory.length) {
+        let checkedList = this.checkedSubcategory;
+        this.indentService.raiseIndentData = checkedList;
+        this.router.navigate(["/indent/" + this.projectId]);
+      }
     }
   }
   getElemenetChecked(ch: MatCheckbox, element: Subcategory) {
@@ -238,69 +247,72 @@ export class BomTableComponent implements OnInit {
   }
 
   createRfq() {
-    let materialList: RfqMat[] = [];
-    this.checkedSubcategory.forEach((category: Subcategory, i) => {
-      let mat: RfqMat = {};
-      mat.projectId = category.projectId;
-      mat.materialId = category.materialId;
-      mat.materialName = category.materialName;
-      mat.requestedQty = category.requestedQuantity;
-      mat.estimatedQty = category.estimatedQty;
-      mat.estimatedRate = category.estimatedRate;
-      mat.dueDate = category.dueDate;
-      mat.fullfilmentDate = String(category.dueDate) === "" ? null : String(category.dueDate);
-      mat.materialUnit = category.materialUnit;
-      materialList.push(mat);
-    });
-    let projectId = materialList[0].projectId;
-    this.addRfq = {
-      id: null,
-      status: null,
-      createdBy: null,
-      createdAt: null,
-      lastUpdatedBy: null,
-      lastUpdatedAt: null,
-      rfqId: null,
-      rfq_status: null,
-      rfqName: null,
-      dueDate: null,
-      supplierId: null,
-      supplierDetails: null,
-      rfqProjectsList: [
-        {
-          projectId: projectId,
-          projectName: this.projectData.projectName,
-          defaultAddress: {
-            projectId: this.projectData.projectId,
-            projectName: this.projectData.projectName,
-            addressID: this.projectData.projectAddressId,
-            addressShortname: this.projectData.addressShortname,
-            addressLine1: this.projectData.addressShortname,
-            addressLine2: this.projectData.addressLine2,
-            city: this.projectData.city,
-            state: this.projectData.state,
-            pinCode: this.projectData.pinCode,
-            country: this.projectData.country,
-            gstNo: this.projectData.gstNo,
-            addressType: this.projectData.addressType,
-            projectAddressId: this.projectData.projectAddressId,
-            projectdefaultAddressId: this.projectData.projectAddressId,
-            primaryAddress: this.projectData.primaryAddress
-          },
-          projectMaterialList: [],
-          projectAddressList: null,
-          prevMatListLength: null
-        }
-      ],
-      documentsList: null,
-      terms: null
-    };
-    this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
-    this.rfqService.addRFQ(this.addRfq).then(res => {
-      this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
-        state: { rfqData: res, selectedIndex: 1 }
+    if (this.checkedSubcategory.length) {
+      let materialList: RfqMat[] = [];
+      this.checkedSubcategory.forEach((category: Subcategory, i) => {
+        let mat: RfqMat = {};
+        mat.projectId = category.projectId;
+        mat.materialId = category.materialId;
+        mat.materialName = category.materialName;
+        mat.requestedQty = category.requestedQuantity;
+        mat.estimatedQty = category.estimatedQty;
+        mat.estimatedRate = category.estimatedRate;
+        mat.dueDate = category.dueDate;
+        mat.fullfilmentDate = String(category.dueDate) === "" ? null : String(category.dueDate);
+        mat.materialUnit = category.materialUnit;
+        materialList.push(mat);
       });
-    });
+      let projectId = materialList[0].projectId;
+      this.addRfq = {
+        id: null,
+        status: null,
+        createdBy: null,
+        createdAt: null,
+        lastUpdatedBy: null,
+        lastUpdatedAt: null,
+        rfqId: null,
+        rfq_status: null,
+        rfqName: null,
+        dueDate: null,
+        supplierId: null,
+        supplierDetails: null,
+        rfqProjectsList: [
+          {
+            projectId: projectId,
+            projectName: this.projectData.projectName,
+            defaultAddress: {
+              projectId: this.projectData.projectId,
+              projectName: this.projectData.projectName,
+              addressID: this.projectData.projectAddressId,
+              addressShortname: this.projectData.addressShortname,
+              addressLine1: this.projectData.addressShortname,
+              addressLine2: this.projectData.addressLine2,
+              city: this.projectData.city,
+              state: this.projectData.state,
+              pinCode: this.projectData.pinCode,
+              country: this.projectData.country,
+              gstNo: this.projectData.gstNo,
+              addressType: this.projectData.addressType,
+              projectAddressId: this.projectData.projectAddressId,
+              projectdefaultAddressId: this.projectData.projectAddressId,
+              primaryAddress: this.projectData.primaryAddress
+            },
+            projectMaterialList: [],
+            projectAddressList: null,
+            prevMatListLength: null
+          }
+        ],
+        documentsList: null,
+        terms: null
+      };
+      this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
+      this.rfqService.addRFQ(this.addRfq).then(res => {
+        this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
+          state: { rfqData: res, selectedIndex: 1 }
+        });
+      });
+    }
+
   }
 
   viewIndent() {
