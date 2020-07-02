@@ -34,12 +34,6 @@ export class RFQViewComponent implements OnInit {
 
     getRFQDetails(rfqId: number) {
         this.rfqService.getRFQView(rfqId).then(res => {
-            
-            // res.data.supplierDetails.forEach(opt => {
-            //     opt.supplier_ratings = 4.6778990;
-            //     opt.supplier_ratings = opt.supplier_ratings.toFixed(2);
-            // });
-
             this.rfqDetails = res.data;
         });
     }
