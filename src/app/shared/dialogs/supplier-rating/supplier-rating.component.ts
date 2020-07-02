@@ -18,7 +18,7 @@ export class SupplierRatingComponent implements OnInit {
   rating: number;
 
   ngOnInit() {
-    this.supplierId = this.data;
+    this.supplierId = this.data.supplierId;
   }
   
   closeDialog() {
