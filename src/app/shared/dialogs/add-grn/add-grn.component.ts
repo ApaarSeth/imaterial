@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CountryCode } from '../../models/currency';
+import { CommonService } from '../../services/commonService';
 
 @Component({
     selector: 'app-add-grn',
@@ -6,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class AddGrnComponent implements OnInit {
-    constructor() { }
+    countryList: CountryCode[]
+    constructor(private commonService: CommonService) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.commonService.getCountry().then(res => {
+            this.countryList = res.data;
+        })
+    }
+
+    selectionChange($event) {
+
+    }
 }

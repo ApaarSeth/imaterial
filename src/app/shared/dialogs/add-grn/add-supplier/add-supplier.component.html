@@ -1,0 +1,138 @@
+<form *ngIf="this.form" [formGroup]="this.form">
+  <div class="row">
+    <span class="col-xs-3 display-flex">
+      <span>
+        <span class="text-semi-bold"> GRN No.-</span>
+        <mat-form-field class="border-input width-50">
+          <input matInput type="string" formControlName="grnNo" placeholder="GRN No." class="m-r-5" />
+        </mat-form-field>
+      </span>
+    </span>
+    <span class="col-xs-3 display-flex">
+      <span class="text-semi-bold">
+        Date-
+        <mat-form-field class="border-input width-50">
+          <mat-label>GRN Date</mat-label>
+          <input #dateinput matInput formControlName="grnDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly />
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate startView="month"></mat-datepicker>
+        </mat-form-field>
+      </span>
+    </span>
+  </div>
+
+  <div class="p-t-20">
+    <h4>Supplier's Details</h4>
+    <div class="row">
+      <div class="col-xs-3">
+        <mat-form-field class="width-95 border-select mat-form-field-flex-mm-padding label-font-size">
+          <input type="text" placeholder="Contact Person*" matInput formControlName="supplierName" />
+          <!-- <input type="text" placeholder="Contact Person*" matInput formControlName="materialName" [matAutocomplete]="auto" /> -->
+
+          <!-- <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
+                    <mat-option matTooltip=" {{ option.materialName }}" *ngFor="let option of this.filterMaterialName | async" [value]="option">
+                      {{ option.materialName }}
+                    </mat-option>
+                  </mat-autocomplete> -->
+        </mat-form-field>
+      </div>
+
+      <div class="col-xs-3">
+        <mat-form-field class="border-select mat-form-field-flex-mm-padding">
+          <mat-select formControlName="countryCode">
+            <div class="display-flex">
+              <input
+                class="p-l-10 p-b-5"
+                matInput
+                type="search"
+                placeholder="Search Country"
+                [(ngModel)]="searchCountry"
+                [ngModelOptions]="{standalone: true}"
+                (keydown)="$event.stopPropagation()"
+              />
+              <button mat-button matSuffix mat-icon-button>
+                <mat-icon>search</mat-icon>
+              </button>
+            </div>
+            <mat-select-trigger>
+              <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
+                ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country"
+              ><span
+                ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
+                <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
+              </span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-3">
+        <mat-form-field class="border-input">
+          <input matInput type="text" formControlName="contact_no" placeholder="Phone No." />
+          <small *ngIf="form.controls['contact_no'].hasError('pattern') && form.controls['contact_no'].touched" class="form-error-msg"> Enter Valid Phone No</small>
+        </mat-form-field>
+      </div>
+      <div class="col-xs-3">
+        <mat-form-field class="border-input">
+          <input matInput type="email" formControlName="email" placeholder="Email *" />
+          <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="form-error-msg"> Email is required </small>
+          <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="form-error-msg"> Enter Valid Email</small>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5">
+      <mat-card class="width100Percent radius-10 p-t-10">
+        <mat-card-header class="upload-documents-mat-header">
+          <span class="text-semi-bold margin-auto">
+            <app-upload #uploadRef [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"> </app-upload>
+          </span>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list class="pt-10">
+            <span>
+              <mat-list-item class="row height-100 p-r-0 mat-list-content-padding" *ngFor="let file of documentList; let i = index">
+                <!-- <mat-icon>file_copy</mat-icon> -->
+                <div class="col-x-9 display-flex">
+                  <span>
+                    <img class="file-icon" src="../../../../assets/images/file-doc.png" />
+                    <span class="overflow-anywhere">{{ file.documentName }}</span>
+                  </span>
+                </div>
+                <div class="col-xs-3 display-flex">
+                  <span class="show-download">
+                    <span class="p-r-10">
+                      <a type="button" target="_blank" class="width-40 p-r-5" [href]="file.Url" mat-icon-button>
+                        <i class="material-icons">
+                          remove_red_eye
+                        </i>
+                      </a>
+                    </span>
+
+                    <button type="button" class="width-21" (click)="removeFile(i)" mat-icon-button>
+                      <mat-icon class="font-size-16">cancel</mat-icon>
+                    </button>
+                  </span>
+                </div>
+              </mat-list-item>
+            </span>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-xs-7">
+      <angular-editor formControlName="textArea" [config]="config"></angular-editor>
+    </div>
+  </div>
+  <div mat-dialog-actions class="flex-column">
+    <button mat-button matStepperPrevious mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0">
+      Back
+    </button>
+  </div>
+</form>

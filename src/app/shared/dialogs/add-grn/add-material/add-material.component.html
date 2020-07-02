@@ -1,4 +1,4 @@
-<form *ngIf="addMaterialsForm" [formGroup]="addMaterialsForm" (ngSubmit)="onSubmitMaTerials()">
+<form *ngIf="addMaterialsForm" [formGroup]="addMaterialsForm" (ngSubmit)="onSubmitMaterials()">
   <div mat-dialog-content class="overflow-remove tx-cst p-r-0">
     <div formArrayName="addMaterial">
       <div *ngFor="let material of addMaterialsForm.get('addMaterial')['controls']; let i = index" class="float-left w-95">
@@ -48,7 +48,7 @@
           <div class="col-xs-2 text-left p-r-0">
             <span>
               <mat-form-field class="border-input label-font-size width-100">
-                <input formControlName="totalAmount" appTwoDigitDecimaNumber matInput type="text" placeholder="Total Amount({{ currency }})*" />
+                <input formControlName="totalAmount" appTwoDigitDecimaNumber matInput type="text" placeholder="Total Amt*({{ currency }})" />
               </mat-form-field>
             </span>
           </div>
@@ -70,14 +70,9 @@
     </div>
   </div>
   <div mat-dialog-actions class="flex-column">
-    <button
-      [disabled]="!checkValidation"
-      mat-button
-      mat-raised-button
-      class="main-background-color main-button color-white m-b-5 mb-0"
-      [disabled]="addMaterialsForm && !addMaterialsForm.valid"
-    >
-      Save
+    <button mat-button matStepperNext mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0">
+      <!-- <button mat-button matStepperNext mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0" [disabled]="addMaterialsForm && !addMaterialsForm.valid"> -->
+      Next
     </button>
   </div>
 </form>

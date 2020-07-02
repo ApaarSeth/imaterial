@@ -5,6 +5,6 @@
   </mat-step>
   <mat-step stepControl="Add Supplier">
     <ng-template matStepLabel>Add Supplier</ng-template>
-    <app-add-supplier> </app-add-supplier>
+    <app-add-supplier *ngIf="countryList && countryList.length" [countryList]="this.countryList"> </app-add-supplier>
   </mat-step>
 </mat-horizontal-stepper>
