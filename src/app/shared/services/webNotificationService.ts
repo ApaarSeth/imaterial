@@ -5,7 +5,7 @@ import { SwPush } from '@angular/service-worker';
   providedIn: 'root',
 })
 export class WebNotificationService {
-  readonly VAPID_PUBLIC_KEY = 'BDYs3zGJicqevdMd66CzMeW9HhkSA_UFdu4hxKfnexyW0Ndksqykr3bLe6KLg26-lbDD9gJTnw2wxIlkrsS77XA';
+  readonly VAPID_PUBLIC_KEY = 'BP5uGBp6nPyVGkY47AwG9RQCyMiNpwsPxZijwRo6Xvt9Yg9iVNnr9IDjJjjN_6p5s8W8pnBe4wlH9KjiFP9PUsg';
   private baseUrl = 'http://localhost:5000/notifications';
   constructor(private http: HttpClient,
     private swPush: SwPush) { }
