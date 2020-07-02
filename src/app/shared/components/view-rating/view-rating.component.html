@@ -22,5 +22,5 @@
             class="half" for="rating1" title="1/2 star"></label>
     </fieldset>
 
-    <span class="rating-value" *ngIf="ratings">({{ ratings }})</span>
+    <span class="rating-value" *ngIf="ratings">({{ ratings.toFixed(2) }})</span>
 </div>

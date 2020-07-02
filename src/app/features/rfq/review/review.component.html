@@ -104,9 +104,10 @@
             <div class="col-md-3" *ngFor="let supplier of selectedSuppliersList">
               <mat-card class="w-100">
                 <div class="col-md-12 text-bold">
-                  <label for="company ">{{ supplier.supplier_name }}</label>
+                  <label for="company" class="mb-0">{{ supplier.supplier_name }}</label>
                 </div>
-                <div class="col-md-12">
+                <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplier_rating"></view-rating>
+                <div class="col-md-12 mgtn12">
                   <label for="email">{{ supplier.email }}</label>
                 </div>
                 <div class="col-md-12">
