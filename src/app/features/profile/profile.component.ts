@@ -50,6 +50,9 @@ export class ProfileComponent implements OnInit {
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
   baseCurrency
+  countryCode: string;
+  validPincode: boolean = false;
+  countryId: Number;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -62,7 +65,8 @@ export class ProfileComponent implements OnInit {
     this.role = localStorage.getItem("role");
     this.formInit();
     this.getUserRoles();
-
+    this.countryId = Number(localStorage.getItem('countryId'))
+    this.countryCode = localStorage.getItem('countryCode')
     // this.getUserInformation(userId);
     this.getTurnOverList();
     this.getCurrencyAndCountry();
@@ -193,7 +197,28 @@ export class ProfileComponent implements OnInit {
     this.customTrade = this._formBuilder.group({
       trade: []
     })
+    this.userInfoForm.get('orgPincode').valueChanges.subscribe(val => {
+      this.cityStateFetch(val)
+    })
   }
+
+  cityStateFetch(value) {
+    this.commonService.getPincodeInternational(value, Number(this.countryId)).then(res => {
+      if (res.data && res.data.length) {
+        let city = res.data[0].districtName;
+        let state = res.data[0].stateName;
+        if (city && state)
+          this.validPincode = true;
+        else
+          this.validPincode = false;
+
+      }
+      else {
+        this.validPincode = false;
+      }
+    });
+  }
+
 
   changeSelected(parameter: string, trade: TradeList) {
     let choosenIndex = -1;

@@ -134,8 +134,6 @@ export class UpdateInfoComponent implements OnInit {
       }
       this.userInfoPatch();
       this.getTurnOverList();
-      this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
-      this.userInfoForm.get('countryId').setValue(this.livingCountry[0] ? this.livingCountry[0].countryId : null)
       this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     });
   }
@@ -143,7 +141,7 @@ export class UpdateInfoComponent implements OnInit {
   userInfoPatch() {
     this.userInfoForm.patchValue({
       baseCurrency: '',
-      countryCode: '',
+      countryCode: this.livingCountry[0] ? this.livingCountry : null,
       organizationName: this.users.organizationName,
       organizationId: this.users.organizationId,
       firstName: this.users.firstName,
@@ -155,7 +153,7 @@ export class UpdateInfoComponent implements OnInit {
       userId: this.users.userId,
       roleDescription: this.users.roleDescription,
       ssoId: this.users.ssoId,
-      countryId: '',
+      countryId: this.livingCountry[0] ? this.livingCountry[0].countryId : null,
       trade: '',
       profileUrl: '',
       orgPincode: '',
@@ -226,10 +224,6 @@ export class UpdateInfoComponent implements OnInit {
         })
       }
       this.countryId = newcurrencyList.length ? newcurrencyList[0].countryId : this.countryId;
-      if (typeof country === "object") {
-        this.cityStateFetch(this.userInfoForm.get('orgPincode').value)
-      }
-      this.userInfoForm.get('countryId').setValue(newcurrencyList.length ? newcurrencyList[0].countryId : null)
       this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     })
     this.userInfoForm.get('orgPincode').valueChanges.subscribe(val => {

@@ -99,7 +99,7 @@
                   </div>
                   <div class="col-xs-7 p-t-1">
                     <mat-form-field class="border-input w-100">
-                      <input matInput type="text" placeholder="Phone No." formControlName="contactNo" />
+                      <input matInput type="text" placeholder="{{ this.countryCode === '+91' ? 'Phone No.*' : 'Phone No.' }}" formControlName="contactNo" />
                     </mat-form-field>
                     <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
                       <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
@@ -120,6 +120,9 @@
                 </mat-error>
                 <mat-error *ngIf="userInfoForm.controls['orgPincode'].hasError('pattern') && userInfoForm.controls['orgPincode'].touched">
                   Only Number Allowed
+                </mat-error>
+                <mat-error *ngIf="!validPincode && userInfoForm.controls['orgPincode'].touched">
+                  Enter Correct pincode
                 </mat-error>
 
                 <mat-form-field class="border-select w-100" *ngIf="users.roleName != 'l3'">
