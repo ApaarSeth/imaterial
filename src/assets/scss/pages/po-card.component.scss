@@ -44,7 +44,7 @@
 }
 
 .rating > input:checked ~ label {
-    color: #f70;
+    color: gold;
 }
 
 .rating:not(:checked) > label:hover,
@@ -173,4 +173,8 @@ label:hover ~ input:checked ~ label { color: #f47721;  }
 
 .mgtn12{
     margin-top: -12px;
+}
+
+.mgbn12{
+    margin-bottom: -12px;
 }
