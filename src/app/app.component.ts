@@ -26,17 +26,17 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    // this.webNotificationService.subscribeToNotification()
-    // if (this.swUpdate.isEnabled) {
+    this.webNotificationService.subscribeToNotification()
+    if (this.swUpdate.isEnabled) {
 
-    //   this.swUpdate.available.subscribe(() => {
+      this.swUpdate.available.subscribe(() => {
 
-    //     if (confirm("New version available. Load New Version?")) {
+        if (confirm("New version available. Load New Version?")) {
 
-    //       window.location.reload();
-    //     }
-    //   });
-    // }
+          window.location.reload();
+        }
+      });
+    }
     this.location = window.location.href;
     this.fbPixel.load();
     if (this.location.includes('rfq-bids/supplier/') || this.location.includes('rfq-bids/after-submit/')) {
