@@ -55,3 +55,27 @@
 div.limited-character.bom {
   max-width: 264px;
 }
+
+.option-select-height {
+  .mat-optgroup-label {
+    height: 2em !important;
+  }
+}
+
+.hide-select-arrow {
+  .mat-select-arrow {
+    width: 10px;
+    height: 10px;
+    border-left: 0px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 0px solid;
+    margin: 0 4px;
+  }
+}
+
+.label-adjust {
+  .mat-form-field-label-wrapper {
+    top: -2.4em !important;
+    padding-top: 3.84375em !important;
+  }
+}

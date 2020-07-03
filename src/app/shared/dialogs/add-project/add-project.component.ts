@@ -152,7 +152,7 @@ export class AddProjectComponent implements OnInit {
   ];
 
   units: Unit[] = [{ value: "acres" }, { value: "sqm" }, { value: "sqft" }, { value: "km" }];
-  costUnits: Unit[] = [{ value: "CR" }, { value: "Million" }, { value: "Billion" }];
+  costUnits: Unit[] = [{ value: this.currencyCode === "+91" ? "CR" : "Thousand" }, { value: "Million" }, { value: "Billion" }];
 
   initForm() {
     this.projectDetails = this.data.isEdit
@@ -302,7 +302,7 @@ export class AddProjectComponent implements OnInit {
 
   }
   cityStateFetch(value) {
-    this.projectService.getPincodeInternational(value, this.selectedCountryId).then(res => {
+    this.commonService.getPincodeInternational(value, this.selectedCountryId).then(res => {
       if (res.data && res.data.length) {
         this.city = res.data[0].districtName;
         this.state = res.data[0].stateName;

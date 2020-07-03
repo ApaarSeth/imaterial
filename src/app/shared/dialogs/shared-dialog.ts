@@ -34,6 +34,9 @@ import { PaymentRecordComponent } from './payment-record/paymentRecord.component
 import { SnackbarComponent } from './snackbar/snackbar.compnent';
 import { SelectCurrencyComponent } from './select-currency/select-currency.component';
 import { TaxCostComponent } from './tax-cost/tax-cost.component';
+import { AddGrnComponent } from './add-grn/add-grn.component';
+import { GrnAddMaterialComponent } from './add-grn/add-material/add-material.component';
+import { GrnAddSupplierComponent } from './add-grn/add-supplier/add-supplier.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -71,5 +74,8 @@ export const SharedDialogs = [
   PaymentRecordComponent,
   SnackbarComponent,
   SelectCurrencyComponent,
-  TaxCostComponent
+  TaxCostComponent,
+  AddGrnComponent,
+  GrnAddMaterialComponent,
+  GrnAddSupplierComponent
 ];

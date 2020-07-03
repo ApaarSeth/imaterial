@@ -35,6 +35,7 @@ export class BomTopMaterialComponent implements OnInit {
   @Input("searchMat") searchMat: string;
   counter: number;
   orgId: number;
+  searchUnit: string = '';
   materialUnit: string[] = [];
   constructor(
     private router: Router,

@@ -1,0 +1,78 @@
+<form *ngIf="addMaterialsForm" [formGroup]="addMaterialsForm" (ngSubmit)="onSubmitMaterials()">
+  <div mat-dialog-content class="overflow-remove tx-cst p-r-0">
+    <div formArrayName="addMaterial">
+      <div *ngFor="let material of addMaterialsForm.get('addMaterial')['controls']; let i = index" class="float-left w-95">
+        <div class="row" [formGroupName]="i">
+          <div class="col-xs-2 p-r-15">
+            <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding label-font-size">
+              <input type="text" placeholder="Material Name" matInput formControlName="materialName" [matAutocomplete]="auto" />
+              <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
+                <mat-option matTooltip=" {{ option.materialName }}" *ngFor="let option of this.filterMaterialName | async" [value]="option">
+                  {{ option.materialName }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-xs-1 p-r-0 p-l-0">
+            <mat-form-field class="border-select label-font-size width-90 mat-form-field-flex-mm-padding">
+              <mat-select placeholder="Unit*" formControlName="unit">
+                <mat-option *ngFor="let unit of materialUnit" [value]="unit">
+                  <span>
+                    {{ unit }}
+                  </span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-xs-2 text-center">
+            <span>
+              <mat-form-field class="border-input p-l-0 label-font-size width-90">
+                <input formControlName="quantity" appTwoDigitDecimaNumber matInput type="text" placeholder="Quantity*" />
+              </mat-form-field>
+            </span>
+          </div>
+          <div class="col-xs-2 text-center">
+            <span>
+              <mat-form-field class="border-input label-font-size width-90">
+                <input formControlName="pendingQty" appTwoDigitDecimaNumber matInput type="text" placeholder="Pending Qty*" />
+              </mat-form-field>
+            </span>
+          </div>
+          <div class="col-xs-2 text-center">
+            <span>
+              <mat-form-field class="border-input label-font-size width-90">
+                <input formControlName="unitPrice" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Price*({{ currency }})" />
+              </mat-form-field>
+            </span>
+          </div>
+          <div class="col-xs-2 text-left p-r-0">
+            <span>
+              <mat-form-field class="border-input label-font-size width-100">
+                <input formControlName="totalAmount" appTwoDigitDecimaNumber matInput type="text" placeholder="Total Amt*({{ currency }})" />
+              </mat-form-field>
+            </span>
+          </div>
+          <div class="col-xs-1 display-flex align-center p-l-20">
+            <span *ngIf="addMaterialsForm.get('addMaterial')['controls'].length > 1" matRipple class="cursor-pointer p-r-5" (click)="deleteField(i)">
+              <img src="../../../../assets/images/delete-button.png" />
+            </span>
+            <span
+              [ngClass]="[addMaterialsForm.get('addMaterial')['controls'][i].valid ? 'main-color' : 'main-color-faded']"
+              matRipple
+              class="material-icons cursor-pointer"
+              (click)="addNewMaterialField()"
+            >
+              add_circle
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="flex-column">
+    <button mat-button matStepperNext mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0">
+      <!-- <button mat-button matStepperNext mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0" [disabled]="addMaterialsForm && !addMaterialsForm.valid"> -->
+      Next
+    </button>
+  </div>
+</form>
