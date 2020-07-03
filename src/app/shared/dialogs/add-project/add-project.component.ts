@@ -62,9 +62,10 @@ export class AddProjectComponent implements OnInit {
   selectedCountryId: number;
   calingCode: string;
   cntryId: number;
-  currencyCode: string;
+  countryCode: string;
   isMobile: boolean;
-
+  costUnits: Unit[];
+  currencyCode: string;
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
@@ -81,6 +82,8 @@ export class AddProjectComponent implements OnInit {
   ngOnInit() {
     this.countryList = this.data.countryList;
     this.currencyCode = localStorage.getItem('currencyCode');
+    this.countryCode = localStorage.getItem('countryCode');
+    this.costUnits = [{ value: this.countryCode === "+91" ? "Crore" : "Thousand" }, { value: "Million" }, { value: "Billion" }];
     this.cntryId = Number(localStorage.getItem('countryId'));
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
@@ -152,7 +155,7 @@ export class AddProjectComponent implements OnInit {
   ];
 
   units: Unit[] = [{ value: "acres" }, { value: "sqm" }, { value: "sqft" }, { value: "km" }];
-  costUnits: Unit[] = [{ value: this.currencyCode === "+91" ? "Crore" : "Thousand" }, { value: "Million" }, { value: "Billion" }];
+
 
   initForm() {
     this.projectDetails = this.data.isEdit
