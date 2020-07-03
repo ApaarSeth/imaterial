@@ -134,6 +134,7 @@ export class UpdateInfoComponent implements OnInit {
       }
       this.userInfoPatch();
       this.getTurnOverList();
+
       this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     });
   }
@@ -141,7 +142,7 @@ export class UpdateInfoComponent implements OnInit {
   userInfoPatch() {
     this.userInfoForm.patchValue({
       baseCurrency: '',
-      countryCode: this.livingCountry[0] ? this.livingCountry : null,
+      countryCode: this.livingCountry[0] ? this.livingCountry[0] : null,
       organizationName: this.users.organizationName,
       organizationId: this.users.organizationId,
       firstName: this.users.firstName,
