@@ -65,6 +65,7 @@ export class AddProjectComponent implements OnInit {
   countryCode: string;
   isMobile: boolean;
   costUnits: Unit[];
+  currencyCode: string;
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
@@ -80,6 +81,7 @@ export class AddProjectComponent implements OnInit {
 
   ngOnInit() {
     this.countryList = this.data.countryList;
+    this.currencyCode = localStorage.getItem('currencyCode');
     this.countryCode = localStorage.getItem('countryCode');
     this.costUnits = [{ value: this.countryCode === "+91" ? "Crore" : "Thousand" }, { value: "Million" }, { value: "Billion" }];
     this.cntryId = Number(localStorage.getItem('countryId'));
