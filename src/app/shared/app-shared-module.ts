@@ -13,9 +13,10 @@ import { PickDateAdapter, PICK_FORMATS } from './services/date.service';
 import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
 import { OnlyNumberDirective } from './directives/number-only2.directive';
 import { TwoDigitDecimaNumberDirective } from './directives/appTwoDigit';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule, NgbModule],
   providers: [DataService,
     { provide: DateAdapter, useClass: PickDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }

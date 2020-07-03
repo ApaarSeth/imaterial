@@ -35,6 +35,8 @@ import { SnackbarComponent } from './snackbar/snackbar.compnent';
 import { SelectCurrencyComponent } from './select-currency/select-currency.component';
 import { TaxCostComponent } from './tax-cost/tax-cost.component';
 import { SupplierRatingComponent } from './supplier-rating/supplier-rating.component';
+import { ViewImageComponent } from './view-image/view-image.component';
+import { UploadImageComponent } from './upload-image/upload-image.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -73,5 +75,7 @@ export const SharedDialogs = [
   SnackbarComponent,
   SelectCurrencyComponent,
   TaxCostComponent,
-  SupplierRatingComponent
+  SupplierRatingComponent,
+  ViewImageComponent,
+  UploadImageComponent
 ];

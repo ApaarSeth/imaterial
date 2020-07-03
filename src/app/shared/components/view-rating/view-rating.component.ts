@@ -13,5 +13,9 @@ export class ViewRatingComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit() {}
+    ngOnInit() {
+        console.log(this.ratings)
+        console.log(this.supplierId);
+        
+    }
 }

@@ -116,7 +116,14 @@
 
                     <ng-container formArrayName="supplierList">
                       <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index" [formGroupName]="s">
-                        <span class="mat-cell maxwidth-15 p-l-25 limited-character" matTooltip=" {{ supplier.supplierName }}">{{ supplier.supplierName }} </span>
+                        <span class="mat-cell maxwidth-15 p-l-25 limited-character" matTooltip=" {{ supplier.supplierName }}">
+                          <span class="supplier-name ml-0">{{ supplier.supplierName }}</span>
+
+                          <span class="d-block supplier-rates ml-0 mgbn12">
+                            <view-rating [supplierId]="material.materialId" [ratings]="supplier.rating"></view-rating>
+                          </span>
+                        </span>
+
                         <span class="mat-cell maxwidth-10"></span>
 
                         <div class="mat-cell maxwidth-75">

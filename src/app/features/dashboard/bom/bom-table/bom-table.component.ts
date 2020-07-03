@@ -23,6 +23,8 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { permission } from 'src/app/shared/models/permissionObject';
 import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
 import { IndentService } from 'src/app/shared/services/indent/indent.service';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 
 @Component({
   selector: "app-bom-table",
@@ -41,9 +43,9 @@ export class BomTableComponent implements OnInit {
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
+  columnsToDisplay = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
 
-  innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
+  innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -167,6 +169,14 @@ export class BomTableComponent implements OnInit {
       }
 
       this.getProject(this.projectId);
+      this.subcategoryData.map(data => {
+        data.attachedImages = [
+          "assets/images/demo.jpg",
+          "assets/images/rfq-details.png",
+          "assets/images/project-background.png",
+          "assets/images/not-found-medium.jpg"
+        ]
+      })
       this.dataSource = new MatTableDataSource(this.subcategoryData);
       this.loading.hide();
     });
@@ -386,5 +396,42 @@ export class BomTableComponent implements OnInit {
     if (disabledStatus != true) {
       this.openDeleteDialog(materialId, projectId);
     }
+  }
+
+  /**
+   * function will call to open view image modal
+   * @param id selected material id
+   */
+  viewAllImages(id){
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        result: this.dataSource.filteredData,
+        selectedMaterialId: id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          console.log(result);
+        }
+    });
+  }
+
+  uploadImage(){
+    const dialogRef = this.dialog.open(UploadImageComponent, {
+      disableClose: true,
+      width: "60vw",
+      panelClass: 'upload-image-modal',
+      data: 'csdcdscds'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          console.log(result);
+        }
+    });
   }
 }
