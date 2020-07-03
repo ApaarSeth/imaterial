@@ -115,7 +115,13 @@ export class CommonService {
     return this.mediaMatcher.matchMedia(this.XSmall);
   }
 
-
+  getPincodeInternational(pin: number, cId: number) {
+    return this.dataService
+      .getRequest(API.GETCITYANDSTATEBYCOUNTRY(pin, cId))
+      .then(res => {
+        return res;
+      });
+  }
 }
 
 
