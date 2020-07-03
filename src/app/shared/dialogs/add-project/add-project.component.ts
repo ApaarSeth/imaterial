@@ -152,7 +152,7 @@ export class AddProjectComponent implements OnInit {
   ];
 
   units: Unit[] = [{ value: "acres" }, { value: "sqm" }, { value: "sqft" }, { value: "km" }];
-  costUnits: Unit[] = [{ value: this.currencyCode === "+91" ? "CR" : "Thousand" }, { value: "Million" }, { value: "Billion" }];
+  costUnits: Unit[] = [{ value: this.currencyCode === "+91" ? "Crore" : "Thousand" }, { value: "Million" }, { value: "Billion" }];
 
   initForm() {
     this.projectDetails = this.data.isEdit
