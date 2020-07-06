@@ -1,4 +1,4 @@
-<mat-dialog-content class="supplier-rating-dialog">
+<mat-dialog-content class="supplier-rating-dialog upload-img-dialog">
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title">Add/Edit Image</h5>
@@ -10,50 +10,25 @@
 
       <div class="row">
         <div class="col-md-6">
+          <div class="upload-image-section">
+            <app-upload #uploadRef (onFileUpdate)="fileUpdate($event)" [imageIntegration]="true"></app-upload>
+              <span class="uploaded-filename" *ngIf="subFileName && !errorMessage">{{subFileName}} has been successfully uploaded.</span>
+          </div>
 
-          <mat-card class="width100Percent radius-10 p-t-10">
-            <mat-card-header class="upload-documents-mat-header">
-              <span class="text-semi-bold margin-auto">
-                <app-upload #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved"
-                  (onFileUpdate)="fileUpdate($event)"> </app-upload>
-              </span>
-            </mat-card-header>
-
-            <mat-card-content>
-              <!-- View files -->
-              <mat-list class="pt-10">
-                <span>
-                  <mat-list-item class="row height-100" *ngFor="let file of documentList; let i = index">
-                    <!-- <mat-icon>file_copy</mat-icon> -->
-                    <div class="col-x-9">
-                      <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-                      <span class="overflow-anywhere">file name</span>
-                    </div>
-                    <div class="col-xs-3">
-                      <span class="show-download">
-                        <a type="button" target="_blank" class="width-40 p-r-5" [href]="file.Url" mat-icon-button>
-                          <i class="material-icons">
-                            remove_red_eye
-                          </i>
-                        </a>
-                        <!-- <button type="button" class="width-21" (click)="removeFile(i)" mat-icon-button>
-                          <mat-icon class="font-size-16">cancel</mat-icon>
-                        </button> -->
-                      </span>
-                    </div>
-                  </mat-list-item>
-                </span>
-              </mat-list>
-            </mat-card-content>
-          </mat-card>
-
+          <div class="d-block mx-auto mt-3">
+            <div class="upload-error d-flex align-items-center justify-content-center mx-auto" *ngIf="errorMessage">
+              <i class="fa fa-exclamation-circle mr-2"></i> {{ errorMessage }}
+            </div>
+          </div>
         </div>
 
+
         <div class="col-md-6">
-          <div class="upload-image-info d-flex align-items-center justify-content-between">
+          <div class="upload-image-info mb-3 d-flex align-items-center justify-content-between" *ngFor="let file of documentList; let i = index">
             <div class="image-info d-flex align-items-center">
-              <img src="assets/images/demo.jpg" alt="" class="img-fluid thumbnail-img">
-              <span class="ml-2">Cement OPC 43.png</span>
+              <!-- <img src="assets/images/demo.jpg" alt="" class="img-fluid thumbnail-img"> -->
+              <i class="fa fa-photo fa-lg" stye="color:#4caf4f"></i>
+              <span class="ml-2">{{ file.DocumentDesc }}</span>
             </div>
 
             <div class="image-actions d-flex align-items-center">

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, Input } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
-import { DocumentList } from '../../models/PO/po-data';
+import { DocumentList, ImageList } from '../../models/PO/po-data';
 import { DocumentUploadService } from '../../services/document-download/document-download.service';
 
 @Component({
@@ -10,85 +10,53 @@ import { DocumentUploadService } from '../../services/document-download/document
 
 export class UploadImageComponent implements OnInit {
 
-  @Input("documentListLength") public documentListLength: number;
-  @Input("documentData") documentData: DocumentList[];
   docs: FileList;
-  documentList: DocumentList[] = [];
+  documentList: ImageList[] = [];
   documentsName: string[] = [];
   filesRemoved: boolean;
+  projectId: number;
+  materialId: number;
+  subFileName: string;
+  errorMessage: string;
 
   constructor(
     private dialogRef: MatDialogRef<UploadImageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _uploadImageService: DocumentUploadService,
-    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
-    console.log(this.data);
+    this.projectId = this.data.projectId;
+    this.materialId = this.data.materialId;
   }
 
   fileUpdate(files: FileList) {
     this.docs = files;
-    this.uploadDocs();
+    if(this.docs && this.docs.length <= 5){
+      this.uploadDocs();
+    }else{
+      this.errorMessage = "You cannot upload more than 5 images."
+    }
   }
 
   uploadDocs() {
     if (this.docs && this.docs.length) {
       const data = new FormData();
-      const fileArr: File[] = [];
       data.append(`file`, this.docs[0]);
-      if(!(this.documentList.some(element => {
-       return element.documentName == this.docs[0].name;
-      }))){
-          return this._uploadImageService.postDocumentUpload(data).then(res => {
-        this.filesRemoved = false;
-        let name: string = res.data;
-        let firstName: number = res.data.fileName.indexOf("_");
-        let subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
-        this.documentsName.push(subFileName);
-        this.documentList.push({
-          documentType: "PO",
-          DocumentDesc: subFileName,
-          DocumentUrl: res.data.fileName,
-          documentName: subFileName,
-          Url: res.data.url
-        });
-        this.documentListLength = this.documentList.length;
-        subFileName = "";
-        this.filesRemoved = true;
-        
-        this._snackBar.open("File has been successfully uploaded", "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
-    
-      }).catch(err => {
-        this.filesRemoved = true;
-        this.docs = null;
-        this._snackBar.open(
-          err.error.message,
-          "",
-          {
-            duration: 4000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          }
-        );
-      });
-      }
-      else{
-         this._snackBar.open(
-         'Duplicate files are not allowed',
-          "",
-          {
-            duration: 4000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          }
-        );
-      }
+      let count = 0;
+      // if(!(this.documentList.some(element => { return element.documentName == this.docs[0].name; }))){
+          this._uploadImageService.postDocumentUpload(data).then(res => {
+            
+            let firstName: number = res.data.fileName.indexOf("_");
+            this.subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
+            this.documentsName.push(this.subFileName);
+
+            this.documentList.push({
+              "DocumentUrl": res.data.fileName,
+              "DocumentDesc": this.subFileName,
+            });    
+          })
+      // }else{}
     }
   }
 
@@ -97,7 +65,15 @@ export class UploadImageComponent implements OnInit {
   }
 
   addImage(){
-    
+    const data = {
+      "projectId": this.projectId,
+      "materialId": this.materialId,
+      "documentsList": this.documentList
+    }
+
+    return this._uploadImageService.uploadImage(data).then(res => {
+      console.log(res);
+    });
   }
 
 }

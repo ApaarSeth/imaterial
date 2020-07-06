@@ -1,6 +1,6 @@
 <!-- new structure -->
 <div class="row" *ngIf="!userInfo">
-  <div class="col-xs-12 upload-document-label" *ngIf="!userInfo">
+  <div class="col-xs-12 upload-document-label" *ngIf="!userInfo" [class.d-none]="imageIntegration">
     <label for="upload-document" *ngIf="!grnResponsive">
       Upload Document
     </label>
@@ -14,13 +14,17 @@
   </div> -->
 
   <!-- Will invisible in case of Update User Info -->
-  <div class="col-xs-12 grey-dotted-border p-t-40" *ngIf="!grnResponsive" appDnd>
+  <div class="col-xs-12 grey-dotted-border p-t-40" *ngIf="!grnResponsive" appDnd [class.img-integration]="imageIntegration">
     <div class="upload-green-tick">
       <img src="../../../../assets/images/upload-green-arrow.png" />
     </div>
     <input accept=".pdf, .doc, .docx, .jpg, .jpeg, .png " type="file" #fileDropRef id="fileDropRef" class="drag-and-drop" title="" multiple (change)="uploadFiles($event.target.files)" />
-    <span>Drag and drop or <span for="fileDropRef" class="main-color">Browse</span> files to upload</span>
+    <span class="upload-msg">Drag and drop or <span for="fileDropRef" class="main-color">Browse</span> files to upload</span>
+    <div class="image-integration" *ngIf="imageIntegration">
+      <span class="file-limit">Max File Size: 5MB, Accepted Formats: .png, .jpg, .jpeg</span>
+    </div>
   </div>
+
 
   <div class="col-xs-12 display-flex p-t-10" *ngIf="grnResponsive">
    <button type="button" class="main-background-color main-button color-white" mat-icon-button>

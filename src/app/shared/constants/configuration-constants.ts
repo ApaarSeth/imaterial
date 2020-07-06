@@ -141,5 +141,6 @@ export const API = {
   EMAILVERFICATIONSTATUS: `email/verification/status`,
   EMAILVERFICATION: (token) => `emailVerification/${token}`,
   DASHBOARD_VIDEOS: 'marketing/dashboardVideo',
-  SUPPLIER_RATING: 'supplier/update/rating'
+  SUPPLIER_RATING: 'supplier/update/rating',
+  UPLOAD_IMAGE: 'material/addImages'
 };
