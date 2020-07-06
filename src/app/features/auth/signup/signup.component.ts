@@ -73,7 +73,6 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.countryList = this.activatedRoute.snapshot.data.countryList;
-    console.log(this.countryList);
     // this.countryList = this.actualCountryList;
     this.primaryCallingCode = localStorage.getItem('countryCode')
     this.route.params.subscribe(param => {
