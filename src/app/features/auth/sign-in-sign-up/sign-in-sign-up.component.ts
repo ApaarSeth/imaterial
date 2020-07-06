@@ -26,7 +26,7 @@ export class SignInSignUpComponent implements OnInit {
   index: number;
   callingCode: string;
   countryCode: string;
-  countryList: CountryCode[]
+  countryList: CountryCode[] = [];
   constructor(
     private visitorsService: VisitorService,
     private router: Router,
@@ -47,16 +47,29 @@ export class SignInSignUpComponent implements OnInit {
       this.uniqueCode = param["uniqueCode"];
       this.index = this.uniqueCode ? 1 : 0;
     });
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.loader.show()
-      Promise.all([this.visitorsService.getGEOLocation(res['ip']), this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true })]).then(res => {
-        localStorage.setItem('countryCode', res[0]['calling_code'])
-        this.callingCode = res[0]['calling_code']
-        this.countryCode = res[0]['country_code2']
-        this.countryList = res[1]['data']
-        this.loader.hide()
-      })
+
+    localStorage.setItem('countryCode', "+91");
+    this.callingCode = "+91";
+    this.countryCode = "IN";
+
+    this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true }).then(res => {
+      if(res.data){
+        this.countryList = res.data;
+      }
+      // console.log(this.countryList);
     })
+
+
+    // this.visitorsService.getIpAddress().subscribe(res => {
+    //   this.loader.show()
+    //   Promise.all([this.visitorsService.getGEOLocation(res['ip']), this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true })]).then(res => {
+    //     localStorage.setItem('countryCode', res[0]['calling_code'])
+    //     this.callingCode = res[0]['calling_code']
+    //     this.countryCode = res[0]['country_code2']
+    //     this.countryList = res[1]['data']
+    //     this.loader.hide()
+    //   })
+    // })
   }
 
   tabChanged(event) {
