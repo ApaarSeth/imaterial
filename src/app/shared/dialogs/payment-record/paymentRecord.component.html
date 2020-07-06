@@ -11,77 +11,73 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-12 p-t-20">
-    <span class="row p-l-10 m-b-10 text-left" *ngIf="paymentDetail.purchaseOrderCurrency && paymentDetail.purchaseOrderCurrency.exchangeCurrencyName != null">
-      <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
-        <span class="font-size-vary-grn color-grey">
-          <img width="25px" *ngIf="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" [src]="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" />
-          {{ paymentDetail.purchaseOrderCurrency.exchangeCurrencyName }}
-        </span>
-        <span class="p-l-5"> = </span>
-        <span class="p-l-5 color-6d6a6a color-grey"> {{ paymentDetail.purchaseOrderCurrency.exchangeValue }} </span>
-        <span class="p-l-5 color-grey">
-          <img width="25px" *ngIf="paymentDetail.purchaseOrderCurrency.primaryCurrencyFlag" [src]="paymentDetail.purchaseOrderCurrency.primaryCurrencyFlag" />
-          {{ paymentDetail.purchaseOrderCurrency.primaryCurrencyName }}
-        </span>
-      </span>
-    </span>
-    <mat-card class="width78Percent gray-border">
-      <div class="row">
-        <div class="col-xs-6">
-          Total PO Amount :
-          {{ paymentDetail.totalPoAmount ? (paymentDetail.totalPoAmount | number: "1.2-2") : (0 | number: "1.2-2") }}
-          {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
 
-          <span class="info-icon info-tootip"
-            ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
-            <span class="info-tootip__content">
-              <div class="tooltip-table maxwidth-270-px">
-                <div class="row mb-1">
-                  <div class="col-sm-12">
-                    <span class="p-r-0"> Total Amount : {{ paymentDetail.poAmount - paymentDetail.gstAmount | number: "1.2-2" }}</span>
-                    <span class="p-l-0 m-l-0">{{
-                      paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode
-                    }}</span>
-                  </div>
-                  <div class="col-sm-12">
-                    <span class="p-r-0">Total Tax Amount : {{ paymentDetail.totalTaxAmount + paymentDetail.gstAmount | number: "1.2-2" }}</span>
-                    <span class="p-l-0 m-l-0">{{
-                      paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode
-                    }}</span>
-                  </div>
-                  <div class="col-sm-12" *ngIf="paymentDetail.otherCost">
-                    <span class="p-r-0">Other Cost Amount : {{ paymentDetail.otherCost | number: "1.2-2" }}</span>
-                    <span class="p-l-0 m-l-0">{{
-                      paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode
-                    }}</span>
-                  </div>
+  <mat-card class="gray-border p-t-10" [ngClass]="paymentDetail.purchaseOrderCurrency ? 'width-99' : 'width-78'">
+    <div class="row">
+      <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-4' : 'col-xs-6'">
+        Total PO Amount :
+        {{ paymentDetail.totalPoAmount ? (paymentDetail.totalPoAmount | number: "1.2-2") : (0 | number: "1.2-2") }}
+        {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
+
+        <span class="info-icon info-tootip"
+          ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+          <span class="info-tootip__content">
+            <div class="tooltip-table maxwidth-270-px">
+              <div class="row mb-1">
+                <div class="col-sm-12">
+                  <span class="p-r-0"> Total Amount : {{ paymentDetail.poAmount - paymentDetail.gstAmount | number: "1.2-2" }}</span>
+                  <span class="p-l-0 m-l-0">{{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}</span>
+                </div>
+                <div class="col-sm-12">
+                  <span class="p-r-0">Total Tax Amount : {{ paymentDetail.totalTaxAmount + paymentDetail.gstAmount | number: "1.2-2" }}</span>
+                  <span class="p-l-0 m-l-0">{{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}</span>
+                </div>
+                <div class="col-sm-12" *ngIf="paymentDetail.otherCost">
+                  <span class="p-r-0">Other Cost Amount : {{ paymentDetail.otherCost | number: "1.2-2" }}</span>
+                  <span class="p-l-0 m-l-0">{{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}</span>
                 </div>
               </div>
+            </div>
+          </span>
+        </span>
+      </div>
+
+      <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-4' : 'col-xs-6'">
+        Amount Paid till date :
+        <span>
+          {{ paymentDetail.paymentRecived ? (paymentDetail.paymentRecived | number: "1.2-2") : (0 | number: "1.2-2") }}
+          {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
+        </span>
+      </div>
+      <div class="col-xs-4 text-center" *ngIf="paymentDetail.purchaseOrderCurrency">
+        <span class="text-left" *ngIf="paymentDetail.purchaseOrderCurrency && paymentDetail.purchaseOrderCurrency.exchangeCurrencyName != null">
+          <span class="base-currency">
+            <span class="font-size-vary-grn color-grey">
+              <img width="25px" *ngIf="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" [src]="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" />
+              {{ paymentDetail.purchaseOrderCurrency.exchangeCurrencyName }}
+            </span>
+            <span class="p-l-5"> = </span>
+            <span class="p-l-5 color-6d6a6a color-grey"> {{ paymentDetail.purchaseOrderCurrency.exchangeValue }} </span>
+            <span class="p-l-5 color-grey">
+              <img width="25px" *ngIf="paymentDetail.purchaseOrderCurrency.primaryCurrencyFlag" [src]="paymentDetail.purchaseOrderCurrency.primaryCurrencyFlag" />
+              {{ paymentDetail.purchaseOrderCurrency.primaryCurrencyName }}
             </span>
           </span>
-        </div>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-4' : 'col-xs-6'">
+        GRN Amount : {{ paymentDetail.grnAmount ? (paymentDetail.grnAmount | number: "1.2-2") : (0 | number: "1.2-2") }}
+        {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
+      </div>
+      <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-4' : 'col-xs-6'">
+        Amount Due : {{ paymentDetail.totalPoAmount - paymentDetail.paymentRecived | number: "1.2-2" }}
+        {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
+      </div>
+    </div>
+  </mat-card>
 
-        <div class="col-xs-6">
-          Amount Paid till date :
-          <span>
-            {{ paymentDetail.paymentRecived ? (paymentDetail.paymentRecived | number: "1.2-2") : (0 | number: "1.2-2") }}
-            {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
-          </span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-6">
-          GRN Amount : {{ paymentDetail.grnAmount ? (paymentDetail.grnAmount | number: "1.2-2") : (0 | number: "1.2-2") }}
-          {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
-        </div>
-        <div class="col-xs-6">
-          Amount Due : {{ paymentDetail.totalPoAmount - paymentDetail.paymentRecived | number: "1.2-2" }}
-          {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
-        </div>
-      </div>
-    </mat-card>
-  </div>
   <div class="col-xs-12 tab-body-padding">
     <mat-tab-group (selectedTabChange)="tabClick($event)">
       <mat-tab label="Add Payment">
@@ -138,7 +134,7 @@
             <ng-container matColumnDef="Exchange Rate">
               <th mat-header-cell *matHeaderCellDef class="text-align-center">Exchange Rate</th>
               <td mat-cell *matCellDef="let element" class="text-align-center">
-                {{ element.exchangeValue }}
+                {{ element.exchangeRate }}
               </td>
             </ng-container>
 

@@ -11,17 +11,9 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { RangeDatePicker } from './rangeDatePicker/datePicker.component';
 import { SnackbarComponent } from '../dialogs/snackbar/snackbar.compnent';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { ViewRatingComponent } from './view-rating/view-rating.component';
 
-
-const components = [
-  ProjectItemComponent,
-  ChipComponent,
-  UploadComponent,
-  GlobalLoaderComponent,
-  BreadcrumbComponent,
-  RangeDatePicker,
-  SubscriptionsComponent
-];
+const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SnackbarComponent, SubscriptionsComponent, ViewRatingComponent ];
 
 @NgModule({
   imports: [

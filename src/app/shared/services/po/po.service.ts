@@ -68,5 +68,8 @@ export class POService {
     return this.dataService.getRequest(API.PAYMENTDETAIL(poId))
   }
 
+  submitSupplierRating(data) {
+    return this.dataService.sendPostRequest(API.SUPPLIER_RATING, data)
+  }
 
 }

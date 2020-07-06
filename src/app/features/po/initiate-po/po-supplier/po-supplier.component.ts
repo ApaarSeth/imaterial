@@ -48,7 +48,7 @@ export class PoSupplierComponent implements OnInit {
     let orgId = Number(localStorage.getItem("orgId"));
 
     this.rfqService.getSuppliers(orgId).then(data => {
-      this.allSuppliers = data.data;;
+      this.allSuppliers = data.data;
     });
   }
 

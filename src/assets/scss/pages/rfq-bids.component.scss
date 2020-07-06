@@ -214,3 +214,22 @@
   font-weight: 550;
   cursor: pointer;
 }
+
+.ratings {
+  margin: 0 0 10px 4px;
+
+  .fa{
+    margin-left: 5px;
+  }
+
+  .fa-star-o {
+    color: #c5c4c4;
+  }
+  .fa-star{
+    color: #f47721;
+  }
+}
+
+.supplier-company label{
+  margin-bottom: 0;
+}

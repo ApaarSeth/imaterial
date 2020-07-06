@@ -28,6 +28,9 @@ export interface POData {
   additionalOtherCostInfo?: OtherCostInfo[];
   additionalOtherCostAmount?: number;
   currencyCode?: string;
+  sellerPORating?: number;
+  poCreatedBy?: number;
+  poStatus?: string;
 }
 
 export interface PurchaseOrderCurrency {
@@ -192,6 +195,9 @@ export interface CardData {
   poValidUpto: string;
   projectId: number;
   isInternational?: number;
+  sellerPORating?: number;
+  poCreatedBy?: number;
+  poStatus?: string;
 }
 
 export interface DocumentList {
@@ -261,7 +267,7 @@ export interface DownloadData {
 }
 
 export interface PaymentHistory {
-  exchangeValue: number, id: number, status: number, createdBy: string, createdAt: string, lastUpdatedBy: string, lastUpdatedAt: string, supplierPaymentId: number, purchaseOrderId: number, supplierId: number, amountPaid: number, transactionId: string, paymentDate: string
+  exchangeRate: string, exchangeValue: number, id: number, status: number, createdBy: string, createdAt: string, lastUpdatedBy: string, lastUpdatedAt: string, supplierPaymentId: number, purchaseOrderId: number, supplierId: number, amountPaid: number, transactionId: string, paymentDate: string
 }
 
 export interface SavePaymnetRecord {

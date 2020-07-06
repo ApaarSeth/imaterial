@@ -21,7 +21,7 @@ export interface Subcategory {
   quantity: number;
   dueDate: Date;
   isApproved?: number;
-
+  attachedImages?: string[];
 }
 
 export interface Materials {
@@ -42,6 +42,7 @@ export interface Materials {
   checked: boolean;
   issueToProject: number;
   availableStock: number;
+  attachedImages?: string[];
 }
 
 export interface QtyData {

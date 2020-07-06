@@ -11,7 +11,8 @@ export interface AllSupplierDetails {
   supplier_name?: string,
   contact_no?: number,
   email?: string,
-  pan?: string
+  pan?: string,
+  supplier_rating?: number,
 }
 
 export interface SupplierDetailsPopUpData {
@@ -34,5 +35,4 @@ export interface SupplierAdd {
   contact_no?: number,
   email?: string,
   pan?: string
-
 }

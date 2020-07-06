@@ -143,5 +143,6 @@ export const API = {
   DASHBOARD_VIDEOS: 'marketing/dashboardVideo',
   GETSUBSCRIPTIONPLAN: 'subscription/getSubscriptionPlan',
   POST_SUBSCRIPTIONPAYMENTGATEWAY: 'payments/subscription/initiate',
-  POST_SUBSRIPTIONINITIATE: 'payment/subscription/initiate'
+  POST_SUBSRIPTIONINITIATE: 'payment/subscription/initiate',
+  SUPPLIER_RATING: 'supplier/update/rating'
 };

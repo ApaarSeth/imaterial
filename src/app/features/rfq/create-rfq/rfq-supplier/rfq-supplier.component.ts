@@ -69,6 +69,7 @@ export class RfqSupplierComponent implements OnInit {
     };
 
     this.orgId = Number(localStorage.getItem("orgId"));
+    console.log(this.activatedRoute);
     if (this.activatedRoute.snapshot.data.createRfq[0].data) {
       this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
       // this.allSupplier.next(this.allSuppliers);
