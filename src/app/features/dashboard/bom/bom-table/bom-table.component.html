@@ -134,9 +134,9 @@
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
-            <div *ngIf="element?.attachedImages?.length" class="images-lists" (click)="viewAllImages(element.materialId)">
-              <ng-container *ngFor="let img of element.attachedImages; let i = index">
-                <img [src]=img alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+            <div *ngIf="element?.documentsList?.length" class="images-lists" (click)="viewAllImages(element.materialId)">
+              <ng-container *ngFor="let img of element.documentsList; let i = index">
+                <img [src]=img.documentUrl alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
               </ng-container>
             </div>
           </td>

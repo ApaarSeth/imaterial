@@ -26,8 +26,8 @@
         <div class="col-md-6">
           <div class="upload-image-info mb-3 d-flex align-items-center justify-content-between" *ngFor="let file of documentList; let i = index">
             <div class="image-info d-flex align-items-center">
-              <!-- <img src="assets/images/demo.jpg" alt="" class="img-fluid thumbnail-img"> -->
-              <i class="fa fa-photo fa-lg" stye="color:#4caf4f"></i>
+              <img [src]="file.imageUrl" alt="" class="img-fluid thumbnail-img">
+              <!-- <i class="fa fa-photo fa-lg" stye="color:#4caf4f"></i> -->
               <span class="ml-2">{{ file.DocumentDesc }}</span>
             </div>
 

@@ -169,14 +169,14 @@ export class BomTableComponent implements OnInit {
       }
 
       this.getProject(this.projectId);
-      this.subcategoryData.map(data => {
-        data.attachedImages = [
-          "assets/images/demo.jpg",
-          "assets/images/rfq-details.png",
-          "assets/images/project-background.png",
-          "assets/images/not-found-medium.jpg"
-        ]
-      })
+      // this.subcategoryData.map(data => {
+      //   data.attachedImages = [
+      //     "assets/images/demo.jpg",
+      //     "assets/images/rfq-details.png",
+      //     "assets/images/project-background.png",
+      //     "assets/images/not-found-medium.jpg"
+      //   ]
+      // })
       this.dataSource = new MatTableDataSource(this.subcategoryData);
       this.loading.hide();
     });
@@ -431,6 +431,7 @@ export class BomTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
         if(result){
           console.log(result);
+          debugger
         }
     });
   }

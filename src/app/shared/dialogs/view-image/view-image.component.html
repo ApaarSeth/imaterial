@@ -6,9 +6,9 @@
         <span>&times;</span>
       </button>
 
-      <ngb-carousel *ngIf="images">
+      <ngb-carousel *ngIf="selectedImages?.length">
           
-        <ng-container *ngFor="let image of images">
+        <ng-container *ngFor="let image of selectedImages">
           <ng-template ngbSlide>
             <div class="picsum-img-wrapper">
               <img [src]=image alt="Random first slide" class="img-fluid">

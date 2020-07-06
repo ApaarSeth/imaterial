@@ -142,5 +142,6 @@ export const API = {
   EMAILVERFICATION: (token) => `emailVerification/${token}`,
   DASHBOARD_VIDEOS: 'marketing/dashboardVideo',
   SUPPLIER_RATING: 'supplier/update/rating',
-  UPLOAD_IMAGE: 'material/addImages'
+  UPLOAD_IMAGE: 'material/addImages',
+  VIEW_IMAGES: (projectId, materialId) => `material/getImages/${projectId}/${materialId}`
 };
