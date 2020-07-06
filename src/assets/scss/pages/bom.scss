@@ -136,12 +136,13 @@ div.limited-character.bom {
 
 .upload-image-info{
   width: 95%;
+  margin-left: 30px;
 }
 
 .image-info{
   .thumbnail-img{
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     object-fit: cover;
     border-radius: 2px;
   }
@@ -150,5 +151,64 @@ div.limited-character.bom {
 .image-actions{
   .fa{
     text-decoration: none !important;
+  }
+}
+
+.upload-img-dialog{
+  button.close{
+    font-weight: 100;
+    font-size: 3em;
+    line-height: 10px;
+  }
+
+  .modal-title {
+    opacity: 0.7;
+    line-height: 20px;
+    font-size: 18px;
+  }
+
+  .modal-body{
+    padding: 30px 50px;
+  }
+}
+
+.img-integration {
+  padding: 30px 30px 20px !important;
+  .upload-green-tick{
+    margin-bottom: 25px;
+  }
+
+  span.upload-msg{
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .image-integration span.file-limit{
+    font-size: 12px;
+    color: #666;
+  }
+}
+
+.uploaded-filename {
+  display: block;
+  margin-top: 20px;
+  position: relative;
+  font-size: 14px;
+  color: #555555;
+}
+
+.upload-error {
+  border: 1px solid #f3999b;
+  border-radius: 4px;
+  padding: 10px 6px;
+  font-size: 12px;
+  color: #ef7678;
+  position: relative;
+  background-color: #feeeee;
+  width: 75%;
+  .fa{
+    color: #ef7678;
+    font-size: 20px;
   }
 }
