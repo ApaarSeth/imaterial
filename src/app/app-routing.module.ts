@@ -13,6 +13,10 @@ import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-l
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 import { ProfileComponent } from './features/profile/profile.component';
 import { CountryResolver } from './shared/resolver/country.resolver';
+import { SubscriptionsResolver } from './shared/components/subscriptions/subscriptions.resolver';
+import { MySubscriptionsComponent } from './features/users/my-subscriptions/my-subscriptions.component';
+import { SubscriptionRedirectionsComponent } from './features/subscription-redirections/subscription-redirections.component';
+
 
 const routes: Routes = [
   {
@@ -55,9 +59,30 @@ const routes: Routes = [
   },
 
   {
+    path: "subscriptions/thankyou",
+    component: SubscriptionRedirectionsComponent,
+    data: {
+      type: 0
+    }
+  },
+  {
+    path: "subscriptions/payment-declined",
+    component: SubscriptionRedirectionsComponent,
+    data: {
+      type: 1
+    }
+  },
+  {
+    path: "subscriptions/unsubscribe",
+    component: SubscriptionRedirectionsComponent,
+    data: {
+      type: 2
+    }
+  },
+  {
     path: "",
     component: ProfileLayoutComponent,
-    canActivate: [AuthGuardService, UserDataGuardService],
+    canActivate: [ AuthGuardService, UserDataGuardService ],
     children: [
       {
         path: "profile",
@@ -70,7 +95,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [AuthGuardService, AfterSignUpGuardService],
+    canActivate: [ AuthGuardService, AfterSignUpGuardService ],
     children: [
       {
         path: "project-dashboard",
@@ -83,6 +108,14 @@ const routes: Routes = [
         path: 'profile-account',
         component: ProfileComponent,
         data: { title: 'profile' }
+      },
+      {
+        path: "subscriptions",
+        component: MySubscriptionsComponent,
+        resolve: {
+          subsData: SubscriptionsResolver
+        },
+        data: { title: 'Subscriptions', breadcrumb: 'Subscriptions' }
       },
       {
         path: 'dashboard',
@@ -178,9 +211,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
-  exports: [RouterModule],
-  providers: [CountryResolver]
+  imports: [ RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }) ],
+  exports: [ RouterModule ],
+  providers: [ CountryResolver, SubscriptionsResolver ]
 })
 
 export class AppRoutingModule { }

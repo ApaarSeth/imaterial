@@ -115,6 +115,10 @@ export class CommonService {
     return this.mediaMatcher.matchMedia(this.XSmall);
   }
 
+  getSubscriptionPlan() {
+    return this.dataService.getRequest(API.GETSUBSCRIPTIONPLAN);
+  }
+
 
 }
 

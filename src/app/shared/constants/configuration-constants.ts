@@ -140,5 +140,8 @@ export const API = {
   RESENDEMAIL: `email/resend`,
   EMAILVERFICATIONSTATUS: `email/verification/status`,
   EMAILVERFICATION: (token) => `emailVerification/${token}`,
-  DASHBOARD_VIDEOS: 'marketing/dashboardVideo'
+  DASHBOARD_VIDEOS: 'marketing/dashboardVideo',
+  GETSUBSCRIPTIONPLAN: 'subscription/getSubscriptionPlan',
+  POST_SUBSCRIPTIONPAYMENTGATEWAY: 'payments/subscription/initiate',
+  POST_SUBSRIPTIONINITIATE: 'payment/subscription/initiate'
 };

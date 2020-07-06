@@ -1,10 +1,9 @@
-dd
 <div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20">
     <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()"
       [projectDetails]="projectData" [disableEditDelete]="true"></card-layout>
     <div class="row">
-      <div class="col-xs-3">
+      <div class="col-xs-6 col-md-3">
         <mat-form-field class="example-form-field border-input">
           <input matInput placeholder="Search Materials" type="search" (keyup)="applyFilter($event)" />
           <button mat-button matSuffix mat-icon-button>
@@ -12,17 +11,16 @@ dd
           </button>
         </mat-form-field>
       </div>
-      <div class="col-xs-9 p-t-10 text-right">
+      <div class="col-xs-6 col-md-9 p-t-10 text-right">
         <span *ngIf="this.permissionObj.rfqFlag">
           <button mat-raised-button class="main-background-color main-button color-white pull-right create-rfq-btn"
             [disabled]="!this.checkedSubcategory.length" (click)="createRfq()">
             Create RFQ
           </button>
         </span>
-        <span class="p-l-5">
-          <button mat-raised-button
-            class="mx-3 main-background-color main-button color-white pull-right raise-indent-btn"
-            [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
+        <span [ngClass]="isMobile ? '' : 'p-l-5' ">
+          <button mat-raised-button class="main-background-color main-button color-white pull-right raise-indent-btn"
+            [ngClass]="isMobile ? '' : 'mx-3' " [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
             Raise Indent
           </button>
         </span>

@@ -10,8 +10,18 @@ import { GlobalLoaderComponent } from './global-loader/global-loader.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { RangeDatePicker } from './rangeDatePicker/datePicker.component';
 import { SnackbarComponent } from '../dialogs/snackbar/snackbar.compnent';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
-const components = [ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker];
+
+const components = [
+  ProjectItemComponent,
+  ChipComponent,
+  UploadComponent,
+  GlobalLoaderComponent,
+  BreadcrumbComponent,
+  RangeDatePicker,
+  SubscriptionsComponent
+];
 
 @NgModule({
   imports: [

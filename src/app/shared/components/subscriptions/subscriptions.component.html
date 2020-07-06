@@ -1,0 +1,54 @@
+<div *ngIf="subscriptionsData" class="subs-data text-align-center">
+    <h2 class="mt-4 mb-4">Choose a Plan That's Right for Your Business</h2>
+
+    <ng-container *ngIf="trialAction">
+        <div class="trial-plan position-absolute">
+            <p class="color-grey"><a matRipple class="brand-color" (click)="startTrialTrigger()">skip</a> this and start
+                your</p>
+            <span>3 months free trial</span>
+        </div>
+    </ng-container>
+
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab *ngFor="let subscription of subscriptionsData" [label]="subscription.frequencyHeader">
+
+            <div class="row d-flex flex-center mt-3 mb-5">
+
+                <mat-card *ngFor="let plan of subscription.planList" class="col-md-3 m-10 text-left">
+                    <mat-card-header>
+                        <mat-card-title>{{plan.planName}}</mat-card-title>
+                        <mat-card-subtitle class="subs-pricing">
+                            <strong>{{plan.currencyCode}} {{plan.planPrice}}/</strong>
+                            <!-- <span>{{plan.planFrequencyAlias}}</span> -->
+                            <span>{{subscription.planFrequencyAlias}}</span>
+                            <p>Save {{plan.currencyCode}} {{plan.planPrice}} a year</p>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+
+                    <mat-card-content class="plan-limit justify-content-between">
+                        <span>{{plan.planLimit.projectCount}} Project {{plan.planLimit.userCount}} Users</span>
+                        <button mat-raised-button class="main-background-color"
+                            (click)="choosePlan(plan.planId, plan.offerCode, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Choose
+                            Plan</button>
+                    </mat-card-content>
+                    <mat-card-actions class="feat-list pt-1 pl-4 pb-3">
+                        <ul>
+                            <li *ngFor="let feature of sortFeaturesObjList(plan.planFeatureObjList)"
+                                [ngClass]="feature.available ? 'active' : 'inactive' ">
+                                <ng-container *ngIf="feature.available; else notAvailable">
+                                    <span class="material-icons">done</span>
+                                </ng-container>
+                                <ng-template #notAvailable>
+                                    <span class="material-icons">close</span>
+                                </ng-template>
+                                {{feature.featureName}}
+                            </li>
+                        </ul>
+                    </mat-card-actions>
+                </mat-card>
+
+            </div>
+
+        </mat-tab>
+    </mat-tab-group>
+</div>
