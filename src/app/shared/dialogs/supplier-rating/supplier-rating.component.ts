@@ -22,7 +22,7 @@ export class SupplierRatingComponent implements OnInit {
   }
   
   closeDialog() {
-    this.dialogRef.close(null);
+    this.dialogRef.close('closed');
   }
 
   checkRating(rating: number): void {
