@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacebookPixelService } from './shared/services/fb-pixel.service';
 import { SwPush, SwUpdate } from '@angular/service-worker';
-import { WebNotificationService } from './shared/services/webNotificationService';
+import { WebNotificationService } from './shared/services/webNotificationService.service';
 
 @Component({
   selector: "app-root",
