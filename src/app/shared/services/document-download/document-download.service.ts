@@ -26,7 +26,11 @@ export class DocumentUploadService {
       });
   }
 
-  uploadImage(data) {
-    return this.dataService.sendPostRequest(API.UPLOAD_IMAGE, data).then(res => res);
-  }
+  // uploadImage(data) {
+  //   return this.dataService.sendPostRequest(API.UPLOAD_IMAGE, data).then(res => res);
+  // }
+
+  // getSelectedImages(projectId: number, materialId: number){
+  //   return this.dataService.getRequest(API.VIEW_IMAGES(projectId, materialId));
+  // }
 }

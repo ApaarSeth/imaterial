@@ -212,3 +212,19 @@ div.limited-character.bom {
     font-size: 20px;
   }
 }
+
+.download-link{
+  position: absolute;
+  left: 82%;
+  z-index: 1;
+  top: 17px;
+  width: 40px;
+  height: 40px;
+  background-color: #f47721;
+  border-radius: 50%;
+  .fa{
+    line-height: 36px;
+    color: #fff !important;
+    cursor: pointer;
+  }
+}

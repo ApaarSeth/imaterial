@@ -292,4 +292,17 @@ export interface PoPayementDetail {
 export interface ImageList {
   DocumentDesc: string;
   DocumentUrl: string;
+  imageUrl?: string;
+  DocumentId?: number;
+}
+
+export interface ImageDocsLists{
+  projectId: number;
+  materialId: number;
+  materialDocumentId: number;
+  documentId: number;
+  documentUrl: string;
+  documentDesc: string;
+  documentType: string;
+  documentShortUrl: string;
 }
