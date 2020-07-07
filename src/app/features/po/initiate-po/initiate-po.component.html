@@ -1,17 +1,19 @@
-<div class="page-start-point ">
+<div class="page-start-point">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row">
       <div class="col-xs-6"></div>
       <div class="col-xs-6"></div>
     </div>
-    <mat-horizontal-stepper [linear]="true" (selectionChange)="selectionChange($event)" #stepper>
+    <mat-horizontal-stepper [linear]="true" (selectionChange)="selectionChange($event)" #stepper
+      [ngClass]="isMobile ? 'm-stepper' : '' ">
       <mat-step stepControl="stepOne">
         <ng-template matStepLabel>Select Supplier</ng-template>
         <app-po-supplier [poData]="existingPoData" (selectedSupplier)="getSupplier($event)"></app-po-supplier>
       </mat-step>
       <mat-step stepControl="stepSecond">
         <ng-template matStepLabel>Project & Material</ng-template>
-        <app-po-project-material [existingPoData]="existingPoData" (selectedMaterial)="getMaterial($event)"> </app-po-project-material>
+        <app-po-project-material [existingPoData]="existingPoData" (selectedMaterial)="getMaterial($event)">
+        </app-po-project-material>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Add Quantity & Makes</ng-template>

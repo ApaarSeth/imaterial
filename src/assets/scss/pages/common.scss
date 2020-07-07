@@ -401,3 +401,35 @@ ngx-mat-drp-picker-overlay {
 .actv-btn.active {
   font-weight: 500 !important;
 }
+
+
+.m-stepper{
+  .mat-horizontal-stepper-header{
+    padding: 0 16px;
+  }
+  .mat-step-icon{
+    height: 16px;
+    width: 16px;
+    font-size: 11px;
+  }
+  .mat-step-label{
+    display: inline-block;
+    font-size: 11px;
+    white-space: break-spaces;
+    overflow: visible;
+    text-overflow: unset;
+    min-width: 60px;
+    vertical-align: middle;
+  }
+}
+
+.po-sm-btn{
+  min-width: auto !important;
+  padding: 0 16px !important;
+}
+
+.po-sm-fm{
+  .mat-form-field{
+    font-size: 12px !important;
+  }
+}
