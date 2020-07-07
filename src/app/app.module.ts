@@ -42,6 +42,8 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
 import { TaxCostService } from './shared/services/taxcost.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import { TaxCostService } from './shared/services/taxcost.service';
     FormsModule,
     ReactiveFormsModule,
     HeaderSharedModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
 
   ],
   providers: [
