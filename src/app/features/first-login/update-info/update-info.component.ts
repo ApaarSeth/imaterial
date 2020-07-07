@@ -375,7 +375,6 @@ export class UpdateInfoComponent implements OnInit {
           this._router.navigate([ 'dashboard' ]);
       });
     }
-    debugger
   }
 
 }

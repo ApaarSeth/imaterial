@@ -5,43 +5,40 @@
   </button>
 </div>
 <form [formGroup]="form" (ngSubmit)="submit()">
-  <div class="row select-currency p-t-10">
-    <div class="col-xs-12 col-sm-6 col-md-6">
+  <div class="row select-currency" [ngClass]="isMobile ? 'text-left font-size12 pt-4' : 'p-t-10' ">
+    <div class="col-md-6 col-xs-7">
       <div class="base-currency">
         <span class="text-semi-bold font-size-vary-grn color-6d6a6a">
           Base Currency
         </span>
         <span class="p-l-10">
-          <img *ngIf="this.primaryCurrencyData" [src]="this.primaryCurrencyData.imageUrl" width="25px" />
+          <img *ngIf="this.primaryCurrencyData" [src]="this.primaryCurrencyData.imageUrl"
+            [ngClass]="isMobile ? 'w-20-px' : 'w-25-px' " />
           {{ this.primaryCurrencyData && this.primaryCurrencyData.currencyCode }}
         </span>
       </div>
     </div>
   </div>
   <div class="row select-currency">
-    <div class="col-xs-6 col-sm-6 col-md-6 country-currency">
+    <div class="col-xs-12 col-sm-6 col-md-6 country-currency">
       <mat-form-field class="border-select width100Percent">
         <mat-label class="value-currencies-label">Currency *</mat-label>
-        <mat-select formControlName="exchangeCurrency" placeholder="Search Currency" (selectionChange)="setExchangeCurrency($event)">
+        <mat-select formControlName="exchangeCurrency" placeholder="Search Currency"
+          (selectionChange)="setExchangeCurrency($event)">
           <div class="display-flex" *ngIf="this.currencies">
-            <input
-              class="p-l-10 p-b-5"
-              matInput
-              type="search"
-              placeholder="Search Currency"
-              [(ngModel)]="searchText"
-              [ngModelOptions]="{standalone: true}"
-              (keydown)="$event.stopPropagation()"
-            />
+            <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Currency" [(ngModel)]="searchText"
+              [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()" />
             <button mat-button matSuffix mat-icon-button>
               <mat-icon>search</mat-icon>
             </button>
           </div>
           <mat-select-trigger>
-            <span matTooltip="{{ selectedCountry && selectedCountry.currency }} {{ selectedCountry && selectedCountry.currencyCode }}"
-              ><img width="25px" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+            <span
+              matTooltip="{{ selectedCountry && selectedCountry.currency }} {{ selectedCountry && selectedCountry.currencyCode }}"><img
+                width="25px" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
               <span class="p-r-5 p-l-10 font-size-vary-grn">{{ selectedCountry && selectedCountry.currency }}</span>
-              <span class="p-l-5 font-size-vary-grn text-semi-bold">{{ selectedCountry && selectedCountry.currencyCode }}</span>
+              <span
+                class="p-l-5 font-size-vary-grn text-semi-bold">{{ selectedCountry && selectedCountry.currencyCode }}</span>
             </span>
           </mat-select-trigger>
           <mat-option *ngFor="let cur of currencies | SearchPipe: searchText:'currency'" [value]="cur">
@@ -64,10 +61,11 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-xs-6 col-sm-6 col-md-6 conversion-rate">
+    <div class="col-xs-12 col-sm-6 col-md-6 conversion-rate">
       <mat-form-field class="border-input width100Percent">
         <mat-label>Conversion Rate </mat-label>
-        <input matInput type="text" appTwoDigitDecimaNumber #conversionValue appTwoDigitDecimaNumber formControlName="exchangeValue" min="0" required />
+        <input matInput type="text" appTwoDigitDecimaNumber #conversionValue appTwoDigitDecimaNumber
+          formControlName="exchangeValue" min="0" required />
         <!-- <small *ngIf="form.controls['cost'].hasError('required') && form.controls['cost'].touched" class="error-msg"> Construction cost is required </small>
              <small *ngIf="form.controls['cost'].hasError('pattern') && form.controls['cost'].touched" class="error-msg"> Enter valid construction cost </small> -->
         <small *ngIf="conversionValue.value.length > 0 && exchangeCurrencyName" class="success-msg">

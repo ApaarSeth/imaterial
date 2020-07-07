@@ -64,26 +64,20 @@ export class SubscriptionsComponent implements OnInit {
 
         this.subsPayService.postSubscriptionPaymentInitiate(obj).then(res => {
 
-            console.log(res);
-
             let data = {
                 customerEmail: this.users.email,
                 customerName: this.users.firstName + ' ' + this.users.lastName,
-                customer_identifier: 'test2',
-                orderId: 'SDFSDVXCVVDS3333DD35566',
-                promoCode: 'DD234Q',
-                validUpto: '12-09-2020',
+                customer_identifier: this.users.organizationId,
+                orderId: res.data.transactionId,
+                // promoCode: 'DD234Q',
+                validUpto: res.data.endDate,
                 redirectUrl: res.data.redirectUrl,
                 cancelUrl: res.data.cancelUrl,
                 failureUrl: res.data.failureUrl,
                 subscriptionPlanRefId: planEncryptId,
                 subscriptionPlanPriceRefId: planPricingEncryptId,
-                // subscriptionPlanRefId: 'imPrem',
-                // subscriptionPlanPriceRefId: '100INR',
                 serviceName: 'iMaterial'
             };
-
-            console.log(JSON.stringify(data));
 
             this.postToExternalSite(data);
 
@@ -102,7 +96,7 @@ export class SubscriptionsComponent implements OnInit {
         form.setAttribute('target', '_self');
         form.setAttribute('method', 'post');
 
-        form.setAttribute('action', ('https://faf51166b6b4.ngrok.io/payment/') + API.POST_SUBSCRIPTIONPAYMENTGATEWAY);
+        form.setAttribute('action', ('https://dev-payment.buildsupply.io/payment/') + API.POST_SUBSCRIPTIONPAYMENTGATEWAY);
         window.document.body.appendChild(form);
         form.submit();
 

@@ -122,6 +122,10 @@ export class CommonService {
         return res;
       });
   }
+
+  getSubscriptionPlan() {
+    return this.dataService.getRequest(API.GETSUBSCRIPTIONPLAN);
+  }
 }
 
 

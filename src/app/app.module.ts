@@ -46,6 +46,8 @@ import { SubscriptionRedirectionsComponent } from './features/subscription-redir
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { UploadImageComponent } from './shared/dialogs/upload-image/upload-image.component';
+import { ViewImageComponent } from './shared/dialogs/view-image/view-image.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { environment } from '../environments/environment';
     ProfileLayoutComponent,
     ProfileComponent,
     MySubscriptionsComponent,
-    SubscriptionRedirectionsComponent
+    SubscriptionRedirectionsComponent,
+    UploadImageComponent,
+    ViewImageComponent
   ],
   imports: [
     BrowserModule,

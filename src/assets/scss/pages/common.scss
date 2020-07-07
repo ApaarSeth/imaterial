@@ -457,3 +457,47 @@ ngx-mat-drp-picker-overlay {
     padding-left: 0px !important ;
   }
 }
+
+.po-rdbtn{
+  vertical-align: sub;
+}
+
+.m-popd{
+  .mat-horizontal-content-container{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.m-podr{
+  .m-itm{
+    &:nth-child(1){
+      order: 2;
+    }
+    &:nth-child(2){
+      order: 1;
+    }
+    &:nth-child(3){
+      order: 3;
+    }
+  }
+}
+
+.mcrncy{
+  img{
+    width: 18px;
+  }
+}
+
+.w-25-px{
+  width: 25px;
+}
+.w-20-px{
+  width: 20px;
+}
+
+.m-srch{
+  .mat-icon-button .mat-icon{
+    font-size: 20px !important;
+  }
+}
