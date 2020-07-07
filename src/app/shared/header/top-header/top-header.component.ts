@@ -28,6 +28,8 @@ export class TopHeaderComponent implements OnInit {
   subscription: Subscription;
   subscriptions: Subscription[] = [];
   newunreadMessage: number = null;
+  isWhatsappIconDisplay: string;
+
   constructor(
     private commonService: CommonService,
     private _snackBar: MatSnackBar,
@@ -41,6 +43,7 @@ export class TopHeaderComponent implements OnInit {
     this.userId = Number(localStorage.getItem('userId'));
     this.userName = localStorage.getItem('userName');
     this.url = localStorage.getItem('profileUrl');
+    this.isWhatsappIconDisplay = localStorage.getItem("countryCode");
 
     this.getNotifications();
     this.startSubscriptions();

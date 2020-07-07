@@ -24,7 +24,7 @@ import { GlobalLoaderService } from 'src/app/shared/services/global-loader.servi
 export class SigninComponent implements OnInit {
   @Input("callingCode") actualCallingCode: string;
   @Input("countryCode") countryCode: string;
-  @Input("countryList") actualCountryList: CountryCode[]
+  @Input("countryList") actualCountryList: CountryCode[];
 
   constructor(private tokenService: TokenService, private router: Router,
     private signInSignupService: SignInSignupService,
@@ -55,7 +55,8 @@ export class SigninComponent implements OnInit {
   callingCode: string;
 
   ngOnInit() {
-    this.countryList = this.actualCountryList
+    this.countryList = this.activatedRoute.snapshot.data.countryList;
+    // this.countryList = this.actualCountryList
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });

@@ -81,7 +81,7 @@
                           </button>
                         </div>
                         <mat-select-trigger>
-                          <span><img class="width-45-px p-r-10" [src]="selectedCountry && selectedCountry.imageUrl"
+                          <span><img class="width-35-px p-r-10" [src]="selectedCountry && selectedCountry.imageUrl"
                               alt="" />
                             <span class="p-r-5">{{ selectedCountry && selectedCountry.countryCode }}</span>
                             <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
@@ -99,7 +99,9 @@
                   </div>
                   <div class="col-xs-7" style="padding-top: 6px;">
                     <mat-form-field class="border-input w-100">
-                      <input matInput type="text" placeholder="Phone No.*" formControlName="contactNo" />
+                      <input matInput type="text"
+                        placeholder="{{ this.countryCode === '+91' ? 'Phone No.*' : 'Phone No.' }}"
+                        formControlName="contactNo" />
                     </mat-form-field>
                     <mat-error
                       *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
@@ -120,6 +122,13 @@
                 <mat-error
                   *ngIf="userInfoForm.controls['orgPincode'].errors?.max && userInfoForm.controls['orgPincode'].touched">
                   maximum characters allowed is 6
+                </mat-error>
+                <mat-error
+                  *ngIf="userInfoForm.controls['orgPincode'].errors?.pincodeInvalid && userInfoForm.controls['orgPincode'].touched">
+                  Enter valid pincode
+                </mat-error>
+                <mat-error *ngIf="!validPincode && userInfoForm.controls['orgPincode'].touched">
+                  Enter Correct pincode
                 </mat-error>
                 <small
                   *ngIf="userInfoForm.controls['orgPincode'].errors?.maxlength && userInfoForm.controls['orgPincode'].touched"

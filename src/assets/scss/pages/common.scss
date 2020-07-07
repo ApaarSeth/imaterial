@@ -433,3 +433,27 @@ ngx-mat-drp-picker-overlay {
     font-size: 12px !important;
   }
 }
+.label-font-size {
+  .mat-form-field-label-wrapper {
+    font-size: 14px !important;
+  }
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.mat-list-content-padding {
+  .mat-list-item-content {
+    padding-right: 0px !important;
+    padding-left: 0px !important ;
+  }
+}

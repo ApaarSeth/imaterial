@@ -11,35 +11,55 @@
           </button>
         </mat-form-field>
       </div>
+
       <div class="col-xs-6 col-md-9 p-t-10 text-right">
-        <span *ngIf="this.permissionObj.rfqFlag">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right create-rfq-btn"
-            [disabled]="!this.checkedSubcategory.length" (click)="createRfq()">
-            Create RFQ
-          </button>
-        </span>
-        <span [ngClass]="isMobile ? '' : 'p-l-5' ">
-          <button mat-raised-button class="main-background-color main-button color-white pull-right raise-indent-btn"
-            [ngClass]="isMobile ? '' : 'mx-3' " [disabled]="!this.checkedSubcategory.length" (click)="raiseIndent()">
-            Raise Indent
-          </button>
-        </span>
-        <!-- <span *ngIf="projectData.openIndentCount > 0" >
-          <button mat-raised-button class="m-l-15 main-background-color main-button color-white pull-right " (click)="viewIndent()">
-            View Indent
-          </button>
-        </span> -->
-        <span>
-          <button mat-raised-button class="main-background-color main-button color-white pull-right"
-            (click)="addMaterial()">
+        <mat-form-field class="t-0 width-15 label-adjust">
+          <mat-label><img src="../../../assets/images/create-icon.svg" alt="" />
+            <span class="main-color p-l-5">Create</span>
+          </mat-label>
+          <mat-select class="hide-select-arrow">
+            <!-- <mat-optgroup class="option-select-height" label="Create GRN">
+              <mat-option (click)="openGrnDialog()" class="height-2-em" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+                Via System
+              </mat-option>
+              <mat-option class="height-2-em" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+                Via Excel
+              </mat-option>
+            </mat-optgroup> -->
+            <mat-optgroup class="option-select-height" label="Actions">
+              <mat-option class="height-2-em" (click)="createRfq()"
+                [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+                Create RFQ
+              </mat-option>
+              <mat-option class="height-2-em" (click)="raiseIndent()"
+                [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+                Raise Indent
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="t-0 width-16 label-adjust">
+          <mat-label><img src="../../../assets/images/create-icon.svg" alt="" />
+            <span class="main-color p-l-5">+Add/Edit</span>
+          </mat-label>
+          <mat-select class="hide-select-arrow">
+            <mat-option class="height-2-em" class="main-color" (click)="addMaterial()">
+              Add/Edit Material
+            </mat-option>
+            <mat-option class="height-2-em" class="main-color" (click)="openAddMyMaterial()">
+              + Add Custom Material
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- <span>
+          <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="addMaterial()">
             Add/Edit Material
           </button>
         </span>
 
         <span>
-          <a href="javascript:void(0)" class="main-color text-semi-bold pull-right p-r-10 p-t-10"
-            (click)="openAddMyMaterial()">+ Add Custom Material</a>
-        </span>
+          <a href="javascript:void(0)" class="main-color text-semi-bold pull-right p-r-10 p-t-10" (click)="openAddMyMaterial()">+ Add Custom Material</a>
+        </span> -->
       </div>
     </div>
 
@@ -133,7 +153,8 @@
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
-            <div *ngIf="element?.attachedImages?.length" class="images-lists" (click)="viewAllImages(element.materialId)">
+            <div *ngIf="element?.attachedImages?.length" class="images-lists"
+              (click)="viewAllImages(element.materialId)">
               <ng-container *ngFor="let img of element.attachedImages; let i = index">
                 <img [src]=img alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
               </ng-container>
