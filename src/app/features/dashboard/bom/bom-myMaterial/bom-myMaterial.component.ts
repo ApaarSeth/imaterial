@@ -36,6 +36,7 @@ export class BomMyMaterialComponent implements OnInit {
   counter: number;
   orgId: number;
   materialUnit: string[] = [];
+  searchUnit: string = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,

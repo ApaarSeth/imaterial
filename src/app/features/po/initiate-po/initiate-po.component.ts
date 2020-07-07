@@ -5,6 +5,7 @@ import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { initiatePoData, initiatePo } from 'src/app/shared/models/PO/po-data';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-initiate-po",
@@ -16,6 +17,7 @@ export class InitiatePoComponent implements OnInit {
   existingPoData: initiatePoData;
   @ViewChildren("poSupplier") poSupplier: PoSupplierComponent;
   searchText = "";
+  isMobile: boolean;
 
   public POProjectTour: GuidedTour = {
     tourId: 'po-project-tour',
@@ -35,10 +37,13 @@ export class InitiatePoComponent implements OnInit {
   userId: number;
 
   constructor(private guidedTourService: GuidedTourService,
-    private userGuideService: UserGuideService
+    private userGuideService: UserGuideService,
+    private commonService: CommonService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
+  }
   setLocalStorage() {
     this.userId = Number(localStorage.getItem("userId"));
 

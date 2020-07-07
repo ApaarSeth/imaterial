@@ -28,6 +28,8 @@ export class TopHeaderComponent implements OnInit {
   subscription: Subscription;
   subscriptions: Subscription[] = [];
   newunreadMessage: number = null;
+  isWhatsappIconDisplay: string;
+
   constructor(
     private commonService: CommonService,
     private _snackBar: MatSnackBar,
@@ -41,6 +43,7 @@ export class TopHeaderComponent implements OnInit {
     this.userId = Number(localStorage.getItem('userId'));
     this.userName = localStorage.getItem('userName');
     this.url = localStorage.getItem('profileUrl');
+    this.isWhatsappIconDisplay = localStorage.getItem("countryCode");
 
     this.getNotifications();
     this.startSubscriptions();
@@ -59,7 +62,7 @@ export class TopHeaderComponent implements OnInit {
           this.newunreadMessage = notificationLength - this.unreadnotificationLength;
           this._snackBar.open('You have ' + this.newunreadMessage + ' new notifications', '', {
             duration: 2000,
-            panelClass: ['success-snackbar'],
+            panelClass: [ 'success-snackbar' ],
             verticalPosition: 'bottom'
           });
         }
@@ -85,13 +88,16 @@ export class TopHeaderComponent implements OnInit {
     this.menu.open();
   }
   logout() {
-    this.router.navigate(['/auth/login']).then(_ => {
+    this.router.navigate([ '/auth/login' ]).then(_ => {
       localStorage.clear();
       // this.tokenService.setAuthResponseData({ serviceToken: null, role: null, userId: null, orgId: null });
     });
   }
   goToProfile() {
-    this.router.navigate(['/profile-account']);
+    this.router.navigate([ '/profile-account' ]);
+  }
+  goToMyPlans() {
+    this.router.navigate([ '/subscriptions' ]);
   }
   openDiv() {
     if (this.notifClicked == true) {

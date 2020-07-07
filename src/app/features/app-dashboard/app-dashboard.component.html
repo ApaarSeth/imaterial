@@ -243,19 +243,20 @@
 
           <div class="banner mb-4">
             <div class="banner__image">
+              <a href="javascript:void(0)" (click)="showVideo()">
+                <img src="assets/images/video-banner.png" alt="Video Banner" class="img-fluid" />
+              </a>
+            </div>
+          </div>
+
+          <div class="banner" *ngIf="isAdDisplay === '+91'">
+            <div class="banner__image">
               <a target="_blank" href="https://www.buildsupply.com" class="cursor-pointer">
                 <img src="assets/images/fb_banner_new.png" alt="Facebook Banner" class="img-fluid" />
               </a>
             </div>
           </div>
 
-          <div class="banner">
-            <div class="banner__image">
-              <a href="javascript:void(0)" (click)="showVideo()">
-                <img src="assets/images/video-banner.png" alt="Video Banner" class="img-fluid" />
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </div>

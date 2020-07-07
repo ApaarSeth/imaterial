@@ -1,24 +1,28 @@
-<div class="row">
-  <div class="col-xs-6">
-    <mat-form-field class="example-form-field border-input p-l-20 border-input p-r-20">
-      <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
-      <button mat-button matSuffix mat-icon-button>
+<div class="row" [ngClass]="isMobile ? 'm-podr' : '' ">
+  <div class="col-xs-6 m-itm">
+    <!-- flex-column-reverse -->
+    <mat-form-field class="example-form-field border-input border-input"
+      [ngClass]="!isMobile ? 'p-l-20 p-r-20' : 'po-sm-fm' ">
+      <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText"
+        [ngModelOptions]="{standalone: true}" />
+      <button mat-button matSuffix mat-icon-button [ngClass]="isMobile ? 'm-srch' : '' ">
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
   </div>
-  <div class="col-xs-6 text-right p-t-10">
-    <span>
-      <!-- <mat-form-field class="example-form-field border-input p-l-20 border-input p-r-20">
+  <div class="col-xs-12 col-md-6 text-right p-t-10 m-itm" [ngClass]="isMobile ? 'pt-0 pb-0 pl-0 pr-2' : '' ">
+    <!-- <span>
+      <mat-form-field class="example-form-field border-input p-l-20 border-input p-r-20">
           <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
-        </mat-form-field> -->
-    </span>
+        </mat-form-field>
+    </span> -->
     <span class="p-r-5">
-      <span class="m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer" (click)="openSupplierDialog()">
-        <span class="font-size20">
+      <span class="m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer font-size-vary-grn"
+        (click)="openSupplierDialog()" [ngClass]="isMobile ? 'text-decoration-underline' : '' ">
+        <span [ngClass]="isMobile ? 'font-size14' : 'font-size20' ">
           +
         </span>
         <span>
@@ -27,14 +31,18 @@
       </span>
     </span>
     <span>
-      <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
-      <button [disabled]="!form.valid" mat-raised-button matStepperNext (click)="choosenSupplier()" class="main-background-color main-button color-white">
+      <span (click)="selectCurrency()"
+        class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select
+        Currency</span>
+      <button [disabled]="!form.valid" mat-raised-button matStepperNext (click)="choosenSupplier()"
+        class="main-background-color main-button color-white" [ngClass]="isMobile ? 'po-sm-btn' : '' ">
         Next
       </button>
     </span>
   </div>
-  <div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
-    <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
+  <div class="col-md-12 col-xs-6 p-b-20 text-right m-itm" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null"
+    [ngClass]="isMobile ? 'pt-4' : 'p-t-10' ">
+    <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10" [ngClass]="isMobile ? 'font-size12 mcrncy' : '' ">
       <span class="font-size-vary-grn color-grey">
         <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
         {{ poCurrency.exchangeCurrencyName }}
@@ -50,43 +58,46 @@
 </div>
 
 <form *ngIf="allSuppliers" [formGroup]="form" (click)="choosenSupplier()">
-  <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'" class="mat-elevation-z8 col-sm-12">
-    <!-- Supplier Name Column -->
-    <ng-container matColumnDef="Supplier Name">
-      <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
-      <td mat-cell *matCellDef="let element" class="pt-2">
-        <mat-radio-group name="aprrover" aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="supplier">
-          <mat-radio-button class="example-radio-button" [value]="element" [checked]="element.checked">
-            {{ element.firstName }}{{ element.lastName }}
-            {{ element.user_d }}
-          </mat-radio-button>
-        </mat-radio-group>
-        <span class="supplier-name">{{ element.supplier_name }}</span>
-        <span class="d-block supplier-rates rfq-supplier-rates po-supplier-rates">
-          <view-rating [supplierId]="element.supplierId" [ratings]="element.supplier_rating"></view-rating>
-        </span>
-      </td>
-    </ng-container>
+  <div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'">
+      <!-- Supplier Name Column -->
+      <ng-container matColumnDef="Supplier Name">
+        <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
+        <td mat-cell *matCellDef="let element" class="pt-2">
+          <mat-radio-group name="aprrover" aria-labelledby="example-radio-group-label" class="example-radio-group"
+            formControlName="supplier">
+            <mat-radio-button class="example-radio-button po-rdbtn" [value]="element" [checked]="element.checked">
+              {{ element.firstName }}{{ element.lastName }}
+              {{ element.user_d }}
+            </mat-radio-button>
+          </mat-radio-group>
+          <span class="supplier-name">{{ element.supplier_name }}</span>
+          <span class="d-block supplier-rates rfq-supplier-rates po-supplier-rates">
+            <view-rating [supplierId]="element.supplierId" [ratings]="element.supplier_rating"></view-rating>
+          </span>
+        </td>
+      </ng-container>
 
-    <!-- Email Column -->
-    <ng-container matColumnDef="Email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-    </ng-container>
+      <!-- Email Column -->
+      <ng-container matColumnDef="Email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
 
-    <!-- Phone No. Column -->
-    <ng-container matColumnDef="Phone No.">
-      <th mat-header-cell *matHeaderCellDef>Phone No.</th>
-      <td mat-cell *matCellDef="let element">{{ element.contact_no }}</td>
-    </ng-container>
+      <!-- Phone No. Column -->
+      <ng-container matColumnDef="Phone No.">
+        <th mat-header-cell *matHeaderCellDef>Phone No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.contact_no }}</td>
+      </ng-container>
 
-    <!-- PAN No. Column -->
-    <!-- <ng-container matColumnDef="PAN No.">
+      <!-- PAN No. Column -->
+      <!-- <ng-container matColumnDef="PAN No.">
       <th mat-header-cell *matHeaderCellDef>PAN No.</th>
       <td mat-cell *matCellDef="let element">{{ element.pan }}</td>
     </ng-container> -->
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <tr mat-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
 </form>

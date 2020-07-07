@@ -54,8 +54,6 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     AppSharedModule,
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
-    NgxEditorModule,
-    AngularEditorModule
   ],
   providers: [PODetailListResolver, InitiatePoResolver, ViewGrnResolver]
 })
