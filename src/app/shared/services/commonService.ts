@@ -122,6 +122,11 @@ export class CommonService {
         return res;
       });
   }
+
+  pushNotificationData(data) {
+    return this.dataService.sendPostRequest(API.PUSHNOTIFICATIONDATA, data)
+  }
+
 }
 
 

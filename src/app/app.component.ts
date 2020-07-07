@@ -10,8 +10,6 @@ import { WebNotificationService } from './shared/services/webNotificationService
   styleUrls: ["../assets/scss/main.scss"]
 })
 export class AppComponent {
-  isEnabled = this.swPush.isEnabled;
-  isGranted = Notification.permission === 'granted';
   title = "imaterial";
   location: string;
   hideHeader: boolean = false;
@@ -26,17 +24,21 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.webNotificationService.subscribeToNotification()
-    if (this.swUpdate.isEnabled) {
+    // this.webNotificationService.subscribeToNotification()
+    // if (this.swUpdate.isEnabled) {
+    //   this.swUpdate.available.subscribe(() => {
 
-      this.swUpdate.available.subscribe(() => {
+    //     if (confirm("New version available. Load New Version?")) {
 
-        if (confirm("New version available. Load New Version?")) {
+    //       window.location.reload();
+    //     }
+    //   });
+    // }
 
-          window.location.reload();
-        }
-      });
-    }
+    // this.swPush.notificationClicks.subscribe(({ action, notification }) => {
+    //   window.open(notification.data.url)
+    // })
+
     this.location = window.location.href;
     this.fbPixel.load();
     if (this.location.includes('rfq-bids/supplier/') || this.location.includes('rfq-bids/after-submit/')) {

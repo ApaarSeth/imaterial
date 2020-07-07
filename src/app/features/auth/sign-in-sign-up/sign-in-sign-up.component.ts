@@ -53,23 +53,23 @@ export class SignInSignUpComponent implements OnInit {
     this.countryCode = "IN";
 
     this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true }).then(res => {
-      if(res.data){
+      if (res.data) {
         this.countryList = res.data;
       }
       // console.log(this.countryList);
     })
 
 
-    // this.visitorsService.getIpAddress().subscribe(res => {
-    //   this.loader.show()
-    //   Promise.all([this.visitorsService.getGEOLocation(res['ip']), this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true })]).then(res => {
-    //     localStorage.setItem('countryCode', res[0]['calling_code'])
-    //     this.callingCode = res[0]['calling_code']
-    //     this.countryCode = res[0]['country_code2']
-    //     this.countryList = res[1]['data']
-    //     this.loader.hide()
-    //   })
-    // })
+    this.visitorsService.getGEOLocation().then(res => {
+      // this.loader.show()
+      // Promise.all([this.visitorsService.getGEOLocation(res['ip']), this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true })]).then(res => {
+      //   localStorage.setItem('countryCode', res[0]['calling_code'])
+      //   this.callingCode = res[0]['calling_code']
+      //   this.countryCode = res[0]['country_code2']
+      //   this.countryList = res[1]['data']
+      //   this.loader.hide()
+      // })
+    })
   }
 
   tabChanged(event) {
