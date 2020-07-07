@@ -18,7 +18,7 @@ export class VisitorService {
 
     getIpAddress() {
         return this.http
-            .get("http://api.ipify.org/?format=json")
+            .get("https://api.ipify.org/?format=json")
             .pipe(
                 catchError(this.handleError)
             );

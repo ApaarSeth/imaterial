@@ -206,7 +206,9 @@ export class PoCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== 'closed') {
+      if(result === 'closed' || result === undefined){
+        this.checkRating(0);
+      }else{
         this.checkRating(result);
       }
     });

@@ -436,12 +436,12 @@ export class BomTableComponent implements OnInit {
     });
   }
 
-  uploadImage() {
+  uploadImage(selectedMaterial) {
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
       width: "60vw",
       panelClass: 'upload-image-modal',
-      data: 'csdcdscds'
+      data: selectedMaterial
     });
 
     dialogRef.afterClosed().subscribe(result => {

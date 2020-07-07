@@ -288,3 +288,8 @@ export interface PoPayementDetail {
   totalPoAmount: 3300000,
   otherCost: 0,
 }
+
+export interface ImageList {
+  DocumentDesc: string;
+  DocumentUrl: string;
+}

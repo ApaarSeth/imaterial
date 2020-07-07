@@ -63,6 +63,10 @@
                 <label for="company " class="word-break-all">{{ supplier.supplier_name }}</label>
               </div>
 
+              <span class="d-block supplier-rates ml-1">
+                <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplier_rating"></view-rating>
+              </span>
+
               <div class="col-md-12">
                 <label for="email" class="word-break-all">{{ supplier.email }}</label>
               </div>
