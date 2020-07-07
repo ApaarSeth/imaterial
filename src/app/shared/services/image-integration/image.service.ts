@@ -16,4 +16,8 @@ export class ImageService {
   getSelectedImages(projectId: number, materialId: number){
     return this.dataService.getRequest(API.VIEW_IMAGES(projectId, materialId));
   }
+
+  downloadImage(data){
+    return this.dataService.getRequest(API.DOWNLOAD_IMAGE, data).then(res => res);
+  }
 }

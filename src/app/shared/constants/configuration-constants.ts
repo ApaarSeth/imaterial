@@ -143,5 +143,6 @@ export const API = {
   DASHBOARD_VIDEOS: 'marketing/dashboardVideo',
   SUPPLIER_RATING: 'supplier/update/rating',
   UPLOAD_IMAGE: 'material/addImages',
-  VIEW_IMAGES: (projectId, materialId) => `material/getImages/${projectId}/${materialId}`
+  VIEW_IMAGES: (projectId, materialId) => `material/getImages/${projectId}/${materialId}`,
+  DOWNLOAD_IMAGE: 'documents/download',
 };

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, Input } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
-import { DocumentList, ImageList } from '../../models/PO/po-data';
+import { DocumentList, ImageList, ImageDocsLists } from '../../models/PO/po-data';
 
 import { ImageService } from '../../services/image-integration/image.service';
 import { DocumentUploadService } from '../../services/document-download/document-download.service';
@@ -14,6 +14,7 @@ export class UploadImageComponent implements OnInit {
 
   docs: FileList;
   documentList: ImageList[] = [];
+  prevDocumentList: ImageDocsLists[] = [];
   documentsName: string[] = [];
   filesRemoved: boolean;
   projectId: number;
@@ -22,6 +23,8 @@ export class UploadImageComponent implements OnInit {
   errorMessage: string;
   thumbnailImg: string;
   successfulUploads: number = 0;
+  prevDocsObj: ImageList[] = [];
+  finalImagesList: any;
 
   constructor(
     private dialogRef: MatDialogRef<UploadImageComponent>,
@@ -33,6 +36,14 @@ export class UploadImageComponent implements OnInit {
   ngOnInit() {
     this.projectId = this.data.projectId;
     this.materialId = this.data.materialId;
+    // this.prevDocumentList = this.data.documentsList;
+    this.getUploadedImages();
+  }
+
+  getUploadedImages(){
+    this._uploadImageService.getSelectedImages(this.projectId, this.materialId).then(res => {
+      this.prevDocumentList = res.data;
+    })
   }
 
   fileUpdate(files: FileList) {
@@ -43,10 +54,10 @@ export class UploadImageComponent implements OnInit {
     if(acceptedFormatsArr.indexOf(acceptedFormats) !== -1)
       this.successfulUploads++;
 
-    if(this.docs && this.successfulUploads <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
+    if(this.docs && (this.successfulUploads + (this.prevDocumentList && this.prevDocumentList.length)) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
       this.uploadDocs();
       this.errorMessage = '';
-    }else if(this.successfulUploads > 5){
+    }else if((this.successfulUploads + this.prevDocumentList.length) > 5){
       this.errorMessage = "You cannot upload more than 5 images."
     }
   }
@@ -66,8 +77,9 @@ export class UploadImageComponent implements OnInit {
         this.documentList.push({
           "DocumentUrl": res.data.fileName,
           "DocumentDesc": this.subFileName,
-          "imageUrl": this.thumbnailImg
-        });    
+          "imageUrl": this.thumbnailImg,
+          "DocumentId": 0
+        });
       })
     }
   }
@@ -77,14 +89,42 @@ export class UploadImageComponent implements OnInit {
   }
 
   addImage(){
-    const data = {
-      "projectId": this.projectId,
-      "materialId": this.materialId,
-      "documentsList": this.documentList
+
+    if(this.prevDocumentList && this.prevDocumentList.length){
+      this.prevDocumentList.forEach((img, index) => {
+        this.prevDocsObj.push({
+          "DocumentUrl": img.documentShortUrl,
+          "DocumentDesc": img.documentDesc,
+          "imageUrl": img.documentUrl,
+          "DocumentId": img.documentId
+        });
+      })
     }
 
-    return this._uploadImageService.uploadImage(data).then(res => {
-      this.dialogRef.close('closed');
+    this.finalImagesList = {
+      "projectId": this.projectId,
+      "materialId": this.materialId,
+      "documentsList": [...this.prevDocsObj, ...this.documentList],
+
+    }
+
+    return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {
+      this.dialogRef.close('addImages');
+    });
+  }
+
+  removeImage(url: string){
+    console.log(url);
+  }
+
+  downloadImage(fileName, url){
+    const data = {
+      fileName,
+      url
+    }
+    this._uploadImageService.downloadImage(data).then(img => {
+      var win = window.open(img.data.url, '_blank');
+      win.focus();
     });
   }
 

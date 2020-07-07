@@ -169,14 +169,6 @@ export class BomTableComponent implements OnInit {
       }
 
       this.getProject(this.projectId);
-      // this.subcategoryData.map(data => {
-      //   data.attachedImages = [
-      //     "assets/images/demo.jpg",
-      //     "assets/images/rfq-details.png",
-      //     "assets/images/project-background.png",
-      //     "assets/images/not-found-medium.jpg"
-      //   ]
-      // })
       this.dataSource = new MatTableDataSource(this.subcategoryData);
       this.loading.hide();
     });
@@ -402,14 +394,14 @@ export class BomTableComponent implements OnInit {
    * function will call to open view image modal
    * @param id selected material id
    */
-  viewAllImages(id){
+  viewAllImages(projectId, materialId){
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
       panelClass: 'view-image-modal',
       data: {
-        result: this.dataSource.filteredData,
-        selectedMaterialId: id
+        projectId,
+        materialId 
       }
     });
 
@@ -429,10 +421,9 @@ export class BomTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        if(result){
-          console.log(result);
-          debugger
-        }
+      if(result === 'addImages'){
+        this.getMaterialWithQuantity();
+      }
     });
   }
 }

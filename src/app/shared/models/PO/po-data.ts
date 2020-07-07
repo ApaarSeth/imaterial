@@ -293,6 +293,7 @@ export interface ImageList {
   DocumentDesc: string;
   DocumentUrl: string;
   imageUrl?: string;
+  DocumentId?: number;
 }
 
 export interface ImageDocsLists{
@@ -303,4 +304,5 @@ export interface ImageDocsLists{
   documentUrl: string;
   documentDesc: string;
   documentType: string;
+  documentShortUrl: string;
 }
