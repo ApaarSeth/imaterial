@@ -52,7 +52,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
 
           return this.formBuilder.group({
             materialUnitPrice: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
-            materialQty: [item.quantity, [Validators.required, this.quantityCheck(item.poAvailableQty)]],
+            materialQty: [item.quantity, [Validators.required, this.quantityCheck(item.poAvailableQty < 0 ? 0 : item.poAvailableQty)]],
             brandNames: [item.makes],
             materialId: [item.materialId],
             fullfilmentDate: [dueDate]

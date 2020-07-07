@@ -31,7 +31,6 @@ import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-l
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
-import { environment } from 'src/environments/environment';
 import { ProfileComponent } from './features/profile/profile.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './features/auth/auth.module';
@@ -77,7 +76,7 @@ import { environment } from '../environments/environment';
     FormsModule,
     ReactiveFormsModule,
     HeaderSharedModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
 
   ],
   providers: [

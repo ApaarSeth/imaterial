@@ -49,7 +49,21 @@
                       >
                         <mat-form-field class="border-select width35Percent mat-form-field-padding mat-form-field-flex-mm-padding">
                           <mat-select formControlName="materialUnit" placeholder="Unit">
-                            <mat-option *ngFor="let unit of materialUnit" [value]="unit">
+                            <div class="display-flex">
+                              <input
+                                class="p-l-10 p-b-5"
+                                matInput
+                                type="search"
+                                placeholder="Search Unit"
+                                [(ngModel)]="searchUnit"
+                                [ngModelOptions]="{standalone: true}"
+                                (keydown)="$event.stopPropagation()"
+                              />
+                              <button mat-button mat-icon-button>
+                                <mat-icon>search</mat-icon>
+                              </button>
+                            </div>
+                            <mat-option *ngFor="let unit of materialUnit | SearchPipe: searchUnit" [value]="unit">
                               <span>
                                 {{ unit }}
                               </span>

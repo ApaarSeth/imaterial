@@ -41,6 +41,7 @@ export class AddMyMaterialBomComponent implements OnInit {
   materialUnit: string[]
   tradesList: orgTrades[] = [];
   filteredOption: tradeRelatedCategory[] = [];
+  searchUnit: string = '';
   // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
 
 

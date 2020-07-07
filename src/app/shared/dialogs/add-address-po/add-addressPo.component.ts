@@ -17,7 +17,7 @@ export interface City {
 // Component for dialog box
 @Component({
   selector: "address-dialog",
-  templateUrl: "./add-addressPo.html"
+  templateUrl: "./add-addressPo.component.html"
 })
 
 // Component class
@@ -165,7 +165,7 @@ export class AddAddressPoDialogComponent {
   }
 
   cityStateFetch(value) {
-    this.projectService.getPincodeInternational(value, this.selectedCountryId).then(res => {
+    this.commonService.getPincodeInternational(value, this.selectedCountryId).then(res => {
       if (res.data && res.data.length) {
         this.city = res.data[0].districtName;
         this.state = res.data[0].stateName;

@@ -1,6 +1,6 @@
 import { OnInit, Component } from '@angular/core';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/models/user-details';
 import { Router } from '@angular/router';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
@@ -54,6 +54,9 @@ export class UpdateInfoComponent implements OnInit {
   livingCountry: CountryCode[] = [];
   permissionObj: permission;
   isMobile: boolean;
+  countryId: Number;
+  countryCode: string;
+  validPincode: boolean = false;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private permissionService: PermissionService,
@@ -67,6 +70,8 @@ export class UpdateInfoComponent implements OnInit {
     this.role = localStorage.getItem("role");
     this.permissionObj = this.permissionService.checkPermission(this.role);
     this.isMobile = this.commonService.isMobile().matches;
+    this.countryCode = localStorage.getItem('countryCode')
+    this.countryId = Number(localStorage.getItem('countryId'))
     this.formInit();
     this.getUserRoles();
     this.getTradesList();
@@ -108,6 +113,7 @@ export class UpdateInfoComponent implements OnInit {
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
       if (!localStorage.getItem('countryId')) {
+        this.countryId = res.data[0].countryId;
         localStorage.setItem('countryId', res.data[0].countryId)
       }
       this.users = res.data ? res.data[0] : null;
@@ -120,12 +126,39 @@ export class UpdateInfoComponent implements OnInit {
           return val.countryId === this.users.countryId
         })
       }
-      this.formInit();
-      this.getTurnOverList()
-      this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
-      this.userInfoForm.get('countryId').setValue(this.livingCountry[0] ? this.livingCountry[0].countryId : null)
+      let newcurrencyList: Currency[] = [];
+      if (this.livingCountry.length) {
+        newcurrencyList = this.currencyList.filter(val => {
+          return val.countryId === Number(this.livingCountry[0].countryId)
+        })
+      }
+      this.userInfoPatch();
+      this.getTurnOverList();
 
+      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     });
+  }
+
+  userInfoPatch() {
+    this.userInfoForm.patchValue({
+      baseCurrency: '',
+      countryCode: this.livingCountry[0] ? this.livingCountry[0] : null,
+      organizationName: this.users.organizationName,
+      organizationId: this.users.organizationId,
+      firstName: this.users.firstName,
+      lastName: this.users.lastName,
+      email: this.users.email,
+      contactNo: this.users.contactNo,
+      roleId: this.users.roleId,
+      turnOverId: this.users.TurnOverId,
+      userId: this.users.userId,
+      roleDescription: this.users.roleDescription,
+      ssoId: this.users.ssoId,
+      countryId: this.livingCountry[0] ? this.livingCountry[0].countryId : null,
+      trade: '',
+      profileUrl: '',
+      orgPincode: '',
+    })
   }
 
   getTurnOverList() {
@@ -161,26 +194,29 @@ export class UpdateInfoComponent implements OnInit {
     this.userInfoForm = this._formBuilder.group({
       baseCurrency: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
       countryCode: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
-      organizationName: [this.users ? this.users.organizationName : ''],
-      organizationId: [this.users ? this.users.organizationId : ''],
-      firstName: [this.users ? this.users.firstName : '', Validators.required],
-      lastName: [this.users ? this.users.lastName : '', Validators.required],
-      email: [this.users ? this.users.email : '', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      contactNo: [this.users ? this.users.contactNo : '', [Validators.required]],
-      roleId: [this.users ? this.users.roleId : null, Validators.required],
-      turnOverId: [this.users ? this.users.TurnOverId : null],
-      userId: [this.users ? this.users.userId : null],
-      roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: true }],
-      ssoId: [this.users ? this.users.ssoId : null],
+      organizationName: [],
+      organizationId: [],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      contactNo: [''],
+      roleId: ['', Validators.required],
+      turnOverId: [],
+      userId: [],
+      roleDescription: [{ value: '', disabled: true }],
+      ssoId: [],
       countryId: [],
       trade: [],
       profileUrl: [''],
       orgPincode: ['', [Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS)]]
     });
+
+    if (this.countryCode === "+91") {
+      this.userInfoForm.get('contactNo').setValidators([Validators.required])
+    }
     this.customTrade = this._formBuilder.group({
       trade: []
     })
-
     this.userInfoForm.get('countryCode').valueChanges.subscribe(country => {
       let newcurrencyList: Currency[] = [];
       if (country) {
@@ -188,11 +224,45 @@ export class UpdateInfoComponent implements OnInit {
           return val.countryId === Number(country.countryId)
         })
       }
-      this.userInfoForm.get('countryId').setValue(newcurrencyList.length ? newcurrencyList[0].countryId : null)
+      this.countryId = newcurrencyList.length ? newcurrencyList[0].countryId : this.countryId;
       this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     })
-
+    this.userInfoForm.get('orgPincode').valueChanges.subscribe(val => {
+      this.cityStateFetch(val)
+    })
   }
+
+  cityStateFetch(value) {
+    this.commonService.getPincodeInternational(value, Number(this.countryId)).then(res => {
+      if (res.data && res.data.length) {
+        let city = res.data[0].districtName;
+        let state = res.data[0].stateName;
+        if (city && state)
+          this.validPincode = true;
+        else
+          this.validPincode = false;
+
+      }
+      else {
+        this.validPincode = false;
+      }
+    });
+  }
+
+  // checkPincode(): ValidatorFn {
+  //   return (control: AbstractControl): Promise<any> | null => {
+  //     return this.commonService.getPincodeInternational(control.value, Number(this.countryId)).then(res => {
+  //       if (res.data && res.data.length) {
+  //         let city = res.data[0].districtName;
+  //         let state = res.data[0].stateName;
+  //         if (city && state)
+  //           return null;
+  //         else
+  //           return { 'pincodeInvalid': true };
+  //       }
+  //     });
+  //   }
+  // }
 
   changeSelected(parameter: string, trade: TradeList) {
     let choosenIndex = -1;
