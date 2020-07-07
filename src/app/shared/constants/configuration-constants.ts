@@ -145,5 +145,7 @@ export const API = {
   POST_SUBSCRIPTIONPAYMENTGATEWAY: 'payments/subscription/initiate',
   POST_SUBSRIPTIONINITIATE: 'payment/subscription/initiate',
   SUPPLIER_RATING: 'supplier/update/rating',
-  UPLOAD_IMAGE: 'material/addImages'
+  UPLOAD_IMAGE: 'material/addImages',
+  VIEW_IMAGES: (projectId, materialId) => `material/getImages/${projectId}/${materialId}`,
+  DOWNLOAD_IMAGE: 'documents/download',
 };

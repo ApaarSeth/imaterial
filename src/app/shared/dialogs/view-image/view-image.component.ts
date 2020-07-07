@@ -1,5 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { DocumentUploadService } from '../../services/document-download/document-download.service';
+import { ImageService } from '../../services/image-integration/image.service';
+import { ImageDocsLists } from '../../models/PO/po-data';
 
 @Component({
   selector: "view-image-dialog",
@@ -8,18 +11,22 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 export class ViewImageComponent implements OnInit {
 
-  supplierId: number;
-  images: string[];
+  selectedImages: ImageDocsLists[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<ViewImageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private _imageService: ImageService
   ) { }
 
   ngOnInit() {
-    const selectedImages = this.data.result.filter(res => res.materialId === this.data.selectedMaterialId);
-    this.images = selectedImages[0].attachedImages;
-    // this.images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
+    this.getAllImages();
+  }
+
+  getAllImages(){
+    this._imageService.getSelectedImages(this.data.projectId, this.data.materialId).then(res => {
+      this.selectedImages = res.data;
+    })
   }
 
   closeDialog() {
