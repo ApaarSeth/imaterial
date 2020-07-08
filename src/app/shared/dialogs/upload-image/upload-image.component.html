@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="upload-image-section">
-            <app-upload #uploadRef (onFileUpdate)="fileUpdate($event)" [imageIntegration]="true"></app-upload>
+            <app-upload #uploadRef (onFileUpdate)="fileUpdate($event)" [imageIntegration]="true" [errorMessage]="true"></app-upload>
               <span class="uploaded-filename" *ngIf="subFileName && !errorMessage">{{subFileName}} has been successfully uploaded.</span>
             </div>
             

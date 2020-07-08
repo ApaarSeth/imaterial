@@ -4,6 +4,7 @@ import { DocumentList, ImageList, ImageDocsLists } from '../../models/PO/po-data
 
 import { ImageService } from '../../services/image-integration/image.service';
 import { DocumentUploadService } from '../../services/document-download/document-download.service';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
   selector: "upload-image-dialog",
@@ -48,6 +49,8 @@ export class UploadImageComponent implements OnInit {
   }
 
   fileUpdate(files: FileList) {
+
+    const str = files[0].name;
     this.docs = files;
     const acceptedFormats = this.docs[0].type.split("/")[1];
     const acceptedFormatsArr = ["png", "jpg", "jpeg"];
@@ -56,15 +59,18 @@ export class UploadImageComponent implements OnInit {
       this.successfulUploads = 0;
     }
 
-    if(acceptedFormatsArr.indexOf(acceptedFormats) !== -1)
+    if((acceptedFormatsArr.indexOf(acceptedFormats) !== -1) && (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true)){
       this.successfulUploads++;
       this.countUploads ? this.countUploads++ : this.countUploads;
+    }
 
-    if(this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
+    if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
       this.uploadDocs();
       this.errorMessage = '';
     }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 5){
       this.errorMessage = "You cannot upload more than 5 images."
+    }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
+      this.errorMessage = "Filename should not include special characters";
     }
   }
 
@@ -117,10 +123,14 @@ export class UploadImageComponent implements OnInit {
     });
   }
   
-  removeImage(url: string){    
-    this.prevDocumentList = this.prevDocumentList.filter(opt => opt.documentDesc !== url);
-    this.documentList = this.documentList.filter(opt => opt.documentDesc !== url);
-    this.countUploads = this.prevDocumentList.length + this.documentList.length;
+  removeImage(url: string){   
+    if(this.prevDocumentList && this.prevDocumentList.length)
+      this.prevDocumentList = this.prevDocumentList.filter(opt => opt.documentDesc !== url);
+
+    if(this.documentList && this.documentList.length)
+      this.documentList = this.documentList.filter(opt => opt.documentDesc !== url);
+
+    this.countUploads = (this.prevDocumentList ? this.prevDocumentList.length : 0) + (this.documentList ? this.documentList.length : 0);
   }
 
   downloadImage(fileName, url){
