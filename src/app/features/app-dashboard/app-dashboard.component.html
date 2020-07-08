@@ -5,40 +5,40 @@
         <div class="things-to-do bg-white mb-4 equal-height sml-d1">
           <!-- <h5 class="mb-3">Things to do</h5> -->
           <div class="things-to-do__inner d-flex justify-content-between align-items-center sml-db">
-            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
-              (click)="openProject()" matTooltip="You can add your project details">
+            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openProject()" matTooltip="You can add your project details">
               <div class="things-to-do__img add-project-img">
                 <img src="../../../assets/images/Add-Project.png" alt="" class="img-fluid" />
               </div>
               <h6 class="mb-0">Add Project</h6>
             </div>
 
-            <div class="things-to-do__icons text-center cursor  mr-2" (click)="openBomDialog()"
-              matTooltip="You can create your BOM of materials">
+            <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your BOM of materials">
               <div class="things-to-do__img">
                 <img src="../../../assets/images/BOM.png" alt="" class="img-fluid" />
               </div>
               <h6 class="mb-0">Create BOM</h6>
             </div>
 
-            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor"
-              [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFQs">
+            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFQs">
               <div class="things-to-do__img">
                 <img src="../../../assets/images/RFQ.png" alt="" class="img-fluid" />
               </div>
               <h6 class="mb-0">Create RFQ</h6>
             </div>
 
-            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor  mr-2"
-              [routerLink]="['/globalStore/' + orgId]" matTooltip="You can check your material details">
+            <div
+              *ngIf="permissionObj.rfqFlag"
+              class="things-to-do__icons text-center cursor mr-2"
+              [routerLink]="['/globalStore/' + orgId]"
+              matTooltip="You can check your material details"
+            >
               <div class="things-to-do__img">
                 <img src="../../../assets/images/global-store.png" alt="Global Store" class="img-fluid" />
               </div>
               <h6 class="mb-0">Global Store</h6>
             </div>
 
-            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor"
-              [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
+            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
               <div class="things-to-do__img">
                 <img src="../../../assets/images/PO.png" alt="" class="img-fluid" />
               </div>
@@ -56,9 +56,8 @@
 
         <div class="statistics bg-white p-20 p-r-0 mb-4">
           <div class="row">
-            <div class="col-xs-12 col-md-7 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : '' ">
-              <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)"
-                [ngClass]="isMobile ? 'mt-0' : 'mt-1' ">
+            <div class="col-xs-12 col-md-7 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : ''">
+              <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)" [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
                 <mat-tab label="{{ tab1 }}" *ngIf="permissionObj.rfqFlag && poData">
                   <div class="statistics__purchase-order d-flex">
                     <div class="statistics__tile stats mr-3">
@@ -67,7 +66,8 @@
                                             </div> -->
                       <div class="stats__content">
                         <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalCount">
-                          {{ poData?.totalCount }}</h2>
+                          {{ poData?.totalCount }}
+                        </h2>
                         <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalCount">0</h2>
                         <p class="mb-0">Awarded Purchase Order</p>
                       </div>
@@ -79,11 +79,11 @@
                                             </div> -->
                       <div class="stats__content">
                         <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalValue">
-                          <ng-container *ngIf="currencyCode">{{currencyCode}}</ng-container>
+                          <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
                           {{ poData?.totalValue | number }}
                         </h2>
                         <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalValue">
-                          <ng-container *ngIf="currencyCode">{{currencyCode}}</ng-container> 0
+                          <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
                         </h2>
                         <p class="mb-0">Awarded P.O. Amount</p>
                       </div>
@@ -99,7 +99,8 @@
                                             </div> -->
                       <div class="stats__content">
                         <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalCount">
-                          {{ rfqData?.totalCount }}</h2>
+                          {{ rfqData?.totalCount }}
+                        </h2>
                         <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalCount">0</h2>
                         <p class="mb-0">Number of RFQ</p>
                       </div>
@@ -111,11 +112,11 @@
                                             </div> -->
                       <div class="stats__content">
                         <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalValue">
-                          <ng-container *ngIf="currencyCode">{{currencyCode}}</ng-container>
+                          <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
                           {{ rfqData?.totalValue | number: "1.2-2" }}
                         </h2>
                         <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalValue">
-                          <ng-container *ngIf="currencyCode">{{currencyCode}}</ng-container> 0
+                          <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
                         </h2>
                         <p class="mb-0">RFQ Amount</p>
                       </div>
@@ -157,22 +158,18 @@
                   <mat-label>Select Project</mat-label>
                   <mat-select formControlName="projectFilter" multiple>
                     <div class="display-flex">
-                      <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
-                        [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                      <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
                       <button mat-button matSuffix mat-icon-button>
                         <mat-icon>search</mat-icon>
                       </button>
                     </div>
-                    <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:'projectName'"
-                      [value]="project">{{ project.projectName }} </mat-option>
+                    <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project">{{ project.projectName }} </mat-option>
                   </mat-select>
                 </mat-form-field>
               </form>
             </div>
-            <div class="col-xs-6 col-md-3 p-r-0 customDatePicker"
-              [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'p-l-20 widthWrapper' ">
-              <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options"
-                #dateRangePicker></ngx-mat-drp>
+            <div class="col-xs-6 col-md-3 p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'p-l-20 widthWrapper'">
+              <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
             </div>
             <!-- <app-range-datePicker></app-range-datePicker> -->
           </div>
@@ -256,7 +253,6 @@
               </a>
             </div>
           </div>
-
         </div>
       </div>
     </div>

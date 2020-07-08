@@ -14,6 +14,8 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { VisitorService } from 'src/app/shared/services/visitor.service';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
+import { WebNotificationService } from 'src/app/shared/services/webNotificationService.service';
+import { SwPush, SwUpdate } from '@angular/service-worker';
 
 
 @Component({
@@ -26,7 +28,13 @@ export class SigninComponent implements OnInit {
   @Input("countryCode") countryCode: string;
   @Input("countryList") actualCountryList: CountryCode[];
 
+  isEnabled = this.swPush.isEnabled;
+  isGranted = Notification.permission === 'granted';
+
   constructor(private tokenService: TokenService, private router: Router,
+    private webNotificationService: WebNotificationService,
+    private swPush: SwPush,
+    private swUpdate: SwUpdate,
     private signInSignupService: SignInSignupService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -130,6 +138,8 @@ export class SigninComponent implements OnInit {
       }
 
       else if (data.serviceRawResponse.data) {
+        this.subscribeNotification()
+
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
         if (localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
           this.router.navigate(["/profile/email-verification"]);
@@ -141,6 +151,22 @@ export class SigninComponent implements OnInit {
         this.navigationService.gaTag({ action: 'event', command: 'login', options: { 'method': this.tokenService.getOrgId() } })
       }
     });
+  }
+
+  subscribeNotification() {
+    this.webNotificationService.subscribeToNotification()
+
+    window.navigator.userAgent.toLowerCase()
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
+        if (confirm("New version available. Load New Version?")) {
+          window.location.reload();
+        }
+      });
+    }
+    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
+      window.open(notification.data.url)
+    })
   }
 
   /**

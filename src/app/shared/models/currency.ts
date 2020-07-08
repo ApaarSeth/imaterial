@@ -5,6 +5,8 @@ export interface Currency {
     currencyId: number
     imageUrl: string
     symbol: string
+    isDefault?: number
+
 }
 
 export interface CountryCode {
