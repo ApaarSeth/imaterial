@@ -4,6 +4,7 @@ import { DocumentList, ImageList, ImageDocsLists } from '../../models/PO/po-data
 
 import { ImageService } from '../../services/image-integration/image.service';
 import { DocumentUploadService } from '../../services/document-download/document-download.service';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
   selector: "upload-image-dialog",
@@ -25,6 +26,7 @@ export class UploadImageComponent implements OnInit {
   successfulUploads: number = 0;
   prevDocsObj: ImageList[] = [];
   finalImagesList: any;
+  countUploads: number;
 
   constructor(
     private dialogRef: MatDialogRef<UploadImageComponent>,
@@ -47,18 +49,28 @@ export class UploadImageComponent implements OnInit {
   }
 
   fileUpdate(files: FileList) {
+
+    const str = files[0].name;
     this.docs = files;
     const acceptedFormats = this.docs[0].type.split("/")[1];
     const acceptedFormatsArr = ["png", "jpg", "jpeg"];
 
-    if(acceptedFormatsArr.indexOf(acceptedFormats) !== -1)
-      this.successfulUploads++;
+    if(this.countUploads){
+      this.successfulUploads = 0;
+    }
 
-    if(this.docs && (this.successfulUploads + (this.prevDocumentList && this.prevDocumentList.length)) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
+    if((acceptedFormatsArr.indexOf(acceptedFormats) !== -1) && (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true)){
+      this.successfulUploads++;
+      this.countUploads ? this.countUploads++ : this.countUploads;
+    }
+
+    if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
       this.uploadDocs();
       this.errorMessage = '';
-    }else if((this.successfulUploads + this.prevDocumentList.length) > 5){
+    }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 5){
       this.errorMessage = "You cannot upload more than 5 images."
+    }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
+      this.errorMessage = "Filename should not include special characters";
     }
   }
 
@@ -75,28 +87,27 @@ export class UploadImageComponent implements OnInit {
         this.documentsName.push(this.subFileName);
 
         this.documentList.push({
-          "DocumentUrl": res.data.fileName,
-          "DocumentDesc": this.subFileName,
-          "imageUrl": this.thumbnailImg,
-          "DocumentId": 0
+          "documentUrl": res.data.fileName,
+          "documentDesc": this.subFileName,
+          "documentId": 0,
+          "documentThumbnailUrl": res.data.ThumbnailUrl,
+          "documentThumbnailShortUrl": res.data.ThumbnailFileName,
         });
       })
     }
   }
 
-  closeDialog() {
-    this.dialogRef.close(null);
-  }
-
+  
   addImage(){
-
+    
     if(this.prevDocumentList && this.prevDocumentList.length){
-      this.prevDocumentList.forEach((img, index) => {
+      this.prevDocumentList.forEach(img => {
         this.prevDocsObj.push({
-          "DocumentUrl": img.documentShortUrl,
-          "DocumentDesc": img.documentDesc,
-          "imageUrl": img.documentUrl,
-          "DocumentId": img.documentId
+          "documentUrl": img.documentShortUrl,
+          "documentDesc": img.documentDesc,
+          "documentId": img.documentId,
+          "documentThumbnailUrl": img.documentThumbnailUrl,
+          "documentThumbnailShortUrl": img.documentThumbnailShortUrl,
         });
       })
     }
@@ -105,27 +116,32 @@ export class UploadImageComponent implements OnInit {
       "projectId": this.projectId,
       "materialId": this.materialId,
       "documentsList": [...this.prevDocsObj, ...this.documentList],
-
     }
-
+    
     return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {
       this.dialogRef.close('addImages');
     });
   }
+  
+  removeImage(url: string){   
+    if(this.prevDocumentList && this.prevDocumentList.length)
+      this.prevDocumentList = this.prevDocumentList.filter(opt => opt.documentDesc !== url);
 
-  removeImage(url: string){
-    console.log(url);
+    if(this.documentList && this.documentList.length)
+      this.documentList = this.documentList.filter(opt => opt.documentDesc !== url);
+
+    this.countUploads = (this.prevDocumentList ? this.prevDocumentList.length : 0) + (this.documentList ? this.documentList.length : 0);
   }
 
   downloadImage(fileName, url){
-    const data = {
-      fileName,
-      url
-    }
+    const data = { fileName, url }
     this._uploadImageService.downloadImage(data).then(img => {
       var win = window.open(img.data.url, '_blank');
       win.focus();
     });
   }
-
+  
+  closeDialog() {
+    this.dialogRef.close(null);
+  }
 }

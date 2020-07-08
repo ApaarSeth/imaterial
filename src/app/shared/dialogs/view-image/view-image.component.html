@@ -6,14 +6,12 @@
         <span>&times;</span>
       </button>
 
-      
-      <ngb-carousel *ngIf="selectedImages?.length">
-        
+      <ngb-carousel *ngIf="selectedImages?.length">        
         <ng-container *ngFor="let image of selectedImages">
           <ng-template ngbSlide>
-            <span class="download-link">
-              <i class="fa fa-download fa-lg cursor-pointer"></i>
-            </span>
+            <!-- <span class="download-link"> -->
+              <i class="fa fa-download fa-lg cursor-pointer download-link" (click)="downloadImage(image.documentShortUrl, image.documentUrl)"></i>
+            <!-- </span> -->
             <div class="picsum-img-wrapper">
               <img [src]=image.documentUrl alt="Random first slide" class="img-fluid">
             </div>

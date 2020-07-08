@@ -156,9 +156,14 @@
             <div *ngIf="element?.documentsList?.length" class="images-lists"
               (click)="viewAllImages(element.projectId, element.materialId)">
               <ng-container *ngFor="let img of element.documentsList; let i = index">
-                <img [src]=img.documentUrl alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
               </ng-container>
             </div>
+
+            <ng-container *ngIf="!element?.documentsList">
+              <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
+            </ng-container>
+            
           </td>
         </ng-container>
 

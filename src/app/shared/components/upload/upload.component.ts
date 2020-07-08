@@ -23,7 +23,8 @@ export class UploadComponent implements OnInit {
   @Input('updateInfo') userInfo: boolean;
   @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
   @Input() imageIntegration: boolean;
- 
+  @Input() errorMessage: boolean;
+
   constructor(private documentUploadService: DocumentUploadService,
     private _snackBar:MatSnackBar
     ) { }
