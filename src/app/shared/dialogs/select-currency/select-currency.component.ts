@@ -41,6 +41,7 @@ export class SelectCurrencyComponent implements OnInit {
   searchText: string = null;
   primaryImageUrl: string;
   primaryCurrencyData: Currency;
+  isMobile: boolean;
 
   constructor(
     private dialogRef: MatDialogRef<SelectCurrencyComponent>,
@@ -55,6 +56,7 @@ export class SelectCurrencyComponent implements OnInit {
   ngOnInit() {
     this.currencyForm();
     this.getCurrencyApi();
+    this.isMobile = this.commonService.isMobile().matches;
   }
   get selectedCountry() {
     if (this.currencies)
@@ -67,9 +69,9 @@ export class SelectCurrencyComponent implements OnInit {
     // if (this.data! = null) {
     //   this.exchangeCurrencyName = this.data.exchangeCurrencyName;
     // }
-    Promise.all([this.commonService.getBaseCurrency(), this.rfqservice.getCurrency()]).then(res => {
-      this.primaryCurrencyData = res[0].data as Currency;
-      this.currencyFields['primaryContryId'] = String(this.primaryCurrencyData.countryId);
+    Promise.all([ this.commonService.getBaseCurrency(), this.rfqservice.getCurrency() ]).then(res => {
+      this.primaryCurrencyData = res[ 0 ].data as Currency;
+      this.currencyFields[ 'primaryContryId' ] = String(this.primaryCurrencyData.countryId);
       this.currencyFields.primaryCurrency = this.primaryCurrencyData.currency;
       this.currencyFields.primaryCurrencyFlag = this.primaryCurrencyData.imageUrl;
       this.currencyFields.primaryCurrencyId = this.primaryCurrencyData.currencyId;
@@ -77,14 +79,14 @@ export class SelectCurrencyComponent implements OnInit {
       this.currencyFields.primaryCurrencySymbol = this.primaryCurrencyData.symbol;
       this.primaryImageUrl = this.primaryCurrencyData.imageUrl;
       this.primaryCurrencyName = this.primaryCurrencyData.currencyCode;
-      this.currencies = res[1].data.filter(value => {
+      this.currencies = res[ 1 ].data.filter(value => {
         return value.countryId !== this.primaryCurrencyData.countryId
       });
       if (this.data != null) {
         let existingCurrency = this.currencies.filter(value => {
           return value.currencyId === this.data.exchangeCurrencyId;
         })
-        this.form.get('exchangeCurrency').setValue(existingCurrency[0]);
+        this.form.get('exchangeCurrency').setValue(existingCurrency[ 0 ]);
       }
     });
   }

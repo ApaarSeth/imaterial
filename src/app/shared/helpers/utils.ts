@@ -28,7 +28,7 @@ export class Utils {
     // }
     static baseUrl(): string {
 
-        return (window['env'] && window['env']['api_url']) || 'https://dev-api.buildsupply.io/';
+        return (window[ 'env' ] && window[ 'env' ][ 'api_url' ]) || 'https://dev-api.buildsupply.io/';
 
     }
 
@@ -127,7 +127,7 @@ export class Utils {
         var list = list || [];
         if (typeof (element) == 'object') {
             for (var idx in element)
-                this.JSON_to_URLEncoded(element[idx], key ? key + '[' + idx + ']' : idx, list);
+                this.JSON_to_URLEncoded(element[ idx ], key ? key + '[' + idx + ']' : idx, list);
         } else {
             list.push(key + '=' + encodeURIComponent(element));
         }

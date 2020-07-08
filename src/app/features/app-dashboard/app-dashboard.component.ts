@@ -42,6 +42,8 @@ export class AppDashboardComponent implements OnInit {
   currentIndex: number = 0;
   isMobile: boolean;
   cntryList: any[];
+  isAdDisplay: string;
+  
   constructor(public dialog: MatDialog,
     private router: Router,
     private formbuilder: FormBuilder,
@@ -61,6 +63,7 @@ export class AppDashboardComponent implements OnInit {
 
 
   ngOnInit() {
+    this.isAdDisplay = localStorage.getItem("countryCode");
     this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
