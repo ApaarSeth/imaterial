@@ -50,7 +50,7 @@
 </div>
 
 <form *ngIf="allSuppliers" [formGroup]="form" (click)="choosenSupplier()">
-  <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:'supplier_name'" class="mat-elevation-z8 col-sm-12">
+  <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:['supplier_name']" class="mat-elevation-z8 col-sm-12">
     <!-- Supplier Name Column -->
     <ng-container matColumnDef="Supplier Name">
       <th mat-header-cell *matHeaderCellDef>Supplier Name</th>

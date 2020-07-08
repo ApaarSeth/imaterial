@@ -22,8 +22,10 @@ export class WebNotificationService {
       .catch(err => console.error('Could not subscribe to notifications', err));
   }
   sendToServer(params: any) {
-    this.commonService.pushNotificationData(JSON.stringify(params))
+    console.log(typeof params)
     console.log(JSON.stringify(params))
+    this.commonService.pushNotificationData(params)
+
     // this.http.post(this.baseUrl, { notification: params }).subscribe();
   }
 }

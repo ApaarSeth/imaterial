@@ -34,7 +34,7 @@
                   <mat-select-trigger>
                     <mat-label>Select Trades</mat-label>
                   </mat-select-trigger>
-                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:'tradeName'" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
+                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:['tradeName']" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
                     >{{ trade.tradeName }}
                   </mat-option>
                 </mat-select>

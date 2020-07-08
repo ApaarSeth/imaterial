@@ -26,7 +26,7 @@ export class VisitorService {
 
     getGEOLocation() {
         //let headers = new HttpHeaders();
-        let url = "https://api.ipgeolocation.io/ipgeo?apiKey=0f4e06b0721a4a2b82bce38abc80b31a";
+        let url = "http://ip-api.com/json";
         return this.http
             .get(url)
             .pipe(

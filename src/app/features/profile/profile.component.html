@@ -88,7 +88,7 @@
                             <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
                           </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country"
+                        <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country"
                           ><span
                             ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
                             <span matTooltip="{{ country.name }}" class="limited-character universal">{{ country.name }}</span>
@@ -176,7 +176,7 @@
                             <span class="p-r-5">{{ selectedBaseCurrency && selectedBaseCurrency.currencyCode }}</span>
                           </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCountry:'currency'" [value]="currency"
+                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCountry:['currency']" [value]="currency"
                           ><span
                             ><img class="width-17 p-r-10" [src]="currency.imageUrl" alt="" />
                             <span class="p-r-5">{{ currency.currency }}</span>
