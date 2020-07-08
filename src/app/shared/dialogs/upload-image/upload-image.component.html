@@ -29,7 +29,7 @@
           <ng-container *ngIf="prevDocumentList?.length">
             <div class="upload-image-info mb-3 d-flex align-items-center justify-content-between" *ngFor="let file of prevDocumentList; let i = index">
               <div class="image-info d-flex align-items-center">
-                <img [src]="file.documentUrl" alt="" class="img-fluid thumbnail-img">
+                <img [src]="file.documentThumbnailUrl" alt="" class="img-fluid thumbnail-img">
                 <!-- <i class="fa fa-photo fa-lg" stye="color:#4caf4f"></i> -->
                 <span class="ml-2">{{ file.documentDesc }}</span>
               </div>
@@ -44,14 +44,14 @@
 
           <div class="upload-image-info mb-3 d-flex align-items-center justify-content-between" *ngFor="let file of documentList; let i = index">
             <div class="image-info d-flex align-items-center">
-              <img [src]="file.imageUrl" alt="" class="img-fluid thumbnail-img">
+              <img [src]="file.documentThumbnailUrl" alt="" class="img-fluid thumbnail-img">
               <!-- <i class="fa fa-photo fa-lg" stye="color:#4caf4f"></i> -->
-              <span class="ml-2">{{ file.DocumentDesc }}</span>
+              <span class="ml-2">{{ file.documentDesc }}</span>
             </div>
 
             <div class="image-actions d-flex align-items-center">
-              <i class="fa fa-trash fa-lg orange-text mr-2 cursor-pointer" (click)="removeImage(file.DocumentDesc)"></i>
-              <i class="fa fa-download fa-lg orange-text cursor-pointer" (click)="downloadImage(file.DocumentUrl, file.imageUrl)"></i>
+              <i class="fa fa-trash fa-lg orange-text mr-2 cursor-pointer" (click)="removeImage(file.documentDesc)"></i>
+              <i class="fa fa-download fa-lg orange-text cursor-pointer" (click)="downloadImage(file.documentUrl, file.imageUrl)"></i>
             </div>
 
           </div>
