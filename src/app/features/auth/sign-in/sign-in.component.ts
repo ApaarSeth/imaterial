@@ -138,7 +138,7 @@ export class SigninComponent implements OnInit {
       }
 
       else if (data.serviceRawResponse.data) {
-        if (!(/iPad|iPhone|iPod/.test(window.navigator.userAgent.toLowerCase()))) {
+        if (!(/ipad|iphone|ipod/.test(window.navigator.userAgent.toLowerCase()))) {
           this.subscribeNotification()
         }
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)

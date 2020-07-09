@@ -205,7 +205,7 @@ export class SignupComponent implements OnInit {
         });
       }
       else if (data.data.serviceRawResponse.data as auth) {
-        if (!(/iPad|iPhone|iPod/.test(window.navigator.userAgent.toLowerCase()))) {
+        if (!(/ipad|iphone|ipod/.test(window.navigator.userAgent.toLowerCase()))) {
           this.subscribeNotification()
         }
         this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
