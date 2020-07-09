@@ -156,14 +156,7 @@ export class SigninComponent implements OnInit {
   }
 
   subscribeNotification() {
-    this.webNotificationService.subscribeToNotification()
-    if (this.swUpdate.isEnabled) {
-      this.swUpdate.available.subscribe(() => {
-        if (confirm("New version available. Load New Version?")) {
-          window.location.reload();
-        }
-      });
-    }
+    this.webNotificationService.subscribeToNotification();
     this.swPush.notificationClicks.subscribe(({ action, notification }) => {
       window.open(notification.data.url)
     })
