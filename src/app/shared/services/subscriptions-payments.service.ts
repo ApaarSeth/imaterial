@@ -15,6 +15,10 @@ export class SubscriptionPaymentsService {
     ) { }
 
     postSubscriptionPaymentInitiate(data) {
-        return this.dataService.sendPostRequest(API.POST_SUBSRIPTIONINITIATE, data);
+        return this.dataService.sendPostRequest(API.POST_SUBSCRIPTIONINITIATE, data);
+    }
+
+    postSubscriptionUnsubscribe(data) {
+        return this.dataService.sendPostRequest(API.POST_SUBSCRIPTION_UNSUBSCRIBE, data);
     }
 }

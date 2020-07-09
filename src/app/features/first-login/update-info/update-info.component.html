@@ -87,10 +87,11 @@
                             <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
                           </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country"
-                          ><span
-                            ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                            <span matTooltip="{{ country.name }}" class="limited-character universal p-r-4">{{ country.name }}</span>
+                        <mat-option
+                          *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
+                          [value]="country"><span><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                            <span matTooltip="{{ country.name }}"
+                              class="limited-character universal p-r-4">{{ country.name }}</span>
                             <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
                           </span>
                         </mat-option>
@@ -184,14 +185,10 @@
                             <span class="p-r-5">{{ selectedBaseCurrency && selectedBaseCurrency.currencyCode }}</span>
                           </span>
                         </mat-select-trigger>
-<<<<<<< HEAD
-                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCurrency:'currency'"
+                        <mat-option
+                          *ngFor="let currency of currencyList | SearchPipe: searchCurrency:['currency', 'currencyCode']"
                           [value]="currency"><span><img class="width-17 p-r-10" [src]="currency.imageUrl" alt="" />
-=======
-                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCurrency:['currency', 'currencyCode']" [value]="currency"
-                          ><span
-                            ><img class="width-17 p-r-10" [src]="currency.imageUrl" alt="" />
->>>>>>> ef689452405b82cdc0cae3fa8cdd844fcf43b3a3
+
                             <span class="p-r-5">{{ currency.currency }}</span>
                           </span>
                         </mat-option>

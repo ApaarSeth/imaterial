@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonService } from 'src/app/shared/services/commonService';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'subscription-redirections',
@@ -14,12 +14,20 @@ export class SubscriptionRedirectionsComponent implements OnInit {
 
     constructor(
         private commonService: CommonService,
-        private activeRoute: ActivatedRoute
+        private activeRoute: ActivatedRoute,
+        private router: Router
     ) { }
 
     ngOnInit() {
         this.isMobile = this.commonService.isMobile().matches;
         this.pageType = this.activeRoute.snapshot.data.type;
+        if (this.pageType !== 3) {
+            this.redirectPageToDashboard();
+        }
+    }
+
+    redirectPageToDashboard() {
+        setTimeout(_ => { this.router.navigate([ "/dashboard" ]) }, 10000);
     }
 
 }
