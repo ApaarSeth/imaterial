@@ -42,7 +42,7 @@
   </div>
   <div class="col-md-12 col-xs-6 p-b-20 text-right m-itm" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null"
     [ngClass]="isMobile ? 'pt-4' : 'p-t-10' ">
-    <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10" [ngClass]="isMobile ? 'font-size12 mcrncy' : '' ">
+    <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'font-size12 mcrncy pt-4 pb-3' : 'p-t-10 p-b-10' ">
       <span class="font-size-vary-grn color-grey">
         <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
         {{ poCurrency.exchangeCurrencyName }}

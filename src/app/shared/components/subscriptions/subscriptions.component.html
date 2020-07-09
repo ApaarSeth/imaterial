@@ -1,16 +1,21 @@
 <div *ngIf="subscriptionsData" class="subs-data text-align-center">
     <h2 class="mt-4 mb-4">Choose a Plan That's Right for Your Business</h2>
 
-    <ng-container *ngIf="trialAction">
+    <!-- <ng-container *ngIf="trialAction">
         <div class="trial-plan position-absolute">
             <p class="color-grey"><a matRipple class="brand-color" (click)="startTrialTrigger()">skip</a> this and start
                 your</p>
             <span>3 months free trial</span>
         </div>
-    </ng-container>
+    </ng-container> -->
 
-    <mat-tab-group mat-align-tabs="center">
-        <mat-tab *ngFor="let subscription of subscriptionsData" [label]="subscription.frequencyHeader">
+    <mat-tab-group mat-align-tabs="center" disableRipple>
+        <mat-tab *ngFor="let subscription of subscriptionsData">
+
+            <ng-template mat-tab-label>
+                <span class="sub-svtxt brand-color font-size12">(Save 30%)</span>
+                {{subscription.frequencyHeader}}
+            </ng-template>
 
             <div class="row d-flex flex-center mt-3 mb-5">
 
@@ -19,18 +24,29 @@
                         <mat-card-title>{{plan.planName}}</mat-card-title>
                         <mat-card-subtitle class="subs-pricing">
                             <strong>{{plan.currencyCode}} {{plan.planPrice}}/</strong>
-                            <!-- <span>{{plan.planFrequencyAlias}}</span> -->
-                            <span>{{subscription.planFrequencyAlias}}</span>
+                            <span>{{plan.planFrequencyAlias}}</span>
                             <p>Save {{plan.currencyCode}} {{plan.planPrice}} a year</p>
                         </mat-card-subtitle>
                     </mat-card-header>
 
                     <mat-card-content class="plan-limit justify-content-between">
                         <span>{{plan.planLimit.projectCount}} Project {{plan.planLimit.userCount}} Users</span>
-                        <button mat-raised-button class="main-background-color"
-                            (click)="choosePlan(plan.planId, plan.offerCode, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Choose
-                            Plan</button>
+                        <ng-container *ngIf="plan.activeSubscription === null">
+                            <button mat-raised-button class="main-background-color subs-btn"
+                                (click)="choosePlan('0', plan.planId, plan.offerCode, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Choose
+                                Plan</button>
+                        </ng-container>
+                        <ng-container *ngIf="plan.activeSubscription !== null">
+                            <button mat-button class="subs-link" (click)="unsubscribePlan()">Unsubscribe</button>
+                        </ng-container>
                     </mat-card-content>
+                    <ng-container *ngIf="trialAction">
+                        <p>
+                            <button mat-button
+                                (click)="choosePlan('1', plan.planId, plan.offerCode, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Select
+                                Trial</button>
+                        </p>
+                    </ng-container>
                     <mat-card-actions class="feat-list pt-1 pl-4 pb-3">
                         <ul>
                             <li *ngFor="let feature of sortFeaturesObjList(plan.planFeatureObjList)"
