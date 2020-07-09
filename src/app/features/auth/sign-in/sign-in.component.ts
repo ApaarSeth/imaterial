@@ -28,8 +28,9 @@ export class SigninComponent implements OnInit {
   @Input("countryCode") countryCode: string;
   @Input("countryList") actualCountryList: CountryCode[];
 
-  isEnabled = this.swPush.isEnabled;
-  isGranted = Notification.permission === 'granted';
+
+  // isEnabled = this.swPush.isEnabled;
+  // isGranted = Notification.permission === 'granted';
 
   constructor(private tokenService: TokenService, private router: Router,
     private webNotificationService: WebNotificationService,
@@ -155,14 +156,7 @@ export class SigninComponent implements OnInit {
   }
 
   subscribeNotification() {
-    this.webNotificationService.subscribeToNotification()
-    if (this.swUpdate.isEnabled) {
-      this.swUpdate.available.subscribe(() => {
-        if (confirm("New version available. Load New Version?")) {
-          window.location.reload();
-        }
-      });
-    }
+    this.webNotificationService.subscribeToNotification();
     this.swPush.notificationClicks.subscribe(({ action, notification }) => {
       window.open(notification.data.url)
     })
