@@ -8,6 +8,7 @@ import { SubscriptionsPayments } from '../../../shared/models/subscription-payme
 import { Utils } from '../../helpers/utils';
 import { FormBuilder } from '@angular/forms';
 import { API } from '../../constants/configuration-constants';
+import { CommonService } from '../../services/commonService';
 
 @Component({
     selector: 'app-subscriptions',
@@ -22,15 +23,18 @@ export class SubscriptionsComponent implements OnInit {
     users: UserDetails;
 
     subscriptionsData: any;
+    isMobile: boolean;
 
     constructor(
         private _router: Router,
         private _userService: UserService,
         private subsPayService: SubscriptionPaymentsService,
+        private commonService: CommonService,
         private formBuilder: FormBuilder
     ) { }
 
     ngOnInit() {
+        this.isMobile = this.commonService.isMobile().matches;
         this.getUserInformation(localStorage.getItem('userId'));
         this.subscriptionsData = this.data.planFrequencyList;
     }
@@ -53,14 +57,20 @@ export class SubscriptionsComponent implements OnInit {
         });
     }
 
-    choosePlan(planId: number, offerId: string, price: number, planEncryptId: string, planPricingEncryptId: string) {
+    unsubscribePlan() {
 
-        const obj = {
+    }
+
+    choosePlan(type, planId: number, offerId: string, price: number, planEncryptId: string, planPricingEncryptId: string) {
+
+        let obj = {
             planId: planId,
             planPricingId: price,
             offerId: null,
             isTrial: 0
         };
+
+        type === '0' ? obj.isTrial = 0 : obj.isTrial = 1;
 
         this.subsPayService.postSubscriptionPaymentInitiate(obj).then(res => {
 
@@ -71,6 +81,7 @@ export class SubscriptionsComponent implements OnInit {
                 orderId: res.data.transactionId,
                 // promoCode: 'DD234Q',
                 validUpto: res.data.endDate,
+                startDt: res.data.startDate,
                 redirectUrl: res.data.redirectUrl,
                 cancelUrl: res.data.cancelUrl,
                 failureUrl: res.data.failureUrl,
@@ -79,7 +90,13 @@ export class SubscriptionsComponent implements OnInit {
                 serviceName: 'iMaterial'
             };
 
-            this.postToExternalSite(data);
+            if (type === '0') {
+                this.postToExternalSite(data);
+            } else {
+                if (res.data) {
+                    this._router.navigate([ "/profile/add-user" ]);
+                }
+            }
 
         });
 

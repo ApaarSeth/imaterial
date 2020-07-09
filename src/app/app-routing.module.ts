@@ -80,6 +80,13 @@ const routes: Routes = [
     }
   },
   {
+    path: "subscriptions/trial-expiry",
+    component: SubscriptionRedirectionsComponent,
+    data: {
+      type: 3
+    }
+  },
+  {
     path: "",
     component: ProfileLayoutComponent,
     canActivate: [ AuthGuardService, UserDataGuardService ],
