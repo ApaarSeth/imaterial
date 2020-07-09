@@ -290,10 +290,13 @@ export interface PoPayementDetail {
 }
 
 export interface ImageList {
-  DocumentDesc: string;
-  DocumentUrl: string;
-  imageUrl?: string;
-  DocumentId?: number;
+  documentUrl: string;
+  documentType?: string;
+  documentDesc: string;
+  documentId: number;
+  documentThumbnailUrl?: string;
+  documentThumbnailShortUrl?: string;
+  // imageUrl?: string;
 }
 
 export interface ImageDocsLists{
@@ -305,4 +308,8 @@ export interface ImageDocsLists{
   documentDesc: string;
   documentType: string;
   documentShortUrl: string;
+  ThumbnailFileName?: string;
+  ThumbnailUrl?: string;
+  documentThumbnailUrl?: string;
+  documentThumbnailShortUrl?: string;
 }

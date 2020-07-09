@@ -39,7 +39,7 @@
       </div>
     </div>
     <!-- end fix part -->
-    <div *ngFor="let projDetails of allProjects | SearchPipe: searchText:'projectName'">
+    <div *ngFor="let projDetails of allProjects | SearchPipe: searchText:['projectName']">
       <card-layout (onEdit)="editProject($event)" (onDelete)="deleteProject($event)" [projectDetails]="projDetails"> </card-layout>
     </div>
   </div>

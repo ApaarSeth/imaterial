@@ -29,6 +29,14 @@ export class ViewImageComponent implements OnInit {
     })
   }
 
+  downloadImage(fileName, url){
+    const data = { fileName, url }
+    this._imageService.downloadImage(data).then(img => {
+      var win = window.open(img.data.url, '_blank');
+      win.focus();
+    });
+  }
+
   closeDialog() {
     this.dialogRef.close(null);
   }

@@ -149,4 +149,5 @@ export const API = {
   UPLOAD_IMAGE: 'material/addImages',
   VIEW_IMAGES: (projectId, materialId) => `material/getImages/${projectId}/${materialId}`,
   DOWNLOAD_IMAGE: 'documents/download',
+  PUSHNOTIFICATIONDATA: 'user/web/notification/savetoken'
 };

@@ -2,7 +2,10 @@ import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacebookPixelService } from './shared/services/fb-pixel.service';
 import { SwPush, SwUpdate } from '@angular/service-worker';
-import { WebNotificationService } from './shared/services/webNotificationService';
+import { WebNotificationService } from './shared/services/webNotificationService.service';
+import { Visitor } from '@angular/compiler/src/render3/r3_ast';
+import { VisitorService } from './shared/services/visitor.service';
+import { API } from './shared/constants/configuration-constants';
 
 @Component({
   selector: "app-root",
@@ -10,13 +13,12 @@ import { WebNotificationService } from './shared/services/webNotificationService
   styleUrls: ["../assets/scss/main.scss"]
 })
 export class AppComponent {
-  isEnabled = this.swPush.isEnabled;
-  isGranted = Notification.permission === 'granted';
   title = "imaterial";
   location: string;
   hideHeader: boolean = false;
   ipaddress: number;
   constructor(
+    private visitorsService: VisitorService,
     private swPush: SwPush,
     private _activatedRoute: ActivatedRoute,
     private fbPixel: FacebookPixelService,
@@ -25,18 +27,24 @@ export class AppComponent {
   ) {
   }
 
+  subscribeNotification() {
+    this.webNotificationService.subscribeToNotification()
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
+        if (confirm("New version available. Load New Version?")) {
+          window.location.reload();
+        }
+      });
+    }
+    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
+      window.open(notification.data.url)
+    })
+  }
+
+
+
+
   ngOnInit() {
-    // this.webNotificationService.subscribeToNotification()
-    // if (this.swUpdate.isEnabled) {
-
-    //   this.swUpdate.available.subscribe(() => {
-
-    //     if (confirm("New version available. Load New Version?")) {
-
-    //       window.location.reload();
-    //     }
-    //   });
-    // }
     this.location = window.location.href;
     this.fbPixel.load();
     if (this.location.includes('rfq-bids/supplier/') || this.location.includes('rfq-bids/after-submit/')) {
@@ -46,4 +54,6 @@ export class AppComponent {
       this.hideHeader = false;
     }
   }
+
+
 }

@@ -39,7 +39,7 @@ export class DataService {
     // this.baseUrl = environment.url + "/";
     // this.masterUrl = environment.masterUrl + "/";
     // this.ssoUrl = environment.ssoUrl + "/";
-    // this.baseUrl = Utils.baseUrl();
+    this.baseUrl = Utils.baseUrl();
     this.baseStartUrl = Utils.baseUrl();
     this.baseUrl = this.baseStartUrl + "im/";
     this.masterUrl = this.baseStartUrl + "mm/";

@@ -14,7 +14,7 @@
   </div> -->
 
   <!-- Will invisible in case of Update User Info -->
-  <div class="col-xs-12 grey-dotted-border p-t-40" *ngIf="!grnResponsive" appDnd [class.img-integration]="imageIntegration">
+  <div class="col-xs-12 grey-dotted-border p-t-40" *ngIf="!grnResponsive" appDnd [class.img-integration]="imageIntegration" [class.red-border]="errorMessage">
     <div class="upload-green-tick">
       <img src="../../../../assets/images/upload-green-arrow.png" />
     </div>

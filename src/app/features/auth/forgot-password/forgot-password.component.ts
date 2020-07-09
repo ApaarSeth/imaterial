@@ -13,6 +13,7 @@ import { SignINDetailLists, ForgetPassDetails } from 'src/app/shared/models/sign
 import { CommonService } from 'src/app/shared/services/commonService';
 import { VisitorService } from 'src/app/shared/services/visitor.service';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 @Component({
   selector: "forgot-password",
@@ -39,10 +40,10 @@ export class ForgotPasswordComponent implements OnInit {
   lastFourDigit: any;
   otpValue: number;
   otpMessageVerify: string = "";
-  countryList: any
+  countryList: CountryCode[] = []
   searchCountry: string = '';
   primaryCallingCode: string = '';
-  livingCountry: string = '';
+  livingCountry: CountryCode[] = [];
   ipaddress: string = '';
   callingCode: string;
   emailSendMessage: boolean = false
