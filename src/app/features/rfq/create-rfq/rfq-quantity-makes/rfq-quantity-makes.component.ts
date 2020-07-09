@@ -90,12 +90,12 @@ export class RfqQuantityMakesComponent implements OnInit {
       rfqCurrency: null,
     };
 
-    if (history.state.rfqData) {
-      this.rfqData = history.state.rfqData.data;
-      this.projectSelectedMaterials =
-        history.state.rfqData.data.rfqProjectsList;
-      this.updatedRfq.emit(this.rfqData);
-    }
+    // if (history.state.rfqData) {
+    //   this.rfqData = history.state.rfqData.data;
+    //   this.projectSelectedMaterials =
+    //     history.state.rfqData.data.rfqProjectsList;
+    //   this.updatedRfq.emit(this.rfqData);
+    // }
     this.formsInit();
   }
 
