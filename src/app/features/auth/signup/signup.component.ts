@@ -205,7 +205,9 @@ export class SignupComponent implements OnInit {
         });
       }
       else if (data.data.serviceRawResponse.data as auth) {
-        this.subscribeNotification()
+        if (!(/iPad|iPhone|iPod/.test(window.navigator.userAgent.toLowerCase()))) {
+          this.subscribeNotification()
+        }
         this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
         this.fbPixel.fire('Lead')
         this.fbPixel.fire('PageView')
@@ -245,13 +247,13 @@ export class SignupComponent implements OnInit {
 
   subscribeNotification() {
     this.webNotificationService.subscribeToNotification()
-    // if (this.swUpdate.isEnabled) {
-    //   this.swUpdate.available.subscribe(() => {
-    //     if (confirm("New version available. Load New Version?")) {
-    //       window.location.reload();
-    //     }
-    //   });
-    // }
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
+        if (confirm("New version available. Load New Version?")) {
+          window.location.reload();
+        }
+      });
+    }
     this.swPush.notificationClicks.subscribe(({ action, notification }) => {
       window.open(notification.data.url)
     })

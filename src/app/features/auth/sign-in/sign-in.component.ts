@@ -138,8 +138,9 @@ export class SigninComponent implements OnInit {
       }
 
       else if (data.serviceRawResponse.data) {
-        this.subscribeNotification()
-
+        if (!(/iPad|iPhone|iPod/.test(window.navigator.userAgent.toLowerCase()))) {
+          this.subscribeNotification()
+        }
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
         if (localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
           this.router.navigate(["/profile/email-verification"]);
@@ -155,8 +156,6 @@ export class SigninComponent implements OnInit {
 
   subscribeNotification() {
     this.webNotificationService.subscribeToNotification()
-
-    window.navigator.userAgent.toLowerCase()
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
         if (confirm("New version available. Load New Version?")) {
