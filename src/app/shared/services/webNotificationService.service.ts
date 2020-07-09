@@ -25,7 +25,6 @@ export class WebNotificationService {
     console.log(typeof params)
     console.log(JSON.stringify(params))
     this.commonService.pushNotificationData(params)
-
     // this.http.post(this.baseUrl, { notification: params }).subscribe();
   }
 }

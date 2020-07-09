@@ -28,8 +28,9 @@ export class SigninComponent implements OnInit {
   @Input("countryCode") countryCode: string;
   @Input("countryList") actualCountryList: CountryCode[];
 
-  isEnabled = this.swPush.isEnabled;
-  isGranted = Notification.permission === 'granted';
+
+  // isEnabled = this.swPush.isEnabled;
+  // isGranted = Notification.permission === 'granted';
 
   constructor(private tokenService: TokenService, private router: Router,
     private webNotificationService: WebNotificationService,
