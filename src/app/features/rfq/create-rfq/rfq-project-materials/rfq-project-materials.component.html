@@ -29,7 +29,7 @@
           <mat-select-trigger>
             <mat-label>Select Project</mat-label>
           </mat-select-trigger>
-          <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:'projectName'" [value]="project" selected="project.clicked" (click)="choosenProject()"
+          <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project" selected="project.clicked" (click)="choosenProject()"
             >{{ project.projectName }}
           </mat-option>
         </mat-select>
@@ -62,7 +62,7 @@
 </form>
 <form *ngIf="rfqDetails.length" [formGroup]="materialForm">
   <span formArrayName="forms">
-    <div *ngFor="let project of rfqDetails | SearchPipe: searchProject:'projectName'; let p = index" [formGroupName]="p">
+    <div *ngFor="let project of rfqDetails | SearchPipe: searchProject:['projectName']; let p = index" [formGroupName]="p">
       <mat-accordion *ngIf="rfqDetails" class="rfq-detail-body">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header>
@@ -81,7 +81,7 @@
           <table
             #table
             mat-table
-            [dataSource]="project.projectMaterialList | SearchPipe: searchMaterial:'materialName'"
+            [dataSource]="project.projectMaterialList | SearchPipe: searchMaterial:['materialName']"
             class="mat-elevation-z8 col-sm-12 po-custom-mat-width"
             formArrayName="materialList"
           >
