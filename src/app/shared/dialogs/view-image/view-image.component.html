@@ -10,7 +10,7 @@
         <ng-container *ngFor="let image of selectedImages">
           <ng-template ngbSlide>
             <!-- <span class="download-link"> -->
-              <i class="fa fa-download fa-lg cursor-pointer download-link" (click)="downloadImage(image.documentShortUrl, image.documentUrl)"></i>
+              <img src="assets/images/download-icon-lg.svg" class="cursor-pointer download-link" (click)="downloadImage(image.documentShortUrl, image.documentUrl)" />
             <!-- </span> -->
             <div class="picsum-img-wrapper">
               <img [src]=image.documentUrl alt="Random first slide" class="img-fluid">

@@ -63,6 +63,48 @@ div.limited-character.bom {
   color: #f47721;
 }
 
+.add-edit-image{
+  a{
+    font-size: 13px;
+  }
+}
+
+.images-lists{
+  position: relative;
+  .attached-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #828282;
+    height: 45px;
+    width: 45px;
+    -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    -moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    position: absolute;
+    background-color: #fff;
+    cursor: pointer;
+
+    &:first-child{
+      z-index: 0;
+      top: -30px;
+      left: 10px;
+    }
+
+    &:nth-child(2){
+      left: 16px;
+      z-index: 1;
+      top: -24px;
+    }
+
+    &:nth-child(3){
+      z-index: 2;
+      left: 23px;
+      top: -17px;
+    }
+  }
+}
+
 .option-select-height {
   .mat-optgroup-label {
     height: 2em !important;
@@ -77,6 +119,20 @@ div.limited-character.bom {
     border-right: 0px solid transparent;
     border-top: 0px solid;
     margin: 0 4px;
+  }
+}
+
+.view-image-modal .mat-dialog-container{
+  padding: 0 24px !important;
+}
+
+.view-image-dialog.mat-dialog-content {
+  padding: 0;
+  .modal-content{
+    border: none;
+  }
+  .modal-body{
+    padding: 0;
   }
 
   button.close{
@@ -176,15 +232,10 @@ div.limited-character.bom {
 
 .download-link{
   position: absolute;
-  left: 82%;
+  left: 80%;
   z-index: 999;
-  top: 8px;
-  width: 40px;
-  height: 40px;
-  background-color: #f47721;
-  border-radius: 50%;
-  line-height: 38px;
-  color: #fff !important;
+  top: 14px;
+  width: 30px;
 }
 
 .default-image{
