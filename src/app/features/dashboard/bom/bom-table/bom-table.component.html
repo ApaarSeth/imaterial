@@ -81,6 +81,7 @@
                 </span>
               </div>
 
+              <!-- Upload Image Modal Link -->
               <div class="add-edit-image d-block">
                 <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(element)">Add/Edit Image</a>
               </div>
@@ -153,6 +154,7 @@
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+            <!-- View image modal link -->
             <div *ngIf="element?.documentsList?.length" class="images-lists"
               (click)="viewAllImages(element.projectId, element.materialId)">
               <ng-container *ngFor="let img of element.documentsList; let i = index">

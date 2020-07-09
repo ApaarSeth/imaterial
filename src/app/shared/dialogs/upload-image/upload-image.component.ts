@@ -36,9 +36,9 @@ export class UploadImageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.data);
     this.projectId = this.data.projectId;
     this.materialId = this.data.materialId;
-    // this.prevDocumentList = this.data.documentsList;
     this.getUploadedImages();
   }
 

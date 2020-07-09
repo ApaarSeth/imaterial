@@ -30,7 +30,7 @@ const components = [ ProjectItemComponent, ChipComponent, UploadComponent, Globa
   ],
 
   declarations: components,
-  entryComponents: [],
+  entryComponents: [UploadImageComponent, ViewImageComponent],
   exports: components
 })
 export class SharedComponentsModule { }
