@@ -94,11 +94,11 @@ export class SigninComponent implements OnInit {
 
   getCountryCode(callingCode, countryCode) {
     this.livingCountry = this.countryList.filter(val => {
-      if (callingCode === '+1') {
-        if (val.callingCode === callingCode && val.countryCode === countryCode)
-          return val;
-      }
-      return val.callingCode === callingCode;
+      // if (callingCode === '+1') {
+      //   if (val.callingCode === callingCode && val.countryCode === countryCode)
+      //     return val;
+      // }
+      return val.countryCode.toLowerCase() === countryCode.toLowerCase();
     })
     this.signinForm.get('countryCode').setValue(this.livingCountry[0])
   }

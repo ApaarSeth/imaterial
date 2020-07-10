@@ -61,7 +61,8 @@ export class SignInSignUpComponent implements OnInit {
     Promise.all([this.visitorsService.getGEOLocation(), this.commonService.getCountry()]).then(res => {
       this.callingCode = res[0]['countryCode'] === 'IN' ? '+91' : 'null';
       this.countryCode = res[0]['countryCode']
-      localStorage.setItem('countryCode', this.callingCode)
+      localStorage.setItem('countryCode', this.countryCode)
+      localStorage.setItem('callingCode', this.callingCode)
       this.countryList = res[1]['data']
     }).catch(err => {
       this.fallBackData()
