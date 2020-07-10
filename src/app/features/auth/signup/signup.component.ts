@@ -94,13 +94,9 @@ export class SignupComponent implements OnInit {
     });
   }
 
-
-
-
   get selectedCountry() {
     return this.signupForm.get('countryCode').value;
   }
-
 
   getLocation() {
     let emailValidator = [
@@ -120,12 +116,8 @@ export class SignupComponent implements OnInit {
 
   getCountryCode(callingCode, countryCode) {
     this.livingCountry = this.countryList.filter(val => {
-      if (callingCode === '+1') {
-        if (val.callingCode === callingCode && val.countryCode === countryCode)
-          return val;
-      } else {
-        return val.callingCode === callingCode;
-      }
+      return val.countryCode.toLowerCase() === countryCode.toLowerCase();
+      // }
     })
     this.signupForm.get('countryCode').setValue(this.livingCountry[0])
   }
