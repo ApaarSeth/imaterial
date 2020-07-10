@@ -18,6 +18,7 @@ import { ReleaseNoteComponent } from 'src/app/shared/dialogs/release-notes/relea
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
 import { TokenService } from 'src/app/shared/services/token.service';
+import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -43,7 +44,7 @@ export class AppDashboardComponent implements OnInit {
   isMobile: boolean;
   cntryList: any[];
   isAdDisplay: string;
-  
+
   constructor(public dialog: MatDialog,
     private router: Router,
     private formbuilder: FormBuilder,
@@ -53,7 +54,7 @@ export class AppDashboardComponent implements OnInit {
     private commonService: CommonService,
     private tokenService: TokenService,
     private permissionService: PermissionService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute, private loader: GlobalLoaderService) { }
 
   range: Range = { fromDate: new Date(), toDate: new Date() };
   options: NgxDrpOptions;
@@ -63,6 +64,7 @@ export class AppDashboardComponent implements OnInit {
 
 
   ngOnInit() {
+    this.loader.hide();
     this.isAdDisplay = localStorage.getItem("countryCode");
     this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
@@ -189,7 +191,7 @@ export class AppDashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result != null)
-        this.router.navigate([ '/project-dashboard' ]);
+        this.router.navigate(['/project-dashboard']);
     });
   }
 
@@ -309,7 +311,7 @@ export class AppDashboardComponent implements OnInit {
   //  }
   // }
 
-  @HostListener('window:resize', [ '$event' ])
+  @HostListener('window:resize', ['$event'])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 494) {
       this.tab1 = "P.O.";

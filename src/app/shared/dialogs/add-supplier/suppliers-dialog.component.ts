@@ -43,7 +43,7 @@ export class SuppliersDialogComponent {
       this.calingCode = localStorage.getItem('countryCode');
     }
     this.cntryId = Number(localStorage.getItem('countryId'));
-    localStorage.getItem('countryCode') === '+91' ? this.isNational = true : this.isNational = false;
+    localStorage.getItem('countryCode') === 'IN' ? this.isNational = true : this.isNational = false;
     this.initForm();
     this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"))

@@ -130,7 +130,7 @@ export class ProfileComponent implements OnInit {
 
   getTurnOverList() {
     this._userService.getTurnOverList().then(res => {
-      let callingCode = localStorage.getItem('countryCode')
+      let callingCode = localStorage.getItem('callingCode')
       this.turnOverList = res.data.filter(data => {
         if (callingCode === '+91' && data.isInternational === 0) {
           return data
@@ -183,7 +183,7 @@ export class ProfileComponent implements OnInit {
       firstName: [{ value: this.users ? this.users.firstName : '', disabled: false }, Validators.required],
       lastName: [{ value: this.users ? this.users.lastName : '', disabled: false }, Validators.required],
       email: [{ value: this.users ? this.users.email : '', disabled: true }, Validators.required],
-      contactNo: [{ value: this.users ? this.users.contactNo : '', disabled: this.countryCode === "+91" ? true : false }, Validators.required],
+      contactNo: [{ value: this.users ? this.users.contactNo : '', disabled: this.countryCode === "IN" ? true : false }, Validators.required],
       roleId: [{ value: this.users ? this.users.roleId : null, disabled: false }, Validators.required],
       turnOverId: [{ value: this.users ? this.users.TurnOverId : null, disabled: false }],
       roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: false }],

@@ -10,6 +10,6 @@ export class CountryResolver implements Resolve<any>{
     ) { }
 
     resolve(route: ActivatedRouteSnapshot) {
-        return this.commonService.getCountry().then(res => res.data);
+        return this.commonService.getCountry(true).then(res => res.data);
     }
 }

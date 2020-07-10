@@ -70,7 +70,8 @@ export class SignInSignUpComponent implements OnInit {
   }
 
   fallBackData() {
-    localStorage.setItem('countryCode', "+91");
+    localStorage.setItem('callingCode', "+91");
+    localStorage.setItem('countryCode', 'IN')
     this.callingCode = "+91";
     this.countryCode = "IN";
     this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true }).then(res => {
