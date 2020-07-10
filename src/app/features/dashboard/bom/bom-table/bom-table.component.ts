@@ -24,6 +24,7 @@ import { permission } from 'src/app/shared/models/permissionObject';
 import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
 import { IndentService } from 'src/app/shared/services/indent/indent.service';
 import { AddGrnComponent } from 'src/app/shared/dialogs/add-grn/add-grn.component';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-bom-table",
@@ -43,7 +44,7 @@ export class BomTableComponent implements OnInit {
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
   columnsToDisplay = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
-
+  isMobile: boolean;
   innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
@@ -99,10 +100,12 @@ export class BomTableComponent implements OnInit {
     private indentService: IndentService,
     private loading: GlobalLoaderService,
     private guidedTourService: GuidedTourService,
-    private userGuideService: UserGuideService
+    private userGuideService: UserGuideService,
+    private commonService: CommonService
   ) {
   }
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
     });
