@@ -82,6 +82,7 @@ export class RfqSupplierComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     this.rfqData = this.finalRfq;
     if (this.rfqData) {
+      this.supplierCounter = 0;
       this.allSuppliers = this.allSuppliers.map((supplier: Suppliers) => {
         if (this.finalRfq.supplierId && this.finalRfq.supplierId.includes(supplier.supplierId)) {
           supplier.checked = true;

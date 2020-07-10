@@ -164,7 +164,7 @@ export class UpdateInfoComponent implements OnInit {
   getTurnOverList() {
     if (this.users.roleName !== "l3") {
       this._userService.getTurnOverList().then(res => {
-        let callingCode = localStorage.getItem('countryCode')
+        let callingCode = localStorage.getItem('callingCode')
         this.turnOverList = res.data.filter(data => {
           if (callingCode === '+91' && data.isInternational === 0) {
             return data
@@ -211,7 +211,7 @@ export class UpdateInfoComponent implements OnInit {
       orgPincode: ['', [Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS)]]
     });
 
-    if (this.countryCode === "+91") {
+    if (this.countryCode === "IN") {
       this.userInfoForm.get('contactNo').setValidators([Validators.required])
     }
     this.customTrade = this._formBuilder.group({

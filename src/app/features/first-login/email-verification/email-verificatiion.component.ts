@@ -33,7 +33,7 @@ export class EmailVerificationComponent implements OnInit {
         })
     }
     emailVerificationStatus() {
-        if (!this.checkAccountStatus) {
+        if (!this.checkAccountStatus && localStorage.getItem('email')) {
             this.signInSignUpService.emailVerificationStatus().then(data => {
                 this.checkAccountStatus = Number(data);
                 if (this.checkAccountStatus) {

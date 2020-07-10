@@ -65,7 +65,6 @@ export class SigninComponent implements OnInit {
 
   ngOnInit() {
     this.countryList = this.activatedRoute.snapshot.data.countryList;
-    // this.countryList = this.actualCountryList
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
