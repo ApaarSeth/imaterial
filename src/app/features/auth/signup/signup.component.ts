@@ -17,6 +17,8 @@ import { API } from 'src/app/shared/constants/configuration-constants';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { VisitorService } from 'src/app/shared/services/visitor.service';
+import { WebNotificationService } from 'src/app/shared/services/webNotificationService.service';
+import { SwPush, SwUpdate } from '@angular/service-worker';
 
 export interface OrganisationType {
   value: string;
@@ -49,6 +51,9 @@ export class SignupComponent implements OnInit {
   countryList: CountryCode[] = [];
   primaryCallingCode: string = '';
   constructor(
+    private webNotificationService: WebNotificationService,
+    private swPush: SwPush,
+    private swUpdate: SwUpdate,
     private tokenService: TokenService,
     private route: ActivatedRoute,
     private router: Router,
@@ -89,13 +94,9 @@ export class SignupComponent implements OnInit {
     });
   }
 
-
-
-
   get selectedCountry() {
     return this.signupForm.get('countryCode').value;
   }
-
 
   getLocation() {
     let emailValidator = [
@@ -115,12 +116,8 @@ export class SignupComponent implements OnInit {
 
   getCountryCode(callingCode, countryCode) {
     this.livingCountry = this.countryList.filter(val => {
-      if (callingCode === '+1') {
-        if (val.callingCode === callingCode && val.countryCode === countryCode)
-          return val;
-      } else {
-        return val.callingCode === callingCode;
-      }
+      return val.countryCode.toLowerCase() === countryCode.toLowerCase();
+      // }
     })
     this.signupForm.get('countryCode').setValue(this.livingCountry[0])
   }
@@ -200,6 +197,9 @@ export class SignupComponent implements OnInit {
         });
       }
       else if (data.data.serviceRawResponse.data as auth) {
+        if (!(/ipad|iphone|ipod/.test(window.navigator.userAgent.toLowerCase()))) {
+          this.subscribeNotification()
+        }
         this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
         this.fbPixel.fire('Lead')
         this.fbPixel.fire('PageView')
@@ -236,6 +236,14 @@ export class SignupComponent implements OnInit {
       }
     });
   }
+
+  subscribeNotification() {
+    this.webNotificationService.subscribeToNotification();
+    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
+      window.open(notification.data.url)
+    })
+  }
+
 
   showPassWord() {
     if (!this.showPassWordString) {

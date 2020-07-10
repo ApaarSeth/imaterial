@@ -31,7 +31,7 @@
                 <span class="font-size12">{{ selectedCountry && selectedCountry.callingCode }}</span>
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country">
+            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country">
               <span
                 ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
                 <span class="limited-character universal p-r-5" matTooltip="{{ country.name }}">{{ country.name }}</span>

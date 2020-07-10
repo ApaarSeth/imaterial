@@ -13,6 +13,7 @@ import { SignINDetailLists, ForgetPassDetails } from 'src/app/shared/models/sign
 import { CommonService } from 'src/app/shared/services/commonService';
 import { VisitorService } from 'src/app/shared/services/visitor.service';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 @Component({
   selector: "forgot-password",
@@ -39,13 +40,14 @@ export class ForgotPasswordComponent implements OnInit {
   lastFourDigit: any;
   otpValue: number;
   otpMessageVerify: string = "";
-  countryList: any
+  countryList: CountryCode[] = []
   searchCountry: string = '';
   primaryCallingCode: string = '';
-  livingCountry: string = '';
+  livingCountry: CountryCode[] = [];
   ipaddress: string = '';
-  callingCode: string;
+  countryCode: string;
   emailSendMessage: boolean = false
+  callingCode: string;
   constructor(
     private tokenService: TokenService,
     private route: ActivatedRoute,
@@ -60,7 +62,10 @@ export class ForgotPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.callingCode = localStorage.getItem("countryCode")
+    this.countryCode = localStorage.getItem("countryCode")
+
+    this.callingCode = localStorage.getItem("callingCode")
+
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       this.formInit();
@@ -91,7 +96,7 @@ export class ForgotPasswordComponent implements OnInit {
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.getCountryCode(this.callingCode)
+    this.getCountryCode(this.countryCode)
     if (this.callingCode === '+91') {
       this.forgetPassForm.get('email').setValidators(emailValidator)
       this.forgetPassForm.get('phone').setValidators(Validators.required)
@@ -101,11 +106,11 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
-  getCountryCode(callingCode) {
+  getCountryCode(countryCode) {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
-        return val.callingCode === callingCode;
+        return val.countryCode.toLowerCase() === countryCode.toLowerCase();
       })
       this.forgetPassForm.get('countryCode').setValue(this.livingCountry[0])
     })
