@@ -308,7 +308,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
               }
             })
           } else {
-            projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null });
+            projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null, documentList: element.material.documentsList ? element.material.documentsList : null });
           }
         }
       })

@@ -20,12 +20,19 @@ export class ViewImageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllImages();
+    this.data.type !== 'rfq' ? this.getAllImages() : this.getAllRfqImages();
   }
 
   getAllImages(){
     this._imageService.getSelectedImages(this.data.projectId, this.data.materialId).then(res => {
       this.selectedImages = res.data;
+    })
+  }
+
+  getAllRfqImages(){
+    this._imageService.getRfqUploadedImages(this.data.rfqId, this.data.materialId).then(res => {
+      this.selectedImages = res.data;
+      debugger
     })
   }
 
