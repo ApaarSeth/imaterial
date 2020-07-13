@@ -16,13 +16,14 @@ import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 
 @Component({
   selector: "review",
   templateUrl: "./review.component.html"
 })
 export class ReviewComponent implements OnInit {
-  displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Makes"];
+  displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Makes", "Attached Images"];
   finalRfq: AddRFQ;
   selectedSuppliersList: Suppliers[];
   documentList: DocumentList[];
@@ -185,6 +186,29 @@ export class ReviewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       if (data != null) {
         this.finalRfq.rfqCurrency = data;
+      }
+    });
+  }
+
+  /**
+   * function will call to open view image modal
+   * @param rfqId, materialId, type
+   */
+  viewAllImages(materialId) {
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        rfqId: this.rfqId,
+        materialId,
+        type: 'rfq'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
       }
     });
   }

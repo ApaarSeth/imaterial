@@ -36,10 +36,15 @@ export class UploadImageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.data);
-    this.projectId = this.data.projectId;
-    this.materialId = this.data.materialId;
-    this.getUploadedImages();
+    if(this.data.type !== 'rfq'){
+      this.projectId = this.data.projectId;
+      this.materialId = this.data.materialId;
+      this.getUploadedImages();
+    }else{
+      this.prevDocumentList = this.data.selectedMaterial.documentList;
+      console.log(this.prevDocumentList)
+      debugger
+    }
   }
 
   getUploadedImages(){
@@ -52,6 +57,8 @@ export class UploadImageComponent implements OnInit {
 
     const str = files[0].name;
     this.docs = files;
+    console.log(this.docs)
+    debugger
     const acceptedFormats = this.docs[0].type.split("/")[1];
     const acceptedFormatsArr = ["png", "jpg", "jpeg"];
 
@@ -64,14 +71,36 @@ export class UploadImageComponent implements OnInit {
       this.countUploads ? this.countUploads++ : this.countUploads;
     }
 
-    if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
-      this.uploadDocs();
-      this.errorMessage = '';
-    }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 5){
-      this.errorMessage = "You cannot upload more than 5 images."
-    }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
-      this.errorMessage = "Filename should not include special characters";
+    if(this.data.type !== 'rfq'){
+      if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
+        this.uploadDocs();
+        this.errorMessage = '';
+      }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 5){
+        this.errorMessage = "You cannot upload more than 5 images."
+      }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
+        this.errorMessage = "Filename should not include special characters";
+      }
+    }else{
+      if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 3 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
+
+        if(this.prevDocumentList && this.prevDocumentList.length){
+          this.prevDocumentList.forEach(file => {
+            if(file.documentDesc !== this.docs[0].name){
+              this.uploadDocs();
+            }
+          });
+        }else{
+          this.uploadDocs();
+        }
+
+        this.errorMessage = '';
+      }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 3){
+        this.errorMessage = "You cannot upload more than 3 images."
+      }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
+        this.errorMessage = "Filename should not include special characters";
+      }
     }
+    
   }
 
   uploadDocs() {
@@ -87,7 +116,7 @@ export class UploadImageComponent implements OnInit {
         this.documentsName.push(this.subFileName);
 
         this.documentList.push({
-          "documentUrl": res.data.fileName,
+          "documentShortUrl": res.data.fileName,
           "documentDesc": this.subFileName,
           "documentId": 0,
           "documentThumbnailUrl": res.data.ThumbnailUrl,
@@ -103,7 +132,7 @@ export class UploadImageComponent implements OnInit {
     if(this.prevDocumentList && this.prevDocumentList.length){
       this.prevDocumentList.forEach(img => {
         this.prevDocsObj.push({
-          "documentUrl": img.documentShortUrl,
+          "documentShortUrl": img.documentShortUrl,
           "documentDesc": img.documentDesc,
           "documentId": img.documentId,
           "documentThumbnailUrl": img.documentThumbnailUrl,
@@ -113,14 +142,18 @@ export class UploadImageComponent implements OnInit {
     }
 
     this.finalImagesList = {
-      "projectId": this.projectId,
-      "materialId": this.materialId,
+      "projectId": this.data.type === 'rfq' ? this.data.selectedMaterial.projectId : this.projectId,
+      "materialId": this.data.type === 'rfq' ? this.data.selectedMaterial.materialId : this.materialId,
       "documentsList": [...this.prevDocsObj, ...this.documentList],
     }
     
-    return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {
-      this.dialogRef.close('addImages');
-    });
+    if(this.data.type !== 'rfq'){
+      return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {
+        this.dialogRef.close('addImages');
+      });
+    }else{
+      this.dialogRef.close(this.finalImagesList);
+    }
   }
   
   removeImage(url: string){   

@@ -292,6 +292,11 @@ export class RfqProjectMaterialsComponent implements OnInit {
                       const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
                       fullfilmentDate = year + "-" + month + "-" + day;
                     }
+
+                    if(mat.documentList === null || mat.documentList === []){
+                      mat.documentList = element.material.documentsList;
+                    }
+
                     projectMaterial.push({ ...mat, fullfilmentDate });
                     materialAddedFlag = true;
                   }
@@ -303,7 +308,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
               }
             })
           } else {
-            projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null });
+            projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null, documentList: element.material.documentsList ? element.material.documentsList : null });
           }
         }
       })

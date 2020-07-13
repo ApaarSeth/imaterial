@@ -149,5 +149,6 @@ export const API = {
   UPLOAD_IMAGE: 'material/addImages',
   VIEW_IMAGES: (projectId, materialId) => `material/getImages/${projectId}/${materialId}`,
   DOWNLOAD_IMAGE: 'documents/download',
-  PUSHNOTIFICATIONDATA: 'user/web/notification/savetoken'
+  PUSHNOTIFICATIONDATA: 'user/web/notification/savetoken',
+  GET_ALL_RFQ_IMAGES: (rfqId, materialId) => `rfq/getImages/${rfqId}/${materialId}`,
 };
