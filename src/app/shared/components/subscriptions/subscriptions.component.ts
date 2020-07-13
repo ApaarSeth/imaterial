@@ -4,9 +4,6 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/userDashboard/user.service';
 import { UserDetails } from '../../models/user-details';
 import { SubscriptionPaymentsService } from '../../services/subscriptions-payments.service';
-import { SubscriptionsPayments } from '../../../shared/models/subscription-payments';
-import { Utils } from '../../helpers/utils';
-import { FormBuilder } from '@angular/forms';
 import { API } from '../../constants/configuration-constants';
 import { CommonService } from '../../services/commonService';
 
@@ -29,8 +26,7 @@ export class SubscriptionsComponent implements OnInit {
         private _router: Router,
         private _userService: UserService,
         private subsPayService: SubscriptionPaymentsService,
-        private commonService: CommonService,
-        private formBuilder: FormBuilder
+        private commonService: CommonService
     ) { }
 
     ngOnInit() {
@@ -57,16 +53,23 @@ export class SubscriptionsComponent implements OnInit {
         });
     }
 
-    unsubscribePlan() {
-
+    unsubscribePlan(id: number) {
+        const obj = {
+            subscriptionId: id
+        };
+        this.subsPayService.postSubscriptionUnsubscribe(obj).then(res => {
+            if (res.data) {
+                this._router.navigate([ "/dashboard" ])
+            }
+        });
     }
 
-    choosePlan(type, planId: number, offerId: string, price: number, planEncryptId: string, planPricingEncryptId: string) {
+    choosePlan(type, planId: number, offerId: number, price: number, planEncryptId: string, planPricingEncryptId: string) {
 
         let obj = {
             planId: planId,
             planPricingId: price,
-            offerId: null,
+            offerId: offerId,
             isTrial: 0
         };
 
@@ -74,23 +77,22 @@ export class SubscriptionsComponent implements OnInit {
 
         this.subsPayService.postSubscriptionPaymentInitiate(obj).then(res => {
 
-            let data = {
-                customerEmail: this.users.email,
-                customerName: this.users.firstName + ' ' + this.users.lastName,
-                customer_identifier: this.users.organizationId,
-                orderId: res.data.transactionId,
-                // promoCode: 'DD234Q',
-                validUpto: res.data.endDate,
-                startDt: res.data.startDate,
-                redirectUrl: res.data.redirectUrl,
-                cancelUrl: res.data.cancelUrl,
-                failureUrl: res.data.failureUrl,
-                subscriptionPlanRefId: planEncryptId,
-                subscriptionPlanPriceRefId: planPricingEncryptId,
-                serviceName: 'iMaterial'
-            };
-
             if (type === '0') {
+                let data = {
+                    customerEmail: this.users.email,
+                    customerName: this.users.firstName + ' ' + this.users.lastName,
+                    customer_identifier: this.users.organizationId,
+                    orderId: res.data.transactionId,
+                    // promoCode: 'DD234Q',
+                    validUpto: res.data.endDate,
+                    startDt: res.data.startDate,
+                    redirectUrl: res.data.redirectUrl,
+                    cancelUrl: res.data.cancelUrl,
+                    failureUrl: res.data.failureUrl,
+                    subscriptionPlanRefId: planEncryptId,
+                    subscriptionPlanPriceRefId: planPricingEncryptId,
+                    serviceName: 'iMaterial'
+                };
                 this.postToExternalSite(data);
             } else {
                 if (res.data) {
@@ -125,6 +127,11 @@ export class SubscriptionsComponent implements OnInit {
         hiddenField.setAttribute('value', value);
         hiddenField.setAttribute('type', 'hidden');
         return hiddenField;
+    }
+
+    showAllFeatures(event) {
+        event.currentTarget.children[ 0 ].children[ 1 ].innerHTML === 'keyboard_arrow_down' ? event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_up' : event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_down';
+        event.currentTarget.nextElementSibling.classList.toggle('f-hide');
     }
 
 }
