@@ -233,3 +233,25 @@
 .supplier-company label{
   margin-bottom: 0;
 }
+
+.rfq-final-step, .rfq-view-step{
+  width: 100%;
+  tr.mat-footer-row, tr.mat-row{
+    height: 66px;
+  }
+
+  .images-lists .attached-image:first-child {
+    top: -28px;
+    left: 80px;
+  }
+
+  .images-lists .attached-image:nth-child(2) {
+    left: 86px;
+    top: -23px;
+  }
+
+  .images-lists .attached-image:nth-child(3) {
+    left: 92px;
+    top: -17px;
+  }
+}

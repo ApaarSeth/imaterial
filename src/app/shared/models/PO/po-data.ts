@@ -290,7 +290,8 @@ export interface PoPayementDetail {
 }
 
 export interface ImageList {
-  documentUrl: string;
+  documentUrl?: string;
+  documentShortUrl: string;
   documentType?: string;
   documentDesc: string;
   documentId: number;
