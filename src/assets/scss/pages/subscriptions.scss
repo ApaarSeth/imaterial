@@ -195,6 +195,13 @@
 
 @media(max-width: 599px){
 
+    .subs-data{
+        .mat-tab-label{
+            font-size: 12px;
+            padding: 0 10px !important;
+        }
+    }
+
     .redirections{
         h2{
             font-size: 26px;
@@ -215,4 +222,9 @@
 .mlr-140px{
     margin-left: 140px;
     margin-right: 140px;
+}
+
+.f-hide{
+    height:0%;
+    display: none !important;
 }

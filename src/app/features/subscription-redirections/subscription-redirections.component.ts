@@ -27,7 +27,7 @@ export class SubscriptionRedirectionsComponent implements OnInit {
     }
 
     redirectPageToDashboard() {
-        setTimeout(_ => { this.router.navigate([ "/dashboard" ]) }, 10000);
+        setTimeout(_ => { this.router.navigate([ "/dashboard" ]) }, 20000);
     }
 
 }
