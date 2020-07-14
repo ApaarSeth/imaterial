@@ -85,8 +85,8 @@
         <small *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Enter Valid Email</small>
         <small
           *ngIf="
-            !emailVerified &&
             emailEnteredCounter &&
+            !emailVerified &&
             !signupForm.controls['email'].hasError('required') &&
             !signupForm.controls['email'].hasError('pattern') &&
             signupForm.controls['email'].touched
