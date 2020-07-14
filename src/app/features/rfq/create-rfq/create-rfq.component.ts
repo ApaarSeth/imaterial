@@ -35,8 +35,8 @@ export class CreateRfqComponent implements OnInit {
   updatedRfqMaterial: AddRFQ;
   rfqMaterial: AddRFQ;
   stpForm: any;
-  prevIndex: any;
-  currentIndex: number;
+  prevIndex: number = 0;
+  currentIndex: number = 0;
   rfqData: AddRFQ;
   finalRfq: AddRFQ;
   completed: boolean = false;
@@ -129,7 +129,9 @@ export class CreateRfqComponent implements OnInit {
   }
 
   getSupplierData(updatedRfq: AddRFQ) {
-    this.rfqMaterial = updatedRfq
+    this.rfqService.addRFQ(updatedRfq).then((res) => {
+      this.rfqMaterial = res.data as AddRFQ
+    })
   }
 
   setLocalStorage() {
@@ -175,7 +177,8 @@ export class CreateRfqComponent implements OnInit {
   }
 
   selectionChange(event) {
-    this.currentIndex = event.selectedIndex
+    this.currentIndex = event.selectedIndex;
+    this.prevIndex = event.previouslySelectedIndex;
     if (event.selectedIndex == 0) {
       if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
         setTimeout(() => {

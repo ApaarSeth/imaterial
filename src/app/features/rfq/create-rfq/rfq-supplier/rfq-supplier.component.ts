@@ -34,7 +34,7 @@ export class RfqSupplierComponent implements OnInit {
   checkedMaterialsList: AddRFQ;
   orgId: number;
 
-  rfqData: AddRFQ;
+  rfqData: AddRFQ = {} as AddRFQ;
   supplierForm: FormGroup;
   supplierCounter: number = 0;
   newAddedId: number;
@@ -49,25 +49,6 @@ export class RfqSupplierComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.rfqData = {
-      id: null,
-      status: null,
-      createdBy: null,
-      createdAt: null,
-      lastUpdatedBy: null,
-      lastUpdatedAt: null,
-      rfqId: null,
-      rfq_status: null,
-      rfqName: null,
-      dueDate: null,
-      supplierId: null,
-      supplierDetails: null,
-      rfqProjectsList: [],
-      documentsList: null,
-      terms: null,
-      rfqCurrency: null,
-    };
-
     this.orgId = Number(localStorage.getItem("orgId"));
     if (this.activatedRoute.snapshot.data.createRfq[0].data) {
       this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
@@ -220,7 +201,7 @@ export class RfqSupplierComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "600px",
-      data: this.rfqData.rfqCurrency
+      data: this.rfqData ? this.rfqData.rfqCurrency : null
     });
 
     dialogRef.afterClosed().subscribe(data => {

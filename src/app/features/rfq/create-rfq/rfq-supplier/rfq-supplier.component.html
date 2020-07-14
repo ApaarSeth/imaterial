@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null">
+<div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="rfqData && rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null">
   <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
     <span class="font-size-vary-grn color-grey">
       <img width="25px" *ngIf="rfqData.rfqCurrency.exchangeCurrencyFlag" [src]="rfqData.rfqCurrency.exchangeCurrencyFlag" />

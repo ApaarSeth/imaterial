@@ -40,6 +40,7 @@ export class AddMyMaterialComponent implements OnInit {
   materialUnit: string[]
   tradesList: orgTrades[] = [];
   filteredOption: tradeRelatedCategory[] = [];
+  searchTrade: string = ''
   // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
 
 
