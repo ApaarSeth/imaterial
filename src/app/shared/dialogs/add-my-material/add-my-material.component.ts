@@ -23,7 +23,7 @@ export interface City {
 })
 
 export class AddMyMaterialComponent implements OnInit {
-
+  searchUnit: string = '';
   roles: UserRoles;
   addMyMaterial: FormGroup;
   users: UserDetails;

@@ -44,9 +44,9 @@ export class PaymentRecordComponent implements OnInit {
         })
     }
 
-    amountCheck(paymentDetail): ValidatorFn {
+    amountCheck(paymentDetail: PoPayementDetail): ValidatorFn {
         return (control: AbstractControl): { [key: string]: boolean } | null => {
-            let checkValue = paymentDetail.poAmount - paymentDetail.paymentRecived;
+            let checkValue = paymentDetail.totalPoAmount - paymentDetail.paymentRecived;
             if (checkValue < control.value) {
                 this._snackBar.open(
                     "Cannot add amount greater than " + checkValue,

@@ -11,7 +11,7 @@ import { MyMaterialService } from 'src/app/shared/services/myMaterial.service';
 	templateUrl: './myMaterialTab.component.html'
 })
 export class MyMaterialTabComponent implements OnInit {
-	selectedCategory: categoryNestedLevel[];
+	selectedCategory: categoryNestedLevel[] = [];
 	isSearching: boolean;
 
 	constructor(private snackBar: MatSnackBar, private materialService: MyMaterialService, private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }

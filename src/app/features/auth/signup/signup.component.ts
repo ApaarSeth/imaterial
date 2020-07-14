@@ -142,6 +142,7 @@ export class SignupComponent implements OnInit {
     });
   }
 
+
   organisationTypes: OrganisationType[] = [
     { value: "Contractor", viewValue: "Contractor" },
     { value: "Supplier", viewValue: "Supplier" }
@@ -158,7 +159,7 @@ export class SignupComponent implements OnInit {
       otp: []
     });
 
-    this.signupForm.get('email').valueChanges.subscribe(data => {
+    this.signupForm.get('email').valueChanges.pipe(debounceTime(30)).subscribe(data => {
       this.verifyEmail(data)
     })
     this.signupForm.get('phone').valueChanges.subscribe(data => {
@@ -310,15 +311,16 @@ export class SignupComponent implements OnInit {
   verifyEmail(email) {
     if (email.match(FieldRegExConst.EMAIL)) {
       this.signInSignupService.verifyEMAIL(this.signupForm.value.email).then(res => {
-        if (res) {
-          this.emailEnteredCounter++;
+        if (res && res.data) {
           this.emailVerified = res.data;
+          this.emailEnteredCounter++;
           this.emailMessage = res.message;
         }
+        else {
+          this.emailEnteredCounter++;
+          this.emailVerified = false;
+        }
       });
-    } else {
-      this.emailEnteredCounter++;
-      this.emailVerified = false;
     }
   }
 }
