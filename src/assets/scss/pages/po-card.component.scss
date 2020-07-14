@@ -135,14 +135,12 @@ input:not(:checked) ~ label {
     position: absolute;
     padding-right: 0;
 }
-/* Click + hover color */
-input:checked ~ label,
-label:hover, label:hover ~ label { color: #f47721;  }
 
-/* Hover highlights */
-input:checked + label:hover, input:checked ~ label:hover,
-input:checked ~ label:hover ~ label,
-label:hover ~ input:checked ~ label { color: #f47721;  }
+.rfq-rates .rate > input:checked ~ label,
+.rfq-rates .rate > label:hover, .rfq-rates .rate > label:hover ~ label { color: #f47721;  }
+.rfq-rates .rate > input:checked + label:hover, .rfq-rates .rate > input:checked ~ label:hover,
+.rfq-rates .rate > input:checked ~ label:hover ~ label,
+.rfq-rates .rate > label:hover ~ input:checked ~ label { color: #f47721;  }
 
 .rating-value{
     margin: -6px 0 0 10px;
