@@ -16,6 +16,7 @@ export class UploadImageComponent implements OnInit {
   docs: FileList;
   documentList: ImageList[] = [];
   prevDocumentList: ImageDocsLists[] = [];
+  contractorImagesList: ImageDocsLists[] = [];
   documentsName: string[] = [];
   filesRemoved: boolean;
   projectId: number;
@@ -27,6 +28,7 @@ export class UploadImageComponent implements OnInit {
   prevDocsObj: ImageList[] = [];
   finalImagesList: any;
   countUploads: number;
+  rfqId: number;
 
   constructor(
     private dialogRef: MatDialogRef<UploadImageComponent>,
@@ -36,20 +38,28 @@ export class UploadImageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(this.data.type !== 'rfq'){
+    if(this.data.type === 'rfq'){
+      this.prevDocumentList = this.data.selectedMaterial.documentList;
+    }else if(this.data.type === 'supplier'){
+      this.rfqId = Number(this.data.rfqId);
+      this.materialId = this.data.selectedMaterial.materialId;
+      this.getContractorImages();
+    }else{
       this.projectId = this.data.projectId;
       this.materialId = this.data.materialId;
       this.getUploadedImages();
-    }else{
-      this.prevDocumentList = this.data.selectedMaterial.documentList;
-      console.log(this.prevDocumentList)
-      debugger
     }
   }
 
   getUploadedImages(){
     this._uploadImageService.getSelectedImages(this.projectId, this.materialId).then(res => {
       this.prevDocumentList = res.data;
+    })
+  }
+
+  getContractorImages(){
+    this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
+      this.contractorImagesList = res.data;
     })
   }
 
@@ -71,16 +81,7 @@ export class UploadImageComponent implements OnInit {
       this.countUploads ? this.countUploads++ : this.countUploads;
     }
 
-    if(this.data.type !== 'rfq'){
-      if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
-        this.uploadDocs();
-        this.errorMessage = '';
-      }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 5){
-        this.errorMessage = "You cannot upload more than 5 images."
-      }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
-        this.errorMessage = "Filename should not include special characters";
-      }
-    }else{
+    if(this.data.type === 'rfq' || this.data.type === 'supplier'){
       if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 3 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
 
         if(this.prevDocumentList && this.prevDocumentList.length){
@@ -96,6 +97,15 @@ export class UploadImageComponent implements OnInit {
         this.errorMessage = '';
       }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 3){
         this.errorMessage = "You cannot upload more than 3 images."
+      }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
+        this.errorMessage = "Filename should not include special characters";
+      }
+    }else{
+      if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
+        this.uploadDocs();
+        this.errorMessage = '';
+      }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 5){
+        this.errorMessage = "You cannot upload more than 5 images."
       }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
         this.errorMessage = "Filename should not include special characters";
       }
