@@ -21,7 +21,6 @@ import { RouterModule } from '@angular/router';
         LayoutModule,
         SharedComponentsModule,
         AppSharedModule,
-        CommonModule,
         RouterModule
     ]
 })
