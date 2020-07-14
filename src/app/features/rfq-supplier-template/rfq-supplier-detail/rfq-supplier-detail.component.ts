@@ -15,6 +15,8 @@ import { RFQDocumentsComponent } from '../rfq-bid-documents/rfq-bid-documents.co
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
+import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 
 interface prevTaxCost {
   dt: any;
@@ -520,6 +522,48 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
   getSum(total, num) {
     return total + num;
+  }
+
+  uploadImage(selectedMaterial, type) {
+    const dialogRef = this.dialog.open(UploadImageComponent, {
+      disableClose: true,
+      width: "60vw",
+      panelClass: 'upload-image-modal',
+      data: {
+        selectedMaterial,
+        type,
+        rfqId: this.activatedRoute.snapshot.params[ "rfqId" ]
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== null) {
+        console.log(result);
+      }
+    });
+  }
+
+  /**
+   * function will call to open view image modal
+   * @param rfqId, materialId, type
+   */
+  viewAllImages(materialId) {
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        rfqId: this.activatedRoute.snapshot.params[ "rfqId" ],
+        materialId,
+        type: 'supplier'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 
 }
