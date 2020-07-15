@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
+import { CommonService } from '../../services/commonService';
 
 @Component({
     selector: "view-rating",
@@ -11,11 +12,16 @@ export class ViewRatingComponent implements OnInit {
     @Input('ratings') ratings: number;
     @Input('supplierId') supplierId: number;
 
-    constructor() { }
+    isMobile: boolean;
+
+    constructor(
+        private commonService: CommonService
+    ) { }
 
     ngOnInit() {
-        console.log(this.ratings)
-        console.log(this.supplierId);
-        
+        this.isMobile = this.commonService.isMobile().matches;
+        // console.log(this.ratings)
+        // console.log(this.supplierId);
+
     }
 }
