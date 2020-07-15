@@ -23,7 +23,7 @@ import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image
   templateUrl: "./review.component.html"
 })
 export class ReviewComponent implements OnInit {
-  displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Makes", "Attached Images"];
+  displayedColumns: string[] = [ "Material Name", "Required Date", "Quantity", "Makes", "Attached Images" ];
   finalRfq: AddRFQ;
   selectedSuppliersList: Suppliers[];
   documentList: DocumentList[];
@@ -33,6 +33,7 @@ export class ReviewComponent implements OnInit {
   checkedList: RfqMaterialResponse[];
   rfqId: number;
   minDate = new Date();
+  isMobile: boolean;
   public RfqPreviewTour: GuidedTour = {
     tourId: 'rfq-preview-tour',
     useOrb: false,
@@ -73,10 +74,11 @@ export class ReviewComponent implements OnInit {
     // this.checkedList = this.finalRfq.rfqProjectsList;
     // this.selectedSuppliersList = this.finalRfq.supplierDetails;
 
+    this.isMobile = this.commonService.isMobile().matches;
     this.userId = Number(localStorage.getItem("userId"));
 
     this.activatedRoute.params.subscribe(params => {
-      this.rfqId = params['rfqId']
+      this.rfqId = params[ 'rfqId' ]
       if (this.rfqId) {
         this.rfqService.getDraftRfq(this.rfqId).then(res => {
           this.finalRfq = res.data;
@@ -112,8 +114,8 @@ export class ReviewComponent implements OnInit {
   }
   initForm() {
     this.form = this.formBuilder.group({
-      rfqName: ["", Validators.required],
-      dueDate: ["", Validators.required]
+      rfqName: [ "", Validators.required ],
+      dueDate: [ "", Validators.required ]
     });
   }
 
@@ -171,7 +173,7 @@ export class ReviewComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.statusCode === 201) {
-          this.router.navigate(["rfq"]);
+          this.router.navigate([ "rfq" ]);
         }
       });
     }
