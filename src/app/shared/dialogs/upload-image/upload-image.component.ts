@@ -17,6 +17,7 @@ export class UploadImageComponent implements OnInit {
   documentList: ImageList[] = [];
   prevDocumentList: ImageDocsLists[] = [];
   contractorImagesList: ImageDocsLists[] = [];
+  supplierContractorImages: ImageList[] | ImageDocsLists[] = [];
   documentsName: string[] = [];
   filesRemoved: boolean;
   projectId: number;
@@ -43,6 +44,7 @@ export class UploadImageComponent implements OnInit {
     }else if(this.data.type === 'supplier'){
       this.rfqId = Number(this.data.rfqId);
       this.materialId = this.data.selectedMaterial.materialId;
+      this.prevDocumentList = this.data.prevUploadedImages.documentsList ? this.data.prevUploadedImages.documentsList.filter(elem => elem.supplierId) : [];
       this.getContractorImages();
     }else{
       this.projectId = this.data.projectId;
@@ -67,8 +69,6 @@ export class UploadImageComponent implements OnInit {
 
     const str = files[0].name;
     this.docs = files;
-    console.log(this.docs)
-    debugger
     const acceptedFormats = this.docs[0].type.split("/")[1];
     const acceptedFormatsArr = ["png", "jpg", "jpeg"];
 
@@ -131,6 +131,7 @@ export class UploadImageComponent implements OnInit {
           "documentId": 0,
           "documentThumbnailUrl": res.data.ThumbnailUrl,
           "documentThumbnailShortUrl": res.data.ThumbnailFileName,
+          "documentUrl": res.data.url
         });
       })
     }
@@ -156,13 +157,23 @@ export class UploadImageComponent implements OnInit {
       "materialId": this.data.type === 'rfq' ? this.data.selectedMaterial.materialId : this.materialId,
       "documentsList": [...this.prevDocsObj, ...this.documentList],
     }
-    
-    if(this.data.type !== 'rfq'){
+
+    if(this.data.type === 'rfq'){
+      this.dialogRef.close(this.finalImagesList);
+    }else if(this.data.type === 'supplier'){
+      this.documentList.map(list => {
+        list.supplierId = Number(this.data.supplierId)
+        list.materialId = this.materialId;
+      });
+      this.supplierContractorImages = [...(this.prevDocumentList ? this.prevDocumentList : []), ...this.documentList, ...(this.contractorImagesList ? this.contractorImagesList : [])]
+
+      console.log("supplierUploadedImages", this.supplierContractorImages)
+      
+      this.dialogRef.close(this.supplierContractorImages);
+    }else{
       return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {
         this.dialogRef.close('addImages');
       });
-    }else{
-      this.dialogRef.close(this.finalImagesList);
     }
   }
   
@@ -179,7 +190,11 @@ export class UploadImageComponent implements OnInit {
   downloadImage(fileName, url){
     const data = { fileName, url }
     this._uploadImageService.downloadImage(data).then(img => {
-      var win = window.open(img.data.url, '_blank');
+      // if(this.data.type === 'supplier'){
+        // var win = window.open(img.data.fileName, '_blank');  
+      // }else{
+        var win = window.open(img.data.url, '_blank');
+      // }
       win.focus();
     });
   }
