@@ -165,14 +165,7 @@ export class RFQSupplierDetailComponent implements OnInit {
         mat.documentsList = mat.documentsList.filter(doc => doc.supplierId !== null) 
       })
     });
-
-    console.log(rfqSupplierObj);
-    debugger
-
-
-
-
-
+    
     if (this.rfqSupplierDetailList.isInternational === 1) {
       rfqSupplierObj.projectList.forEach(itm => {
         if (this.taxAndCostData.hasOwnProperty(itm.projectId)) {
