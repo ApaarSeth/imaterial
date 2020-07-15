@@ -297,7 +297,8 @@ export interface ImageList {
   documentId: number;
   documentThumbnailUrl?: string;
   documentThumbnailShortUrl?: string;
-  // imageUrl?: string;
+  supplierId?: number;
+  materialId?: number;
 }
 
 export interface ImageDocsLists{
@@ -313,4 +314,5 @@ export interface ImageDocsLists{
   ThumbnailUrl?: string;
   documentThumbnailUrl?: string;
   documentThumbnailShortUrl?: string;
+  supplierId?: number;
 }

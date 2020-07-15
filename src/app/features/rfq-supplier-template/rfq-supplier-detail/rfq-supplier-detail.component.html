@@ -138,15 +138,15 @@
                 <td class="font-size14">Required Date : {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</td>
                 
                 <!-- View image modal link -->
-                <td class="font-size14 text-center">
-                  <div *ngIf="material?.documentList?.length" class="images-lists"
+                <td class="font-size14 text-center supplier-bid-imgs">
+                  <div *ngIf="material?.documentsList?.length" class="images-lists"
                     (click)="viewAllImages(material.materialId)">
-                    <ng-container *ngFor="let img of material.documentList; let i = index">
+                    <ng-container *ngFor="let img of material.documentsList; let i = index">
                       <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
                     </ng-container>
                   </div>
       
-                  <ng-container *ngIf="!material?.documentList">
+                  <ng-container *ngIf="!material?.documentsList">
                     <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
                   </ng-container>
                 </td>

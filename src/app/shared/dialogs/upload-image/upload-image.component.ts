@@ -13,22 +13,23 @@ import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants'
 
 export class UploadImageComponent implements OnInit {
 
-  docs: FileList;
-  documentList: ImageList[] = [];
-  prevDocumentList: ImageDocsLists[] = [];
-  contractorImagesList: ImageDocsLists[] = [];
-  documentsName: string[] = [];
-  filesRemoved: boolean;
+  rfqId: number;
   projectId: number;
   materialId: number;
   subFileName: string;
   errorMessage: string;
   thumbnailImg: string;
-  successfulUploads: number = 0;
-  prevDocsObj: ImageList[] = [];
-  finalImagesList: any;
   countUploads: number;
-  rfqId: number;
+  successfulUploads: number = 0;
+  docs: FileList;
+  finalImagesList: any;
+  documentsName: string[] = [];
+  prevDocsObj: ImageList[] = [];
+  documentList: ImageList[] = [];
+  prevDocumentList: ImageDocsLists[] = [];
+  contractorImagesList: ImageDocsLists[] = [];
+  supplierContractorImages: ImageList[] | ImageDocsLists[] = [];
+  isDisplayErr: boolean;
 
   constructor(
     private dialogRef: MatDialogRef<UploadImageComponent>,
@@ -43,6 +44,7 @@ export class UploadImageComponent implements OnInit {
     }else if(this.data.type === 'supplier'){
       this.rfqId = Number(this.data.rfqId);
       this.materialId = this.data.selectedMaterial.materialId;
+      this.prevDocumentList = this.data.prevUploadedImages.documentsList ? this.data.prevUploadedImages.documentsList.filter(elem => elem.supplierId) : [];
       this.getContractorImages();
     }else{
       this.projectId = this.data.projectId;
@@ -51,26 +53,37 @@ export class UploadImageComponent implements OnInit {
     }
   }
 
+  /**
+   * @description function to get previous uploaded images for BOM, call when upload popup opens
+   */
   getUploadedImages(){
     this._uploadImageService.getSelectedImages(this.projectId, this.materialId).then(res => {
       this.prevDocumentList = res.data;
     })
   }
 
+  /**
+   * @description function to get all contractor(rfq uploaded) images, call when upload popup opens 
+   */
   getContractorImages(){
     this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
       this.contractorImagesList = res.data;
     })
   }
 
+  /**
+   * @description function calls when select a new file to upload, also checks file format, 
+   * duplicate file names not allowed, if filename have special characters then can't upload 
+   * and manage successful upload counts
+   * @param files file object of upload file
+   */
   fileUpdate(files: FileList) {
 
     const str = files[0].name;
     this.docs = files;
-    console.log(this.docs)
-    debugger
     const acceptedFormats = this.docs[0].type.split("/")[1];
     const acceptedFormatsArr = ["png", "jpg", "jpeg"];
+    this.isDisplayErr = true;
 
     if(this.countUploads){
       this.successfulUploads = 0;
@@ -79,40 +92,45 @@ export class UploadImageComponent implements OnInit {
     if((acceptedFormatsArr.indexOf(acceptedFormats) !== -1) && (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true)){
       this.successfulUploads++;
       this.countUploads ? this.countUploads++ : this.countUploads;
+      this.errorMessage = "";
+    }else{
+      this.errorMessage = "File format should be .jpg, .jpeg, .png";
     }
 
-    if(this.data.type === 'rfq' || this.data.type === 'supplier'){
-      if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 3 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
+    if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) 
+      && this.docs 
+      && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5) 
+      && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
 
-        if(this.prevDocumentList && this.prevDocumentList.length){
-          this.prevDocumentList.forEach(file => {
-            if(file.documentDesc !== this.docs[0].name){
-              this.uploadDocs();
-            }
-          });
+      if((this.prevDocumentList && this.prevDocumentList.length) || (this.documentList && this.documentList.length)){
+        
+        const prevDuplicateUploads = this.prevDocumentList.filter(file => file.documentDesc === this.docs[0].name);
+        const latestDuplicateUploads = this.documentList.filter(file => file.documentDesc === this.docs[0].name);
+
+        if((prevDuplicateUploads && prevDuplicateUploads.length > 0) || (latestDuplicateUploads && latestDuplicateUploads.length > 0)){
+          this.errorMessage = "Files with same name are not allowed";
+          this.successfulUploads--;
+          this.countUploads ? this.countUploads-- : 0;
         }else{
+          this.errorMessage = "";
           this.uploadDocs();
         }
-
+      }else{
         this.errorMessage = '';
-      }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 3){
-        this.errorMessage = "You cannot upload more than 3 images."
-      }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
-        this.errorMessage = "Filename should not include special characters";
-      }
-    }else{
-      if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) && this.docs && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= 5 && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
         this.uploadDocs();
-        this.errorMessage = '';
-      }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > 5){
-        this.errorMessage = "You cannot upload more than 5 images."
-      }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
-        this.errorMessage = "Filename should not include special characters";
       }
+
+    }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5)){
+      this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5} images.`
+    }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
+      this.errorMessage = "Filename should not include special characters";
     }
     
   }
 
+  /**
+   * @description function to upload images with valid filename and file format
+   */
   uploadDocs() {
     if (this.docs && this.docs.length) {
       const data = new FormData();
@@ -120,25 +138,30 @@ export class UploadImageComponent implements OnInit {
       this._documentUploadService.postDocumentUpload(data).then(res => {
         
         this.thumbnailImg = res.data.url;
-
         let firstName: number = res.data.fileName.indexOf("_");
         this.subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
         this.documentsName.push(this.subFileName);
 
+        // document object - created when new file uploads
         this.documentList.push({
           "documentShortUrl": res.data.fileName,
           "documentDesc": this.subFileName,
           "documentId": 0,
           "documentThumbnailUrl": res.data.ThumbnailUrl,
           "documentThumbnailShortUrl": res.data.ThumbnailFileName,
+          "documentUrl": res.data.url
         });
       })
     }
   }
 
   
+  /**
+   * @description function will call when click on Add button in upload modal
+   */
   addImage(){
     
+    // if previous uploaded images exist then create a new object prevDocsObj with all mandatory fields
     if(this.prevDocumentList && this.prevDocumentList.length){
       this.prevDocumentList.forEach(img => {
         this.prevDocsObj.push({
@@ -151,31 +174,56 @@ export class UploadImageComponent implements OnInit {
       })
     }
 
+    // final image list object - and combined both prev and new images list
     this.finalImagesList = {
       "projectId": this.data.type === 'rfq' ? this.data.selectedMaterial.projectId : this.projectId,
       "materialId": this.data.type === 'rfq' ? this.data.selectedMaterial.materialId : this.materialId,
       "documentsList": [...this.prevDocsObj, ...this.documentList],
     }
-    
-    if(this.data.type !== 'rfq'){
+
+    // conditions for rfq, supplier and bom images to upload
+    if(this.data.type === 'rfq'){
+      this.dialogRef.close(this.finalImagesList);
+    }else if(this.data.type === 'supplier'){
+      this.documentList.map(list => {
+        list.supplierId = Number(this.data.supplierId)
+        list.materialId = this.materialId;
+      });
+      this.supplierContractorImages = [...(this.prevDocumentList ? this.prevDocumentList : []), ...this.documentList, ...(this.contractorImagesList ? this.contractorImagesList : [])]      
+      this.dialogRef.close(this.supplierContractorImages);
+    }else{
       return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {
         this.dialogRef.close('addImages');
       });
-    }else{
-      this.dialogRef.close(this.finalImagesList);
     }
   }
   
+  /**
+   * @description function will execute to delete an specific image
+   * @param url image url which you wants to remove
+   */
   removeImage(url: string){   
+    // if any image removes, then error message which was displaying previously (error related to filename, file format duplicate file) should also remove
+    this.errorMessage = "";
+    this.isDisplayErr = false;
+
+    //get the length of prrevious uploads after delete a file
     if(this.prevDocumentList && this.prevDocumentList.length)
       this.prevDocumentList = this.prevDocumentList.filter(opt => opt.documentDesc !== url);
 
+    //get the length of latest uploads after delete a file
     if(this.documentList && this.documentList.length)
       this.documentList = this.documentList.filter(opt => opt.documentDesc !== url);
 
+    // after removing/deleting uploaded file, manage the successful counts by summation of prev and latest uploads
     this.countUploads = (this.prevDocumentList ? this.prevDocumentList.length : 0) + (this.documentList ? this.documentList.length : 0);
   }
 
+  /**
+   * @description function will execute to download specific image
+   * @param fileName image short url
+   * @param url image url, which you wants to download
+   */
   downloadImage(fileName, url){
     const data = { fileName, url }
     this._uploadImageService.downloadImage(data).then(img => {
@@ -184,6 +232,10 @@ export class UploadImageComponent implements OnInit {
     });
   }
   
+
+  /**
+   * @description function will call when click on close button of popup
+   */
   closeDialog() {
     this.dialogRef.close(null);
   }

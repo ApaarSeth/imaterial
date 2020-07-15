@@ -12,6 +12,7 @@ import { ImageDocsLists } from '../../models/PO/po-data';
 export class ViewImageComponent implements OnInit {
 
   selectedImages: ImageDocsLists[] = [];
+  rfqId: number;
 
   constructor(
     private dialogRef: MatDialogRef<ViewImageComponent>,
@@ -20,7 +21,18 @@ export class ViewImageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.data.type !== 'rfq' ? this.getAllImages() : this.getAllRfqImages();
+    if(this.data.type === 'rfq'){
+      this.getAllRfqImages();
+    }else if(this.data.type === 'supplier'){
+      this.rfqId = Number(this.data.rfqId);
+      this.selectedImages = this.data.displayImages.documentsList;
+      const contractorImages = this.selectedImages.filter(img => img.documentUrl === "" && img.supplierId === null);
+      if(contractorImages.length > 0){
+        this.getAllRfqImages();
+      }
+    }else{
+      this.getAllImages();
+    }
   }
 
   getAllImages(){
@@ -32,7 +44,6 @@ export class ViewImageComponent implements OnInit {
   getAllRfqImages(){
     this._imageService.getRfqUploadedImages(this.data.rfqId, this.data.materialId).then(res => {
       this.selectedImages = res.data;
-      debugger
     })
   }
 

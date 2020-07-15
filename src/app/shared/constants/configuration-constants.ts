@@ -151,4 +151,5 @@ export const API = {
   DOWNLOAD_IMAGE: 'documents/download',
   PUSHNOTIFICATIONDATA: 'user/web/notification/savetoken',
   GET_ALL_RFQ_IMAGES: (rfqId, materialId) => `rfq/getImages/${rfqId}/${materialId}`,
+  GET_SUPPLIER_IMAGES: (rfqId, materialId, supplierId) => `rfq/getImages/${rfqId}/${materialId}/${supplierId}`,
 };

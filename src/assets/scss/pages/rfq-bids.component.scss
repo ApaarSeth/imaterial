@@ -267,3 +267,30 @@
   width: 95%;
   margin-left: 38px;
 }
+
+.supplier-bid-imgs{
+
+  .images-lists {
+    .attached-image{
+      position: relative;
+    }
+
+    .attached-image:first-child {
+      top: -8px;
+      left: 0px;
+    }
+
+    .attached-image:nth-child(2) {
+      left: 6px;
+      top: -2px;
+      position: absolute;
+    }
+
+    .attached-image:nth-child(3) {
+      left: 12px;
+      top: 4px;
+      position: absolute;
+    }
+  }
+
+}
