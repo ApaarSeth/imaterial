@@ -45,6 +45,9 @@ export class AppComponent {
 
 
   ngOnInit() {
+    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
+      window.open(notification.data.url)
+    })
     this.location = window.location.href;
     this.fbPixel.load();
     if (this.location.includes('rfq-bids/supplier/') || this.location.includes('rfq-bids/after-submit/')) {
