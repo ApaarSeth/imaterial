@@ -72,7 +72,6 @@ export class RfqQuantityMakesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.generatedRfq);
     this.primaryCurrencyCode = localStorage.getItem('currencyCode')
     this.startDate = new Date();
     this.rfqData = {
@@ -309,6 +308,10 @@ export class RfqQuantityMakesComponent implements OnInit {
     });
   }
 
+  /**
+   * function will call to upload new images
+   * @param selectedMaterial, type
+   */
   uploadImage(selectedMaterial, type) {
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
@@ -316,7 +319,8 @@ export class RfqQuantityMakesComponent implements OnInit {
       panelClass: 'upload-image-modal',
       data: {
         selectedMaterial,
-        type
+        type,
+        rfqId: this.generatedRfq.rfqId
       }
     });
 
