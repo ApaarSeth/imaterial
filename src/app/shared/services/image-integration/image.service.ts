@@ -21,6 +21,10 @@ export class ImageService {
     return this.dataService.getRequest(API.GET_ALL_RFQ_IMAGES(rfqId, materialId));
   }
 
+  getSupplierUploadedImages(rfqId: number, materialId: number, supplierId: number){
+    return this.dataService.getRequest(API.GET_SUPPLIER_IMAGES(rfqId, materialId, supplierId));
+  }
+
   downloadImage(data){
     return this.dataService.getRequest(API.DOWNLOAD_IMAGE, data).then(res => res);
   }

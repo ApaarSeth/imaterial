@@ -112,6 +112,10 @@
                           </ng-container>
                         </div>
                       </span>
+
+                      <span class="mat-cell maxwidth-10">
+                        Attached Images
+                      </span>
                     </section>
 
                     <ng-container formArrayName="supplierList">
@@ -165,6 +169,20 @@
                               </ng-container>
                             </ng-container>
                           </div>
+                        </div>
+
+                        <!-- Attached Image Column individual Supplier -->
+                        <div class="mat-cell maxwidth-10">
+                          <!-- <div *ngIf="supplier?.documentList?.length" class="images-lists"
+                            (click)="viewAllImages(material.materialId)">
+                            <ng-container *ngFor="let img of supplier.documentList; let i = index">
+                              <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                            </ng-container>
+                          </div> -->
+              
+                          <ng-container *ngIf="!supplier?.documentList">
+                            <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
+                          </ng-container> 
                         </div>
                       </div>
                     </ng-container>

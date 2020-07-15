@@ -13,7 +13,7 @@
           <div class="upload-image-section">
             <app-upload #uploadRef (onFileUpdate)="fileUpdate($event)" [imageIntegration]="true" [errorMessage]="true">
             </app-upload>
-            <span class="uploaded-filename" *ngIf="subFileName && !errorMessage">{{subFileName}} has been successfully
+            <span class="uploaded-filename" *ngIf="subFileName && !errorMessage && isDisplayErr">{{subFileName}} has been successfully
               uploaded.</span>
           </div>
 
@@ -27,7 +27,7 @@
 
         <div class="col-md-6">
 
-          <p class="image-heading supplier-img-heading">Images uploaded by you</p>
+          <p class="image-heading supplier-img-heading" *ngIf="data.type === 'supplier'">Images uploaded by you</p>
 
           <!-- If previous images exists -->
           <ng-container *ngIf="prevDocumentList?.length">
@@ -57,8 +57,10 @@
 
             <div class="image-actions d-flex align-items-center">
               <img src="assets/images/delete-button.png" class="mr-2 cursor-pointer" (click)="removeImage(file.documentDesc)" />
+              <!-- <img src="assets/images/download-po.png" class="orange-text cursor-pointer"
+                (click)="downloadImage(file.documentUrl, file.imageUrl)" /> -->
               <img src="assets/images/download-po.png" class="orange-text cursor-pointer"
-                (click)="downloadImage(file.documentUrl, file.imageUrl)" />
+                (click)="downloadImage(file.documentShortUrl, file.documentUrl)" />
             </div>
 
           </div>
@@ -68,7 +70,7 @@
             <div class="upload-image-info mb-3">
               <hr/>
               <p class="image-heading">Images uploaded by contractor</p>
-              <div *ngFor="let file of contractorImagesList; let i = index" class="d-flex align-items-center justify-content-between">
+              <div *ngFor="let file of contractorImagesList; let i = index" class="d-flex align-items-center justify-content-between mb-2">
                 <div class="image-info d-flex align-items-center">
                   <img [src]="file.documentThumbnailUrl" alt="" class="img-fluid thumbnail-img">
                   <span class="ml-2">{{ file.documentDesc }}</span>

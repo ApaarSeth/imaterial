@@ -16,6 +16,7 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShowSupplierRemarksandDocs } from 'src/app/shared/dialogs/show-supplier-remarks-documents/show-supplier-remarks-documents.component';
 import { ProjectItemComponent } from 'src/app/shared/components/project-item/project-item.component';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 
 @Component({
   selector: "app-rfq-bids",
@@ -259,4 +260,27 @@ export class RfqBidsComponent implements OnInit {
       .toPromise()
       .then(result => { });
   }
+
+  /**
+   * function will call to open view image modal
+   * @param rfqId, materialId, type
+   */
+  // viewAllImages(materialId) {
+  //   const dialogRef = this.dialog.open(ViewImageComponent, {
+  //     disableClose: true,
+  //     width: "500px",
+  //     panelClass: 'view-image-modal',
+  //     data: {
+  //       rfqId: this.generatedRfq.rfqId,
+  //       materialId,
+  //       type: 'bid'
+  //     }
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       console.log(result);
+  //     }
+  //   });
+  // }
 }
