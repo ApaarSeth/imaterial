@@ -3,17 +3,18 @@
     <div class="col-xs-12">
       <app-top-header [menu]="menu"></app-top-header>
     </div>
-    <div class="col-sm-12 blue-background-color" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false" fxShow="true" *ngIf="role">
+    
+    <!-- <div class="col-sm-2 blue-background-color" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false" fxShow="true" *ngIf="role">
       <ng-container *ngFor="let selectedHeader of headerConst">
         <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]">
-          <button [class.active]="buttonName === selectedHeader.name" class="color-white" mat-button>
+          <button [class.active]="buttonName === selectedHeader.name" class="color-white header-links" mat-button>
             {{selectedHeader.name}}
           </button>
         </a>
       </ng-container>
-    </div>
-    <div class="col-sm-12 p-t-0 p-b-0 p-l-0 p-r-0">
+    </div> -->
+    <!-- <div class="col-sm-12 p-t-0 p-b-0 p-l-0 p-r-0">
       <app-breadcrumb></app-breadcrumb>
-    </div>
+    </div> -->
   </div>
 </div>

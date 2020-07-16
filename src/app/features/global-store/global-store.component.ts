@@ -17,6 +17,7 @@ export class GlobalStoreComponent implements OnInit {
   materialDataLength: number;
   projectDataLength: number;
   userId: number;
+  sidebarNav: boolean;
   isMobile: boolean;
 
   constructor(private route: ActivatedRoute,
@@ -32,6 +33,10 @@ export class GlobalStoreComponent implements OnInit {
       this.globalStoreData = data.globalData.data;
     });
     this.getNotifications();
+  }
+  
+  ngOnChanges() {
+    this.sidebarNav = Boolean(localStorage.getItem("sidebarNavigation"));
   }
 
   getNotifications() {
