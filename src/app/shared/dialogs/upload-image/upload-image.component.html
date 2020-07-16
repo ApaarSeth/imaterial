@@ -39,7 +39,7 @@
               </div>
 
               <div class="image-actions d-flex align-items-center">
-                <img src="assets/images/delete-button.png" class="mr-2 cursor-pointer" (click)="removeImage(file.documentDesc)" />
+                <img src="assets/images/delete-button.png" class="mr-3 ml-2 cursor-pointer" (click)="removeImage(file.documentDesc)" />
                 <img src="assets/images/download-po.png" class="orange-text cursor-pointer"
                   (click)="downloadImage(file.documentShortUrl, file.documentUrl)" />
               </div>
@@ -56,7 +56,7 @@
             </div>
 
             <div class="image-actions d-flex align-items-center">
-              <img src="assets/images/delete-button.png" class="mr-2 cursor-pointer" (click)="removeImage(file.documentDesc)" />
+              <img src="assets/images/delete-button.png" class="mr-3 ml-2 cursor-pointer" (click)="removeImage(file.documentDesc)" />
               <!-- <img src="assets/images/download-po.png" class="orange-text cursor-pointer"
                 (click)="downloadImage(file.documentUrl, file.imageUrl)" /> -->
               <img src="assets/images/download-po.png" class="orange-text cursor-pointer"
@@ -88,7 +88,7 @@
       </div>
 
       <p class="text-center mb-0 mt-4">
-        <button class="btn save-button" (click)="addImage()">Add</button>
+        <button class="btn save-button" [disabled]="!((documentList && documentList.length) || (prevDocumentList && prevDocumentList.length))" (click)="addImage()">Add</button>
       </p>
     </div>
 
