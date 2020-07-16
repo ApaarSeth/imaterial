@@ -73,18 +73,12 @@ export class UploadImageComponent implements OnInit {
   getContractorImages(){
     this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
       this.contractorImagesList = res.data;
-
-      // if(this.data.type === 'rfq'){
-      //   const matchedImage = res.data.filter(file => file.documentShortUrl === this.prevMatchedImage[0].documentShortUrl);
-      //   this.prevDocumentList.forEach(file => {
-      //     if(file.documentShortUrl === matchedImage[0].documentShortUrl){
-      //       file.documentUrl = matchedImage[0].documentUrl;
-      //     }
-      //   });
-      // }
     })
   }
 
+  /**
+   * @description function to get all rfq previous uploads, call when upload popup opens 
+   */
   getPrevUploadedRfqImages(){
       this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
         this.prevDocumentList = res.data;
@@ -124,8 +118,8 @@ export class UploadImageComponent implements OnInit {
 
       if((this.prevDocumentList && this.prevDocumentList.length) || (this.documentList && this.documentList.length)){
         
-        const prevDuplicateUploads = this.prevDocumentList.filter(file => file.documentDesc === this.docs[0].name);
-        const latestDuplicateUploads = this.documentList.filter(file => file.documentDesc === this.docs[0].name);
+        const prevDuplicateUploads = (this.prevDocumentList && this.prevDocumentList.length) ? this.prevDocumentList.filter(file => file.documentDesc === this.docs[0].name) : [];
+        const latestDuplicateUploads = (this.documentList && this.documentList.length) ? this.documentList.filter(file => file.documentDesc === this.docs[0].name) : [];
 
         if((prevDuplicateUploads && prevDuplicateUploads.length > 0) || (latestDuplicateUploads && latestDuplicateUploads.length > 0)){
           this.errorMessage = "Files with same name are not allowed";
@@ -245,21 +239,6 @@ export class UploadImageComponent implements OnInit {
    * @param url image url, which you wants to download
    */
   downloadImage(fileName, url){
-
-    // this.prevMatchedImage = this.prevDocumentList.filter(file => file.documentShortUrl === fileName);
-
-    // if(this.data.type === 'rfq' && (this.prevMatchedImage && this.prevMatchedImage.length)){
-    //   this.rfqId = this.data.rfqId;
-    //   this.materialId = this.data.selectedMaterial.materialId;
-    //   this.getContractorImages();
-    //   url = this.prevDocumentList.filter(file => {
-    //     if(file.documentShortUrl === this.prevMatchedImage[0].documentShortUrl){
-    //       return file.documentUrl;
-    //     }
-    //   });
-    //   console.log(url);
-    // }
-    
     const data = { fileName, url }
     this._uploadImageService.downloadImage(data).then(img => {
       var win = window.open(img.data.url, '_blank');
