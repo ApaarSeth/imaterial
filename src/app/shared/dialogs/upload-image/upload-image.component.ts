@@ -103,7 +103,7 @@ export class UploadImageComponent implements OnInit {
       this.successfulUploads = 0;
     }
 
-    if((acceptedFormatsArr.indexOf(acceptedFormats) !== -1) && (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true)){
+    if((acceptedFormatsArr.indexOf(acceptedFormats) !== -1) && (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false)){
       this.successfulUploads++;
       this.countUploads ? this.countUploads++ : this.countUploads;
       this.errorMessage = "";
@@ -111,7 +111,7 @@ export class UploadImageComponent implements OnInit {
       this.errorMessage = "File format should be .jpg, .jpeg, .png";
     }
 
-    if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) 
+    if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false) 
       && this.docs 
       && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5) 
       && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
@@ -136,7 +136,7 @@ export class UploadImageComponent implements OnInit {
 
     }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5)){
       this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5} images.`
-    }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false){
+    }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true){
       this.errorMessage = "Filename should not include special characters";
     }
     
