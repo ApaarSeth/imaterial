@@ -64,7 +64,8 @@ export class SigninComponent implements OnInit {
   callingCode: string;
 
   ngOnInit() {
-    this.countryList = this.activatedRoute.snapshot.data.countryList;
+    // this.countryList = this.activatedRoute.snapshot.data.countryList;
+    this.countryList = this.actualCountryList;
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
@@ -156,9 +157,6 @@ export class SigninComponent implements OnInit {
 
   subscribeNotification() {
     this.webNotificationService.subscribeToNotification();
-    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
-      window.open(notification.data.url)
-    })
   }
 
   /**

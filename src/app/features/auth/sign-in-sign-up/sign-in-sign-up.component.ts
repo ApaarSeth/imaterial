@@ -58,30 +58,27 @@ export class SignInSignUpComponent implements OnInit {
       this.uniqueCode = param["uniqueCode"];
       this.index = this.uniqueCode ? 1 : 0;
     });
-    //   Promise.all([this.visitorsService.getGEOLocation(), this.commonService.getCountry()]).then(res => {
-    //     this.callingCode = res[0]['countryCode'] === 'IN' ? '+91' : 'null';
-    //     this.countryCode = res[0]['countryCode']
-    //     localStorage.setItem('countryCode', this.countryCode)
-    //     localStorage.setItem('callingCode', this.callingCode)
-    //     this.countryList = res[1]['data']
-    //   }).catch(err => {
-    //     this.fallBackData()
-    //   })
-    // }
-    this.callingCode = 'null';
-    this.countryCode = 'US'
-    localStorage.setItem('countryCode', this.countryCode)
-    localStorage.setItem('callingCode', this.callingCode)
-    // fallBackData() {
-    //   localStorage.setItem('callingCode', "+91");
-    //   localStorage.setItem('countryCode', 'IN')
-    //   this.callingCode = "+91";
-    //   this.countryCode = "IN";
-    //   this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true }).then(res => {
-    //     if (res.data) {
-    //       this.countryList = res.data;
-    //     }
-    //   })
+    Promise.all([this.visitorsService.getGEOLocation(), this.commonService.getCountry()]).then(res => {
+      this.callingCode = res[0]['countryCode'] === 'IN' ? '+91' : 'null';
+      this.countryCode = res[0]['countryCode']
+      localStorage.setItem('countryCode', this.countryCode)
+      localStorage.setItem('callingCode', this.callingCode)
+      this.countryList = res[1]['data']
+    }).catch(err => {
+      this.fallBackData()
+    })
+  }
+
+  fallBackData() {
+    localStorage.setItem('callingCode', "+91");
+    localStorage.setItem('countryCode', 'IN')
+    this.callingCode = "+91";
+    this.countryCode = "IN";
+    this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true }).then(res => {
+      if (res.data) {
+        this.countryList = res.data;
+      }
+    })
   }
 
   tabChanged(event) {

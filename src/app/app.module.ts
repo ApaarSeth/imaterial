@@ -98,6 +98,6 @@ import { environment } from '../environments/environment';
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
     TaxCostService
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

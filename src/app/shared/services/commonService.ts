@@ -117,7 +117,7 @@ export class CommonService {
 
   getPincodeInternational(pin: number, cId: number) {
     return this.dataService
-      .getRequest(API.GETCITYANDSTATEBYCOUNTRY(pin, cId))
+      .getRequest(API.GETCITYANDSTATEBYCOUNTRY(pin, cId), null, { skipLoader: true })
       .then(res => {
         return res;
       });
