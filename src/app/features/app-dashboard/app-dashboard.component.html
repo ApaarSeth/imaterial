@@ -207,7 +207,7 @@
                             <mat-icon>search</mat-icon>
                           </button>
                         </div>
-                        <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:'projectName'"
+                        <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']"
                           [value]="project">{{ project.projectName }} </mat-option>
                       </mat-select>
                     </mat-form-field>

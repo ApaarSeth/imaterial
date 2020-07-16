@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { DocumentUploadService } from '../../services/document-download/document-download.service';
 import { ImageService } from '../../services/image-integration/image.service';
 import { ImageDocsLists } from '../../models/PO/po-data';
 
@@ -30,6 +29,8 @@ export class ViewImageComponent implements OnInit {
       if(contractorImages.length > 0){
         this.getAllRfqImages();
       }
+    }else if(this.data.type === 'bid'){
+      this.getAllSupplierImages();
     }else{
       this.getAllImages();
     }
@@ -43,6 +44,12 @@ export class ViewImageComponent implements OnInit {
 
   getAllRfqImages(){
     this._imageService.getRfqUploadedImages(this.data.rfqId, this.data.materialId).then(res => {
+      this.selectedImages = res.data;
+    })
+  }
+
+  getAllSupplierImages(){
+    this._imageService.getSupplierUploadedImages(this.data.rfqId, this.data.materialId, this.data.supplierId).then(res => {
       this.selectedImages = res.data;
     })
   }

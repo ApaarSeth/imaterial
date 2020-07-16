@@ -27,9 +27,11 @@ export class UploadImageComponent implements OnInit {
   prevDocsObj: ImageList[] = [];
   documentList: ImageList[] = [];
   prevDocumentList: ImageDocsLists[] = [];
+  updatedDownloadList: ImageDocsLists[] = [];
   contractorImagesList: ImageDocsLists[] = [];
   supplierContractorImages: ImageList[] | ImageDocsLists[] = [];
   isDisplayErr: boolean;
+  prevMatchedImage: ImageDocsLists[];
 
   constructor(
     private dialogRef: MatDialogRef<UploadImageComponent>,
@@ -40,7 +42,10 @@ export class UploadImageComponent implements OnInit {
 
   ngOnInit() {
     if(this.data.type === 'rfq'){
-      this.prevDocumentList = this.data.selectedMaterial.documentList;
+      this.rfqId = this.data.rfqId;
+      this.materialId = this.data.selectedMaterial.materialId;
+      this.getPrevUploadedRfqImages();
+      // this.prevDocumentList = this.data.selectedMaterial.documentList;
     }else if(this.data.type === 'supplier'){
       this.rfqId = Number(this.data.rfqId);
       this.materialId = this.data.selectedMaterial.materialId;
@@ -69,6 +74,15 @@ export class UploadImageComponent implements OnInit {
     this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
       this.contractorImagesList = res.data;
     })
+  }
+
+  /**
+   * @description function to get all rfq previous uploads, call when upload popup opens 
+   */
+  getPrevUploadedRfqImages(){
+      this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
+        this.prevDocumentList = res.data;
+      });
   }
 
   /**
@@ -104,8 +118,8 @@ export class UploadImageComponent implements OnInit {
 
       if((this.prevDocumentList && this.prevDocumentList.length) || (this.documentList && this.documentList.length)){
         
-        const prevDuplicateUploads = this.prevDocumentList.filter(file => file.documentDesc === this.docs[0].name);
-        const latestDuplicateUploads = this.documentList.filter(file => file.documentDesc === this.docs[0].name);
+        const prevDuplicateUploads = (this.prevDocumentList && this.prevDocumentList.length) ? this.prevDocumentList.filter(file => file.documentDesc === this.docs[0].name) : [];
+        const latestDuplicateUploads = (this.documentList && this.documentList.length) ? this.documentList.filter(file => file.documentDesc === this.docs[0].name) : [];
 
         if((prevDuplicateUploads && prevDuplicateUploads.length > 0) || (latestDuplicateUploads && latestDuplicateUploads.length > 0)){
           this.errorMessage = "Files with same name are not allowed";

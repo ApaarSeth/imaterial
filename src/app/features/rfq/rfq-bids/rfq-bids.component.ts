@@ -265,22 +265,23 @@ export class RfqBidsComponent implements OnInit {
    * function will call to open view image modal
    * @param rfqId, materialId, type
    */
-  // viewAllImages(materialId) {
-  //   const dialogRef = this.dialog.open(ViewImageComponent, {
-  //     disableClose: true,
-  //     width: "500px",
-  //     panelClass: 'view-image-modal',
-  //     data: {
-  //       rfqId: this.generatedRfq.rfqId,
-  //       materialId,
-  //       type: 'bid'
-  //     }
-  //   });
+  viewAllImages(materialId, supplierId) {
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        rfqId: this.rfqId,
+        materialId,
+        supplierId,
+        type: 'bid'
+      }
+    });
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       console.log(result);
-  //     }
-  //   });
-  // }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
 }
