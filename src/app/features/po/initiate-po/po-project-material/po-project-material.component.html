@@ -1,31 +1,27 @@
 <form [formGroup]="form">
-  <div class="row p-t-10">
-    <div class="col-xs-4 p-t-10 border-input">
-      <mat-form-field class="p-l-20 input-search-padding-zero">
-        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" [ngModelOptions]="{standalone: true}" />
+  <div class="row" [ngClass]="isMobile ? 'm-podr1' : 'p-t-10' ">
+    <div class="col-xs-6 col-sm-4 p-t-10 border-input m-itm" [ngClass]="isMobile ? 'm-srch' : '' ">
+      <mat-form-field class="input-search-padding-zero" [ngClass]="isMobile ? 'pl-0' : 'p-l-20' ">
+        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial"
+          [ngModelOptions]="{standalone: true}" />
         <button mat-button matSuffix mat-icon-button>
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field>
     </div>
-    <div class="col-sm-4 text-right">
+    <div class="col-xs-6 col-sm-4 text-right m-itm" [ngClass]="isMobile ? 'm-srch mtpd-2px' : '' ">
       <mat-form-field class="border-select select-project">
-        <mat-select formControlName="selectedProject" placeholder="Search project Name" (selectionChange)="choosenProject($event)">
+        <mat-select formControlName="selectedProject" placeholder="Search project Name"
+          (selectionChange)="choosenProject($event)">
           <div class="display-flex">
-            <input
-              class="p-l-10 p-b-5"
-              matInput
-              type="search"
-              placeholder="Search project Name"
-              [(ngModel)]="searchText"
-              [ngModelOptions]="{standalone: true}"
-              (keydown)="$event.stopPropagation()"
-            />
+            <input class="p-b-5" [ngClass]="isMobile ? 'pl-0' : 'p-l-10' " matInput type="search"
+              placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"
+              (keydown)="$event.stopPropagation()" />
             <button mat-button matSuffix mat-icon-button>
               <mat-icon>search</mat-icon>
             </button>
           </div>
-          <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:'projectName'" [value]="project">
+          <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project">
             <span>
               {{ project.projectName }}
             </span>
@@ -33,84 +29,94 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-xs-4 text-right">
+    <div class="col-md-4 col-xs-12 text-right m-itm">
       <span class="p-r-5">
-        <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
-        <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="materialAdded()" type="button">Back</button>
+        <span (click)="selectCurrency()"
+          class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select
+          Currency</span>
+        <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white"
+          (click)="materialAdded()" type="button" [ngClass]="isMobile ? 'po-sm-btn' : '' ">Back</button>
       </span>
       <span>
-        <button mat-raised-button [disabled]="!(form.valid && counter > 0)" matStepperNext (click)="materialAdded()" class="main-background-color main-button color-white">
+        <button mat-raised-button [disabled]="!(form.valid && counter > 0)" matStepperNext (click)="materialAdded()"
+          class="main-background-color main-button color-white" [ngClass]="isMobile ? 'po-sm-btn' : '' ">
           Next
         </button>
       </span>
     </div>
-  </div>
-  <div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null">
-    <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
-      <span class="font-size-vary-grn color-grey">
-        <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
-        {{ poCurrency.exchangeCurrencyName }}
+    <div class="col-xs-12 p-t-10 p-b-20 text-right m-itm" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null"
+      [ngClass]="isMobile ? 'mt-2' : '' ">
+      <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10" [ngClass]="isMobile ? 'font-size12 mcrncy' : '' ">
+        <span class="font-size-vary-grn color-grey">
+          <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
+          {{ poCurrency.exchangeCurrencyName }}
+        </span>
+        <span class="p-l-5"> = </span>
+        <span class="p-l-5 color-6d6a6a color-grey"> {{ poCurrency.exchangeValue }} </span>
+        <span class="p-l-5 color-grey">
+          <img width="25px" *ngIf="poCurrency.primaryCurrencyFlag" [src]="poCurrency.primaryCurrencyFlag" />
+          {{ poCurrency.primaryCurrencyName }}
+        </span>
       </span>
-      <span class="p-l-5"> = </span>
-      <span class="p-l-5 color-6d6a6a color-grey"> {{ poCurrency.exchangeValue }} </span>
-      <span class="p-l-5 color-grey">
-        <img width="25px" *ngIf="poCurrency.primaryCurrencyFlag" [src]="poCurrency.primaryCurrencyFlag" />
-        {{ poCurrency.primaryCurrencyName }}
-      </span>
-    </span>
+    </div>
   </div>
 </form>
 <mat-accordion *ngIf="poDetails" class="accordion-padding-zero">
   <form *ngIf="poDetails.length" [formGroup]="materialForm">
-    <mat-expansion-panel class="myPanel" [expanded]="true">
-      <mat-expansion-panel-header>
+    <mat-expansion-panel class="myPanel" [expanded]="true" [ngClass]="isMobile ? 'mt-2' : '' ">
+      <mat-expansion-panel-header [ngClass]="isMobile ? 'font-size12 pt-4 pb-4' : '' ">
         <mat-panel-title>
           {{ poDetails[0].projectName }}
           <a href="javascript:void(0)" class="main-color p-l-15">
             {{ poDetails[0].defaultAddress.addressLine1 }}
-            <span *ngIf="poDetails[0].defaultAddress.addressLine2">, {{ poDetails[0].defaultAddress.addressLine2 }}</span>
+            <span *ngIf="poDetails[0].defaultAddress.addressLine2">,
+              {{ poDetails[0].defaultAddress.addressLine2 }}</span>
             <span *ngIf="poDetails[0].defaultAddress.city">, {{ poDetails[0].defaultAddress.city }}</span>
             <span *ngIf="poDetails[0].defaultAddress.state">, {{ poDetails[0].defaultAddress.state }}</span>
             <span *ngIf="poDetails[0].defaultAddress.pinCode">, {{ poDetails[0].defaultAddress.pinCode }}</span>
           </a>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <table mat-table [dataSource]="poDetails[0].projectMaterialList | SearchPipe: searchMaterial:'materialName'" class="mat-elevation-z8 col-sm-12" formArrayName="formArr">
-        <ng-container matColumnDef="Material Name">
-          <th mat-header-cell *matHeaderCellDef>Material Name</th>
-          <td mat-cell *matCellDef="let element; let i = index" formGroupName="{{ i }}">
-            <mat-checkbox #ch [checked]="element.checked" (change)="materialChecked(ch, i, element)">
-              <div class="limited-character po-p-m" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
-            </mat-checkbox>
-          </td>
-        </ng-container>
+      <div class="example-container mat-elevation-z8">
+        <table mat-table [dataSource]="poDetails[0].projectMaterialList | SearchPipe: searchMaterial:['materialName']"
+          formArrayName="formArr">
+          <ng-container matColumnDef="Material Name">
+            <th mat-header-cell *matHeaderCellDef>Material Name</th>
+            <td mat-cell *matCellDef="let element; let i = index" formGroupName="{{ i }}">
+              <mat-checkbox #ch [checked]="element.checked" (change)="materialChecked(ch, i, element)">
+                <div class="limited-character po-p-m" matTooltip=" {{ element.materialName }}">
+                  {{ element.materialName }} <br /></div>
+              </mat-checkbox>
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="Required Date">
-          <th mat-header-cell *matHeaderCellDef>Required Date</th>
-          <td mat-cell *matCellDef="let element; let i = index">
-            {{ element.dueDate ? (element.dueDate | date: "dd-MMM-yyy") : "" }}
-          </td>
-        </ng-container>
-        <!-- Name Column -->
-        <ng-container matColumnDef="Requested Quantity">
-          <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.requestedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
-          </td>
-        </ng-container>
-        <!-- Name Column -->
-        <ng-container matColumnDef="Estimated Quantity">
-          <th mat-header-cell *matHeaderCellDef>Estimated Quantity</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.estimatedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="Required Date">
+            <th mat-header-cell *matHeaderCellDef>Required Date</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              {{ element.dueDate ? (element.dueDate | date: "dd-MMM-yyy") : "" }}
+            </td>
+          </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="Requested Quantity">
+            <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.requestedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
+            </td>
+          </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="Estimated Quantity">
+            <th mat-header-cell *matHeaderCellDef>Estimated Quantity</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.estimatedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
+            </td>
+          </ng-container>
 
-        <!-- Symbol Column -->
+          <!-- Symbol Column -->
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
+          <tr mat-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
 
       <!-- end table part -->
     </mat-expansion-panel>

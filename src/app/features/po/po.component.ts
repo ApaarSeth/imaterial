@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ViewChildren, HostListener, ChangeDetectorRef } from "@angular/core";
 import { POService } from "src/app/shared/services/po/po.service";
+import { AngularEditor } from 'src/app/shared/constants/angular-editor.constant';
 import {
   POData,
   PoMaterial,
@@ -82,19 +83,7 @@ export class PoComponent implements OnInit {
   showResponsiveDesign: boolean;
   showResponsiveDesignDown: boolean;
   additionalOtherCost: { additionalOtherCostAmount: number, additionalOtherCostInfo: OtherCostInfo[] }
-  config: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    minHeight: '9rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-    toolbarHiddenButtons: [
-      ['backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript']
-    ],
-
-  };
+  config: AngularEditorConfig = AngularEditor.config;
   currency: { isInternational: number, purchaseOrderCurrency: PurchaseOrderCurrency }
 
   constructor(
@@ -132,7 +121,10 @@ export class PoComponent implements OnInit {
         poNumber: this.poData.poNumber,
         poValidUpto: this.poData.poValidUpto,
         projectId: this.poData.projectId,
-        isInternational: this.poData.isInternational
+        isInternational: this.poData.isInternational,
+        sellerPORating: this.poData.sellerPORating,
+        poCreatedBy: this.poData.poCreatedBy,
+        poStatus: this.poData.poStatus
       };
       this.documentList = this.poData.DocumentsList;
       this.terms = this.poData.Terms;
@@ -145,7 +137,7 @@ export class PoComponent implements OnInit {
       // if (this.poData.projectAddress.gstNo === "" || this.poData.projectAddress.gstNo === null) {
       //   this.openProjectDialog(this.poData)
       // }
-      if (this.cardData.billingAddress.gstNo.toString() == '' || this.cardData.billingAddress.gstNo == null) {
+      if (this.cardData.billingAddress.gstNo && this.cardData.billingAddress.gstNo.toString() == '') {
         this.openProjectDialog(this.poData)
       }
     });

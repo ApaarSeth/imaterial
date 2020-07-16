@@ -1,46 +1,41 @@
 <div class="sign-in-up">
-    <div class="row m-0">
-        <div class="d-none d-sm-block col-md-12 col-lg-8 pl-0">
-            <div class="min-height">
-                <img *ngIf="tabClicked == 'Sign Up'" src="../../../assets/images/image-signup.png"
-                    alt="construction-site-image" class="signup-image" style="width: 100%;" />
-                <img *ngIf="tabClicked == 'Sign In'" src="../../../assets/images/image-login.png"
-                    alt="construction-site-image" class="login-image" style="width: 100%;" />
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-6 col-lg-4 offset-lg-0 parent">
-            <div class="form-design justify-content-center">
-
-                <!-- buildsupply logo -->
-                <img src="../../../assets/images/loginLogo.png" alt="BuildSupply" class="logo-img mb-4 mt-4" />
-
-                <!-- sign in/up tabs-->
-                <mat-tab-group class="tab-signin-up" [selectedIndex]="index" (selectedTabChange)="tabChanged($event)">
-                    <mat-tab label="Sign In">
-                        <div>
-                            <signin></signin>
-                        </div>
-                    </mat-tab>
-
-                    <mat-tab label="Sign Up">
-                        <div>
-                            <signup></signup>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group>
-
-                <div class="row text-align-center three-months-signup-text">
-                    <div class="col-sm-12 p-t-5 p-b-15">
-                        <div class="font-signup">
-                            You will be charged a monthly subscription fee of INR 9999 after your three months free
-                            trial period ends. <br>
-                            This is an introductory offer for the first year of your purchase only.
-                        </div>
-                        <!-- <div class="font-size16 p-l-5 p-r-5"> </div> -->
-                    </div>
-                </div>
-
-            </div>
-        </div>
+  <div class="row m-0">
+    <div class="d-none d-sm-block col-md-12 col-lg-8 pl-0">
+      <div class="min-height">
+        <img *ngIf="tabClicked == 'Sign Up'" src="../../../assets/images/image-signup.png" alt="construction-site-image" class="signup-image" style="width: 100%;" />
+        <img *ngIf="tabClicked == 'Sign In'" src="../../../assets/images/image-login.png" alt="construction-site-image" class="login-image" style="width: 100%;" />
+      </div>
     </div>
+    <div class="col-xs-12 col-md-6 col-lg-4 offset-lg-0 parent">
+      <div class="form-design justify-content-center">
+        <!-- buildsupply logo -->
+        <img src="../../../assets/images/loginLogo.png" alt="BuildSupply" class="logo-img mb-4 mt-4" />
+
+        <!-- sign in/up tabs-->
+        <mat-tab-group class="tab-signin-up" [selectedIndex]="index" (selectedTabChange)="tabChanged($event)">
+          <mat-tab label="Sign In">
+            <div>
+              <signin *ngIf="callingCode" [countryList]="countryList" [countryCode]="countryCode" [callingCode]="callingCode"></signin>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Sign Up">
+            <div>
+              <signup *ngIf="callingCode" [countryList]="countryList" [countryCode]="countryCode" [callingCode]="callingCode"></signup>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+        <!-- 
+        <div class="row text-align-center three-months-signup-text">
+          <div class="col-sm-12 p-t-5 p-b-15">
+            <div class="font-signup" *ngIf="this.callingCode === '+91'">
+              You will be charged a monthly subscription fee of INR 9999 after your three months free trial period ends. <br />
+              This is an introductory offer for the first year of your purchase only.
+            </div>
+            <div class="font-size16 p-l-5 p-r-5"> </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
 </div>

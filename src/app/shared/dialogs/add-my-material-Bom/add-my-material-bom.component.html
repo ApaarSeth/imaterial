@@ -33,7 +33,21 @@
             <div class="text-right p-l-0 p-r-0" [ngClass]="this.data ? 'col-xs-1' : 'col-xs-2'">
               <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
                 <mat-select placeholder="Unit*" formControlName="materialUnit">
-                  <mat-option *ngFor="let unit of materialUnit" [value]="unit">
+                  <div class="display-flex">
+                    <input
+                      class="p-l-10 p-b-5"
+                      matInput
+                      type="search"
+                      placeholder="Search Unit"
+                      [(ngModel)]="searchUnit"
+                      [ngModelOptions]="{standalone: true}"
+                      (keydown)="$event.stopPropagation()"
+                    />
+                    <button mat-button mat-icon-button>
+                      <mat-icon>search</mat-icon>
+                    </button>
+                  </div>
+                  <mat-option *ngFor="let unit of materialUnit | SearchPipe: searchUnit" [value]="unit">
                     <span>
                       {{ unit }}
                     </span>
@@ -83,7 +97,7 @@
                       <mat-icon>search</mat-icon>
                     </button>
                   </div>
-                  <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:'categoriesName'" [value]="option" matTooltip=" {{ option.categoriesName }}">
+                  <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:['categoriesName']" [value]="option" matTooltip=" {{ option.categoriesName }}">
                     {{ option.categoriesName }}
                   </mat-option>
                 </mat-select>

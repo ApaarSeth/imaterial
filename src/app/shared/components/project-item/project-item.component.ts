@@ -21,6 +21,7 @@ import { PermissionService } from "../../services/permission.service";
 import { Orientation, GuidedTour, GuidedTourService } from 'ngx-guided-tour';
 import { DisplayProjectDetailsComponent } from "../../dialogs/display-project-details/display-project-details.component";
 import { MatDialog } from "@angular/material";
+import { CommonService } from '../../services/commonService';
 
 @Component({
   selector: "card-layout",
@@ -31,6 +32,7 @@ export class ProjectItemComponent implements OnInit {
   permissionObj: any;
   url: string;
   currencyCode: string;
+  isMobile: boolean;
 
   constructor(
     private permissionService: PermissionService,
@@ -38,7 +40,8 @@ export class ProjectItemComponent implements OnInit {
     public dialog: MatDialog,
 
     private activatedRoute: ActivatedRoute,
-    private guidedTourService: GuidedTourService
+    private guidedTourService: GuidedTourService,
+    private commonService: CommonService
   ) { }
 
   @Output("onEdit") onEdit = new EventEmitter<number>();
@@ -49,6 +52,7 @@ export class ProjectItemComponent implements OnInit {
   @Output('startDate') startDate = new EventEmitter<Date>();
 
   ngOnInit(): void {
+    this.isMobile = this.commonService.isMobile().matches;
     this.currencyCode = localStorage.getItem('currencyCode');
     const role = localStorage.getItem("role")
     this.permissionObj = this.permissionService.checkPermission(role);

@@ -85,10 +85,10 @@ a:hover {
 }
 
 .main-color {
-  color: $main-color;
+  color: $main-color !important;
 }
 .main-color-faded {
-  color: $main-color;
+  color: $main-color !important;
   opacity: 0.6;
 }
 
@@ -156,10 +156,6 @@ input {
   // background: $white-color;
   padding: 10px;
   border-radius: 5px;
-}
-
-.display-flex {
-  display: flex;
 }
 
 .display-flex-important {

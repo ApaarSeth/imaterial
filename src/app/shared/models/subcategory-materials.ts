@@ -1,4 +1,5 @@
 import { MatTableDataSource } from "@angular/material/table";
+import { ImageDocsLists } from "./PO/po-data";
 
 export interface Subcategory {
   materialId: number;
@@ -21,7 +22,7 @@ export interface Subcategory {
   quantity: number;
   dueDate: Date;
   isApproved?: number;
-
+  documentsList: ImageDocsLists[];
 }
 
 export interface Materials {
@@ -42,6 +43,7 @@ export interface Materials {
   checked: boolean;
   issueToProject: number;
   availableStock: number;
+  documentsList: ImageDocsLists[];
 }
 
 export interface QtyData {

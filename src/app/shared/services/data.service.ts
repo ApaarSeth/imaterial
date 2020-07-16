@@ -39,7 +39,7 @@ export class DataService {
     // this.baseUrl = environment.url + "/";
     // this.masterUrl = environment.masterUrl + "/";
     // this.ssoUrl = environment.ssoUrl + "/";
-    // this.baseUrl = Utils.baseUrl();
+    this.baseUrl = Utils.baseUrl();
     this.baseStartUrl = Utils.baseUrl();
     this.baseUrl = this.baseStartUrl + "im/";
     this.masterUrl = this.baseStartUrl + "mm/";
@@ -57,16 +57,6 @@ export class DataService {
     let headers = new HttpHeaders();
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
-    // if(this.role){
-    //   headers = headers.append("Authorization", this.role);
-    // }
-    // if(this.userId){
-    //   headers = headers.append("userId", this.userId);
-    // }
-    // if(this.orgId){
-    //   headers = headers.append("orgId", this.orgId);
-    // }
-
 
     if (reqOptions) {
       if (reqOptions.skipLoader) {
@@ -84,7 +74,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -112,16 +102,6 @@ export class DataService {
     let headers = new HttpHeaders();
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
-    // headers = headers.append("Authorization", "admin");
-    // if (this.role) {
-    //   headers = headers.append("Authorization", this.role);
-    // }
-    // if (this.userId) {
-    //   headers = headers.append("userId", this.userId);
-    // }
-    // if (this.orgId) {
-    //   headers = headers.append("orgId", this.orgId);
-    // }
     if (reqOptions) {
       if (reqOptions.skipLoader) {
         headers = headers.append(
@@ -139,7 +119,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -197,16 +177,6 @@ export class DataService {
     let headers = new HttpHeaders();
     headers = headers.append("Access-Control-Allow-Origin", "*");
     headers = headers.append("accept", "*/*");
-    // headers = headers.append("Authorization", "admin");
-    // if (this.role) {
-    //   headers = headers.append("Authorization", this.role);
-    // }
-    // if (this.userId) {
-    //   headers = headers.append("userId", this.userId);
-    // }
-    // if (this.orgId) {
-    //   headers = headers.append("orgId", this.orgId);
-    // }
     if (reqOptions) {
       if (reqOptions.skipLoader) {
         headers = headers.append(
@@ -255,7 +225,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -304,7 +274,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -328,8 +298,6 @@ export class DataService {
     reqOptions: DataServiceOptions = null
   ): Promise<any> {
     let headers = new HttpHeaders();
-    headers = headers.append("accept", "*/*");
-    //headers = headers.append( 'Authorization', 'admin');
     headers = headers.append(
       "Authorization",
       "Basic " + btoa("fooClientIdPassword:secret")
@@ -355,7 +323,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -437,7 +405,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 

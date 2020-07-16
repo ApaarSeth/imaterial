@@ -41,6 +41,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   searchCountry: string = '';
   selectedCountryId: number;
   isCallingCode: string;
+  isInternational: number;
 
   constructor(
     public dialog: MatDialog,
@@ -57,61 +58,66 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   ngOnInit() {
     this.rfqSupplierObj = history.state.rfqSupplierObj;
     this.supplierId = history.state.supplierId;
-    this.brandCount = this.activatedRoute.snapshot.params[ "brandList" ];
-    this.materialCount = this.activatedRoute.snapshot.params[ "MaterialList" ];
+    this.brandCount = this.activatedRoute.snapshot.params["brandList"];
+    this.materialCount = this.activatedRoute.snapshot.params["MaterialList"];
+    this.isInternational = Number(localStorage.getItem('isInternational'));
 
     this.poService.getSupplierAddress(this.supplierId).then(data => {
 
       this.supplierAddress = data;
       this.getLocation();
-      if (this.supplierAddress && this.supplierAddress.data.length < 2 && this.supplierAddress.data[ 0 ].supplierAddressId == 0) {
+      if (this.supplierAddress && this.supplierAddress.data.length < 2 && this.supplierAddress.data[0].supplierAddressId == 0) {
         this.AddressValid = false;
       }
       else {
         this.AddressValid = true;
       }
 
-      if (this.supplierAddress && this.supplierAddress.data[ 0 ].supplierAddressId == 0 || this.supplierAddress.data[ 0 ].addressId == null || this.supplierAddress.data[ 0 ].addressId == "") {
+      if (this.supplierAddress && this.supplierAddress.data[0].supplierAddressId == 0 || this.supplierAddress.data[0].addressId == null || this.supplierAddress.data[0].addressId == "") {
 
         this.initForm();
 
-        this.form.controls.supplierName.setValidators([ Validators.required ]);
+        this.form.controls.supplierName.setValidators([Validators.required]);
         this.form.controls.supplierName.updateValueAndValidity();
 
-        this.form.controls.contactNo.setValidators([ Validators.required, Validators.pattern(FieldRegExConst.PHONE) ]);
+        this.form.controls.contactNo.setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE)]);
         this.form.controls.contactNo.updateValueAndValidity();
 
-        this.form.controls.email.setValidators([ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ]);
+        this.form.controls.email.setValidators([Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]);
         this.form.controls.email.updateValueAndValidity();
 
-        this.form.controls.contactNo.setValidators([ Validators.required, Validators.pattern(FieldRegExConst.PHONE) ]);
+        this.form.controls.contactNo.setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE)]);
         this.form.controls.contactNo.updateValueAndValidity();
 
-        this.form.controls.addressLine1.setValidators([ Validators.required, Validators.maxLength(120) ]);
+        this.form.controls.addressLine1.setValidators([Validators.required, Validators.maxLength(120)]);
         this.form.controls.addressLine1.updateValueAndValidity();
 
-        this.form.controls.addressLine2.setValidators([ Validators.maxLength(120) ]);
+        this.form.controls.addressLine2.setValidators([Validators.maxLength(120)]);
         this.form.controls.addressLine2.updateValueAndValidity();
 
-        this.form.controls.pinCode.setValidators([ Validators.required, Validators.pattern(FieldRegExConst.PINCODE) ]);
+        this.form.controls.pinCode.setValidators([Validators.required, Validators.minLength(4), Validators.maxLength(6)]);
         this.form.controls.pinCode.updateValueAndValidity();
 
-        this.form.controls.state.setValidators([ Validators.required ]);
+        this.form.controls.state.setValidators([Validators.required]);
         this.form.controls.state.updateValueAndValidity();
 
-        this.form.controls.city.setValidators([ Validators.required ]);
+        this.form.controls.city.setValidators([Validators.required]);
         this.form.controls.city.updateValueAndValidity();
 
-        this.form.controls.gstNo.setValidators([ Validators.required, Validators.pattern(FieldRegExConst.GSTIN) ]);
+        if (this.isInternational === 0) {
+          this.form.controls.gstNo.setValidators([Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]);
+        } else {
+          this.form.controls.gstNo.setValidators([Validators.pattern(FieldRegExConst.GSTIN)]);
+        }
         this.form.controls.gstNo.updateValueAndValidity();
 
       } else {
         this.addSupplierAddress = true;
         this.initForm();
-        this.form.controls.state.setValidators([ Validators.required ]);
+        this.form.controls.state.setValidators([Validators.required]);
         this.form.controls.state.updateValueAndValidity();
 
-        this.form.controls.city.setValidators([ Validators.required ]);
+        this.form.controls.city.setValidators([Validators.required]);
         this.form.controls.city.updateValueAndValidity();
       }
 
@@ -122,15 +128,10 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   getLocation() {
     if (this.selectedAddress && this.selectedAddress.countryId) {
       this.getCountryCode({ callingCode: null, countryId: this.selectedAddress.countryId });
-    } else if (this.supplierAddress.data.length && this.supplierAddress.data[ 0 ].countryId) {
-      this.getCountryCode({ callingCode: null, countryId: this.supplierAddress.data[ 0 ].countryId });
+    } else if (this.supplierAddress.data.length && this.supplierAddress.data[0].countryId) {
+      this.getCountryCode({ callingCode: null, countryId: this.supplierAddress.data[0].countryId });
     } else {
-      this.visitorsService.getIpAddress().subscribe(res => {
-        this.ipaddress = res[ 'ip' ];
-        this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-          this.getCountryCode({ callingCode: res[ 'calling_code' ] });
-        });
-      });
+      this.getCountryCode({ countryId: localStorage.getItem('countryId') });
     }
   }
 
@@ -139,12 +140,12 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
         if (obj.countryId) {
-          return val.countryId === obj.countryId;
+          return val.countryId === Number(obj.countryId);
         } else {
           return val.callingCode === obj.callingCode;
         }
       })
-      this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
+      this.form.get('countryCode').setValue(this.livingCountry[0]);
     })
   }
 
@@ -168,23 +169,23 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     this.form = this.formBuilder.group({
 
       supplierName: [
-        { value: this.supplierAddress.data ? this.supplierAddress.data[ 0 ].supplier_name : "", disabled: true }
+        { value: this.supplierAddress.data ? this.supplierAddress.data[0].supplier_name : "", disabled: true }
       ],
       contactNo: [
-        { value: this.supplierAddress.data ? this.supplierAddress.data[ 0 ].contact_no : "", disabled: true }
+        { value: this.supplierAddress.data ? this.supplierAddress.data[0].contact_no : "", disabled: true }
       ],
       email: [
-        { value: this.supplierAddress.data ? this.supplierAddress.data[ 0 ].email : "", disabled: true }
+        { value: this.supplierAddress.data ? this.supplierAddress.data[0].email : "", disabled: true }
       ],
 
       addressLine1: [
         { value: (this.selectedAddress && this.selectedAddress.addressLine1) ? this.selectedAddress.addressLine1 : "", disabled: this.disabledAddress }, Validators.maxLength(120)
       ],
-      addressLine2: [ { value: (this.selectedAddress && this.selectedAddress.addressLine2) ? this.selectedAddress.addressLine2 : "", disabled: this.disabledAddress }, Validators.maxLength(120) ],
+      addressLine2: [{ value: (this.selectedAddress && this.selectedAddress.addressLine2) ? this.selectedAddress.addressLine2 : "", disabled: this.disabledAddress }, Validators.maxLength(120)],
       pinCode: [
         { value: (this.selectedAddress && this.selectedAddress.pinCode) ? this.selectedAddress.pinCode : "", disabled: this.disabledAddress },
         // [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
-        [ Validators.required ]
+        [Validators.required]
       ],
       state: [
         { value: (this.selectedAddress && this.selectedAddress.state) ? this.selectedAddress.state : "", disabled: true },
@@ -196,13 +197,18 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       ],
       gstNo: [
         { value: (this.selectedAddress && this.selectedAddress.gstNo) ? this.selectedAddress.gstNo : "", disabled: this.disabledAddress },
-        [ Validators.required, Validators.pattern(FieldRegExConst.GSTIN) ]
+        [Validators.pattern(FieldRegExConst.GSTIN)]
       ],
-      countryId: [ null ],
+      countryId: [null],
       countryCode: []
     });
     if (this.form.value.pinCode)
       this.validPincode = true;
+
+    if (this.isInternational === 0) {
+      this.form.get('gstNo').setValidators([Validators.required, Validators.pattern(FieldRegExConst.GSTIN)]);
+    }
+
   }
 
   saveAddress() {
@@ -223,17 +229,17 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   }
 
   getCityAndState(value) {
-    this.projectService.getPincodeInternational(value, this.selectedCountryId).then(res => {
+    this.commonService.getPincodeInternational(value, this.selectedCountryId).then(res => {
       if (res.data && res.data.length) {
-        this.city = res.data[ 0 ].districtName;
-        this.state = res.data[ 0 ].stateName;
+        this.city = res.data[0].districtName;
+        this.state = res.data[0].stateName;
         if (this.city && this.state)
           this.validPincode = true;
         else
           this.validPincode = false;
 
-        this.form.get('city').setValue(res.data[ 0 ].districtName);
-        this.form.get('state').setValue(res.data[ 0 ].stateName);
+        this.form.get('city').setValue(res.data[0].districtName);
+        this.form.get('state').setValue(res.data[0].stateName);
       }
 
     });
@@ -258,7 +264,8 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       .toPromise()
       .then(data => {
         if (data != null && data.status == 1) {
-          this.router.navigate([ "/rfq-bids/finish/" + this.brandCount + "/" + this.materialCount ]);
+          localStorage.clear();
+          this.router.navigate(["/rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
         }
       });
   }
@@ -290,6 +297,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   }
 
   reset() {
+    this.selectedAddress = {};
     this.getLocation();
     this.disabledAddress = false;
     this.initForm();

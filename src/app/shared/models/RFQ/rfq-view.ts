@@ -44,6 +44,8 @@ export interface Supplier {
     contact_no: string,
     email: string,
     pan: string,
+    countryCallingCode: string,
+    supplier_ratings: number
 }
 
 export interface TermsObj {

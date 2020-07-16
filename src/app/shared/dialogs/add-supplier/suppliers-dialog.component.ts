@@ -35,17 +35,15 @@ export class SuppliersDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
     private navService: AppNavigationService,
-    private visitorsService: VisitorService,
-    private commonService: CommonService
   ) { }
 
   ngOnInit() {
-    this.countryList = this.data.countryList;
+    this.countryList = this.data ? this.data.countryList : null;
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
     this.cntryId = Number(localStorage.getItem('countryId'));
-    localStorage.getItem('callingCode') === '+91' ? this.isNational = true : this.isNational = false;
+    localStorage.getItem('countryCode') === '+91' ? this.isNational = true : this.isNational = false;
     this.initForm();
     this.getLocation();
     this.orgId = Number(localStorage.getItem("orgId"))
@@ -55,33 +53,19 @@ export class SuppliersDialogComponent {
     if (this.cntryId) {
       this.getCountryCode({ callingCode: null, countryId: this.cntryId });
     } else {
-      this.visitorsService.getIpAddress().subscribe(res => {
-        this.ipaddress = res[ 'ip' ];
-        this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-          this.getCountryCode({ callingCode: res[ 'calling_code' ] });
-        });
-      });
+      this.getCountryCode({ countryId: localStorage.getItem('countryId') });
     }
   }
 
   getCountryCode(obj) {
-    // this.commonService.getCountry().then(res => {
-    //   this.countryList = res.data;
-    //   this.livingCountry = this.countryList.filter(val => {
-    //     return val.callingCode === callingCode;
-    //   })
-    //   this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
-    // })
-
-
     this.livingCountry = this.countryList.filter(val => {
       if (obj.countryId) {
-        return val.countryId === obj.countryId;
+        return val.countryId === Number(obj.countryId);
       } else {
         return val.callingCode === obj.callingCode;
       }
     })
-    this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
+    this.form.get('countryCode').setValue(this.livingCountry[0])
 
   }
 
@@ -95,23 +79,23 @@ export class SuppliersDialogComponent {
 
   initForm() {
     this.form = this.formBuilder.group({
-      supplier_name: [ "", Validators.required ],
-      email: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ] ],
+      supplier_name: ["", Validators.required],
+      email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
       // contact_no: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ] ],
-      contact_no: [ null ],
-      pan: [ "" ],
-      countryCallingCode: [ null ],
+      contact_no: [null, [Validators.pattern(FieldRegExConst.MOBILE3)]],
+      pan: [""],
+      countryCallingCode: [null],
       countryCode: []
     });
     if (this.isNational) {
-      this.form.get('contact_no').setValidators([ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ]);
+      this.form.get('contact_no').setValidators([Validators.required, Validators.pattern(FieldRegExConst.MOBILE3)]);
     }
   }
 
   submit() {
     let data = this.form.value;
     if (data.contact_no) {
-      data[ 'countryCallingCode' ] = this.form.get('countryCode').value.callingCode;
+      data['countryCallingCode'] = this.form.get('countryCode').value.callingCode;
     }
     delete data.countryCode;
     this.addSuppliers(this.data, data);
@@ -129,7 +113,7 @@ export class SuppliersDialogComponent {
         this.dialogRef.close(res.message);
         this._snackBar.open('Supplier Added', "", {
           duration: 2000,
-          panelClass: [ "success-snackbar" ],
+          panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
       }

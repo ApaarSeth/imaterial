@@ -1,4 +1,4 @@
-import { DocumentList } from '../PO/po-data';
+import { DocumentList, ImageDocsLists } from '../PO/po-data';
 
 export interface SendRfqObj {
   dueDate: Date;
@@ -9,6 +9,7 @@ export interface SendRfqObj {
   DocumentsList?: DocumentList[];
   isInternational?: number;
   rfqCurrency: any;
+  baseCurrencyCode?: string;
 }
 export interface ProjectRfqObj {
   projectId: number;
@@ -37,6 +38,7 @@ export interface MaterialRfqObj {
   materialIGSTFlag: boolean;
   materialGst?: number;
   fullfilmentDate?: string;
+  documentsList?: ImageDocsLists[];
 }
 
 export interface BrandRfqObj {

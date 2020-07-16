@@ -3,7 +3,6 @@
   <div class="min-height parent">
     <div class="row submit-bid-row-add">
       <div class="submit-bid-div-add">
-
         <form *ngIf="form" [formGroup]="form">
           <!-- new structure -->
           <div class="col-sm-12">
@@ -25,14 +24,10 @@
                 <mat-form-field class="border-input add-edit-user-form-modal">
                   <input matInput type="number" placeholder="Phone No" formControlName="contactNo" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
-                  <small *ngIf="form.controls['contactNo'].hasError('required') && form.controls['contactNo'].touched"
-                    class="form-error-msg"> Phone No is required </small>
-                  <small *ngIf="form.controls['contactNo'].hasError('pattern') && form.controls['contactNo'].touched"
-                    class="form-error-msg"> Enter Valid Phone No</small>
+                  <small *ngIf="form.controls['contactNo'].hasError('required') && form.controls['contactNo'].touched" class="form-error-msg"> Phone No is required </small>
+                  <small *ngIf="form.controls['contactNo'].hasError('pattern') && form.controls['contactNo'].touched" class="form-error-msg"> Enter Valid Phone No</small>
                 </mat-form-field>
-
               </div>
-
             </div>
 
             <!-- third row -->
@@ -42,24 +37,27 @@
                 <mat-form-field class="border-input add-edit-user-form-modal">
                   <input matInput type="text" placeholder="Email Id" formControlName="email" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">Email Id is Required</mat-error> -->
-                  <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
-                    class="form-error-msg"> Email is required </small>
-                  <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
-                    class="form-error-msg"> Enter Valid Email</small>
+                  <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="form-error-msg"> Email is required </small>
+                  <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="form-error-msg"> Enter Valid Email</small>
                 </mat-form-field>
               </div>
 
               <div class="col-sm-6">
-                <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="GST No" formControlName="gstNo" required />
-                  <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
-                  <small *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
-                    class="form-error-msg"> GST No is required </small>
-                  <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched"
-                    class="form-error-msg"> Enter Valid GST No</small>
-                </mat-form-field>
+                <ng-container *ngIf="isInternational === 0; else noInt">
+                  <mat-form-field class="border-input add-edit-user-form-modal">
+                    <input matInput type="text" placeholder="GST No" formControlName="gstNo" required />
+                    <!-- <mat-error class="mat-error-add-edit-form-modal">contactNo is Required</mat-error> -->
+                    <small *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched" class="form-error-msg"> GST No is required </small>
+                    <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched" class="form-error-msg"> Enter Valid GST No</small>
+                  </mat-form-field>
+                </ng-container>
+                <ng-template #noInt>
+                  <mat-form-field class="border-input add-edit-user-form-modal">
+                    <input matInput type="text" placeholder="GST No" formControlName="gstNo" />
+                    <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched" class="form-error-msg"> Enter Valid GST No</small>
+                  </mat-form-field>
+                </ng-template>
               </div>
-
             </div>
 
             <div class="row p-t-20">
@@ -79,14 +77,12 @@
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Address Line1" #FormaddressLine1
-                    formControlName="addressLine1" required />
+                  <input matInput type="text" placeholder="Address Line1" #FormaddressLine1 formControlName="addressLine1" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine1 is Required</mat-error> -->
-                  <small
-                    *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched"
-                    class="form-error-msg"> Address Line1 is required </small>
-                  <small *ngIf="FormaddressLine1.value.length > 120 && form.controls['addressLine1'].touched"
-                    class="form-error-msg">
+                  <small *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched" class="form-error-msg">
+                    Address Line1 is required
+                  </small>
+                  <small *ngIf="FormaddressLine1.value.length > 120 && form.controls['addressLine1'].touched" class="form-error-msg">
                     Address should be less than 120 characters
                   </small>
                 </mat-form-field>
@@ -95,53 +91,56 @@
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Address Line2" #FormaddressLine2
-                    formControlName="addressLine2" />
+                  <input matInput type="text" placeholder="Address Line2" #FormaddressLine2 formControlName="addressLine2" />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">addressLine2 is Required</mat-error> -->
                   <!-- <small
                     *ngIf="form.controls['addressLine2'].hasError('required') && form.controls['addressLine2'].touched"
                     class="form-error-msg"> Address Line 2 is required </small> -->
-                  <small
-                    *ngIf="form.controls['addressLine2'].hasError('pattern') && form.controls['addressLine2'].touched"
-                    class="form-error-msg"> Enter Valid Address Line 2</small>
-                  <small *ngIf="FormaddressLine2.value.length > 120  && form.controls['addressLine2'].touched"
-                    class="form-error-msg">
+                  <small *ngIf="form.controls['addressLine2'].hasError('pattern') && form.controls['addressLine2'].touched" class="form-error-msg">
+                    Enter Valid Address Line 2</small
+                  >
+                  <small *ngIf="FormaddressLine2.value.length > 120 && form.controls['addressLine2'].touched" class="form-error-msg">
                     Address should be less than 120 characters
                   </small>
                 </mat-form-field>
               </div>
-
             </div>
 
             <!-- fifth row-->
             <!-- fourth row -->
             <div class="row">
-
               <div class="col-sm-6">
                 <!-- country -->
                 <mat-form-field class="border-select mat-form-field-flex-mm-padding w-100 pl-4 pr-4 ml-1">
                   <mat-select formControlName="countryCode" (selectionChange)="blankPincode()">
                     <div class="display-flex">
-                      <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country"
-                        [(ngModel)]="searchCountry" [ngModelOptions]="{standalone: true}"
-                        (keydown)="$event.stopPropagation()" />
+                      <input
+                        class="p-l-10 p-b-5"
+                        matInput
+                        type="search"
+                        placeholder="Search Country"
+                        [(ngModel)]="searchCountry"
+                        [ngModelOptions]="{standalone: true}"
+                        (keydown)="$event.stopPropagation()"
+                      />
                       <button mat-button matSuffix mat-icon-button>
                         <mat-icon>search</mat-icon>
                       </button>
                     </div>
                     <mat-select-trigger>
-                      <span
-                        matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"><img
-                          class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                      <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
+                        ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                         <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.name }}</span>
                         <!-- <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span> -->
                       </span>
                     </mat-select-trigger>
-                    <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country"
-                      selected="trade.isAttatched"><span><img class="width17Percent p-r-10" [src]="country.imageUrl"
-                          alt="" />
-                        <span matTooltip="{{ country.name }}"
-                          class="limited-character universal p-r-5">{{ country.name }}</span>
+                    <mat-option
+                      *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
+                      [value]="country"
+                      selected="trade.isAttatched"
+                      ><span
+                        ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                        <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
                         <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
                       </span>
                     </mat-option>
@@ -149,18 +148,16 @@
                 </mat-form-field>
               </div>
 
-
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
-                  <input matInput type="text" placeholder="Pincode" #pincode formControlName="pinCode"
-                    (input)="getPincode($event)" required />
+                  <input matInput type="text" placeholder="Pincode" #pincode formControlName="pinCode" (input)="getPincode($event)" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">pinCode is Required</mat-error> -->
-                  <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
-                    class="form-error-msg"> Pincode is required </small>
+                  <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched" class="form-error-msg"> Pincode is required </small>
                   <!-- <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched"
                     class="form-error-msg"> Enter Valid pinCode</small> -->
-                  <small
+
+                  <!-- <small
                     *ngIf="form.controls['pinCode'].touched && (!validPincode) && form.controls['pinCode'].hasError('pattern')"
                     class="error-msg">
                     Enter Valid Pincode
@@ -169,24 +166,31 @@
                     *ngIf="form.controls['pinCode'].touched && (!validPincode) && !form.controls['pinCode'].hasError('pattern') && !validPincode && (pincode.value.length > 0) "
                     class="error-msg">
                     Enter Valid Pincode
-                  </small>
+                  </small> -->
+
+                  <ng-container *ngIf="form.controls['pinCode'].touched">
+                    <small *ngIf="form.controls['pinCode'].hasError('required') && pincodeLength <= 0" class="form-error-msg p-l-15">
+                      Pincode is required
+                    </small>
+                    <!-- <small *ngIf="newAddressForm.controls['pinCode'].hasError('pattern') && newAddressForm.controls['pinCode'].touched"
+                                      class="form-error-msg p-l-15"> Enter Valid Pincode</small> -->
+                    <small *ngIf="!validPincode && pincodeLength > 0" class="error-msg p-l-15">
+                      Enter Valid Pincode
+                    </small>
+                  </ng-container>
                 </mat-form-field>
               </div>
-
             </div>
 
             <!-- fourth row -->
             <div class="row">
-
               <div class="col-sm-6">
                 <!-- PinCode -->
                 <mat-form-field class="border-input add-edit-user-form-modal">
                   <input matInput type="text" placeholder="City" formControlName="city" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">city is Required</mat-error> -->
-                  <small *ngIf="form.controls['city'].hasError('required') && form.controls['city'].touched"
-                    class="form-error-msg"> City is required </small>
-                  <small *ngIf="form.controls['city'].hasError('pattern') && form.controls['city'].touched"
-                    class="form-error-msg"> Enter Valid City</small>
+                  <small *ngIf="form.controls['city'].hasError('required') && form.controls['city'].touched" class="form-error-msg"> City is required </small>
+                  <small *ngIf="form.controls['city'].hasError('pattern') && form.controls['city'].touched" class="form-error-msg"> Enter Valid City</small>
                 </mat-form-field>
               </div>
 
@@ -195,28 +199,25 @@
                 <mat-form-field class="border-input add-edit-user-form-modal">
                   <input matInput type="text" placeholder="State" formControlName="state" required />
                   <!-- <mat-error class="mat-error-add-edit-form-modal">state is Required</mat-error> -->
-                  <small *ngIf="form.controls['state'].hasError('required') && form.controls['state'].touched"
-                    class="form-error-msg"> State is required </small>
-                  <small *ngIf="form.controls['state'].hasError('pattern') && form.controls['state'].touched"
-                    class="form-error-msg"> Enter Valid State</small>
+                  <small *ngIf="form.controls['state'].hasError('required') && form.controls['state'].touched" class="form-error-msg"> State is required </small>
+                  <small *ngIf="form.controls['state'].hasError('pattern') && form.controls['state'].touched" class="form-error-msg"> Enter Valid State</small>
                 </mat-form-field>
               </div>
-              <div class="col-sm-6">
-
-              </div>
-
+              <div class="col-sm-6"></div>
             </div>
 
             <!-- sixth row-->
-
-
           </div>
           <!-- end structure -->
 
           <div mat-dialog-actions>
             <div class="col-sm-12 save-btn-add-edit-user-modal rfq-bid-address">
-              <button mat-raised-button [disabled]="(disabledAddress ? false : ( validPincode ? (!form.valid) : true))"
-                (click)="saveAddress()" class="main-background-color main-button color-white pull-right">
+              <button
+                mat-raised-button
+                [disabled]="disabledAddress ? false : validPincode ? !form.valid : true"
+                (click)="saveAddress()"
+                class="main-background-color main-button color-white pull-right"
+              >
                 Submit
               </button>
             </div>

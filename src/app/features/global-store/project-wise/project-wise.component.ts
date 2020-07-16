@@ -1,20 +1,25 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { GlobalStoreMaterial } from "src/app/shared/models/GlobalStore/materialWise";
 import { GlobalProject } from "src/app/shared/models/GlobalStore/projectWise";
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-project-wise",
   templateUrl: "./project-wise.component.html",
-  styleUrls: ["./project-wise.component.scss"]
+  styleUrls: [ "./project-wise.component.scss" ]
 })
 export class ProjectWiseComponent implements OnInit {
   @Input("projectData") projectData: GlobalProject[];
   @Output("projectDataLength") projectDataLength = new EventEmitter();
   newProjectData: GlobalProject[];
   searchProject: string = "";
-  constructor() { }
+  isMobile: boolean;
+  constructor(
+    private commonService: CommonService
+  ) { }
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.mappingMaterialData();
   }
 

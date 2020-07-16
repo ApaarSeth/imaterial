@@ -1,7 +1,7 @@
 <form *ngIf="projectSelectedMaterials.length" [formGroup]="materialForms">
-  <div class="row">
-    <div class="col-xs-6 p-t-10 border-input">
-      <mat-form-field class="input-search-padding-zero">
+  <div class="row" [ngClass]="isMobile ? 'm-podr3' : '' ">
+    <div class="col-md-6 col-xs-12 p-t-10 border-input m-itm">
+      <mat-form-field class="input-search-padding-zero w-50">
         <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchProject"
           [ngModelOptions]="{standalone: true}" />
         <button mat-button matSuffix mat-icon-button>
@@ -9,7 +9,7 @@
         </button>
       </mat-form-field>
 
-      <mat-form-field class="p-l-20 input-search-padding-zero">
+      <mat-form-field class="p-l-20 input-search-padding-zero w-50">
         <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial"
           [ngModelOptions]="{standalone: true}" />
         <button mat-button matSuffix mat-icon-button>
@@ -18,7 +18,7 @@
       </mat-form-field>
     </div>
 
-    <div class="col-xs-6 text-right p-t-10 p-b-10">
+    <div class="col-md-6 col-xs-12 text-right p-t-10 p-b-10 m-itm">
       <span (click)="selectCurrency()"
         class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select
         Currency</span>
@@ -33,31 +33,32 @@
         </button>
       </span>
     </div>
+
+    <div class="col-xs-12 text-right m-itm" [ngClass]="isMobile ? 'p-t-5 p-b-10' : 'p-t-10 p-b-20' "
+      *ngIf="rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null">
+      <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'font-size12 mcrncy pt-2 pb-2' : 'p-t-10 p-b-10' ">
+        <span class="font-size-vary-grn color-grey">
+          <img width="25px" *ngIf="rfqData.rfqCurrency.exchangeCurrencyFlag"
+            [src]="rfqData.rfqCurrency.exchangeCurrencyFlag" />
+          {{ rfqData.rfqCurrency.exchangeCurrencyName }}
+        </span>
+        <span class="p-l-5"> = </span>
+        <span class="p-l-5 color-6d6a6a color-grey"> {{ rfqData.rfqCurrency.exchangeValue }} </span>
+        <span class="p-l-5 color-grey">
+          <img width="25px" *ngIf="rfqData.rfqCurrency.primaryCurrencyFlag"
+            [src]="rfqData.rfqCurrency.primaryCurrencyFlag" />
+          {{ rfqData.rfqCurrency.primaryCurrencyName }}
+        </span>
+      </span>
+    </div>
+
   </div>
 
-  <div class="col-xs-12 p-t-10 p-b-20 text-right"
-    *ngIf="rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null">
-    <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
-      <span class="font-size-vary-grn color-grey">
-        <img width="25px" *ngIf="rfqData.rfqCurrency.exchangeCurrencyFlag"
-          [src]="rfqData.rfqCurrency.exchangeCurrencyFlag" />
-        {{ rfqData.rfqCurrency.exchangeCurrencyName }}
-      </span>
-      <span class="p-l-5"> = </span>
-      <span class="p-l-5 color-6d6a6a color-grey"> {{ rfqData.rfqCurrency.exchangeValue }} </span>
-      <span class="p-l-5 color-grey">
-        <img width="25px" *ngIf="rfqData.rfqCurrency.primaryCurrencyFlag"
-          [src]="rfqData.rfqCurrency.primaryCurrencyFlag" />
-        {{ rfqData.rfqCurrency.primaryCurrencyName }}
-      </span>
-    </span>
-  </div>
-
-  <div *ngFor="let material of projectSelectedMaterials | SearchPipe: searchProject:'projectName'; let mati = index">
+  <div *ngFor="let material of projectSelectedMaterials | SearchPipe: searchProject:['projectName']; let mati = index">
     <ng-container *ngIf="material.projectMaterialList.length">
       <mat-accordion class="accordion-padding-zero" formArrayName="forms">
-        <mat-expansion-panel [expanded]="true">
-          <mat-expansion-panel-header>
+        <mat-expansion-panel [expanded]="true" [ngClass]="isMobile ? 'mt-2' : '' ">
+          <mat-expansion-panel-header [ngClass]="isMobile ? 'font-size12 pt-4 pb-4' : '' ">
             <mat-panel-title>
               {{ material.projectName }}
               <a href="javascript:void(0)" (click)="openDialog(material)"
@@ -70,83 +71,121 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <table mat-table [dataSource]="material.projectMaterialList | SearchPipe: searchMaterial:'materialName'"
-            class="col-sm-12 rfq-custom-mat-width">
-            <ng-container matColumnDef="Material Name">
-              <th mat-header-cell *matHeaderCellDef>Material Name</th>
-              <td mat-cell *matCellDef="let element">
-                <div class="limited-character global" matTooltip=" {{ element.materialName }}">
-                  {{ element.materialName }} <br /></div>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Estimated Qty">
-              <th mat-header-cell *matHeaderCellDef>Estimated Qty</th>
-              <td class="text-center" mat-cell *matCellDef="let element">
-                {{ element.estimatedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Requested Qty">
-              <th mat-header-cell *matHeaderCellDef>Requested Qty</th>
-              <td class="text-center" mat-cell *matCellDef="let element">
-                {{ element.requestedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Fullfillment Date" class="date-dialog-add-edit">
-              <th mat-header-cell *matHeaderCellDef>Fullfillment Date</th>
-              <td mat-cell *matCellDef="let element; let i = index">
-                <mat-form-field class="border-input"
-                  [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)">
-                  <!-- <mat-label>Fullfil </mat-label> -->
-                  <!-- <span class="form-placeholder">{{
+          <div class="example-container mat-elevation-z8">
+
+            <table mat-table [dataSource]="material.projectMaterialList | SearchPipe: searchMaterial:['materialName']"
+              class="col-sm-12 rfq-custom-mat-width">
+              <ng-container matColumnDef="Material Name">
+                <th mat-header-cell *matHeaderCellDef>Material Name</th>
+                <td mat-cell *matCellDef="let element">
+                  <div class="limited-character global" matTooltip=" {{ element.materialName }}">
+                    <span>{{ element.materialName }}</span>
+                    <!-- Upload Image Modal Link -->
+                    <div class="add-edit-image d-block">
+                      <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(element, 'rfq')">Add/Edit
+                        Image</a>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Estimated Qty">
+                <th mat-header-cell *matHeaderCellDef>Estimated Qty</th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                  {{ element.estimatedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Requested Qty">
+                <th mat-header-cell *matHeaderCellDef>Requested Qty</th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                  {{ element.requestedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Fullfillment Date" class="date-dialog-add-edit">
+                <th mat-header-cell *matHeaderCellDef>Fullfillment Date</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  <mat-form-field class="border-input"
+                    [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)">
+                    <!-- <mat-label>Fullfil </mat-label> -->
+                    <!-- <span class="form-placeholder">{{
                     materialForms["controls"]["forms"]["controls"][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]["controls"]["fullfilmentDate"].value
                       | date: "dd-MMM-yyy"
                   }}</span> -->
-                  <input matInput [min]="startDate" [matDatepicker]="dueDate" formControlName="fullfilmentDate"
-                    (click)="dueDate.open()" readonly />
-                  <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
-                  <mat-datepicker #dueDate startView="month" [startAt]="startDate"></mat-datepicker>
-                </mat-form-field>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Estimated Rate">
-              <th mat-header-cell *matHeaderCellDef>Estimated Rate <br/> <span *ngIf="rfqData.rfqCurrency && rfqData.rfqCurrency.primaryCurrencyName">({{rfqData.rfqCurrency.primaryCurrencyName}})</span></th>
-              <td mat-cell *matCellDef="let element; let i = index">
-                <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)"
-                  class="border-input table-input">
-                  <input matInput formControlName="estimatedRate" type="text" appTwoDigitDecimaNumber
-                    placeholder="Estimated Rate" min="0" />
-                  <small *ngIf="
+                    <input matInput [min]="startDate" [matDatepicker]="dueDate" formControlName="fullfilmentDate"
+                      (click)="dueDate.open()" readonly />
+                    <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                    <mat-datepicker #dueDate startView="month" [startAt]="startDate"></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Estimated Rate">
+                <th mat-header-cell *matHeaderCellDef>
+                  Estimated Rate <br />
+                  <span>({{ rfqData.rfqCurrency && rfqData.rfqCurrency.exchangeCurrencyName ? rfqData.rfqCurrency.exchangeCurrencyName : primaryCurrencyCode }})</span>
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)"
+                    class="border-input table-input">
+                    <input matInput formControlName="estimatedRate" type="text" appTwoDigitDecimaNumber
+                      placeholder="Estimated Rate" min="0" />
+                    <small *ngIf="
                       materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['estimatedRate'].hasError(
                         'pattern'
                       ) && materialForms['controls']['forms']['controls'][i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)]['controls']['estimatedRate'].touched
                     " class="error-msg">
-                    Invalid estimated rate
-                  </small>
-                </mat-form-field>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Quantity">
-              <th mat-header-cell *matHeaderCellDef>Quantity</th>
-              <td mat-cell *matCellDef="let element; let i = index">
-                <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)"
-                  class="border-input table-input">
-                  <input matInput formControlName="quantity" type="text" placeholder="Quantity" min="0"
-                    appTwoDigitDecimaNumber />
-                </mat-form-field>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Makes">
-              <th mat-header-cell *matHeaderCellDef>Makes</th>
-              <td mat-cell *matCellDef="let element; let i = index">
-                <app-chip [chips]="element.makes"
-                  (onUpdate)="makesUpdate($event, i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0))"
-                  class="lh30"> </app-chip>
-              </td>
-            </ng-container>
+                      Invalid estimated rate
+                    </small>
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Quantity">
+                <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  <mat-form-field [formGroupName]="i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0)"
+                    class="border-input table-input">
+                    <input matInput formControlName="quantity" type="text" placeholder="Quantity" min="0"
+                      appTwoDigitDecimaNumber />
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Makes">
+                <th mat-header-cell *matHeaderCellDef>Makes</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  <app-chip [chips]="element.makes"
+                    (onUpdate)="makesUpdate($event, i + (mati ? projectSelectedMaterials[mati].prevMatListLength : 0))"
+                    class="lh30"> </app-chip>
+                </td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
+              <ng-container matColumnDef="Attached Images">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
+                  Attached Images
+                </th>
+                <td class="text-align-center" mat-cell *matCellDef="let element"
+                  [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+                  <!-- View image modal link -->
+                  <div *ngIf="element?.documentList?.length" class="images-lists mt-3"
+                    (click)="viewAllImages(element.materialId)">
+                    <ng-container *ngFor="let img of element.documentList; let i = index">
+                      <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image"
+                        *ngIf="i < 3" />
+                    </ng-container>
+                  </div>
+
+                  <ng-container *ngIf="!element?.documentList">
+                    <img src="assets/images/default-material.png" alt="default-material"
+                      class="img-fluid default-image" />
+                  </ng-container>
+
+                </td>
+              </ng-container>
+
+
+              <tr mat-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+
+          </div>
+
         </mat-expansion-panel>
       </mat-accordion>
     </ng-container>

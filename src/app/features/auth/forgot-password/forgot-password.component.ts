@@ -13,6 +13,7 @@ import { SignINDetailLists, ForgetPassDetails } from 'src/app/shared/models/sign
 import { CommonService } from 'src/app/shared/services/commonService';
 import { VisitorService } from 'src/app/shared/services/visitor.service';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 @Component({
   selector: "forgot-password",
@@ -39,12 +40,12 @@ export class ForgotPasswordComponent implements OnInit {
   lastFourDigit: any;
   otpValue: number;
   otpMessageVerify: string = "";
-  countryList: any
+  countryList: CountryCode[] = []
   searchCountry: string = '';
   primaryCallingCode: string = '';
-  livingCountry: string = '';
+  livingCountry: CountryCode[] = [];
   ipaddress: string = '';
-  callingCode: string = '+91';
+  callingCode: string;
   emailSendMessage: boolean = false
   constructor(
     private tokenService: TokenService,
@@ -60,19 +61,15 @@ export class ForgotPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.primaryCallingCode = localStorage.getItem('callingCode')
-    this.countryList = [{ countryName: 'India' }];
+    this.callingCode = localStorage.getItem("countryCode")
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
+      this.formInit();
       if (this.uniqueCode) {
         this.getUserInfo(this.uniqueCode);
-      } else {
-        this.formInit();
-
       }
       this.getLocation();
     });
-
     // let urlLength = this.router.url.toString().length;
     // let lastSlash = this.router.url.toString().lastIndexOf("/");
     // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
@@ -90,28 +87,19 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
-
-
   getLocation() {
     let emailValidator = [
       Validators.required,
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
-      this.callingCode = res['calling_code'];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        this.getCountryCode(res['calling_code'])
-        if (this.callingCode === '+91') {
-          this.forgetPassForm.get('email').setValidators(emailValidator)
-          this.forgetPassForm.get('phone').setValidators(Validators.required)
-        }
-        else {
-          this.forgetPassForm.get('email').setValidators(emailValidator)
-
-        }
-      });
-    });
+    this.getCountryCode(this.callingCode)
+    if (this.callingCode === '+91') {
+      this.forgetPassForm.get('email').setValidators(emailValidator)
+      this.forgetPassForm.get('phone').setValidators(Validators.required)
+    }
+    else {
+      this.forgetPassForm.get('email').setValidators(emailValidator)
+    }
   }
 
   getCountryCode(callingCode) {
@@ -132,7 +120,7 @@ export class ForgotPasswordComponent implements OnInit {
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {
       this.user = res.data[0];
-      this.formInit();
+      this.forgetPassForm.patchValue({ phone: this.user ? this.user.contactNo : '' })
     });
   }
 
@@ -144,7 +132,7 @@ export class ForgotPasswordComponent implements OnInit {
   formInit() {
     this.forgetPassForm = this.formBuilder.group({
       countryCode: [],
-      phone: [this.user ? this.user.contactNo : ''],
+      phone: [],
       organisationType: ["Contractor"],
       password: ["", [Validators.required, Validators.minLength(6)]],
       otp: [""],
@@ -269,9 +257,15 @@ export class ForgotPasswordComponent implements OnInit {
       this.sendotp(this.value);
     }
     else {
-
       this.signInSignupService.verifyResetEmail(this.forgetPassForm.get('email').value, 'fooClientIdPassword').then(res => {
-        this.emailSendMessage = true;
+        if (res.data.success) {
+          this._snackBar.open(`Password change email is sent to ${this.forgetPassForm.get('email').value}`, "", {
+            duration: 4000,
+            panelClass: ["success-snackbar"],
+            verticalPosition: "bottom"
+          });
+
+        }
         console.log(res)
       })
     }

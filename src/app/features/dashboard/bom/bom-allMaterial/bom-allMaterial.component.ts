@@ -33,6 +33,7 @@ export class BOMAllMaterialComponent implements OnInit {
   @Input("searchMat") searchMat: string;
   counter: number;
   orgId: number;
+  searchUnit: string = "";
   constructor(
     private router: Router,
     private route: ActivatedRoute,

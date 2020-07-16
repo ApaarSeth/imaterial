@@ -5,6 +5,7 @@ import { DataService } from './data.service';
 import { Router } from '@angular/router';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Currency } from '../models/currency';
+import { MediaMatcher } from '@angular/cdk/layout';
 @Injectable({
   providedIn: "root"
 })
@@ -19,8 +20,12 @@ export class CommonService {
   onUserUpdate$ = new Subject<number>();
   materialAdded = new Subject<boolean>();
   baseCurrency = new BehaviorSubject(null);
-  constructor(private dataService: DataService,
-    private _router: Router) { }
+  XSmall: string = '(max-width: 599px)';
+  constructor(
+    private dataService: DataService,
+    private _router: Router,
+    private mediaMatcher: MediaMatcher
+  ) { }
 
   formatDate(oldDate): string {
     let newDate = new Date(oldDate);
@@ -95,7 +100,8 @@ export class CommonService {
   }
 
   getCountry() {
-    return this.dataService.getRequest(API.COUNTRYCODE);
+    let callingCode = localStorage.getItem('countryCode')
+    return this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: callingCode === '+91' ? false : true });
   }
 
   poTaxesList() {
@@ -105,10 +111,24 @@ export class CommonService {
     return this.dataService.getRequest(API.GETTAXESLIST(rfqId))
   }
 
+  isMobile() {
+    return this.mediaMatcher.matchMedia(this.XSmall);
+  }
 
+  getPincodeInternational(pin: number, cId: number) {
+    return this.dataService
+      .getRequest(API.GETCITYANDSTATEBYCOUNTRY(pin, cId))
+      .then(res => {
+        return res;
+      });
+  }
 
-
-
+  getSubscriptionPlan() {
+    return this.dataService.getRequest(API.GETSUBSCRIPTIONPLAN);
+  }
+  pushNotificationData(data) {
+    return this.dataService.sendPostRequest(API.PUSHNOTIFICATIONDATA, data)
+  }
 
 }
 

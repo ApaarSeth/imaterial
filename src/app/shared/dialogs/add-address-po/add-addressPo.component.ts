@@ -17,7 +17,7 @@ export interface City {
 // Component for dialog box
 @Component({
   selector: "address-dialog",
-  templateUrl: "./add-addressPo.html"
+  templateUrl: "./add-addressPo.component.html"
 })
 
 // Component class
@@ -68,11 +68,8 @@ export class AddAddressPoDialogComponent {
   tabClick($event) {
     this.currentIndex = $event.index;
     if (this.currentIndex === 1) {
-      this._userService.getUserInfo(localStorage.getItem("userId")).then(res => {
-        this.getCountryCode(res.data[0].countryId)
-      })
+      this.getCountryCode(localStorage.getItem('countryId'))
     }
-
   }
 
   cities: City[] = [
@@ -93,7 +90,7 @@ export class AddAddressPoDialogComponent {
     this.commonService.getCountry().then(res => {
       this.countryList = res.data;
       this.livingCountry = this.countryList.filter(val => {
-        return val.countryId === countryId;
+        return val.countryId === Number(countryId);
       })
       this.newAddressForm.get('countryCode').setValue(this.livingCountry[0]);
     })
@@ -117,7 +114,8 @@ export class AddAddressPoDialogComponent {
     this.newAddressForm = this.formBuilder.group({
       addressLine1: ["", [Validators.required, Validators.maxLength(120)]],
       addressLine2: ["", Validators.maxLength(120)],
-      pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
+      // pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
+      pinCode: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
       state: [{ value: "", disabled: true }, Validators.required],
       city: [{ value: "", disabled: true }, Validators.required],
       gstNo: ["", [Validators.pattern(FieldRegExConst.GSTIN)]],
@@ -167,7 +165,7 @@ export class AddAddressPoDialogComponent {
   }
 
   cityStateFetch(value) {
-    this.projectService.getPincodeInternational(value, this.selectedCountryId).then(res => {
+    this.commonService.getPincodeInternational(value, this.selectedCountryId).then(res => {
       if (res.data && res.data.length) {
         this.city = res.data[0].districtName;
         this.state = res.data[0].stateName;
@@ -180,6 +178,7 @@ export class AddAddressPoDialogComponent {
         this.newAddressForm.get('state').setValue(res.data[0].stateName);
       }
     });
+
   }
   close() {
     this.dialogRef.close(null);

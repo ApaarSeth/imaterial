@@ -7,6 +7,7 @@ import { UserService } from 'src/app/shared/services/userDashboard/user.service'
 import { MatSnackBar } from '@angular/material';
 import { Currency, CountryCode } from 'src/app/shared/models/currency';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 export interface City {
   value: string;
@@ -42,13 +43,16 @@ export class ProfileComponent implements OnInit {
   url: any;
   userId
   imageFileSizeError: string = "";
-  imageFileSize: boolean = false;
+  imageFileSizeCheck: boolean = true;
   fileTypes: string[] = ['png', 'jpeg', 'jpg'];
   tradeDescription: string;
   currencyList: Currency[] = [];
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
   baseCurrency
+  countryCode: string;
+  validPincode: boolean = false;
+  countryId: Number;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -61,7 +65,8 @@ export class ProfileComponent implements OnInit {
     this.role = localStorage.getItem("role");
     this.formInit();
     this.getUserRoles();
-
+    this.countryId = Number(localStorage.getItem('countryId'))
+    this.countryCode = localStorage.getItem('countryCode')
     // this.getUserInformation(userId);
     this.getTurnOverList();
     this.getCurrencyAndCountry();
@@ -114,7 +119,7 @@ export class ProfileComponent implements OnInit {
 
   setCountryAndCurrency() {
     this.livingCountry = this.countryList.filter(val => {
-      return val.countryId === this.users.countryId;
+      return val.countryId === Number(this.users.countryId);
     })
     let newCurrencyList = this.currencyList.filter(val => {
       return val.currencyId === this.users.baseCurrency.currencyId;
@@ -125,7 +130,15 @@ export class ProfileComponent implements OnInit {
 
   getTurnOverList() {
     this._userService.getTurnOverList().then(res => {
-      this.turnOverList = res.data;
+      let callingCode = localStorage.getItem('countryCode')
+      this.turnOverList = res.data.filter(data => {
+        if (callingCode === '+91' && data.isInternational === 0) {
+          return data
+        }
+        else if (callingCode !== '+91' && data.isInternational === 1) {
+          return data
+        }
+      })
     })
   }
 
@@ -163,27 +176,49 @@ export class ProfileComponent implements OnInit {
 
   formInit() {
     this.userInfoForm = this._formBuilder.group({
-      baseCurrency: [],
-      countryCode: [],
+      baseCurrency: [{ value: '', disabled: true }],
+      countryCode: [{ value: '', disabled: true }],
       organizationName: [this.users ? this.users.organizationName : ''],
       organizationId: [this.users ? this.users.organizationId : ''],
-      firstName: [{ value: this.users ? this.users.firstName : '', disabled: true }, Validators.required],
-      lastName: [{ value: this.users ? this.users.lastName : '', disabled: true }, Validators.required],
+      firstName: [{ value: this.users ? this.users.firstName : '', disabled: false }, Validators.required],
+      lastName: [{ value: this.users ? this.users.lastName : '', disabled: false }, Validators.required],
       email: [{ value: this.users ? this.users.email : '', disabled: true }, Validators.required],
-      contactNo: [{ value: this.users ? this.users.contactNo : '', disabled: true }, Validators.required],
-      roleId: [{ value: this.users ? this.users.roleId : null, disabled: true }, Validators.required],
-      turnOverId: [{ value: this.users ? this.users.TurnOverId : null, disabled: true }, Validators.required],
-      roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: true }],
+      contactNo: [{ value: this.users ? this.users.contactNo : '', disabled: this.countryCode === "+91" ? true : false }, Validators.required],
+      roleId: [{ value: this.users ? this.users.roleId : null, disabled: false }, Validators.required],
+      turnOverId: [{ value: this.users ? this.users.TurnOverId : null, disabled: false }],
+      roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: false }],
       userId: [this.users ? this.users.userId : null],
       ssoId: [this.users ? this.users.ssoId : null],
       countryId: [],
-      trade: [],
+      trade: [this.users ? this.users.trade : null],
       profileUrl: [''],
+      orgPincode: [this.users ? this.users.orgPincode : null, [Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS)]]
     });
     this.customTrade = this._formBuilder.group({
       trade: []
     })
+    this.userInfoForm.get('orgPincode').valueChanges.subscribe(val => {
+      this.cityStateFetch(val)
+    })
   }
+
+  cityStateFetch(value) {
+    this.commonService.getPincodeInternational(value, Number(this.countryId)).then(res => {
+      if (res.data && res.data.length) {
+        let city = res.data[0].districtName;
+        let state = res.data[0].stateName;
+        if (city && state)
+          this.validPincode = true;
+        else
+          this.validPincode = false;
+
+      }
+      else {
+        this.validPincode = false;
+      }
+    });
+  }
+
 
   changeSelected(parameter: string, trade: TradeList) {
     let choosenIndex = -1;
@@ -203,7 +238,6 @@ export class ProfileComponent implements OnInit {
         this.customTrade.get("trade").disable()
       }
     }
-
     this.selectedTradesId = this.selectedTrades.map((trades: TradeList) => trades.tradeId).flat()
   }
 
@@ -226,11 +260,11 @@ export class ProfileComponent implements OnInit {
             this.localImg = (<FileReader>event.target).result;
           }
           this.imageFileSizeError = "";
-          this.imageFileSize = true;
+          this.imageFileSizeCheck = true;
           this.uploadImage(file);
         }
         else {
-          this.imageFileSize = false;
+          this.imageFileSizeCheck = false;
           this.imageFileSizeError = "Image must be less than 1 mb";
         }
       }
@@ -263,7 +297,6 @@ export class ProfileComponent implements OnInit {
 
 
   submit() {
-
     if (this.userInfoForm.valid) {
       this.selectedTrades = this.selectedTrades.map((trade: TradeList) => {
         if (trade.tradeId === this.OthersId) {
@@ -271,11 +304,13 @@ export class ProfileComponent implements OnInit {
         }
         return trade;
       })
-      this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
 
       let data: UserDetails = this.userInfoForm.getRawValue();
+      data.myAccountUpdate = false;
+      data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
+      data.orgPincode = String(this.userInfoForm.getRawValue().orgPincode)
       this._userService.submitUserDetails(data).then(res => {
         if (this.url) {
           this._userService.UpdateProfileImage.next(this.url);

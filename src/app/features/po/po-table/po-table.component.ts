@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild, Output, EventEmitter, HostListener } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, ViewChild, Output, EventEmitter, HostListener, ChangeDetectorRef } from "@angular/core";
 import { PoMaterial, PurchaseOrder, PurchaseOrderCurrency, POData } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
 import { ignoreElements, debounceTime } from "rxjs/operators";
@@ -30,7 +30,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   toggleCounter: number = 0;
   showResponsiveDesign: boolean;
   poCurrency: PurchaseOrderCurrency
-  constructor(private activatedRoute: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
+  constructor(private cdr: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
@@ -44,12 +44,14 @@ export class PoTableComponent implements OnInit, OnDestroy {
   totalAdditionalCost: number = 0;
   additonalCost: { additionalOtherCostAmount: number, additionalOtherCostInfo: OverallOtherCost[] }
   ratesBaseCurr: boolean = false;
+  isMobile: boolean;
 
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
       this.mode = params.mode;
     });
+    this.isMobile = this.commonService.isMobile().matches;
     this.formInit();
   }
 
@@ -59,7 +61,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
     this.additonalCost = this.additionalOtherCostInfo;
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-
   }
   formInit() {
     const frmArr: FormGroup[] = this.poTableData.map((poMaterial: PoMaterial, i) => {
@@ -400,6 +401,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     else {
       return this.poTableData[m].purchaseOrderDetailList[0].taxAmount ? this.poTableData[m].purchaseOrderDetailList[0].taxAmount : 0;
     }
+
   }
 
 

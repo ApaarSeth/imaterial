@@ -12,6 +12,7 @@ import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractCon
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
 import { Subject, Observable } from 'rxjs';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-rfq-supplier",
@@ -38,17 +39,20 @@ export class RfqSupplierComponent implements OnInit {
   supplierForm: FormGroup;
   supplierCounter: number = 0;
   newAddedId: number;
-
+  countryist: any;
+  isMobile: boolean;
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.rfqData = {
       id: null,
       status: null,
@@ -69,12 +73,15 @@ export class RfqSupplierComponent implements OnInit {
     };
 
     this.orgId = Number(localStorage.getItem("orgId"));
-    if (this.activatedRoute.snapshot.data.createRfq[0].data) {
-      this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
+    console.log(this.activatedRoute);
+    if (this.activatedRoute.snapshot.data.createRfq[ 0 ].data) {
+      this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[ 0 ].data;
       // this.allSupplier.next(this.allSuppliers);
     } else {
       this.allSuppliers = [];
     }
+
+    this.countryist = this.activatedRoute.snapshot.data.countryList
     this.formInit();
   }
   ngOnChanges(changes: SimpleChanges) {
@@ -97,7 +104,7 @@ export class RfqSupplierComponent implements OnInit {
   formInit() {
     const frmArr: FormGroup[] = this.allSuppliers.map(supplier => {
       return this.formBuilder.group({
-        supplier: [supplier.checked ? supplier : null]
+        supplier: [ supplier.checked ? supplier : null ]
       });
     });
     this.supplierForm = this.formBuilder.group({
@@ -106,7 +113,7 @@ export class RfqSupplierComponent implements OnInit {
   }
 
   supplierCheck() {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
+    return (control: AbstractControl): { [ key: string ]: boolean } | null => {
       let check = control.value.some(supp => {
         return supp.supplier != null
       })
@@ -120,7 +127,7 @@ export class RfqSupplierComponent implements OnInit {
 
 
   valueChange(supplier: Suppliers, ch: MatCheckbox, i: number) {
-    const sArr = this.supplierForm.controls["forms"] as FormArray;
+    const sArr = this.supplierForm.controls[ "forms" ] as FormArray;
     const sGrp = sArr.at(i) as FormGroup;
     if (ch.checked) {
       if (this.supplierCounter < 3) {
@@ -141,7 +148,7 @@ export class RfqSupplierComponent implements OnInit {
   supplierAlert() {
     this._snackBar.open("Cannot add more than 3 supplier", "", {
       duration: 2000,
-      panelClass: ["warning-snackbar"],
+      panelClass: [ "warning-snackbar" ],
       verticalPosition: "bottom"
     });
   }
@@ -170,9 +177,11 @@ export class RfqSupplierComponent implements OnInit {
   }
 
   openSupplierDialog(projectId) {
+    let data = { projectId, countryList: this.countryist }
+
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "660px",
-      data: projectId
+      data
     });
     dialogRef
       .afterClosed()
@@ -211,15 +220,15 @@ export class RfqSupplierComponent implements OnInit {
     });
   }
 
-  selectCurrency(){
+  selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
-      disableClose: true ,
+      disableClose: true,
       width: "600px",
-      data : this.rfqData.rfqCurrency
+      data: this.rfqData.rfqCurrency
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      if(data != null){
+      if (data != null) {
         this.rfqData.rfqCurrency = data;
       }
     });

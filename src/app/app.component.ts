@@ -1,9 +1,11 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacebookPixelService } from './shared/services/fb-pixel.service';
-import { environment } from 'src/environments/environment';
-import { API, Froala } from './shared/constants/configuration-constants';
+import { SwPush, SwUpdate } from '@angular/service-worker';
+import { WebNotificationService } from './shared/services/webNotificationService.service';
+import { Visitor } from '@angular/compiler/src/render3/r3_ast';
 import { VisitorService } from './shared/services/visitor.service';
+import { API } from './shared/constants/configuration-constants';
 
 @Component({
   selector: "app-root",
@@ -17,10 +19,30 @@ export class AppComponent {
   ipaddress: number;
   constructor(
     private visitorsService: VisitorService,
+    private swPush: SwPush,
     private _activatedRoute: ActivatedRoute,
-    private fbPixel: FacebookPixelService
+    private fbPixel: FacebookPixelService,
+    private webNotificationService: WebNotificationService,
+    private swUpdate: SwUpdate
   ) {
   }
+
+  // subscribeNotification() {
+  //   this.webNotificationService.subscribeToNotification()
+  //   if (this.swUpdate.isEnabled) {
+  //     this.swUpdate.available.subscribe(() => {
+  //       if (confirm("New version available. Load New Version?")) {
+  //         window.location.reload();
+  //       }
+  //     });
+  //   }
+  //   this.swPush.notificationClicks.subscribe(({ action, notification }) => {
+  //     window.open(notification.data.url)
+  //   })
+  // }
+
+
+
 
   ngOnInit() {
     this.location = window.location.href;
@@ -31,15 +53,5 @@ export class AppComponent {
     else {
       this.hideHeader = false;
     }
-    this.getLocation()
-  }
-
-  getLocation() {
-    this.visitorsService.getIpAddress().subscribe(res => {
-      this.ipaddress = res['ip'];
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        localStorage.setItem('callingCode', res['calling_code'])
-      });
-    });
   }
 }

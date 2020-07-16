@@ -2,8 +2,7 @@
   <mat-card class="width98Percent margin-0-auto radius-10">
     <mat-card-header class="upload-documents-mat-header">
       <span class="text-semi-bold width100Percent">
-        <app-upload #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved"
-          (onFileUpdate)="fileUpdate($event)"> </app-upload>
+        <app-upload #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"> </app-upload>
       </span>
       <!-- <span class="col-xs-12 text-align-center text-semi-bold">
         View Document
@@ -23,7 +22,6 @@
                 </i>
               </a>
             </span>
-
           </mat-list-item>
         </span>
         <span *ngIf="!documentData">

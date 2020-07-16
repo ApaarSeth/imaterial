@@ -98,7 +98,7 @@
                 </span>
               </th>
 
-              <th class="font-size14" colspan="2">
+              <th class="font-size14" colspan="3">
                 <span *ngIf="projects.addressLine1">
                   {{ projects.addressLine1 }}
                 </span>
@@ -125,15 +125,32 @@
             <ng-container *ngFor="let material of projects.materialList">
               <tr matSort class="material-rfq-supplies">
                 <td class="font-size14 limited-character">
-                  <span>
-                    {{ material.materialName }}
-                  </span>
+                  <span>{{ material.materialName }}</span>
+                  <!-- Upload Image Modal Link -->
+                  <div class="add-edit-image d-block">
+                    <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(material, 'supplier')">Add/Edit Image</a>
+                  </div>
                 </td>
                 <td class="font-size14">
                   Requested Quantity: {{ material.materialQuantity }}
                   {{ material.materialUnit }}
                 </td>
                 <td class="font-size14">Required Date : {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</td>
+                
+                <!-- View image modal link -->
+                <td class="font-size14 text-center supplier-bid-imgs">
+                  <div *ngIf="material?.documentsList?.length" class="images-lists"
+                    (click)="viewAllImages(material.materialId)">
+                    <ng-container *ngFor="let img of material.documentsList; let i = index">
+                      <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                    </ng-container>
+                  </div>
+      
+                  <ng-container *ngIf="!material?.documentsList">
+                    <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
+                  </ng-container>
+                </td>
+
                 <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1">
                   <td class="font-size14">
                     <ng-container *ngIf="
@@ -191,9 +208,17 @@
               <ng-container *ngIf="rfqSupplierDetailList.isInternational === 0; else intBHeader">
                 <tr matSort class="brand-name-rfq-supplies">
                   <th class="font-size14">Brand Name</th>
-                  <th class="font-size14">Rate</th>
-                  <th class="font-size14 text-align-right">Total Amount</th>
-                  <th class="font-size14 text-align-right">GST Amount</th>
+                  <th class="font-size14">Rate <ng-container *ngIf="rfqSupplierDetailList.baseCurrencyCode">
+                      ({{ rfqSupplierDetailList.baseCurrencyCode }})</ng-container>
+                  </th>
+                  <th class="font-size14 text-align-right" colspan="2">Total Amount <ng-container
+                      *ngIf="rfqSupplierDetailList.baseCurrencyCode">
+                      ({{ rfqSupplierDetailList.baseCurrencyCode }})</ng-container>
+                  </th>
+                  <th class="font-size14 text-align-right">GST Amount <ng-container
+                      *ngIf="rfqSupplierDetailList.baseCurrencyCode">
+                      ({{ rfqSupplierDetailList.baseCurrencyCode }})</ng-container>
+                  </th>
                 </tr>
 
                 <!-- Brand-wise details -->
@@ -208,7 +233,7 @@
                     </mat-form-field>
                   </td>
 
-                  <td class="text-align-right">{{ brand.brandRate * material.materialQuantity | number: "1.2-2" }}</td>
+                  <td class="text-align-right" colspan="2">{{ brand.brandRate * material.materialQuantity | number: "1.2-2" }}</td>
 
                   <td class="text-align-right">
                     <span *ngIf="!brand.brandRate">0.00</span>
@@ -221,18 +246,27 @@
                 <tr matSort class="brand-name-rfq-supplies">
                   <th class="font-size14">Brand Name</th>
                   <th class="font-size14">
-                    Unit Rate <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                    Unit Rate <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                    <ng-template #bsCrCode>
+                      {{ rfqSupplierDetailList.baseCurrencyCode }}
+                    </ng-template>
                   </th>
                   <th class="font-size14 text-align-right">
                     Amount
-                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                    <ng-template #bsCrCode>
+                      {{ rfqSupplierDetailList.baseCurrencyCode }}
+                    </ng-template>
                   </th>
                   <th class="font-size14 text-align-right">
                     Tax Amount
-                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                    <ng-template #bsCrCode>
+                      {{ rfqSupplierDetailList.baseCurrencyCode }}
+                    </ng-template>
                     <span *ngIf="
                         taxAndCostData &&
                         taxAndCostData[projects.projectId] &&
@@ -254,8 +288,11 @@
                   </th>
                   <th class="font-size14 text-align-right">
                     Total Amount
-                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
+                    <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
+                    <ng-template #bsCrCode>
+                      {{ rfqSupplierDetailList.baseCurrencyCode }}
+                    </ng-template>
                   </th>
                 </tr>
 

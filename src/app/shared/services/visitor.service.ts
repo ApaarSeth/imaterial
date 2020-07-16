@@ -16,23 +16,22 @@ export class VisitorService {
 
     }
 
-    getIpAddress() {
-        return this.http
-            .get("https://cors-anywhere.herokuapp.com/http://api.ipify.org/?format=json")
-            .pipe(
-                catchError(this.handleError)
-            );
-    }
+    // getIpAddress() {
+    //     return this.http
+    //         .get("http://ip-api.com/json")
+    //         .pipe(
+    //             catchError(this.handleError)
+    //         );
+    // }
 
-    getGEOLocation(ip) {
-
+    getGEOLocation() {
         //let headers = new HttpHeaders();
-        let url = "https://api.ipgeolocation.io/ipgeo?apiKey=0f4e06b0721a4a2b82bce38abc80b31a&ip=" + ip;
+        let url = "https://pro.ip-api.com/json?key=nPhN084pCibTSLr";
         return this.http
             .get(url)
             .pipe(
                 catchError(this.handleError)
-            );
+            ).toPromise();
     }
 
     private handleError(error: HttpErrorResponse) {

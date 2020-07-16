@@ -31,7 +31,7 @@
                 <span class="font-size12">{{ selectedCountry && selectedCountry.callingCode }}</span>
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:'name'" [value]="country">
+            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country">
               <span
                 ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
                 <span class="limited-character universal p-r-5" matTooltip="{{ country.name }}">{{ country.name }}</span>
@@ -43,16 +43,7 @@
       </div>
       <div *ngIf="this.callingCode === '+91'" class="phone-number col-xs-8" [ngClass]="{'p-t-10': lessOTPDigits}">
         <mat-form-field class="border-input display-flex">
-          <input
-            matInput
-            type="number"
-            min="0"
-            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-            formControlName="phone"
-            #phone
-            placeholder="Phone No."
-            (input)="enterPhone($event)"
-          />
+          <input matInput type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" #phone placeholder="Phone No." />
           <button
             type="button"
             *ngIf="!lessOTPDigits"
@@ -89,11 +80,19 @@
         <input matInput type="text" formControlName="organisationName" placeholder="Company Name" />
       </mat-form-field>
       <mat-form-field class="col-xs-12 border-input">
-        <input matInput type="email" formControlName="email" (input)="verifyEmail($event)" placeholder="Email" />
+        <input matInput type="email" formControlName="email" placeholder="Email" />
         <small *ngIf="signupForm.controls['email'].hasError('required') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Email is required </small>
         <small *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Enter Valid Email</small>
-
-        <small *ngIf="!emailVerified">Email already in use.</small>
+        <small
+          *ngIf="
+            !emailVerified &&
+            emailEnteredCounter &&
+            !signupForm.controls['email'].hasError('required') &&
+            !signupForm.controls['email'].hasError('pattern') &&
+            signupForm.controls['email'].touched
+          "
+          >Email already in use.
+        </small>
       </mat-form-field>
 
       <!-- <mat-form-field class="col-xs-12 border-select">
@@ -123,7 +122,7 @@
           class="main-background-color main-button color-white m-b-5"
           cdkFocusInitial
           style="width: 100%;"
-          [disabled]="this.callingCode === '+91' ? !signupForm.valid || !lessOTPDigits || !emailVerified : !signupForm.valid || !emailVerified"
+          [disabled]="this.callingCode === '+91' ? !signupForm.valid || !lessOTPDigits || !emailVerified : !signupForm.valid && !emailVerified"
         >
           Sign Up
         </button>

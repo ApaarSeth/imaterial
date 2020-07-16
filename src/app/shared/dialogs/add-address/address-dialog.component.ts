@@ -22,7 +22,7 @@ export class AddAddressDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: RfqMaterialResponse,
     private formBuilder: FormBuilder,
     private addAddressService: AddAddressService
-  ) {}
+  ) { }
   selectAddressFrm: FormGroup;
   newAddressForm: FormGroup;
   address: Address;
@@ -42,11 +42,11 @@ export class AddAddressDialogComponent {
 
     // new address form
     this.newAddressForm = this.formBuilder.group({
-      addressLine1: ["", [Validators.required,Validators.maxLength(120)]],
-      addressLine2: ["", Validators.maxLength(120)],
-      pinCode: ["", [Validators.required,Validators.pattern(FieldRegExConst.PINCODE)]],
-      state: ["", Validators.required],
-      city: ["", Validators.required]
+      addressLine1: [ "", [ Validators.required, Validators.maxLength(120) ] ],
+      addressLine2: [ "", Validators.maxLength(120) ],
+      pinCode: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.PINCODE) ] ],
+      state: [ "", Validators.required ],
+      city: [ "", Validators.required ]
     });
 
   }

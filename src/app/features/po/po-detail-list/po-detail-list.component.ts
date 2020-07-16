@@ -70,6 +70,7 @@ export class PODetailComponent implements OnInit {
     private poDetailService: POService,
     private permissionService: PermissionService,
     private route: Router,
+    private poService: POService,
     private projectService: ProjectService,
     public dialog: MatDialog,
     private guidedTourService: GuidedTourService,
@@ -196,10 +197,17 @@ export class PODetailComponent implements OnInit {
     } as ProjetPopupData);
   }
   openPaymentRecord(poDetail: PurchaseOrder) {
-    const dialogRef = this.dialog.open(PaymentRecordComponent, {
-      width: "800px",
-      data: poDetail
-    });
+    this.poService.paymentDetail(poDetail.purchaseOrderId).then(res => {
+      let data = {
+        poDetail,
+        paymentDetail: res.data[0]
+      }
+      const dialogRef = this.dialog.open(PaymentRecordComponent, {
+        width: "800px",
+        data
+      });
+    })
+
   }
 
   openDialogDeactiveUser(data: ProjetPopupData): void {

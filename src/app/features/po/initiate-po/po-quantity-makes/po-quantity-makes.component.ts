@@ -22,19 +22,30 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   @Output() finalPoData = new EventEmitter<any>();
   initiatePoData: initiatePo = {} as initiatePo;
   suppliers: Suppliers;
-  displayedColumns: string[] = ["Material Name", "Required Date", "Requested Qty", "Fullfillment Date", "Estimated Qty", "Estimated Rate", "Quantity", "Makes"];
+  displayedColumns: string[] = [ "Material Name", "Required Date", "Requested Qty", "Fullfillment Date", "Estimated Qty", "Estimated Rate", "Quantity", "Makes" ];
   materialForms: FormGroup;
   minDate = new Date();
   checkedMaterialsList: RfqMaterialResponse[];
   poCurrency: rfqCurrency;
-  constructor(private dialog: MatDialog, private commonService: CommonService, private navService: AppNavigationService, private route: ActivatedRoute, private router: Router, private poService: POService, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
+  isMobile: boolean;
+  constructor(
+    private dialog: MatDialog,
+    private commonService: CommonService,
+    private navService: AppNavigationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private poService: POService,
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     this.poCurrency = this.poData && this.poData.poCurrency;
     if (this.poData)
-      this.checkedMaterialsList = [...this.poData.selectedMaterial];
+      this.checkedMaterialsList = [ ...this.poData.selectedMaterial ];
     if (this.checkedMaterialsList) {
       this.formsInit();
     }
@@ -45,17 +56,17 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
     const frmArr = this.checkedMaterialsList
       .map((subCat, i) => {
         if (i !== 0) {
-          subCat.prevMatListLength = this.checkedMaterialsList[i - 1].projectMaterialList.length;
+          subCat.prevMatListLength = this.checkedMaterialsList[ i - 1 ].projectMaterialList.length;
         }
         return subCat.projectMaterialList.map(item => {
           let dueDate = item.dueDate ? (new Date(item.dueDate) < new Date() ? null : item.dueDate) : null;
 
           return this.formBuilder.group({
-            materialUnitPrice: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
-            materialQty: [item.quantity, [Validators.required, this.quantityCheck(item.poAvailableQty)]],
-            brandNames: [item.makes],
-            materialId: [item.materialId],
-            fullfilmentDate: [dueDate]
+            materialUnitPrice: [ item.estimatedRate, Validators.pattern(FieldRegExConst.RATES) ],
+            materialQty: [ item.quantity, [ Validators.required, this.quantityCheck(item.poAvailableQty < 0 ? 0 : item.poAvailableQty) ] ],
+            brandNames: [ item.makes ],
+            materialId: [ item.materialId ],
+            fullfilmentDate: [ dueDate ]
           });
         });
       })
@@ -65,14 +76,14 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
 
   }
   quantityCheck(availableQuantity): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
+    return (control: AbstractControl): { [ key: string ]: boolean } | null => {
       if (availableQuantity < control.value) {
         this._snackBar.open(
           "Cannot add quantity greater than " + availableQuantity,
           "",
           {
             duration: 2000,
-            panelClass: ["warning-snackbar"],
+            panelClass: [ "warning-snackbar" ],
             verticalPosition: "bottom"
           }
         );
@@ -86,7 +97,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   makesUpdate(data: string[], grpIndex: number) {
 
     const forms = this.materialForms.get("forms") as FormArray;
-    forms.controls[grpIndex].get("brandNames").setValue(data);
+    forms.controls[ grpIndex ].get("brandNames").setValue(data);
 
   }
   materialAdded() {
@@ -113,18 +124,18 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       this.initiatePoData.materialList = this.materialForms.value.forms;
     });
 
-    this.poService.initiatePo([this.initiatePoData]).then(res => {
+    this.poService.initiatePo([ this.initiatePoData ]).then(res => {
       this.navService.gaEvent({
         action: 'submit',
         category: 'material-name',
         label: 'material name',
         value: null
       });
-      this.router.navigate(["/po/po-generate/" + res.data[0] + "/edit"]);
+      this.router.navigate([ "/po/po-generate/" + res.data[ 0 ] + "/edit" ]);
     });
   }
   sendDataBack() {
-    this.poData.selectedMaterial[0].projectMaterialList = this.poData.selectedMaterial[0].projectMaterialList.map((mat: RfqMat) => {
+    this.poData.selectedMaterial[ 0 ].projectMaterialList = this.poData.selectedMaterial[ 0 ].projectMaterialList.map((mat: RfqMat) => {
       for (let material of this.materialForms.value.forms) {
         if (material.materialId === mat.materialId) {
           mat.quantity = material.materialQty;

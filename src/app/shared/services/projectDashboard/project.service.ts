@@ -92,9 +92,14 @@ export class ProjectService {
       });
   }
 
-  getPincodeInternational(pin: number, cId: number) {
+
+
+  /**
+   * @description To get the dashboard videos
+   */
+  getVideos() {
     return this.dataService
-      .getRequest(API.GETCITYANDSTATEBYCOUNTRY(pin, cId))
+      .getRequest(API.DASHBOARD_VIDEOS)
       .then(res => {
         return res;
       });

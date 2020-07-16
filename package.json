@@ -21,12 +21,17 @@
     "@angular/material": "^8.2.3",
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
+    "@angular/pwa": "^0.1000.1",
     "@angular/router": "~8.2.14",
+    "@angular/service-worker": "^10.0.2",
     "@kolkov/angular-editor": "^1.1.2",
+    "@ng-bootstrap/ng-bootstrap": "^5.3.1",
+    "@types/jquery": "^3.5.0",
     "angular-file-saver": "^1.1.3",
     "angular-froala-wysiwyg": "^3.1.1-1",
     "file-saver": "^2.0.2",
     "hammerjs": "^2.0.8",
+    "http-server": "^0.12.3",
     "ngx-editor": "^5.0.0-alpha.3",
     "ngx-google-analytics": "^8.0.0",
     "ngx-guided-tour": "^1.1.8",
@@ -57,6 +62,6 @@
     "protractor": "^5.4.4",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "^3.4.5"
   }
 }

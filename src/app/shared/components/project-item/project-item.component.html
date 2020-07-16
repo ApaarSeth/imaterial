@@ -1,4 +1,4 @@
-<mat-card class="m-t-5 m-b-10 box-shadow">
+<mat-card class="box-shadow" [ngClass]="isMobile ? 'p-10' : 'm-t-5 m-b-10' ">
   <mat-card-content class="mat-card-content card-project-dashboard">
     <div class="row">
       <div class="col-lg-2 image-big-screen">
@@ -10,7 +10,7 @@
 
       <div class="col-lg-10 col-md-12 col-xs-12 card-project-dialog">
         <div class="row">
-          <div class="col-xs-10">
+          <div [ngClass]="isMobile ? 'pl-3 col-xs-12' : 'col-xs-10' ">
             <div class="row">
               <div class="col-xs-3 image-small-screen">
                 <div>
@@ -20,7 +20,7 @@
                     [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
                 </div>
               </div>
-              <div class="col-xs-9 p-l-25">
+              <div class="col-xs-9" [ngClass]="isMobile ? 'pl-3' : 'p-l-25' ">
                 <div class="text-bold">
                   <span class="main-color card-project-name"
                     href="javascript:void(0)">{{ projectDetails.projectName }}</span>
@@ -38,7 +38,8 @@
                         <span *ngIf="projectDetails.pinCode">, {{ projectDetails.pinCode }}</span>
                       </div>
 
-                      <div class="firstOne-details" (click)="showDetails(projectDetails)">
+                      <div class="firstOne-details" (click)="showDetails(projectDetails)"
+                        [ngClass]="isMobile ? 'pl-0' : '' ">
                         View Details
                       </div>
                     </div>
@@ -108,11 +109,12 @@
 
 
 
-        <div class="row m-t-20 tiles">
+        <div class="row tiles" [ngClass]="isMobile ? 'mt-2' : 'm-t-20' ">
 
-          <div class="col-xs-6  col-sm-4 col-md-3  display-material-indent-po-box">
-            <div class="box-custom color-text-card p-t-10 cursor-pointer display-flex showAllMaterials"
-              (click)="navigationToBOM(projectDetails.projectId, projectDetails)" matTooltip="View All Materials">
+          <div class="col-xs-4 col-sm-4 col-md-3 display-material-indent-po-box">
+            <div class="box-custom color-text-card cursor-pointer showAllMaterials"
+              (click)="navigationToBOM(projectDetails.projectId, projectDetails)" matTooltip="View All Materials"
+              [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex' ">
               <div class="font-size20 text-bold">
                 <span *ngIf="projectDetails.matCount" class="max-width-96 word-break-word">
                   {{ projectDetails.matCount }}
@@ -121,7 +123,7 @@
                   0
                 </span>
               </div>
-              <div class="font-size12 p-l-15 p-t-5">
+              <div [ngClass]="isMobile ? 'font-size11 line-height-1' : 'p-l-15 p-t-5 font-size12' ">
                 <div class="max-width-96 word-break-word">
                   All Materials
                 </div>
@@ -130,10 +132,10 @@
           </div>
 
 
-          <div class="col-xs-6  col-sm-4 col-md-3  display-material-indent-po-box">
-            <div class="box-custom color-text-card p-t-10 cursor-pointer  display-flex showOpenIndents"
+          <div class="col-xs-4 col-sm-4 col-md-3  display-material-indent-po-box">
+            <div class="box-custom color-text-card cursor-pointer showOpenIndents"
               (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
-              matTooltip="View All Indents">
+              matTooltip="View All Open Purchase Requisition" [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex' ">
               <div class="font-size20 text-bold">
                 <span *ngIf="!projectDetails.openIndentCount" class="max-width-96 word-break-word">
                   0
@@ -142,9 +144,10 @@
                   {{ projectDetails.openIndentCount }}
                 </span>
               </div>
-              <div class="font-size12 color-text-card p-l-15 p-t-5">
+              <div class="color-text-card"
+                [ngClass]="isMobile ? 'font-size11 line-height-1' : 'p-l-15 p-t-5 font-size12' ">
                 <div class="max-width-96 word-break-word">
-                  Open Indents
+                  Open Purchase Requisition
                 </div>
               </div>
             </div>
@@ -152,10 +155,10 @@
 
 
 
-          <div class="col-xs-6  col-sm-4  col-md-3 third-item display-material-indent-po-box">
+          <div class="col-xs-4 col-sm-4 col-md-3 display-material-indent-po-box">
             <div *ngIf="permissionObj.purchaseOrderFlag"
-              class="box-custom color-text-card p-t-10 cursor-pointer  display-flex showOpenIndents"
-              (click)="redirectToPurchaseOrder()" matTooltip="View All Purchase Orders">
+              class="box-custom color-text-card cursor-pointer showOpenIndents" (click)="redirectToPurchaseOrder()"
+              matTooltip="View All Purchase Orders" [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex' ">
               <div class="font-size20 color-text-card text-bold">
                 <span *ngIf="projectDetails.purchaseOrderCount" class="max-width-96 word-break-word">
                   {{ projectDetails.purchaseOrderCount }}
@@ -163,14 +166,19 @@
                 <span *ngIf="!projectDetails.purchaseOrderCount" class="max-width-96 word-break-word">
                   0
                 </span>
+                <ng-container *ngIf="isMobile">
+                  <span class="font-weight-normal font-size12">PO</span>
+                </ng-container>
               </div>
-              <div class="font-size12 color-text-card p-l-15 p-t-5">
-                <div class="max-width-96 word-break-word">
-                  Purchase Orders
-                </div>
+              <div class="color-text-card" [ngClass]="isMobile ? 'font-size11' : 'p-l-15 p-t-5 font-size12' ">
+                <ng-container *ngIf="!isMobile">
+                  <div class="max-width-96 word-break-word">
+                    Purchase Orders
+                  </div>
+                </ng-container>
                 <div>
-                  <span class="font-size12 purchase-amount max-width-96 word-break-word"
-                    *ngIf="projectDetails.purchaseOrderCost">
+                  <span class="max-width-96 word-break-word" *ngIf="projectDetails.purchaseOrderCost"
+                    [ngClass]="isMobile ? 'font-size11 line-height-1' : 'purchase-amount font-size12' ">
                     <ng-container *ngIf="this.currencyCode">
                       {{ this.currencyCode }}
                     </ng-container>

@@ -11,63 +11,108 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-12 p-t-20">
-    <mat-card class="width78Percent gray-border" *ngIf="paymentDetail">
-      <div class="row">
-        <div class="col-xs-6">
-          Total PO Amount :
-          {{ paymentDetail.poAmount ? (paymentDetail.poAmount | number: "1.2-2") : (0 | number: "1.2-2") }}
-          <span class="info-icon info-tootip"><img src="./../../../../assets/images/i_icon.png"
-              class="img-responsive" />
-            <span class="info-tootip__content">
-              <div class="tooltip-table">
-                <p class="row mb-1">
-                  <span class="col-sm-12">Total Amount :
-                    {{ paymentDetail.poAmount - paymentDetail.gstAmount | number: "1.2-2" }}</span>
-                  <span class="col-sm-12">GST Amount :
-                    {{ paymentDetail.gstAmount ? (paymentDetail.gstAmount | number: "1.2-2") : (0 | number: "1.2-2") }}</span>
-                </p>
+
+  <mat-card class="gray-border p-t-10" [ngClass]="paymentDetail.purchaseOrderCurrency ? 'width-99' : 'width-78'">
+    <div class="row">
+      <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-4' : 'col-xs-6'">
+        Total PO Amount :
+        {{ paymentDetail.totalPoAmount ? (paymentDetail.totalPoAmount | number: "1.2-2") : (0 | number: "1.2-2") }}
+        {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
+
+        <span class="info-icon info-tootip"
+          ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+          <span class="info-tootip__content">
+            <div class="tooltip-table maxwidth-270-px">
+              <div class="row mb-1">
+                <div class="col-sm-12">
+                  <span class="p-r-0"> Total Amount : {{ paymentDetail.poAmount - paymentDetail.gstAmount | number: "1.2-2" }}</span>
+                  <span class="p-l-0 m-l-0">{{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}</span>
+                </div>
+                <div class="col-sm-12">
+                  <span class="p-r-0">Total Tax Amount : {{ paymentDetail.totalTaxAmount + paymentDetail.gstAmount | number: "1.2-2" }}</span>
+                  <span class="p-l-0 m-l-0">{{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}</span>
+                </div>
+                <div class="col-sm-12" *ngIf="paymentDetail.otherCost">
+                  <span class="p-r-0">Other Cost Amount : {{ paymentDetail.otherCost | number: "1.2-2" }}</span>
+                  <span class="p-l-0 m-l-0">{{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}</span>
+                </div>
               </div>
+            </div>
+          </span>
+        </span>
+      </div>
+
+      <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-4' : 'col-xs-6'">
+        Amount Paid till date :
+        <span>
+          {{ paymentDetail.paymentRecived ? (paymentDetail.paymentRecived | number: "1.2-2") : (0 | number: "1.2-2") }}
+          {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
+        </span>
+      </div>
+      <div class="col-xs-4 text-center" *ngIf="paymentDetail.purchaseOrderCurrency">
+        <span class="text-left" *ngIf="paymentDetail.purchaseOrderCurrency && paymentDetail.purchaseOrderCurrency.exchangeCurrencyName != null">
+          <span class="base-currency">
+            <span class="font-size-vary-grn color-grey">
+              <img width="25px" *ngIf="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" [src]="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" />
+              {{ paymentDetail.purchaseOrderCurrency.exchangeCurrencyName }}
+            </span>
+            <span class="p-l-5"> = </span>
+            <span class="p-l-5 color-6d6a6a color-grey"> {{ paymentDetail.purchaseOrderCurrency.exchangeValue }} </span>
+            <span class="p-l-5 color-grey">
+              <img width="25px" *ngIf="paymentDetail.purchaseOrderCurrency.primaryCurrencyFlag" [src]="paymentDetail.purchaseOrderCurrency.primaryCurrencyFlag" />
+              {{ paymentDetail.purchaseOrderCurrency.primaryCurrencyName }}
             </span>
           </span>
-        </div>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-4' : 'col-xs-6'">
+        GRN Amount : {{ paymentDetail.grnAmount ? (paymentDetail.grnAmount | number: "1.2-2") : (0 | number: "1.2-2") }}
+        {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
+      </div>
+      <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-4' : 'col-xs-6'">
+        Amount Due : {{ paymentDetail.totalPoAmount - paymentDetail.paymentRecived | number: "1.2-2" }}
+        {{ paymentDetail.purchaseOrderCurrency ? paymentDetail.purchaseOrderCurrency.exchangeCurrencyName : paymentDetail.currencyCode }}
+      </div>
+    </div>
+  </mat-card>
 
-        <div class="col-xs-6">Amount Paid till date :
-          {{ paymentDetail.paymentRecived ? (paymentDetail.paymentRecived | number: "1.2-2") : (0 | number: "1.2-2") }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-6">GRN Amount :
-          {{ paymentDetail.grnAmount ? (paymentDetail.grnAmount | number: "1.2-2") : (0 | number: "1.2-2") }}</div>
-        <div class="col-xs-6">Amount Due : {{ paymentDetail.poAmount - paymentDetail.paymentRecived | number: "1.2-2" }}
-        </div>
-      </div>
-    </mat-card>
-  </div>
   <div class="col-xs-12 tab-body-padding">
     <mat-tab-group (selectedTabChange)="tabClick($event)">
       <mat-tab label="Add Payment">
         <form *ngIf="paymentDetail != null" [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
           <div class="row width100Percent">
-            <div class="col-xs-4">
+            <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-3' : 'col-xs-4'">
               <mat-form-field class="border-input width-90">
-                <input formControlName="amountPaid" appTwoDigitDecimaNumber matInput type="text"
-                  placeholder="Amount Paid*" />
+                <input formControlName="amountPaid" appTwoDigitDecimaNumber matInput type="text" placeholder="Amount Paid*" />
               </mat-form-field>
             </div>
-            <div class="col-xs-4">
+            <div *ngIf="paymentDetail.purchaseOrderCurrency" class="col-xs-3">
+              <mat-form-field class="border-input width-90">
+                <input formControlName="exchangeRate" appTwoDigitDecimaNumber matInput type="text" placeholder="Exchange Rate*" />
+              </mat-form-field>
+            </div>
+            <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-3' : 'col-xs-4'">
               <mat-form-field class="border-input">
-                <input matInput [min]="startDate" [max]="endDate" [matDatepicker]="dueDate"
-                  placeholder="Date of Payment*" formControlName="paymentDate" (click)="dueDate.open()" readonly />
+                <input
+                  matInput
+                  [min]="startDate"
+                  [max]="endDate"
+                  [matDatepicker]="dueDate"
+                  placeholder="Date of Payment*"
+                  formControlName="paymentDate"
+                  (click)="dueDate.open()"
+                  readonly
+                />
                 <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                 <mat-datepicker #dueDate startView="month" [startAt]="startDate"></mat-datepicker>
               </mat-form-field>
             </div>
-            <div class="col-xs-4 text-center">
+            <div class="" [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-3 text-right' : 'col-xs-4 text-center'">
               <span>
                 <mat-form-field class="border-input width-90">
-                  <input formControlName="transactionId" appTwoDigitDecimaNumber matInput type="text"
-                    placeholder="Transaction ID" />
+                  <input formControlName="transactionId" appTwoDigitDecimaNumber matInput type="text" placeholder="Transaction ID" />
                 </mat-form-field>
               </span>
             </div>
@@ -79,17 +124,23 @@
       </mat-tab>
       <mat-tab label="Payment History" class="">
         <div class="dialog-length">
-          <table mat-table [dataSource]="dataSource">
+          <table *ngIf="paymentDetail" mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="Amount Paid">
-              <th mat-header-cell *matHeaderCellDef>Amount Paid</th>
-              <td mat-cell *matCellDef="let element">
+              <th mat-header-cell *matHeaderCellDef class="text-align-center">Amount Paid</th>
+              <td mat-cell *matCellDef="let element" class="text-align-center">
                 {{ element.amountPaid }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Exchange Rate">
+              <th mat-header-cell *matHeaderCellDef class="text-align-center">Exchange Rate</th>
+              <td mat-cell *matCellDef="let element" class="text-align-center">
+                {{ element.exchangeRate }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="Date">
-              <th mat-header-cell *matHeaderCellDef>Date</th>
-              <td mat-cell *matCellDef="let element">{{ element.paymentDate | date: "dd MMM yyy" }}</td>
+              <th mat-header-cell *matHeaderCellDef class="text-align-center">Date</th>
+              <td mat-cell *matCellDef="let element" class="text-align-center">{{ element.paymentDate | date: "dd MMM yyy" }}</td>
             </ng-container>
 
             <ng-container matColumnDef="Transaction ID">

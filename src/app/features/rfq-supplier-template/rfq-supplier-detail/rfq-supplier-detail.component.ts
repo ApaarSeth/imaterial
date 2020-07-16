@@ -9,12 +9,14 @@ import { materialize } from 'rxjs/operators';
 import { formatDate, DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Froala } from 'src/app/shared/constants/configuration-constants';
-import { DocumentList } from 'src/app/shared/models/PO/po-data';
+import { DocumentList, ImageList, ImageDocsLists } from 'src/app/shared/models/PO/po-data';
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { RFQDocumentsComponent } from '../rfq-bid-documents/rfq-bid-documents.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
+import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 
 interface prevTaxCost {
   dt: any;
@@ -89,7 +91,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     defaultParagraphSeparator: 'p',
     defaultFontName: 'Arial',
     toolbarHiddenButtons: [
-      ['backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript']
+      [ 'backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript' ]
     ],
 
   };
@@ -98,14 +100,15 @@ export class RFQSupplierDetailComponent implements OnInit {
   ngOnInit() {
     this.rfqService
       .getRFQDetailSupplier(
-        this.activatedRoute.snapshot.params["rfqId"],
-        this.activatedRoute.snapshot.params["supplierId"]
+        this.activatedRoute.snapshot.params[ "rfqId" ],
+        this.activatedRoute.snapshot.params[ "supplierId" ]
       )
       .then(data => {
         if (data.data.rfqSupplierBidFlag === 1) {
-          this.router.navigate(['/rfq-bids/finish']);
+          this.router.navigate([ '/rfq-bids/finish' ]);
         }
         this.rfqSupplierDetailList = data.data;
+        localStorage.setItem('isInternational', JSON.stringify(this.rfqSupplierDetailList.isInternational));
         if (this.rfqSupplierDetailList.projectList) {
           this.rfqSupplierDetailList.projectList.forEach(element => {
             this.materialCount =
@@ -156,6 +159,13 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
 
   postRFQDetailSupplier(rfqSupplierObj) {
+
+    rfqSupplierObj.projectList.forEach(project => {
+      project.materialList.forEach(mat => {
+        mat.documentsList = mat.documentsList.filter(doc => doc.supplierId !== null) 
+      })
+    });
+    
     if (this.rfqSupplierDetailList.isInternational === 1) {
       rfqSupplierObj.projectList.forEach(itm => {
         if (this.taxAndCostData.hasOwnProperty(itm.projectId)) {
@@ -163,8 +173,9 @@ export class RFQSupplierDetailComponent implements OnInit {
         }
       });
       if (Object.keys(this.otherCostData).length && this.otherCostData.hasOwnProperty('otherCostInfo')) {
-        rfqSupplierObj.otherCostRfqList = this.otherCostData['otherCostInfo'];
+        rfqSupplierObj.otherCostRfqList = this.otherCostData[ 'otherCostInfo' ];
       }
+
       this.submitBidInternational(rfqSupplierObj);
     } else {
       this.submitBid(rfqSupplierObj);
@@ -173,9 +184,9 @@ export class RFQSupplierDetailComponent implements OnInit {
 
   updateItemTaxInfo(item) {
     item.materialList.forEach(itm => {
-      if (this.taxAndCostData[item.projectId].hasOwnProperty(itm.materialId)) {
-        itm.taxInfo = this.taxAndCostData[item.projectId][itm.materialId].taxInfo;
-        itm.otherCostInfo = this.taxAndCostData[item.projectId][itm.materialId].otherCostInfo;
+      if (this.taxAndCostData[ item.projectId ].hasOwnProperty(itm.materialId)) {
+        itm.taxInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ].taxInfo;
+        itm.otherCostInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ].otherCostInfo;
       }
     });
     return item;
@@ -197,9 +208,9 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
-    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
-    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
+    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
+    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
+    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
     this.router.navigate([
@@ -221,9 +232,9 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
-    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
-    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
+    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
+    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
+    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
     this.router.navigate([
@@ -388,7 +399,7 @@ export class RFQSupplierDetailComponent implements OnInit {
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
           }
 
-          if ((brand == material.rfqBrandList[material.rfqBrandList.length - 1])) {
+          if ((brand == material.rfqBrandList[ material.rfqBrandList.length - 1 ])) {
 
             if (this.rfqSupplierDetailList.isInternational === 0) {
 
@@ -483,16 +494,16 @@ export class RFQSupplierDetailComponent implements OnInit {
       width: "600px",
       data: {
         type,
-        rfqId: Number(this.activatedRoute.snapshot.params["rfqId"]),
+        rfqId: Number(this.activatedRoute.snapshot.params[ "rfqId" ]),
         prevData
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
         if (!this.taxAndCostData.hasOwnProperty(pId)) {
-          this.taxAndCostData[pId] = {};
+          this.taxAndCostData[ pId ] = {};
         }
-        this.taxAndCostData[pId][mId] = res;
+        this.taxAndCostData[ pId ][ mId ] = res;
       }
       if (type === 'otherCost') {
         this.otherCostData = res;
@@ -519,6 +530,83 @@ export class RFQSupplierDetailComponent implements OnInit {
   }
   getSum(total, num) {
     return total + num;
+  }
+
+  uploadImage(selectedMaterial, type) {
+
+    let prevUploadedImageList: any;
+    this.rfqSupplierDetailList.projectList.forEach(project => {
+      project.materialList.forEach(mat => {
+        if(selectedMaterial.materialId === mat.materialId){
+          prevUploadedImageList = mat;
+        }
+      })
+    });
+
+    console.log(prevUploadedImageList);
+
+    const dialogRef = this.dialog.open(UploadImageComponent, {
+      disableClose: true,
+      width: "60vw",
+      panelClass: 'upload-image-modal',
+      data: {
+        selectedMaterial,
+        type,
+        rfqId: this.activatedRoute.snapshot.params["rfqId"],
+        supplierId: this.activatedRoute.snapshot.params["supplierId"],
+        prevUploadedImages: prevUploadedImageList ? prevUploadedImageList : []
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== null) {
+        
+        const matId = result.map(mat => mat.materialId).filter((value, index, self) => self.indexOf(value) === index);
+
+        this.rfqSupplierDetailList.projectList.map(project => {
+          project.materialList.map(mat => {
+            if(mat.materialId === matId[0]){
+              // mat.documentsList = result.filter(material => material.supplierId);
+              mat.documentsList = result;
+            }
+          })
+        });
+      }
+    });
+  }
+
+  /**
+   * function will call to open view image modal
+   * @param rfqId, materialId, type
+   */
+  viewAllImages(materialId) {
+
+    let allSupplierImages: any;
+    this.rfqSupplierDetailList.projectList.forEach(project => {
+      project.materialList.forEach(mat => {
+        if(materialId === mat.materialId){
+          allSupplierImages = mat;
+        }
+      })
+    });
+
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        rfqId: this.activatedRoute.snapshot.params["rfqId"],
+        materialId,
+        type: 'supplier',
+        displayImages: allSupplierImages
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 
 }

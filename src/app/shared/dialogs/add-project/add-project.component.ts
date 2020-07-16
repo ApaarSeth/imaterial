@@ -53,7 +53,7 @@ export class AddProjectComponent implements OnInit {
   pincodeLength: number;
   imageFileSizeError: string = "";
   imageFileSize: boolean = false;
-  fileTypes: string[] = [ 'png', 'jpeg', 'jpg' ];
+  fileTypes: string[] = ['png', 'jpeg', 'jpg'];
 
   ipaddress: string;
   countryList: CountryCode[] = [];
@@ -62,8 +62,10 @@ export class AddProjectComponent implements OnInit {
   selectedCountryId: number;
   calingCode: string;
   cntryId: number;
+  countryCode: string;
+  isMobile: boolean;
+  costUnits: Unit[];
   currencyCode: string;
-
   constructor(
     private projectService: ProjectService,
     private dialogRef: MatDialogRef<AddProjectComponent>,
@@ -74,19 +76,21 @@ export class AddProjectComponent implements OnInit {
     private _router: Router,
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
-    private visitorsService: VisitorService,
     private commonService: CommonService
   ) { }
 
   ngOnInit() {
     this.countryList = this.data.countryList;
     this.currencyCode = localStorage.getItem('currencyCode');
+    this.countryCode = localStorage.getItem('countryCode');
+    this.costUnits = [{ value: this.countryCode === "+91" ? "Crore" : "Thousand" }, { value: "Million" }, { value: "Billion" }];
     this.cntryId = Number(localStorage.getItem('countryId'));
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
+    this.isMobile = this.commonService.isMobile().matches;
     // this.selectedConstructionUnit = "1";
     this.initForm();
     this.getLocation();
@@ -104,12 +108,7 @@ export class AddProjectComponent implements OnInit {
     } else if (this.cntryId) {
       this.getCountryCode({ callingCode: null, countryId: this.cntryId });
     } else {
-      this.visitorsService.getIpAddress().subscribe(res => {
-        this.ipaddress = res[ 'ip' ];
-        this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-          this.getCountryCode({ callingCode: res[ 'calling_code' ] });
-        });
-      });
+      this.getCountryCode({ countryId: localStorage.getItem('countryId') });
     }
   }
 
@@ -124,12 +123,12 @@ export class AddProjectComponent implements OnInit {
   getCountryCode(obj) {
     this.livingCountry = this.countryList.filter(val => {
       if (obj.countryId) {
-        return val.countryId === obj.countryId;
+        return val.countryId === Number(obj.countryId);
       } else {
         return val.callingCode === obj.callingCode;
       }
     })
-    this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
+    this.form.get('countryCode').setValue(this.livingCountry[0]);
   }
 
   get selectedCountry() {
@@ -155,8 +154,8 @@ export class AddProjectComponent implements OnInit {
     { type: "OTHERS" }
   ];
 
-  units: Unit[] = [ { value: "acres" }, { value: "sqm" }, { value: "sqft" }, { value: "km" } ];
-  costUnits: Unit[] = [ { value: "CR" }, { value: "Million" }, { value: "Billion" } ];
+  units: Unit[] = [{ value: "acres" }, { value: "sqm" }, { value: "sqft" }, { value: "km" }];
+
 
   initForm() {
     this.projectDetails = this.data.isEdit
@@ -169,13 +168,13 @@ export class AddProjectComponent implements OnInit {
       ],
       addressLine1: [
         this.data.isEdit ? this.data.detail.addressLine1 : "",
-        [ Validators.required, Validators.maxLength(120) ]
+        [Validators.required, Validators.maxLength(120)]
       ],
-      addressLine2: [ this.data.isEdit ? this.data.detail.addressLine2 : "", Validators.maxLength(120) ],
+      addressLine2: [this.data.isEdit ? this.data.detail.addressLine2 : "", Validators.maxLength(120)],
       pinCode: [
         this.data.isEdit ? this.data.detail.pinCode : "",
         // [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
-        [ Validators.required ]
+        [Validators.required]
       ],
       state: [
         { value: this.data.isEdit ? this.data.detail.state : "", disabled: true },
@@ -187,7 +186,7 @@ export class AddProjectComponent implements OnInit {
       ],
       area: [
         this.data.isEdit ? this.data.detail.area : "",
-        [ Validators.required, Validators.pattern(FieldRegExConst.RATES) ]
+        [Validators.required, Validators.pattern(FieldRegExConst.RATES)]
       ],
       startDate: [
         this.data.isEdit ? this.data.detail.startDate : "",
@@ -199,20 +198,20 @@ export class AddProjectComponent implements OnInit {
       ],
       cost: [
         this.data.isEdit ? this.data.detail.cost : "",
-        [ Validators.required, Validators.pattern(FieldRegExConst.RATES) ]
+        [Validators.required, Validators.pattern(FieldRegExConst.RATES)]
       ],
       type: [
         this.data.isEdit ? this.data.detail.type : "",
         Validators.required
       ],
-      unit: [ this.data.isEdit ? this.data.detail.unit : "", Validators.required ],
+      unit: [this.data.isEdit ? this.data.detail.unit : "", Validators.required],
       gstNo: [
         this.data.isEdit ? this.data.detail.gstNo : "",
-        [ Validators.pattern(FieldRegExConst.GSTIN) ]
+        [Validators.pattern(FieldRegExConst.GSTIN)]
       ],
-      costUnit: [ this.data.isEdit ? this.data.detail.costUnit : "", Validators.required ],
-      imageUrl: [ this.data.isEdit ? this.data.detail.imageFileName : "" ],
-      countryId: [ null ],
+      costUnit: [this.data.isEdit ? this.data.detail.costUnit : "", Validators.required],
+      imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
+      countryId: [null],
       countryCode: []
     });
   }
@@ -233,7 +232,7 @@ export class AddProjectComponent implements OnInit {
         if (res) {
           this._snackBar.open(res.message, "", {
             duration: 2000,
-            panelClass: [ "success-snackbar" ],
+            panelClass: ["success-snackbar"],
             verticalPosition: "bottom"
           });
         }
@@ -251,7 +250,7 @@ export class AddProjectComponent implements OnInit {
             this.dialogRef.close(res.message);
             this._snackBar.open(res.message, "", {
               duration: 2000,
-              panelClass: [ "success-snackbar" ],
+              panelClass: ["success-snackbar"],
               verticalPosition: "bottom"
             });
 
@@ -306,17 +305,17 @@ export class AddProjectComponent implements OnInit {
 
   }
   cityStateFetch(value) {
-    this.projectService.getPincodeInternational(value, this.selectedCountryId).then(res => {
+    this.commonService.getPincodeInternational(value, this.selectedCountryId).then(res => {
       if (res.data && res.data.length) {
-        this.city = res.data[ 0 ].districtName;
-        this.state = res.data[ 0 ].stateName;
+        this.city = res.data[0].districtName;
+        this.state = res.data[0].stateName;
         if (this.city && this.state)
           this.validPincode = true;
         else
           this.validPincode = false;
 
-        this.form.get('city').setValue(res.data[ 0 ].districtName);
-        this.form.get('state').setValue(res.data[ 0 ].stateName);
+        this.form.get('city').setValue(res.data[0].districtName);
+        this.form.get('state').setValue(res.data[0].stateName);
       }
 
     });
@@ -363,10 +362,10 @@ export class AddProjectComponent implements OnInit {
   onFileSelect(event) {
     if (event.target.files.length > 0) {
       let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[ 0 ]);
-      const file = event.target.files[ 0 ];
-      let fileSize = event.target.files[ 0 ].size; // in bytes
-      let fileType = event.target.files[ 0 ].name.split('.').pop();
+      reader.readAsDataURL(event.target.files[0]);
+      const file = event.target.files[0];
+      let fileSize = event.target.files[0].size; // in bytes
+      let fileType = event.target.files[0].name.split('.').pop();
 
       if (this.fileTypes.some(element => {
         return element === fileType
@@ -390,7 +389,7 @@ export class AddProjectComponent implements OnInit {
 
         this._snackBar.open("We don't support " + fileType + " in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
           duration: 2000,
-          panelClass: [ "success-snackbar" ],
+          panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
       }

@@ -1,27 +1,30 @@
 <form *ngIf="allProjects" [formGroup]="form">
-  <div class="row">
-    <div class="col-xs-4 p-t-10 border-input">
-      <mat-form-field class="input-search-padding-zero">
-        <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
+  <div class="row" [ngClass]="isMobile ? 'm-podr2' : '' ">
+    <div class="col-md-4 col-xs-12 p-t-10 border-input m-itm">
+      <mat-form-field class="input-search-padding-zero w-50">
+        <input matInput placeholder="Search Projects" type="search" [(ngModel)]="searchProject"
+          [ngModelOptions]="{standalone: true}" />
         <button mat-button matSuffix mat-icon-button>
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field>
 
-      <mat-form-field class="p-l-20 input-search-padding-zero">
-        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" [ngModelOptions]="{standalone: true}" />
+      <mat-form-field class="p-l-20 input-search-padding-zero w-50">
+        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial"
+          [ngModelOptions]="{standalone: true}" />
         <button mat-button matSuffix mat-icon-button>
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field>
     </div>
 
-    <div class="col-xs-4 text-right">
-      <mat-form-field class="border-select select-project">
+    <div class="col-md-4 col-xs-6 text-right m-itm" [ngClass]="isMobile ? 'pr-0' : '' ">
+      <mat-form-field class="border-select select-project" [ngClass]="isMobile ? 'd-inline-block w-100' : '' ">
         <mat-label *ngIf="!rfqDetails.length">Select Project</mat-label>
         <mat-select formControlName="selectedProject" multiple>
           <div class="display-flex">
-            <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+            <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
+              [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
             <button mat-button matSuffix mat-icon-button>
               <mat-icon>search</mat-icon>
             </button>
@@ -29,96 +32,109 @@
           <mat-select-trigger>
             <mat-label>Select Project</mat-label>
           </mat-select-trigger>
-          <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:'projectName'" [value]="project" selected="project.clicked" (click)="choosenProject()"
-            >{{ project.projectName }}
+          <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project"
+            selected="project.clicked" (click)="choosenProject()">{{ project.projectName }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <div class="col-xs-4 text-right">
-      <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
+    <div class="col-md-4 col-xs-12 text-right m-itm">
+      <span (click)="selectCurrency()"
+        class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select
+        Currency</span>
       <span>
-        <button mat-raised-button matStepperNext [disabled]="!(form.valid && counter > 0)" (click)="materialAdded()" class="main-background-color main-button color-white">
+        <button mat-raised-button matStepperNext [disabled]="!(form.valid && counter > 0)" (click)="materialAdded()"
+          class="main-background-color main-button color-white">
           Next
         </button>
       </span>
     </div>
-  </div>
-  <div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="addRfq.rfqCurrency != null && addRfq.rfqCurrency.exchangeCurrencyName != null">
-    <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
-      <span class="font-size-vary-grn color-grey">
-        <img width="25px" *ngIf="addRfq.rfqCurrency.exchangeCurrencyFlag" [src]="addRfq.rfqCurrency.exchangeCurrencyFlag" />
-        {{ addRfq.rfqCurrency.exchangeCurrencyName }}
+
+    <div class="col-md-12 col-xs-6 p-b-20 text-right m-itm"
+      *ngIf="addRfq.rfqCurrency != null && addRfq.rfqCurrency.exchangeCurrencyName != null"
+      [ngClass]="isMobile ? 'pt-3' : 'p-t-10' ">
+      <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'font-size12 mcrncy pt-2 pb-2' : 'p-t-10 p-b-10' ">
+        <span class="font-size-vary-grn color-grey">
+          <img width="25px" *ngIf="addRfq.rfqCurrency.exchangeCurrencyFlag"
+            [src]="addRfq.rfqCurrency.exchangeCurrencyFlag" />
+          {{ addRfq.rfqCurrency.exchangeCurrencyName }}
+        </span>
+        <span class="p-l-5"> = </span>
+        <span class="p-l-5 color-6d6a6a color-grey"> {{ addRfq.rfqCurrency.exchangeValue }} </span>
+        <span class="p-l-5 color-grey">
+          <img width="25px" *ngIf="addRfq.rfqCurrency.primaryCurrencyFlag"
+            [src]="addRfq.rfqCurrency.primaryCurrencyFlag" />
+          {{ addRfq.rfqCurrency.primaryCurrencyName }}
+        </span>
       </span>
-      <span class="p-l-5"> = </span>
-      <span class="p-l-5 color-6d6a6a color-grey"> {{ addRfq.rfqCurrency.exchangeValue }} </span>
-      <span class="p-l-5 color-grey">
-        <img width="25px" *ngIf="addRfq.rfqCurrency.primaryCurrencyFlag" [src]="addRfq.rfqCurrency.primaryCurrencyFlag" />
-        {{ addRfq.rfqCurrency.primaryCurrencyName }}
-      </span>
-    </span>
+    </div>
+
   </div>
 </form>
 <form *ngIf="rfqDetails.length" [formGroup]="materialForm">
   <span formArrayName="forms">
-    <div *ngFor="let project of rfqDetails | SearchPipe: searchProject:'projectName'; let p = index" [formGroupName]="p">
+    <div *ngFor="let project of rfqDetails | SearchPipe: searchProject:['projectName']; let p = index"
+      [formGroupName]="p">
       <mat-accordion *ngIf="rfqDetails" class="rfq-detail-body">
-        <mat-expansion-panel class="myPanel" [expanded]="true">
-          <mat-expansion-panel-header>
+        <mat-expansion-panel class="myPanel" [expanded]="true" [ngClass]="isMobile ? 'mt-2' : '' ">
+          <mat-expansion-panel-header [ngClass]="isMobile ? 'font-size12 pt-4 pb-4' : '' ">
             <mat-panel-title>
               {{ project.projectName }}
 
               <a href="javascript:void(0)" class="main-color p-l-15">
                 {{ project.defaultAddress.addressLine1 }}
-                <ng-container *ngIf="project.defaultAddress.addressLine2"> {{ project.defaultAddress.addressLine2 }}</ng-container>
+                <ng-container *ngIf="project.defaultAddress.addressLine2"> {{ project.defaultAddress.addressLine2 }}
+                </ng-container>
                 <ng-container *ngIf="project.defaultAddress.city"> {{ project.defaultAddress.city }}</ng-container>
                 <ng-container *ngIf="project.defaultAddress.state"> {{ project.defaultAddress.state }}</ng-container>
-                <ng-container *ngIf="project.defaultAddress.pinCode"> {{ project.defaultAddress.pinCode }}</ng-container>
+                <ng-container *ngIf="project.defaultAddress.pinCode"> {{ project.defaultAddress.pinCode }}
+                </ng-container>
               </a>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <table
-            #table
-            mat-table
-            [dataSource]="project.projectMaterialList | SearchPipe: searchMaterial:'materialName'"
-            class="mat-elevation-z8 col-sm-12 po-custom-mat-width"
-            formArrayName="materialList"
-          >
-            <ng-container matColumnDef="Material Name">
-              <th mat-header-cell *matHeaderCellDef>Material Name</th>
-              <td mat-cell *matCellDef="let element; let i = index" formGroupName="{{ i }}">
-                <mat-checkbox #ch [checked]="element.checked" (change)="materialChecked(ch, i, p, project.projectId, element)">
-                  <div class="limited-character po-p-m" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
-                  <div class="limited-character po-p-m" matTooltip=" {{ element.materialGroup }}">
-                    <span class="category-name">
-                      {{ element.materialGroup }}
-                    </span>
-                  </div>
-                </mat-checkbox>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Required Date">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Required Date</th>
-              <td class="text-center" mat-cell *matCellDef="let element; let i = index">
-                {{ element.dueDate | date: "dd-MMM-yyy" }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Requested Quantity">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Requested Quantity</th>
-              <td class="text-center" mat-cell *matCellDef="let element">
-                {{ element.requestedQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="Estimated Quantity">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Estimated Quantity</th>
-              <td class="text-center" mat-cell *matCellDef="let element">
-                {{ element.estimatedQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
+          <div class="example-container mat-elevation-z8">
+            <table #table mat-table
+              [dataSource]="project.projectMaterialList | SearchPipe: searchMaterial:['materialName']"
+              class="po-custom-mat-width" formArrayName="materialList">
+              <ng-container matColumnDef="Material Name">
+                <th mat-header-cell *matHeaderCellDef>Material Name</th>
+                <td mat-cell *matCellDef="let element; let i = index" formGroupName="{{ i }}"
+                  [ngClass]="isMobile ? 'lbm' : '' ">
+                  <mat-checkbox #ch [checked]="element.checked"
+                    (change)="materialChecked(ch, i, p, project.projectId, element)">
+                    <div class="limited-character po-p-m" matTooltip=" {{ element.materialName }}">
+                      {{ element.materialName }} <br /></div>
+                    <div class="limited-character po-p-m" matTooltip=" {{ element.materialGroup }}">
+                      <span class="category-name">
+                        {{ element.materialGroup }}
+                      </span>
+                    </div>
+                  </mat-checkbox>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Required Date">
+                <th mat-header-cell class="text-center" *matHeaderCellDef>Required Date</th>
+                <td class="text-center" mat-cell *matCellDef="let element; let i = index">
+                  {{ element.dueDate | date: "dd-MMM-yyy" }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Requested Quantity">
+                <th mat-header-cell class="text-center" *matHeaderCellDef>Requested Quantity</th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                  {{ element.requestedQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Estimated Quantity">
+                <th mat-header-cell class="text-center" *matHeaderCellDef>Estimated Quantity</th>
+                <td class="text-center" mat-cell *matCellDef="let element">
+                  {{ element.estimatedQty }}<span class="p-l-5">{{ element.materialUnit }}</span>
+                </td>
+              </ng-container>
+              <tr mat-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
         </mat-expansion-panel>
         <br />
       </mat-accordion>

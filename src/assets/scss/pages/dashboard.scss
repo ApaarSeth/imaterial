@@ -325,6 +325,11 @@ body,
   margin-bottom: 4px;
 }
 
+.email-verification .buildsupply-logo {
+  display: block;
+  margin: auto;
+}
+
 @media only screen and (max-width: 958px) {
   .app-dashboard {
    // margin-top: 56px;
@@ -353,9 +358,9 @@ body,
       margin-right: 10px;
     }
 
-    .mat-tab-group {
-      padding-top: 50px;
-    }
+    // .mat-tab-group {
+    //   padding-top: 50px;
+    // }
   }
 
   @media only screen and (max-width: 715px) {
@@ -433,6 +438,20 @@ body,
         padding-top: 5px;
       }
     }
+  }
+  .sml-db{
+    flex-wrap: wrap;
+    justify-content: flex-start !important;
+    margin-left: 6px;
+    .things-to-do, .things-to-do__icons{
+      margin-right: 0px;
+      margin-bottom: 10px;
+    }
+  }
+  .things-to-do.sml-d1{
+    padding: 10px !important;
+    align-items: center;
+    overflow: hidden;
   }
 }
 @media only screen and (max-width: 560px) {
@@ -514,6 +533,77 @@ body,
   // }
 }
 
+@media only screen and (max-width: 1023px){
+  .off-white-background{
+    height: 10vh !important;
+  }
+
+  .off-white-background .ink-color {
+    font-size: 24px;
+    line-height: 10vh !important;
+  }
+
+  .email-verification, .terms-conditions {
+    padding: 10px 0 50px !important;
+  }
+
+  .email-verification .width-60 {
+    width: 75% !important;
+  }
+
+  .email-verification .col-md-12 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .email-verification .width-60 {
+    width: 100% !important;
+  }
+
+  .verify-email {
+    width: 75vw!important;
+    margin: auto;
+  }
+
+  .verify-email .ink-color {
+    font-size: 24px;
+    line-height: 45px !important;
+  }
+}
+
+@media only screen and (max-width: 460px){
+  .verify-email {
+    width: 90vw !important;
+  }
+
+  .verify-email .ink-color {
+    font-size: 20px;
+    line-height: 35px !important;
+  }
+}
+
+@media only screen and (max-width: 445px){
+  .email-verification .width-60 {
+    width: 100% !important;
+    padding: 20px 10px !important;
+  }
+
+  .off-white-background .ink-color {
+    font-size: 18px;
+  }
+
+  .email-verification .col-md-12 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .email-verification .fontsize-18-px {
+    font-size: 14px !important;
+  }
+}
+
 @media only screen and (max-width: 378px) {
   .statistics {
     .row {
@@ -536,4 +626,17 @@ body,
 .image-project-card {
   width: 100%;
   border-radius: 5px;
+}
+
+
+.wdrpr-mb{
+  .ngx-mat-drp-date-input{
+    min-width: 90% !important;
+    width: 90% !important;
+  }
+  .ngx-mat-drp-date-display{
+    min-width: 50% !important;
+    max-width: 100% !important;
+    padding-left: 15px;
+  }
 }
