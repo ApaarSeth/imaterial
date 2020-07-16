@@ -14,6 +14,7 @@ export class MainLayoutComponent implements OnInit {
   userId: number;
   userName: string;
   url: string;
+  isSideNavCollapsed: boolean;
 
   constructor(private router: Router, private _userService: UserService) { }
 
@@ -50,5 +51,13 @@ export class MainLayoutComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscriptions.forEach(subs => subs.unsubscribe());
+  }
+
+  isSidebarCollapsed(e){
+    // this.isSideNavCollapsed = e;
+    if(e){
+      localStorage.setItem('sidebarNavigation', e);
+    }
+    localStorage.setItem('sidebarNavigation', e);
   }
 }
