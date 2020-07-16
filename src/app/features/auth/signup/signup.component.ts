@@ -77,19 +77,20 @@ export class SignupComponent implements OnInit {
   locationCounter: number = 0;
 
   ngOnInit() {
-    this.countryList = this.activatedRoute.snapshot.data.countryList;
-    // this.countryList = this.actualCountryList;
+    // this.countryList = this.activatedRoute.snapshot.data.countryList;
+    this.countryList = this.actualCountryList;
     this.primaryCallingCode = localStorage.getItem('countryCode')
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       this.callingCode = this.actualCallingCode
       this.formInit();
+      this.getCountryCode(this.callingCode, this.countryCode)
+      if (this.callingCode) {
+        this.getLocation();
+      }
       if (this.uniqueCode) {
         this.organisationDisabled = true;
         this.getUserInfo(this.uniqueCode);
-      }
-      if (this.callingCode) {
-        this.getLocation();
       }
     });
   }
@@ -111,7 +112,6 @@ export class SignupComponent implements OnInit {
     else {
       this.signupForm.get('email').setValidators([...emailValidator])
     }
-    this.getCountryCode(this.callingCode, this.countryCode)
   }
 
   getCountryCode(callingCode, countryCode) {
@@ -240,9 +240,6 @@ export class SignupComponent implements OnInit {
 
   subscribeNotification() {
     this.webNotificationService.subscribeToNotification();
-    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
-      window.open(notification.data.url)
-    })
   }
 
 

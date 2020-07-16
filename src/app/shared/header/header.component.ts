@@ -46,7 +46,6 @@ export class HeaderLayoutComponent implements OnInit {
       // })
 
     }
-
     this.highlightButton(this.router.url);
     this.startSubscription();
   }
@@ -55,7 +54,6 @@ export class HeaderLayoutComponent implements OnInit {
     this.menu.open();
   }
   startSubscription(): void {
-
     this.subsriptions.push(
       this.router.events
         .pipe(filter(e => e instanceof NavigationEnd))

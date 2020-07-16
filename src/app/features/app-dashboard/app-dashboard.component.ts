@@ -59,14 +59,13 @@ export class AppDashboardComponent implements OnInit {
   range: Range = { fromDate: new Date(), toDate: new Date() };
   options: NgxDrpOptions;
   presets: Array<PresetItem> = [];
-
   currencyCode: string;
-
+  projectData
 
   ngOnInit() {
     this.loader.hide();
     this.isAdDisplay = localStorage.getItem("countryCode");
-    this.cntryList = this.activatedRoute.snapshot.data.countryList;
+    // this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
     this.isMobile = this.commonService.isMobile().matches;
@@ -93,20 +92,18 @@ export class AppDashboardComponent implements OnInit {
         }
       });
     }
-    this.userguideservice.getUserGuideFlag().then(res => {
-      this.userGuidedata = res.data;
+    Promise.all([this.userguideservice.getUserGuideFlag(),
+    this._projectService.getProjects(this.orgId, this.userId),
+    this.commonService.getNotification(this.userId)]).then(res => {
+      this.userGuidedata = res[0].data;
       this.userGuidedata.forEach(element => {
         localStorage.setItem(element.moduleName, element.enableGuide);
       });
-
+      this.projectData = res[1];
+      this.getProjectsNumber()
     })
-    this.getProjectsNumber();
-    this.getNotifications();
   }
 
-  ngOnChanges(): void {
-
-  }
 
   datePickerConfig() {
     const today = new Date();
@@ -170,38 +167,35 @@ export class AppDashboardComponent implements OnInit {
     this.filterForm.get('projectFilter').valueChanges.subscribe(val => {
       this.getDashboardInfo(this.label)
     })
-    // this.filterForm.get('termFilter').valueChanges.subscribe(val => {
-    //   this.getDashboardInfo(this.label)
-    // })
   }
 
   getNotifications() {
     this.commonService.getNotification(this.userId);
   }
-  openProject() {
-    let data = {
-      isEdit: false,
-      isDelete: false,
-      countryList: this.cntryList
-    };
-    const dialogRef = this.dialog.open(AddProjectComponent, {
-      width: "1000px",
-      data
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result != null)
-        this.router.navigate(['/project-dashboard']);
+  openProject() {
+    this.commonService.getCountry().then(res => {
+      let data = {
+        isEdit: false,
+        isDelete: false,
+        countryList: res.data
+      };
+      const dialogRef = this.dialog.open(AddProjectComponent, {
+        width: "1000px",
+        data
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result && result != null)
+          this.router.navigate(['/project-dashboard']);
+      });
     });
   }
 
   openReleaseNote(data, releaseNoteId) {
-
     const dialogRef = this.dialog.open(ReleaseNoteComponent, {
       disableClose: true,
       width: "500px", data
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result != null && result == 'closed') {
         // post api hit user/add/releaseNote
@@ -236,7 +230,7 @@ export class AppDashboardComponent implements OnInit {
       "range": "Custom",
       "projectList": projectIds ? projectIds : []
     }
-    this._userService.getDashboardData(data).then(res => {
+    this._userService.getDashboardData(data, true).then(res => {
       if (res.data.currencyCode) {
         this.currencyCode = res.data.currencyCode;
       }
@@ -275,11 +269,9 @@ export class AppDashboardComponent implements OnInit {
   }
 
   getProjectsNumber() {
-    this._projectService.getProjects(this.orgId, this.userId).then(res => {
-      this.allProjects = res.data
-      this.projectCount = res.data ? res.data.length : 0;
-      this.projectLists = res.data;
-    });
+    this.allProjects = this.projectData.data
+    this.projectCount = this.projectData.data ? this.projectData.data.length : 0;
+    this.projectLists = this.projectData.data;
   }
 
   openBomDialog() {
