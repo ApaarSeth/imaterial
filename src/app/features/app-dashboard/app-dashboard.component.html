@@ -1,48 +1,66 @@
 <div class="dashboard app-dashboard">
-  <div class="container-fluid bg-gray">
+  <div class="container-fluid bg-gray pl-0 pr-3">
     <div class="row">
-      <div class="col-sm-12 col-md-9">
-        <div class="things-to-do bg-white mb-4 equal-height sml-d1">
-          <!-- <h5 class="mb-3">Things to do</h5> -->
-          <div class="things-to-do__inner d-flex justify-content-between align-items-center sml-db">
-            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openProject()" matTooltip="You can add your project details">
-              <div class="things-to-do__img add-project-img">
-                <img src="../../../assets/images/Add-Project.png" alt="" class="img-fluid" />
-              </div>
-              <h6 class="mb-0">Add Project</h6>
-            </div>
+      <!-- <sidebar-navigation (collapseMenu)="isSidebarCollapsed($event)"></sidebar-navigation> -->
+      <!-- [class.changeWidth]="isSideNavCollapsed" -->
+      <div class="col-md-12 changeWidth">
+        <div class="row">
+          <div class="col-sm-12 pl-3">
+            <app-breadcrumb></app-breadcrumb>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-sm-12 col-md-9 pl-3">
+            <div class="things-to-do bg-white mb-4 equal-height sml-d1">
+              <!-- <h5 class="mb-3">Things to do</h5> -->
+              <div class="things-to-do__inner d-flex justify-content-between align-items-center sml-db">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openProject()"
+                  matTooltip="You can add your project details">
+                  <div class="things-to-do__img add-project-img">
+                    <img src="../../../assets/images/Add-Project.png" alt="" class="img-fluid" />
+                  </div>
+                  <h6 class="mb-0">Add Project</h6>
+                </div>
 
-            <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your BOM of materials">
-              <div class="things-to-do__img">
-                <img src="../../../assets/images/BOM.png" alt="" class="img-fluid" />
-              </div>
-              <h6 class="mb-0">Create BOM</h6>
-            </div>
+                <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()"
+                  matTooltip="You can create your BOM of materials">
+                  <div class="things-to-do__img">
+                    <img src="../../../assets/images/BOM.png" alt="" class="img-fluid" />
+                  </div>
+                  <h6 class="mb-0">Create BOM</h6>
+                </div>
 
-            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFQs">
-              <div class="things-to-do__img">
-                <img src="../../../assets/images/RFQ.png" alt="" class="img-fluid" />
-              </div>
-              <h6 class="mb-0">Create RFQ</h6>
-            </div>
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor"
+                  [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFQs">
+                  <div class="things-to-do__img">
+                    <img src="../../../assets/images/RFQ.png" alt="" class="img-fluid" />
+                  </div>
+                  <h6 class="mb-0">Create RFQ</h6>
+                </div>
 
-            <div
-              *ngIf="permissionObj.rfqFlag"
-              class="things-to-do__icons text-center cursor mr-2"
-              [routerLink]="['/globalStore/' + orgId]"
-              matTooltip="You can check your material details"
-            >
-              <div class="things-to-do__img">
-                <img src="../../../assets/images/global-store.png" alt="Global Store" class="img-fluid" />
-              </div>
-              <h6 class="mb-0">Global Store</h6>
-            </div>
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
+                  [routerLink]="['/globalStore/' + orgId]" matTooltip="You can check your material details">
+                  <div class="things-to-do__img">
+                    <img src="../../../assets/images/global-store.png" alt="Global Store" class="img-fluid" />
+                  </div>
+                  <h6 class="mb-0">Global Store</h6>
+                </div>
 
-            <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor" [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
-              <div class="things-to-do__img">
-                <img src="../../../assets/images/PO.png" alt="" class="img-fluid" />
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor"
+                  [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
+                  <div class="things-to-do__img">
+                    <img src="../../../assets/images/PO.png" alt="" class="img-fluid" />
+                  </div>
+                  <h6 class="mb-0">Create PO</h6>
+                </div>
+
+                <!-- <div class="things-to-do__icons text-center">
+                                <div class="things-to-do__img">
+                                    <img src="assets/images/icon3.png" alt="" class="img-fluid">
+                                </div>
+                                <h6 class="mb-0">Keep Track</h6>
+                            </div> -->
               </div>
-              <h6 class="mb-0">Create PO</h6>
             </div>
 
             <!-- <div class="things-to-do__icons text-center">
@@ -51,210 +69,267 @@
                             </div>
                             <h6 class="mb-0">Keep Track</h6>
                         </div> -->
-          </div>
-        </div>
-
-        <div class="statistics bg-white p-20 p-r-0 mb-4">
-          <div class="row">
-            <div class="col-xs-12 col-md-7 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : ''">
-              <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)" [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
-                <mat-tab label="{{ tab1 }}" *ngIf="permissionObj.rfqFlag && poData">
-                  <div class="statistics__purchase-order d-flex">
-                    <div class="statistics__tile stats mr-3">
-                      <!-- <div class="stats__icon">
-                                                <img src="assets/images/icon1.png" alt="Awarded Purchase Order" class="img-fluid">
-                                            </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalCount">
-                          {{ poData?.totalCount }}
-                        </h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalCount">0</h2>
-                        <p class="mb-0">Awarded Purchase Order</p>
-                      </div>
-                    </div>
-
-                    <div class="statistics__tile stats">
-                      <!-- <div class="stats__icon">
-                                                <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
-                                            </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalValue">
-                          <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
-                          {{ poData?.totalValue | number }}
-                        </h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalValue">
-                          <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
-                        </h2>
-                        <p class="mb-0">Awarded P.O. Amount</p>
-                      </div>
-                    </div>
-                  </div>
-                </mat-tab>
-
-                <mat-tab label="{{ tab2 }}" *ngIf="permissionObj.rfqFlag && rfqData">
-                  <div class="statistics__purchase-order d-flex">
-                    <div class="statistics__tile stats mr-3">
-                      <!-- <div class="stats__icon">
-                                                <img src="assets/images/icon6.png" alt="Awarded Purchase Order" class="img-fluid">
-                                            </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalCount">
-                          {{ rfqData?.totalCount }}
-                        </h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalCount">0</h2>
-                        <p class="mb-0">Number of RFQ</p>
-                      </div>
-                    </div>
-
-                    <div class="statistics__tile stats">
-                      <!-- <div class="stats__icon">
-                                                <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
-                                            </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalValue">
-                          <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
-                          {{ rfqData?.totalValue | number: "1.2-2" }}
-                        </h2>
-                        <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalValue">
-                          <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
-                        </h2>
-                        <p class="mb-0">RFQ Amount</p>
-                      </div>
-                    </div>
-                  </div>
-                </mat-tab>
-
-                <mat-tab label="Indents" *ngIf="indentData">
-                  <div class="statistics__purchase-order d-flex">
-                    <div class="statistics__tile stats mr-3">
-                      <!-- <div class="stats__icon">
-                                                <img src="assets/images/fulfilled-indent-icon.png" alt="Awarded Purchase Order" class="img-fluid">
-                                            </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1" *ngIf="indentData.totalCount">{{ indentData?.totalCount }}</h2>
-                        <h2 class="mb-1" *ngIf="!indentData.totalCount">0</h2>
-                        <p class="mb-0">Fulfilled Indents</p>
-                      </div>
-                    </div>
-
-                    <div class="statistics__tile stats">
-                      <!-- <div class="stats__icon">
-                                                <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
-                                            </div> -->
-                      <div class="stats__content">
-                        <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue }}</h2>
-                        <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
-                        <p class="mb-0">Raised Indents</p>
-                      </div>
-                    </div>
-                  </div>
-                </mat-tab>
-              </mat-tab-group>
-            </div>
-
-            <div class="col-xs-6 col-md-2 p-l-25 p-r-0">
-              <form [formGroup]="filterForm">
-                <mat-form-field class="border-select select-project width103Percent mat-form-field-flex-mm-padding">
-                  <mat-label>Select Project</mat-label>
-                  <mat-select formControlName="projectFilter" multiple>
-                    <div class="display-flex">
-                      <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
-                      <button mat-button matSuffix mat-icon-button>
-                        <mat-icon>search</mat-icon>
-                      </button>
-                    </div>
-                    <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project">{{ project.projectName }} </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </form>
-            </div>
-            <div class="col-xs-6 col-md-3 p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'p-l-20 widthWrapper'">
-              <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
-            </div>
-            <!-- <app-range-datePicker></app-range-datePicker> -->
-          </div>
-        </div>
-
-        <!--- Will implement later once api is ready -->
-
-        <!-- <div class="approvals py-4 bg-white">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h6 class="px-4">Approvals</h6>
-
-                            <div class="approvals__list d-flex justify-content-between align-items-center">
-                                <div class="approvals__desc pl-4">
-                                    <p class="mb-1">Rakesh Gupta has sent a PO for Vatika Tower Project for your approval of value</p>
-                                    <p class="mb-0"><strong>23456789.00</strong></p>
-                                </div>
-                                <div class="approvals__actions pr-4 d-flex justify-content-between align-items-center">
-                                    <div class="approvals__view">
-                                        <img src="assets/images/view-icon.png" alt="View" class="img-fluid cursor">
-                                    </div>
-                                    <div class="approvals__reject mx-3">
-                                        <button class="btn btn-outline-warning">Reject</button>
-                                    </div>
-                                    <div class="approvals__accept">
-                                        <button class="btn btn-warning">Accept</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="approvals__list d-flex justify-content-between align-items-center">
-                                <div class="approvals__desc pl-4">
-                                    <p class="mb-1">Rakesh Gupta has sent a PO for Vatika Tower Project for your approval of value</p>
-                                    <p class="mb-0"><strong>23456789.00</strong></p>
-                                </div>
-                                <div class="approvals__actions pr-4 d-flex justify-content-between align-items-center">
-                                    <div class="approvals__view">
-                                        <img src="assets/images/view-icon.png" alt="View" class="img-fluid cursor">
-                                    </div>
-                                    <div class="approvals__reject mx-3">
-                                        <button class="btn btn-outline-warning">Reject</button>
-                                    </div>
-                                    <div class="approvals__accept">
-                                        <button class="btn btn-warning">Accept</button>
-                                    </div>
-                                </div>
-                            </div>
-
+            <div class="statistics bg-white p-20 p-r-0 mb-4">
+              <div class="row">
+                <div class="col-xs-12 col-md-7 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : ''">
+                  <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)" [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
+                    <mat-tab label="{{ tab1 }}" *ngIf="permissionObj.rfqFlag && poData">
+                      <div class="statistics__purchase-order d-flex">
+                        <div class="statistics__tile stats mr-3">
+                          <!-- <div class="stats__icon">
+                                                    <img src="assets/images/icon1.png" alt="Awarded Purchase Order" class="img-fluid">
+                                                </div> -->
+                          <div class="stats__content">
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalCount">
+                              {{ poData?.totalCount }}
+                            </h2>
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalCount">0</h2>
+                            <p class="mb-0">Awarded Purchase Order</p>
+                          </div>
                         </div>
-                    </div>
+    
+                        <div class="statistics__tile stats">
+                          <!-- <div class="stats__icon">
+                                                    <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
+                                                </div> -->
+                          <div class="stats__content">
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalValue">
+                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
+                              {{ poData?.totalValue | number }}
+                            </h2>
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalValue">
+                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
+                            </h2>
+                            <p class="mb-0">Awarded P.O. Amount</p>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-tab>
+    
+      <!-- current start -->                    
+                    <mat-tab label="{{ tab2 }}" *ngIf="permissionObj.rfqFlag && rfqData">
+                      <div class="statistics__purchase-order d-flex">
+                        <div class="statistics__tile stats mr-3">
+                          <!-- <div class="stats__icon">
+                                                    <img src="assets/images/icon6.png" alt="Awarded Purchase Order" class="img-fluid">
+                                                </div> -->
+                          <div class="stats__content">
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalCount">
+                              {{ rfqData?.totalCount }}</h2>
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalCount">0</h2>
+                            <p class="mb-0">Number of RFQ</p>
+                          </div>
+                        </div>
+    
+                        <div class="statistics__tile stats">
+                          <!-- <div class="stats__icon">
+                                                    <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
+                                                </div> -->
+                          <div class="stats__content">
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalValue">
+                              <ng-container *ngIf="currencyCode">{{currencyCode}}</ng-container>
+                              {{ rfqData?.totalValue | number: "1.2-2" }}
+                            </h2>
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalValue">
+                              <ng-container *ngIf="currencyCode">{{currencyCode}}</ng-container> 0
+                            </h2>
+                            <p class="mb-0">RFQ Amount</p>
+                          </div>
+                        </div>
+                      </div>
+                        <!-- current end -->
+                      </mat-tab>
+                            
+                          <!-- incoming start -->
+                    <!-- <mat-tab label="{{ tab2 }}" *ngIf="permissionObj.rfqFlag && rfqData">
+                      <div class="statistics__purchase-order d-flex">
+                        <div class="statistics__tile stats mr-3">
+                          <div class="stats__content">
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalCount">
+                              {{ rfqData?.totalCount }}
+                            </h2>
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalCount">0</h2>
+                            <p class="mb-0">Number of RFQ</p>
+                          </div>
+                        </div>
+    
+                        <div class="statistics__tile stats">
+                          <div class="stats__content">
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalValue">
+                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
+                              {{ rfqData?.totalValue | number: "1.2-2" }}
+                            </h2>
+                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalValue">
+                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
+                            </h2>
+                            <p class="mb-0">RFQ Amount</p>
+                          </div> -->
+                          <!-- incoming end -->
+    
+                        <mat-tab label="Indents" *ngIf="indentData">
+                          <div class="statistics__purchase-order d-flex">
+                            <div class="statistics__tile stats mr-3">
+                              <!-- <div class="stats__icon">
+                                                        <img src="assets/images/fulfilled-indent-icon.png" alt="Awarded Purchase Order" class="img-fluid">
+                                                    </div> -->
+                              <div class="stats__content">
+                                <h2 class="mb-1" *ngIf="indentData.totalCount">{{ indentData?.totalCount }}</h2>
+                                <h2 class="mb-1" *ngIf="!indentData.totalCount">0</h2>
+                                <p class="mb-0">Fulfilled Indents</p>
+                              </div>
+                            </div>
+    
+                            <div class="statistics__tile stats">
+                              <!-- <div class="stats__icon">
+                                                        <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
+                                                    </div> -->
+                              <div class="stats__content">
+                                <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue }}</h2>
+                                <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
+                                <p class="mb-0">Raised Indents</p>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-tab>
+                      </mat-tab-group>
+                </div>
+    
+                <!-- Current start-->
+                <div class="col-xs-6 col-md-2 p-l-25 p-r-0">
+                  <form [formGroup]="filterForm">
+                    <mat-form-field class="border-select select-project width103Percent mat-form-field-flex-mm-padding">
+                      <mat-label>Select Project</mat-label>
+                      <mat-select formControlName="projectFilter" multiple>
+                        <div class="display-flex">
+                          <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
+                            [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                          <button mat-button matSuffix mat-icon-button>
+                            <mat-icon>search</mat-icon>
+                          </button>
+                        </div>
+                        <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:'projectName'"
+                          [value]="project">{{ project.projectName }} </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </form>
+                </div>
+                <div class="col-xs-6 col-md-3 p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'p-l-20 widthWrapper'">
+                  <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options"
+                    #dateRangePicker></ngx-mat-drp>
+                </div>
+                <!-- <app-range-datePicker></app-range-datePicker> -->
+              </div>
+                  <!-- current end -->
+    
+    
+                  <!-- Incoming start -->
+    <!-- 
+                <div class="col-xs-6 col-md-2 p-l-25 p-r-0">
+                  <form [formGroup]="filterForm">
+                    <mat-form-field class="border-select select-project width103Percent mat-form-field-flex-mm-padding">
+                      <mat-label>Select Project</mat-label>
+                      <mat-select formControlName="projectFilter" multiple>
+                        <div class="display-flex">
+                          <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                          <button mat-button matSuffix mat-icon-button>
+                            <mat-icon>search</mat-icon>
+                          </button>
+                        </div>
+                        <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project">{{ project.projectName }} </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </form>
+                </div>
+                <div class="col-xs-6 col-md-3 p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'p-l-20 widthWrapper'">
+                  <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
+    
                 </div> -->
-      </div>
-
-      <div class="col-sm-12 col-md-3">
-        <div class="dashboard__right">
-          <div class="project-tile cursor" [routerLink]="['/project-dashboard']">
-            <div class="project-tile__tile equal-height w-100 mb-4 stats px-3 py-3 d-flex align-items-center mr-3">
-              <div class="project-tile__icon">
-                <img src="assets/images/Add-Project.png" alt="Total number of project" class="img-fluid mr-3" />
-              </div>
-              <div class="project-tile__content">
-                <h2 class="mb-1" *ngIf="projectCount">{{ projectCount }}</h2>
-                <h2 class="mb-1" *ngIf="!projectCount">0</h2>
-                <p class="mb-0">Total number of projects</p>
-              </div>
+                <!-- incoming end -->
+    
+                <!--- Will implement later once api is ready -->
+    
+                <!-- <div class="approvals py-4 bg-white">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="px-4">Approvals</h6>
+    
+                                    <div class="approvals__list d-flex justify-content-between align-items-center">
+                                        <div class="approvals__desc pl-4">
+                                            <p class="mb-1">Rakesh Gupta has sent a PO for Vatika Tower Project for your approval of value</p>
+                                            <p class="mb-0"><strong>23456789.00</strong></p>
+                                        </div>
+                                        <div class="approvals__actions pr-4 d-flex justify-content-between align-items-center">
+                                            <div class="approvals__view">
+                                                <img src="assets/images/view-icon.png" alt="View" class="img-fluid cursor">
+                                            </div>
+                                            <div class="approvals__reject mx-3">
+                                                <button class="btn btn-outline-warning">Reject</button>
+                                            </div>
+                                            <div class="approvals__accept">
+                                                <button class="btn btn-warning">Accept</button>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="approvals__list d-flex justify-content-between align-items-center">
+                                        <div class="approvals__desc pl-4">
+                                            <p class="mb-1">Rakesh Gupta has sent a PO for Vatika Tower Project for your approval of value</p>
+                                            <p class="mb-0"><strong>23456789.00</strong></p>
+                                        </div>
+                                        <div class="approvals__actions pr-4 d-flex justify-content-between align-items-center">
+                                            <div class="approvals__view">
+                                                <img src="assets/images/view-icon.png" alt="View" class="img-fluid cursor">
+                                            </div>
+                                            <div class="approvals__reject mx-3">
+                                                <button class="btn btn-outline-warning">Reject</button>
+                                            </div>
+                                            <div class="approvals__accept">
+                                                <button class="btn btn-warning">Accept</button>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div> -->
             </div>
           </div>
-
-          <div class="banner mb-4">
-            <div class="banner__image">
-              <a href="javascript:void(0)" (click)="showVideo()">
-                <img src="assets/images/video-banner.png" alt="Video Banner" class="img-fluid" />
-              </a>
-            </div>
-          </div>
-
-          <div class="banner" *ngIf="isAdDisplay === '+91'">
-            <div class="banner__image">
-              <a target="_blank" href="https://www.buildsupply.com" class="cursor-pointer">
-                <img src="assets/images/fb_banner_new.png" alt="Facebook Banner" class="img-fluid" />
-              </a>
+          <div class="col-sm-12 col-md-3">
+            <div class="dashboard__right">
+              <div class="project-tile cursor" [routerLink]="['/project-dashboard']">
+                <div class="project-tile__tile equal-height w-100 mb-4 stats px-3 py-3 d-flex align-items-center mr-3">
+                  <div class="project-tile__icon">
+                    <img src="assets/images/Add-Project.png" alt="Total number of project" class="img-fluid mr-3" />
+                  </div>
+                  <div class="project-tile__content">
+                    <h2 class="mb-1" *ngIf="projectCount">{{ projectCount }}</h2>
+                    <h2 class="mb-1" *ngIf="!projectCount">0</h2>
+                    <p class="mb-0">Total number of projects</p>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="banner mb-4">
+                <div class="banner__image">
+                  <a href="javascript:void(0)" (click)="showVideo()">
+                    <img src="assets/images/video-banner.png" alt="Video Banner" class="img-fluid" />
+                  </a>
+                </div>
+              </div>
+  
+              <div class="banner" *ngIf="isAdDisplay === '+91'">
+                <div class="banner__image">
+                  <a target="_blank" href="https://www.buildsupply.com" class="cursor-pointer">
+                    <img src="assets/images/fb_banner_new.png" alt="Facebook Banner" class="img-fluid" />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+
+
     </div>
   </div>
+</div>
 </div>
