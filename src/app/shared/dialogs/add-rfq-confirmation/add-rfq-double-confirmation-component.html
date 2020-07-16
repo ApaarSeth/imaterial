@@ -7,20 +7,21 @@
 <br />
 
 <div class="text-center p-b-10 color-grey font-size14" *ngIf="exchangeValue>0">
-  You are floating the RFQ in <span>{{exchangeCurrency}}</span> with conversion rate of <span>{{exchangeValue}} </span><span>{{primaryCurrency}}</span>.Also Supplier will have to
+  You are floating the RFQ in <span>{{exchangeCurrency}}</span> with conversion rate of <span>{{exchangeValue}}
+  </span><span>{{primaryCurrency}}</span>.Also Supplier will have to
   submit the quote in this selected currency
 </div>
 <div class="text-center text-semi-bold color-grey">
   Do you want to float the RFQ?
 </div>
 
-<div mat-dialog-actions>
-  <div class="col-sm-6">
+<div class="pt-4 pb-4" mat-dialog-actions>
+  <div class="col-xs-6">
     <button mat-raised-button class="main-color main-button pull-left" (click)="close(null)">
       Cancel
     </button>
   </div>
-  <div class="col-sm-6">
+  <div class="col-xs-6">
     <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="addRFQ()">
       Float RFQ
     </button>

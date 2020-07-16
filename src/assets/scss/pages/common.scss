@@ -500,6 +500,51 @@ ngx-mat-drp-picker-overlay {
   }
 }
 
+.m-podr2{
+  .m-itm{
+    &:nth-child(1){
+      order: 4;
+    }
+    &:nth-child(2){
+      order: 2;
+    }
+    &:nth-child(3){
+      order: 1;
+    }
+    &:nth-child(4){
+      order: 3;
+    }
+  }
+}
+
+.m-podr3{
+  .m-itm{
+    &:nth-child(1){
+      order: 3;
+    }
+    &:nth-child(2){
+      order: 1;
+    }
+    &:nth-child(3){
+      order: 2;
+    }
+  }
+}
+
+.m-podr4{
+  .m-itm{
+    &:nth-child(1){
+      order: 2;
+    }
+    &:nth-child(2){
+      order: 3;
+    }
+    &:nth-child(3){
+      order: 1;
+    }
+  }
+}
+
 .mcrncy{
   img{
     width: 18px;
@@ -525,4 +570,14 @@ ngx-mat-drp-picker-overlay {
   .mat-form-field{
     padding-top: 2px;
   }
+}
+
+.lbm{
+  label{
+    margin-bottom: 0;
+  }
+}
+
+.min-w-150px{
+  min-width: 150px;
 }

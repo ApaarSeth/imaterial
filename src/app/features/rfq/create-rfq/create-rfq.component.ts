@@ -40,6 +40,7 @@ export class CreateRfqComponent implements OnInit {
   rfqData: AddRFQ;
   finalRfq: AddRFQ;
   completed: boolean = false;
+  isMobile: boolean;
 
   public RfqProjectTour: GuidedTour = {
     tourId: 'rfq-project-tour',
@@ -95,6 +96,7 @@ export class CreateRfqComponent implements OnInit {
 
   ngOnInit() {
 
+    this.isMobile = this.commonService.isMobile().matches;
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     if (this.stepper) {
@@ -161,10 +163,10 @@ export class CreateRfqComponent implements OnInit {
   getMaterial(materials: AddRFQ) {
     this.rfqService.addRFQ(materials).then(res => {
       this.route.params.subscribe(param => {
-        let rfqId = param['rfqId']
+        let rfqId = param[ 'rfqId' ]
         this.rfqMaterial = res.data as AddRFQ;
         if (!rfqId) {
-          this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
+          this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
             state: { rfqData: res, selectedIndex: 1 }
           });
         }
