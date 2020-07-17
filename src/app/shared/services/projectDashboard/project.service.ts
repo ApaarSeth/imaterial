@@ -13,9 +13,9 @@ import { IndentVO } from "../../models/indent";
 export class ProjectService {
   constructor(private dataService: DataService) { }
 
-  getProjects(organizationId: Number, userId: Number) {
+  getProjects(organizationId: Number, userId: Number, skipLoader?: boolean) {
     return this.dataService
-      .getRequest(API.PROJECTS(organizationId, userId))
+      .getRequest(API.PROJECTS(organizationId, userId), null, { skipLoader })
       .then(res => {
         return res;
       });
