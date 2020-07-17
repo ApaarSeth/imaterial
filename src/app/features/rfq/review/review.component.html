@@ -183,7 +183,7 @@
                     Attached Images
                   </th>
                   <td class="text-align-center" mat-cell *matCellDef="let element">
-                    <div *ngIf="element?.documentList?.length" class="images-lists"
+                    <div *ngIf="element?.documentList?.length" class="images-lists float-rfq-img-stack"
                       (click)="viewAllImages(element.materialId)">
                       <ng-container *ngFor="let img of element.documentList; let i = index">
                         <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image"

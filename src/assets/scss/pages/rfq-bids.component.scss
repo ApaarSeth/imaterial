@@ -320,3 +320,19 @@
     }
   }
 }
+
+.rfq-final-step .float-rfq-img-stack{
+  .attached-image{
+    &:first-child{
+      left: 39px;
+    }
+
+    &:nth-child(2){
+      left: 45px;
+    }
+
+    &:nth-child(3){
+      left: 52px;
+    }
+  }
+}
