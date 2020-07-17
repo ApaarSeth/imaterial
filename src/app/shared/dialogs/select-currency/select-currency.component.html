@@ -44,7 +44,7 @@
               <span class="p-l-5 font-size-vary-grn text-semi-bold">{{ selectedCountry && selectedCountry.currencyCode }}</span>
             </span>
           </mat-select-trigger>
-          <mat-option *ngFor="let cur of currencies | SearchPipe: searchText:['currency']" [value]="cur">
+          <mat-option *ngFor="let cur of currencies | SearchPipe: searchText:['currency', 'currencyCode']" [value]="cur">
             <div class="display-flex justify-content-space-between">
               <div class="display-flex">
                 <div class="p-t-0">
