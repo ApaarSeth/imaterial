@@ -145,9 +145,9 @@ export class ProfileComponent implements OnInit {
       roleDescription: this.users.roleDescription,
       ssoId: this.users.ssoId,
       countryId: this.livingCountry[0] ? this.livingCountry[0].countryId : null,
-      trade: '',
+      trade: this.users.trade,
       profileUrl: '',
-      orgPincode: '',
+      orgPincode: this.users.orgPincode,
     })
   }
 
@@ -324,7 +324,7 @@ export class ProfileComponent implements OnInit {
       data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
-      data.orgPincode = String(this.userInfoForm.getRawValue().orgPincode)
+      data.orgPincode = String(this.userInfoForm.value.orgPincode)
       this._userService.submitUserDetails(data).then(res => {
         if (this.url) {
           this._userService.UpdateProfileImage.next(this.url);
