@@ -40,7 +40,7 @@
         </app-rfq-project-materials>
       </mat-step>
       <mat-step stepControl="stepSecond">
-        <ng-template matStepLabel>Add Quantity & Makes{{ currentIndex }}</ng-template>
+        <ng-template matStepLabel>Add Quantity & Makes</ng-template>
         <app-rfq-quantity-makes *ngIf="rfqMaterial" #rfqQtyMakes [generatedRfq]="rfqMaterial"
           (updatedRfq)="getQuantityAndMakes($event)"> </app-rfq-quantity-makes>
       </mat-step>

@@ -294,3 +294,45 @@
   }
 
 }
+
+.view-bid-images-preview .images-lists{
+  position: relative;
+  .attached-image {
+    position: relative;
+
+    &:first-child{
+      top: 20px;
+      left: 10px;
+    }
+
+    &:nth-child(2){
+      left: 16px;
+      top: -21px;
+    }
+
+    &:nth-child(3){
+      left: 23px;
+      top: -60px;
+    }
+
+    &:nth-child(4), &:nth-child(5){
+      display: none;
+    }
+  }
+}
+
+.rfq-final-step .float-rfq-img-stack{
+  .attached-image{
+    &:first-child{
+      left: 39px;
+    }
+
+    &:nth-child(2){
+      left: 45px;
+    }
+
+    &:nth-child(3){
+      left: 52px;
+    }
+  }
+}
