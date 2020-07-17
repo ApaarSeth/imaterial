@@ -82,7 +82,6 @@ export class ProfileComponent implements OnInit {
       this.getCurrency(res[2])
       this.getCountry(res[3])
       this.getUserInformation(res[4], res[5])
-
     })
   }
 
@@ -121,6 +120,9 @@ export class ProfileComponent implements OnInit {
         if (element.tradeId == 13) {
           if (element.tradeDescription)
             this.tradeDescription = element.tradeDescription;
+          this.customTrade.patchValue({
+            trade: element.tradeDescription
+          })
         }
       });
       this.getTradesList(tradeRes);
@@ -146,7 +148,7 @@ export class ProfileComponent implements OnInit {
       ssoId: this.users.ssoId,
       countryId: this.livingCountry[0] ? this.livingCountry[0].countryId : null,
       trade: this.users.trade,
-      profileUrl: '',
+      profileUrl: this.users.profileUrl,
       orgPincode: this.users.orgPincode,
     })
   }

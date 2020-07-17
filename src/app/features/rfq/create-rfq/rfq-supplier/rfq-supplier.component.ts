@@ -12,6 +12,7 @@ import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractCon
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
 import { Subject, Observable } from 'rxjs';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
+import { CountryCode } from 'src/app/shared/models/currency';
 
 @Component({
   selector: "app-rfq-supplier",
@@ -19,6 +20,8 @@ import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/
 })
 export class RfqSupplierComponent implements OnInit {
   @Input() finalRfq: AddRFQ;
+  @Input() cntryList: CountryCode[];
+  @Input() suppliers: Suppliers[];
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   searchText: string = null;
   buttonName: string = "selectSupplier";
@@ -38,7 +41,7 @@ export class RfqSupplierComponent implements OnInit {
   supplierForm: FormGroup;
   supplierCounter: number = 0;
   newAddedId: number;
-  countryist: any;
+  countryist: CountryCode[];
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -50,16 +53,15 @@ export class RfqSupplierComponent implements OnInit {
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
-    if (this.activatedRoute.snapshot.data.createRfq[0].data) {
-      this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[0].data;
-      // this.allSupplier.next(this.allSuppliers);
+    if (this.suppliers) {
+      this.allSuppliers = this.suppliers;
     } else {
       this.allSuppliers = [];
     }
-
-    this.countryist = this.activatedRoute.snapshot.data.countryList
+    this.countryist = this.cntryList;
     this.formInit();
   }
+
   ngOnChanges(changes: SimpleChanges) {
     this.rfqData = this.finalRfq;
     if (this.rfqData) {

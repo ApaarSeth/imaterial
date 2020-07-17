@@ -24,6 +24,7 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { LoaderInterceptor } from 'src/app/shared/http-interceptors/loader-interceptor';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
+import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
 
 @Component({
   selector: "app-rfq-project-materials",
@@ -31,6 +32,7 @@ import { GlobalLoaderService } from 'src/app/shared/services/global-loader.servi
 })
 export class RfqProjectMaterialsComponent implements OnInit {
   @Input() existingRfq: AddRFQ;
+  @Input() projectsList: ProjectDetails[];
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   @ViewChild("ch", { static: true }) ch: HTMLElement;
   @ViewChild("table", { static: true }) table;
@@ -62,6 +64,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
   counter: number = 0;
   constructor(
     public dialog: MatDialog,
+    private projectService: ProjectService,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
@@ -72,7 +75,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
   form: FormGroup;
 
   ngOnInit() {
-    this.allProjects = this.activatedRoute.snapshot.data.createRfq[1].data;
+
+    this.allProjects = this.projectsList;
     this.activatedRoute.params.subscribe(params => {
       this.rfqId = params['rfqId']
     })
@@ -88,9 +92,6 @@ export class RfqProjectMaterialsComponent implements OnInit {
     }
   }
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   this.allProjects ? this.checkExistingData() : null;
-  // }
 
   checkExistingData() {
     if (this.existingRfq) {
@@ -125,9 +126,11 @@ export class RfqProjectMaterialsComponent implements OnInit {
       selectedProject: ['', [Validators.required]]
     });
   }
+
   setButtonName(name: string) {
     this.buttonName = name;
   }
+
   choosenProject() {
     let projectAdd: number[] = [];
     let projectRemove: number[] = [];
