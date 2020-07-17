@@ -1,6 +1,6 @@
 <!-- <fix-header></fix-header> -->
 
-<div class="page-start-point" *ngIf="rfqDetails">
+<div class="page-start-point changeWidth mt-5 pt-4" *ngIf="rfqDetails">
   <div class="create-po-dashboard p-b-20 min-height parent">
     <div class="row m-b-10">
       <div class="col-md-12">
@@ -57,17 +57,23 @@
 
         <!-- second row -->
         <div class="row m-b-10">
-          <div class="supplier-list-rfq-view col-md-3 main-flex" *ngFor="let supplier of rfqDetails.supplierDetails">
+          <div class="supplier-list-rfq-view col-md-3 main-flex" *ngFor="let supplier of rfqDetails.supplierDetails; let i = index">
             <mat-card class="w-100">
-              <div class="col-md-12 text-bold">
+              <div class="col-md-12 text-bold supplier-company">
                 <label for="company " class="word-break-all">{{ supplier.supplier_name }}</label>
               </div>
+
+              <span class="d-block supplier-rates ml-1">
+                <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplier_rating"></view-rating>
+              </span>
+
               <div class="col-md-12">
                 <label for="email" class="word-break-all">{{ supplier.email }}</label>
               </div>
               <div class="col-md-12">
                 <label for="phoneNumber" class="word-break-all"> {{ supplier.countryCallingCode }}-{{ supplier.contact_no }} </label>
               </div>
+              
             </mat-card>
           </div>
         </div>
@@ -101,7 +107,7 @@
 
           <!-- table -->
           <div class="add-unique-container mat-elevation-z8">
-            <table mat-table [dataSource]="project.projectMaterialList">
+            <table mat-table [dataSource]="project.projectMaterialList" class="rfq-view-step">
               <!-- Material Name Column -->
               <ng-container matColumnDef="Material Name">
                 <th class="font-size14" mat-header-cell *matHeaderCellDef>Material Name</th>
@@ -135,6 +141,25 @@
                       {{ make }}
                     </span>
                   </ng-container>
+                </td>
+              </ng-container>
+
+              <!-- View image Column -->
+              <ng-container matColumnDef="Attached Images">
+                <th mat-header-cell *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
+                  Attached Images
+                </th>
+                <td class="text-align-center" mat-cell *matCellDef="let element">
+                  <div *ngIf="element?.documentList?.length" class="images-lists" (click)="viewAllImages(element.materialId)">
+                    <ng-container *ngFor="let img of element.documentList; let i = index">
+                      <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                    </ng-container>
+                  </div>
+      
+                  <ng-container *ngIf="!element?.documentList">
+                    <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
+                  </ng-container>
+                  
                 </td>
               </ng-container>
 

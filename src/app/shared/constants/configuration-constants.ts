@@ -141,5 +141,15 @@ export const API = {
   EMAILVERFICATIONSTATUS: `email/verification/status`,
   EMAILVERFICATION: (token) => `emailVerification/${token}`,
   DASHBOARD_VIDEOS: 'marketing/dashboardVideo',
-  PUSHNOTIFICATIONDATA: 'user/web/notification/savetoken'
+  GETSUBSCRIPTIONPLAN: 'subscription/getSubscriptionPlan',
+  POST_SUBSCRIPTIONPAYMENTGATEWAY: 'payments/subscription/initiate',
+  POST_SUBSCRIPTIONINITIATE: 'payment/subscription/initiate',
+  POST_SUBSCRIPTION_UNSUBSCRIBE: 'payment/unsubscribe',
+  SUPPLIER_RATING: 'supplier/update/rating',
+  UPLOAD_IMAGE: 'material/addImages',
+  VIEW_IMAGES: (projectId, materialId) => `material/getImages/${projectId}/${materialId}`,
+  DOWNLOAD_IMAGE: 'documents/download',
+  PUSHNOTIFICATIONDATA: 'user/web/notification/savetoken',
+  GET_ALL_RFQ_IMAGES: (rfqId, materialId) => `rfq/getImages/${rfqId}/${materialId}`,
+  GET_SUPPLIER_IMAGES: (rfqId, materialId, supplierId) => `rfq/getImages/${rfqId}/${materialId}/${supplierId}`,
 };

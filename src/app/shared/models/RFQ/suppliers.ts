@@ -11,4 +11,5 @@ export interface Suppliers {
   email: string;
   pan: string;
   checked?: boolean;
+  supplier_rating?: number;
 }

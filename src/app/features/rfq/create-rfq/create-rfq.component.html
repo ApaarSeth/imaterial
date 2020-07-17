@@ -1,5 +1,5 @@
-<div class="page-start-point">
-  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+<div class="page-start-point changeWidth mt-5 pt-4" [ngClass]="isMobile ? 'm-popd' : '' ">
+  <div class="p-b-20 min-height parent" [ngClass]="isMobile ? 'pl-2 pr-2' : 'p-l-20 p-r-20' ">
     <div class="row">
       <div class="col-xs-12 text-right">
         <!-- <span class="p-r-5">
@@ -32,7 +32,8 @@
       </div>
     </div>
     <!-- <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper> -->
-    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper>
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper
+      [ngClass]="isMobile ? 'm-stepper' : '' ">
       <mat-step stepControl="stepOne">
         <ng-template matStepLabel>Project & Material</ng-template>
         <app-rfq-project-materials

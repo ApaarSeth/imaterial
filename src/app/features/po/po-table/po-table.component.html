@@ -97,16 +97,29 @@
               }})</span
             ></span
           >
+
+          <!---- Attached Image Column ---->
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'">
+            Attached Images
+          </span>
+
           <span
             class="mat-header-cell"
             *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
             [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'"
           ></span>
         </section>
+
         <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
           <div class="material-row" [ngClass]="isMobile ? 'mpo-mh' : ''">
             <span class="mat-cell widthReduce" [ngClass]="isMobile ? 'fontsize-10-px' : ''">{{ m + 1 }}</span>
-            <span class="mat-cell maxwidth-20" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ material.materialName }}</span>
+            <span class="mat-cell maxwidth-20" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
+              <span>{{ material.materialName }}</span>
+              <!-- Upload Image Modal Link -->
+              <div class="add-edit-image d-block">
+                <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(material, 'po')">Add/Edit Image</a>
+              </div>
+            </span>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'"></span>
             <span class="mat-cell p-l-0 minwidth-10" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
@@ -185,6 +198,22 @@
                 ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue + getMaterialTotalAmount(m) | number: "1.2-2")
                 : (this.poTableData[m].otherCostAmount + getMaterialTotalAmount(m) | number: "1.2-2")
             }}</span>
+
+            <!---- Attached Column Images List ---->
+            <span class="mat-cell">
+              <!-- View image modal link -->
+              <!-- <div *ngIf="element?.documentList?.length" class="images-lists"
+                (click)="viewAllImages(element.materialId)">
+                <ng-container *ngFor="let img of element.documentList; let i = index">
+                  <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                </ng-container>
+              </div>
+  
+              <ng-container *ngIf="!element?.documentList">
+                <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
+              </ng-container> -->
+            </span>
+
             <span
               class="mat-cell minwidth-11 text-align-right"
               [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"

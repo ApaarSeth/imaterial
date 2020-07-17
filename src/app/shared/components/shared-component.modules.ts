@@ -10,8 +10,14 @@ import { GlobalLoaderComponent } from './global-loader/global-loader.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { RangeDatePicker } from './rangeDatePicker/datePicker.component';
 import { SnackbarComponent } from '../dialogs/snackbar/snackbar.compnent';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { ViewRatingComponent } from './view-rating/view-rating.component';
+import { ViewImageComponent } from '../dialogs/view-image/view-image.component';
+import { UploadImageComponent } from '../dialogs/upload-image/upload-image.component';
+import { SupplierRatingComponent } from '../dialogs/supplier-rating/supplier-rating.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-const components = [ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker];
+const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent ];
 
 @NgModule({
   imports: [
@@ -19,11 +25,12 @@ const components = [ProjectItemComponent, ChipComponent, UploadComponent, Global
     FormsModule,
     RouterModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
 
   declarations: components,
-  entryComponents: [],
+  entryComponents: [UploadImageComponent, ViewImageComponent, SupplierRatingComponent],
   exports: components
 })
 export class SharedComponentsModule { }

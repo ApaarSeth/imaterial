@@ -1,4 +1,4 @@
-import { DocumentList } from '../PO/po-data';
+import { DocumentList, ImageDocsLists } from '../PO/po-data';
 import { rfqCurrency } from './rfq-details';
 import { Currency } from '../currency';
 
@@ -160,6 +160,7 @@ export interface RfqSupplierList {
   brandDetailList: RfqBrandDetail[];
   taxInfo?: RfqTaxInfo[];
   otherCostInfo?: OtherCostInfo[];
+  documentList?: string[];
 }
 
 export interface RfqBrandDetail {

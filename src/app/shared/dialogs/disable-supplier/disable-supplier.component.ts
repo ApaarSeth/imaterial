@@ -56,12 +56,11 @@ export class DeactiveSupplierComponent implements OnInit {
           this.dialogRef.close(data.message);
           this._snackBar.open(data.message, "", {
             duration: 2000,
-            panelClass: ["success-snackbar"],
+            panelClass: [ "success-snackbar" ],
             verticalPosition: "bottom"
           });
         }
         return data.data;
-        debugger
       });
     }
   }

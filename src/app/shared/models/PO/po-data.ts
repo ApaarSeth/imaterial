@@ -28,6 +28,9 @@ export interface POData {
   additionalOtherCostInfo?: OtherCostInfo[];
   additionalOtherCostAmount?: number;
   currencyCode?: string;
+  sellerPORating?: number;
+  poCreatedBy?: number;
+  poStatus?: string;
 }
 
 export interface PurchaseOrderCurrency {
@@ -192,6 +195,9 @@ export interface CardData {
   poValidUpto: string;
   projectId: number;
   isInternational?: number;
+  sellerPORating?: number;
+  poCreatedBy?: number;
+  poStatus?: string;
 }
 
 export interface DocumentList {
@@ -281,4 +287,32 @@ export interface PoPayementDetail {
   totalTaxAmount: 0,
   totalPoAmount: 3300000,
   otherCost: 0,
+}
+
+export interface ImageList {
+  documentUrl?: string;
+  documentShortUrl: string;
+  documentType?: string;
+  documentDesc: string;
+  documentId: number;
+  documentThumbnailUrl?: string;
+  documentThumbnailShortUrl?: string;
+  supplierId?: number;
+  materialId?: number;
+}
+
+export interface ImageDocsLists{
+  projectId: number;
+  materialId: number;
+  materialDocumentId: number;
+  documentId: number;
+  documentUrl: string;
+  documentDesc: string;
+  documentType: string;
+  documentShortUrl: string;
+  ThumbnailFileName?: string;
+  ThumbnailUrl?: string;
+  documentThumbnailUrl?: string;
+  documentThumbnailShortUrl?: string;
+  supplierId?: number;
 }

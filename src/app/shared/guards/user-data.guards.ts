@@ -23,7 +23,7 @@ export class UserDataGuardService implements CanActivate {
                 return true;
             }
             else {
-                this.router.navigate(['/dashboard']);
+                this.router.navigate([ '/dashboard' ]);
                 return false;
             }
         });

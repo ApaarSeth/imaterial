@@ -13,6 +13,7 @@ import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.compo
 import { OverallOtherCost } from 'src/app/shared/models/common.models';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
+import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 
 @Component({
   selector: "app-po-table",
@@ -514,5 +515,28 @@ export class PoTableComponent implements OnInit, OnDestroy {
       }
     }
 
+  }
+
+
+  /**
+   * function will call to upload new images
+   * @param selectedMaterial, type
+   */
+  uploadImage(selectedMaterial, type) {
+    const dialogRef = this.dialog.open(UploadImageComponent, {
+      disableClose: true,
+      width: "60vw",
+      panelClass: 'upload-image-modal',
+      data: {
+        selectedMaterial,
+        type,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== null) {
+        console.log(result);
+      }
+    });
   }
 }

@@ -41,6 +41,9 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
 import { TaxCostService } from './shared/services/taxcost.service';
+import { MySubscriptionsComponent } from './features/users/my-subscriptions/my-subscriptions.component';
+import { SubscriptionRedirectionsComponent } from './features/subscription-redirections/subscription-redirections.component';
+
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -53,7 +56,9 @@ import { environment } from '../environments/environment';
     SupplierBidLayoutComponent,
     AppDashboardComponent,
     ProfileLayoutComponent,
-    ProfileComponent
+    ProfileComponent,
+    MySubscriptionsComponent,
+    SubscriptionRedirectionsComponent
   ],
   imports: [
     BrowserModule,
@@ -98,6 +103,6 @@ import { environment } from '../environments/environment';
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
     TaxCostService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

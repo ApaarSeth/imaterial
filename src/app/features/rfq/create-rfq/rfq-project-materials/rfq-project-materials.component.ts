@@ -62,6 +62,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
   finalRfqDetails: RfqMaterialResponse[];
   rfqId: number;
   counter: number = 0;
+  isMobile: boolean;
   constructor(
     public dialog: MatDialog,
     private projectService: ProjectService,
@@ -77,8 +78,10 @@ export class RfqProjectMaterialsComponent implements OnInit {
   ngOnInit() {
 
     this.allProjects = this.projectsList;
+    this.isMobile = this.commonService.isMobile().matches;
+    // this.allProjects = this.activatedRoute.snapshot.data.createRfq[ 1 ].data;
     this.activatedRoute.params.subscribe(params => {
-      this.rfqId = params['rfqId']
+      this.rfqId = params[ 'rfqId' ]
     })
     this.formInit();
     this.materialsForm();
@@ -123,7 +126,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
 
   formInit() {
     this.form = this.formBuilder.group({
-      selectedProject: ['', [Validators.required]]
+      selectedProject: [ '', [ Validators.required ] ]
     });
   }
 
@@ -178,7 +181,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
         // this.materialAdded();
       });
     }
-    this.projectIds = [...selectedIds];
+    this.projectIds = [ ...selectedIds ];
   }
 
   getCheckedMaterial(project: RfqMaterialResponse) {
@@ -221,7 +224,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
       let materialGrp: FormGroup[] = projects.projectMaterialList.map(
         material => {
           return this.formBuilder.group({
-            material: [material.checked ? material : null]
+            material: [ material.checked ? material : null ]
           });
         }
       );
@@ -244,9 +247,9 @@ export class RfqProjectMaterialsComponent implements OnInit {
     projectId: number,
     element: RfqMat
   ) {
-    const pArr = this.materialForm.controls["forms"] as FormArray;
+    const pArr = this.materialForm.controls[ "forms" ] as FormArray;
     const mArr = pArr.at(p) as FormArray;
-    const maGrp = mArr.controls["materialList"] as FormArray;
+    const maGrp = mArr.controls[ "materialList" ] as FormArray;
     const mat = maGrp.at(i);
     if (checked.checked) {
       element.checked = true;
@@ -263,7 +266,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
     let newRfqDetails = JSON.parse(JSON.stringify(this.rfqDetails));
     newRfqDetails = newRfqDetails.map((rfqDetail: RfqMaterialResponse, i) => {
       let projectMaterial: RfqMat[] = [];
-      this.materialForm.value.forms[i].materialList.forEach(element => {
+      this.materialForm.value.forms[ i ].materialList.forEach(element => {
         if (element.material != null) {
           if (this.checkedProjectIds.includes(rfqDetail.projectId)) {
             this.checkedProjectList.forEach((project: RfqMaterialResponse) => {
@@ -284,6 +287,11 @@ export class RfqProjectMaterialsComponent implements OnInit {
                       const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
                       fullfilmentDate = year + "-" + month + "-" + day;
                     }
+
+                    if (mat.documentList === null || mat.documentList === []) {
+                      mat.documentList = element.material.documentsList;
+                    }
+
                     projectMaterial.push({ ...mat, fullfilmentDate });
                     materialAddedFlag = true;
                   }
@@ -295,7 +303,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
               }
             })
           } else {
-            projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null });
+            projectMaterial.push({ ...element.material, fullfilmentDate: element.material.dueDate ? element.material.dueDate : null, documentList: element.material.documentsList ? element.material.documentsList : null });
           }
         }
       })
