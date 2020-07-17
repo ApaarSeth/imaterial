@@ -170,7 +170,7 @@ export class SigninComponent implements OnInit {
         localStorage.setItem("userName", res.data[0].firstName);
       localStorage.setItem("profileUrl", res.data[0].profileUrl);
       localStorage.setItem("currencyCode", res.data[0].baseCurrency ? res.data[0].baseCurrency.currencyCode : null);
-      localStorage.setItem("countryCode", res.data[0].countryCode);
+      // localStorage.setItem("countryCode", res.data[0].countryCode);
       localStorage.setItem("countryId", res.data[0].countryId)
       this.dataService.getRequest(API.CHECKTERMS, null, { skipLoader: true }).then(res => {
         this.acceptTerms = res.data;

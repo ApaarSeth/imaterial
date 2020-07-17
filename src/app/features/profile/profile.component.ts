@@ -323,6 +323,14 @@ export class ProfileComponent implements OnInit {
       })
       let data: UserDetails = this.userInfoForm.getRawValue();
       data.myAccountUpdate = false;
+      if (data.profileUrl.includes('https')) {
+        let tempIndex = data.profileUrl.indexOf('tmp')
+        let quesIndex = data.profileUrl.indexOf('?')
+        let re = /\%20/gi;
+        let fileName = (<String>data.profileUrl.slice(tempIndex, quesIndex)).replace(re, " ");
+        data.profileUrl = fileName;
+      }
+
       data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
