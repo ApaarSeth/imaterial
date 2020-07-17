@@ -3,6 +3,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/userDashboard/user.service';
 import { Subscription } from 'rxjs';
 import { IBreadCrumb } from '../../models/breadcrumbs';
+import { MenuList } from '../../models/menu.model';
 
 @Component({
   selector: "app-main-layout",
@@ -15,11 +16,16 @@ export class MainLayoutComponent implements OnInit {
   userName: string;
   url: string;
   isSideNavCollapsed: boolean;
+  menuData: MenuList;
 
-  constructor(private router: Router, private _userService: UserService) { }
+  constructor(private router: Router,
+    private _userService: UserService,
+    private activateRoute: ActivatedRoute
+  ) { }
 
   loaded = '';
   ngOnInit() {
+    this.menuData = this.activateRoute.snapshot.data.menu;
     this.userId = Number(localStorage.getItem("userId"));
     this.userName = localStorage.getItem("userName");
     this.url = localStorage.getItem('profileUrl');
@@ -32,7 +38,7 @@ export class MainLayoutComponent implements OnInit {
   }
 
   goToProfile(sidenav) {
-    this.router.navigate(['/profile-account']).then(_ => {
+    this.router.navigate([ '/profile-account' ]).then(_ => {
       sidenav.close();
     });
 
@@ -53,9 +59,9 @@ export class MainLayoutComponent implements OnInit {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
 
-  isSidebarCollapsed(e){
+  isSidebarCollapsed(e) {
     // this.isSideNavCollapsed = e;
-    if(e){
+    if (e) {
       localStorage.setItem('sidebarNavigation', e);
     }
     localStorage.setItem('sidebarNavigation', e);

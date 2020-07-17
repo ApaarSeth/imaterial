@@ -8,6 +8,8 @@ import { FacebookPixelService } from '../services/fb-pixel.service';
 import { MatSidenav } from '@angular/material';
 import { AppNavigationService } from '../services/navigation.service';
 import { TokenService } from '../services/token.service';
+import { MenuList } from '../models/menu.model';
+import { CommonService } from '../services/commonService';
 
 @Component({
   selector: "sidebar-navigation",
@@ -25,17 +27,22 @@ export class SidebarNavigationComponent implements OnInit {
   userId: number;
   @Input('menu') menu: MatSidenav;
   subsriptions: Subscription[] = [];
-  headerConst: { name: string, link: string, flag: boolean }[]
-
+  headerConst: { name: string, link: string, flag: boolean }[];
   isCollapseMenu: boolean = true;
   @Output('collapseMenu') sideNavCollapse = new EventEmitter<boolean>();
+
+  @Input('menuData') data: MenuList;
+
+  clicked: boolean;
+
 
   constructor(
     private permissionService: PermissionService,
     private router: Router,
     private fbPixel: FacebookPixelService,
     private navService: AppNavigationService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
@@ -43,6 +50,15 @@ export class SidebarNavigationComponent implements OnInit {
     this.userId = Number(localStorage.getItem("userId"));
     this.role = this.tokenService.getRole();
     this.sidenavToggle.emit('loaded');
+
+    if (this.data.moduleList.length) {
+      this.data.moduleList.forEach(itm => {
+        if (itm.modulePath === 'globalStore/') {
+          itm.modulePath = itm.modulePath + this.orgId;
+        }
+      });
+    }
+
     if (this.role) {
       // this.tokenService.headerRole.subscribe(role => {
       this.permissionObj = this.permissionService.checkPermission(this.role);
@@ -70,6 +86,18 @@ export class SidebarNavigationComponent implements OnInit {
           }
         })
     )
+  }
+
+  showOnHover() {
+    if (!this.clicked) {
+      this.isCollapseMenu = false;
+    }
+  }
+
+  hideOnHover() {
+    if (!this.clicked) {
+      this.isCollapseMenu = true;
+    }
   }
 
   public onToggleSidenav = () => {
@@ -114,7 +142,7 @@ export class SidebarNavigationComponent implements OnInit {
   }
 
   routeTo(route) {
-    this.router.navigate([route]);
+    this.router.navigate([ route ]);
   }
 
   closeDialog() {
@@ -125,8 +153,9 @@ export class SidebarNavigationComponent implements OnInit {
     this.subsriptions.forEach(subs => subs.unsubscribe());
   }
 
-  collapseSideMenu(){
+  collapseSideMenu() {
     this.isCollapseMenu = !this.isCollapseMenu;
     this.sideNavCollapse.emit(this.isCollapseMenu);
+    this.clicked = !this.clicked;
   }
 }
