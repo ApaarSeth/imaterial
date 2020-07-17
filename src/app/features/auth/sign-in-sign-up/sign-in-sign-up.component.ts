@@ -58,24 +58,24 @@ export class SignInSignUpComponent implements OnInit {
       this.uniqueCode = param["uniqueCode"];
       this.index = this.uniqueCode ? 1 : 0;
     });
-    // Promise.all([this.visitorsService.getGEOLocation(), this.commonService.getCountry()]).then(res => {
-    //   this.callingCode = res[0]['countryCode'] === 'IN' ? '+91' : 'null';
-    //   this.countryCode = res[0]['countryCode']
-    //   localStorage.setItem('countryCode', this.countryCode)
-    //   localStorage.setItem('callingCode', this.callingCode)
-    //   this.countryList = res[1]['data']
-    // }).catch(err => {
-    //   this.fallBackData()
-    // })
-    Promise.all([this.commonService.getCountry()]).then(res => {
-      this.callingCode = 'null';
-      this.countryCode = 'US'
+    Promise.all([this.visitorsService.getGEOLocation(), this.commonService.getCountry()]).then(res => {
+      this.callingCode = res[0]['countryCode'] === 'IN' ? '+91' : 'null';
+      this.countryCode = res[0]['countryCode']
       localStorage.setItem('countryCode', this.countryCode)
       localStorage.setItem('callingCode', this.callingCode)
-      this.countryList = res[0]['data']
+      this.countryList = res[1]['data']
     }).catch(err => {
-      // this.fallBackData()
+      this.fallBackData()
     })
+    // Promise.all([this.commonService.getCountry()]).then(res => {
+    //   this.callingCode = 'null';
+    //   this.countryCode = 'US'
+    //   localStorage.setItem('countryCode', this.countryCode)
+    //   localStorage.setItem('callingCode', this.callingCode)
+    //   this.countryList = res[0]['data']
+    // }).catch(err => {
+    //   // this.fallBackData()
+    // })
   }
 
 
