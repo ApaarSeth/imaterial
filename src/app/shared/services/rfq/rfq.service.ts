@@ -35,8 +35,8 @@ export class RFQService {
     return this.dataService.sendPostRequest(API.RFQADDPO, bidData);
   }
 
-  getSuppliers(organizationId: number) {
-    return this.dataService.getRequest(API.GETSUPPLIERS(organizationId));
+  getSuppliers(organizationId: number, skipLoader?: boolean) {
+    return this.dataService.getRequest(API.GETSUPPLIERS(organizationId), null, { skipLoader });
   }
 
   addNewSupplier(organizationId: number, supplier: Suppliers) {
@@ -45,8 +45,8 @@ export class RFQService {
     });
   }
 
-  addRFQ(rfqDetail: AddRFQ) {
-    return this.dataService.sendPostRequest(API.ADDRFQ, rfqDetail);
+  addRFQ(rfqDetail: AddRFQ, skipLoader?: boolean) {
+    return this.dataService.sendPostRequest(API.ADDRFQ, rfqDetail, { skipLoader });
   }
 
   getRFQDetailSupplier(rfqId: number, supplierId: number) {

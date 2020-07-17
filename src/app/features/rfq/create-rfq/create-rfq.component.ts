@@ -21,11 +21,16 @@ import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
 import { AddRFQConfirmationComponent } from 'src/app/shared/dialogs/add-rfq-confirmation/add-rfq-double-confirmation.component';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
+import { ProjectDetails } from 'src/app/shared/models/project-details';
+import { CountryCode } from 'src/app/shared/models/currency';
+import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 
 @Component({
   selector: "app-create-rfq",
   templateUrl: "./create-rfq.component.html"
 })
+
 export class CreateRfqComponent implements OnInit {
   @ViewChild("stepper", { static: true, read: MatStepper }) stepper: MatStepper;
   @ViewChild("rfqQtyMakes", { static: true })
@@ -40,11 +45,10 @@ export class CreateRfqComponent implements OnInit {
   rfqData: AddRFQ;
   finalRfq: AddRFQ;
   completed: boolean = false;
-
+  countryList: CountryCode[] = [];
   public RfqProjectTour: GuidedTour = {
     tourId: 'rfq-project-tour',
     useOrb: false,
-
     steps: [
       {
         title: 'Search Project',
@@ -75,8 +79,12 @@ export class CreateRfqComponent implements OnInit {
   };
   orgId: number;
   userId: number;
+  allProject: ProjectDetails[] = [];
+  allSupplier: Suppliers[] = [];
   constructor(
+    private projectService: ProjectService,
     private router: Router,
+    private loader: GlobalLoaderService,
     private commonService: CommonService,
     private rfqService: RFQService,
     private route: ActivatedRoute,
@@ -88,17 +96,29 @@ export class CreateRfqComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-
     this.commonService.baseCurrency.subscribe(val => {
     })
   }
 
   ngOnInit() {
+    let userId = Number(localStorage.getItem("userId"));
+    let orgId = Number(localStorage.getItem("orgId"));
+    let id = this.route.snapshot.params['rfqId'];
 
-    this.orgId = Number(localStorage.getItem("orgId"));
-    this.userId = Number(localStorage.getItem("userId"));
+    Promise.all([
+      this.rfqService.getSuppliers(orgId, id),
+      this.projectService.getProjects(orgId, userId),
+      this.commonService.getCountry()
+    ]).then(res => {
+      if (id) { this.loader.hide() }
+      this.allSupplier = res[0].data
+      this.allProject = res[1].data
+      this.countryList = res[2].data
+    });
+
     if (this.stepper) {
       this.stepper.selectedIndex = history.state.selectedIndex;
+      this.currentIndex = history.state.selectedIndex ? history.state.selectedIndex : 0;
       if (this.stepper.selectedIndex == 0) {
         if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
           setTimeout(() => {
@@ -161,9 +181,10 @@ export class CreateRfqComponent implements OnInit {
   }
 
   getMaterial(materials: AddRFQ) {
-    this.rfqService.addRFQ(materials).then(res => {
-      this.route.params.subscribe(param => {
-        let rfqId = param['rfqId']
+    this.route.params.subscribe(param => {
+      let rfqId = param['rfqId']
+      if (!rfqId) this.loader.show()
+      this.rfqService.addRFQ(materials, !rfqId ? true : false).then(res => {
         if (!rfqId) {
           this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
             state: { rfqData: res, selectedIndex: 1 }
@@ -194,6 +215,7 @@ export class CreateRfqComponent implements OnInit {
       }
     }
   }
+
   goBack(stepper: MatStepper) {
     stepper.previous();
   }
