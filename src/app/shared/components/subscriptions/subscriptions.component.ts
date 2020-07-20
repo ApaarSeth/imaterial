@@ -58,8 +58,8 @@ export class SubscriptionsComponent implements OnInit {
             subscriptionId: id
         };
         this.subsPayService.postSubscriptionUnsubscribe(obj).then(res => {
-            if (res.data) {
-                this._router.navigate([ "/dashboard" ])
+            if (res.status === 1) {
+                this._router.navigate([ "/subscriptions/unsubscribe" ])
             }
         });
     }
@@ -82,7 +82,8 @@ export class SubscriptionsComponent implements OnInit {
                     customerEmail: this.users.email,
                     customerName: this.users.firstName + ' ' + this.users.lastName,
                     customer_identifier: this.users.organizationId,
-                    orderId: res.data.transactionId,
+                    // orderId: res.data.transactionId,
+                    orderId: res.data.orderId,
                     // promoCode: 'DD234Q',
                     validUpto: res.data.endDate,
                     startDt: res.data.startDate,

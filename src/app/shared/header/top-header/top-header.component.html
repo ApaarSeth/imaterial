@@ -39,9 +39,11 @@
         <button mat-menu-item class="background-white-color" (click)="goToProfile()">
           My Account
         </button>
-        <button mat-menu-item class="background-white-color" (click)="goToMyPlans()">
-          My Plan / Upgrade
-        </button>
+        <ng-container *ngIf="isActiveSubscription">
+          <button mat-menu-item class="background-white-color" (click)="goToMyPlans()">
+            My Plan / Upgrade
+          </button>
+        </ng-container>
         <button mat-menu-item class="background-white-color" (click)="logout()"
           routerLinkActive="router-link-active">Logout</button>
       </mat-menu>
