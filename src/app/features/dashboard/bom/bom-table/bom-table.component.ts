@@ -25,12 +25,9 @@ import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-materia
 import { IndentService } from 'src/app/shared/services/indent/indent.service';
 import { AddGrnComponent } from 'src/app/shared/dialogs/add-grn/add-grn.component';
 import { CommonService } from 'src/app/shared/services/commonService';
-<<<<<<< HEAD
 import { AddGrnViaExcelComponent } from 'src/app/shared/dialogs/addGrn-viaExcel/addGrnViaExcel.component';
-=======
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
->>>>>>> b021db0c87a2f5b12cae2b33a278bc787ee290c0
 
 @Component({
   selector: "app-bom-table",
@@ -49,9 +46,9 @@ export class BomTableComponent implements OnInit {
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = [ "materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
+  columnsToDisplay = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
 
-  innerDisplayedColumns = [ "materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
+  innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -114,7 +111,7 @@ export class BomTableComponent implements OnInit {
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
     this.route.params.subscribe(params => {
-      this.projectId = params[ "id" ];
+      this.projectId = params["id"];
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
@@ -155,7 +152,7 @@ export class BomTableComponent implements OnInit {
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
-      this.subcategories = res.data ? [ ...res.data ] : null;
+      this.subcategories = res.data ? [...res.data] : null;
       if (this.subcategories) {
         this.subcategories.forEach(subcategory => {
           if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
@@ -247,7 +244,7 @@ export class BomTableComponent implements OnInit {
       if (this.checkedSubcategory.length) {
         let checkedList = this.checkedSubcategory;
         this.indentService.raiseIndentData = checkedList;
-        this.router.navigate([ "/indent/" + this.projectId ]);
+        this.router.navigate(["/indent/" + this.projectId]);
       }
     }
   }
@@ -279,7 +276,7 @@ export class BomTableComponent implements OnInit {
         mat.materialUnit = category.materialUnit;
         materialList.push(mat);
       });
-      let projectId = materialList[ 0 ].projectId;
+      let projectId = materialList[0].projectId;
       this.addRfq = {
         id: null,
         status: null,
@@ -322,9 +319,9 @@ export class BomTableComponent implements OnInit {
         documentsList: null,
         terms: null
       };
-      this.addRfq.rfqProjectsList[ 0 ].projectMaterialList = materialList;
+      this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
       this.rfqService.addRFQ(this.addRfq).then(res => {
-        this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
+        this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
           state: { rfqData: res, selectedIndex: 1 }
         });
       });
@@ -333,7 +330,7 @@ export class BomTableComponent implements OnInit {
   }
 
   viewIndent() {
-    this.router.navigate([ "/indent/" + this.projectId + "/indent-detail" ]);
+    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
   }
 
   editProject() {
@@ -380,7 +377,7 @@ export class BomTableComponent implements OnInit {
     }
   }
   addMaterial() {
-    this.router.navigate([ "/project-dashboard/bom/" + this.projectId ]);
+    this.router.navigate(["/project-dashboard/bom/" + this.projectId]);
 
   }
 
