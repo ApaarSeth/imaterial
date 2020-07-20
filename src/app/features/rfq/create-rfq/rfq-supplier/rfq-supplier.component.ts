@@ -13,6 +13,7 @@ import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/
 import { Subject, Observable } from 'rxjs';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { CountryCode } from 'src/app/shared/models/currency';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-rfq-supplier",
@@ -48,7 +49,8 @@ export class RfqSupplierComponent implements OnInit {
     private rfqService: RFQService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
@@ -168,7 +170,7 @@ export class RfqSupplierComponent implements OnInit {
       .then(result => {
         if (result === 'Supplier Successfully added') {
           let allSuppliersId: number[] = [];
-          this.rfqService.getSuppliers(this.orgId).then(data => {
+          this.commonService.getSuppliers(this.orgId).then(data => {
             allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
             let tempId: number[] = data.data.map(supp => supp.supplierId);
             let newAddedId: number = null
