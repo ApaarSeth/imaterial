@@ -127,6 +127,10 @@ export class CommonService {
     return this.dataService.sendPostRequest(API.PUSHNOTIFICATIONDATA, data)
   }
 
+  getSuppliers(organizationId: number, skipLoader?: boolean) {
+    return this.dataService.getRequest(API.GETSUPPLIERS(organizationId), null, { skipLoader });
+  }
+
 }
 
 

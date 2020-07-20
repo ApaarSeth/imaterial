@@ -79,3 +79,11 @@ div.limited-character.bom {
     padding-top: 3.84375em !important;
   }
 }
+
+.cdk-overlay-pane.shift-upward {
+  transform: translateX(-61px) translateY(-76px) !important;
+}
+
+.mat-select-panel.removeMinWidth {
+  min-width: 100% !important;
+}
