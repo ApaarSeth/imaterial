@@ -32,7 +32,6 @@ import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image
 export class RfqQuantityMakesComponent implements OnInit {
   @Input() generatedRfq: AddRFQ;
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
-
   userId: 1;
   searchProject: string = null;
   searchMaterial: string = null;
@@ -77,36 +76,11 @@ export class RfqQuantityMakesComponent implements OnInit {
     this.isMobile = this.commonService.isMobile().matches;
     this.primaryCurrencyCode = localStorage.getItem('currencyCode')
     this.startDate = new Date();
-    // this.rfqData = {
-    //   id: null,
-    //   status: null,
-    //   createdBy: null,
-    //   createdAt: null,
-    //   lastUpdatedBy: null,
-    //   lastUpdatedAt: null,
-    //   rfqId: null,
-    //   rfq_status: null,
-    //   rfqName: null,
-    //   dueDate: null,
-    //   supplierId: null,
-    //   supplierDetails: null,
-    //   rfqProjectsList: [],
-    //   documentsList: null,
-    //   terms: null,
-    //   rfqCurrency: null,
-    // };
-
-    // if (history.state.rfqData) {
-    //   this.rfqData = history.state.rfqData.data;
-    //   this.projectSelectedMaterials =
-    //     history.state.rfqData.data.rfqProjectsList;
-    //   this.updatedRfq.emit(this.rfqData);
-    // }
-    this.formsInit();
+    // this.formsInit();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.generatedRfq) {
+    if (changes.generatedRfq && changes.generatedRfq.currentValue) {
       this.rfqData = this.generatedRfq as AddRFQ;
       this.projectSelectedMaterials = this.rfqData.rfqProjectsList;
       this.formsInit();

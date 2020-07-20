@@ -56,34 +56,10 @@ export class RfqSupplierComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.orgId = Number(localStorage.getItem("orgId"));
-    // if (this.suppliers) {
-    //   this.allSuppliers = this.suppliers;
-    this.isMobile = this.commonService.isMobile().matches;
-    this.rfqData = {
-      id: null,
-      status: null,
-      createdBy: null,
-      createdAt: null,
-      lastUpdatedBy: null,
-      lastUpdatedAt: null,
-      rfqId: null,
-      rfq_status: null,
-      rfqName: null,
-      dueDate: null,
-      supplierId: null,
-      supplierDetails: null,
-      rfqProjectsList: [],
-      documentsList: null,
-      terms: null,
-      rfqCurrency: null,
-    };
-
     this.orgId = Number(localStorage.getItem("orgId"));
-    console.log(this.activatedRoute);
-    if (this.activatedRoute.snapshot.data.createRfq[ 0 ].data) {
-      this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[ 0 ].data;
-      // this.allSupplier.next(this.allSuppliers);
+    this.isMobile = this.commonService.isMobile().matches;
+    if (this.suppliers) {
+      this.allSuppliers = this.suppliers;
     } else {
       this.allSuppliers = [];
     }
@@ -108,6 +84,7 @@ export class RfqSupplierComponent implements OnInit {
       this.formInit();
     }
   }
+
 
   formInit() {
     const frmArr: FormGroup[] = this.allSuppliers.map(supplier => {
@@ -197,7 +174,7 @@ export class RfqSupplierComponent implements OnInit {
       .then(result => {
         if (result === 'Supplier Successfully added') {
           let allSuppliersId: number[] = [];
-          this.rfqService.getSuppliers(this.orgId).then(data => {
+          this.commonService.getSuppliers(this.orgId).then(data => {
             allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
             let tempId: number[] = data.data.map(supp => supp.supplierId);
             let newAddedId: number = null

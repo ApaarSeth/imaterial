@@ -92,7 +92,7 @@ export class SupplierDetailComponent implements OnInit {
     this.commonService.getNotification(this.userId);
   }
   getAllSupplier() {
-    this.rfqService.getSuppliers(this.orgId).then(data => {
+    this.commonService.getSuppliers(this.orgId).then(data => {
       this.dataSource = new MatTableDataSource(data.data);
 
       this.dataSourceTemp = data.data;

@@ -32,6 +32,7 @@ import { ProjectService } from 'src/app/shared/services/projectDashboard/project
 })
 export class RfqProjectMaterialsComponent implements OnInit {
   @Input() existingRfq: AddRFQ;
+  @Input() prevIndex: number;
   @Input() projectsList: ProjectDetails[];
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   @ViewChild("ch", { static: true }) ch: HTMLElement;
@@ -74,27 +75,47 @@ export class RfqProjectMaterialsComponent implements OnInit {
     private loader: GlobalLoaderService
   ) { }
   form: FormGroup;
-
+  existingRfqData: AddRFQ = null
+  previousIndex: number
   ngOnInit() {
-
-    this.allProjects = this.projectsList;
+    // this.allProjects = this.projectsList;
     this.isMobile = this.commonService.isMobile().matches;
-    // this.allProjects = this.activatedRoute.snapshot.data.createRfq[ 1 ].data;
-    this.activatedRoute.params.subscribe(params => {
-      this.rfqId = params[ 'rfqId' ]
+    this.rfqService.mat.subscribe(data => {
+      console.log(data)
     })
-    this.formInit();
-    this.materialsForm();
-    if (this.rfqId && !this.existingRfq) {
-      this.rfqService.getDraftRfq(this.rfqId).then(res => {
-        this.existingRfq = res.data;
-        this.checkExistingData()
+    // if (this.rfqId) {
+    //   if (this.previousIndex !== 1) {
+    //     this.rfqService.getDraftRfq(this.rfqId).then(res => {
+    //       this.existingRfq = res.data;
+    //       this.checkExistingData()
+    //     })
+    //   }
+    // }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.projectsList && changes.projectsList.currentValue) {
+      this.allProjects = this.projectsList;
+      this.formInit();
+      this.materialsForm();
+    }
+    if (changes.prevIndex) {
+      this.activatedRoute.params.subscribe(params => {
+        this.rfqId = params['rfqId']
+        if (this.rfqId) {
+          if (this.prevIndex !== 1) {
+            this.rfqService.getDraftRfq(this.rfqId).then(res => {
+              this.existingRfq = res.data;
+              this.checkExistingData()
+            })
+          }
+        }
       })
-    } else {
+    }
+    if (changes.existingRfq) {
       this.checkExistingData()
     }
   }
-
 
   checkExistingData() {
     if (this.existingRfq) {
