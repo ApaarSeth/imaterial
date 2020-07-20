@@ -13,6 +13,7 @@ import { BomService } from 'src/app/shared/services/bom/bom.service';
 import { Supplier } from 'src/app/shared/models/RFQ/rfq-view';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
     selector: 'app-add-supplier',
@@ -38,11 +39,13 @@ export class GrnAddSupplierComponent implements OnInit {
     supplierList: Supplier[] = []
     isMobile: boolean
     constructor(
+        private notifier: AppNotificationService,
         private commonService: CommonService,
         private bomService: BomService,
         private _snackBar: MatSnackBar,
         private formBuilder: FormBuilder,
-        private documentUploadService: DocumentUploadService
+        private documentUploadService: DocumentUploadService,
+        private dialogRef: MatDialogRef<GrnAddSupplierComponent>
     ) { }
 
 
@@ -205,7 +208,10 @@ export class GrnAddSupplierComponent implements OnInit {
         }
         let data = { ...this.form.getRawValue(), grnDate, supplierName, supplierId, materialList, documentList, countryCode }
         this.bomService.addGrnWithoutPo(data).then(res => {
-            console.log(res)
+            if (res.statusCode === 200) {
+                this.notifier.snack(res.message)
+                this.dialogRef.close(null)
+            }
         })
     }
 }
