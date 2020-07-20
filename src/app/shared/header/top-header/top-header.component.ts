@@ -30,6 +30,8 @@ export class TopHeaderComponent implements OnInit {
   newunreadMessage: number = null;
   isWhatsappIconDisplay: string;
 
+  isActiveSubscription: boolean;
+
   constructor(
     private commonService: CommonService,
     private _snackBar: MatSnackBar,
@@ -39,6 +41,10 @@ export class TopHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.isActiveSubscription = true;
+
+    // localStorage.getItem('isActiveSubscription') === '0' ? this.isActiveSubscription = false : this.isActiveSubscription = true;
 
     this.userId = Number(localStorage.getItem('userId'));
     this.userName = localStorage.getItem('userName');
