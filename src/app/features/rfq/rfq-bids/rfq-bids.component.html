@@ -1,4 +1,4 @@
-<div class="page-start-point">
+<div class="page-start-point changeWidth mt-5 pt-4">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <form *ngIf="rfqProjects.length" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
       <div class="row p-t-10 p-b-10">
@@ -112,11 +112,22 @@
                           </ng-container>
                         </div>
                       </span>
+
+                      <span class="mat-cell maxwidth-10">
+                        Attached Images
+                      </span>
                     </section>
 
                     <ng-container formArrayName="supplierList">
                       <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index" [formGroupName]="s">
-                        <span class="mat-cell maxwidth-15 p-l-25 limited-character" matTooltip=" {{ supplier.supplierName }}">{{ supplier.supplierName }} </span>
+                        <span class="mat-cell maxwidth-15 p-l-25 limited-character" matTooltip=" {{ supplier.supplierName }}">
+                          <span class="supplier-name ml-0">{{ supplier.supplierName }}</span>
+
+                          <span class="d-block supplier-rates ml-0 mgbn12">
+                            <view-rating [supplierId]="material.materialId" [ratings]="supplier.rating"></view-rating>
+                          </span>
+                        </span>
+
                         <span class="mat-cell maxwidth-10"></span>
 
                         <div class="mat-cell maxwidth-75">
@@ -158,6 +169,20 @@
                               </ng-container>
                             </ng-container>
                           </div>
+                        </div>
+
+                        <!-- Attached Image Column individual Supplier -->
+                        <div class="mat-cell maxwidth-10 view-bid-images-preview">
+                          <div *ngIf="supplier?.documentList?.length" class="images-lists"
+                            (click)="viewAllImages(material.materialId, supplier.supplierId)">
+                            <ng-container *ngFor="let img of supplier.documentList; let i = index">
+                              <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                            </ng-container>
+                          </div>
+              
+                          <ng-container *ngIf="!supplier?.documentList">
+                            <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
+                          </ng-container> 
                         </div>
                       </div>
                     </ng-container>

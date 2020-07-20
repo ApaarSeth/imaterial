@@ -1,0 +1,230 @@
+.subs-data{
+    .mat-tab-header{
+        border-bottom:0px;
+    }
+
+    .mat-card{
+        &:hover{
+            box-shadow:0px 0px 20px 5px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+            transition: .5s;
+        }
+    }
+
+    .mat-tab-labels{
+        padding-top: 25px;
+    }
+
+    .mat-tab-label{
+        overflow: visible;
+
+        text-transform: uppercase;
+        background-color: #ffffff;
+        color:#787878;
+        opacity: 1;
+        border-radius: 10px;
+        padding: 0 15px !important;
+        margin: 0 10px;
+        letter-spacing: 0.5px;
+        margin-bottom:15px;
+        &:focus, &:active{
+            background-color: #f47728;
+            opacity: 1;
+            color: #ffffff;
+        }
+    }
+
+    .mat-tab-body-content{
+        overflow: inherit !important;
+    }
+
+    .mat-tab-label-active{
+        background-color: #f47728;
+        opacity: 1;
+        color: #ffffff;
+    }
+
+    .mat-ink-bar{
+        height:0 !important;
+        &:before{
+        content: '';
+        border-top: 20px solid #f47728;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        }
+    }
+
+    h2{
+        font-weight: normal;
+    }
+
+    .mat-card-title{
+        font-size: 200%;
+        margin-bottom: 5px !important;    
+    }
+
+    .mat-card-subtitle{
+        margin-bottom: 5px !important;    
+    }
+
+    .subs-pricing{
+        strong{
+            font-size: 30px;
+            font-weight: 400;
+            color: #0e3c54;
+        }
+        span{
+            color:#517083;
+        }
+        p{
+            color:#0e3c54;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+    }
+
+    .plan-limit{
+        margin-left: -15px;
+        margin-right: -15px;
+        padding: 0 15px;
+        background-color: #0e3c54;
+        background-image: linear-gradient(to right, #0e3c54 , #0f7ab5);
+        color:#ffffff;
+        display: flex;
+        span{
+            font-size: 16px;
+            padding:0 16px;
+            line-height: 40px;
+        }
+        button{
+            position: absolute;
+            right: 20px;
+            padding: 5px;
+            margin-top: -5px;
+        }
+        .subs-btn{
+            border-radius: 30px;
+            color:#ffffff;
+        }
+        .subs-link{
+            color: #7db9d9;
+        }
+    }
+
+    .feat-list{
+        ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            line-height: 30px;
+            font-size: 12px;
+        }
+        .active{
+            color:#555a5d;
+        }
+        .inactive{
+            color:#b8b8b8;
+        }
+        .material-icons{
+            font-size: 16px;
+            padding-right: 10px;
+            vertical-align: middle;
+        }
+    }
+
+    .trial-plan{
+        right: 10%;
+        text-align: right;
+        z-index: 9;
+        a{
+            cursor:pointer;
+        }
+        p{
+            margin: 0;
+        }
+        span{
+            font-weight: 500;
+        }
+    }
+}
+
+.brand-color{
+    color:#f47728 !important;
+}
+
+.brand-bg-color{
+    background-color:#f47728 !important;
+}
+
+
+.redirections{
+    h2{
+        font-weight: normal;
+    }
+    .shadow-tag{
+        display: inline-block;
+        border: 1px solid #dadada;
+        border-radius: 12px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+        font-size: 130%;
+    }
+    button{
+        padding: 15px 30px;
+        border-radius: 30px;
+        font-weight: normal;
+        color:#ffffff;
+    }
+}
+
+.font-size-40px{
+    font-size:40px;
+}
+.font-size-26px{
+    font-size:26px;
+}
+
+.font-weight500{
+    font-weight: 500;
+}
+
+.sub-svtxt{
+    position: absolute;
+    top:-25px;
+}
+
+@media(max-width: 599px){
+
+    .subs-data{
+        .mat-tab-label{
+            font-size: 12px;
+            padding: 0 10px !important;
+        }
+    }
+
+    .redirections{
+        h2{
+            font-size: 26px;
+        }
+        p, .shadow-tag{
+            font-size: 110%;
+        }
+        button{
+            padding: 5px 10px;
+        }
+        img{
+            max-width: 60px;
+        }
+    }
+
+}
+
+.mlr-140px{
+    margin-left: 140px;
+    margin-right: 140px;
+}
+
+.f-hide{
+    height:0%;
+    display: none !important;
+}

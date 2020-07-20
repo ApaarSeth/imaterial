@@ -1,0 +1,97 @@
+<app-top-header></app-top-header>
+
+<div class="container pt-5 pb-5 redirections">
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2 justify-content-center text-center">
+            <mat-card class="pt-4 pb-4">
+
+                <ng-container *ngIf="pageType === 0">
+                    <mat-card-content>
+                        <img src="../../../assets/images/subs-thanks.png" alt="">
+                        <h2 class="mt-4 mb-4" [ngClass]="isMobile ? 'font-size30' : 'font-size-40px' ">
+                            Thank You
+                            <br />
+                            for Choosing Basic Plan
+                        </h2>
+
+                        <div class="shadow-tag pl-5 pr-5 pt-2 pb-2">
+                            2 Projects, 6 Users
+                        </div>
+
+                        <p class="mt-4 font-size20">Your basic plan has been activated</p>
+                    </mat-card-content>
+                </ng-container>
+
+                <ng-container *ngIf="pageType === 1">
+                    <mat-card-content>
+                        <img src="../../../assets/images/subs-unsubscribe.png" alt="">
+                        <h2 class="mt-4 mb-4" [ngClass]="isMobile ? 'font-size30' : 'font-size-40px' ">
+                            Payment Declined
+                        </h2>
+
+                        <div class="shadow-tag pl-4 pr-4 pt-3 pb-3" [ngClass]="isMobile ? 'w-100' : 'w-75' ">
+                            The automatic payment to renew subscription with Material Manager has failed.
+                            <span class="font-weight500 d-block">We will retry the payment in 3 days</span>
+                            <span class="d-block mt-2 mb-2">Or</span>
+                            You may need to update your payment details
+                        </div>
+
+                        <div [ngClass]="isMobile ? 'mt-4' : 'mt-5' ">
+                            <button mat-button class="brand-bg-color pl-5 pr-5"
+                                [ngClass]="isMobile ? 'font-size20' : 'font-size-26px' ">Update Details</button>
+                        </div>
+                    </mat-card-content>
+                </ng-container>
+
+                <ng-container *ngIf="pageType === 2">
+                    <mat-card-content>
+                        <img src="../../../assets/images/subs-payment-decline.png" alt="">
+                        <h2 class="mt-4 mb-2" [ngClass]="isMobile ? 'font-size30' : 'font-size-40px' ">
+                            Do you really wish to Unsubscribe?
+                        </h2>
+
+                        <p class="mt-2 font-size20">We don't want to see you go</p>
+
+                        <div class="shadow-tag pl-4 pr-4 pt-2 pb-2">
+                            We promise security of your data until next payment
+                        </div>
+
+                        <div class="mt-4">
+                            <button mat-flat-button class="brand-color"
+                                [ngClass]="isMobile ? 'font-size20' : 'font-size-26px' ">Unsubscribe</button>
+                        </div>
+                    </mat-card-content>
+                </ng-container>
+
+                <ng-container *ngIf="pageType === 3">
+                    <mat-card-content>
+                        <img src="../../../assets/images/subs-trial-expiry.png" alt="">
+                        <h2 class="mt-4 mb-2" [ngClass]="isMobile ? 'font-size30' : 'font-size-40px' ">
+                            Free Trial Has Expired
+                        </h2>
+
+                        <div class="shadow-tag pl-4 pr-4 pt-4 pb-4" [ngClass]="!isMobile ? 'mlr-140px' : '' ">
+                            Your 3 months free trial has expired. We hope, our service were useful to you. We will keep
+                            your data and information safe with us.
+                            <br>To keep continuing our service, please choose any of our subscription plans.
+                        </div>
+
+                        <div [ngClass]="isMobile ? 'mt-4' : 'mt-5' ">
+                            <button mat-button class="brand-bg-color pl-5 pr-5"
+                                [ngClass]="isMobile ? 'font-size20' : 'font-size-26px' ">Choose Plan</button>
+                        </div>
+                    </mat-card-content>
+                </ng-container>
+
+                <ng-container *ngIf="pageType !== 3">
+                    <div class="pt-0 pb-2 text-center">
+                        <button mat-button class="brand-color" routerLink="/dashboard">Cancel</button>
+                    </div>
+                </ng-container>
+
+            </mat-card>
+        </div>
+
+    </div>
+</div>

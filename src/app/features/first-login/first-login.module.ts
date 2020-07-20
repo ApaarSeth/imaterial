@@ -11,6 +11,8 @@ import { FirstLoginRoutingModule } from './first-login.routing';
 import { AddUserComponent } from './add-user/add-user.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { EmailVerificationComponent } from './email-verification/email-verificatiion.component';
+import { ProfileSubscriptionsComponent } from './profile-subscriptions/profile-subscriptions.component';
+
 
 @NgModule({
     imports: [
@@ -22,13 +24,14 @@ import { EmailVerificationComponent } from './email-verification/email-verificat
         ReactiveFormsModule,
         MatInputModule,
         RouterModule,
-        AppSharedModule,
+        AppSharedModule
     ],
     declarations: [
         UpdateInfoComponent,
         AddUserComponent,
         TermsConditionsComponent,
-        EmailVerificationComponent
+        EmailVerificationComponent,
+        ProfileSubscriptionsComponent
     ]
 })
 

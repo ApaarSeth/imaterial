@@ -43,6 +43,7 @@ export class RfqSupplierComponent implements OnInit {
   supplierCounter: number = 0;
   newAddedId: number;
   countryist: CountryCode[];
+  // countryist: any;
 
   constructor(
     public dialog: MatDialog,
@@ -53,6 +54,7 @@ export class RfqSupplierComponent implements OnInit {
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
+    this.isMobile = this.commonService.isMobile().matches;
     if (this.suppliers) {
       this.allSuppliers = this.suppliers;
     } else {
@@ -79,6 +81,7 @@ export class RfqSupplierComponent implements OnInit {
       this.formInit();
     }
   }
+
 
   formInit() {
     const frmArr: FormGroup[] = this.allSuppliers.map(supplier => {

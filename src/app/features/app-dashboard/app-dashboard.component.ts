@@ -41,6 +41,7 @@ export class AppDashboardComponent implements OnInit {
   searchText = '';
   filterForm: FormGroup;
   currentIndex: number = 0;
+  // isSideNavCollapsed: boolean;
   isMobile: boolean;
   cntryList: any[];
   isAdDisplay: string;
@@ -242,7 +243,7 @@ export class AppDashboardComponent implements OnInit {
 
       if (label == 'indent')
         this.indentData = res.data;
-    })
+    }).catch(error => console.log(error))
   }
 
   onTabChanged($event) {
@@ -313,4 +314,8 @@ export class AppDashboardComponent implements OnInit {
       this.tab2 = "Request for Quotations";
     }
   }
+
+  // isSidebarCollapsed(e){
+  //   this.isSideNavCollapsed = e;
+  // }
 }

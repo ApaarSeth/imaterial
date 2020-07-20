@@ -46,6 +46,8 @@ export class CreateRfqComponent implements OnInit {
   finalRfq: AddRFQ;
   completed: boolean = false;
   countryList: CountryCode[] = [];
+  isMobile: boolean;
+
   public RfqProjectTour: GuidedTour = {
     tourId: 'rfq-project-tour',
     useOrb: false,
@@ -117,6 +119,9 @@ export class CreateRfqComponent implements OnInit {
       this.countryList = res[2].data
     });
 
+    this.isMobile = this.commonService.isMobile().matches;
+    this.orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
     if (this.stepper) {
       this.stepper.selectedIndex = history.state.selectedIndex;
       this.currentIndex = history.state.selectedIndex ? history.state.selectedIndex : 0;
@@ -191,7 +196,7 @@ export class CreateRfqComponent implements OnInit {
       this.rfqService.addRFQ(materials, !rfqId ? true : false).then(res => {
 
         if (!rfqId) {
-          this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
+          this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
             state: { rfqData: res, selectedIndex: 1 }
           });
         }

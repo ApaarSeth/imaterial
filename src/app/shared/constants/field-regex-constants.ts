@@ -13,4 +13,5 @@ export const FieldRegExConst = {
     RATES: /^(\d{1,25}|\d{0,25}\.\d{1,2})$/,
     MOBILE: /^(((\+){0,1}0{0,1}91{0,1}))?([6-9][0-9]{9})$/,
     MOBILE3: /^\d{10}$/,
+    SPECIAL_CHARACTERS: /[!@#$%^&*()+=\[\]{};':"\\|,<>\/?]/
 };

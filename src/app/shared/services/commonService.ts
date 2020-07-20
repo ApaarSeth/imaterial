@@ -123,8 +123,15 @@ export class CommonService {
       });
   }
 
+  getSubscriptionPlan() {
+    return this.dataService.getRequest(API.GETSUBSCRIPTIONPLAN);
+  }
   pushNotificationData(data) {
     return this.dataService.sendPostRequest(API.PUSHNOTIFICATIONDATA, data)
+  }
+
+  getMenuData() {
+    return this.dataService.getRequest(API.GET_MENU);
   }
 
   getSuppliers(organizationId: number, skipLoader?: boolean) {

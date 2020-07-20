@@ -30,6 +30,8 @@ export class TopHeaderComponent implements OnInit {
   newunreadMessage: number = null;
   isWhatsappIconDisplay: string;
 
+  isActiveSubscription: boolean;
+
   constructor(
     private commonService: CommonService,
     private _snackBar: MatSnackBar,
@@ -39,6 +41,10 @@ export class TopHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.isActiveSubscription = true;
+
+    // localStorage.getItem('isActiveSubscription') === '0' ? this.isActiveSubscription = false : this.isActiveSubscription = true;
 
     this.userId = Number(localStorage.getItem('userId'));
     this.userName = localStorage.getItem('userName');
@@ -62,7 +68,7 @@ export class TopHeaderComponent implements OnInit {
           this.newunreadMessage = notificationLength - this.unreadnotificationLength;
           this._snackBar.open('You have ' + this.newunreadMessage + ' new notifications', '', {
             duration: 2000,
-            panelClass: ['success-snackbar'],
+            panelClass: [ 'success-snackbar' ],
             verticalPosition: 'bottom'
           });
         }
@@ -88,13 +94,16 @@ export class TopHeaderComponent implements OnInit {
     this.menu.open();
   }
   logout() {
-    this.router.navigate(['/auth/login']).then(_ => {
+    this.router.navigate([ '/auth/login' ]).then(_ => {
       localStorage.clear();
       // this.tokenService.setAuthResponseData({ serviceToken: null, role: null, userId: null, orgId: null });
     });
   }
   goToProfile() {
-    this.router.navigate(['/profile-account']);
+    this.router.navigate([ '/profile-account' ]);
+  }
+  goToMyPlans() {
+    this.router.navigate([ '/subscriptions' ]);
   }
   openDiv() {
     if (this.notifClicked == true) {

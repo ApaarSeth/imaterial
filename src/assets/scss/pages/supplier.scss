@@ -30,6 +30,10 @@
   width: 100%;
   overflow: auto;
 
+  .mat-header-cell{
+    z-index: 9 !important;
+  }
+
   table {
     border-left: 1px solid #d6d6d6;
   }

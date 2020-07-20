@@ -1,5 +1,5 @@
 <mat-toolbar color="background-white-color">
-  <mat-toolbar-row>
+  <mat-toolbar-row class="header-border-bottom">
     <button class="hamburger" fxShow="true" fxHide.gt-sm (click)="openMenu()" mat-icon-button>
       <mat-icon>menu</mat-icon>
     </button>
@@ -19,21 +19,17 @@
 
     <button class="pull-right p-t-10 notification-bell-icon" mat-button [matMenuTriggerFor]="notifs">
       <a href="javascript:void(0)" (click)="openDiv()">
-        <mat-icon
-          [ngClass]="{'bell-icon-active': notifClicked === true, 'bell-icon': notifClicked === false}"
-          matBadge="{{ newunreadMessage }}"
-          matBadgeSize="small"
-          matBadge="15"
-          matBadgeColor="warn"
-        >
-          notifications</mat-icon
-        >
+        <mat-icon [ngClass]="{'bell-icon-active': notifClicked === true, 'bell-icon': notifClicked === false}"
+          matBadge="{{ newunreadMessage }}" matBadgeSize="small" matBadge="15" matBadgeColor="warn">
+          notifications</mat-icon>
       </a>
     </button>
 
     <div class="logo-profile-header">
-      <button mat-button [matMenuTriggerFor]="logIn" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false" fxShow="true">
-        <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
+      <button mat-button [matMenuTriggerFor]="logIn" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false"
+        fxShow="true">
+        <img class="img-circle" height="36" width="38"
+          [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
         <span class="username">
           {{ userName }}
         </span>
@@ -43,7 +39,13 @@
         <button mat-menu-item class="background-white-color" (click)="goToProfile()">
           My Account
         </button>
-        <button mat-menu-item class="background-white-color" (click)="logout()" routerLinkActive="router-link-active">Logout</button>
+        <ng-container *ngIf="isActiveSubscription">
+          <button mat-menu-item class="background-white-color" (click)="goToMyPlans()">
+            My Plan / Upgrade
+          </button>
+        </ng-container>
+        <button mat-menu-item class="background-white-color" (click)="logout()"
+          routerLinkActive="router-link-active">Logout</button>
       </mat-menu>
     </div>
   </mat-toolbar-row>

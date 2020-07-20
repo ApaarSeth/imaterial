@@ -121,7 +121,10 @@ export class PoComponent implements OnInit {
         poNumber: this.poData.poNumber,
         poValidUpto: this.poData.poValidUpto,
         projectId: this.poData.projectId,
-        isInternational: this.poData.isInternational
+        isInternational: this.poData.isInternational,
+        sellerPORating: this.poData.sellerPORating,
+        poCreatedBy: this.poData.poCreatedBy,
+        poStatus: this.poData.poStatus
       };
       this.documentList = this.poData.DocumentsList;
       this.terms = this.poData.Terms;
