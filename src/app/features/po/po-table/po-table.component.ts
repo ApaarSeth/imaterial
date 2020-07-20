@@ -530,6 +530,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
       data: {
         selectedMaterial,
         type,
+        projectId: this.poData.projectId
       }
     });
 

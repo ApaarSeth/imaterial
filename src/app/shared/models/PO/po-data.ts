@@ -247,6 +247,7 @@ export interface poMaterialList {
   materialQty: number;
   brandNames: string[];
   materialUnitPrice: number;
+  documentList?: ImageDocsLists[];
 }
 
 export interface poApproveReject {

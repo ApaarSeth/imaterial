@@ -51,6 +51,8 @@ export class UploadImageComponent implements OnInit {
       this.materialId = this.data.selectedMaterial.materialId;
       this.prevDocumentList = this.data.prevUploadedImages.documentsList ? this.data.prevUploadedImages.documentsList.filter(elem => elem.supplierId) : [];
       this.getContractorImages();
+    }else if(this.data.type === 'po'){
+      this.prevDocumentList = this.data.selectedMaterial.purchaseOrderDetailList[0].documentList;
     }else{
       this.projectId = this.data.projectId;
       this.materialId = this.data.materialId;
@@ -190,8 +192,8 @@ export class UploadImageComponent implements OnInit {
 
     // final image list object - and combined both prev and new images list
     this.finalImagesList = {
-      "projectId": this.data.type === 'rfq' ? this.data.selectedMaterial.projectId : this.projectId,
-      "materialId": this.data.type === 'rfq' ? this.data.selectedMaterial.materialId : this.materialId,
+      "projectId": this.data.type === 'rfq' ? this.data.selectedMaterial.projectId : (this.data.type === 'po' ? this.data.projectId : this.projectId),
+      "materialId": this.data.type === 'rfq' ? this.data.selectedMaterial.materialId : (this.data.type === 'po' ? this.data.selectedMaterial.materialId : this.materialId),
       "documentsList": [...this.prevDocsObj, ...this.documentList],
     }
 
@@ -205,6 +207,10 @@ export class UploadImageComponent implements OnInit {
       });
       this.supplierContractorImages = [...(this.prevDocumentList ? this.prevDocumentList : []), ...this.documentList, ...(this.contractorImagesList ? this.contractorImagesList : [])]      
       this.dialogRef.close(this.supplierContractorImages);
+    }else if(this.data.type === 'po'){
+      return this._uploadImageService.uploadPOImage(this.finalImagesList).then(res => {
+        this.dialogRef.close('addImages');
+      });
     }else{
       return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {
         this.dialogRef.close('addImages');

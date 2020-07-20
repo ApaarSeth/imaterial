@@ -152,4 +152,5 @@ export const API = {
   PUSHNOTIFICATIONDATA: 'user/web/notification/savetoken',
   GET_ALL_RFQ_IMAGES: (rfqId, materialId) => `rfq/getImages/${rfqId}/${materialId}`,
   GET_SUPPLIER_IMAGES: (rfqId, materialId, supplierId) => `rfq/getImages/${rfqId}/${materialId}/${supplierId}`,
+  PO_ADD_IMAGES: 'po/addImages',
 };

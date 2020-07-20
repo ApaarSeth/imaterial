@@ -28,4 +28,8 @@ export class ImageService {
   downloadImage(data){
     return this.dataService.getRequest(API.DOWNLOAD_IMAGE, data).then(res => res);
   }
+
+  uploadPOImage(data){
+    return this.dataService.sendPostRequest(API.PO_ADD_IMAGES, data).then(res => res);
+  }
 }
