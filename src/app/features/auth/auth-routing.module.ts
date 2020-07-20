@@ -14,7 +14,6 @@ const routes: Routes = [
   {
     path: "login",
     component: SignInSignUpComponent,
-    resolve: { countryList: InitialCountryResolver }
   },
   {
     path: "login/:uniqueCode",

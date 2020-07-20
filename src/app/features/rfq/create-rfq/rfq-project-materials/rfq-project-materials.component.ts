@@ -22,6 +22,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
+import { LoaderInterceptor } from 'src/app/shared/http-interceptors/loader-interceptor';
+import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
+import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
 
 @Component({
   selector: "app-rfq-project-materials",
@@ -29,6 +32,8 @@ import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/
 })
 export class RfqProjectMaterialsComponent implements OnInit {
   @Input() existingRfq: AddRFQ;
+  @Input() prevIndex: number;
+  @Input() projectsList: ProjectDetails[];
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   @ViewChild("ch", { static: true }) ch: HTMLElement;
   @ViewChild("table", { static: true }) table;
@@ -51,7 +56,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
     "Requested Quantity",
     "Estimated Quantity"
   ];
-  addRfq: AddRFQ;
+  addRfq: AddRFQ = {} as AddRFQ;
   alreadySelectedId: number[];
   checkedProjectList: RfqMaterialResponse[] = [];
   checkedProjectIds: number[] = [];
@@ -61,50 +66,55 @@ export class RfqProjectMaterialsComponent implements OnInit {
   isMobile: boolean;
   constructor(
     public dialog: MatDialog,
+    private projectService: ProjectService,
     private activatedRoute: ActivatedRoute,
     private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private loader: GlobalLoaderService
   ) { }
   form: FormGroup;
-
+  existingRfqData: AddRFQ = null
+  previousIndex: number
   ngOnInit() {
+    // this.allProjects = this.projectsList;
     this.isMobile = this.commonService.isMobile().matches;
-    this.allProjects = this.activatedRoute.snapshot.data.createRfq[ 1 ].data;
-    this.activatedRoute.params.subscribe(params => {
-      this.rfqId = params[ 'rfqId' ]
+    this.rfqService.mat.subscribe(data => {
+      console.log(data)
     })
-    this.addRfq = {
-      id: null,
-      status: null,
-      createdBy: null,
-      createdAt: null,
-      lastUpdatedBy: null,
-      lastUpdatedAt: null,
-      rfqId: null,
-      rfq_status: null,
-      rfqName: null,
-      dueDate: null,
-      supplierId: null,
-      supplierDetails: null,
-      rfqProjectsList: [],
-      documentsList: null,
-      terms: null,
-      rfqCurrency: null,
-    };
-    if (this.rfqId) {
-      this.rfqService.getDraftRfq(this.rfqId).then(res => {
-        this.existingRfq = res.data;
-        this.checkExistingData()
-      })
-    }
-    this.formInit();
-    this.materialsForm();
+    // if (this.rfqId) {
+    //   if (this.previousIndex !== 1) {
+    //     this.rfqService.getDraftRfq(this.rfqId).then(res => {
+    //       this.existingRfq = res.data;
+    //       this.checkExistingData()
+    //     })
+    //   }
+    // }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.checkExistingData();
+    if (changes.projectsList && changes.projectsList.currentValue) {
+      this.allProjects = this.projectsList;
+      this.formInit();
+      this.materialsForm();
+    }
+    if (changes.prevIndex) {
+      this.activatedRoute.params.subscribe(params => {
+        this.rfqId = params['rfqId']
+        if (this.rfqId) {
+          if (this.prevIndex !== 1) {
+            this.rfqService.getDraftRfq(this.rfqId).then(res => {
+              this.existingRfq = res.data;
+              this.checkExistingData()
+            })
+          }
+        }
+      })
+    }
+    if (changes.existingRfq) {
+      this.checkExistingData()
+    }
   }
 
   checkExistingData() {
@@ -140,9 +150,11 @@ export class RfqProjectMaterialsComponent implements OnInit {
       selectedProject: [ '', [ Validators.required ] ]
     });
   }
+
   setButtonName(name: string) {
     this.buttonName = name;
   }
+
   choosenProject() {
     let projectAdd: number[] = [];
     let projectRemove: number[] = [];
@@ -176,8 +188,10 @@ export class RfqProjectMaterialsComponent implements OnInit {
       this.materialAdded();
     }
     if (projectAdd.length) {
-      this.rfqService.rfqMaterials(projectAdd).then(res => {
-        this.rfqDetails = [ ...this.rfqDetails, ...res.data ];
+      this.loader.show()
+      this.rfqService.rfqMaterials(projectAdd, true).then(res => {
+        this.loader.hide()
+        this.rfqDetails = [...this.rfqDetails, ...res.data];
         this.rfqDetails = this.rfqDetails.map(
           (project: RfqMaterialResponse) => {
             let proj = this.getCheckedMaterial(project);

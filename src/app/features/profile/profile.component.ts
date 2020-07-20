@@ -63,58 +63,94 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.userId = localStorage.getItem("userId");
     this.role = localStorage.getItem("role");
-    this.formInit();
-    this.getUserRoles();
     this.countryId = Number(localStorage.getItem('countryId'))
     this.countryCode = localStorage.getItem('countryCode')
-    // this.getUserInformation(userId);
-    this.getTurnOverList();
-    this.getCurrencyAndCountry();
-    // this.getCountryCode();
+    this.formInit();
+    this.getAllApi();
   }
 
-  getBaseCurrency() {
-    this.commonService.getBaseCurrency().then(res => {
-      this.userInfoForm.get('baseCurrency').setValue(res.data)
-    })
-  }
-
-  getUserRoles() {
-    this._userService.getRoles().then(res => {
-      this.roles = res.data;
-      this.roles.splice(2, 1);
-      const id = this.roles.filter(opt => opt.roleName === this.role);
-      this.roleId = id[0].roleId;
-    })
-  }
-
-  getCurrencyAndCountry() {
-    Promise.all([
-      this.commonService.getCurrency(),
-      this.commonService.getCountry()
+  getAllApi() {
+    Promise.all([this._userService.getRoles()
+      , this._userService.getTurnOverList(),
+    this.commonService.getCurrency(),
+    this.commonService.getCountry(),
+    this._userService.getUserInfo(this.userId),
+    this._userService.getTrades()
     ]).then(res => {
-      this.currencyList = res[0].data;
-      this.countryList = res[1].data;
-      this.getUserInformation(this.userId);
+      this.getUserRoles(res[0]);
+      this.getTurnOverList(res[1]);
+      this.getCurrency(res[2])
+      this.getCountry(res[3])
+      this.getUserInformation(res[4], res[5])
     })
   }
 
-  getUserInformation(userId) {
-    this._userService.getUserInfo(userId).then(res => {
-      this.users = res.data ? res.data[0] : null;
-      if (res.data[0].trade) {
-        res.data[0].trade.forEach(element => {
-          this.usersTrade.push(element.tradeId);
-          if (element.tradeId == 13) {
-            if (element.tradeDescription)
-              this.tradeDescription = element.tradeDescription;
-          }
-        });
-        this.getTradesList();
+  getUserRoles(res) {
+    this.roles = res.data;
+    this.roles.splice(2, 1);
+    const id = this.roles.filter(opt => opt.roleName === this.role);
+    this.roleId = id[0].roleId;
+  }
+
+  getTurnOverList(res) {
+    let callingCode = localStorage.getItem('callingCode')
+    this.turnOverList = res.data.filter(data => {
+      if (callingCode === '+91' && data.isInternational === 0) {
+        return data
       }
-      this.formInit();
-      this.setCountryAndCurrency()
-    });
+      else if (callingCode !== '+91' && data.isInternational === 1) {
+        return data
+      }
+    })
+  }
+
+  getCurrency(res) {
+    this.currencyList = res.data;
+  }
+
+  getCountry(res) {
+    this.countryList = res.data;
+  }
+
+  getUserInformation(res, tradeRes) {
+    this.users = res.data ? res.data[0] : null;
+    if (res.data[0].trade) {
+      res.data[0].trade.forEach(element => {
+        this.usersTrade.push(element.tradeId);
+        if (element.tradeId == 13) {
+          if (element.tradeDescription)
+            this.tradeDescription = element.tradeDescription;
+          this.customTrade.patchValue({
+            trade: element.tradeDescription
+          })
+        }
+      });
+      this.getTradesList(tradeRes);
+    }
+    this.userInfoPatch();
+    this.setCountryAndCurrency()
+  }
+
+  userInfoPatch() {
+    this.userInfoForm.patchValue({
+      baseCurrency: '',
+      countryCode: this.livingCountry[0] ? this.livingCountry[0] : null,
+      organizationName: this.users.organizationName,
+      organizationId: this.users.organizationId,
+      firstName: this.users.firstName,
+      lastName: this.users.lastName,
+      email: this.users.email,
+      contactNo: this.users.contactNo,
+      roleId: this.users.roleId,
+      turnOverId: this.users.TurnOverId,
+      userId: this.users.userId,
+      roleDescription: this.users.roleDescription,
+      ssoId: this.users.ssoId,
+      countryId: this.livingCountry[0] ? this.livingCountry[0].countryId : null,
+      trade: this.users.trade,
+      profileUrl: this.users.profileUrl,
+      orgPincode: this.users.orgPincode,
+    })
   }
 
   setCountryAndCurrency() {
@@ -128,41 +164,23 @@ export class ProfileComponent implements OnInit {
     this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
   }
 
-  getTurnOverList() {
-    this._userService.getTurnOverList().then(res => {
-      let callingCode = localStorage.getItem('countryCode')
-      this.turnOverList = res.data.filter(data => {
-        if (callingCode === '+91' && data.isInternational === 0) {
-          return data
+  getTradesList(res) {
+    this.tradeList = res.data;
+    if (res.data) {
+      res.data.forEach(element => {
+        if (element.tradeName == 'Others') {
+          this.OthersId = element.tradeId;
         }
-        else if (callingCode !== '+91' && data.isInternational === 1) {
-          return data
+      });
+    }
+    if (this.tradeList) {
+      this.tradeList.forEach(element => {
+        for (let i = 0; i < this.usersTrade.length; i++) {
+          if (this.usersTrade[i] == element.tradeId)
+            element.selected = true;
         }
-      })
-    })
-  }
-
-  getTradesList() {
-    this._userService.getTrades().then(res => {
-      this.tradeList = res.data;
-
-      if (res.data) {
-        res.data.forEach(element => {
-          if (element.tradeName == 'Others') {
-            this.OthersId = element.tradeId;
-          }
-        });
-      }
-
-      if (this.tradeList) {
-        this.tradeList.forEach(element => {
-          for (let i = 0; i < this.usersTrade.length; i++) {
-            if (this.usersTrade[i] == element.tradeId)
-              element.selected = true;
-          }
-        });
-      }
-    })
+      });
+    }
   }
 
 
@@ -178,21 +196,21 @@ export class ProfileComponent implements OnInit {
     this.userInfoForm = this._formBuilder.group({
       baseCurrency: [{ value: '', disabled: true }],
       countryCode: [{ value: '', disabled: true }],
-      organizationName: [this.users ? this.users.organizationName : ''],
-      organizationId: [this.users ? this.users.organizationId : ''],
-      firstName: [{ value: this.users ? this.users.firstName : '', disabled: false }, Validators.required],
-      lastName: [{ value: this.users ? this.users.lastName : '', disabled: false }, Validators.required],
+      organizationName: [''],
+      organizationId: [''],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: [{ value: this.users ? this.users.email : '', disabled: true }, Validators.required],
-      contactNo: [{ value: this.users ? this.users.contactNo : '', disabled: this.countryCode === "+91" ? true : false }, Validators.required],
-      roleId: [{ value: this.users ? this.users.roleId : null, disabled: false }, Validators.required],
-      turnOverId: [{ value: this.users ? this.users.TurnOverId : null, disabled: false }],
-      roleDescription: [{ value: this.users ? this.users.roleDescription : null, disabled: false }],
-      userId: [this.users ? this.users.userId : null],
-      ssoId: [this.users ? this.users.ssoId : null],
+      contactNo: [{ value: '', disabled: this.countryCode === "IN" ? true : false }, Validators.required],
+      roleId: ['', Validators.required],
+      turnOverId: [],
+      roleDescription: [],
+      userId: [],
+      ssoId: [],
       countryId: [],
-      trade: [this.users ? this.users.trade : null],
-      profileUrl: [''],
-      orgPincode: [this.users ? this.users.orgPincode : null, [Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS)]]
+      trade: [],
+      profileUrl: [],
+      orgPincode: ['', [Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS)]]
     });
     this.customTrade = this._formBuilder.group({
       trade: []
@@ -295,7 +313,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-
   submit() {
     if (this.userInfoForm.valid) {
       this.selectedTrades = this.selectedTrades.map((trade: TradeList) => {
@@ -304,13 +321,20 @@ export class ProfileComponent implements OnInit {
         }
         return trade;
       })
-
       let data: UserDetails = this.userInfoForm.getRawValue();
       data.myAccountUpdate = false;
+      if (data.profileUrl.includes('https')) {
+        let tempIndex = data.profileUrl.indexOf('tmp')
+        let quesIndex = data.profileUrl.indexOf('?')
+        let re = /\%20/gi;
+        let fileName = (<String>data.profileUrl.slice(tempIndex, quesIndex)).replace(re, " ");
+        data.profileUrl = fileName;
+      }
+
       data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
-      data.orgPincode = String(this.userInfoForm.getRawValue().orgPincode)
+      data.orgPincode = String(this.userInfoForm.value.orgPincode)
       this._userService.submitUserDetails(data).then(res => {
         if (this.url) {
           this._userService.UpdateProfileImage.next(this.url);

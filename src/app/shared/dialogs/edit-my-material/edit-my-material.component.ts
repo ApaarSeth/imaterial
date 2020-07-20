@@ -26,6 +26,7 @@ export interface City {
 })
 
 export class EditMyMaterialComponent implements OnInit {
+  searchUnit: string = '';
   searchCategory: string = "";
   roles: UserRoles;
   addMyMaterial: FormGroup;

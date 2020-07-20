@@ -100,9 +100,7 @@
                   </div>
                   <div class="col-xs-7">
                     <mat-form-field class="border-input w-100">
-                      <input matInput type="text"
-                        placeholder="{{ this.countryCode === '+91' ? 'Phone No.*' : 'Phone No.' }}"
-                        formControlName="contactNo" />
+                      <input matInput type="text" placeholder="{{ this.countryCode === 'IN' ? 'Phone No.*' : 'Phone No.' }}" formControlName="contactNo" />
                     </mat-form-field>
                     <mat-error
                       *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
@@ -185,12 +183,26 @@
                             <span class="p-r-5">{{ selectedBaseCurrency && selectedBaseCurrency.currencyCode }}</span>
                           </span>
                         </mat-select-trigger>
-                        <mat-option
-                          *ngFor="let currency of currencyList | SearchPipe: searchCurrency:['currency', 'currencyCode']"
-                          [value]="currency"><span><img class="width-17 p-r-10" [src]="currency.imageUrl" alt="" />
-
-                            <span class="p-r-5">{{ currency.currency }}</span>
-                          </span>
+                        <mat-option *ngFor="let currency of currencyList | SearchPipe: searchCurrency:['currency', 'currencyCode']" [value]="currency">
+                          <!-- <span
+                              ><img class="width-17 p-r-10" [src]="currency.imageUrl" alt="" />
+                              <span class="p-r-5">{{ currency.currency }}</span>
+                            </span> -->
+                          <div class="display-flex justify-content-space-between">
+                            <div class="display-flex">
+                              <div class="p-t-0">
+                                <img [src]="currency.imageUrl" width="35px" />
+                              </div>
+                              <span class="p-l-10">
+                                {{ currency.currency }}
+                              </span>
+                            </div>
+                            <div>
+                              <span>
+                                {{ currency.currencyCode }}
+                              </span>
+                            </div>
+                          </div>
                         </mat-option>
                       </mat-select>
                     </mat-form-field>

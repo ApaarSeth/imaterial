@@ -12,6 +12,7 @@ import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractCon
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
 import { Subject, Observable } from 'rxjs';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
+import { CountryCode } from 'src/app/shared/models/currency';
 import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
@@ -20,6 +21,8 @@ import { CommonService } from 'src/app/shared/services/commonService';
 })
 export class RfqSupplierComponent implements OnInit {
   @Input() finalRfq: AddRFQ;
+  @Input() cntryList: CountryCode[];
+  @Input() suppliers: Suppliers[];
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   searchText: string = null;
   buttonName: string = "selectSupplier";
@@ -35,11 +38,12 @@ export class RfqSupplierComponent implements OnInit {
   checkedMaterialsList: AddRFQ;
   orgId: number;
 
-  rfqData: AddRFQ;
+  rfqData: AddRFQ = {} as AddRFQ;
   supplierForm: FormGroup;
   supplierCounter: number = 0;
   newAddedId: number;
-  countryist: any;
+  countryist: CountryCode[];
+  // countryist: any;
   isMobile: boolean;
   constructor(
     public dialog: MatDialog,
@@ -52,41 +56,21 @@ export class RfqSupplierComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isMobile = this.commonService.isMobile().matches;
-    this.rfqData = {
-      id: null,
-      status: null,
-      createdBy: null,
-      createdAt: null,
-      lastUpdatedBy: null,
-      lastUpdatedAt: null,
-      rfqId: null,
-      rfq_status: null,
-      rfqName: null,
-      dueDate: null,
-      supplierId: null,
-      supplierDetails: null,
-      rfqProjectsList: [],
-      documentsList: null,
-      terms: null,
-      rfqCurrency: null,
-    };
-
     this.orgId = Number(localStorage.getItem("orgId"));
-    console.log(this.activatedRoute);
-    if (this.activatedRoute.snapshot.data.createRfq[ 0 ].data) {
-      this.allSuppliers = this.activatedRoute.snapshot.data.createRfq[ 0 ].data;
-      // this.allSupplier.next(this.allSuppliers);
+    this.isMobile = this.commonService.isMobile().matches;
+    if (this.suppliers) {
+      this.allSuppliers = this.suppliers;
     } else {
       this.allSuppliers = [];
     }
-
-    this.countryist = this.activatedRoute.snapshot.data.countryList
+    this.countryist = this.cntryList;
     this.formInit();
   }
+
   ngOnChanges(changes: SimpleChanges) {
     this.rfqData = this.finalRfq;
     if (this.rfqData) {
+      this.supplierCounter = 0;
       this.allSuppliers = this.allSuppliers.map((supplier: Suppliers) => {
         if (this.finalRfq.supplierId && this.finalRfq.supplierId.includes(supplier.supplierId)) {
           supplier.checked = true;
@@ -100,6 +84,7 @@ export class RfqSupplierComponent implements OnInit {
       this.formInit();
     }
   }
+
 
   formInit() {
     const frmArr: FormGroup[] = this.allSuppliers.map(supplier => {
@@ -189,7 +174,7 @@ export class RfqSupplierComponent implements OnInit {
       .then(result => {
         if (result === 'Supplier Successfully added') {
           let allSuppliersId: number[] = [];
-          this.rfqService.getSuppliers(this.orgId).then(data => {
+          this.commonService.getSuppliers(this.orgId).then(data => {
             allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
             let tempId: number[] = data.data.map(supp => supp.supplierId);
             let newAddedId: number = null
@@ -224,7 +209,7 @@ export class RfqSupplierComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "600px",
-      data: this.rfqData.rfqCurrency
+      data: this.rfqData ? this.rfqData.rfqCurrency : null
     });
 
     dialogRef.afterClosed().subscribe(data => {

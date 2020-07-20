@@ -77,30 +77,27 @@ export class SignupComponent implements OnInit {
   locationCounter: number = 0;
 
   ngOnInit() {
-    this.countryList = this.activatedRoute.snapshot.data.countryList;
-    // this.countryList = this.actualCountryList;
+    // this.countryList = this.activatedRoute.snapshot.data.countryList;
+    this.countryList = this.actualCountryList;
     this.primaryCallingCode = localStorage.getItem('countryCode')
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       this.callingCode = this.actualCallingCode
       this.formInit();
+      this.getCountryCode(this.callingCode, this.countryCode)
+      if (this.callingCode) {
+        this.getLocation();
+      }
       if (this.uniqueCode) {
         this.organisationDisabled = true;
         this.getUserInfo(this.uniqueCode);
       }
-      if (this.callingCode) {
-        this.getLocation();
-      }
     });
   }
-
-
-
 
   get selectedCountry() {
     return this.signupForm.get('countryCode').value;
   }
-
 
   getLocation() {
     let emailValidator = [
@@ -115,17 +112,12 @@ export class SignupComponent implements OnInit {
     else {
       this.signupForm.get('email').setValidators([...emailValidator])
     }
-    this.getCountryCode(this.callingCode, this.countryCode)
   }
 
   getCountryCode(callingCode, countryCode) {
     this.livingCountry = this.countryList.filter(val => {
-      if (callingCode === '+1') {
-        if (val.callingCode === callingCode && val.countryCode === countryCode)
-          return val;
-      } else {
-        return val.callingCode === callingCode;
-      }
+      return val.countryCode.toLowerCase() === countryCode.toLowerCase();
+      // }
     })
     this.signupForm.get('countryCode').setValue(this.livingCountry[0])
   }
@@ -150,6 +142,7 @@ export class SignupComponent implements OnInit {
     });
   }
 
+
   organisationTypes: OrganisationType[] = [
     { value: "Contractor", viewValue: "Contractor" },
     { value: "Supplier", viewValue: "Supplier" }
@@ -166,7 +159,7 @@ export class SignupComponent implements OnInit {
       otp: []
     });
 
-    this.signupForm.get('email').valueChanges.subscribe(data => {
+    this.signupForm.get('email').valueChanges.pipe(debounceTime(30)).subscribe(data => {
       this.verifyEmail(data)
     })
     this.signupForm.get('phone').valueChanges.subscribe(data => {
@@ -247,9 +240,6 @@ export class SignupComponent implements OnInit {
 
   subscribeNotification() {
     this.webNotificationService.subscribeToNotification();
-    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
-      window.open(notification.data.url)
-    })
   }
 
 
@@ -318,15 +308,16 @@ export class SignupComponent implements OnInit {
   verifyEmail(email) {
     if (email.match(FieldRegExConst.EMAIL)) {
       this.signInSignupService.verifyEMAIL(this.signupForm.value.email).then(res => {
-        if (res) {
-          this.emailEnteredCounter++;
+        if (res && res.data) {
           this.emailVerified = res.data;
+          this.emailEnteredCounter++;
           this.emailMessage = res.message;
         }
+        else {
+          this.emailEnteredCounter++;
+          this.emailVerified = false;
+        }
       });
-    } else {
-      this.emailEnteredCounter++;
-      this.emailVerified = false;
     }
   }
 }

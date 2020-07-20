@@ -64,8 +64,8 @@ export class SigninComponent implements OnInit {
   callingCode: string;
 
   ngOnInit() {
-    this.countryList = this.activatedRoute.snapshot.data.countryList;
-    // this.countryList = this.actualCountryList
+    // this.countryList = this.activatedRoute.snapshot.data.countryList;
+    this.countryList = this.actualCountryList;
     this.route.params.subscribe(param => {
       this.uniqueCode = param[ "uniqueCode" ];
     });
@@ -94,11 +94,11 @@ export class SigninComponent implements OnInit {
 
   getCountryCode(callingCode, countryCode) {
     this.livingCountry = this.countryList.filter(val => {
-      if (callingCode === '+1') {
-        if (val.callingCode === callingCode && val.countryCode === countryCode)
-          return val;
-      }
-      return val.callingCode === callingCode;
+      // if (callingCode === '+1') {
+      //   if (val.callingCode === callingCode && val.countryCode === countryCode)
+      //     return val;
+      // }
+      return val.countryCode.toLowerCase() === countryCode.toLowerCase();
     })
     this.signinForm.get('countryCode').setValue(this.livingCountry[ 0 ])
   }
@@ -157,9 +157,6 @@ export class SigninComponent implements OnInit {
 
   subscribeNotification() {
     this.webNotificationService.subscribeToNotification();
-    this.swPush.notificationClicks.subscribe(({ action, notification }) => {
-      window.open(notification.data.url)
-    })
   }
 
   /**
@@ -173,7 +170,7 @@ export class SigninComponent implements OnInit {
         localStorage.setItem("userName", res.data[ 0 ].firstName);
       localStorage.setItem("profileUrl", res.data[ 0 ].profileUrl);
       localStorage.setItem("currencyCode", res.data[ 0 ].baseCurrency ? res.data[ 0 ].baseCurrency.currencyCode : null);
-      localStorage.setItem("countryCode", res.data[ 0 ].countryCode);
+      // localStorage.setItem("countryCode", res.data[0].countryCode);
       localStorage.setItem("countryId", res.data[ 0 ].countryId);
       localStorage.setItem("isActiveSubscription", res.data[ 0 ].isActiveSubscription);
       this.dataService.getRequest(API.CHECKTERMS, null, { skipLoader: true }).then(res => {

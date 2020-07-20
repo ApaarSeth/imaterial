@@ -61,15 +61,27 @@ export class SignInSignUpComponent implements OnInit {
     Promise.all([this.visitorsService.getGEOLocation(), this.commonService.getCountry()]).then(res => {
       this.callingCode = res[0]['countryCode'] === 'IN' ? '+91' : 'null';
       this.countryCode = res[0]['countryCode']
-      localStorage.setItem('countryCode', this.callingCode)
+      localStorage.setItem('countryCode', this.countryCode)
+      localStorage.setItem('callingCode', this.callingCode)
       this.countryList = res[1]['data']
     }).catch(err => {
       this.fallBackData()
     })
+    // Promise.all([this.commonService.getCountry()]).then(res => {
+    //   this.callingCode = 'null';
+    //   this.countryCode = 'US'
+    //   localStorage.setItem('countryCode', this.countryCode)
+    //   localStorage.setItem('callingCode', this.callingCode)
+    //   this.countryList = res[0]['data']
+    // }).catch(err => {
+    //   // this.fallBackData()
+    // })
   }
 
+
   fallBackData() {
-    localStorage.setItem('countryCode', "+91");
+    localStorage.setItem('callingCode', "+91");
+    localStorage.setItem('countryCode', 'IN')
     this.callingCode = "+91";
     this.countryCode = "IN";
     this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: true }).then(res => {
