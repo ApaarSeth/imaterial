@@ -9,6 +9,7 @@ import { initiatePo, initiatePoData } from 'src/app/shared/models/PO/po-data';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { CountryCode } from 'src/app/shared/models/currency';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
   selector: "app-po-supplier",
@@ -27,7 +28,7 @@ export class PoSupplierComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private rfqService: RFQService,
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute, private commonService: CommonService) { }
 
   ngOnInit() {
     this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data;
@@ -47,7 +48,7 @@ export class PoSupplierComponent implements OnInit {
     let userId = Number(localStorage.getItem("userId"));
     let orgId = Number(localStorage.getItem("orgId"));
 
-    this.rfqService.getSuppliers(orgId).then(data => {
+    this.commonService.getSuppliers(orgId).then(data => {
       this.allSuppliers = data.data;;
     });
   }
