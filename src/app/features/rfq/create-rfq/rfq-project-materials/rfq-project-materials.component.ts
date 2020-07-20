@@ -79,7 +79,11 @@ export class RfqProjectMaterialsComponent implements OnInit {
   previousIndex: number
   ngOnInit() {
     // this.allProjects = this.projectsList;
+<<<<<<< HEAD
+
+=======
     this.isMobile = this.commonService.isMobile().matches;
+>>>>>>> b021db0c87a2f5b12cae2b33a278bc787ee290c0
     this.rfqService.mat.subscribe(data => {
       console.log(data)
     })

@@ -19,14 +19,14 @@
             <span class="main-color p-l-5">Create</span>
           </mat-label>
           <mat-select class="hide-select-arrow">
-            <!-- <mat-optgroup class="option-select-height" label="Create GRN">
-              <mat-option (click)="openGrnDialog()" class="height-2-em" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+            <mat-optgroup class="option-select-height" label="Create GRN">
+              <mat-option (click)="openGrnDialog()" class="height-2-em main-color">
                 Via System
               </mat-option>
-              <mat-option class="height-2-em" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded'">
+              <mat-option (click)="openGrnViaExcelDialog()" class="height-2-em main-color">
                 Via Excel
               </mat-option>
-            </mat-optgroup> -->
+            </mat-optgroup>
             <mat-optgroup class="option-select-height" label="Actions">
               <mat-option class="height-2-em" (click)="createRfq()" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded not-allowed'">
                 Create RFQ
@@ -42,7 +42,7 @@
             ><img src="../../../assets/images/create-icon.svg" alt="" />
             <span class="main-color p-l-5">+Add/Edit</span>
           </mat-label>
-          <mat-select class="hide-select-arrow">
+          <mat-select class="hide-select-arrow shift-upward">
             <mat-option class="height-2-em" class="main-color" (click)="addMaterial()">
               Add/Edit Material
             </mat-option>

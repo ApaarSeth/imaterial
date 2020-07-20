@@ -54,22 +54,22 @@
 
 div.limited-character.bom {
   max-width: 264px;
-  a{
+  a {
     font-size: 12px;
   }
 }
 
-.orange-text{
+.orange-text {
   color: #f47721;
 }
 
-.add-edit-image{
-  a{
+.add-edit-image {
+  a {
     font-size: 13px;
   }
 }
 
-.images-lists{
+.images-lists {
   position: relative;
   .attached-image {
     display: block;
@@ -78,32 +78,33 @@ div.limited-character.bom {
     border: 1px solid #828282;
     height: 45px;
     width: 45px;
-    -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    -moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     position: absolute;
     background-color: #fff;
     cursor: pointer;
 
-    &:first-child{
+    &:first-child {
       z-index: 0;
       top: -30px;
       left: 10px;
     }
 
-    &:nth-child(2){
+    &:nth-child(2) {
       left: 16px;
       z-index: 1;
       top: -24px;
     }
 
-    &:nth-child(3){
+    &:nth-child(3) {
       z-index: 2;
       left: 23px;
       top: -17px;
     }
 
-    &:nth-child(4), &:nth-child(5){
+    &:nth-child(4),
+    &:nth-child(5) {
       display: none;
     }
   }
@@ -126,20 +127,20 @@ div.limited-character.bom {
   }
 }
 
-.view-image-modal .mat-dialog-container{
+.view-image-modal .mat-dialog-container {
   padding: 0 24px !important;
 }
 
 .view-image-dialog.mat-dialog-content {
   padding: 0;
-  .modal-content{
+  .modal-content {
     border: none;
   }
-  .modal-body{
+  .modal-body {
     padding: 0;
   }
 
-  button.close{
+  button.close {
     position: absolute;
     right: 10px;
     z-index: 99;
@@ -150,20 +151,20 @@ div.limited-character.bom {
     text-shadow: none;
   }
 
-  h4{
+  h4 {
     text-shadow: 0 0 10px #000;
     word-break: break-word;
   }
 }
 
-.upload-image-info{
+.upload-image-info {
   width: 95%;
   margin-left: 30px;
 }
 
-.image-info{
+.image-info {
   width: 75%;
-  .thumbnail-img{
+  .thumbnail-img {
     width: 30px;
     height: 30px;
     object-fit: cover;
@@ -171,21 +172,21 @@ div.limited-character.bom {
     border: 1px solid #bbbaba;
   }
 
-  span{
+  span {
     text-align: left;
     word-break: break-word;
   }
 }
 
-.image-actions{
+.image-actions {
   width: 15%;
-  .fa{
+  .fa {
     text-decoration: none !important;
   }
 }
 
-.upload-img-dialog{
-  button.close{
+.upload-img-dialog {
+  button.close {
     font-weight: 100;
     font-size: 3em;
     line-height: 10px;
@@ -197,24 +198,24 @@ div.limited-character.bom {
     font-size: 18px;
   }
 
-  .modal-body{
+  .modal-body {
     padding: 30px 50px;
   }
 }
 
 .img-integration {
   padding: 30px 30px 20px !important;
-  .upload-green-tick{
+  .upload-green-tick {
     margin-bottom: 25px;
   }
 
-  span.upload-msg{
+  span.upload-msg {
     font-weight: 500;
     margin-bottom: 10px;
     display: block;
   }
 
-  .image-integration span.file-limit{
+  .image-integration span.file-limit {
     font-size: 12px;
     color: #666;
   }
@@ -237,13 +238,13 @@ div.limited-character.bom {
   position: relative;
   background-color: #feeeee;
   width: 85%;
-  .fa{
+  .fa {
     color: #ef7678;
     font-size: 20px;
   }
 }
 
-.download-link{
+.download-link {
   position: absolute;
   left: 80%;
   z-index: 999;
@@ -251,7 +252,7 @@ div.limited-character.bom {
   width: 30px;
 }
 
-.default-image{
+.default-image {
   height: 50px;
 }
 
@@ -261,12 +262,13 @@ div.limited-character.bom {
 
 .carousel-indicators li,
 .carousel-control-prev-icon,
-.carousel-control-next-icon{
+.carousel-control-next-icon {
   cursor: pointer;
 }
 
-.bom-select-menus{
-  .mat-select-trigger, .mat-select-placeholder{
+.bom-select-menus {
+  .mat-select-trigger,
+  .mat-select-placeholder {
     height: 45px;
   }
 }

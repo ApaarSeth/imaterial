@@ -9,7 +9,11 @@ export class CreateRfqResolver implements Resolve<any> {
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
+<<<<<<< HEAD
+    private commonService: CommonService
+=======
     private commonService: CommonService,
+>>>>>>> b021db0c87a2f5b12cae2b33a278bc787ee290c0
   ) { }
 
   resolve() {

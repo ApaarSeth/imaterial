@@ -25,8 +25,12 @@ import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-materia
 import { IndentService } from 'src/app/shared/services/indent/indent.service';
 import { AddGrnComponent } from 'src/app/shared/dialogs/add-grn/add-grn.component';
 import { CommonService } from 'src/app/shared/services/commonService';
+<<<<<<< HEAD
+import { AddGrnViaExcelComponent } from 'src/app/shared/dialogs/addGrn-viaExcel/addGrnViaExcel.component';
+=======
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+>>>>>>> b021db0c87a2f5b12cae2b33a278bc787ee290c0
 
 @Component({
   selector: "app-bom-table",
@@ -226,6 +230,13 @@ export class BomTableComponent implements OnInit {
   openGrnDialog() {
     const dialogRef = this.dialog.open(AddGrnComponent, {
       width: "1000px",
+      data: this.projectId
+    });
+  }
+
+  openGrnViaExcelDialog() {
+    const dialogRef = this.dialog.open(AddGrnViaExcelComponent, {
+      width: "600px",
       data: this.projectId
     });
   }
