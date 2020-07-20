@@ -40,9 +40,9 @@ export class CreateRfqComponent implements OnInit {
   updatedRfqMaterial: AddRFQ;
   rfqMaterial: AddRFQ;
   stpForm: any;
-  prevIndex: number = 0;
+  prevIndex: number = null;
   currentIndex: number = 0;
-  rfqData: AddRFQ;
+  rfqData: AddRFQ = null;
   finalRfq: AddRFQ;
   completed: boolean = false;
   countryList: CountryCode[] = [];
@@ -81,6 +81,7 @@ export class CreateRfqComponent implements OnInit {
   };
   orgId: number;
   userId: number;
+  id: number;
   allProject: ProjectDetails[] = [];
   allSupplier: Suppliers[] = [];
   constructor(
@@ -105,14 +106,14 @@ export class CreateRfqComponent implements OnInit {
   ngOnInit() {
     let userId = Number(localStorage.getItem("userId"));
     let orgId = Number(localStorage.getItem("orgId"));
-    let id = this.route.snapshot.params['rfqId'];
+    this.id = this.route.snapshot.params['rfqId'];
 
     Promise.all([
-      this.rfqService.getSuppliers(orgId, id),
+      this.commonService.getSuppliers(orgId),
       this.projectService.getProjects(orgId, userId),
       this.commonService.getCountry()
     ]).then(res => {
-      if (id) { this.loader.hide() }
+      if (this.id) { this.loader.hide() }
       this.allSupplier = res[0].data
       this.allProject = res[1].data
       this.countryList = res[2].data
@@ -124,6 +125,8 @@ export class CreateRfqComponent implements OnInit {
     if (this.stepper) {
       this.stepper.selectedIndex = history.state.selectedIndex;
       this.currentIndex = history.state.selectedIndex ? history.state.selectedIndex : 0;
+      this.prevIndex = this.currentIndex
+      this.rfqService.stepperIndex.next(this.currentIndex)
       if (this.stepper.selectedIndex == 0) {
         if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
           setTimeout(() => {
@@ -176,6 +179,7 @@ export class CreateRfqComponent implements OnInit {
   getQuantityAndMakes(updatedMaterials: AddRFQ) {
     this.rfqService.addRFQ(updatedMaterials).then((res) => {
       this.finalRfq = res.data as AddRFQ
+      this.rfqService.mat.next(res.data)
       this.rfqData = res.data as AddRFQ
     });
     this.completed = this.rfqQtyMakes && this.rfqQtyMakes.materialForms.value.forms.every(
@@ -190,6 +194,7 @@ export class CreateRfqComponent implements OnInit {
       let rfqId = param['rfqId']
       if (!rfqId) this.loader.show()
       this.rfqService.addRFQ(materials, !rfqId ? true : false).then(res => {
+
         if (!rfqId) {
           this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
             state: { rfqData: res, selectedIndex: 1 }
@@ -205,6 +210,7 @@ export class CreateRfqComponent implements OnInit {
   selectionChange(event) {
     this.currentIndex = event.selectedIndex;
     this.prevIndex = event.previouslySelectedIndex;
+    this.rfqService.stepperIndex.next(this.prevIndex)
     if (event.selectedIndex == 0) {
       if ((localStorage.getItem('rfq') == "null") || (localStorage.getItem('rfq') == '0')) {
         setTimeout(() => {
@@ -239,5 +245,6 @@ export class CreateRfqComponent implements OnInit {
     });
   }
 
+  // <!-- * ngIf="this.currentIndex === 0 && allProject.length ? (this.prevIndex === 0 ? true : rfqData) : false" -- >
 
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 //import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from "rxjs";
+import { Observable, Subject, BehaviorSubject } from "rxjs";
 import { environment } from "src/environments/environment";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
@@ -15,7 +15,8 @@ import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
 })
 export class RFQService {
   constructor(private dataService: DataService) { }
-
+  mat = new Subject()
+  stepperIndex = new BehaviorSubject(null)
   rfqMaterials(ProjectIds: number[], skipLoader?: boolean) {
     return this.dataService.sendPostRequest(API.RFQMATERIALS, {
       skipLoader: skipLoader,
@@ -35,9 +36,7 @@ export class RFQService {
     return this.dataService.sendPostRequest(API.RFQADDPO, bidData);
   }
 
-  getSuppliers(organizationId: number, skipLoader?: boolean) {
-    return this.dataService.getRequest(API.GETSUPPLIERS(organizationId), null, { skipLoader });
-  }
+
 
   addNewSupplier(organizationId: number, supplier: Suppliers) {
     return this.dataService.sendPostRequest(API.ADDSUPPLIER(organizationId), supplier).then(res => {

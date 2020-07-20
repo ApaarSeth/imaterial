@@ -38,10 +38,11 @@
         <ng-template matStepLabel>Project & Material</ng-template>
         <app-rfq-project-materials
           [projectsList]="allProject"
-          *ngIf="this.currentIndex === 0 && allProject.length ? (this.prevIndex === 0 ? true : rfqData) : false"
+          *ngIf="allProject.length && currentIndex === 0 ? true : false"
           (updatedRfq)="getMaterial($event)"
           #projectrMaterial
           [existingRfq]="rfqData"
+          [prevIndex]="prevIndex"
         >
         </app-rfq-project-materials>
       </mat-step>
@@ -53,7 +54,7 @@
         <ng-template matStepLabel>Select Supplier</ng-template>
         <app-rfq-supplier
           #rfqSupplier
-          *ngIf="allSupplier.length && countryList.length"
+          *ngIf="countryList.length"
           [cntryList]="this.countryList"
           [suppliers]="allSupplier"
           [finalRfq]="finalRfq"

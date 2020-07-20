@@ -243,7 +243,7 @@ export class AppDashboardComponent implements OnInit {
 
       if (label == 'indent')
         this.indentData = res.data;
-    })
+    }).catch(error => console.log(error))
   }
 
   onTabChanged($event) {

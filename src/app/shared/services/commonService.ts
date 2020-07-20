@@ -133,6 +133,10 @@ export class CommonService {
   getMenuData() {
     return this.dataService.getRequest(API.GET_MENU);
   }
+  
+  getSuppliers(organizationId: number, skipLoader?: boolean) {
+    return this.dataService.getRequest(API.GETSUPPLIERS(organizationId), null, { skipLoader });
+  }
 
 }
 
