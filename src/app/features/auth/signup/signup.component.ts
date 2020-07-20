@@ -159,12 +159,15 @@ export class SignupComponent implements OnInit {
       otp: []
     });
 
-    this.signupForm.get('email').valueChanges.pipe(debounceTime(30)).subscribe(data => {
-      this.verifyEmail(data)
-    })
-    this.signupForm.get('phone').valueChanges.subscribe(data => {
+    if (!this.uniqueCode) {
+      this.signupForm.get('email').valueChanges.pipe(debounceTime(30)).subscribe(data => {
+        this.verifyEmail(data)
+      })
+    }
 
-    })
+    // this.signupForm.get('phone').valueChanges.subscribe(data => {
+
+    // })
   }
 
   signup() {
