@@ -17,7 +17,7 @@ import { UploadImageComponent } from '../dialogs/upload-image/upload-image.compo
 import { SupplierRatingComponent } from '../dialogs/supplier-rating/supplier-rating.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent ];
+const components = [ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent];
 
 @NgModule({
   imports: [
