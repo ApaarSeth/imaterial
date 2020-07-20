@@ -279,3 +279,10 @@ div.limited-character.bom {
 .mat-select-panel.removeMinWidth {
   min-width: 100% !important;
 }
+
+.label-adjust {
+  .mat-form-field-label-wrapper {
+    top: -2.4em !important;
+    padding-top: 3.84375em !important;
+  }
+}
