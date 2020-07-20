@@ -9,6 +9,7 @@ import { UnapprovedMaterialTabComponent } from './unapproved-materials-tab/unapp
 import { MyMaterialTabComponent } from './my-materials-tab/myMaterialTab.component';
 import { MyMaterialComponent } from './my-material.component';
 import { MyMaterialRoutingModule } from './my-material.routing';
+import { RouterModule } from '@angular/router';
 @NgModule({
     declarations: [MyMaterialTabComponent, UnapprovedMaterialTabComponent, MyMaterialComponent],
     imports: [
@@ -19,7 +20,8 @@ import { MyMaterialRoutingModule } from './my-material.routing';
         MaterialModule,
         LayoutModule,
         SharedComponentsModule,
-        AppSharedModule
+        AppSharedModule,
+        RouterModule
     ]
 })
 export class MyMaterialModule { }

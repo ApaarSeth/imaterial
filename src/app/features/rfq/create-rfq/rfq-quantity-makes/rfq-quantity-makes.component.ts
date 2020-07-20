@@ -54,7 +54,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   ];
   rfqId: any;
   startDate: Date;
-  rfqData: AddRFQ;
+  rfqData: AddRFQ = {} as AddRFQ;
   message: string;
   lastupdateValue: any;
   valid: boolean = false;
@@ -77,24 +77,24 @@ export class RfqQuantityMakesComponent implements OnInit {
     this.isMobile = this.commonService.isMobile().matches;
     this.primaryCurrencyCode = localStorage.getItem('currencyCode')
     this.startDate = new Date();
-    this.rfqData = {
-      id: null,
-      status: null,
-      createdBy: null,
-      createdAt: null,
-      lastUpdatedBy: null,
-      lastUpdatedAt: null,
-      rfqId: null,
-      rfq_status: null,
-      rfqName: null,
-      dueDate: null,
-      supplierId: null,
-      supplierDetails: null,
-      rfqProjectsList: [],
-      documentsList: null,
-      terms: null,
-      rfqCurrency: null,
-    };
+    // this.rfqData = {
+    //   id: null,
+    //   status: null,
+    //   createdBy: null,
+    //   createdAt: null,
+    //   lastUpdatedBy: null,
+    //   lastUpdatedAt: null,
+    //   rfqId: null,
+    //   rfq_status: null,
+    //   rfqName: null,
+    //   dueDate: null,
+    //   supplierId: null,
+    //   supplierDetails: null,
+    //   rfqProjectsList: [],
+    //   documentsList: null,
+    //   terms: null,
+    //   rfqCurrency: null,
+    // };
 
     // if (history.state.rfqData) {
     //   this.rfqData = history.state.rfqData.data;

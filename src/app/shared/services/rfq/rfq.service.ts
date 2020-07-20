@@ -16,8 +16,9 @@ import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
 export class RFQService {
   constructor(private dataService: DataService) { }
 
-  rfqMaterials(ProjectIds: number[]) {
+  rfqMaterials(ProjectIds: number[], skipLoader?: boolean) {
     return this.dataService.sendPostRequest(API.RFQMATERIALS, {
+      skipLoader: skipLoader,
       projectIds: ProjectIds
     });
   }
@@ -34,8 +35,8 @@ export class RFQService {
     return this.dataService.sendPostRequest(API.RFQADDPO, bidData);
   }
 
-  getSuppliers(organizationId: number) {
-    return this.dataService.getRequest(API.GETSUPPLIERS(organizationId));
+  getSuppliers(organizationId: number, skipLoader?: boolean) {
+    return this.dataService.getRequest(API.GETSUPPLIERS(organizationId), null, { skipLoader });
   }
 
   addNewSupplier(organizationId: number, supplier: Suppliers) {
@@ -44,8 +45,8 @@ export class RFQService {
     });
   }
 
-  addRFQ(rfqDetail: AddRFQ) {
-    return this.dataService.sendPostRequest(API.ADDRFQ, rfqDetail);
+  addRFQ(rfqDetail: AddRFQ, skipLoader?: boolean) {
+    return this.dataService.sendPostRequest(API.ADDRFQ, rfqDetail, { skipLoader });
   }
 
   getRFQDetailSupplier(rfqId: number, supplierId: number) {
@@ -84,8 +85,8 @@ export class RFQService {
   getDraftRfq(rfqId: number) {
     return this.dataService.getRequest(API.GETADDEDRFQ(rfqId));
   }
-  
-  getCurrency(){
+
+  getCurrency() {
     return this.dataService.getRequest(API.CURRENCY);
   }
 }

@@ -264,7 +264,6 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       .toPromise()
       .then(data => {
         if (data != null && data.status == 1) {
-          localStorage.clear();
           this.router.navigate(["/rfq-bids/finish/" + this.brandCount + "/" + this.materialCount]);
         }
       });

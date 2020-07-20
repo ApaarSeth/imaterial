@@ -30,10 +30,9 @@ export class AddMyMaterialBomComponent implements OnInit {
   rows: FormArray;
   emailVerified: boolean = true;
   emailMessage: string;
-
+  searchTrade: string = "";
   creatorId: number;
   index: string[] = [];
-
   emails: string[] = [];
   count: any;
   addUserFormLength: number;

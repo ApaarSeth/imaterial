@@ -99,9 +99,9 @@ export class CommonService {
     return this.dataService.getRequest(API.CURRENCY);
   }
 
-  getCountry() {
-    let callingCode = localStorage.getItem('countryCode')
-    return this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: callingCode === '+91' ? false : true });
+  getCountry(skipLoader?: boolean) {
+    let callingCode = localStorage.getItem('callingCode')
+    return this.dataService.getRequest(API.COUNTRYCODE, null, { skipLoader: skipLoader });
   }
 
   poTaxesList() {
@@ -117,7 +117,7 @@ export class CommonService {
 
   getPincodeInternational(pin: number, cId: number) {
     return this.dataService
-      .getRequest(API.GETCITYANDSTATEBYCOUNTRY(pin, cId))
+      .getRequest(API.GETCITYANDSTATEBYCOUNTRY(pin, cId), null, { skipLoader: true })
       .then(res => {
         return res;
       });

@@ -131,9 +131,6 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: AppDashboardComponent,
-        resolve: {
-          countryList: CountryResolver
-        },
         data: { title: 'Dashboard', breadcrumb: 'Dashboard' }
       },
       // {
