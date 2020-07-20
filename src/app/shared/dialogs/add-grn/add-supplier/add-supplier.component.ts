@@ -63,11 +63,11 @@ export class GrnAddSupplierComponent implements OnInit {
     }
     initForm() {
         this.form = this.formBuilder.group({
-            grnNo: [''],
+            grnNo: ['', Validators.maxLength(300)],
             grnDate: [''],
-            supplierName: ["", Validators.required],
-            email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-            contact: [null, [Validators.pattern(FieldRegExConst.MOBILE3)]],
+            supplierName: ["", [Validators.required, Validators.maxLength(300)]],
+            email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL), Validators.maxLength(300)]],
+            contact: [null, [Validators.pattern(FieldRegExConst.MOBILE3), , Validators.maxLength(300)]],
             countryCode: [],
             comments: []
         })
@@ -79,18 +79,23 @@ export class GrnAddSupplierComponent implements OnInit {
                 observer.next(val);
                 observer.complete();
             })
-            // if (typeof changes === 'object') {
-            //     this.form.get("index").value].patchValue({ materialUnit: (<Subcategory>changes).materialUnit });
-            //     this.form.get("index").value].patchValue({ pendingQty: (<Subcategory>changes).estimatedQty - (<Subcategory>changes).availableStock });
-            //     this.form.get("index").value].controls['pendingQty'].disable();
-            //     if (<FormArray>this.addMaterialsForm.get('addMaterial')['controls'][form.get("index").value].controls['materialUnit'].value.length) {
-            //         <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][form.get("index").value].controls['materialUnit'].disable();
-            //     }
-            // }
-            // else {
-            //     <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ pendingQty: 0 });
-            //     <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['pendingQty'].disable();
-            // }
+            if (typeof changes === 'object') {
+                this.form.patchValue({ email: (<Supplier>changes).email });
+                this.form.patchValue({ contact: (<Supplier>changes).contact_no });
+                let supplierCountry = this.countryList.filter((cntry: CountryCode) => {
+                    return cntry.callingCode === (<Supplier>changes).countryCallingCode
+                })
+                this.form.patchValue({ countryCode: supplierCountry[0] });
+                this.form.patchValue({ email: (<Supplier>changes).email });
+                this.form.get('email').disable();
+                this.form.get('contact').disable();
+                this.form.get('countryCode').disable();
+            }
+            else {
+                this.form.get('email').enable();
+                this.form.get('contact').enable();
+                this.form.get('countryCode').enable();
+            }
         })
     }
 
@@ -189,15 +194,17 @@ export class GrnAddSupplierComponent implements OnInit {
     }
 
     onSubmit() {
-        this.form.value.countryCode = this.form.value.countryCode ? this.form.value.countryCode.callingCode : null
-        this.form.value.materialList = this.materialList
-        this.form.value.documentList = this.documentList
-        this.form.value.supplierId = typeof (this.form.value.supplierName === 'object') ? Number(this.form.value.supplierName.supplier_name) : null;
-        this.form.value.supplierName = typeof (this.form.value.supplierName === 'object') ? this.form.value.supplierName.supplier_name : this.form.value.supplierName;
-        if (this.form.value.grnDate) {
-            this.form.value.grnDate = this.commonService.getFormatedDate(this.form.value.grnDate)
+        let { countryCode, grnDate, supplierName } = this.form.getRawValue()
+        countryCode = countryCode ? countryCode.callingCode : null
+        let materialList = this.materialList
+        let documentList = this.documentList
+        let supplierId = typeof (this.form.value.supplierName) === 'object' ? Number(this.form.value.supplierName.supplierId) : null;
+        supplierName = typeof (this.form.value.supplierName) === 'object' ? this.form.value.supplierName.supplier_name : this.form.value.supplierName;
+        if (grnDate) {
+            grnDate = this.commonService.getFormatedDate(grnDate)
         }
-        this.bomService.addGrnWithoutPo(this.form.value).then(res => {
+        let data = { ...this.form.getRawValue(), grnDate, supplierName, supplierId, materialList, documentList, countryCode }
+        this.bomService.addGrnWithoutPo(data).then(res => {
             console.log(res)
         })
     }

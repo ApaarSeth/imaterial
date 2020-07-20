@@ -57,13 +57,13 @@ export class GrnAddMaterialComponent implements OnInit {
 
     addMaterialFormGroup() {
         const frmGrp = this.formBuilder.group({
-            materialName: ['', Validators.required],
-            materialUnit: ['', Validators.required],
-            deliveredQty: ['', Validators.required],
+            materialName: ['', [Validators.required, Validators.maxLength(300)]],
+            materialUnit: ['', [Validators.required, Validators.maxLength(300)]],
+            deliveredQty: ['', [Validators.required, Validators.maxLength(300)]],
             index: [],
-            pendingQty: ['', Validators.required],
-            materialUnitPrice: ['', Validators.required],
-            amount: ['', Validators.required]
+            pendingQty: ['', [Validators.required, Validators.maxLength(300)]],
+            materialUnitPrice: ['', [Validators.required, Validators.maxLength(300)]],
+            amount: ['', [Validators.required, Validators.maxLength(300)]]
         });
 
         frmGrp.get("index").patchValue(this.addMaterialsForm.get('addMaterial')['controls'].length)

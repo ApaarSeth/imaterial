@@ -5,6 +5,7 @@
         <span class="text-semi-bold"> GRN No.-</span>
         <mat-form-field class="border-input width-50">
           <input matInput type="string" formControlName="grnNo" placeholder="GRN No." class="m-r-5" />
+          <small *ngIf="form.get('grnNo').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
         </mat-form-field>
       </span>
     </span>
@@ -32,6 +33,7 @@
               {{ option.supplier_name }}
             </mat-option>
           </mat-autocomplete>
+          <small *ngIf="form.get('supplierName').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
         </mat-form-field>
       </div>
 
@@ -80,6 +82,7 @@
           <input matInput type="email" formControlName="email" placeholder="Email *" />
           <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="form-error-msg"> Email is required </small>
           <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="form-error-msg"> Enter Valid Email</small>
+          <small *ngIf="form.get('email').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
         </mat-form-field>
       </div>
     </div>

@@ -11,6 +11,9 @@
                   {{ option.materialName }}
                 </mat-option>
               </mat-autocomplete>
+              <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['materialName'].errors?.maxlength" class="warning-color"
+                >maximun characters allowed is 300</small
+              >
             </mat-form-field>
           </div>
           <div class="col-xs-1 p-r-0 p-l-0">
@@ -22,12 +25,18 @@
                   </span>
                 </mat-option>
               </mat-select>
+              <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['materialUnit'].errors?.maxlength" class="warning-color"
+                >maximun characters allowed is 300</small
+              >
             </mat-form-field>
           </div>
           <div class="col-xs-2 text-center">
             <span>
               <mat-form-field class="border-input p-l-0 label-font-size width-90">
                 <input formControlName="deliveredQty" appTwoDigitDecimaNumber matInput type="text" placeholder="Quantity*" />
+                <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['deliveredQty'].errors?.maxlength" class="warning-color"
+                  >maximun characters allowed is 300</small
+                >
               </mat-form-field>
             </span>
           </div>
@@ -35,6 +44,9 @@
             <span>
               <mat-form-field class="border-input label-font-size width-90">
                 <input formControlName="pendingQty" appTwoDigitDecimaNumber matInput type="text" placeholder="Pending Qty*" />
+                <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['pendingQty'].errors?.maxlength" class="warning-color"
+                  >maximun characters allowed is 300</small
+                >
               </mat-form-field>
             </span>
           </div>
@@ -42,6 +54,9 @@
             <span>
               <mat-form-field class="border-input label-font-size width-90">
                 <input formControlName="materialUnitPrice" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Price*({{ currency }})" />
+                <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['materialUnitPrice'].errors?.maxlength" class="warning-color"
+                  >maximun characters allowed is 300</small
+                >
               </mat-form-field>
             </span>
           </div>
@@ -49,6 +64,9 @@
             <span>
               <mat-form-field class="border-input label-font-size width-100">
                 <input formControlName="amount" appTwoDigitDecimaNumber matInput type="text" placeholder="Total Amt*({{ currency }})" />
+                <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['amount'].errors?.maxlength" class="warning-color"
+                  >maximun characters allowed is 300</small
+                >
               </mat-form-field>
             </span>
           </div>
