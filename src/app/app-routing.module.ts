@@ -16,6 +16,7 @@ import { CountryResolver } from './shared/resolver/country.resolver';
 import { SubscriptionsResolver } from './shared/components/subscriptions/subscriptions.resolver';
 import { MySubscriptionsComponent } from './features/users/my-subscriptions/my-subscriptions.component';
 import { SubscriptionRedirectionsComponent } from './features/subscription-redirections/subscription-redirections.component';
+import { MenuResolver } from './shared/resolver/menu.resolver';
 
 
 const routes: Routes = [
@@ -89,7 +90,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileLayoutComponent,
-    canActivate: [AuthGuardService, UserDataGuardService],
+    canActivate: [ AuthGuardService, UserDataGuardService ],
     children: [
       {
         path: "profile",
@@ -103,6 +104,9 @@ const routes: Routes = [
     path: "",
     component: MainLayoutComponent,
     canActivate: [ AuthGuardService, AfterSignUpGuardService ],
+    resolve: {
+      menu: MenuResolver
+    },
     children: [
       {
         path: "project-dashboard",
@@ -217,7 +221,7 @@ const routes: Routes = [
 @NgModule({
   imports: [ RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }) ],
   exports: [ RouterModule ],
-  providers: [ CountryResolver, SubscriptionsResolver ]
+  providers: [ CountryResolver, SubscriptionsResolver, MenuResolver ]
 })
 
 export class AppRoutingModule { }

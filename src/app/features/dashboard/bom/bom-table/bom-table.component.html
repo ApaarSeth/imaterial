@@ -1,7 +1,7 @@
 <div class="page-start-point changeWidth mt-5 pt-4">
   <div class="p-l-20 p-r-20 p-b-20">
     <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()"
-      [projectDetails]="projectData" [disableEditDelete]="true"></card-layout>
+      [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"></card-layout>
     <div class="row">
       <div class="col-xs-12 col-md-3">
         <mat-form-field class="example-form-field border-input">
@@ -158,14 +158,15 @@
             <div *ngIf="element?.documentsList?.length" class="images-lists"
               (click)="viewAllImages(element.projectId, element.materialId)">
               <ng-container *ngFor="let img of element.documentsList; let i = index">
-                <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image"
+                  *ngIf="i < 3" />
               </ng-container>
             </div>
 
             <ng-container *ngIf="!element?.documentsList">
               <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
             </ng-container>
-            
+
           </td>
         </ng-container>
 

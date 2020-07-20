@@ -130,6 +130,10 @@ export class CommonService {
     return this.dataService.sendPostRequest(API.PUSHNOTIFICATIONDATA, data)
   }
 
+  getMenuData() {
+    return this.dataService.getRequest(API.GET_MENU);
+  }
+
 }
 
 
