@@ -1,6 +1,6 @@
 <!-- <mat-sidenav #sidenav> -->
-  <mat-nav-list>
-    <ng-container *ngFor="let selectedHeader of headerConst">
+<mat-nav-list>
+  <!-- <ng-container *ngFor="let selectedHeader of headerConst">
       <div [ngClass]="(buttonName && (buttonName === selectedHeader.name)) ? 'display-flex active' : 'display-flex'" >
          <a href="javascript:void(0)" *ngIf="selectedHeader.flag" mat-list-item (click)="redirect(selectedHeader.link)">
             <img [src]="selectedHeader.image" alt=""/>
@@ -9,13 +9,26 @@
            </span> 
         </a>
       </div>
-    </ng-container>
-     <div class="display-flex">
-         <a href="javascript:void(0)"  mat-list-item  (click)="logout()">
-            <img src="../../../assets/images/logout-hamburger.svg" alt=""/>
-             <span class="p-l-15">
-             Logout
-           </span> 
+    </ng-container> -->
+  <ng-container *ngIf="data && data.moduleList">
+    <ng-container *ngFor="let item of data.moduleList">
+      <div [ngClass]="(buttonName && (buttonName === item.moduleName)) ? 'display-flex active' : 'display-flex'">
+        <a href="javascript:void(0)" mat-list-item (click)="redirect(item.modulePath)">
+          <img src="../../../assets/images/{{item.moduleIcon}}" alt="" />
+          <span class="p-l-15">
+            {{item.moduleName}}
+          </span>
         </a>
       </div>
-  </mat-nav-list>
+    </ng-container>
+  </ng-container>
+
+  <div class="display-flex">
+    <a href="javascript:void(0)" mat-list-item (click)="logout()">
+      <img src="../../../assets/images/logout-hamburger.svg" alt="" />
+      <span class="p-l-15">
+        Logout
+      </span>
+    </a>
+  </div>
+</mat-nav-list>

@@ -99,7 +99,7 @@
                   </div>
                   <div class="col-xs-7 p-t-1">
                     <mat-form-field class="border-input w-100">
-                      <input matInput type="text" placeholder="{{ this.countryCode === '+91' ? 'Phone No.*' : 'Phone No.' }}" formControlName="contactNo" />
+                      <input matInput type="text" placeholder="{{ this.countryCode === 'IN' ? 'Phone No.*' : 'Phone No.' }}" formControlName="contactNo" />
                     </mat-form-field>
                     <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
                       <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">

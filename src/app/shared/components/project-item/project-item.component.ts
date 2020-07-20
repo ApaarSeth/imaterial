@@ -51,6 +51,8 @@ export class ProjectItemComponent implements OnInit {
   // tslint:disable-next-line: no-output-rename
   @Output('startDate') startDate = new EventEmitter<Date>();
 
+  @Input('pageType') type: string;
+
   ngOnInit(): void {
     this.isMobile = this.commonService.isMobile().matches;
     this.currencyCode = localStorage.getItem('currencyCode');
@@ -59,6 +61,7 @@ export class ProjectItemComponent implements OnInit {
     if (this.projectDetails.startDate) {
       this.startDate.emit(this.projectDetails.startDate);
     }
+    console.log(this.type);
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.url = this.router.url;

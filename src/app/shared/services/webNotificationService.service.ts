@@ -15,6 +15,19 @@ export class WebNotificationService {
       console.log('Notification is not enabled')
       return;
     }
+    // subscribeNotification() {
+    //   this.webNotificationService.subscribeToNotification()
+    //   if (this.swUpdate.isEnabled) {
+    //     this.swUpdate.available.subscribe(() => {
+    //       if (confirm("New version available. Load New Version?")) {
+    //         window.location.reload();
+    //       }
+    //     });
+    //   }
+    //   this.swPush.notificationClicks.subscribe(({ action, notification }) => {
+    //     window.open(notification.data.url)
+    //   })
+    // }
     this.swPush.requestSubscription({
       serverPublicKey: this.VAPID_PUBLIC_KEY
     })
@@ -22,9 +35,6 @@ export class WebNotificationService {
       .catch(err => console.error('Could not subscribe to notifications', err));
   }
   sendToServer(params: any) {
-    console.log(typeof params)
-    console.log(JSON.stringify(params))
     this.commonService.pushNotificationData(params)
-    // this.http.post(this.baseUrl, { notification: params }).subscribe();
   }
 }

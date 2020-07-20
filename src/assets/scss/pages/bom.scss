@@ -270,3 +270,10 @@ div.limited-character.bom {
     height: 45px;
   }
 }
+.cdk-overlay-pane.shift-upward {
+  transform: translateX(-61px) translateY(-76px) !important;
+}
+
+.mat-select-panel.removeMinWidth {
+  min-width: 100% !important;
+}

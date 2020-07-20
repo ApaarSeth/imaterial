@@ -185,8 +185,8 @@ export class RFQSupplierDetailComponent implements OnInit {
   updateItemTaxInfo(item) {
     item.materialList.forEach(itm => {
       if (this.taxAndCostData[ item.projectId ].hasOwnProperty(itm.materialId)) {
-        itm.taxInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ].taxInfo;
-        itm.otherCostInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ].otherCostInfo;
+        itm.taxInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ] !== null ? this.taxAndCostData[ item.projectId ][ itm.materialId ].taxInfo : [];
+        itm.otherCostInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ] !== null ? this.taxAndCostData[ item.projectId ][ itm.materialId ].otherCostInfo : [];
       }
     });
     return item;

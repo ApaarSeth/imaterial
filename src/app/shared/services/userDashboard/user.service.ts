@@ -3,13 +3,13 @@ import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
 import { UserAdd } from '../../models/user-details';
 import { Router } from '@angular/router';
-import {NotificationInt} from '../../models/notification'
+import { NotificationInt } from '../../models/notification'
 import { Subject } from 'rxjs';
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
-   UpdateProfileImage = new Subject<string>();
+  UpdateProfileImage = new Subject<string>();
   constructor(private dataService: DataService,
     private _router: Router) { }
 
@@ -27,16 +27,16 @@ export class UserService {
       .then(res => res);
   }
 
-  getTurnOverList(){
-      return this.dataService
+  getTurnOverList() {
+    return this.dataService
       .getRequest(API.TURNOVERLIST)
       .then(res => res);
   }
   addUsers(user: UserAdd) {
     return this.dataService.sendPostRequest(API.ADDUSER, user)
   }
-  postTerms(id){
-    return this.dataService.sendPostRequest(API.TERMS(id),{})
+  postTerms(id) {
+    return this.dataService.sendPostRequest(API.TERMS(id), {})
   }
   updateUsers(user: UserAdd) {
     return this.dataService.sendPostRequest(API.EDITUSER, user).then(res => {
@@ -50,8 +50,8 @@ export class UserService {
     })
   }
 
-  getUserInfo(userId) {
-    return this.dataService.getRequest(API.GET_USER_PROFILE(userId)).then(res => res)
+  getUserInfo(userId, skipLoader?: boolean) {
+    return this.dataService.getRequest(API.GET_USER_PROFILE(userId), null, { skipLoader: skipLoader }).then(res => res)
   }
 
   getTrades() {
@@ -67,11 +67,11 @@ export class UserService {
     return this.dataService.getRequest(API.GET_USER_INFO_UNIQUE_CODE(uniqueCode));
   }
 
-  getDashboardData(data) {
-    return this.dataService.sendPostRequest(API.GET_DASHBOARD_DATA, data);
+  getDashboardData(data, skipLoader?: boolean) {
+    return this.dataService.sendPostRequest(API.GET_DASHBOARD_DATA, data, { skipLoader: skipLoader });
   }
 
- verifyEMAIL(email) {
+  verifyEMAIL(email) {
     return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => { return res });
   }
   logoutUser() {

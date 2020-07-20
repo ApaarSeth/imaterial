@@ -10,12 +10,12 @@
           </div>
         </div>
         <div class="row mt-3">
-          <div class="col-sm-12 col-md-9 pl-3">
+          <div class="col-sm-12 col-md-9 pl-3" [ngClass]="isMobile ? 'pr-0' : '' ">
             <div class="things-to-do bg-white mb-4 equal-height sml-d1">
               <!-- <h5 class="mb-3">Things to do</h5> -->
               <div class="things-to-do__inner d-flex justify-content-between align-items-center sml-db">
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openProject()"
-                  matTooltip="You can add your project details">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
+                  (click)="openProject()" matTooltip="You can add your project details">
                   <div class="things-to-do__img add-project-img">
                     <img src="../../../assets/images/Add-Project.png" alt="" class="img-fluid" />
                   </div>
@@ -30,7 +30,7 @@
                   <h6 class="mb-0">Create BOM</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor"
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
                   [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFQs">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/RFQ.png" alt="" class="img-fluid" />
@@ -46,7 +46,7 @@
                   <h6 class="mb-0">Global Store</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor"
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor  mr-2"
                   [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/PO.png" alt="" class="img-fluid" />
@@ -72,7 +72,8 @@
             <div class="statistics bg-white p-20 p-r-0 mb-4">
               <div class="row">
                 <div class="col-xs-12 col-md-7 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : ''">
-                  <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)" [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
+                  <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)"
+                    [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
                     <mat-tab label="{{ tab1 }}" *ngIf="permissionObj.rfqFlag && poData">
                       <div class="statistics__purchase-order d-flex">
                         <div class="statistics__tile stats mr-3">
@@ -87,7 +88,7 @@
                             <p class="mb-0">Awarded Purchase Order</p>
                           </div>
                         </div>
-    
+
                         <div class="statistics__tile stats">
                           <!-- <div class="stats__icon">
                                                     <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
@@ -105,8 +106,8 @@
                         </div>
                       </div>
                     </mat-tab>
-    
-      <!-- current start -->                    
+
+                    <!-- current start -->
                     <mat-tab label="{{ tab2 }}" *ngIf="permissionObj.rfqFlag && rfqData">
                       <div class="statistics__purchase-order d-flex">
                         <div class="statistics__tile stats mr-3">
@@ -120,7 +121,7 @@
                             <p class="mb-0">Number of RFQ</p>
                           </div>
                         </div>
-    
+
                         <div class="statistics__tile stats">
                           <!-- <div class="stats__icon">
                                                     <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
@@ -137,10 +138,10 @@
                           </div>
                         </div>
                       </div>
-                        <!-- current end -->
-                      </mat-tab>
-                            
-                          <!-- incoming start -->
+                      <!-- current end -->
+                    </mat-tab>
+
+                    <!-- incoming start -->
                     <!-- <mat-tab label="{{ tab2 }}" *ngIf="permissionObj.rfqFlag && rfqData">
                       <div class="statistics__purchase-order d-flex">
                         <div class="statistics__tile stats mr-3">
@@ -164,36 +165,36 @@
                             </h2>
                             <p class="mb-0">RFQ Amount</p>
                           </div> -->
-                          <!-- incoming end -->
-    
-                        <mat-tab label="Indents" *ngIf="indentData">
-                          <div class="statistics__purchase-order d-flex">
-                            <div class="statistics__tile stats mr-3">
-                              <!-- <div class="stats__icon">
+                    <!-- incoming end -->
+
+                    <mat-tab label="Indents" *ngIf="indentData">
+                      <div class="statistics__purchase-order d-flex">
+                        <div class="statistics__tile stats mr-3">
+                          <!-- <div class="stats__icon">
                                                         <img src="assets/images/fulfilled-indent-icon.png" alt="Awarded Purchase Order" class="img-fluid">
                                                     </div> -->
-                              <div class="stats__content">
-                                <h2 class="mb-1" *ngIf="indentData.totalCount">{{ indentData?.totalCount }}</h2>
-                                <h2 class="mb-1" *ngIf="!indentData.totalCount">0</h2>
-                                <p class="mb-0">Fulfilled Indents</p>
-                              </div>
-                            </div>
-    
-                            <div class="statistics__tile stats">
-                              <!-- <div class="stats__icon">
+                          <div class="stats__content">
+                            <h2 class="mb-1" *ngIf="indentData.totalCount">{{ indentData?.totalCount }}</h2>
+                            <h2 class="mb-1" *ngIf="!indentData.totalCount">0</h2>
+                            <p class="mb-0">Fulfilled Indents</p>
+                          </div>
+                        </div>
+
+                        <div class="statistics__tile stats">
+                          <!-- <div class="stats__icon">
                                                         <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
                                                     </div> -->
-                              <div class="stats__content">
-                                <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue }}</h2>
-                                <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
-                                <p class="mb-0">Raised Indents</p>
-                              </div>
-                            </div>
+                          <div class="stats__content">
+                            <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue }}</h2>
+                            <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
+                            <p class="mb-0">Raised Indents</p>
                           </div>
-                        </mat-tab>
-                      </mat-tab-group>
+                        </div>
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
                 </div>
-    
+
                 <!-- Current start-->
                 <div class="col-xs-6 col-md-2 p-l-25 p-r-0">
                   <form [formGroup]="filterForm">
@@ -213,17 +214,18 @@
                     </mat-form-field>
                   </form>
                 </div>
-                <div class="col-xs-6 col-md-3 p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'p-l-20 widthWrapper'">
+                <div class="col-xs-6 col-md-3 p-r-0 customDatePicker"
+                  [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'p-l-20 widthWrapper'">
                   <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options"
                     #dateRangePicker></ngx-mat-drp>
                 </div>
                 <!-- <app-range-datePicker></app-range-datePicker> -->
               </div>
-                  <!-- current end -->
-    
-    
-                  <!-- Incoming start -->
-    <!-- 
+              <!-- current end -->
+
+
+              <!-- Incoming start -->
+              <!-- 
                 <div class="col-xs-6 col-md-2 p-l-25 p-r-0">
                   <form [formGroup]="filterForm">
                     <mat-form-field class="border-select select-project width103Percent mat-form-field-flex-mm-padding">
@@ -244,11 +246,11 @@
                   <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
     
                 </div> -->
-                <!-- incoming end -->
-    
-                <!--- Will implement later once api is ready -->
-    
-                <!-- <div class="approvals py-4 bg-white">
+              <!-- incoming end -->
+
+              <!--- Will implement later once api is ready -->
+
+              <!-- <div class="approvals py-4 bg-white">
                             <div class="row">
                                 <div class="col-md-12">
                                     <h6 class="px-4">Approvals</h6>
@@ -308,7 +310,7 @@
                   </div>
                 </div>
               </div>
-  
+
               <div class="banner mb-4">
                 <div class="banner__image">
                   <a href="javascript:void(0)" (click)="showVideo()">
@@ -316,7 +318,7 @@
                   </a>
                 </div>
               </div>
-  
+
               <div class="banner" *ngIf="isAdDisplay === '+91'">
                 <div class="banner__image">
                   <a target="_blank" href="https://www.buildsupply.com" class="cursor-pointer">
@@ -329,7 +331,7 @@
         </div>
 
 
+      </div>
     </div>
   </div>
-</div>
 </div>

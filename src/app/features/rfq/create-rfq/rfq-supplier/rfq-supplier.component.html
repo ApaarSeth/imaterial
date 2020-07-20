@@ -38,7 +38,7 @@
   </div>
 
   <div class="col-md-12 col-xs-6 p-b-20 text-right m-itm"
-    *ngIf="rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null"
+    *ngIf="rfqData && rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null"
     [ngClass]="isMobile ? 'pt-3' : 'p-t-10' ">
     <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'font-size12 mcrncy pt-2 pb-2' : 'p-t-10 p-b-10' ">
       <span class="font-size-vary-grn color-grey">
