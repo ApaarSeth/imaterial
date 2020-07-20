@@ -200,18 +200,19 @@
             }}</span>
 
             <!---- Attached Column Images List ---->
-            <span class="mat-cell">
+            <span class="mat-cell po-images-list">
               <!-- View image modal link -->
-              <!-- <div *ngIf="element?.documentList?.length" class="images-lists"
-                (click)="viewAllImages(element.materialId)">
-                <ng-container *ngFor="let img of element.documentList; let i = index">
+              <!-- material?.purchaseOrderDetailList[0]?.documentList?.length -->
+              <div *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length" class="images-lists"
+                (click)="viewAllImages(material.materialId)">
+                <ng-container *ngFor="let img of material.purchaseOrderDetailList[0].documentList; let i = index">
                   <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
                 </ng-container>
               </div>
   
-              <ng-container *ngIf="!element?.documentList">
+              <ng-container *ngIf="!(material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList)">
                 <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
-              </ng-container> -->
+              </ng-container>
             </span>
 
             <span

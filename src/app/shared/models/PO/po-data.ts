@@ -317,3 +317,10 @@ export interface ImageDocsLists{
   documentThumbnailShortUrl?: string;
   supplierId?: number;
 }
+
+export interface finalImageObject{
+  projectId?: number;
+  materialId?: number;
+  purchaseOrderId?: number;
+  documentsList?: ImageList[];
+}

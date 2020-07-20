@@ -336,3 +336,24 @@
     }
   }
 }
+
+.po-images-list .images-lists{
+  position: absolute;
+  .attached-image{
+    position: relative;
+    &:first-child{
+      top: -30px;
+      left: 0px;
+    }
+
+    &:nth-child(2){
+      left: 6px;
+      top: -70px;
+    }
+
+    &:nth-child(3){
+      left: 13px;
+      top: -109px;
+    }
+  }
+}
