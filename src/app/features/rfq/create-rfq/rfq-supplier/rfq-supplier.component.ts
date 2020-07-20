@@ -37,17 +37,15 @@ export class RfqSupplierComponent implements OnInit {
   selectedSupplierFlag: boolean = false;
   checkedMaterialsList: AddRFQ;
   orgId: number;
-
+  isMobile: boolean;
   rfqData: AddRFQ = {} as AddRFQ;
   supplierForm: FormGroup;
   supplierCounter: number = 0;
   newAddedId: number;
   countryist: CountryCode[];
+
   constructor(
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService,
-    private router: Router,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private commonService: CommonService

@@ -23,13 +23,13 @@ const ELEMENT_DATA: SupplierAdd[] = [];
 @Component({
   selector: "supplier-details",
   templateUrl: "./supplier-details.component.html",
-  styleUrls: [ "../../../../assets/scss/main.scss" ]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 
 
 export class SupplierDetailComponent implements OnInit {
-  displayedColumns: string[] = [ 'suppliername', 'email', 'contactNo', 'status' ];
-  displayedColumnsDeactivate: string[] = [ 'username', 'email', 'contactNo', 'roleName', 'ProjectList' ];
+  displayedColumns: string[] = ['suppliername', 'email', 'contactNo', 'status'];
+  displayedColumnsDeactivate: string[] = ['username', 'email', 'contactNo', 'roleName', 'ProjectList'];
   dataSource = new MatTableDataSource<SupplierAdd>();
   dataSourceTemp = ELEMENT_DATA;
   dataSourceDeactivate = ELEMENT_DATA;
@@ -92,7 +92,7 @@ export class SupplierDetailComponent implements OnInit {
     this.commonService.getNotification(this.userId);
   }
   getAllSupplier() {
-    this.rfqService.getSuppliers(this.orgId).then(data => {
+    this.commonService.getSuppliers(this.orgId).then(data => {
       this.dataSource = new MatTableDataSource(data.data);
       this.dataSourceTemp = data.data;
       if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
@@ -181,15 +181,15 @@ export class SupplierDetailComponent implements OnInit {
 
   uploadExcel(files: FileList) {
     const data = new FormData();
-    data.append("file", files[ 0 ]);
-    var fileSize = files[ 0 ].size; // in bytes
+    data.append("file", files[0]);
+    var fileSize = files[0].size; // in bytes
     if (fileSize < 5000000) {
       this.postSupplierExcel(data);
     }
     else {
       this._snackBar.open("File must be less than 5 mb", "", {
         duration: 2000,
-        panelClass: [ "success-snackbar" ],
+        panelClass: ["success-snackbar"],
         verticalPosition: "bottom"
       });
     }
@@ -201,7 +201,7 @@ export class SupplierDetailComponent implements OnInit {
       if (res.statusCode === 201) {
         this._snackBar.open(res.message, "", {
           duration: 2000,
-          panelClass: [ "success-snackbar" ],
+          panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
         this.myInputVariable.nativeElement.value = ""
@@ -211,7 +211,7 @@ export class SupplierDetailComponent implements OnInit {
       else {
         this._snackBar.open(res.message, "", {
           duration: 5000,
-          panelClass: [ "success-snackbar" ],
+          panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
         this.loading.hide();
@@ -220,7 +220,7 @@ export class SupplierDetailComponent implements OnInit {
       this.myInputVariable.nativeElement.value = "";
       this._snackBar.open(err.error.message, "", {
         duration: 5000,
-        panelClass: [ "success-snackbar" ],
+        panelClass: ["success-snackbar"],
         verticalPosition: "bottom"
       });
       this.loading.hide();
@@ -231,7 +231,7 @@ export class SupplierDetailComponent implements OnInit {
     var win = window.open(url, "_blank");
     win.focus();
   }
-  @HostListener('window:resize', [ '$event' ])
+  @HostListener('window:resize', ['$event'])
 
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 1025) {
