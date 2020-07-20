@@ -9,11 +9,7 @@ export class SupplierLiabilityReportResolver implements Resolve<any> {
   constructor(
     private projectService: ProjectService,
     private commonService: CommonService
-<<<<<<< HEAD
   ) { }
-=======
-  ) {}
->>>>>>> b021db0c87a2f5b12cae2b33a278bc787ee290c0
 
   resolve() {
     let userId = Number(localStorage.getItem("userId"));

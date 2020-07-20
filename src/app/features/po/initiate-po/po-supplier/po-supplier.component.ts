@@ -22,22 +22,18 @@ export class PoSupplierComponent implements OnInit {
   searchText: string = null;
   allSuppliers: Suppliers[];
   form: FormGroup;
-  displayedColumns: string[] = [ "Supplier Name", "Email", "Phone No." ];
+  displayedColumns: string[] = ["Supplier Name", "Email", "Phone No."];
   poCurrency: rfqCurrency;
   countryist: CountryCode[];
   isMobile: boolean;
   constructor(private formBuilder: FormBuilder,
     private rfqService: RFQService,
     public dialog: MatDialog,
-<<<<<<< HEAD
-    private activatedRoute: ActivatedRoute, private commonService: CommonService) { }
-=======
     private activatedRoute: ActivatedRoute,
     private commonService: CommonService) { }
->>>>>>> b021db0c87a2f5b12cae2b33a278bc787ee290c0
 
   ngOnInit() {
-    this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[ 0 ].data;
+    this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data;
     this.countryist = this.activatedRoute.snapshot.data.countryList;
 
     this.isMobile = this.commonService.isMobile().matches;
@@ -57,17 +53,13 @@ export class PoSupplierComponent implements OnInit {
     let orgId = Number(localStorage.getItem("orgId"));
 
     this.commonService.getSuppliers(orgId).then(data => {
-<<<<<<< HEAD
-      this.allSuppliers = data.data;;
-=======
       this.allSuppliers = data.data;
->>>>>>> b021db0c87a2f5b12cae2b33a278bc787ee290c0
     });
   }
 
   formInit() {
     this.form = this.formBuilder.group({
-      supplier: [ "", [ Validators.required ] ]
+      supplier: ["", [Validators.required]]
     });
   }
 
