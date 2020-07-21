@@ -104,7 +104,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [ AuthGuardService, AfterSignUpGuardService ],
+    canActivate: [ AuthGuardService, AfterSignUpGuardService, SubscriptionGaurdService ],
     resolve: {
       menu: MenuResolver
     },

@@ -11,13 +11,13 @@ export class SubscriptionGaurdService implements CanActivate {
 
     canActivate(): Promise<boolean> {
         const user = localStorage.getItem('userId');
-        console.log(user);
         return this.userService.getUserInfo(user).then(res => {
             if (res.data[ 0 ].isActiveSubscription === 1) {
-                this.router.navigate([ '/dashboard' ]);
+                return true;
+            } else {
+                this.router.navigate([ '/profile/subscriptions' ]);
                 return false;
             }
-            return true;
         })
     }
 }

@@ -29,6 +29,10 @@ export class TopHeaderComponent implements OnInit {
   subscriptions: Subscription[] = [];
   newunreadMessage: number = null;
   isWhatsappIconDisplay: string;
+  isMobile: boolean;
+
+  isFreeTrial: any;
+  isFreeTrialActivate: boolean;
 
   isActiveSubscription: boolean;
 
@@ -41,6 +45,8 @@ export class TopHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.isMobile = this.commonService.isMobile().matches;
 
     this.isActiveSubscription = true;
 
@@ -56,7 +62,34 @@ export class TopHeaderComponent implements OnInit {
 
     const source = interval(30000);
     this.subscription = source.subscribe(val => { this.getNotifications(); this.startSubscriptions() });
+
+    this.checkFreeTrial();
   }
+
+  checkFreeTrial() {
+    this.commonService.getSubscriptionPlan().then(res => {
+      console.log(res.data);
+      if (res.data && res.data.planFrequencyList !== null) {
+        let checked = 0;
+        res.data.planFrequencyList.forEach(item => {
+          item.planList.forEach(itm => {
+            if (checked === 0) {
+              if (itm.isTrialActive === 1) {
+                checked = 1;
+                this.isFreeTrial = itm.activeSubscription;
+                this.isFreeTrialActivate = true;
+              } else {
+                this.isFreeTrial = null;
+                this.isFreeTrialActivate = false;
+              }
+            }
+          });
+        });
+      }
+    });
+    console.log(this.isFreeTrialActivate);
+  }
+
   startSubscriptions() {
     this.subscriptions.push(
       this.commonService.onUserUpdate$.subscribe(notificationLength => {
@@ -78,6 +111,9 @@ export class TopHeaderComponent implements OnInit {
       this._userService.UpdateProfileImage.subscribe(image => {
         this.url = image;
         localStorage.setItem('profileUrl', this.url);
+      }),
+      this._userService.isActivatedSubscription$.subscribe(res => {
+        this.isActiveSubscription = res;
       })
     );
   }
@@ -85,6 +121,7 @@ export class TopHeaderComponent implements OnInit {
   getNotifications() {
     this.commonService.getNotification(this.userId);
   }
+
   getNotificationFromLocalstorage() {
     this.allnotificationLength = Number(localStorage.getItem('all_notification'));
     this.unreadnotificationLength = Number(localStorage.getItem('un_read_notification'));
@@ -93,15 +130,18 @@ export class TopHeaderComponent implements OnInit {
   openMenu() {
     this.menu.open();
   }
+
   logout() {
     this.router.navigate([ '/auth/login' ]).then(_ => {
       localStorage.clear();
       // this.tokenService.setAuthResponseData({ serviceToken: null, role: null, userId: null, orgId: null });
     });
   }
+
   goToProfile() {
     this.router.navigate([ '/profile-account' ]);
   }
+
   goToMyPlans() {
     this.router.navigate([ '/subscriptions' ]);
   }

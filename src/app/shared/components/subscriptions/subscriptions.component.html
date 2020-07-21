@@ -1,8 +1,8 @@
 <div *ngIf="subscriptionsData" class="subs-data text-align-center">
-    <h2 class="mt-4">Choose a Plan That's Right for Your Business</h2>
+    <h2 class="mt-4" [ngClass]="isMobile ? 'ml-2 mr-2' : '' ">Choose a Plan That's Right for Your Business</h2>
 
     <ng-container *ngIf="trialAction">
-        <p class="mb-2 mt-2">1 MONTH FREE TRIAL</p>
+        <p class="mb-2 mt-2">{{ trialDays }} FREE TRIAL</p>
     </ng-container>
 
     <!-- <ng-container *ngIf="trialAction">
@@ -17,69 +17,82 @@
         <mat-tab *ngFor="let subscription of subscriptionsData">
 
             <ng-template mat-tab-label>
-                <span class="sub-svtxt brand-color" [ngClass]="isMobile ?  'font-size10' : 'font-size12' ">(Save
-                    30%)</span>
+                <span *ngIf="subscription.discountPercent" class="sub-svtxt brand-color"
+                    [ngClass]="isMobile ?  'font-size10' : 'font-size12' ">(Save
+                    {{subscription.discountPercent}}%)</span>
                 {{subscription.frequencyHeader}}
             </ng-template>
 
-            <div class="row d-flex flex-center mb-5" [ngClass]="isMobile ? 'ml-2 mr-2 mt-2' : 'mt-3' ">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
 
-                <mat-card *ngFor="let plan of subscription.planList" class="col-md-3 m-10 text-left">
-                    <mat-card-header>
-                        <mat-card-title>{{plan.planName}}</mat-card-title>
-                        <mat-card-subtitle class="subs-pricing">
-                            <strong>{{plan.currencyCode}} {{plan.planPrice}}/</strong>
-                            <span>{{plan.planFrequencyAlias}}</span>
-                            <p>Save {{plan.currencyCode}} {{plan.planPrice}} a year</p>
-                        </mat-card-subtitle>
-                    </mat-card-header>
+                    <div class="row" [ngClass]="isMobile ? 'ml-2 mr-2 mt-2' : 'mt-3' ">
 
-                    <mat-card-content class="plan-limit justify-content-between">
-                        <span>{{plan.planLimit.projectCount}} Project {{plan.planLimit.userCount}} Users</span>
-                        <ng-container *ngIf="plan.activeSubscription === null">
-                            <button *ngIf="trialAction" mat-button class="main-background-color subs-btn"
-                                (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Free
-                                Trial</button>
-                            <button *ngIf="!trialAction" mat-raised-button class="main-background-color subs-btn"
-                                (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Choose
-                                Plan</button>
-                        </ng-container>
-                        <ng-container *ngIf="plan.activeSubscription !== null">
-                            <button mat-button class="subs-link"
-                                (click)="unsubscribePlan(plan.activeSubscription.subscriptionId)">Unsubscribe</button>
-                        </ng-container>
-                    </mat-card-content>
-                    <!-- <ng-container *ngIf="trialAction">
-                        <p>
-                            <button mat-button
-                                (click)="choosePlan('1', plan.planId, plan.offerCode, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Select
-                                Trial</button>
-                        </p>
-                    </ng-container> -->
-                    <ng-container *ngIf="isMobile">
-                        <button mat-button class="w-100" (click)="showAllFeatures($event)">
-                            <span class="float-left brand-color">Show All Features</span>
-                            <span class="material-icons float-right mt-2">
-                                keyboard_arrow_down
-                            </span>
-                        </button>
-                    </ng-container>
-                    <mat-card-actions class="feat-list pt-1 pl-4 pb-3" [ngClass]="isMobile ? 'f-hide' : '' ">
-                        <ul>
-                            <li *ngFor="let feature of sortFeaturesObjList(plan.planFeatureObjList)"
-                                [ngClass]="feature.available ? 'active' : 'inactive' ">
-                                <ng-container *ngIf="feature.available; else notAvailable">
-                                    <span class="material-icons">done</span>
+                        <div *ngFor="let plan of subscription.planList" class="col-md-6 mb-3 d-flex">
+
+                            <mat-card class="col-md-12 text-left">
+                                <mat-card-header>
+                                    <mat-card-title>{{plan.planName}}</mat-card-title>
+                                    <mat-card-subtitle class="subs-pricing">
+                                        <strong>{{plan.currencyCode}} {{plan.planPrice}}/</strong>
+                                        <span>{{plan.planFrequencyAlias}}</span>
+                                        <p *ngIf="subscription.discountPercent">Save {{plan.currencyCode}}
+                                            {{getSubsciptionDiscounted(subscription.discountPercent, plan.planPrice)}} a
+                                            year</p>
+                                    </mat-card-subtitle>
+                                </mat-card-header>
+
+                                <mat-card-content class="plan-limit justify-content-between">
+                                    <span>{{plan.planLimit.projectCount}} Project {{plan.planLimit.userCount}}
+                                        Users</span>
+                                    <ng-container *ngIf="plan.activeSubscription === null">
+                                        <button *ngIf="trialAction" mat-button class="main-background-color subs-btn"
+                                            (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Free
+                                            Trial</button>
+                                        <button *ngIf="!trialAction" mat-raised-button
+                                            class="main-background-color subs-btn"
+                                            (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Choose
+                                            Plan</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="plan.activeSubscription !== null">
+                                        <button *ngIf="plan.isTrialActive === 0" mat-button class="subs-link"
+                                            (click)="unsubscribePlan(plan.activeSubscription.subscriptionId)">Unsubscribe</button>
+                                        <button *ngIf="plan.isTrialActive === 1" mat-raised-button
+                                            class="main-background-color subs-btn"
+                                            (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">Choose
+                                            Plan</button>
+                                    </ng-container>
+                                </mat-card-content>
+                                <ng-container *ngIf="isMobile">
+                                    <button mat-button class="w-100" (click)="showAllFeatures($event)">
+                                        <span class="float-left brand-color">Show All Features</span>
+                                        <span class="material-icons float-right mt-2">
+                                            keyboard_arrow_down
+                                        </span>
+                                    </button>
                                 </ng-container>
-                                <ng-template #notAvailable>
-                                    <span class="material-icons">close</span>
-                                </ng-template>
-                                {{feature.featureName}}
-                            </li>
-                        </ul>
-                    </mat-card-actions>
-                </mat-card>
+                                <mat-card-actions class="feat-list pt-1 pl-4 pb-3"
+                                    [ngClass]="isMobile ? 'f-hide' : '' ">
+                                    <ul>
+                                        <li *ngFor="let feature of sortFeaturesObjList(plan.planFeatureObjList)"
+                                            [ngClass]="feature.available ? 'active' : 'inactive' ">
+                                            <ng-container *ngIf="feature.available; else notAvailable">
+                                                <span class="material-icons">done</span>
+                                            </ng-container>
+                                            <ng-template #notAvailable>
+                                                <span class="material-icons">close</span>
+                                            </ng-template>
+                                            {{feature.featureName}}
+                                        </li>
+                                    </ul>
+                                </mat-card-actions>
+                            </mat-card>
 
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
         </mat-tab>
