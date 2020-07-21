@@ -21,6 +21,7 @@ export class SubscriptionsComponent implements OnInit {
 
     subscriptionsData: any;
     isMobile: boolean;
+    trialDays: string;
 
     constructor(
         private _router: Router,
@@ -33,6 +34,24 @@ export class SubscriptionsComponent implements OnInit {
         this.isMobile = this.commonService.isMobile().matches;
         this.getUserInformation(localStorage.getItem('userId'));
         this.subscriptionsData = this.data.planFrequencyList;
+        this.getTrialDays();
+    }
+
+    getTrialDays() {
+        const days = this.data.planFrequencyList[ 0 ].planList[ 0 ].trialDays;
+        if (days < 30) {
+            this.trialDays = days + ' DAYS';
+        } else if (days == 30) {
+            this.trialDays = days + ' MONTH';
+        } else if (days > 30 && days < 60) {
+            this.trialDays = days + ' DAYS';
+        } else {
+            this.trialDays = days + ' MONTHS';
+        }
+    }
+
+    getSubsciptionDiscounted(discount, price) {
+        return (price * (0. + discount));
     }
 
     startTrialTrigger() {

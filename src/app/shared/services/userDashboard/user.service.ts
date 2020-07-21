@@ -10,6 +10,8 @@ import { Subject } from 'rxjs';
 })
 export class UserService {
   UpdateProfileImage = new Subject<string>();
+  isActivatedSubscription$ = new Subject<any>();
+
   constructor(private dataService: DataService,
     private _router: Router) { }
 
@@ -75,7 +77,7 @@ export class UserService {
     return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => { return res });
   }
   logoutUser() {
-    this._router.navigate(['/auth/login']).then(_ => {
+    this._router.navigate([ '/auth/login' ]).then(_ => {
       localStorage.clear();
     });
   }
