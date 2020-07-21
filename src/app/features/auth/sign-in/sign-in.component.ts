@@ -67,7 +67,7 @@ export class SigninComponent implements OnInit {
     // this.countryList = this.activatedRoute.snapshot.data.countryList;
     this.countryList = this.actualCountryList;
     this.route.params.subscribe(param => {
-      this.uniqueCode = param[ "uniqueCode" ];
+      this.uniqueCode = param["uniqueCode"];
     });
     this.callingCode = this.actualCallingCode
     this.formInit();
@@ -84,7 +84,7 @@ export class SigninComponent implements OnInit {
     this.getCountryCode(this.callingCode, this.countryCode)
     if (this.callingCode === '+91') {
       // this.signinForm.get('email').setValidators(emailValidator)
-      this.signinForm.get('phone').setValidators([ Validators.required ])
+      this.signinForm.get('phone').setValidators([Validators.required])
     }
     else {
       this.signinForm.get('email').setValidators(emailValidator)
@@ -100,15 +100,15 @@ export class SigninComponent implements OnInit {
       // }
       return val.countryCode.toLowerCase() === countryCode.toLowerCase();
     })
-    this.signinForm.get('countryCode').setValue(this.livingCountry[ 0 ])
+    this.signinForm.get('countryCode').setValue(this.livingCountry[0])
   }
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      countryCode: [ { value: '', disabled: true } ],
-      phone: [ "" ],
-      password: [ "", Validators.required ],
-      email: [ '' ],
+      countryCode: [{ value: '', disabled: true }],
+      phone: [""],
+      password: ["", Validators.required],
+      email: [''],
     });
   }
 
@@ -133,7 +133,7 @@ export class SigninComponent implements OnInit {
         this.loader.hide()
         this._snackBar.open(data.errorMessage, "", {
           duration: 2000,
-          panelClass: [ "warning-snackbar" ],
+          panelClass: ["warning-snackbar"],
           verticalPosition: "bottom"
         });
       }
@@ -144,7 +144,7 @@ export class SigninComponent implements OnInit {
         }
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
         if (localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
-          this.router.navigate([ "/profile/email-verification" ]);
+          this.router.navigate(["/profile/email-verification"]);
           this.loader.hide()
         }
         else {
@@ -166,19 +166,19 @@ export class SigninComponent implements OnInit {
    */
   getUserInfo(userId) {
     this.dataService.getRequest(API.GET_USER_PROFILE(userId), null, { skipLoader: true }).then(res => {
-      if (res.data[ 0 ].firstName)
-        localStorage.setItem("userName", res.data[ 0 ].firstName);
-      localStorage.setItem("profileUrl", res.data[ 0 ].profileUrl);
-      localStorage.setItem("currencyCode", res.data[ 0 ].baseCurrency ? res.data[ 0 ].baseCurrency.currencyCode : null);
+      if (res.data[0].firstName)
+        localStorage.setItem("userName", res.data[0].firstName);
+      localStorage.setItem("profileUrl", res.data[0].profileUrl);
+      localStorage.setItem("currencyCode", res.data[0].baseCurrency ? res.data[0].baseCurrency.currencyCode : null);
       // localStorage.setItem("countryCode", res.data[0].countryCode);
-      localStorage.setItem("countryId", res.data[ 0 ].countryId);
+      localStorage.setItem("countryId", res.data[0].countryId);
       this.dataService.getRequest(API.CHECKTERMS, null, { skipLoader: true }).then(res => {
         this.acceptTerms = res.data;
         if (!this.acceptTerms) {
-          this.router.navigate([ "/profile/terms-conditions" ]);
+          this.router.navigate(["/profile/terms-conditions"]);
         }
         else {
-          this.router.navigate([ "/profile/update-info" ]);
+          this.router.navigate(["/dashboard"]);
         }
       })
     })
@@ -192,10 +192,10 @@ export class SigninComponent implements OnInit {
   }
   goToForgetPass() {
     if (this.uniqueCode) {
-      this.router.navigate([ 'auth/forgot-password/' + this.uniqueCode ]);
+      this.router.navigate(['auth/forgot-password/' + this.uniqueCode]);
     }
     else {
-      this.router.navigate([ 'auth/forgot-password' ]);
+      this.router.navigate(['auth/forgot-password']);
     }
   }
 
