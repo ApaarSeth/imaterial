@@ -127,9 +127,9 @@ export class SignupComponent implements OnInit {
       this.user = res.data[0];
       if (res.data[0].firstName)
         localStorage.setItem("userName", res.data[0].firstName);
-      if (this.user.email) {
-        this.verifyEmail(this.user.email)
-      }
+      // if (this.user.email) {
+      //   this.verifyEmail(this.user.email)
+      // }
       this.signupForm.setValue({
         countryCode: this.signupForm.get('countryCode').value,
         email: this.user ? this.user.email : '',
@@ -158,16 +158,9 @@ export class SignupComponent implements OnInit {
       password: ["", [Validators.required, Validators.minLength(6)]],
       otp: []
     });
-
-    if (!this.uniqueCode) {
-      this.signupForm.get('email').valueChanges.pipe(debounceTime(30)).subscribe(data => {
-        this.verifyEmail(data)
-      })
-    }
-
-    // this.signupForm.get('phone').valueChanges.subscribe(data => {
-
-    // })
+    this.signupForm.get('email').valueChanges.pipe(debounceTime(30)).subscribe(data => {
+      this.verifyEmail(data)
+    })
   }
 
   signup() {
