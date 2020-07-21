@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { BomService } from 'src/app/shared/services/bom/bom.service';
 import { categoryNestedLevel } from 'src/app/shared/models/category';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditMyMaterialComponent } from 'src/app/shared/dialogs/edit-my-material/edit-my-material.component';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { MyMaterialService } from 'src/app/shared/services/myMaterial.service';
+import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
 
 @Component({
 	selector: 'app-my-material-tab',
 	templateUrl: './myMaterialTab.component.html'
 })
 export class MyMaterialTabComponent implements OnInit {
+
+	@Input("selectedCategory") selectedCategry: categoryNestedLevel[]
 	selectedCategory: categoryNestedLevel[] = [];
 	isSearching: boolean;
 
-	constructor(private snackBar: MatSnackBar, private materialService: MyMaterialService, private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
+	constructor(public dialog: MatDialog,
+		private snackBar: MatSnackBar, private materialService: MyMaterialService, private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
 
 	ngOnInit() {
-		this.getMyMaterial();
+		// this.getMyMaterial();
 		this.commonService.materialAdded.subscribe(val => {
 			if (val) {
 				this.getMyMaterial();
@@ -25,11 +29,29 @@ export class MyMaterialTabComponent implements OnInit {
 		})
 	}
 
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes.selectedCategry && changes.selectedCategry.currentValue) {
+			this.selectedCategory = changes.selectedCategry.currentValue
+			this.searchCategory()
+		}
+	}
+
 	getMyMaterial() {
 		this.commonService.getMyMaterial('approved').then(res => {
 			this.selectedCategory = [...res.data];
 			this.searchCategory();
 		});
+	}
+
+	openAddMaterial() {
+		const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
+			width: '720px'
+		})
+		dialogRef.afterClosed().subscribe(result => {
+			if (result === 'done') {
+				this.commonService.materialAdded.next(true)
+			}
+		})
 	}
 
 
