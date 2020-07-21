@@ -4,25 +4,26 @@
     <div class="p-t-10">
       <mat-card class="parent">
         <form [formGroup]="form">
-          <div class="row">
-            <div class="col-xs-3 text -left border-input">
-              <mat-form-field class="input-search-padding-zero">
-                <input #text matInput placeholder="Search Material" type="search" (input)="searchMaterial(text.value)" />
-                <button mat-button matSuffix mat-icon-button>
-                  <mat-icon>search</mat-icon>
-                </button>
-              </mat-form-field>
+          <div class="row align-items-center">
 
-              <button mat-raised-button class="main-background-color main-button color-white" [routerLink]="['/project-dashboard/bom/'+projectId+'/copy-materials']">
-                Copy Materials
-              </button>
-            </div>
-            <div class="col-xs-3 text-right">
-              <mat-form-field class="border-select p-t-0">
-                <mat-label *ngIf="!formArray.length">Select Trades</mat-label>
-                <mat-select formControlName="selectedTrades" multiple>
-                  <div class="display-flex">
-                    <input
+            <!-- Left Side menus -->
+            <div class="col-md-6 text -left border-input">
+
+              <div class="row align-items-center justify-content-between">
+                <!-- Search field -->
+                <mat-form-field class="input-search-padding-zero ptop-15">
+                  <input #text matInput placeholder="Search Material" type="search" (input)="searchMaterial(text.value)" />
+                  <button mat-button matSuffix mat-icon-button>
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </mat-form-field>
+  
+                <!-- Select Trades field -->
+                <mat-form-field class="border-select p-t-0 select-trades">
+                  <mat-label *ngIf="!formArray.length">Select Trades</mat-label>
+                  <mat-select formControlName="selectedTrades" multiple>
+                    <div class="display-flex">
+                      <input
                       class="p-l-10 p-b-5"
                       matInput
                       type="search"
@@ -30,48 +31,69 @@
                       [(ngModel)]="searchTrade"
                       [ngModelOptions]="{standalone: true}"
                       (keydown)="$event.stopPropagation()"
-                    />
-                    <button mat-button matSuffix mat-icon-button>
-                      <mat-icon>search</mat-icon>
-                    </button>
-                  </div>
-                  <mat-select-trigger>
-                    <mat-label>Select Trades</mat-label>
-                  </mat-select-trigger>
-                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:['tradeName']" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
+                      />
+                      <button mat-button matSuffix mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                      </button>
+                    </div>
+                    <mat-select-trigger>
+                      <mat-label>Select Trades</mat-label>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:['tradeName']" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
                     >{{ trade.tradeName }}
                   </mat-option>
                 </mat-select>
-              </mat-form-field>
-              <!-- <p>Please select categories to add materials in Bill of Materials</p> -->
-            </div>
-            <div class="col-xs-6 text-right d-flex justify-content-end" appDnd>
-              <div class="mr-3">
-                <span class="cursor-pointer download-bom-template">
-                  <img src="assets/images/download.png" alt="download" class="img-fluid mr-2" />
-                  <a (click)="downloadExcel('assets/images/bom_template.xlsx')"> Download BOM Template</a></span
-                >
-              </div>
-              <div class="mr-3 cursor-pointer">
-                <input
-                  type="file"
-                  accept=".xlsx"
-                  #fileDropRef
-                  id="fileDropRef"
-                  class="fileupload cursor-pointer"
-                  style="display: none;"
-                  multiple
-                  (change)="uploadExcel($event.target.files)"
-                />
-                <label for="fileDropRef" class="cursor-pointer upload-template">
-                  <img src="assets/images/upload.png" alt="upload" class="img-fluid mr-2 w-30 cursor-pointer" /> Upload BOM Template</label
-                >
-              </div>
-              <div>
-                <button mat-raised-button class="main-background-color main-button color-white pull-right save-material-button" (click)="saveCategory()" [disabled]="status">
-                  Add to BOM
+                </mat-form-field>
+
+                <!-- Copy Materials Button -->
+                <button mat-raised-button class="main-background-color main-button color-white" [routerLink]="['/project-dashboard/bom/'+projectId+'/copy-materials']">
+                  Copy Materials
                 </button>
+            </div>
+            </div>
+
+            <!-- <div class="col-xs-3 text-right"> -->
+              <!-- <p>Please select categories to add materials in Bill of Materials</p> -->
+            <!-- </div> -->
+
+            <!-- Right side menus -->
+            <div class="col-md-6 text-right d-flex justify-content-end" appDnd>
+
+              <div class="row align-items-center justify-content-between">
+                <!-- Download BOM Link -->
+                <div class="mr-3 ptop-10">
+                  <span class="cursor-pointer download-bom-template">
+                    <img src="assets/images/download.png" alt="download" class="img-fluid mr-2" />
+                    <a (click)="downloadExcel('assets/images/bom_template.xlsx')"> Download BOM Template</a></span
+                  >
+                </div>
+  
+                <!-- Upload BOM Link -->
+                <div class="mr-3 cursor-pointer ptop-15">
+                  <input
+                    type="file"
+                    accept=".xlsx"
+                    #fileDropRef
+                    id="fileDropRef"
+                    class="fileupload cursor-pointer"
+                    style="display: none;"
+                    multiple
+                    (change)="uploadExcel($event.target.files)"
+                  />
+                  <label for="fileDropRef" class="cursor-pointer upload-template">
+                    <img src="assets/images/upload.png" alt="upload" class="img-fluid mr-2 w-30 cursor-pointer" /> 
+                    <a style="color: #222;">Upload BOM Template</a>
+                    </label>
+                </div>
+  
+                <!-- Add to BOM Button -->
+                <div>
+                  <button mat-raised-button class="main-background-color main-button color-white pull-right save-material-button" (click)="saveCategory()" [disabled]="status">
+                    Add to BOM
+                  </button>
+                </div>
               </div>
+
             </div>
           </div>
         </form>

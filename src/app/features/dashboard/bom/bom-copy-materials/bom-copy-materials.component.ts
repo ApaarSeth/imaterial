@@ -199,20 +199,6 @@ export class BomCopyMaterialComponent implements OnInit {
         })
     }
 
-    openAddMyMaterial() {
-        let data = this.projectId
-        const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
-            width: "1400px",
-            data
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result === 'done')
-                this.getMaterialWithQuantity();
-        })
-    }
-
-
     getMaterialWithQuantity() {
         this.loading.show();
         this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
@@ -288,93 +274,6 @@ export class BomCopyMaterialComponent implements OnInit {
         });
     }
 
-    openGrnDialog() {
-        const dialogRef = this.dialog.open(AddGrnComponent, {
-            width: "1000px",
-            data: this.projectId
-        });
-    }
-
-    raiseIndent() {
-        if (this.checkedSubcategory.length) {
-            let projectDetails = this.projectData;
-            if (this.checkedSubcategory.length) {
-                let checkedList = this.checkedSubcategory;
-                this.indentService.raiseIndentData = checkedList;
-                this.router.navigate(["/indent/" + this.projectId]);
-            }
-        }
-    }
-
-    createRfq() {
-        if (this.checkedSubcategory.length) {
-            let materialList: RfqMat[] = [];
-            this.checkedSubcategory.forEach((category: Subcategory, i) => {
-                let mat: RfqMat = {};
-                mat.projectId = category.projectId;
-                mat.materialId = category.materialId;
-                mat.materialName = category.materialName;
-                mat.requestedQty = category.requestedQuantity;
-                mat.estimatedQty = category.estimatedQty;
-                mat.estimatedRate = category.estimatedRate;
-                mat.dueDate = category.dueDate;
-                mat.fullfilmentDate = String(category.dueDate) === "" ? null : String(category.dueDate);
-                mat.materialUnit = category.materialUnit;
-                materialList.push(mat);
-            });
-            let projectId = materialList[0].projectId;
-            this.addRfq = {
-                id: null,
-                status: null,
-                createdBy: null,
-                createdAt: null,
-                lastUpdatedBy: null,
-                lastUpdatedAt: null,
-                rfqId: null,
-                rfq_status: null,
-                rfqName: null,
-                dueDate: null,
-                supplierId: null,
-                supplierDetails: null,
-                rfqProjectsList: [
-                    {
-                        projectId: projectId,
-                        projectName: this.projectData.projectName,
-                        defaultAddress: {
-                            projectId: this.projectData.projectId,
-                            projectName: this.projectData.projectName,
-                            addressID: this.projectData.projectAddressId,
-                            addressShortname: this.projectData.addressShortname,
-                            addressLine1: this.projectData.addressShortname,
-                            addressLine2: this.projectData.addressLine2,
-                            city: this.projectData.city,
-                            state: this.projectData.state,
-                            pinCode: this.projectData.pinCode,
-                            country: this.projectData.country,
-                            gstNo: this.projectData.gstNo,
-                            addressType: this.projectData.addressType,
-                            projectAddressId: this.projectData.projectAddressId,
-                            projectdefaultAddressId: this.projectData.projectAddressId,
-                            primaryAddress: this.projectData.primaryAddress
-                        },
-                        projectMaterialList: [],
-                        projectAddressList: null,
-                        prevMatListLength: null
-                    }
-                ],
-                documentsList: null,
-                terms: null
-            };
-            this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
-            this.rfqService.addRFQ(this.addRfq).then(res => {
-                this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
-                    state: { rfqData: res, selectedIndex: 1 }
-                });
-            });
-        }
-
-    }
-
     viewIndent() {
         this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
     }
@@ -421,10 +320,6 @@ export class BomCopyMaterialComponent implements OnInit {
                 .toPromise()
                 .then(result => { });
         }
-    }
-    addMaterial() {
-        this.router.navigate(["/project-dashboard/bom/" + this.projectId]);
-
     }
 
     issueToIndent(materialId, projectId): void {
