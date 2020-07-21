@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from "@angular/core";
 import { SubscriptionsList } from '../../models/subscriptions';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/userDashboard/user.service';
@@ -34,7 +34,14 @@ export class SubscriptionsComponent implements OnInit {
         this.isMobile = this.commonService.isMobile().matches;
         this.getUserInformation(localStorage.getItem('userId'));
         this.subscriptionsData = this.data.planFrequencyList;
-        this.getTrialDays();
+
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.data && changes.data.currentValue) {
+            this.getTrialDays();
+        }
+
     }
 
     getTrialDays() {
