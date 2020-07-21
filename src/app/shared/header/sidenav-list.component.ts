@@ -105,6 +105,13 @@ export class SidenavListComponent implements OnInit {
       this.sidenav.close();
     })
   }
+
+  goToMyPlans() {
+    this.router.navigate([ '/subscriptions' ]);
+    this.buttonName = 'My Plans';
+    this.sidenav.close();
+  }
+
   logout() {
     this.router.navigate([ '/auth/login' ]).then(_ => {
       localStorage.clear();
