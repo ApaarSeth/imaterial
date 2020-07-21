@@ -287,8 +287,35 @@ div.limited-character.bom {
   }
 }
 
-.select-trades.mat-form-field-appearance-legacy .mat-form-field-wrapper{
+.select-trades.mat-form-field-appearance-legacy .mat-form-field-wrapper,
+.select-project-dropdown.mat-form-field-appearance-legacy .mat-form-field-wrapper{
   padding-top: 0px !important;
+}
+
+.search-form-field{
+  .mat-form-field-flex{
+    width: 90%;
+  }
+
+  .mat-form-field-label,
+  .mat-input-element.mat-form-field-autofill-control{
+    padding-left: 0px !important;
+  }
+
+  .mat-form-field-label{
+    padding-top: 0px !important;
+  }
+}
+
+.select-project-dropdown{
+  .mat-form-field-flex,
+  .mat-form-field-label{
+    padding-left: 0px !important;
+  }
+
+  .mat-form-field-label{
+    padding-top: 4px !important;
+  }
 }
 
 .ptop-10{

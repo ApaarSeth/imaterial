@@ -3,7 +3,7 @@
         <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()"
             [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"></card-layout>
 
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-xs-12 col-md-3">
                 <mat-form-field class="search-form-field border-input w-100">
                     <input matInput placeholder="Search Materials" type="search" (keyup)="applyFilter($event)" />
@@ -14,7 +14,7 @@
             </div>
 
             <div class="col-xs-12 col-md-3">
-                <mat-form-field>
+                <mat-form-field class="border-select select-project-dropdown w-100">
                     <mat-label>Select Project</mat-label>
                     <mat-select>
                         <mat-option *ngFor="let project of allProjectsList" [value]="project.projectId" (click)="getProjectMaterials(project.projectId)">
