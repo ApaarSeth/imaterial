@@ -17,6 +17,7 @@ import { SubscriptionsResolver } from './shared/components/subscriptions/subscri
 import { MySubscriptionsComponent } from './features/users/my-subscriptions/my-subscriptions.component';
 import { SubscriptionRedirectionsComponent } from './features/subscription-redirections/subscription-redirections.component';
 import { MenuResolver } from './shared/resolver/menu.resolver';
+import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
 
 
 const routes: Routes = [
@@ -103,7 +104,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [ AuthGuardService, AfterSignUpGuardService ],
+    canActivate: [ AuthGuardService, AfterSignUpGuardService, SubscriptionGaurdService ],
     resolve: {
       menu: MenuResolver
     },

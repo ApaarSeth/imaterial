@@ -1,10 +1,17 @@
+<div class="header-add-edit-dialog">
+  <h1 mat-dialog-title class="light-grey">Direct GRN via system</h1>
+  <button type="button" class="close" (click)="cancel()" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+
 <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper>
   <mat-step stepControl="Add Materials">
     <ng-template matStepLabel>Add Materials</ng-template>
-    <app-add-material> </app-add-material>
+    <app-add-material #myMaterial> </app-add-material>
   </mat-step>
   <mat-step stepControl="Add Supplier">
     <ng-template matStepLabel>Add Supplier</ng-template>
-    <app-add-supplier *ngIf="countryList && countryList.length" [countryList]="this.countryList"> </app-add-supplier>
+    <app-add-supplier *ngIf="materialList.length" [materialList]="this.materialList" [countryList]="this.countryList" [supplierList]="this.supplierList"> </app-add-supplier>
   </mat-step>
 </mat-horizontal-stepper>

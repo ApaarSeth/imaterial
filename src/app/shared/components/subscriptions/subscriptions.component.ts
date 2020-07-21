@@ -21,6 +21,7 @@ export class SubscriptionsComponent implements OnInit {
 
     subscriptionsData: any;
     isMobile: boolean;
+    trialDays: string;
 
     constructor(
         private _router: Router,
@@ -33,6 +34,24 @@ export class SubscriptionsComponent implements OnInit {
         this.isMobile = this.commonService.isMobile().matches;
         this.getUserInformation(localStorage.getItem('userId'));
         this.subscriptionsData = this.data.planFrequencyList;
+        this.getTrialDays();
+    }
+
+    getTrialDays() {
+        const days = this.data.planFrequencyList[ 0 ].planList[ 0 ].trialDays;
+        if (days < 30) {
+            this.trialDays = days + ' DAYS';
+        } else if (days == 30) {
+            this.trialDays = days + ' MONTH';
+        } else if (days > 30 && days < 60) {
+            this.trialDays = days + ' DAYS';
+        } else {
+            this.trialDays = days + ' MONTHS';
+        }
+    }
+
+    getSubsciptionDiscounted(discount, price) {
+        return (price * (0. + discount));
     }
 
     startTrialTrigger() {
@@ -58,8 +77,8 @@ export class SubscriptionsComponent implements OnInit {
             subscriptionId: id
         };
         this.subsPayService.postSubscriptionUnsubscribe(obj).then(res => {
-            if (res.data) {
-                this._router.navigate([ "/dashboard" ])
+            if (res.status === 1) {
+                this._router.navigate([ "/subscriptions/unsubscribe" ])
             }
         });
     }
@@ -82,7 +101,8 @@ export class SubscriptionsComponent implements OnInit {
                     customerEmail: this.users.email,
                     customerName: this.users.firstName + ' ' + this.users.lastName,
                     customer_identifier: this.users.organizationId,
-                    orderId: res.data.transactionId,
+                    // orderId: res.data.transactionId,
+                    orderId: res.data.orderId,
                     // promoCode: 'DD234Q',
                     validUpto: res.data.endDate,
                     startDt: res.data.startDate,
