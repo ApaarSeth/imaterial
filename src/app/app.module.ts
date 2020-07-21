@@ -46,6 +46,7 @@ import { SubscriptionRedirectionsComponent } from './features/subscription-redir
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { environment } from '../environments/environment';
     AuthGuardService,
     UserDataGuardService,
     AfterSignUpGuardService,
+    SubscriptionGaurdService,
     GuidedTourService,
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} },

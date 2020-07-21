@@ -25,6 +25,7 @@ export interface MaterialListSubmit {
   materialQty: number;
   brandName: string;
   materialUnitPrice: number;
+  documentList?: ImageDocsLists[];
 }
 export interface RfqProject {
   projectId: number;
@@ -146,6 +147,7 @@ export interface RfqMaterialList {
   supplierList: RfqSupplierList[];
   rfqSuppliers: null;
   brands: null;
+  documentList?: ImageDocsLists[];
 }
 
 export interface RfqSupplierList {
@@ -160,7 +162,7 @@ export interface RfqSupplierList {
   brandDetailList: RfqBrandDetail[];
   taxInfo?: RfqTaxInfo[];
   otherCostInfo?: OtherCostInfo[];
-  documentList?: string[];
+  documentList?: ImageDocsLists[];
 }
 
 export interface RfqBrandDetail {

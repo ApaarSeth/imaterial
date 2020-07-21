@@ -27,7 +27,7 @@
 
         <div class="col-md-6">
 
-          <p class="image-heading supplier-img-heading" *ngIf="data.type === 'supplier'">Images uploaded by you</p>
+          <p class="image-heading supplier-img-heading" *ngIf="data.type === 'supplier' || data.type === 'po'">Images uploaded by you</p>
 
           <!-- If previous images exists -->
           <ng-container *ngIf="prevDocumentList?.length">

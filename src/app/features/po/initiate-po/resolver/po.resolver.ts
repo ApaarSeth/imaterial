@@ -9,12 +9,12 @@ export class InitiatePoResolver implements Resolve<any> {
   constructor(
     private projectService: ProjectService,
     private commonService: CommonService
-  ) {}
+  ) { }
 
   resolve() {
 
-    let userId=Number(localStorage.getItem("userId"))
-    let orgId=Number(localStorage.getItem("orgId"))
+    let userId = Number(localStorage.getItem("userId"))
+    let orgId = Number(localStorage.getItem("orgId"))
 
     return Promise.all([
       this.commonService.getSuppliers(orgId),

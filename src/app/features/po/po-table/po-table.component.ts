@@ -14,6 +14,7 @@ import { OverallOtherCost } from 'src/app/shared/models/common.models';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 
 @Component({
   selector: "app-po-table",
@@ -31,7 +32,9 @@ export class PoTableComponent implements OnInit, OnDestroy {
   toggleCounter: number = 0;
   showResponsiveDesign: boolean;
   poCurrency: PurchaseOrderCurrency
-  constructor(private cdr: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
+  poId: number;
+  constructor(private cdr: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar,
+    private cdRef : ChangeDetectorRef) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
@@ -51,6 +54,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
       this.mode = params.mode;
+      this.poId = Number(params['id']);
     });
     this.isMobile = this.commonService.isMobile().matches;
     this.formInit();
@@ -63,6 +67,11 @@ export class PoTableComponent implements OnInit, OnDestroy {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
   }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+  }
+
   formInit() {
     const frmArr: FormGroup[] = this.poTableData.map((poMaterial: PoMaterial, i) => {
       let purchaseGrp: FormGroup[] = poMaterial.purchaseOrderDetailList.map((purchaseorder: PurchaseOrder, j) => {
@@ -530,13 +539,39 @@ export class PoTableComponent implements OnInit, OnDestroy {
       data: {
         selectedMaterial,
         type,
+        purchaseOrderId: this.poId
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== null) {
-        console.log(result);
+        this.poService.getPoGenerateData(this.poId).then(res => {
+          this.poTableData = res.data.materialData;
+        });
       }
+    });
+  }
+
+  /**
+   * function will call to open view image modal
+   * @param rfqId, materialId, type
+   */
+  viewAllImages(materialId) {
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+        disableClose: true,
+        width: "500px",
+        panelClass: 'view-image-modal',
+        data: {
+            purchaseOrderId: this.poId,
+            materialId,
+            type: 'po'
+        }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+            console.log(result);
+        }
     });
   }
 }

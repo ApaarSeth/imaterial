@@ -13,11 +13,21 @@ export class AfterSignUpGuardService implements CanActivate {
 
         const userId = localStorage.getItem("userId");
         return this._userService.getUserInfo(userId).then(res => {
-            if ((res.data[0].firstName !== null || res.data[0].firstName !== "") && (res.data[0].lastName !== null || res.data[0].lastName !== "")) {
+            if ((res.data[0].firstName !== null || res.data[0].firstName !== "") && (res.data[0].lastName !== null || res.data[0].lastName !== "") && res.data[0].isActiveSubscription === 1) {
                 return true;
             }
-            this.router.navigate(['/profile/update-info']);
-            return false;
+            else {
+                if ((res.data[0].firstName !== "") && (res.data[0].lastName !== "")) {
+                    this.router.navigate(['/profile/subscriptions']);
+                    return false;
+                }
+                else {
+                    this.router.navigate(['/profile/update-info']);
+                    return false;
+                }
+
+            }
+
         });
     }
 }

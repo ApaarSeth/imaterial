@@ -31,25 +31,45 @@ export class ViewImageComponent implements OnInit {
       }
     }else if(this.data.type === 'bid'){
       this.getAllSupplierImages();
+    }else if(this.data.type === 'po'){
+      this.getAllPOImages();
     }else{
       this.getAllImages();
-    }
+    } 
   }
 
+  /**
+   * @description get all uploaded images of BOM
+   */
   getAllImages(){
     this._imageService.getSelectedImages(this.data.projectId, this.data.materialId).then(res => {
       this.selectedImages = res.data;
     })
   }
 
+  /**
+   * @description get all uploaded images of RFQ
+   */
   getAllRfqImages(){
     this._imageService.getRfqUploadedImages(this.data.rfqId, this.data.materialId).then(res => {
       this.selectedImages = res.data;
     })
   }
 
+  /**
+   * @description get all images uploaded by supplier
+   */
   getAllSupplierImages(){
     this._imageService.getSupplierUploadedImages(this.data.rfqId, this.data.materialId, this.data.supplierId).then(res => {
+      this.selectedImages = res.data;
+    })
+  }
+
+  /**
+   * @description get all uploaded images of Purchase Order
+   */
+  getAllPOImages(){
+    this._imageService.getPOImages(this.data.purchaseOrderId, this.data.materialId).then(res => {
       this.selectedImages = res.data;
     })
   }

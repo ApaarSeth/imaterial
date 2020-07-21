@@ -25,6 +25,7 @@ export interface RfqMat {
   materialUnit?: string;
   poAvailableQty?: number;
   documentList?: ImageDocsLists[];
+  documentsList?: ImageDocsLists[];
 }
 export interface Address {
   projectId?: number;

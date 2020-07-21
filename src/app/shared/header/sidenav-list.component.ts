@@ -37,7 +37,7 @@ export class SidenavListComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.role = localStorage.getItem("role");
 
-    if (this.data.moduleList.length) {
+    if (this.data.moduleList && this.data.moduleList.length) {
       this.data.moduleList.forEach(itm => {
         if (itm.modulePath === 'globalStore/') {
           itm.modulePath = itm.modulePath + this.orgId;

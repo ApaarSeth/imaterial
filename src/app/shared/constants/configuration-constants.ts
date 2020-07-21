@@ -141,6 +141,8 @@ export const API = {
   EMAILVERFICATIONSTATUS: `email/verification/status`,
   EMAILVERFICATION: (token) => `emailVerification/${token}`,
   DASHBOARD_VIDEOS: 'marketing/dashboardVideo',
+  PUSHNOTIFICATIONDATA: 'user/web/notification/savetoken',
+  ADDGRNWITHOUTPO: 'po/add/grn/withoutpo',
   GETSUBSCRIPTIONPLAN: 'subscription/getSubscriptionPlan',
   POST_SUBSCRIPTIONPAYMENTGATEWAY: 'payments/subscription/initiate',
   POST_SUBSCRIPTIONINITIATE: 'payment/subscription/initiate',
@@ -149,8 +151,9 @@ export const API = {
   UPLOAD_IMAGE: 'material/addImages',
   VIEW_IMAGES: (projectId, materialId) => `material/getImages/${projectId}/${materialId}`,
   DOWNLOAD_IMAGE: 'documents/download',
-  PUSHNOTIFICATIONDATA: 'user/web/notification/savetoken',
   GET_ALL_RFQ_IMAGES: (rfqId, materialId) => `rfq/getImages/${rfqId}/${materialId}`,
   GET_SUPPLIER_IMAGES: (rfqId, materialId, supplierId) => `rfq/getImages/${rfqId}/${materialId}/${supplierId}`,
+  PO_ADD_IMAGES: 'po/addImages',
+  GET_ALL_PO_IMAGES: (purchaseOrderId, materialId) => `po/getImages/${purchaseOrderId}/${materialId}`,
   GET_MENU: 'subscription/menu'
 };

@@ -51,7 +51,7 @@ export class SidebarNavigationComponent implements OnInit {
     this.role = this.tokenService.getRole();
     this.sidenavToggle.emit('loaded');
 
-    if (this.data.moduleList.length) {
+    if (this.data.moduleList && this.data.moduleList.length) {
       this.data.moduleList.forEach(itm => {
         if (itm.modulePath === 'globalStore/') {
           itm.modulePath = itm.modulePath + this.orgId;
