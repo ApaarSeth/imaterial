@@ -98,6 +98,11 @@ export class GrnAddSupplierComponent implements OnInit {
                 this.form.get('email').enable();
                 this.form.get('contact').enable();
                 this.form.get('countryCode').enable();
+
+                this.form.get('email').reset();
+                this.form.get('contact').reset();
+                this.form.get('countryCode').reset();
+                this.getCountryCode()
             }
         })
     }
@@ -208,9 +213,12 @@ export class GrnAddSupplierComponent implements OnInit {
         }
         let data = { ...this.form.getRawValue(), grnDate, supplierName, supplierId, materialList, documentList, countryCode }
         this.bomService.addGrnWithoutPo(data).then(res => {
-            if (res.statusCode === 200) {
-                this.notifier.snack(res.message)
+            if (res.statusCode === 201) {
+                this.notifier.snack("GRN Created Successfully!")
                 this.dialogRef.close(null)
+            }
+            else {
+                this.notifier.snack("There is some issue submitting GRN")
             }
         })
     }
