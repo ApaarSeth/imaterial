@@ -93,6 +93,8 @@ export class BomService {
     return this.dataService.getRequestMaster(API.ALLCATEGORY)
   }
 
-
+  addGrnWithoutPo(data) {
+    return this.dataService.sendPostRequest(API.ADDGRNWITHOUTPO, data)
+  }
 
 }

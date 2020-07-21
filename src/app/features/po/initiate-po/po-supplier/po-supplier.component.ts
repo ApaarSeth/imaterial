@@ -22,7 +22,7 @@ export class PoSupplierComponent implements OnInit {
   searchText: string = null;
   allSuppliers: Suppliers[];
   form: FormGroup;
-  displayedColumns: string[] = [ "Supplier Name", "Email", "Phone No." ];
+  displayedColumns: string[] = ["Supplier Name", "Email", "Phone No."];
   poCurrency: rfqCurrency;
   countryist: CountryCode[];
   isMobile: boolean;
@@ -33,7 +33,7 @@ export class PoSupplierComponent implements OnInit {
     private commonService: CommonService) { }
 
   ngOnInit() {
-    this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[ 0 ].data;
+    this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data;
     this.countryist = this.activatedRoute.snapshot.data.countryList;
 
     this.isMobile = this.commonService.isMobile().matches;
@@ -59,7 +59,7 @@ export class PoSupplierComponent implements OnInit {
 
   formInit() {
     this.form = this.formBuilder.group({
-      supplier: [ "", [ Validators.required ] ]
+      supplier: ["", [Validators.required]]
     });
   }
 

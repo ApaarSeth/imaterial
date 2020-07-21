@@ -17,14 +17,14 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  imports: [ CommonModule, RouterModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule, AngularEditorModule, NgbModule ],
-  providers: [ DataService,
+  imports: [CommonModule, RouterModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule, AngularEditorModule, NgbModule],
+  providers: [DataService,
     { provide: DateAdapter, useClass: PickDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
   ],
-  declarations: [ ...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective ],
-  exports: [ ...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective, AngularEditorModule ],
-  entryComponents: [ ...SharedDialogs ]
+  declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective],
+  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective, AngularEditorModule],
+  entryComponents: [...SharedDialogs]
 })
 
 export class AppSharedModule { }
