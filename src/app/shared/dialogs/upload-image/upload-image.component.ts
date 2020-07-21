@@ -51,8 +51,9 @@ export class UploadImageComponent implements OnInit {
       this.prevDocumentList = this.data.prevUploadedImages.documentsList ? this.data.prevUploadedImages.documentsList.filter(elem => elem.supplierId) : [];
       this.getContractorImages();
     }else if(this.data.type === 'po'){
-      this.prevDocumentList = this.data.selectedMaterial.purchaseOrderDetailList[0].documentList.filter(list => list.supplierId !== null);
-      this.contractorImagesList = this.data.selectedMaterial.purchaseOrderDetailList[0].documentList.filter(list => list.supplierId === null)
+      this.getAllPOImages();
+      // this.prevDocumentList = this.data.selectedMaterial.purchaseOrderDetailList[0].documentList.filter(list => list.supplierId !== null);
+      // this.contractorImagesList = this.data.selectedMaterial.purchaseOrderDetailList[0].documentList.filter(list => list.supplierId === null)
     }else{
       this.projectId = this.data.projectId;
       this.materialId = this.data.materialId;
@@ -85,6 +86,16 @@ export class UploadImageComponent implements OnInit {
       this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
         this.prevDocumentList = res.data;
       });
+  }
+
+  /**
+   * @description get all uploaded images of Purchase Order
+   */
+  getAllPOImages(){
+    this._uploadImageService.getPOImages(this.data.purchaseOrderId, this.data.selectedMaterial.materialId).then(res => {
+      this.prevDocumentList = res.data.filter(list => list.supplierId === null);
+      this.contractorImagesList = res.data.filter(list => list.supplierId !== null);
+    })
   }
 
   /**

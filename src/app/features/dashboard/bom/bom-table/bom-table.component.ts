@@ -266,6 +266,7 @@ export class BomTableComponent implements OnInit {
         mat.dueDate = category.dueDate;
         mat.fullfilmentDate = String(category.dueDate) === "" ? null : String(category.dueDate);
         mat.materialUnit = category.materialUnit;
+        mat.documentList = category.documentsList;
         materialList.push(mat);
       });
       let projectId = materialList[ 0 ].projectId;

@@ -72,6 +72,7 @@ export class RfqBidsComponent implements OnInit {
                   materialSgst: supplier.materialSgst,
                   taxInfo: supplier.taxInfo ? this.formBuilder.array(supplier.taxInfo) : null,
                   otherCostInfo: supplier.otherCostInfo ? this.formBuilder.array(supplier.otherCostInfo) : null,
+                  documentList: supplier.documentList ? this.formBuilder.array(supplier.documentList) : null,
                   brandGroup: this.formBuilder.array(brandGrp)
                 });
               }
@@ -79,6 +80,7 @@ export class RfqBidsComponent implements OnInit {
 
             return this.formBuilder.group({
               materialId: material.materialId,
+              documentList: material.documentList ? this.formBuilder.array(material.documentList) : null,
               materialQty: material.materialQty,
               materialpoAvailableQty: material.poAvailableQty,
               validQtyBoolean: true,
@@ -150,7 +152,8 @@ export class RfqBidsComponent implements OnInit {
                     materialCgst: sup.materialCgst,
                     materialIgst: sup.materialIgst,
                     taxInfo: sup.taxInfo ? [...sup.taxInfo] : null,
-                    otherCostInfo: sup.otherCostInfo ? [...sup.otherCostInfo] : null
+                    otherCostInfo: sup.otherCostInfo ? [...sup.otherCostInfo] : null,
+                    documentList: [...(sup.documentList ? sup.documentList : []), ...(mat.documentList ? mat.documentList : [])]
                   };
                 });
               });
@@ -196,6 +199,7 @@ export class RfqBidsComponent implements OnInit {
       },
       [] as RfqProjectSubmit[]
     );
+
     this.rfqService.rfqAddPo(submitData.flat(2)).then(res => {
       if (res.statusCode === 201) {
         this.navService.gaEvent({

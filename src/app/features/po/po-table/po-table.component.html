@@ -116,7 +116,7 @@
             <span class="mat-cell maxwidth-20" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
               <span>{{ material.materialName }}</span>
               <!-- Upload Image Modal Link -->
-              <div class="add-edit-image d-block">
+              <div class="add-edit-image d-block" *ngIf="mode !== 'view'">
                 <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(material, 'po')">Add/Edit Image</a>
               </div>
             </span>

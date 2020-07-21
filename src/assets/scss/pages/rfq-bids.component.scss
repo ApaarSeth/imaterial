@@ -357,3 +357,35 @@
     }
   }
 }
+
+th.attached-images-col.mat-column-Attached-Images {
+  max-width: 80px;
+  white-space: normal;
+}
+
+th.fulfillment-date-col.mat-column-Fullfillment-Date {
+  max-width: 130px;
+}
+
+tr.tbl-body-cols.mat-row {
+  height: 65px;
+}
+
+.attached-images-col .images-lists{
+  .attached-image{
+    &:first-child{
+      top: -36px;
+      left: 20px;
+    }
+
+    &:nth-child(2){
+      top: -30px;
+      left: 26px;
+    }
+
+    &:nth-child(3){
+      top: -24px;
+      left: 32px;
+    }
+  }
+}
