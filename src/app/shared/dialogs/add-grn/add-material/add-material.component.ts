@@ -63,7 +63,7 @@ export class GrnAddMaterialComponent implements OnInit {
             index: [],
             pendingQty: ['', [Validators.required, Validators.maxLength(300)]],
             materialUnitPrice: ['', [Validators.required, Validators.maxLength(300)]],
-            amount: ['', [Validators.required, Validators.maxLength(300)]]
+            amount: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(300)]]
         });
 
         frmGrp.get("index").patchValue(this.addMaterialsForm.get('addMaterial')['controls'].length)
@@ -85,6 +85,21 @@ export class GrnAddMaterialComponent implements OnInit {
             else {
                 <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ pendingQty: 0 });
                 <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['pendingQty'].disable();
+            }
+        })
+        frmGrp.controls['materialUnitPrice'].valueChanges.subscribe(changes => {
+            if (typeof changes === 'string') {
+                let deliveredQty = this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].value['deliveredQty'] as number;
+                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].get('amount').enable();
+                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ amount: Number(changes) * (deliveredQty ? deliveredQty : 0) });
+                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].get('amount').disable();
+
+            }
+        })
+        frmGrp.controls['deliveredQty'].valueChanges.subscribe(changes => {
+            if (typeof changes === 'string') {
+                let materialUnitPrice = this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].value['materialUnitPrice'] as number;
+                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ amount: Number(changes) * (materialUnitPrice ? materialUnitPrice : 0) });
             }
         })
         return frmGrp;
@@ -109,7 +124,7 @@ export class GrnAddMaterialComponent implements OnInit {
     }
 
     getMaterialList() {
-        return this.addMaterialsForm.value.addMaterial.map((mat: GrnFormMaterialList) => {
+        return this.addMaterialsForm.getRawValue().addMaterial.map((mat: GrnFormMaterialList) => {
             return {
                 materialName: typeof mat.materialName === 'object' ? mat.materialName.materialName : mat.materialName,
                 materialId: typeof mat.materialName === 'object' ? mat.materialName.materialId : null,

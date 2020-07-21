@@ -1,7 +1,7 @@
 <div class="page-start-point changeWidth mt-5 pt-4">
   <div class="p-l-20 p-r-20 p-b-20 min-height">
     <div class="p-t-20">
-      <div class="row">
+      <div class="row" *ngIf="selectedCategory.length">
         <div class="col-xs-6 text -left border-input">
           <mat-form-field class="input-search-padding-zero width-40">
             <input #text matInput placeholder="Search Material" type="search" (input)="searchMaterial(text.value)" />
@@ -23,7 +23,7 @@
         </div> -->
 
       <mat-tab-group (selectedTabChange)="tabClick($event)">
-        <mat-tab label="My Materials"> <app-my-material-tab *ngIf="showMyMaterial"></app-my-material-tab></mat-tab>
+        <mat-tab label="My Materials"> <app-my-material-tab *ngIf="showMyMaterial" [selectedCategory]="selectedCategory"></app-my-material-tab></mat-tab>
         <!-- <mat-tab label="Unapproved My Materials"><app-unapproved-material-tab *ngIf="showUnapprovedMaterial"></app-unapproved-material-tab></mat-tab> -->
       </mat-tab-group>
     </div>
