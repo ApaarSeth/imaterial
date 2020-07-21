@@ -247,6 +247,7 @@ export interface poMaterialList {
   materialQty: number;
   brandNames: string[];
   materialUnitPrice: number;
+  documentList?: ImageDocsLists[];
 }
 
 export interface poApproveReject {
@@ -315,4 +316,11 @@ export interface ImageDocsLists{
   documentThumbnailUrl?: string;
   documentThumbnailShortUrl?: string;
   supplierId?: number;
+}
+
+export interface finalImageObject{
+  projectId?: number;
+  materialId?: number;
+  purchaseOrderId?: number;
+  documentsList?: ImageList[];
 }

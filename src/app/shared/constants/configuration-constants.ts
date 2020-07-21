@@ -153,5 +153,7 @@ export const API = {
   DOWNLOAD_IMAGE: 'documents/download',
   GET_ALL_RFQ_IMAGES: (rfqId, materialId) => `rfq/getImages/${rfqId}/${materialId}`,
   GET_SUPPLIER_IMAGES: (rfqId, materialId, supplierId) => `rfq/getImages/${rfqId}/${materialId}/${supplierId}`,
+  PO_ADD_IMAGES: 'po/addImages',
+  GET_ALL_PO_IMAGES: (purchaseOrderId, materialId) => `po/getImages/${purchaseOrderId}/${materialId}`,
   GET_MENU: 'subscription/menu'
 };

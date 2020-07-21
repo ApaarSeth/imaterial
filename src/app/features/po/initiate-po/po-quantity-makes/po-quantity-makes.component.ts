@@ -122,6 +122,15 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
         return material
       });
       this.initiatePoData.materialList = this.materialForms.value.forms;
+
+      // to attach document list for selected material
+      project.projectMaterialList.forEach((e1) => this.initiatePoData.materialList.forEach((e2) => {
+          if(e1.materialId === e2.materialId){
+            e2.documentList = e1.documentsList;
+          }
+        }
+      ));
+
     });
 
     this.poService.initiatePo([ this.initiatePoData ]).then(res => {
