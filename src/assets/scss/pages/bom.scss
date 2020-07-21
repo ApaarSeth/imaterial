@@ -31,6 +31,8 @@
 .bom-details-table-div-part {
   max-height: 453px;
   overflow-y: auto;
+  z-index: 0;
+  position: relative;
   table {
     width: 100%;
   }
@@ -285,4 +287,16 @@ div.limited-character.bom {
     top: -2.4em !important;
     padding-top: 3.84375em !important;
   }
+}
+
+.select-trades.mat-form-field-appearance-legacy .mat-form-field-wrapper{
+  padding-top: 0px !important;
+}
+
+.ptop-10{
+  padding-top: 10px;
+}
+
+.ptop-15{
+  padding-top: 15px;
 }

@@ -5,6 +5,7 @@ import { AddMyMaterialComponent } from 'src/app/shared/dialogs/add-my-material/a
 import { Subject } from 'rxjs';
 import { CommonService } from '../../shared/services/commonService';
 import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
+import { categoryNestedLevel } from 'src/app/shared/models/category';
 
 @Component({
   selector: 'app-my-material',
@@ -17,10 +18,13 @@ export class MyMaterialComponent implements OnInit {
   showMyMaterial = true
   showUnapprovedMaterial = false;
   currentIndex: number = 0;
+  selectedCategory: categoryNestedLevel[] = [];
 
   ngOnInit() {
     this.tradeNames = ['civil', 'piping']
+    this.getMyMaterial();
   }
+
   openAddMaterial() {
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: '720px'
@@ -34,6 +38,12 @@ export class MyMaterialComponent implements OnInit {
 
   searchMaterial(event) {
     this.bomService.searchText.next(event);
+  }
+
+  getMyMaterial() {
+    this.commonService.getMyMaterial('approved').then(res => {
+      this.selectedCategory = [...res.data];
+    });
   }
 
   tabClick(event) {

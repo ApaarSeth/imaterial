@@ -14,6 +14,7 @@ import { BOMAllMaterialComponent } from './bom/bom-allMaterial/bom-allMaterial.c
 import { BomTableComponent } from './bom/bom-table/bom-table.component';
 import { BomMyMaterialComponent } from './bom/bom-myMaterial/bom-myMaterial.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-component.modules';
+import { BomCopyMaterialComponent } from './bom/bom-copy-materials/bom-copy-materials.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,8 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
     BomTopMaterialComponent,
     BOMAllMaterialComponent,
     BomTableComponent,
-    BomMyMaterialComponent]
+    BomMyMaterialComponent,
+    BomCopyMaterialComponent
+  ]
 })
 export class DashboardModule { }
