@@ -54,3 +54,15 @@ export interface QtyData {
   materialUnit: string;
   estimatedRate: null;
 }
+
+export interface CopyMaterials {
+  materialId: null;
+  materialMasterId: null;
+  estimatedQty: number;
+  materialCode: string;
+  materialName: string;
+  materialGroup: string;
+  materialUnit: string;
+  estimatedRate: number;
+  checked: boolean;
+}

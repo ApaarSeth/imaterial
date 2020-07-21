@@ -3,6 +3,7 @@ import { DashboardComponent } from './dashboard.component';
 import { BomComponent } from './bom/bom.component';
 import { BomTableComponent } from './bom/bom-table/bom-table.component';
 import { CountryResolver } from 'src/app/shared/resolver/country.resolver';
+import { BomCopyMaterialComponent } from './bom/bom-copy-materials/bom-copy-materials.component';
 
 const routes: Routes = [
     {
@@ -24,6 +25,11 @@ const routes: Routes = [
         data: {
             breadcrumb: 'BOM-Detail'
         }
+    },
+    {
+        path: "bom/:id/copy-materials",
+        component: BomCopyMaterialComponent,
+        data: { breadcrumb: 'BOM-Copy-Materials' }
     }
 ];
 
