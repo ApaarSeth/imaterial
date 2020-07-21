@@ -6,7 +6,13 @@
     <span><img class="buildsupply-logo" src="../../../../assets/images/loginLogo.png" alt="logo" /></span>
     <span class="menu-spacer"></span>
 
-    <a href="https://api.whatsapp.com/send?phone=+918512060007" target="_blank">
+    <ng-container *ngIf="isFreeTrialActivate">
+      <button mat-button class="brand-bg-color color-white font-size10 mt-2"
+        [ngClass]="isMobile ? 'mr-0 p-0' : 'mr-3' "><span *ngIf="!isMobile" class="mr-1">Your Free Trial
+          Expire Soon</span><strong>13 Days Left</strong></button>
+    </ng-container>
+
+    <a href="https://api.whatsapp.com/send?phone=+918512060007" target="_blank" [ngClass]="isMobile ? 'p-1' : '' ">
       <div class="whatsapp-div-header">
         <div>
           <img src="../../../../assets/images/whatsapp-main.png" class="whatsapp-icon" />
@@ -17,7 +23,8 @@
       </div>
     </a>
 
-    <button class="pull-right p-t-10 notification-bell-icon" mat-button [matMenuTriggerFor]="notifs">
+    <button class="pull-right p-t-10 notification-bell-icon" [ngClass]="isMobile ? 'p-1' : '' " mat-button
+      [matMenuTriggerFor]="notifs">
       <a href="javascript:void(0)" (click)="openDiv()">
         <mat-icon [ngClass]="{'bell-icon-active': notifClicked === true, 'bell-icon': notifClicked === false}"
           matBadge="{{ newunreadMessage }}" matBadgeSize="small" matBadge="15" matBadgeColor="warn">
