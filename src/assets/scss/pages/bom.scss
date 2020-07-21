@@ -31,6 +31,8 @@
 .bom-details-table-div-part {
   max-height: 453px;
   overflow-y: auto;
+  z-index: 0;
+  position: relative;
   table {
     width: 100%;
   }

@@ -68,7 +68,6 @@ export class TopHeaderComponent implements OnInit {
 
   checkFreeTrial() {
     this.commonService.getSubscriptionPlan().then(res => {
-      console.log(res.data);
       if (res.data && res.data.planFrequencyList !== null) {
         let checked = 0;
         res.data.planFrequencyList.forEach(item => {
@@ -87,7 +86,6 @@ export class TopHeaderComponent implements OnInit {
         });
       }
     });
-    console.log(this.isFreeTrialActivate);
   }
 
   startSubscriptions() {
