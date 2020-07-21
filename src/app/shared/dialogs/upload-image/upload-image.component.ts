@@ -31,7 +31,6 @@ export class UploadImageComponent implements OnInit {
   contractorImagesList: ImageDocsLists[] = [];
   supplierContractorImages: ImageList[] | ImageDocsLists[] = [];
   isDisplayErr: boolean;
-  prevMatchedImage: ImageDocsLists[];
 
   constructor(
     private dialogRef: MatDialogRef<UploadImageComponent>,
@@ -51,6 +50,10 @@ export class UploadImageComponent implements OnInit {
       this.materialId = this.data.selectedMaterial.materialId;
       this.prevDocumentList = this.data.prevUploadedImages.documentsList ? this.data.prevUploadedImages.documentsList.filter(elem => elem.supplierId) : [];
       this.getContractorImages();
+    }else if(this.data.type === 'po'){
+      this.getAllPOImages();
+      // this.prevDocumentList = this.data.selectedMaterial.purchaseOrderDetailList[0].documentList.filter(list => list.supplierId !== null);
+      // this.contractorImagesList = this.data.selectedMaterial.purchaseOrderDetailList[0].documentList.filter(list => list.supplierId === null)
     }else{
       this.projectId = this.data.projectId;
       this.materialId = this.data.materialId;
@@ -83,6 +86,16 @@ export class UploadImageComponent implements OnInit {
       this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
         this.prevDocumentList = res.data;
       });
+  }
+
+  /**
+   * @description get all uploaded images of Purchase Order
+   */
+  getAllPOImages(){
+    this._uploadImageService.getPOImages(this.data.purchaseOrderId, this.data.selectedMaterial.materialId).then(res => {
+      this.prevDocumentList = res.data.filter(list => list.supplierId === null);
+      this.contractorImagesList = res.data.filter(list => list.supplierId !== null);
+    })
   }
 
   /**
@@ -191,7 +204,8 @@ export class UploadImageComponent implements OnInit {
     // final image list object - and combined both prev and new images list
     this.finalImagesList = {
       "projectId": this.data.type === 'rfq' ? this.data.selectedMaterial.projectId : this.projectId,
-      "materialId": this.data.type === 'rfq' ? this.data.selectedMaterial.materialId : this.materialId,
+      "materialId": this.data.type === 'rfq' ? this.data.selectedMaterial.materialId : (this.data.type === 'po' ? this.data.selectedMaterial.materialId : this.materialId),
+      "purchaseOrderId": this.data.type === 'po' ? this.data.purchaseOrderId : null,
       "documentsList": [...this.prevDocsObj, ...this.documentList],
     }
 
@@ -205,6 +219,13 @@ export class UploadImageComponent implements OnInit {
       });
       this.supplierContractorImages = [...(this.prevDocumentList ? this.prevDocumentList : []), ...this.documentList, ...(this.contractorImagesList ? this.contractorImagesList : [])]      
       this.dialogRef.close(this.supplierContractorImages);
+    }else if(this.data.type === 'po'){
+
+      this.finalImagesList.documentsList = [...this.finalImagesList.documentsList, ...this.contractorImagesList];
+
+      return this._uploadImageService.uploadPOImage(this.finalImagesList).then(res => {
+        this.dialogRef.close('addImages');
+      });
     }else{
       return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {
         this.dialogRef.close('addImages');
