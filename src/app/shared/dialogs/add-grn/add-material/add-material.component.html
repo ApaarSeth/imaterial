@@ -5,7 +5,7 @@
         <div class="row" [formGroupName]="i">
           <div class="col-xs-2 p-r-15">
             <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding label-font-size">
-              <input type="text" placeholder="Material Name" matInput formControlName="materialName" [matAutocomplete]="auto" />
+              <input type="text" placeholder="Material Name*" matInput formControlName="materialName" [matAutocomplete]="auto" />
               <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
                 <mat-option matTooltip=" {{ option.materialName }}" *ngFor="let option of this.filterMaterialName | async" [value]="option">
                   {{ option.materialName }}
@@ -18,8 +18,22 @@
           </div>
           <div class="col-xs-1 p-r-0 p-l-0">
             <mat-form-field class="border-select label-font-size width-90 mat-form-field-flex-mm-padding">
-              <mat-select placeholder="Unit*" formControlName="materialUnit">
-                <mat-option *ngFor="let unit of materialUnit" [value]="unit">
+              <mat-select formControlName="materialUnit" placeholder="Unit*">
+                <div class="display-flex">
+                  <input
+                    class="p-l-10 p-b-5"
+                    matInput
+                    type="search"
+                    placeholder="Search Unit"
+                    [(ngModel)]="searchUnit"
+                    [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()"
+                  />
+                  <button mat-button mat-icon-button>
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </div>
+                <mat-option *ngFor="let unit of materialUnit | SearchPipe: searchUnit" [value]="unit">
                   <span>
                     {{ unit }}
                   </span>
@@ -87,6 +101,7 @@
       </div>
     </div>
   </div>
+  <div class="light-grey fontsize-13-px p-t-20">*Total amount and unit price are inclusive of GST</div>
   <div mat-dialog-actions class="flex-column">
     <button mat-button mat-raised-button [disabled]="addMaterialsForm.invalid" class="main-background-color main-button color-white m-b-5 mb-0">
       <!-- <button mat-button matStepperNext mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0" [disabled]="addMaterialsForm && !addMaterialsForm.valid"> -->

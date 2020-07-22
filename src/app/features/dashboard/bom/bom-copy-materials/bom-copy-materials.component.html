@@ -3,7 +3,7 @@
         <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()"
             [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"></card-layout>
 
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-xs-12 col-md-3">
                 <mat-form-field class="search-form-field border-input w-100">
                     <input matInput placeholder="Search Materials" type="search" (keyup)="applyFilter($event)" />
@@ -14,7 +14,7 @@
             </div>
 
             <div class="col-xs-12 col-md-3">
-                <mat-form-field>
+                <mat-form-field class="border-select select-project-dropdown w-100">
                     <mat-label>Select Project</mat-label>
                     <mat-select>
                         <mat-option *ngFor="let project of allProjectsList" [value]="project.projectId" (click)="getProjectMaterials(project.projectId)">
@@ -38,12 +38,14 @@
             <div class="row bom-details-table-div-part example-container mat-elevation-z8">
                 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="col-sm-12 bom-material-table">
                     <ng-container matColumnDef="materialName">
-                        <th *matHeaderCellDef class="first-column-row-header">
-                            Material Name
+                        <th *matHeaderCellDef class="bom-material-name-col">
+                            <mat-checkbox #allCh (change)="getElemenetChecked(allCh, dataSource, 'SelectAll')">
+                                Material Name
+                            </mat-checkbox>
                         </th>
                         <td class="text-left" mat-cell *matCellDef="let element"
                             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
-                            <mat-checkbox #ch (change)="getElemenetChecked(ch, element)" [checked]="element.checked"
+                            <mat-checkbox #ch (change)="getElemenetChecked(ch, element, 'Select')" [checked]="element.checked"
                                 [disabled]="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false">
                                 <div class="limited-character bom" matTooltip=" {{ element.materialName }}">
                                     {{ element.materialName }}

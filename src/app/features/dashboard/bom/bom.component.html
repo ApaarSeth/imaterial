@@ -11,7 +11,7 @@
 
               <div class="row align-items-center justify-content-between">
                 <!-- Search field -->
-                <mat-form-field class="input-search-padding-zero ptop-15">
+                <mat-form-field class="input-search-padding-zero ptop-15 search-input-bom">
                   <input #text matInput placeholder="Search Material" type="search" (input)="searchMaterial(text.value)" />
                   <button mat-button matSuffix mat-icon-button>
                     <mat-icon>search</mat-icon>
@@ -44,11 +44,6 @@
                   </mat-option>
                 </mat-select>
                 </mat-form-field>
-
-                <!-- Copy Materials Button -->
-                <button mat-raised-button class="main-background-color main-button color-white" [routerLink]="['/project-dashboard/bom/'+projectId+'/copy-materials']">
-                  Copy Materials
-                </button>
             </div>
             </div>
 
@@ -63,7 +58,7 @@
                 <!-- Download BOM Link -->
                 <div class="mr-3 ptop-10">
                   <span class="cursor-pointer download-bom-template">
-                    <img src="assets/images/download.png" alt="download" class="img-fluid mr-2" />
+                    <img src="assets/images/download-bom.svg" alt="download" class="img-fluid mr-2" />
                     <a (click)="downloadExcel('assets/images/bom_template.xlsx')"> Download BOM Template</a></span
                   >
                 </div>
@@ -81,7 +76,7 @@
                     (change)="uploadExcel($event.target.files)"
                   />
                   <label for="fileDropRef" class="cursor-pointer upload-template">
-                    <img src="assets/images/upload.png" alt="upload" class="img-fluid mr-2 w-30 cursor-pointer" /> 
+                    <img src="assets/images/upload-bom.svg" alt="upload" class="img-fluid mr-2 w-45 cursor-pointer" /> 
                     <a style="color: #222;">Upload BOM Template</a>
                     </label>
                 </div>
@@ -98,12 +93,18 @@
           </div>
         </form>
         <div class="row">
-          <div class="col-xs-10 display-flex m-t-20">
+          <div class="col-md-9 display-flex m-t-20">
             <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
               <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
             </div>
           </div>
-          <div class="col-xs-2 p-t-20">
+          <div class="col-md-3 p-t-20 d-flex align-items-center justify-content-between">
+            <!-- Copy Materials Link -->
+            <a href="javascript:void(0)" class="main-color text-semi-bold" [routerLink]="['/project-dashboard/bom/'+projectId+'/copy-materials']">
+              Copy Materials
+            </a>
+
+            <!-- Add Custom Material Link -->
             <a href="javascript:void(0)" class="main-color text-semi-bold" (click)="openAddMyMaterial()">+ Add Custom Material</a>
           </div>
         </div>

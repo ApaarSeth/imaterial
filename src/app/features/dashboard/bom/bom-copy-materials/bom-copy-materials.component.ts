@@ -51,13 +51,14 @@ export class BomCopyMaterialComponent implements OnInit {
     sortedData: MatTableDataSource<Subcategory>;
     expandedElement: Subcategory | null;
     orgId: number;
-    checkedSubcategory: CopyMaterials[] = [];
+    checkedSubcategory: Subcategory[] = [];
     permissionObj: permission;
     isMobile: boolean;
     userId: number;
     role: string;
     allProjectsList: ProjectDetails[] = [];
     projectMaterialsList: Materials[] = [];
+    @ViewChild('allCh', { static: false }) allCh;
 
     public BomDetailsashboardTour: GuidedTour = {
         tourId: 'bom-details-tour',
@@ -147,15 +148,30 @@ export class BomCopyMaterialComponent implements OnInit {
      * @param ch checkbox checked or not
      * @param element selected material data
      */
-    getElemenetChecked(ch: MatCheckbox, element: CopyMaterials) {
-        if (ch.checked) {
-            element.checked = true;
-            this.checkedSubcategory.push(element);
-        } else {
-            element.checked = false;
-            this.checkedSubcategory = this.checkedSubcategory.filter(sub => {
-                return sub.materialId !== element.materialId;
-            });
+    getElemenetChecked(ch: MatCheckbox, element: any, type: string) {
+        if(type === 'SelectAll'){
+            if(ch.checked){
+                element.filteredData.forEach(opt => {
+                    opt.checked = true;
+                    this.checkedSubcategory.push(opt);
+                });
+            }else{
+                element.filteredData.forEach(opt => {
+                    opt.checked = false;
+                    this.checkedSubcategory = [];
+                });
+            }
+        }else{
+            if (ch.checked) {
+                element.checked = true;
+                this.checkedSubcategory.push(element);
+            } else {
+                this.allCh.checked = false;
+                element.checked = false;
+                this.checkedSubcategory = this.checkedSubcategory.filter(sub => {
+                    return sub.materialId !== element.materialId;
+                });
+            }
         }
     }
 

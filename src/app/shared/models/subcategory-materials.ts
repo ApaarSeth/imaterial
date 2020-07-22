@@ -4,25 +4,27 @@ import { ImageDocsLists } from "./PO/po-data";
 export interface Subcategory {
   materialId: number;
   materialCode: string;
-  projectId: number;
+  projectId?: number;
   materialName: string;
   materialGroup: string;
   materialUnit: string;
   estimatedQty: number;
   estimatedRate: number;
-  materialCustomFlag: number;
-  materialCustomId: number;
-  materialSubGroup: string;
+  materialCustomFlag?: number;
+  materialCustomId?: number;
+  materialSubGroup?: string;
   materialSpecs?: Materials[] | MatTableDataSource<Materials>;
-  sum: number;
-  requestedQuantity: number;
+  sum?: number;
+  requestedQuantity?: number;
   checked: boolean;
-  issueToProject: number;
-  availableStock: number;
-  quantity: number;
-  dueDate: Date;
+  issueToProject?: number;
+  availableStock?: number;
+  quantity?: number;
+  dueDate?: Date;
   isApproved?: number;
-  documentsList: ImageDocsLists[];
+  documentsList?: ImageDocsLists[];
+  materialMasterId?: null;
+  filteredData?: any;
 }
 
 export interface Materials {
@@ -65,4 +67,5 @@ export interface CopyMaterials {
   materialUnit: string;
   estimatedRate: number;
   checked: boolean;
+  filteredData?: any;
 }

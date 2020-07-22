@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { CountryCode } from '../../models/currency';
 import { CommonService } from '../../services/commonService';
 import { PoTableComponent } from 'src/app/features/po/po-table/po-table.component';
 import { GrnAddMaterialComponent } from './add-material/add-material.component';
 import { GrnMaterialList } from '../../models/add-direct-grn';
 import { Supplier } from '../../models/RFQ/rfq-view';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
     selector: 'app-add-grn',
@@ -19,7 +19,8 @@ export class AddGrnComponent implements OnInit {
     materialList: GrnMaterialList[] = [];
     supplierList: Supplier[]
     constructor(private commonService: CommonService,
-        private dialogRef: MatDialogRef<AddGrnComponent>
+        private dialogRef: MatDialogRef<AddGrnComponent>,
+        @Inject(MAT_DIALOG_DATA) public data
     ) { }
 
     ngOnInit() {

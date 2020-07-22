@@ -12,7 +12,8 @@
     </mat-step>
     <mat-step stepControl="Add Supplier">
       <ng-template matStepLabel>Add Supplier</ng-template>
-      <app-add-supplier *ngIf="materialList.length" [materialList]="this.materialList" [countryList]="this.countryList" [supplierList]="this.supplierList"> </app-add-supplier>
+      <app-add-supplier *ngIf="materialList.length" [projectId]="this.data" [materialList]="this.materialList" [countryList]="this.countryList" [supplierList]="this.supplierList">
+      </app-add-supplier>
     </mat-step>
   </mat-horizontal-stepper>
 </div>
