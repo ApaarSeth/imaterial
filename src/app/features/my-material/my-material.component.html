@@ -1,4 +1,4 @@
-<div class="page-start-point changeWidth mt-5 pt-4">
+<div class="page-start-point changeWidth pt-4">
   <div class="p-l-20 p-r-20 p-b-20 min-height">
     <div class="p-t-20">
       <div class="row" *ngIf="selectedCategory.length">
@@ -11,7 +11,8 @@
           </mat-form-field>
         </div>
         <div class="col-xs-6 text-right">
-          <button mat-raised-button class="main-background-color main-button color-white" (click)="openAddMaterial()">+Add Material</button>
+          <button mat-raised-button class="main-background-color main-button color-white"
+            (click)="openAddMaterial()">+Add Material</button>
         </div>
       </div>
       <!-- <div class="col-sm-12 col-md-12 choose-trades">
@@ -23,7 +24,9 @@
         </div> -->
 
       <mat-tab-group (selectedTabChange)="tabClick($event)">
-        <mat-tab label="My Materials"> <app-my-material-tab *ngIf="showMyMaterial" [selectedCategory]="selectedCategory"></app-my-material-tab></mat-tab>
+        <mat-tab label="My Materials">
+          <app-my-material-tab *ngIf="showMyMaterial" [selectedCategory]="selectedCategory"></app-my-material-tab>
+        </mat-tab>
         <!-- <mat-tab label="Unapproved My Materials"><app-unapproved-material-tab *ngIf="showUnapprovedMaterial"></app-unapproved-material-tab></mat-tab> -->
       </mat-tab-group>
     </div>

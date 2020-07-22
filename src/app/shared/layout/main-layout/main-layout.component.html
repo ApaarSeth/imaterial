@@ -14,9 +14,18 @@
     <app-sidenav-list [sidenav]="sidenav" [menuData]="menuData"></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header #header [menu]="sidenav"></app-header>
+    <app-header #header [menu]="sidenav" [subscriptionsData]="subscriptionsData"></app-header>
     <sidebar-navigation (collapseMenu)="isSidebarCollapsed($event)" [menuData]="menuData">
     </sidebar-navigation>
-    <router-outlet> </router-outlet>
+    <ng-container *ngIf="isFreeTrialActivate; else noTrial">
+      <div class="mt-80">
+        <router-outlet> </router-outlet>
+      </div>
+    </ng-container>
+    <ng-template #noTrial>
+      <div class="mt-5">
+        <router-outlet> </router-outlet>
+      </div>
+    </ng-template>
   </mat-sidenav-content>
 </mat-sidenav-container>

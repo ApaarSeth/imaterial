@@ -6,12 +6,6 @@
     <span><img class="buildsupply-logo" src="../../../../assets/images/loginLogo.png" alt="logo" /></span>
     <span class="menu-spacer"></span>
 
-    <ng-container *ngIf="isFreeTrialActivate">
-      <button mat-button class="brand-bg-color color-white font-size10 mt-2"
-        [ngClass]="isMobile ? 'mr-0 p-0' : 'mr-3' "><span *ngIf="!isMobile" class="mr-1">Your Free Trial
-          Expire Soon</span><strong>13 Days Left</strong></button>
-    </ng-container>
-
     <a href="https://api.whatsapp.com/send?phone=+918512060007" target="_blank" [ngClass]="isMobile ? 'p-1' : '' ">
       <div class="whatsapp-div-header">
         <div>
@@ -57,6 +51,15 @@
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
+<ng-container *ngIf="isFreeTrialActivate">
+  <div class="trial-block" [ngClass]="isMobile ? 'font-size10' : '' ">
+    <span class="mr-1">Your Free Trial of {{ isFreeTrial.planName }} Plan Expire Soon {{ isFreeTrial.daysLeft }} Days
+      Left</span>
+    <button mat-button class="brand-bg-color color-white" [ngClass]="isMobile ? 'font-size10 mt-1' : 'ml-2' "
+      (click)="choosePlan()">Choose
+      Plan</button>
+  </div>
+</ng-container>
 
 <mat-menu #notifs="matMenu" class="header-bell-menu">
   <div class="main-div-bell" mat-menu-item [disableRipple]="true">
