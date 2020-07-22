@@ -2,7 +2,7 @@
   <div class="row">
     <span class="col-md-3 col-xs-6 display-flex">
       <span>
-        <span class="text-semi-bold"> GRN No.-</span>
+        <span class="text-semi-bold p-r-5"> GRN No.-</span>
         <mat-form-field class="border-input width-50">
           <input matInput type="string" formControlName="grnNo" placeholder="GRN No." class="m-r-5" />
           <small *ngIf="form.get('grnNo').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
@@ -11,7 +11,7 @@
     </span>
     <span class="col-md-3 col-xs-6 display-flex">
       <span>
-        <span class="text-semi-bold"> Date-</span>
+        <span class="text-semi-bold p-r-10"> Date-</span>
         <mat-form-field class="border-input width-50">
           <mat-label>GRN Date</mat-label>
           <input #dateinput matInput formControlName="grnDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly />
@@ -135,7 +135,7 @@
     <button mat-button matStepperPrevious mat-raised-button type="button" class="main-background-color main-button color-white m-b-5 mb-0">
       Back
     </button>
-    <button mat-button mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0">
+    <button mat-button mat-raised-button [disabled]="form.invalid" class="main-background-color main-button color-white m-b-5 mb-0">
       Submit
     </button>
   </div>

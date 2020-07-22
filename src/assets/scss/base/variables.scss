@@ -175,7 +175,7 @@ input {
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-label {
-  padding: 8px;
+  padding: 5px 8px 8px 0px;
 }
 
 .mat-form-field-infix {
@@ -295,7 +295,7 @@ input {
 .border-select .mat-form-field-flex {
   border-bottom: 2px solid $icon-color-gray;
   border-radius: 0px;
-  padding: 5px;
+  padding: 5px 5px 5px 0px;
 }
 
 .border-input.mat-form-field.mat-focused input,

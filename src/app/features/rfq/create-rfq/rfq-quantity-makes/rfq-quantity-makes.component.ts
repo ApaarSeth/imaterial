@@ -95,7 +95,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   formsInit() {
     const temp = 0;
@@ -109,12 +109,12 @@ export class RfqQuantityMakesComponent implements OnInit {
         return subCat.projectMaterialList.map(item => {
           let fullfilmentDate = item.fullfilmentDate ? (new Date(item.fullfilmentDate) < new Date() ? null : item.fullfilmentDate) : null;
           return this.formBuilder.group({
-            estimatedRate: [ item.estimatedRate, Validators.pattern(FieldRegExConst.RATES) ],
-            quantity: [ item.quantity ? item.quantity : null, [ Validators.required, this.quantityCheck(item.estimatedQty) ] ],
-            makes: [ item.makes ],
-            fullfilmentDate: [ fullfilmentDate ],
-            projId: [ item.projectId ],
-            matId: [ item.materialId ],
+            estimatedRate: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
+            quantity: [item.quantity ? item.quantity : null, [Validators.required, this.quantityCheck(item.estimatedQty)]],
+            makes: [item.makes],
+            fullfilmentDate: [fullfilmentDate],
+            projId: [item.projectId],
+            matId: [item.materialId],
           });
         });
       })
@@ -129,7 +129,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   }
 
   dateCheck(): ValidatorFn {
-    return (control: AbstractControl): { [ key: string ]: boolean } | null => {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
       if (control.value) {
         if (new Date(control.value) < new Date()) {
           control.setValue(null)
@@ -141,7 +141,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   }
 
   getMaterialLength(): ValidatorFn {
-    return (formGroup: FormGroup): { [ key: string ]: boolean } | null => {
+    return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
       checked = (<FormArray>formGroup.get('forms')).controls.every((val: FormGroup) => {
         return Number(val.value.quantity) > 0
@@ -169,14 +169,14 @@ export class RfqQuantityMakesComponent implements OnInit {
 
 
   quantityCheck(estimatedQty: number): ValidatorFn {
-    return (control: AbstractControl): { [ key: string ]: boolean } | null => {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
       if (estimatedQty < control.value) {
         this._snackBar.open(
           "Cannot add quantity greater than estimated qty",
           "",
           {
             duration: 2000,
-            panelClass: [ "warning-snackbar" ],
+            panelClass: ["warning-snackbar"],
             verticalPosition: "bottom"
           }
         );
@@ -190,14 +190,14 @@ export class RfqQuantityMakesComponent implements OnInit {
   makesUpdate(data: string[], grpIndex: number) {
     const forms = this.materialForms.get("forms") as FormArray;
     if (data.length <= 4) {
-      forms.controls[ grpIndex ].get("makes").setValue(data);
+      forms.controls[grpIndex].get("makes").setValue(data);
     } else {
       this._snackBar.open(
         "Only 5 brands allowed",
         "",
         {
           duration: 2000,
-          panelClass: [ "warning-snackbar" ],
+          panelClass: ["warning-snackbar"],
           verticalPosition: "bottom"
         }
       );
@@ -215,7 +215,7 @@ export class RfqQuantityMakesComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        data.defaultAddress = result ? result[ 1 ].address : data.defaultAddress;
+        data.defaultAddress = result ? result[1].address : data.defaultAddress;
       });
     }
   }
@@ -237,12 +237,12 @@ export class RfqQuantityMakesComponent implements OnInit {
             material.projectId === val.projId &&
             material.materialId === val.matId
           ) {
-            this.projectSelectedMaterials[ i ].projectMaterialList[
+            this.projectSelectedMaterials[i].projectMaterialList[
               j
             ].estimatedRate = val.estimatedRate;
-            this.projectSelectedMaterials[ i ].projectMaterialList[ j ].quantity =
+            this.projectSelectedMaterials[i].projectMaterialList[j].quantity =
               val.quantity;
-            this.projectSelectedMaterials[ i ].projectMaterialList[ j ].makes =
+            this.projectSelectedMaterials[i].projectMaterialList[j].makes =
               val.makes;
             if (val.fullfilmentDate) {
               let date = new Date(this.commonService.formatDate(val.fullfilmentDate))
@@ -250,11 +250,11 @@ export class RfqQuantityMakesComponent implements OnInit {
               const year = date.getFullYear().toString();
               const month = dummyMonth > 9 ? dummyMonth.toString() : "0" + dummyMonth.toString();
               const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
-              this.projectSelectedMaterials[ i ].projectMaterialList[
+              this.projectSelectedMaterials[i].projectMaterialList[
                 j
               ].fullfilmentDate = year + "-" + month + "-" + day;
             } else {
-              this.projectSelectedMaterials[ i ].projectMaterialList[
+              this.projectSelectedMaterials[i].projectMaterialList[
                 j
               ].fullfilmentDate = null;
             }
@@ -305,7 +305,7 @@ export class RfqQuantityMakesComponent implements OnInit {
       if (result !== null) {
         this.rfqData = this.generatedRfq;
         this.projectSelectedMaterials.map(project => project.projectMaterialList.map(mat => mat.documentList = (mat.materialId === result.materialId) ? result.documentsList : mat.documentList));
-        this.materialAdded();
+        // this.materialAdded();
       }
     });
   }

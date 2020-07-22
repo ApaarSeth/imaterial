@@ -84,6 +84,8 @@ export class GrnAddMaterialComponent implements OnInit {
             }
             else {
                 <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ pendingQty: 0 });
+                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['materialUnit'].enable();;
+                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['materialUnit'].reset();
                 <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['pendingQty'].disable();
             }
         })
