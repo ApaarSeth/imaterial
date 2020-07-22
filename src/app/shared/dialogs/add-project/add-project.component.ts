@@ -83,7 +83,8 @@ export class AddProjectComponent implements OnInit {
     this.countryList = this.data.countryList;
     this.currencyCode = localStorage.getItem('currencyCode');
     this.countryCode = localStorage.getItem('countryCode');
-    this.costUnits = [{ value: this.countryCode === "IN" ? "Crore" : "Thousand" }, { value: "Million" }, { value: "Billion" }];
+    let unitArray = this.countryCode === "IN" ? [{ value: "Crore" }] : [{ value: "Thousand" }, { value: "Million" }, { value: "Billion" }]
+    this.costUnits = [...unitArray];
     this.cntryId = Number(localStorage.getItem('countryId'));
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
