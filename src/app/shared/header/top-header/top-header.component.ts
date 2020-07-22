@@ -6,6 +6,7 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { Subscription, interval } from 'rxjs';
 import { MatSnackBar, MatSidenav } from '@angular/material';
 import { TokenService } from '../../services/token.service';
+import { SubscriptionPaymentsService } from '../../services/subscriptions-payments.service';
 
 @Component({
   selector: 'app-top-header',
@@ -30,18 +31,20 @@ export class TopHeaderComponent implements OnInit {
   newunreadMessage: number = null;
   isWhatsappIconDisplay: string;
   isMobile: boolean;
+  @Input('subscriptionsData') subscriptionsData: any;
 
   isFreeTrial: any;
   isFreeTrialActivate: boolean;
 
   isActiveSubscription: boolean;
+  users: UserService;
 
   constructor(
     private commonService: CommonService,
     private _snackBar: MatSnackBar,
     private _userService: UserService,
     private router: Router,
-    private tokenService: TokenService
+    private subsPayService: SubscriptionPaymentsService
   ) { }
 
   ngOnInit() {
@@ -57,6 +60,8 @@ export class TopHeaderComponent implements OnInit {
     this.url = localStorage.getItem('profileUrl');
     this.isWhatsappIconDisplay = localStorage.getItem("countryCode");
 
+    this.getUserInformation(this.userId);
+
     this.getNotifications();
     this.startSubscriptions();
 
@@ -66,26 +71,41 @@ export class TopHeaderComponent implements OnInit {
     this.checkFreeTrial();
   }
 
-  checkFreeTrial() {
-    this.commonService.getSubscriptionPlan().then(res => {
-      if (res.data && res.data.planFrequencyList !== null) {
-        let checked = 0;
-        res.data.planFrequencyList.forEach(item => {
-          item.planList.forEach(itm => {
-            if (checked === 0) {
-              if (itm.isTrialActive === 1) {
-                checked = 1;
-                this.isFreeTrial = itm.activeSubscription;
-                this.isFreeTrialActivate = true;
-              } else {
-                this.isFreeTrial = null;
-                this.isFreeTrialActivate = false;
-              }
-            }
-          });
-        });
-      }
+  getUserInformation(userId) {
+    this._userService.getUserInfo(userId).then(res => {
+      this.users = res.data ? res.data[ 0 ] : null;
     });
+  }
+
+  checkFreeTrial() {
+    const data = this.subscriptionsData;
+    if (data && data.planFrequencyList.length) {
+      let checked = 0;
+      for (let i = 0; i < data.planFrequencyList.length; i++) {
+        for (let x = 0; x < data.planFrequencyList[ i ].planList.length; x++) {
+          if (checked == 0) {
+            if (data.planFrequencyList[ i ].planList[ x ].isTrialActive === 1) {
+              checked = 1;
+              this.isFreeTrial = data.planFrequencyList[ i ].planList[ x ];
+              const dates = data.planFrequencyList[ i ].planList[ x ].activeSubscription
+              data.planFrequencyList[ i ].planList[ x ][ 'daysLeft' ] = this.setTrialDaysLeft(dates.trialPeriodStartDate, dates.trialPeriodEndDate);
+              this.isFreeTrialActivate = true;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  choosePlan() {
+    this.subsPayService.chooseSubcriptionPlan('0', this.isFreeTrial.planId, this.isFreeTrial.offerId, this.isFreeTrial.planPricingId, this.isFreeTrial.planEncryptId, this.isFreeTrial.planPricingEncryptId, this.users);
+  }
+
+  setTrialDaysLeft(date1, date2) {
+    let dt1 = new Date(date1);
+    let dt2 = new Date(date2);
+    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
   }
 
   startSubscriptions() {
@@ -109,9 +129,6 @@ export class TopHeaderComponent implements OnInit {
       this._userService.UpdateProfileImage.subscribe(image => {
         this.url = image;
         localStorage.setItem('profileUrl', this.url);
-      }),
-      this._userService.isActivatedSubscription$.subscribe(res => {
-        this.isActiveSubscription = res;
       })
     );
   }

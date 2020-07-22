@@ -1,9 +1,9 @@
 <div class="header-fixed">
   <div class="row">
     <div class="col-xs-12">
-      <app-top-header [menu]="menu"></app-top-header>
+      <app-top-header [menu]="menu" [subscriptionsData]="subscriptionsData"></app-top-header>
     </div>
-    
+
     <!-- <div class="col-sm-2 blue-background-color" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false" fxShow="true" *ngIf="role">
       <ng-container *ngFor="let selectedHeader of headerConst">
         <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]">
