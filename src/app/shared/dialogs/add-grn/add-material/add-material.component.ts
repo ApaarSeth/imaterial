@@ -19,6 +19,7 @@ export class GrnAddMaterialComponent implements OnInit {
     filteredMaterialName: Subcategory[]
     addMaterialsForm: FormGroup;
     orgId: number
+    searchUnit: string = ''
     projectId: number
     materialUnit: string[]
     currency: string
@@ -56,12 +57,12 @@ export class GrnAddMaterialComponent implements OnInit {
 
 
     addMaterialFormGroup() {
-        const frmGrp = this.formBuilder.group({
+        let frmGrp = this.formBuilder.group({
             materialName: ['', [Validators.required, Validators.maxLength(300)]],
             materialUnit: ['', [Validators.required, Validators.maxLength(300)]],
             deliveredQty: ['', [Validators.required, Validators.maxLength(300)]],
             index: [],
-            pendingQty: ['', [Validators.required, Validators.maxLength(300)]],
+            pendingQty: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(300)]],
             materialUnitPrice: ['', [Validators.required, Validators.maxLength(300)]],
             amount: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(300)]]
         });
@@ -74,34 +75,57 @@ export class GrnAddMaterialComponent implements OnInit {
                 observer.next(val);
                 observer.complete();
             })
+            let index = frmGrp.get("index").value
+            let matGroup: FormGroup = null;
+            (<FormArray>this.addMaterialsForm.get('addMaterial'))['controls'].forEach((frmgrp: FormGroup) => {
+                if (frmGrp.value.index === index) {
+                    matGroup = frmgrp
+                }
+            }) as any
             if (typeof changes === 'object') {
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ materialUnit: (<Subcategory>changes).materialUnit });
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ pendingQty: (<Subcategory>changes).estimatedQty - (<Subcategory>changes).availableStock });
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['pendingQty'].disable();
-                if (<FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['materialUnit'].value.length) {
-                    <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['materialUnit'].disable();
+                matGroup.patchValue({ materialUnit: (<Subcategory>changes).materialUnit });
+                matGroup.patchValue({ pendingQty: (<Subcategory>changes).estimatedQty - (<Subcategory>changes).availableStock });
+                matGroup.controls['pendingQty'].disable();
+                if (matGroup.controls['materialUnit'].value.length) {
+                    matGroup.controls['materialUnit'].disable();
                 }
             }
             else {
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ pendingQty: 0 });
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['materialUnit'].enable();;
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['materialUnit'].reset();
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['pendingQty'].disable();
+                matGroup.controls['pendingQty'].enable();
+                matGroup.patchValue({ pendingQty: 0 });
+                matGroup.controls['pendingQty'].disable();
+                matGroup.controls['materialUnit'].enable();;
+                matGroup.controls['materialUnit'].reset();
+
             }
         })
         frmGrp.controls['materialUnitPrice'].valueChanges.subscribe(changes => {
+            let index = frmGrp.get("index").value
+            let matGroup: FormGroup = null;
+            (<FormArray>this.addMaterialsForm.get('addMaterial'))['controls'].forEach((frmgrp: FormGroup) => {
+                if (frmGrp.value.index === index) {
+                    matGroup = frmgrp
+                }
+            }) as any
             if (typeof changes === 'string') {
-                let deliveredQty = this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].value['deliveredQty'] as number;
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].get('amount').enable();
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ amount: Number(changes) * (deliveredQty ? deliveredQty : 0) });
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].get('amount').disable();
+                let deliveredQty = matGroup.value['deliveredQty'] as number;
+                matGroup.get('amount').enable();
+                matGroup.patchValue({ amount: Number(changes) * (deliveredQty ? deliveredQty : 0) });
+                matGroup.get('amount').disable();
 
             }
         })
         frmGrp.controls['deliveredQty'].valueChanges.subscribe(changes => {
+            let index = frmGrp.get("index").value
+            let matGroup: FormGroup = null;
+            (<FormArray>this.addMaterialsForm.get('addMaterial'))['controls'].forEach((frmgrp: FormGroup) => {
+                if (frmGrp.value.index === index) {
+                    matGroup = frmgrp
+                }
+            }) as any
             if (typeof changes === 'string') {
-                let materialUnitPrice = this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].value['materialUnitPrice'] as number;
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ amount: Number(changes) * (materialUnitPrice ? materialUnitPrice : 0) });
+                let materialUnitPrice = matGroup.value['materialUnitPrice'] as number;
+                matGroup.patchValue({ amount: Number(changes) * (materialUnitPrice ? materialUnitPrice : 0) });
             }
         })
         return frmGrp;
