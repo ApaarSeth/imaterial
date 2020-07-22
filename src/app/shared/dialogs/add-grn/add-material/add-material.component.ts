@@ -82,7 +82,7 @@ export class GrnAddMaterialComponent implements OnInit {
                     matGroup = frmgrp
                 }
             }) as any
-            if (typeof changes === 'object') {
+            if (changes && typeof changes === 'object') {
                 matGroup.patchValue({ materialUnit: (<Subcategory>changes).materialUnit });
                 matGroup.patchValue({ pendingQty: (<Subcategory>changes).estimatedQty - (<Subcategory>changes).availableStock });
                 matGroup.controls['pendingQty'].disable();
