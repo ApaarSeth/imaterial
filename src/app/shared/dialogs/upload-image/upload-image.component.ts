@@ -98,6 +98,10 @@ export class UploadImageComponent implements OnInit {
     })
   }
 
+  getFileSizeErr($event){
+    this.errorMessage = $event;
+  }
+
   /**
    * @description function calls when select a new file to upload, also checks file format, 
    * duplicate file names not allowed, if filename have special characters then can't upload 
@@ -126,7 +130,7 @@ export class UploadImageComponent implements OnInit {
 
     if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false) 
       && this.docs 
-      && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5) 
+      && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5) 
       && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
 
       if((this.prevDocumentList && this.prevDocumentList.length) || (this.documentList && this.documentList.length)){
