@@ -34,26 +34,22 @@ export class SubscriptionsComponent implements OnInit {
         this.isMobile = this.commonService.isMobile().matches;
         this.getUserInformation(localStorage.getItem('userId'));
         this.subscriptionsData = this.data.planFrequencyList;
-
+        this.getTrialDays(this.subscriptionsData);
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.data && changes.data.currentValue) {
-            this.getTrialDays();
-        }
+    getTrialDays(subs) {
 
-    }
-
-    getTrialDays() {
-        const days = this.data.planFrequencyList[0].planList[0].trialDays;
-        if (days < 30) {
-            this.trialDays = days + ' DAYS';
-        } else if (days == 30) {
-            this.trialDays = days + ' MONTH';
-        } else if (days > 30 && days < 60) {
-            this.trialDays = days + ' DAYS';
-        } else {
-            this.trialDays = days + ' MONTHS';
+        if (subs) {
+            const days = subs[ 0 ].planList[ 0 ].trialDays;
+            if (days < 30) {
+                this.trialDays = days + ' DAYS';
+            } else if (days == 30) {
+                this.trialDays = days + ' MONTH';
+            } else if (days > 30 && days < 60) {
+                this.trialDays = days + ' DAYS';
+            } else {
+                this.trialDays = days + ' MONTHS';
+            }
         }
     }
 
@@ -75,7 +71,7 @@ export class SubscriptionsComponent implements OnInit {
 
     getUserInformation(userId) {
         this._userService.getUserInfo(userId).then(res => {
-            this.users = res.data ? res.data[0] : null;
+            this.users = res.data ? res.data[ 0 ] : null;
         });
     }
 
@@ -85,7 +81,7 @@ export class SubscriptionsComponent implements OnInit {
         };
         this.subsPayService.postSubscriptionUnsubscribe(obj).then(res => {
             if (res.status === 1) {
-                this._router.navigate(["/subscriptions/unsubscribe"])
+                this._router.navigate([ "/subscriptions/unsubscribe" ])
             }
         });
     }
@@ -123,7 +119,7 @@ export class SubscriptionsComponent implements OnInit {
                 this.postToExternalSite(data);
             } else {
                 if (res.data) {
-                    this._router.navigate(["/profile/add-user"]);
+                    this._router.navigate([ "/profile/add-user" ]);
                 }
             }
 
@@ -136,7 +132,7 @@ export class SubscriptionsComponent implements OnInit {
         const form = window.document.createElement('form');
 
         Object.entries(dataToPost).forEach((field: any[]) => {
-            form.appendChild(this.createHiddenElement(field[0], field[1]));
+            form.appendChild(this.createHiddenElement(field[ 0 ], field[ 1 ]));
         });
 
         form.setAttribute('target', '_self');
@@ -157,7 +153,7 @@ export class SubscriptionsComponent implements OnInit {
     }
 
     showAllFeatures(event) {
-        event.currentTarget.children[0].children[1].innerHTML === 'keyboard_arrow_down' ? event.currentTarget.children[0].children[1].innerHTML = 'keyboard_arrow_up' : event.currentTarget.children[0].children[1].innerHTML = 'keyboard_arrow_down';
+        event.currentTarget.children[ 0 ].children[ 1 ].innerHTML === 'keyboard_arrow_down' ? event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_up' : event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_down';
         event.currentTarget.nextElementSibling.classList.toggle('f-hide');
     }
 
