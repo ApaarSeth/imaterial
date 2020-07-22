@@ -38,12 +38,14 @@
             <div class="row bom-details-table-div-part example-container mat-elevation-z8">
                 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="col-sm-12 bom-material-table">
                     <ng-container matColumnDef="materialName">
-                        <th *matHeaderCellDef class="first-column-row-header">
-                            Material Name
+                        <th *matHeaderCellDef class="bom-material-name-col">
+                            <mat-checkbox #allCh (change)="getElemenetChecked(allCh, dataSource, 'SelectAll')">
+                                Material Name
+                            </mat-checkbox>
                         </th>
                         <td class="text-left" mat-cell *matCellDef="let element"
                             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
-                            <mat-checkbox #ch (change)="getElemenetChecked(ch, element)" [checked]="element.checked"
+                            <mat-checkbox #ch (change)="getElemenetChecked(ch, element, 'Select')" [checked]="element.checked"
                                 [disabled]="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false">
                                 <div class="limited-character bom" matTooltip=" {{ element.materialName }}">
                                     {{ element.materialName }}
