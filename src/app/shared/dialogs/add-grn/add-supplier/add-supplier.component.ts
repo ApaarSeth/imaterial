@@ -89,7 +89,7 @@ export class GrnAddSupplierComponent implements OnInit {
             })
             if (typeof changes === 'object') {
                 this.form.patchValue({ email: (<Supplier>changes).email });
-                this.form.patchValue({ contact: (<Supplier>changes).contact_no });
+                this.form.patchValue({ contact: (<Supplier>changes).phoneNo });
                 let supplierCountry = this.countryList.filter((cntry: CountryCode) => {
                     return cntry.callingCode === (<Supplier>changes).countryCallingCode
                 })

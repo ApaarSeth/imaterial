@@ -42,6 +42,7 @@ export interface Supplier {
     supplierId: number,
     supplier_name: string,
     contact_no: string,
+    phoneNo?: string,
     email: string,
     pan: string,
     countryCallingCode: string,
