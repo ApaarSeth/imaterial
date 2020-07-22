@@ -24,7 +24,7 @@ export class GrnAddSupplierComponent implements OnInit {
     @Input("countryList") cntryList: CountryCode[];
     @Input("supplierList") supplrList: Supplier[];
     @Input("materialList") materialList: GrnMaterialList[];
-
+    @Input("projectId") prjctId: number
     filterSupplierName: Observable<Supplier[]>;
     searchCountry = "";
     countryList: CountryCode[] = [];
@@ -38,6 +38,7 @@ export class GrnAddSupplierComponent implements OnInit {
     config: AngularEditorConfig = AngularEditor.config;
     supplierList: Supplier[] = []
     isMobile: boolean
+    projectId: number
     constructor(
         private notifier: AppNotificationService,
         private commonService: CommonService,
@@ -54,6 +55,7 @@ export class GrnAddSupplierComponent implements OnInit {
         this.isMobile = this.commonService.isMobile().matches;
         this.cntryId = Number(localStorage.getItem('countryId'));
         this.getCountryCode();
+
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -62,6 +64,9 @@ export class GrnAddSupplierComponent implements OnInit {
         }
         if (changes.supplrList && changes.supplrList.currentValue) {
             this.supplierList = this.supplrList
+        }
+        if (changes.prjctId && changes.prjctId.currentValue) {
+            this.projectId = changes.prjctId.currentValue
         }
     }
     initForm() {
@@ -211,9 +216,9 @@ export class GrnAddSupplierComponent implements OnInit {
         if (grnDate) {
             grnDate = this.commonService.getFormatedDate(grnDate)
         }
-        let data = { ...this.form.getRawValue(), grnDate, supplierName, supplierId, materialList, documentList, countryCode }
+        let data = { ...this.form.getRawValue(), grnDate, supplierName, supplierId, materialList, documentList, countryCode, projectId: Number(this.projectId) }
         this.bomService.addGrnWithoutPo(data).then(res => {
-            if (res.statusCode === 201) {
+            if (res.statusCode === 200) {
                 this.notifier.snack("GRN Created Successfully!")
                 this.dialogRef.close(null)
             }
