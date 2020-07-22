@@ -24,6 +24,13 @@
     padding-left: 48px;
   }
 
+  .bom-material-name-col{
+    padding-left: 24px;
+    .mat-checkbox-frame {
+      border-color: rgb(255, 255, 255);
+    }
+  }
+
   .mat-column-materialName {
     width: 10% !important;
   }
@@ -156,6 +163,7 @@ div.limited-character.bom {
   h4 {
     text-shadow: 0 0 10px #000;
     word-break: break-word;
+    font-size: 1.25rem;
   }
 }
 
@@ -326,4 +334,42 @@ div.limited-character.bom {
 
 .ptop-15{
   padding-top: 15px;
+}
+
+.picsum-img-wrapper {
+  height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .img-fluid{
+    max-height: 100%;
+  }
+}
+
+.carousel-caption,
+.carousel-indicators{
+  bottom: 0px;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon{
+  width: 30px;
+  height: 30px;
+}
+
+.carousel-control-prev-icon{
+  background-image: url('/assets/images/left-arrow.svg')
+}
+
+.carousel-control-next-icon{
+ background-image: url('/assets/images/right-arrow.svg')
+}
+
+.w-45{
+  width: 45px;
+}
+
+.search-input-bom{
+  .mat-form-field-label{
+    padding-top: 0px !important;
+  }
 }

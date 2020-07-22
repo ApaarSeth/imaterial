@@ -24,6 +24,7 @@ export class UploadComponent implements OnInit {
   @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
   @Input() imageIntegration: boolean;
   @Input() errorMessage: boolean;
+  @Output() fileSizeErr = new EventEmitter<string>();
 
   constructor(private documentUploadService: DocumentUploadService,
     private _snackBar:MatSnackBar
@@ -82,11 +83,15 @@ export class UploadComponent implements OnInit {
            
       }
       else{
-           this._snackBar.open("File must be less than 5 mb", "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
+        if(this.imageIntegration){
+          this.fileSizeErr.emit("File should be less than 5 MB");
+        }else{
+          this._snackBar.open("File must be less than 5 mb", "", {
+           duration: 2000,
+           panelClass: ["success-snackbar"],
+           verticalPosition: "bottom"
+         });
+        }
       }
   
   }
