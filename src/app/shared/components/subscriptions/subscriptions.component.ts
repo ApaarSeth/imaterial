@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnDestroy } from "@angular/core";
 import { SubscriptionsList } from '../../models/subscriptions';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/userDashboard/user.service';
@@ -40,21 +40,21 @@ export class SubscriptionsComponent implements OnInit {
     getTrialDays(subs) {
 
         if (subs) {
-            const days = subs[ 0 ].planList[ 0 ].trialDays;
+            const days = subs[ 0 ].trialDays;
             if (days < 30) {
                 this.trialDays = days + ' DAYS';
             } else if (days == 30) {
-                this.trialDays = days + ' MONTH';
+                this.trialDays = '1 MONTH';
             } else if (days > 30 && days < 60) {
                 this.trialDays = days + ' DAYS';
             } else {
-                this.trialDays = days + ' MONTHS';
+                this.trialDays = '2 MONTHS';
             }
         }
     }
 
     getSubsciptionDiscounted(discount, price) {
-        return (price * (0. + discount));
+        return (Number(price) * (discount / 100));
     }
 
     startTrialTrigger() {
@@ -86,71 +86,75 @@ export class SubscriptionsComponent implements OnInit {
         });
     }
 
-    choosePlan(type, planId: number, offerId: number, price: number, planEncryptId: string, planPricingEncryptId: string) {
-
-        let obj = {
-            planId: planId,
-            planPricingId: price,
-            offerId: offerId,
-            isTrial: 0
-        };
-
-        type === '0' ? obj.isTrial = 0 : obj.isTrial = 1;
-
-        this.subsPayService.postSubscriptionPaymentInitiate(obj).then(res => {
-
-            if (type === '0') {
-                let data = {
-                    customerEmail: this.users.email,
-                    customerName: this.users.firstName + ' ' + this.users.lastName,
-                    customer_identifier: this.users.organizationId,
-                    // orderId: res.data.transactionId,
-                    orderId: res.data.orderId,
-                    // promoCode: 'DD234Q',
-                    validUpto: res.data.endDate,
-                    startDt: res.data.startDate,
-                    redirectUrl: res.data.redirectUrl,
-                    cancelUrl: res.data.cancelUrl,
-                    failureUrl: res.data.failureUrl,
-                    subscriptionPlanRefId: planEncryptId,
-                    subscriptionPlanPriceRefId: planPricingEncryptId,
-                    serviceName: 'iMaterial'
-                };
-                this.postToExternalSite(data);
-            } else {
-                if (res.data) {
-                    this._router.navigate([ "/profile/add-user" ]);
-                }
-            }
-
-        });
-
+    choosePlan(type, planId, offerId, price, planEncryptId, planPricingEncryptId) {
+        this.subsPayService.chooseSubcriptionPlan(type, planId, offerId, price, planEncryptId, planPricingEncryptId, this.users);
     }
 
-    private postToExternalSite(dataToPost): void {
+    // choosePlan(type, planId: number, offerId: number, price: number, planEncryptId: string, planPricingEncryptId: string) {
 
-        const form = window.document.createElement('form');
+    //     let obj = {
+    //         planId: planId,
+    //         planPricingId: price,
+    //         offerId: offerId,
+    //         isTrial: 0
+    //     };
 
-        Object.entries(dataToPost).forEach((field: any[]) => {
-            form.appendChild(this.createHiddenElement(field[ 0 ], field[ 1 ]));
-        });
+    //     type === '0' ? obj.isTrial = 0 : obj.isTrial = 1;
 
-        form.setAttribute('target', '_self');
-        form.setAttribute('method', 'post');
+    //     this.subsPayService.postSubscriptionPaymentInitiate(obj).then(res => {
 
-        form.setAttribute('action', ('https://dev-payment.buildsupply.io/payment/') + API.POST_SUBSCRIPTIONPAYMENTGATEWAY);
-        window.document.body.appendChild(form);
-        form.submit();
+    //         if (type === '0') {
+    //             let data = {
+    //                 customerEmail: this.users.email,
+    //                 customerName: this.users.firstName + ' ' + this.users.lastName,
+    //                 customer_identifier: this.users.organizationId,
+    //                 // orderId: res.data.transactionId,
+    //                 orderId: res.data.orderId,
+    //                 // promoCode: 'DD234Q',
+    //                 validUpto: res.data.endDate,
+    //                 startDt: res.data.startDate,
+    //                 redirectUrl: res.data.redirectUrl,
+    //                 cancelUrl: res.data.cancelUrl,
+    //                 failureUrl: res.data.failureUrl,
+    //                 subscriptionPlanRefId: planEncryptId,
+    //                 subscriptionPlanPriceRefId: planPricingEncryptId,
+    //                 serviceName: 'iMaterial'
+    //             };
+    //             this.postToExternalSite(data);
+    //         } else {
+    //             if (res.data) {
+    //                 this._router.navigate([ "/profile/add-user" ]);
+    //             }
+    //         }
 
-    }
+    //     });
 
-    private createHiddenElement(name: string, value: string): HTMLInputElement {
-        const hiddenField = document.createElement('input');
-        hiddenField.setAttribute('name', name);
-        hiddenField.setAttribute('value', value);
-        hiddenField.setAttribute('type', 'hidden');
-        return hiddenField;
-    }
+    // }
+
+    // private postToExternalSite(dataToPost): void {
+
+    //     const form = window.document.createElement('form');
+
+    //     Object.entries(dataToPost).forEach((field: any[]) => {
+    //         form.appendChild(this.createHiddenElement(field[ 0 ], field[ 1 ]));
+    //     });
+
+    //     form.setAttribute('target', '_self');
+    //     form.setAttribute('method', 'post');
+
+    //     form.setAttribute('action', ('https://dev-payment.buildsupply.io/payment/') + API.POST_SUBSCRIPTIONPAYMENTGATEWAY);
+    //     window.document.body.appendChild(form);
+    //     form.submit();
+
+    // }
+
+    // private createHiddenElement(name: string, value: string): HTMLInputElement {
+    //     const hiddenField = document.createElement('input');
+    //     hiddenField.setAttribute('name', name);
+    //     hiddenField.setAttribute('value', value);
+    //     hiddenField.setAttribute('type', 'hidden');
+    //     return hiddenField;
+    // }
 
     showAllFeatures(event) {
         event.currentTarget.children[ 0 ].children[ 1 ].innerHTML === 'keyboard_arrow_down' ? event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_up' : event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_down';

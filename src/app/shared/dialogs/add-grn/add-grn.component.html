@@ -1,5 +1,5 @@
 <div class="header-add-edit-dialog">
-  <h1 mat-dialog-title class="light-grey">Direct GRN via system</h1>
+  <h1 mat-dialog-title class="light-grey">Direct Receipts via system</h1>
   <button type="button" class="close" (click)="cancel()" aria-label="Close">
     <span aria-hidden="true">×</span>
   </button>
@@ -12,7 +12,8 @@
     </mat-step>
     <mat-step stepControl="Add Supplier">
       <ng-template matStepLabel>Add Supplier</ng-template>
-      <app-add-supplier *ngIf="materialList.length" [materialList]="this.materialList" [countryList]="this.countryList" [supplierList]="this.supplierList"> </app-add-supplier>
+      <app-add-supplier *ngIf="materialList.length" [projectId]="this.data" [materialList]="this.materialList" [countryList]="this.countryList" [supplierList]="this.supplierList">
+      </app-add-supplier>
     </mat-step>
   </mat-horizontal-stepper>
 </div>
