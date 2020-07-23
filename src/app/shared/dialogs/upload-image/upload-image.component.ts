@@ -104,7 +104,7 @@ export class UploadImageComponent implements OnInit {
 
   /**
    * @description function calls when select a new file to upload, also checks file format, 
-   * duplicate file names not allowed, if filename have special characters then can't upload 
+   * //duplicate file names not allowed, if filename have special characters then can't upload//
    * and manage successful upload counts
    * @param files file object of upload file
    */
@@ -116,19 +116,41 @@ export class UploadImageComponent implements OnInit {
     const acceptedFormatsArr = ["png", "jpg", "jpeg"];
     this.isDisplayErr = true;
 
-    if(this.countUploads){
+    if((this.prevDocumentList && this.prevDocumentList.length > 0) && (this.documentList && this.documentList.length === 0)){
       this.successfulUploads = 0;
     }
 
+    // if(this.countUploads){
+    //   this.successfulUploads = 0;
+    // }
+
     if((acceptedFormatsArr.indexOf(acceptedFormats) !== -1) && (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false)){
       this.successfulUploads++;
-      this.countUploads ? this.countUploads++ : this.countUploads;
+      // this.countUploads ? this.countUploads++ : this.countUploads;
       this.errorMessage = "";
     }else{
       this.errorMessage = "File format should be .jpg, .jpeg, .png";
     }
 
+
     if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false) 
+      && this.docs 
+      && (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0)) <= ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5) 
+      && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
+        
+        console.log("upload", this.successfulUploads);
+        this.errorMessage = '';
+        this.uploadDocs();
+
+    }else if((this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0)) > ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 10 : 5)){
+      this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier') ? 10 : 5} images.`
+      this.successfulUploads--;
+    }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true){
+      this.errorMessage = "Filename should not include special characters";
+    }
+
+
+    /*if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false) 
       && this.docs 
       && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5) 
       && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
@@ -152,10 +174,10 @@ export class UploadImageComponent implements OnInit {
       }
 
     }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5)){
-      this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5} images.`
+      this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier') ? 10 : 5} images.`
     }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true){
       this.errorMessage = "Filename should not include special characters";
-    }
+    }*/
     
   }
 
@@ -248,14 +270,18 @@ export class UploadImageComponent implements OnInit {
 
     //get the length of prrevious uploads after delete a file
     if(this.prevDocumentList && this.prevDocumentList.length)
-      this.prevDocumentList = this.prevDocumentList.filter(opt => opt.documentDesc !== url);
+      this.prevDocumentList = this.prevDocumentList.filter(opt => opt.documentShortUrl !== url);
 
     //get the length of latest uploads after delete a file
     if(this.documentList && this.documentList.length)
-      this.documentList = this.documentList.filter(opt => opt.documentDesc !== url);
+      this.documentList = this.documentList.filter(opt => opt.documentShortUrl !== url);
+
+    this.successfulUploads = this.documentList.length;
 
     // after removing/deleting uploaded file, manage the successful counts by summation of prev and latest uploads
-    this.countUploads = (this.prevDocumentList ? this.prevDocumentList.length : 0) + (this.documentList ? this.documentList.length : 0);
+    // this.countUploads = (this.prevDocumentList ? this.prevDocumentList.length : 0) + (this.documentList ? this.documentList.length : 0);
+    // this.successfulUploads = (this.prevDocumentList ? this.prevDocumentList.length : 0) + (this.documentList ? this.documentList.length : 0);
+    console.log("deleted", this.successfulUploads);
   }
 
   /**

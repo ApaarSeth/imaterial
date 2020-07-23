@@ -1,41 +1,37 @@
 <div class="page-start-point changeWidth pt-4">
 
   <ng-container *ngIf="(dataSourceTemp == null) ||  (dataSourceTemp == []) || dataSourceTemp.length==0 ">
-    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
-      <div class="add-user-img suppliers">
-        <img src="../../../../assets/images/supplier-background.png" alt="BuildSupply_Logo">
-        <div>
-          <p>
-            You haven't added any supplier yet. <br>
-            Please create one to continue.
-          </p>
-        </div>
-        <button mat-raised-button (click)="addSupplier()" class="main-background-color main-button color-white">
-          Add First Supplier
-        </button>
-        <br>
-        <p>
-          <br>
-          Or
-        </p>
-        <div class=" d-flex justify-content-center" appDnd>
-          <div class="mr-3 p-t-10">
-            <span class="cursor-pointer">
-              <img src="assets/images/download.png" alt="download" class="img-fluid mr-2 cursor-pointer ">
-              <a class="cursor-pointer" (click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')"> Download
-                Supplier Template</a></span>
-          </div>
-          <div class="mr-3 p-t-10 cursor-pointer">
-            <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload cursor-pointer"
-              style="display: none;" multiple (change)="uploadExcel($event.target.files)" />
-            <label for="fileDropRef" class="cursor-pointer upload-template"> <img src="assets/images/upload.png"
-                alt="upload" class="img-fluid mr-2 w-30 cursor-pointer"> Upload Supplier Template</label>
-          </div>
+      <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+     <div class="add-user-img suppliers">
+          <img src="../../../../assets/images/supplier-background.png" alt="BuildSupply_Logo">
+             <div>
+                  <p>
+                    You haven't added any supplier yet. <br>
+                    Please create one to continue.
+                  </p>
+            </div>
+                <button  mat-raised-button  (click)="addSupplier()" class="main-background-color main-button color-white">
+                  Add First Supplier
+                </button>
+                <br>
+                <p>
+                  <br>
+                  Or 
+                </p>
+                 <div class=" d-flex justify-content-center" appDnd>
+                    <div class="mr-3 p-t-10">
+                      <span  class="cursor-pointer">
+                        <img src="assets/images/download-bom.svg" alt="download" class="img-fluid mr-2 cursor-pointer w-45">
+                        <a class="cursor-pointer"(click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')"> Download Supplier Template</a></span>
+                    </div>
+                    <div  class="mr-3 p-t-10 cursor-pointer">
+                      <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload cursor-pointer" style="display: none;" multiple
+                        (change)="uploadExcel($event.target.files)" />
+                      <label for="fileDropRef" class="cursor-pointer upload-template"> <img src="assets/images/upload-bom.svg" alt="upload" class="img-fluid mr-2 w-45 cursor-pointer"> Upload Supplier Template</label>
+                    </div>
+                </div>
         </div>
       </div>
-    </div>
-
-
   </ng-container>
 
 
@@ -49,43 +45,35 @@
           </button>
         </div> -->
       <div class="row">
-        <div class="col-sm-4 col-md-3 column-1">
-          <mat-form-field class="example-form-field border-input">
-            <input matInput placeholder="Search Suppliers" type="search" (keyup)="applyFilter($event.target.value)" />
-            <button mat-button matSuffix mat-icon-button>
-              <mat-icon>search</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-        <div class="col-sm-8 col-md-9 column-2">
-          <div
-            [ngClass]="showResponsiveDesignIcons ? 'text-right add-user-details-button-right p-t-10' : 'text-right add-user-details-button-right p-t-10 p-r-20'">
-            <div class="text-right d-flex justify-content-end" appDnd>
-              <div class="mr-3 p-t-10">
-                <span class="cursor-pointer">
-                  <img *ngIf="!showResponsiveDesignIcons" src="assets/images/download.png" alt="download"
-                    class="img-fluid mr-2 cursor-pointer "
-                    (click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')">
-                  <img *ngIf="showResponsiveDesignIcons" src="assets/images/excel-download-res.svg" alt="download"
-                    class="img-fluid mr-2 cursor-pointer "
-                    (click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')">
+      <div class="col-sm-4 col-md-3 column-1">
+        <mat-form-field class="example-form-field border-input">
+          <input matInput placeholder="Search Suppliers" type="search" (keyup)="applyFilter($event.target.value)" />
+          <button mat-button matSuffix mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-8 col-md-9 column-2">
+        <div [ngClass]="showResponsiveDesignIcons ? 'text-right add-user-details-button-right p-t-10' : 'text-right add-user-details-button-right p-t-10 p-r-20'">
+          <div class="text-right d-flex justify-content-end" appDnd>
+            <div class="mr-3 cursor-pointer">
+              <span  class="cursor-pointer">
+                <img *ngIf="!showResponsiveDesignIcons" src="assets/images/download-bom.svg" alt="download" class="img-fluid mr-2 cursor-pointer w-45" (click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')">
+                <img *ngIf="showResponsiveDesignIcons" src="assets/images/excel-download-res.svg" alt="download" class="img-fluid mr-2 cursor-pointer " (click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')">
 
-                  <a class="cursor-pointer" *ngIf="!showResponsiveDesignIcons"
-                    (click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')">
+                <a class="cursor-pointer" *ngIf="!showResponsiveDesignIcons" (click)="downloadExcel('assets/images/Supplier_Upload_Template.xlsx')">
                     Download Supplier Template
-                  </a></span>
-              </div>
-              <div class="mr-3 p-t-10 cursor-pointer">
-                <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload cursor-pointer"
-                  style="display: none;" multiple (change)="uploadExcel($event.target.files)" />
-                <label for="fileDropRef" class="cursor-pointer upload-template">
-                  <img *ngIf="!showResponsiveDesignIcons" src="assets/images/upload.png" alt="upload"
-                    class="img-fluid mr-2 w-30 cursor-pointer">
-                  <img *ngIf="showResponsiveDesignIcons" src="assets/images/upload-res.svg" alt="upload"
-                    class="img-fluid mr-2 w-30 cursor-pointer">
-                  <span *ngIf="!showResponsiveDesignIcons">
-                    Upload Supplier Template
-                  </span>
+                </a></span>
+            </div>
+            <div  class="mr-3 cursor-pointer">
+              <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload cursor-pointer" style="display: none;" multiple
+                (change)="uploadExcel($event.target.files)" />
+              <label for="fileDropRef" class="cursor-pointer upload-template"> 
+                <img *ngIf="!showResponsiveDesignIcons" src="assets/images/upload-bom.svg" alt="upload" class="img-fluid mr-2 w-45 cursor-pointer"> 
+                <img *ngIf="showResponsiveDesignIcons" src="assets/images/upload-res.svg" alt="upload" class="img-fluid mr-2 w-30 cursor-pointer"> 
+                <a *ngIf="!showResponsiveDesignIcons" style="color: #222222;">
+                  Upload Supplier Template
+                </a> 
                 </label>
               </div>
               <button mat-raised-button (click)="addSupplier()"

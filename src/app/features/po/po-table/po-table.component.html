@@ -221,7 +221,7 @@
             </span>
 
             <span
-              class="mat-cell minwidth-11 text-align-right"
+              class="mat-cell add-taxes-col text-align-right"
               [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"
               *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
               [ngClass]="isMobile ? 'fontsize-10-px' : ''"
@@ -236,7 +236,7 @@
               <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
               <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ purchaseOrder.materialBrand }}</span>
               <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
-              <span class="mat-cell supplier-rates text-align-center" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
+              <span class="mat-cell supplier-rates text-align-left" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
                 <ng-container *ngIf="mode != 'edit'; else editRate">
                   {{
                     ratesBaseCurr ? (purchaseOrder.materialUnitPrice * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.materialUnitPrice | number: "1.2-2")
@@ -329,6 +329,7 @@
                 </ng-template>
               </span>
               <span *ngIf="isInternational && mode === 'edit' && mode === 'edit'" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" class="mat-cell"></span>
+              <span class="mat-cell po-images-list"></span>
             </div>
           </ng-container>
         </div>
