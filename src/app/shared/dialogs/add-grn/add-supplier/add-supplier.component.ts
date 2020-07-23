@@ -72,7 +72,7 @@ export class GrnAddSupplierComponent implements OnInit {
     initForm() {
         this.form = this.formBuilder.group({
             grnNo: ['', Validators.maxLength(300)],
-            grnDate: [''],
+            grnDate: ['', Validators.required],
             supplierName: ["", [Validators.required, Validators.maxLength(300)]],
             email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL), Validators.maxLength(300)]],
             contact: [null, [Validators.pattern(FieldRegExConst.MOBILE3), , Validators.maxLength(300)]],
