@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class UserService {
   UpdateProfileImage = new Subject<string>();
-  isActivatedSubscription$ = new Subject<any>();
+  choosePlanFromFreeTrail$ = new Subject<any>();
 
   constructor(private dataService: DataService,
     private _router: Router) { }
