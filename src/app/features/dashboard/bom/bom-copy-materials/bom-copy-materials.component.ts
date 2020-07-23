@@ -59,6 +59,7 @@ export class BomCopyMaterialComponent implements OnInit {
     allProjectsList: ProjectDetails[] = [];
     projectMaterialsList: Materials[] = [];
     @ViewChild('allCh', { static: false }) allCh;
+    searchText: string = null;
 
     public BomDetailsashboardTour: GuidedTour = {
         tourId: 'bom-details-tour',
@@ -200,6 +201,11 @@ export class BomCopyMaterialComponent implements OnInit {
                 this.router.navigate(['/project-dashboard/bom/'+this.projectId+'/bom-detail']);
             }
         })
+    }
+
+    searchProject(e){
+        this.allProjectsList.filter(proj => proj.projectName === e.value);
+        console.log(this.allProjectsList);
     }
 
     setLocalStorage() {

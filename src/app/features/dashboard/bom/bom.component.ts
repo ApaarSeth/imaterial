@@ -307,7 +307,6 @@ export class BomComponent implements OnInit {
     }
   }
 
-
   tabClick(event) {
     this.text.nativeElement.value = ""
     this.previousIndex = this.currentIndex ? this.currentIndex : 0;
@@ -339,7 +338,6 @@ export class BomComponent implements OnInit {
     }
   }
 
-
   openAddMyMaterial() {
     let data = this.projectId
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
@@ -347,10 +345,13 @@ export class BomComponent implements OnInit {
       data
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getProject(this.projectId);
-      this.callApi()
+      if(result !== null){
+        this.getProject(this.projectId);
+        this.callApi()
+      }
     })
   }
+
   openAddBomDialog(index: number) {
     const dialogRef = this.dialog.open(AddBomWarningComponent, {
       width: "400px",

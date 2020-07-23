@@ -361,3 +361,22 @@ s .validTill {
     padding: .3rem .1rem !important;
   }
 }
+
+.customPo .po-table .material-row{
+  height: auto;
+}
+
+.add-taxes-col{
+  min-width: 100px;
+  max-width: 120px;
+  span{
+    white-space: normal;
+  }
+}
+
+@media only screen and (max-width: 1300px){
+  .add-taxes-col {
+    min-width: 60px !important;
+    max-width: 80px;
+  }
+}

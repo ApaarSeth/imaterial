@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { ImageService } from '../../services/image-integration/image.service';
-import { ImageDocsLists } from '../../models/PO/po-data';
+import { ImageDocsLists, ImageList } from '../../models/PO/po-data';
 
 @Component({
   selector: "view-image-dialog",
@@ -10,8 +10,9 @@ import { ImageDocsLists } from '../../models/PO/po-data';
 
 export class ViewImageComponent implements OnInit {
 
-  selectedImages: ImageDocsLists[] = [];
   rfqId: number;
+  selectedImages: ImageDocsLists[] = [];
+  prevContractorImgs: ImageDocsLists[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<ViewImageComponent>,
@@ -30,6 +31,7 @@ export class ViewImageComponent implements OnInit {
         this.getAllRfqImages();
       }
     }else if(this.data.type === 'bid'){
+      this.getAllRfqImages();
       this.getAllSupplierImages();
     }else if(this.data.type === 'po'){
       this.getAllPOImages();
@@ -52,7 +54,11 @@ export class ViewImageComponent implements OnInit {
    */
   getAllRfqImages(){
     this._imageService.getRfqUploadedImages(this.data.rfqId, this.data.materialId).then(res => {
-      this.selectedImages = res.data;
+      if(this.data.type === 'bid'){
+        this.prevContractorImgs = res.data;
+      }else{
+        this.selectedImages = res.data;
+      }
     })
   }
 
@@ -61,8 +67,9 @@ export class ViewImageComponent implements OnInit {
    */
   getAllSupplierImages(){
     this._imageService.getSupplierUploadedImages(this.data.rfqId, this.data.materialId, this.data.supplierId).then(res => {
-      this.selectedImages = res.data;
-    })
+      //combined both supplier images and contractor images for specific material
+      this.selectedImages = [...(res.data ? res.data : []), ...(this.prevContractorImgs ? this.prevContractorImgs : [])];
+    });
   }
 
   /**

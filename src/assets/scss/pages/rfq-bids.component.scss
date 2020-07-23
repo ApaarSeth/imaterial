@@ -389,3 +389,51 @@ tr.tbl-body-cols.mat-row {
     }
   }
 }
+
+.rfq-final-step{
+  .mat-header-cell.mat-column-Material-Name {
+    width: 20%;
+  }
+
+  .mat-header-cell.mat-column-Required-Date {
+    width: 15%;
+  }
+}
+
+.view-bid-images-preview{
+  .images-lists.single-image{
+    .attached-image:first-child {
+      left: 0;
+      top: 0;
+      margin: auto;
+    }
+  }
+
+  .images-lists.double-images{
+    .attached-image:first-child {
+      left: 42px;
+      top: 18px;
+    }
+
+    .attached-image:nth-child(2) {
+      left: 48px;
+    }
+  }
+
+  .images-lists.triple-images{
+    .attached-image:first-child {
+      left: 38px;
+      top: 36px;
+    }
+
+    .attached-image:nth-child(2) {
+      left: 44px;
+      top: -2px;
+    }
+
+    .attached-image:nth-child(3) {
+      left: 50px;
+      top: -40px;
+    }
+  }
+}
