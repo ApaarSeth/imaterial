@@ -196,7 +196,7 @@ export class CreateRfqComponent implements OnInit {
       this.rfqService.addRFQ(materials, !rfqId ? true : false).then(res => {
 
         if (!rfqId) {
-          this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
+          this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
             state: { rfqData: res, selectedIndex: 1 }
           });
         }
@@ -208,6 +208,9 @@ export class CreateRfqComponent implements OnInit {
   }
 
   selectionChange(event) {
+    if (event.selectedIndex === 0) {
+      this.rfqData = null;
+    }
     this.currentIndex = event.selectedIndex;
     this.prevIndex = event.previouslySelectedIndex;
     this.rfqService.stepperIndex.next(this.prevIndex)

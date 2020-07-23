@@ -81,7 +81,7 @@
         <mat-form-field class="border-input" [ngClass]="{'width-95': isMobile}">
           <!-- <label matTooltip=" {{ form.controls['email'].value }}">{{ form.controls["email"].value }}</label> -->
           <!-- <div class="hiddenTooltip" matTooltipPosition="below" matTooltipClass="my-tooltip" matTooltip="hello" #tooltip="matTooltip"></div> -->
-          <input matInput type="email" formControlName="email" placeholder="Email *" />
+          <input matInput type="email" formControlName="email" placeholder="Email*" title="{{ form.controls['email'].value }}" />
           <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="form-error-msg"> Email is required </small>
           <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="form-error-msg"> Enter Valid Email</small>
           <small *ngIf="form.get('email').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>

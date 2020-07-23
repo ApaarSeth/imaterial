@@ -596,3 +596,12 @@ ngx-mat-drp-picker-overlay {
 .mt-80 {
   margin-top: 80px;
 }
+
+input [title]:hover {
+  font-style: italic;
+  color: gray;
+}
+input::title {
+  font-style: italic;
+  color: gray;
+}

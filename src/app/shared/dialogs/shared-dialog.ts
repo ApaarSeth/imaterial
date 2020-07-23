@@ -38,6 +38,7 @@ import { AddGrnComponent } from './add-grn/add-grn.component';
 import { GrnAddMaterialComponent } from './add-grn/add-material/add-material.component';
 import { GrnAddSupplierComponent } from './add-grn/add-supplier/add-supplier.component';
 import { AddGrnViaExcelComponent } from './addGrn-viaExcel/addGrnViaExcel.component';
+import { DeleteMyMaterialComponent } from './delete-my-material-confirmation/delete-myMaterial-confirmation.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -79,5 +80,6 @@ export const SharedDialogs = [
   AddGrnComponent,
   GrnAddMaterialComponent,
   GrnAddSupplierComponent,
-  AddGrnViaExcelComponent
+  AddGrnViaExcelComponent,
+  DeleteMyMaterialComponent
 ];
