@@ -46,6 +46,18 @@ export class RfqBidsComponent implements OnInit {
     });
     this.rfqService.rfqPo(this.orgId, this.rfqId).then(res => {
       this.rfqProjects = res.data;
+
+      this.rfqProjects.forEach(project => {
+        project.materialList.forEach(matList => {
+            matList.supplierList.forEach((supp, i) => {
+                const bidSubmitted = supp.brandDetailList.filter(brand => brand.materialUnitPrice !== null);
+                if(bidSubmitted.length > 0){
+                    supp.documentList = [...(supp.documentList ? supp.documentList : []), ...(matList.documentList ? matList.documentList : [])];
+                }
+            })
+        })
+      });
+
       this.formInit();
     });
   }
@@ -269,7 +281,7 @@ export class RfqBidsComponent implements OnInit {
    * function will call to open view image modal
    * @param rfqId, materialId, type
    */
-  viewAllImages(materialId, supplierId) {
+  viewAllImages(materialId, supplierId, projectId) {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",

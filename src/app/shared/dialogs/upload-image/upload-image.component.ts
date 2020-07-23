@@ -152,7 +152,7 @@ export class UploadImageComponent implements OnInit {
       }
 
     }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5)){
-      this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5} images.`
+      this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier') ? 10 : 5} images.`
     }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true){
       this.errorMessage = "Filename should not include special characters";
     }

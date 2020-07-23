@@ -17,7 +17,12 @@
                 <mat-form-field class="border-select select-project-dropdown w-100">
                     <mat-label>Select Project</mat-label>
                     <mat-select>
-                        <mat-option *ngFor="let project of allProjectsList" [value]="project.projectId" (click)="getProjectMaterials(project.projectId)">
+                        <div class="search-project-div">
+                            <input class="p-b-5" matInput type="Search Project..."
+                            placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"
+                            (keydown)="$event.stopPropagation()" autocomplete="off" />
+                        </div>
+                        <mat-option *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']" [value]="project.projectName" (click)="getProjectMaterials(project.projectId)">
                             {{project.projectName}}
                         </mat-option>
                     </mat-select>
