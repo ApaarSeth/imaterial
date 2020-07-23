@@ -2,9 +2,9 @@
   <div class="row">
     <span class="col-md-3 col-xs-6 display-flex">
       <span>
-        <span class="text-semi-bold p-r-5"> GRN No.-</span>
+        <span class="text-semi-bold p-r-5"> Receipts No.-</span>
         <mat-form-field class="border-input width-50">
-          <input matInput type="string" formControlName="grnNo" placeholder="GRN No." class="m-r-5" />
+          <input matInput type="string" formControlName="grnNo" placeholder="Receipts No." class="m-r-5" />
           <small *ngIf="form.get('grnNo').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
         </mat-form-field>
       </span>
@@ -13,7 +13,7 @@
       <span>
         <span class="text-semi-bold p-r-10"> Date-</span>
         <mat-form-field class="border-input width-50">
-          <mat-label>GRN Date</mat-label>
+          <mat-label>Receipts Date</mat-label>
           <input #dateinput matInput formControlName="grnDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly />
           <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
           <mat-datepicker #endDate startView="month"></mat-datepicker>
@@ -79,8 +79,9 @@
       </div>
       <div class="col-md-3 col-xs-12">
         <mat-form-field class="border-input" [ngClass]="{'width-95': isMobile}">
-          <label matTooltip=" {{ form.controls['email'].value }}">{{ form.controls["email"].value }}</label>
-          <input hidden matInput type="email" formControlName="email" placeholder="Email *" />
+          <!-- <label matTooltip=" {{ form.controls['email'].value }}">{{ form.controls["email"].value }}</label> -->
+          <!-- <div class="hiddenTooltip" matTooltipPosition="below" matTooltipClass="my-tooltip" matTooltip="hello" #tooltip="matTooltip"></div> -->
+          <input matInput type="email" formControlName="email" placeholder="Email *" />
           <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="form-error-msg"> Email is required </small>
           <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="form-error-msg"> Enter Valid Email</small>
           <small *ngIf="form.get('email').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
