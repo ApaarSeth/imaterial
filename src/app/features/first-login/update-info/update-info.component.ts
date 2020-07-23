@@ -48,7 +48,7 @@ export class UpdateInfoComponent implements OnInit {
   OthersId: number;
   imageFileSizeError: string;
   imageFileSizeCheck: boolean = true;
-  fileTypes: string[] = [ 'png', 'jpeg', 'jpg' ];
+  fileTypes: string[] = ['png', 'jpeg', 'jpg'];
   currencyList: Currency[] = [];
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
@@ -106,19 +106,19 @@ export class UpdateInfoComponent implements OnInit {
       this.roles = res.data;
       this.roles.splice(2, 1);
       const id = this.roles.filter(opt => opt.roleName === this.role);
-      this.roleId = id.length && id[ 0 ].roleId;
+      this.roleId = id.length && id[0].roleId;
     })
   }
 
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
       if (!localStorage.getItem('countryId')) {
-        this.countryId = res.data[ 0 ].countryId;
-        localStorage.setItem('countryId', res.data[ 0 ].countryId)
+        this.countryId = res.data[0].countryId;
+        localStorage.setItem('countryId', res.data[0].countryId)
       }
-      this.users = res.data ? res.data[ 0 ] : null;
+      this.users = res.data ? res.data[0] : null;
       if (this.users.roleName === 'l1') {
-        this.userInfoForm.controls.turnOverId.setValidators([ Validators.required ]);
+        this.userInfoForm.controls.turnOverId.setValidators([Validators.required]);
         this.userInfoForm.controls.turnOverId.updateValueAndValidity();
       }
       if (this.countryList) {
@@ -129,20 +129,20 @@ export class UpdateInfoComponent implements OnInit {
       let newcurrencyList: Currency[] = [];
       if (this.livingCountry.length) {
         newcurrencyList = this.currencyList.filter(val => {
-          return val.countryId === Number(this.livingCountry[ 0 ].countryId)
+          return val.countryId === Number(this.livingCountry[0].countryId)
         })
       }
       this.userInfoPatch();
       this.getTurnOverList();
 
-      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[ 0 ] : null)
+      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     });
   }
 
   userInfoPatch() {
     this.userInfoForm.patchValue({
       baseCurrency: '',
-      countryCode: this.livingCountry[ 0 ] ? this.livingCountry[ 0 ] : null,
+      countryCode: this.livingCountry[0] ? this.livingCountry[0] : null,
       organizationName: this.users.organizationName,
       organizationId: this.users.organizationId,
       firstName: this.users.firstName,
@@ -154,7 +154,7 @@ export class UpdateInfoComponent implements OnInit {
       userId: this.users.userId,
       roleDescription: this.users.roleDescription,
       ssoId: this.users.ssoId,
-      countryId: this.livingCountry[ 0 ] ? this.livingCountry[ 0 ].countryId : null,
+      countryId: this.livingCountry[0] ? this.livingCountry[0].countryId : null,
       trade: '',
       profileUrl: '',
       orgPincode: '',
@@ -192,23 +192,23 @@ export class UpdateInfoComponent implements OnInit {
 
   formInit() {
     this.userInfoForm = this._formBuilder.group({
-      baseCurrency: [ { value: '', disabled: this.permissionObj.rfqFlag ? false : true } ],
-      countryCode: [ { value: '', disabled: this.permissionObj.rfqFlag ? false : true } ],
+      baseCurrency: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
+      countryCode: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
       organizationName: [],
       organizationId: [],
-      firstName: [ '', Validators.required ],
-      lastName: [ '', Validators.required ],
-      email: [ '', [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ] ],
-      contactNo: [ '' ],
-      roleId: [ '', Validators.required ],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: [{ value: '', disabled: this.countryCode !== "IN" ? true : false }, [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      contactNo: [{ value: '', disabled: this.countryCode === "IN" ? true : false }],
+      roleId: ['', Validators.required],
       turnOverId: [],
       userId: [],
-      roleDescription: [ { value: '', disabled: true } ],
+      roleDescription: [{ value: '', disabled: true }],
       ssoId: [],
       countryId: [],
       trade: [],
-      profileUrl: [ '' ],
-      orgPincode: [ '', [ Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS) ] ]
+      profileUrl: [''],
+      orgPincode: ['', [Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS)]]
     });
 
     if (this.countryCode === "IN") {
@@ -224,8 +224,8 @@ export class UpdateInfoComponent implements OnInit {
           return val.countryId === Number(country.countryId)
         })
       }
-      this.countryId = newcurrencyList.length ? newcurrencyList[ 0 ].countryId : this.countryId;
-      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[ 0 ] : null)
+      this.countryId = newcurrencyList.length ? newcurrencyList[0].countryId : this.countryId;
+      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
     })
     this.userInfoForm.get('orgPincode').valueChanges.subscribe(val => {
       this.cityStateFetch(val)
@@ -235,8 +235,8 @@ export class UpdateInfoComponent implements OnInit {
   cityStateFetch(value) {
     this.commonService.getPincodeInternational(value, Number(this.countryId)).then(res => {
       if (res.data && res.data.length) {
-        let city = res.data[ 0 ].districtName;
-        let state = res.data[ 0 ].stateName;
+        let city = res.data[0].districtName;
+        let state = res.data[0].stateName;
         if (city && state)
           this.validPincode = true;
         else
@@ -282,17 +282,16 @@ export class UpdateInfoComponent implements OnInit {
         this.customTrade.get("trade").disable()
       }
     }
-
     this.selectedTradesId = this.selectedTrades.map((trades: TradeList) => trades.tradeId).flat()
   }
 
   onFileSelect(event) {
     if (event.target.files.length > 0) {
       var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[ 0 ]);
-      const file = event.target.files[ 0 ];
-      var fileSize = event.target.files[ 0 ].size; // in bytes
-      let fileType = event.target.files[ 0 ].name.split('.').pop();
+      reader.readAsDataURL(event.target.files[0]);
+      const file = event.target.files[0];
+      var fileSize = event.target.files[0].size; // in bytes
+      let fileType = event.target.files[0].name.split('.').pop();
 
       if (this.fileTypes.some(element => {
         return element === fileType
@@ -314,7 +313,7 @@ export class UpdateInfoComponent implements OnInit {
         this.localImg = '';
         this._snackBar.open("We don't support " + fileType + " in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
           duration: 2000,
-          panelClass: [ "success-snackbar" ],
+          panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
       }
@@ -342,7 +341,7 @@ export class UpdateInfoComponent implements OnInit {
         return trade;
       })
       // this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
-      this.userInfoForm.get('trade').setValue([ ...this.selectedTrades ]);
+      this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
       // this.userInfoForm.value.tradeId = [...this.selectedTrades];
       let countryCode = null;
       if (this.users.roleName === "l3") {
@@ -369,10 +368,10 @@ export class UpdateInfoComponent implements OnInit {
           localStorage.setItem('profileUrl', this.url);
         }
         if (this.users.roleName === 'l1')
-          this._router.navigate([ 'profile/subscriptions' ]);
+          this._router.navigate(['profile/subscriptions']);
         // this._router.navigate([ 'profile/add-user' ]);
         else if (this.users.roleName != 'l1')
-          this._router.navigate([ 'dashboard' ]);
+          this._router.navigate(['dashboard']);
       });
     }
   }

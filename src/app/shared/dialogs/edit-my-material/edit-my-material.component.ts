@@ -106,7 +106,7 @@ export class EditMyMaterialComponent implements OnInit {
     const addOtherFormGroup = this.data.materialList.map((data: material) => {
       let frmGrp = this._formBuilder.group({
         customMaterialId: data.customMaterialId,
-        materialName: [data.materialName, Validators.required],
+        materialName: [data.materialName, [Validators.required, Validators.maxLength(300)]],
         materialUnit: [data.materialUnit, Validators.required],
         index: [],
         trade: [{ tradeName: data.tradeName, tradeId: data.tradeId }],
@@ -185,7 +185,6 @@ export class EditMyMaterialComponent implements OnInit {
   }
 
   submit() {
-
     let myMaterial: MyMaterialPost = this.editMaterialForm.get("forms").value.map(val => {
       return {
         customMaterialId: val.customMaterialId,
@@ -253,9 +252,9 @@ export class EditMyMaterialComponent implements OnInit {
     let updateMaterial = { materialName: myMaterial[0].materialName, materialUnit: myMaterial[0].materialUnit, customMaterialId: myMaterial[0].customMaterialId }
     this.myMaterialService.updateMyMaterial(updateMaterial).then(res => {
       if (res.message = "done") {
-        this.resetMaterialName("My Materials Added")
+        this.dialogRef.close('done');
+        // this.resetMaterialName("My Materials Added")
       }
-      this.dialogRef.close('done');
     });
   }
 

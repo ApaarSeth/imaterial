@@ -18,10 +18,16 @@
         <div formArrayName="forms" class="width-100" *ngFor="let myMaterial of data.materialList; let i = index">
           <div class="row p-t-10" [formGroupName]="i">
             <div class="col-xs-3">
-              <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 3px;">
+              <mat-form-field class="border-input width-90">
+                <input type="text" placeholder="Material Name*" matInput formControlName="materialName" />
+                <small *ngIf="editMaterialForm.get('forms')['controls'][i]['controls']['materialName'].errors?.maxlength" class="warning-color"
+                  >maximum characters allowed is 300</small
+                >
+              </mat-form-field>
+              <!-- <mat-form-field class="width-90 mat-form-field-padding" style="padding-top: 3px;">
                 <mat-label>*Material Name</mat-label>
                 <textarea matInput formControlName="materialName" class="text-area-border"></textarea>
-              </mat-form-field>
+              </mat-form-field> -->
               <!-- <mat-error *ngIf="myMaterial.controls['email'].hasError('required') && myMaterial.controls['email'].touched">
                   Email is required
                 </mat-error> -->

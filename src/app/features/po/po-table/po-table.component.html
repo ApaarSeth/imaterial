@@ -150,7 +150,7 @@
             </span>
             <span class="mat-cell"></span>
             <span class="mat-cell maxwidth-20 p-l-0 p-r-0" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"
-              >{{ getMaterialQuantity(m) | number: "1.2-2" }}
+              >{{ getMaterialQuantity(m) | number: "1.2-2" }} {{ material.materialUnit }}
               <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
                 Must be less than {{material.poAvailableQty}}
               </span> -->
@@ -207,10 +207,10 @@
                 [ngClass]="material.purchaseOrderDetailList[0].documentList.length === 1 ? 'single-image' : (material.purchaseOrderDetailList[0].documentList.length === 2 ? 'double-images' : 'triple-images')"
                 (click)="viewAllImages(material.materialId)">
                 <ng-container *ngFor="let img of material.purchaseOrderDetailList[0].documentList; let i = index">
-                  <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                  <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
                 </ng-container>
               </div>
-  
+
               <ng-container *ngIf="!(material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList)">
                 <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
               </ng-container>

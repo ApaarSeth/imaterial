@@ -77,6 +77,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
   form: FormGroup;
   existingRfqData: AddRFQ = null
   previousIndex: number
+
   ngOnInit() {
     // this.allProjects = this.projectsList;
     this.isMobile = this.commonService.isMobile().matches;
@@ -112,7 +113,8 @@ export class RfqProjectMaterialsComponent implements OnInit {
         }
       })
     }
-    if (changes.existingRfq) {
+    if (changes.existingRfq && changes.existingRfq.currentValue) {
+      this.existingRfq = changes.existingRfq.currentValue;
       this.checkExistingData()
     }
   }
