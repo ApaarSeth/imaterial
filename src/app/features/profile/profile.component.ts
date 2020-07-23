@@ -70,8 +70,9 @@ export class ProfileComponent implements OnInit {
   }
 
   getAllApi() {
-    Promise.all([this._userService.getRoles()
-      , this._userService.getTurnOverList(),
+    let callingCode = localStorage.getItem('callingCode')
+    Promise.all([this.role !== 'l3' ? this._userService.getRoles() : null
+      , this.role !== 'l3' ? this._userService.getTurnOverList() : null,
     this.commonService.getCurrency(),
     this.commonService.getCountry(),
     this._userService.getUserInfo(this.userId),
@@ -86,22 +87,25 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserRoles(res) {
-    this.roles = res.data;
-    this.roles.splice(2, 1);
-    const id = this.roles.filter(opt => opt.roleName === this.role);
-    this.roleId = id[0].roleId;
+    if (res) {
+      this.roles = res.data;
+      this.roles.splice(2, 1);
+      const id = this.roles.filter(opt => opt.roleName === this.role);
+      this.roleId = id[0].roleId;
+    }
   }
-
   getTurnOverList(res) {
-    let callingCode = localStorage.getItem('callingCode')
-    this.turnOverList = res.data.filter(data => {
-      if (callingCode === '+91' && data.isInternational === 0) {
-        return data
-      }
-      else if (callingCode !== '+91' && data.isInternational === 1) {
-        return data
-      }
-    })
+    if (res) {
+      let callingCode = localStorage.getItem('callingCode')
+      this.turnOverList = res.data.filter(data => {
+        if (callingCode === '+91' && data.isInternational === 0) {
+          return data
+        }
+        else if (callingCode !== '+91' && data.isInternational === 1) {
+          return data
+        }
+      })
+    }
   }
 
   getCurrency(res) {
