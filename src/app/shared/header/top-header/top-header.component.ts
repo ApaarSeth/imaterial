@@ -77,6 +77,11 @@ export class TopHeaderComponent implements OnInit {
     });
   }
 
+  choosePlan() {
+    this.router.navigate([ '/subscriptions' ]);
+    // this.subsPayService.chooseSubcriptionPlan('0', this.isFreeTrial.planId, this.isFreeTrial.offerId, this.isFreeTrial.planPricingId, this.isFreeTrial.planEncryptId, this.isFreeTrial.planPricingEncryptId, this.users);
+  }
+
   checkFreeTrial() {
     const data = this.subscriptionsData;
     if (data && data.planFrequencyList.length) {
@@ -88,18 +93,14 @@ export class TopHeaderComponent implements OnInit {
               checked = 1;
               this.isFreeTrial = data.planFrequencyList[ i ].planList[ x ];
               const dates = data.planFrequencyList[ i ].planList[ x ].activeSubscription
-              data.planFrequencyList[ i ].planList[ x ][ 'daysLeft' ] = this.setTrialDaysLeft(dates.trialPeriodStartDate, dates.trialPeriodEndDate);
+              let tDate = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
+              data.planFrequencyList[ i ].planList[ x ][ 'daysLeft' ] = this.setTrialDaysLeft(tDate, dates.trialPeriodEndDate);
               this.isFreeTrialActivate = true;
             }
           }
         }
       }
     }
-  }
-
-
-  choosePlan() {
-    this.subsPayService.chooseSubcriptionPlan('0', this.isFreeTrial.planId, this.isFreeTrial.offerId, this.isFreeTrial.planPricingId, this.isFreeTrial.planEncryptId, this.isFreeTrial.planPricingEncryptId, this.users);
   }
 
   setTrialDaysLeft(date1, date2) {
