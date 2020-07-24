@@ -172,8 +172,8 @@
                     </ng-container>
                   </div>
 
-                  <ng-container *ngIf="!element?.documentList">
-                    <img src="assets/images/default-material.png" alt="default-material"
+                  <ng-container *ngIf="!(element && element.documentList && element.documentList.length)">
+                    <img src="assets/images/project-default-image.png" alt="default-material"
                       class="img-fluid default-image" />
                   </ng-container>
 

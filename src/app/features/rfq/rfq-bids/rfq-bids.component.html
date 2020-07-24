@@ -113,7 +113,7 @@
                         </div>
                       </span>
 
-                      <span class="mat-cell maxwidth-10">
+                      <span class="mat-cell maxwidth-10 text-center">
                         Attached Images
                       </span>
                     </section>
@@ -172,16 +172,16 @@
                         </div>
 
                         <!-- Attached Image Column individual Supplier -->
-                        <div class="mat-cell maxwidth-10 view-bid-images-preview">
-                          <div *ngIf="supplier?.documentList?.length" class="images-lists"
-                            (click)="viewAllImages(material.materialId, supplier.supplierId)">
+                        <div class="mat-cell maxwidth-10 view-bid-images-preview text-center">
+                          <div *ngIf="supplier?.documentList?.length" class="images-lists" [ngClass]="supplier.documentList.length === 1 ? 'single-image' : (supplier.documentList.length === 2 ? 'double-images' : 'triple-images')"
+                            (click)="viewAllImages(material.materialId, supplier.supplierId, project.projectId)">
                             <ng-container *ngFor="let img of supplier.documentList; let i = index">
                               <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
                             </ng-container>
                           </div>
               
                           <ng-container *ngIf="!supplier?.documentList">
-                            <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
+                            <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
                           </ng-container> 
                         </div>
                       </div>

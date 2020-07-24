@@ -6,6 +6,8 @@ import { EditMyMaterialComponent } from 'src/app/shared/dialogs/edit-my-material
 import { CommonService } from 'src/app/shared/services/commonService';
 import { MyMaterialService } from 'src/app/shared/services/myMaterial.service';
 import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { DeleteMyMaterialComponent } from 'src/app/shared/dialogs/delete-my-material-confirmation/delete-myMaterial-confirmation.component';
 
 @Component({
 	selector: 'app-my-material-tab',
@@ -18,7 +20,7 @@ export class MyMaterialTabComponent implements OnInit {
 	isSearching: boolean;
 
 	constructor(public dialog: MatDialog,
-		private snackBar: MatSnackBar, private materialService: MyMaterialService, private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
+		private notifier: AppNotificationService, private materialService: MyMaterialService, private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
 
 	ngOnInit() {
 		// this.getMyMaterial();
@@ -54,7 +56,6 @@ export class MyMaterialTabComponent implements OnInit {
 		})
 	}
 
-
 	openEditDialog(c, sc) {
 		let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'edit' }
 		const dialogRef = this.dialogRef.open(EditMyMaterialComponent, {
@@ -63,22 +64,26 @@ export class MyMaterialTabComponent implements OnInit {
 		})
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === 'done') {
+				this.notifier.snack("Changes Saved")
 				this.getMyMaterial()
 			}
 		})
 	}
+
 	onDelete(c, sc) {
-		this.materialService.deleteApi(this.selectedCategory[c].materialList[sc].customMaterialId).then(res => {
-			if (res.statusCode = '201') {
-				this.snackBar.open("Material Successfully Deleted", "", {
-					duration: 4000,
-					panelClass: ["warning-snackbar"],
-					verticalPosition: "bottom"
-				});
-				this.selectedCategory[c].materialList.splice(sc, 1)
+		const dialogRef = this.dialogRef.open(DeleteMyMaterialComponent, {
+			width: "750px",
+		})
+		dialogRef.afterClosed().subscribe(result => {
+			if (result === 'yes') {
+				this.materialService.deleteApi(this.selectedCategory[c].materialList[sc].customMaterialId).then(res => {
+					if (res.statusCode = '201') {
+						this.notifier.snack("Material Successfully Deleted")
+						this.selectedCategory[c].materialList.splice(sc, 1)
+					}
+				})
 			}
 		})
-
 	}
 
 	searchCategory() {

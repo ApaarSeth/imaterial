@@ -150,7 +150,7 @@
             </span>
             <span class="mat-cell"></span>
             <span class="mat-cell maxwidth-20 p-l-0 p-r-0" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"
-              >{{ getMaterialQuantity(m) | number: "1.2-2" }}
+              >{{ getMaterialQuantity(m) | number: "1.2-2" }} {{ material.materialUnit }}
               <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
                 Must be less than {{material.poAvailableQty}}
               </span> -->
@@ -204,19 +204,20 @@
               <!-- View image modal link -->
               <!-- material?.purchaseOrderDetailList[0]?.documentList?.length -->
               <div *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length" class="images-lists"
+                [ngClass]="material.purchaseOrderDetailList[0].documentList.length === 1 ? 'single-image' : (material.purchaseOrderDetailList[0].documentList.length === 2 ? 'double-images' : 'triple-images')"
                 (click)="viewAllImages(material.materialId)">
                 <ng-container *ngFor="let img of material.purchaseOrderDetailList[0].documentList; let i = index">
-                  <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                  <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
                 </ng-container>
               </div>
-  
+
               <ng-container *ngIf="!(material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList)">
-                <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
+                <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
               </ng-container>
             </span>
 
             <span
-              class="mat-cell minwidth-11 text-align-right"
+              class="mat-cell add-taxes-col text-align-right"
               [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"
               *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
               [ngClass]="isMobile ? 'fontsize-10-px' : ''"
@@ -231,7 +232,7 @@
               <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
               <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ purchaseOrder.materialBrand }}</span>
               <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
-              <span class="mat-cell supplier-rates text-align-center" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
+              <span class="mat-cell supplier-rates text-align-left" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
                 <ng-container *ngIf="mode != 'edit'; else editRate">
                   {{
                     ratesBaseCurr ? (purchaseOrder.materialUnitPrice * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.materialUnitPrice | number: "1.2-2")
@@ -324,6 +325,7 @@
                 </ng-template>
               </span>
               <span *ngIf="isInternational && mode === 'edit' && mode === 'edit'" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" class="mat-cell"></span>
+              <span class="mat-cell po-images-list"></span>
             </div>
           </ng-container>
         </div>

@@ -264,6 +264,7 @@ div.limited-character.bom {
 
 .default-image {
   height: 50px;
+  // box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .red-border {
@@ -371,5 +372,44 @@ div.limited-character.bom {
 .search-input-bom{
   .mat-form-field-label{
     padding-top: 0px !important;
+  }
+}
+
+.search-project-div{
+  padding: 10px 15px 5px;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+/** image css for BOM if(single, double and triple images in the list)**/
+.bom-attached-images-col{
+  .images-lists.single-image .attached-image:first-child {
+    margin: auto;
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  
+  .images-lists.double-images{
+    .attached-image:first-child {
+      left: 24px;
+    }
+  
+    .attached-image:nth-child(2) {
+      left: 30px;
+    }
+  }
+
+  .images-lists.triple-images{
+    .attached-image:nth-child(3) {
+      left: 32px;
+    }
+
+    .attached-image:nth-child(2) {
+      left: 26px;
+    }
+
+    .attached-image:first-child {
+      left: 20px;
+    }
   }
 }

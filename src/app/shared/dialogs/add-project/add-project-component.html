@@ -32,8 +32,11 @@
             <mat-form-field class="border-input">
               <mat-label>Project Name*</mat-label>
               <input matInput type="text" formControlName="projectName" />
-              <!-- <mat-error>Project Name is Required</mat-error> -->
             </mat-form-field>
+            <small *ngIf="form.controls['projectName'].hasError('required') && form.controls['projectName'].touched"
+              class="form-error-msg">
+              Project name is required
+            </small>
           </div>
         </div>
 
@@ -44,6 +47,10 @@
             <mat-form-field class="border-input">
               <mat-label>Address 1*</mat-label>
               <input matInput type="text" formControlName="addressLine1" />
+              <small *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched"
+                class="form-error-msg">
+                Address is required
+              </small>
               <small
                 *ngIf="form.controls['addressLine1'].hasError('maxlength') && form.controls['addressLine1'].touched"
                 class="form-error-msg">
@@ -157,6 +164,10 @@
 
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
               <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
+              <small *ngIf="form.controls['startDate'].hasError('required') && form.controls['startDate'].touched"
+                class="form-error-msg">
+                Start date is required
+              </small>
             </mat-form-field>
           </div>
           <div class="col-xs-6 col-sm-6 date-dialog-add-edit">
@@ -169,6 +180,10 @@
                 (click)="endDate.open()" readonly />
               <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
               <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
+              <small *ngIf="form.controls['endDate'].hasError('required') && form.controls['endDate'].touched"
+                class="form-error-msg">
+                End date is required
+              </small>
             </mat-form-field>
             <small *ngIf="sameStartEndDate" class="error-msg sameStartEndDate"> End Date must be greater than Start Date
             </small>
@@ -187,6 +202,10 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <small *ngIf="form.controls['type'].hasError('required') && form.controls['type'].touched"
+              class="form-error-msg">
+              Project type is required
+            </small>
           </div>
 
           <div class="col-xs-6 col-sm-3">
@@ -212,6 +231,8 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <small *ngIf="form.controls['unit'].hasError('required') && form.controls['unit'].touched"
+              class="error-msg">Area unit is required </small>
           </div>
         </div>
         <!-- sixth row -->
@@ -242,6 +263,8 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <small *ngIf="form.controls['costUnit'].hasError('required') && form.controls['costUnit'].touched"
+              class="error-msg">Cost unit is required </small>
           </div>
 
           <div class="col-sm-6">

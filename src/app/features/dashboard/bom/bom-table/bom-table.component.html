@@ -148,10 +148,11 @@
           <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
             Attached Images
           </th>
-          <td class="text-align-center" mat-cell *matCellDef="let element"
+          <td class="text-align-center bom-attached-images-col" mat-cell *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
             <!-- View image modal link -->
             <div *ngIf="element?.documentsList?.length" class="images-lists"
+              [ngClass]="element.documentsList.length === 1 ? 'single-image' : (element.documentsList.length === 2 ? 'double-images' : 'triple-images')"
               (click)="viewAllImages(element.projectId, element.materialId)">
               <ng-container *ngFor="let img of element.documentsList; let i = index">
                 <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image"
@@ -160,7 +161,8 @@
             </div>
 
             <ng-container *ngIf="!element?.documentsList">
-              <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
+              <img src="assets/images/project-default-image.png" alt="default-material"
+                class="img-fluid default-image" />
             </ng-container>
           </td>
         </ng-container>
