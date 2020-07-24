@@ -33,7 +33,7 @@
           </button>
         </mat-form-field>
       </div>
-      <div class="text-right col-xs-5 add-project-btn p-t-10">
+      <div class="text-right col-xs-5 add-project-btn p-t-10" [ngClass]="isMobile ? 'sm-btn1' : '' ">
         <button mat-raised-button class="main-background-color main-button color-white demo-title"
           (click)="addProject()">
           + Add Project

@@ -34,3 +34,12 @@
 .w-40{
   width: 40%;
 }
+
+@media(max-width: 340px){
+  .xs-scrn-btn{
+    margin-right:5px;
+    button{
+      margin-top: 10px;
+    }
+  }
+}

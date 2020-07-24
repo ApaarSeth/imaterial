@@ -34,6 +34,8 @@ export class DashboardComponent implements OnInit {
   permissionObj: any;
   countryList: CountryCode[] = [];
 
+  isMobile: boolean;
+
   public dashboardTour: GuidedTour = {
     tourId: 'purchases-tour',
     useOrb: false,
@@ -113,6 +115,7 @@ export class DashboardComponent implements OnInit {
     this.permissionObj = this.permissionService.checkPermission(role);
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
+    this.isMobile = this.commonService.isMobile().matches;
     this.getAllProjects();
     this.countryList = this.route.snapshot.data.countryList;
 

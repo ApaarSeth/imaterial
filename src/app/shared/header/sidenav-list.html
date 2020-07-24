@@ -12,7 +12,8 @@
     </ng-container> -->
   <ng-container *ngIf="data && data.moduleList">
     <ng-container *ngFor="let item of data.moduleList">
-      <div [ngClass]="(buttonName && (buttonName === item.moduleName)) ? 'display-flex active' : 'display-flex'">
+      <div class="sidenav-btns"
+        [ngClass]="(buttonName && (buttonName === item.moduleName)) ? 'display-flex active' : 'display-flex'">
         <a href="javascript:void(0)" mat-list-item (click)="redirect(item.modulePath)">
           <img src="../../../assets/images/{{item.moduleIcon}}" alt="" />
           <span class="p-l-15">

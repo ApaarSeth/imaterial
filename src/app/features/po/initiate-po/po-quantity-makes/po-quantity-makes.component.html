@@ -1,6 +1,6 @@
 <form *ngIf="checkedMaterialsList" [formGroup]="materialForms">
   <div class="row">
-    <div class="col-xs-12 text-right p-b-10">
+    <div class="col-xs-12 text-right p-b-10" [ngClass]="isMobile ? 'sm-btn1 mt-2' : '' ">
       <span class="p-r-5">
         <span (click)="selectCurrency()"
           class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select

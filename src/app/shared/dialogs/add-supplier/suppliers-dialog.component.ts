@@ -27,6 +27,7 @@ export class SuppliersDialogComponent {
   calingCode: string;
   cntryId: number;
   isNational: boolean;
+  isMobile: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<SuppliersDialogComponent>,
@@ -65,7 +66,7 @@ export class SuppliersDialogComponent {
         return val.callingCode === obj.callingCode;
       }
     })
-    this.form.get('countryCode').setValue(this.livingCountry[0])
+    this.form.get('countryCode').setValue(this.livingCountry[ 0 ])
 
   }
 
@@ -79,23 +80,23 @@ export class SuppliersDialogComponent {
 
   initForm() {
     this.form = this.formBuilder.group({
-      supplier_name: ["", Validators.required],
-      email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      supplier_name: [ "", Validators.required ],
+      email: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ] ],
       // contact_no: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ] ],
-      contact_no: [null, [Validators.pattern(FieldRegExConst.MOBILE3)]],
-      pan: [""],
-      countryCallingCode: [null],
+      contact_no: [ null, [ Validators.pattern(FieldRegExConst.MOBILE3) ] ],
+      pan: [ "" ],
+      countryCallingCode: [ null ],
       countryCode: []
     });
     if (this.isNational) {
-      this.form.get('contact_no').setValidators([Validators.required, Validators.pattern(FieldRegExConst.MOBILE3)]);
+      this.form.get('contact_no').setValidators([ Validators.required, Validators.pattern(FieldRegExConst.MOBILE3) ]);
     }
   }
 
   submit() {
     let data = this.form.value;
     if (data.contact_no) {
-      data['countryCallingCode'] = this.form.get('countryCode').value.callingCode;
+      data[ 'countryCallingCode' ] = this.form.get('countryCode').value.callingCode;
     }
     delete data.countryCode;
     this.addSuppliers(this.data, data);
@@ -113,7 +114,7 @@ export class SuppliersDialogComponent {
         this.dialogRef.close(res.message);
         this._snackBar.open('Supplier Added', "", {
           duration: 2000,
-          panelClass: ["success-snackbar"],
+          panelClass: [ "success-snackbar" ],
           verticalPosition: "bottom"
         });
       }
