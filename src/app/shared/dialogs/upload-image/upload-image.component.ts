@@ -31,6 +31,7 @@ export class UploadImageComponent implements OnInit {
   contractorImagesList: ImageDocsLists[] = [];
   supplierContractorImages: ImageList[] | ImageDocsLists[] = [];
   isDisplayErr: boolean;
+  isEmptyImgList = false;
 
   constructor(
     private dialogRef: MatDialogRef<UploadImageComponent>,
@@ -57,6 +58,7 @@ export class UploadImageComponent implements OnInit {
     }else{
       this.projectId = this.data.projectId;
       this.materialId = this.data.materialId;
+      // this.isEmptyImgList = (this.prevDocumentList && this.prevDocumentList.length > 0) ? true : false;
       this.getUploadedImages();
     }
   }
@@ -188,6 +190,7 @@ export class UploadImageComponent implements OnInit {
     if (this.docs && this.docs.length) {
       const data = new FormData();
       data.append(`file`, this.docs[0]);
+      this.isEmptyImgList = true;
       this._documentUploadService.postDocumentUpload(data).then(res => {
         
         this.thumbnailImg = res.data.url;
@@ -267,6 +270,7 @@ export class UploadImageComponent implements OnInit {
     // if any image removes, then error message which was displaying previously (error related to filename, file format duplicate file) should also remove
     this.errorMessage = "";
     this.isDisplayErr = false;
+    this.isEmptyImgList = true;
 
     //get the length of prrevious uploads after delete a file
     if(this.prevDocumentList && this.prevDocumentList.length)

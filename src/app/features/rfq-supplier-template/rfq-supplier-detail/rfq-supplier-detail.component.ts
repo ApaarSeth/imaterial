@@ -532,6 +532,11 @@ export class RFQSupplierDetailComponent implements OnInit {
     return total + num;
   }
 
+  /**
+   * @description function will call to open upload modal and send some required data to that modal
+   * @param selectedMaterial 
+   * @param type 
+   */
   uploadImage(selectedMaterial, type) {
 
     let prevUploadedImageList: any;
@@ -566,7 +571,6 @@ export class RFQSupplierDetailComponent implements OnInit {
         this.rfqSupplierDetailList.projectList.map(project => {
           project.materialList.map(mat => {
             if(mat.materialId === matId[0]){
-              // mat.documentsList = result.filter(material => material.supplierId);
               mat.documentsList = result;
             }
           })

@@ -203,20 +203,16 @@
             <span class="mat-cell po-images-list">
               <!-- View image modal link -->
               <!-- material?.purchaseOrderDetailList[0]?.documentList?.length -->
-              <div
-                *ngIf="
-                  material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length
-                "
-                class="images-lists"
-                (click)="viewAllImages(material.materialId)"
-              >
+              <div *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length" class="images-lists"
+                [ngClass]="material.purchaseOrderDetailList[0].documentList.length === 1 ? 'single-image' : (material.purchaseOrderDetailList[0].documentList.length === 2 ? 'double-images' : 'triple-images')"
+                (click)="viewAllImages(material.materialId)">
                 <ng-container *ngFor="let img of material.purchaseOrderDetailList[0].documentList; let i = index">
                   <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
                 </ng-container>
               </div>
 
               <ng-container *ngIf="!(material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList)">
-                <img src="assets/images/default-material.png" alt="default-material" class="img-fluid default-image" />
+                <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
               </ng-container>
             </span>
 
