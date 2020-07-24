@@ -570,11 +570,6 @@ ngx-mat-drp-picker-overlay {
     display: block !important;
   }
 }
-.mtpd-2px {
-  .mat-form-field {
-    padding-top: 2px;
-  }
-}
 
 .lbm {
   label {
@@ -595,4 +590,48 @@ ngx-mat-drp-picker-overlay {
 }
 .mt-80 {
   margin-top: 80px;
+}
+
+.cntry{
+  min-width: 144px;
+  display: inline-block;
+}
+
+.pt-3px{
+  padding-top: 3px;
+}
+
+.sm-btn1{
+  .mat-raised-button{
+    line-height: 26px !important;
+  }
+  .main-button.mat-button-base{
+    min-width: 80px;
+    max-height: 30px;
+  }
+}
+
+
+@media(max-width: 599px){
+  .mat-form-field-infix{
+    font-size: 13px;
+  }
+  
+  .ngx-mat-drp-calendar-container{
+    display: flex;
+    flex-direction: column;
+    min-width: auto !important;
+    height: auto !important;
+  }
+}
+
+.sidenav-btns{
+  img{
+    width: 25px;
+    max-height: 25px;
+  }
+}
+
+.mnwtdh-140{
+  min-width: 140px;
 }

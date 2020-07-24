@@ -88,10 +88,12 @@
                   </span>
                 </label>
               </div>
-              <button mat-raised-button (click)="addSupplier()"
-                class="main-background-color main-button color-white add-supplier-button">
-                Add Supplier
-              </button>
+              <div [ngClass]="isMobile ? 'sm-btn1 pt-2' : '' ">
+                <button mat-raised-button (click)="addSupplier()"
+                  class="main-background-color main-button color-white add-supplier-button">
+                  Add Supplier
+                </button>
+              </div>
             </div>
           </div>
         </div>

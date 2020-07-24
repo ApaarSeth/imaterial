@@ -196,6 +196,9 @@
 @media(max-width: 599px){
 
     .subs-data{
+        h2{
+            font-size: 20px;
+        }
         .mat-tab-label{
             font-size: 12px;
             padding: 0 10px !important;
@@ -234,4 +237,34 @@
 .f-hide{
     height:0%;
     display: none !important;
+}
+
+
+@media(max-width: 360px){
+
+    .subs-data{
+        .mat-tab-label{
+            font-size: 10px;
+            padding: 0 5px !important;
+        }
+        .plan-limit{
+            span{
+                font-size: 10px;
+                padding:0 8px;
+                line-height: 26px;
+            }
+        }
+        .mat-tab-label {
+            height: 32px;
+        }
+
+        // .mat-ink-bar{
+        //     &:before{
+        //     content: '';
+        //     border-top: 15px solid #f47728;
+        //     border-left: 15px solid transparent;
+        //     border-right: 15px solid transparent;
+        //     }
+        // }
+    }
 }
