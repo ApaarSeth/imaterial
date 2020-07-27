@@ -2,7 +2,7 @@
   <div class="row">
     <span class="col-md-3 col-xs-6 display-flex">
       <span>
-        <span class="text-semi-bold p-r-5"> Receipts No.-</span>
+        <span class="text-semi-bold p-r-5"> Receipt No.-</span>
         <mat-form-field class="border-input width-50">
           <input matInput type="string" formControlName="grnNo" placeholder="Receipts No." class="m-r-5" />
           <small *ngIf="form.get('grnNo').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
@@ -13,7 +13,7 @@
       <span>
         <span class="text-semi-bold p-r-10"> Date-</span>
         <mat-form-field class="border-input width-50">
-          <mat-label>Receipts Date</mat-label>
+          <mat-label>Receipt Date</mat-label>
           <input #dateinput matInput formControlName="grnDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly />
           <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
           <mat-datepicker #endDate startView="month"></mat-datepicker>

@@ -62,7 +62,7 @@
 
       <!-- mat-menu that opens up after we click show-amount   -->
       <mat-menu #amount="matMenu" class="header-project-menu show-amount">
-        <button mat-menu-item *ngFor="let range of amountRange" [disableRipple]="true">
+        <button mat-menu-item *ngFor="let range of amountRange" (click)="clickMenuItem(range)">
           {{ range }}
         </button>
       </mat-menu>
@@ -123,7 +123,7 @@
                 <mat-expansion-panel-header class="border-row background-supplier">
                   <tr class="material-row backgound-none-important p-r-10">
                     <td class="mat-cell">{{ supplier.supplierName }}</td>
-                    <td class="mat-cell">{{ supplier.totalPoAmount }}</td>
+                    <td class="mat-cell">{{ supplier.totalPoAmount / this.conversionNumber }}</td>
                     <td class="mat-cell">{{ supplier.grnAmount }}</td>
                     <td class="mat-cell">{{ supplier.paymentRecived }}</td>
                     <td class="mat-cell">{{ supplier.totalPoAmount - supplier.paymentRecived }}</td>
