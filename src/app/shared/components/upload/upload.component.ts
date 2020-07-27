@@ -12,6 +12,7 @@ export class UploadComponent implements OnInit {
   @Input("grnResponsive") public grnResponsive: boolean;
   @Input() documentListLength: number;
   fileTypes : string[] = ['pdf', 'doc', 'docx', 'jpeg', 'png', 'jpg'];
+  imgFileTypes : string[] = ['jpeg', 'png', 'jpg'];
 
   deletedDocs: number[] = [];
   uploadedDocs: DocumentDetails[];
@@ -83,8 +84,14 @@ export class UploadComponent implements OnInit {
            
       }
       else{
+
+        /** If upload image is greater than 5 mb then it will check nested condition (if file extension matches accepted file format or not) **/
         if(this.imageIntegration){
-          this.fileSizeErr.emit("File should be less than 5 MB");
+          if(this.imgFileTypes.indexOf(fileType) === -1)
+            this.fileSizeErr.emit("File format should be .jpg, .jpeg, .png");
+
+          else
+            this.fileSizeErr.emit("File should be less than 5 MB");
         }else{
           this._snackBar.open("File must be less than 5 mb", "", {
            duration: 2000,

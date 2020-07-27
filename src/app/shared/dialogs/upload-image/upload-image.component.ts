@@ -19,7 +19,6 @@ export class UploadImageComponent implements OnInit {
   subFileName: string;
   errorMessage: string;
   thumbnailImg: string;
-  countUploads: number;
   successfulUploads: number = 0;
   docs: FileList;
   finalImagesList: any;
@@ -45,7 +44,6 @@ export class UploadImageComponent implements OnInit {
       this.rfqId = this.data.rfqId;
       this.materialId = this.data.selectedMaterial.materialId;
       this.getPrevUploadedRfqImages();
-      // this.prevDocumentList = this.data.selectedMaterial.documentList;
     }else if(this.data.type === 'supplier'){
       this.rfqId = Number(this.data.rfqId);
       this.materialId = this.data.selectedMaterial.materialId;
@@ -53,12 +51,9 @@ export class UploadImageComponent implements OnInit {
       this.getContractorImages();
     }else if(this.data.type === 'po'){
       this.getAllPOImages();
-      // this.prevDocumentList = this.data.selectedMaterial.purchaseOrderDetailList[0].documentList.filter(list => list.supplierId !== null);
-      // this.contractorImagesList = this.data.selectedMaterial.purchaseOrderDetailList[0].documentList.filter(list => list.supplierId === null)
     }else{
       this.projectId = this.data.projectId;
       this.materialId = this.data.materialId;
-      // this.isEmptyImgList = (this.prevDocumentList && this.prevDocumentList.length > 0) ? true : false;
       this.getUploadedImages();
     }
   }
@@ -105,8 +100,7 @@ export class UploadImageComponent implements OnInit {
   }
 
   /**
-   * @description function calls when select a new file to upload, also checks file format, 
-   * //duplicate file names not allowed, if filename have special characters then can't upload//
+   * @description function calls when select a new file to upload, also checks file format,
    * and manage successful upload counts
    * @param files file object of upload file
    */
@@ -122,13 +116,8 @@ export class UploadImageComponent implements OnInit {
       this.successfulUploads = 0;
     }
 
-    // if(this.countUploads){
-    //   this.successfulUploads = 0;
-    // }
-
     if((acceptedFormatsArr.indexOf(acceptedFormats) !== -1) && (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false)){
       this.successfulUploads++;
-      // this.countUploads ? this.countUploads++ : this.countUploads;
       this.errorMessage = "";
     }else{
       this.errorMessage = "File format should be .jpg, .jpeg, .png";
@@ -140,47 +129,15 @@ export class UploadImageComponent implements OnInit {
       && (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0)) <= ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5) 
       && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
         
-        console.log("upload", this.successfulUploads);
         this.errorMessage = '';
         this.uploadDocs();
 
-    }else if((this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0)) > ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 10 : 5)){
-      this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier') ? 10 : 5} images.`
+    }else if((this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0)) > ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5)){
+      this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5} images.`
       this.successfulUploads--;
     }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true){
       this.errorMessage = "Filename should not include special characters";
     }
-
-
-    /*if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false) 
-      && this.docs 
-      && (this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) <= ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5) 
-      && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
-
-      if((this.prevDocumentList && this.prevDocumentList.length) || (this.documentList && this.documentList.length)){
-        
-        const prevDuplicateUploads = (this.prevDocumentList && this.prevDocumentList.length) ? this.prevDocumentList.filter(file => file.documentDesc === this.docs[0].name) : [];
-        const latestDuplicateUploads = (this.documentList && this.documentList.length) ? this.documentList.filter(file => file.documentDesc === this.docs[0].name) : [];
-
-        if((prevDuplicateUploads && prevDuplicateUploads.length > 0) || (latestDuplicateUploads && latestDuplicateUploads.length > 0)){
-          this.errorMessage = "Files with same name are not allowed";
-          this.successfulUploads--;
-          this.countUploads ? this.countUploads-- : 0;
-        }else{
-          this.errorMessage = "";
-          this.uploadDocs();
-        }
-      }else{
-        this.errorMessage = '';
-        this.uploadDocs();
-      }
-
-    }else if((this.countUploads ? this.countUploads : (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0))) > ((this.data.type === 'rfq' || this.data.type === 'supplier') ? 3 : 5)){
-      this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier') ? 10 : 5} images.`
-    }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true){
-      this.errorMessage = "Filename should not include special characters";
-    }*/
-    
   }
 
   /**
@@ -281,11 +238,6 @@ export class UploadImageComponent implements OnInit {
       this.documentList = this.documentList.filter(opt => opt.documentShortUrl !== url);
 
     this.successfulUploads = this.documentList.length;
-
-    // after removing/deleting uploaded file, manage the successful counts by summation of prev and latest uploads
-    // this.countUploads = (this.prevDocumentList ? this.prevDocumentList.length : 0) + (this.documentList ? this.documentList.length : 0);
-    // this.successfulUploads = (this.prevDocumentList ? this.prevDocumentList.length : 0) + (this.documentList ? this.documentList.length : 0);
-    console.log("deleted", this.successfulUploads);
   }
 
   /**
