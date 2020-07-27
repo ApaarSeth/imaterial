@@ -65,12 +65,12 @@ export class AddGrnViaExcelComponent implements OnInit {
         });
     }
 
-    downloadExcel(url: string) {
+    downloadExcel() {
         this.grnService.downloadGrnTempelate(this.data)
-        //  .then(res => {
-        //     var win = window.open(res, "_blank");
-        //     win.focus();
-        // })
+            .then(res => {
+                var win = window.open(res, "_blank");
+                win.focus();
+            })
 
     }
 
