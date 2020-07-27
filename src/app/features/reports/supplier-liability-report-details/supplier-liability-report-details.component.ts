@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef, SimpleChanges } from "@angular/core";
-import { MatDialog, MatChipInputEvent, MatTableDataSource } from "@angular/material";
+import { MatDialog, MatChipInputEvent, MatTableDataSource, MatMenuTrigger } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   ProjectDetails,
@@ -30,6 +30,7 @@ import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierAdd } from 'src/app/shared/models/supplier';
+import { SupplierLiabilityReport } from 'src/app/shared/models/supplierLiabiltityReport.model';
 
 // chip static data
 export interface Fruit {
@@ -46,9 +47,9 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 
 
 export class SupplierLiabilityReportDetailComponent implements OnInit {
+  @ViewChild(MatMenuTrigger, { static: false }) triggerBtn: MatMenuTrigger;
   displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
   displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
-
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;
   allProjects: ProjectDetails[];
@@ -94,10 +95,13 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   materialForm: FormGroup;
   counter: number;
   addRfq: AddRFQ;
-
+  SupplierLiabiltyReportData: SupplierLiabilityReport
   allSuppliers: SupplierAdd[];
   selectedSupplier: SupplierAdd[] = [];
   alreadySelectedSupplierId: number[];
+  amountRange: string[];
+
+
 
   constructor(
     public dialog: MatDialog,
@@ -114,15 +118,20 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    let countryCode = localStorage.getItem("countryCode")
+    this.amountRange = countryCode === 'IN' ? ['Full figures', 'Lakhs', 'Crores'] : ['Full figures', 'Thousands', 'Millions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.allSuppliers = this.activatedRoute.snapshot.data.SupplierLiabilityReportResolver[0].data;
-    this.allProjects = this.activatedRoute.snapshot.data.SupplierLiabilityReportResolver[1].data;
-
+    this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data;
+    this.allProjects = this.activatedRoute.snapshot.data.resolverData[1].data;
     this.formInit();
     this.getNotifications();
+
   }
 
+  focus() {
+    this.triggerBtn.focus('mouse')
+  }
 
   formInit() {
     this.form = this.formBuilder.group({
@@ -130,6 +139,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
       selectedSupplier: ['']
     });
   }
+
   choosenProject() {
     this.projectIds = [];
     this.projectIds = this.form.value.selectedProject.map(
@@ -158,6 +168,10 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   }
 
   setLocalStorage() {
+  }
+
+  ngAfterViewInit() {
+    this.focus()
   }
 
 }
