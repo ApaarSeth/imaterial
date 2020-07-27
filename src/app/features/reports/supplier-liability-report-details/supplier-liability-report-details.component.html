@@ -61,8 +61,8 @@
       </div>
 
       <!-- mat-menu that opens up after we click show-amount   -->
-      <mat-menu #amount="matMenu" *ngFor="let range of amountRange" class="header-project-menu show-amount">
-        <button mat-menu-item [disableRipple]="true">
+      <mat-menu #amount="matMenu" class="header-project-menu show-amount">
+        <button mat-menu-item *ngFor="let range of amountRange" [disableRipple]="true">
           {{ range }}
         </button>
       </mat-menu>
