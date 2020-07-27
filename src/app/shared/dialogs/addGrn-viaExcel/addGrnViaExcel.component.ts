@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SnackbarComponent } from '../snackbar/snackbar.compnent';
 import { ConfirmRfqBidComponent } from '../confirm-rfq-bid/confirm-frq-bid-component';
+import { GRNService } from '../../services/grn/grn.service';
 
 @Component({
     selector: 'add-grn-viaExcel',
@@ -19,6 +20,7 @@ export class AddGrnViaExcelComponent implements OnInit {
         private bomService: BomService,
         private router: Router,
         private _snackBar: MatSnackBar,
+        private grnService: GRNService
     ) { }
     ngOnInit() {
         this.projectId = this.data
@@ -43,7 +45,7 @@ export class AddGrnViaExcelComponent implements OnInit {
 
     postMaterialExcel(data) {
         this.loading.show();
-        this.bomService.postMaterialExcel(data, this.projectId).then(res => {
+        this.grnService.uploadGrnTempelate(data, this.projectId).then(res => {
             this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
             this.loading.hide();
             if (res.statusCode === 201) {
@@ -63,9 +65,13 @@ export class AddGrnViaExcelComponent implements OnInit {
         });
     }
 
-    downloadExcel(url: string) {
-        var win = window.open(url, "_blank");
-        win.focus();
+    downloadExcel() {
+        this.grnService.downloadGrnTempelate(this.data)
+            .then(res => {
+                var win = window.open(res, "_blank");
+                win.focus();
+            })
+
     }
 
     cancel() {

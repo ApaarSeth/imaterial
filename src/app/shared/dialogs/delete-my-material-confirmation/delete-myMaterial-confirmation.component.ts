@@ -20,13 +20,11 @@ export class DeleteMyMaterialComponent implements OnInit {
   projectDetails: ProjectDetails;
   constructor(
     private dialogRef: MatDialogRef<DeleteMyMaterialComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
     private _snackBar: MatSnackBar,
     private projectService: ProjectService
   ) { }
 
   ngOnInit() {
-    this.projectDetails = this.data.detail;
   }
 
   close() {

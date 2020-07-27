@@ -18,30 +18,29 @@ export class MyMaterialTabComponent implements OnInit {
 	@Input("selectedCategory") selectedCategry: categoryNestedLevel[]
 	selectedCategory: categoryNestedLevel[] = [];
 	isSearching: boolean;
-
+	search: string = ''
 	constructor(public dialog: MatDialog,
 		private notifier: AppNotificationService, private materialService: MyMaterialService, private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
 
 	ngOnInit() {
-		// this.getMyMaterial();
-		this.commonService.materialAdded.subscribe(val => {
-			if (val) {
-				this.getMyMaterial();
-			}
-		})
+		// this.commonService.materialAdded.subscribe(val => {
+		// 	if (val) {
+		// 		this.getMyMaterial();
+		// 	}
+		// })
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.selectedCategry && changes.selectedCategry.currentValue) {
 			this.selectedCategory = changes.selectedCategry.currentValue
-			this.searchCategory()
+			this.searchCategory('')
 		}
 	}
 
 	getMyMaterial() {
 		this.commonService.getMyMaterial('approved').then(res => {
 			this.selectedCategory = [...res.data];
-			this.searchCategory();
+			this.searchCategory('');
 		});
 	}
 
@@ -51,7 +50,7 @@ export class MyMaterialTabComponent implements OnInit {
 		})
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === 'done') {
-				this.commonService.materialAdded.next(true)
+				this.getMyMaterial()
 			}
 		})
 	}
@@ -80,37 +79,38 @@ export class MyMaterialTabComponent implements OnInit {
 					if (res.statusCode = '201') {
 						this.notifier.snack("Material Successfully Deleted")
 						this.selectedCategory[c].materialList.splice(sc, 1)
+						if (!this.selectedCategory[c].materialList.length) {
+							this.selectedCategory.splice(c, 1)
+						}
 					}
 				})
 			}
 		})
 	}
 
-	searchCategory() {
-		this.bomService.searchText.subscribe(val => {
-			if (val && val !== '') {
-				this.isSearching = true;
-				for (let category of this.selectedCategory) {
-					for (let mat of category.materialList) {
-						if (mat.materialName.toLowerCase().indexOf(val.trim().toLowerCase()) > -1) {
-							mat.isNull = false;
-						}
-						else {
-							mat.isNull = true;
-						}
-					}
-					category.allNull = category.materialList.every(mat => mat.isNull)
-				}
-			}
-			else {
-				this.isSearching = false;
-				for (let category of this.selectedCategory) {
-					for (let mat of category.materialList) {
+	searchCategory(search) {
+		if (search && search !== '') {
+			this.isSearching = true;
+			for (let category of this.selectedCategory) {
+				for (let mat of category.materialList) {
+					if (mat.materialName.toLowerCase().indexOf(search.trim().toLowerCase()) > -1) {
 						mat.isNull = false;
 					}
-					category.allNull = false;
+					else {
+						mat.isNull = true;
+					}
 				}
+				category.allNull = category.materialList.every(mat => mat.isNull)
 			}
-		})
+		}
+		else {
+			this.isSearching = false;
+			for (let category of this.selectedCategory) {
+				for (let mat of category.materialList) {
+					mat.isNull = false;
+				}
+				category.allNull = false;
+			}
+		}
 	}
 }
