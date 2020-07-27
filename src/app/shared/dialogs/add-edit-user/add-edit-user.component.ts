@@ -55,6 +55,7 @@ export class AddEditUserComponent implements OnInit {
   searchCountry: string = '';
   calingCode: string;
   cntryId: number;
+  isMobile: boolean;
 
   constructor(
     private userService: UserService,
@@ -69,6 +70,7 @@ export class AddEditUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
     }
@@ -116,7 +118,7 @@ export class AddEditUserComponent implements OnInit {
         return val.callingCode === obj.callingCode;
       }
     })
-    this.form.get('countriesList').setValue(this.livingCountry[0])
+    this.form.get('countriesList').setValue(this.livingCountry[ 0 ])
     if (this.data.isEdit && (this.data.detail.accountStatus == 1)) {
       this.form.get('countriesList').disable();
     }
@@ -149,11 +151,11 @@ export class AddEditUserComponent implements OnInit {
       ),
       email: new FormControl(
         { value: this.data.isEdit ? this.data.detail.email : "", disabled: (this.data.isEdit && (this.data.detail.accountStatus == 1)) ? true : false },
-        [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]),
+        [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ]),
 
       contactNo: new FormControl(
         { value: this.data.isEdit ? this.data.detail.contactNo : "", disabled: (this.data.isEdit && (this.data.detail.accountStatus == 1)) ? true : false },
-        [Validators.pattern(FieldRegExConst.MOBILE3)]
+        [ Validators.pattern(FieldRegExConst.MOBILE3) ]
       ),
       roleId: new FormControl(
         this.data.isEdit ? this.data.detail.roleId : "",
@@ -164,7 +166,7 @@ export class AddEditUserComponent implements OnInit {
       ),
       creatorId: new FormControl(''),
       userId: new FormControl(this.data.isEdit ? this.data.detail.userId : null),
-      countryCode: [""],
+      countryCode: [ "" ],
       countriesList: []
     });
   }
@@ -177,7 +179,7 @@ export class AddEditUserComponent implements OnInit {
     var form_data = new FormData();
 
     for (var key in userDetails) {
-      form_data.append(key, userDetails[key]);
+      form_data.append(key, userDetails[ key ]);
     }
 
     this.userService.addUsers(userDetails).then(res => {
@@ -185,7 +187,7 @@ export class AddEditUserComponent implements OnInit {
         this.dialogRef.close(res.message);
         this._snackBar.open(res.message, "", {
           duration: 2000,
-          panelClass: ["success-snackbar"],
+          panelClass: [ "success-snackbar" ],
           verticalPosition: "bottom"
         });
         return res.data;
@@ -206,7 +208,7 @@ export class AddEditUserComponent implements OnInit {
             this.dialogRef.close(res.message);
             this._snackBar.open(res.message, "", {
               duration: 2000,
-              panelClass: ["success-snackbar"],
+              panelClass: [ "success-snackbar" ],
               verticalPosition: "bottom"
             });
             return res.data;
@@ -250,7 +252,7 @@ export class AddEditUserComponent implements OnInit {
   }
 
   userDetailsNavigate() {
-    this.router.navigate(["/users"]);
+    this.router.navigate([ "/users" ]);
   }
 
   closeDialog() {

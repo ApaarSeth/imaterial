@@ -453,6 +453,10 @@ body,
     align-items: center;
     overflow: hidden;
   }
+  .things-to-do__icons h6 {
+    font-size: 11px;
+  }
+
 }
 @media only screen and (max-width: 560px) {
   .project-dashboard {
@@ -638,5 +642,12 @@ body,
     min-width: 50% !important;
     max-width: 100% !important;
     padding-left: 15px;
+  }
+}
+
+
+@media(max-width:340px){
+  .things-to-do__icons {
+    min-width: 76px !important;
   }
 }

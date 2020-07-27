@@ -61,6 +61,7 @@ export class UserDetailComponent implements OnInit {
   allUsers: AllUserDetails;
   orgId: number;
   countryList: any[];
+  isMobile: boolean;
 
   public UserDashboardTour: GuidedTour = {
     tourId: 'supplier-tour',
@@ -99,7 +100,7 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-
+    this.isMobile = this.commonService.isMobile().matches;
     this.countryList = this.activatedRoute.snapshot.data.countryList;
 
     this.getAllUsers();

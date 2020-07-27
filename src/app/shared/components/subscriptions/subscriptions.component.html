@@ -22,8 +22,8 @@
       </ng-template>
 
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <div class="row" [ngClass]="isMobile ? 'ml-2 mr-2 mt-2' : 'mt-3'">
+        <div class="col-md-7 col-sm-12 m-0-auto">
+          <div class="row" [ngClass]="isMobile ? 'mt-2' : 'mt-3'">
             <div *ngFor="let plan of subscription.planList" class="col-md-6 mb-3 d-flex">
               <mat-card class="col-md-12 text-left">
                 <mat-card-header>
@@ -36,7 +36,7 @@
                   </mat-card-subtitle>
                 </mat-card-header>
 
-                <mat-card-content class="plan-limit justify-content-between">
+                <mat-card-content class="plan-limit justify-content-between" [ngClass]="isMobile ? 'sm-btn1' : '' ">
                   <span>{{ plan.planLimit.projectCount }} Project {{ plan.planLimit.userCount }} Users</span>
                   <ng-container *ngIf="plan.activeSubscription === null">
                     <button *ngIf="trialAction" mat-button class="main-background-color subs-btn"

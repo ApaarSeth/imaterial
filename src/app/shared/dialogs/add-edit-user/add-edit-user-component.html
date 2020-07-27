@@ -30,10 +30,13 @@
     <div class="col-xs-12 col-sm-12">
       <!-- address 1 -->
       <mat-form-field class="border-input add-edit-user-form-modal">
-        <input matInput type="text" placeholder="Email Id" formControlName="email" (input)="verifyEmail($event)" required />
+        <input matInput type="text" placeholder="Email Id" formControlName="email" (input)="verifyEmail($event)"
+          required />
         <!-- <mat-error class="mat-error-add-edit-form-modal">Email Id is Required</mat-error> -->
-        <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="form-error-msg"> Email is required </small>
-        <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="form-error-msg"> Enter Valid Email</small>
+        <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
+          class="form-error-msg"> Email is required </small>
+        <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
+          class="form-error-msg"> Enter Valid Email</small>
         <small class="form-error-msg" *ngIf="(!emailVerified)">Email already in use.</small>
       </mat-form-field>
     </div>
@@ -44,29 +47,24 @@
       <mat-form-field class="border-select mat-form-field-flex-mm-padding">
         <mat-select formControlName="countriesList">
           <div class="display-flex">
-            <input
-              class="p-l-10 p-b-5"
-              matInput
-              type="search"
-              placeholder="Search Country"
-              [(ngModel)]="searchCountry"
-              [ngModelOptions]="{standalone: true}"
-              (keydown)="$event.stopPropagation()"
-            />
+            <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country" [(ngModel)]="searchCountry"
+              [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()" />
             <button mat-button matSuffix mat-icon-button>
               <mat-icon>search</mat-icon>
             </button>
           </div>
           <mat-select-trigger>
-            <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-              ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+            <span
+              matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"><img
+                class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
               <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
               <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
             </span>
           </mat-select-trigger>
-          <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country" selected="trade.isAttatched"
-            ><span
-              ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+          <mat-option
+            *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
+            [value]="country" selected="trade.isAttatched"><span><img class="width17Percent p-r-10"
+                [src]="country.imageUrl" alt="" />
               <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
               <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
             </span>
@@ -79,7 +77,8 @@
       <!-- PinCode -->
       <mat-form-field class="border-input add-edit-user-form-modal">
         <input matInput type="text" placeholder="Phone No" formControlName="contactNo" />
-        <small *ngIf="form.controls['contactNo'].hasError('pattern') && form.controls['contactNo'].touched" class="form-error-msg"> Enter Valid Phone No</small>
+        <small *ngIf="form.controls['contactNo'].hasError('pattern') && form.controls['contactNo'].touched"
+          class="form-error-msg"> Enter Valid Phone No</small>
       </mat-form-field>
     </div>
   </div>
@@ -117,7 +116,8 @@
       <mat-form-field class="border-select add-edit-user-form-modal">
         <mat-label>Project</mat-label>
         <mat-select formControlName="projectIds" multiple>
-          <mat-option *ngFor="let project of allProjects" [value]="project.projectId">{{project.projectName}} </mat-option>
+          <mat-option *ngFor="let project of allProjects" [value]="project.projectId">{{project.projectName}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -126,8 +126,9 @@
   <!-- end structure -->
 
   <div mat-dialog-actions>
-    <div class="col-xs-12 col-sm-12 save-btn-add-edit-user-modal">
-      <button mat-raised-button [disabled]="!form.valid || !emailVerified" (click)="userDetailsNavigate()" class="main-background-color main-button color-white pull-right">
+    <div class="col-xs-12 col-sm-12 save-btn-add-edit-user-modal" [ngClass]="isMobile ? 'sm-btn1' : '' ">
+      <button mat-raised-button [disabled]="!form.valid || !emailVerified" (click)="userDetailsNavigate()"
+        class="main-background-color main-button color-white pull-right">
         <span *ngIf="!data.isEdit">Add</span>
         <span *ngIf="data.isEdit">Save</span>
       </button>

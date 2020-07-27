@@ -265,7 +265,7 @@
 
 .supplier-img-heading{
   width: 95%;
-  margin-left: 38px;
+  margin-left: 30px;
 }
 
 .supplier-bid-imgs{
@@ -337,23 +337,70 @@
   }
 }
 
-.po-images-list .images-lists{
-  position: absolute;
-  .attached-image{
-    position: relative;
-    &:first-child{
-      top: -30px;
-      left: 0px;
-    }
+.po-images-list{
+  min-height: 70px;
+  max-height: 75px;
+}
 
-    &:nth-child(2){
-      left: 6px;
-      top: -70px;
-    }
+.po-images-list {
+  .images-lists{
+    // position: absolute;
+    .attached-image{
+      position: relative;
+      &:first-child{
+        top: -30px;
+        left: 0px;
+      }
 
-    &:nth-child(3){
-      left: 13px;
-      top: -109px;
+      &:nth-child(2){
+        left: 6px;
+        top: -70px;
+      }
+
+      &:nth-child(3){
+        left: 13px;
+        top: -109px;
+      }
+    }
+  }
+
+  .images-lists.single-image{
+    .attached-image:first-child {
+      top: 12px;
+      left: -4px;
+    }
+  }
+
+  .images-lists.double-images{
+    .attached-image{
+      &:first-child {
+        top: 10px;
+        left: -4px;
+      }
+
+      &:nth-child(2) {
+        left: 3px;
+        top: -28px;
+      }
+    }
+  }
+
+  .images-lists.triple-images{
+    .attached-image{
+      &:first-child {
+        top: 10px;
+        left: -4px;
+      }
+
+      &:nth-child(2) {
+        left: 2px;
+        top: -30px;
+      }
+
+      &:nth-child(3) {
+        left: 8px;
+        top: -70px;
+      }
     }
   }
 }
