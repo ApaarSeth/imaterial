@@ -165,7 +165,7 @@
                   [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
                   <!-- View image modal link -->
                   <div *ngIf="element?.documentList?.length" class="images-lists mt-3"
-                    (click)="viewAllImages(element.materialId)">
+                    (click)="viewAllImages(element.materialId, element)">
                     <ng-container *ngFor="let img of element.documentList; let i = index">
                       <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image"
                         *ngIf="i < 3" />

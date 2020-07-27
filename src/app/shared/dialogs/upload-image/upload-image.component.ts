@@ -81,8 +81,21 @@ export class UploadImageComponent implements OnInit {
    */
   getPrevUploadedRfqImages(){
       this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
-        this.prevDocumentList = res.data;
+        if(res.data){
+
+          let rfqPrevImages: ImageDocsLists[] = [];
+
+          this.data.selectedMaterial.documentList.forEach(prevImg => res.data.forEach(newImg => {
+            if(prevImg.documentId === newImg.documentId){
+              rfqPrevImages.push(newImg);
+            }
+          }));
+
+          const newUploadedImageList = (this.data.selectedMaterial && this.data.selectedMaterial.documentList) ? this.data.selectedMaterial.documentList.filter(opt => opt.documentId === 0) : [];
+          this.prevDocumentList = [...rfqPrevImages, ...newUploadedImageList];
+        }
       });
+
   }
 
   /**
@@ -183,6 +196,7 @@ export class UploadImageComponent implements OnInit {
           "documentId": img.documentId,
           "documentThumbnailUrl": img.documentThumbnailUrl,
           "documentThumbnailShortUrl": img.documentThumbnailShortUrl,
+          "documentUrl": img.documentUrl ? img.documentUrl : null
         });
       })
     }
@@ -210,7 +224,7 @@ export class UploadImageComponent implements OnInit {
       this.finalImagesList.documentsList = [...this.finalImagesList.documentsList, ...this.contractorImagesList];
 
       return this._uploadImageService.uploadPOImage(this.finalImagesList).then(res => {
-        this.dialogRef.close('addImages');
+        this.dialogRef.close(this.finalImagesList);
       });
     }else{
       return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {

@@ -314,15 +314,16 @@ export class RfqQuantityMakesComponent implements OnInit {
    * function will call to open view image modal
    * @param rfqId, materialId, type
    */
-  viewAllImages(materialId) {
+  viewAllImages(materialId, selectedMaterial) {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
       panelClass: 'view-image-modal',
       data: {
+        selectedMaterial,
         rfqId: this.generatedRfq.rfqId,
         materialId,
-        type: 'rfq'
+        type: 'create-rfq',
       }
     });
 
