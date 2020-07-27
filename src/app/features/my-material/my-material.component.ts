@@ -31,7 +31,8 @@ export class MyMaterialComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'done') {
-        this.commonService.materialAdded.next(true)
+        this.getMyMaterial()
+        // this.commonService.materialAdded.next(true)
       }
     })
   }

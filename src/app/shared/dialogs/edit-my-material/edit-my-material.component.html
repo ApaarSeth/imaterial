@@ -59,77 +59,35 @@
               </mat-form-field>
             </div>
             <div class="col-xs-4 text-center">
-              <span *ngIf="data.type !== 'edit'; else elseTradeBlock">
-                <!-- <mat-form-field class="border-input width-90">
-                  <input type="text" onkeypress="return false;" placeholder="Trade" matInput formControlName="trade" [matAutocomplete]="auto" />
-                  <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn1">
-                    <mat-option matTooltip=" {{ trade.tradeName }}" *ngFor="let trade of this.tradesList" [value]="trade">
-                      {{ trade.tradeName }}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field> -->
+              <span>
                 <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                  <mat-select formControlName="trade">
+                  <input type="text" placeholder="Trade" matInput formControlName="trade" />
+
+                  <!-- <mat-select placeholder="Trade" formControlName="trade">
                     <mat-option *ngFor="let trade of tradesList" [value]="trade">
                       <span>
                         {{ trade.tradeName }}
                       </span>
                     </mat-option>
-                  </mat-select>
+                  </mat-select> -->
                 </mat-form-field>
               </span>
-              <ng-template #elseTradeBlock>
-                <span class="p-t-20 display-inline-block">
-                  {{ editMaterialForm["controls"]["forms"]["controls"][i]["controls"]["trade"].value.tradeName }}
-                </span>
-              </ng-template>
             </div>
             <div class="col-xs-3 text-center">
-              <span *ngIf="data.type !== 'edit'; else elseBlock">
+              <span>
                 <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                  <mat-label>Category*</mat-label>
-                  <mat-select formControlName="category">
-                    <div class="display-flex">
-                      <input
-                        class="p-l-10 p-b-5"
-                        matInput
-                        type="search"
-                        placeholder="Search Category"
-                        [(ngModel)]="searchCategory"
-                        [ngModelOptions]="{standalone: true}"
-                        (keydown)="$event.stopPropagation()"
-                      />
-                      <button mat-button matSuffix mat-icon-button>
-                        <mat-icon>search</mat-icon>
-                      </button>
-                    </div>
-                    <mat-option
-                      *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:['categoriesName']"
-                      [value]="option"
-                      matTooltip=" {{ option.categoriesName }}"
-                    >
-                      {{ option.categoriesName }}
+                  <input type="text" placeholder="Category" matInput formControlName="category" />
+                </mat-form-field>
+
+                <!-- <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
+                  <mat-select placeholder="Category" formControlName="category">
+                    <mat-option *ngFor="let option of this.filteredOption" [value]="option" matTooltip=" {{ option.categoriesName }}">
+                      <span> {{ option.categoriesName }}</span>
                     </mat-option>
                   </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
               </span>
-              <ng-template #elseBlock>
-                <span class="p-t-20 display-inline-block">
-                  {{ editMaterialForm["controls"]["forms"]["controls"][i]["controls"]["category"].value.categoriesName }}
-                </span>
-              </ng-template>
             </div>
-            <!-- <div class="col-xs-1 text-center p-t-15">
-              <div class="p-t-10">
-                <span *ngIf="i > 1" class="p-r-5">
-                  <a class="width-15-px cursor-pointer float-right-invite-delBtn" matTooltip="Delete" (click)="onDelete(i)">
-                    <span class="material-icons main-color">
-                      delete_outline
-                    </span>
-                  </a>
-                </span>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
