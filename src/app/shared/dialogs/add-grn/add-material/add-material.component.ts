@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn, AbstractControl } from '@angular/forms';
 import { TaxInfo } from 'src/app/shared/models/tax-cost.model';
 import { Observable } from 'rxjs';
 import { BomService } from 'src/app/shared/services/bom/bom.service';
@@ -8,6 +8,7 @@ import { Subcategory } from 'src/app/shared/models/subcategory-materials';
 import { MatRadioButton, MatSnackBar, MAT_DIALOG_DATA, MatStepper } from '@angular/material';
 import { Currency } from 'src/app/shared/models/currency';
 import { GrnFormMaterialList, GrnMaterialList } from 'src/app/shared/models/add-direct-grn';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
     selector: 'app-add-material',
@@ -25,6 +26,7 @@ export class GrnAddMaterialComponent implements OnInit {
     currency: string
     alreadyPresent: boolean = false;
     constructor(private _snackbar: MatSnackBar, private route: ActivatedRoute,
+        private notifier: AppNotificationService,
         private bomService: BomService,
         private formBuilder: FormBuilder,
         private stepper: MatStepper,
@@ -85,12 +87,14 @@ export class GrnAddMaterialComponent implements OnInit {
             if (changes && typeof changes === 'object') {
                 matGroup.patchValue({ materialUnit: (<Subcategory>changes).materialUnit });
                 matGroup.patchValue({ pendingQty: (<Subcategory>changes).estimatedQty - (<Subcategory>changes).availableStock });
+                matGroup.get('deliveredQty').setValidators([matGroup.get('deliveredQty').validator, this.quantityCheck(changes)])
                 matGroup.controls['pendingQty'].disable();
                 if (matGroup.controls['materialUnit'].value.length) {
                     matGroup.controls['materialUnit'].disable();
                 }
             }
             else {
+                matGroup.get('deliveredQty').setValidators([Validators.required, Validators.maxLength(300)])
                 matGroup.controls['pendingQty'].enable();
                 matGroup.patchValue({ pendingQty: 0 });
                 matGroup.controls['pendingQty'].disable();
@@ -138,6 +142,18 @@ export class GrnAddMaterialComponent implements OnInit {
         let filteredValue: Subcategory[] = !this.filteredMaterialName ? [] : this.filteredMaterialName.filter(option => option.materialName.toLowerCase().includes(value));
         return filteredValue;
 
+    }
+
+    quantityCheck(changes): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: boolean } | null => {
+            let checkValue = (<Subcategory>changes).estimatedQty - (<Subcategory>changes).availableStock
+            if (checkValue < control.value) {
+                this.notifier.snack("Cannot add quantity greater than " + checkValue);
+                control.setValue(0)
+                return { 'quanityExceed': true };
+            }
+            return null;
+        }
     }
 
     onSubmitMaterials() {

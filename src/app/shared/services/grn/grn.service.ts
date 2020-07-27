@@ -29,4 +29,13 @@ export class GRNService {
         });
     }
 
+    downloadGrnTempelate(projectId) {
+        return this.dataService.getRequest(API.GRNDOWNLOADTEMPELATE(projectId))
+    }
+
+    uploadGrnTempelate(data, projectId) {
+        return this.dataService.sendPostRequest(API.GRNUPLOADTEMPELATE(projectId), data)
+    }
+
+
 }
