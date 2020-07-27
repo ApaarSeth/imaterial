@@ -76,7 +76,7 @@ export class SubscriptionPaymentsService {
         form.setAttribute('target', '_self');
         form.setAttribute('method', 'post');
 
-        form.setAttribute('action', ('https://dev-payment.buildsupply.io/payment/') + API.POST_SUBSCRIPTIONPAYMENTGATEWAY);
+        form.setAttribute('action', Utils.paymentUrl() + API.POST_SUBSCRIPTIONPAYMENTGATEWAY);
         window.document.body.appendChild(form);
         form.submit();
 
