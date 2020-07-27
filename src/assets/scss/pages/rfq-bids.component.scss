@@ -340,6 +340,10 @@
 .po-images-list{
   min-height: 70px;
   max-height: 75px;
+
+  .default-image{
+    margin-top: 10px;
+  }
 }
 
 .po-images-list {
@@ -482,5 +486,16 @@ tr.tbl-body-cols.mat-row {
       left: 50px;
       top: -40px;
     }
+  }
+}
+
+/** view bid page - view rating and supplier rates column distortion css fixes **/
+@media only screen and (max-width: 1332px){
+  .view-bid-tbl{
+    max-width: 20% !important;
+  }
+
+  .supplier-rate-col-bid {
+    max-width: 15% !important;
   }
 }

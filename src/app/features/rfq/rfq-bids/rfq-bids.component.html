@@ -77,7 +77,7 @@
 
                 <div>
                   <section class="mat-header-row">
-                    <span class="mat-cell maxwidth-15 p-l-25">Material Name</span>
+                    <span class="mat-cell maxwidth-15 p-l-25 view-bid-tbl">Material Name</span>
                     <span class="mat-cell maxwidth-10">Quantity</span>
                     <span class="mat-cell maxwidth-15">Makes & Rates</span>
                   </section>
@@ -86,7 +86,7 @@
                 <ng-container formArrayName="materialList">
                   <div class="p-0" *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
                     <section class="mat-row rfqbid-header-color">
-                      <span class="mat-cell maxwidth-15 p-l-25">
+                      <span class="mat-cell maxwidth-15 view-bid-tbl p-l-25">
                         <div class="limited-character" matTooltip=" {{ material.materialName }}">
                           {{ material.materialName }} <br />
                           <!-- <span *ngIf="!rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.value" class="error-msg font-size9"> Net Quantity Should be less than {{material.poAvailableQty}} </span> -->
@@ -103,7 +103,7 @@
                             <span class="mat-cell maxwidth-10 text-center">
                               {{ brand }}
                             </span>
-                            <span class="mat-cell maxwidth-10 text-center">
+                            <span class="mat-cell maxwidth-10 text-center supplier-rate-col-bid">
                               Supplier Rates
                               <span *ngIf="this.rfqProjects[0].rfqCurrency" class="p-r-5 p-t-2">({{ currency }})</span>
                             </span>
@@ -120,10 +120,10 @@
 
                     <ng-container formArrayName="supplierList">
                       <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index" [formGroupName]="s">
-                        <span class="mat-cell maxwidth-15 p-l-25 limited-character" matTooltip=" {{ supplier.supplierName }}">
+                        <span class="mat-cell maxwidth-15 p-l-25 limited-character view-bid-tbl" matTooltip=" {{ supplier.supplierName }}">
                           <span class="supplier-name ml-0">{{ supplier.supplierName }}</span>
 
-                          <span class="d-block supplier-rates ml-0 mgbn12">
+                          <span class="d-block supplier-rates ml-0 mgbn12 view-bid-supp-rating">
                             <view-rating [supplierId]="material.materialId" [ratings]="supplier.rating"></view-rating>
                           </span>
                         </span>
@@ -155,7 +155,7 @@
                                   </ng-template>
                                 </div>
 
-                                <span class="mat-cell maxwidth-10 text-center">
+                                <span class="mat-cell maxwidth-10 text-center supplier-rate-col-bid">
                                   {{
                                     brandInfo.materialUnitPrice != null
                                       ? ratesBaseCurr
