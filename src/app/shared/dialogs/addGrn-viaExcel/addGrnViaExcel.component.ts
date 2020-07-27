@@ -68,7 +68,7 @@ export class AddGrnViaExcelComponent implements OnInit {
     downloadExcel() {
         this.grnService.downloadGrnTempelate(this.data)
             .then(res => {
-                var win = window.open(res, "_blank");
+                var win = window.open(res.data.url, "_blank");
                 win.focus();
             })
 

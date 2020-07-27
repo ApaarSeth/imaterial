@@ -7,8 +7,8 @@ import { SupplierLiabilityReportResolver } from "./resolver/supplier-liability-r
 const routes: Routes = [
   {
     path: "supplier-liability",
-    data : { breadcrumb: 'Supplier-Liability' },
-    resolve: { SupplierLiabilityReportResolver: SupplierLiabilityReportResolver },
+    data: { breadcrumb: 'Supplier-Liability' },
+    resolve: { resolverData: SupplierLiabilityReportResolver },
     component: SupplierLiabilityReportDetailComponent
   }
 ];
