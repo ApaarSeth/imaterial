@@ -56,6 +56,18 @@ export class ViewImageComponent implements OnInit {
     this._imageService.getRfqUploadedImages(this.data.rfqId, this.data.materialId).then(res => {
       if(this.data.type === 'bid'){
         this.prevContractorImgs = res.data;
+      }else if(this.data.type === 'rfq'){
+        
+        let rfqPrevImages: ImageDocsLists[] = [];
+
+        this.data.selectedMaterial.documentList.forEach(prevImg => res.data.forEach(newImg => {
+          if(prevImg.documentId === newImg.documentId){
+            rfqPrevImages.push(newImg);
+          }
+        }));
+
+        const newUploadedImageList = (this.data.selectedMaterial && this.data.selectedMaterial.documentList) ? this.data.selectedMaterial.documentList.filter(opt => opt.documentId === 0) : [];
+        this.selectedImages = [...rfqPrevImages, ...newUploadedImageList];
       }else{
         this.selectedImages = res.data;
       }
