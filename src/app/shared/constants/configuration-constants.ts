@@ -155,5 +155,7 @@ export const API = {
   GET_SUPPLIER_IMAGES: (rfqId, materialId, supplierId) => `rfq/getImages/${rfqId}/${materialId}/${supplierId}`,
   PO_ADD_IMAGES: 'po/addImages',
   GET_ALL_PO_IMAGES: (purchaseOrderId, materialId) => `po/getImages/${purchaseOrderId}/${materialId}`,
-  GET_MENU: 'subscription/menu'
+  GET_MENU: 'subscription/menu',
+  GRNDOWNLOADTEMPELATE: (projectId) => `po/download/GRNExcelTemplate/${projectId}`,
+  GRNUPLOADTEMPELATE: (projectId) => `po/add/opengrn/excel/${projectId}`
 };

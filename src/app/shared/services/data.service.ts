@@ -41,7 +41,6 @@ export class DataService {
     // this.baseUrl = environment.url + "/";
     // this.masterUrl = environment.masterUrl + "/";
     // this.ssoUrl = environment.ssoUrl + "/";
-    this.baseUrl = Utils.baseUrl();
     this.baseStartUrl = Utils.baseUrl();
     this.baseUrl = this.baseStartUrl + "im/";
     this.masterUrl = this.baseStartUrl + "mm/";
@@ -76,7 +75,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -121,7 +120,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -227,7 +226,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -276,7 +275,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -325,7 +324,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -427,7 +426,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 

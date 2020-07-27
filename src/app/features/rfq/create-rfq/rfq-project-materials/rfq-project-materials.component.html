@@ -39,7 +39,7 @@
       </mat-form-field>
     </div>
 
-    <div class="col-md-4 col-xs-12 text-right m-itm">
+    <div class="col-md-4 col-xs-12 text-right m-itm" [ngClass]="isMobile ? 'sm-btn1' : '' ">
       <span (click)="selectCurrency()"
         class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select
         Currency</span>

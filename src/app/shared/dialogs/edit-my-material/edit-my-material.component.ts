@@ -42,7 +42,7 @@ export class EditMyMaterialComponent implements OnInit {
   check: boolean;
   materialUnit: string[];
   tradesList: { tradeName: string, tradeId: number }[] = [];
-  filteredOption: [tradeRelatedCategory[]] = [null];
+  filteredOption: tradeRelatedCategory[] = [];
   // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
   addOtherFormGroup: FormGroup;
   editMaterialForm: FormGroup;
@@ -65,8 +65,8 @@ export class EditMyMaterialComponent implements OnInit {
     this.getUserData(this.creatorId);
     this.getUserRoles();
     this.getMaterialUnit();
-    this.getTrades();
-    this.formInit();
+    // this.getTrades();
+    // this.getCategories()
   }
 
 
@@ -81,6 +81,14 @@ export class EditMyMaterialComponent implements OnInit {
     })
   }
 
+  getCategories() {
+    this.bomService.getAllCategories().then(res => {
+      this.filteredOption = res.data;
+      this.filteredOption.push({ categoriesCode: null, categoriesName: 'Others' });
+      (<FormGroup>(<FormArray>this.editMaterialForm.get('forms')).controls[0]).controls['category'].setValue(
+        { categoriesCode: this.data.materialList[0].materialGroupCode, categoriesName: this.data.materialList[0].materialGroup })
+    })
+  }
 
   getMaterialUnit() {
     this.bomService.getMaterialUnit().then(res => {
@@ -109,8 +117,8 @@ export class EditMyMaterialComponent implements OnInit {
         materialName: [data.materialName, [Validators.required, Validators.maxLength(300)]],
         materialUnit: [data.materialUnit, Validators.required],
         index: [],
-        trade: [{ tradeName: data.tradeName, tradeId: data.tradeId }],
-        category: [{ categoriesCode: data.materialGroupCode, categoriesName: data.materialGroup }]
+        trade: [{ value: data.tradeName, disabled: true }],
+        category: [{ value: data.materialGroup, disabled: true }]
       });
       return frmGrp;
     });

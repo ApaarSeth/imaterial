@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center rfq-rates">
+<div class="d-flex align-items-center rfq-rates mnwtdh-140">
     <fieldset class="rate">
         <input type="radio" id="rating10" [name]="supplierId" [checked]="ratings == 5" /><label for="rating10"
             title="5 stars" [ngClass]="isMobile ? 'str' : '' "></label>
@@ -22,5 +22,6 @@
             class="half" for="rating1" title="1/2 star" [ngClass]="isMobile ? 'str' : '' "></label>
     </fieldset>
 
-    <span class="rating-value" *ngIf="ratings">({{ ratings.toFixed(2) }})</span>
+    <span class="rating-value" *ngIf="ratings"
+        [ngClass]="isMobile ? 'font-size-12' : '' ">({{ ratings.toFixed(2) }})</span>
 </div>

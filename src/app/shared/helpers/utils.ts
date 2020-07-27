@@ -32,6 +32,10 @@ export class Utils {
 
     }
 
+    static paymentUrl(): string {
+        return 'https://dev-payment.buildsupply.io/payment/';
+    }
+
     // static formatCardNumber(type, card) {
     //     switch (type) {
     //         case 'american-express':

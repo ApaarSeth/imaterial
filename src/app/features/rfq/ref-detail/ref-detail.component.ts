@@ -16,6 +16,8 @@ export class RefDetailComponent implements OnInit {
   nonSubmittedRfqListTemp: RfqList[];
   submittedRfqListTemp: RfqList[];
 
+  isMobile: boolean;
+
   submittedRfqList: MatTableDataSource<RfqList>;
   nonSubmittedRfqList: MatTableDataSource<RfqList>;
 
@@ -30,6 +32,7 @@ export class RefDetailComponent implements OnInit {
     "action2"
   ];
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     let orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.rfqService.rfqDetail(orgId).then(res => {
@@ -42,30 +45,30 @@ export class RefDetailComponent implements OnInit {
 
       this.submittedRfqList.filterPredicate = (data, filterValue) => {
         const dataStr =
-          (data.rfqName != null) ? data.rfqName.toLowerCase() :'' +
-          data.createdAt.toString() +
-         // data.rfqDueDate.toString() +
-          data.projectCount.toString() +
-          data.materialCount.toString();
+          (data.rfqName != null) ? data.rfqName.toLowerCase() : '' +
+            data.createdAt.toString() +
+            // data.rfqDueDate.toString() +
+            data.projectCount.toString() +
+            data.materialCount.toString();
         return dataStr.indexOf(filterValue) != -1;
       };
 
       this.nonSubmittedRfqList.filterPredicate = (data, filterValue) => {
-        if(data){
+        if (data) {
           const dataStr =
-          (data.rfqName != null) ? data.rfqName.toLowerCase() :'' +
-          data.createdAt.toString() +
-        //  data.rfqDueDate.toString() +
-          data.projectCount.toString() +
-          data.materialCount.toString();
-        return dataStr.indexOf(filterValue) != -1;
+            (data.rfqName != null) ? data.rfqName.toLowerCase() : '' +
+              data.createdAt.toString() +
+              //  data.rfqDueDate.toString() +
+              data.projectCount.toString() +
+              data.materialCount.toString();
+          return dataStr.indexOf(filterValue) != -1;
         }
       };
     });
-      this.getNotifications();
+    this.getNotifications();
   }
 
- getNotifications(){
+  getNotifications() {
     this.commonService.getNotification(this.userId);
   }
 
@@ -76,14 +79,14 @@ export class RefDetailComponent implements OnInit {
 
   viewRfq(element: RfqList) {
     if (element.rfqStatus === 0) {
-      this.router.navigate(["../../rfq/createRfq", element.rfqId]);
+      this.router.navigate([ "../../rfq/createRfq", element.rfqId ]);
     } else {
-      this.router.navigate(["../../rfq/rfq-view", element.rfqId]);
+      this.router.navigate([ "../../rfq/rfq-view", element.rfqId ]);
     }
   }
 
   createRfq() {
-    this.router.navigate(["/rfq/createRfq"]);
+    this.router.navigate([ "/rfq/createRfq" ]);
   }
 
 }

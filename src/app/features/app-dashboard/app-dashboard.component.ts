@@ -277,7 +277,7 @@ export class AppDashboardComponent implements OnInit {
 
   openBomDialog() {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
-      width: "1000px",
+      width: "600px",
       data: this.projectLists
     });
 
