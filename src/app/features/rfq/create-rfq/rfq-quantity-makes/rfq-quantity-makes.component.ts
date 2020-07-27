@@ -323,7 +323,7 @@ export class RfqQuantityMakesComponent implements OnInit {
         selectedMaterial,
         rfqId: this.generatedRfq.rfqId,
         materialId,
-        type: 'rfq',
+        type: 'create-rfq',
       }
     });
 

@@ -13,6 +13,7 @@ export class ViewImageComponent implements OnInit {
   rfqId: number;
   selectedImages: ImageDocsLists[] = [];
   prevContractorImgs: ImageDocsLists[] = [];
+  supplierImages: ImageDocsLists[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<ViewImageComponent>,
@@ -21,7 +22,7 @@ export class ViewImageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(this.data.type === 'rfq'){
+    if(this.data.type === 'rfq' || this.data.type === 'create-rfq'){
       this.getAllRfqImages();
     }else if(this.data.type === 'supplier'){
       this.rfqId = Number(this.data.rfqId);
@@ -56,15 +57,18 @@ export class ViewImageComponent implements OnInit {
     this._imageService.getRfqUploadedImages(this.data.rfqId, this.data.materialId).then(res => {
       if(this.data.type === 'bid'){
         this.prevContractorImgs = res.data;
-      }else if(this.data.type === 'rfq'){
+        this.selectedImages = [...(this.prevContractorImgs ? this.prevContractorImgs : []), ...(this.supplierImages ? this.supplierImages : [])];
+      }else if(this.data.type === 'create-rfq'){
         
         let rfqPrevImages: ImageDocsLists[] = [];
 
-        this.data.selectedMaterial.documentList.forEach(prevImg => res.data.forEach(newImg => {
-          if(prevImg.documentId === newImg.documentId){
-            rfqPrevImages.push(newImg);
-          }
-        }));
+        if(this.data.selectedMaterial && this.data.selectedMaterial.documentList){
+          this.data.selectedMaterial.documentList.forEach(prevImg => res.data.forEach(newImg => {
+            if(prevImg.documentId === newImg.documentId){
+              rfqPrevImages.push(newImg);
+            }
+          }));
+        }
 
         const newUploadedImageList = (this.data.selectedMaterial && this.data.selectedMaterial.documentList) ? this.data.selectedMaterial.documentList.filter(opt => opt.documentId === 0) : [];
         this.selectedImages = [...rfqPrevImages, ...newUploadedImageList];
@@ -80,7 +84,8 @@ export class ViewImageComponent implements OnInit {
   getAllSupplierImages(){
     this._imageService.getSupplierUploadedImages(this.data.rfqId, this.data.materialId, this.data.supplierId).then(res => {
       //combined both supplier images and contractor images for specific material
-      this.selectedImages = [...(res.data ? res.data : []), ...(this.prevContractorImgs ? this.prevContractorImgs : [])];
+      this.supplierImages = res.data;
+      this.selectedImages = [...(this.prevContractorImgs ? this.prevContractorImgs : []), ...(this.supplierImages ? this.supplierImages : [])];
     });
   }
 
@@ -94,6 +99,7 @@ export class ViewImageComponent implements OnInit {
   }
 
   downloadImage(fileName, url){
+    // url = undefined;
     const data = { fileName, url }
     this._imageService.downloadImage(data).then(img => {
       var win = window.open(img.data.url, '_blank');

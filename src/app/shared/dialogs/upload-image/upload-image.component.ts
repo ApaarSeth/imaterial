@@ -196,6 +196,7 @@ export class UploadImageComponent implements OnInit {
           "documentId": img.documentId,
           "documentThumbnailUrl": img.documentThumbnailUrl,
           "documentThumbnailShortUrl": img.documentThumbnailShortUrl,
+          "documentUrl": img.documentUrl ? img.documentUrl : null
         });
       })
     }
