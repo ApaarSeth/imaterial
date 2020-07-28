@@ -77,7 +77,7 @@ a:hover {
 }
 
 .color-black {
-  color: $black-color;
+  color: $black-color !important;
 }
 
 .color-grey {
@@ -863,8 +863,7 @@ mat-accordion {
   padding-top: 0px;
 }
 
-
-@media(max-width: 599px){
+@media (max-width: 599px) {
   .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button .mat-icon {
     font-size: 20px !important;
   }

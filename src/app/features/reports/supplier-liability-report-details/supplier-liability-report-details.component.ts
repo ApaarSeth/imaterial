@@ -87,7 +87,8 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   alreadySelectedId: number[];
   checkedProjectList: RfqMaterialResponse[] = [];
   checkedProjectIds: number[] = [];
-  searchText: string = null;
+  searchSupplier: string = '';
+  searchProject: string = ''
   projects: FormControl;
   selectedProjects: ProjectDetails[] = [];
   projectIds: number[] = [];
@@ -102,7 +103,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   alreadySelectedSupplierId: number[];
   amountRange: string[];
   selectedMenu: string;
-
+  currency: string
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -121,6 +122,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   ngOnInit() {
     this.conversionNumber = 1;
     let countryCode = localStorage.getItem("countryCode")
+    let currency = localStorage.getItem("currencyCode")
     this.amountRange = countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));

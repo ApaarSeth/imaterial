@@ -336,62 +336,67 @@ s .validTill {
   overflow-wrap: anywhere !important;
 }
 
-.mpo-table{
+.mpo-table {
   width: 100%;
   overflow-x: scroll;
 }
 
-.txt-nwrp{
+.txt-nwrp {
   white-space: normal !important;
   font-weight: normal !important;
 }
 
-.mpo-mh{
+.mpo-mh {
   height: 30px;
   padding-top: 10px !important;
 }
 
-.mpo-mh{
+.mpo-mh {
   height: 30px;
 }
 
-.str{
-  &:before{
+.str {
+  &:before {
     font-size: 1rem !important;
-    padding: .3rem .1rem !important;
+    padding: 0.3rem 0.1rem !important;
   }
 }
 
-.customPo .po-table .material-row{
+.customPo .po-table .material-row {
   height: auto;
 }
 
-.add-taxes-col{
+.add-taxes-col {
   min-width: 100px;
   max-width: 120px;
-  span{
+  span {
     white-space: normal;
   }
 }
 
-@media only screen and (max-width: 1300px){
+@media only screen and (max-width: 1300px) {
   .add-taxes-col {
     min-width: 60px !important;
     max-width: 80px;
   }
 }
 
-.po-sno-width{
+.po-sno-width {
   max-width: 4%;
   min-width: 4% !important;
 }
 
-.po-col-width{
+.po-col-width {
   max-width: 8.6%;
   min-width: 8.6% !important;
 }
 
-.po-date-width{
+.po-date-width {
   max-width: 10%;
   min-width: 10% !important;
+}
+
+.removePadding .mat-menu-content {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }

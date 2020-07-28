@@ -16,11 +16,12 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
 import { permission } from 'src/app/shared/models/permissionObject';
 import { DownloadData } from 'src/app/shared/models/PO/po-data';
 import { PaymentRecordComponent } from 'src/app/shared/dialogs/payment-record/paymentRecord.component';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
   selector: "po-detail-list",
   templateUrl: "./po-detail-list.component.html",
-  styleUrls: [ "../../../../assets/scss/main.scss" ]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class PODetailComponent implements OnInit {
   poDetails: MatTableDataSource<PODetailLists>;
@@ -72,6 +73,7 @@ export class PODetailComponent implements OnInit {
     private poDetailService: POService,
     private permissionService: PermissionService,
     private route: Router,
+    private notifier: AppNotificationService,
     private poService: POService,
     private projectService: ProjectService,
     public dialog: MatDialog,
@@ -181,10 +183,10 @@ export class PODetailComponent implements OnInit {
   }
 
   viewPO(purchaseOrderId) {
-    this.route.navigate([ "./po-generate/" + purchaseOrderId + "/view" ]);
+    this.route.navigate(["./po-generate/" + purchaseOrderId + "/view"]);
   }
   viewPODEdit(purchaseOrderId) {
-    this.route.navigate([ "./po-generate/" + purchaseOrderId + "/edit" ]);
+    this.route.navigate(["./po-generate/" + purchaseOrderId + "/edit"]);
   }
   applyFilter(filterValue: string) {
     this.acceptedRejectedPOList.filter = filterValue.trim().toLowerCase();
@@ -199,11 +201,27 @@ export class PODetailComponent implements OnInit {
       detail: element
     } as ProjetPopupData);
   }
+
+  copyPo(poId: number) {
+    this.poService.getCopyPo(poId).then(res => {
+      if (res.statusCode === 201) {
+        this.PoData();
+        this.notifier.snack(res.message)
+      }
+    }).catch(err => {
+      this.notifier.snack(err.message)
+    })
+  }
+
+  viewGrn(purchaseOrderId) {
+    this.route.navigate(["po/view-grn/" + purchaseOrderId]);
+  }
+
   openPaymentRecord(poDetail: PurchaseOrder) {
     this.poService.paymentDetail(poDetail.purchaseOrderId).then(res => {
       let data = {
         poDetail,
-        paymentDetail: res.data[ 0 ]
+        paymentDetail: res.data[0]
       }
       const dialogRef = this.dialog.open(PaymentRecordComponent, {
         width: "800px",

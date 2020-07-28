@@ -592,32 +592,31 @@ ngx-mat-drp-picker-overlay {
   margin-top: 80px;
 }
 
-.cntry{
+.cntry {
   min-width: 144px;
   display: inline-block;
 }
 
-.pt-3px{
+.pt-3px {
   padding-top: 3px;
 }
 
-.sm-btn1{
-  .mat-raised-button{
+.sm-btn1 {
+  .mat-raised-button {
     line-height: 26px !important;
   }
-  .main-button.mat-button-base{
+  .main-button.mat-button-base {
     min-width: 80px;
     max-height: 30px;
   }
 }
 
-
-@media(max-width: 599px){
-  .mat-form-field-infix{
+@media (max-width: 599px) {
+  .mat-form-field-infix {
     font-size: 13px;
   }
-  
-  .ngx-mat-drp-calendar-container{
+
+  .ngx-mat-drp-calendar-container {
     display: flex;
     flex-direction: column;
     min-width: auto !important;
@@ -625,14 +624,14 @@ ngx-mat-drp-picker-overlay {
   }
 }
 
-.sidenav-btns{
-  img{
+.sidenav-btns {
+  img {
     width: 25px;
     max-height: 25px;
   }
 }
 
-.mnwtdh-140{
+.mnwtdh-140 {
   min-width: 140px;
 }
 
@@ -643,4 +642,8 @@ input [title]:hover {
 input::title {
   font-style: italic;
   color: gray;
+}
+
+.border-solid {
+  border-bottom: 1px solid;
 }
