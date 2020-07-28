@@ -26,7 +26,7 @@ export class AdvanceSearchComponent implements OnInit {
         this.userId = Number(localStorage.getItem('userId'));
     }
 
-    displayWith(option) {
+    displayProject(option) {
         return option && option.projectName ? option.projectName : ''
     }
 
