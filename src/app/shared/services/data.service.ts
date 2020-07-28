@@ -376,7 +376,7 @@ export class DataService {
     if (err.status === ErrorCodesConstants.ERROR_HTTP_NOT_FOUND) {
       throw err.error;
     } else {
-      throw err;
+      throw err.error;
     }
 
     // if (err.error.error === 'Unauthorized' && err.error.httpStatusCode === 401) {
