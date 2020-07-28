@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef, SimpleChanges } from "@angular/core";
-import { MatDialog, MatChipInputEvent, MatTableDataSource } from "@angular/material";
+import { MatDialog, MatChipInputEvent, MatTableDataSource, MatMenuTrigger } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   ProjectDetails,
@@ -25,11 +25,12 @@ import { AddEditUserComponent } from 'src/app/shared/dialogs/add-edit-user/add-e
 import { UserDetailsPopUpData, AllUserDetails, UserAdd } from 'src/app/shared/models/user-details';
 import { DeactiveUserComponent } from 'src/app/shared/dialogs/disable-user/disable-user.component';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { forEachChild } from 'typescript';
+import { forEachChild, idText } from 'typescript';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierAdd } from 'src/app/shared/models/supplier';
+import { SupplierLiabilityReport } from 'src/app/shared/models/supplierLiabiltityReport.model';
 
 // chip static data
 export interface Fruit {
@@ -46,9 +47,9 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 
 
 export class SupplierLiabilityReportDetailComponent implements OnInit {
+  @ViewChild(MatMenuTrigger, { static: false }) triggerBtn: MatMenuTrigger;
   displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
   displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
-
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;
   allProjects: ProjectDetails[];
@@ -57,7 +58,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   userDetailsTemp: UserAdd = {};
   deactivateUsers: Array<UserAdd> = new Array<UserAdd>();
   activateUsers: Array<UserAdd> = new Array<UserAdd>();
-
+  conversionNumber: number
   addUserBtn: boolean = false;
   allUsers: AllUserDetails;
   orgId: number;
@@ -94,10 +95,12 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   materialForm: FormGroup;
   counter: number;
   addRfq: AddRFQ;
-
+  SupplierLiabiltyReportData: SupplierLiabilityReport
   allSuppliers: SupplierAdd[];
   selectedSupplier: SupplierAdd[] = [];
   alreadySelectedSupplierId: number[];
+  amountRange: string[];
+  selectedMenu: string;
 
   constructor(
     public dialog: MatDialog,
@@ -114,22 +117,34 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.conversionNumber = 1;
+    let countryCode = localStorage.getItem("countryCode")
+    this.amountRange = countryCode === 'IN' ? ['Full figures', 'Lakhs', 'Crores'] : ['Full figures', 'Thousands', 'Millions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.allSuppliers = this.activatedRoute.snapshot.data.SupplierLiabilityReportResolver[0].data;
-    this.allProjects = this.activatedRoute.snapshot.data.SupplierLiabilityReportResolver[1].data;
-
+    this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data;
+    this.allProjects = this.activatedRoute.snapshot.data.resolverData[1].data;
     this.formInit();
     this.getNotifications();
+    this.selectedMenu = 'Full figures'
   }
 
+  focus() {
+    this.triggerBtn.focus('mouse')
+  }
 
   formInit() {
     this.form = this.formBuilder.group({
       selectedProject: [''],
-      selectedSupplier: ['']
+      selectedSupplier: [''],
+      amountDisplay: ['Full figures']
     });
+
+    this.form.get('amountDisplay').valueChanges.subscribe(res => {
+      console.log(res)
+    })
   }
+
   choosenProject() {
     this.projectIds = [];
     this.projectIds = this.form.value.selectedProject.map(
@@ -160,4 +175,32 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   setLocalStorage() {
   }
 
+  ngAfterViewInit() {
+    this.focus()
+  }
+
+  clickMenuItem(menuItem) {
+    console.log(menuItem);
+    this.selectedMenu = menuItem;
+    switch (this.selectedMenu) {
+      case 'Lakhs':
+        this.conversionNumber = 100000
+        break;
+      case 'Crores':
+        this.conversionNumber = 10000000
+        break;
+      case 'Thousands':
+        this.conversionNumber = 1000
+        break;
+      case 'Million':
+        this.conversionNumber = 1000000
+        break;
+      default:
+        this.conversionNumber = 1
+        break;
+    }
+  }
+
+
 }
+

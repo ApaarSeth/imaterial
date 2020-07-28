@@ -44,11 +44,11 @@
     <mat-accordion displayMode="flat" multi class="mat-table" formArrayName="forms" [ngClass]="isMobile ? 'res-table' : 'po-table'">
       <div class="res-td">
         <section matSort class="mat-elevation-z2 mat-header-row">
-          <span class="mat-header-cell widthReduce" mat-sort-header="vesselName">S.No</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'">Material Name</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'">Makes</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20 text-center' : 'maxwidth-20'">Fullfillment <br />Date</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20 text-center' : 'maxwidth-20'"
+          <span class="mat-header-cell po-sno-width" mat-sort-header="vesselName">S.No</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'">Material Name</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'">Makes</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'po-date-width' : 'maxwidth-20'">Fullfillment <br />Date</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'"
             >Supplier Rate
             <span
               >({{
@@ -56,8 +56,8 @@
               }})</span
             ></span
           >
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'">Awarded <br />quantity</span>
-          <span class="mat-header-cell" [ngClass]="{'maxwidth-20 p-l-12 p-r-0': isInternational && mode === 'edit' && mode === 'edit'}"
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'">Awarded <br />quantity</span>
+          <span class="mat-header-cell" [ngClass]="{'po-col-width': isInternational && mode === 'edit' && mode === 'edit'}"
             >Amount
             <span style="display: block;"
               >({{
@@ -65,10 +65,11 @@
               }})</span
             ></span
           >
+
+          <!-- [ngClass]="{'text-center': isInternational && mode !== 'edit'}" -->
           <span
             class="mat-header-cell"
-            [ngClass]="{'text-center': isInternational && mode !== 'edit'}"
-            [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'"
+            [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'"
           >
             <!-- {{ isInternational ? "Tax Amount ("+ ((poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)) + ')' : "GST %" }} -->
             <ng-container *ngIf="isInternational; else defaultGstPercent">
@@ -79,7 +80,7 @@
               GST %
             </ng-template>
           </span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'">
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'">
             <!-- {{ isInternational ? "Other Cost (" + ((poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)) + ')' : "GST Amount" }} -->
             <ng-container *ngIf="isInternational; else defaultCurr">
               Other Cost <br />
@@ -89,7 +90,7 @@
               GST Amount
             </ng-template>
           </span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'"
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'"
             >Total Amount
             <span
               >({{
@@ -99,29 +100,29 @@
           >
 
           <!---- Attached Image Column ---->
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'">
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'">
             Attached Images
           </span>
 
           <span
             class="mat-header-cell"
             *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
-            [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'"
+            [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'"
           ></span>
         </section>
 
         <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
           <div class="material-row" [ngClass]="isMobile ? 'mpo-mh' : ''">
-            <span class="mat-cell widthReduce" [ngClass]="isMobile ? 'fontsize-10-px' : ''">{{ m + 1 }}</span>
-            <span class="mat-cell maxwidth-20" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
+            <span class="mat-cell po-sno-width" [ngClass]="isMobile ? 'fontsize-10-px' : ''">{{ m + 1 }}</span>
+            <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
               <span>{{ material.materialName }}</span>
               <!-- Upload Image Modal Link -->
               <div class="add-edit-image d-block" *ngIf="mode !== 'view'">
                 <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(material, 'po')">Add/Edit Image</a>
               </div>
             </span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'minwidth-10' : 'minwidth-10'"></span>
-            <span class="mat-cell p-l-0 minwidth-10" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
+            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'minwidth-10'"></span>
+            <span class="mat-cell po-date-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
                 <mat-form-field
@@ -148,16 +149,16 @@
                 </mat-form-field>
               </ng-template>
             </span>
-            <span class="mat-cell"></span>
-            <span class="mat-cell maxwidth-20 p-l-0 p-r-0" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"
+            <span class="mat-cell po-col-width"></span>
+            <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"
               >{{ getMaterialQuantity(m) | number: "1.2-2" }} {{ material.materialUnit }}
               <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
                 Must be less than {{material.poAvailableQty}}
               </span> -->
             </span>
-            <span class="mat-cell maxwidth-20 p-l-0 p-r-0" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
+            <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
 
-            <span class="mat-cell text-align-center" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" *ngIf="isInternational; else gstTotalBlock"
+            <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" *ngIf="isInternational; else gstTotalBlock"
               >{{ getTotalPOListTax(m) | number: "1.2-2" }}
               <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
@@ -173,10 +174,10 @@
             </span>
 
             <ng-template #gstTotalBlock>
-              <span class="mat-cell minwidth-60-px" [ngClass]="isMobile ? 'fontsize-10-px' : ''"></span>
+              <span class="mat-cell minwidth-60-px po-col-width" [ngClass]="isMobile ? 'fontsize-10-px' : ''"></span>
             </ng-template>
 
-            <span class="mat-cell maxwidth-20" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" *ngIf="isInternational; else gstTotalAmountBlock">
+            <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" *ngIf="isInternational; else gstTotalAmountBlock">
               {{ ratesBaseCurr ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue | number: "1.2-2") : (this.poTableData[m].otherCostAmount | number: "1.2-2") }}
               <span *ngIf="this.poTableData[m].otherCostAmount" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
@@ -191,16 +192,16 @@
               </span></span
             >
             <ng-template #gstTotalAmountBlock>
-              <span class="mat-cell text-left p-l-10 p-r-10" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
+              <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
             </ng-template>
-            <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{
+            <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{
               ratesBaseCurr
                 ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue + getMaterialTotalAmount(m) | number: "1.2-2")
                 : (this.poTableData[m].otherCostAmount + getMaterialTotalAmount(m) | number: "1.2-2")
             }}</span>
 
             <!---- Attached Column Images List ---->
-            <span class="mat-cell po-images-list">
+            <span class="mat-cell po-images-list po-col-width">
               <!-- View image modal link -->
               <!-- material?.purchaseOrderDetailList[0]?.documentList?.length -->
               <div *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length" class="images-lists"
@@ -217,7 +218,7 @@
             </span>
 
             <span
-              class="mat-cell add-taxes-col text-align-right"
+              class="mat-cell add-taxes-col po-col-width"
               [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"
               *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
               [ngClass]="isMobile ? 'fontsize-10-px' : ''"
@@ -226,13 +227,15 @@
               </button></span
             >
           </div>
+
+
           <ng-container formArrayName="purchaseOrderDetailList">
             <div class="mat-row" *ngFor="let purchaseOrder of material.purchaseOrderDetailList; let p = index" [formGroupName]="p" [ngClass]="isMobile ? 'mpo-mh' : ''">
-              <span class="mat-cell widthReduce"></span>
-              <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
-              <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ purchaseOrder.materialBrand }}</span>
-              <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
-              <span class="mat-cell supplier-rates text-align-left" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
+              <span class="mat-cell po-sno-width"></span>
+              <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
+              <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ purchaseOrder.materialBrand }}</span>
+              <span class="mat-cell po-date-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
+              <span class="mat-cell supplier-rates po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
                 <ng-container *ngIf="mode != 'edit'; else editRate">
                   {{
                     ratesBaseCurr ? (purchaseOrder.materialUnitPrice * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.materialUnitPrice | number: "1.2-2")
@@ -254,7 +257,7 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell maxwidth-20" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
+              <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity | number: "1.2-2" }}</ng-container>
                 <ng-template #editQuantity>
                   <mat-form-field class="border-input" [ngClass]="isInternational && mode === 'edit' ? 'width-60' : 'width50Percent'">
@@ -271,17 +274,17 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
+              <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
                 <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount | number: "1.2-2" }} </ng-container>
                 <ng-template #editAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
                 </ng-template>
               </span>
-              <span class="mat-last-cell text-align-center" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" *ngIf="isInternational; else gstBlock">
+              <span class="mat-last-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" *ngIf="isInternational; else gstBlock">
                 {{ isInternational && mode === "edit" ? (getPOListTax(m, p, "edit") | number: "1.2-2") : (getPOListTax(m, p, "view") | number: "1.2-2") }}
               </span>
               <ng-template #gstBlock>
-                <span class="mat-cell">
+                <span class="mat-cell po-col-width">
                   <span *ngIf="mode != 'edit'; else editGst" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
                     <span *ngIf="purchaseOrder && purchaseOrder.materialCgst == 0 && purchaseOrder.materialSgst === 0">
                       {{ purchaseOrder.materialIgst | number: "1.2-2" }}
@@ -306,17 +309,17 @@
                   </ng-template>
                 </span>
               </ng-template>
-              <span *ngIf="isInternational; else gstAmountBlock" [ngClass]="isInternational && mode === 'edit' ? 'maxwidth-20' : 'maxwidth-20'" class="mat-cell text-center p-r-15">
+              <span *ngIf="isInternational; else gstAmountBlock" [ngClass]="isInternational && mode === 'edit' ? 'po-col-width' : 'maxwidth-20'" class="mat-cell">
               </span>
               <ng-template #gstAmountBlock>
-                <span class="mat-cell text-left P-l-0" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
+                <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
                   <ng-container *ngIf="mode != 'edit'; else editgstAmount"> {{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
                   <ng-template #editgstAmount>
                     {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["gstAmount"].value | number: "1.2-2" }}
                   </ng-template>
                 </span>
               </ng-template>
-              <span class="mat-cell maxwidth-20 p-l-13 p-r-0'" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
+              <span class="mat-cell po-col-width'" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
                 <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total | number: "1.2-2" }} </ng-container>
                 <ng-template #editTotal>
                   <span [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{
@@ -324,10 +327,12 @@
                   }}</span>
                 </ng-template>
               </span>
-              <span *ngIf="isInternational && mode === 'edit' && mode === 'edit'" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" class="mat-cell"></span>
-              <span class="mat-cell po-images-list"></span>
+              <span *ngIf="isInternational && mode === 'edit' && mode === 'edit'" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" class="mat-cell po-col-width"></span>
+              <span class="mat-cell po-images-list po-col-width"></span>
             </div>
           </ng-container>
+
+
         </div>
         <div class="material-row" *ngIf="isInternational" [ngClass]="isMobile ? 'mpo-mh' : ''">
           <span *ngIf="mode === 'edit'; else viewAdditonalBlock" class="mat-cell text-right">
@@ -390,14 +395,17 @@
             </div>
           </ng-template>
         </div>
+
+        <!-- Table Footer Row -->
         <div class="mat-row footer" [ngClass]="isMobile ? 'mpo-mh1' : ''">
-          <span class="mat-cell widthReduce"></span>
-          <span class="mat-cell"></span>
-          <span class="mat-cell"></span>
-          <span class="mat-cell"></span>
-          <span class="mat-cell"></span>
-          <span class="mat-cell"></span>
-          <span class="mat-cell"
+          <span class="mat-cell po-sno-width"></span>
+          <span class="mat-cell po-col-width"></span>
+          <span class="mat-cell po-col-width"></span>
+          <span class="mat-cell po-date-width"></span>
+          <span class="mat-cell po-col-width"></span>
+          <span class="mat-cell po-col-width"></span>
+          <span class="mat-cell po-col-width"></span>
+          <span class="mat-cell po-col-width"
             ><span *ngIf="isInternational" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''"
               ><span
                 >Tax Amount
@@ -410,10 +418,10 @@
               <br />{{ totalTaxAmount | number: "1.2-2" }}</span
             ></span
           >
-          <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''">
+          <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''">
             <span *ngIf="isInternational; else totalGstAmount">
               <span
-                >Other Cost
+                >Other Cost <br/>
                 <span
                   >({{
                     poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
@@ -424,7 +432,7 @@
             </span>
             <ng-template #totalGstAmount> <span> GST Amount </span> <br />{{ gstTotalAmount | number: "1.2-2" }} </ng-template>
           </span>
-          <span class="mat-cell" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''"
+          <span class="mat-cell po-col-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''"
             ><span
               >Total Amount
               <span
@@ -435,8 +443,9 @@
             >
             <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue + totalAmount | number: "1.2-2") : (totalAmount + totalOtherAmount | number: "1.2-2") }}</span
           >
-          <span class="mat-cell mat-last-cell"></span>
+          <span class="mat-cell mat-last-cell po-col-width"></span>
         </div>
+
         <div *ngIf="!isInternational" class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35 font-size-vary-grn">
           Net Payable Amount in Words :Rupees {{ totalAmount | numberToWords | async | titlecase }} <span class="text-semi-bold">Only /-</span>
         </div>

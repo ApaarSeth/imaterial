@@ -128,7 +128,6 @@ export class SigninComponent implements OnInit {
     params.append("userType", "BUYER");
 
     this.signInSignupService.signIn(params.toString()).then(data => {
-
       if (data.errorMessage) {
         this.loader.hide()
         this._snackBar.open(data.errorMessage, "", {
@@ -137,7 +136,6 @@ export class SigninComponent implements OnInit {
           verticalPosition: "bottom"
         });
       }
-
       else if (data.serviceRawResponse.data) {
         if (!(/ipad|iphone|ipod/.test(window.navigator.userAgent.toLowerCase()))) {
           this.subscribeNotification()

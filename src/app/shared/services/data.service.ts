@@ -374,6 +374,8 @@ export class DataService {
 
 
     if (err.status === ErrorCodesConstants.ERROR_HTTP_NOT_FOUND) {
+      throw err.error;
+    } else {
       throw err;
     }
 

@@ -111,7 +111,8 @@ export interface PurchaseOrder {
   qty?: number;
   validUpto?: string;
   taxAmount?: number;
-  otherCostAmount?: number
+  otherCostAmount?: number;
+  documentList?: ImageList[] | ImageDocsLists[];
 }
 export interface terms {
   termsId?: number;

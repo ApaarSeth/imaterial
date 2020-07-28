@@ -218,7 +218,7 @@ export class GrnAddSupplierComponent implements OnInit {
         }
         let data = { ...this.form.getRawValue(), grnDate, supplierName, supplierId, materialList, documentList, countryCode, projectId: Number(this.projectId) }
         this.bomService.addGrnWithoutPo(data).then(res => {
-            if (res.statusCode === 200) {
+            if (res.statusCode === 201) {
                 this.notifier.snack("GRN Created Successfully!")
                 this.dialogRef.close(null)
             }

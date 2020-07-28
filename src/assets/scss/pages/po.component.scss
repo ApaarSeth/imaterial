@@ -380,3 +380,18 @@ s .validTill {
     max-width: 80px;
   }
 }
+
+.po-sno-width{
+  max-width: 4%;
+  min-width: 4% !important;
+}
+
+.po-col-width{
+  max-width: 8.6%;
+  min-width: 8.6% !important;
+}
+
+.po-date-width{
+  max-width: 10%;
+  min-width: 10% !important;
+}
