@@ -11,6 +11,7 @@ import { AppSharedModule } from "../../shared/app-shared-module";
 import { SupplierLiabilityReportResolver } from "./resolver/supplier-liability-report.resolver";
 import { SupplierLiabilityReportDetailComponent } from "./supplier-liability-report-details/supplier-liability-report-details.component";
 import { ReportRoutingModule } from './report-dashboard-routing.module';
+import { CTCReportComponent } from './ctc-report/ctc-report.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ReportRoutingModule } from './report-dashboard-routing.module';
   ],
   providers : [ SupplierLiabilityReportResolver ],
   declarations: [
-    SupplierLiabilityReportDetailComponent
+    SupplierLiabilityReportDetailComponent,
+    CTCReportComponent
   ]
 })
 
