@@ -73,6 +73,12 @@ export class UploadComponent implements OnInit {
           }
           this.fileToUpload = newFiles.files;
           this.onFileUpdate.emit(this.fileToUpload);
+
+          // If same file upload in image integration twice then this code will work
+          if(this.imageIntegration){
+            this.myInputVariable.nativeElement.value = "";
+            this.fileToUpload = this.myInputVariable.nativeElement.value;
+          }
        }
        else{
            this._snackBar.open("We don't support "+fileType+" in Document upload, Please uplaod pdf, doc, docx, jpeg, png", "", {

@@ -110,7 +110,28 @@ export class PoComponent implements OnInit {
       this.mode = poParams.mode;
     });
     this.poService.getPoGenerateData(this.poId).then(res => {
+      
+      /**
+       * @description code to remove duplicate entries in purchaseOrderDetailList documentList array for each material
+       */
+      res.data.materialData.forEach(mat => {
+        mat.purchaseOrderDetailList.forEach(list => {
+          
+          if(list.documentList && list.documentList.length > 0){
+            list.documentList = list.documentList.reduce((unique, o) => {
+              if(!unique.some(obj => obj.documentId === o.documentId)) {
+                unique.push(o);
+              }
+              return unique;
+            },[]);
+          }
+          
+        });
+      });
+      // end the code
+
       this.poData = res.data;
+
       this.tableData = this.poData.materialData;
       this.currency = { isInternational: this.poData.isInternational, purchaseOrderCurrency: this.poData.purchaseOrderCurrency }
       this.additionalOtherCost = { additionalOtherCostAmount: this.poData.additionalOtherCostAmount, additionalOtherCostInfo: this.poData.additionalOtherCostInfo }
