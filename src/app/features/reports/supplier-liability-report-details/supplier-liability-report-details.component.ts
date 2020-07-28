@@ -31,6 +31,7 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierAdd } from 'src/app/shared/models/supplier';
 import { SupplierLiabilityReport } from 'src/app/shared/models/supplierLiabiltityReport.model';
+import { ReportService } from 'src/app/shared/services/supplierLiabilityReport.service';
 
 // chip static data
 export interface Fruit {
@@ -95,7 +96,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   materialForm: FormGroup;
   counter: number;
   addRfq: AddRFQ;
-  SupplierLiabiltyReportData: SupplierLiabilityReport
+  supplierLiabiltyReportData: SupplierLiabilityReport
   allSuppliers: SupplierAdd[];
   selectedSupplier: SupplierAdd[] = [];
   alreadySelectedSupplierId: number[];
@@ -112,26 +113,27 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     private userService: UserService,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private reportService: ReportService
   ) {
   }
 
   ngOnInit() {
     this.conversionNumber = 1;
     let countryCode = localStorage.getItem("countryCode")
-    this.amountRange = countryCode === 'IN' ? ['Full figures', 'Lakhs', 'Crores'] : ['Full figures', 'Thousands', 'Millions']
+    this.amountRange = countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data;
     this.allProjects = this.activatedRoute.snapshot.data.resolverData[1].data;
     this.formInit();
     this.getNotifications();
-    this.selectedMenu = 'Full figures'
+    this.selectedMenu = 'Full Figures'
   }
 
-  focus() {
-    this.triggerBtn.focus('mouse')
-  }
+  // focus() {
+  //   this.triggerBtn.focus('mouse')
+  // }
 
   formInit() {
     this.form = this.formBuilder.group({
@@ -148,7 +150,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   choosenProject() {
     this.projectIds = [];
     this.projectIds = this.form.value.selectedProject.map(
-      selectedProject => selectedProject.projectId
+      selectedProject => String(selectedProject.projectId)
     );
     this.sendProjectSuppierData();
   }
@@ -156,16 +158,19 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   choosenSupplier() {
     this.supplierIds = [];
     this.supplierIds = this.form.value.selectedSupplier.map(
-      selectedSupplier => selectedSupplier.supplierId
+      selectedSupplier => String(selectedSupplier.supplierId)
     );
     this.sendProjectSuppierData();
   }
 
   sendProjectSuppierData() {
     const obj = {
-      "projectIds": this.projectIds,
-      "supplierIds": this.supplierIds
+      "projectIdList": this.projectIds,
+      "supplierIdList": this.supplierIds
     }
+    this.reportService.getSupplierLiabilityReport(obj).then(res => {
+      this.supplierLiabiltyReportData = res;
+    })
   }
 
   getNotifications() {
@@ -173,10 +178,6 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   }
 
   setLocalStorage() {
-  }
-
-  ngAfterViewInit() {
-    this.focus()
   }
 
   clickMenuItem(menuItem) {

@@ -57,7 +57,7 @@ export class SubscriptionPaymentsService {
                 this.postToExternalSite(data);
             } else {
                 if (res.data) {
-                    this._router.navigate([ "/profile/add-user" ]);
+                    this._router.navigate(["/profile/add-user"]);
                 }
             }
 
@@ -70,7 +70,7 @@ export class SubscriptionPaymentsService {
         const form = window.document.createElement('form');
 
         Object.entries(dataToPost).forEach((field: any[]) => {
-            form.appendChild(this.createHiddenElement(field[ 0 ], field[ 1 ]));
+            form.appendChild(this.createHiddenElement(field[0], field[1]));
         });
 
         form.setAttribute('target', '_self');

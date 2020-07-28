@@ -157,5 +157,6 @@ export const API = {
   GET_ALL_PO_IMAGES: (purchaseOrderId, materialId) => `po/getImages/${purchaseOrderId}/${materialId}`,
   GET_MENU: 'subscription/menu',
   GRNDOWNLOADTEMPELATE: (projectId) => `po/download/GRNExcelTemplate/${projectId}`,
-  GRNUPLOADTEMPELATE: (projectId) => `po/add/opengrn/excel/${projectId}`
+  GRNUPLOADTEMPELATE: (projectId) => `po/add/opengrn/excel/${projectId}`,
+  SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport'
 };
