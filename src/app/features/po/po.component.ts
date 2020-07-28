@@ -117,12 +117,14 @@ export class PoComponent implements OnInit {
       res.data.materialData.forEach(mat => {
         mat.purchaseOrderDetailList.forEach(list => {
           
-          list.documentList = list.documentList.reduce((unique, o) => {
-            if(!unique.some(obj => obj.documentId === o.documentId)) {
-              unique.push(o);
-            }
-            return unique;
-          },[]);
+          if(list.documentList && list.documentList.length > 0){
+            list.documentList = list.documentList.reduce((unique, o) => {
+              if(!unique.some(obj => obj.documentId === o.documentId)) {
+                unique.push(o);
+              }
+              return unique;
+            },[]);
+          }
           
         });
       });
