@@ -35,7 +35,7 @@ export class RefDetailComponent implements OnInit {
     this.isMobile = this.commonService.isMobile().matches;
     let orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.rfqService.rfqDetail(orgId).then(res => {
+    this.rfqService.rfqDetail(orgId, {}).then(res => {
       this.submittedRfqList = new MatTableDataSource(res.data.submittedRfqList);
       this.nonSubmittedRfqList = new MatTableDataSource(
         res.data.nonSubmittedRfqList

@@ -1,0 +1,94 @@
+<section class="search-block">
+
+    <div class="s-head border-bottom">
+        <h4>Advance Search</h4>
+        <span class="brand-color">Clear</span>
+    </div>
+
+    <div class="border-bottom">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Project Name
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-form-field class="border-input">
+                <input matInput placeholder="Search" type="search"
+                    (keyup)="searchFilter($event.target.value,'projects')" [matAutocomplete]="projectAutocomplete" />
+                <button mat-button matSuffix mat-icon-button>
+                    <mat-icon>search</mat-icon>
+                </button>
+
+                <mat-autocomplete #projectAutocomplete="matAutocomplete" [displayWith]="displayProject">
+                    <mat-option *ngFor="let option of proejectsData" [value]="option">
+                        <mat-checkbox class="example-margin"></mat-checkbox>{{ option.projectName }}
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+
+        </mat-expansion-panel>
+    </div>
+
+    <div class="border-bottom">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Supplier Name
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </div>
+
+    <div class="border-bottom">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Material Name
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+        </mat-expansion-panel>
+    </div>
+
+    <div class="border-bottom">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Raised By
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </div>
+
+    <div class="border-bottom">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Raised Date
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </div>
+
+    <div class="border-bottom">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Expiry Date
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </div>
+
+    <div class="actions text-align-center p-10">
+        <button mat-button class="bordered-button mr-2">
+            Export
+        </button>
+        <button mat-button mat-button-base class="main-background-color color-white demo-title">
+            Apply
+        </button>
+    </div>
+
+</section>

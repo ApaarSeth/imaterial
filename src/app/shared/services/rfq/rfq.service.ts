@@ -24,8 +24,12 @@ export class RFQService {
     });
   }
 
-  rfqDetail(organizationId: number) {
-    return this.dataService.getRequest(API.RFQDETAIL(organizationId));
+  // rfqDetail(organizationId: number) {
+  //   return this.dataService.getRequest(API.RFQDETAIL(organizationId));
+  // }
+
+  rfqDetail(organisationId: number, data) {
+    return this.dataService.sendPostRequest(API.RFQDETAIL(organisationId), data);
   }
 
   rfqPo(organizationId: number, rfqId: number) {
