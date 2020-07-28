@@ -16,8 +16,9 @@ import { ViewImageComponent } from '../dialogs/view-image/view-image.component';
 import { UploadImageComponent } from '../dialogs/upload-image/upload-image.component';
 import { SupplierRatingComponent } from '../dialogs/supplier-rating/supplier-rating.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdvanceSearchComponent } from './advance-search/advance-search.component';
 
-const components = [ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent];
+const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent ];
 
 @NgModule({
   imports: [
@@ -30,7 +31,7 @@ const components = [ProjectItemComponent, ChipComponent, UploadComponent, Global
   ],
 
   declarations: components,
-  entryComponents: [UploadImageComponent, ViewImageComponent, SupplierRatingComponent],
+  entryComponents: [ UploadImageComponent, ViewImageComponent, SupplierRatingComponent ],
   exports: components
 })
 export class SharedComponentsModule { }
