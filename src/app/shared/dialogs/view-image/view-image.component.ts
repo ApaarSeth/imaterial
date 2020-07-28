@@ -94,7 +94,17 @@ export class ViewImageComponent implements OnInit {
    */
   getAllPOImages(){
     this._imageService.getPOImages(this.data.purchaseOrderId, this.data.materialId).then(res => {
-      this.selectedImages = res.data;
+      
+      // code to get distinct values of documentList and remove duplicate values
+      if(res.data){
+        this.selectedImages = res.data.reduce((unique, o) => {
+          if(!unique.some(obj => obj.documentId === o.documentId)) {
+            unique.push(o);
+          }
+          return unique;
+        },[]);
+      }
+      // this.selectedImages = res.data;
     })
   }
 

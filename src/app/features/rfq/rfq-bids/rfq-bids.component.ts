@@ -165,7 +165,7 @@ export class RfqBidsComponent implements OnInit {
                     materialIgst: sup.materialIgst,
                     taxInfo: sup.taxInfo ? [...sup.taxInfo] : null,
                     otherCostInfo: sup.otherCostInfo ? [...sup.otherCostInfo] : null,
-                    documentList: [...(sup.documentList ? sup.documentList : []), ...(mat.documentList ? mat.documentList : [])]
+                    documentList: (sup.documentList ? sup.documentList : [])
                   };
                 });
               });
