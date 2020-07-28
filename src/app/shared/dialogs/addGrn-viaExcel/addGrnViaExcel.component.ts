@@ -6,6 +6,7 @@ import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SnackbarComponent } from '../snackbar/snackbar.compnent';
 import { ConfirmRfqBidComponent } from '../confirm-rfq-bid/confirm-frq-bid-component';
 import { GRNService } from '../../services/grn/grn.service';
+import { AppNotificationService } from '../../services/app-notification.service';
 
 @Component({
     selector: 'add-grn-viaExcel',
@@ -13,15 +14,19 @@ import { GRNService } from '../../services/grn/grn.service';
 })
 
 export class AddGrnViaExcelComponent implements OnInit {
+
     projectId: number;
+
     constructor(private loading: GlobalLoaderService,
         private dialogRef: MatDialogRef<AddGrnViaExcelComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
+        private notifier: AppNotificationService,
         private bomService: BomService,
         private router: Router,
         private _snackBar: MatSnackBar,
         private grnService: GRNService
     ) { }
+
     ngOnInit() {
         this.projectId = this.data
     }
@@ -46,23 +51,17 @@ export class AddGrnViaExcelComponent implements OnInit {
     postMaterialExcel(data) {
         this.loading.show();
         this.grnService.uploadGrnTempelate(data, this.projectId).then(res => {
-            this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
-            this.loading.hide();
             if (res.statusCode === 201) {
-                this._snackBar.openFromComponent(SnackbarComponent, {
-                    data: res.data,
-                    duration: 6000,
-                    panelClass: ["success-snackbar"],
-                    verticalPosition: "bottom"
-                });
+                this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
+                this.loading.hide();
+                this.notifier.snack(res.message)
             } else {
-                this._snackBar.open(res.message, "", {
-                    duration: 2000,
-                    panelClass: ["success-snackbar"],
-                    verticalPosition: "bottom"
-                });
+                this.notifier.snack(res.message)
             }
-        });
+        }).catch(err => {
+            this.notifier.snack(err.message)
+        })
+            ;
     }
 
     downloadExcel() {
