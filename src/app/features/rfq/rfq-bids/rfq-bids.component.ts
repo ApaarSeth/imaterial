@@ -47,12 +47,15 @@ export class RfqBidsComponent implements OnInit {
     this.rfqService.rfqPo(this.orgId, this.rfqId).then(res => {
       this.rfqProjects = res.data;
 
+      // code to get the documentList of supplier whose materialUnitPrice is not null and concatenate those with material documentList
       this.rfqProjects.forEach(project => {
         project.materialList.forEach(matList => {
             matList.supplierList.forEach((supp, i) => {
-                const bidSubmitted = supp.brandDetailList.filter(brand => brand.materialUnitPrice !== null);
-                if(bidSubmitted.length > 0){
-                    supp.documentList = [...(supp.documentList ? supp.documentList : []), ...(matList.documentList ? matList.documentList : [])];
+                if(supp.brandDetailList && supp.brandDetailList.length > 0){
+                  const bidSubmitted = supp.brandDetailList.filter(brand => brand.materialUnitPrice !== null);
+                  if(bidSubmitted.length > 0){
+                      supp.documentList = [...(supp.documentList ? supp.documentList : []), ...(matList.documentList ? matList.documentList : [])];
+                  }
                 }
             })
         })

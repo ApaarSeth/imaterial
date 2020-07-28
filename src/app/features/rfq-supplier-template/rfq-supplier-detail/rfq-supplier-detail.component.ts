@@ -160,9 +160,12 @@ export class RFQSupplierDetailComponent implements OnInit {
 
   postRFQDetailSupplier(rfqSupplierObj) {
 
+    // get the documentList whose supplierId is not null and replace those with previous list
     rfqSupplierObj.projectList.forEach(project => {
       project.materialList.forEach(mat => {
-        mat.documentsList = mat.documentsList.filter(doc => doc.supplierId !== null) 
+        if(mat.documentsList){
+          mat.documentsList = mat.documentsList.filter(doc => doc.supplierId !== null)
+        }
       })
     });
     

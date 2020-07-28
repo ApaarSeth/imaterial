@@ -278,11 +278,17 @@ div.limited-character.bom {
 }
 
 .bom-select-menus {
-  .mat-select-trigger,
-  .mat-select-placeholder {
-    height: 45px;
-  }
+  // .mat-select-trigger,
+  // .mat-select-placeholder {
+  //   height: 45px;
+  // }
+
+  .label-adjust .mat-form-field-label-wrapper {
+    top: -.84375em !important;
+    padding-top: .84375em !important;
+  }  
 }
+
 .cdk-overlay-pane.shift-upward {
   transform: translateX(-61px) translateY(-76px) !important;
 }
