@@ -158,5 +158,6 @@ export const API = {
   GET_MENU: 'subscription/menu',
   GRNDOWNLOADTEMPELATE: (projectId) => `po/download/GRNExcelTemplate/${projectId}`,
   GRNUPLOADTEMPELATE: (projectId) => `po/add/opengrn/excel/${projectId}`,
-  SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport'
+  SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport',
+  COPYPO: (poId) => `po/copyPO/${poId}`,
 };

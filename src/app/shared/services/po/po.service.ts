@@ -72,4 +72,7 @@ export class POService {
     return this.dataService.sendPostRequest(API.SUPPLIER_RATING, data)
   }
 
+  getCopyPo(poId: number) {
+    return this.dataService.getRequest(API.COPYPO(poId))
+  }
 }
