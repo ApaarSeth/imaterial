@@ -11,7 +11,9 @@
           <ng-template ngbSlide>
             <img src="assets/images/download-icon-lg.svg" class="cursor-pointer download-link" (click)="downloadImage(image.documentShortUrl, image.documentUrl)" />
             <div class="picsum-img-wrapper">
-              <img [src]=image.documentUrl alt="Random first slide" class="img-fluid">
+              <ng-container *ngIf="image.documentUrl">
+                <img [src]=image.documentUrl alt="Random first slide" class="img-fluid">
+              </ng-container>
             </div>
 
             <div class="carousel-caption">

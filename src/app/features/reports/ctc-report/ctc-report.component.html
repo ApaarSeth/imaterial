@@ -1,0 +1,153 @@
+<div class="page-start-point changeWidth mt-5 pt-4">
+  <form *ngIf="allProjects" [formGroup]="form">
+    <div class="row" class="users-dashboard p-b-20 min-height parent report">
+      <!-- In case of WEB View - design for search Projects, Generate Report and amount  -->
+      <div class="row align-items-center">
+
+        <!------ Select Project Field ------>
+        <div class="col-md-3 text-left showResponsiveReport">
+          <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
+            <mat-label>Select Project</mat-label>
+            <mat-select formControlName="selectedProject" multiple>
+              <div class="display-flex">
+                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
+                  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                <button mat-button matSuffix mat-icon-button>
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+              <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project"
+                selected="project.clicked" (click)="choosenProject()">{{ project.projectName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-9 add-project-btn display-flex justify-content-flex-end align-items-center">
+          <!------ Download Report ------>
+          <div class="download-report pr-3">
+            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img
+                src="../../../../assets/images/download-po.png" /></a>
+          </div>
+
+          <!------ Generate Report ------>
+          <button mat-raised-button class="main-background-color main-button color-white demo-title cursor-pointer">
+            Generate Report
+          </button>
+        </div>
+
+        <!------ Show Amount Field ------>
+        <div class="col-md-12 add-project-btn display-flex justify-content-flex-end showResponsiveReport">
+          <div class="show-amount text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
+            show amount
+          </div>
+        </div>
+      </div>
+
+      <!-- mat-menu that opens up after we click show-amount   -->
+      <mat-menu #amount="matMenu" class="header-project-menu show-amount">
+        <button mat-menu-item *ngFor="let range of amountRange" (click)="clickMenuItem(range)">
+          {{ range }}
+        </button>
+      </mat-menu>
+
+      <!-- Report Default Image If No data is Present -->
+      <ng-container>
+        <div class="wrapper-btn-center">
+          <div class="report-image">
+            <img src="../../../../assets/images/report-main.svg" alt="BuildSupply_Logo" />
+            <div>
+              <p class="p-t-10 font-size-vary-grn">
+                You have not selected any project or supplier yet. <br />
+                Please select any one from the above to see the report.
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- table For Showing Reports-->
+      <ng-container *ngIf="projectIds.length || supplierIds.length">
+        <div class="reportTablePo">
+          <table class="report-table">
+            <tr matSort class="mat-elevation-z2 mat-header-row">
+              <thead class="mat-header-cell material">
+                Supplier Name
+              </thead>
+              <thead class="mat-header-cell material">
+                PO Awarded
+                <br />
+                Value ({{
+                  SupplierLiabiltyReportData.currencyCode
+                }})
+              </thead>
+              <thead class="mat-header-cell material">
+                GRN Amount ({{
+                  SupplierLiabiltyReportData.currencyCode
+                }})
+              </thead>
+              <thead class="mat-header-cell material">
+                Amount Paid
+                <br />
+                till date ({{
+                  SupplierLiabiltyReportData.currencyCode
+                }})
+              </thead>
+              <thead class="mat-header-cell material">
+                Yet to be
+                <br />
+                paid ({{
+                  SupplierLiabiltyReportData.currencyCode
+                }})
+              </thead>
+            </tr>
+            <mat-accordion *ngFor="let supplier of SupplierLiabiltyReportData.supplierReportDataList">
+              <!-- Supplier List -->
+              <mat-expansion-panel>
+                <mat-expansion-panel-header class="border-row background-supplier">
+                  <tr class="material-row backgound-none-important p-r-10">
+                    <td class="mat-cell">{{ supplier.supplierName }}</td>
+                    <td class="mat-cell">{{ supplier.totalPoAmount / this.conversionNumber }}</td>
+                    <td class="mat-cell">{{ supplier.grnAmount }}</td>
+                    <td class="mat-cell">{{ supplier.paymentRecived }}</td>
+                    <td class="mat-cell">{{ supplier.totalPoAmount - supplier.paymentRecived }}</td>
+                  </tr>
+                </mat-expansion-panel-header>
+                <!-- Project List -->
+                <mat-expansion-panel *ngFor="let project of supplier.projectReportDataList">
+                  <mat-expansion-panel-header class="border-row background-project">
+                    <tr class="material-row backgound-none-important p-r-10">
+                      <td class="mat-cell">{{ project.projectName }}</td>
+                      <td class="mat-cell">{{ project.totalPoAmount }}</td>
+                      <td class="mat-cell">{{ project.grnAmount }}</td>
+                      <td class="mat-cell">{{ project.paymentRecived }}</td>
+                      <td class="mat-cell">{{ project.totalPoAmount - project.paymentRecived }}</td>
+                    </tr>
+                  </mat-expansion-panel-header>
+                  <!-- Project Details Of an Individual Project -->
+                  <tr class="material-row border-row background-project-list"
+                    *ngFor="let poData of project.purchaseOrderDataList">
+                    <td class="mat-cell">{{ poData.purchaseOrderLabel }}</td>
+                    <td class="mat-cell">{{ poData.totalPoAmount }}</td>
+                    <td class="mat-cell">{{ poData.grnAmount }}</td>
+                    <td class="mat-cell">{{ poData.paymentRecived }}</td>
+                    <td class="mat-cell">{{ poData.totalPoAmount - poData.paymentRecived }}</td>
+                  </tr>
+                </mat-expansion-panel>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <!-- Total Amount Footer -->
+            <tr class="material-row backgound-total-amount">
+              <td class="mat-cell">Total Amount</td>
+              <td class="mat-cell">{{ SupplierLiabiltyReportData.totalPoAmount }}</td>
+              <td class="mat-cell">{{ SupplierLiabiltyReportData.grnAmount }}</td>
+              <td class="mat-cell">{{ SupplierLiabiltyReportData.paymentRecived }}</td>
+              <td class="mat-cell">
+                {{ SupplierLiabiltyReportData.totalPoAmount - SupplierLiabiltyReportData.paymentRecived }}</td>
+            </tr>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </form>
+</div>
