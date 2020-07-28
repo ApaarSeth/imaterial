@@ -87,7 +87,8 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   alreadySelectedId: number[];
   checkedProjectList: RfqMaterialResponse[] = [];
   checkedProjectIds: number[] = [];
-  searchText: string = null;
+  searchSupplier: string = '';
+  searchProject: string = ''
   projects: FormControl;
   selectedProjects: ProjectDetails[] = [];
   projectIds: number[] = [];

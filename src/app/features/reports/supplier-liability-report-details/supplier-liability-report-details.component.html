@@ -8,7 +8,15 @@
             <mat-label>Select Project</mat-label>
             <mat-select formControlName="selectedProject" multiple>
               <div class="display-flex">
-                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                <input
+                  class="p-l-10 p-b-5"
+                  matInput
+                  type="search"
+                  placeholder="Search project Name"
+                  [(ngModel)]="searchProject"
+                  [ngModelOptions]="{standalone: true}"
+                  (keydown)="$event.stopPropagation()"
+                />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
@@ -16,7 +24,7 @@
               <!-- <mat-select-trigger>
                     <mat-label>Select Project</mat-label>
                   </mat-select-trigger> -->
-              <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project" selected="project.clicked" (click)="choosenProject()"
+              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']" [value]="project" selected="project.clicked" (click)="choosenProject()"
                 >{{ project.projectName }}
               </mat-option>
             </mat-select>
@@ -27,7 +35,15 @@
             <mat-label>Select Supplier</mat-label>
             <mat-select formControlName="selectedSupplier" multiple>
               <div class="display-flex">
-                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Supplier Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                <input
+                  class="p-l-10 p-b-5"
+                  matInput
+                  type="search"
+                  placeholder="Search Supplier Name"
+                  [(ngModel)]="searchSupplier"
+                  [ngModelOptions]="{standalone: true}"
+                  (keydown)="$event.stopPropagation()"
+                />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
@@ -36,7 +52,7 @@
                     <mat-label>Select Supplier</mat-label>
                   </mat-select-trigger> -->
               <mat-option
-                *ngFor="let supplier of allSuppliers | SearchPipe: searchText:['supplier_name']"
+                *ngFor="let supplier of allSuppliers | SearchPipe: searchSupplier:['supplier_name']"
                 [value]="supplier"
                 selected="supplier.clicked"
                 (click)="choosenSupplier()"
