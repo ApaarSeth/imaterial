@@ -1,25 +1,37 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { RfqList } from "src/app/shared/models/RFQ/rfq-details";
 import { MatTableDataSource } from "@angular/material";
 import { Router } from "@angular/router";
 import { CommonService } from 'src/app/shared/services/commonService';
+import { Subscription } from 'rxjs';
+import { AdvanceSearchService } from 'src/app/shared/services/advance-search.service';
 
 @Component({
   selector: "app-ref-detail",
   templateUrl: "./ref-detail.component.html"
 })
-export class RefDetailComponent implements OnInit {
+export class RefDetailComponent implements OnInit, OnDestroy {
   userId: number;
-  constructor(private router: Router, private rfqService: RFQService, private commonService: CommonService) { }
+  constructor(
+    private router: Router,
+    private rfqService: RFQService,
+    private commonService: CommonService,
+    private advSearchService: AdvanceSearchService
+  ) { }
   // submittedRfqList: RfqList[];
   nonSubmittedRfqListTemp: RfqList[];
   submittedRfqListTemp: RfqList[];
 
   isMobile: boolean;
+  orgId: number;
+
+  rfqCount: number;
 
   submittedRfqList: MatTableDataSource<RfqList>;
   nonSubmittedRfqList: MatTableDataSource<RfqList>;
+
+  subscriptions: Subscription[] = [];
 
   displayedColumns = [
     "RFQ Name",
@@ -33,15 +45,22 @@ export class RefDetailComponent implements OnInit {
   ];
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
-    let orgId = Number(localStorage.getItem("orgId"));
+    this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.rfqService.rfqDetail(orgId, {}).then(res => {
+    this.getRFQDetails({ data: {} });
+    this.getNotifications();
+    this.startSubscriptions();
+  }
+
+  getRFQDetails(obj) {
+    this.rfqService.rfqDetail(this.orgId, obj.data).then(res => {
       this.submittedRfqList = new MatTableDataSource(res.data.submittedRfqList);
       this.nonSubmittedRfqList = new MatTableDataSource(
         res.data.nonSubmittedRfqList
       );
       this.nonSubmittedRfqListTemp = res.data.nonSubmittedRfqList;
       this.submittedRfqListTemp = res.data.submittedRfqList;
+      this.rfqCount = res.data.rfqCount;
 
       this.submittedRfqList.filterPredicate = (data, filterValue) => {
         const dataStr =
@@ -65,7 +84,21 @@ export class RefDetailComponent implements OnInit {
         }
       };
     });
-    this.getNotifications();
+  }
+
+  startSubscriptions() {
+    this.subscriptions.push(
+      this.advSearchService.RFQFilterRequest$.subscribe(res => {
+        this.getRFQDetails({ data: res });
+      }),
+      this.advSearchService.RFQFilterExportRequest$.subscribe(res => {
+        this.rfqService.postRFQExport(this.orgId, res).then(res => {
+          if (res.data.url) {
+            window.open(res.data.url);
+          }
+        });
+      })
+    );
   }
 
   getNotifications() {
@@ -87,6 +120,10 @@ export class RefDetailComponent implements OnInit {
 
   createRfq() {
     this.router.navigate([ "/rfq/createRfq" ]);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(item => item.unsubscribe());
   }
 
 }
