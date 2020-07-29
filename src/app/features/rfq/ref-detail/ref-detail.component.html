@@ -1,5 +1,5 @@
 <div class="page-start-point changeWidth pt-4">
-  <div *ngIf="!submittedRfqListTemp && !nonSubmittedRfqListTemp" class="parent min-height">
+  <div *ngIf="!submittedRfqListTemp && !nonSubmittedRfqListTemp && rfqCount === 0" class="parent min-height">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
         <img src="../../../../assets/images/rfq-details.png" alt="Project Logo" />
@@ -17,7 +17,8 @@
     </div>
   </div>
 
-  <div class="create-po-dashboard p-b-20 min-height parent" *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp">
+  <div class="create-po-dashboard p-b-20 min-height parent"
+    *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp || rfqCount > 0">
     <div class="row">
       <div class="col-xs-7">
         <mat-form-field class="example-form-field border-input project w-vw-14">

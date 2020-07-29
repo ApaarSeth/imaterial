@@ -61,6 +61,13 @@ export class RFQService {
       return res;
     });
   }
+
+  postRFQExport(organisationId, data) {
+    return this.dataService.sendPostRequest(API.POSTRFQEXPORTREQUEST(organisationId), data).then(res => {
+      return res;
+    });
+  }
+
   deleteSuplier(supplierId: number) {
     return this.dataService.sendDeleteRequest(API.DELETESUPPLIER(supplierId), {}).then(res => {
       return res;

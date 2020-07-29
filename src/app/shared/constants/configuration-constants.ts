@@ -68,6 +68,7 @@ export const API = {
   POSTSUPPLIERDOCUMENTUPLOAD: `supplier/documents/upload`,
   SIGNUP: `api/auth/signup`,
   SIGNIN: `oauth/token`,
+  GETDISTINCTMATERIALS: 'material/getDistinctMaterials',
   GETISSUETOINDENT: (materialId, projectId) => `materials/updateStock/${materialId}/${projectId}`,
   POSTISSUETOINDENT: materialId => `indent/issueQty/${materialId}`,
   GETSINGLEINDENT: indentId => `indent/detail/${indentId}`,
@@ -158,6 +159,7 @@ export const API = {
   GET_MENU: 'subscription/menu',
   GRNDOWNLOADTEMPELATE: (projectId) => `po/download/GRNExcelTemplate/${projectId}`,
   GRNUPLOADTEMPELATE: (projectId) => `po/add/opengrn/excel/${projectId}`,
+  POSTRFQEXPORTREQUEST: organisationId => `rfq/excelDownload/${organisationId}`,
   SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport',
   COPYPO: (poId) => `po/copyPO/${poId}`,
 };
