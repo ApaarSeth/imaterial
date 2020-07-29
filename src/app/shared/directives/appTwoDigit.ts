@@ -15,9 +15,16 @@ export class TwoDigitDecimaNumberDirective {
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     // Allow Backspace, tab, end, and home keys
+    if (!event.key) {
+      event.preventDefault();
+
+      return;
+    }
+
     if (this.specialKeys.indexOf(event.key) !== -1) {
       return;
     }
+
     let current: string = this.el.nativeElement.value;
     const position = this.el.nativeElement.selectionStart;
     const next: string = [current.slice(0, position), event.key == 'Decimal' ? '.' : event.key, current.slice(position)].join('');
@@ -25,4 +32,5 @@ export class TwoDigitDecimaNumberDirective {
       event.preventDefault();
     }
   }
+
 } 
