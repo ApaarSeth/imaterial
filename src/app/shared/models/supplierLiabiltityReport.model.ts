@@ -34,13 +34,14 @@ export interface ProjectReportData {
     grnAmount: number
     poAmount: number
     paymentRecived: number
-    purchaseOrderDataList: PurchaseOrderData[]
+    entityDataList: PurchaseOrderData[]
     currencyCode: string
 }
 
 export interface PurchaseOrderData {
-    PurchaseOrderID: number
-    purchaseOrderLabel: string
+    entityId: number
+    entityLabel: string
+    entityType: string
     totalTaxAmount: number
     totalPoAmount: number
     otherCost: number

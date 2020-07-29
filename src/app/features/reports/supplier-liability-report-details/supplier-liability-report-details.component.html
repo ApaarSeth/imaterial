@@ -1,5 +1,5 @@
 <div class="page-start-point changeWidth mt-5 pt-4">
-  <form *ngIf="allProjects" [formGroup]="form">
+  <form *ngIf="allProjects" [formGroup]="form" autocomplete="off">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
       <div class="row">
@@ -66,7 +66,7 @@
             <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png" /> </a>
           </div>
           <div *ngIf="supplierLiabiltyReportData" class="show-amount p-r-12 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
-            show amount
+            Show amount
           </div>
           <!-- <button mat-raised-button class="main-background-color main-button color-white demo-title cursor-pointer">
             Generate Report
@@ -100,7 +100,7 @@
       <!-- table For Showing Reports-->
 
       <ng-container *ngIf="supplierLiabiltyReportData">
-        <div class="reportTablePo">
+        <div class="reportTablePo" *ngIf="supplierLiabiltyReportData.supplierReportDataList; else elseBlock">
           <p class="fontsize-14-px p-b-0 p-t-10 m-b-0">*Conversion Rate={{ currency }}</p>
 
           <table class="report-table">
@@ -167,8 +167,8 @@
                     </tr>
                   </mat-expansion-panel-header>
                   <!-- Project Details Of an Individual Project -->
-                  <tr class="material-row border-row background-project-list" *ngFor="let poData of project.purchaseOrderDataList">
-                    <td class="mat-cell">{{ poData.purchaseOrderLabel }}</td>
+                  <tr class="material-row border-row background-project-list" *ngFor="let poData of project.entityDataList">
+                    <td class="mat-cell">{{ poData.entityLabel }}</td>
                     <td class="mat-cell">{{ poData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
                     <td class="mat-cell">{{ poData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
                     <td class="mat-cell">{{ poData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
@@ -187,6 +187,11 @@
             </tr>
           </table>
         </div>
+        <ng-template #elseBlock>
+          <div class="center-element font-16-px">
+            No purchase order raised for this project
+          </div>
+        </ng-template>
       </ng-container>
     </div>
   </form>
