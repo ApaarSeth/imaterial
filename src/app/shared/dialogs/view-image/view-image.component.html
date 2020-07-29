@@ -1,10 +1,18 @@
 <mat-dialog-content class="view-image-dialog">
   <div class="modal-content">
-    <div class="modal-body text-center">
 
+    <div class="modal-header">
+      <h5 class="modal-title">Image Preview</h5>
       <button type="button" class="close" (click)="closeDialog()">
         <span>&times;</span>
       </button>
+    </div>
+
+    <div class="modal-body text-center">
+
+      <!-- <button type="button" class="close" (click)="closeDialog()">
+        <span>&times;</span>
+      </button> -->
 
       <ngb-carousel *ngIf="selectedImages?.length" (mouseenter)="addRemoveOverlay($event)" (mouseleave)="addRemoveOverlay($event)">        
         <ng-container *ngFor="let image of selectedImages">
@@ -18,7 +26,7 @@
             
             <div class="carousel-caption">
               <ng-container *ngIf="isAddOpacity">
-                <img src="assets/images/download-icon-lg.svg" class="cursor-pointer download-white-icon" 
+                <img src="assets/images/download-white-icon.svg" class="cursor-pointer download-white-icon" 
                   (click)="downloadImage(image.documentShortUrl, image.documentUrl)" />
               </ng-container>
               
