@@ -149,16 +149,16 @@ div.limited-character.bom {
     padding: 0;
   }
 
-  button.close {
-    position: absolute;
-    right: 10px;
-    z-index: 99;
-    opacity: 1;
-    font-size: 50px;
-    font-weight: 100;
-    color: #f47721;
-    text-shadow: none;
-  }
+  // button.close {
+  //   position: absolute;
+  //   right: 10px;
+  //   z-index: 99;
+  //   opacity: 1;
+  //   font-size: 50px;
+  //   font-weight: 100;
+  //   color: #f47721;
+  //   text-shadow: none;
+  // }
 
   h4 {
     font-size: 1.25rem;
@@ -198,7 +198,8 @@ div.limited-character.bom {
   }
 }
 
-.upload-img-dialog {
+.upload-img-dialog,
+.view-image-dialog {
   button.close {
     font-weight: 100;
     font-size: 3em;
@@ -210,7 +211,9 @@ div.limited-character.bom {
     line-height: 20px;
     font-size: 18px;
   }
+}
 
+.upload-img-dialog {
   .modal-body {
     padding: 30px 50px;
   }
@@ -347,7 +350,9 @@ div.limited-character.bom {
 }
 
 .picsum-img-wrapper {
-  height: 65vh;
+  height: 55vh;
+  max-height: 55vh;
+  min-height: 55vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -446,7 +451,7 @@ div.limited-character.bom {
 
 .download-white-icon{
   width: 40px;
-  transform: translate(0%, -150%);
+  transform: translate(0%, -100%);
   margin: auto;
 }
 

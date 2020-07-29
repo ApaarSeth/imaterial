@@ -284,7 +284,7 @@
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
                 </ng-template>
               </span>
-              <span class="mat-last-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))" *ngIf="isInternational; else gstBlock">
+              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))" *ngIf="isInternational; else gstBlock">
                 {{ isInternational && mode === "edit" ? (getPOListTax(m, p, "edit") | number: "1.2-2") : (getPOListTax(m, p, "view") | number: "1.2-2") }}
               </span>
               <ng-template #gstBlock>
@@ -378,7 +378,7 @@
               <div class="col-xs-9"></div>
               <div class="col-xs-3 p-r-10 fontsize-15-px text-left">
                 <span class="p-r-0">
-                  <span class="light-grey">Other Cost:</span>
+                  <span class="light-grey small-text">Other Cost:</span>
                   <span class="p-r-5 light-grey" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
                     {{
                       ratesBaseCurr
