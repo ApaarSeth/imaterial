@@ -138,6 +138,10 @@ export class CommonService {
     return this.dataService.getRequest(API.GETSUPPLIERS(organizationId), null, { skipLoader });
   }
 
+  getMaterials() {
+    return this.dataService.getRequest(API.GETDISTINCTMATERIALS);
+  }
+
 }
 
 

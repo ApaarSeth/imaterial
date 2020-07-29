@@ -644,3 +644,7 @@ input::title {
   font-style: italic;
   color: gray;
 }
+
+.border-bottom-dark{
+  border-bottom:1px solid var(--gray);
+}

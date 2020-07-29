@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+  <g id="Subscription_plan" data-name="Subscription plan" transform="translate(8949 15773)">
+    <g id="Rectangle_19061" data-name="Rectangle 19061" transform="translate(-8949 -15773)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0">
+      <rect width="26" height="26" stroke="none"/>
+      <rect x="0.5" y="0.5" width="25" height="25" fill="none"/>
+    </g>
+    <g id="Group_32210" data-name="Group 32210" transform="translate(24 26)">
+      <g id="Rectangle_19057" data-name="Rectangle 19057" transform="translate(-8968 -15796)" fill="none" stroke="#0c3d56" stroke-width="0.5">
+        <rect width="16" height="21" rx="1" stroke="none"/>
+        <rect x="0.25" y="0.25" width="15.5" height="20.5" rx="0.75" fill="none"/>
+      </g>
+      <g id="Icon_feather-dollar-sign" data-name="Icon feather-dollar-sign" transform="translate(-8971.446 -15794.852)">
+        <path id="Path_7772" data-name="Path 7772" d="M18,1.5v9.7" transform="translate(-6.354)" fill="none" stroke="#f47822" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path id="Path_7773" data-name="Path 7773" d="M13.852,7.5H10.544a1.544,1.544,0,1,0,0,3.088h2.205a1.544,1.544,0,0,1,0,3.088H9" transform="translate(0 -4.236)" fill="none" stroke="#f47822" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Group_32207" data-name="Group 32207" transform="translate(-8963.297 -15780.876)">
+        <g id="Group_32204" data-name="Group 32204" transform="translate(0 0)">
+          <rect id="Rectangle_19056" data-name="Rectangle 19056" width="11" height="1" rx="0.5" transform="translate(-1.702 -0.124)" fill="#0c3d56"/>
+          <rect id="Rectangle_19058" data-name="Rectangle 19058" width="11" height="1" rx="0.5" transform="translate(-1.702 1.876)" fill="#0c3d56"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
