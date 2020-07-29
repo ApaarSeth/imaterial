@@ -4,7 +4,7 @@ import { UserDetailsPopUpData } from '../../models/user-details';
 import { Router } from '@angular/router';
 import { ProjectService } from '../../services/projectDashboard/project.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Video } from "src/app/shared/models/video";
+import { Video } from "../../models/video";
 
 @Component({
   selector: "view-video-dialog",
@@ -12,8 +12,8 @@ import { Video } from "src/app/shared/models/video";
 })
 
 export class ViewVideoComponent implements OnInit {
-vid : any;
-safeURL: any;
+  vid: any;
+  safeURL: any;
 
   constructor(
     private dialogRef: MatDialogRef<ViewVideoComponent>,
@@ -28,7 +28,7 @@ safeURL: any;
     this.getVideo();
   }
 
-  getVideo(){
+  getVideo() {
     const countryId = Number(localStorage.getItem("countryId"));
 
     this.projectService.getVideos().then(res => {
@@ -36,21 +36,21 @@ safeURL: any;
       // get the video object if callingCode is equal to registered user countryCode
       var dashboardVideo: Video[] = res.data.filter(video => video.countryId === countryId);
       var videoURL: string;
-      
+
       // If callingCode does not match with registered user countryCode then set default video url
-      if(dashboardVideo === [] || dashboardVideo.length === 0){
+      if (dashboardVideo === [] || dashboardVideo.length === 0) {
         dashboardVideo = res.data.filter(video => video.isDefault === 1);
       }
 
       const videoId = dashboardVideo[0].videoUrl.split('/')[3].split("=")[1];
-      videoURL = "https://www.youtube.com/embed/"+videoId;
+      videoURL = "https://www.youtube.com/embed/" + videoId;
 
       // Final video url
       this.safeURL = this._sanitizer.bypassSecurityTrustResourceUrl(videoURL);
       console.log(this.safeURL)
     });
   }
-  
+
   close() {
     this.dialogRef.close(null);
   }

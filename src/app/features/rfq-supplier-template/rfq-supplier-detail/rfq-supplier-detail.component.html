@@ -127,9 +127,9 @@
                 <td class="font-size14 limited-character">
                   <span>{{ material.materialName }}</span>
                   <!-- Upload Image Modal Link -->
-                  <div class="add-edit-image d-block">
+                  <!-- <div class="add-edit-image d-block">
                     <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(material, 'supplier')">Add/Edit Image</a>
-                  </div>
+                  </div> -->
                 </td>
                 <td class="font-size14">
                   Requested Quantity: {{ material.materialQuantity }}
@@ -139,16 +139,28 @@
                 
                 <!-- View image modal link -->
                 <td class="font-size14 text-center supplier-bid-imgs">
-                  <div *ngIf="material?.documentsList?.length" class="images-lists"
-                    (click)="viewAllImages(material.materialId)">
-                    <ng-container *ngFor="let img of material.documentsList; let i = index">
-                      <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
-                    </ng-container>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <!-- View Image Section -->
+                    <div class="view-image-section">
+                      <div *ngIf="material?.documentsList?.length" class="images-lists"
+                        (click)="viewAllImages(material.materialId)">
+                        <ng-container *ngFor="let img of material.documentsList; let i = index">
+                          <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
+                        </ng-container>
+                      </div>
+          
+                      <ng-container *ngIf="!material?.documentsList">
+                        <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
+                      </ng-container>
+                    </div>
+  
+                    <!-- Upload Image Section -->
+                    <div class="upload-image-section mgtn12">
+                      <a class="cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image" (click)="uploadImage(material, 'supplier')">
+                        <img class="width-20-px mt-1 mr-2" src="assets/images/upload-image-icon.svg" />
+                      </a>
                   </div>
-      
-                  <ng-container *ngIf="!material?.documentsList">
-                    <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
-                  </ng-container>
+                  </div>
                 </td>
 
                 <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1">

@@ -1,4 +1,4 @@
-<form *ngIf="addMaterialsForm" [formGroup]="addMaterialsForm" (ngSubmit)="onSubmitMaterials()">
+<form *ngIf="addMaterialsForm" autocomplete="off" [formGroup]="addMaterialsForm" (ngSubmit)="onSubmitMaterials()">
   <div mat-dialog-content class="overflow-remove tx-cst p-r-0">
     <div formArrayName="addMaterial">
       <div *ngFor="let material of addMaterialsForm.get('addMaterial')['controls']; let i = index" class="float-left w-95">

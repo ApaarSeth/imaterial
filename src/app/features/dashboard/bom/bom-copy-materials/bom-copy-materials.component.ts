@@ -129,7 +129,10 @@ export class BomCopyMaterialComponent implements OnInit {
      */
     getAllProjects(){
         this.projectService.getProjects(this.orgId, this.userId).then(res => {
-            this.allProjectsList = res.data;
+            if(res.data){
+                //to filter the selected project from the list of all projects
+                this.allProjectsList = res.data.filter(project => project.projectName !== this.projectData.projectName)
+            }
         })
     }
 

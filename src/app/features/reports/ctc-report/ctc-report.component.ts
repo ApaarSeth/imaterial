@@ -32,22 +32,16 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierAdd } from 'src/app/shared/models/supplier';
 import { SupplierLiabilityReport } from 'src/app/shared/models/supplierLiabiltityReport.model';
 import { ReportService } from 'src/app/shared/services/supplierLiabilityReport.service';
-
-// chip static data
-export interface Fruit {
-  name: string;
-}
-
+import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
 
 const ELEMENT_DATA: AllUserDetails[] = [];
 
 @Component({
-  selector: "supplier-liability-report-details",
-  templateUrl: "./supplier-liability-report-details.component.html"
+  selector: "ctc-report",
+  templateUrl: "./ctc-report.component.html"
 })
 
-
-export class SupplierLiabilityReportDetailComponent implements OnInit {
+export class CTCReportComponent implements OnInit {
   @ViewChild(MatMenuTrigger, { static: false }) triggerBtn: MatMenuTrigger;
   displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
   displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
@@ -63,32 +57,12 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   addUserBtn: boolean = false;
   allUsers: AllUserDetails;
   orgId: number;
-
-  // public UserDashboardTour: GuidedTour = {
-  //   tourId: 'supplier-tour',
-  //   useOrb: false,
-  //   steps: [
-  //     {
-  //       title: 'Add User',
-  //       selector: '.add-user-button',
-  //       content: 'Click here to add other users of your organisation.',
-  //       orientation: Orientation.Left
-  //     }
-  //   ],
-  //     skipCallback: () => {
-  //     this.setLocalStorage()
-  //   },
-  //   completeCallback: () => {
-  //     this.setLocalStorage()
-  //   }
-  // };
   userId: number;
   form: FormGroup;
   alreadySelectedId: number[];
   checkedProjectList: RfqMaterialResponse[] = [];
   checkedProjectIds: number[] = [];
-  searchSupplier: string = '';
-  searchProject: string = ''
+  searchText: string = null;
   projects: FormControl;
   selectedProjects: ProjectDetails[] = [];
   projectIds: number[] = [];
@@ -103,11 +77,12 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   alreadySelectedSupplierId: number[];
   amountRange: string[];
   selectedMenu: string;
-  currency: string
+
+  allProjectsList: ProjectDetails[] = [];
+
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private router: Router,
     private ref: ChangeDetectorRef,
@@ -115,32 +90,52 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
     private commonService: CommonService,
-    private reportService: ReportService
+    private reportService: ReportService,
+    private _projectService: ProjectService,
+    private _rfqService: RFQService,
   ) {
   }
 
   ngOnInit() {
     this.conversionNumber = 1;
-    let countryCode = localStorage.getItem("countryCode")
-    this.currency = localStorage.getItem("currencyCode")
+    let countryCode = localStorage.getItem("countryCode");
     this.amountRange = countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data;
     this.allProjects = this.activatedRoute.snapshot.data.resolverData[1].data;
     this.formInit();
-    this.getNotifications();
     this.selectedMenu = 'Full Figures'
+
+    this.getAllProjects();
   }
 
-  // focus() {
-  //   this.triggerBtn.focus('mouse')
-  // }
+  /**
+   * @description to get all projects list
+   */
+  getAllProjects() {
+    this._projectService.getProjects(this.orgId, this.userId).then(res => {
+      if (res.data) {
+        this.allProjectsList = res.data;
+      }
+    })
+  }
+
+  /**
+   * @description to get all materials of selected project in dropdown
+   * @param projectId project id of selected project in dropdown list
+   */
+  getProjectMaterials(){
+    const selectedIds = this.form.value.selectedProject.map(selectedProject => selectedProject);
+  }
+
+  focus() {
+    this.triggerBtn.focus('mouse')
+  }
 
   formInit() {
     this.form = this.formBuilder.group({
       selectedProject: [''],
-      selectedSupplier: [''],
       amountDisplay: ['Full figures']
     });
 
@@ -152,34 +147,20 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   choosenProject() {
     this.projectIds = [];
     this.projectIds = this.form.value.selectedProject.map(
-      selectedProject => String(selectedProject.projectId)
-    );
-    this.sendProjectSuppierData();
-  }
-
-  choosenSupplier() {
-    this.supplierIds = [];
-    this.supplierIds = this.form.value.selectedSupplier.map(
-      selectedSupplier => String(selectedSupplier.supplierId)
+      selectedProject => selectedProject.projectId
     );
     this.sendProjectSuppierData();
   }
 
   sendProjectSuppierData() {
     const obj = {
-      "projectIdList": this.projectIds,
-      "supplierIdList": this.supplierIds
+      "projectIds": this.projectIds,
+      "supplierIds": this.supplierIds
     }
-    this.reportService.getSupplierLiabilityReport(obj).then(res => {
-      this.supplierLiabiltyReportData = res;
-    })
   }
 
-  getNotifications() {
-    this.commonService.getNotification(this.userId);
-  }
-
-  setLocalStorage() {
+  ngAfterViewInit() {
+    this.focus()
   }
 
   clickMenuItem(menuItem) {
@@ -203,7 +184,5 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
         break;
     }
   }
-
-
 }
 

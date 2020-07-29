@@ -36,7 +36,7 @@
   }
 }
 .bom-details-table-div-part {
-  max-height: 453px;
+  // max-height: 453px;
   overflow-y: auto;
   z-index: 0;
   position: relative;
@@ -149,21 +149,24 @@ div.limited-character.bom {
     padding: 0;
   }
 
-  button.close {
-    position: absolute;
-    right: 10px;
-    z-index: 99;
-    opacity: 1;
-    font-size: 50px;
-    font-weight: 100;
-    color: #f47721;
-    text-shadow: none;
-  }
+  // button.close {
+  //   position: absolute;
+  //   right: 10px;
+  //   z-index: 99;
+  //   opacity: 1;
+  //   font-size: 50px;
+  //   font-weight: 100;
+  //   color: #f47721;
+  //   text-shadow: none;
+  // }
 
   h4 {
+    font-size: 1.25rem;
+  }
+
+  h4, p{
     text-shadow: 0 0 10px #000;
     word-break: break-word;
-    font-size: 1.25rem;
   }
 }
 
@@ -195,7 +198,8 @@ div.limited-character.bom {
   }
 }
 
-.upload-img-dialog {
+.upload-img-dialog,
+.view-image-dialog {
   button.close {
     font-weight: 100;
     font-size: 3em;
@@ -207,7 +211,9 @@ div.limited-character.bom {
     line-height: 20px;
     font-size: 18px;
   }
+}
 
+.upload-img-dialog {
   .modal-body {
     padding: 30px 50px;
   }
@@ -278,11 +284,17 @@ div.limited-character.bom {
 }
 
 .bom-select-menus {
-  .mat-select-trigger,
-  .mat-select-placeholder {
-    height: 45px;
-  }
+  // .mat-select-trigger,
+  // .mat-select-placeholder {
+  //   height: 45px;
+  // }
+
+  .label-adjust .mat-form-field-label-wrapper {
+    top: -.84375em !important;
+    padding-top: .84375em !important;
+  }  
 }
+
 .cdk-overlay-pane.shift-upward {
   transform: translateX(-61px) translateY(-76px) !important;
 }
@@ -338,7 +350,9 @@ div.limited-character.bom {
 }
 
 .picsum-img-wrapper {
-  height: 65vh;
+  height: 55vh;
+  max-height: 55vh;
+  min-height: 55vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -347,7 +361,6 @@ div.limited-character.bom {
   }
 }
 
-.carousel-caption,
 .carousel-indicators{
   bottom: 0px;
 }
@@ -411,5 +424,43 @@ div.limited-character.bom {
     .attached-image:first-child {
       left: 20px;
     }
+  }
+}
+
+.width-20-px{
+  width: 20px;
+}
+
+.bom-material-table tr.mat-row {
+  height: 65px;
+}
+
+.mgtn12{
+  margin-top: -12px;
+}
+
+.carousel-overlay{
+  background-color: black;
+	width: 100%;
+	opacity: 0.6;
+	height: 100%;
+  top: 0;
+	position: absolute;
+  z-index: 1;
+}
+
+.download-white-icon{
+  width: 40px;
+  transform: translate(0%, -100%);
+  margin: auto;
+}
+
+.carousel-caption{
+  bottom: 30px;
+}
+
+.remove-carousel-indicators{
+  .carousel-control-next, .carousel-control-prev{
+    display: none;
   }
 }

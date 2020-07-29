@@ -1,33 +1,6 @@
-import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef } from "@angular/core";
-import { MatDialog, MatChipInputEvent, MatTableDataSource } from "@angular/material";
-import { ActivatedRoute, Router } from "@angular/router";
-import {
-  ProjectDetails,
-  ProjectIds
-} from "src/app/shared/models/project-details";
-import {
-  FormBuilder,
-  FormArray,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { stringify } from "querystring";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import {
-  RfqMat,
-  RfqMaterialResponse
-} from "src/app/shared/models/RFQ/rfq-details";
-import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
-import { AddEditUserComponent } from 'src/app/shared/dialogs/add-edit-user/add-edit-user.component';
-import { UserDetailsPopUpData, AllUserDetails, UserAdd } from 'src/app/shared/models/user-details';
-import { DeactiveUserComponent } from 'src/app/shared/dialogs/disable-user/disable-user.component';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { forEachChild } from 'typescript';
-import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { CommonService } from 'src/app/shared/services/commonService';
+import { AllUserDetails, UserAdd, UserDetailsPopUpData } from "../../../shared/models/user-details"; import { Component, OnInit, ChangeDetectorRef } from "@angular/core"; import { MatTableDataSource, MatDialog } from "@angular/material"; import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour"; import { ActivatedRoute, Router } from "@angular/router"; import { RFQService } from "../../../shared/services/rfq/rfq.service"; import { FormBuilder } from "@angular/forms"; import { UserService } from "../../../shared/services/userDashboard/user.service"; import { CommonService } from "../../../shared/services/commonService"; import { AddEditUserComponent } from "../../../shared/dialogs/add-edit-user/add-edit-user.component"; import { DeactiveUserComponent } from "../../../shared/dialogs/disable-user/disable-user.component";
+import { UserGuideService } from "../../../shared/services/user-guide/user-guide.service";
+
 
 // chip static data
 export interface Fruit {
@@ -40,13 +13,13 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 @Component({
   selector: "user-details",
   templateUrl: "./user-details.component.html",
-  styleUrls: [ "../../../../assets/scss/main.scss" ]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 
 
 export class UserDetailComponent implements OnInit {
-  displayedColumns: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star' ];
-  displayedColumnsDeactivate: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project' ];
+  displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
+  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
 
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;

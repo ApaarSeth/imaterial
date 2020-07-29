@@ -49,7 +49,8 @@ export class RfqQuantityMakesComponent implements OnInit {
     "Estimated Rate",
     "Quantity",
     "Makes",
-    "Attached Images"
+    "Attached Images",
+    "Upload Images"
   ];
   rfqId: any;
   startDate: Date;

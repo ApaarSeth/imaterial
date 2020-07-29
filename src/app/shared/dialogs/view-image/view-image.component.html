@@ -1,22 +1,47 @@
 <mat-dialog-content class="view-image-dialog">
   <div class="modal-content">
-    <div class="modal-body text-center">
 
+    <div class="modal-header">
+      <h5 class="modal-title">Image Preview</h5>
       <button type="button" class="close" (click)="closeDialog()">
         <span>&times;</span>
       </button>
+    </div>
 
-      <ngb-carousel *ngIf="selectedImages?.length">        
+    <div class="modal-body text-center">
+
+      <!-- <button type="button" class="close" (click)="closeDialog()">
+        <span>&times;</span>
+      </button> -->
+
+      <ngb-carousel *ngIf="selectedImages?.length" (mouseenter)="addRemoveOverlay($event)" (mouseleave)="addRemoveOverlay($event)" [class.remove-carousel-indicators]="selectedImages.length === 1">        
         <ng-container *ngFor="let image of selectedImages">
           <ng-template ngbSlide>
-            <img src="assets/images/download-icon-lg.svg" class="cursor-pointer download-link" (click)="downloadImage(image.documentShortUrl, image.documentUrl)" />
+            <!-- <img src="assets/images/download-icon-lg.svg" class="cursor-pointer download-link" (click)="downloadImage(image.documentShortUrl, image.documentUrl)" /> -->
             <div class="picsum-img-wrapper">
-              <img [src]=image.documentUrl alt="Random first slide" class="img-fluid">
+              <ng-container *ngIf="image.documentUrl">
+                <img [src]=image.documentUrl alt="Random first slide" class="img-fluid">
+              </ng-container>
+            </div>
+            
+            <div class="carousel-caption">
+              <ng-container *ngIf="isAddOpacity">
+                <img src="assets/images/download-white-icon.svg" class="cursor-pointer download-white-icon" 
+                  (click)="downloadImage(image.documentShortUrl, image.documentUrl)" />
+              </ng-container>
+              
+              <h4>{{ image.documentDesc }}</h4>
+              <ng-container *ngIf="data.type === 'supplier'; else defaultCase">
+                <p>Uploaded by {{ image.supplierId ? 'you' : 'contractor' }}</p>
+              </ng-container>
+
+              <ng-template #defaultCase>
+                <p>Uploaded by {{ image.supplierId ? 'contractor' : 'you' }}</p>
+              </ng-template>
+              
             </div>
 
-            <div class="carousel-caption">
-              <h4>{{ image.documentDesc }}</h4>
-            </div>
+            <div class="carousel-overlay" *ngIf="isAddOpacity"></div>
           </ng-template>
         </ng-container>
       </ngb-carousel>

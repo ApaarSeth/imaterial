@@ -1,5 +1,5 @@
 <div class="page-start-point changeWidth mt-5 pt-4">
-  <form *ngIf="allProjects" [formGroup]="form">
+  <form *ngIf="allProjects" [formGroup]="form" autocomplete="off">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
       <div class="row">
@@ -8,7 +8,15 @@
             <mat-label>Select Project</mat-label>
             <mat-select formControlName="selectedProject" multiple>
               <div class="display-flex">
-                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                <input
+                  class="p-l-10 p-b-5"
+                  matInput
+                  type="search"
+                  placeholder="Search project Name"
+                  [(ngModel)]="searchProject"
+                  [ngModelOptions]="{standalone: true}"
+                  (keydown)="$event.stopPropagation()"
+                />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
@@ -16,7 +24,7 @@
               <!-- <mat-select-trigger>
                     <mat-label>Select Project</mat-label>
                   </mat-select-trigger> -->
-              <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project" selected="project.clicked" (click)="choosenProject()"
+              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']" [value]="project" selected="project.clicked" (click)="choosenProject()"
                 >{{ project.projectName }}
               </mat-option>
             </mat-select>
@@ -27,7 +35,15 @@
             <mat-label>Select Supplier</mat-label>
             <mat-select formControlName="selectedSupplier" multiple>
               <div class="display-flex">
-                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Supplier Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                <input
+                  class="p-l-10 p-b-5"
+                  matInput
+                  type="search"
+                  placeholder="Search Supplier Name"
+                  [(ngModel)]="searchSupplier"
+                  [ngModelOptions]="{standalone: true}"
+                  (keydown)="$event.stopPropagation()"
+                />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
@@ -36,7 +52,7 @@
                     <mat-label>Select Supplier</mat-label>
                   </mat-select-trigger> -->
               <mat-option
-                *ngFor="let supplier of allSuppliers | SearchPipe: searchText:['supplier_name']"
+                *ngFor="let supplier of allSuppliers | SearchPipe: searchSupplier:['supplier_name']"
                 [value]="supplier"
                 selected="supplier.clicked"
                 (click)="choosenSupplier()"
@@ -47,28 +63,27 @@
         </div>
         <div class="col-xs-12 col-sm-4 col-md-6 p-t-10 add-project-btn display-flex justify-content-flex-end column-3">
           <div class="p-r-20 p-t-10">
-            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png" /></a>
+            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png" /> </a>
           </div>
-          <button mat-raised-button class="main-background-color main-button color-white demo-title cursor-pointer">
+          <div *ngIf="supplierLiabiltyReportData" class="show-amount p-r-12 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
+            Show amount
+          </div>
+          <!-- <button mat-raised-button class="main-background-color main-button color-white demo-title cursor-pointer">
             Generate Report
-          </button>
+          </button> -->
         </div>
-        <div class="col-xs-3 col-sm-12 add-project-btn display-flex justify-content-flex-end showResponsiveReport column-4">
-          <div class="show-amount text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
-            show amount
-          </div>
-        </div>
+        <div *ngIf="supplierLiabiltyReportData" class="col-xs-3 col-sm-12 add-project-btn display-flex justify-content-flex-end showResponsiveReport column-4"></div>
       </div>
 
       <!-- mat-menu that opens up after we click show-amount   -->
       <mat-menu #amount="matMenu" class="header-project-menu show-amount">
-        <button mat-menu-item *ngFor="let range of amountRange" (click)="clickMenuItem(range)">
+        <button mat-menu-item class="height-30-px m-b-5 line-0-px" *ngFor="let range of amountRange" (click)="clickMenuItem(range)">
           {{ range }}
         </button>
       </mat-menu>
 
       <!-- Report Default Image If No data is Present -->
-      <ng-container>
+      <ng-container *ngIf="!supplierLiabiltyReportData">
         <div class="wrapper-btn-center">
           <div class="report-image">
             <img src="../../../../assets/images/report-main.svg" alt="BuildSupply_Logo" />
@@ -83,8 +98,11 @@
       </ng-container>
 
       <!-- table For Showing Reports-->
-      <ng-container *ngIf="projectIds.length || supplierIds.length">
-        <div class="reportTablePo">
+
+      <ng-container *ngIf="supplierLiabiltyReportData">
+        <div class="reportTablePo" *ngIf="supplierLiabiltyReportData.supplierReportDataList; else elseBlock">
+          <p class="fontsize-14-px p-b-0 p-t-10 m-b-0">*Conversion Rate={{ currency }}</p>
+
           <table class="report-table">
             <tr matSort class="mat-elevation-z2 mat-header-row">
               <thead class="mat-header-cell material">
@@ -93,40 +111,48 @@
               <thead class="mat-header-cell material">
                 PO Awarded
                 <br />
-                Value ({{
-                  SupplierLiabiltyReportData.currencyCode
-                }})
+                Value
+                <span *ngIf="selectedMenu !== 'Full Figures'">(</span
+                >{{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </thead>
               <thead class="mat-header-cell material">
-                GRN Amount ({{
-                  SupplierLiabiltyReportData.currencyCode
-                }})
+                GRN Amount
+                <br /><span *ngIf="selectedMenu !== 'Full Figures'">(</span
+                >{{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </thead>
               <thead class="mat-header-cell material">
                 Amount Paid
                 <br />
-                till date ({{
-                  SupplierLiabiltyReportData.currencyCode
-                }})
+                till date
+                <span *ngIf="selectedMenu !== 'Full Figures'">(</span
+                >{{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </thead>
               <thead class="mat-header-cell material">
                 Yet to be
                 <br />
-                paid ({{
-                  SupplierLiabiltyReportData.currencyCode
-                }})
+                paid
+                <span *ngIf="selectedMenu !== 'Full Figures'">(</span
+                >{{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </thead>
             </tr>
-            <mat-accordion *ngFor="let supplier of SupplierLiabiltyReportData.supplierReportDataList">
+            <mat-accordion *ngFor="let supplier of supplierLiabiltyReportData.supplierReportDataList">
               <!-- Supplier List -->
               <mat-expansion-panel>
                 <mat-expansion-panel-header class="border-row background-supplier">
                   <tr class="material-row backgound-none-important p-r-10">
                     <td class="mat-cell">{{ supplier.supplierName }}</td>
-                    <td class="mat-cell">{{ supplier.totalPoAmount / this.conversionNumber }}</td>
-                    <td class="mat-cell">{{ supplier.grnAmount }}</td>
-                    <td class="mat-cell">{{ supplier.paymentRecived }}</td>
-                    <td class="mat-cell">{{ supplier.totalPoAmount - supplier.paymentRecived }}</td>
+                    <td class="mat-cell">{{ supplier.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell">{{ supplier.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell">{{ supplier.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell">{{ (supplier.totalPoAmount - supplier.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
                   </tr>
                 </mat-expansion-panel-header>
                 <!-- Project List -->
@@ -134,19 +160,19 @@
                   <mat-expansion-panel-header class="border-row background-project">
                     <tr class="material-row backgound-none-important p-r-10">
                       <td class="mat-cell">{{ project.projectName }}</td>
-                      <td class="mat-cell">{{ project.totalPoAmount }}</td>
-                      <td class="mat-cell">{{ project.grnAmount }}</td>
-                      <td class="mat-cell">{{ project.paymentRecived }}</td>
-                      <td class="mat-cell">{{ project.totalPoAmount - project.paymentRecived }}</td>
+                      <td class="mat-cell">{{ project.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell">{{ project.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell">{{ project.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell">{{ (project.totalPoAmount - project.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
                     </tr>
                   </mat-expansion-panel-header>
                   <!-- Project Details Of an Individual Project -->
-                  <tr class="material-row border-row background-project-list" *ngFor="let poData of project.purchaseOrderDataList">
-                    <td class="mat-cell">{{ poData.purchaseOrderLabel }}</td>
-                    <td class="mat-cell">{{ poData.totalPoAmount }}</td>
-                    <td class="mat-cell">{{ poData.grnAmount }}</td>
-                    <td class="mat-cell">{{ poData.paymentRecived }}</td>
-                    <td class="mat-cell">{{ poData.totalPoAmount - poData.paymentRecived }}</td>
+                  <tr class="material-row border-row background-project-list" *ngFor="let poData of project.entityDataList">
+                    <td class="mat-cell">{{ poData.entityLabel }}</td>
+                    <td class="mat-cell">{{ poData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell">{{ poData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell">{{ poData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell">{{ (poData.totalPoAmount - poData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
                   </tr>
                 </mat-expansion-panel>
               </mat-expansion-panel>
@@ -154,13 +180,18 @@
             <!-- Total Amount Footer -->
             <tr class="material-row backgound-total-amount">
               <td class="mat-cell">Total Amount</td>
-              <td class="mat-cell">{{ SupplierLiabiltyReportData.totalPoAmount }}</td>
-              <td class="mat-cell">{{ SupplierLiabiltyReportData.grnAmount }}</td>
-              <td class="mat-cell">{{ SupplierLiabiltyReportData.paymentRecived }}</td>
-              <td class="mat-cell">{{ SupplierLiabiltyReportData.totalPoAmount - SupplierLiabiltyReportData.paymentRecived }}</td>
+              <td class="mat-cell">{{ supplierLiabiltyReportData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
+              <td class="mat-cell">{{ supplierLiabiltyReportData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
+              <td class="mat-cell">{{ supplierLiabiltyReportData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
+              <td class="mat-cell">{{ (supplierLiabiltyReportData.totalPoAmount - supplierLiabiltyReportData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
             </tr>
           </table>
         </div>
+        <ng-template #elseBlock>
+          <div class="center-element font-16-px">
+            No purchase order raised for this project
+          </div>
+        </ng-template>
       </ng-container>
     </div>
   </form>
