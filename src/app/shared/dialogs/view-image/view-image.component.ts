@@ -14,6 +14,7 @@ export class ViewImageComponent implements OnInit {
   selectedImages: ImageDocsLists[] = [];
   prevContractorImgs: ImageDocsLists[] = [];
   supplierImages: ImageDocsLists[] = [];
+  isAddOpacity: boolean;
 
   constructor(
     private dialogRef: MatDialogRef<ViewImageComponent>,
@@ -62,7 +63,7 @@ export class ViewImageComponent implements OnInit {
         
         let rfqPrevImages: ImageDocsLists[] = [];
 
-        if(this.data.selectedMaterial && this.data.selectedMaterial.documentList){
+        if(this.data.selectedMaterial && this.data.selectedMaterial.documentList && res.data){
           this.data.selectedMaterial.documentList.forEach(prevImg => res.data.forEach(newImg => {
             if(prevImg.documentId === newImg.documentId){
               rfqPrevImages.push(newImg);
@@ -121,4 +122,7 @@ export class ViewImageComponent implements OnInit {
     this.dialogRef.close(null);
   }
 
+  addRemoveOverlay($event){
+    this.isAddOpacity = $event.type == 'mouseenter' ? true : false;
+  }
 }

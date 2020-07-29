@@ -31,6 +31,8 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierAdd } from 'src/app/shared/models/supplier';
 import { SupplierLiabilityReport } from 'src/app/shared/models/supplierLiabiltityReport.model';
+import { ReportService } from 'src/app/shared/services/supplierLiabilityReport.service';
+import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
 
 const ELEMENT_DATA: AllUserDetails[] = [];
 
@@ -69,38 +71,62 @@ export class CTCReportComponent implements OnInit {
   materialForm: FormGroup;
   counter: number;
   addRfq: AddRFQ;
-  SupplierLiabiltyReportData: SupplierLiabilityReport
+  supplierLiabiltyReportData: SupplierLiabilityReport
   allSuppliers: SupplierAdd[];
   selectedSupplier: SupplierAdd[] = [];
   alreadySelectedSupplierId: number[];
   amountRange: string[];
   selectedMenu: string;
 
+  allProjectsList: ProjectDetails[] = [];
+
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private router: Router,
     private ref: ChangeDetectorRef,
     private userService: UserService,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private reportService: ReportService,
+    private _projectService: ProjectService,
+    private _rfqService: RFQService,
   ) {
   }
 
   ngOnInit() {
     this.conversionNumber = 1;
-    let countryCode = localStorage.getItem("countryCode")
-    this.amountRange = countryCode === 'IN' ? ['Thousands', 'Millions', 'Billions'] : ['Thousands', 'Millions', 'Billions']
+    let countryCode = localStorage.getItem("countryCode");
+    this.amountRange = countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data;
     this.allProjects = this.activatedRoute.snapshot.data.resolverData[1].data;
     this.formInit();
-    this.getNotifications();
-    this.selectedMenu = 'Thousands'
+    this.selectedMenu = 'Full Figures'
+
+    this.getAllProjects();
+  }
+
+  /**
+   * @description to get all projects list
+   */
+  getAllProjects() {
+    this._projectService.getProjects(this.orgId, this.userId).then(res => {
+      if (res.data) {
+        this.allProjectsList = res.data;
+      }
+    })
+  }
+
+  /**
+   * @description to get all materials of selected project in dropdown
+   * @param projectId project id of selected project in dropdown list
+   */
+  getProjectMaterials(){
+    const selectedIds = this.form.value.selectedProject.map(selectedProject => selectedProject);
   }
 
   focus() {
@@ -110,8 +136,7 @@ export class CTCReportComponent implements OnInit {
   formInit() {
     this.form = this.formBuilder.group({
       selectedProject: [''],
-      selectedSupplier: [''],
-      amountDisplay: ['Thousands']
+      amountDisplay: ['Full figures']
     });
 
     this.form.get('amountDisplay').valueChanges.subscribe(res => {
@@ -134,28 +159,25 @@ export class CTCReportComponent implements OnInit {
     }
   }
 
-  getNotifications() {
-    this.commonService.getNotification(this.userId);
-  }
-
-  setLocalStorage() {
-  }
-
   ngAfterViewInit() {
     this.focus()
   }
 
   clickMenuItem(menuItem) {
+    console.log(menuItem);
     this.selectedMenu = menuItem;
     switch (this.selectedMenu) {
+      case 'Lakhs':
+        this.conversionNumber = 100000
+        break;
+      case 'Crores':
+        this.conversionNumber = 10000000
+        break;
       case 'Thousands':
         this.conversionNumber = 1000
         break;
-      case 'Millions':
+      case 'Million':
         this.conversionNumber = 1000000
-        break;
-      case 'Billions':
-        this.conversionNumber = 1000000000
         break;
       default:
         this.conversionNumber = 1
