@@ -14,7 +14,7 @@
         <span>&times;</span>
       </button> -->
 
-      <ngb-carousel *ngIf="selectedImages?.length" (mouseenter)="addRemoveOverlay($event)" (mouseleave)="addRemoveOverlay($event)">        
+      <ngb-carousel *ngIf="selectedImages?.length" (mouseenter)="addRemoveOverlay($event)" (mouseleave)="addRemoveOverlay($event)" [class.remove-carousel-indicators]="selectedImages.length === 1">        
         <ng-container *ngFor="let image of selectedImages">
           <ng-template ngbSlide>
             <!-- <img src="assets/images/download-icon-lg.svg" class="cursor-pointer download-link" (click)="downloadImage(image.documentShortUrl, image.documentUrl)" /> -->
@@ -31,7 +31,14 @@
               </ng-container>
               
               <h4>{{ image.documentDesc }}</h4>
-              <p>Uploaded by {{ image.supplierId ? 'you' : 'contractor' }}</p>
+              <ng-container *ngIf="data.type === 'supplier'; else defaultCase">
+                <p>Uploaded by {{ image.supplierId ? 'you' : 'contractor' }}</p>
+              </ng-container>
+
+              <ng-template #defaultCase>
+                <p>Uploaded by {{ image.supplierId ? 'contractor' : 'you' }}</p>
+              </ng-template>
+              
             </div>
 
             <div class="carousel-overlay" *ngIf="isAddOpacity"></div>
