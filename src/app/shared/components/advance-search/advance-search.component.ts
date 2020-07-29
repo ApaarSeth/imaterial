@@ -253,7 +253,6 @@ export class AdvanceSearchComponent implements OnInit {
     getFilterRequest() {
         let data = this.filterRequest();
         if (this.filterType === 'rfq') {
-            // console.log(JSON.stringify(data));
             this.advSearchService.RFQFilterRequest$.next(data);
         }
     }
