@@ -45,8 +45,8 @@
       <div class="res-td">
         <section matSort class="mat-elevation-z2 mat-header-row">
           <span class="mat-header-cell po-sno-width" mat-sort-header="vesselName">S.No</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Material Name</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Makes</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Material Name & Makes</span>
+          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Unit</span>
           <span class="mat-header-cell po-date-width">Fullfillment <br />Date</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Supplier Rate
             <span
@@ -118,7 +118,7 @@
                 <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(material, 'po')">Add/Edit Image</a>
               </div> -->
             </span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
+            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">{{ material.materialUnit }}</span>
             <span class="mat-cell po-date-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
@@ -236,8 +236,8 @@
           <ng-container formArrayName="purchaseOrderDetailList">
             <div class="mat-row" *ngFor="let purchaseOrder of material.purchaseOrderDetailList; let p = index" [formGroupName]="p" [ngClass]="isMobile ? 'mpo-mh' : ''">
               <span class="mat-cell po-sno-width"></span>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
               <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">{{ purchaseOrder.materialBrand }}</span>
+              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
               <span class="mat-cell po-date-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
               <span class="mat-cell supplier-rates" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
                 <ng-container *ngIf="mode != 'edit'; else editRate">
