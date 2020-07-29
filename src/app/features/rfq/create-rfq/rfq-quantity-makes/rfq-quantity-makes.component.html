@@ -192,7 +192,7 @@
                 <td class="text-align-center" mat-cell *matCellDef="let element"
                   [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
                   <!-- Upload Image Link -->
-                  <a class="p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image" (click)="uploadImage(element, 'rfq')">
+                  <a class="cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image" (click)="uploadImage(element, 'rfq')">
                     <img class="width-20-px mt-1 mr-2" src="assets/images/upload-image-icon.svg" />
                   </a>
                 </td>
