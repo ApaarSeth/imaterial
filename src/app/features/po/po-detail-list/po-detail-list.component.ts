@@ -205,6 +205,9 @@ export class PODetailComponent implements OnInit {
   copyPo(poId: number) {
     this.poService.getCopyPo(poId).then(res => {
       if (res.statusCode === 201) {
+        this.poDetailService.getPODetails(this.orgId).then(data => {
+          this.poDraftedDetails = new MatTableDataSource(data.data.draftedPOList);
+        });
         this.PoData();
         this.notifier.snack(res.message)
       }
