@@ -458,3 +458,9 @@ div.limited-character.bom {
 .carousel-caption{
   bottom: 30px;
 }
+
+.remove-carousel-indicators{
+  .carousel-control-next, .carousel-control-prev{
+    display: none;
+  }
+}
