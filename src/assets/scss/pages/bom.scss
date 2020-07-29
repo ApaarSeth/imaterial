@@ -161,9 +161,12 @@ div.limited-character.bom {
   }
 
   h4 {
+    font-size: 1.25rem;
+  }
+
+  h4, p{
     text-shadow: 0 0 10px #000;
     word-break: break-word;
-    font-size: 1.25rem;
   }
 }
 
@@ -353,7 +356,6 @@ div.limited-character.bom {
   }
 }
 
-.carousel-caption,
 .carousel-indicators{
   bottom: 0px;
 }
@@ -418,4 +420,36 @@ div.limited-character.bom {
       left: 20px;
     }
   }
+}
+
+.width-20-px{
+  width: 20px;
+}
+
+.bom-material-table tr.mat-row {
+  height: 65px;
+}
+
+.mgtn12{
+  margin-top: -12px;
+}
+
+.carousel-overlay{
+  background-color: black;
+	width: 100%;
+	opacity: 0.6;
+	height: 100%;
+  top: 0;
+	position: absolute;
+  z-index: 1;
+}
+
+.download-white-icon{
+  width: 40px;
+  transform: translate(0%, -150%);
+  margin: auto;
+}
+
+.carousel-caption{
+  bottom: 30px;
 }

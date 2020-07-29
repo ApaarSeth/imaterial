@@ -367,8 +367,8 @@ s .validTill {
 }
 
 .add-taxes-col {
-  min-width: 100px;
-  max-width: 120px;
+  // min-width: 100px;
+  // max-width: 120px;
   span {
     white-space: normal;
   }
@@ -386,11 +386,6 @@ s .validTill {
   min-width: 4% !important;
 }
 
-.po-col-width {
-  max-width: 8.6%;
-  min-width: 8.6% !important;
-}
-
 .po-date-width {
   max-width: 10%;
   min-width: 10% !important;
@@ -399,4 +394,32 @@ s .validTill {
 .removePadding .mat-menu-content {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
+}
+
+.international-edit-po{
+  max-width: 8.3%;
+  min-width: 8.3% !important;
+}
+
+.international-view-po,
+.national-edit-po{
+  max-width: 9.2%;
+  min-width: 9.2% !important;
+}
+
+.national-view-po{
+  max-width: 9.5%;
+  min-width: 9.5% !important;
+}
+
+.po-date-width .date-label .mat-form-field-label-wrapper{
+  top: -.84375em;
+}
+
+@media only screen and (max-width: 1199px){
+  .edit-view-purchase-order{
+    .mat-header-cell, .mat-cell, .add-taxes-col span, .small-text{
+      font-size: 13px;
+    }
+  }
 }

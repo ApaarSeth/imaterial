@@ -76,11 +76,6 @@
                   {{ element.materialGroup }}
                 </span>
               </div>
-
-              <!-- Upload Image Modal Link -->
-              <div class="add-edit-image d-block">
-                <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(element)">Add/Edit Image</a>
-              </div>
             </mat-checkbox>
           </td>
         </ng-container>
@@ -171,24 +166,19 @@
           <th *matHeaderCellDef></th>
           <td class="text-right p-b-20" mat-cell *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
-            <!-- <a>
-              <mat-icon>edit</mat-icon>
-            </a> -->
+            
             <span *ngIf="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false"
               class="p-r-20 p-t-10 display-inline-block color-grey">Pending</span>
-            <!-- <a
-              (click)="(element.materialCustomFlag === 1 ? element.isApproved !== 1 : false) ? null : issueToIndent(element.materialId, projectId)"
-              class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"
-              matTooltip="Issue to Indent"
-            > -->
+            
+            <!-- Upload Image Link -->
+            <a class="p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image" (click)="uploadImage(element)">
+              <img class="width-20-px mt-1 mr-2" src="assets/images/upload-image-icon.svg" />
+            </a>
+              
             <a class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Issue to Indent">
               <img (click)="openIssueTOIndent(element)" [src]="indentButtonColor(element)" />
             </a>
-
-            <!-- <a *ngIf="permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)" class="width-15-px p-r-10 issue-to-indent-icon">
-              <img src="../../../../assets/images/issue_to_indent_disabled.png" />
-            </a> -->
-
+            
             <a class="width-15-px p-l-5 cursor-pointer" matTooltip="Delete" *ngIf="
                 (element.requestedQuantity === 0 || element.requestedQuantity === null) &&
                 (element.availableStock === 0 || element.availableStock === null) &&
@@ -206,6 +196,16 @@
                     : '../../../../assets/images/delete-button_disable.png'
                 " />
             </a>
+
+            <!-- <a
+              (click)="(element.materialCustomFlag === 1 ? element.isApproved !== 1 : false) ? null : issueToIndent(element.materialId, projectId)"
+              class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon"
+              matTooltip="Issue to Indent"
+            > -->
+
+            <!-- <a *ngIf="permissionObj.rfqFlag && (element.availableStock === 0 || element.availableStock === null)" class="width-15-px p-r-10 issue-to-indent-icon">
+              <img src="../../../../assets/images/issue_to_indent_disabled.png" />
+            </a> -->
 
             <!-- <a
               class="width-15-px p-l-5"

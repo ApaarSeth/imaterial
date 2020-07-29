@@ -93,6 +93,8 @@ export class UploadImageComponent implements OnInit {
 
           const newUploadedImageList = (this.data.selectedMaterial && this.data.selectedMaterial.documentList) ? this.data.selectedMaterial.documentList.filter(opt => opt.documentId === 0) : [];
           this.prevDocumentList = [...rfqPrevImages, ...newUploadedImageList];
+        }else{
+          this.prevDocumentList = this.data.selectedMaterial.documentList;
         }
       });
 
