@@ -25,6 +25,7 @@ import { AppNotificationService } from './app-notification.service';
 })
 export class DataService {
   private baseUrl: string;
+  paymentUrl: string;
   private baseStartUrl: string;
   private masterUrl: string;
   private ssoUrl: string;
@@ -48,6 +49,7 @@ export class DataService {
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.orgId = localStorage.getItem("orgId");
+    this.paymentUrl = Utils.paymentUrl() + 'payment/';
   }
 
   getRequest(
@@ -75,7 +77,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -120,7 +122,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -226,7 +228,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -275,7 +277,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -324,7 +326,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -428,7 +430,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
