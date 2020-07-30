@@ -4,11 +4,11 @@ import { POService } from "src/app/shared/services/po/po.service";
 
 @Injectable()
 export class PODetailListResolver implements Resolve<any> {
-  constructor(private poDetailService: POService) {}
+  constructor(private poDetailService: POService) { }
 
   resolve() {
-    let orgId=Number(localStorage.getItem("orgId"))
-    return this.poDetailService.getPODetails(orgId).then(data => {
+    // let orgId=Number(localStorage.getItem("orgId"))
+    return this.poDetailService.getPODetails({}).then(data => {
       return data.data;
     });
   }
