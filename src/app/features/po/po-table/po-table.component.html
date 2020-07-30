@@ -45,8 +45,8 @@
       <div class="res-td">
         <section matSort class="mat-elevation-z2 mat-header-row">
           <span class="mat-header-cell po-sno-width" mat-sort-header="vesselName">S.No</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Material Name & Makes</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Unit</span>
+          <span class="mat-header-cell po-material-width">Material Name <br/> & Makes</span>
+          <span class="mat-header-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-unit-width' : 'po-unit-width'">Unit</span>
           <span class="mat-header-cell po-date-width">Fullfillment <br />Date</span>
           <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Supplier Rate
             <span
@@ -97,7 +97,7 @@
             Attached Images
           </span>
 
-          <span class="mat-header-cell po-sno-width" *ngIf="mode === 'edit'"></span>
+          <span class="mat-header-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-image-width' : 'po-sno-width'" *ngIf="mode === 'edit'"></span>
 
           <span
             class="mat-header-cell"
@@ -110,7 +110,7 @@
         <div *ngFor="let material of poTableData; let m = index" [formGroupName]="m">
           <div class="material-row" [ngClass]="isMobile ? 'mpo-mh' : ''">
             <span class="mat-cell po-sno-width" [ngClass]="isMobile ? 'fontsize-10-px' : ''">{{ m + 1 }}</span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+            <span class="mat-cell po-material-width">
               <span>{{ material.materialName }}</span>
               <!-- [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''" -->
               <!-- Upload Image Modal Link -->
@@ -118,7 +118,7 @@
                 <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(material, 'po')">Add/Edit Image</a>
               </div> -->
             </span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">{{ material.materialUnit }}</span>
+            <span class="mat-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-unit-width' : 'po-unit-width'">{{ material.materialUnit }}</span>
             <span class="mat-cell po-date-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
@@ -148,7 +148,7 @@
             </span>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
             <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"
-              >{{ getMaterialQuantity(m) | number: "1.2-2" }} {{ material.materialUnit }}
+              >{{ getMaterialQuantity(m) | number: "1.2-2" }}
               <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
                 Must be less than {{material.poAvailableQty}}
               </span> -->
@@ -215,7 +215,7 @@
               </ng-container>
             </span>
 
-            <span class="mat-cell po-sno-width up" *ngIf="mode === 'edit'">
+            <span class="mat-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-image-width' : 'po-sno-width'" *ngIf="mode === 'edit'">
               <!-- Upload Image Link -->
               <a class="cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image" (click)="uploadImage(material, 'po')">
                 <img class="width-20-px mt-1 mr-2" src="assets/images/upload-image-icon.svg" />
@@ -236,8 +236,8 @@
           <ng-container formArrayName="purchaseOrderDetailList">
             <div class="mat-row" *ngFor="let purchaseOrder of material.purchaseOrderDetailList; let p = index" [formGroupName]="p" [ngClass]="isMobile ? 'mpo-mh' : ''">
               <span class="mat-cell po-sno-width"></span>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">{{ purchaseOrder.materialBrand }}</span>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
+              <span class="mat-cell po-material-width">{{ purchaseOrder.materialBrand }}</span>
+              <span class="mat-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-unit-width' : 'po-unit-width'"></span>
               <span class="mat-cell po-date-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
               <span class="mat-cell supplier-rates" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
                 <ng-container *ngIf="mode != 'edit'; else editRate">
@@ -375,8 +375,8 @@
 
           <ng-template #viewAdditonalBlock>
             <div class="row width-100">
-              <div class="col-xs-9"></div>
-              <div class="col-xs-3 p-r-10 fontsize-15-px text-left">
+              <div class="col-md-9"></div>
+              <div class="col-md-3 p-r-10 fontsize-15-px text-left">
                 <span class="p-r-0">
                   <span class="light-grey small-text">Other Cost:</span>
                   <span class="p-r-5 light-grey" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
@@ -406,22 +406,22 @@
         <!----------------- Table Footer Row ------------------>
         <div class="mat-row footer" [ngClass]="isMobile ? 'mpo-mh1' : ''">
           <span class="mat-cell po-sno-width"></span>
-          <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
-          <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
+          <span class="mat-cell po-material-width"></span>
+          <span class="mat-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-unit-width' : 'po-unit-width'"></span>
           <span class="mat-cell po-date-width"></span>
           <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
           <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
           <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
           <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
             <span *ngIf="isInternational" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''"><span>
-              Tax Amount<br/>
+              Tax Amount
               <span>({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})</span>
             </span>
             <br />{{ totalTaxAmount | number: "1.2-2" }}</span></span>
           <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
             <span *ngIf="isInternational; else totalGstAmount">
               <span
-                >Other Cost <br/>
+                >Other Cost
                 <span
                   >({{
                     poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
@@ -442,7 +442,7 @@
             <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue + totalAmount | number: "1.2-2") : (totalAmount + totalOtherAmount | number: "1.2-2") }}</span
           >
           <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
-          <span class="mat-cell mat-last-cell po-sno-width" *ngIf="mode === 'edit'"></span>
+          <span class="mat-cell mat-last-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-image-width' : 'po-sno-width'" *ngIf="mode === 'edit'"></span>
         </div>
 
         <div *ngIf="!isInternational" class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35 font-size-vary-grn">

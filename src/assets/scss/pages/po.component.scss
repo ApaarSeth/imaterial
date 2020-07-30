@@ -5,8 +5,6 @@
     border-bottom: none;
   }
   .mat-accordion .mat-header-row {
-    padding-left: 1.5rem;
-    padding-right: 2rem;
     border-bottom: none;
   }
 
@@ -39,9 +37,10 @@
   .mat-header-row {
     display: flex;
     align-items: center;
-    padding: 0 $mat-row-horizontal-padding;
     box-sizing: border-box;
     width: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .mat-cell,
@@ -386,7 +385,8 @@ s .validTill {
   min-width: 4% !important;
 }
 
-.po-date-width {
+.po-date-width,
+.po-material-width {
   max-width: 10%;
   min-width: 10% !important;
 }
@@ -397,23 +397,22 @@ s .validTill {
 }
 
 .international-edit-po{
-  max-width: 8.3%;
-  min-width: 8.3% !important;
+  max-width: 8.25%;
+  min-width: 8.25% !important;
 }
 
 .national-edit-po{
-  max-width: 9.2%;
-  min-width: 9.2% !important;
+  max-width: 9.4%;
+  min-width: 9.4% !important;
 }
 
 .international-view-po,
 .national-view-po{
-  max-width: 9.5%;
-  min-width: 9.5% !important;
+  max-width: 10%;
+  min-width: 10% !important;
 }
 
 .po-date-width .date-label{
-  
   .mat-form-field-label-wrapper{
     top: -.84375em;
   }
@@ -421,6 +420,21 @@ s .validTill {
   .form-placeholder {
     font-size: 13px;
   }
+}
+
+.po-unit-width{
+  max-width: 6%;
+  min-width: 6% !important;
+}
+
+.po-national-unit-width{
+  max-width: 7%;
+  min-width: 7% !important;
+}
+
+.po-national-image-width{
+  max-width: 3%;
+  min-width: 3% !important;
 }
 
 @media only screen and (max-width: 1199px){
