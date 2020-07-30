@@ -33,11 +33,13 @@
     }
 
     .actions{
+        display: flex;
         button{
             border-radius: 25px;
             &:first-of-type{
                 line-height: 26px;
                 padding:0 20px;
+                color:#f47721;                
             }
             &:last-of-type{
                 line-height: 30px;

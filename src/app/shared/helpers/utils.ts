@@ -27,13 +27,11 @@ export class Utils {
     //             ) : "https:" + '//api.yeho.ga') + '/';
     // }
     static baseUrl(): string {
-
         return (window[ 'env' ] && window[ 'env' ][ 'api_url' ]) || 'https://dev-api.buildsupply.io/';
-
     }
 
     static paymentUrl(): string {
-        return 'https://dev-payment.buildsupply.io/payment/';
+        return (window[ 'env' ] && window[ 'env' ][ 'payment_url' ]) || 'https://dev-payment.buildsupply.io/';
     }
 
     // static formatCardNumber(type, card) {
