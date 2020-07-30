@@ -75,4 +75,9 @@ export class POService {
   getCopyPo(poId: number) {
     return this.dataService.getRequest(API.COPYPO(poId))
   }
+
+
+  shortClose(poId: number) {
+    return this.dataService.getRequest(API.SHORTCLOSE(poId))
+  }
 }

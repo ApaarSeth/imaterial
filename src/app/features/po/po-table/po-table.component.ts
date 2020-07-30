@@ -34,7 +34,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   poCurrency: PurchaseOrderCurrency
   poId: number;
   constructor(private cdr: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar,
-    private cdRef : ChangeDetectorRef) { }
+    private cdRef: ChangeDetectorRef) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
@@ -403,15 +403,11 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getTotalPOListTax(m) {
     if (this.poTableData[m].purchaseOrderDetailList.length > 1) {
-      if (this.poTableData[m].purchaseOrderDetailList[0].taxAmount)
-        return this.poTableData[m].purchaseOrderDetailList.map(val => val.taxAmount).reduce((a, b) => (a + b))
-      else
-        return 0;
+      return this.poTableData[m].purchaseOrderDetailList.map(val => val.taxAmount).reduce((a, b) => (a + b))
     }
     else {
       return this.poTableData[m].purchaseOrderDetailList[0].taxAmount ? this.poTableData[m].purchaseOrderDetailList[0].taxAmount : 0;
     }
-
   }
 
 
@@ -546,7 +542,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== null) {
         this.poTableData[0].purchaseOrderDetailList.map(list => {
-          if(list.materialId === result.materialId){
+          if (list.materialId === result.materialId) {
             list.documentList = result.documentsList;
           }
         });
@@ -563,20 +559,20 @@ export class PoTableComponent implements OnInit, OnDestroy {
    */
   viewAllImages(materialId) {
     const dialogRef = this.dialog.open(ViewImageComponent, {
-        disableClose: true,
-        width: "500px",
-        panelClass: 'view-image-modal',
-        data: {
-            purchaseOrderId: this.poId,
-            materialId,
-            type: 'po'
-        }
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        purchaseOrderId: this.poId,
+        materialId,
+        type: 'po'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-            console.log(result);
-        }
+      if (result) {
+        console.log(result);
+      }
     });
   }
 }

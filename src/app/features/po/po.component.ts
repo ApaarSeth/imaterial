@@ -28,6 +28,8 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gstin-missing.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
+import { ShortCloseConfirmationComponent } from 'src/app/shared/dialogs/short-close-confirmation/short-close-confirmation.component';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
   selector: "app-po",
@@ -97,41 +99,46 @@ export class PoComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private commonService: CommonService,
     private userGuideService: UserGuideService,
-    private navService: AppNavigationService
+    private navService: AppNavigationService,
+    private notifier: AppNotificationService
   ) {
   }
   poId: number;
   mode: string;
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
-
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
       this.mode = poParams.mode;
+      this.generatePoApi()
+      this.formInit();
+      this.startSubscription();
     });
+
+  }
+
+  generatePoApi() {
     this.poService.getPoGenerateData(this.poId).then(res => {
-      
       /**
        * @description code to remove duplicate entries in purchaseOrderDetailList documentList array for each material
        */
       res.data.materialData.forEach(mat => {
         mat.purchaseOrderDetailList.forEach(list => {
-          
-          if(list.documentList && list.documentList.length > 0){
+
+          if (list.documentList && list.documentList.length > 0) {
             list.documentList = list.documentList.reduce((unique, o) => {
-              if(!unique.some(obj => obj.documentId === o.documentId)) {
+              if (!unique.some(obj => obj.documentId === o.documentId)) {
                 unique.push(o);
               }
               return unique;
-            },[]);
+            }, []);
           }
-          
+
         });
       });
       // end the code
 
       this.poData = res.data;
-
       this.tableData = this.poData.materialData;
       this.currency = { isInternational: this.poData.isInternational, purchaseOrderCurrency: this.poData.purchaseOrderCurrency }
       this.additionalOtherCost = { additionalOtherCostAmount: this.poData.additionalOtherCostAmount, additionalOtherCostInfo: this.poData.additionalOtherCostInfo }
@@ -162,8 +169,6 @@ export class PoComponent implements OnInit {
         this.openProjectDialog(this.poData)
       }
     });
-    this.formInit();
-    this.startSubscription();
   }
 
   setLocalStorage() {
@@ -217,9 +222,30 @@ export class PoComponent implements OnInit {
     };
     return poDataCollate;
   }
+
   viewModes() {
     this.viewMode = true;
   }
+
+  openShortClose() {
+    const dialogRef = this.dialog.open(ShortCloseConfirmationComponent, {
+      width: "400px",
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res === 'yes') {
+        this.poService.shortClose(this.poId).then(res => {
+          if (res.statusCode === 201) {
+            this.notifier.snack(res.message)
+            this.router.navigate(["po"]);
+          }
+          else {
+            this.notifier.snack(res.message)
+          }
+        })
+      }
+    })
+  }
+
   selectApprover() {
     this.viewMode = true;
     let data: POData = this.collateResults();
@@ -348,6 +374,8 @@ export class PoComponent implements OnInit {
     win.blur();
     setTimeout(win.focus, 0);
   }
+
+
   @HostListener('window:resize', ['$event'])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 576) {
