@@ -7,7 +7,7 @@
           <div class="row align-items-center">
 
             <!-- Left Side menus -->
-            <div class="col-md-6 text -left border-input">
+            <div class="col-md-6 text -left border-input col-left-width">
 
               <div class="row align-items-center justify-content-between">
                 <!-- Search field -->
@@ -52,7 +52,7 @@
             <!-- </div> -->
 
             <!-- Right side menus -->
-            <div class="col-md-6 text-right d-flex justify-content-end" appDnd>
+            <div class="col-md-6 text-right d-flex justify-content-end col-right-width" appDnd>
 
               <div class="row align-items-center justify-content-between">
                 <!-- Download BOM Link -->
@@ -93,12 +93,12 @@
           </div>
         </form>
         <div class="row">
-          <div class="col-md-9 display-flex m-t-20">
+          <div class="col-md-9 display-flex m-t-20 col-left-width-9">
             <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
               <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
             </div>
           </div>
-          <div class="col-md-3 p-t-20 d-flex align-items-center justify-content-between">
+          <div class="col-md-3 col-right-width-3 p-t-20 d-flex align-items-center justify-content-between">
             <!-- Copy Materials Link -->
             <a href="javascript:void(0)" class="main-color text-semi-bold" [routerLink]="['/project-dashboard/bom/'+projectId+'/copy-materials']">
               Copy Materials
