@@ -2,7 +2,7 @@
     background-color: #fff;
     .s-head{
         display: block;
-        padding: 10px 16px;
+        padding: 10px 10px;
         h4{
             font-size: 16px;
             font-weight: normal;
@@ -22,15 +22,24 @@
     }
     
     .mat-expansion-panel-header{
-        padding: 0 16px;
+        padding: 0 10px;
+    }
+
+    .mat-expansion-panel-body{
+        padding: 0 10px 16px;
+    }
+    .mat-expansion-panel:hover{
+        background: #ffffff;
     }
 
     .actions{
+        display: flex;
         button{
             border-radius: 25px;
             &:first-of-type{
                 line-height: 26px;
                 padding:0 20px;
+                color:#f47721;                
             }
             &:last-of-type{
                 line-height: 30px;
@@ -42,4 +51,25 @@
 
 .bordered-button{
     border:2px solid #f47721 !important;
+}
+
+.selected-list{
+    list-style: none;
+    margin: 10px 0px 0px;
+    padding: 0;
+    li{
+        margin-bottom: 5px;
+        background-color: #fbf6f2;
+        color:#929292;
+        padding: 5px;
+        border-radius: 5px;
+        display: block;
+        width: 100%;
+        &:last-of-type{
+            margin-bottom: 0px;
+        }
+        span{
+            cursor: pointer;
+        }
+    }
 }

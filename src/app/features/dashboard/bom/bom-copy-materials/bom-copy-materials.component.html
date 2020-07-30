@@ -1,7 +1,6 @@
 <div class="page-start-point changeWidth mt-5 pt-4">
     <div class="p-l-20 p-r-20 p-b-20">
-        <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()"
-            [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"></card-layout>
+        <card-layout *ngIf="projectData" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"></card-layout>
 
         <div class="row align-items-center">
             <div class="col-xs-12 col-md-3">

@@ -10,7 +10,7 @@
     </mat-card-header>
     <mat-card-content>
       <mat-list class="pt-10">
-        <span *ngIf="mode != 'edit' && documentData">
+        <span *ngIf="documentData">
           <mat-list-item class="row height-100" *ngFor="let file of documentData; let i = index">
             <!-- <mat-icon>file_copy</mat-icon> -->
             <div class="col-x-10">

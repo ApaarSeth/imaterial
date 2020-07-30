@@ -606,7 +606,7 @@ ngx-mat-drp-picker-overlay {
     line-height: 26px !important;
   }
   .main-button.mat-button-base {
-    min-width: 80px;
+    min-width: auto;
     max-height: 30px;
   }
 }
@@ -644,6 +644,18 @@ input::title {
   color: gray;
 }
 
+.border-bottom-dark{
+  border-bottom:1px solid var(--gray);
+}
 .border-solid {
   border-bottom: 1px solid;
+}
+
+
+.fltr-btn{
+  font-size: 30px !important;
+    min-width: auto !important;
+    line-height: 18px !important;
+    padding: 0 10px !important;
+    margin-top: -8px !important;
 }

@@ -31,7 +31,7 @@ export class Utils {
     }
 
     static paymentUrl(): string {
-        return 'https://dev-payment.buildsupply.io/payment/';
+        return (window['env'] && window['env']['payment_url']) || 'https://dev-payment.buildsupply.io/';
     }
 
     // static formatCardNumber(type, card) {
