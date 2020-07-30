@@ -6,15 +6,15 @@ import { UserService } from '../../services/userDashboard/user.service';
 import { MatSelect, MatCheckbox, MatDatepicker } from '@angular/material';
 
 interface rfqRequestData {
-    ProjectIDList?: any;
-    MaterialCodeList?: any;
-    RfqRaisedStartDate?: string;
-    RfqRaisedEndDate?: string;
-    RfqStatus?: number;
-    SupplierIDList?: any;
-    UserIDList?: any;
-    RfqExpiryStartDate?: string;
-    RfqExpiryEndDate?: string;
+    projectIDList?: any;
+    materialCodeList?: any;
+    rfqRaisedStartDate?: string;
+    rfqRaisedEndDate?: string;
+    rfqStatus?: number;
+    supplierIDList?: any;
+    userIDList?: any;
+    rfqExpiryStartDate?: string;
+    rfqExpiryEndDate?: string;
 }
 
 @Component({
@@ -97,14 +97,14 @@ export class AdvanceSearchComponent implements OnInit {
 
     checkSubmitNotSubmit(isChecked, type, bidSubmitted, notSubmitted) {
 
-        if (isChecked) {
-            if (type === '0') {
-                notSubmitted._checked = false;
-            }
-            if (type === '1') {
-                bidSubmitted._checked = false;
-            }
-        }
+        // if (isChecked) {
+        //     if (type === '0') {
+        //         notSubmitted._checked = false;
+        //     }
+        //     if (type === '1') {
+        //         bidSubmitted._checked = false;
+        //     }
+        // }
         this.isBidSubmitted = bidSubmitted._checked;
         this.isNotSubmitted = notSubmitted._checked;
     }
@@ -266,22 +266,22 @@ export class AdvanceSearchComponent implements OnInit {
 
     filterRequest() {
         let data: rfqRequestData = {};
-        data.RfqExpiryStartDate = this.expiryFromPickerEl ? this.expiryFromPickerEl : null;
-        data.RfqExpiryEndDate = this.expiryToPickerEl ? this.expiryToPickerEl : null;
-        data.RfqRaisedStartDate = this.raisedFromPickerEl ? this.raisedFromPickerEl : null;
-        data.RfqRaisedEndDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
+        data.rfqExpiryStartDate = this.expiryFromPickerEl ? this.expiryFromPickerEl : null;
+        data.rfqExpiryEndDate = this.expiryToPickerEl ? this.expiryToPickerEl : null;
+        data.rfqRaisedStartDate = this.raisedFromPickerEl ? this.raisedFromPickerEl : null;
+        data.rfqRaisedEndDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
 
         if (this.isBidSubmitted) {
-            data.RfqStatus = 1;
+            data.rfqStatus = 1;
         }
         if (this.isNotSubmitted) {
-            data.RfqStatus = 0;
+            data.rfqStatus = 0;
         }
 
-        data.ProjectIDList = this.advSearchService.getFinalList(this.selectedProjects, 'projects');
-        data.MaterialCodeList = this.advSearchService.getFinalList(this.selectedMaterials, 'materials');
-        data.SupplierIDList = this.advSearchService.getFinalList(this.selectedSuppliers, 'suppliers');
-        data.UserIDList = this.advSearchService.getFinalList(this.selectedUsers, 'users');
+        data.projectIDList = this.advSearchService.getFinalList(this.selectedProjects, 'projects');
+        data.materialCodeList = this.advSearchService.getFinalList(this.selectedMaterials, 'materials');
+        data.supplierIDList = this.advSearchService.getFinalList(this.selectedSuppliers, 'suppliers');
+        data.userIDList = this.advSearchService.getFinalList(this.selectedUsers, 'users');
 
         return data;
     }
