@@ -220,7 +220,7 @@ export class GrnAddSupplierComponent implements OnInit {
         this.bomService.addGrnWithoutPo(data).then(res => {
             if (res.statusCode === 201) {
                 this.notifier.snack("GRN Created Successfully!")
-                this.dialogRef.close(null)
+                this.dialogRef.close("success")
             }
             else {
                 this.notifier.snack("There is some issue submitting GRN")

@@ -459,8 +459,31 @@ div.limited-character.bom {
   bottom: 30px;
 }
 
+/******** if only one image exists in slider then controls should get removed *********/
 .remove-carousel-indicators{
   .carousel-control-next, .carousel-control-prev{
     display: none;
+  }
+}
+
+@media only screen and (max-width: 1311px){
+  .col-left-width {
+    flex-basis: 40%;
+    max-width: 40%;
+  }
+
+  .col-right-width {
+    flex: 60%;
+    max-width: 60%;
+  }
+
+  .col-left-width-9 {
+    flex-basis: 70%;
+    max-width: 70%;
+  }
+
+  .col-right-width-3 {
+    flex: 30%;
+    max-width: 30%;
   }
 }

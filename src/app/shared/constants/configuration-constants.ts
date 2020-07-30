@@ -163,4 +163,5 @@ export const API = {
   POSTRFQEXPORTREQUEST: organisationId => `rfq/excelDownload/${organisationId}`,
   SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport',
   COPYPO: (poId) => `po/copyPO/${poId}`,
+  SHORTCLOSE: (poId) => `po/POAmend/${poId}`
 };

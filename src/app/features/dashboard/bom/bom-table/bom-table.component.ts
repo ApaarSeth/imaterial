@@ -229,6 +229,11 @@ export class BomTableComponent implements OnInit {
       width: "1000px",
       data: this.projectId
     });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res === 'success') {
+        this.getMaterialWithQuantity()
+      }
+    })
   }
 
   openGrnViaExcelDialog() {
@@ -236,6 +241,12 @@ export class BomTableComponent implements OnInit {
       width: "600px",
       data: this.projectId
     });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res === 'success') {
+        this.getMaterialWithQuantity()
+      }
+    })
   }
 
   raiseIndent() {

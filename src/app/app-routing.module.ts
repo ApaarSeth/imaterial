@@ -18,6 +18,8 @@ import { MySubscriptionsComponent } from './features/users/my-subscriptions/my-s
 import { SubscriptionRedirectionsComponent } from './features/subscription-redirections/subscription-redirections.component';
 import { MenuResolver } from './shared/resolver/menu.resolver';
 import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
+import { GrnComponent } from './features/grn/grn.component';
+import { GrnResolver } from './features/grn/resolver/grn.resolver';
 
 
 const routes: Routes = [
@@ -123,6 +125,12 @@ const routes: Routes = [
         data: { title: 'profile' }
       },
       {
+        path: 'grn',
+        component: GrnComponent,
+        data: { title: 'grn' },
+        resolve: { projectsList: GrnResolver }
+      },
+      {
         path: "subscriptions",
         component: MySubscriptionsComponent,
         resolve: {
@@ -223,7 +231,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule],
-  providers: [CountryResolver, SubscriptionsResolver, MenuResolver]
+  providers: [CountryResolver, SubscriptionsResolver, MenuResolver, GrnResolver]
 })
 
 export class AppRoutingModule { }

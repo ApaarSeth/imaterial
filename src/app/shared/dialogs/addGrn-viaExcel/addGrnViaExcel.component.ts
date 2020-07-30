@@ -55,6 +55,7 @@ export class AddGrnViaExcelComponent implements OnInit {
                 this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
                 this.loading.hide();
                 this.notifier.snack(res.message)
+                this.dialogRef.close('success')
             } else {
                 this.notifier.snack(res.message)
             }
