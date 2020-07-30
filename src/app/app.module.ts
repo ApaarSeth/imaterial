@@ -47,6 +47,7 @@ import { SubscriptionRedirectionsComponent } from './features/subscription-redir
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
+import { GrnComponent } from './features/grn/grn.component';
 
 @NgModule({
   declarations: [
@@ -59,10 +60,12 @@ import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
     ProfileLayoutComponent,
     ProfileComponent,
     MySubscriptionsComponent,
-    SubscriptionRedirectionsComponent
+    SubscriptionRedirectionsComponent,
+    GrnComponent
   ],
   imports: [
     BrowserModule,
+
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
@@ -105,6 +108,6 @@ import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
     TaxCostService
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

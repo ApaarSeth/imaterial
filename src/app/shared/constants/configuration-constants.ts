@@ -160,4 +160,5 @@ export const API = {
   GRNUPLOADTEMPELATE: (projectId) => `po/add/opengrn/excel/${projectId}`,
   SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport',
   COPYPO: (poId) => `po/copyPO/${poId}`,
+  SHORTCLOSE: (poId) => `po/POAmend/${poId}`
 };
