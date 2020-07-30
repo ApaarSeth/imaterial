@@ -1,5 +1,5 @@
 <div class="page-start-point changeWidth pt-4">
-  <div *ngIf="!poApprovalDetailsTemp && !poDraftedDetailsTemp && !acceptedRejectedPOListTemp">
+  <div *ngIf="!poApprovalDetailsTemp && !poDraftedDetailsTemp && !acceptedRejectedPOListTemp && poCount === 0">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
         <img src="../../../../assets/images/po-background.png" alt="BuildSupply_Logo" />
@@ -9,21 +9,19 @@
             Please create one to continue.
           </p>
         </div>
-        <button
-          mat-raised-button
-          [routerLink]="['./initiate-po']"
-          class="main-background-color main-button color-white"
-          matTooltip="Issue P.O. to supplier without Request For Quotations"
-        >
+        <button mat-raised-button [routerLink]="['./initiate-po']" class="main-background-color main-button color-white"
+          matTooltip="Issue P.O. to supplier without Request For Quotations">
           Create P.O.
         </button>
       </div>
     </div>
   </div>
-  <div class="p-b-20 min-height parent create-po-dashboard" *ngIf="poApprovalDetailsTemp || poDraftedDetailsTemp || acceptedRejectedPOListTemp">
+  <div class="p-b-20 min-height parent create-po-dashboard"
+    *ngIf="poApprovalDetailsTemp || poDraftedDetailsTemp || acceptedRejectedPOListTemp || poCount > 0">
     <div class="row">
       <div class="col-xs-7">
-        <mat-form-field class="example-form-field border-input project p-l-10">
+        <mat-form-field class="example-form-field border-input project p-l-10"
+          [ngClass]="isMobile ? 'w-100' : ' w-vw-14' ">
           <input matInput placeholder="Search PO" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
@@ -31,317 +29,331 @@
         </mat-form-field>
       </div>
       <div class="text-right col-xs-5 create-po-btn p-r-20 p-t-10" [ngClass]="isMobile ? 'sm-btn1' : ''">
-        <button
-          mat-raised-button
-          class="main-background-color main-button color-white demo-title"
-          [routerLink]="['./initiate-po']"
-          matTooltip="Issue P.O. to supplier without Request For Quotations"
-        >
+        <button mat-raised-button class="main-background-color main-button color-white demo-title"
+          [routerLink]="['./initiate-po']" matTooltip="Issue P.O. to supplier without Request For Quotations">
           Create P.O.
         </button>
       </div>
     </div>
 
-    <div class="col-xs-12 text-right">
-      <!-- Topmost Status -->
-      <!-- <mat-card class="m-t-40 m-b-20">
-        <div class="row">
-          <div class="right-pipe" style="width: 25%;">
-            <span class="p-l-30 p-r-20 pull-left">23</span>
-            <span class="pull-left">Approved PO</span>
-          </div>
-          <div class="right-pipe" style="width: 25%;">
-            <span class="p-l-10 p-r-20 pull-left">23</span>
-            <span class="pull-left">Total Project</span>
-          </div>
-          <div class="right-pipe" style="width: 25%;">
-            <span class="p-l-10 p-r-20 pull-left">23</span>
-            <span class="pull-left">Completed Indent</span>
-          </div>
-          <div style="width: 25%;">
-            <span class="p-l-10 p-r-20 pull-left">23</span>
-            <span class="pull-left">Ongoing Indent</span>
-          </div>
-        </div>
-      </mat-card> -->
+    <div class="row">
 
-      <!-- Accordion for PO Lists -->
-      <div class="po-list-detail-custom">
-        <!-- <div *ngIf="poApprovalDetailsTemp">
-          <mat-expansion-panel class="myPanel m-b-10" [expanded]="true">
-            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-              <mat-panel-title>
-                P.O. For Approval
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="row matCellAlignLeft">
-              <table mat-table [dataSource]="poApprovalDetails" class="mat-elevation-z8 col-sm-12 po-custom-mat-width">
-                <ng-container matColumnDef="PO Number">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
-                </ng-container>
+      <div class="col-md-2">
 
-                <ng-container matColumnDef="Raised Date">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
-                  </td>
-                </ng-container>
+        <advance-search filterType="po"></advance-search>
 
-                <ng-container matColumnDef="Supplier Name">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.supplierName }}
-                  </td>
-                </ng-container>
+      </div>
 
-                <ng-container matColumnDef="Total Material">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>Total Material</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.totalMaterials }}
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="PO Amount">
-                  <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount ₹</th>
-                  <td mat-cell class="text-right" *matCellDef="let element">
-                    {{ element.poAmount | number: "1.2-2" }}
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Action">
-                  <th mat-header-cell class="text-align-center" class="text-align-right" *matHeaderCellDef></th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    <span class="p-r-10">
-                      <a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'requiredApproval']">View P.O</a>
-                    </span>
-                    <span>&nbsp;</span>
-                  </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-              </table>
+      <div class="col-md-10 text-right">
+        <!-- Topmost Status -->
+        <!-- <mat-card class="m-t-40 m-b-20">
+          <div class="row">
+            <div class="right-pipe" style="width: 25%;">
+              <span class="p-l-30 p-r-20 pull-left">23</span>
+              <span class="pull-left">Approved PO</span>
             </div>
-          </mat-expansion-panel>
-        </div> -->
-        <div *ngIf="poApprovalDetailsTemp && permissionObj.poApprovalFlag">
-          <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-              <mat-panel-title>
-                P.O. For Approval
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div class="example-container mat-elevation-z8">
-              <table mat-table [dataSource]="poApprovalDetails">
-                <ng-container matColumnDef="PO Number">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="Raised Date">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Supplier Name">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.supplierName }}
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Total Material">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef class="text-align-center">Total Material</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.totalMaterials }}
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="PO Amount">
-                  <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount</th>
-                  <td mat-cell class="text-right" *matCellDef="let element">{{ element.poAmount | number: "1.2-2" }} {{ element.currencyCode }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="Action">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef></th>
-                  <td mat-cell class="text-align-center actions-cell" *matCellDef="let element">
-                    <span class="p-r-10">
-                      <a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./po-generate/', element.purchaseOrderId, 'requiredApproval']">View P.O</a>
-                    </span>
-
-                    <span>&nbsp;</span>
-                    <span class="p-r-10 float-right cursor-pointer"
-                      ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
-                    ></span>
-                  </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-              </table>
+            <div class="right-pipe" style="width: 25%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Total Project</span>
             </div>
-          </mat-expansion-panel>
-        </div>
-        <br />
-        <div *ngIf="poDraftedDetailsTemp">
-          <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-              <mat-panel-title>
-                Drafted P.O.
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="example-container mat-elevation-z8">
-              <table mat-table [dataSource]="poDraftedDetails">
-                <ng-container matColumnDef="PO Number">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="Raised Date">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Supplier Name">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.supplierName }}
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Total Material">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef class="text-align-center">Total Material</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.totalMaterials }}
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="PO Amount">
-                  <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount</th>
-                  <td mat-cell class="text-right" *matCellDef="let element">{{ element.poAmount | number: "1.2-2" }} {{ element.currencyCode }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="Action">
-                  <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element" class="actions-cell">
-                    <span class="p-r-10"
-                      ><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./po-generate/', element.purchaseOrderId, 'edit']">Review Draft P.O.</a></span
-                    >
-                    <span>&nbsp;</span>
-                    <span class="p-r-10 float-right cursor-pointer"
-                      ><a (click)="deleteDraftedPo(element)" matTooltip="Delete"> <img src="../../../../assets/images/delete-button.png" /> </a
-                    ></span>
-                    <span class="p-r-10 float-right cursor-pointer"
-                      ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
-                    ></span>
-                  </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-              </table>
+            <div class="right-pipe" style="width: 25%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Completed Indent</span>
             </div>
-          </mat-expansion-panel>
-        </div>
-        <br />
-        <div *ngIf="acceptedRejectedPOListTemp">
-          <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-              <mat-panel-title>
-                <div class="col-xs-5 text-left approved">
-                  Approved P.O.
-                </div>
-                <!-- <div class="col-xs-7 text-right grn-note">
-                  *GRN = Goods Receive Note
-                </div> -->
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="example-container mat-elevation-z8">
-              <table mat-table [dataSource]="acceptedRejectedPOList">
-                <ng-container matColumnDef="PO Number">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
-                </ng-container>
+            <div style="width: 25%;">
+              <span class="p-l-10 p-r-20 pull-left">23</span>
+              <span class="pull-left">Ongoing Indent</span>
+            </div>
+          </div>
+        </mat-card> -->
 
-                <ng-container matColumnDef="Raised Date">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
-                  </td>
-                </ng-container>
+        <!-- Accordion for PO Lists -->
+        <div class="po-list-detail-custom">
+          <!-- <div *ngIf="poApprovalDetailsTemp">
+            <mat-expansion-panel class="myPanel m-b-10" [expanded]="true">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+                <mat-panel-title>
+                  P.O. For Approval
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="row matCellAlignLeft">
+                <table mat-table [dataSource]="poApprovalDetails" class="mat-elevation-z8 col-sm-12 po-custom-mat-width">
+                  <ng-container matColumnDef="PO Number">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
+                  </ng-container>
+  
+                  <ng-container matColumnDef="Raised Date">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
+                    </td>
+                  </ng-container>
+  
+                  <ng-container matColumnDef="Supplier Name">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.supplierName }}
+                    </td>
+                  </ng-container>
+  
+                  <ng-container matColumnDef="Total Material">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>Total Material</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.totalMaterials }}
+                    </td>
+                  </ng-container>
+  
+                  <ng-container matColumnDef="PO Amount">
+                    <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount ₹</th>
+                    <td mat-cell class="text-right" *matCellDef="let element">
+                      {{ element.poAmount | number: "1.2-2" }}
+                    </td>
+                  </ng-container>
+  
+                  <ng-container matColumnDef="Action">
+                    <th mat-header-cell class="text-align-center" class="text-align-right" *matHeaderCellDef></th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      <span class="p-r-10">
+                        <a href="javascript:void(0)" style="color: #f47721" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'requiredApproval']">View P.O</a>
+                      </span>
+                      <span>&nbsp;</span>
+                    </td>
+                  </ng-container>
+  
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+              </div>
+            </mat-expansion-panel>
+          </div> -->
+          <div *ngIf="poApprovalDetailsTemp && permissionObj.poApprovalFlag">
+            <mat-expansion-panel class="myPanel" [expanded]="true">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+                <mat-panel-title>
+                  P.O. For Approval
+                </mat-panel-title>
+              </mat-expansion-panel-header>
 
-                <ng-container matColumnDef="Supplier Name">
-                  <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.supplierName }}
-                  </td>
-                </ng-container>
+              <div class="example-container mat-elevation-z8">
+                <table mat-table [dataSource]="poApprovalDetails">
+                  <ng-container matColumnDef="PO Number">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
+                  </ng-container>
 
-                <ng-container matColumnDef="Total Material">
-                  <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Material</th>
-                  <td mat-cell class="text-align-center" *matCellDef="let element">
-                    {{ element.totalMaterials }}
-                  </td>
-                </ng-container>
+                  <ng-container matColumnDef="Raised Date">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
+                    </td>
+                  </ng-container>
 
-                <ng-container matColumnDef="PO Amount">
-                  <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount</th>
-                  <td mat-cell *matCellDef="let element" class="text-right">{{ element.poAmount | number: "1.2-2" }} {{ element.currencyCode }}</td>
-                </ng-container>
+                  <ng-container matColumnDef="Supplier Name">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.supplierName }}
+                    </td>
+                  </ng-container>
 
-                <ng-container matColumnDef="Action">
-                  <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
-                  <td mat-cell *matCellDef="let element" class="actions-cell">
-                    <span class="p-r-10 display-inline-block p-t-5"
-                      ><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
-                    >
-                    <!-- <span class="p-r-10 display-inline-block p-t-5"
-                      ><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./view-grn/', element.purchaseOrderId]">Add/View Receipts</a></span
-                    > -->
-                    <!-- <span class="p-r-10 cursor-pointer"
-                      ><a (click)="openPaymentRecord(element)" matTooltip="Payment Record"><img src="../../../../assets/images/trackpayment.svg" /></a
-                    ></span> -->
-                    <span class="p-r-10 cursor-pointer display-inline-block p-t-5"
-                      ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
-                    ></span>
+                  <ng-container matColumnDef="Total Material">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef class="text-align-center">Total
+                      Material</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.totalMaterials }}
+                    </td>
+                  </ng-container>
 
-                    <button mat-icon-button class="main-color" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                      <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu" class="removePadding">
-                      <button mat-menu-item class="border-solid height-36-px line-0-px" (click)="viewGrn(element.purchaseOrderId)" matTooltip="Add/View Receipts">
-                        <span> Add/View Receipts</span>
+                  <ng-container matColumnDef="PO Amount">
+                    <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount</th>
+                    <td mat-cell class="text-right" *matCellDef="let element">{{ element.poAmount | number: "1.2-2" }}
+                      {{ element.currencyCode }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Action">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef></th>
+                    <td mat-cell class="text-align-center actions-cell" *matCellDef="let element">
+                      <span class="p-r-10">
+                        <a href="javascript:void(0)" style="color: #f47721;"
+                          [routerLink]="['./po-generate/', element.purchaseOrderId, 'requiredApproval']">View P.O</a>
+                      </span>
+
+                      <span>&nbsp;</span>
+                      <span class="p-r-10 float-right cursor-pointer"><a (click)="downloadPo(element.purchaseOrderId)"
+                          matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a></span>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+              </div>
+            </mat-expansion-panel>
+          </div>
+          <br />
+          <div *ngIf="poDraftedDetailsTemp">
+            <mat-expansion-panel class="myPanel" [expanded]="true">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+                <mat-panel-title>
+                  Drafted P.O.
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="example-container mat-elevation-z8">
+                <table mat-table [dataSource]="poDraftedDetails">
+                  <ng-container matColumnDef="PO Number">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Raised Date">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Supplier Name">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.supplierName }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Total Material">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef class="text-align-center">Total
+                      Material</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.totalMaterials }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="PO Amount">
+                    <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount</th>
+                    <td mat-cell class="text-right" *matCellDef="let element">{{ element.poAmount | number: "1.2-2" }}
+                      {{ element.currencyCode }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Action">
+                    <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element" class="actions-cell">
+                      <span class="p-r-10"><a href="javascript:void(0)" style="color: #f47721;"
+                          [routerLink]="['./po-generate/', element.purchaseOrderId, 'edit']">Review Draft
+                          P.O.</a></span>
+                      <span>&nbsp;</span>
+                      <span class="p-r-10 float-right cursor-pointer"><a (click)="deleteDraftedPo(element)"
+                          matTooltip="Delete"> <img src="../../../../assets/images/delete-button.png" /> </a></span>
+                      <span class="p-r-10 float-right cursor-pointer"><a (click)="downloadPo(element.purchaseOrderId)"
+                          matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a></span>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+              </div>
+            </mat-expansion-panel>
+          </div>
+          <br />
+          <div *ngIf="acceptedRejectedPOListTemp">
+            <mat-expansion-panel class="myPanel" [expanded]="true">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+                <mat-panel-title>
+                  <div class="col-xs-5 text-left approved">
+                    Approved P.O.
+                  </div>
+                  <!-- <div class="col-xs-7 text-right grn-note">
+                    *GRN = Goods Receive Note
+                  </div> -->
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="example-container mat-elevation-z8">
+                <table mat-table [dataSource]="acceptedRejectedPOList">
+                  <ng-container matColumnDef="PO Number">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Raised Date">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Supplier Name">
+                    <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.supplierName }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Total Material">
+                    <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Material</th>
+                    <td mat-cell class="text-align-center" *matCellDef="let element">
+                      {{ element.totalMaterials }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="PO Amount">
+                    <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount</th>
+                    <td mat-cell *matCellDef="let element" class="text-right">{{ element.poAmount | number: "1.2-2" }}
+                      {{ element.currencyCode }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Action">
+                    <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element" class="actions-cell">
+                      <span class="p-r-10 display-inline-block p-t-5"><a href="javascript:void(0)"
+                          style="color: #f47721;"
+                          [routerLink]="['./po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span>
+                      <!-- <span class="p-r-10 display-inline-block p-t-5"
+                        ><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./view-grn/', element.purchaseOrderId]">Add/View Receipts</a></span
+                      > -->
+                      <!-- <span class="p-r-10 cursor-pointer"
+                        ><a (click)="openPaymentRecord(element)" matTooltip="Payment Record"><img src="../../../../assets/images/trackpayment.svg" /></a
+                      ></span> -->
+                      <span class="p-r-10 cursor-pointer display-inline-block p-t-5"><a
+                          (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img
+                            src="../../../../assets/images/download-po.png" /> </a></span>
+
+                      <button mat-icon-button class="main-color" [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
                       </button>
-                      <button mat-menu-item class="border-solid height-36-px line-0-px" (click)="openPaymentRecord(element)" matTooltip="Payment Record">
-                        <span> Payment Record</span>
-                      </button>
-                      <button mat-menu-item class="height-36-px line-0-px" (click)="copyPo(element.purchaseOrderId)" matTooltip="Copy PO">
-                        <span>Copy PO</span>
-                      </button>
-                    </mat-menu>
+                      <mat-menu #menu="matMenu" class="removePadding">
+                        <button mat-menu-item class="border-solid height-36-px line-0-px"
+                          (click)="viewGrn(element.purchaseOrderId)" matTooltip="Add/View Receipts">
+                          <span> Add/View Receipts</span>
+                        </button>
+                        <button mat-menu-item class="border-solid height-36-px line-0-px"
+                          (click)="openPaymentRecord(element)" matTooltip="Payment Record">
+                          <span> Payment Record</span>
+                        </button>
+                        <button mat-menu-item class="height-36-px line-0-px" (click)="copyPo(element.purchaseOrderId)"
+                          matTooltip="Copy PO">
+                          <span>Copy PO</span>
+                        </button>
+                      </mat-menu>
 
-                    <!-- <span class="p-r-10"
-                      ><a style="color: #f47721" href="javascript:void(0)" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
-                    >
-                    <span class="p-r-10"> <a style="color: #f47721" [routerLink]="['../../po/view-grn/', element.purchaseOrderId]">Add/View GRN</a></span> -->
-                    <!-- <span><a style="color: #f47721" [routerLink]="['../../po/add-grn/',element.purchaseOrderId]">Add
-                        GRN</a></span> -->
-                  </td>
-                </ng-container>
+                      <!-- <span class="p-r-10"
+                        ><a style="color: #f47721" href="javascript:void(0)" [routerLink]="['../../po/po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
+                      >
+                      <span class="p-r-10"> <a style="color: #f47721" [routerLink]="['../../po/view-grn/', element.purchaseOrderId]">Add/View GRN</a></span> -->
+                      <!-- <span><a style="color: #f47721" [routerLink]="['../../po/add-grn/',element.purchaseOrderId]">Add
+                          GRN</a></span> -->
+                    </td>
+                  </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-              </table>
-            </div>
-          </mat-expansion-panel>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+              </div>
+            </mat-expansion-panel>
+          </div>
         </div>
       </div>
+
+
     </div>
   </div>
 </div>

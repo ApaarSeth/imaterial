@@ -9,6 +9,7 @@ export class AdvanceSearchService {
 
     RFQFilterRequest$ = new Subject<any>();
     RFQFilterExportRequest$ = new Subject<any>();
+    POFilterRequest$ = new Subject<any>();
 
     constructor() { }
 
@@ -114,7 +115,7 @@ export class AdvanceSearchService {
                     result.push(item.materialCode.toString());
                 });
             }
-            if (type === 'users') {
+            if (type === 'users' || type === 'approvers' || type === 'created') {
                 data.forEach(item => {
                     result.push(item.ProjectUser.userId.toString());
                 });
