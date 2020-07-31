@@ -147,7 +147,7 @@ export class GrnAddMaterialComponent implements OnInit {
     quantityCheck(changes): ValidatorFn {
         return (control: AbstractControl): { [key: string]: boolean } | null => {
             let checkValue = (<Subcategory>changes).estimatedQty - (<Subcategory>changes).availableStock
-            if (checkValue < control.value) {
+            if (checkValue > 0 && checkValue < control.value) {
                 this.notifier.snack("Cannot add quantity greater than " + checkValue);
                 control.setValue(0)
                 return { 'quanityExceed': true };
