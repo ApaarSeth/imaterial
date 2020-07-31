@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { ActivatedRouteSnapshot, ActivatedRoute, Router } from "@angular/router";
 import { GlobalStoreService } from 'src/app/shared/services/global-store/global-store.service';
 import { GlobalProject } from 'src/app/shared/models/GlobalStore/projectWise';
@@ -29,7 +29,8 @@ export class GlobalStoreComponent implements OnInit {
     private projectService: ProjectService,
     private router: Router,
     private globalStoreService: GlobalStoreService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -74,9 +75,11 @@ export class GlobalStoreComponent implements OnInit {
   }
   materialShowDataLength(event) {
     this.materialDataLength = event;
+    this.cdr.detectChanges();
   }
   projectShowDataLength(event) {
     this.projectDataLength = event;
+    this.cdr.detectChanges();
   }
 
   openBomDialog() {
