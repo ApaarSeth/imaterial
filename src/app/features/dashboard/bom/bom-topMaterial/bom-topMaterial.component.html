@@ -1,4 +1,4 @@
-<form *ngIf="selectedCategory.length" [formGroup]="quantityForms">
+<form *ngIf="selectedCategory && selectedCategory.length && formCreated" [formGroup]="quantityForms">
   <ng-container formArrayName="forms">
     <span *ngFor="let category of selectedCategory; let c = index">
       <ng-container [formGroupName]="c">

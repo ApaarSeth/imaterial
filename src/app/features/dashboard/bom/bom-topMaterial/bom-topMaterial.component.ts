@@ -5,7 +5,8 @@ import {
   ViewChild,
   Output,
   EventEmitter,
-  ElementRef
+  ElementRef,
+  SimpleChanges
 } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
@@ -37,6 +38,7 @@ export class BomTopMaterialComponent implements OnInit {
   orgId: number;
   searchUnit: string = '';
   materialUnit: string[] = [];
+  formCreated = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -48,9 +50,7 @@ export class BomTopMaterialComponent implements OnInit {
   projectId: number;
   frmArr: FormGroup[];
   quantityForms: FormGroup;
-  selectedCategory: categoryNestedLevel[] = [];
-  // searchMaterial: string;
-  // product: ProjectDetails;
+  selectedCategory: categoryNestedLevel[];
   step = 0;
   isSearching: boolean;
   setStep(index: number) {
@@ -60,26 +60,17 @@ export class BomTopMaterialComponent implements OnInit {
 
   ngOnInit() {
     this.currencyCode = localStorage.getItem('currencyCode')
-    this.route.params.subscribe(params => {
-      this.projectId = params["id"];
-    });
-    this.orgId = Number(localStorage.getItem("orgId"))
-    // this.projectService.getProject(this.orgId, this.projectId).then(data => {
-    // });
     this.bomService.getMaterialUnit().then(res => {
       this.materialUnit = res.data;
     });
-    this.selectedCategory = [...this.category];
-    this.mappingMaterialWithQuantity()
-    this.formInit();
-    this.searchCategory();
+    this.bomService.searchText.subscribe(val => {
+      this.searchCategory(val);
+    })
+
   }
 
-  searchCategory() {
-    if (this.category) {
-      this.selectedCategory = [...this.category];
-    }
-    this.bomService.searchText.subscribe(val => {
+  searchCategory(val) {
+    if (this.selectedCategory) {
       if (val && val !== '') {
         this.isSearching = true;
         for (let category of this.selectedCategory) {
@@ -103,20 +94,20 @@ export class BomTopMaterialComponent implements OnInit {
           category.allNull = false;
         }
       }
-    })
-
+    }
   }
 
-  ngOnChanges(): void {
-    this.selectedCategory = [...this.category];
-    this.mappingMaterialWithQuantity()
-    this.formInit();
-    if (this.searchMat != null && this.searchMat != "") {
-      this.bomService.searchText.next(this.searchMat);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.category && changes.category.currentValue) {
+      if (changes.category.currentValue.length) {
+        this.route.params.subscribe(params => {
+          this.projectId = params["id"];
+          this.orgId = Number(localStorage.getItem("orgId"))
+          this.selectedCategory = [...this.category];
+          this.mappingMaterialWithQuantity()
+        });
+      }
     }
-    this.formInit();
-    // this.enteredInput();
-
   }
 
   formInit() {
@@ -142,6 +133,8 @@ export class BomTopMaterialComponent implements OnInit {
       { forms: this.formBuilder.array(frmArr) }
       , { validators: this.getMaterialLength() }
     );
+
+    this.formCreated = true;
     // this.quantityForms.addControl("forms", new FormArray(frmArr, [this.getMaterialLength()]));
     // this.enteredInput();r
 
@@ -161,8 +154,8 @@ export class BomTopMaterialComponent implements OnInit {
       .then(res => {
         this.dataQty = res.data;
         if (this.dataQty) {
-          this.selectedCategory.map((category: categoryNestedLevel) => {
-            category.materialList = category.materialList.map(
+          this.selectedCategory.forEach((category: categoryNestedLevel) => {
+            category.materialList.forEach(
               subcategory => {
                 for (let data of this.dataQty) {
                   if (
@@ -184,24 +177,19 @@ export class BomTopMaterialComponent implements OnInit {
                     subcategory.issueToProject = null;
                   }
                 }
-                return subcategory;
               });
-            return category;
           })
-          this.formInit();
         } else {
-          this.selectedCategory.map((category: categoryNestedLevel) => {
-            category.materialList = category.materialList.map(
+          this.selectedCategory.forEach((category: categoryNestedLevel) => {
+            category.materialList.forEach(
               subcategory => {
                 subcategory.requestedQuantity = null;
                 subcategory.availableStock = null;
                 subcategory.issueToProject = null;
-                return subcategory;
               });
-            return category;
           })
         }
-        // this.searchData.emit(this.selectedCategory);
+        this.formInit();;
       })
       .catch(err => {
       });
@@ -238,9 +226,6 @@ export class BomTopMaterialComponent implements OnInit {
           break;
         }
       }
-      // if (control.value) {
-      //   checked++;
-      // }
 
       if (!checked) {
         return {
@@ -274,19 +259,5 @@ export class BomTopMaterialComponent implements OnInit {
   }
   saveCategory() {
     this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
-  }
-
-  allowOnlyAmountAndDot(event, index1, index2) {
-    // // this.quantityForms.get('forms').get(index1).get("materialGroup").get(index2).get("estimatedQty").valueChanges(changes => {
-    // // })
-
-    // (<FormGroup>(<FormArray>(<FormGroup>(<FormArray>this.quantityForms.get('forms')).controls[index1]).get('materialGroup')).controls[index2]).get("estimatedQty").valueChanges.subscribe(changes => {
-    // })
-    var rgx = /^\d+(\.\d{1,2})?$/;
-    // const inputChar = String.fromCharCode((event as KeyboardEvent).charCode);
-    if (!rgx.test(event.target.value)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
   }
 }
