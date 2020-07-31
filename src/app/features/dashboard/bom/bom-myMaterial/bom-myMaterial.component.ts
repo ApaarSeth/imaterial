@@ -64,13 +64,12 @@ export class BomMyMaterialComponent implements OnInit {
 
   ngOnInit() {
     this.currencyCode = localStorage.getItem('currencyCode')
-    this.route.params.subscribe(params => {
-      this.projectId = params["id"];
-    });
-    this.orgId = Number(localStorage.getItem("orgId"))
     this.bomService.getMaterialUnit().then(res => {
       this.materialUnit = res.data;
     });
+    this.bomService.searchText.subscribe(val => {
+      this.searchCategory(val);
+    })
   }
 
   searchCategory(val) {
@@ -105,13 +104,12 @@ export class BomMyMaterialComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.category && changes.category.currentValue) {
       if (changes.category.currentValue.length) {
-        this.selectedCategory = [...this.category];
-        this.mappingMaterialWithQuantity()
-      }
-    }
-    if (changes.searchMat && changes.searchMat.currentValue) {
-      if (changes.searchMat.currentValue != "") {
-        this.searchCategory(changes.searchMat.currentValue);
+        this.route.params.subscribe(params => {
+          this.projectId = params["id"];
+          this.orgId = Number(localStorage.getItem("orgId"))
+          this.selectedCategory = [...this.category];
+          this.mappingMaterialWithQuantity()
+        });
       }
     }
   }

@@ -170,10 +170,10 @@ export class BomComponent implements OnInit {
 
   get status() {
     if (this.currentIndex == 0) {
-      return this.topMaterial ? this.topMaterial.quantityForms.invalid : true
+      return this.topMaterial ? this.topMaterial.quantityForms ? this.topMaterial.quantityForms.invalid : false : true
     }
     else if (this.currentIndex == 1) {
-      return this.allMaterial ? this.allMaterial.quantityForms.invalid : true
+      return this.allMaterial ? this.allMaterial.quantityForms ? this.allMaterial.quantityForms.invalid : false : true
     }
     else if (this.currentIndex == 2) {
       return this.myMaterial ? this.myMaterial.quantityForms ? this.myMaterial.quantityForms.invalid : false : true
@@ -283,7 +283,6 @@ export class BomComponent implements OnInit {
       this.showTopMaterial = true;
       this.bomService.get25Trades({ tradeNames: this.selectedTrades.length ? [...this.selectedTrades] : null }).then(res => {
         this.topMaterialData = [...res];
-        this.searchAgain = this.text.nativeElement.value
         this.showTable = true;
       });
     }
@@ -293,7 +292,6 @@ export class BomComponent implements OnInit {
       this.showAllMaterial = true;
       this.bomService.getTrades({ tradeNames: this.selectedTrades.length ? [...this.selectedTrades] : null }).then(res => {
         this.allMaterialData = [...res];
-        this.searchAgain = this.text.nativeElement.value
       });
     }
     else if (this.buttonName == 2) {
@@ -302,7 +300,6 @@ export class BomComponent implements OnInit {
       this.showMyMaterial = true;
       this.commonService.getMyMaterial('allwithdeleted').then(res => {
         this.myMaterialData = [...res.data];
-        this.searchAgain = this.text.nativeElement.value
       });
     }
   }
