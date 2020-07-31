@@ -21,4 +21,8 @@ export class ReportService {
         return this.dataService.sendPostRequest(API.SUPPLIERLIABILITYREPORT, data)
     }
 
+    getCTCReportData(projectIds){
+        return this.dataService.sendPostRequest(API.CTC_REPORT, projectIds);
+    }
+
 }
