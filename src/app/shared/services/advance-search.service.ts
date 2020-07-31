@@ -10,6 +10,7 @@ export class AdvanceSearchService {
     RFQFilterRequest$ = new Subject<any>();
     RFQFilterExportRequest$ = new Subject<any>();
     POFilterRequest$ = new Subject<any>();
+    POFilterExportRequest$ = new Subject<any>();
 
     constructor() { }
 

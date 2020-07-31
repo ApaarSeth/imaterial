@@ -80,8 +80,14 @@ export class POService {
     return this.dataService.getRequest(API.COPYPO(poId))
   }
 
-
   shortClose(poId: number) {
     return this.dataService.getRequest(API.SHORTCLOSE(poId))
   }
+
+  postPOExport(data) {
+    return this.dataService.sendPostRequest(API.POSTPOEXPORTREQUEST, data).then(res => {
+      return res;
+    });
+  }
+
 }

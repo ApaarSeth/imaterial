@@ -61,7 +61,6 @@ export class ProjectItemComponent implements OnInit {
     if (this.projectDetails.startDate) {
       this.startDate.emit(this.projectDetails.startDate);
     }
-    console.log(this.type);
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.url = this.router.url;
