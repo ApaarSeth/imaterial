@@ -5,7 +5,9 @@ import {
   ViewChild,
   Output,
   EventEmitter,
-  ElementRef
+  ElementRef,
+  SimpleChange,
+  SimpleChanges
 } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
@@ -37,6 +39,7 @@ export class BomMyMaterialComponent implements OnInit {
   orgId: number;
   materialUnit: string[] = [];
   searchUnit: string = '';
+  formCreated = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -65,22 +68,13 @@ export class BomMyMaterialComponent implements OnInit {
       this.projectId = params["id"];
     });
     this.orgId = Number(localStorage.getItem("orgId"))
-    // this.projectService.getProject(this.orgId, this.projectId).then(data => {
-    // });
     this.bomService.getMaterialUnit().then(res => {
       this.materialUnit = res.data;
     });
-    this.selectedCategory = [...this.category];
-    this.mappingMaterialWithQuantity()
-    this.formInit();
-    this.searchCategory();
   }
 
-  searchCategory() {
-    if (this.category) {
-      this.selectedCategory = [...this.category];
-    }
-    this.bomService.searchText.subscribe(val => {
+  searchCategory(val) {
+    if (this.selectedCategory) {
       if (val && val !== '') {
         this.isSearching = true;
         for (let category of this.selectedCategory) {
@@ -105,20 +99,21 @@ export class BomMyMaterialComponent implements OnInit {
           category.allNull = false;
         }
       }
-    })
-
+    }
   }
 
-  ngOnChanges(): void {
-    this.selectedCategory = [...this.category];
-    this.mappingMaterialWithQuantity()
-    this.formInit();
-    if (this.searchMat != null && this.searchMat != "") {
-      this.bomService.searchText.next(this.searchMat);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.category && changes.category.currentValue) {
+      if (changes.category.currentValue.length) {
+        this.selectedCategory = [...this.category];
+        this.mappingMaterialWithQuantity()
+      }
     }
-    this.formInit();
-    // this.enteredInput();
-
+    if (changes.searchMat && changes.searchMat.currentValue) {
+      if (changes.searchMat.currentValue != "") {
+        this.searchCategory(changes.searchMat.currentValue);
+      }
+    }
   }
 
   formInit() {
@@ -144,6 +139,7 @@ export class BomMyMaterialComponent implements OnInit {
       { forms: this.formBuilder.array(frmArr) }
       , { validators: this.getMaterialLength() }
     );
+    this.formCreated = true;
     // this.quantityForms.addControl("forms", new FormArray(frmArr, [this.getMaterialLength()]));
     // this.enteredInput();r
 
@@ -163,8 +159,8 @@ export class BomMyMaterialComponent implements OnInit {
       .then(res => {
         this.dataQty = res.data;
         if (this.dataQty) {
-          this.selectedCategory.map((category: categoryNestedLevel) => {
-            category.materialList = category.materialList.map(
+          this.selectedCategory.forEach((category: categoryNestedLevel) => {
+            category.materialList.forEach(
               subcategory => {
                 for (let data of this.dataQty) {
                   if (
@@ -181,32 +177,38 @@ export class BomMyMaterialComponent implements OnInit {
                     subcategory.materialId = data.materialId;
                   }
                   else {
+                    subcategory.estimatedQty = null;
                     subcategory.requestedQuantity = null;
                     subcategory.availableStock = null;
                     subcategory.issueToProject = null;
                   }
                 }
-                return subcategory;
               });
-            return category;
           })
-          this.formInit();
         } else {
-          this.selectedCategory.map((category: categoryNestedLevel) => {
-            category.materialList = category.materialList.map(
+          this.selectedCategory.forEach((category: categoryNestedLevel) => {
+            category.materialList.forEach(
               subcategory => {
                 subcategory.requestedQuantity = null;
                 subcategory.availableStock = null;
                 subcategory.issueToProject = null;
-                return subcategory;
               });
-            return category;
           })
         }
+        this.filterDeletedMaterial()
+        this.formInit();
         // this.searchData.emit(this.selectedCategory);
       })
       .catch(err => {
       });
+  }
+
+  filterDeletedMaterial() {
+    this.selectedCategory.forEach(category => {
+      category.materialList = category.materialList.filter(material => {
+        return material.status === 0 || (material.status === 1 && material.estimatedQty !== null)
+      })
+    })
   }
 
   getMaterialLength(): ValidatorFn {

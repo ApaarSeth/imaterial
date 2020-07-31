@@ -176,7 +176,7 @@ export class BomComponent implements OnInit {
       return this.allMaterial ? this.allMaterial.quantityForms.invalid : true
     }
     else if (this.currentIndex == 2) {
-      return this.myMaterial ? this.myMaterial.quantityForms.invalid : true
+      return this.myMaterial ? this.myMaterial.quantityForms ? this.myMaterial.quantityForms.invalid : false : true
     }
   }
 
@@ -300,7 +300,7 @@ export class BomComponent implements OnInit {
       this.showAllMaterial = false;
       this.showTopMaterial = false;
       this.showMyMaterial = true;
-      this.commonService.getMyMaterial('all').then(res => {
+      this.commonService.getMyMaterial('allwithdeleted').then(res => {
         this.myMaterialData = [...res.data];
         this.searchAgain = this.text.nativeElement.value
       });
@@ -345,7 +345,7 @@ export class BomComponent implements OnInit {
       data
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result !== null){
+      if (result !== null) {
         this.getProject(this.projectId);
         this.callApi()
       }

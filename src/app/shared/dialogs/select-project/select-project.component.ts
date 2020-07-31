@@ -49,7 +49,6 @@ export class SelectProjectComponent implements OnInit {
     }
 
     addProject() {
-
         this.closeDialog();
         this.commonService.getCountry().then(res => {
             let data = {
