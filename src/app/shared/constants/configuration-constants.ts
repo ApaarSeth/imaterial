@@ -54,7 +54,8 @@ export const API = {
   RFQADDPO: `po/addPO`,
   GETSUPPLIERS: organizationId => `projects/getsuppliers/${organizationId}`,
   ADDSUPPLIER: organizationId => `projects/addSuppliers/${organizationId}`,
-  GETPODETAILLIST: organizationId => `po/detail/list/${organizationId}`,
+  // GETPODETAILLIST: organizationId => `po/detail/list/${organizationId}`,
+  POSTPODETAILLIST: `po/detail/list`,
   GETPODATA: poId => `po/genarate/${poId}`,
   SENDPODATA: `po/updatePO`,
   ADDRFQ: `rfq/addrfq`,
@@ -160,6 +161,8 @@ export const API = {
   GRNDOWNLOADTEMPELATE: (projectId) => `po/download/GRNExcelTemplate/${projectId}`,
   GRNUPLOADTEMPELATE: (projectId) => `po/add/opengrn/excel/${projectId}`,
   POSTRFQEXPORTREQUEST: organisationId => `rfq/excelDownload/${organisationId}`,
+  POSTPOEXPORTREQUEST: `po/excelDownload`,
   SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport',
   COPYPO: (poId) => `po/copyPO/${poId}`,
+  SHORTCLOSE: (poId) => `po/POAmend/${poId}`
 };

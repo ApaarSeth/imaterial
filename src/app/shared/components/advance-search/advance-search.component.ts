@@ -3,19 +3,33 @@ import { CommonService } from '../../services/commonService';
 import { ProjectService } from '../../services/projectDashboard/project.service';
 import { AdvanceSearchService } from '../../services/advance-search.service';
 import { UserService } from '../../services/userDashboard/user.service';
-import { MatSelect, MatCheckbox, MatDatepicker } from '@angular/material';
+import { MatSelect, MatCheckbox, MatDatepicker, MatInput } from '@angular/material';
 
 interface rfqRequestData {
     projectIDList?: any;
     materialCodeList?: any;
     rfqRaisedStartDate?: string;
     rfqRaisedEndDate?: string;
-    rfqStatus?: number;
+    rfqStatus?: any;
     supplierIDList?: any;
     userIDList?: any;
     rfqExpiryStartDate?: string;
     rfqExpiryEndDate?: string;
 }
+
+interface poRequestData {
+    poRaisedStartDate?: string;
+    poRaisedEndDate?: string;
+    poStatus?: any;
+    projectIdList?: any;
+    materialCodeList?: any;
+    supplierIdList?: any;
+    poCreatedByList?: any;
+    poApprovedByList?: any;
+    poAmountMin?: number;
+    poAmountMax?: number;
+}
+
 
 @Component({
     selector: 'advance-search',
@@ -30,6 +44,8 @@ export class AdvanceSearchComponent implements OnInit {
     @ViewChild('suppliersSelect', { static: false, read: MatSelect }) suppliersSelect: MatSelect;
     @ViewChild('materialsSelect', { static: false, read: MatSelect }) materialsSelect: MatSelect;
     @ViewChild('usersSelect', { static: false, read: MatSelect }) usersSelect: MatSelect;
+    @ViewChild('approversSelect', { static: false, read: MatSelect }) approversSelect: MatSelect;
+    @ViewChild('createdSelect', { static: false, read: MatSelect }) createdSelect: MatSelect;
 
     @ViewChild('bidSubmitted', { static: false, read: MatCheckbox }) bidSubmitted: MatCheckbox;
     @ViewChild('notSubmitted', { static: false, read: MatCheckbox }) notSubmitted: MatCheckbox;
@@ -38,6 +54,13 @@ export class AdvanceSearchComponent implements OnInit {
     @ViewChild('raisedToPicker', { static: false, read: MatDatepicker }) raisedToPicker: MatDatepicker<string>;
     @ViewChild('expiryFromPicker', { static: false, read: MatDatepicker }) expiryFromPicker: MatDatepicker<string>;
     @ViewChild('expiryToPicker', { static: false, read: MatDatepicker }) expiryToPicker: MatDatepicker<string>;
+
+    @ViewChild('minAmt', { static: false, read: MatInput }) minAmt: MatInput;
+    @ViewChild('maxAmt', { static: false, read: MatInput }) maxAmt: MatInput;
+
+    @ViewChild('po1', { static: false, read: MatCheckbox }) po1: MatCheckbox;
+    @ViewChild('po2', { static: false, read: MatCheckbox }) po2: MatCheckbox;
+    @ViewChild('po3', { static: false, read: MatCheckbox }) po3: MatCheckbox;
 
     userId: number;
     orgId: number;
@@ -62,6 +85,13 @@ export class AdvanceSearchComponent implements OnInit {
     selectedUsers: any[];
     usersList: any[];
 
+    // approvers
+    selectedApprovers: any[];
+    approversList: any[];
+
+    createdList: any[];
+    selectedCreated: any[];
+
     isBidSubmitted: boolean;
     isNotSubmitted: boolean;
 
@@ -84,6 +114,8 @@ export class AdvanceSearchComponent implements OnInit {
         this.selectedSuppliers = [];
         this.selectedMaterials = [];
         this.selectedUsers = [];
+        this.selectedApprovers = [];
+        this.selectedCreated = [];
         this.getProjects();
         this.getSuppliers();
         this.getMaterials();
@@ -95,7 +127,7 @@ export class AdvanceSearchComponent implements OnInit {
         return value.length > 20 ? value.substring(0, 20) + '...' : value;
     }
 
-    checkSubmitNotSubmit(isChecked, type, bidSubmitted, notSubmitted) {
+    checkSubmitNotSubmit(bidSubmitted, notSubmitted) {
 
         // if (isChecked) {
         //     if (type === '0') {
@@ -138,6 +170,12 @@ export class AdvanceSearchComponent implements OnInit {
         if (type === 'users') {
             this.usersList = result;
         }
+        if (type === 'approvers') {
+            this.approversList = result;
+        }
+        if (type === 'created') {
+            this.createdList = result;
+        }
     }
 
     select(query: string, type: string): string[] {
@@ -151,7 +189,7 @@ export class AdvanceSearchComponent implements OnInit {
         if (type === 'materials') {
             result = this.getMaterialsSelectQuery(query);
         }
-        if (type === 'users') {
+        if (type === 'users' || type === 'users' || type === 'created') {
             result = this.getUsersSelectQuery(query);
         }
         return result;
@@ -189,7 +227,7 @@ export class AdvanceSearchComponent implements OnInit {
 
     getUsersSelectQuery(query) {
         let result: string[] = [];
-        for (let a of this.materialsData) {
+        for (let a of this.usersData) {
             if (a.ProjectUser.userId.toLowerCase().indexOf(query) > -1) {
                 result.push(a);
             }
@@ -230,6 +268,8 @@ export class AdvanceSearchComponent implements OnInit {
         this.userService.getAllUsers(this.orgId).then(res => {
             this.usersData = res.data.activatedProjectList;
             this.usersList = res.data.activatedProjectList;
+            this.approversList = res.data.activatedProjectList;
+            this.createdList = res.data.activatedProjectList;
         });
     }
 
@@ -248,40 +288,82 @@ export class AdvanceSearchComponent implements OnInit {
         if (type === 'users') {
             this.selectedUsers = this.advSearchService.searchUsersValue(obj, this.selectedUsers);
         }
+        if (type === 'approvers') {
+            this.selectedApprovers = this.advSearchService.searchUsersValue(obj, this.selectedApprovers);
+        }
+        if (type === 'created') {
+            this.selectedCreated = this.advSearchService.searchUsersValue(obj, this.selectedCreated);
+        }
     }
 
     getFilterRequest() {
-        let data = this.filterRequest();
+        let data;
         if (this.filterType === 'rfq') {
+            data = this.rfqFilterRequest();
             this.advSearchService.RFQFilterRequest$.next(data);
+        }
+        if (this.filterType === 'po') {
+            data = this.poFilterRequest();
+            this.advSearchService.POFilterRequest$.next(data);
         }
     }
 
     getFilterExportRequest() {
-        let data = this.filterRequest();
+        let data;
         if (this.filterType === 'rfq') {
+            data = this.rfqFilterRequest();
             this.advSearchService.RFQFilterExportRequest$.next(data);
+        }
+        if (this.filterType === 'po') {
+            data = this.poFilterRequest();
+            this.advSearchService.POFilterExportRequest$.next(data);
         }
     }
 
-    filterRequest() {
+    rfqFilterRequest() {
         let data: rfqRequestData = {};
+        data.rfqStatus = [];
         data.rfqExpiryStartDate = this.expiryFromPickerEl ? this.expiryFromPickerEl : null;
         data.rfqExpiryEndDate = this.expiryToPickerEl ? this.expiryToPickerEl : null;
         data.rfqRaisedStartDate = this.raisedFromPickerEl ? this.raisedFromPickerEl : null;
         data.rfqRaisedEndDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
-
         if (this.isBidSubmitted) {
-            data.rfqStatus = 1;
+            data.rfqStatus.push('2');
         }
         if (this.isNotSubmitted) {
-            data.rfqStatus = 0;
+            data.rfqStatus.push('1');
         }
-
         data.projectIDList = this.advSearchService.getFinalList(this.selectedProjects, 'projects');
         data.materialCodeList = this.advSearchService.getFinalList(this.selectedMaterials, 'materials');
         data.supplierIDList = this.advSearchService.getFinalList(this.selectedSuppliers, 'suppliers');
         data.userIDList = this.advSearchService.getFinalList(this.selectedUsers, 'users');
+        return data;
+    }
+
+    poFilterRequest() {
+        let data: poRequestData = {};
+        data.poRaisedStartDate = this.raisedFromPickerEl ? this.raisedFromPickerEl : null;;
+        data.poRaisedEndDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
+
+        data.poStatus = [];
+
+        if (this.po1.checked) {
+            data.poStatus.push('2');
+        }
+        if (this.po2.checked) {
+            data.poStatus.push('3');
+        }
+        if (this.po3.checked) {
+            data.poStatus.push('1');
+        }
+
+        data.projectIdList = this.advSearchService.getFinalList(this.selectedProjects, 'projects');
+        data.materialCodeList = this.advSearchService.getFinalList(this.selectedMaterials, 'materials');
+        data.supplierIdList = this.advSearchService.getFinalList(this.selectedSuppliers, 'suppliers');
+        data.poCreatedByList = this.advSearchService.getFinalList(this.selectedCreated, 'created');
+        data.poApprovedByList = this.advSearchService.getFinalList(this.selectedApprovers, 'approvers');
+        data.poAmountMin = Number(this.minAmt.value);
+        data.poAmountMax = Number(this.maxAmt.value);
 
         return data;
     }
@@ -303,6 +385,14 @@ export class AdvanceSearchComponent implements OnInit {
             this.usersSelect.options.find(opt => opt.value.ProjectUser.userId === id).deselect();
             this.usersList = this.usersData;
         }
+        if (type === 'approvers') {
+            this.approversSelect.options.find(opt => opt.value.ProjectUser.userId === id).deselect();
+            this.approversList = this.usersData;
+        }
+        if (type === 'created') {
+            this.createdSelect.options.find(opt => opt.value.ProjectUser.userId === id).deselect();
+            this.createdList = this.usersData;
+        }
     }
 
     clearFilter() {
@@ -311,8 +401,23 @@ export class AdvanceSearchComponent implements OnInit {
         this.raisedFromPickerEl = '';
         this.raisedToPickerEl = '';
 
-        this.isBidSubmitted = false;
-        this.isNotSubmitted = false;
+        if (this.filterType === 'rfq') {
+            this.isBidSubmitted = false;
+            this.isNotSubmitted = false;
+            this.bidSubmitted.checked = false;
+            this.notSubmitted.checked = false;
+            this.usersSelect.options.forEach(opt => opt.deselect());
+            this.expiryFromPicker._datepickerInput.value = '';
+            this.expiryToPicker._datepickerInput.value = '';
+        }
+
+        if (this.filterType === 'po') {
+            this.po1.checked = false;
+            this.po2.checked = false;
+            this.po3.checked = false;
+            this.approversSelect.options.forEach(opt => opt.deselect());
+            this.createdSelect.options.forEach(opt => opt.deselect());
+        }
 
         this.selectedProjects = [];
         this.selectedMaterials = [];
@@ -322,15 +427,9 @@ export class AdvanceSearchComponent implements OnInit {
         this.projectsSelect.options.forEach(opt => opt.deselect());
         this.suppliersSelect.options.forEach(opt => opt.deselect());
         this.materialsSelect.options.forEach(opt => opt.deselect());
-        this.usersSelect.options.forEach(opt => opt.deselect());
-
-        this.bidSubmitted.checked = false;
-        this.notSubmitted.checked = false;
 
         this.raisedFromPicker._datepickerInput.value = '';
         this.raisedToPicker._datepickerInput.value = '';
-        this.expiryFromPicker._datepickerInput.value = '';
-        this.expiryToPicker._datepickerInput.value = '';
     }
 
 }
