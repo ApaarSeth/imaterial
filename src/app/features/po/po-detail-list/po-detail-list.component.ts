@@ -111,7 +111,13 @@ export class PODetailComponent implements OnInit, OnDestroy {
           this.poApprovalDetailsTemp = data.data.sendForApprovalPOList;
           this.acceptedRejectedPOListTemp = data.data.acceptedRejectedPOList;
         });
-        // this.PoData();
+      }),
+      this.advSearchService.POFilterExportRequest$.subscribe(res => {
+        this.poService.postPOExport(res).then(res => {
+          if (res.data.url) {
+            window.open(res.data.url);
+          }
+        });
       })
     )
   }

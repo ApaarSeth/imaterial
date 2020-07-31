@@ -161,6 +161,7 @@ export const API = {
   GRNDOWNLOADTEMPELATE: (projectId) => `po/download/GRNExcelTemplate/${projectId}`,
   GRNUPLOADTEMPELATE: (projectId) => `po/add/opengrn/excel/${projectId}`,
   POSTRFQEXPORTREQUEST: organisationId => `rfq/excelDownload/${organisationId}`,
+  POSTPOEXPORTREQUEST: `po/excelDownload`,
   SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport',
   COPYPO: (poId) => `po/copyPO/${poId}`,
   SHORTCLOSE: (poId) => `po/POAmend/${poId}`

@@ -306,7 +306,6 @@ export class AdvanceSearchComponent implements OnInit {
             data = this.poFilterRequest();
             this.advSearchService.POFilterRequest$.next(data);
         }
-
     }
 
     getFilterExportRequest() {
@@ -314,6 +313,10 @@ export class AdvanceSearchComponent implements OnInit {
         if (this.filterType === 'rfq') {
             data = this.rfqFilterRequest();
             this.advSearchService.RFQFilterExportRequest$.next(data);
+        }
+        if (this.filterType === 'po') {
+            data = this.poFilterRequest();
+            this.advSearchService.POFilterExportRequest$.next(data);
         }
     }
 
