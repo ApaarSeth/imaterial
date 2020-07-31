@@ -23,8 +23,8 @@ export class IndentService {
     );
   }
 
-  getIndentList(projectId: Number) {
-    return this.dataService.getRequest(API.GETINDENTLIST(projectId));
+  getIndentList(projectId: Number, data) {
+    return this.dataService.sendPostRequest(API.GETINDENTLIST(projectId), data);
   }
 
   getSingleIndent(indentId: Number) {
@@ -32,4 +32,11 @@ export class IndentService {
       return res;
     });
   }
+
+  postIndentExport(data) {
+    return this.dataService.sendPostRequest(API.POSTINDENTEXPORTREQUEST, data).then(res => {
+      return res;
+    });
+  }
+
 }
