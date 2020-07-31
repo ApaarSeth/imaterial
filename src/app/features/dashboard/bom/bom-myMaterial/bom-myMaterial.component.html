@@ -1,8 +1,8 @@
-<form *ngIf="selectedCategory.length" [formGroup]="quantityForms">
+<form *ngIf="selectedCategory.length && formCreated" [formGroup]="quantityForms">
   <ng-container formArrayName="forms">
     <span *ngFor="let category of selectedCategory; let c = index">
       <ng-container [formGroupName]="c">
-        <mat-accordion>
+        <mat-accordion *ngIf="category.materialList && category.materialList.length">
           <div #myele *ngIf="!isSearching ? true : !category.allNull">
             <mat-expansion-panel class="m-b-5 m-t-5 bom-qty-page border-radius-panel mat-expansion-panel-header-wrapper" [expanded]="true">
               <mat-expansion-panel-header class="background-color-skyblue row">

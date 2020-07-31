@@ -19,6 +19,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
 import { TokenService } from 'src/app/shared/services/token.service';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -55,6 +56,7 @@ export class AppDashboardComponent implements OnInit {
     private commonService: CommonService,
     private tokenService: TokenService,
     private permissionService: PermissionService,
+    private notifier: AppNotificationService,
     private activatedRoute: ActivatedRoute, private loader: GlobalLoaderService) { }
 
   range: Range = { fromDate: new Date(), toDate: new Date() };
@@ -123,17 +125,23 @@ export class AppDashboardComponent implements OnInit {
       calendarOverlayConfig: {
         shouldCloseOnBackdropClick: true,
         hasBackdrop: true
-      }
+      },
       // cancelLabel: "Cancel",
       // excludeWeekends:true,
       // fromMinMax: {fromDate:fromMin, toDate:fromMax},
-      // toMinMax: {fromDate:toMin, toDate:toMax}
+      toMinMax: { fromDate: toMin, toDate: toMax }
     };
   }
 
   updateRange(range: Range) {
     this.range = range;
-    this.getDashboardInfo(this.label);
+    if (range.toDate < range.fromDate) {
+      this.notifier.snack("To date can'nt be earlier than from date")
+    }
+    else {
+      this.getDashboardInfo(this.label);
+    }
+
   }
 
   setupPresets() {
@@ -277,7 +285,7 @@ export class AppDashboardComponent implements OnInit {
 
   openBomDialog() {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
-      width: "600px",
+      width: "800px",
       data: this.projectLists
     });
 
