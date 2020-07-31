@@ -30,6 +30,17 @@ interface poRequestData {
     poAmountMax?: number;
 }
 
+interface indentRequestData {
+    projectId?: number;
+    materialCodeList?: any;
+    indentRaisedByList?: any;
+    indentStatus?: any;
+    indentRaisedStartDate?: string;
+    indentRaisedEndDate?: string;
+    indentRequestStartDate?: string;
+    indentRequestEndDate?: string;
+}
+
 
 @Component({
     selector: 'advance-search',
@@ -61,6 +72,11 @@ export class AdvanceSearchComponent implements OnInit {
     @ViewChild('po1', { static: false, read: MatCheckbox }) po1: MatCheckbox;
     @ViewChild('po2', { static: false, read: MatCheckbox }) po2: MatCheckbox;
     @ViewChild('po3', { static: false, read: MatCheckbox }) po3: MatCheckbox;
+    @ViewChild('indentOpen', { static: false, read: MatCheckbox }) indentOpen: MatCheckbox;
+    @ViewChild('indentClosed', { static: false, read: MatCheckbox }) indentClosed: MatCheckbox;
+
+    @ViewChild('requestedFromPicker', { static: false, read: MatDatepicker }) requestedFromPicker: MatDatepicker<string>;
+    @ViewChild('requestedToPicker', { static: false, read: MatDatepicker }) requestedToPicker: MatDatepicker<string>;
 
     userId: number;
     orgId: number;
@@ -317,6 +333,10 @@ export class AdvanceSearchComponent implements OnInit {
             data = this.poFilterRequest();
             this.advSearchService.POFilterRequest$.next(data);
         }
+        if (this.filterType === 'indent') {
+            data = this.indentFilterRequest();
+            this.advSearchService.indentFilterRequest$.next(data);
+        }
     }
 
     getFilterExportRequest() {
@@ -328,6 +348,10 @@ export class AdvanceSearchComponent implements OnInit {
         if (this.filterType === 'po') {
             data = this.poFilterRequest();
             this.advSearchService.POFilterExportRequest$.next(data);
+        }
+        if (this.filterType === 'indent') {
+            data = this.indentFilterRequest();
+            this.advSearchService.indentFilterExportRequest$.next(data);
         }
     }
 
@@ -379,6 +403,27 @@ export class AdvanceSearchComponent implements OnInit {
         return data;
     }
 
+    indentFilterRequest() {
+        let data: indentRequestData = {};
+        data.indentStatus = [];
+        data.projectId = 0;
+        data.materialCodeList = this.advSearchService.getFinalList(this.selectedMaterials, 'materials');
+        data.indentRaisedByList = this.advSearchService.getFinalList(this.selectedUsers, 'users');
+
+        if (this.indentOpen.checked) {
+            data.indentStatus.push('1');
+        }
+        if (this.indentClosed.checked) {
+            data.indentStatus.push('2');
+        }
+
+        data.indentRaisedStartDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
+        data.indentRaisedEndDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
+        data.indentRequestStartDate = this.requestedFromPicker._datepickerInput.value ? this.advSearchService.getDateInFormat(this.requestedFromPicker._datepickerInput.value) : null;
+        data.indentRequestEndDate = this.requestedToPicker._datepickerInput.value ? this.advSearchService.getDateInFormat(this.requestedToPicker._datepickerInput.value) : null;
+        return data;
+    }
+
     removeId(id, type) {
         if (type === 'projects') {
             this.projectsSelect.options.find(opt => opt.value.projectId === id).deselect();
@@ -417,7 +462,6 @@ export class AdvanceSearchComponent implements OnInit {
             this.isNotSubmitted = false;
             this.bidSubmitted.checked = false;
             this.notSubmitted.checked = false;
-            this.usersSelect.options.forEach(opt => opt.deselect());
             this.expiryFromPicker._datepickerInput.value = '';
             this.expiryToPicker._datepickerInput.value = '';
         }
@@ -430,13 +474,26 @@ export class AdvanceSearchComponent implements OnInit {
             this.createdSelect.options.forEach(opt => opt.deselect());
         }
 
+        if (this.filterType === 'indent') {
+            this.indentOpen.checked = false;
+            this.indentClosed.checked = false;
+            this.requestedFromPicker._datepickerInput.value = '';
+            this.requestedToPicker._datepickerInput.value = '';
+        }
+
         this.selectedProjects = [];
         this.selectedMaterials = [];
         this.selectedSuppliers = [];
         this.selectedUsers = [];
 
-        this.projectsSelect.options.forEach(opt => opt.deselect());
-        this.suppliersSelect.options.forEach(opt => opt.deselect());
+        if (this.filterType === 'rfq' || this.filterType === 'po') {
+            this.projectsSelect.options.forEach(opt => opt.deselect());
+            this.suppliersSelect.options.forEach(opt => opt.deselect());
+        }
+        if (this.filterType === 'rfq' || this.filterType === 'indent') {
+            this.usersSelect.options.forEach(opt => opt.deselect());
+        }
+
         this.materialsSelect.options.forEach(opt => opt.deselect());
 
         this.raisedFromPicker._datepickerInput.value = '';

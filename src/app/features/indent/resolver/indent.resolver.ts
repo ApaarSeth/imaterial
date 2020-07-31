@@ -16,8 +16,8 @@ export class IndentResolver implements Resolve<any> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    this.projectId = route.params["id"];
-    return this.indentService.getIndentList(this.projectId).then(data => {
+    this.projectId = route.params[ "id" ];
+    return this.indentService.getIndentList(this.projectId, {}).then(data => {
       return data.data;
     });
   }

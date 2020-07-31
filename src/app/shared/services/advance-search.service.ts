@@ -11,6 +11,8 @@ export class AdvanceSearchService {
     RFQFilterExportRequest$ = new Subject<any>();
     POFilterRequest$ = new Subject<any>();
     POFilterExportRequest$ = new Subject<any>();
+    indentFilterRequest$ = new Subject<any>();
+    indentFilterExportRequest$ = new Subject<any>();
 
     constructor() { }
 
