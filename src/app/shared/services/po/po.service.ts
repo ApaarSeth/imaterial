@@ -17,8 +17,12 @@ export class POService {
   supplierAddress$ = new Subject();
   poNumber$ = new Subject();
 
-  getPODetails(organizationId: Number) {
-    return this.dataService.getRequest(API.GETPODETAILLIST(organizationId));
+  // getPODetails(organizationId: Number) {
+  //   return this.dataService.getRequest(API.GETPODETAILLIST(organizationId));
+  // }
+
+  getPODetails(data) {
+    return this.dataService.sendPostRequest(API.POSTPODETAILLIST, data);
   }
   getPoGenerateData(poId: Number) {
     return this.dataService.getRequest(API.GETPODATA(poId));
@@ -32,7 +36,7 @@ export class POService {
   }
   projectMaterials(projectIds: number) {
     return this.dataService.sendPostRequest(API.RFQMATERIALS, {
-      projectIds: [projectIds]
+      projectIds: [ projectIds ]
     });
   }
 
