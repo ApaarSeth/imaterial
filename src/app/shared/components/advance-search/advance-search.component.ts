@@ -189,7 +189,7 @@ export class AdvanceSearchComponent implements OnInit {
         if (type === 'materials') {
             result = this.getMaterialsSelectQuery(query);
         }
-        if (type === 'users' || type === 'users' || type === 'created') {
+        if (type === 'users' || type === 'approvers' || type === 'created') {
             result = this.getUsersSelectQuery(query);
         }
         return result;
@@ -198,7 +198,7 @@ export class AdvanceSearchComponent implements OnInit {
     getProjectSelectQuery(query) {
         let result: string[] = [];
         for (let a of this.projectsData) {
-            if (a.projectName.toLowerCase().indexOf(query) > -1) {
+            if (a.projectName.toLowerCase().indexOf(query.toLowerCase()) > -1) {
                 result.push(a);
             }
         }
@@ -208,7 +208,7 @@ export class AdvanceSearchComponent implements OnInit {
     getSupplierSelectQuery(query) {
         let result: string[] = [];
         for (let a of this.suppliersData) {
-            if (a.supplier_name.toLowerCase().indexOf(query) > -1) {
+            if (a.supplier_name.toLowerCase().indexOf(query.toLowerCase()) > -1) {
                 result.push(a);
             }
         }
@@ -218,7 +218,7 @@ export class AdvanceSearchComponent implements OnInit {
     getMaterialsSelectQuery(query) {
         let result: string[] = [];
         for (let a of this.materialsData) {
-            if (a.materialName.toLowerCase().indexOf(query) > -1) {
+            if (a.materialName.toLowerCase().indexOf(query.toLowerCase()) > -1) {
                 result.push(a);
             }
         }
@@ -228,7 +228,8 @@ export class AdvanceSearchComponent implements OnInit {
     getUsersSelectQuery(query) {
         let result: string[] = [];
         for (let a of this.usersData) {
-            if (a.ProjectUser.userId.toLowerCase().indexOf(query) > -1) {
+            let userName = a.ProjectUser.firstName + ' ' + a.ProjectUser.lastName;
+            if (userName.toLowerCase().indexOf(query.toLowerCase()) > -1) {
                 result.push(a);
             }
         }
@@ -268,9 +269,19 @@ export class AdvanceSearchComponent implements OnInit {
         this.userService.getAllUsers(this.orgId).then(res => {
             this.usersData = res.data.activatedProjectList;
             this.usersList = res.data.activatedProjectList;
-            this.approversList = res.data.activatedProjectList;
+            this.approversList = this.getUserWhoCanApprove(res.data.activatedProjectList);
             this.createdList = res.data.activatedProjectList;
         });
+    }
+
+    getUserWhoCanApprove(data) {
+        let result = [];
+        data.forEach(itm => {
+            if (itm.ProjectUser.roleName !== 'l3' && (itm.ProjectUser.firstName !== '' || itm.ProjectUser.lastName !== '')) {
+                result.push(itm);
+            }
+        });
+        return result;
     }
 
     // search value function
@@ -387,7 +398,7 @@ export class AdvanceSearchComponent implements OnInit {
         }
         if (type === 'approvers') {
             this.approversSelect.options.find(opt => opt.value.ProjectUser.userId === id).deselect();
-            this.approversList = this.usersData;
+            this.approversList = this.getUserWhoCanApprove(this.usersData);
         }
         if (type === 'created') {
             this.createdSelect.options.find(opt => opt.value.ProjectUser.userId === id).deselect();
@@ -430,6 +441,7 @@ export class AdvanceSearchComponent implements OnInit {
 
         this.raisedFromPicker._datepickerInput.value = '';
         this.raisedToPicker._datepickerInput.value = '';
+        this.getFilterRequest();
     }
 
 }

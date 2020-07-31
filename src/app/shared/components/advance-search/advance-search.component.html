@@ -19,7 +19,8 @@
                 <mat-select multiple (openedChange)="projectInput.focus()" #projectsSelect>
                     <div class="d-flex">
                         <input class="pl-3" #projectInput matInput focused="'true'" type="text"
-                            (input)="search($event.target.value, 'projects')" autocomplete="off" placeholder="search">
+                            (input)="search($event.target.value, 'projects')" autocomplete="off" placeholder="search"
+                            (keydown)="$event.stopPropagation()">
                         <button mat-button matSuffix mat-icon-button>
                             <mat-icon>search</mat-icon>
                         </button>
@@ -65,7 +66,8 @@
                 <mat-select multiple (openedChange)="supplierInput.focus()" #suppliersSelect>
                     <div class="d-flex">
                         <input class="pl-3" #supplierInput matInput focused="'true'" type="text"
-                            (input)="search($event.target.value, 'suppliers')" autocomplete="off" placeholder="search">
+                            (input)="search($event.target.value, 'suppliers')" autocomplete="off" placeholder="search"
+                            (keydown)="$event.stopPropagation()">
                         <button mat-button matSuffix mat-icon-button>
                             <mat-icon>search</mat-icon>
                         </button>
@@ -112,7 +114,8 @@
                 <mat-select multiple (openedChange)="materialInput.focus()" #materialsSelect>
                     <div class="d-flex">
                         <input class="pl-3" #materialInput matInput focused="'true'" type="text"
-                            (input)="search($event.target.value, 'materials')" autocomplete="off" placeholder="search">
+                            (input)="search($event.target.value, 'materials')" autocomplete="off" placeholder="search"
+                            (keydown)="$event.stopPropagation()">
                         <button mat-button matSuffix mat-icon-button>
                             <mat-icon>search</mat-icon>
                         </button>
@@ -185,7 +188,8 @@
                     <mat-select multiple (openedChange)="usersInput.focus()" #usersSelect>
                         <div class="d-flex">
                             <input class="pl-3" #usersInput matInput focused="'true'" type="text"
-                                (input)="search($event.target.value, 'users')" autocomplete="off" placeholder="search">
+                                (input)="search($event.target.value, 'users')" autocomplete="off" placeholder="search"
+                                (keydown)="$event.stopPropagation()">
                             <button mat-button matSuffix mat-icon-button>
                                 <mat-icon>search</mat-icon>
                             </button>
@@ -234,7 +238,7 @@
                         <div class="d-flex">
                             <input class="pl-3" #approversInput matInput focused="'true'" type="text"
                                 (input)="search($event.target.value, 'approvers')" autocomplete="off"
-                                placeholder="search">
+                                placeholder="search" (keydown)="$event.stopPropagation()">
                             <button mat-button matSuffix mat-icon-button>
                                 <mat-icon>search</mat-icon>
                             </button>
@@ -283,8 +287,8 @@
                     <mat-select multiple (openedChange)="createdInput.focus()" #createdSelect>
                         <div class="d-flex">
                             <input class="pl-3" #createdInput matInput focused="'true'" type="text"
-                                (input)="search($event.target.value, 'created')" autocomplete="off"
-                                placeholder="search">
+                                (input)="search($event.target.value, 'created')" autocomplete="off" placeholder="search"
+                                (keydown)="$event.stopPropagation()">
                             <button mat-button matSuffix mat-icon-button>
                                 <mat-icon>search</mat-icon>
                             </button>
