@@ -138,8 +138,6 @@ export class BomMyMaterialComponent implements OnInit {
       , { validators: this.getMaterialLength() }
     );
     this.formCreated = true;
-    // this.quantityForms.addControl("forms", new FormArray(frmArr, [this.getMaterialLength()]));
-    // this.enteredInput();r
 
 
     (<FormArray>this.quantityForms.get('forms')).controls.map((control: FormGroup) => {
@@ -195,7 +193,6 @@ export class BomMyMaterialComponent implements OnInit {
         }
         this.filterDeletedMaterial()
         this.formInit();
-        // this.searchData.emit(this.selectedCategory);
       })
       .catch(err => {
       });
@@ -221,10 +218,6 @@ export class BomMyMaterialComponent implements OnInit {
           break;
         }
       }
-      // if (control.value) {
-      //   checked++;
-      // }
-
       if (!checked) {
         return {
           requireCheckboxToBeChecked: true,
@@ -246,7 +239,6 @@ export class BomMyMaterialComponent implements OnInit {
     }).flat()
 
   }
-
 
   customValidation(form: FormGroup) {
     if (form.value) {

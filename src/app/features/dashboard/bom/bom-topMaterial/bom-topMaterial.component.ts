@@ -226,9 +226,6 @@ export class BomTopMaterialComponent implements OnInit {
           break;
         }
       }
-      // if (control.value) {
-      //   checked++;
-      // }
 
       if (!checked) {
         return {
@@ -262,19 +259,5 @@ export class BomTopMaterialComponent implements OnInit {
   }
   saveCategory() {
     this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
-  }
-
-  allowOnlyAmountAndDot(event, index1, index2) {
-    // // this.quantityForms.get('forms').get(index1).get("materialGroup").get(index2).get("estimatedQty").valueChanges(changes => {
-    // // })
-
-    // (<FormGroup>(<FormArray>(<FormGroup>(<FormArray>this.quantityForms.get('forms')).controls[index1]).get('materialGroup')).controls[index2]).get("estimatedQty").valueChanges.subscribe(changes => {
-    // })
-    var rgx = /^\d+(\.\d{1,2})?$/;
-    // const inputChar = String.fromCharCode((event as KeyboardEvent).charCode);
-    if (!rgx.test(event.target.value)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
   }
 }

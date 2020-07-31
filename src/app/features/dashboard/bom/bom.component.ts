@@ -244,34 +244,6 @@ export class BomComponent implements OnInit {
       selectedTrade => selectedTrade.tradeName
     );
     this.callApi();
-    {// if (selectedTrades.length === 0) {
-      //   this.categoryData = [];
-      //   this.tradeNames = [];
-      //   return;
-      // }
-      // if (this.tradeNames.length === 0) {
-      //   tradeAdd = selectedTrades;
-      // } else if (this.tradeNames.length < selectedTrades.length) {
-      //   for (let id of selectedTrades) {
-      //     if (!this.tradeNames.includes(id)) {
-      //       tradeAdd.push(id);
-      //     }
-      //   }
-      // } else if (this.tradeNames.length >= selectedTrades.length) {
-      //   for (let id of this.tradeNames) {
-      //     if (!selectedTrades.includes(id)) {
-      //       tradeRemove.push(id);
-      //     }
-      //   }
-      //   this.categoryData = this.categoryData.filter(
-      //     (category: categoryNestedLevel) => {
-      //       return !tradeRemove.includes(category.tradeName);
-      //     }
-      //   );
-      // }
-      // if (tradeAdd.length) {
-
-    }
 
     this.tradeNames = [...this.selectedTrades];
   }
@@ -375,21 +347,6 @@ export class BomComponent implements OnInit {
       }
     })
   }
-
-
-  // finalisedCategory() {
-  //   this.showTable = true;
-
-  //   this.bomService
-  //     .getMaterialsWithSpecs({
-  //       pid: this.form.value.selectedTrades.map(
-  //         selectedCategory => selectedCategory.materialGroup
-  //       )
-  //     })
-  //     .then(res => {
-  //       this.topMaterialData = [...res];
-  //     });
-  // }
 
   checkValidations(event: boolean): void {
     this.valueChanged = event

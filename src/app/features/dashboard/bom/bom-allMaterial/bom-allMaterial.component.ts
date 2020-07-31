@@ -48,8 +48,6 @@ export class BOMAllMaterialComponent implements OnInit {
   quantityForms: FormGroup;
   selectedCategory: categoryNestedLevel[] = [];
   materialUnit: string[] = []
-  // searchMaterial: string;
-  // product: ProjectDetails;
   step = 0;
   isSearching: boolean;
   setStep(index: number) {
@@ -201,21 +199,6 @@ export class BOMAllMaterialComponent implements OnInit {
 
 
   getMaterialLength(minRequired = 1): ValidatorFn {
-    // if (!control.touched) {
-    //   return null;
-    // }
-
-    // if (!Object.keys(control.value).length) {
-    //   return { inValid: true };
-    // } else {
-    //   const isAllEmpty = control.value.forms.every(cat => !cat.estimatedQty);
-
-    //   if (isAllEmpty) {
-    //     return { inValid: true };
-    //   } else {
-    //     return null;
-    //   }
-    // }
     return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
       for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {
@@ -227,9 +210,6 @@ export class BOMAllMaterialComponent implements OnInit {
           break;
         }
       }
-      // if (control.value) {
-      //   checked++;
-      // }
 
       if (!checked) {
         return {
