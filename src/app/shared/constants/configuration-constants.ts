@@ -165,5 +165,6 @@ export const API = {
   POSTINDENTEXPORTREQUEST: `indent/list/excelDownload`,
   SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport',
   COPYPO: (poId) => `po/copyPO/${poId}`,
-  SHORTCLOSE: (poId) => `po/POAmend/${poId}`
+  SHORTCLOSE: (poId) => `po/POAmend/${poId}`,
+  CTC_REPORT: 'report/ctcReport',
 };
