@@ -162,7 +162,9 @@ export const API = {
   GRNUPLOADTEMPELATE: (projectId) => `po/add/opengrn/excel/${projectId}`,
   POSTRFQEXPORTREQUEST: organisationId => `rfq/excelDownload/${organisationId}`,
   POSTPOEXPORTREQUEST: `po/excelDownload`,
+  POSTINDENTEXPORTREQUEST: `indent/list/excelDownload`,
   SUPPLIERLIABILITYREPORT: 'supplier/getLiabilityReport',
   COPYPO: (poId) => `po/copyPO/${poId}`,
-  SHORTCLOSE: (poId) => `po/POAmend/${poId}`
+  SHORTCLOSE: (poId) => `po/POAmend/${poId}`,
+  CTC_REPORT: 'report/ctcReport',
 };

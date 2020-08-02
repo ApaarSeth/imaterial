@@ -9,6 +9,10 @@ import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confi
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { MatDialog } from "@angular/material";
 import { AllIndentListVO, IndentVO } from "src/app/shared/models/indent";
+import { AdvanceSearchService } from 'src/app/shared/services/advance-search.service';
+import { Subscription } from 'rxjs';
+import { IndentService } from 'src/app/shared/services/indent/indent.service';
+import { CommonService } from 'src/app/shared/services/commonService';
 
 export interface IndentData {
   indentName: string;
@@ -21,7 +25,7 @@ export interface IndentData {
 @Component({
   selector: "app-indent-detail",
   templateUrl: "./indent-detail.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  styleUrls: [ "../../../../assets/scss/main.scss" ]
 })
 export class IndentDetailComponent implements OnInit {
   product: ProjectDetails;
@@ -39,22 +43,48 @@ export class IndentDetailComponent implements OnInit {
   dataSource1: IndentVO[];
   dataSource2: IndentVO[];
   orgId: number;
+  isMobile: boolean;
+  susbcriptions: Subscription[] = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private projectService: ProjectService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private advSearchService: AdvanceSearchService,
+    private indentService: IndentService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.projectId = params["id"];
+      this.projectId = params[ "id" ];
     });
+    this.isMobile = this.commonService.isMobile().matches;
     this.orgId = Number(localStorage.getItem("orgId"));
     this.getProject(this.projectId);
     this.allIndents = this.route.snapshot.data.indentList;
     this.dataSource1 = this.allIndents.ongoingIndentList;
     this.dataSource2 = this.allIndents.completedIndentList;
+    this.startSubscriptions();
+  }
+
+  startSubscriptions() {
+    this.susbcriptions.push(
+      this.advSearchService.indentFilterRequest$.subscribe(res => {
+        res.projectId = Number(this.projectId);
+        this.indentService.getIndentList(this.projectId, res).then(data => {
+          this.allIndents = data.data;
+        })
+      }),
+      this.advSearchService.indentFilterExportRequest$.subscribe(res => {
+        res.projectId = Number(this.projectId);
+        this.indentService.postIndentExport(res).then(data => {
+          if (data.data.url) {
+            window.open(data.data.url);
+          }
+        });
+      })
+    )
   }
 
   getProject(id: number) {
@@ -109,7 +139,7 @@ export class IndentDetailComponent implements OnInit {
         .then(result => { });
     }
   }
-  
+
   viewIndentDetails(row) {
     this.router.navigate([
       "/indent/" + this.projectId + "/single-indent/" + row.indentId

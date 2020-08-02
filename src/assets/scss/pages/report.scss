@@ -79,6 +79,7 @@
   }
 
   $mat-header-row-height: 56px;
+  $ctc-mat-header-row-height: 75px;
   $mat-row-height: 48px;
   $material-row-height: 77px;
   $mat-row-horizontal-padding: 24px;
@@ -89,6 +90,11 @@
 
   .mat-header-row {
     min-height: $mat-header-row-height;
+    height: auto
+  }
+
+  .mat-header-row.ctc-report-header-row{
+    height: auto;
   }
 
   .mat-row {
@@ -103,7 +109,7 @@
   .mat-header-row {
     display: flex;
     align-items: center;
-    padding: 0 $mat-row-horizontal-padding;
+    padding: 0 15px;
     box-sizing: border-box;
   }
 
@@ -165,6 +171,19 @@
         font-size: 12px;
       }
     }
+
+    .background-category{
+      background-color: #e0e3ec !important;
+      .material-row {
+        background-color: #e0e3ec !important;
+        border-bottom: 0.5px solid #979797;
+        border-left: 0.5px solid #d0d0d0;
+      }
+    }
+
+    .background-projects{
+      background-color: #EFFBFF !important;
+    }
   }
 
   .radio-btn-group-report-table {
@@ -206,4 +225,8 @@
 }
 .reportTablePo .report-table .material-row{
   width: 100% !important;
+}
+
+.ctc-report .mat-select-panel-wrap{
+  margin-left: 40px;
 }
