@@ -79,8 +79,6 @@ export class BOMAllMaterialComponent implements OnInit {
     }
   }
 
-
-
   searchCategory(val) {
     if (this.category) {
       this.selectedCategory = [...this.category];
@@ -134,8 +132,6 @@ export class BOMAllMaterialComponent implements OnInit {
       { forms: this.formBuilder.array(frmArr) }
       , { validators: this.getMaterialLength() }
     );
-    // this.quantityForms.addControl("forms", new FormArray(frmArr, [this.getMaterialLength()]));
-    // this.enteredInput();r
     (<FormArray>this.quantityForms.get('forms')).controls.map((control: FormGroup) => {
       (<FormArray>control.get('materialGroup')).controls.map((control: FormGroup) => {
         control.get("estimatedQty").valueChanges.subscribe(changes => {
@@ -143,7 +139,6 @@ export class BOMAllMaterialComponent implements OnInit {
         })
       })
     })
-
     this.quantityForms.valueChanges.subscribe(changes => {
       this.inputEntered.emit(true);
     })

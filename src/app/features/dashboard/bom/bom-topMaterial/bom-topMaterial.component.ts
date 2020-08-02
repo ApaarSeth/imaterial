@@ -38,7 +38,6 @@ export class BomTopMaterialComponent implements OnInit {
   orgId: number;
   searchUnit: string = '';
   materialUnit: string[] = [];
-  formCreated = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -133,11 +132,6 @@ export class BomTopMaterialComponent implements OnInit {
       { forms: this.formBuilder.array(frmArr) }
       , { validators: this.getMaterialLength() }
     );
-
-    this.formCreated = true;
-    // this.quantityForms.addControl("forms", new FormArray(frmArr, [this.getMaterialLength()]));
-    // this.enteredInput();r
-
 
     (<FormArray>this.quantityForms.get('forms')).controls.map((control: FormGroup) => {
       (<FormArray>control.get('materialGroup')).controls.map((control: FormGroup) => {

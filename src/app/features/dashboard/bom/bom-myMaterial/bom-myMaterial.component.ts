@@ -39,7 +39,6 @@ export class BomMyMaterialComponent implements OnInit {
   orgId: number;
   materialUnit: string[] = [];
   searchUnit: string = '';
-  formCreated = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -52,15 +51,12 @@ export class BomMyMaterialComponent implements OnInit {
   frmArr: FormGroup[];
   quantityForms: FormGroup;
   selectedCategory: categoryNestedLevel[] = [];
-  // searchMaterial: string;
-  // product: ProjectDetails;
   step = 0;
   isSearching: boolean;
   setStep(index: number) {
     this.step = index;
   }
   currencyCode: string;
-
 
   ngOnInit() {
     this.currencyCode = localStorage.getItem('currencyCode')
@@ -137,7 +133,6 @@ export class BomMyMaterialComponent implements OnInit {
       { forms: this.formBuilder.array(frmArr) }
       , { validators: this.getMaterialLength() }
     );
-    this.formCreated = true;
 
 
     (<FormArray>this.quantityForms.get('forms')).controls.map((control: FormGroup) => {

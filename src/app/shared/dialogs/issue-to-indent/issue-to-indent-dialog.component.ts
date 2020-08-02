@@ -87,7 +87,7 @@ export class IssueToIndentDialogComponent implements OnInit {
       }
     });
     this.bomService.postIssueToIndent(this.data.materialId, formValues).then(res => {
-      if ( res.status == 1 ){
+      if (res.status == 1) {
         this.navService.gaEvent({
           action: 'submit',
           category: 'issue_to_indent',
