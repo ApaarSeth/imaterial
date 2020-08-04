@@ -4,7 +4,8 @@ import {
   ViewChild,
   QueryList,
   ViewChildren,
-  ElementRef
+  ElementRef,
+  ChangeDetectorRef
 } from "@angular/core";
 import { FormControl, FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -124,7 +125,8 @@ export class BomComponent implements OnInit {
     private fbPixel: FacebookPixelService,
     private globalLoader: GlobalLoaderService,
     private _snackBar: MatSnackBar,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -166,18 +168,6 @@ export class BomComponent implements OnInit {
 
   searchMaterial(event) {
     this.bomService.searchText.next(event);
-  }
-
-  get status() {
-    if (this.currentIndex == 0) {
-      return this.topMaterial ? this.topMaterial.quantityForms ? this.topMaterial.quantityForms.invalid : false : true
-    }
-    else if (this.currentIndex == 1) {
-      return this.allMaterial ? this.allMaterial.quantityForms ? this.allMaterial.quantityForms.invalid : false : true
-    }
-    else if (this.currentIndex == 2) {
-      return this.myMaterial ? this.myMaterial.quantityForms ? this.myMaterial.quantityForms.invalid : false : true
-    }
   }
 
   formInit() {

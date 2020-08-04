@@ -19,7 +19,7 @@
 
   <div class="create-po-dashboard p-b-20 min-height parent"
     *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp || rfqCount > 0">
-    <div class="row" [ngClass]="isMobile">
+    <div class="row" [ngClass]="isMobile ? 'ml-0' : '' ">
       <div class="col-xs-6">
         <mat-form-field class="example-form-field border-input project" [ngClass]="isMobile ? 'w-100' : ' w-vw-14' ">
           <input matInput placeholder="Search RFQ" type="search" (keyup)="applyFilter($event.target.value)" />

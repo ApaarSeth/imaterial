@@ -5,99 +5,103 @@
         <span class="brand-color" (click)="clearFilter()">Clear</span>
     </div>
 
-    <!-- project names -->
-    <div class="border-bottom">
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Project Name
-                </mat-panel-title>
-            </mat-expansion-panel-header>
+    <!-- project names for po, rfq -->
+    <ng-container *ngIf="filterType === 'rfq' || filterType === 'po'">
+        <div class="border-bottom">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Project Name
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
 
-            <mat-form-field class="d-block border-bottom-dark">
-                <mat-label>Select Projects</mat-label>
-                <mat-select multiple (openedChange)="projectInput.focus()" #projectsSelect>
-                    <div class="d-flex">
-                        <input class="pl-3" #projectInput matInput focused="'true'" type="text"
-                            (input)="search($event.target.value, 'projects')" autocomplete="off" placeholder="search"
-                            (keydown)="$event.stopPropagation()">
-                        <button mat-button matSuffix mat-icon-button>
-                            <mat-icon>search</mat-icon>
-                        </button>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <mat-option *ngFor="let project of projectsList" [value]="project"
-                        (click)="searchValue(project, 'projects')">
-                        {{project.projectName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+                <mat-form-field class="d-block border-bottom-dark">
+                    <mat-label>Select Projects</mat-label>
+                    <mat-select multiple (openedChange)="projectInput.focus()" #projectsSelect>
+                        <div class="d-flex">
+                            <input class="pl-3" #projectInput matInput focused="'true'" type="text"
+                                (input)="search($event.target.value, 'projects')" autocomplete="off"
+                                placeholder="search" (keydown)="$event.stopPropagation()">
+                            <button mat-button matSuffix mat-icon-button>
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <mat-option *ngFor="let project of projectsList" [value]="project"
+                            (click)="searchValue(project, 'projects')">
+                            {{project.projectName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <ng-container *ngIf="projectsSelect.selected">
-                <ul class="selected-list">
-                    <li *ngFor="let option of projectsSelect.selected" class="d-flex justify-content-between">
-                        {{getValueWithMaxWidth({fval: option.value.projectName})}}
-                        <span class="font-size20">
-                            <mat-icon
-                                (click)="removeId(option.value.projectId, 'projects'); searchValue(option.value, 'projects')"
-                                inline="true">close
-                            </mat-icon>
-                        </span>
-                    </li>
-                </ul>
+                <ng-container *ngIf="projectsSelect.selected">
+                    <ul class="selected-list">
+                        <li *ngFor="let option of projectsSelect.selected" class="d-flex justify-content-between">
+                            {{getValueWithMaxWidth({fval: option.value.projectName})}}
+                            <span class="font-size20">
+                                <mat-icon
+                                    (click)="removeId(option.value.projectId, 'projects'); searchValue(option.value, 'projects')"
+                                    inline="true">close
+                                </mat-icon>
+                            </span>
+                        </li>
+                    </ul>
 
-            </ng-container>
+                </ng-container>
 
-        </mat-expansion-panel>
-    </div>
+            </mat-expansion-panel>
+        </div>
+    </ng-container>
 
     <!-- supplier name -->
-    <div class="border-bottom">
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Supplier Name
-                </mat-panel-title>
-            </mat-expansion-panel-header>
+    <ng-container *ngIf="filterType === 'rfq' || filterType === 'po'">
+        <div class="border-bottom">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Supplier Name
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
 
 
-            <mat-form-field class="d-block border-bottom-dark">
-                <mat-label>Select Suppliers</mat-label>
-                <mat-select multiple (openedChange)="supplierInput.focus()" #suppliersSelect>
-                    <div class="d-flex">
-                        <input class="pl-3" #supplierInput matInput focused="'true'" type="text"
-                            (input)="search($event.target.value, 'suppliers')" autocomplete="off" placeholder="search"
-                            (keydown)="$event.stopPropagation()">
-                        <button mat-button matSuffix mat-icon-button>
-                            <mat-icon>search</mat-icon>
-                        </button>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <mat-option *ngFor="let project of suppliersList" [value]="project"
-                        (click)="searchValue(project, 'suppliers')">
-                        {{project.supplier_name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+                <mat-form-field class="d-block border-bottom-dark">
+                    <mat-label>Select Suppliers</mat-label>
+                    <mat-select multiple (openedChange)="supplierInput.focus()" #suppliersSelect>
+                        <div class="d-flex">
+                            <input class="pl-3" #supplierInput matInput focused="'true'" type="text"
+                                (input)="search($event.target.value, 'suppliers')" autocomplete="off"
+                                placeholder="search" (keydown)="$event.stopPropagation()">
+                            <button mat-button matSuffix mat-icon-button>
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <mat-option *ngFor="let project of suppliersList" [value]="project"
+                            (click)="searchValue(project, 'suppliers')">
+                            {{project.supplier_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <ng-container *ngIf="suppliersSelect.selected">
-                <ul class="selected-list">
-                    <li *ngFor="let option of suppliersSelect.selected" class="d-flex justify-content-between">
-                        {{getValueWithMaxWidth({fval: option.value.supplier_name})}}
-                        <span class="font-size20">
-                            <mat-icon
-                                (click)="removeId(option.value.supplierId, 'suppliers'); searchValue(option.value, 'suppliers')"
-                                inline="true">close
-                            </mat-icon>
-                        </span>
-                    </li>
-                </ul>
+                <ng-container *ngIf="suppliersSelect.selected">
+                    <ul class="selected-list">
+                        <li *ngFor="let option of suppliersSelect.selected" class="d-flex justify-content-between">
+                            {{getValueWithMaxWidth({fval: option.value.supplier_name})}}
+                            <span class="font-size20">
+                                <mat-icon
+                                    (click)="removeId(option.value.supplierId, 'suppliers'); searchValue(option.value, 'suppliers')"
+                                    inline="true">close
+                                </mat-icon>
+                            </span>
+                        </li>
+                    </ul>
 
-            </ng-container>
+                </ng-container>
 
 
-        </mat-expansion-panel>
-    </div>
+            </mat-expansion-panel>
+        </div>
+    </ng-container>
 
     <!-- material name -->
     <div class="border-bottom">
@@ -147,6 +151,28 @@
         </mat-expansion-panel>
     </div>
 
+
+    <!-- indent status for indent -->
+    <ng-container *ngIf="filterType === 'indent'">
+        <div class="border-bottom">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Request Status
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <section class="example-section pb-2">
+                    <mat-checkbox class="example-margin d-block" #indentOpen>
+                        Open</mat-checkbox>
+                    <mat-checkbox class="example-margin d-block" #indentClosed>
+                        Closed</mat-checkbox>
+                </section>
+
+            </mat-expansion-panel>
+        </div>
+    </ng-container>
+
     <!-- rfq status for rfq -->
     <ng-container *ngIf="filterType === 'rfq'">
         <div class="border-bottom">
@@ -172,8 +198,8 @@
         </div>
     </ng-container>
 
-    <!-- raised by for rfq -->
-    <ng-container *ngIf="filterType === 'rfq'">
+    <!-- raised by for rfq, indent -->
+    <ng-container *ngIf="filterType === 'rfq' || filterType === 'indent'">
         <div class="border-bottom">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -361,7 +387,7 @@
     </ng-container>
 
 
-
+    <!-- raised date amount for po, rfq -->
     <div class="border-bottom">
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -387,6 +413,7 @@
         </mat-expansion-panel>
     </div>
 
+    <!-- expiry date amount for rfq -->
     <ng-container *ngIf="filterType === 'rfq'">
         <div class="border-bottom">
             <mat-expansion-panel>
@@ -415,6 +442,38 @@
             </mat-expansion-panel>
         </div>
     </ng-container>
+
+    <!-- requested date amount for indent -->
+    <ng-container *ngIf="filterType === 'indent'">
+        <div class="border-bottom">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Requested Date
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>From</mat-label>
+                    <input matInput [matDatepicker]="requestedFromPicker"
+                        (dateChange)="getDate($event, 'requestedFromPicker')">
+                    <mat-datepicker-toggle matSuffix [for]="requestedFromPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #requestedFromPicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>To</mat-label>
+                    <input matInput [matDatepicker]="requestedToPicker"
+                        (dateChange)="getDate($event, 'requestedToPicker')">
+                    <mat-datepicker-toggle matSuffix [for]="requestedToPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #requestedToPicker></mat-datepicker>
+                </mat-form-field>
+
+
+            </mat-expansion-panel>
+        </div>
+    </ng-container>
+
 
 
     <!-- po status for rfq -->

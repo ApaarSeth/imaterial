@@ -80,7 +80,26 @@
 
                 <!-- Add to BOM Button -->
                 <div>
-                  <button mat-raised-button class="main-background-color main-button color-white pull-right save-material-button" (click)="saveCategory()" [disabled]="status">
+                  <button
+                    mat-raised-button
+                    class="main-background-color main-button color-white pull-right save-material-button"
+                    (click)="saveCategory()"
+                    [disabled]="
+                      this.currentIndex == 0
+                        ? this.topMaterial && this.topMaterial.quantityForms
+                          ? this.topMaterial.quantityForms.invalid
+                          : true
+                        : this.currentIndex == 1
+                        ? this.allMaterial && this.allMaterial.quantityForms
+                          ? this.allMaterial.quantityForms.invalid
+                          : true
+                        : this.currentIndex == 2
+                        ? this.myMaterial && this.myMaterial.quantityForms
+                          ? this.myMaterial.quantityForms.invalid
+                          : true
+                        : true
+                    "
+                  >
                     Add to BOM
                   </button>
                 </div>
