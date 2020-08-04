@@ -1,16 +1,24 @@
+$mat-header-row-height: 56px;
+$mat-row-height: 48px;
+$material-row-height: 77px;
+$mat-row-horizontal-padding: 12px;
+
 .grnTable {
   width: 100%;
   overflow-x: auto;
+
   table {
     width: 100%;
+    border: 1px solid #ababab;
   }
+
   td.mat-cell,
   td.mat-footer-cell,
   th.mat-header-cell {
     border-bottom: none;
   }
   .mat-accordion .mat-header-row {
-    padding-left: 1.5rem;
+    padding-left: 0.8rem;
     padding-right: 2rem;
     border-bottom: none;
   }
@@ -18,11 +26,6 @@
   .mat-expansion-panel-header.mat-row {
     border-bottom: none;
   }
-
-  $mat-header-row-height: 56px;
-  $mat-row-height: 48px;
-  $material-row-height: 77px;
-  $mat-row-horizontal-padding: 24px;
 
   .mat-table {
     display: block;
@@ -54,6 +57,8 @@
     overflow: hidden;
     word-wrap: break-word;
     color: black;
+    min-width: 135px;
+    padding: 0 5px;
   }
 
   .widthReduce {
@@ -69,42 +74,44 @@
     }
   }
 
-  .grnTable {
-    .mat-row {
-      min-height: 50px;
+  .mat-cell.double-mat-cell {
+    min-width: 270px !important;
+  }
 
-      .mat-cell {
-        color: #707070;
-      }
-    }
-    .border-row {
-      border-bottom: 0.5px solid #979797;
-    }
-    .background-supplier {
-      background: #effbff;
-    }
-    .background-project {
-      background: #eaeaea;
-    }
-    .background-project-list {
-      background: #ffffff;
-    }
-    .grn-material-row {
-      min-height: 38px;
-      .mat-cell {
-        color: #707070;
-      }
-    }
-    .footer {
-      background-color: rgba(25, 33, 53, 0.2);
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-      min-height: 70px;
+  .mat-row {
+    min-height: 50px;
 
-      .mat-cell {
-        color: #000000;
-        font-weight: 500;
-        font-size: 12px;
-      }
+    .mat-cell {
+      color: #707070;
+    }
+  }
+  .border-row {
+    border-bottom: 0.5px solid #979797;
+  }
+  .background-supplier {
+    background: #effbff;
+  }
+  .background-project {
+    background: #eaeaea;
+  }
+  .background-project-list {
+    background: #ffffff;
+  }
+  .grn-material-row {
+    min-height: 38px;
+    .mat-cell {
+      color: #707070;
+    }
+  }
+  .footer {
+    background-color: rgba(25, 33, 53, 0.2);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    min-height: 70px;
+
+    .mat-cell {
+      color: #000000;
+      font-weight: 500;
+      font-size: 12px;
     }
   }
 
@@ -123,38 +130,49 @@
   .mat-expansion-panel-header {
     padding-left: 0px;
     padding-right: 5px;
-    background: whitesmoke !important;
-  }
-  .mat-expansion-panel-header:hover {
-    background: whitesmoke !important;
-  }
-
-  .mat-expansion-panel-header:focus {
-    background: !important;
   }
 
   .mat-expansion-panel-body {
     padding: 0;
   }
+
+  .backgound-project{
+    background-color: #fff !important;
+  }
+
+  .background-grn{
+    background-color: #e0e3ec !important;
+    .material-row {
+      background-color: #e0e3ec !important;
+      border-bottom: 0.5px solid #979797;
+      border-left: 0.5px solid #d0d0d0;
+    }
+  }
+
+  .mat-expansion-panel-header.background-grn.mat-expanded:focus, 
+  .mat-expansion-panel-header.background-grn.mat-expanded:hover{
+    background-color: #e0e3ec !important;
+  }
 }
-.grnTable .mat-cell,
-.grnTable .mat-header-cell {
-  min-width: 130px;
-  padding: 0 5px;
-}
-.grnTable .mat-cell,
-.grnTable .mat-header-cell.widthReduce {
-  min-width: 50px;
-  padding: 0 5px;
-}
-.grnTable .grnTable .grn-material-row .mat-cell.widthReduce {
-  min-width: 50px;
-  padding: 0 5px;
-}
-.grnTable .grnTable .grn-material-row .mat-cell {
-  min-width: 130px;
-  padding: 0 5px;
-}
-.grnTable .grnTable .grn-material-row {
-  width: 95 !important;
-}
+
+// .grnTable .mat-cell,
+// .grnTable .mat-header-cell {
+//   min-width: 130px;
+//   padding: 0 5px;
+// }
+// .grnTable .mat-cell,
+// .grnTable .mat-header-cell.widthReduce {
+//   min-width: 50px;
+//   padding: 0 5px;
+// }
+// .grnTable .grnTable .grn-material-row .mat-cell.widthReduce {
+//   min-width: 50px;
+//   padding: 0 5px;
+// }
+// .grnTable .grnTable .grn-material-row .mat-cell {
+//   min-width: 130px;
+//   padding: 0 5px;
+// }
+// .grnTable .grnTable .grn-material-row {
+//   width: 95 !important;
+// }
