@@ -18,6 +18,7 @@ export class GrnComponent implements OnInit {
     projectIds: number[] = [];
     searchProject: string = ''
     form: FormGroup;
+    selectedIds: number[] = [];
     allProjectsGRNData: AllProjectsGRNData[] = [];
 
     constructor(
@@ -39,14 +40,16 @@ export class GrnComponent implements OnInit {
     }
 
     getProjectGRNData() {
-        const selectedIds = this.form.value.selectedProject.map(selectedProject => selectedProject);
-        if(selectedIds.length > 0){
+        this.selectedIds = this.form.value.selectedProject.map(selectedProject => selectedProject);
+        if(this.selectedIds.length > 0){
             const projectIds = {
-                "ids": selectedIds
+                "ids": this.selectedIds
             }
             this._grnService.getAllGRNData(projectIds).then(res => {
-                this.allProjectsGRNData = res;
+                this.allProjectsGRNData = res.data;
             });
+        }else{
+            this.allProjectsGRNData = [];
         }
     }
 
