@@ -40,12 +40,14 @@ export class GrnComponent implements OnInit {
 
     getProjectGRNData() {
         const selectedIds = this.form.value.selectedProject.map(selectedProject => selectedProject);
-        const projectIds = {
-            "ids": selectedIds
+        if(selectedIds.length > 0){
+            const projectIds = {
+                "ids": selectedIds
+            }
+            this._grnService.getAllGRNData(projectIds).then(res => {
+                this.allProjectsGRNData = res;
+            });
         }
-        this._grnService.getAllGRNData(projectIds).then(res => {
-            this.allProjectsGRNData = res;
-        });
     }
 
     openDocuments(data) {

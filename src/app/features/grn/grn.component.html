@@ -27,7 +27,7 @@
       <ng-container *ngIf="allProjectsGRNData?.length; else noDataAvailable">
         <div class="grnTable mb-4" *ngFor="let project of allProjectsGRNData">
           <mat-accordion>
-            <mat-expansion-panel>
+            <mat-expansion-panel [expanded]="true">
 
               <mat-expansion-panel-header class="backgound-project">
                 <div class="grn-material-row p-r-10">
@@ -38,13 +38,13 @@
               <table class="grnTable">
                 <tr matSort class="mat-elevation-z2 mat-header-row">
                   <thead class="mat-header-cell material">Material Name</thead>
-                  <thead class="mat-header-cell material">Unit</thead>
+                  <thead class="mat-header-cell material-unit">Unit</thead>
                   <thead class="mat-header-cell material">Brand</thead>
-                  <thead class="mat-header-cell material">Awarded <br/>Quantity</thead>
-                  <thead class="mat-header-cell material">Delivered <br/>Quantity</thead>
-                  <thead class="mat-header-cell material">Pending <br/>Quantity</thead>
+                  <thead class="mat-header-cell material">Awarded <br />Quantity</thead>
+                  <thead class="mat-header-cell material">Delivered <br />Quantity</thead>
+                  <thead class="mat-header-cell material">Pending <br />Quantity</thead>
                   <thead class="mat-header-cell material">Unit Price <br />(INR)</thead>
-                  <thead class="mat-header-cell material">Total Amount <br />(INR)</thead>
+                  <thead class="mat-header-cell material text-right">Total Amount <br />(INR)</thead>
                   <thead class="mat-header-cell material">Supplier</thead>
                 </tr>
 
@@ -67,22 +67,23 @@
                         <td class="mat-cell">{{ grnData.grnDate | date: "dd-MMM-yyy" }}</td>
                         <td class="mat-cell"></td>
                         <td class="mat-cell"></td>
-                        <td class="mat-cell" (click)="openDocuments(grnData.grnDocuments);mep.expanded = false">
+                        <td class="mat-cell" (click)="openDocuments(grnData.grnDocuments);mep.expanded = true">
                           <img class="file-icon" src="../../../../assets/images/file-doc.png" />
                           <span class="font-size-vary-grn main-color text-decoration-underline">Documents</span>
                         </td>
                       </tr>
                     </mat-expansion-panel-header>
 
-                    <tr class="grn-material-row border-row background-project-list" *ngFor="let grnDetail of grnData.grnDetailList">
+                    <tr class="grn-material-row border-row background-project-list"
+                      *ngFor="let grnDetail of grnData.grnDetailList">
                       <td class="mat-cell">{{ grnDetail.MaterialName }}</td>
-                      <td class="mat-cell">{{ grnDetail.MaterialUnit }}</td>
-                      <td class="mat-cell">{{ grnDetail }}</td>
+                      <td class="mat-cell material-unit">{{ grnDetail.MaterialUnit }}</td>
+                      <td class="mat-cell">{{ grnDetail.MaterialBrand }}</td>
                       <td class="mat-cell">{{ grnDetail.EstimatedQty }}</td>
                       <td class="mat-cell">{{ grnDetail.DeliveredQty }}</td>
                       <td class="mat-cell"></td>
                       <td class="mat-cell">{{ grnDetail.MaterialUnitPrice }}</td>
-                      <td class="mat-cell">{{ grnDetail.TotalAmount }}</td>
+                      <td class="mat-cell text-right">{{ grnDetail.TotalAmount }}</td>
                       <td class="mat-cell">{{ grnDetail.SupplierName }}</td>
                     </tr>
 
@@ -101,7 +102,7 @@
             <img src="../../../../assets/images/report-main.svg" alt="BuildSupply_Logo" />
             <div>
               <p class="p-t-10 font-size-vary-grn">
-                You have not selected any project or supplier yet. <br />
+                You have not selected any project yet. <br />
                 Please select any one from the above to see the report.
               </p>
             </div>

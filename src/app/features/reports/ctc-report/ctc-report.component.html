@@ -71,32 +71,32 @@
             <tr matSort class="mat-elevation-z2 mat-header-row ctc-report-header-row">
               <th class="mat-header-cell material">Materials</th>
               <th class="mat-header-cell material">Unit</th>
-              <th class="mat-header-cell material">Estimated Amount <br/>
+              <th class="mat-header-cell material text-right">Estimated Amount <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material">Awarded Amount <br/>
+              <th class="mat-header-cell material text-right">Awarded Amount <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material">Delivered Amount <br/>
+              <th class="mat-header-cell material text-right">Delivered Amount <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material">Paid Amount <br/>
+              <th class="mat-header-cell material text-right">Paid Amount <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material">Projected Cost <br/>to Complete <br/>
+              <th class="mat-header-cell material text-right">Projected Cost <br/>to Complete <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material">Balance Cost <br/>to Complete <br/>
+              <th class="mat-header-cell material text-right">Balance Cost <br/>to Complete <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
@@ -110,12 +110,12 @@
                   <tr class="material-row backgound-none-important p-r-10">
                     <td class="mat-cell">{{ project.projectName }}</td>
                     <td class="mat-cell"></td>
-                    <td class="mat-cell">{{ project.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ project.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ project.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ project.paidAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ project.projectedCost / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ (project.projectedCost - project.deliveredAmount) / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ project.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ project.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ project.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ project.paidAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ project.projectedCost / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ (project.projectedCost - project.deliveredAmount) / this.conversionNumber | number: "1.2-2" }}</td>
                   </tr>
                 </mat-expansion-panel-header>
 
@@ -125,12 +125,12 @@
                     <tr class="material-row p-r-10">
                       <td class="mat-cell">{{ matCategory.materialCategoryName }}</td>
                       <td class="mat-cell">{{ matCategory.materialUnit }}</td>
-                      <td class="mat-cell">{{ matCategory.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell">{{ matCategory.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell">{{ matCategory.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ matCategory.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ matCategory.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ matCategory.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
                       <td class="mat-cell"></td>
-                      <td class="mat-cell">{{ matCategory.projectedCost / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell">{{ (matCategory.projectedCost - matCategory.deliveredAmount) / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ matCategory.projectedCost / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ (matCategory.projectedCost - matCategory.deliveredAmount) / this.conversionNumber | number: "1.2-2" }}</td>
                     </tr>
                   </mat-expansion-panel-header>
 
@@ -138,12 +138,12 @@
                   <tr class="material-row border-row background-project-list" *ngFor="let material of matCategory.materialCTCDataList">
                     <td class="mat-cell">{{ material.materialName }}</td>
                       <td class="mat-cell">{{ material.materialUnit }}</td>
-                      <td class="mat-cell">{{ material.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell">{{ material.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell">{{ material.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ material.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ material.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ material.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
                       <td class="mat-cell"></td>
-                      <td class="mat-cell">{{ material.projectedCTC / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell">{{ (material.projectedCTC - material.deliveredAmount) / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ material.projectedCTC / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ (material.projectedCTC - material.deliveredAmount) / this.conversionNumber | number: "1.2-2" }}</td>
                   </tr>
                 </mat-expansion-panel>
               </mat-expansion-panel>

@@ -8,7 +8,6 @@ import { Documents } from '../../models/RFQ/rfq-view';
   templateUrl: "./show-documents.component.html"
 })
 
-// Component class
 export class ShowDocumentComponent implements OnInit {
   documentList : Documents[];
   constructor(public dialogRef: MatDialogRef<ShowDocumentComponent>,
