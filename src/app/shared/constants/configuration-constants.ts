@@ -167,4 +167,5 @@ export const API = {
   COPYPO: (poId) => `po/copyPO/${poId}`,
   SHORTCLOSE: (poId) => `po/POAmend/${poId}`,
   CTC_REPORT: 'report/ctcReport',
+  GET_ALL_GRN: 'all/grn',
 };

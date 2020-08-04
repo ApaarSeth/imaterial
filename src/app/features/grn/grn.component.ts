@@ -2,20 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectDetails } from 'src/app/shared/models/project-details';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { GRNService } from 'src/app/shared/services/grn/grn.service';
+import { AllProjectsGRNData } from 'src/app/shared/models/grn';
+import { ShowDocumentComponent } from 'src/app/shared/dialogs/show-documents/show-documents.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
-    selector: 'selector-name',
+    selector: 'all-grn',
     templateUrl: 'grn.component.html'
 })
 
 export class GrnComponent implements OnInit {
 
-    constructor(private activatedRoute: ActivatedRoute,
-        private formBuilder: FormBuilder) { }
     allProjects: ProjectDetails[];
     projectIds: number[] = [];
     searchProject: string = ''
     form: FormGroup;
+    allProjectsGRNData: AllProjectsGRNData[] = [];
+
+    constructor(
+        private activatedRoute: ActivatedRoute,
+        private formBuilder: FormBuilder,
+        private _grnService: GRNService,
+        private _dialog: MatDialog) { }
 
     ngOnInit() {
         this.allProjects = this.activatedRoute.snapshot.data.projectsList;
@@ -29,20 +38,27 @@ export class GrnComponent implements OnInit {
         });
     }
 
-    choosenProject() {
-        this.projectIds = [];
-        this.projectIds = this.form.value.selectedProject.map(
-            selectedProject => String(selectedProject.projectId)
-        );
-        this.sendProjectSuppierData();
+    getProjectGRNData() {
+        const selectedIds = this.form.value.selectedProject.map(selectedProject => selectedProject);
+        if(selectedIds.length > 0){
+            const projectIds = {
+                "ids": selectedIds
+            }
+            this._grnService.getAllGRNData(projectIds).then(res => {
+                this.allProjectsGRNData = res;
+            });
+        }
     }
 
-    sendProjectSuppierData() {
-        const obj = {
-            "projectIdList": this.projectIds,
-        }
-        // this.reportService.getSupplierLiabilityReport(obj).then(res => {
-        //     this.supplierLiabiltyReportData = res;
-        // })
+    openDocuments(data) {
+        const dialogRef = this._dialog.open(ShowDocumentComponent, {
+            width: "500px",
+            data
+        });
+        dialogRef.afterClosed().toPromise().then(result => {
+            if (result) {
+                // this.getGRNDetails(this.poId);
+            }
+        });
     }
 }
