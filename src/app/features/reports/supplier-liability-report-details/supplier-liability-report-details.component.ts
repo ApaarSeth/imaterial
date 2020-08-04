@@ -183,7 +183,6 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   }
 
   clickMenuItem(menuItem) {
-    console.log(menuItem);
     this.selectedMenu = menuItem;
     switch (this.selectedMenu) {
       case 'Lakhs':
@@ -205,5 +204,20 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
         this.conversionNumber = 1
         break;
     }
+  }
+
+  downloadExcel(){
+
+    const data = {
+      "projectIdList": this.projectIds,
+      "supplierIdList": this.supplierIds
+    }
+
+    this.reportService.supplierLiabilityExcelDownload(data).then(res => {
+      if(res.data){
+        var win = window.open(res.data.url, "_blank");
+        win.focus();
+      }
+    })
   }
 }

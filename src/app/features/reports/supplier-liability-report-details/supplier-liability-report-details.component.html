@@ -63,7 +63,8 @@
         </div>
         <div class="col-xs-12 col-sm-4 col-md-6 p-t-10 add-project-btn display-flex justify-content-flex-end column-3">
           <div *ngIf="projectIds.length || supplierIds.length" class="p-r-20 p-t-10">
-            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png" /> </a>
+            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png"
+              (click)="downloadExcel()" /> </a>
           </div>
           <div *ngIf="supplierLiabiltyReportData" class="show-amount p-r-12 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
             Show amount
