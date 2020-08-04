@@ -130,7 +130,7 @@ $mat-row-horizontal-padding: 12px;
 
   .mat-expansion-panel-header {
     padding-left: 0px;
-    padding-right: 5px;
+    padding-right: 12px;
   }
 
   .mat-expansion-panel-body {
@@ -153,6 +153,10 @@ $mat-row-horizontal-padding: 12px;
   .mat-expansion-panel-header.background-grn.mat-expanded:focus, 
   .mat-expansion-panel-header.background-grn.mat-expanded:hover{
     background-color: #e0e3ec !important;
+  }
+
+  .mat-expansion-indicator:after{
+    padding: 6px;
   }
 }
 
