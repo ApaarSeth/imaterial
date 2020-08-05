@@ -56,7 +56,9 @@ export interface TermsObj {
 }
 
 export interface Documents {
-    documentType: string,
-    DocumentDesc: string,
-    DocumentUrl: string
+    documentType: string;
+    DocumentDesc: string;
+    DocumentUrl: string;
+    documentId?: number;
+    documentName?: string;
 }

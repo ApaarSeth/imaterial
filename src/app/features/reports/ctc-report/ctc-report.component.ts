@@ -19,7 +19,7 @@ export class CTCReportComponent implements OnInit {
   searchText: string = null;
   projects: FormControl;
   selectedProjects: ProjectDetails[] = [];
-  projectIds: number[] = [];
+  projectIds: string[] = [];
   amountRange: string[];
   selectedMenu: string;
   currency: string
@@ -65,11 +65,11 @@ export class CTCReportComponent implements OnInit {
    * @param projectId project id of selected project in dropdown list
    */
   getProjectMaterials() {
-    const selectedIds = this.form.value.selectedProject.map(selectedProject => String(selectedProject));
-    const projectIds = {
-      "projectIdList": selectedIds
+    this.projectIds = this.form.value.selectedProject.map(selectedProject => String(selectedProject));
+    const selectedProjectIds = {
+      "projectIdList": this.projectIds
     }
-    this.reportService.getCTCReportData(projectIds).then(res => {
+    this.reportService.getCTCReportData(selectedProjectIds).then(res => {
       this.allProjectsData = res;
     })
   }
@@ -86,7 +86,6 @@ export class CTCReportComponent implements OnInit {
   }
 
   clickMenuItem(menuItem) {
-    console.log(menuItem);
     this.selectedMenu = menuItem;
     switch (this.selectedMenu) {
       case 'Lakhs':
@@ -108,6 +107,20 @@ export class CTCReportComponent implements OnInit {
         this.conversionNumber = 1
         break;
     }
+  }
+
+  downloadExcel(){
+
+    const data = {
+      "projectIdList": this.projectIds
+    }
+
+    this.reportService.ctcReportExcelDownload(data).then(res => {
+      if(res.data){
+        var win = window.open(res.data.url, "_blank");
+        win.focus();
+      }
+    })
   }
 }
 

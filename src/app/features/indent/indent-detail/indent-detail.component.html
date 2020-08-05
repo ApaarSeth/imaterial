@@ -39,13 +39,13 @@
 
                   <!-- Position Column -->
                   <ng-container matColumnDef="Indent Number">
-                    <th mat-header-cell *matHeaderCellDef>Indent Number</th>
+                    <th mat-header-cell *matHeaderCellDef>Purchase Requisition Number</th>
                     <td mat-cell *matCellDef="let element">{{ element.indentId }}</td>
                   </ng-container>
 
                   <!-- Name Column -->
                   <ng-container matColumnDef="Indented Date">
-                    <th mat-header-cell *matHeaderCellDef>Indented Date</th>
+                    <th mat-header-cell *matHeaderCellDef>Requested Date</th>
                     <td mat-cell *matCellDef="let element">
                       {{ element.createdAt | date: "dd-MMM-yyy" }}
                     </td>
@@ -70,7 +70,7 @@
                   <ng-container matColumnDef="View Indent">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                      <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721;">View Indent</a>
+                      <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721;">View Request</a>
                     </td>
                   </ng-container>
 
@@ -118,13 +118,13 @@
 
                   <!-- Position Column -->
                   <ng-container matColumnDef="Indent Number">
-                    <th mat-header-cell *matHeaderCellDef>Indent Number</th>
+                    <th mat-header-cell *matHeaderCellDef>Purchase Requisition Number</th>
                     <td mat-cell *matCellDef="let element">{{ element.indentId }}</td>
                   </ng-container>
 
                   <!-- Name Column -->
                   <ng-container matColumnDef="Indented Date">
-                    <th mat-header-cell *matHeaderCellDef>Indented Date</th>
+                    <th mat-header-cell *matHeaderCellDef>Requested Date</th>
                     <td mat-cell *matCellDef="let element">
                       {{ element.createdAt | date: "dd-MMM-yyy" }}
                     </td>
@@ -149,7 +149,7 @@
                   <ng-container matColumnDef="View Indent">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                      <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721;">View Indent</a>
+                      <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721;">View Request</a>
                     </td>
                   </ng-container>
 
