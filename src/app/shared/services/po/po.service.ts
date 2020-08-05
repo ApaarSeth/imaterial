@@ -1,3 +1,4 @@
+import { TokenService } from 'src/app/shared/services/token.service';
 import { Injectable } from "@angular/core";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
@@ -36,7 +37,7 @@ export class POService {
   }
   projectMaterials(projectIds: number) {
     return this.dataService.sendPostRequest(API.RFQMATERIALS, {
-      projectIds: [ projectIds ]
+      projectIds: [projectIds]
     });
   }
 
@@ -90,4 +91,7 @@ export class POService {
     });
   }
 
+  rejectAmendedPo(poId) {
+    return this.dataService.getRequest(API.REJECTAMENDPO(poId))
+  }
 }

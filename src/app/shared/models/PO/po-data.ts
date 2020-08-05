@@ -30,8 +30,10 @@ export interface POData {
   currencyCode?: string;
   sellerPORating?: number;
   poCreatedBy?: number;
+  isAmended?: number;
   poStatus?: string;
 }
+
 
 export interface PurchaseOrderCurrency {
   UserId: string
@@ -303,7 +305,7 @@ export interface ImageList {
   materialId?: number;
 }
 
-export interface ImageDocsLists{
+export interface ImageDocsLists {
   projectId: number;
   materialId: number;
   materialDocumentId: number;
@@ -319,7 +321,7 @@ export interface ImageDocsLists{
   supplierId?: number;
 }
 
-export interface finalImageObject{
+export interface finalImageObject {
   projectId?: number;
   materialId?: number;
   purchaseOrderId?: number;

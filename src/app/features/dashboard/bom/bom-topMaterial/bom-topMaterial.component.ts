@@ -24,6 +24,7 @@ import { BomService } from "src/app/shared/services/bom/bom.service";
 import { parse } from "querystring";
 import { Materials } from "src/app/shared/models/subcategory-materials";
 import { range } from 'rxjs';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
   selector: "app-bom-topMaterial",
@@ -43,7 +44,8 @@ export class BomTopMaterialComponent implements OnInit {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private bomService: BomService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private notifier: AppNotificationService
   ) { }
   private dataQty: Materials[];
   projectId: number;
@@ -65,9 +67,7 @@ export class BomTopMaterialComponent implements OnInit {
     this.bomService.searchText.subscribe(val => {
       this.searchCategory(val);
     })
-
   }
-
   searchCategory(val) {
     if (this.selectedCategory) {
       if (val && val !== '') {
@@ -115,7 +115,7 @@ export class BomTopMaterialComponent implements OnInit {
         return this.formBuilder.group({
           materialId: [subcategory.materialId],
           materialMasterId: [subcategory.materialId],
-          estimatedQty: [subcategory.estimatedQty],
+          estimatedQty: [subcategory.estimatedQty, [this.estimatedQtyCheck(subcategory.poAvailableQty ? subcategory.poAvailableQty : 0)]],
           materialCode: [subcategory.materialCode],
           materialName: [subcategory.materialName],
           materialGroup: [subcategory.materialGroup],
@@ -142,6 +142,20 @@ export class BomTopMaterialComponent implements OnInit {
     })
   }
 
+  estimatedQtyCheck(checkVal): ValidatorFn {
+    return (control: FormControl): { [key: string]: boolean } | null => {
+      if (control.value >= checkVal || control.value == null || checkVal == 0) {
+        return null;
+      }
+      else {
+        this.notifier.snack("Estimated qty can'nt be less than available qty")
+        return {
+          incorrectValue: true,
+        };
+      }
+    }
+  }
+
   mappingMaterialWithQuantity() {
     this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
@@ -160,6 +174,7 @@ export class BomTopMaterialComponent implements OnInit {
                     subcategory.materialUnit = data.materialUnit;
                     subcategory.requestedQuantity = data.requestedQuantity
                     subcategory.availableStock = data.availableStock
+                    subcategory.poAvailableQty = data.poAvailableQty
                     subcategory.issueToProject = data.issueToProject
                     subcategory.estimatedQty = data.estimatedQty;
                     subcategory.estimatedRate = data.estimatedRate;
