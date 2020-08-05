@@ -4,7 +4,7 @@
     <div class="p-t-10">
       <mat-card class="parent">
         <form [formGroup]="form">
-          <div class="row align-items-center">
+          <div class="row align-items-center row-sm-screen">
             <!-- Left Side menus -->
             <div class="col-md-6 text -left border-input col-left-width">
               <div class="row align-items-center justify-content-between">
@@ -18,7 +18,7 @@
 
                 <!-- Select Trades field -->
                 <mat-form-field class="border-select p-t-0 select-trades">
-                  <mat-label *ngIf="!formArray.length">Select Trades</mat-label>
+                  <mat-label *ngIf="!formArray.length" class="mat-select-trades">Select Trades</mat-label>
                   <mat-select formControlName="selectedTrades" multiple>
                     <div class="display-flex">
                       <input
@@ -35,7 +35,7 @@
                       </button>
                     </div>
                     <mat-select-trigger>
-                      <mat-label>Select Trades</mat-label>
+                      <mat-label class="mat-select-trades">Select Trades</mat-label>
                     </mat-select-trigger>
                     <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:['tradeName']" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
                       >{{ trade.tradeName }}

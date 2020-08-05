@@ -42,19 +42,18 @@
                   <thead class="mat-header-cell material">Brand</thead>
                   <thead class="mat-header-cell material">Awarded <br />Quantity</thead>
                   <thead class="mat-header-cell material">Delivered <br />Quantity</thead>
-                  <thead class="mat-header-cell material">Pending <br />Quantity</thead>
+                  <!-- <thead class="mat-header-cell material">Pending <br />Quantity</thead> -->
                   <thead class="mat-header-cell material">Unit Price <br />(INR)</thead>
-                  <thead class="mat-header-cell material text-right">Total Amount <br />(INR)</thead>
+                  <thead class="mat-header-cell material">Total Amount <br />(INR)</thead>
                   <thead class="mat-header-cell material">Supplier</thead>
                 </tr>
 
                 <mat-accordion *ngFor="let grnData of project.grnDataList">
                   <mat-expansion-panel #mep="matExpansionPanel">
-                    <!-- [expanded]="true" -->
                     <mat-expansion-panel-header class="border-row background-grn">
-                      <tr class="grn-material-row p-r-10">
-                        <td class="mat-cell">{{ grnData.grnName }}</td>
-                        <td class="mat-cell double-mat-cell">
+                      <tr class="grn-material-row p-r-10 w-100">
+                        <td class="mat-cell grn-name-cell">{{ grnData.grnName }}</td>
+                        <td class="mat-cell po-number-cell">
                           <ng-container *ngIf="grnData.poNumber; else directGRN">
                             PO ID - {{ grnData.poNumber }}
                           </ng-container>
@@ -63,11 +62,11 @@
                             Direct
                           </ng-template>
                         </td>
-                        <td class="mat-cell double-mat-cell">Added by - {{ grnData.addedBy }}</td>
-                        <td class="mat-cell">{{ grnData.grnDate | date: "dd-MMM-yyy" }}</td>
+                        <td class="mat-cell double-mat-cell added-by-cell">Added by - {{ grnData.addedBy }}</td>
+                        <td class="mat-cell grn-date-cell">{{ grnData.grnDate | date: "dd-MMM-yyy" }}</td>
                         <td class="mat-cell"></td>
                         <td class="mat-cell"></td>
-                        <td class="mat-cell" (click)="openDocuments(grnData.grnDocuments);mep.expanded = true">
+                        <td class="mat-cell grn-documents-cell" (click)="openDocuments(grnData.grnDocuments);mep.expanded = true">
                           <img class="file-icon" src="../../../../assets/images/file-doc.png" />
                           <span class="font-size-vary-grn main-color text-decoration-underline">Documents</span>
                         </td>
@@ -81,7 +80,7 @@
                       <td class="mat-cell">{{ grnDetail.MaterialBrand }}</td>
                       <td class="mat-cell">{{ grnDetail.EstimatedQty }}</td>
                       <td class="mat-cell">{{ grnDetail.DeliveredQty }}</td>
-                      <td class="mat-cell"></td>
+                      <!-- <td class="mat-cell"></td> -->
                       <td class="mat-cell">{{ grnDetail.MaterialUnitPrice }}</td>
                       <td class="mat-cell text-right">{{ grnDetail.TotalAmount }}</td>
                       <td class="mat-cell">{{ grnDetail.SupplierName }}</td>

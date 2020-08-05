@@ -160,24 +160,16 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
-// .grnTable .mat-cell,
-// .grnTable .mat-header-cell {
-//   min-width: 130px;
-//   padding: 0 5px;
-// }
-// .grnTable .mat-cell,
-// .grnTable .mat-header-cell.widthReduce {
-//   min-width: 50px;
-//   padding: 0 5px;
-// }
-// .grnTable .grnTable .grn-material-row .mat-cell.widthReduce {
-//   min-width: 50px;
-//   padding: 0 5px;
-// }
-// .grnTable .grnTable .grn-material-row .mat-cell {
-//   min-width: 130px;
-//   padding: 0 5px;
-// }
-// .grnTable .grnTable .grn-material-row {
-//   width: 95 !important;
-// }
+/** css to make receipt page grn detail row's column aligned **/
+.grn-material-row{
+  .mat-cell.grn-name-cell,
+  .mat-cell.po-number-cell {
+    flex: 0 0 152px;
+    min-width: 152px;
+  }
+
+  .mat-cell.double-mat-cell.added-by-cell {
+    min-width: 306px;
+    flex: 0 0 306px;
+  }
+}
