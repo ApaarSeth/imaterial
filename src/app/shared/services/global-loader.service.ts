@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class GlobalLoaderService {
-    private loaderCounter = 0;
-    private loader = new Subject<boolean>();
-    loaderChanged$ = this.loader.asObservable();
+    public isLoading = new BehaviorSubject(false);
 
     show() {
-        this.loaderCounter++;
-        this.loader.next(true);
+        this.isLoading.next(true);
     }
 
     hide() {
-        this.loaderCounter--;
-        if (this.loaderCounter <= 0) {
-            this.loaderCounter = 0;
-            this.loader.next(false);
-        }
+        this.isLoading.next(false);
     }
 }

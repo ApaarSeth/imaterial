@@ -82,7 +82,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
     // this.allProjects = this.projectsList;
     this.isMobile = this.commonService.isMobile().matches;
     this.rfqService.mat.subscribe(data => {
-      console.log(data)
+      // console.log(data)
     })
     // if (this.rfqId) {
     //   if (this.previousIndex !== 1) {

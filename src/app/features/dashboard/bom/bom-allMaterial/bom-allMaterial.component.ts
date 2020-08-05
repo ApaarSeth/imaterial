@@ -22,6 +22,7 @@ import {
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import { parse } from "querystring";
 import { Materials } from "src/app/shared/models/subcategory-materials";
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
   selector: "app-bom-allMaterial",
@@ -37,6 +38,7 @@ export class BOMAllMaterialComponent implements OnInit {
   searchUnit: string = "";
   constructor(
     private router: Router,
+    private notifier: AppNotificationService,
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private bomService: BomService,
@@ -115,7 +117,7 @@ export class BOMAllMaterialComponent implements OnInit {
         return this.formBuilder.group({
           materialId: [subcategory.materialId],
           materialMasterId: [subcategory.materialId],
-          estimatedQty: [subcategory.estimatedQty],
+          estimatedQty: [subcategory.estimatedQty, [this.estimatedQtyCheck(subcategory.poAvailableQty ? subcategory.poAvailableQty : 0)]],
           materialCode: [subcategory.materialCode],
           materialName: [subcategory.materialName],
           materialGroup: [subcategory.materialGroup],
@@ -144,6 +146,20 @@ export class BOMAllMaterialComponent implements OnInit {
     })
   }
 
+  estimatedQtyCheck(checkVal): ValidatorFn {
+    return (control: FormControl): { [key: string]: boolean } | null => {
+      if (control.value >= checkVal || control.value == null || checkVal == 0) {
+        return null;
+      }
+      else {
+        this.notifier.snack("Estimated qty can'nt be less than available qty")
+        return {
+          incorrectValue: true,
+        };
+      }
+    }
+  }
+
   mappingMaterialWithQuantity() {
     this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
@@ -162,6 +178,7 @@ export class BOMAllMaterialComponent implements OnInit {
                     subcategory.materialUnit = data.materialUnit;
                     subcategory.requestedQuantity = data.requestedQuantity
                     subcategory.availableStock = data.availableStock
+                    subcategory.poAvailableQty = data.poAvailableQty
                     subcategory.issueToProject = data.issueToProject
                     subcategory.estimatedQty = data.estimatedQty;
                     subcategory.materialId = data.materialId;
