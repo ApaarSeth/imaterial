@@ -296,52 +296,49 @@ export class PoComponent implements OnInit {
     this.collatePoData.poApproverId = this.poData.approverId;
     this.collatePoData.purchaseOrderId = this.poData.purchaseOrderId;
     this.collatePoData.userId = Number(localStorage.getItem("userId"));
-    if (decision === "approved") {
-      this.collatePoData.isApproved = 1;
-    } else {
+    if (decision === "rejected" && this.poData.isAmended) {
       this.collatePoData.isApproved = 0;
-    }
-    this.poService.approveRejectPo(this.collatePoData).then(res => {
-      if (res.status === 0) {
-        this._snackBar.open(
-          res.message,
-          "",
-          {
-            duration: 2000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          }
-        );
-      } else {
-        if (decision === "approved") {
-          this.navService.gaEvent({
-            action: 'submit',
-            category: 'approve_po',
-            label: null,
-            value: null
-          });
+      this.poService.rejectAmendedPo(this.poData.purchaseOrderId).then(res => {
+        if (res.status === 201) {
+          this.notifier.snack(res.message)
+          this.router.navigate(["po"]);
         }
         else {
-          this.navService.gaEvent({
-            action: 'submit',
-            category: 'rejection',
-            label: null,
-            value: null
-          });
+          this.notifier.snack(res.message)
         }
-
-        this._snackBar.open(
-          res.message,
-          "",
-          {
-            duration: 2000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          }
-        );
-        this.router.navigate(["po"]);
+      })
+    } else {
+      if (decision === "accepted")
+        this.collatePoData.isApproved = 1;
+      else {
+        this.collatePoData.isApproved = 0;
       }
-    });
+      this.poService.approveRejectPo(this.collatePoData).then(res => {
+        if (res.status === 0) {
+          this.notifier.snack(res.message)
+        } else {
+          if (decision === "approved") {
+            this.navService.gaEvent({
+              action: 'submit',
+              category: 'approve_po',
+              label: null,
+              value: null
+            });
+          }
+          else {
+            this.navService.gaEvent({
+              action: 'submit',
+              category: 'rejection',
+              label: null,
+              value: null
+            });
+          }
+          this.notifier.snack(res.message)
+          this.router.navigate(["po"]);
+        }
+      });
+    }
+
   }
 
   startSubscription() {
