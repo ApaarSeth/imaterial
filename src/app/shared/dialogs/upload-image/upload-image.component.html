@@ -9,7 +9,7 @@
 
     <div class="modal-body text-center">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12">
           <div class="upload-image-section">
             <app-upload #uploadRef (onFileUpdate)="fileUpdate($event)" [imageIntegration]="true" [errorMessage]="true" (fileSizeErr)="getFileSizeErr($event)">
             </app-upload>
@@ -25,7 +25,7 @@
         </div>
 
 
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12">
 
           <p class="image-heading supplier-img-heading" *ngIf="data.type === 'supplier' || data.type === 'po'">Images uploaded by you</p>
 
