@@ -57,7 +57,8 @@ export class SubscriptionPaymentsService {
                 this.postToExternalSite(data);
             } else {
                 if (res.data) {
-                    this._router.navigate([ "/profile/add-user" ]);
+                    // this._router.navigate([ "/profile/add-user" ]);
+                    this._router.navigate([ "/dashboard" ]);
                 }
             }
 

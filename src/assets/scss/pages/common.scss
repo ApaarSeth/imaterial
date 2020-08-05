@@ -591,6 +591,9 @@ ngx-mat-drp-picker-overlay {
 .mt-80 {
   margin-top: 80px;
 }
+.mt-100 {
+  margin-top: 100px;
+}
 
 .cntry {
   min-width: 144px;
@@ -658,4 +661,11 @@ input::title {
     line-height: 18px !important;
     padding: 0 10px !important;
     margin-top: -8px !important;
+}
+
+.dark-blu-color-bg{
+background-color: #0c3c55;
+}
+.dark-blu-color{
+  color: #0c3c55;
 }
