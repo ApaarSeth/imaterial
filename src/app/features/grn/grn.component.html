@@ -2,121 +2,91 @@
   <form *ngIf="allProjects" [formGroup]="form">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
-      <div class="row">
+      <div class="row mb-4">
         <div class="col-xs-3 col-md-3">
           <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
             <mat-label>Select Project</mat-label>
             <mat-select formControlName="selectedProject" multiple>
               <div class="display-flex">
-                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
+                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
+                  [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
-              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']" [value]="project" selected="project.clicked" (click)="choosenProject()"
-                >{{ project.projectName }}
+              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']"
+                [value]="project.projectId" selected="project.clicked" (click)="getProjectGRNData()">
+                {{ project.projectName }}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
       </div>
 
-      <!-- Report Default Image If No data is Present -->
-      <ng-container>
-        <div class="wrapper-btn-center">
-          <div class="report-image">
-            <img src="../../../../assets/images/report-main.svg" alt="BuildSupply_Logo" />
-            <div>
-              <p class="p-t-10 font-size-vary-grn">
-                You have not selected any project or supplier yet. <br />
-                Please select any one from the above to see the report.
-              </p>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-
       <!-- table For Showing Reports-->
-      <ng-container>
-        <div class="grnTable">
+      <ng-container *ngIf="allProjectsGRNData?.length; else noDataAvailable">
+        <div class="grnTable mb-4" *ngFor="let project of allProjectsGRNData">
           <mat-accordion>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <tr class="grn-material-row backgound-none-important p-r-10">
-                  Project
-                </tr>
+            <mat-expansion-panel [expanded]="true">
+
+              <mat-expansion-panel-header class="backgound-project">
+                <div class="grn-material-row p-r-10">
+                  {{ project.projectName }}
+                </div>
               </mat-expansion-panel-header>
+
               <table class="grnTable">
                 <tr matSort class="mat-elevation-z2 mat-header-row">
-                  <thead class="mat-header-cell material">
-                    Material Name
-                  </thead>
-                  <thead class="mat-header-cell material">
-                    Unit
-                  </thead>
-                  <thead class="mat-header-cell material">
-                    Brand
-                  </thead>
-                  <thead class="mat-header-cell material">
-                    Awarded Quantity
-                  </thead>
-                  <thead class="mat-header-cell material">
-                    Delivered Quantity
-                  </thead>
-                  <thead class="mat-header-cell material">
-                    Pending Quantity
-                  </thead>
-                  <thead class="mat-header-cell material">
-                    Unit Price
-                    <br />
-                    (INR)
-                  </thead>
-                  <thead class="mat-header-cell material">
-                    Total Amount
-                    <br />
-                    (INR)
-                  </thead>
-                  <thead class="mat-header-cell material">
-                    Supplier
-                  </thead>
+                  <thead class="mat-header-cell material">Material Name</thead>
+                  <thead class="mat-header-cell material-unit">Unit</thead>
+                  <thead class="mat-header-cell material">Brand</thead>
+                  <thead class="mat-header-cell material">Awarded <br />Quantity</thead>
+                  <thead class="mat-header-cell material">Delivered <br />Quantity</thead>
+                  <thead class="mat-header-cell material">Pending <br />Quantity</thead>
+                  <thead class="mat-header-cell material">Unit Price <br />(INR)</thead>
+                  <thead class="mat-header-cell material text-right">Total Amount <br />(INR)</thead>
+                  <thead class="mat-header-cell material">Supplier</thead>
                 </tr>
-                <mat-accordion>
-                  <mat-expansion-panel>
-                    <mat-expansion-panel-header class="border-row width-98">
+
+                <mat-accordion *ngFor="let grnData of project.grnDataList">
+                  <mat-expansion-panel #mep="matExpansionPanel">
+                    <!-- [expanded]="true" -->
+                    <mat-expansion-panel-header class="border-row background-grn">
                       <tr class="grn-material-row p-r-10">
-                        <td class="mat-cell">Supplier Name 1</td>
-                        <td class="mat-cell">34,52,552</td>
-                        <td class="mat-cell">7,52,552</td>
-                        <td class="mat-cell">3,52,552</td>
-                        <td class="mat-cell">4,52,552</td>
-                        <td class="mat-cell">34,52,552</td>
-                        <td class="mat-cell">7,52,552</td>
-                        <td class="mat-cell">3,52,552</td>
-                        <td class="mat-cell">4,52,552</td>
+                        <td class="mat-cell">{{ grnData.grnName }}</td>
+                        <td class="mat-cell double-mat-cell">
+                          <ng-container *ngIf="grnData.poNumber; else directGRN">
+                            PO ID - {{ grnData.poNumber }}
+                          </ng-container>
+
+                          <ng-template #directGRN>
+                            Direct
+                          </ng-template>
+                        </td>
+                        <td class="mat-cell double-mat-cell">Added by - {{ grnData.addedBy }}</td>
+                        <td class="mat-cell">{{ grnData.grnDate | date: "dd-MMM-yyy" }}</td>
+                        <td class="mat-cell"></td>
+                        <td class="mat-cell"></td>
+                        <td class="mat-cell" (click)="openDocuments(grnData.grnDocuments);mep.expanded = true">
+                          <img class="file-icon" src="../../../../assets/images/file-doc.png" />
+                          <span class="font-size-vary-grn main-color text-decoration-underline">Documents</span>
+                        </td>
                       </tr>
                     </mat-expansion-panel-header>
-                    <tr class="grn-material-row border-row background-project-list width-98">
-                      <td class="mat-cell">PRJ 12</td>
-                      <td class="mat-cell">34,52,552</td>
-                      <td class="mat-cell">7,52,552</td>
-                      <td class="mat-cell">3,52,552</td>
-                      <td class="mat-cell">4,52,552</td>
-                      <td class="mat-cell">34,52,552</td>
-                      <td class="mat-cell">7,52,552</td>
-                      <td class="mat-cell">3,52,552</td>
-                      <td class="mat-cell">4,52,552</td>
+
+                    <tr class="grn-material-row border-row background-project-list"
+                      *ngFor="let grnDetail of grnData.grnDetailList">
+                      <td class="mat-cell">{{ grnDetail.MaterialName }}</td>
+                      <td class="mat-cell material-unit">{{ grnDetail.MaterialUnit }}</td>
+                      <td class="mat-cell">{{ grnDetail.MaterialBrand }}</td>
+                      <td class="mat-cell">{{ grnDetail.EstimatedQty }}</td>
+                      <td class="mat-cell">{{ grnDetail.DeliveredQty }}</td>
+                      <td class="mat-cell"></td>
+                      <td class="mat-cell">{{ grnDetail.MaterialUnitPrice }}</td>
+                      <td class="mat-cell text-right">{{ grnDetail.TotalAmount }}</td>
+                      <td class="mat-cell">{{ grnDetail.SupplierName }}</td>
                     </tr>
-                    <tr class="grn-material-row border-row background-project-list width-98">
-                      <td class="mat-cell">PRJ--0000 12</td>
-                      <td class="mat-cell">34,52,552</td>
-                      <td class="mat-cell">7,52,552</td>
-                      <td class="mat-cell">3,52,552</td>
-                      <td class="mat-cell">4,52,552</td>
-                      <td class="mat-cell">34,52,552</td>
-                      <td class="mat-cell">7,52,552</td>
-                      <td class="mat-cell">3,52,552</td>
-                      <td class="mat-cell">4,52,552</td>
-                    </tr>
+
                   </mat-expansion-panel>
                 </mat-accordion>
               </table>
@@ -124,6 +94,21 @@
           </mat-accordion>
         </div>
       </ng-container>
+
+      <!-- Report Default Image If No data is Present -->
+      <ng-template #noDataAvailable>
+        <div class="wrapper-btn-center">
+          <div class="report-image">
+            <img src="../../../../assets/images/report-main.svg" alt="BuildSupply_Logo" />
+            <div>
+              <p class="p-t-10 font-size-vary-grn">
+                You have not selected any project yet. <br />
+                Please select any one from the above to see the report.
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </form>
 </div>

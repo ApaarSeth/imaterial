@@ -37,5 +37,7 @@ export class GRNService {
         return this.dataService.sendPostRequest(API.GRNUPLOADTEMPELATE(projectId), data)
     }
 
-
+    getAllGRNData(projectIds){
+        return this.dataService.getRequest(API.GET_ALL_GRN, projectIds);
+    }
 }

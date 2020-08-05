@@ -48,3 +48,48 @@ export interface GRNPopupData {
   pID?: number;
   detail?: GRNDetails;
 }
+
+export interface AllProjectsGRNData{
+  projectName: string;
+  grnDataList: GRNDataList[];
+}
+
+export interface GRNDataList{
+  grnName: string;
+  GrnId: number;
+  poNumber: string;
+  grnDate: string;
+  addedBy: string;
+  projectName: string;
+  grnDetailList: GRNDetailList[];
+  grnDocuments: GRNDocuments[];
+}
+
+export interface GRNDetailList{
+  GrnId: number;
+  GrnNumber: string;
+  GrnDate: string;
+  MaterialId: number
+  PurchaseOrderId: number;
+  PurchaseOrderNumber: string;
+  ProjectId: number;
+  ProjectName: "IndiaProject"
+  SupplierName: string;
+  Comments: string;
+  MaterialName: string;
+  MaterialUnit: string;
+  MaterialUnitPrice: number;
+  DeliveredQty: number;
+  TotalAmount: number;
+  Amount: number;
+  EstimatedQty: number;
+  AddedBy: string;
+}
+
+export interface GRNDocuments{
+  documentId: number;
+  documentType: string;
+  documentDesc: string;
+  documentUrl: string;
+  documentName: string;
+}

@@ -125,7 +125,7 @@ const routes: Routes = [
         data: { title: 'profile' }
       },
       {
-        path: 'grn',
+        path: 'receipt',
         component: GrnComponent,
         data: { title: 'grn' },
         resolve: { projectsList: GrnResolver }

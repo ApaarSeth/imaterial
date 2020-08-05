@@ -63,7 +63,8 @@
         </div>
         <div class="col-xs-12 col-sm-4 col-md-6 p-t-10 add-project-btn display-flex justify-content-flex-end column-3">
           <div *ngIf="projectIds.length || supplierIds.length" class="p-r-20 p-t-10">
-            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png" /> </a>
+            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png"
+              (click)="downloadExcel()" /> </a>
           </div>
           <div *ngIf="supplierLiabiltyReportData" class="show-amount p-r-12 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
             Show amount
@@ -108,7 +109,7 @@
               <thead class="mat-header-cell material">
                 Supplier Name
               </thead>
-              <thead class="mat-header-cell material">
+              <thead class="mat-header-cell material text-right">
                 PO Awarded
                 <br />
                 Value
@@ -117,14 +118,14 @@
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </thead>
-              <thead class="mat-header-cell material">
+              <thead class="mat-header-cell material text-right">
                 GRN Amount
                 <br /><span *ngIf="selectedMenu !== 'Full Figures'">(</span
                 >{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </thead>
-              <thead class="mat-header-cell material">
+              <thead class="mat-header-cell material text-right">
                 Amount Paid
                 <br />
                 till date
@@ -133,7 +134,7 @@
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </thead>
-              <thead class="mat-header-cell material">
+              <thead class="mat-header-cell material text-right">
                 Yet to be
                 <br />
                 paid
@@ -146,33 +147,33 @@
             <mat-accordion *ngFor="let supplier of supplierLiabiltyReportData.supplierReportDataList">
               <!-- Supplier List -->
               <mat-expansion-panel>
-                <mat-expansion-panel-header class="border-row background-supplier">
+                <mat-expansion-panel-header class="border-row background-supplier background-projects">
                   <tr class="material-row backgound-none-important p-r-10">
                     <td class="mat-cell">{{ supplier.supplierName }}</td>
-                    <td class="mat-cell">{{ supplier.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ supplier.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ supplier.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ (supplier.totalPoAmount - supplier.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ supplier.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ supplier.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ supplier.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ (supplier.totalPoAmount - supplier.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
                   </tr>
                 </mat-expansion-panel-header>
                 <!-- Project List -->
                 <mat-expansion-panel *ngFor="let project of supplier.projectReportDataList">
-                  <mat-expansion-panel-header class="border-row background-project">
+                  <mat-expansion-panel-header class="border-row background-category">
                     <tr class="material-row backgound-none-important p-r-10">
                       <td class="mat-cell">{{ project.projectName }}</td>
-                      <td class="mat-cell">{{ project.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell">{{ project.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell">{{ project.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell">{{ (project.totalPoAmount - project.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ project.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ project.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ project.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ (project.totalPoAmount - project.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
                     </tr>
                   </mat-expansion-panel-header>
                   <!-- Project Details Of an Individual Project -->
                   <tr class="material-row border-row background-project-list" *ngFor="let poData of project.entityDataList">
                     <td class="mat-cell">{{ poData.entityLabel }}</td>
-                    <td class="mat-cell">{{ poData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ poData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ poData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell">{{ (poData.totalPoAmount - poData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ poData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ poData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ poData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ (poData.totalPoAmount - poData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
                   </tr>
                 </mat-expansion-panel>
               </mat-expansion-panel>
@@ -180,10 +181,10 @@
             <!-- Total Amount Footer -->
             <tr class="material-row backgound-total-amount">
               <td class="mat-cell">Total Amount</td>
-              <td class="mat-cell">{{ supplierLiabiltyReportData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
-              <td class="mat-cell">{{ supplierLiabiltyReportData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
-              <td class="mat-cell">{{ supplierLiabiltyReportData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
-              <td class="mat-cell">{{ (supplierLiabiltyReportData.totalPoAmount - supplierLiabiltyReportData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
+              <td class="mat-cell text-right">{{ supplierLiabiltyReportData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
+              <td class="mat-cell text-right">{{ supplierLiabiltyReportData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
+              <td class="mat-cell text-right">{{ supplierLiabiltyReportData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
+              <td class="mat-cell text-right">{{ (supplierLiabiltyReportData.totalPoAmount - supplierLiabiltyReportData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
             </tr>
           </table>
         </div>

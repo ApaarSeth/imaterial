@@ -25,4 +25,11 @@ export class ReportService {
         return this.dataService.sendPostRequest(API.CTC_REPORT, projectIds);
     }
 
+    supplierLiabilityExcelDownload(data){
+        return this.dataService.sendPostRequest(API.SUPPLIER_LIABILITY_EXCEL_DOWNLOAD, data);
+    }
+
+    ctcReportExcelDownload(data){
+        return this.dataService.sendPostRequest(API.CTC_REPORT_EXCEL_DOWNLOAD, data);
+    }
 }
