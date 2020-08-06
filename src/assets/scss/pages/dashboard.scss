@@ -459,9 +459,12 @@ body,
 
 }
 @media only screen and (max-width: 560px) {
+  .users-dashboard, .bom-table-style, .dashboard-unique, .grn-dashboard, .project-dashboard, .create-po-dashboard, .bom-main-style, .copy-bom-materials-outer {
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+  }
+
   .project-dashboard {
-    padding-left: 7px;
-    padding-right: 7px;
     .example-form-field {
       width: 100%;
     }
@@ -469,14 +472,7 @@ body,
       padding-top: 10px;
     }
   }
-  .users-dashboard {
-    padding-left: 7px;
-    padding-right: 7px;
-  }
   .dashboard-unique {
-    padding-left: 7px;
-    padding-right: 7px;
-
     .mat-form-field-appearance-legacy .mat-form-field-wrapper {
       padding-top: 0px !important;
     }
@@ -484,16 +480,10 @@ body,
       width: 100% !important;
     }
   }
-  .grn-dashboard {
-    padding-left: 7px;
-    padding-right: 7px;
-  }
   .back-btn-grn {
     display: none;
   }
   .create-po-dashboard {
-    padding-left: 7px;
-    padding-right: 7px;
     .mat-expansion-panel-header-title {
       font-size: 14px !important;
     }

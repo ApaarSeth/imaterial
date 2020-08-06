@@ -470,6 +470,131 @@ div.limited-character.bom {
   color: #888888;
 }
 
+.copy-and-add-materials,
+.bom-detail-dropdown {
+  .material-icons{
+    color: #f4783d;
+    font-size: 34px;
+  }
+
+  button{
+    padding: 0;
+    min-width: 50px;
+  }
+}
+
+.copy-and-add-materials-menus,
+.bom-detail-dropdown-menus{
+  .mat-menu-content:not(:empty) {
+    padding: 0px;
+  }
+
+  .mat-menu-item:not(:last-child) {
+    border-bottom: 1px solid #888888;
+  }
+}
+
+.bom-detail-action-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .main-button.mat-button-base{
+    color: #fff !important;
+  }
+}
+
+.bom-detail-dropdown{
+  button{
+    padding: 0;
+    min-width: auto;
+  }
+}
+
+.row-sm-screen{
+  padding: 0 0 0 0.5rem;
+}
+
+.add-to-bom-style{
+  .mat-tab-header{
+    margin-bottom: 10px;
+  }
+}
+
+.bom-details-table-div-part{
+  margin: 0;
+}
+
+.create-rfp.main-color-faded,
+.raise-pr.main-color-faded{
+  color: #fff !important;
+}
+
+.bom-top-materials-lists, .bom-my-materials-lists, .bom-all-materials-lists{
+
+  .mat-expansion-panel{
+    border-radius: 0 !important;
+  }
+
+  .mat-expansion-panel-header-wrapper{
+    .mat-expansion-panel-header, .mat-expansion-panel-header.mat-expanded:hover, .mat-expansion-panel-header.mat-expanded:focus{
+      border-radius: 0px !important;
+      min-height: auto !important;
+      background-color: #f5f5f5 !important;
+    }
+  }
+
+  // .bom-materials-info{
+  //   padding: 0 24px;
+  // }
+
+  // .bom-materials-body-info{
+  //   padding: 15px 24px 2px;
+  // }
+
+  .bom-estimated-rate-col .mat-form-field{
+    text-align: right;
+  }
+
+  .mat-expansion-indicator:after{
+    padding: 5px;
+  }
+
+  .estimated-rate-column-header, .estimated-rate-column{
+    padding-right: 42px;
+  }
+  
+  .bom-materials-unit-column, .bom-materials-qty-column, .estimated-rate-column{
+    padding-top: 12px;
+  }
+  
+  .material-category{
+    padding-left: 24px;
+    width: 330px;
+  }
+  
+  .material-unit-col {
+    width: 250px;
+  }
+  
+  .material-trade {
+    width: 210px;
+  }
+  
+  .bom-materials-row{
+    border-bottom: 0.5px solid #d2d2d2;
+  }
+
+  .material-category, .material-trades{
+    padding-right: 10px;
+  }
+
+  .bom-top-material-container, .bom-my-material-container, .bom-all-material-container, .mat-expansion-panel{
+    &:hover{
+      background-color: #ffffff !important;
+    }
+  }
+}
+
 @media only screen and (max-width: 1311px){
   .col-left-width {
     flex-basis: 40%;
@@ -498,10 +623,65 @@ div.limited-character.bom {
     margin-left: 0px;
     margin-top: 20px;
   }
+
+  /** CSS to make Create BOM Page responsive **/
+  .project-info-section .project-info-card .tiles .display-material-indent-po-box {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    .material-details-box {
+      padding: 0 20px 0 !important;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .card-counts {
+      padding-right: 10px;
+      font-size: 26px;
+    }
+
+    .card-info {
+      padding: 0px !important;
+      div {
+        max-width: 100%;
+        line-height: 16px;
+      }
+    }
+  }
+
+  .bom-top-materials-lists, .bom-my-materials-lists, .bom-all-materials-lists{
+    .mat-expansion-panel-body{
+      width: 100%;
+      overflow-x: scroll;
+    }
+  }
+
+  .bom-unit-col{
+    width: 70% !important;
+  }
+
+  .bom-same-width-col{
+    width: 90%;
+  }
+
+  .copy-bom-small-screen{
+    .copy-bom-search-input{
+      order: 2;
+    }
+
+    .copy-bom-select-project{
+      order: 3;
+    }
+
+    .copy-bom-button-action {
+      margin-top: 15px;
+    }
+  }
+  /** create bom css end here **/
 }
 
-/** CSS to make Create BOM Page responsive **/
 @media only screen and (max-width: 959px){
+  /** CSS to make Create BOM Page responsive **/
   .changeWidth {
     max-width: 100%;
     flex: 0 0 100%;
@@ -520,14 +700,101 @@ div.limited-character.bom {
   .col-left-width-9{
     order: 2;
   }
+  /** create bom css end here **/
+}
+
+@media only screen and (max-width: 767px){
+  /** CSS to make Create BOM Page responsive **/
+  .display-material-indent-po-box:not(:last-child) {
+    margin-top: 15px;
+  }
+
+  .col-search-input{
+    order: 2;
+    max-width: 50%;
+    flex: 0 0 50%;
+  }
+
+  .bom-above-tbl-section{
+    margin: 15px 0;
+  }
+  
+  .material-category {
+    min-width: 250px;
+    word-break: break-all;
+  }
+
+  .bom-selected-trades {
+    min-width: 200px;
+  }
+
+  .no-project-selected-img{
+    img{
+      width: 50% !important;
+    }
+  }
+
+  .cdk-overlay-container .cdk-overlay-pane.upload-image-modal, .cdk-overlay-container .cdk-overlay-pane.view-image-modal{
+    width: 100vw !important;
+  }
+
+  .upload-img-dialog .modal-body {
+    padding: 20px 10px;
+  }
+  /** create bom css end here **/
+}
+
+@media only screen and (max-width: 665px){
+  /** CSS to make Create BOM Page responsive **/
+  .download-bom-template,
+  .upload-template{
+    font-size: 13px;
+  }
+
+  .add-bom-button .main-button.mat-button-base{
+    min-width: 80px;
+    height: 36px;
+    font-size: 13px;
+    padding: 0px 12px;
+    line-height: 34px;
+  }
+
+  .copy-and-add-materials button {
+    min-width: auto;
+    padding: 0 0 0 6px;
+  }
+
+  .upload-bom-excel, .download-bom-excel {
+    margin-right: 5px !important;
+    padding: 0px;
+  }
+
+  .upload-template{
+    margin-bottom: 0;
+  }
+
+  .search-input-bom.mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button .mat-icon{
+    line-height: 0.2;
+  }
+  /** create bom css end here **/
+}
+
+@media only screen and (max-width: 600px){
+  .bom-top-materials-lists, .bom-my-materials-lists, .bom-all-materials-lists{
+    .mat-expansion-panel-header{
+      height: 38px !important;
+    }
+
+    .estimated-rate-column{
+      span.display-block{
+        display: inherit;
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 575px){
   .upload-img-dialog {
-    .modal-body {
-      padding: 30px 20px;
-    }
-
     .col-md-6:last-child{
       padding-left: 5px;
     }
@@ -536,4 +803,30 @@ div.limited-character.bom {
   .uploaded-filename{
     word-break: break-all;
   }
+
+  /** CSS to make Create BOM Page responsive **/
+  .col-left-width {
+    margin-top: 15px;
+  }
+  /** create bom css end here **/
+}
+
+@media only screen and (max-width: 480px){
+  /** CSS to make Create BOM Page responsive **/
+  .row-sm-screen{
+    .mat-form-field{
+      width: 45%;
+    }
+  }
+  /** create bom css end here **/
+}
+
+@media only screen and (max-width: 325px){
+  /** CSS to make Create BOM Page responsive **/
+  .download-bom-excel, .upload-bom-excel{
+    .w-45 {
+      width: 35px;
+    }
+  }
+  /** create bom css end here **/
 }

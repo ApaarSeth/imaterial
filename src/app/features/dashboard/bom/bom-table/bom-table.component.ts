@@ -400,7 +400,9 @@ export class BomTableComponent implements OnInit {
         data: { materialId: materialId, projectId: projectId }
       });
       dialogRef.afterClosed().subscribe(result => {
-        this.getMaterialWithQuantity();
+        if(result !== null){
+          this.getMaterialWithQuantity();
+        }
       });
     }
   }
