@@ -1,7 +1,14 @@
-<div class="initial__loader" [class.hide]="!show">
+<!-- <div class="initial__loader" [class.hide]="!show">
 
     <img src="../../../../assets/images/loading.gif" alt="">
  
 
     <div class="popup__overlay"></div>
+</div>
+ -->
+
+<div class="initial__loader" [hidden]="!loading">
+  <img src="../../../../assets/images/loading.gif" alt="" />
+
+  <div class="popup__overlay"></div>
 </div>

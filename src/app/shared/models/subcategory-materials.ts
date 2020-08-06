@@ -46,6 +46,7 @@ export interface Materials {
   issueToProject: number;
   availableStock: number;
   documentsList: ImageDocsLists[];
+  poAvailableQty?: number;
 }
 
 export interface QtyData {

@@ -647,15 +647,14 @@ input::title {
   color: gray;
 }
 
-.border-bottom-dark{
-  border-bottom:1px solid var(--gray);
+.border-bottom-dark {
+  border-bottom: 1px solid var(--gray);
 }
 .border-solid {
   border-bottom: 1px solid;
 }
 
-
-.fltr-btn{
+.fltr-btn {
   font-size: 30px !important;
     min-width: auto !important;
     line-height: 18px !important;
@@ -668,4 +667,23 @@ background-color: #0c3c55;
 }
 .dark-blu-color{
   color: #0c3c55;
+}
+
+.align-item-end {
+  align-items: flex-end;
+}
+
+.justify-content-flex-end {
+  justify-content: flex-end;
+}
+
+.justify-content-flex-start {
+  justify-content: flex-start;
+}
+
+.justify-content-space-around {
+  justify-content: space-around;
+}
+.justify-content-space-between {
+  justify-content: space-between;
 }

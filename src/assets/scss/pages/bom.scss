@@ -466,6 +466,10 @@ div.limited-character.bom {
   }
 }
 
+.mat-select-trades{
+  color: #888888;
+}
+
 @media only screen and (max-width: 1311px){
   .col-left-width {
     flex-basis: 40%;
@@ -485,5 +489,51 @@ div.limited-character.bom {
   .col-right-width-3 {
     flex: 30%;
     max-width: 30%;
+  }
+}
+
+@media only screen and (max-width: 992px){
+  .upload-image-info {
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 20px;
+  }
+}
+
+/** CSS to make Create BOM Page responsive **/
+@media only screen and (max-width: 959px){
+  .changeWidth {
+    max-width: 100%;
+    flex: 0 0 100%;
+    margin-left: 0%;
+  }
+
+  .col-left-width,
+  .col-right-width,
+  .col-left-width-9,
+  .col-right-width-3 {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+  
+  .col-left-width,
+  .col-left-width-9{
+    order: 2;
+  }
+}
+
+@media only screen and (max-width: 575px){
+  .upload-img-dialog {
+    .modal-body {
+      padding: 30px 20px;
+    }
+
+    .col-md-6:last-child{
+      padding-left: 5px;
+    }
+  }
+
+  .uploaded-filename{
+    word-break: break-all;
   }
 }
