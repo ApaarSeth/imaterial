@@ -21,7 +21,8 @@ export class ProfileSubscriptionsComponent implements OnInit {
     }
 
     startTrialEvent() {
-        this._router.navigate([ 'profile/add-user' ]);
+        // this._router.navigate([ 'profile/add-user' ]);
+        this._router.navigate([ '/dashboard' ]);
     }
 
 }
