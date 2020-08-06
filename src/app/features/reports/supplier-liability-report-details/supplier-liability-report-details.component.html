@@ -45,8 +45,8 @@
                   (keydown)="$event.stopPropagation()"
                 />
                 <button mat-button matSuffix mat-icon-button>
-                  <mat-icon>search</mat-icon>
-                </button>
+                  <mat-icon>search</mat-icon></button
+                >align
               </div>
               <!-- <mat-select-trigger>
                     <mat-label>Select Supplier</mat-label>
@@ -61,10 +61,12 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-xs-12 col-sm-4 col-md-6 p-t-10 add-project-btn display-flex justify-content-flex-end column-3">
-          <div *ngIf="projectIds.length || supplierIds.length" class="p-r-20 p-t-10">
-            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png"
-              (click)="downloadExcel()" /> </a>
+        <div
+          class="col-xs-12 col-sm-4 col-md-6 add-project-btn display-flex align-item-end column-3"
+          [ngClass]="isMobile ? 'justify-content-flex-start height-25-px' : 'justify-content-flex-end'"
+        >
+          <div *ngIf="projectIds.length || supplierIds.length" class="p-r-20">
+            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png" (click)="downloadExcel()" /> </a>
           </div>
           <div *ngIf="supplierLiabiltyReportData" class="show-amount p-r-12 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
             Show amount
@@ -184,7 +186,9 @@
               <td class="mat-cell text-right">{{ supplierLiabiltyReportData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
               <td class="mat-cell text-right">{{ supplierLiabiltyReportData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
               <td class="mat-cell text-right">{{ supplierLiabiltyReportData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
-              <td class="mat-cell text-right">{{ (supplierLiabiltyReportData.totalPoAmount - supplierLiabiltyReportData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
+              <td class="mat-cell text-right">
+                {{ (supplierLiabiltyReportData.totalPoAmount - supplierLiabiltyReportData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}
+              </td>
             </tr>
           </table>
         </div>

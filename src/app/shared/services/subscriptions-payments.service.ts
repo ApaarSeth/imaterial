@@ -57,7 +57,8 @@ export class SubscriptionPaymentsService {
                 this.postToExternalSite(data);
             } else {
                 if (res.data) {
-                    this._router.navigate([ "/profile/add-user" ]);
+                    // this._router.navigate([ "/profile/add-user" ]);
+                    this._router.navigate([ "/dashboard" ]);
                 }
             }
 
@@ -88,6 +89,10 @@ export class SubscriptionPaymentsService {
         hiddenField.setAttribute('value', value);
         hiddenField.setAttribute('type', 'hidden');
         return hiddenField;
+    }
+
+    getContactSales() {
+        return this.dataService.getRequest(API.GET_CONTACTSALES);
     }
 
 }

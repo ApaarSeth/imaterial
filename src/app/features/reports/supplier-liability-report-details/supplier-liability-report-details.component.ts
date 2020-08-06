@@ -103,7 +103,8 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   alreadySelectedSupplierId: number[];
   amountRange: string[];
   selectedMenu: string;
-  currency: string
+  currency: string;
+  isMobile: boolean;
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -121,6 +122,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
 
   ngOnInit() {
     this.conversionNumber = 1;
+    this.isMobile = this.commonService.isMobile().matches;
     let countryCode = localStorage.getItem("countryCode")
     this.currency = localStorage.getItem("currencyCode")
     this.amountRange = countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions', 'Billions']
@@ -194,10 +196,10 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
       case 'Thousands':
         this.conversionNumber = 1000
         break;
-      case 'Million':
+      case 'Millions':
         this.conversionNumber = 1000000
         break;
-      case 'Billion':
+      case 'Billions':
         this.conversionNumber = 1000000000
         break;
       default:
@@ -206,7 +208,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     }
   }
 
-  downloadExcel(){
+  downloadExcel() {
 
     const data = {
       "projectIdList": this.projectIds,
@@ -214,7 +216,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     }
 
     this.reportService.supplierLiabilityExcelDownload(data).then(res => {
-      if(res.data){
+      if (res.data) {
         var win = window.open(res.data.url, "_blank");
         win.focus();
       }

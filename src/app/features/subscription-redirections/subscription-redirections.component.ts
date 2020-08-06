@@ -11,6 +11,11 @@ export class SubscriptionRedirectionsComponent implements OnInit {
 
     isMobile: boolean;
     pageType: number;
+    planName: any;
+    userCount: any;
+    amount: any;
+    currencyCode: any;
+
 
     constructor(
         private commonService: CommonService,
@@ -24,6 +29,20 @@ export class SubscriptionRedirectionsComponent implements OnInit {
         if (this.pageType !== 3) {
             this.redirectPageToDashboard();
         }
+        this.activeRoute.queryParams.subscribe(param => {
+            if (param.planName) {
+                this.planName = param.planName;
+            }
+            if (param.userCount) {
+                this.userCount = param.userCount;
+            }
+            if (param.amount) {
+                this.amount = param.amount;
+            }
+            if (param.currencyCode) {
+                this.currencyCode = param.currencyCode;
+            }
+        });
     }
 
     redirectPageToDashboard() {
