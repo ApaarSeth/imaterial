@@ -1,3 +1,4 @@
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
@@ -17,8 +18,9 @@ import { UploadImageComponent } from '../dialogs/upload-image/upload-image.compo
 import { SupplierRatingComponent } from '../dialogs/supplier-rating/supplier-rating.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdvanceSearchComponent } from './advance-search/advance-search.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
-const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent ];
+const components = [ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent, BarChartComponent, PieChartComponent];
 
 @NgModule({
   imports: [
@@ -31,7 +33,7 @@ const components = [ ProjectItemComponent, ChipComponent, UploadComponent, Globa
   ],
 
   declarations: components,
-  entryComponents: [ UploadImageComponent, ViewImageComponent, SupplierRatingComponent ],
+  entryComponents: [UploadImageComponent, ViewImageComponent, SupplierRatingComponent],
   exports: components
 })
 export class SharedComponentsModule { }
