@@ -141,32 +141,6 @@
                       <!-- current end -->
                     </mat-tab>
 
-                    <!-- incoming start -->
-                    <!-- <mat-tab label="{{ tab2 }}" *ngIf="permissionObj.rfqFlag && rfqData">
-                      <div class="statistics__purchase-order d-flex">
-                        <div class="statistics__tile stats mr-3">
-                          <div class="stats__content">
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalCount">
-                              {{ rfqData?.totalCount }}
-                            </h2>
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalCount">0</h2>
-                            <p class="mb-0">Number of RFQ</p>
-                          </div>
-                        </div>
-    
-                        <div class="statistics__tile stats">
-                          <div class="stats__content">
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalValue">
-                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
-                              {{ rfqData?.totalValue | number: "1.2-2" }}
-                            </h2>
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalValue">
-                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
-                            </h2>
-                            <p class="mb-0">RFQ Amount</p>
-                          </div> -->
-                    <!-- incoming end -->
-
                     <mat-tab label="Indents" *ngIf="indentData">
                       <div class="statistics__purchase-order d-flex">
                         <div class="statistics__tile stats mr-3">
@@ -195,7 +169,6 @@
                   </mat-tab-group>
                 </div>
 
-                <!-- Current start-->
                 <div class="col-xs-6 col-md-2 p-r-0" [ngClass]="isMobile ? 'pl-0' : 'p-l-25'">
                   <form [formGroup]="filterForm">
                     <mat-form-field class="border-select select-project width103Percent mat-form-field-flex-mm-padding">
@@ -215,80 +188,17 @@
                 <div class="col-xs-6 col-md-3 p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
                   <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
                 </div>
+                <div *ngIf="permissionObj.rfqFlag && poData && label == 'po'">
+                  <app-bar-chart></app-bar-chart>
+                </div>
+                <div *ngIf="permissionObj.rfqFlag && rfqData && label == 'rfq'">
+                  <app-bar-chart></app-bar-chart>
+                </div>
+                <div class="text-center" *ngIf="permissionObj.rfqFlag && indentData && label == 'indent'">
+                  <app-pie-chart></app-pie-chart>
+                </div>
                 <!-- <app-range-datePicker></app-range-datePicker> -->
               </div>
-              <!-- current end -->
-
-              <!-- Incoming start -->
-              <!-- 
-                <div class="col-xs-6 col-md-2 p-l-25 p-r-0">
-                  <form [formGroup]="filterForm">
-                    <mat-form-field class="border-select select-project width103Percent mat-form-field-flex-mm-padding">
-                      <mat-label>Select Project</mat-label>
-                      <mat-select formControlName="projectFilter" multiple>
-                        <div class="display-flex">
-                          <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
-                          <button mat-button matSuffix mat-icon-button>
-                            <mat-icon>search</mat-icon>
-                          </button>
-                        </div>
-                        <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project">{{ project.projectName }} </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </form>
-                </div>
-                <div class="col-xs-6 col-md-3 p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'p-l-20 widthWrapper'">
-                  <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
-    
-                </div> -->
-              <!-- incoming end -->
-
-              <!--- Will implement later once api is ready -->
-
-              <!-- <div class="approvals py-4 bg-white">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h6 class="px-4">Approvals</h6>
-    
-                                    <div class="approvals__list d-flex justify-content-between align-items-center">
-                                        <div class="approvals__desc pl-4">
-                                            <p class="mb-1">Rakesh Gupta has sent a PO for Vatika Tower Project for your approval of value</p>
-                                            <p class="mb-0"><strong>23456789.00</strong></p>
-                                        </div>
-                                        <div class="approvals__actions pr-4 d-flex justify-content-between align-items-center">
-                                            <div class="approvals__view">
-                                                <img src="assets/images/view-icon.png" alt="View" class="img-fluid cursor">
-                                            </div>
-                                            <div class="approvals__reject mx-3">
-                                                <button class="btn btn-outline-warning">Reject</button>
-                                            </div>
-                                            <div class="approvals__accept">
-                                                <button class="btn btn-warning">Accept</button>
-                                            </div>
-                                        </div>
-                                    </div>
-    
-                                    <div class="approvals__list d-flex justify-content-between align-items-center">
-                                        <div class="approvals__desc pl-4">
-                                            <p class="mb-1">Rakesh Gupta has sent a PO for Vatika Tower Project for your approval of value</p>
-                                            <p class="mb-0"><strong>23456789.00</strong></p>
-                                        </div>
-                                        <div class="approvals__actions pr-4 d-flex justify-content-between align-items-center">
-                                            <div class="approvals__view">
-                                                <img src="assets/images/view-icon.png" alt="View" class="img-fluid cursor">
-                                            </div>
-                                            <div class="approvals__reject mx-3">
-                                                <button class="btn btn-outline-warning">Reject</button>
-                                            </div>
-                                            <div class="approvals__accept">
-                                                <button class="btn btn-warning">Accept</button>
-                                            </div>
-                                        </div>
-                                    </div>
-    
-                                </div>
-                            </div>
-                        </div> -->
             </div>
           </div>
           <div class="col-sm-12 col-md-3" [ngClass]="isMobile ? 'pr-0' : ''">

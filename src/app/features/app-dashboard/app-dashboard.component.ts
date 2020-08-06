@@ -1,3 +1,4 @@
+import { GoogleChartService } from './../../shared/services/google-chart.service';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
@@ -33,7 +34,7 @@ export class AppDashboardComponent implements OnInit {
   userId: number;
   projectCount: number;
   projectLists: ProjectDetails[];
-  label: string;
+  label: string = 'po';
   userGuidedata: GuideTourModel[] = [];
   permissionObj: permission;
   tab1: string;
@@ -49,6 +50,7 @@ export class AppDashboardComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
     private router: Router,
+    private chartService: GoogleChartService,
     private formbuilder: FormBuilder,
     private _userService: UserService,
     private userguideservice: UserGuideService,
@@ -129,11 +131,12 @@ export class AppDashboardComponent implements OnInit {
       // cancelLabel: "Cancel",
       // excludeWeekends:true,
       // fromMinMax: {fromDate:fromMin, toDate:fromMax},
-      toMinMax: { fromDate: toMin, toDate: toMax }
+      // toMinMax: { fromDate: toMin, toDate: toMax }
     };
   }
 
   updateRange(range: Range) {
+
     this.range = range;
     if (range.toDate < range.fromDate) {
       this.notifier.snack("To date can'nt be earlier than from date")
@@ -159,15 +162,38 @@ export class AppDashboardComponent implements OnInit {
     const currMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
     const lastMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1);
     const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
-
+    const quarterFromDate = this.getQuartrDateRange().fromdate;
+    const quarterLastDate = this.getQuartrDateRange().toDate;
+    const yearFromDate = new Date(today.getFullYear(), 0, 1);
+    const yearToDate = new Date(today.getFullYear(), 12, 0);
     this.presets = [
       { presetLabel: "Yesterday", range: { fromDate: yesterday, toDate: today } },
       { presetLabel: "Last 7 Days", range: { fromDate: minus7, toDate: today } },
       { presetLabel: "Last 30 Days", range: { fromDate: minus30, toDate: today } },
       { presetLabel: "This Month", range: { fromDate: currMonthStart, toDate: currMonthEnd } },
-      { presetLabel: "Last Month", range: { fromDate: lastMonthStart, toDate: lastMonthEnd } }
+      { presetLabel: "Last Month", range: { fromDate: lastMonthStart, toDate: lastMonthEnd } },
+      { presetLabel: "Quarter", range: { fromDate: quarterFromDate, toDate: quarterLastDate } },
+      { presetLabel: "Yearly ", range: { fromDate: yearFromDate, toDate: yearToDate } }
     ]
   }
+  getQuartrDateRange(): { fromdate: Date, toDate: Date } {
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1
+    if (1 <= currentMonth && currentMonth < 4) {
+      return { fromdate: new Date(today.getFullYear(), 0, 1), toDate: new Date(today.getFullYear(), 3, 0) }
+    }
+    else if (4 <= currentMonth && currentMonth < 7) {
+      return { fromdate: new Date(today.getFullYear(), 3, 1), toDate: new Date(today.getFullYear(), 6, 0) }
+    }
+    else if (7 <= currentMonth && currentMonth < 10) {
+      return { fromdate: new Date(today.getFullYear(), 6, 1), toDate: new Date(today.getFullYear(), 9, 0) }
+    }
+    else if (10 <= currentMonth) {
+      return { fromdate: new Date(today.getFullYear(), 9, 1), toDate: new Date(today.getFullYear(), 12, 0) }
+    }
+
+  }
+
 
   formInit() {
     this.filterForm = this.formbuilder.group({
@@ -243,14 +269,31 @@ export class AppDashboardComponent implements OnInit {
       if (res.data.currencyCode) {
         this.currencyCode = res.data.currencyCode;
       }
-      if (label == 'po')
+      if (label == 'po') {
         this.poData = res.data;
-
-      if (label == 'rfq')
         this.rfqData = res.data;
+        this.chartService.barChartData.next([['Month', 'Awarded PO', 'Delivered PO', 'Yet to be delivered'],
+        ['Jan', 1336060, 400361, 1001582],
+        ['Feb', 1336060, 400361, 1001582],
+        ['Mar', 1336060, 400361, 1001582],
+        ['April', 1336060, 400361, 1001582]])
+      }
 
-      if (label == 'indent')
+      if (label == 'rfq') {
+        this.rfqData = res.data;
+        this.chartService.barChartData.next([['Month', 'RFP Amount'],
+        ['Jan', 1336060],
+        ['Feb', 1336060],
+        ['Mar', 1336060],
+        ['April', 1336060],])
+      }
+      if (label == 'indent') {
         this.indentData = res.data;
+        this.chartService.pieChartData.next([['PRs', 'Vaue'],
+        ['Fullfilled PRs', 50],
+        ['Raised PRs', 50],
+        ])
+      }
     }).catch(error => console.log(error))
   }
 
