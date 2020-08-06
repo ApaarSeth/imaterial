@@ -108,6 +108,6 @@ import { GrnComponent } from './features/grn/grn.component';
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
     TaxCostService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

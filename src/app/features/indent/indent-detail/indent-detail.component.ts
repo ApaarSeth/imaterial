@@ -74,6 +74,8 @@ export class IndentDetailComponent implements OnInit {
         res.projectId = Number(this.projectId);
         this.indentService.getIndentList(this.projectId, res).then(data => {
           this.allIndents = data.data;
+          this.dataSource1 = this.allIndents.ongoingIndentList;
+          this.dataSource2 = this.allIndents.completedIndentList;
         })
       }),
       this.advSearchService.indentFilterExportRequest$.subscribe(res => {

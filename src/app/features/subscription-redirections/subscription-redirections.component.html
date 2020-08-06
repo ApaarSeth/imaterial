@@ -12,7 +12,7 @@
                         <h2 class="mt-4 mb-4" [ngClass]="isMobile ? 'font-size30' : 'font-size-40px' ">
                             Thank You
                             <br />
-                            for Choosing <ng-container *ngIf="userCount">{{userCount}}</ng-container> Plan
+                            for Choosing <ng-container *ngIf="planName">{{planName}}</ng-container> Plan
                         </h2>
 
                         <div class="shadow-tag pl-5 pr-5 pt-2 pb-2">
@@ -51,7 +51,8 @@
                         </h2>
 
                         <div class="shadow-tag pl-4 pr-4 pt-3 pb-3" [ngClass]="isMobile ? 'w-100' : 'w-75' ">
-                            Sorry, your payment of <ng-container *ngIf="amount">{{amount}}</ng-container> had failed.
+                            Sorry, your payment of <ng-container *ngIf="currencyCode">{{currencyCode}}</ng-container>
+                            <ng-container *ngIf="amount">{{amount}}</ng-container> had failed.
                             <span class="d-block mt-2 mb-2"></span>
                             <span class="d-block" [ngClass]="isMobile ? 'ml-1 mr-1' : 'ml-5 mr-5'">Please make sure to
                                 update your
