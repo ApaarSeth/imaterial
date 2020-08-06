@@ -1,0 +1,26 @@
+<div class="header-add-edit-dialog">
+    <h1 mat-dialog-title>Unsubscribe Plan</h1>
+    <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+        <mat-icon>clear</mat-icon>
+    </button>
+</div>
+
+
+<div class="pt-5 pb-5 redirections text-align-center">
+
+    <h2 class="font-size-26px mb-3">Do you Really Wish to Cancel This Plan?</h2>
+
+    <div class="shadow-tag pl-4 pr-4 pt-3 pb-3" [ngClass]="isMobile ? 'w-100' : 'w-75' ">
+        We don't want to see you go
+        <br />
+        we promise security of your data until next payment
+        <span class="d-block mt-2 mb-2"></span>
+        <span class="d-block" [ngClass]="isMobile ? 'ml-1 mr-1' : 'ml-5 mr-5'">Regarding payment related terms</span>
+    </div>
+
+    <div [ngClass]="isMobile ? 'mt-4' : 'mt-5' ">
+        <button mat-button class="brand-bg-color pl-5 pr-5 font-size18 pb-2 pt-2" (click)="cancelSubscription()">Update
+            Details</button>
+    </div>
+
+</div>
