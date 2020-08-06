@@ -644,18 +644,36 @@ input::title {
   color: gray;
 }
 
-.border-bottom-dark{
-  border-bottom:1px solid var(--gray);
+.border-bottom-dark {
+  border-bottom: 1px solid var(--gray);
 }
 .border-solid {
   border-bottom: 1px solid;
 }
 
-
-.fltr-btn{
+.fltr-btn {
   font-size: 30px !important;
-    min-width: auto !important;
-    line-height: 18px !important;
-    padding: 0 10px !important;
-    margin-top: -8px !important;
+  min-width: auto !important;
+  line-height: 18px !important;
+  padding: 0 10px !important;
+  margin-top: -8px !important;
+}
+
+.align-item-end {
+  align-items: flex-end;
+}
+
+.justify-content-flex-end {
+  justify-content: flex-end;
+}
+
+.justify-content-flex-start {
+  justify-content: flex-start;
+}
+
+.justify-content-space-around {
+  justify-content: space-around;
+}
+.justify-content-space-between {
+  justify-content: space-between;
 }
