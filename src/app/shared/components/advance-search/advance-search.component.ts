@@ -4,6 +4,7 @@ import { ProjectService } from '../../services/projectDashboard/project.service'
 import { AdvanceSearchService } from '../../services/advance-search.service';
 import { UserService } from '../../services/userDashboard/user.service';
 import { MatSelect, MatCheckbox, MatDatepicker, MatInput } from '@angular/material';
+import { MatAccordion } from '@angular/material/expansion';
 
 interface rfqRequestData {
     projectIDList?: any;
@@ -77,6 +78,8 @@ export class AdvanceSearchComponent implements OnInit {
 
     @ViewChild('requestedFromPicker', { static: false, read: MatDatepicker }) requestedFromPicker: MatDatepicker<string>;
     @ViewChild('requestedToPicker', { static: false, read: MatDatepicker }) requestedToPicker: MatDatepicker<string>;
+
+    @ViewChild(MatAccordion, { static: false }) accordion: MatAccordion;
 
     userId: number;
     orgId: number;
@@ -283,17 +286,29 @@ export class AdvanceSearchComponent implements OnInit {
 
     getAllUsers() {
         this.userService.getAllUsers(this.orgId).then(res => {
-            this.usersData = res.data.activatedProjectList;
-            this.usersList = res.data.activatedProjectList;
+            this.usersData = this.getUserWithName(res.data.activatedProjectList);
+            this.usersList = this.getUserWithName(res.data.activatedProjectList);
             this.approversList = this.getUserWhoCanApprove(res.data.activatedProjectList);
-            this.createdList = res.data.activatedProjectList;
+            this.createdList = this.getUserWithName(res.data.activatedProjectList);
         });
     }
 
     getUserWhoCanApprove(data) {
         let result = [];
         data.forEach(itm => {
-            if (itm.ProjectUser.roleName !== 'l3' && (itm.ProjectUser.firstName !== '' || itm.ProjectUser.lastName !== '')) {
+            if (itm.ProjectUser.firstName !== '' && itm.ProjectUser.lastName !== '') {
+                if (itm.ProjectUser.roleName !== 'l3') {
+                    result.push(itm);
+                }
+            }
+        });
+        return result;
+    }
+
+    getUserWithName(data) {
+        let result = [];
+        data.forEach(itm => {
+            if (itm.ProjectUser.firstName !== '' || itm.ProjectUser.lastName !== '') {
                 result.push(itm);
             }
         });
@@ -439,7 +454,7 @@ export class AdvanceSearchComponent implements OnInit {
         }
         if (type === 'users') {
             this.usersSelect.options.find(opt => opt.value.ProjectUser.userId === id).deselect();
-            this.usersList = this.usersData;
+            this.usersList = this.getUserWithName(this.usersData);
         }
         if (type === 'approvers') {
             this.approversSelect.options.find(opt => opt.value.ProjectUser.userId === id).deselect();
@@ -447,7 +462,7 @@ export class AdvanceSearchComponent implements OnInit {
         }
         if (type === 'created') {
             this.createdSelect.options.find(opt => opt.value.ProjectUser.userId === id).deselect();
-            this.createdList = this.usersData;
+            this.createdList = this.getUserWithName(this.usersData);
         }
     }
 
@@ -498,7 +513,26 @@ export class AdvanceSearchComponent implements OnInit {
 
         this.raisedFromPicker._datepickerInput.value = '';
         this.raisedToPicker._datepickerInput.value = '';
+        this.accordion.closeAll();
         this.getFilterRequest();
     }
 
+    checkFromDate(event, type) {
+        if (type._datepickerInput.value) {
+            let d1 = new Date(type._datepickerInput.value);
+            let d2 = new Date(event.target.value);
+            if (d2.getTime() < d1.getTime()) {
+                event.target.value = '';
+            }
+        }
+    }
+    checkToDate(event, type) {
+        if (type._datepickerInput.value) {
+            let d1 = new Date(event.target.value);
+            let d2 = new Date(type._datepickerInput.value);
+            if (d2.getTime() < d1.getTime()) {
+                type._datepickerInput.value = '';
+            }
+        }
+    }
 }

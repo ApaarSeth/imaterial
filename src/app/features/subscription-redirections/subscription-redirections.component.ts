@@ -14,6 +14,7 @@ export class SubscriptionRedirectionsComponent implements OnInit {
     planName: any;
     userCount: any;
     amount: any;
+    currencyCode: any;
 
 
     constructor(
@@ -38,11 +39,14 @@ export class SubscriptionRedirectionsComponent implements OnInit {
             if (param.amount) {
                 this.amount = param.amount;
             }
+            if (param.currencyCode) {
+                this.currencyCode = param.currencyCode;
+            }
         });
     }
 
     redirectPageToDashboard() {
-        // setTimeout(_ => { this.router.navigate([ "/dashboard" ]) }, 20000);
+        setTimeout(_ => { this.router.navigate([ "/dashboard" ]) }, 20000);
     }
 
 }

@@ -13,13 +13,13 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 @Component({
   selector: "user-details",
   templateUrl: "./user-details.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  styleUrls: [ "../../../../assets/scss/main.scss" ]
 })
 
 
 export class UserDetailComponent implements OnInit {
-  displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
-  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
+  displayedColumns: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star' ];
+  displayedColumnsDeactivate: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project' ];
 
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;
@@ -184,7 +184,6 @@ export class UserDetailComponent implements OnInit {
   }
 
   editProject(data) {
-    console.log(data.ProjectUser);
     const projectList: Array<number> = new Array<number>();
     this.userDetailsTemp.firstName = data.ProjectUser.firstName;
     this.userDetailsTemp.lastName = data.ProjectUser.lastName;

@@ -53,7 +53,7 @@
 
                 <ng-container *ngIf="plan.planName !== 'Custom'; else cstmActn">
                   <ng-container *ngIf="plan.activeSubscription === null; else sbscrbd">
-                    <div class="actions text-align-center p-10 d-block">
+                    <div class="susb-actions text-align-center p-10 d-block">
                       <button *ngIf="trialAction" mat-button class="bordered-button fbtn mr-2"
                         (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
                         Start Free Trial
@@ -65,7 +65,7 @@
                     </div>
                   </ng-container>
                   <ng-template #sbscrbd>
-                    <div class="actions text-align-center p-10 d-none">
+                    <div class="susb-actions text-align-center p-10 d-none">
                       <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
                         (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
                         Add More User
@@ -74,7 +74,7 @@
                   </ng-template>
                 </ng-container>
                 <ng-template #cstmActn>
-                  <div class="actions text-align-center p-10 d-block">
+                  <div class="susb-actions text-align-center p-10 d-block">
                     <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
                       (click)="contactSales()">
                       Contact Sales
