@@ -308,11 +308,7 @@ export class PoComponent implements OnInit {
         }
       })
     } else {
-      if (decision === "accepted")
-        this.collatePoData.isApproved = 1;
-      else {
-        this.collatePoData.isApproved = 0;
-      }
+      decision === "approved" ? this.collatePoData.isApproved = 1 : this.collatePoData.isApproved = 0
       this.poService.approveRejectPo(this.collatePoData).then(res => {
         if (res.status === 0) {
           this.notifier.snack(res.message)
