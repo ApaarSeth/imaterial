@@ -106,7 +106,7 @@ export class SignupComponent implements OnInit {
     ]
     if (this.callingCode === '+91') {
       this.signupForm.get('email').setValidators(emailValidator)
-      this.signupForm.get('phone').setValidators([Validators.required])
+      this.signupForm.get('phone').setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE_NUMBER)])
       this.signupForm.get('otp').setValidators([Validators.required])
     }
     else {
