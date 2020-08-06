@@ -212,4 +212,9 @@ export class TopHeaderComponent implements OnInit {
     this.subscriptions.forEach(subs => subs.unsubscribe());
     this.subscription.unsubscribe();
   }
+
+  goToHome() {
+    this.router.navigate([ '/dashboard' ]);
+  }
+
 }

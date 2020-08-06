@@ -3,7 +3,8 @@
     <button class="hamburger" fxShow="true" fxHide.gt-sm (click)="openMenu()" mat-icon-button>
       <mat-icon>menu</mat-icon>
     </button>
-    <span><img class="buildsupply-logo" src="../../../../assets/images/loginLogo.png" alt="logo" /></span>
+    <span class="cursor-pointer" (click)="goToHome()"><img class="buildsupply-logo"
+        src="../../../../assets/images/loginLogo.png" alt="logo" /></span>
     <span class="menu-spacer"></span>
 
     <a href="https://api.whatsapp.com/send?phone=+918512060007" target="_blank" [ngClass]="isMobile ? 'p-1' : '' ">
