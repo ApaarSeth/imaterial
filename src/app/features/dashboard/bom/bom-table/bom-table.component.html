@@ -1,9 +1,10 @@
 <div class="page-start-point changeWidth mt-5 pt-4">
-  <div class="p-l-20 p-r-20 p-b-20">
+  <div class="p-l-20 p-r-20 p-b-20 bom-table-style">
     <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()"
       [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"></card-layout>
-    <div class="row">
-      <div class="col-xs-12 col-md-3">
+
+    <div class="row align-items-center justify-content-between bom-above-tbl-section">
+      <div class="col-md-3 col-sm-6 col-xs-12 col-search-input">
         <mat-form-field class="bom-form-field border-input w-100">
           <input matInput placeholder="Search Materials" type="search" (keyup)="applyFilter($event)" />
           <button mat-button matSuffix mat-icon-button>
@@ -12,50 +13,32 @@
         </mat-form-field>
       </div>
 
-      <div class="col-xs-12 col-md-9 p-t-10" [ngClass]="!isMobile ? 'text-right' : ''">
-        <mat-form-field [ngClass]="isMobile ? 'width-50' : 'width-15'" class="t-0 label-adjust bom-select-menus">
-          <mat-label><img src="../../../assets/images/create-icon.svg" alt="" />
-            <span class="main-color p-l-5">Create</span>
-          </mat-label>
-          <mat-select class="hide-select-arrow">
-            <mat-option class="height-2-em" (click)="createRfq()"
-              [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded not-allowed'">
-              Create RFQ
-            </mat-option>
-            <mat-option class="height-2-em" (click)="raiseIndent()"
-              [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded not-allowed'">
-              Raise Indent
-            </mat-option>
-            <mat-option (click)="openGrnDialog()" class="height-2-em main-color">
-              Create Receipts Via System
-            </mat-option>
-            <mat-option (click)="openGrnViaExcelDialog()" class="height-2-em main-color">
-              Create Receipts Via Excel
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field [ngClass]="isMobile ? 'width-50' : 'width-16'" class="t-0 label-adjust bom-select-menus">
-          <mat-label><img src="../../../assets/images/create-icon.svg" alt="" />
-            <span class="main-color p-l-5">+Add/Edit</span>
-          </mat-label>
-          <mat-select class="hide-select-arrow shift-upward">
-            <mat-option class="height-2-em" class="main-color" (click)="addMaterial()">
-              Add/Edit Material
-            </mat-option>
-            <mat-option class="height-2-em" class="main-color" (click)="openAddMyMaterial()">
-              + Add Custom Material
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <!-- <span>
-          <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="addMaterial()">
-            Add/Edit Material
-          </button>
-        </span>
+      <div class="col-md-9 col-sm-6 col-xs-12 col-bom-actions" [ngClass]="!isMobile ? 'text-right' : ''">
 
-        <span>
-          <a href="javascript:void(0)" class="main-color text-semi-bold pull-right p-r-10 p-t-10" (click)="openAddMyMaterial()">+ Add Custom Material</a>
-        </span> -->
+        <div class="bom-detail-action-buttons">
+
+          <button mat-raised-button class="main-background-color main-button color-white create-rfp mr-2"
+          (click)="createRfq()" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded not-allowed'">
+            Create RFP
+          </button>
+
+          <button mat-raised-button class="main-background-color main-button color-white raise-pr mr-2"
+          (click)="raiseIndent()" [ngClass]="this.checkedSubcategory.length ? 'main-color' : 'main-color-faded not-allowed'">
+            Raise PR
+          </button>
+
+          <div class="bom-detail-dropdown">
+            <button mat-button [matMenuTriggerFor]="menu">
+              <span class="material-icons">menu</span>
+            </button>
+            <mat-menu #menu="matMenu" class="bom-detail-dropdown-menus">
+              <button mat-menu-item (click)="openGrnViaExcelDialog()">Create Receipt via Excel</button>
+              <button mat-menu-item (click)="openGrnDialog()">Create Receipt via System</button>
+              <button mat-menu-item (click)="addMaterial()">Add/Edit Material</button>
+              <button mat-menu-item (click)="openAddMyMaterial()">Add Custom Material</button>
+            </mat-menu>
+          </div>
+        </div>
       </div>
     </div>
 
