@@ -70,7 +70,7 @@ const routes: Routes = [
     }
   },
   {
-    path: "subscriptions/payment-declined",
+    path: "subscriptions/payment-failed",
     component: SubscriptionRedirectionsComponent,
     data: {
       type: 1

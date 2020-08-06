@@ -91,4 +91,8 @@ export class SubscriptionPaymentsService {
         return hiddenField;
     }
 
+    getContactSales() {
+        return this.dataService.getRequest(API.GET_CONTACTSALES);
+    }
+
 }

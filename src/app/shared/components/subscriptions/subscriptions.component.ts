@@ -1,3 +1,5 @@
+import { CancelSubscriptionDialog } from './subscription-cancel/cancel-subscription-dialog.component';
+import { MatDialog } from '@angular/material';
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnDestroy } from "@angular/core";
 import { SubscriptionsList } from '../../models/subscriptions';
 import { Router } from '@angular/router';
@@ -27,7 +29,8 @@ export class SubscriptionsComponent implements OnInit {
         private _router: Router,
         private _userService: UserService,
         private subsPayService: SubscriptionPaymentsService,
-        private commonService: CommonService
+        private commonService: CommonService,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit() {
@@ -54,7 +57,8 @@ export class SubscriptionsComponent implements OnInit {
     }
 
     getSubsciptionDiscounted(discount, price) {
-        return (Number(price) * (discount / 100));
+        // return (Number(price) * (discount / 100));
+        return Number(price) - (Number(price) * (discount / 100));
     }
 
     startTrialTrigger() {
@@ -76,14 +80,21 @@ export class SubscriptionsComponent implements OnInit {
     }
 
     unsubscribePlan(id: number) {
-        const obj = {
-            subscriptionId: id
-        };
-        this.subsPayService.postSubscriptionUnsubscribe(obj).then(res => {
-            if (res.status === 1) {
-                this._router.navigate([ "/subscriptions/unsubscribe" ])
+        const dialogRef = this.dialog.open(CancelSubscriptionDialog, {
+            width: "768px",
+        })
+        dialogRef.afterClosed().subscribe(res => {
+            if (res) {
+                const obj = {
+                    subscriptionId: id
+                };
+                this.subsPayService.postSubscriptionUnsubscribe(obj).then(res => {
+                    if (res.status === 1) {
+                        this._router.navigate([ "/subscriptions/unsubscribe" ])
+                    }
+                });
             }
-        });
+        })
     }
 
     choosePlan(type, planId, offerId, price, planEncryptId, planPricingEncryptId) {
@@ -97,6 +108,10 @@ export class SubscriptionsComponent implements OnInit {
 
     getClassName(planName) {
         return planName.toLowerCase() + '-head';
+    }
+
+    contactSales() {
+        this.subsPayService.getContactSales();
     }
 
 }

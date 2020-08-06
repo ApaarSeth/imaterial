@@ -1,3 +1,4 @@
+import { CancelSubscriptionDialog } from './../components/subscriptions/subscription-cancel/cancel-subscription-dialog.component';
 import { AddProjectComponent } from "./add-project/add-project.component";
 import { DoubleConfirmationComponent } from "./double-confirmation/double-confirmation.component";
 import { SuppliersDialogComponent } from "./add-supplier/suppliers-dialog.component";
@@ -83,5 +84,6 @@ export const SharedDialogs = [
   GrnAddSupplierComponent,
   AddGrnViaExcelComponent,
   DeleteMyMaterialComponent,
-  ShortCloseConfirmationComponent
+  ShortCloseConfirmationComponent,
+  CancelSubscriptionDialog
 ];

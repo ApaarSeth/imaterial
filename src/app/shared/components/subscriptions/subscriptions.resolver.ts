@@ -14,7 +14,7 @@ export class SubscriptionsResolver implements Resolve<any>{
         return this.commonService.getSubscriptionPlan().then(res => {
             let subsdata = res.data;
             let cstmPlan = {
-                "planName": "Custom", "planSortSeq": 3, "planFeatureList": null, "planFeatureObjList": [ { "featureName": "Customizable", "available": true },
+                "planName": "Custom", "activeSubscription": null, "planSortSeq": 3, "planFeatureList": null, "planFeatureObjList": [ { "featureName": "Customizable", "available": true },
                 { "featureName": "Supplier Management", "available": true },
                 { "featureName": "Bill of Materials(BOM)", "available": true },
                 { "featureName": "Purchase Requisitions", "available": true },

@@ -20,12 +20,23 @@
           <div *ngFor="let plan of subscription.planList" class="col-md-4 mb-3 d-flex">
             <mat-card class="col-md-12 text-left p-0">
               <mat-card-header [className]="getClassName(plan.planName)">
-                <mat-card-title>{{ plan.planName }} Plan</mat-card-title>
+                <mat-card-title>{{ plan.planName }} Plan
+                  <ng-container *ngIf="plan.activeSubscription !== null">
+                    <span class="font-size-12 font-weight500 mt-2">(My Plan)</span>
+                  </ng-container>
+                </mat-card-title>
                 <mat-card-subtitle>
                   <ng-container *ngIf="plan.planName !== 'Custom'; else cstmSts">
                     <div class="pt-2 pb-3">
-                      <span>{{ plan.currencyCode }} {{ plan.planPrice }} <sub
-                          class="font-size-40px prc-str">*</sub></span>
+                      <span>
+                        <ng-container *ngIf="subscription.discountPercent !== null; else flatPrice">
+                          {{getSubsciptionDiscounted(subscription.discountPercent, plan.planPrice)}}
+                        </ng-container>
+                        <ng-template #flatPrice>
+                          {{ plan.currencyCode }} {{ plan.planPrice }}
+                        </ng-template>
+                        <sub class="font-size-40px prc-str">*</sub>
+                      </span>
                       <!-- <p>Per Additional User: {{ plan.currencyCode }}
                         {{ plan.planPrice }}</p> -->
                     </div>
@@ -38,41 +49,29 @@
                 </mat-card-subtitle>
               </mat-card-header>
 
-              <!-- <mat-card-content class="plan-limit justify-content-between" [ngClass]="isMobile ? 'sm-btn1' : '' ">
-                <span>{{ plan.planLimit.projectCount }} Project {{ plan.planLimit.userCount }} Users</span>
-                <ng-container *ngIf="plan.activeSubscription === null">
-                  <button *ngIf="trialAction" mat-button class="main-background-color subs-btn"
-                    (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
-                    Free Trial
-                  </button>
-                  <button *ngIf="!trialAction" mat-raised-button class="main-background-color subs-btn"
-                    (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
-                    Choose Plan
-                  </button>
-                </ng-container>
-                <ng-container *ngIf="plan.activeSubscription !== null">
-                  <button *ngIf="plan.isTrialActive === 0" mat-button class="subs-link"
-                    (click)="unsubscribePlan(plan.activeSubscription.subscriptionId)">Unsubscribe</button>
-                  <button *ngIf="plan.isTrialActive === 1" mat-raised-button class="main-background-color subs-btn"
-                    (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
-                    Choose Plan
-                  </button>
-                </ng-container>
-              </mat-card-content> -->
-
               <mat-card-content [ngClass]="isMobile ? 'sm-btn1' : '' ">
 
                 <ng-container *ngIf="plan.planName !== 'Custom'; else cstmActn">
-                  <div class="actions text-align-center p-10 d-block">
-                    <button *ngIf="trialAction" mat-button class="bordered-button fbtn mr-2"
-                      (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
-                      Start Free Trial
-                    </button>
-                    <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
-                      (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
-                      Buy Now
-                    </button>
-                  </div>
+                  <ng-container *ngIf="plan.activeSubscription === null; else sbscrbd">
+                    <div class="actions text-align-center p-10 d-block">
+                      <button *ngIf="trialAction" mat-button class="bordered-button fbtn mr-2"
+                        (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        Start Free Trial
+                      </button>
+                      <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
+                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        Buy Now
+                      </button>
+                    </div>
+                  </ng-container>
+                  <ng-template #sbscrbd>
+                    <div class="actions text-align-center p-10 d-none">
+                      <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
+                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        Add More User
+                      </button>
+                    </div>
+                  </ng-template>
                 </ng-container>
                 <ng-template #cstmActn>
                   <div class="actions text-align-center p-10 d-block">
@@ -106,13 +105,16 @@
                   </li>
                 </ul>
 
-                <!-- <ng-container *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom'">
+                <!-- <ng-container
+                  *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && plan.isTrialActive === 0"> -->
+                <ng-container
+                  *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && plan.isTrialActive === 0">
                   <p class="text-center mt-4 mr-4 brand-color">
-                    <button mat-button>
+                    <button mat-button (click)="unsubscribePlan(plan.planId)">
                       Cancel Plan
                     </button>
                   </p>
-                </ng-container> -->
+                </ng-container>
               </mat-card-actions>
             </mat-card>
           </div>
@@ -121,4 +123,5 @@
 
     </mat-tab>
   </mat-tab-group>
+  <p class="color-6d6a6a desp-block font-size14 mb-4 text-align-right">*Displayed prices all exclusive of taxes</p>
 </div>
