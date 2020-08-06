@@ -84,7 +84,7 @@ export class SigninComponent implements OnInit {
     this.getCountryCode(this.callingCode, this.countryCode)
     if (this.callingCode === '+91') {
       // this.signinForm.get('email').setValidators(emailValidator)
-      this.signinForm.get('phone').setValidators([Validators.required])
+      this.signinForm.get('phone').setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE_NUMBER)])
     }
     else {
       this.signinForm.get('email').setValidators(emailValidator)

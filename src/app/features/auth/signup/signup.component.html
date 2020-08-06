@@ -55,9 +55,9 @@
             Send OTP
           </button>
         </mat-form-field>
-        <small *ngIf="signupForm.controls['phone'].hasError('required') && signupForm.controls['phone'].touched" class="signupForm-error-msg p-l-12"> Phone No is required </small>
-        <small *ngIf="signupForm.controls['phone'].hasError('pattern') && signupForm.controls['phone'].touched" class="signupForm-error-msg p-l-12"> Enter Valid Phone No</small>
-        <small *ngIf="lessOTPDigits" class="signupForm-error-msg green-colour p-l-12"> Mobile Number is Verified</small>
+        <small *ngIf="signupForm.controls['phone'].hasError('required') && signupForm.controls['phone'].touched" class="signupForm-error-msg"> Phone No is required </small>
+        <small *ngIf="signupForm.controls['phone'].hasError('pattern') && signupForm.controls['phone'].touched" class="signupForm-error-msg"> Enter Valid Phone No</small>
+        <small *ngIf="lessOTPDigits" class="signupForm-error-msg green-colour"> Mobile Number is Verified</small>
       </div>
 
       <mat-form-field class="col-xs-12 border-input" *ngIf="showOtp && !lessOTPDigits">
