@@ -18,11 +18,13 @@
                 </button>
               </div>
               
-              <app-select-check-all [model]="form.get('selectedProject')" [values]="projectNumIds" (selectAllText)="getAllIds($event)"></app-select-check-all>
+              <div class="select-all-checkbox">
+                <app-select-check-all [model]="form.get('selectedProject')" [values]="projectNumIds" (selectAllText)="getAllIds($event)"></app-select-check-all>
+              </div>
 
               <!-- <mat-option #allSelected (click)="toggleAllSelection(allSelected)" [value]="projectNumIds">Select All</mat-option> -->
               <mat-option *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']"
-                [value]="project.projectId" (click)="getProjectMaterials()">
+                [value]="project.projectId" (click)="getProjectMaterials()" class="project-list-dropdown">
                 {{project.projectName}}
               </mat-option>
             </mat-select>

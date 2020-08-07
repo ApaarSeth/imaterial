@@ -1,8 +1,10 @@
 <div class="page-start-point changeWidth mt-5 pt-4">
   <form *ngIf="allProjects" [formGroup]="form" autocomplete="off">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
+
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
       <div class="row align-items-center">
+
         <div class="col-md-3 col-sm-4 col-xs-4 text-left showResponsiveReport">
           <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
             <mat-label>Select Project</mat-label>
@@ -21,15 +23,17 @@
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
-              <!-- <mat-select-trigger>
-                    <mat-label>Select Project</mat-label>
-                  </mat-select-trigger> -->
-              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']" [value]="project" selected="project.clicked" (click)="choosenProject()"
-                >{{ project.projectName }}
-              </mat-option>
+              
+              <div class="select-all-checkbox">
+                <app-select-check-all [model]="form.get('selectedProject')" [values]="projectNumIds" (selectAllText)="getAllIds($event)"></app-select-check-all>
+              </div>
+
+              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']" [value]="project.projectId" 
+              (click)="choosenProject()">{{ project.projectName }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
+        
         <div class="col-md-3 col-sm-4 col-xs-4 text-left showResponsiveReport">
           <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
             <mat-label>Select Supplier</mat-label>
@@ -48,19 +52,17 @@
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
-              <!-- <mat-select-trigger>
-                    <mat-label>Select Supplier</mat-label>
-                  </mat-select-trigger> -->
-              <mat-option
-                *ngFor="let supplier of allSuppliers | SearchPipe: searchSupplier:['supplier_name']"
-                [value]="supplier"
-                selected="supplier.clicked"
-                (click)="choosenSupplier()"
-                >{{ supplier.supplier_name }}
-              </mat-option>
+              
+              <div class="select-all-checkbox">
+                <app-select-check-all [model]="form.get('selectedSupplier')" [values]="allSuppIds" (selectAllText)="getAllSuppIds($event)"></app-select-check-all>
+              </div>
+
+              <mat-option *ngFor="let supplier of allSuppliers | SearchPipe: searchSupplier:['supplier_name']"
+                [value]="supplier.supplierId" (click)="choosenSupplier()">{{ supplier.supplier_name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
+        
         <div
           class="col-md-6 col-sm-4 col-xs-4 add-project-btn display-flex align-items-center"
           [ngClass]="isMobile ? 'justify-content-flex-start height-25-px' : 'justify-content-flex-end'"

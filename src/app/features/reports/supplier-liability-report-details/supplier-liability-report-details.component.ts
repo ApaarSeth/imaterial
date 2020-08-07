@@ -63,25 +63,6 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   addUserBtn: boolean = false;
   allUsers: AllUserDetails;
   orgId: number;
-
-  // public UserDashboardTour: GuidedTour = {
-  //   tourId: 'supplier-tour',
-  //   useOrb: false,
-  //   steps: [
-  //     {
-  //       title: 'Add User',
-  //       selector: '.add-user-button',
-  //       content: 'Click here to add other users of your organisation.',
-  //       orientation: Orientation.Left
-  //     }
-  //   ],
-  //     skipCallback: () => {
-  //     this.setLocalStorage()
-  //   },
-  //   completeCallback: () => {
-  //     this.setLocalStorage()
-  //   }
-  // };
   userId: number;
   form: FormGroup;
   alreadySelectedId: number[];
@@ -91,8 +72,8 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   searchProject: string = ''
   projects: FormControl;
   selectedProjects: ProjectDetails[] = [];
-  projectIds: number[] = [];
-  supplierIds: number[] = [];
+  projectIds: string[] = [];
+  supplierIds: string[] = [];
   rfqDetails: RfqMaterialResponse[] = [];
   materialForm: FormGroup;
   counter: number;
@@ -105,16 +86,13 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   selectedMenu: string;
   currency: string;
   isMobile: boolean;
+  projectNumIds: number[];
+  allSuppIds: number[];
+
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService,
     private formBuilder: FormBuilder,
-    private router: Router,
-    private ref: ChangeDetectorRef,
-    private userService: UserService,
-    private guidedTourService: GuidedTourService,
-    private userGuideService: UserGuideService,
     private commonService: CommonService,
     private reportService: ReportService
   ) {
@@ -132,12 +110,10 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     this.allProjects = this.activatedRoute.snapshot.data.resolverData[1].data;
     this.formInit();
     this.getNotifications();
-    this.selectedMenu = 'Full Figures'
+    this.selectedMenu = 'Full Figures';
+    this.projectNumIds = this.allProjects.map(elem => elem.projectId);
+    this.allSuppIds = this.allSuppliers.map(supp => supp.supplierId);
   }
-
-  // focus() {
-  //   this.triggerBtn.focus('mouse')
-  // }
 
   formInit() {
     this.form = this.formBuilder.group({
@@ -153,17 +129,13 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
 
   choosenProject() {
     this.projectIds = [];
-    this.projectIds = this.form.value.selectedProject.map(
-      selectedProject => String(selectedProject.projectId)
-    );
+    this.projectIds = this.form.value.selectedProject.map(selectedProject => String(selectedProject));
     this.sendProjectSuppierData();
   }
 
   choosenSupplier() {
     this.supplierIds = [];
-    this.supplierIds = this.form.value.selectedSupplier.map(
-      selectedSupplier => String(selectedSupplier.supplierId)
-    );
+    this.supplierIds = this.form.value.selectedSupplier.map(selectedSupplier => String(selectedSupplier));
     this.sendProjectSuppierData();
   }
 
@@ -213,7 +185,6 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   }
 
   downloadExcel() {
-
     const data = {
       "projectIdList": this.projectIds,
       "supplierIdList": this.supplierIds
@@ -225,5 +196,33 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
         win.focus();
       }
     })
+  }
+
+  /**
+   * @description function to check if select all option clicked or not
+   * @param text 'select all' text present or not
+   */
+  getAllIds(text){
+    if(text === 'Select All'){
+      this.projectIds = this.projectNumIds.map(String);
+      this.sendProjectSuppierData();
+    }else{
+      this.projectIds = [];
+      this.supplierLiabiltyReportData = null;
+    }
+  }
+
+  /**
+   * @description function to check if select all option clicked or not
+   * @param text 'select all' text present or not
+   */
+  getAllSuppIds(text){
+    if(text === 'Select All'){
+      this.supplierIds = this.allSuppIds.map(String);
+      this.sendProjectSuppierData();
+    }else{
+      this.supplierIds = [];
+      this.supplierLiabiltyReportData = null;
+    }
   }
 }
