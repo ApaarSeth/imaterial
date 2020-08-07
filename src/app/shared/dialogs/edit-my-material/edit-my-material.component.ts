@@ -59,7 +59,6 @@ export class EditMyMaterialComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { materialList: material[], type: string }) { }
 
   ngOnInit() {
-
     this.creatorId = Number(localStorage.getItem("userId"));
     this.formInit();
     this.getUserData(this.creatorId);
@@ -68,8 +67,6 @@ export class EditMyMaterialComponent implements OnInit {
     // this.getTrades();
     // this.getCategories()
   }
-
-
 
   getTrades() {
     this.userService.getTrades().then(res => {
@@ -193,7 +190,7 @@ export class EditMyMaterialComponent implements OnInit {
   }
 
   submit() {
-    let myMaterial: MyMaterialPost = this.editMaterialForm.get("forms").value.map(val => {
+    let myMaterial: MyMaterialPost = (this.editMaterialForm.get("forms") as FormArray).getRawValue().map(val => {
       return {
         customMaterialId: val.customMaterialId,
         estimatedPrice: null,
@@ -205,7 +202,7 @@ export class EditMyMaterialComponent implements OnInit {
         tradeId: val.trade.tradeId,
         tradeName: val.trade.tradeName
       };
-    });
+    }) as any;
 
     if (this.data.type === 'edit') {
       if (this.data.materialList[0].materialName === myMaterial[0].materialName) {

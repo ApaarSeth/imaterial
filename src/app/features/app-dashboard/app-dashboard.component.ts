@@ -176,6 +176,7 @@ export class AppDashboardComponent implements OnInit {
       { presetLabel: "Yearly ", range: { fromDate: yearFromDate, toDate: yearToDate } }
     ]
   }
+
   getQuartrDateRange(): { fromdate: Date, toDate: Date } {
     const today = new Date();
     const currentMonth = today.getMonth() + 1
@@ -191,9 +192,7 @@ export class AppDashboardComponent implements OnInit {
     else if (10 <= currentMonth) {
       return { fromdate: new Date(today.getFullYear(), 9, 1), toDate: new Date(today.getFullYear(), 12, 0) }
     }
-
   }
-
 
   formInit() {
     this.filterForm = this.formbuilder.group({
