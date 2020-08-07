@@ -5,7 +5,8 @@ import {
   QueryList,
   ViewChildren,
   ElementRef,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  HostListener
 } from "@angular/core";
 import { FormControl, FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -81,6 +82,7 @@ export class BomComponent implements OnInit {
   showTopMaterial: boolean = true;
   showAllMaterial: boolean = true;
   showMyMaterial: boolean = true;
+  innerWidth: number;
 
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
@@ -150,7 +152,18 @@ export class BomComponent implements OnInit {
       })
       this.form.get('selectedTrades').setValue(selectedTrades)
       this.choosenTrade()
-    })
+    });
+
+    this.onResize(event);
+  }
+
+  /**
+   * @description to check the width of screen
+   * @param event 
+   */
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
   }
 
   setLocalStorage() {
