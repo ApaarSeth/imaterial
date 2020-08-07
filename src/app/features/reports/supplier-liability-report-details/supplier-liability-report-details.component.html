@@ -2,8 +2,8 @@
   <form *ngIf="allProjects" [formGroup]="form" autocomplete="off">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
-      <div class="row">
-        <div class="col-xs-4 col-sm-4 col-md-3 text-left showResponsiveReport column-1">
+      <div class="row align-items-center">
+        <div class="col-md-3 col-sm-4 col-xs-4 text-left showResponsiveReport">
           <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
             <mat-label>Select Project</mat-label>
             <mat-select formControlName="selectedProject" multiple>
@@ -30,7 +30,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-xs-5 col-sm-4 col-md-3 text-left showResponsiveReport column-2">
+        <div class="col-md-3 col-sm-4 col-xs-4 text-left showResponsiveReport">
           <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
             <mat-label>Select Supplier</mat-label>
             <mat-select formControlName="selectedSupplier" multiple>
@@ -62,14 +62,14 @@
           </mat-form-field>
         </div>
         <div
-          class="col-xs-12 col-sm-4 col-md-6 add-project-btn display-flex align-item-end column-3"
+          class="col-md-6 col-sm-4 col-xs-4 add-project-btn display-flex align-items-center"
           [ngClass]="isMobile ? 'justify-content-flex-start height-25-px' : 'justify-content-flex-end'"
         >
           <div *ngIf="projectIds.length || supplierIds.length" class="p-r-20">
             <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png" (click)="downloadExcel()" /> </a>
           </div>
-          <div *ngIf="supplierLiabiltyReportData" class="show-amount p-r-12 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
-            Show amount
+          <div *ngIf="supplierLiabiltyReportData" class="show-amount pt-0 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
+            Display Amount
           </div>
           <!-- <button mat-raised-button class="main-background-color main-button color-white demo-title cursor-pointer">
             Generate Report
@@ -159,7 +159,7 @@
                   </tr>
                 </mat-expansion-panel-header>
                 <!-- Project List -->
-                <mat-expansion-panel *ngFor="let project of supplier.projectReportDataList">
+                <mat-expansion-panel *ngFor="let project of supplier.projectReportDataList" [expanded]="true">
                   <mat-expansion-panel-header class="border-row background-category">
                     <tr class="material-row backgound-none-important p-r-10">
                       <td class="mat-cell">{{ project.projectName }}</td>
