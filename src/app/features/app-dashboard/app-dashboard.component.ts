@@ -167,12 +167,12 @@ export class AppDashboardComponent implements OnInit {
     const yearFromDate = new Date(today.getFullYear(), 0, 1);
     const yearToDate = new Date(today.getFullYear(), 12, 0);
     this.presets = [
-      { presetLabel: "Yesterday", range: { fromDate: yesterday, toDate: today } },
+      // { presetLabel: "Yesterday", range: { fromDate: yesterday, toDate: today } },
       { presetLabel: "Last 7 Days", range: { fromDate: minus7, toDate: today } },
-      { presetLabel: "Last 30 Days", range: { fromDate: minus30, toDate: today } },
+      // { presetLabel: "Last 30 Days", range: { fromDate: minus30, toDate: today } },
       { presetLabel: "This Month", range: { fromDate: currMonthStart, toDate: currMonthEnd } },
       { presetLabel: "Last Month", range: { fromDate: lastMonthStart, toDate: lastMonthEnd } },
-      { presetLabel: "Quarter", range: { fromDate: quarterFromDate, toDate: quarterLastDate } },
+      // { presetLabel: "Quarter", range: { fromDate: quarterFromDate, toDate: quarterLastDate } },
       { presetLabel: "Yearly ", range: { fromDate: yearFromDate, toDate: yearToDate } }
     ]
   }
