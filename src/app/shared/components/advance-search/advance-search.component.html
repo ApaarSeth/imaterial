@@ -376,12 +376,14 @@
 
                     <mat-form-field class="w-100 border-input">
                         <mat-label>Min Amount</mat-label>
-                        <input matInput type="number" min="0" #minAmt>
+                        <input matInput type="number" min="0" (input)="checkAmount($event, maxAmt, '0')"
+                            autocomplete="off" #minAmt>
                     </mat-form-field>
 
                     <mat-form-field class="w-100 border-input">
                         <mat-label>Max Amount</mat-label>
-                        <input matInput type="number" min="0" #maxAmt>
+                        <input matInput type="number" (input)="checkAmount($event, minAmt, '1')" autocomplete="off"
+                            min="0" #maxAmt>
                     </mat-form-field>
 
                 </mat-expansion-panel>

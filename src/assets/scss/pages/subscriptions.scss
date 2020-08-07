@@ -253,14 +253,14 @@
     height:35%;
 }
 
-.basic-head{
-    .mat-card-header-text{
-    background-color: #ebb931;
-        .mat-card-title{
-            background-color:#d29828;
-        }
-    }
-}
+// .basic-head{
+//     .mat-card-header-text{
+//     background-color: #ebb931;
+//         .mat-card-title{
+//             background-color:#d29828;
+//         }
+//     }
+// }
 
 .premium-head{
     .mat-card-header-text{
@@ -271,7 +271,7 @@
     }
 }
 
-.subscribed-head{
+.basic-head{
     .mat-card-header-text{
     background-color: #959aa4;
         .mat-card-title{

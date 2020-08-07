@@ -65,10 +65,14 @@
                     </div>
                   </ng-container>
                   <ng-template #sbscrbd>
-                    <div class="susb-actions text-align-center p-10 d-none">
-                      <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
+                    <div class="susb-actions text-align-center p-10 d-block">
+                      <!-- <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
                         (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
                         Add More User
+                      </button> -->
+                      <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
+                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        Buy Now
                       </button>
                     </div>
                   </ng-template>
