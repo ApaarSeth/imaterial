@@ -172,9 +172,13 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
       "projectIdList": this.projectIds,
       "supplierIdList": this.supplierIds
     }
-    this.reportService.getSupplierLiabilityReport(obj).then(res => {
-      this.supplierLiabiltyReportData = res;
-    })
+    if (obj.projectIdList.length !== 0 || obj.supplierIdList.length !== 0) {
+      this.reportService.getSupplierLiabilityReport(obj).then(res => {
+        this.supplierLiabiltyReportData = res;
+      })
+    } else {
+      this.supplierLiabiltyReportData = null
+    }
   }
 
   getNotifications() {

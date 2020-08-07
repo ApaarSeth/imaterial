@@ -392,7 +392,7 @@ export class AdvanceSearchComponent implements OnInit {
 
     poFilterRequest() {
         let data: poRequestData = {};
-        data.poRaisedStartDate = this.raisedFromPickerEl ? this.raisedFromPickerEl : null;;
+        data.poRaisedStartDate = this.raisedFromPickerEl ? this.raisedFromPickerEl : null;
         data.poRaisedEndDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
 
         data.poStatus = [];
@@ -432,7 +432,7 @@ export class AdvanceSearchComponent implements OnInit {
             data.indentStatus.push('2');
         }
 
-        data.indentRaisedStartDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
+        data.indentRaisedStartDate = this.raisedFromPickerEl ? this.raisedFromPickerEl : null;
         data.indentRaisedEndDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
         data.indentRequestStartDate = this.requestedFromPicker._datepickerInput.value ? this.advSearchService.getDateInFormat(this.requestedFromPicker._datepickerInput.value) : null;
         data.indentRequestEndDate = this.requestedToPicker._datepickerInput.value ? this.advSearchService.getDateInFormat(this.requestedToPicker._datepickerInput.value) : null;
@@ -485,6 +485,10 @@ export class AdvanceSearchComponent implements OnInit {
             this.po1.checked = false;
             this.po2.checked = false;
             this.po3.checked = false;
+
+            this.minAmt.value = '';
+            this.maxAmt.value = '';
+
             this.approversSelect.options.forEach(opt => opt.deselect());
             this.createdSelect.options.forEach(opt => opt.deselect());
         }
@@ -521,6 +525,7 @@ export class AdvanceSearchComponent implements OnInit {
         if (type._datepickerInput.value) {
             let d1 = new Date(type._datepickerInput.value);
             let d2 = new Date(event.target.value);
+            // event._maxDate = type._datepickerInput.value;
             if (d2.getTime() < d1.getTime()) {
                 event.target.value = '';
             }
@@ -530,9 +535,28 @@ export class AdvanceSearchComponent implements OnInit {
         if (type._datepickerInput.value) {
             let d1 = new Date(event.target.value);
             let d2 = new Date(type._datepickerInput.value);
+            // type._maxDate = event.target.value;
             if (d2.getTime() < d1.getTime()) {
                 type._datepickerInput.value = '';
             }
         }
     }
+
+    checkAmount(event, type, minMax) {
+        event.currentTarget.value = event.currentTarget.value;
+        if (event.currentTarget.value) {
+            if (minMax === '0' && type.value) {
+                if (Number(type.value) < Number(event.target.value)) {
+                    type.value = event.target.value;
+                }
+
+            }
+            if (minMax === '1' && type.value) {
+                if (Number(type.value) > Number(event.target.value)) {
+                    event.target.value = type.value;
+                }
+            }
+        }
+    }
+
 }

@@ -7,9 +7,9 @@ export class AppNotificationService {
     constructor(private _snackBar: MatSnackBar) {
     }
 
-    snack(msg: string) {
+    snack(msg: string, duration?: number) {
         this._snackBar.open(msg, "", {
-            duration: 2 * 1000,
+            duration: duration ? duration : 2 * 1000,
             panelClass: ["success-snackbar"],
             verticalPosition: "bottom"
         });
