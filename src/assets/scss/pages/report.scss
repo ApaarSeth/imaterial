@@ -96,7 +96,7 @@
 
   .mat-header-row.ctc-report-header-row{
     height: auto;
-    padding-right: 35px;
+    padding-right: 42px;
   }
 
   .mat-row {
@@ -155,8 +155,11 @@
       background: #eaeaea;
     }
     .background-project-list{
-      background: #ffffff;
+      background: #EFEFEF;
       padding-right: 40px;
+      padding-left: 10px;
+      border-left: 4px solid #2196ba;
+      border-bottom: 1px solid #cccccc;
     }
     .material-row {
       min-height: 38px;
@@ -177,16 +180,18 @@
     }
 
     .background-category{
-      background-color: #e0e3ec !important;
+      background-color: #D5D5D5 !important;
       .material-row {
-        background-color: #e0e3ec !important;
+        background-color: #D5D5D5 !important;
         border-bottom: 0.5px solid #979797;
-        border-left: 0.5px solid #d0d0d0;
       }
     }
 
     .background-projects{
-      background-color: #EFFBFF !important;
+      background-color: #ACACAC !important;
+      .material-row td{
+        color: #000;
+      }
     }
 
     .mat-expansion-indicator:after{
@@ -209,7 +214,7 @@
   .mat-expansion-panel-header{
     padding-left: 0px;
     padding-right: 12px;
-    background: #979797;
+    // background: #979797;
   }
   .mat-expansion-panel-body{
     padding: 0;
@@ -241,4 +246,16 @@
 
 .ctc-report .mat-select-panel-wrap{
   margin-left: 40px;
+}
+
+@media only screen and (max-width: 410px){
+  .report {
+    .show-amount{
+      width: 50px;
+    }
+    .add-project-btn{
+      text-align: right;
+      justify-content: flex-end;
+    }
+  }
 }

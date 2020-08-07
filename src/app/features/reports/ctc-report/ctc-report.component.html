@@ -2,10 +2,10 @@
   <form *ngIf="allProjects" [formGroup]="form">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Generate Report and amount  -->
-      <div class="row align-items-center mt-2">
+      <div class="row align-items-center mt-2 ctc-upper-section">
 
         <!------ Select Project Field ------>
-        <div class="col-md-3 text-left showResponsiveReport">
+        <div class="col-md-3 col-xs-6 text-left showResponsiveReport">
           <mat-form-field class="border-select select-project-dropdown w-100">
             <mat-label>Select Project</mat-label>
             <mat-select formControlName="selectedProject" multiple>
@@ -17,6 +17,7 @@
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
+              <!-- <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option> -->
               <mat-option *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']"
                 [value]="project.projectId" selected="project.clicked" (click)="getProjectMaterials()">
                 {{project.projectName}}
@@ -25,9 +26,9 @@
           </mat-form-field>
         </div>
 
-        <div class="col-md-9 add-project-btn display-flex justify-content-flex-end align-items-center">
+        <div class="col-md-9 col-xs-6 add-project-btn display-flex justify-content-flex-end align-items-center">
           <!------ Download Report ------>
-          <div class="download-report pr-3">
+          <div class="download-report pr-3" *ngIf="allProjectsData">
             <a class="font-size16 cursor-pointer" matTooltip="Download" (click)="downloadExcel()"> <img
                 src="../../../../assets/images/download-po.png" /></a>
           </div>
@@ -40,7 +41,7 @@
 
           <!------ Show Amount Field ------>
           <div *ngIf="allProjectsData" class="show-amount-dropdown text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
-            show amount
+            Display Amount
           </div>
         </div>
 
@@ -69,34 +70,34 @@
           <p class="fontsize-14-px p-b-0 p-t-10 mb-2">*Conversion Rate = {{ currency }}</p>
           <table class="report-table">
             <tr matSort class="mat-elevation-z2 mat-header-row ctc-report-header-row">
-              <th class="mat-header-cell material">Materials</th>
-              <th class="mat-header-cell material">Unit</th>
-              <th class="mat-header-cell material text-right">Estimated Amount <br/>
+              <th class="mat-header-cell">Materials</th>
+              <th class="mat-header-cell">Unit</th>
+              <th class="mat-header-cell text-right">Estimated Amount <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material text-right">Awarded Amount <br/>
+              <th class="mat-header-cell text-right">Awarded Amount <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material text-right">Delivered Amount <br/>
+              <th class="mat-header-cell text-right">Delivered Amount <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material text-right">Paid Amount <br/>
+              <th class="mat-header-cell text-right">Paid Amount <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material text-right">Projected Cost <br/>to Complete <br/>
+              <th class="mat-header-cell text-right">Projected Cost <br/>to Complete <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
               </th>
-              <th class="mat-header-cell material text-right">Balance Cost <br/>to Complete <br/>
+              <th class="mat-header-cell text-right">Balance Cost <br/>to Complete <br/>
                 <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
@@ -106,7 +107,7 @@
             <mat-accordion *ngFor="let project of allProjectsData">
               <!-- Project List Data -->
               <mat-expansion-panel>
-                <mat-expansion-panel-header class="border-row background-projects">
+                <mat-expansion-panel-header class="background-projects">
                   <tr class="material-row backgound-none-important p-r-10">
                     <td class="mat-cell">{{ project.projectName }}</td>
                     <td class="mat-cell"></td>
@@ -120,11 +121,11 @@
                 </mat-expansion-panel-header>
 
                 <!-- Material category details of specific project -->
-                <mat-expansion-panel *ngFor="let matCategory of project.materialCategoryDataList">
-                  <mat-expansion-panel-header class="border-row background-category">
+                <mat-expansion-panel *ngFor="let matCategory of project.materialCategoryDataList" [expanded]="true">
+                  <mat-expansion-panel-header class="background-category">
                     <tr class="material-row p-r-10">
                       <td class="mat-cell">{{ matCategory.materialCategoryName }}</td>
-                      <td class="mat-cell">{{ matCategory.materialUnit }}</td>
+                      <td class="mat-cell"></td>
                       <td class="mat-cell text-right">{{ matCategory.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
                       <td class="mat-cell text-right">{{ matCategory.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
                       <td class="mat-cell text-right">{{ matCategory.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
@@ -135,7 +136,7 @@
                   </mat-expansion-panel-header>
 
                   <!-- material details of specific material category -->
-                  <tr class="material-row border-row background-project-list" *ngFor="let material of matCategory.materialCTCDataList">
+                  <tr class="material-row background-project-list" *ngFor="let material of matCategory.materialCTCDataList">
                     <td class="mat-cell">{{ material.materialName }}</td>
                       <td class="mat-cell">{{ material.materialUnit }}</td>
                       <td class="mat-cell text-right">{{ material.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>

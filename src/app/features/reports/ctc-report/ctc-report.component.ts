@@ -122,5 +122,9 @@ export class CTCReportComponent implements OnInit {
       }
     })
   }
+
+  toggleAllSelection() {
+    
+  }
 }
 
