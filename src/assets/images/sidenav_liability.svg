@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Liability" transform="translate(-21018 2413)">
+    <g id="Rectangle_19076" data-name="Rectangle 19076" transform="translate(21018 -2413)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0">
+      <rect width="24" height="24" stroke="none"/>
+      <rect x="0.5" y="0.5" width="23" height="23" fill="none"/>
+    </g>
+    <g id="Report_3" data-name="Report 3" transform="translate(21021 -2410.05)">
+      <g id="Group_32250" data-name="Group 32250" transform="translate(0 7.159)">
+        <g id="Group_32249" data-name="Group 32249">
+          <path id="Path_7818" data-name="Path 7818" d="M4.526,187.75H.648A.65.65,0,0,0,0,188.4v9.7a.647.647,0,0,0,.648.648H4.526a.647.647,0,0,0,.648-.648v-9.7A.647.647,0,0,0,4.526,187.75Z" transform="translate(0 -187.75)" fill="#0e3c55"/>
+        </g>
+      </g>
+      <g id="Group_32252" data-name="Group 32252" transform="translate(6.465 0.05)">
+        <g id="Group_32251" data-name="Group 32251" transform="translate(0 0)">
+          <path id="Path_7819" data-name="Path 7819" d="M175.226.05h-3.878a.647.647,0,0,0-.648.644V17.5a.647.647,0,0,0,.648.648h3.878a.647.647,0,0,0,.648-.648V.7A.647.647,0,0,0,175.226.05Z" transform="translate(-170.7 -0.05)" fill="#f47822"/>
+        </g>
+      </g>
+      <g id="Group_32254" data-name="Group 32254" transform="translate(12.931 5.22)">
+        <g id="Group_32253" data-name="Group 32253">
+          <path id="Path_7820" data-name="Path 7820" d="M345.926,136.55h-3.878a.645.645,0,0,0-.648.648v11.635a.647.647,0,0,0,.648.648h3.878a.647.647,0,0,0,.648-.648V137.2A.647.647,0,0,0,345.926,136.55Z" transform="translate(-341.4 -136.55)" fill="#0e3c55"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

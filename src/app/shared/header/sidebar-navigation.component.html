@@ -1,11 +1,9 @@
 <div class="sideNavigation" fxShow="true" fxShow.gt-xs="true" fxShow.sm="false" fxShow.xs="false">
-    <span class="material-icons mat-arrow-icon cursor" (click)="collapseSideMenu()"
-        [ngClass]="{'no-collapsed':!isCollapseMenu, 'collapsed':isCollapseMenu}">
-        {{!isCollapseMenu ? 'keyboard_arrow_left' : 'keyboard_arrow_right'}}
-    </span>
-    <div class="sidenav sidebar-navigation" *ngIf="role" [ngClass]="!isCollapseMenu ? 'f-w' : 'c-w' "
-        (mouseover)="showOnHover()" (mouseout)="hideOnHover()">
-        <!-- <ng-container *ngIf="!isCollapseMenu; else clsicon">
+  <span class="material-icons mat-arrow-icon cursor" (click)="collapseSideMenu()" [ngClass]="{'no-collapsed': !isCollapseMenu, collapsed: isCollapseMenu}">
+    {{ !isCollapseMenu ? "keyboard_arrow_left" : "keyboard_arrow_right" }}
+  </span>
+  <div class="sidenav sidebar-navigation" *ngIf="role" [ngClass]="!isCollapseMenu ? 'f-w' : 'c-w'" (mouseover)="showOnHover()" (mouseout)="hideOnHover()">
+    <!-- <ng-container *ngIf="!isCollapseMenu; else clsicon">
             <span class="side-logo sl">
                 <img class="buildsupply-logo" src="../../../assets/images/loginLogo.png" alt="logo" />
             </span>
@@ -16,7 +14,7 @@
             </span>
         </ng-template> -->
 
-        <!-- <ng-container *ngFor="let selectedHeader of headerConst">
+    <!-- <ng-container *ngFor="let selectedHeader of headerConst">
             <a href="javascript:void(0)" *ngIf="selectedHeader.flag" [routerLink]="[selectedHeader.link]"
                 (click)="isCollapseMenu = true">
                 <button [class.active]="buttonName === selectedHeader.name" class="header-links" mat-button>
@@ -26,17 +24,15 @@
             </a>
         </ng-container> -->
 
-        <ng-container *ngIf="data && data.moduleList">
-            <ng-container *ngFor="let item of data.moduleList">
-                <a class="sidenav-btns" href="javascript:void(0)" [routerLink]="'/' + item.modulePath"
-                    (click)="isCollapseMenu = true">
-                    <button [class.active]="buttonName === item.moduleName" class="header-links" mat-button>
-                        <img src="../../../assets/images/{{item.moduleIcon}}" class="ml-1 mr-3" />
-                        <span>{{item.moduleName}}</span>
-                    </button>
-                </a>
-            </ng-container>
-        </ng-container>
-    </div>
-
+    <ng-container *ngIf="data && data.moduleList">
+      <ng-container *ngFor="let item of data.moduleList">
+        <a class="sidenav-btns" href="javascript:void(0)" [routerLink]="'/' + item.modulePath" (click)="isCollapseMenu = true">
+          <button [class.active]="buttonName === item.moduleName" class="header-links" mat-button>
+            <img src="../../../assets/images/sidenav_{{ item.moduleIcon }}" class="ml-1 mr-3" />
+            <span>{{ item.moduleName }}</span>
+          </button>
+        </a>
+      </ng-container>
+    </ng-container>
+  </div>
 </div>
