@@ -47,6 +47,7 @@ export class AppDashboardComponent implements OnInit {
   isMobile: boolean;
   cntryList: any[];
   isAdDisplay: string;
+  diffDays
 
   constructor(public dialog: MatDialog,
     private router: Router,
@@ -136,15 +137,15 @@ export class AppDashboardComponent implements OnInit {
   }
 
   updateRange(range: Range) {
-
     this.range = range;
     if (range.toDate < range.fromDate) {
       this.notifier.snack("To date can'nt be earlier than from date")
     }
     else {
+      const diffTime = Math.abs(range.fromDate.getTime() - range.toDate.getTime());
+      this.diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       this.getDashboardInfo(this.label);
     }
-
   }
 
   setupPresets() {
@@ -252,16 +253,30 @@ export class AppDashboardComponent implements OnInit {
     return year + "-" + month + "-" + day;
   }
 
+  getRange() {
+    if (this.diffDays <= 31) {
+      return 'Custom'
+    } else if (88 <= this.diffDays && this.diffDays <= 93) {
+      return 'Weekly'
+    } else if (365 <= this.diffDays && this.diffDays <= 366) {
+      return 'Yearly'
+    }
+    // else if(){
+
+    // }
+  }
+
   getDashboardInfo(label) {
     let projectIds = this.filterForm.get("projectFilter").value && this.filterForm.get("projectFilter").value.map(val => {
       return val.projectId;
     })
+    const range = this.getRange()
     const data = {
       "orgId": this.orgId,
       "startDate": this.getFormatedDate(this.range.fromDate),
       "endDate": this.getFormatedDate(this.range.toDate),
       "dataSource": label,
-      "range": "Custom",
+      "range": 'Custom',
       "projectList": projectIds ? projectIds : []
     }
     this._userService.getDashboardData(data, true).then(res => {
@@ -277,7 +292,6 @@ export class AppDashboardComponent implements OnInit {
         ['Mar', 1336060, 400361, 1001582],
         ['April', 1336060, 400361, 1001582]])
       }
-
       if (label == 'rfq') {
         this.rfqData = res.data;
         this.chartService.barChartData.next([['Month', 'RFP Amount'],
@@ -344,28 +358,15 @@ export class AppDashboardComponent implements OnInit {
     });
 
   }
-  // onResize(event) {
-  //  if(event.target.innerWidth <= 494){
-  //    this.tab1 = "P.O.";
-  //    this.tab2 = "RFQ for Quotations";
-  //  }else{
-  //    this.tab1 = "Purchase Orders";
-  //    this.tab2 = "Request for Quotations";
-  //  }
-  // }
 
   @HostListener('window:resize', ['$event'])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 494) {
       this.tab1 = "P.O.";
-      this.tab2 = "RFQ";
+      this.tab2 = "RFPs";
     } else {
       this.tab1 = "Purchase Orders";
-      this.tab2 = "Request for Quotations";
+      this.tab2 = "Request for Price(RFPs)";
     }
   }
-
-  // isSidebarCollapsed(e){
-  //   this.isSideNavCollapsed = e;
-  // }
 }

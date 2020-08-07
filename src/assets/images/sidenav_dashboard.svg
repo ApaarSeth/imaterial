@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Dashboard" transform="translate(-15222 4048)">
+    <g id="Rectangle_19068" data-name="Rectangle 19068" transform="translate(15222 -4048)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0">
+      <rect width="24" height="24" stroke="none"/>
+      <rect x="0.5" y="0.5" width="23" height="23" fill="none"/>
+    </g>
+    <g id="dashboard-2" data-name="dashboard" transform="translate(15224.514 -4045.487)">
+      <path id="Path_7801" data-name="Path 7801" d="M7.442,0H1.408A1.409,1.409,0,0,0,0,1.408v3.62A1.409,1.409,0,0,0,1.408,6.436H7.442A1.409,1.409,0,0,0,8.85,5.028V1.408A1.409,1.409,0,0,0,7.442,0Zm0,0" fill="#f47822"/>
+      <path id="Path_7802" data-name="Path 7802" d="M7.442,213.332H1.408A1.409,1.409,0,0,0,0,214.74v8.448A1.409,1.409,0,0,0,1.408,224.6H7.442a1.409,1.409,0,0,0,1.408-1.408V214.74A1.409,1.409,0,0,0,7.442,213.332Zm0,0" transform="translate(0 -205.287)" fill="#0e3c55"/>
+      <path id="Path_7803" data-name="Path 7803" d="M284.774,341.332H278.74a1.409,1.409,0,0,0-1.408,1.408v3.62a1.409,1.409,0,0,0,1.408,1.408h6.034a1.409,1.409,0,0,0,1.408-1.408v-3.62A1.409,1.409,0,0,0,284.774,341.332Zm0,0" transform="translate(-266.873 -328.46)" fill="#f47822"/>
+      <path id="Path_7804" data-name="Path 7804" d="M284.774,0H278.74a1.409,1.409,0,0,0-1.408,1.408V9.855a1.409,1.409,0,0,0,1.408,1.408h6.034a1.409,1.409,0,0,0,1.408-1.408V1.408A1.409,1.409,0,0,0,284.774,0Zm0,0" transform="translate(-266.873)" fill="#0e3c55"/>
+    </g>
+  </g>
+</svg>
