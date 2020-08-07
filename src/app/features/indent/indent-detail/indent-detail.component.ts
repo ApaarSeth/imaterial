@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
 import {
@@ -27,7 +27,7 @@ export interface IndentData {
   templateUrl: "./indent-detail.component.html",
   styleUrls: [ "../../../../assets/scss/main.scss" ]
 })
-export class IndentDetailComponent implements OnInit {
+export class IndentDetailComponent implements OnInit, OnDestroy {
   product: ProjectDetails;
   projectId: number;
 
@@ -147,4 +147,9 @@ export class IndentDetailComponent implements OnInit {
       "/indent/" + this.projectId + "/single-indent/" + row.indentId
     ]);
   }
+
+  ngOnDestroy() {
+    this.susbcriptions.forEach(itm => itm.unsubscribe());
+  }
+
 }
