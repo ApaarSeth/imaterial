@@ -3,7 +3,6 @@ import { MatDialog } from "@angular/material";
 import { ProjectDetails, AllCTCProjectData } from "src/app/shared/models/project-details";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { ReportService } from 'src/app/shared/services/supplierLiabilityReport.service';
-import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -26,12 +25,13 @@ export class CTCReportComponent implements OnInit {
   allProjectsList: ProjectDetails[] = [];
   allProjectsData: AllCTCProjectData[];
   allProjects: ProjectDetails[];
+  selectedProjectIds: number[] = [];
+  projectNumIds: number[] = [];
 
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private reportService: ReportService,
-    private _projectService: ProjectService,
     private activatedRoute: ActivatedRoute
   ) {
   }
@@ -43,21 +43,10 @@ export class CTCReportComponent implements OnInit {
     this.amountRange = countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions', 'Billions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.allProjects = this.activatedRoute.snapshot.data.resolverData[1].data;
+    this.allProjectsList = this.activatedRoute.snapshot.data.resolverData[1].data;
     this.formInit();
-    this.selectedMenu = 'Full Figures'
-    this.getAllProjects();
-  }
-
-  /**
-   * @description to get all projects list
-   */
-  getAllProjects() {
-    this._projectService.getProjects(this.orgId, this.userId).then(res => {
-      if (res.data) {
-        this.allProjectsList = res.data;
-      }
-    })
+    this.selectedMenu = 'Full Figures';
+    this.projectNumIds = this.allProjectsList.map(elem => elem.projectId);
   }
 
   /**
@@ -66,12 +55,20 @@ export class CTCReportComponent implements OnInit {
    */
   getProjectMaterials() {
     this.projectIds = this.form.value.selectedProject.map(selectedProject => String(selectedProject));
+    if(this.projectIds.length > 0){
+      this.sendDataGetCTCReport();
+    }else{
+      this.allProjectsData = [];
+    }
+  }
+
+  sendDataGetCTCReport(){
     const selectedProjectIds = {
       "projectIdList": this.projectIds
     }
     this.reportService.getCTCReportData(selectedProjectIds).then(res => {
       this.allProjectsData = res;
-    })
+    });
   }
 
   formInit() {
@@ -110,7 +107,6 @@ export class CTCReportComponent implements OnInit {
   }
 
   downloadExcel(){
-
     const data = {
       "projectIdList": this.projectIds
     }
@@ -123,8 +119,18 @@ export class CTCReportComponent implements OnInit {
     })
   }
 
-  toggleAllSelection() {
-    
+  /**
+   * @description function to check if select all option clicked or not
+   * @param text 'select all' text present or not
+   */
+  getAllIds(text){
+    if(text === 'Select All'){
+      this.projectIds = this.projectNumIds.map(String);
+      this.sendDataGetCTCReport();
+    }else{
+      this.projectIds = [];
+      this.allProjectsData = [];
+    }
   }
 }
 
