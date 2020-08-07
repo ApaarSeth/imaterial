@@ -17,17 +17,17 @@ const routes: Routes = [
   },
   {
     path: "rfq-bid/:id",
-    data: { breadcrumb: 'RFQ Bid' },
+    data: { breadcrumb: 'RFP Bid' },
     component: RfqBidsComponent
   },
   {
     path: "review/:rfqId",
-    data: { breadcrumb: 'RFQ Review' },
+    data: { breadcrumb: 'RFP Review' },
     component: ReviewComponent
   },
   {
     path: "rfq-view/:id",
-    data: { breadcrumb: 'RFQ View' },
+    data: { breadcrumb: 'RFP View' },
     component: RFQViewComponent
   },
   {

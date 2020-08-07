@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
         orientation: Orientation.Bottom
       },
       {
-        title: 'Show Open Indents',
+        title: 'Show Open PRs',
         selector: '.showOpenIndents',
         content: 'Click here to view all your indents.',
         orientation: Orientation.Bottom
