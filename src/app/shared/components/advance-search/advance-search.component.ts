@@ -119,6 +119,10 @@ export class AdvanceSearchComponent implements OnInit {
     expiryFromPickerEl: string = '';
     expiryToPickerEl: string = '';
 
+    // dates min max
+    raisedMinDate: any;
+    raisedMaxDate: any;
+
     constructor(
         private commonService: CommonService,
         private projectService: ProjectService,
@@ -525,7 +529,6 @@ export class AdvanceSearchComponent implements OnInit {
         if (type._datepickerInput.value) {
             let d1 = new Date(type._datepickerInput.value);
             let d2 = new Date(event.target.value);
-            // event._maxDate = type._datepickerInput.value;
             if (d2.getTime() < d1.getTime()) {
                 event.target.value = '';
             }
@@ -535,7 +538,6 @@ export class AdvanceSearchComponent implements OnInit {
         if (type._datepickerInput.value) {
             let d1 = new Date(event.target.value);
             let d2 = new Date(type._datepickerInput.value);
-            // type._maxDate = event.target.value;
             if (d2.getTime() < d1.getTime()) {
                 type._datepickerInput.value = '';
             }

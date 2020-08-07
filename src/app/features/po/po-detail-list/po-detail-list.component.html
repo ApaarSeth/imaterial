@@ -18,17 +18,24 @@
   </div>
   <div class="p-b-20 min-height parent create-po-dashboard"
     *ngIf="poApprovalDetailsTemp || poDraftedDetailsTemp || acceptedRejectedPOListTemp || poCount > 0">
-    <div class="row">
-      <div class="col-xs-7">
-        <mat-form-field class="example-form-field border-input project p-l-10"
-          [ngClass]="isMobile ? 'w-100' : ' w-vw-14' ">
+    <div class="row" [ngClass]="isMobile ? 'ml-0' : '' ">
+      <div class="col-xs-6">
+        <mat-form-field class="example-form-field border-input project"
+          [ngClass]="isMobile ? 'w-100 p-l-10' : ' w-vw-14' ">
           <input matInput placeholder="Search PO" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
         </mat-form-field>
       </div>
-      <div class="text-right col-xs-5 create-po-btn p-r-20 p-t-10" [ngClass]="isMobile ? 'sm-btn1' : ''">
+
+      <div class="text-right col-xs-6 create-po-btn p-r-20 p-t-10" [ngClass]="isMobile ? 'sm-btn1 d-flex' : '' ">
+        <ng-container *ngIf="isMobile">
+          <button mat-button class="fltr-btn brand-color" (click)="openFilter()">
+            <mat-icon inline="true">filter_list</mat-icon>
+          </button>
+        </ng-container>
+
         <button mat-raised-button class="main-background-color main-button color-white demo-title"
           [routerLink]="['./initiate-po']" matTooltip="Issue P.O. to supplier without Request For Quotations">
           Create P.O.
@@ -38,11 +45,19 @@
 
     <div class="row">
 
-      <ng-container *ngIf="!isMobile">
+      <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2">
           <advance-search filterType="po"></advance-search>
         </div>
       </ng-container>
+
+      <ng-template #mobileSearch>
+        <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close' ">
+          <div class="sdb" (click)="closeFilter()"></div>
+          <advance-search class="mb-cl" filterType="po"></advance-search>
+        </div>
+      </ng-template>
+
 
       <div class="col-md-10 text-right">
         <!-- Topmost Status -->
@@ -136,7 +151,8 @@
 
             <div *ngIf="poApprovalDetailsTemp && permissionObj.poApprovalFlag">
               <mat-expansion-panel class="myPanel" [expanded]="true">
-                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
+                  [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
                   <mat-panel-title>
                     P.O. For Approval
                   </mat-panel-title>
@@ -201,7 +217,8 @@
             <br />
             <div *ngIf="poDraftedDetailsTemp">
               <mat-expansion-panel class="myPanel" [expanded]="true">
-                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
+                  [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
                   <mat-panel-title>
                     Drafted P.O.
                   </mat-panel-title>
@@ -265,7 +282,8 @@
             <br />
             <div *ngIf="acceptedRejectedPOListTemp">
               <mat-expansion-panel class="myPanel" [expanded]="true">
-                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
+                  [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
                   <mat-panel-title>
                     <div class="col-xs-5 text-left approved">
                       Approved P.O.
