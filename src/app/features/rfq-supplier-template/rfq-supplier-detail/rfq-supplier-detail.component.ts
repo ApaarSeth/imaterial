@@ -91,7 +91,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     defaultParagraphSeparator: 'p',
     defaultFontName: 'Arial',
     toolbarHiddenButtons: [
-      [ 'backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript' ]
+      ['backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript']
     ],
 
   };
@@ -100,12 +100,12 @@ export class RFQSupplierDetailComponent implements OnInit {
   ngOnInit() {
     this.rfqService
       .getRFQDetailSupplier(
-        this.activatedRoute.snapshot.params[ "rfqId" ],
-        this.activatedRoute.snapshot.params[ "supplierId" ]
+        this.activatedRoute.snapshot.params["rfqId"],
+        this.activatedRoute.snapshot.params["supplierId"]
       )
       .then(data => {
         if (data.data.rfqSupplierBidFlag === 1) {
-          this.router.navigate([ '/rfq-bids/finish' ]);
+          this.router.navigate(['/rfq-bids/finish']);
         }
         this.rfqSupplierDetailList = data.data;
         localStorage.setItem('isInternational', JSON.stringify(this.rfqSupplierDetailList.isInternational));
@@ -163,12 +163,12 @@ export class RFQSupplierDetailComponent implements OnInit {
     // get the documentList whose supplierId is not null and replace those with previous list
     rfqSupplierObj.projectList.forEach(project => {
       project.materialList.forEach(mat => {
-        if(mat.documentsList){
+        if (mat.documentsList) {
           mat.documentsList = mat.documentsList.filter(doc => doc.supplierId !== null)
         }
       })
     });
-    
+
     if (this.rfqSupplierDetailList.isInternational === 1) {
       rfqSupplierObj.projectList.forEach(itm => {
         if (this.taxAndCostData.hasOwnProperty(itm.projectId)) {
@@ -176,7 +176,7 @@ export class RFQSupplierDetailComponent implements OnInit {
         }
       });
       if (Object.keys(this.otherCostData).length && this.otherCostData.hasOwnProperty('otherCostInfo')) {
-        rfqSupplierObj.otherCostRfqList = this.otherCostData[ 'otherCostInfo' ];
+        rfqSupplierObj.otherCostRfqList = this.otherCostData['otherCostInfo'];
       }
 
       this.submitBidInternational(rfqSupplierObj);
@@ -187,9 +187,9 @@ export class RFQSupplierDetailComponent implements OnInit {
 
   updateItemTaxInfo(item) {
     item.materialList.forEach(itm => {
-      if (this.taxAndCostData[ item.projectId ].hasOwnProperty(itm.materialId)) {
-        itm.taxInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ] !== null ? this.taxAndCostData[ item.projectId ][ itm.materialId ].taxInfo : [];
-        itm.otherCostInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ] !== null ? this.taxAndCostData[ item.projectId ][ itm.materialId ].otherCostInfo : [];
+      if (this.taxAndCostData[item.projectId].hasOwnProperty(itm.materialId)) {
+        itm.taxInfo = this.taxAndCostData[item.projectId][itm.materialId] !== null ? this.taxAndCostData[item.projectId][itm.materialId].taxInfo : [];
+        itm.otherCostInfo = this.taxAndCostData[item.projectId][itm.materialId] !== null ? this.taxAndCostData[item.projectId][itm.materialId].otherCostInfo : [];
       }
     });
     return item;
@@ -211,9 +211,9 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
-    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
-    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
+    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
+    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
+    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
     this.router.navigate([
@@ -235,9 +235,9 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
-    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
-    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
+    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
+    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
+    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
     this.router.navigate([
@@ -290,7 +290,7 @@ export class RFQSupplierDetailComponent implements OnInit {
 
     if (this.dateDue != "" && this.dateDue != null) {
       if (value == setDob) {
-        this.showDateError = "Quote Valid Till must be greater than RFQ Expiry Date";
+        this.showDateError = "Quote Valid Till must be greater than RFP Expiry Date";
         this.dudateFlag = false;
       }
       else {
@@ -402,7 +402,7 @@ export class RFQSupplierDetailComponent implements OnInit {
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
           }
 
-          if ((brand == material.rfqBrandList[ material.rfqBrandList.length - 1 ])) {
+          if ((brand == material.rfqBrandList[material.rfqBrandList.length - 1])) {
 
             if (this.rfqSupplierDetailList.isInternational === 0) {
 
@@ -497,16 +497,16 @@ export class RFQSupplierDetailComponent implements OnInit {
       width: "600px",
       data: {
         type,
-        rfqId: Number(this.activatedRoute.snapshot.params[ "rfqId" ]),
+        rfqId: Number(this.activatedRoute.snapshot.params["rfqId"]),
         prevData
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
         if (!this.taxAndCostData.hasOwnProperty(pId)) {
-          this.taxAndCostData[ pId ] = {};
+          this.taxAndCostData[pId] = {};
         }
-        this.taxAndCostData[ pId ][ mId ] = res;
+        this.taxAndCostData[pId][mId] = res;
       }
       if (type === 'otherCost') {
         this.otherCostData = res;
@@ -545,7 +545,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     let prevUploadedImageList: any;
     this.rfqSupplierDetailList.projectList.forEach(project => {
       project.materialList.forEach(mat => {
-        if(selectedMaterial.materialId === mat.materialId){
+        if (selectedMaterial.materialId === mat.materialId) {
           prevUploadedImageList = mat;
         }
       })
@@ -568,12 +568,12 @@ export class RFQSupplierDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== null) {
-        
+
         const matId = result.map(mat => mat.materialId).filter((value, index, self) => self.indexOf(value) === index);
 
         this.rfqSupplierDetailList.projectList.map(project => {
           project.materialList.map(mat => {
-            if(mat.materialId === matId[0]){
+            if (mat.materialId === matId[0]) {
               mat.documentsList = result;
             }
           })
@@ -591,7 +591,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     let allSupplierImages: any;
     this.rfqSupplierDetailList.projectList.forEach(project => {
       project.materialList.forEach(mat => {
-        if(materialId === mat.materialId){
+        if (materialId === mat.materialId) {
           allSupplierImages = mat;
         }
       })

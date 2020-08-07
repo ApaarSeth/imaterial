@@ -23,33 +23,28 @@
 
                 <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your BOM of materials">
                   <div class="things-to-do__img">
-                    <img src="../../../assets/images/BOM.png" alt="" class="img-fluid" />
+                    <img src="../../../assets/images/bom.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create BOM</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFQs">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your PRs">
                   <div class="things-to-do__img">
-                    <img src="../../../assets/images/RFQ.png" alt="" class="img-fluid" />
+                    <img src="../../../assets/images/pr.svg" alt="Purchase Requistion" class="img-fluid" />
                   </div>
-                  <h6 class="mb-0">Create RFQ</h6>
+                  <h6 class="mb-0">Create PR</h6>
                 </div>
 
-                <div
-                  *ngIf="permissionObj.rfqFlag"
-                  class="things-to-do__icons text-center cursor mr-2"
-                  [routerLink]="['/globalStore/' + orgId]"
-                  matTooltip="You can check your material details"
-                >
-                  <div class="things-to-do__img">
-                    <img src="../../../assets/images/global-store.png" alt="Global Store" class="img-fluid" />
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFPs">
+                  <div class="things-to-dopng__img">
+                    <img src="../../../assets/images/rfp.svg" alt="" class="img-fluid" />
                   </div>
-                  <h6 class="mb-0">Global Store</h6>
+                  <h6 class="mb-0">Create RFPs</h6>
                 </div>
 
                 <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
                   <div class="things-to-do__img">
-                    <img src="../../../assets/images/PO.png" alt="" class="img-fluid" />
+                    <img src="../../../assets/images/po.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create PO</h6>
                 </div>
@@ -118,7 +113,7 @@
                               {{ rfqData?.totalCount }}
                             </h2>
                             <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalCount">0</h2>
-                            <p class="mb-0">Number of RFQ</p>
+                            <p class="mb-0">Number of RFP</p>
                           </div>
                         </div>
 
@@ -134,14 +129,14 @@
                             <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalValue">
                               <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
                             </h2>
-                            <p class="mb-0">RFQ Amount</p>
+                            <p class="mb-0">RFP Amount</p>
                           </div>
                         </div>
                       </div>
                       <!-- current end -->
                     </mat-tab>
 
-                    <mat-tab label="Indents" *ngIf="indentData">
+                    <mat-tab label="Purchase Requisitions (PR)" *ngIf="indentData">
                       <div class="statistics__purchase-order d-flex">
                         <div class="statistics__tile stats mr-3">
                           <!-- <div class="stats__icon">
@@ -150,7 +145,7 @@
                           <div class="stats__content">
                             <h2 class="mb-1" *ngIf="indentData.totalCount">{{ indentData?.totalCount }}</h2>
                             <h2 class="mb-1" *ngIf="!indentData.totalCount">0</h2>
-                            <p class="mb-0">Fulfilled Indents</p>
+                            <p class="mb-0">Fulfilled PR</p>
                           </div>
                         </div>
 
@@ -161,7 +156,7 @@
                           <div class="stats__content">
                             <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue }}</h2>
                             <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
-                            <p class="mb-0">Raised Indents</p>
+                            <p class="mb-0">Raised PR</p>
                           </div>
                         </div>
                       </div>

@@ -55,7 +55,7 @@ export class CreateRfqComponent implements OnInit {
       {
         title: 'Search Project',
         selector: '.select-project',
-        content: 'Select one/multiple projects to add material in the RFQ.',
+        content: 'Select one/multiple projects to add material in the RFP.',
         orientation: Orientation.Left
       }
     ],
@@ -71,7 +71,7 @@ export class CreateRfqComponent implements OnInit {
       {
         title: 'Add Supplier',
         selector: '.add-supplier-btn',
-        content: 'Add supplier to whom RFQ needs to be floated.',
+        content: 'Add supplier to whom RFP needs to be floated.',
         orientation: Orientation.Left
       }
     ],
