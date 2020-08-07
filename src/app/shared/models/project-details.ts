@@ -39,6 +39,7 @@ export interface ProjectDetails {
   callingCode?: string;
   costUnit?: string;
   countryId: number;
+  selected?: boolean;
 }
 
 export interface ProjetPopupData {

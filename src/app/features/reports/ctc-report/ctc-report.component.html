@@ -1,5 +1,5 @@
 <div class="page-start-point changeWidth mt-5 pt-4 ctc-report">
-  <form *ngIf="allProjects" [formGroup]="form">
+  <form *ngIf="allProjectsList" [formGroup]="form">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Generate Report and amount  -->
       <div class="row align-items-center mt-2 ctc-upper-section">
@@ -17,9 +17,12 @@
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
-              <!-- <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option> -->
+              
+              <app-select-check-all [model]="form.get('selectedProject')" [values]="projectNumIds" (selectAllText)="getAllIds($event)"></app-select-check-all>
+
+              <!-- <mat-option #allSelected (click)="toggleAllSelection(allSelected)" [value]="projectNumIds">Select All</mat-option> -->
               <mat-option *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']"
-                [value]="project.projectId" selected="project.clicked" (click)="getProjectMaterials()">
+                [value]="project.projectId" (click)="getProjectMaterials()">
                 {{project.projectName}}
               </mat-option>
             </mat-select>
