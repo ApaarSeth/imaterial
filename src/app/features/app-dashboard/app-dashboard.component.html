@@ -1,5 +1,6 @@
 <div class="dashboard app-dashboard">
-  <div class="container-fluid bg-gray pl-0 pr-3 mt-120">
+  <div class="container-fluid bg-gray pl-0 pr-3">
+    <!-- <div class="container-fluid bg-gray pl-0 pr-3 mt-120"> -->
     <div class="row">
       <!-- <sidebar-navigation (collapseMenu)="isSidebarCollapsed($event)"></sidebar-navigation> -->
       <!-- [class.changeWidth]="isSideNavCollapsed" -->
@@ -14,35 +15,40 @@
             <div class="things-to-do bg-white mb-4 equal-height sml-d1">
               <!-- <h5 class="mb-3">Things to do</h5> -->
               <div class="things-to-do__inner d-flex justify-content-between align-items-center sml-db">
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openProject()" matTooltip="You can add your project details">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
+                  (click)="openProject()" matTooltip="You can add your project details">
                   <div class="things-to-do__img add-project-img">
                     <img src="../../../assets/images/Add-Project.png" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Add Project</h6>
                 </div>
 
-                <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your BOM of materials">
+                <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()"
+                  matTooltip="You can create your BOM of materials">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/bom.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create BOM</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your PRs">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
+                  (click)="openBomDialog()" matTooltip="You can create your PRs">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/pr.svg" alt="Purchase Requistion" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create PR</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFPs">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
+                  [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFPs">
                   <div class="things-to-dopng__img">
                     <img src="../../../assets/images/rfp.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create RFPs</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
+                  [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/po.svg" alt="" class="img-fluid" />
                   </div>
@@ -67,7 +73,8 @@
             <div class="statistics bg-white p-20 p-r-0 mb-4">
               <div class="row">
                 <div class="col-xs-12 col-md-7 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : ''">
-                  <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)" [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
+                  <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)"
+                    [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
                     <mat-tab label="{{ tab1 }}" *ngIf="permissionObj.rfqFlag && poData">
                       <div class="statistics__purchase-order d-flex">
                         <div class="statistics__tile stats mr-3">
@@ -170,18 +177,22 @@
                       <mat-label>Select Project</mat-label>
                       <mat-select formControlName="projectFilter" multiple>
                         <div class="display-flex">
-                          <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
+                          <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
+                            [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
                           <button mat-button matSuffix mat-icon-button>
                             <mat-icon>search</mat-icon>
                           </button>
                         </div>
-                        <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project">{{ project.projectName }} </mat-option>
+                        <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']"
+                          [value]="project">{{ project.projectName }} </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </form>
                 </div>
-                <div class="col-xs-6 col-md-3 p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
-                  <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
+                <div class="col-xs-6 col-md-3 p-r-0 customDatePicker"
+                  [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
+                  <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options"
+                    #dateRangePicker></ngx-mat-drp>
                 </div>
                 <div *ngIf="permissionObj.rfqFlag && poData && label == 'po'">
                   <app-bar-chart></app-bar-chart>
