@@ -20,6 +20,10 @@ export class MainLayoutComponent implements OnInit {
   subscriptionsData: any;
   isFreeTrialActivate: boolean;
 
+  isFreeTrialSubscription: any;
+
+  users: any;
+
   constructor(private router: Router,
     private _userService: UserService,
     private activateRoute: ActivatedRoute
@@ -32,9 +36,26 @@ export class MainLayoutComponent implements OnInit {
     this.userId = Number(localStorage.getItem("userId"));
     this.userName = localStorage.getItem("userName");
     this.url = localStorage.getItem('profileUrl');
+    this.isFreeTrialSubscription = Number(localStorage.getItem('isFreeTrialSubscription'));
     this.startSubscriptions();
-    this.checkFreeTrial();
+    // this.checkFreeTrial();
+    this.getUserInformation(this.userId);
   }
+
+  getUserInformation(userId) {
+    if (this.isFreeTrialSubscription && this.isFreeTrialSubscription === 1) {
+      this.isFreeTrialActivate = true;
+    } else {
+      this._userService.getUserInfo(userId).then(res => {
+        this.users = res.data ? res.data[ 0 ] : null;
+        // this.checkFreeTrial();
+        if (this.users && this.users.isFreeTrialSubscription === 1) {
+          this.isFreeTrialActivate = true;
+        }
+      });
+    }
+  }
+
 
   checkFreeTrial() {
     const data = this.subscriptionsData;

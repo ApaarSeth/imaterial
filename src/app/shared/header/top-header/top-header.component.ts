@@ -37,7 +37,7 @@ export class TopHeaderComponent implements OnInit {
   isFreeTrialActivate: boolean;
 
   isActiveSubscription: boolean;
-  users: UserService;
+  users: any;
 
   constructor(
     private commonService: CommonService,
@@ -68,12 +68,13 @@ export class TopHeaderComponent implements OnInit {
     const source = interval(30000);
     this.subscription = source.subscribe(val => { this.getNotifications(); this.startSubscriptions() });
 
-    this.checkFreeTrial();
+    // this.checkFreeTrial();
   }
 
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
       this.users = res.data ? res.data[ 0 ] : null;
+      this.checkFreeTrial();
     });
   }
 
@@ -95,7 +96,9 @@ export class TopHeaderComponent implements OnInit {
               const dates = data.planFrequencyList[ i ].planList[ x ].activeSubscription
               let tDate = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
               data.planFrequencyList[ i ].planList[ x ][ 'daysLeft' ] = this.setTrialDaysLeft(tDate, dates.trialPeriodEndDate);
-              this.isFreeTrialActivate = true;
+              if (this.users && this.users.isFreeTrialSubscription === 1) {
+                this.isFreeTrialActivate = true;
+              }
             }
           }
         }

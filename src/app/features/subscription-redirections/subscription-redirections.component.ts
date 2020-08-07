@@ -49,4 +49,8 @@ export class SubscriptionRedirectionsComponent implements OnInit {
         setTimeout(_ => { this.router.navigate([ "/dashboard" ]) }, 20000);
     }
 
+    gotoSubscriptions() {
+        this.router.navigate([ 'profile/subscriptions' ]);
+    }
+
 }
