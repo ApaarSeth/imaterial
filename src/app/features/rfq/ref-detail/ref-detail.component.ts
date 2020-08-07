@@ -33,6 +33,8 @@ export class RefDetailComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  isFilter: boolean;
+
   displayedColumns = [
     "RFQ Name",
     "Raised Date",
@@ -90,6 +92,7 @@ export class RefDetailComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.advSearchService.RFQFilterRequest$.subscribe(res => {
         this.getRFQDetails({ data: res });
+        this.isFilter = false;
       }),
       this.advSearchService.RFQFilterExportRequest$.subscribe(res => {
         this.rfqService.postRFQExport(this.orgId, res).then(res => {
@@ -97,6 +100,7 @@ export class RefDetailComponent implements OnInit, OnDestroy {
             window.open(res.data.url);
           }
         });
+        this.isFilter = false;
       })
     );
   }
@@ -124,6 +128,14 @@ export class RefDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(item => item.unsubscribe());
+  }
+
+  openFilter() {
+    this.isFilter = true;
+  }
+
+  closeFilter() {
+    this.isFilter = false;
   }
 
 }

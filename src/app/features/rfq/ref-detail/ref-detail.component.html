@@ -30,7 +30,7 @@
       </div>
       <div class="text-right col-xs-6 create-po-btn p-r-20 p-t-10" [ngClass]="isMobile ? 'sm-btn1 d-flex' : '' ">
         <ng-container *ngIf="isMobile">
-          <button mat-button class="fltr-btn brand-color">
+          <button mat-button class="fltr-btn brand-color" (click)="openFilter()">
             <mat-icon inline="true">filter_list</mat-icon>
           </button>
         </ng-container>
@@ -43,18 +43,25 @@
 
     <div class="row">
 
-      <ng-container *ngIf="!isMobile">
+      <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2">
           <advance-search filterType="rfq"></advance-search>
         </div>
       </ng-container>
+
+      <ng-template #mobileSearch>
+        <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close' ">
+          <div class="sdb" (click)="closeFilter()"></div>
+          <advance-search class="mb-cl" filterType="rfq"></advance-search>
+        </div>
+      </ng-template>
 
       <div class="col-md-10">
         <ng-container *ngIf="(submittedRfqListTemp || nonSubmittedRfqListTemp) else emptyReports">
           <div class="rfq-list-detail-custom">
             <mat-accordion *ngIf="submittedRfqListTemp" class="m-b-10">
               <mat-expansion-panel class="myPanel" [expanded]="true">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header [ngClass]="isMobile ? 'pt-3 pb-3' : '' ">
                   <mat-panel-title>
                     Quotes Received
                   </mat-panel-title>
@@ -144,7 +151,7 @@
             <br />
             <mat-accordion *ngIf="nonSubmittedRfqListTemp">
               <mat-expansion-panel class="myPanel" [expanded]="true">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header [ngClass]="isMobile ? 'pt-3 pb-3' : '' ">
                   <mat-panel-title>
                     Quotes Not Received
                   </mat-panel-title>

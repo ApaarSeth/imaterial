@@ -242,3 +242,15 @@
 .ctc-report .mat-select-panel-wrap{
   margin-left: 40px;
 }
+
+
+@media(max-width:599px){
+  .report-table {
+
+    .mat-expansion-indicator:after{
+      padding: 4px !important;
+      margin-top: -10px;
+    }
+
+  }
+}
