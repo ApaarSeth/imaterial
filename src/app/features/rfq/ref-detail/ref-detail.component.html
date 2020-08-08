@@ -17,7 +17,8 @@
     </div>
   </div>
 
-  <div class="create-po-dashboard p-b-20 min-height parent" *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp || rfqCount > 0">
+  <div class="create-po-dashboard p-b-20 min-height parent"
+    *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp || rfqCount > 0">
     <div class="row" [ngClass]="isMobile ? 'ml-0' : ''">
       <div class="col-xs-6">
         <mat-form-field class="example-form-field border-input project" [ngClass]="isMobile ? 'w-100' : ' w-vw-14'">
@@ -29,29 +30,38 @@
       </div>
       <div class="text-right col-xs-6 create-po-btn p-r-20 p-t-10" [ngClass]="isMobile ? 'sm-btn1 d-flex' : ''">
         <ng-container *ngIf="isMobile">
-          <button mat-button class="fltr-btn brand-color">
+          <button mat-button class="fltr-btn brand-color" (click)="openFilter()">
             <mat-icon inline="true">filter_list</mat-icon>
           </button>
         </ng-container>
-        <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="createRfq()">
+        <button mat-raised-button class="main-background-color main-button color-white demo-title"
+          (click)="createRfq()">
           Create RFP
         </button>
       </div>
     </div>
 
     <div class="row">
-      <ng-container *ngIf="!isMobile">
+
+      <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2">
           <advance-search filterType="rfq"></advance-search>
         </div>
       </ng-container>
+
+      <ng-template #mobileSearch>
+        <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close' ">
+          <div class="sdb" (click)="closeFilter()"></div>
+          <advance-search class="mb-cl" filterType="rfq"></advance-search>
+        </div>
+      </ng-template>
 
       <div class="col-md-10">
         <ng-container *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp; else emptyReports">
           <div class="rfq-list-detail-custom">
             <mat-accordion *ngIf="submittedRfqListTemp" class="m-b-10">
               <mat-expansion-panel class="myPanel" [expanded]="true">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header [ngClass]="isMobile ? 'pt-3 pb-3' : '' ">
                   <mat-panel-title>
                     Quotes Received
                   </mat-panel-title>
@@ -107,8 +117,7 @@
                                 <div class="col-sm-12">
                                   <span class="supplier-name-tag">Supplier Name</span>
                                   <ng-container *ngFor="let name of element.supplierList">
-                                    <span
-                                      ><br />
+                                    <span><br />
                                       {{ name.supplierName }}
                                     </span>
                                   </ng-container>
@@ -128,7 +137,8 @@
                     <ng-container matColumnDef="action2">
                       <th mat-header-cell *matHeaderCellDef></th>
                       <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center">
-                        <a [routerLink]="['./rfq-bid/', element.rfqId]" class="text-align-center" style="color: #f47721;">View Bids</a>
+                        <a [routerLink]="['./rfq-bid/', element.rfqId]" class="text-align-center"
+                          style="color: #f47721;">View Bids</a>
                       </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -140,7 +150,7 @@
             <br />
             <mat-accordion *ngIf="nonSubmittedRfqListTemp">
               <mat-expansion-panel class="myPanel" [expanded]="true">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header [ngClass]="isMobile ? 'pt-3 pb-3' : '' ">
                   <mat-panel-title>
                     Quotes Not Received
                   </mat-panel-title>
@@ -197,8 +207,7 @@
                                 <div class="col-sm-12">
                                   <span class="supplier-name-tag">Supplier Name</span>
                                   <ng-container *ngFor="let name of element.supplierList">
-                                    <span
-                                      ><br />
+                                    <span><br />
                                       {{ name.supplierName }}
                                     </span>
                                   </ng-container>
@@ -212,12 +221,14 @@
                     <ng-container matColumnDef="action1">
                       <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                       <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                        <a (click)="viewRfq(element)" class="cursor" style="color: #f47721;">{{ element.rfqStatus === 0 ? "Complete RFP" : "View RFP" }}</a>
+                        <a (click)="viewRfq(element)" class="cursor"
+                          style="color: #f47721;">{{ element.rfqStatus === 0 ? "Complete RFP" : "View RFP" }}</a>
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="action2">
                       <th mat-header-cell *matHeaderCellDef></th>
-                      <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center"></td>
+                      <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center">
+                      </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -230,7 +241,8 @@
         <ng-template #emptyReports>
           <div class="d-block text-align-center mt-3">
             <img src="../../../../assets/images/empty-report.svg" alt="empty report" />
-            <p class="font-weight-light m-0 pt-3"><strong class="font-weight500">Oops!</strong> You have nothing to see.</p>
+            <p class="font-weight-light m-0 pt-3"><strong class="font-weight500">Oops!</strong> You have nothing to see.
+            </p>
             <p class="font-weight-light m-0 mt-1">Try Again !</p>
           </div>
         </ng-template>

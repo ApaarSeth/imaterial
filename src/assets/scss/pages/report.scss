@@ -252,6 +252,17 @@
   background-color: #eae8e8;
 }
 
+@media(max-width:599px){
+  .report-table {
+
+    .mat-expansion-indicator:after{
+      padding: 4px !important;
+      margin-top: -10px;
+    }
+  }
+  
+}
+
 @media only screen and (max-width: 410px){
   .report {
     .show-amount{

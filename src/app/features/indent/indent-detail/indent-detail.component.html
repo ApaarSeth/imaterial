@@ -7,15 +7,30 @@
       </div>
     </div>
 
+    <ng-container *ngIf="isMobile">
+      <p class="text-right mt-3 mb-2">
+        <button mat-button class="fltr-btn" (click)="openFilter()">
+          <mat-icon class="brand-color" inline="true">filter_list</mat-icon>
+          <span class="color-6d6a6a font-size18 ml-2">Filter</span>
+        </button>
+      </p>
+    </ng-container>
+
 
     <div class="row">
 
-      <ng-container *ngIf="!isMobile">
+      <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2">
           <advance-search filterType="indent"></advance-search>
         </div>
       </ng-container>
 
+      <ng-template #mobileSearch>
+        <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close' ">
+          <div class="sdb" (click)="closeFilter()"></div>
+          <advance-search class="mb-cl" filterType="indent"></advance-search>
+        </div>
+      </ng-template>
 
       <div class="col-md-10">
 
@@ -23,7 +38,8 @@
 
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
+                [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Ongoing Purchase Requisition</span>
@@ -101,7 +117,8 @@
           <p></p>
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
+                [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Completed Purchase Requisition</span>
