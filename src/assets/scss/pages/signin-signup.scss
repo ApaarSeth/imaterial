@@ -105,3 +105,194 @@
     overflow: hidden !important;
   }
 }
+
+@media only screen and (max-width: 1023px){
+  .landing-page-image{
+    display: none !important;
+  }
+
+  .sign-in-up, .forgot-password-page{
+    .right-align-form {
+      max-width: 65%;
+      margin: auto;
+      flex: 0 0 65%;
+    }
+
+    .country-flags{
+      width: 22.5% !important;
+    }
+  }
+
+  .forgot-password-page{
+    .country-phone-num label {
+      font-size: 14px;
+    }
+
+    .left-country-code{
+      .mat-form-field-infix{
+        padding-top: 5px;
+      }
+
+      .mat-select-value{
+        padding-bottom: 3px;
+      }
+    }
+
+    .country-extension, .country-symbol {
+      color: #6f6f6f;
+      font-size: 13px;
+    }
+  
+  }
+}
+
+@media only screen and (max-width: 992px){
+  .forgot-password-page{
+    .country-flags{
+      width: 27.5% !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .sign-in-up .country-flags {
+    width: 32.5% !important;
+  }
+
+  .forgot-password-page{
+    .country-flags{
+      width: 38.5% !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 660px){
+  .sign-in-up{
+    .country-flags {
+      width: 40.5% !important;
+    }
+  }
+
+  .forgot-password-page{
+    .country-flags{
+      width: 45.5% !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 599px){
+  .sign-in-up{
+    .right-align-form {
+      max-width: 100%;
+      margin: auto;
+      flex: 0 0 100%;
+    }
+
+    .country-flags {
+      width: 25% !important;
+    }
+
+    .mobile-num .mat-input-element{
+      height: 39px;
+    }
+  }
+
+  .forgot-password-page{
+    .right-align-form {
+      max-width: 90%;
+      flex: 0 0 90%;
+    }
+
+    .country-flags{
+      width: 35.5% !important;
+    }
+
+    .country-phone-num{
+      .mat-form-field-infix{
+        padding: 10px 0;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 580px){
+  .forgot-password-page{
+    .left-country-code .mat-form-field-flex{
+      height: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: 566px){
+  .sign-in-up{
+    .select-country-code .mat-form-field-infix{
+      padding-top: 6px;
+    }
+
+    .mobile-num .mat-input-element{
+      height: 40px;
+    }
+  }
+}
+
+@media only screen and (max-width: 530px){
+  .sign-in-up{
+    .select-country-code .mat-form-field-infix{
+      padding-top: 7px;
+    }
+
+    .mobile-num .mat-input-element{
+      height: 41px;
+    }
+  }
+
+  .forgot-password-page .country-flags {
+    width: 40.5% !important;
+  }
+}
+
+@media only screen and (max-width: 480px){
+  .sign-in-up{
+    .country-flags {
+      width: 22% !important;
+    }
+
+    .right-align-form{
+      .form-design {
+        width: 90%;
+      }
+    }
+  }
+
+  .forgot-password-page{
+    .form-design-forget {
+      width: 100%;
+    }
+
+    .country-flags{
+      width: 34.5% !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 425px){
+  .sign-in-up{
+    .country-flags {
+      width: 26% !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 360px){
+  .sign-in-up{
+    .country-flags {
+      width: 33% !important;
+    }
+  }
+
+  .forgot-password-page{
+    .country-flags{
+      width: 40.5% !important;
+    }
+  }
+}

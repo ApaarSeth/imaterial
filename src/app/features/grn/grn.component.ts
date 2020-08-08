@@ -20,6 +20,7 @@ export class GrnComponent implements OnInit {
     form: FormGroup;
     selectedIds: number[] = [];
     allProjectsGRNData: AllProjectsGRNData[] = [];
+    noProjectDataFound: boolean;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -47,13 +48,12 @@ export class GrnComponent implements OnInit {
                 "ids": this.selectedIds
             }
             this._grnService.getAllGRNData(projectIds).then(res => {
-                debugger
-                if(res.data !== null){
+                if(res.data !== "No data found"){
                     this.allProjectsGRNData = res.data;
+                    this.noProjectDataFound = false;
                 }else{
-
-                    // this.allProjectsGRNData = [];
-                    this.snackbar.open(res.message, "", {
+                    this.noProjectDataFound = true;
+                    this.snackbar.open(res.data, "", {
                         duration: 2000,
                         panelClass: ["warning-snackbar"],
                         verticalPosition: "bottom"
