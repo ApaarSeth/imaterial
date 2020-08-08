@@ -74,6 +74,9 @@ export class TopHeaderComponent implements OnInit {
   getUserInformation(userId) {
     this._userService.getUserInfo(userId).then(res => {
       this.users = res.data ? res.data[ 0 ] : null;
+      if ((this.users && this.users.isFreeTrialSubscription === 1)) {
+        this.isFreeTrialActivate = true;
+      }
       this.checkFreeTrial();
     });
   }
@@ -96,9 +99,6 @@ export class TopHeaderComponent implements OnInit {
               const dates = data.planFrequencyList[ i ].planList[ x ].activeSubscription
               let tDate = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
               data.planFrequencyList[ i ].planList[ x ][ 'daysLeft' ] = this.setTrialDaysLeft(tDate, dates.trialPeriodEndDate);
-              if (this.users && this.users.isFreeTrialSubscription === 1) {
-                this.isFreeTrialActivate = true;
-              }
             }
           }
         }
