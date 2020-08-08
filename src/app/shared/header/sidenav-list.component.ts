@@ -24,6 +24,8 @@ export class SidenavListComponent implements OnInit {
   subsriptions: Subscription[] = [];
   buttonName: string;
 
+  isPlanAvailable: any;
+
   @Input('menuData') data: MenuList;
 
   constructor(
@@ -36,6 +38,8 @@ export class SidenavListComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.role = localStorage.getItem("role");
+
+    this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
 
     if (this.data.moduleList && this.data.moduleList.length) {
       this.data.moduleList.forEach(itm => {

@@ -171,8 +171,11 @@ export class SigninComponent implements OnInit {
       // localStorage.setItem("countryCode", res.data[0].countryCode);
       localStorage.setItem("countryId", res.data[ 0 ].countryId);
 
-      sessionStorage.setItem('isFreeTrialSubscription', res.data[ 0 ].isFreeTrialSubscription);
-      sessionStorage.setItem('isActiveSubscription', res.data[ 0 ].isActiveSubscription);
+      localStorage.setItem("isPlanAvailable", res.data[ 0 ].isPlanAvailable);
+
+      localStorage.setItem('isFreeTrialSubscription', res.data[ 0 ].isFreeTrialSubscription);
+      localStorage.setItem('isActiveSubscription', res.data[ 0 ].isActiveSubscription);
+
 
       this.dataService.getRequest(API.CHECKTERMS, null, { skipLoader: true }).then(res => {
         this.acceptTerms = res.data;
@@ -180,7 +183,11 @@ export class SigninComponent implements OnInit {
           this.router.navigate([ "/profile/terms-conditions" ]);
         }
         else {
-          this.router.navigate([ "/dashboard" ]);
+          if (Number(localStorage.getItem('isPlanAvailable')) === 1) {
+            this.router.navigate([ "/dashboard" ]);
+          } else {
+            this.router.navigate([ "/profile/update-info" ]);
+          }
         }
       })
     })

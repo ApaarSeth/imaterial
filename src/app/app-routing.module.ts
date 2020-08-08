@@ -20,6 +20,7 @@ import { MenuResolver } from './shared/resolver/menu.resolver';
 import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
 import { GrnComponent } from './features/grn/grn.component';
 import { GrnResolver } from './features/grn/resolver/grn.resolver';
+import { BuySubscriptionsComponent } from './shared/components/subscriptions/buy-subscriptions/buy-subscriptions.component';
 
 
 const routes: Routes = [
@@ -102,7 +103,14 @@ const routes: Routes = [
       }
     ]
   },
-
+  {
+    path: "buy-subscriptions",
+    component: BuySubscriptionsComponent,
+    resolve: {
+      subsData: SubscriptionsResolver
+    },
+    data: { title: 'Subscriptions', breadcrumb: 'Subscriptions' }
+  },
   {
     path: "",
     component: MainLayoutComponent,
@@ -218,6 +226,7 @@ const routes: Routes = [
       }
     ]
   },
+
   {
     path: "404",
     component: NotFoundComponent

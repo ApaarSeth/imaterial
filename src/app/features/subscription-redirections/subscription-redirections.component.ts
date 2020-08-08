@@ -26,9 +26,7 @@ export class SubscriptionRedirectionsComponent implements OnInit {
     ngOnInit() {
         this.isMobile = this.commonService.isMobile().matches;
         this.pageType = this.activeRoute.snapshot.data.type;
-        if (this.pageType !== 3) {
-            this.redirectPageToDashboard();
-        }
+        this.redirectPageToDashboard();
         this.activeRoute.queryParams.subscribe(param => {
             if (param.planName) {
                 this.planName = param.planName;
@@ -46,11 +44,20 @@ export class SubscriptionRedirectionsComponent implements OnInit {
     }
 
     redirectPageToDashboard() {
-        setTimeout(_ => { this.router.navigate([ "/dashboard" ]) }, 20000);
+        if (this.pageType !== 3 && this.pageType !== 1) {
+            setTimeout(_ => { this.router.navigate([ "/dashboard" ]) }, 20000);
+        }
+        if (this.pageType === 1) {
+            setTimeout(_ => { this.router.navigate([ "/subscriptions" ]) }, 20000);
+        }
+    }
+
+    gotoMySubscriptions() {
+        this.router.navigate([ '/subscriptions' ]);
     }
 
     gotoSubscriptions() {
-        this.router.navigate([ 'profile/subscriptions' ]);
+        this.router.navigate([ '/buy-subscriptions' ]);
     }
 
 }

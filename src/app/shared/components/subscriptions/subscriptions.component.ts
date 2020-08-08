@@ -8,6 +8,7 @@ import { UserDetails } from '../../models/user-details';
 import { SubscriptionPaymentsService } from '../../services/subscriptions-payments.service';
 import { API } from '../../constants/configuration-constants';
 import { CommonService } from '../../services/commonService';
+import { AppNotificationService } from '../../services/app-notification.service';
 
 @Component({
     selector: 'app-subscriptions',
@@ -33,7 +34,8 @@ export class SubscriptionsComponent implements OnInit {
         private _userService: UserService,
         private subsPayService: SubscriptionPaymentsService,
         private commonService: CommonService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private notifier: AppNotificationService
     ) { }
 
     ngOnInit() {
@@ -83,6 +85,8 @@ export class SubscriptionsComponent implements OnInit {
             this.users = res.data ? res.data[ 0 ] : null;
             this.isFreeTrialSubscription = res.data[ 0 ].isFreeTrialSubscription;
             this.isActiveSubscription = res.data[ 0 ].isActiveSubscription;
+            localStorage.setItem('isFreeTrialSubscription', this.isFreeTrialSubscription);
+            localStorage.setItem('isActiveSubscription', this.isActiveSubscription);
         });
     }
 
@@ -97,7 +101,9 @@ export class SubscriptionsComponent implements OnInit {
                 };
                 this.subsPayService.postSubscriptionUnsubscribe(obj).then(res => {
                     if (res.status === 1) {
-                        this._router.navigate([ "/subscriptions/unsubscribe" ])
+                        this.getUpdatedSubscription();
+                        this.notifier.snack("You have unsubscribed successfully");
+                        // this._router.navigate([ "/subscriptions/unsubscribe" ])
                     }
                 });
             }
@@ -119,6 +125,41 @@ export class SubscriptionsComponent implements OnInit {
 
     contactSales() {
         this.subsPayService.getContactSales();
+    }
+
+    getUpdatedSubscription() {
+
+        this.commonService.getSubscriptionPlan().then(res => {
+            let subsdata = res.data;
+            let cstmPlan = {
+                "planName": "Custom", "activeSubscription": null, "planSortSeq": 3, "planFeatureList": null, "planFeatureObjList": [ { "featureName": "Customizable", "available": true },
+                { "featureName": "Supplier Management", "available": true },
+                { "featureName": "Bill of Materials(BOM)", "available": true },
+                { "featureName": "Purchase Requisitions", "available": true },
+                { "featureName": "Request for Price(RFP)", "available": true },
+                { "featureName": "Purchase Orders", "available": true },
+                { "featureName": "Good Receipt Notes(GRN)", "available": true },
+                { "featureName": "Material Issuance", "available": true },
+                { "featureName": "Payment Record", "available": true },
+                { "featureName": "Inventory Records", "available": true },
+                { "featureName": "PO ShortClose", "available": true },
+                { "featureName": "Comprehensive Dashboards", "available": true },
+                { "featureName": "Real Time Status Tracking", "available": true },
+                { "featureName": "Currency Administration", "available": true },
+                { "featureName": "Intersite Transfer", "available": true },
+                { "featureName": "Vendor Rating", "available": true },
+                { "featureName": "Image Integration", "available": true },
+                { "featureName": "Reports & Analytics", "available": true },
+                { "featureName": "Aggregated Purchase", "available": true },
+                { "featureName": "On Demand Dedicated Onboarding", "available": true },
+                { "featureName": "And a lot more..", "available": true } ]
+            };
+            subsdata.planFrequencyList.forEach(item => {
+                item.planList.push(cstmPlan);
+            });
+            this.subscriptionsData = subsdata;
+        });
+
     }
 
 }

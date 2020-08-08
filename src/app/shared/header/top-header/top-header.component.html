@@ -41,7 +41,7 @@
         <button mat-menu-item class="background-white-color" (click)="goToProfile()">
           My Account
         </button>
-        <ng-container *ngIf="isActiveSubscription">
+        <ng-container *ngIf="isPlanAvailable === 1">
           <button mat-menu-item class="background-white-color" (click)="goToMyPlans()">
             My Plan / Upgrade
           </button>
