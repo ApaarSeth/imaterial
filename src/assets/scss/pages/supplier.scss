@@ -587,6 +587,9 @@ mat-icon {
   display: flex;
   justify-content: center;
   align-items: center;
+  div:first-child{
+    margin-right: 25px;
+  }
 }
 
 .project-name-div {
