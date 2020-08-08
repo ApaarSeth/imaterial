@@ -38,6 +38,6 @@ export class GRNService {
     }
 
     getAllGRNData(projectIds){
-        return this.dataService.getRequest(API.GET_ALL_GRN, projectIds);
+        return this.dataService.getRequest(API.GET_ALL_GRN, projectIds).then(res => res);
     }
 }

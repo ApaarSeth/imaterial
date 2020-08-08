@@ -397,7 +397,9 @@ export class BomTableComponent implements OnInit {
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(IssueToIndentDialogComponent, {
         width: "1200px",
-        data: { materialId: materialId, projectId: projectId }
+        data: { materialId: materialId, projectId: projectId },
+        disableClose: true,
+        panelClass: ["issue-to-indent-dialog"]
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result !== null) {

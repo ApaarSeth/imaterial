@@ -541,14 +541,13 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== null) {
-        this.poTableData[0].purchaseOrderDetailList.map(list => {
-          if (list.materialId === result.materialId) {
-            list.documentList = result.documentsList;
-          }
+        this.poTableData.forEach(po => {
+          po.purchaseOrderDetailList.map(list => {
+            if (list.materialId === result.materialId) {
+              list.documentList = result.documentsList;
+            }
+          });
         });
-        // this.poService.getPoGenerateData(this.poId).then(res => {
-        //   this.poTableData = res.data.materialData;
-        // });
       }
     });
   }

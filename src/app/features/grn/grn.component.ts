@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { GRNService } from 'src/app/shared/services/grn/grn.service';
 import { AllProjectsGRNData } from 'src/app/shared/models/grn';
 import { ShowDocumentComponent } from 'src/app/shared/dialogs/show-documents/show-documents.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'all-grn',
@@ -25,7 +25,8 @@ export class GrnComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private formBuilder: FormBuilder,
         private _grnService: GRNService,
-        private _dialog: MatDialog) { }
+        private _dialog: MatDialog,
+        private snackbar: MatSnackBar) { }
 
     ngOnInit() {
         this.allProjects = this.activatedRoute.snapshot.data.projectsList;
@@ -41,12 +42,23 @@ export class GrnComponent implements OnInit {
 
     getProjectGRNData() {
         this.selectedIds = this.form.value.selectedProject.map(selectedProject => selectedProject);
-        if(this.selectedIds.length > 0){
+        if(this.selectedIds && this.selectedIds.length > 0){
             const projectIds = {
                 "ids": this.selectedIds
             }
             this._grnService.getAllGRNData(projectIds).then(res => {
-                this.allProjectsGRNData = res.data;
+                debugger
+                if(res.data !== null){
+                    this.allProjectsGRNData = res.data;
+                }else{
+
+                    // this.allProjectsGRNData = [];
+                    this.snackbar.open(res.message, "", {
+                        duration: 2000,
+                        panelClass: ["warning-snackbar"],
+                        verticalPosition: "bottom"
+                    });
+                }
             });
         }else{
             this.allProjectsGRNData = [];
@@ -60,7 +72,7 @@ export class GrnComponent implements OnInit {
         });
         dialogRef.afterClosed().toPromise().then(result => {
             if (result) {
-                // this.getGRNDetails(this.poId);
+                console.log(result);
             }
         });
     }

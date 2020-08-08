@@ -1,7 +1,14 @@
 <div *ngIf="issueToIndentDetails && issueToIndentDetails.indentDetailList" class="indent-Modal">
-  <div mat-dialog-title>
+  <div class="indent-header">
+    <h1 mat-dialog-title class="mb-0">Issue to Indent</h1>
+    <button type="button" class="close pull-right p-t-5" (click)="onNoClick()" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+
+  <!-- <div mat-dialog-title>
     <div class="row">
-      <div class="col-xs-2 font-size-20">
+      <div class="col-md-6 font-size-20">
         Issue to Indent
       </div>
 
@@ -20,15 +27,34 @@
           {{issueToIndentDetails.materialUnit}}
         </span>
       </div>
-      <div class="col-xs-1">
+      <div class="col-md-6">
         <button type="button" class="close p-t-7" (click)="onNoClick()" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div mat-dialog-content class="p-l-10 p-r-10">
+  <div mat-dialog-content>
+
+    <div class="row pb-3">
+      <div class="col-md-5 mid-head-top limited-character universal" matTooltip="{{issueToIndentDetails.materialName}}" style="font-weight: 500;">
+        {{issueToIndentDetails.materialName}}
+      </div>
+      <div class="col-md-7 mid-head-top">
+        <span style="font-weight: 500;">
+          Available in Stock:
+          <span *ngIf="issueToIndentDetails.availableStock>0">
+            {{issueToIndentDetails.availableStock}}
+          </span>
+          <span *ngIf="issueToIndentDetails.availableStock == null">
+            0
+          </span>
+          {{issueToIndentDetails.materialUnit}}
+        </span>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-xs-12">
         <div class="row p-t-10 p-b-10 gray-border">
