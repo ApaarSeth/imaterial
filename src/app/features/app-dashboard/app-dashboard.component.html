@@ -15,193 +15,264 @@
             <div class="things-to-do bg-white mb-4 equal-height sml-d1">
               <!-- <h5 class="mb-3">Things to do</h5> -->
               <div class="things-to-do__inner d-flex justify-content-between align-items-center sml-db">
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
-                  (click)="openProject()" matTooltip="You can add your project details">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openProject()" matTooltip="You can add your project details">
                   <div class="things-to-do__img add-project-img">
-                    <img src="../../../assets/images/Add-Project.png" alt="" class="img-fluid" />
+                    <img src="../../../assets/images/projectstore.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Add Project</h6>
                 </div>
 
-                <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()"
-                  matTooltip="You can create your BOM of materials">
+                <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your BOM of materials">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/bom.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create BOM</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
-                  (click)="openBomDialog()" matTooltip="You can create your PRs">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your PRs">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/pr.svg" alt="Purchase Requistion" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create PR</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
-                  [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFPs">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFPs">
                   <div class="things-to-dopng__img">
                     <img src="../../../assets/images/rfp.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create RFPs</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2"
-                  [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/po.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create PO</h6>
                 </div>
-
-                <!-- <div class="things-to-do__icons text-center">
-                                <div class="things-to-do__img">
-                                    <img src="assets/images/icon3.png" alt="" class="img-fluid">
-                                </div>
-                                <h6 class="mb-0">Keep Track</h6>
-                            </div> -->
               </div>
             </div>
-
-            <!-- <div class="things-to-do__icons text-center">
-                            <div class="things-to-do__img">
-                                <img src="assets/images/icon3.png" alt="" class="img-fluid">
-                            </div>
-                            <h6 class="mb-0">Keep Track</h6>
-                        </div> -->
             <div class="statistics bg-white p-20 p-r-0 mb-4">
               <div class="row">
-                <div class="col-xs-12 col-md-7 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : ''">
-                  <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)"
-                    [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
-                    <mat-tab label="{{ tab1 }}" *ngIf="permissionObj.rfqFlag && poData">
-                      <div class="statistics__purchase-order d-flex">
-                        <div class="statistics__tile stats mr-3">
-                          <!-- <div class="stats__icon">
-                                                    <img src="assets/images/icon1.png" alt="Awarded Purchase Order" class="img-fluid">
-                                                </div> -->
-                          <div class="stats__content">
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalCount">
-                              {{ poData?.totalCount }}
-                            </h2>
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalCount">0</h2>
-                            <p class="mb-0">Awarded Purchase Order</p>
+                <div class="col-xs-12 col-md-12 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : ''">
+                  <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)" [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
+                    <mat-tab label="{{ tab1 }}" *ngIf="permissionObj.rfqFlag">
+                      <div class="row width-99">
+                        <div class="col-md-6">
+                          <div class="statistics__purchase-order display-flex" *ngIf="poData">
+                            <div class="statistics__tile stats m-r-10">
+                              <div class="stats__content">
+                                <p class="mb-0 fontsize-13-px text-semi-bold">Total Awarded Purchase Order</p>
+                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalCount">
+                                  {{ poData?.totalCount }}
+                                </h2>
+                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalCount">0</h2>
+                              </div>
+                            </div>
+
+                            <div class="statistics__tile stats">
+                              <div class="stats__content">
+                                <p class="mb-0 fontsize-13-px text-semi-bold">Total Awarded P.O. Amount</p>
+                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalValue">
+                                  <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
+                                  {{ poData?.totalValue | number }}
+                                </h2>
+                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalValue">
+                                  <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
+                                </h2>
+                              </div>
+                            </div>
                           </div>
                         </div>
 
-                        <div class="statistics__tile stats">
-                          <!-- <div class="stats__icon">
-                                                    <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
-                                                </div> -->
-                          <div class="stats__content">
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="poData.totalValue">
-                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
-                              {{ poData?.totalValue | number }}
-                            </h2>
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/po']" *ngIf="!poData.totalValue">
-                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
-                            </h2>
-                            <p class="mb-0">Awarded P.O. Amount</p>
-                          </div>
+                        <div class="col-md-6">
+                          <form [formGroup]="filterForm" class="width-99 display-flex">
+                            <div class="width-35">
+                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding p-r-10">
+                                <mat-label>Select Project</mat-label>
+                                <mat-select formControlName="projectFilter" multiple>
+                                  <div class="display-flex">
+                                    <input
+                                      class="p-l-10 p-b-5"
+                                      matInput
+                                      type="search"
+                                      placeholder="Search project Name"
+                                      [(ngModel)]="searchText"
+                                      [ngModelOptions]="{standalone: true}"
+                                    />
+                                    <button mat-button matSuffix mat-icon-button>
+                                      <mat-icon>search</mat-icon>
+                                    </button>
+                                  </div>
+                                  <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project">{{ project.projectName }} </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div class="p-r-0 customDatePicker width-35 p-t-7" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
+                              <ngx-mat-drp class="border-input input-font-size" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
+                            </div>
+                            <div class="width-35 p-r-0 p-l-10">
+                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding">
+                                <mat-label matTooltip="Status Filter">Status Filter</mat-label>
+                                <mat-select formControlName="poFilter">
+                                  <mat-option value="Awarded PO">Awarded PO</mat-option>
+                                  <mat-option value="Delivered PO">Delivered PO</mat-option>
+                                  <mat-option value="Yet to be delivered">Yet to be delivered</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </form>
                         </div>
                       </div>
                     </mat-tab>
 
                     <!-- current start -->
-                    <mat-tab label="{{ tab2 }}" *ngIf="permissionObj.rfqFlag && rfqData">
-                      <div class="statistics__purchase-order d-flex">
-                        <div class="statistics__tile stats mr-3">
-                          <!-- <div class="stats__icon">
+                    <mat-tab label="{{ tab2 }}" *ngIf="permissionObj.rfqFlag">
+                      <div class="row width-99">
+                        <div class="col-md-6">
+                          <div class="statistics__purchase-order d-flex" *ngIf="rfqData">
+                            <div class="statistics__tile stats width-50 mr-3">
+                              <!-- <div class="stats__icon">
                                                     <img src="assets/images/icon6.png" alt="Awarded Purchase Order" class="img-fluid">
                                                 </div> -->
-                          <div class="stats__content">
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalCount">
-                              {{ rfqData?.totalCount }}
-                            </h2>
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalCount">0</h2>
-                            <p class="mb-0">Number of RFP</p>
-                          </div>
-                        </div>
+                              <div class="stats__content">
+                                <p class="mb-0 fontsize-13-px text-semi-bold">Total Number of RFPs</p>
+                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalCount">
+                                  {{ rfqData?.totalCount }}
+                                </h2>
+                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalCount">0</h2>
+                              </div>
+                            </div>
 
-                        <div class="statistics__tile stats">
-                          <!-- <div class="stats__icon">
+                            <div class="statistics__tile width-50 stats">
+                              <!-- <div class="stats__icon">
                                                     <img src="assets/images/po-amount-icon.png" alt="Awarded PO Amount" class="img-fluid">
                                                 </div> -->
-                          <div class="stats__content">
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalValue">
-                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
-                              {{ rfqData?.totalValue | number: "1.2-2" }}
-                            </h2>
-                            <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalValue">
-                              <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
-                            </h2>
-                            <p class="mb-0">RFP Amount</p>
+                              <div class="stats__content">
+                                <p class="mb-0 fontsize-13-px text-semi-bold">Total RFPs Amount</p>
+                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="rfqData.totalValue">
+                                  <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container>
+                                  {{ rfqData?.totalValue | number: "1.2-2" }}
+                                </h2>
+                                <h2 class="mb-1 cursor-pointer" [routerLink]="['/rfq']" *ngIf="!rfqData.totalValue">
+                                  <ng-container *ngIf="currencyCode">{{ currencyCode }}</ng-container> 0
+                                </h2>
+                              </div>
+                            </div>
                           </div>
+                        </div>
+                        <div class="col-md-6 display-flex">
+                          <form [formGroup]="filterForm" class="width-99 display-flex">
+                            <div class="width-35">
+                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding">
+                                <mat-label>Select Project</mat-label>
+                                <mat-select formControlName="projectFilter" multiple>
+                                  <div class="display-flex">
+                                    <input
+                                      class="p-l-10 p-b-5"
+                                      matInput
+                                      type="search"
+                                      placeholder="Search project Name"
+                                      [(ngModel)]="searchText"
+                                      [ngModelOptions]="{standalone: true}"
+                                    />
+                                    <button mat-button matSuffix mat-icon-button>
+                                      <mat-icon>search</mat-icon>
+                                    </button>
+                                  </div>
+                                  <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project">{{ project.projectName }} </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+
+                            <div class="p-r-0 customDatePicker width-35 p-t-7" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
+                              <ngx-mat-drp class="border-input input-font-size" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
+                            </div>
+                            <div class="width-35 p-r-0 p-l-10">
+                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding">
+                                <mat-label>Status Filter</mat-label>
+                                <mat-select formControlName="rfpFilter">
+                                  <mat-option value="Rasied RFP">Rasied RFP</mat-option>
+                                  <mat-option value="Bided RFP">Bided RFP</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </form>
                         </div>
                       </div>
                       <!-- current end -->
                     </mat-tab>
 
-                    <mat-tab label="Purchase Requisitions (PR)" *ngIf="indentData">
-                      <div class="statistics__purchase-order d-flex">
-                        <div class="statistics__tile stats mr-3">
-                          <!-- <div class="stats__icon">
+                    <mat-tab label="Purchase Requisitions (PR)">
+                      <div class="row width-99">
+                        <div class="col-md-7">
+                          <div class="statistics__purchase-order d-flex" *ngIf="indentData">
+                            <div class="statistics__tile width-50 stats mr-3">
+                              <!-- <div class="stats__icon">
                                                         <img src="assets/images/fulfilled-indent-icon.png" alt="Awarded Purchase Order" class="img-fluid">
                                                     </div> -->
-                          <div class="stats__content">
-                            <h2 class="mb-1" *ngIf="indentData.totalCount">{{ indentData?.totalCount }}</h2>
-                            <h2 class="mb-1" *ngIf="!indentData.totalCount">0</h2>
-                            <p class="mb-0">Fulfilled PR</p>
-                          </div>
-                        </div>
+                              <div class="stats__content">
+                                <p class="mb-0 fontsize-13-px text-semi-bold">Fulfilled Purchase Requisitions</p>
+                                <h2 class="mb-1" *ngIf="indentData.totalCount">{{ indentData?.totalCount }}</h2>
+                                <h2 class="mb-1" *ngIf="!indentData.totalCount">0</h2>
+                              </div>
+                            </div>
 
-                        <div class="statistics__tile stats">
-                          <!-- <div class="stats__icon">
+                            <div class="statistics__tile width-50 stats">
+                              <!-- <div class="stats__icon">
                                                         <img src="assets/images/raised-indent.png" alt="Awarded PO Amount" class="img-fluid">
                                                     </div> -->
-                          <div class="stats__content">
-                            <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue }}</h2>
-                            <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
-                            <p class="mb-0">Raised PR</p>
+                              <div class="stats__content">
+                                <p class="mb-0 fontsize-13-px text-semi-bold">Raised Purchase Requisitions</p>
+                                <h2 class="mb-1" *ngIf="indentData.totalValue">{{ indentData?.totalValue }}</h2>
+                                <h2 class="mb-1" *ngIf="!indentData.totalValue">0</h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-5 display-flex text-right">
+                          <div class="width-42">
+                            <form [formGroup]="filterForm">
+                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding">
+                                <mat-label>Select Project</mat-label>
+                                <mat-select formControlName="projectFilter" multiple>
+                                  <div class="display-flex">
+                                    <input
+                                      class="p-l-10 p-b-5"
+                                      matInput
+                                      type="search"
+                                      placeholder="Search project Name"
+                                      [(ngModel)]="searchText"
+                                      [ngModelOptions]="{standalone: true}"
+                                    />
+                                    <button mat-button matSuffix mat-icon-button>
+                                      <mat-icon>search</mat-icon>
+                                    </button>
+                                  </div>
+                                  <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project">{{ project.projectName }} </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </form>
+                          </div>
+                          <div class="width-88">
+                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
+                              <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </mat-tab>
                   </mat-tab-group>
                 </div>
-
-                <div class="col-xs-6 col-md-2 p-r-0" [ngClass]="isMobile ? 'pl-0' : 'p-l-25'">
-                  <form [formGroup]="filterForm">
-                    <mat-form-field class="border-select select-project width103Percent mat-form-field-flex-mm-padding">
-                      <mat-label>Select Project</mat-label>
-                      <mat-select formControlName="projectFilter" multiple>
-                        <div class="display-flex">
-                          <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
-                            [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
-                          <button mat-button matSuffix mat-icon-button>
-                            <mat-icon>search</mat-icon>
-                          </button>
-                        </div>
-                        <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']"
-                          [value]="project">{{ project.projectName }} </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </form>
-                </div>
-                <div class="col-xs-6 col-md-3 p-r-0 customDatePicker"
-                  [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
-                  <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options"
-                    #dateRangePicker></ngx-mat-drp>
-                </div>
-                <div *ngIf="permissionObj.rfqFlag && poData && label == 'po'">
-                  <app-bar-chart></app-bar-chart>
-                </div>
-                <div *ngIf="permissionObj.rfqFlag && rfqData && label == 'rfq'">
-                  <app-bar-chart></app-bar-chart>
-                </div>
-                <div class="text-center" *ngIf="permissionObj.rfqFlag && indentData && label == 'indent'">
-                  <app-pie-chart></app-pie-chart>
+                <div class="col-md-12 display-flex justify-content-center">
+                  <div *ngIf="permissionObj.rfqFlag && poData && poData.graphData.length > 1 && label == 'po'">
+                    <app-bar-chart></app-bar-chart>
+                  </div>
+                  <div *ngIf="permissionObj.rfqFlag && rfqData && rfqData.graphData.length > 1 && label == 'rfq'">
+                    <app-bar-chart></app-bar-chart>
+                  </div>
+                  <div *ngIf="permissionObj.rfqFlag && indentData && (indentData.totalCount || indentData.totalValue) && label == 'indent'">
+                    <app-pie-chart></app-pie-chart>
+                  </div>
                 </div>
                 <!-- <app-range-datePicker></app-range-datePicker> -->
               </div>
@@ -212,7 +283,7 @@
               <div class="project-tile cursor" [routerLink]="['/project-dashboard']">
                 <div class="project-tile__tile equal-height w-100 mb-4 stats px-3 py-3 d-flex align-items-center mr-3">
                   <div class="project-tile__icon">
-                    <img src="assets/images/Add-Project.png" alt="Total number of project" class="img-fluid mr-3" />
+                    <img src="assets/images/projectstore.svg" alt="Total number of project" class="img-fluid mr-3" />
                   </div>
                   <div class="project-tile__content">
                     <h2 class="mb-1" *ngIf="projectCount">{{ projectCount }}</h2>

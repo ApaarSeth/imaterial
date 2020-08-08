@@ -47,7 +47,8 @@ export class AppDashboardComponent implements OnInit {
   isMobile: boolean;
   cntryList: any[];
   isAdDisplay: string;
-  diffDays
+  diffDays: number
+  rangeType: string = 'Custom';
 
   constructor(public dialog: MatDialog,
     private router: Router,
@@ -69,7 +70,6 @@ export class AppDashboardComponent implements OnInit {
   projectData
 
   ngOnInit() {
-    this.loader.hide();
     this.isAdDisplay = localStorage.getItem("countryCode");
     // this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
@@ -81,9 +81,6 @@ export class AppDashboardComponent implements OnInit {
       this.orgId = Number(localStorage.getItem("orgId"));
     }
     this.userId = Number(localStorage.getItem("userId"));
-    this.getDashboardInfo('po');
-    this.getDashboardInfo('rfq');
-    this.getDashboardInfo('indent');
     window.dispatchEvent(new Event('resize'));
     if (!localStorage.getItem('ReleaseNotes') || (localStorage.getItem('ReleaseNotes') != '1')) {
       localStorage.setItem('ReleaseNotes', '0');
@@ -149,12 +146,10 @@ export class AppDashboardComponent implements OnInit {
   }
 
   setupPresets() {
-
     const backDate = (numOfDays) => {
       const today = new Date();
       return new Date(today.setDate(today.getDate() - numOfDays));
     }
-
     const today = new Date();
     const yesterday = backDate(1);
     const minus7 = backDate(7)
@@ -197,9 +192,17 @@ export class AppDashboardComponent implements OnInit {
 
   formInit() {
     this.filterForm = this.formbuilder.group({
-      projectFilter: []
+      projectFilter: [],
+      poFilter: [],
+      rfpFilter: []
     })
     this.filterForm.get('projectFilter').valueChanges.subscribe(val => {
+      this.getDashboardInfo(this.label)
+    })
+    this.filterForm.get('poFilter').valueChanges.subscribe(val => {
+      this.getDashboardInfo(this.label)
+    })
+    this.filterForm.get('rfpFilter').valueChanges.subscribe(val => {
       this.getDashboardInfo(this.label)
     })
   }
@@ -261,53 +264,76 @@ export class AppDashboardComponent implements OnInit {
     } else if (365 <= this.diffDays && this.diffDays <= 366) {
       return 'Yearly'
     }
-    // else if(){
+    else {
+      return null
+    }
+  }
 
-    // }
+  getFilter(label) {
+    let poFilter
+    let rfpFilter
+    if (label == 'po') {
+      poFilter = this.filterForm.get("poFilter") && this.filterForm.get("poFilter").value ? this.filterForm.get("poFilter").value : 'all'
+    }
+    if (label == 'rfq') {
+      rfpFilter = this.filterForm.get("rfpFilter") && this.filterForm.get("rfpFilter").value ? this.filterForm.get("rfpFilter").value : 'all'
+    }
+
+    if (label == 'po') {
+      return poFilter ? poFilter : 'all'
+    }
+    else if (label == 'rfq') {
+      return rfpFilter ? rfpFilter : 'all'
+    }
+    else {
+      return null
+    }
   }
 
   getDashboardInfo(label) {
+
     let projectIds = this.filterForm.get("projectFilter").value && this.filterForm.get("projectFilter").value.map(val => {
       return val.projectId;
     })
-    const range = this.getRange()
-    const data = {
-      "orgId": this.orgId,
-      "startDate": this.getFormatedDate(this.range.fromDate),
-      "endDate": this.getFormatedDate(this.range.toDate),
-      "dataSource": label,
-      "range": 'Custom',
-      "projectList": projectIds ? projectIds : []
+
+
+    this.rangeType = this.getRange()
+
+    if (this.rangeType) {
+      const data = {
+        "orgId": this.orgId,
+        "startDate": this.getFormatedDate(this.range.fromDate),
+        "endDate": this.getFormatedDate(this.range.toDate),
+        "dataSource": label,
+        "range": this.rangeType,
+        "projectList": projectIds ? projectIds : [],
+        "fliterFlag": this.getFilter(label)
+      }
+      this._userService.getDashboardData(data, true).then(res => {
+        if (res.data.currencyCode) {
+          this.currencyCode = res.data.currencyCode;
+        }
+        if (label == 'po') {
+          this.poData = res.data;
+          this.chartService.barChartData.next([...this.poData.graphData])
+        }
+        if (label == 'rfq') {
+          this.rfqData = res.data;
+          this.chartService.barChartData.next([...this.rfqData.graphData])
+        }
+        if (label == 'indent') {
+          this.indentData = res.data;
+          this.chartService.pieChartData.next([['PRs', 'Vaue'],
+          ['Fullfilled PRs', this.indentData.totalCount],
+          ['Raised PRs', this.indentData.totalValue],
+          ])
+        }
+      }).catch(error => console.log(error))
     }
-    this._userService.getDashboardData(data, true).then(res => {
-      if (res.data.currencyCode) {
-        this.currencyCode = res.data.currencyCode;
-      }
-      if (label == 'po') {
-        this.poData = res.data;
-        this.rfqData = res.data;
-        this.chartService.barChartData.next([['Month', 'Awarded PO', 'Delivered PO', 'Yet to be delivered'],
-        ['Jan', 1336060, 400361, 1001582],
-        ['Feb', 1336060, 400361, 1001582],
-        ['Mar', 1336060, 400361, 1001582],
-        ['April', 1336060, 400361, 1001582]])
-      }
-      if (label == 'rfq') {
-        this.rfqData = res.data;
-        this.chartService.barChartData.next([['Month', 'RFP Amount'],
-        ['Jan', 1336060],
-        ['Feb', 1336060],
-        ['Mar', 1336060],
-        ['April', 1336060],])
-      }
-      if (label == 'indent') {
-        this.indentData = res.data;
-        this.chartService.pieChartData.next([['PRs', 'Vaue'],
-        ['Fullfilled PRs', 50],
-        ['Raised PRs', 50],
-        ])
-      }
-    }).catch(error => console.log(error))
+    else {
+      this.notifier.snack('Selected date range can not be greater than 31 days')
+    }
+
   }
 
   onTabChanged($event) {
@@ -365,8 +391,8 @@ export class AppDashboardComponent implements OnInit {
       this.tab1 = "P.O.";
       this.tab2 = "RFPs";
     } else {
-      this.tab1 = "Purchase Orders";
-      this.tab2 = "Request for Price(RFPs)";
+      this.tab1 = "Purchase Orders (PO)";
+      this.tab2 = "Request for Price (RFPs)";
     }
   }
 }

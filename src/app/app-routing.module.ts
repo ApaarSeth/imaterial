@@ -94,7 +94,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileLayoutComponent,
-    canActivate: [ AuthGuardService, UserDataGuardService ],
+    // canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
         path: "profile",
@@ -114,7 +114,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [ AuthGuardService, AfterSignUpGuardService ],
+    // canActivate: [AuthGuardService, AfterSignUpGuardService],
     resolve: {
       menu: MenuResolver,
       subsData: SubscriptionsResolver
@@ -238,9 +238,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }) ],
-  exports: [ RouterModule ],
-  providers: [ CountryResolver, SubscriptionsResolver, MenuResolver, GrnResolver ]
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  exports: [RouterModule],
+  providers: [CountryResolver, SubscriptionsResolver, MenuResolver, GrnResolver]
 })
 
 export class AppRoutingModule { }

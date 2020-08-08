@@ -87,7 +87,7 @@ export class PoComponent implements OnInit {
   additionalOtherCost: { additionalOtherCostAmount: number, additionalOtherCostInfo: OtherCostInfo[] }
   config: AngularEditorConfig = AngularEditor.config;
   currency: { isInternational: number, purchaseOrderCurrency: PurchaseOrderCurrency }
-
+  shortClose: boolean = true;
   constructor(
     private cdr: ChangeDetectorRef,
     private router: Router,
@@ -140,6 +140,9 @@ export class PoComponent implements OnInit {
 
       this.poData = res.data;
       this.tableData = this.poData.materialData;
+      if (this.mode === 'view') {
+        this.getShortCloseValidation(this.tableData);
+      }
       this.currency = { isInternational: this.poData.isInternational, purchaseOrderCurrency: this.poData.purchaseOrderCurrency }
       this.additionalOtherCost = { additionalOtherCostAmount: this.poData.additionalOtherCostAmount, additionalOtherCostInfo: this.poData.additionalOtherCostInfo }
       this.cardData = {
@@ -188,6 +191,15 @@ export class PoComponent implements OnInit {
 
   ngOnChanges() {
     this.isPoNumberValid = this.poCard.projectDetails.valid
+  }
+
+  getShortCloseValidation(tableData: PoMaterial[]) {
+    for (let val of tableData) {
+      if (val.poAvailableQty <= 0) {
+        this.shortClose = false;
+        break;
+      }
+    }
   }
 
   formInit() {

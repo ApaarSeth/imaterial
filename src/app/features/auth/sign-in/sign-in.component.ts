@@ -163,7 +163,7 @@ export class SigninComponent implements OnInit {
    * @description Function will get the data of logged in user
    */
   getUserInfo(userId) {
-    this.dataService.getRequest(API.GET_USER_PROFILE(userId), null, { skipLoader: true }).then(res => {
+    this.dataService.getRequest(API.GET_USER_PROFILE(userId), null).then(res => {
       if (res.data[ 0 ].firstName)
         localStorage.setItem("userName", res.data[ 0 ].firstName);
       localStorage.setItem("profileUrl", res.data[ 0 ].profileUrl);
@@ -176,8 +176,7 @@ export class SigninComponent implements OnInit {
       localStorage.setItem('isFreeTrialSubscription', res.data[ 0 ].isFreeTrialSubscription);
       localStorage.setItem('isActiveSubscription', res.data[ 0 ].isActiveSubscription);
 
-
-      this.dataService.getRequest(API.CHECKTERMS, null, { skipLoader: true }).then(res => {
+      this.dataService.getRequest(API.CHECKTERMS, null).then(res => {
         this.acceptTerms = res.data;
         if (!this.acceptTerms) {
           this.router.navigate([ "/profile/terms-conditions" ]);

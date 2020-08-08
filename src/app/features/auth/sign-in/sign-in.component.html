@@ -2,7 +2,7 @@
   <div style="min-height: 221px;" class="w-100">
     <div class="row">
       <div *ngIf="callingCode === '+91'" class="col-xs-4">
-        <mat-form-field class="border-select mat-form-field-flex-mm-padding">
+        <mat-form-field class="border-select mat-form-field-flex-mm-padding select-country-code">
           <mat-select formControlName="countryCode">
             <div class="display-flex">
               <input
@@ -19,8 +19,8 @@
               </button>
             </div>
             <mat-select-trigger>
-              <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-                ><img class="width35Percent p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+              <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}">
+                <img class="width35Percent p-r-4 country-flags" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                 <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
                 <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
               </span>

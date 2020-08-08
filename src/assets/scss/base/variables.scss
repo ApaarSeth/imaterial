@@ -329,34 +329,6 @@ input {
   position: relative;
 }
 
-.center-element {
-  position: absolute;
-  float: left;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.pull-right {
-  float: right;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.text-webkit-center {
-  text-align: -webkit-center;
-}
-
-.pull-left {
-  float: left;
-}
-
 a:hover {
   color: transparent;
   text-decoration: none;
@@ -813,7 +785,6 @@ mat-accordion {
 .line-height-1-6 {
   line-height: 1.6;
 }
-
 
 .max-width-96 {
   max-width: 96px;

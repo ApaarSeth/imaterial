@@ -26,12 +26,16 @@ export class PieChartComponent implements OnInit {
         ]);
 
         var options = {
-            title: 'My Daily Activities',
             is3D: true,
-            width: 600, height: 400,
+            width: 500, height: 400,
+            colors: ['#1584BA', '#60C1EF'],
+            axisX: {
+                valueFormatString: "DD-MMM",
+                labelAngle: -50
+            },
         };
 
-        let chart = new this.gLib.visualization.PieChart(document.getElementById('divPieChart'));
+        let chart = new this.gLib.visualization.PieChart(this.pieChart.nativeElement);
 
         chart.draw(data, options);
     }
