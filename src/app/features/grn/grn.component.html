@@ -96,18 +96,33 @@
 
       <!-- Report Default Image If No data is Present -->
       <ng-template #noDataAvailable>
-        <div class="wrapper-btn-center">
-          <div class="report-image">
-            <img src="../../../../assets/images/report-main.svg" alt="BuildSupply_Logo" />
-            <div>
+
+        <ng-container *ngIf="noProjectDataFound; else defaultImageMsg">
+          <div class="wrapper-btn-center">
+            <div class="report-image">
               <p class="p-t-10 font-size-vary-grn">
-                You have not selected any project yet. <br />
-                Please select any one from the above to see the report.
+                No GRN created for selected project.
               </p>
             </div>
           </div>
-        </div>
+        </ng-container>
+
+        <ng-template #defaultImageMsg>
+          <div class="wrapper-btn-center">
+            <div class="report-image">
+              <img src="../../../../assets/images/report-main.svg" alt="BuildSupply_Logo" />
+              <div>
+                <p class="p-t-10 font-size-vary-grn">
+                  You have not selected any project yet. <br />
+                  Please select any one from the above to see the report.
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
       </ng-template>
+
+      
     </div>
   </form>
 </div>

@@ -1,14 +1,8 @@
 <form *ngIf="signupForm" [formGroup]="signupForm" (ngSubmit)="signup()" class="sign-up-form">
-  <!-- <mat-form-field class="col-xs-12 border-input">
-                    <input matInput formControlName="firstName" type="text" placeholder="First Name" />
-                </mat-form-field>
-                <mat-form-field class="col-xs-12 border-input">
-                    <input matInput formControlName="lastName" type="text" placeholder="Last Name" />
-                </mat-form-field> -->
   <div style="min-height: 311px;">
     <div class="row">
       <div *ngIf="this.callingCode === '+91'" class="col-xs-4">
-        <mat-form-field class="border-select p-t-10 p-r-0 mat-form-field-flex-mm-padding">
+        <mat-form-field class="border-select p-t-10 p-r-0 mat-form-field-flex-mm-padding select-country-code">
           <mat-select formControlName="countryCode">
             <div class="display-flex">
               <input
@@ -25,8 +19,8 @@
               </button>
             </div>
             <mat-select-trigger>
-              <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-                ><img class="width35Percent p-r-5" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+              <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}">
+                <img class="width35Percent p-r-5 country-flags" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                 <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
                 <span class="font-size12">{{ selectedCountry && selectedCountry.callingCode }}</span>
               </span>
@@ -41,7 +35,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div *ngIf="this.callingCode === '+91'" class="phone-number col-xs-8" [ngClass]="{'p-t-10': lessOTPDigits}">
+      <div *ngIf="this.callingCode === '+91'" class="phone-number col-xs-8 mobile-num" [ngClass]="{'p-t-10': lessOTPDigits}">
         <mat-form-field class="border-input display-flex">
           <input matInput type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" #phone placeholder="Phone No." />
           <button
