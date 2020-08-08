@@ -70,7 +70,6 @@ export class AppDashboardComponent implements OnInit {
   projectData
 
   ngOnInit() {
-    this.loader.hide();
     this.isAdDisplay = localStorage.getItem("countryCode");
     // this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
@@ -316,15 +315,11 @@ export class AppDashboardComponent implements OnInit {
         }
         if (label == 'po') {
           this.poData = res.data;
-          this.chartService.barChartData.next([...this.poData.poGraphData])
+          this.chartService.barChartData.next([...this.poData.graphData])
         }
         if (label == 'rfq') {
           this.rfqData = res.data;
-          this.chartService.barChartData.next([['Month', 'RFP Amount'],
-          ['Jan', 1336060],
-          ['Feb', 1336060],
-          ['Mar', 1336060],
-          ['April', 1336060],])
+          this.chartService.barChartData.next([...this.rfqData.graphData])
         }
         if (label == 'indent') {
           this.indentData = res.data;

@@ -31,5 +31,5 @@ export interface PurchaseOrderData {
   endDate: string;
   totalCount: number;
   totalValue: number;
-  poGraphData: Array<any>;
+  graphData: Array<any>;
 }

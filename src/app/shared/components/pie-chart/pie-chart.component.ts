@@ -31,7 +31,7 @@ export class PieChartComponent implements OnInit {
             width: 600, height: 400,
         };
 
-        let chart = new this.gLib.visualization.PieChart(document.getElementById('divPieChart'));
+        let chart = new this.gLib.visualization.PieChart(this.pieChart.nativeElement);
 
         chart.draw(data, options);
     }

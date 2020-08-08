@@ -184,7 +184,7 @@
                               </mat-form-field>
                             </div>
 
-                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
+                            <div class="p-r-0 customDatePicker width-35 p-t-1" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
                               <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
                             </div>
                             <div class="width-35 p-r-0 p-l-10">
@@ -229,7 +229,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-5 display-flex">
+                        <div class="col-md-5 display-flex text-right">
                           <div class="width-42">
                             <form [formGroup]="filterForm">
                               <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding">
@@ -264,10 +264,10 @@
                   </mat-tab-group>
                 </div>
                 <div class="col-md-12 display-flex justify-content-center">
-                  <div *ngIf="permissionObj.rfqFlag && poData && label == 'po'">
+                  <div *ngIf="permissionObj.rfqFlag && poData && poData.graphData.length > 1 && label == 'po'">
                     <app-bar-chart></app-bar-chart>
                   </div>
-                  <div *ngIf="permissionObj.rfqFlag && rfqData && label == 'rfq'">
+                  <div *ngIf="permissionObj.rfqFlag && rfqData && rfqData.graphData.length > 1 && label == 'rfq'">
                     <app-bar-chart></app-bar-chart>
                   </div>
                   <div *ngIf="permissionObj.rfqFlag && indentData && (indentData.totalCount || indentData.totalValue) && label == 'indent'">

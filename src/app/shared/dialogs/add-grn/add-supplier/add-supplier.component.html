@@ -13,7 +13,7 @@
       <span>
         <span class="text-semi-bold p-r-10"> Date-</span>
         <mat-form-field class="border-input width-50">
-          <mat-label>Receipt Date</mat-label>
+          <mat-label>Receipt Date*</mat-label>
           <input #dateinput matInput formControlName="grnDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly />
           <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
           <mat-datepicker #endDate startView="month"></mat-datepicker>
