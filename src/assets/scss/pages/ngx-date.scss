@@ -1,8 +1,7 @@
 .widthWrapper {
   .ngx-mat-drp-date-display {
-    min-width: 80% !important;
-    width: 80% !important;
-    padding-left: 10px;
+    min-width: 90% !important;
+    width: 90% !important;
   }
 
   .ngx-mat-drp-date-input {
@@ -45,17 +44,15 @@ td .mat-calendar-body-selected {
   padding: 0px !important;
 }
 
-@media(max-width: 599px){
-  
+@media (max-width: 599px) {
   .widthWrapper {
     .ngx-mat-drp-date-display {
       min-width: 100% !important;
       width: 1000% !important;
     }
   }
-
 }
 
-.wdrpr-mb{
+.wdrpr-mb {
   margin-top: -1px;
 }
