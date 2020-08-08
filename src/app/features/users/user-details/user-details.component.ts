@@ -13,13 +13,14 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 @Component({
   selector: "user-details",
   templateUrl: "./user-details.component.html",
-  styleUrls: [ "../../../../assets/scss/main.scss" ]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 
 
 export class UserDetailComponent implements OnInit {
-  displayedColumns: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star' ];
-  displayedColumnsDeactivate: string[] = [ 'User Name', 'Email Id', 'Phone', 'Role', 'Project' ];
+
+  displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
+  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
 
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;
@@ -75,7 +76,6 @@ export class UserDetailComponent implements OnInit {
     this.userId = Number(localStorage.getItem("userId"));
     this.isMobile = this.commonService.isMobile().matches;
     this.countryList = this.activatedRoute.snapshot.data.countryList;
-
     this.getAllUsers();
     this.getNotifications();
   }
@@ -92,8 +92,6 @@ export class UserDetailComponent implements OnInit {
 
         this.dataSourceActivateTemp = data.data.activatedProjectList;
         this.dataSourceDeactivateTemp = data.data.deactivatedProjectList;
-
-
         if ((localStorage.getItem('user') == "null") || (localStorage.getItem('user') == '0')) {
           setTimeout(() => {
             this.guidedTourService.startTour(this.UserDashboardTour);
@@ -160,13 +158,15 @@ export class UserDetailComponent implements OnInit {
 
 
   deactivateUser(data) {
-    this.userDetailsTemp.userId = data.ProjectUser.userId;
-    this.openDialogDeactiveUser({
-      isEdit: false,
-      isDelete: true,
-      detail: this.userDetailsTemp,
-      countryList: this.countryList
-    } as UserDetailsPopUpData);
+    if (data.ProjectUser.userId !== this.userId) {
+      this.userDetailsTemp.userId = data.ProjectUser.userId;
+      this.openDialogDeactiveUser({
+        isEdit: false,
+        isDelete: true,
+        detail: this.userDetailsTemp,
+        countryList: this.countryList
+      } as UserDetailsPopUpData);
+    }
   }
 
   openDialogDeactiveUser(data: UserDetailsPopUpData): void {

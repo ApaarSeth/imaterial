@@ -93,7 +93,7 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileLayoutComponent,
-    canActivate: [AuthGuardService, UserDataGuardService],
+    // canActivate: [AuthGuardService, UserDataGuardService],
     children: [
       {
         path: "profile",
@@ -106,7 +106,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [AuthGuardService, AfterSignUpGuardService],
+    // canActivate: [AuthGuardService, AfterSignUpGuardService],
     resolve: {
       menu: MenuResolver,
       subsData: SubscriptionsResolver
