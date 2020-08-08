@@ -118,10 +118,10 @@ export class UploadImageComponent implements OnInit {
           },[]);
         }
 
+        this.contractorImagesList = res.data.filter(list => list.supplierId !== null);
       }
 
-      this.contractorImagesList = res.data.filter(list => list.supplierId !== null);
-    })
+    });
   }
 
   getFileSizeErr($event){
