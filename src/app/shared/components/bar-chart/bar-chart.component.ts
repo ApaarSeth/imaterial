@@ -31,7 +31,13 @@ export class BarChartComponent implements OnInit {
 
         chart.draw(data, {
             width: 600, height: 400,
-            vAxis: '', isStacked: true
+            isStacked: true,
+            // hAxis: { format: 'dd/MM/yyyy' },
+            hAxis: {
+                valueFormatString: "DD-MMM",
+                labelAngle: -50
+            },
+            colors: ['#1584BA', '#60C1EF', '#B7E7FE']
         });
     }
 

@@ -56,3 +56,9 @@ td .mat-calendar-body-selected {
 .wdrpr-mb {
   margin-top: -1px;
 }
+
+.input-font-size {
+  .mat-form-field-infix .ngx-mat-drp-date-input {
+    font-size: 11px;
+  }
+}

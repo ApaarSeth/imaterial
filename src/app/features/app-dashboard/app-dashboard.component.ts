@@ -391,7 +391,7 @@ export class AppDashboardComponent implements OnInit {
       this.tab1 = "P.O.";
       this.tab2 = "RFPs";
     } else {
-      this.tab1 = "Purchase Orders";
+      this.tab1 = "Purchase Orders (PO)";
       this.tab2 = "Request for Price (RFPs)";
     }
   }
