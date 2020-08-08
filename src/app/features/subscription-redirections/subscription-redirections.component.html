@@ -101,7 +101,8 @@
 
                         <div [ngClass]="isMobile ? 'mt-4' : 'mt-5' ">
                             <button mat-button class="brand-bg-color pl-5 pr-5"
-                                [ngClass]="isMobile ? 'font-size20' : 'font-size-26px' ">Choose Plan</button>
+                                [ngClass]="isMobile ? 'font-size20' : 'font-size-26px' "
+                                (click)="gotoSubscriptions()">Choose Plan</button>
                         </div>
                     </mat-card-content>
                 </ng-container>

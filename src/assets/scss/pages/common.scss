@@ -687,3 +687,42 @@ background-color: #0c3c55;
 .justify-content-space-between {
   justify-content: space-between;
 }
+
+.mb-srch{
+  position: fixed;
+  top: 0;
+  right:0;
+  z-index: 99;
+  width: 100vw;
+  height:100vh;
+  transition: .2s;
+  background-color: rgba(0,0,0,0.2);
+
+  .sdb{
+    top: 0;
+    left:0;
+    width: 20vw;
+    height: 100vh;
+    position: fixed;
+  }
+
+  .mb-cl{
+    position: fixed;
+    top: 0;
+    right:0;
+    height:100vh;
+    background-color: #fff;
+    right:0;
+    width:80vw;
+    padding: 0;
+    overflow-y: auto;
+  }
+
+  &__open{
+    transform: translateX(0);    
+  }
+
+  &__close{
+    transform: translateX(100%);
+  }
+}

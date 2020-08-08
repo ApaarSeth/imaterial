@@ -45,6 +45,8 @@ export class IndentDetailComponent implements OnInit, OnDestroy {
   orgId: number;
   isMobile: boolean;
   susbcriptions: Subscription[] = [];
+  isFilter: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -77,6 +79,7 @@ export class IndentDetailComponent implements OnInit, OnDestroy {
           this.dataSource1 = this.allIndents.ongoingIndentList;
           this.dataSource2 = this.allIndents.completedIndentList;
         })
+        this.isFilter = false;
       }),
       this.advSearchService.indentFilterExportRequest$.subscribe(res => {
         res.projectId = Number(this.projectId);
@@ -85,6 +88,7 @@ export class IndentDetailComponent implements OnInit, OnDestroy {
             window.open(data.data.url);
           }
         });
+        this.isFilter = false;
       })
     )
   }
@@ -150,6 +154,14 @@ export class IndentDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.susbcriptions.forEach(itm => itm.unsubscribe());
+  }
+
+  openFilter() {
+    this.isFilter = true;
+  }
+
+  closeFilter() {
+    this.isFilter = false;
   }
 
 }

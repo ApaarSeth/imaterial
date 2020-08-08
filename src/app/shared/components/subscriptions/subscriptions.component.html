@@ -70,10 +70,18 @@
                         (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
                         Add More User
                       </button> -->
-                      <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
-                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
-                        Buy Now
-                      </button>
+
+                      <ng-container
+                        *ngIf="(plan.activeSubscription === null && isActiveSubscription === 1); else blnkSpc">
+                        <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
+                          (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                          Buy Now
+                        </button>
+                      </ng-container>
+                      <ng-template #blnkSpc>
+                        <p style="height:20px;"></p>
+                      </ng-template>
+
                     </div>
                   </ng-template>
                 </ng-container>
@@ -112,7 +120,7 @@
                 <!-- <ng-container
                   *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && plan.isTrialActive === 0"> -->
                 <ng-container
-                  *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && plan.isTrialActive === 0">
+                  *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && plan.isTrialActive === 0 && isActiveSubscription === 1">
                   <p class="text-center mt-4 mr-4 brand-color">
                     <button mat-button (click)="unsubscribePlan(plan.planId)">
                       Cancel Plan

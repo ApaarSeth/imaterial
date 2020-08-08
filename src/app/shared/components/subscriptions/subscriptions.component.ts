@@ -25,6 +25,9 @@ export class SubscriptionsComponent implements OnInit {
     isMobile: boolean;
     trialDays: string;
 
+    isFreeTrialSubscription: any;
+    isActiveSubscription: any;
+
     constructor(
         private _router: Router,
         private _userService: UserService,
@@ -36,6 +39,8 @@ export class SubscriptionsComponent implements OnInit {
     ngOnInit() {
         this.isMobile = this.commonService.isMobile().matches;
         this.getUserInformation(localStorage.getItem('userId'));
+        this.isFreeTrialSubscription = Number(localStorage.getItem('isFreeTrialSubscription'));
+        this.isActiveSubscription = Number(localStorage.getItem('isActiveSubscription'));
         this.subscriptionsData = this.data.planFrequencyList;
         this.getTrialDays(this.subscriptionsData);
     }
@@ -76,6 +81,8 @@ export class SubscriptionsComponent implements OnInit {
     getUserInformation(userId) {
         this._userService.getUserInfo(userId).then(res => {
             this.users = res.data ? res.data[ 0 ] : null;
+            this.isFreeTrialSubscription = res.data[ 0 ].isFreeTrialSubscription;
+            this.isActiveSubscription = res.data[ 0 ].isActiveSubscription;
         });
     }
 
