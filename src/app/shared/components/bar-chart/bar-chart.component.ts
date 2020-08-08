@@ -30,7 +30,6 @@ export class BarChartComponent implements OnInit {
         let chart = new this.gLib.visualization.ColumnChart(this.barChart.nativeElement);
 
         chart.draw(data, {
-            title: "Yearly Coffee Consumption by Country",
             width: 600, height: 400,
             vAxis: '', isStacked: true
         });
