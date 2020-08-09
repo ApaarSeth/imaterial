@@ -264,10 +264,10 @@
                   </mat-tab-group>
                 </div>
                 <div class="col-md-12 display-flex justify-content-center">
-                  <div *ngIf="permissionObj.rfqFlag && poData && poData.graphData.length > 1 && label == 'po'">
+                  <div *ngIf="permissionObj.rfqFlag && poData && poData.graphData && poData.graphData.length > 1 && label == 'po'">
                     <app-bar-chart></app-bar-chart>
                   </div>
-                  <div *ngIf="permissionObj.rfqFlag && rfqData && rfqData.graphData.length > 1 && label == 'rfq'">
+                  <div *ngIf="permissionObj.rfqFlag && rfqData && rfqData.graphData && rfqData.graphData.length > 1 && label == 'rfq'">
                     <app-bar-chart></app-bar-chart>
                   </div>
                   <div *ngIf="permissionObj.rfqFlag && indentData && (indentData.totalCount || indentData.totalValue) && label == 'indent'">

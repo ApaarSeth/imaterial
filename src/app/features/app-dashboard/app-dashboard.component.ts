@@ -315,11 +315,11 @@ export class AppDashboardComponent implements OnInit {
         }
         if (label == 'po') {
           this.poData = res.data;
-          this.chartService.barChartData.next([...this.poData.graphData])
+          this.chartService.barChartData.next(this.poData.graphData ? [...this.poData.graphData] : null)
         }
         if (label == 'rfq') {
           this.rfqData = res.data;
-          this.chartService.barChartData.next([...this.rfqData.graphData])
+          this.chartService.barChartData.next(this.rfqData.graphData ? [...this.rfqData.graphData] : null)
         }
         if (label == 'indent') {
           this.indentData = res.data;
