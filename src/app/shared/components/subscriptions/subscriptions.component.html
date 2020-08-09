@@ -30,6 +30,7 @@
                     <div class="pt-2 pb-3">
                       <span>
                         <ng-container *ngIf="subscription.discountPercent !== null; else flatPrice">
+                          {{ plan.currencyCode }}
                           {{getSubsciptionDiscounted(subscription.discountPercent, plan.planUnitPrice)}}
                         </ng-container>
                         <ng-template #flatPrice>

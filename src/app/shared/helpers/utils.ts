@@ -27,7 +27,8 @@ export class Utils {
     //             ) : "https:" + '//api.yeho.ga') + '/';
     // }
     static baseUrl(): string {
-        return (window[ 'env' ] && window[ 'env' ][ 'api_url' ]) || 'https://dev-api.buildsupply.io/';
+        // return (window[ 'env' ] && window[ 'env' ][ 'api_url' ]) || 'https://dev-api.buildsupply.io/';
+        return (window[ 'env' ] && window[ 'env' ][ 'api_url' ]) || 'http://8365260f6ded.ngrok.io/';
     }
 
     static paymentUrl(): string {
