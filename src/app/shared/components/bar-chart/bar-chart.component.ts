@@ -30,7 +30,7 @@ export class BarChartComponent implements OnInit {
         let chart = new this.gLib.visualization.ColumnChart(this.barChart.nativeElement);
 
         chart.draw(data, {
-            width: 600, height: 400,
+            width: 880, height: 400,
             isStacked: true,
             // hAxis: { format: 'dd/MM/yyyy' },
             hAxis: {
