@@ -316,6 +316,22 @@
     position: relative;
 }
 
+.subs-terms{
+    background-color: #ffffff;
+    text-align: left;
+    margin: 0 15% 2%;
+    padding: 20px;
+    color:#7a7a7a;
+
+    h4, p{
+        font-size: 12px;
+    }
+    p{
+        font-weight: light;
+    }
+}
+
+
 @media(max-width: 1300px){
     .subs-data{
         .mat-card-title{
@@ -367,7 +383,7 @@
         }
     }
 
-    .desp-block{
+    .desp-block, .subs-terms{
         margin: 0 10px;
     }
 

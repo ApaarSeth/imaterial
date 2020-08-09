@@ -19,23 +19,16 @@
             <mat-label>Select Projects</mat-label>
             <mat-select multiple (openedChange)="projectInput.focus()" #projectsSelect>
               <div class="d-flex">
-                <input
-                  class="pl-3"
-                  #projectInput
-                  matInput
-                  focused="'true'"
-                  type="text"
-                  (input)="search($event.target.value, 'projects')"
-                  autocomplete="off"
-                  placeholder="search"
-                  (keydown)="$event.stopPropagation()"
-                />
+                <input class="pl-3" #projectInput matInput focused="'true'" type="text"
+                  (input)="search($event.target.value, 'projects')" autocomplete="off" placeholder="search"
+                  (keydown)="$event.stopPropagation()" />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
               <mat-divider></mat-divider>
-              <mat-option *ngFor="let project of projectsList" [value]="project" (click)="searchValue(project, 'projects')">
+              <mat-option *ngFor="let project of projectsList" [value]="project"
+                (click)="searchValue(project, 'projects')">
                 {{ project.projectName }}
               </mat-option>
             </mat-select>
@@ -46,7 +39,9 @@
               <li *ngFor="let option of projectsSelect.selected" class="d-flex justify-content-between">
                 {{ getValueWithMaxWidth({fval: option.value.projectName}) }}
                 <span class="font-size20">
-                  <mat-icon (click)="removeId(option.value.projectId, 'projects'); searchValue(option.value, 'projects')" inline="true">close </mat-icon>
+                  <mat-icon
+                    (click)="removeId(option.value.projectId, 'projects'); searchValue(option.value, 'projects')"
+                    inline="true">close </mat-icon>
                 </span>
               </li>
             </ul>
@@ -69,23 +64,16 @@
             <mat-label>Select Suppliers</mat-label>
             <mat-select multiple (openedChange)="supplierInput.focus()" #suppliersSelect>
               <div class="d-flex">
-                <input
-                  class="pl-3"
-                  #supplierInput
-                  matInput
-                  focused="'true'"
-                  type="text"
-                  (input)="search($event.target.value, 'suppliers')"
-                  autocomplete="off"
-                  placeholder="search"
-                  (keydown)="$event.stopPropagation()"
-                />
+                <input class="pl-3" #supplierInput matInput focused="'true'" type="text"
+                  (input)="search($event.target.value, 'suppliers')" autocomplete="off" placeholder="search"
+                  (keydown)="$event.stopPropagation()" />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
               <mat-divider></mat-divider>
-              <mat-option *ngFor="let project of suppliersList" [value]="project" (click)="searchValue(project, 'suppliers')">
+              <mat-option *ngFor="let project of suppliersList" [value]="project"
+                (click)="searchValue(project, 'suppliers')">
                 {{ project.supplier_name }}
               </mat-option>
             </mat-select>
@@ -96,7 +84,9 @@
               <li *ngFor="let option of suppliersSelect.selected" class="d-flex justify-content-between">
                 {{ getValueWithMaxWidth({fval: option.value.supplier_name}) }}
                 <span class="font-size20">
-                  <mat-icon (click)="removeId(option.value.supplierId, 'suppliers'); searchValue(option.value, 'suppliers')" inline="true">close </mat-icon>
+                  <mat-icon
+                    (click)="removeId(option.value.supplierId, 'suppliers'); searchValue(option.value, 'suppliers')"
+                    inline="true">close </mat-icon>
                 </span>
               </li>
             </ul>
@@ -118,23 +108,16 @@
           <mat-label>Select Materials</mat-label>
           <mat-select multiple (openedChange)="materialInput.focus()" #materialsSelect>
             <div class="d-flex">
-              <input
-                class="pl-3"
-                #materialInput
-                matInput
-                focused="'true'"
-                type="text"
-                (input)="search($event.target.value, 'materials')"
-                autocomplete="off"
-                placeholder="search"
-                (keydown)="$event.stopPropagation()"
-              />
+              <input class="pl-3" #materialInput matInput focused="'true'" type="text"
+                (input)="search($event.target.value, 'materials')" autocomplete="off" placeholder="search"
+                (keydown)="$event.stopPropagation()" />
               <button mat-button matSuffix mat-icon-button>
                 <mat-icon>search</mat-icon>
               </button>
             </div>
             <mat-divider></mat-divider>
-            <mat-option *ngFor="let project of materialsList" [value]="project" (click)="searchValue(project, 'materials')">
+            <mat-option *ngFor="let project of materialsList" [value]="project"
+              (click)="searchValue(project, 'materials')">
               {{ project.materialName }}
             </mat-option>
           </mat-select>
@@ -145,7 +128,9 @@
             <li *ngFor="let option of materialsSelect.selected" class="d-flex justify-content-between">
               {{ getValueWithMaxWidth({fval: option.value.materialName}) }}
               <span class="font-size20">
-                <mat-icon (click)="removeId(option.value.materialCode, 'materials'); searchValue(option.value, 'materials')" inline="true">close </mat-icon>
+                <mat-icon
+                  (click)="removeId(option.value.materialCode, 'materials'); searchValue(option.value, 'materials')"
+                  inline="true">close </mat-icon>
               </span>
             </li>
           </ul>
@@ -182,8 +167,10 @@
           </mat-expansion-panel-header>
 
           <section class="example-section pb-2">
-            <mat-checkbox class="example-margin d-block" (change)="checkSubmitNotSubmit(bidSubmitted, notSubmitted)" #bidSubmitted> Bid Submitted</mat-checkbox>
-            <mat-checkbox class="example-margin d-block" (change)="checkSubmitNotSubmit(bidSubmitted, notSubmitted)" #notSubmitted> Not Submitted</mat-checkbox>
+            <mat-checkbox class="example-margin d-block" (change)="checkSubmitNotSubmit(bidSubmitted, notSubmitted)"
+              #bidSubmitted> Bid Submitted</mat-checkbox>
+            <mat-checkbox class="example-margin d-block" (change)="checkSubmitNotSubmit(bidSubmitted, notSubmitted)"
+              #notSubmitted> Not Submitted</mat-checkbox>
           </section>
         </mat-expansion-panel>
       </div>
@@ -203,17 +190,9 @@
             <mat-label>Select Users</mat-label>
             <mat-select multiple (openedChange)="usersInput.focus()" #usersSelect>
               <div class="d-flex">
-                <input
-                  class="pl-3"
-                  #usersInput
-                  matInput
-                  focused="'true'"
-                  type="text"
-                  (input)="search($event.target.value, 'users')"
-                  autocomplete="off"
-                  placeholder="search"
-                  (keydown)="$event.stopPropagation()"
-                />
+                <input class="pl-3" #usersInput matInput focused="'true'" type="text"
+                  (input)="search($event.target.value, 'users')" autocomplete="off" placeholder="search"
+                  (keydown)="$event.stopPropagation()" />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
@@ -230,7 +209,9 @@
               <li *ngFor="let option of usersSelect.selected" class="d-flex justify-content-between">
                 {{ getValueWithMaxWidth({fval: option.value.ProjectUser.firstName, sval: option.value.ProjectUser.lastName}) }}
                 <span class="font-size20">
-                  <mat-icon (click)="removeId(option.value.ProjectUser.userId, 'users'); searchValue(option.value, 'users')" inline="true">close </mat-icon>
+                  <mat-icon
+                    (click)="removeId(option.value.ProjectUser.userId, 'users'); searchValue(option.value, 'users')"
+                    inline="true">close </mat-icon>
                 </span>
               </li>
             </ul>
@@ -253,23 +234,16 @@
             <mat-label>Select Users</mat-label>
             <mat-select multiple (openedChange)="approversInput.focus()" #approversSelect>
               <div class="d-flex">
-                <input
-                  class="pl-3"
-                  #approversInput
-                  matInput
-                  focused="'true'"
-                  type="text"
-                  (input)="search($event.target.value, 'approvers')"
-                  autocomplete="off"
-                  placeholder="search"
-                  (keydown)="$event.stopPropagation()"
-                />
+                <input class="pl-3" #approversInput matInput focused="'true'" type="text"
+                  (input)="search($event.target.value, 'approvers')" autocomplete="off" placeholder="search"
+                  (keydown)="$event.stopPropagation()" />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
               <mat-divider></mat-divider>
-              <mat-option *ngFor="let project of approversList" [value]="project" (click)="searchValue(project, 'approvers')">
+              <mat-option *ngFor="let project of approversList" [value]="project"
+                (click)="searchValue(project, 'approvers')">
                 {{ project.ProjectUser.firstName }} {{ project.ProjectUser.lastName }}
               </mat-option>
             </mat-select>
@@ -280,7 +254,9 @@
               <li *ngFor="let option of approversSelect.selected" class="d-flex justify-content-between">
                 {{ getValueWithMaxWidth({fval: option.value.ProjectUser.firstName, sval: option.value.ProjectUser.lastName}) }}
                 <span class="font-size20">
-                  <mat-icon (click)="removeId(option.value.ProjectUser.userId, 'approvers'); searchValue(option.value, 'approvers')" inline="true">close </mat-icon>
+                  <mat-icon
+                    (click)="removeId(option.value.ProjectUser.userId, 'approvers'); searchValue(option.value, 'approvers')"
+                    inline="true">close </mat-icon>
                 </span>
               </li>
             </ul>
@@ -303,23 +279,16 @@
             <mat-label>Select Users</mat-label>
             <mat-select multiple (openedChange)="createdInput.focus()" #createdSelect>
               <div class="d-flex">
-                <input
-                  class="pl-3"
-                  #createdInput
-                  matInput
-                  focused="'true'"
-                  type="text"
-                  (input)="search($event.target.value, 'created')"
-                  autocomplete="off"
-                  placeholder="search"
-                  (keydown)="$event.stopPropagation()"
-                />
+                <input class="pl-3" #createdInput matInput focused="'true'" type="text"
+                  (input)="search($event.target.value, 'created')" autocomplete="off" placeholder="search"
+                  (keydown)="$event.stopPropagation()" />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
               <mat-divider></mat-divider>
-              <mat-option *ngFor="let project of createdList" [value]="project" (click)="searchValue(project, 'created')">
+              <mat-option *ngFor="let project of createdList" [value]="project"
+                (click)="searchValue(project, 'created')">
                 {{ project.ProjectUser.firstName }} {{ project.ProjectUser.lastName }}
               </mat-option>
             </mat-select>
@@ -330,7 +299,9 @@
               <li *ngFor="let option of createdSelect.selected" class="d-flex justify-content-between">
                 {{ getValueWithMaxWidth({fval: option.value.ProjectUser.firstName, sval: option.value.ProjectUser.lastName}) }}
                 <span class="font-size20">
-                  <mat-icon (click)="removeId(option.value.ProjectUser.userId, 'created'); searchValue(option.value, 'created')" inline="true">close </mat-icon>
+                  <mat-icon
+                    (click)="removeId(option.value.ProjectUser.userId, 'created'); searchValue(option.value, 'created')"
+                    inline="true">close </mat-icon>
                 </span>
               </li>
             </ul>
@@ -365,12 +336,14 @@
 
           <mat-form-field class="w-100 border-input">
             <mat-label>Min Amount</mat-label>
-            <input matInput type="number" min="0" (input)="checkAmount($event, maxAmt, '0')" autocomplete="off" #minAmt />
+            <input matInput type="number" min="0" (input)="checkAmount($event, maxAmt, '0')" autocomplete="off"
+              #minAmt />
           </mat-form-field>
 
           <mat-form-field class="w-100 border-input">
             <mat-label>Max Amount</mat-label>
-            <input matInput type="number" (input)="checkAmount($event, minAmt, '1')" autocomplete="off" min="0" #maxAmt />
+            <input matInput type="number" (input)="checkAmount($event, minAmt, '1')" autocomplete="off" min="0"
+              #maxAmt />
           </mat-form-field>
         </mat-expansion-panel>
       </div>
@@ -387,14 +360,16 @@
 
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>From</mat-label>
-          <input matInput [matDatepicker]="raisedFromPicker" (dateChange)="getDate($event, 'raisedFromPicker'); checkToDate($event, raisedToPicker)" />
+          <input matInput [matDatepicker]="raisedFromPicker"
+            (dateChange)="getDate($event, 'raisedFromPicker'); checkToDate($event, raisedToPicker)" />
           <mat-datepicker-toggle matSuffix [for]="raisedFromPicker"></mat-datepicker-toggle>
           <mat-datepicker #raisedFromPicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>To</mat-label>
-          <input matInput [matDatepicker]="raisedToPicker" (dateChange)="getDate($event, 'raisedToPicker'); checkFromDate($event, raisedFromPicker)" />
+          <input matInput [matDatepicker]="raisedToPicker"
+            (dateChange)="getDate($event, 'raisedToPicker'); checkFromDate($event, raisedFromPicker)" />
           <mat-datepicker-toggle matSuffix [for]="raisedToPicker"></mat-datepicker-toggle>
           <mat-datepicker #raisedToPicker></mat-datepicker>
         </mat-form-field>
@@ -413,14 +388,16 @@
 
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>From</mat-label>
-            <input matInput [matDatepicker]="expiryFromPicker" (dateChange)="getDate($event, 'expiryFromPicker'); checkToDate($event, expiryToPicker)" />
+            <input matInput [matDatepicker]="expiryFromPicker"
+              (dateChange)="getDate($event, 'expiryFromPicker'); checkToDate($event, expiryToPicker)" />
             <mat-datepicker-toggle matSuffix [for]="expiryFromPicker"></mat-datepicker-toggle>
             <mat-datepicker #expiryFromPicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>To</mat-label>
-            <input matInput [matDatepicker]="expiryToPicker" (dateChange)="getDate($event, 'expiryToPicker'); checkFromDate($event, expiryFromPicker)" />
+            <input matInput [matDatepicker]="expiryToPicker"
+              (dateChange)="getDate($event, 'expiryToPicker'); checkFromDate($event, expiryFromPicker)" />
             <mat-datepicker-toggle matSuffix [for]="expiryToPicker"></mat-datepicker-toggle>
             <mat-datepicker #expiryToPicker></mat-datepicker>
           </mat-form-field>
@@ -428,26 +405,28 @@
       </div>
     </ng-container>
 
-    <!-- requested date for indent -->
+    <!-- required date for indent -->
     <ng-container *ngIf="filterType === 'indent'">
       <div class="border-bottom">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Requested Date
+              Required Date
             </mat-panel-title>
           </mat-expansion-panel-header>
 
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>From</mat-label>
-            <input matInput [matDatepicker]="requestedFromPicker" (dateChange)="getDate($event, 'requestedFromPicker'); checkToDate($event, requestedToPicker)" />
+            <input matInput [matDatepicker]="requestedFromPicker"
+              (dateChange)="getDate($event, 'requestedFromPicker'); checkToDate($event, requestedToPicker)" />
             <mat-datepicker-toggle matSuffix [for]="requestedFromPicker"></mat-datepicker-toggle>
             <mat-datepicker #requestedFromPicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>To</mat-label>
-            <input matInput [matDatepicker]="requestedToPicker" (dateChange)="getDate($event, 'requestedToPicker'); checkFromDate($event, requestedFromPicker)" />
+            <input matInput [matDatepicker]="requestedToPicker"
+              (dateChange)="getDate($event, 'requestedToPicker'); checkFromDate($event, requestedFromPicker)" />
             <mat-datepicker-toggle matSuffix [for]="requestedToPicker"></mat-datepicker-toggle>
             <mat-datepicker #requestedToPicker></mat-datepicker>
           </mat-form-field>
@@ -479,7 +458,8 @@
     <button mat-button class="bordered-button mr-2" (click)="getFilterExportRequest()">
       Export
     </button>
-    <button mat-button mat-button-base class="main-background-color color-white demo-title" (click)="getFilterRequest()">
+    <button mat-button mat-button-base class="main-background-color color-white demo-title"
+      (click)="getFilterRequest()">
       Apply
     </button>
   </div>

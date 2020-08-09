@@ -48,6 +48,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
 import { GrnComponent } from './features/grn/grn.component';
+import { BuySubscriptionsComponent } from './shared/components/subscriptions/buy-subscriptions/buy-subscriptions.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { GrnComponent } from './features/grn/grn.component';
     ProfileComponent,
     MySubscriptionsComponent,
     SubscriptionRedirectionsComponent,
+    BuySubscriptionsComponent,
     GrnComponent
   ],
   imports: [
