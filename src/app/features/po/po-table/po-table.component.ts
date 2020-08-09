@@ -49,7 +49,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   additonalCost: { additionalOtherCostAmount: number, additionalOtherCostInfo: OverallOtherCost[] }
   ratesBaseCurr: boolean = false;
   isMobile: boolean;
-
+  taxCounter: number = 0;
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
@@ -383,7 +383,14 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getPOListTax(m, p, type) {
     let tax: number = 0;
-    if (type === 'edit') {
+
+    if (type === 'edit' && this.taxCounter === 0) {
+      this.calculateTaxInfo(m)
+      tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+      this.taxCounter++;
+    }
+
+    if (type === 'edit' && this.taxCounter !== 0) {
       tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
     }
     else {
@@ -395,6 +402,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
       return this.poTableData[m].purchaseOrderDetailList[p]['taxAmount']
     }
     else {
+      this.poTableData[m].purchaseOrderDetailList[p]['taxAmount'] = null
       return this.poTableData[m].purchaseOrderDetailList[p]['taxAmount']
     }
   }
@@ -491,18 +499,19 @@ export class PoTableComponent implements OnInit, OnDestroy {
         type,
         po: true,
         rfqId: null,
-        existingData
+        existingData,
+        currency: this.poCurrency.exchangeCurrencyName
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
-        this.poTableData[mId].taxInfo = res.taxInfo ? res.taxInfo : null;
-        this.poTableData[mId].otherCostInfo = res.otherCostInfo ? res.otherCostInfo : null;
+        this.poTableData[mId].taxInfo = res && res.taxInfo ? res.taxInfo : null;
+        this.poTableData[mId].otherCostInfo = res && res.otherCostInfo ? res.otherCostInfo : null;
         this.calculateTaxInfo(mId);
         this.calculateOtherTaxInfo(mId);
       }
       if (type === 'otherCost') {
-        this.additonalCost.additionalOtherCostInfo = res.otherCostInfo ? res.otherCostInfo : null;
+        this.additonalCost.additionalOtherCostInfo = res && res.otherCostInfo ? res.otherCostInfo : null;
         otherCost();
       }
     });
