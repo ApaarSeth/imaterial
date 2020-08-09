@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { CommonService } from 'src/app/shared/services/commonService';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonService } from 'src/app/shared/services/commonService';
+import { SubscriptionPaymentsService } from './../../shared/services/subscriptions-payments.service';
+import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 
 @Component({
     selector: 'subscription-redirections',
@@ -20,12 +22,15 @@ export class SubscriptionRedirectionsComponent implements OnInit {
     constructor(
         private commonService: CommonService,
         private activeRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private _userService: UserService,
+        private subsPayService: SubscriptionPaymentsService
     ) { }
 
     ngOnInit() {
         this.isMobile = this.commonService.isMobile().matches;
         this.pageType = this.activeRoute.snapshot.data.type;
+        this.getUserInformation(localStorage.getItem('userId'));
         this.redirectPageToDashboard();
         this.activeRoute.queryParams.subscribe(param => {
             if (param.planName) {
@@ -40,6 +45,14 @@ export class SubscriptionRedirectionsComponent implements OnInit {
             if (param.currencyCode) {
                 this.currencyCode = param.currencyCode;
             }
+        });
+    }
+
+    getUserInformation(userId) {
+        this._userService.getUserInfo(userId).then(res => {
+            this.subsPayService.updateSubscriptionPlan$.next();
+            localStorage.setItem('isFreeTrialSubscription', res.data[ 0 ].isFreeTrialSubscription);
+            localStorage.setItem('isActiveSubscription', res.data[ 0 ].isActiveSubscription);
         });
     }
 

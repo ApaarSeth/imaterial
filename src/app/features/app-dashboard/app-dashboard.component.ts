@@ -72,7 +72,7 @@ export class AppDashboardComponent implements OnInit {
   projectData
 
   ngOnInit() {
-    this.isAdDisplay = localStorage.getItem("countryCode");
+    this.isAdDisplay = localStorage.getItem("callingCode");
     // this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
