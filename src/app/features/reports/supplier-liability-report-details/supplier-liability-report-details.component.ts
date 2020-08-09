@@ -88,7 +88,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   isMobile: boolean;
   projectNumIds: number[];
   allSuppIds: number[];
-
+  countryCode: string;
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -101,9 +101,9 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   ngOnInit() {
     this.conversionNumber = 1;
     this.isMobile = this.commonService.isMobile().matches;
-    let countryCode = localStorage.getItem("countryCode")
+    this.countryCode = localStorage.getItem("countryCode")
     this.currency = localStorage.getItem("currencyCode")
-    this.amountRange = countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions', 'Billions']
+    this.amountRange = this.countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions', 'Billions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data;
@@ -202,11 +202,11 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
    * @description function to check if select all option clicked or not
    * @param text 'select all' text present or not
    */
-  getAllIds(text){
-    if(text === 'Select All'){
+  getAllIds(text) {
+    if (text === 'Select All') {
       this.projectIds = this.projectNumIds.map(String);
       this.sendProjectSuppierData();
-    }else{
+    } else {
       this.projectIds = [];
       this.supplierLiabiltyReportData = null;
     }
@@ -216,11 +216,11 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
    * @description function to check if select all option clicked or not
    * @param text 'select all' text present or not
    */
-  getAllSuppIds(text){
-    if(text === 'Select All'){
+  getAllSuppIds(text) {
+    if (text === 'Select All') {
       this.supplierIds = this.allSuppIds.map(String);
       this.sendProjectSuppierData();
-    }else{
+    } else {
       this.supplierIds = [];
       this.supplierLiabiltyReportData = null;
     }
