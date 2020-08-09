@@ -128,7 +128,6 @@ export class SubscriptionsComponent implements OnInit {
     }
 
     getUpdatedSubscription() {
-
         this.commonService.getSubscriptionPlan().then(res => {
             let subsdata = res.data;
             let cstmPlan = {
@@ -157,9 +156,8 @@ export class SubscriptionsComponent implements OnInit {
             subsdata.planFrequencyList.forEach(item => {
                 item.planList.push(cstmPlan);
             });
-            this.subscriptionsData = subsdata;
+            this.subscriptionsData = subsdata.planFrequencyList;
         });
-
     }
 
 }

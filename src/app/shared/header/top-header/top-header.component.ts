@@ -52,14 +52,10 @@ export class TopHeaderComponent implements OnInit {
 
     this.isMobile = this.commonService.isMobile().matches;
 
-    if (Number(localStorage.getItem('isFreeTrialSubscription')) === 1) {
-      this.isFreeTrialActivate = true;
-    }
-
     this.userId = Number(localStorage.getItem('userId'));
     this.userName = localStorage.getItem('userName');
     this.url = localStorage.getItem('profileUrl');
-    this.isWhatsappIconDisplay = localStorage.getItem("countryCode");
+    this.isWhatsappIconDisplay = localStorage.getItem("callingCode");
     this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
 
     this.getNotifications();
@@ -92,6 +88,9 @@ export class TopHeaderComponent implements OnInit {
           }
         }
       }
+    }
+    if (Number(localStorage.getItem('isFreeTrialSubscription')) === 1) {
+      this.isFreeTrialActivate = true;
     }
   }
 

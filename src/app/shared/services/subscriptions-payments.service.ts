@@ -7,6 +7,7 @@ import { Utils } from '../helpers/utils';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { UserService } from './userDashboard/user.service';
+import { AppNotificationService } from './app-notification.service';
 
 @Injectable({
     providedIn: "root"
@@ -19,7 +20,8 @@ export class SubscriptionPaymentsService {
     constructor(
         private dataService: DataService,
         private _router: Router,
-        private _userService: UserService
+        private _userService: UserService,
+        private notifier: AppNotificationService
     ) { }
 
     postSubscriptionPaymentInitiate(data) {
@@ -66,6 +68,7 @@ export class SubscriptionPaymentsService {
                     // this._router.navigate([ "/profile/add-user" ]);
 
                     this._router.navigate([ "/dashboard" ]);
+                    this.notifier.snack('Your free trial has been started successfully!');
                     this.updateSubscriptionPlan$.next();
                     this.getUserInformation(localStorage.getItem('userId'));
 
