@@ -51,7 +51,7 @@
                         </h2>
 
                         <div class="shadow-tag pl-4 pr-4 pt-3 pb-3" [ngClass]="isMobile ? 'w-100' : 'w-75' ">
-                            Sorry, your payment of <ng-container *ngIf="currencyCode">{{currencyCode}}</ng-container>
+                            Sorry, your payment of <ng-container *ngIf="currencyCode">{{currencyCode}} </ng-container>
                             <ng-container *ngIf="amount">{{amount}}</ng-container> had failed.
                             <span class="d-block mt-2 mb-2"></span>
                             <span class="d-block" [ngClass]="isMobile ? 'ml-1 mr-1' : 'ml-5 mr-5'">Please make sure to
@@ -61,7 +61,8 @@
 
                         <div [ngClass]="isMobile ? 'mt-4' : 'mt-5' ">
                             <button mat-button class="brand-bg-color pl-5 pr-5"
-                                [ngClass]="isMobile ? 'font-size20' : 'font-size-26px' ">Update Details</button>
+                                [ngClass]="isMobile ? 'font-size20' : 'font-size-26px' "
+                                (click)="gotoMySubscriptions()">Update Details</button>
                         </div>
                     </mat-card-content>
                 </ng-container>

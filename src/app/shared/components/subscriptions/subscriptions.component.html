@@ -30,10 +30,10 @@
                     <div class="pt-2 pb-3">
                       <span>
                         <ng-container *ngIf="subscription.discountPercent !== null; else flatPrice">
-                          {{getSubsciptionDiscounted(subscription.discountPercent, plan.planPrice)}}
+                          {{getSubsciptionDiscounted(subscription.discountPercent, plan.planUnitPrice)}}
                         </ng-container>
                         <ng-template #flatPrice>
-                          {{ plan.currencyCode }} {{ plan.planPrice }}
+                          {{ plan.currencyCode }} {{ plan.planUnitPrice }}
                         </ng-template>
                         <sub class="font-size-40px prc-str">*</sub>
                       </span>
@@ -71,8 +71,7 @@
                         Add More User
                       </button> -->
 
-                      <ng-container
-                        *ngIf="(plan.activeSubscription === null && isActiveSubscription === 1); else blnkSpc">
+                      <ng-container *ngIf="(isFreeTrialSubscription === 1 && isActiveSubscription === 1); else blnkSpc">
                         <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
                           (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
                           Buy Now
@@ -120,9 +119,9 @@
                 <!-- <ng-container
                   *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && plan.isTrialActive === 0"> -->
                 <ng-container
-                  *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && plan.isTrialActive === 0 && isActiveSubscription === 1">
+                  *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && isActiveSubscription === 1 && isFreeTrialSubscription === 0 && plan.activeSubscription.dateUnsubscribed === null">
                   <p class="text-center mt-4 mr-4 brand-color">
-                    <button mat-button (click)="unsubscribePlan(plan.planId)">
+                    <button mat-button (click)="unsubscribePlan(plan.activeSubscription.subscriptionId)">
                       Cancel Plan
                     </button>
                   </p>
@@ -136,4 +135,55 @@
     </mat-tab>
   </mat-tab-group>
   <p class="color-6d6a6a desp-block font-size14 mb-4 text-align-right">*Displayed prices all exclusive of taxes</p>
+
+  <div>
+    <div class="subs-terms">
+
+      <section class="example-section">
+        <mat-checkbox class="example-margin">I agree to terms & condition</mat-checkbox>
+      </section>
+
+      <h4 class="mt-2 mb-4">wPayment terms and conditions - Fees for purchased services</h4>
+
+      <h4>1. Subscription terms </h4>
+      <p>Material Manager offers a range of subscription plans. Each plan includes a certain number of users and
+        features.
+        You will select your plan as part of your registration, which may begin with a free trial. You may be billed
+        monthly, semi annually or annually as per your chosen cycle. </p>
+
+      <h4>2. Free Trial period </h4>
+      <p>2.1 During the registration process, you get a one time free trial to try out the Material Manager platform
+        from
+        the date you register without paying in advance. <br />
+        2.2 You can enjoy a free trial of the platform for a period of 30 days, post which the free trial ends and you
+        may
+        have to subscribe to any one of the plans to continue using the platform</p>
+
+      <h4>3. Payment terms, Refunds, Upgrades </h4>
+      <p>3.1 The fees of your plan are billed in advance, non-refundable and automatically renew on a monthly,
+        semi-annual
+        or annual basis as described in your plan. <br />
+        3.2 If you upgrade your plan, your credit card will be charged immediately on a prorated amount reflecting the
+        increased rate. You will be charged the full amount of the new rate as part of your new billing cyclebr <br>
+        3.3 Any discounts applied to the previous subscription may not be applied to the renewed subscription. <br>
+        3.4 You may also add users over and above the number mentioned as part of each plan. You will be charged an
+        amount
+        per user. If you add more users in the middle of the month/cycle, it would be considered as a new subscription
+        and
+        the amount remaining as part of the previous subscription will be adjusted in the next month. </p>
+
+
+      <h4>4. Subscription cancellation </h4>
+      <p>
+        4.1 The only method to cancel your subscription is doing so using the ‘Cancel’ option in the platform. <br>
+        4.2 If you cancel your plan before the end of your pre-paid period, you will not be charged again for your plan
+        beginning with the next billing cycle. If you cancel your plan, you will lose access to the data on the platform
+        upon expiration of your current pre-paid period. </p>
+
+      <h4>5. Payment failure</h4>
+      <p>5.1 If you fail to make payments on or before the due date (case of dishonored auto debit ), your subscription
+        will be paused immediately. You will regain access to the platform once the payment is made.</p>
+
+    </div>
+  </div>
 </div>
