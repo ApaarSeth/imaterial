@@ -27,7 +27,7 @@ export class CTCReportComponent implements OnInit {
   allProjects: ProjectDetails[];
   selectedProjectIds: number[] = [];
   projectNumIds: number[] = [];
-
+  countryCode: string
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -38,9 +38,9 @@ export class CTCReportComponent implements OnInit {
 
   ngOnInit() {
     this.conversionNumber = 1;
-    let countryCode = localStorage.getItem("countryCode");
+    this.countryCode = localStorage.getItem("countryCode");
     this.currency = localStorage.getItem("currencyCode");
-    this.amountRange = countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions', 'Billions']
+    this.amountRange = this.countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions', 'Billions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.allProjectsList = this.activatedRoute.snapshot.data.resolverData[1].data;
@@ -55,14 +55,14 @@ export class CTCReportComponent implements OnInit {
    */
   getProjectMaterials() {
     this.projectIds = this.form.value.selectedProject.map(selectedProject => String(selectedProject));
-    if(this.projectIds.length > 0){
+    if (this.projectIds.length > 0) {
       this.sendDataGetCTCReport();
-    }else{
+    } else {
       this.allProjectsData = [];
     }
   }
 
-  sendDataGetCTCReport(){
+  sendDataGetCTCReport() {
     const selectedProjectIds = {
       "projectIdList": this.projectIds
     }
@@ -106,13 +106,13 @@ export class CTCReportComponent implements OnInit {
     }
   }
 
-  downloadExcel(){
+  downloadExcel() {
     const data = {
       "projectIdList": this.projectIds
     }
 
     this.reportService.ctcReportExcelDownload(data).then(res => {
-      if(res.data){
+      if (res.data) {
         var win = window.open(res.data.url, "_blank");
         win.focus();
       }
@@ -123,11 +123,11 @@ export class CTCReportComponent implements OnInit {
    * @description function to check if select all option clicked or not
    * @param text 'select all' text present or not
    */
-  getAllIds(text){
-    if(text === 'Select All'){
+  getAllIds(text) {
+    if (text === 'Select All') {
       this.projectIds = this.projectNumIds.map(String);
       this.sendDataGetCTCReport();
-    }else{
+    } else {
       this.projectIds = [];
       this.allProjectsData = [];
     }
