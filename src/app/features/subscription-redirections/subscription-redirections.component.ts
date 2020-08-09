@@ -50,9 +50,9 @@ export class SubscriptionRedirectionsComponent implements OnInit {
 
     getUserInformation(userId) {
         this._userService.getUserInfo(userId).then(res => {
-            this.subsPayService.updateSubscriptionPlan$.next();
             localStorage.setItem('isFreeTrialSubscription', res.data[ 0 ].isFreeTrialSubscription);
             localStorage.setItem('isActiveSubscription', res.data[ 0 ].isActiveSubscription);
+            this.subsPayService.updateSubscriptionPlan$.next();
         });
     }
 
