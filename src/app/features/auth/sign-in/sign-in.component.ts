@@ -129,7 +129,6 @@ export class SigninComponent implements OnInit {
 
     this.signInSignupService.signIn(params.toString()).then(data => {
       if (data.errorMessage) {
-        this.loader.hide()
         this._snackBar.open(data.errorMessage, "", {
           duration: 2000,
           panelClass: ["warning-snackbar"],
@@ -143,7 +142,6 @@ export class SigninComponent implements OnInit {
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
         if (localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
           this.router.navigate(["/profile/email-verification"]);
-          this.loader.hide()
         }
         else {
           this.getUserInfo(data.serviceRawResponse.data.userId);
