@@ -50,6 +50,8 @@ export class AppDashboardComponent implements OnInit {
   diffDays: number
   rangeType: string = 'Custom';
 
+  prText: string;
+
   constructor(public dialog: MatDialog,
     private router: Router,
     private chartService: GoogleChartService,
@@ -70,7 +72,7 @@ export class AppDashboardComponent implements OnInit {
   projectData
 
   ngOnInit() {
-    this.isAdDisplay = localStorage.getItem("countryCode");
+    this.isAdDisplay = localStorage.getItem("callingCode");
     // this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
@@ -95,16 +97,17 @@ export class AppDashboardComponent implements OnInit {
         }
       });
     }
-    Promise.all([this.userguideservice.getUserGuideFlag(),
+    Promise.all([ this.userguideservice.getUserGuideFlag(),
     this._projectService.getProjects(this.orgId, this.userId),
-    this.commonService.getNotification(this.userId)]).then(res => {
-      this.userGuidedata = res[0].data;
+    this.commonService.getNotification(this.userId) ]).then(res => {
+      this.userGuidedata = res[ 0 ].data;
       this.userGuidedata.forEach(element => {
         localStorage.setItem(element.moduleName, element.enableGuide);
       });
-      this.projectData = res[1];
+      this.projectData = res[ 1 ];
       this.getProjectsNumber()
     })
+    this.isMobile ? this.prText = 'PR' : this.prText = 'Purchase Requisitions (PR)';
   }
 
 
@@ -224,7 +227,7 @@ export class AppDashboardComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result != null)
-          this.router.navigate(['/project-dashboard']);
+          this.router.navigate([ '/project-dashboard' ]);
       });
     });
   }
@@ -315,17 +318,17 @@ export class AppDashboardComponent implements OnInit {
         }
         if (label == 'po') {
           this.poData = res.data;
-          this.chartService.barChartData.next(this.poData.graphData ? [...this.poData.graphData] : null)
+          this.chartService.barChartData.next(this.poData.graphData ? [ ...this.poData.graphData ] : null)
         }
         if (label == 'rfq') {
           this.rfqData = res.data;
-          this.chartService.barChartData.next(this.rfqData.graphData ? [...this.rfqData.graphData] : null)
+          this.chartService.barChartData.next(this.rfqData.graphData ? [ ...this.rfqData.graphData ] : null)
         }
         if (label == 'indent') {
           this.indentData = res.data;
-          this.chartService.pieChartData.next([['PRs', 'Vaue'],
-          ['Fullfilled PRs', this.indentData.totalCount],
-          ['Raised PRs', this.indentData.totalValue],
+          this.chartService.pieChartData.next([ [ 'PRs', 'Vaue' ],
+          [ 'Fullfilled PRs', this.indentData.totalCount ],
+          [ 'Raised PRs', this.indentData.totalValue ],
           ])
         }
       }).catch(error => console.log(error))
@@ -385,7 +388,7 @@ export class AppDashboardComponent implements OnInit {
 
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', [ '$event' ])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 494) {
       this.tab1 = "P.O.";
