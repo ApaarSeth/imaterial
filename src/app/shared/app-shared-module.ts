@@ -15,6 +15,7 @@ import { OnlyNumberDirective } from './directives/number-only2.directive';
 import { TwoDigitDecimaNumberDirective } from './directives/appTwoDigit';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { IndianNumberPipe } from './pipes/indianNumber';
 
 @NgModule({
   imports: [CommonModule, RouterModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule, AngularEditorModule, NgbModule],
@@ -22,8 +23,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     { provide: DateAdapter, useClass: PickDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
   ],
-  declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective],
-  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective, AngularEditorModule],
+  declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, IndianNumberPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective],
+  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective, IndianNumberPipe, AngularEditorModule],
   entryComponents: [...SharedDialogs]
 })
 

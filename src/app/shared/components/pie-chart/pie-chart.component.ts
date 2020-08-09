@@ -29,10 +29,7 @@ export class PieChartComponent implements OnInit {
             is3D: true,
             width: 500, height: 400,
             colors: ['#1584BA', '#60C1EF'],
-            axisX: {
-                valueFormatString: "DD-MMM",
-                labelAngle: -50
-            },
+
         };
 
         let chart = new this.gLib.visualization.PieChart(this.pieChart.nativeElement);
