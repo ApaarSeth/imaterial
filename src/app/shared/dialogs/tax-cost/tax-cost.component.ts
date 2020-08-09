@@ -38,7 +38,7 @@ export class TaxCostComponent implements OnInit {
       if (this.data.type === 'taxesAndCost') {
         this.taxCostFormInit();
         if ((this.data.prevData && this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
-          if (this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.length) {
+          if (this.data.prevData.currencydt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.length) {
             this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.forEach((itm, index) => {
               this.addNewTaxField();
               const txInfoArr = this.taxCostForm.get('taxInfo') as FormArray;
@@ -513,59 +513,58 @@ export class TaxCostComponent implements OnInit {
 
 
   onSubmitOtherCost() {
-    if (this.otherCostForm.valid) {
-      let data = {
-        organizationId: 0,
-        rfqId: this.rfqId,
-        otherCostInfo: [],
-        taxInfo: []
-      }
-      this.otherCostForm.value.otherCostInfo.forEach(itm => {
-        if (itm.otherCostAmount && itm.otherCostAmount) {
-          let otItm: OtherCostInfo
-          if (typeof itm.otherCostName === 'string') {
-            otItm = {
-              id: 0,
-              status: 0,
-              createdBy: "",
-              createdAt: "",
-              lastUpdatedBy: "",
-              lastUpdatedAt: "",
-              otherCostId: null,
-              otherCostName: itm.otherCostName,
-              otherCostDescription: null,
-              otherCostAmount: itm.otherCostAmount,
-              organizationId: 0
-            }
+
+    let data = {
+      organizationId: 0,
+      rfqId: this.rfqId,
+      otherCostInfo: [],
+      taxInfo: []
+    }
+    this.otherCostForm.value.otherCostInfo.forEach(itm => {
+      if (itm.otherCostAmount && itm.otherCostAmount) {
+        let otItm: OtherCostInfo
+        if (typeof itm.otherCostName === 'string') {
+          otItm = {
+            id: 0,
+            status: 0,
+            createdBy: "",
+            createdAt: "",
+            lastUpdatedBy: "",
+            lastUpdatedAt: "",
+            otherCostId: null,
+            otherCostName: itm.otherCostName,
+            otherCostDescription: null,
+            otherCostAmount: itm.otherCostAmount,
+            organizationId: 0
           }
-          else {
-            otItm = { ...itm.otherCostName, otherCostAmount: itm.otherCostAmount } as OtherCostInfo;
-          }
-          data.otherCostInfo.push(otItm);
-        }
-      });
-      let check = this.alreadyPresentAdditionalCost();
-      if (this.data.po) {
-        if (!check) {
-          this.taxcostService.poTaxCostData(data)
-            .then(res => {
-              this.dialogRef.close(res.data);
-            });
         }
         else {
-          this.snackbar("Cost Name Already Added")
+          otItm = { ...itm.otherCostName, otherCostAmount: itm.otherCostAmount } as OtherCostInfo;
         }
+        data.otherCostInfo.push(otItm);
+      }
+    });
+    let check = this.alreadyPresentAdditionalCost();
+    if (this.data.po) {
+      if (!check) {
+        this.taxcostService.poTaxCostData(data)
+          .then(res => {
+            this.dialogRef.close(res.data);
+          });
       }
       else {
-        if (!check) {
-          this.taxcostService.postTaxCostData(data)
-            .then(res => {
-              this.dialogRef.close(res.data);
-            });
-        }
-        else {
-          this.snackbar("Cost Name Already Added")
-        }
+        this.snackbar("Cost Name Already Added")
+      }
+    }
+    else {
+      if (!check) {
+        this.taxcostService.postTaxCostData(data)
+          .then(res => {
+            this.dialogRef.close(res.data);
+          });
+      }
+      else {
+        this.snackbar("Cost Name Already Added")
       }
     }
   }

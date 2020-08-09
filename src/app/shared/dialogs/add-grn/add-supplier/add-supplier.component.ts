@@ -33,6 +33,7 @@ export class GrnAddSupplierComponent implements OnInit {
     livingCountry: CountryCode[] = [];
     cntryId: number;
     docs: FileList;
+    todayDate: Date = null;
     filesRemoved: boolean;
     documentList: DocumentList[] = [];
     config: AngularEditorConfig = AngularEditor.config;
@@ -51,6 +52,7 @@ export class GrnAddSupplierComponent implements OnInit {
 
 
     ngOnInit() {
+        this.todayDate = new Date();
         this.initForm();
         this.isMobile = this.commonService.isMobile().matches;
         this.cntryId = Number(localStorage.getItem('countryId'));
@@ -225,6 +227,8 @@ export class GrnAddSupplierComponent implements OnInit {
             else {
                 this.notifier.snack("There is some issue submitting GRN")
             }
+        }).catch(err => {
+            this.notifier.snack("There is some issue submitting GRN")
         })
     }
 }
