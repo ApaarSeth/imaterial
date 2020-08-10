@@ -85,7 +85,7 @@ export class PaymentRecordComponent implements OnInit {
         submitData.paymentDate = this.commonService.getFormatedDate(submitData.paymentDate)
         this.poService.paymentRecord(this.data.poDetail.purchaseOrderId, submitData).then(res => {
             if (res.statusCode === 201) {
-                this.notifier.snack(res.message)
+                this.notifier.snack("Record added Successfully")
                 this.dialogRef.close(null)
             }
             else {
