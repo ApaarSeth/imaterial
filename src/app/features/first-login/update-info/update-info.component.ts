@@ -373,6 +373,7 @@ export class UpdateInfoComponent implements OnInit {
           localStorage.setItem('profileUrl', this.url);
         }
         localStorage.setItem('isPlanAvailable', res.data.isPlanAvailable);
+        localStorage.setItem('accountOwner', res.data.accountOwner);
         if (this.users.roleName === 'l1') {
           if (res.data.isPlanAvailable === 1) {
             this._router.navigate([ 'profile/subscriptions' ]);

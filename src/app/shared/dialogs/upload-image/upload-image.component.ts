@@ -119,6 +119,15 @@ export class UploadImageComponent implements OnInit {
         }
 
         this.contractorImagesList = res.data.filter(list => list.supplierId !== null);
+        if(this.contractorImagesList && this.contractorImagesList.length > 0){
+          // code to get distinct values of documentList and remove duplicate values
+          this.contractorImagesList = this.contractorImagesList.reduce((unique, o) => {
+            if(!unique.some(obj => obj.documentId === o.documentId)) {
+              unique.push(o);
+            }
+            return unique;
+          },[]);
+        }
       }
 
     });

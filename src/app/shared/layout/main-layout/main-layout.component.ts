@@ -24,6 +24,7 @@ export class MainLayoutComponent implements OnInit {
   isActiveSubscription: any;
 
   isPlanAvailable: any;
+  accountOwner: any;
 
   users: any;
 
@@ -42,6 +43,7 @@ export class MainLayoutComponent implements OnInit {
     this.isFreeTrialSubscription = Number(localStorage.getItem('isFreeTrialSubscription'));
     this.isActiveSubscription = Number(localStorage.getItem('isActiveSubscription'));
     this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
+    this.accountOwner = Number(localStorage.getItem('accountOwner'));
     this.startSubscriptions();
     // this.checkFreeTrial();
     // this.getUserInformation(this.userId);

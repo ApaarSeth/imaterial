@@ -24,6 +24,8 @@ export class SidenavListComponent implements OnInit {
   subsriptions: Subscription[] = [];
   buttonName: string;
 
+  accountOwner: any;
+
   isPlanAvailable: any;
 
   @Input('menuData') data: MenuList;
@@ -40,6 +42,7 @@ export class SidenavListComponent implements OnInit {
     this.role = localStorage.getItem("role");
 
     this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
+    this.accountOwner = Number(localStorage.getItem('accountOwner'));
 
     if (this.data.moduleList && this.data.moduleList.length) {
       this.data.moduleList.forEach(itm => {
