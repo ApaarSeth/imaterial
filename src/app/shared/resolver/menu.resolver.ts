@@ -13,7 +13,18 @@ export class MenuResolver implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot) {
         return this.commonService.getMenuData().then(res => {
-            return res.data;
+            const role = localStorage.getItem('role');
+            let result = res.data;
+            if (role == 'l3') {
+                let roleResult = [];
+                result.moduleList.forEach(itm => {
+                    if (itm.moduleName === 'Dashboard' || itm.moduleName === 'Project Store') {
+                        roleResult.push(itm);
+                    }
+                });
+                result.moduleList = roleResult;
+            }
+            return result;
         });
     }
 
