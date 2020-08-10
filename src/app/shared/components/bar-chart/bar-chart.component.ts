@@ -32,7 +32,6 @@ export class BarChartComponent implements OnInit {
         chart.draw(data, {
             width: 880, height: 400,
             isStacked: true,
-            // hAxis: { format: 'dd/MM/yyyy' },
             hAxis: {
                 valueFormatString: "DD-MMM",
                 labelAngle: -50
