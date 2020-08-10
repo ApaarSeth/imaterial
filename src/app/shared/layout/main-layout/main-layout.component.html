@@ -17,7 +17,7 @@
     <app-header #header [menu]="sidenav" [subscriptionsData]="subscriptionsData"></app-header>
     <sidebar-navigation (collapseMenu)="isSidebarCollapsed($event)" [menuData]="menuData">
     </sidebar-navigation>
-    <ng-container *ngIf="isFreeTrialActivate; else noTrial">
+    <ng-container *ngIf="isFreeTrialActivate && accountOwner === 1; else noTrial">
       <div class="mt-120">
         <router-outlet> </router-outlet>
       </div>

@@ -35,6 +35,7 @@ export class TopHeaderComponent implements OnInit {
 
   isFreeTrial: any;
   isFreeTrialActivate: boolean;
+  accountOwner: any;
 
   users: any;
 
@@ -57,6 +58,8 @@ export class TopHeaderComponent implements OnInit {
     this.url = localStorage.getItem('profileUrl');
     this.isWhatsappIconDisplay = localStorage.getItem("callingCode");
     this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
+
+    this.accountOwner = Number(localStorage.getItem('accountOwner'));
 
     this.getNotifications();
     this.startSubscriptions();
@@ -100,6 +103,13 @@ export class TopHeaderComponent implements OnInit {
     return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
   }
 
+  getUpdatedSubscription() {
+    this.subsPayService.getUpdatedSubscriptionData().then(res => {
+      this.subscriptionsData = res;
+      this.checkFreeTrial();
+    });
+  }
+
   startSubscriptions() {
     this.subscriptions.push(
       this.commonService.onUserUpdate$.subscribe(notificationLength => {
@@ -123,6 +133,7 @@ export class TopHeaderComponent implements OnInit {
         localStorage.setItem('profileUrl', this.url);
       }),
       this.subsPayService.updateSubscriptionPlan$.subscribe(_ => {
+        this.getUpdatedSubscription();
         if (Number(localStorage.getItem('isFreeTrialSubscription')) === 1) {
           this.isFreeTrialActivate = true;
         } else {
