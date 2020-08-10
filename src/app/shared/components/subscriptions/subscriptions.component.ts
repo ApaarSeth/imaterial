@@ -129,7 +129,9 @@ export class SubscriptionsComponent implements OnInit {
 
 
     getUpdatedSubscription() {
-        this.subscriptionsData = this.subsPayService.getUpdatedSubscriptionData();
+        this.subsPayService.getUpdatedSubscriptionData().then(res => {
+            this.subscriptionsData = res;
+        });
     }
 
 }

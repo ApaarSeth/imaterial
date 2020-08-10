@@ -69,10 +69,14 @@ export class SubscriptionPaymentsService {
                 if (res.data) {
                     // this._router.navigate([ "/profile/add-user" ]);
 
-                    this.getUserInformation(localStorage.getItem('userId'));
-                    this._router.navigate([ "/dashboard" ]);
-                    this.notifier.snack('Your free trial has been started successfully!');
-
+                    // this.getUserInformation(localStorage.getItem('userId'));
+                    this._userService.getUserInfo(localStorage.getItem('userId')).then(res => {
+                        localStorage.setItem('isFreeTrialSubscription', res.data[ 0 ].isFreeTrialSubscription);
+                        localStorage.setItem('isActiveSubscription', res.data[ 0 ].isActiveSubscription);
+                        this.updateSubscriptionPlan$.next();
+                        this._router.navigate([ "/dashboard" ]);
+                        this.notifier.snack('Your free trial has been started successfully!');
+                    });
                 }
             }
 
@@ -117,8 +121,8 @@ export class SubscriptionPaymentsService {
         });
     }
 
-    getUpdatedSubscriptionData() {
-        this.commonService.getSubscriptionPlan().then(res => {
+    getUpdatedSubscriptionData(): Promise<any> {
+        return this.commonService.getSubscriptionPlan().then(res => {
             let subsdata = res.data;
             let cstmPlan = {
                 "planName": "Custom", "activeSubscription": null, "planSortSeq": 3, "planFeatureList": null, "planFeatureObjList": [ { "featureName": "Customizable", "available": true },

@@ -55,7 +55,8 @@
                 <ng-container *ngIf="plan.planName !== 'Custom'; else cstmActn">
                   <ng-container *ngIf="plan.activeSubscription === null; else sbscrbd">
                     <div class="susb-actions text-align-center p-10 d-block">
-                      <button *ngIf="trialAction" mat-button class="bordered-button fbtn mr-2"
+                      <button *ngIf="trialAction && isActiveSubscription === 0" mat-button
+                        class="bordered-button fbtn mr-2"
                         (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
                         Start Free Trial
                       </button>
