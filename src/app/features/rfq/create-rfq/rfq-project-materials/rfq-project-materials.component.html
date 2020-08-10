@@ -19,8 +19,11 @@
     </div>
 
     <div class="col-md-4 col-xs-6 text-right m-itm" [ngClass]="isMobile ? 'pr-0' : '' ">
+      
       <mat-form-field class="border-select select-project" [ngClass]="isMobile ? 'd-inline-block w-100' : '' ">
+
         <mat-label *ngIf="!rfqDetails.length">Select Project</mat-label>
+
         <mat-select formControlName="selectedProject" multiple>
           <div class="display-flex">
             <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
@@ -29,9 +32,7 @@
               <mat-icon>search</mat-icon>
             </button>
           </div>
-          <mat-select-trigger>
-            <mat-label>Select Project</mat-label>
-          </mat-select-trigger>
+          
           <mat-option *ngFor="let project of allProjects | SearchPipe: searchText:['projectName']" [value]="project"
             selected="project.clicked" (click)="choosenProject()">{{ project.projectName }}
           </mat-option>

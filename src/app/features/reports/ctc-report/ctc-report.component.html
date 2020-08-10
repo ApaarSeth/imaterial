@@ -23,10 +23,12 @@
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
-
-              <div class="select-all-checkbox">
+              
+              <!--************************************************************-->
+              <!-- Select All functionality (will enable this code later) -->
+              <!-- <div class="select-all-checkbox">
                 <app-select-check-all [model]="form.get('selectedProject')" [values]="projectNumIds" (selectAllText)="getAllIds($event)"></app-select-check-all>
-              </div>
+              </div> -->
 
               <!-- <mat-option #allSelected (click)="toggleAllSelection(allSelected)" [value]="projectNumIds">Select All</mat-option> -->
               <mat-option
@@ -80,40 +82,43 @@
       <!-- table For Showing Reports-->
       <ng-container *ngIf="allProjectsData?.length; else noDataAvailable">
         <div class="reportTablePo">
-          <p class="fontsize-14-px p-b-0 p-t-10 mb-2">*Conversion Rate = {{ currency }}</p>
+          <p class="fontsize-14-px p-b-0 p-t-10 mb-1">*All the values are in base currency ({{ currency }})</p>
+          <p class="fontsize-14-px pb-0">**All the values are inclusive of taxes.</p>
           <table class="report-table">
             <tr matSort class="mat-elevation-z2 mat-header-row ctc-report-header-row">
               <th class="mat-header-cell">Materials</th>
               <th class="mat-header-cell">Unit</th>
-              <th class="mat-header-cell text-right">
-                Estimated Amount <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{ selectedMenu === "Full Figures" ? "" : selectedMenu
-                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
+              <th class="mat-header-cell text-right">Estimated Amount <br/>
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }})</span>
               </th>
-              <th class="mat-header-cell text-right">
-                Awarded Amount <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{ selectedMenu === "Full Figures" ? "" : selectedMenu
-                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
+              <th class="mat-header-cell text-right">Awarded Amount <br/>
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }})</span>
               </th>
-              <th class="mat-header-cell text-right">
-                Delivered Amount <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{ selectedMenu === "Full Figures" ? "" : selectedMenu
-                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
+              <th class="mat-header-cell text-right">Delivered Amount <br/>
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }})</span>
               </th>
-              <th class="mat-header-cell text-right">
-                Paid Amount <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{ selectedMenu === "Full Figures" ? "" : selectedMenu
-                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
+              <th class="mat-header-cell text-right">Paid Amount <br/>
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }})</span>
               </th>
-              <th class="mat-header-cell text-right">
-                Projected Cost <br />to Complete <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{ selectedMenu === "Full Figures" ? "" : selectedMenu
-                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
+              <th class="mat-header-cell text-right projected-cost-col">Projected Cost 
+                <mat-icon matTooltip="(Quantity(Yet to be awarded) *Estimated Rate + Awarded Amount)" matTooltipPosition="above" class="ml-1">info</mat-icon>
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }})</span>
               </th>
-              <th class="mat-header-cell text-right">
-                Balance Cost <br />to Complete <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">(</span>{{ selectedMenu === "Full Figures" ? "" : selectedMenu
-                }}<span *ngIf="selectedMenu !== 'Full Figures'">)</span>
+              <th class="mat-header-cell text-right balance-cost-col">Balance Cost
+                <mat-icon matTooltip="(Projected Cost - Delivered Amount)" matTooltipPosition="above" class="ml-1">info</mat-icon>
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{
+                  selectedMenu === "Full Figures" ? "" : selectedMenu
+                }})</span>
               </th>
             </tr>
 

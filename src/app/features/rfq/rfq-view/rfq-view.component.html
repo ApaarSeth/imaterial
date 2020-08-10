@@ -86,11 +86,10 @@
       </span>
     </mat-card>
 
-    <!-- Accordion/ Collapsible -->
-    <mat-accordion>
-      <!-- first Project -->
-      <ng-template ngFor let-project [ngForOf]="rfqDetails.rfqProjectsList" let-i="index">
-        <mat-expansion-panel class="myPanel" [expanded]="true">
+    <!-- Each Project's Accordion/ Collapsible -->
+    <ng-template ngFor let-project [ngForOf]="rfqDetails.rfqProjectsList" let-i="index">
+      <mat-accordion class="d-block mb-3">
+        <mat-expansion-panel class="myPanel display-project-accordion" [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
               {{ project.projectName }}
@@ -148,8 +147,10 @@
                 <th mat-header-cell *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
                   Attached Images
                 </th>
-                <td class="text-align-center" mat-cell *matCellDef="let element">
-                  <div *ngIf="element?.documentList?.length" class="images-lists" (click)="viewAllImages(element.materialId)">
+
+                <td class="text-align-center rfq-view-image-lists" mat-cell *matCellDef="let element">
+                  <div *ngIf="element?.documentList?.length" class="images-lists" (click)="viewAllImages(element.materialId)"
+                    [ngClass]="element?.documentList?.length === 1 ? 'single-image' : element?.documentList?.length === 2 ? 'double-images' : 'triple-images'">
                     <ng-container *ngFor="let img of element.documentList; let i = index">
                       <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
                     </ng-container>
@@ -166,7 +167,7 @@
             </table>
           </div>
         </mat-expansion-panel>
-      </ng-template>
-    </mat-accordion>
+      </mat-accordion>
+    </ng-template>
   </div>
 </div>
