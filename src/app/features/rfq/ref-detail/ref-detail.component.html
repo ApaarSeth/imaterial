@@ -44,7 +44,7 @@
     <div class="row">
 
       <ng-container *ngIf="!isMobile; else mobileSearch">
-        <div class="col-md-2">
+        <div class="col-md-2 align-top">
           <advance-search filterType="rfq"></advance-search>
         </div>
       </ng-container>
@@ -56,7 +56,7 @@
         </div>
       </ng-template>
 
-      <div class="col-md-10">
+      <div class="col-md-10 align-top">
         <ng-container *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp; else emptyReports">
           <div class="rfq-list-detail-custom">
             <mat-accordion *ngIf="submittedRfqListTemp" class="m-b-10">

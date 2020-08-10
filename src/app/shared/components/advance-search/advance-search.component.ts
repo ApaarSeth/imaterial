@@ -122,6 +122,10 @@ export class AdvanceSearchComponent implements OnInit {
     // dates min max
     raisedMinDate: any;
     raisedMaxDate: any;
+    expiryMinDate: any;
+    expiryMaxDate: any;
+    requiredMinDate: any;
+    requiredMaxDate: any;
 
     constructor(
         private commonService: CommonService,
@@ -151,15 +155,6 @@ export class AdvanceSearchComponent implements OnInit {
     }
 
     checkSubmitNotSubmit(bidSubmitted, notSubmitted) {
-
-        // if (isChecked) {
-        //     if (type === '0') {
-        //         notSubmitted._checked = false;
-        //     }
-        //     if (type === '1') {
-        //         bidSubmitted._checked = false;
-        //     }
-        // }
         this.isBidSubmitted = bidSubmitted._checked;
         this.isNotSubmitted = notSubmitted._checked;
     }
@@ -525,21 +520,39 @@ export class AdvanceSearchComponent implements OnInit {
         this.getFilterRequest();
     }
 
-    checkFromDate(event, type) {
+    checkFromDate(event, type, mType) {
+        let d1 = new Date(type._datepickerInput.value);
+        let d2 = new Date(event.target.value);
+        if (mType === 'raised') {
+            this.raisedMaxDate = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate());
+        }
+        if (mType === 'expiry') {
+            this.expiryMaxDate = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate());
+        }
+        if (mType === 'required') {
+            this.requiredMaxDate = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate());
+        }
         if (type._datepickerInput.value) {
-            let d1 = new Date(type._datepickerInput.value);
-            let d2 = new Date(event.target.value);
             if (d2.getTime() < d1.getTime()) {
                 event.target.value = '';
             }
         }
     }
-    checkToDate(event, type) {
+    checkToDate(event, type, mType) {
+        let d1 = new Date(event.target.value);
+        let d2 = new Date(type._datepickerInput.value);
+        if (mType === 'raised') {
+            this.raisedMinDate = new Date(d1.getFullYear(), d1.getMonth(), d1.getDate());
+        }
+        if (mType === 'expiry') {
+            this.expiryMinDate = new Date(d1.getFullYear(), d1.getMonth(), d1.getDate());
+        }
+        if (mType === 'required') {
+            this.requiredMinDate = new Date(d1.getFullYear(), d1.getMonth(), d1.getDate());
+        }
         if (type._datepickerInput.value) {
-            let d1 = new Date(event.target.value);
-            let d2 = new Date(type._datepickerInput.value);
             if (d2.getTime() < d1.getTime()) {
-                type._datepickerInput.value = '';
+                event.target.value = '';
             }
         }
     }
