@@ -51,7 +51,7 @@
                         </h2>
 
                         <div class="shadow-tag pl-4 pr-4 pt-3 pb-3" [ngClass]="isMobile ? 'w-100' : 'w-75' ">
-                            Sorry, your payment of <ng-container *ngIf="currencyCode">{{currencyCode}}</ng-container>
+                            Sorry, your payment of <ng-container *ngIf="currencyCode">{{currencyCode}} </ng-container>
                             <ng-container *ngIf="amount">{{amount}}</ng-container> had failed.
                             <span class="d-block mt-2 mb-2"></span>
                             <span class="d-block" [ngClass]="isMobile ? 'ml-1 mr-1' : 'ml-5 mr-5'">Please make sure to
@@ -61,7 +61,8 @@
 
                         <div [ngClass]="isMobile ? 'mt-4' : 'mt-5' ">
                             <button mat-button class="brand-bg-color pl-5 pr-5"
-                                [ngClass]="isMobile ? 'font-size20' : 'font-size-26px' ">Update Details</button>
+                                [ngClass]="isMobile ? 'font-size20' : 'font-size-26px' "
+                                (click)="gotoMySubscriptions()">Update Details</button>
                         </div>
                     </mat-card-content>
                 </ng-container>
@@ -94,7 +95,7 @@
                         </h2>
 
                         <div class="shadow-tag pl-4 pr-4 pt-4 pb-4" [ngClass]="!isMobile ? 'mlr-140px' : '' ">
-                            Your 3 months free trial has expired. We hope, our service were useful to you. We will keep
+                            Your free trial has expired. We hope, our service were useful to you. We will keep
                             your data and information safe with us.
                             <br>To keep continuing our service, please choose any of our subscription plans.
                         </div>
@@ -109,7 +110,7 @@
 
                 <ng-container *ngIf="pageType !== 3">
                     <div class="pt-0 pb-2 text-center">
-                        <button mat-button class="brand-color" routerLink="/dashboard">Cancel</button>
+                        <button mat-button class="brand-color" routerLink="/dashboard">Back to Dashboard</button>
                     </div>
                 </ng-container>
 

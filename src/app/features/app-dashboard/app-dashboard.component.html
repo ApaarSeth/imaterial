@@ -22,28 +22,43 @@
                   <h6 class="mb-0">Add Project</h6>
                 </div>
 
-                <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your BOM of materials">
+                <div class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your Bill Of Material (BOM)">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/bom.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create BOM</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your PRs">
+                <div
+                  *ngIf="permissionObj.rfqFlag"
+                  class="things-to-do__icons text-center cursor mr-2"
+                  (click)="openBomDialog()"
+                  matTooltip="You can create your Purchase Requisition (PRs)"
+                >
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/pr.svg" alt="Purchase Requistion" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create PR</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your RFPs">
-                  <div class="things-to-dopng__img">
+                <div
+                  *ngIf="permissionObj.rfqFlag"
+                  class="things-to-do__icons text-center cursor mr-2"
+                  [routerLink]="['/rfq/createRfq']"
+                  matTooltip="You can create your Request For Price (RFPs)"
+                >
+                  <div class="things-to-do__img">
                     <img src="../../../assets/images/rfp.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create RFPs</h6>
                 </div>
 
-                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/po/initiate-po']" matTooltip="You can create your P.O.">
+                <div
+                  *ngIf="permissionObj.rfqFlag"
+                  class="things-to-do__icons text-center cursor mr-2"
+                  [routerLink]="['/po/initiate-po']"
+                  matTooltip="You can create your Purchase Order (P.O.)"
+                >
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/po.svg" alt="" class="img-fluid" />
                   </div>
@@ -53,7 +68,8 @@
             </div>
             <div class="statistics bg-white p-20 p-r-0 mb-4">
               <div class="row">
-                <div class="col-xs-12 col-md-12 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : ''">
+                <div class="col-xs-12 col-md-12 p-r-0 p-l-0">
+                  <!-- <div class="col-xs-12 col-md-12 p-r-0 p-l-0" [ngClass]="isMobile ? 'order-last' : ''"> -->
                   <mat-tab-group class="mat-tabs-button" (selectedTabChange)="onTabChanged($event)" [ngClass]="isMobile ? 'mt-0' : 'mt-1'">
                     <mat-tab label="{{ tab1 }}" *ngIf="permissionObj.rfqFlag">
                       <div class="row width-99">
@@ -85,9 +101,9 @@
                         </div>
 
                         <div class="col-md-6">
-                          <form [formGroup]="filterForm" class="width-99 display-flex">
-                            <div class="width-35">
-                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding p-r-10">
+                          <form [formGroup]="filterForm" class="display-flex" [ngClass]="isMobile ? 'flex-column' : 'width-99'">
+                            <div [ngClass]="isMobile ? 'w-100' : 'width-35'">
+                              <mat-form-field class="border-select select-project mat-form-field-flex-mm-padding" [ngClass]="isMobile ? 'w-100' : 'width-94 p-r-10'">
                                 <mat-label>Select Project</mat-label>
                                 <mat-select formControlName="projectFilter" multiple>
                                   <div class="display-flex">
@@ -107,11 +123,12 @@
                                 </mat-select>
                               </mat-form-field>
                             </div>
-                            <div class="p-r-0 customDatePicker width-35 p-t-1" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
-                              <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
+                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 w-100 wdpw-100' : 'widthWrapper width-35 p-t-7'">
+                              <ngx-mat-drp class="border-input input-font-size" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker>
+                              </ngx-mat-drp>
                             </div>
-                            <div class="width-35 p-r-0 p-l-10">
-                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding">
+                            <div class="p-r-0" [ngClass]="isMobile ? 'w-100 pl-0' : 'width-35 p-l-10'">
+                              <mat-form-field class="border-select select-project mat-form-field-flex-mm-padding" [ngClass]="isMobile ? 'w-100' : 'w-100'">
                                 <mat-label matTooltip="Status Filter">Status Filter</mat-label>
                                 <mat-select formControlName="poFilter">
                                   <mat-option value="Awarded PO">Awarded PO</mat-option>
@@ -161,9 +178,9 @@
                           </div>
                         </div>
                         <div class="col-md-6 display-flex">
-                          <form [formGroup]="filterForm" class="width-99 display-flex">
-                            <div class="width-35">
-                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding">
+                          <form [formGroup]="filterForm" class="display-flex" [ngClass]="isMobile ? 'flex-column w-100' : 'width-99'">
+                            <div [ngClass]="isMobile ? 'w-100' : 'width-35'">
+                              <mat-form-field class="border-select select-project mat-form-field-flex-mm-padding" [ngClass]="isMobile ? 'w-100' : 'width-94'">
                                 <mat-label>Select Project</mat-label>
                                 <mat-select formControlName="projectFilter" multiple>
                                   <div class="display-flex">
@@ -184,11 +201,12 @@
                               </mat-form-field>
                             </div>
 
-                            <div class="p-r-0 customDatePicker width-35 p-t-1" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
-                              <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
+                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdpw-100 w-100' : 'widthWrapper width-35 p-t-7'">
+                              <ngx-mat-drp class="border-input input-font-size" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker>
+                              </ngx-mat-drp>
                             </div>
-                            <div class="width-35 p-r-0 p-l-10">
-                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding">
+                            <div class="p-r-0" [ngClass]="isMobile ? 'w-100' : 'width-35 p-l-10'">
+                              <mat-form-field class="border-select select-project mat-form-field-flex-mm-padding" [ngClass]="isMobile ? 'w-100' : 'width-94'">
                                 <mat-label>Status Filter</mat-label>
                                 <mat-select formControlName="rfpFilter">
                                   <mat-option value="Rasied RFP">Rasied RFP</mat-option>
@@ -202,7 +220,7 @@
                       <!-- current end -->
                     </mat-tab>
 
-                    <mat-tab label="Purchase Requisitions (PR)">
+                    <mat-tab [label]="prText">
                       <div class="row width-99">
                         <div class="col-md-7">
                           <div class="statistics__purchase-order d-flex" *ngIf="indentData">
@@ -229,10 +247,10 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-5 display-flex text-right">
-                          <div class="width-42">
-                            <form [formGroup]="filterForm">
-                              <mat-form-field class="border-select select-project width-94 mat-form-field-flex-mm-padding">
+                        <div class="col-md-5 display-flex text-right" [ngClass]="isMobile ? 'flex-column' : ''">
+                          <div [ngClass]="isMobile ? 'w-100' : 'width-42'">
+                            <form [formGroup]="filterForm" [ngClass]="isMobile ? 'flex-column' : 'width-99'">
+                              <mat-form-field class="border-select select-project mat-form-field-flex-mm-padding" [ngClass]="isMobile ? 'w-100' : 'width-94'">
                                 <mat-label>Select Project</mat-label>
                                 <mat-select formControlName="projectFilter" multiple>
                                   <div class="display-flex">
@@ -253,8 +271,8 @@
                               </mat-form-field>
                             </form>
                           </div>
-                          <div class="width-88">
-                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdrpr-mb' : 'widthWrapper'">
+                          <div [ngClass]="isMobile ? 'w-100' : 'width-88'">
+                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdpw-100 w-100' : 'widthWrapper'">
                               <ngx-mat-drp class="border-input" (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker></ngx-mat-drp>
                             </div>
                           </div>
@@ -263,11 +281,11 @@
                     </mat-tab>
                   </mat-tab-group>
                 </div>
-                <div class="col-md-12 display-flex justify-content-center">
-                  <div *ngIf="permissionObj.rfqFlag && poData && poData.graphData.length > 1 && label == 'po'">
+                <div class="col-md-12 display-flex" [ngClass]="isMobile ? '' : 'justify-content-center'">
+                  <div *ngIf="permissionObj.rfqFlag && poData && poData.graphData && poData.graphData.length > 1 && label == 'po'">
                     <app-bar-chart></app-bar-chart>
                   </div>
-                  <div *ngIf="permissionObj.rfqFlag && rfqData && rfqData.graphData.length > 1 && label == 'rfq'">
+                  <div *ngIf="permissionObj.rfqFlag && rfqData && rfqData.graphData && rfqData.graphData.length > 1 && label == 'rfq'">
                     <app-bar-chart></app-bar-chart>
                   </div>
                   <div *ngIf="permissionObj.rfqFlag && indentData && (indentData.totalCount || indentData.totalValue) && label == 'indent'">

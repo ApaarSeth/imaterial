@@ -50,6 +50,8 @@ export class AppDashboardComponent implements OnInit {
   diffDays: number
   rangeType: string = 'Custom';
 
+  prText: string;
+
   constructor(public dialog: MatDialog,
     private router: Router,
     private chartService: GoogleChartService,
@@ -70,7 +72,7 @@ export class AppDashboardComponent implements OnInit {
   projectData
 
   ngOnInit() {
-    this.isAdDisplay = localStorage.getItem("countryCode");
+    this.isAdDisplay = localStorage.getItem("callingCode");
     // this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
@@ -105,6 +107,7 @@ export class AppDashboardComponent implements OnInit {
       this.projectData = res[1];
       this.getProjectsNumber()
     })
+    this.isMobile ? this.prText = 'PR' : this.prText = 'Purchase Requisitions (PR)';
   }
 
 
@@ -119,7 +122,7 @@ export class AppDashboardComponent implements OnInit {
     this.options = {
       presets: this.presets,
       format: 'mediumDate',
-      range: { fromDate: new Date(tempDate.setDate(tempDate.getDate() - 30)), toDate: today },
+      range: { fromDate: new Date(today.getFullYear(), 0, 1), toDate: new Date(today.getFullYear(), 12, 0) },
       applyLabel: 'Submit',
       placeholder: 'Choose Date',
       calendarOverlayConfig: {
@@ -315,11 +318,11 @@ export class AppDashboardComponent implements OnInit {
         }
         if (label == 'po') {
           this.poData = res.data;
-          this.chartService.barChartData.next([...this.poData.graphData])
+          this.chartService.barChartData.next(this.poData.graphData ? [...this.poData.graphData] : null)
         }
         if (label == 'rfq') {
           this.rfqData = res.data;
-          this.chartService.barChartData.next([...this.rfqData.graphData])
+          this.chartService.barChartData.next(this.rfqData.graphData ? [...this.rfqData.graphData] : null)
         }
         if (label == 'indent') {
           this.indentData = res.data;
@@ -391,7 +394,7 @@ export class AppDashboardComponent implements OnInit {
       this.tab1 = "P.O.";
       this.tab2 = "RFPs";
     } else {
-      this.tab1 = "Purchase Orders";
+      this.tab1 = "Purchase Orders (PO)";
       this.tab2 = "Request for Price (RFPs)";
     }
   }

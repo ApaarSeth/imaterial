@@ -1,3 +1,4 @@
+import { AppNotificationService } from './../../services/app-notification.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
@@ -22,13 +23,15 @@ export class PaymentRecordComponent implements OnInit {
         private commonService: CommonService,
         private poService: POService,
         private formBuilder: FormBuilder,
+        private notifier: AppNotificationService,
         private dialogRef: MatDialogRef<PaymentRecordComponent>,
         @Inject(MAT_DIALOG_DATA) public data: { poDetail: PurchaseOrder, paymentDetail: PoPayementDetail }) { }
 
 
     ngOnInit() {
-        this.startDate = new Date(this.data.poDetail.createdAt);
-        this.endDate = this.data.poDetail.validUpto ? new Date(this.data.poDetail.validUpto) : null;
+        this.endDate = new Date()
+        // this.startDate = new Date(this.data.poDetail.createdAt);
+        // this.endDate = this.data.poDetail.validUpto ? new Date(this.data.poDetail.validUpto) : null;
         this.paymentDetail = this.data.paymentDetail
         if (this.paymentDetail.purchaseOrderCurrency) {
             this.displayedColumns.splice(1, 0, "Exchange Rate")
@@ -80,7 +83,15 @@ export class PaymentRecordComponent implements OnInit {
         let submitData: SavePaymnetRecord = this.paymentForm.value;
         submitData.amountPaid = Number(submitData.amountPaid)
         submitData.paymentDate = this.commonService.getFormatedDate(submitData.paymentDate)
-        this.poService.paymentRecord(this.data.poDetail.purchaseOrderId, submitData)
-        this.dialogRef.close(null);
+        this.poService.paymentRecord(this.data.poDetail.purchaseOrderId, submitData).then(res => {
+            if (res.statusCode === 201) {
+                this.notifier.snack("Record added Successfully")
+                this.dialogRef.close(null)
+            }
+            else {
+                this.notifier.snack(res.message)
+            }
+        })
+
     }
 }

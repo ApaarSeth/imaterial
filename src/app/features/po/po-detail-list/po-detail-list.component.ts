@@ -23,7 +23,7 @@ import { AdvanceSearchService } from 'src/app/shared/services/advance-search.ser
 @Component({
   selector: "po-detail-list",
   templateUrl: "./po-detail-list.component.html",
-  styleUrls: [ "../../../../assets/scss/main.scss" ]
+  styleUrls: ["../../../../assets/scss/main.scss"]
 })
 export class PODetailComponent implements OnInit, OnDestroy {
   poDetails: MatTableDataSource<PODetailLists>;
@@ -222,10 +222,10 @@ export class PODetailComponent implements OnInit, OnDestroy {
   }
 
   viewPO(purchaseOrderId) {
-    this.route.navigate([ "./po-generate/" + purchaseOrderId + "/view" ]);
+    this.route.navigate(["./po-generate/" + purchaseOrderId + "/view"]);
   }
   viewPODEdit(purchaseOrderId) {
-    this.route.navigate([ "./po-generate/" + purchaseOrderId + "/edit" ]);
+    this.route.navigate(["./po-generate/" + purchaseOrderId + "/edit"]);
   }
   applyFilter(filterValue: string) {
     this.acceptedRejectedPOList.filter = filterValue.trim().toLowerCase();
@@ -258,20 +258,21 @@ export class PODetailComponent implements OnInit, OnDestroy {
   }
 
   viewGrn(purchaseOrderId) {
-    this.route.navigate([ "po/view-grn/" + purchaseOrderId ]);
+    this.route.navigate(["po/view-grn/" + purchaseOrderId]);
   }
 
   openPaymentRecord(poDetail: PurchaseOrder) {
     this.poService.paymentDetail(poDetail.purchaseOrderId).then(res => {
       let data = {
         poDetail,
-        paymentDetail: res.data[ 0 ]
+        paymentDetail: res.data[0]
       }
       const dialogRef = this.dialog.open(PaymentRecordComponent, {
         width: "800px",
         data
       });
     })
+
 
   }
 

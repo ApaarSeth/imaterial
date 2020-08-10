@@ -445,7 +445,7 @@ ngx-mat-drp-picker-overlay {
 }
 
 .display-flex {
-  display: flex;
+  display: flex !important;
 }
 
 .align-center {
@@ -672,6 +672,9 @@ input::title {
 .align-item-end {
   align-items: flex-end;
 }
+.align-center {
+  align-items: center;
+}
 
 .justify-content-flex-end {
   justify-content: flex-end;
@@ -751,4 +754,9 @@ input::title {
   &__close {
     transform: translateX(100%);
   }
+}
+
+.horizontal-align-center {
+  display: flex;
+  align-items: center;
 }

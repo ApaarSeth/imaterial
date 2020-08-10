@@ -1,10 +1,8 @@
 <div class="page-start-point changeWidth mt-5 pt-4">
   <form *ngIf="allProjects" [formGroup]="form" autocomplete="off">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
-
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
       <div class="row align-items-center">
-
         <div class="col-md-3 col-sm-4 col-xs-4 text-left showResponsiveReport">
           <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
             <mat-label>Select Project</mat-label>
@@ -30,12 +28,13 @@
                 <app-select-check-all [model]="form.get('selectedProject')" [values]="projectNumIds" (selectAllText)="getAllIds($event)"></app-select-check-all>
               </div> -->
 
-              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']" [value]="project.projectId" 
-              (click)="choosenProject()">{{ project.projectName }}</mat-option>
+              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']" [value]="project.projectId" (click)="choosenProject()">{{
+                project.projectName
+              }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        
+
         <div class="col-md-3 col-sm-4 col-xs-4 text-left showResponsiveReport">
           <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
             <mat-label>Select Supplier</mat-label>
@@ -61,12 +60,13 @@
                 <app-select-check-all [model]="form.get('selectedSupplier')" [values]="allSuppIds" (selectAllText)="getAllSuppIds($event)"></app-select-check-all>
               </div> -->
 
-              <mat-option *ngFor="let supplier of allSuppliers | SearchPipe: searchSupplier:['supplier_name']"
-                [value]="supplier.supplierId" (click)="choosenSupplier()">{{ supplier.supplier_name }}</mat-option>
+              <mat-option *ngFor="let supplier of allSuppliers | SearchPipe: searchSupplier:['supplier_name']" [value]="supplier.supplierId" (click)="choosenSupplier()">{{
+                supplier.supplier_name
+              }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        
+
         <div
           class="col-md-6 col-sm-4 col-xs-4 add-project-btn display-flex align-items-center"
           [ngClass]="isMobile ? 'justify-content-flex-start height-25-px' : 'justify-content-flex-end'"
@@ -159,10 +159,12 @@
                 <mat-expansion-panel-header class="border-row background-supplier background-projects">
                   <tr class="material-row backgound-none-important p-r-10">
                     <td class="mat-cell">{{ supplier.supplierName }}</td>
-                    <td class="mat-cell text-right">{{ supplier.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ supplier.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ supplier.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ (supplier.totalPoAmount - supplier.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ supplier.totalPoAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ supplier.grnAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ supplier.paymentRecived / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">
+                      {{ (supplier.totalPoAmount - supplier.paymentRecived) / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
+                    </td>
                   </tr>
                 </mat-expansion-panel-header>
                 <!-- Project List -->
@@ -170,19 +172,23 @@
                   <mat-expansion-panel-header class="border-row background-category">
                     <tr class="material-row backgound-none-important p-r-10">
                       <td class="mat-cell">{{ project.projectName }}</td>
-                      <td class="mat-cell text-right">{{ project.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell text-right">{{ project.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell text-right">{{ project.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell text-right">{{ (project.totalPoAmount - project.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ project.totalPoAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                      <td class="mat-cell text-right">{{ project.grnAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                      <td class="mat-cell text-right">{{ project.paymentRecived / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                      <td class="mat-cell text-right">
+                        {{ (project.totalPoAmount - project.paymentRecived) / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
+                      </td>
                     </tr>
                   </mat-expansion-panel-header>
                   <!-- Project Details Of an Individual Project -->
                   <tr class="material-row border-row background-project-list" *ngFor="let poData of project.entityDataList">
                     <td class="mat-cell">{{ poData.entityLabel }}</td>
-                    <td class="mat-cell text-right">{{ poData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ poData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ poData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ (poData.totalPoAmount - poData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ poData.totalPoAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ poData.grnAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ poData.paymentRecived / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">
+                      {{ (poData.totalPoAmount - poData.paymentRecived) / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
+                    </td>
                   </tr>
                 </mat-expansion-panel>
               </mat-expansion-panel>
@@ -190,11 +196,18 @@
             <!-- Total Amount Footer -->
             <tr class="material-row backgound-total-amount">
               <td class="mat-cell">Total Amount</td>
-              <td class="mat-cell text-right">{{ supplierLiabiltyReportData.totalPoAmount / this.conversionNumber | number: "1.2-2" }}</td>
-              <td class="mat-cell text-right">{{ supplierLiabiltyReportData.grnAmount / this.conversionNumber | number: "1.2-2" }}</td>
-              <td class="mat-cell text-right">{{ supplierLiabiltyReportData.paymentRecived / this.conversionNumber | number: "1.2-2" }}</td>
               <td class="mat-cell text-right">
-                {{ (supplierLiabiltyReportData.totalPoAmount - supplierLiabiltyReportData.paymentRecived) / this.conversionNumber | number: "1.2-2" }}
+                {{ supplierLiabiltyReportData.totalPoAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
+              </td>
+              <td class="mat-cell text-right">{{ supplierLiabiltyReportData.grnAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+              <td class="mat-cell text-right">
+                {{ supplierLiabiltyReportData.paymentRecived / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
+              </td>
+              <td class="mat-cell text-right">
+                {{
+                  (supplierLiabiltyReportData.totalPoAmount - supplierLiabiltyReportData.paymentRecived) / this.conversionNumber
+                    | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US")
+                }}
               </td>
             </tr>
           </table>

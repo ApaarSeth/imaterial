@@ -35,9 +35,11 @@ export class TopHeaderComponent implements OnInit {
 
   isFreeTrial: any;
   isFreeTrialActivate: boolean;
+  accountOwner: any;
 
-  isActiveSubscription: boolean;
   users: any;
+
+  isPlanAvailable: any;
 
   constructor(
     private commonService: CommonService,
@@ -51,16 +53,13 @@ export class TopHeaderComponent implements OnInit {
 
     this.isMobile = this.commonService.isMobile().matches;
 
-    this.isActiveSubscription = true;
-
-    // localStorage.getItem('isActiveSubscription') === '0' ? this.isActiveSubscription = false : this.isActiveSubscription = true;
-
     this.userId = Number(localStorage.getItem('userId'));
     this.userName = localStorage.getItem('userName');
     this.url = localStorage.getItem('profileUrl');
-    this.isWhatsappIconDisplay = localStorage.getItem("countryCode");
+    this.isWhatsappIconDisplay = localStorage.getItem("callingCode");
+    this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
 
-    this.getUserInformation(this.userId);
+    this.accountOwner = Number(localStorage.getItem('accountOwner'));
 
     this.getNotifications();
     this.startSubscriptions();
@@ -68,19 +67,11 @@ export class TopHeaderComponent implements OnInit {
     const source = interval(30000);
     this.subscription = source.subscribe(val => { this.getNotifications(); this.startSubscriptions() });
 
-    // this.checkFreeTrial();
-  }
-
-  getUserInformation(userId) {
-    this._userService.getUserInfo(userId).then(res => {
-      this.users = res.data ? res.data[ 0 ] : null;
-      this.checkFreeTrial();
-    });
+    this.checkFreeTrial();
   }
 
   choosePlan() {
     this.router.navigate([ '/subscriptions' ]);
-    // this.subsPayService.chooseSubcriptionPlan('0', this.isFreeTrial.planId, this.isFreeTrial.offerId, this.isFreeTrial.planPricingId, this.isFreeTrial.planEncryptId, this.isFreeTrial.planPricingEncryptId, this.users);
   }
 
   checkFreeTrial() {
@@ -96,13 +87,13 @@ export class TopHeaderComponent implements OnInit {
               const dates = data.planFrequencyList[ i ].planList[ x ].activeSubscription
               let tDate = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
               data.planFrequencyList[ i ].planList[ x ][ 'daysLeft' ] = this.setTrialDaysLeft(tDate, dates.trialPeriodEndDate);
-              if (this.users && this.users.isFreeTrialSubscription === 1) {
-                this.isFreeTrialActivate = true;
-              }
             }
           }
         }
       }
+    }
+    if (Number(localStorage.getItem('isFreeTrialSubscription')) === 1) {
+      this.isFreeTrialActivate = true;
     }
   }
 
@@ -110,6 +101,13 @@ export class TopHeaderComponent implements OnInit {
     let dt1 = new Date(date1);
     let dt2 = new Date(date2);
     return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+  }
+
+  getUpdatedSubscription() {
+    this.subsPayService.getUpdatedSubscriptionData().then(res => {
+      this.subscriptionsData = res;
+      this.checkFreeTrial();
+    });
   }
 
   startSubscriptions() {
@@ -133,6 +131,14 @@ export class TopHeaderComponent implements OnInit {
       this._userService.UpdateProfileImage.subscribe(image => {
         this.url = image;
         localStorage.setItem('profileUrl', this.url);
+      }),
+      this.subsPayService.updateSubscriptionPlan$.subscribe(_ => {
+        this.getUpdatedSubscription();
+        if (Number(localStorage.getItem('isFreeTrialSubscription')) === 1) {
+          this.isFreeTrialActivate = true;
+        } else {
+          this.isFreeTrialActivate = false;
+        }
       })
     );
   }

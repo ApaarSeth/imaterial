@@ -8,6 +8,7 @@ import { UserDetails } from '../../models/user-details';
 import { SubscriptionPaymentsService } from '../../services/subscriptions-payments.service';
 import { API } from '../../constants/configuration-constants';
 import { CommonService } from '../../services/commonService';
+import { AppNotificationService } from '../../services/app-notification.service';
 
 @Component({
     selector: 'app-subscriptions',
@@ -33,7 +34,8 @@ export class SubscriptionsComponent implements OnInit {
         private _userService: UserService,
         private subsPayService: SubscriptionPaymentsService,
         private commonService: CommonService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private notifier: AppNotificationService
     ) { }
 
     ngOnInit() {
@@ -83,6 +85,8 @@ export class SubscriptionsComponent implements OnInit {
             this.users = res.data ? res.data[ 0 ] : null;
             this.isFreeTrialSubscription = res.data[ 0 ].isFreeTrialSubscription;
             this.isActiveSubscription = res.data[ 0 ].isActiveSubscription;
+            localStorage.setItem('isFreeTrialSubscription', this.isFreeTrialSubscription);
+            localStorage.setItem('isActiveSubscription', this.isActiveSubscription);
         });
     }
 
@@ -97,7 +101,9 @@ export class SubscriptionsComponent implements OnInit {
                 };
                 this.subsPayService.postSubscriptionUnsubscribe(obj).then(res => {
                     if (res.status === 1) {
-                        this._router.navigate([ "/subscriptions/unsubscribe" ])
+                        this.getUpdatedSubscription();
+                        this.notifier.snack("You have unsubscribed successfully");
+                        // this._router.navigate([ "/subscriptions/unsubscribe" ])
                     }
                 });
             }
@@ -119,6 +125,13 @@ export class SubscriptionsComponent implements OnInit {
 
     contactSales() {
         this.subsPayService.getContactSales();
+    }
+
+
+    getUpdatedSubscription() {
+        this.subsPayService.getUpdatedSubscriptionData().then(res => {
+            this.subscriptionsData = res;
+        });
     }
 
 }

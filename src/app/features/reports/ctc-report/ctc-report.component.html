@@ -3,16 +3,22 @@
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Generate Report and amount  -->
       <div class="row align-items-center mt-2 ctc-upper-section">
-
         <!------ Select Project Field ------>
         <div class="col-md-3 col-xs-6 text-left showResponsiveReport">
           <mat-form-field class="border-select select-project-dropdown w-100">
             <mat-label>Select Project</mat-label>
             <mat-select formControlName="selectedProject" multiple>
               <div class="search-project-div d-flex align-items-center">
-                <input class="p-b-5" matInput type="Search Project..." placeholder="Search project Name"
-                  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()"
-                  autocomplete="off" />
+                <input
+                  class="p-b-5"
+                  matInput
+                  type="Search Project..."
+                  placeholder="Search project Name"
+                  [(ngModel)]="searchText"
+                  [ngModelOptions]="{standalone: true}"
+                  (keydown)="$event.stopPropagation()"
+                  autocomplete="off"
+                />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
@@ -25,9 +31,13 @@
               </div> -->
 
               <!-- <mat-option #allSelected (click)="toggleAllSelection(allSelected)" [value]="projectNumIds">Select All</mat-option> -->
-              <mat-option *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']"
-                [value]="project.projectId" (click)="getProjectMaterials()" class="project-list-dropdown">
-                {{project.projectName}}
+              <mat-option
+                *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']"
+                [value]="project.projectId"
+                (click)="getProjectMaterials()"
+                class="project-list-dropdown"
+              >
+                {{ project.projectName }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -36,15 +46,13 @@
         <div class="col-md-9 col-xs-6 add-project-btn display-flex justify-content-flex-end align-items-center">
           <!------ Download Report ------>
           <div class="download-report pr-3" *ngIf="allProjectsData">
-            <a class="font-size16 cursor-pointer" matTooltip="Download" (click)="downloadExcel()"> <img
-                src="../../../../assets/images/download-po.png" /></a>
+            <a class="font-size16 cursor-pointer" matTooltip="Download" (click)="downloadExcel()"> <img src="../../../../assets/images/download-po.png" /></a>
           </div>
 
           <!------ Generate Report (will use later) ------>
           <!-- <button mat-raised-button class="main-background-color main-button color-white demo-title cursor-pointer">
             Generate Report
           </button> -->
-
 
           <!------ Show Amount Field ------>
           <div *ngIf="allProjectsData" class="show-amount-dropdown text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
@@ -113,7 +121,7 @@
                 }})</span>
               </th>
             </tr>
-            
+
             <mat-accordion *ngFor="let project of allProjectsData">
               <!-- Project List Data -->
               <mat-expansion-panel>
@@ -121,12 +129,14 @@
                   <tr class="material-row backgound-none-important p-r-10">
                     <td class="mat-cell">{{ project.projectName }}</td>
                     <td class="mat-cell"></td>
-                    <td class="mat-cell text-right">{{ project.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ project.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ project.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ project.paidAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ project.projectedCost / this.conversionNumber | number: "1.2-2" }}</td>
-                    <td class="mat-cell text-right">{{ (project.projectedCost - project.deliveredAmount) / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell text-right">{{ project.estimatedAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ project.awardedAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ project.deliveredAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ project.paidAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ project.projectedCost / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">
+                      {{ (project.projectedCost - project.deliveredAmount) / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
+                    </td>
                   </tr>
                 </mat-expansion-panel-header>
 
@@ -136,25 +146,29 @@
                     <tr class="material-row p-r-10">
                       <td class="mat-cell">{{ matCategory.materialCategoryName }}</td>
                       <td class="mat-cell"></td>
-                      <td class="mat-cell text-right">{{ matCategory.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell text-right">{{ matCategory.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell text-right">{{ matCategory.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ matCategory.estimatedAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                      <td class="mat-cell text-right">{{ matCategory.awardedAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                      <td class="mat-cell text-right">{{ matCategory.deliveredAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
                       <td class="mat-cell"></td>
-                      <td class="mat-cell text-right">{{ matCategory.projectedCost / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell text-right">{{ (matCategory.projectedCost - matCategory.deliveredAmount) / this.conversionNumber | number: "1.2-2" }}</td>
+                      <td class="mat-cell text-right">{{ matCategory.projectedCost / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                      <td class="mat-cell text-right">
+                        {{ (matCategory.projectedCost - matCategory.deliveredAmount) / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
+                      </td>
                     </tr>
                   </mat-expansion-panel-header>
 
                   <!-- material details of specific material category -->
                   <tr class="material-row background-project-list" *ngFor="let material of matCategory.materialCTCDataList">
                     <td class="mat-cell">{{ material.materialName }}</td>
-                      <td class="mat-cell">{{ material.materialUnit }}</td>
-                      <td class="mat-cell text-right">{{ material.estimatedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell text-right">{{ material.awardedAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell text-right">{{ material.deliveredAmount / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell"></td>
-                      <td class="mat-cell text-right">{{ material.projectedCTC / this.conversionNumber | number: "1.2-2" }}</td>
-                      <td class="mat-cell text-right">{{ (material.projectedCTC - material.deliveredAmount) / this.conversionNumber | number: "1.2-2" }}</td>
+                    <td class="mat-cell">{{ material.materialUnit }}</td>
+                    <td class="mat-cell text-right">{{ material.estimatedAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ material.awardedAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">{{ material.deliveredAmount / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell"></td>
+                    <td class="mat-cell text-right">{{ material.projectedCTC / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}</td>
+                    <td class="mat-cell text-right">
+                      {{ (material.projectedCTC - material.deliveredAmount) / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
+                    </td>
                   </tr>
                 </mat-expansion-panel>
               </mat-expansion-panel>

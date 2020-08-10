@@ -30,8 +30,13 @@ export class BarChartComponent implements OnInit {
         let chart = new this.gLib.visualization.ColumnChart(this.barChart.nativeElement);
 
         chart.draw(data, {
-            width: 600, height: 400,
-            vAxis: '', isStacked: true
+            width: 880, height: 400,
+            isStacked: true,
+            hAxis: {
+                valueFormatString: "DD-MMM",
+                labelAngle: -50
+            },
+            colors: ['#1584BA', '#60C1EF', '#B7E7FE']
         });
     }
 

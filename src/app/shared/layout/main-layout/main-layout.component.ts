@@ -21,6 +21,10 @@ export class MainLayoutComponent implements OnInit {
   isFreeTrialActivate: boolean;
 
   isFreeTrialSubscription: any;
+  isActiveSubscription: any;
+
+  isPlanAvailable: any;
+  accountOwner: any;
 
   users: any;
 
@@ -37,9 +41,15 @@ export class MainLayoutComponent implements OnInit {
     this.userName = localStorage.getItem("userName");
     this.url = localStorage.getItem('profileUrl');
     this.isFreeTrialSubscription = Number(localStorage.getItem('isFreeTrialSubscription'));
+    this.isActiveSubscription = Number(localStorage.getItem('isActiveSubscription'));
+    this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
+    this.accountOwner = Number(localStorage.getItem('accountOwner'));
     this.startSubscriptions();
     // this.checkFreeTrial();
-    this.getUserInformation(this.userId);
+    // this.getUserInformation(this.userId);
+    if (this.isFreeTrialSubscription && this.isFreeTrialSubscription === 1) {
+      this.isFreeTrialActivate = true;
+    }
   }
 
   getUserInformation(userId) {
@@ -49,7 +59,7 @@ export class MainLayoutComponent implements OnInit {
       this._userService.getUserInfo(userId).then(res => {
         this.users = res.data ? res.data[ 0 ] : null;
         // this.checkFreeTrial();
-        if (this.users && this.users.isFreeTrialSubscription === 1) {
+        if ((this.users && this.users.isFreeTrialSubscription === 1)) {
           this.isFreeTrialActivate = true;
         }
       });

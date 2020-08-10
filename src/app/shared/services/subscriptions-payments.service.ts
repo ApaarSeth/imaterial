@@ -5,15 +5,25 @@ import { API } from '../constants/configuration-constants';
 import { DataServiceOptions } from '../models/data-service-options';
 import { Utils } from '../helpers/utils';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { UserService } from './userDashboard/user.service';
+import { AppNotificationService } from './app-notification.service';
+import { CommonService } from './commonService';
 
 @Injectable({
     providedIn: "root"
 })
 
 export class SubscriptionPaymentsService {
+
+    updateSubscriptionPlan$ = new Subject<any>();
+
     constructor(
         private dataService: DataService,
-        private _router: Router
+        private _router: Router,
+        private _userService: UserService,
+        private notifier: AppNotificationService,
+        private commonService: CommonService
     ) { }
 
     postSubscriptionPaymentInitiate(data) {
@@ -58,7 +68,15 @@ export class SubscriptionPaymentsService {
             } else {
                 if (res.data) {
                     // this._router.navigate([ "/profile/add-user" ]);
-                    this._router.navigate([ "/dashboard" ]);
+
+                    // this.getUserInformation(localStorage.getItem('userId'));
+                    this._userService.getUserInfo(localStorage.getItem('userId')).then(res => {
+                        localStorage.setItem('isFreeTrialSubscription', res.data[ 0 ].isFreeTrialSubscription);
+                        localStorage.setItem('isActiveSubscription', res.data[ 0 ].isActiveSubscription);
+                        this.updateSubscriptionPlan$.next();
+                        this._router.navigate([ "/dashboard" ]);
+                        this.notifier.snack('Your free trial has been started successfully!');
+                    });
                 }
             }
 
@@ -93,6 +111,47 @@ export class SubscriptionPaymentsService {
 
     getContactSales() {
         return this.dataService.getRequest(API.GET_CONTACTSALES);
+    }
+
+    getUserInformation(userId) {
+        this._userService.getUserInfo(userId).then(res => {
+            localStorage.setItem('isFreeTrialSubscription', res.data[ 0 ].isFreeTrialSubscription);
+            localStorage.setItem('isActiveSubscription', res.data[ 0 ].isActiveSubscription);
+            this.updateSubscriptionPlan$.next();
+        });
+    }
+
+    getUpdatedSubscriptionData(): Promise<any> {
+        return this.commonService.getSubscriptionPlan().then(res => {
+            let subsdata = res.data;
+            let cstmPlan = {
+                "planName": "Custom", "activeSubscription": null, "planSortSeq": 3, "planFeatureList": null, "planFeatureObjList": [ { "featureName": "Customizable", "available": true },
+                { "featureName": "Supplier Management", "available": true },
+                { "featureName": "Bill of Materials(BOM)", "available": true },
+                { "featureName": "Purchase Requisitions", "available": true },
+                { "featureName": "Request for Price(RFP)", "available": true },
+                { "featureName": "Purchase Orders", "available": true },
+                { "featureName": "Good Receipt Notes(GRN)", "available": true },
+                { "featureName": "Material Issuance", "available": true },
+                { "featureName": "Payment Record", "available": true },
+                { "featureName": "Inventory Records", "available": true },
+                { "featureName": "PO ShortClose", "available": true },
+                { "featureName": "Comprehensive Dashboards", "available": true },
+                { "featureName": "Real Time Status Tracking", "available": true },
+                { "featureName": "Currency Administration", "available": true },
+                { "featureName": "Intersite Transfer", "available": true },
+                { "featureName": "Vendor Rating", "available": true },
+                { "featureName": "Image Integration", "available": true },
+                { "featureName": "Reports & Analytics", "available": true },
+                { "featureName": "Aggregated Purchase", "available": true },
+                { "featureName": "On Demand Dedicated Onboarding", "available": true },
+                { "featureName": "And a lot more..", "available": true } ]
+            };
+            subsdata.planFrequencyList.forEach(item => {
+                item.planList.push(cstmPlan);
+            });
+            return subsdata.planFrequencyList;
+        });
     }
 
 }
