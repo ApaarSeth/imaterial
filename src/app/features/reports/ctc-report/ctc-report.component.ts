@@ -40,7 +40,7 @@ export class CTCReportComponent implements OnInit {
     this.conversionNumber = 1;
     this.countryCode = localStorage.getItem("countryCode");
     this.currency = localStorage.getItem("currencyCode");
-    this.amountRange = this.countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Million', 'Billion']
+    this.amountRange = this.countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions', 'Billions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.allProjectsList = this.activatedRoute.snapshot.data.resolverData[1].data;
@@ -94,10 +94,10 @@ export class CTCReportComponent implements OnInit {
       case 'Thousands':
         this.conversionNumber = 1000
         break;
-      case 'Million':
+      case 'Millions':
         this.conversionNumber = 1000000
         break;
-      case 'Billion':
+      case 'Billions':
         this.conversionNumber = 1000000000
         break;
       default:
