@@ -12,7 +12,6 @@ import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { CommonService } from 'src/app/shared/services/commonService';
-import { CountryCode } from 'src/app/shared/models/currency';
 import { VisitorService } from 'src/app/shared/services/visitor.service';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 import { WebNotificationService } from 'src/app/shared/services/webNotificationService.service';
