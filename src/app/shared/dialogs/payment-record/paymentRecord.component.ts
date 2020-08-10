@@ -42,7 +42,7 @@ export class PaymentRecordComponent implements OnInit {
         this.paymentForm = this.formBuilder.group({
             amountPaid: ['', [Validators.required, this.amountCheck(this.paymentDetail)]],
             paymentDate: ['', Validators.required],
-            transactionId: [],
+            transactionId: ['', Validators.maxLength(300)],
             exchangeRate: ['', this.paymentDetail.purchaseOrderCurrency ? Validators.required : null]
         })
     }
