@@ -1,6 +1,6 @@
 <div *ngIf="(issueToIndentDetails && issueToIndentDetails.indentDetailList)" class="indent-Modal">
   <div class="indent-header">
-    <h1 mat-dialog-title class="mb-0">Issue to Indent</h1>
+    <h1 mat-dialog-title class="mb-0">Issue to Purchase Requisition</h1>
     <button type="button" class="close pull-right p-t-5" (click)="onNoClick()" aria-label="Close">
       <span aria-hidden="true">×</span>
     </button>
@@ -126,7 +126,7 @@
 <!-- If no indent available then this block will execute -->
 <div *ngIf="issueToIndentDetails && (!issueToIndentDetails.indentDetailList)">
   <div class="indent-header">
-    <h1 mat-dialog-title class="mb-0">Issue to Indent</h1>
+    <h1 mat-dialog-title class="mb-0">Issue to Purchase Requisition</h1>
     <button type="button" class="close pull-right p-t-5" (click)="onNoClick()" aria-label="Close">
       <span aria-hidden="true">×</span>
     </button>

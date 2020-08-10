@@ -20,7 +20,7 @@
     <div class="row">
 
       <ng-container *ngIf="!isMobile; else mobileSearch">
-        <div class="col-md-2">
+        <div class="col-md-2 align-top">
           <advance-search filterType="indent"></advance-search>
         </div>
       </ng-container>
@@ -32,7 +32,7 @@
         </div>
       </ng-template>
 
-      <div class="col-md-10">
+      <div class="col-md-10 align-top">
 
         <ng-container *ngIf="(dataSource1 || dataSource2) else emptyReports">
 
