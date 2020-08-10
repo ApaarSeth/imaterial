@@ -41,20 +41,22 @@ export class IssueToIndentDialogComponent implements OnInit {
 
   formsInit(indentDetail) {
     const num = Number(this.issueToIndentDetails.availableStock);
-
-    const frmArr = indentDetail.indentDetailList.map((indent: IndentVO) => {
-      return this.formBuilder.group({
-        indentId: [indent.indentId],
-        issuedQty: ["", [Validators.max(num)]],
-        issuedDate: [indent.dueDate],
-        requiredQuantity: [indent.quantity]
+    let frmArr;
+    
+    if(indentDetail && indentDetail.indentDetailList && indentDetail.indentDetailList.length > 0){
+      frmArr = indentDetail.indentDetailList.map((indent: IndentVO) => {
+        return this.formBuilder.group({
+          indentId: [indent.indentId],
+          issuedQty: ["", [Validators.max(num)]],
+          issuedDate: [indent.dueDate],
+          requiredQuantity: [indent.quantity]
+        });
       });
-    });
 
-
-    this.materialForms = this.formBuilder.group({
-      forms: new FormArray(frmArr)
-    });
+      this.materialForms = this.formBuilder.group({
+        forms: new FormArray(frmArr)
+      });
+    }
 
   }
 
@@ -65,8 +67,8 @@ export class IssueToIndentDialogComponent implements OnInit {
   showQuantityInput() {
     this.sum = 0;
     this.materialForms.value.forms.forEach(element => {
-      if (element.issuedQty > 0) {
-        this.sum = this.sum + element.issuedQty;
+      if (Number(element.issuedQty) > 0) {
+        this.sum = this.sum + Number(element.issuedQty);
       }
     });
 
@@ -78,6 +80,7 @@ export class IssueToIndentDialogComponent implements OnInit {
       this.errorMsg = true;
     }
   }
+
   raiseIndent() {
     const formValues: sendIssuedQuantityObj[] = [];
     this.materialForms.value.forms.forEach(element => {

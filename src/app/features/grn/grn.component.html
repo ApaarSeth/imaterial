@@ -6,7 +6,7 @@
         <div class="col-xs-3 col-md-3">
           <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
             <mat-label>Select Project</mat-label>
-            <mat-select formControlName="selectedProject" multiple>
+            <mat-select formControlName="selectedProject" panelClass="dropDown-project-panel" multiple>
               <div class="display-flex">
                 <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
                   [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
@@ -43,8 +43,8 @@
                   <thead class="mat-header-cell material">Awarded <br />Quantity</thead>
                   <thead class="mat-header-cell material">Delivered <br />Quantity</thead>
                   <!-- <thead class="mat-header-cell material">Pending <br />Quantity</thead> -->
-                  <thead class="mat-header-cell material">Unit Price <br />(INR)</thead>
-                  <thead class="mat-header-cell material">Total Amount <br />(INR)</thead>
+                  <thead class="mat-header-cell material text-center">Unit Price <br />(INR)</thead>
+                  <thead class="mat-header-cell material text-center">Total Amount <br />(INR)</thead>
                   <thead class="mat-header-cell material">Supplier</thead>
                 </tr>
 
@@ -81,8 +81,8 @@
                       <td class="mat-cell">{{ grnDetail.EstimatedQty }}</td>
                       <td class="mat-cell">{{ grnDetail.DeliveredQty }}</td>
                       <!-- <td class="mat-cell"></td> -->
-                      <td class="mat-cell">{{ grnDetail.MaterialUnitPrice }}</td>
-                      <td class="mat-cell text-right">{{ grnDetail.TotalAmount }}</td>
+                      <td class="mat-cell text-center">{{ grnDetail.MaterialUnitPrice }}</td>
+                      <td class="mat-cell text-center">{{ grnDetail.TotalAmount }}</td>
                       <td class="mat-cell">{{ grnDetail.SupplierName }}</td>
                     </tr>
 
