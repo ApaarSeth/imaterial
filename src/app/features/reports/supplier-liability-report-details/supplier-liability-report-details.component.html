@@ -23,10 +23,12 @@
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
-              
-              <div class="select-all-checkbox">
+
+              <!--************************************************************-->
+              <!-- Select All functionality (will enable this code later) -->
+              <!-- <div class="select-all-checkbox">
                 <app-select-check-all [model]="form.get('selectedProject')" [values]="projectNumIds" (selectAllText)="getAllIds($event)"></app-select-check-all>
-              </div>
+              </div> -->
 
               <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']" [value]="project.projectId" 
               (click)="choosenProject()">{{ project.projectName }}</mat-option>
@@ -53,9 +55,11 @@
                 </button>
               </div>
               
-              <div class="select-all-checkbox">
+              <!--************************************************************-->
+              <!-- Select All functionality (will enable this code later) -->
+              <!-- <div class="select-all-checkbox">
                 <app-select-check-all [model]="form.get('selectedSupplier')" [values]="allSuppIds" (selectAllText)="getAllSuppIds($event)"></app-select-check-all>
-              </div>
+              </div> -->
 
               <mat-option *ngFor="let supplier of allSuppliers | SearchPipe: searchSupplier:['supplier_name']"
                 [value]="supplier.supplierId" (click)="choosenSupplier()">{{ supplier.supplier_name }}</mat-option>
@@ -106,7 +110,8 @@
 
       <ng-container *ngIf="supplierLiabiltyReportData">
         <div class="reportTablePo" *ngIf="supplierLiabiltyReportData.supplierReportDataList; else elseBlock">
-          <p class="fontsize-14-px p-b-0 p-t-10 m-b-0">*Conversion Rate={{ currency }}</p>
+          <p class="fontsize-14-px p-b-0 p-t-10 mb-1">*All the values are in base currency ({{ currency }})</p>
+          <p class="fontsize-14-px pb-0">**All the values are inclusive of taxes.</p>
 
           <table class="report-table">
             <tr matSort class="mat-elevation-z2 mat-header-row">

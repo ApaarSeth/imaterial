@@ -1,4 +1,4 @@
-<div *ngIf="issueToIndentDetails && issueToIndentDetails.indentDetailList" class="indent-Modal">
+<div *ngIf="(issueToIndentDetails && issueToIndentDetails.indentDetailList)" class="indent-Modal">
   <div class="indent-header">
     <h1 mat-dialog-title class="mb-0">Issue to Indent</h1>
     <button type="button" class="close pull-right p-t-5" (click)="onNoClick()" aria-label="Close">
@@ -6,39 +6,10 @@
     </button>
   </div>
 
-  <!-- <div mat-dialog-title>
-    <div class="row">
-      <div class="col-md-6 font-size-20">
-        Issue to Indent
-      </div>
-
-      <div class="col-xs-5 mid-head-top limited-character universal" matTooltip="{{issueToIndentDetails.materialName}}">
-        {{issueToIndentDetails.materialName}}
-      </div>
-      <div class="col-xs-4 mid-head-top">
-        <span>
-          Available in Stock:
-          <span *ngIf="issueToIndentDetails.availableStock>0">
-            {{issueToIndentDetails.availableStock}}
-          </span>
-          <span *ngIf="issueToIndentDetails.availableStock == null">
-            0
-          </span>
-          {{issueToIndentDetails.materialUnit}}
-        </span>
-      </div>
-      <div class="col-md-6">
-        <button type="button" class="close p-t-7" (click)="onNoClick()" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-    </div>
-  </div> -->
-
   <div mat-dialog-content>
-
     <div class="row pb-3">
-      <div class="col-md-5 mid-head-top limited-character universal" matTooltip="{{issueToIndentDetails.materialName}}" style="font-weight: 500;">
+      <div class="col-md-5 mid-head-top limited-character universal" matTooltip="{{issueToIndentDetails.materialName}}"
+        style="font-weight: 500;">
         {{issueToIndentDetails.materialName}}
       </div>
       <div class="col-md-7 mid-head-top">
@@ -57,30 +28,36 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <div class="row p-t-10 p-b-10 gray-border">
-          <div class="col-xs-3">Indent Id</div>
-          <div class="col-xs-2">Required Quantity</div>
+        <div class="row p-t-10 p-b-10 gray-border indent-header-bg">
+          <div class="col-xs-2">PR Id</div>
+          <div class="col-xs-2 text-center">Required Quantity</div>
           <div class="col-xs-2">Required Date</div>
           <div class="col-xs-2">Issued Quantity</div>
           <div class="col-xs-3">To be Issued</div>
         </div>
-        <form [formGroup]="materialForms ">
-          <div formArrayName="forms" class="row p-t-10 p-b-10 gray-border" *ngFor="let indent of issueToIndentDetails.indentDetailList; let i = index; ">
-            <div class="col-xs-3 formGroup p-t-12">
+
+        <form [formGroup]="materialForms">
+          <div formArrayName="forms" class="row p-t-10 p-b-10 gray-border"
+            *ngFor="let indent of issueToIndentDetails.indentDetailList; let i = index;">
+
+            <div class="col-xs-2 formGroup p-t-12">
               <div>
                 {{indent.indentId}}
               </div>
             </div>
-            <div class="col-xs-2 formGroup p-t-12 text-align-center p-r-40">
+
+            <div class="col-xs-2 formGroup p-t-12 text-center">
               <div>
                 {{indent.quantity}}
               </div>
             </div>
+            
             <div class="col-xs-2 formGroup p-t-12">
               <div>
                 {{indent.dueDate|date: "dd-MMM-yyy"}}
               </div>
             </div>
+            
             <div class="col-xs-2 formGroup p-t-12">
               <div class="supplier-qty-div">
                 <div class="p-r-50">
@@ -95,8 +72,7 @@
                       <div class="col-sm-6">
                         <span>Issued Date</span>
                         <ng-container *ngFor="let date of indent.IssuedQuantityList">
-                          <span
-                            ><br />
+                          <span><br />
                             {{date.issuedDate| date: "dd-MMM-yyy"}}
                           </span>
                         </ng-container>
@@ -104,8 +80,7 @@
                       <div class="col-sm-6">
                         <span>Issued Quantity</span>
                         <ng-container *ngFor="let date of indent.IssuedQuantityList">
-                          <span
-                            ><br />
+                          <span><br />
                             {{date.issuedQty}}
                           </span>
                         </ng-container>
@@ -115,14 +90,15 @@
                 </div>
               </div>
             </div>
+
             <div class="col-xs-3 formGroup">
               <mat-form-field class="col-xs-12 border-input" [formGroupName]="i">
-                <input formControlName="issuedQty" (input)="showQuantityInput()" matInput type="text" min="0" appTwoDigitDecimaNumber placeholder="Issue Quantity" />
-                <!-- <mat-error *ngIf="materialForms.controls.forms.controls[i].controls['issuedQty'].hasError('max') &&  materialForms.controls.forms.controls[i].controls['issuedQty'].touched"
-                class="error-msg p-t-5"> Quantity should be less than available stocks. </mat-error> -->
+                <input formControlName="issuedQty" (input)="showQuantityInput()" matInput type="text" min="0"
+                  appTwoDigitDecimaNumber placeholder="Issue Quantity" />
               </mat-form-field>
               <span>{{indent.unit}}</span>
             </div>
+
           </div>
         </form>
       </div>
@@ -139,16 +115,30 @@
       <button mat-raised-button (click)="onNoClick()" class="main-color main-button pull-left">
         Cancel
       </button>
-      <button [disabled]="errorMsg || !materialForms.valid" mat-raised-button (click)="showIndent()" class="main-background-color main-button color-white pull-right">
+      <button [disabled]="errorMsg || !materialForms.valid" mat-raised-button (click)="showIndent()"
+        class="main-background-color main-button color-white pull-right">
         Save
       </button>
     </div>
   </div>
 </div>
+
+<!-- If no indent available then this block will execute -->
 <div *ngIf="issueToIndentDetails && (!issueToIndentDetails.indentDetailList)">
-  <div mat-dialog-title>
-    <div class="col-xs-12 no-indent-list">
-      No Indent List Available for this {{issueToIndentDetails.materialName}}
+  <div class="indent-header">
+    <h1 mat-dialog-title class="mb-0">Issue to Indent</h1>
+    <button type="button" class="close pull-right p-t-5" (click)="onNoClick()" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-md-12 no-indent-list">
+        <p class="text-center no-indent">
+          No Purchase Requisition Available for the {{issueToIndentDetails.materialName}}
+        </p>
+      </div>
     </div>
   </div>
 </div>

@@ -252,6 +252,15 @@
   background-color: #eae8e8;
 }
 
+.projected-cost-col,
+.balance-cost-col{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-right: -6px;
+}
+
 @media(max-width:599px){
   .report-table {
 
