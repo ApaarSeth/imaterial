@@ -29,6 +29,7 @@ export interface GlobalMaterial {
   nearDueDate?: string;
   deliveredQty: number;
   issuedQty: number;
+  poAvailableQty: number;
   availableQuantity?: null;
 }
 export interface GlobalProject {
