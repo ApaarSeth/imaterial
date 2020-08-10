@@ -103,7 +103,8 @@
             <div class="" [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-3 text-right' : 'col-xs-4 text-center'">
               <span>
                 <mat-form-field class="border-input width-90">
-                  <input formControlName="transactionId" appTwoDigitDecimaNumber matInput type="text" placeholder="Transaction ID" />
+                  <input formControlName="transactionId" matInput type="text" placeholder="Transaction ID" />
+                  <small *ngIf="paymentForm.get('transactionId').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
                 </mat-form-field>
               </span>
             </div>
