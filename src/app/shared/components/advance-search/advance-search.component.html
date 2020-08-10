@@ -360,16 +360,16 @@
 
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>From</mat-label>
-          <input matInput [matDatepicker]="raisedFromPicker"
-            (dateChange)="getDate($event, 'raisedFromPicker'); checkToDate($event, raisedToPicker)" />
+          <input matInput [max]="raisedMaxDate" [matDatepicker]="raisedFromPicker"
+            (dateChange)="getDate($event, 'raisedFromPicker'); checkToDate($event, raisedToPicker, 'raised')" />
           <mat-datepicker-toggle matSuffix [for]="raisedFromPicker"></mat-datepicker-toggle>
           <mat-datepicker #raisedFromPicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="w-100">
           <mat-label>To</mat-label>
-          <input matInput [matDatepicker]="raisedToPicker"
-            (dateChange)="getDate($event, 'raisedToPicker'); checkFromDate($event, raisedFromPicker)" />
+          <input matInput [min]="raisedMinDate" [matDatepicker]="raisedToPicker"
+            (dateChange)="getDate($event, 'raisedToPicker'); checkFromDate($event, raisedFromPicker, 'raised')" />
           <mat-datepicker-toggle matSuffix [for]="raisedToPicker"></mat-datepicker-toggle>
           <mat-datepicker #raisedToPicker></mat-datepicker>
         </mat-form-field>
@@ -388,16 +388,16 @@
 
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>From</mat-label>
-            <input matInput [matDatepicker]="expiryFromPicker"
-              (dateChange)="getDate($event, 'expiryFromPicker'); checkToDate($event, expiryToPicker)" />
+            <input matInput [max]="expiryMaxDate" [matDatepicker]="expiryFromPicker"
+              (dateChange)="getDate($event, 'expiryFromPicker'); checkToDate($event, expiryToPicker, 'expiry')" />
             <mat-datepicker-toggle matSuffix [for]="expiryFromPicker"></mat-datepicker-toggle>
             <mat-datepicker #expiryFromPicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>To</mat-label>
-            <input matInput [matDatepicker]="expiryToPicker"
-              (dateChange)="getDate($event, 'expiryToPicker'); checkFromDate($event, expiryFromPicker)" />
+            <input matInput [min]="expiryMinDate" [matDatepicker]="expiryToPicker"
+              (dateChange)="getDate($event, 'expiryToPicker'); checkFromDate($event, expiryFromPicker, 'expiry')" />
             <mat-datepicker-toggle matSuffix [for]="expiryToPicker"></mat-datepicker-toggle>
             <mat-datepicker #expiryToPicker></mat-datepicker>
           </mat-form-field>
@@ -417,16 +417,16 @@
 
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>From</mat-label>
-            <input matInput [matDatepicker]="requestedFromPicker"
-              (dateChange)="getDate($event, 'requestedFromPicker'); checkToDate($event, requestedToPicker)" />
+            <input matInput [max]="requiredMaxDate" [matDatepicker]="requestedFromPicker"
+              (dateChange)="getDate($event, 'requestedFromPicker'); checkToDate($event, requestedToPicker, 'required')" />
             <mat-datepicker-toggle matSuffix [for]="requestedFromPicker"></mat-datepicker-toggle>
             <mat-datepicker #requestedFromPicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>To</mat-label>
-            <input matInput [matDatepicker]="requestedToPicker"
-              (dateChange)="getDate($event, 'requestedToPicker'); checkFromDate($event, requestedFromPicker)" />
+            <input matInput [min]="requiredMinDate" [matDatepicker]="requestedToPicker"
+              (dateChange)="getDate($event, 'requestedToPicker'); checkFromDate($event, requestedFromPicker, 'required')" />
             <mat-datepicker-toggle matSuffix [for]="requestedToPicker"></mat-datepicker-toggle>
             <mat-datepicker #requestedToPicker></mat-datepicker>
           </mat-form-field>
