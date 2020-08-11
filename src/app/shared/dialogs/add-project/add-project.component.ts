@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { AppNavigationService } from '../../services/navigation.service';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
 import { CountryCode } from '../../models/currency';
-import { VisitorService } from '../../services/visitor.service';
 import { CommonService } from '../../services/commonService';
 
 export interface City {
@@ -38,6 +37,7 @@ export class AddProjectComponent implements OnInit {
   form: FormGroup;
   startDate = new Date(1990, 0, 1);
   endDate = new Date(2021, 0, 1);
+  projectEndDate: Date;
   minDate = new Date();
   projectDetails: ProjectDetails;
   orgId: number;
@@ -80,6 +80,7 @@ export class AddProjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.validPincode = this.data.isEdit ? true : false;
     this.countryList = this.data.countryList;
     this.currencyCode = localStorage.getItem('currencyCode');
     this.countryCode = localStorage.getItem('countryCode');
@@ -138,12 +139,6 @@ export class AddProjectComponent implements OnInit {
     }
     return this.form.get('countryCode').value;
   }
-
-  cities: City[] = [
-    { value: "Gurgaon", viewValue: "Gurgaon" },
-    { value: "Delhi", viewValue: "Delhi" },
-    { value: "Karnal", viewValue: "Karnal" }
-  ];
 
   projectTypes: ProjectType[] = [
     { type: "RESIDENTIAL" },
@@ -215,6 +210,14 @@ export class AddProjectComponent implements OnInit {
       countryId: [null],
       countryCode: []
     });
+    this.form.get('startDate').valueChanges.subscribe(res => {
+      this.projectEndDate = new Date(res)
+      this.projectEndDate.setDate(this.projectEndDate.getDate() + 1)
+    });
+    if (!this.projectEndDate) {
+      this.projectEndDate = new Date(this.form.get('startDate').value)
+      this.projectEndDate.setDate(this.projectEndDate.getDate() + 1)
+    }
   }
 
   addProjects(projectDetails: ProjectDetails) {
@@ -278,7 +281,6 @@ export class AddProjectComponent implements OnInit {
       this.form.value.startDate = this.formatDate(this.form.value.startDate);
       this.form.value.endDate = this.formatDate(this.form.value.endDate);
       this.addProjects(this.form.value);
-
     }
   }
 

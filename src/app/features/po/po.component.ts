@@ -242,6 +242,8 @@ export class PoComponent implements OnInit {
             this.notifier.snack(res.message)
           }
         })
+      } else {
+        this.router.navigate(["po"]);
       }
     })
   }
