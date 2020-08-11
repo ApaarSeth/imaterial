@@ -242,6 +242,8 @@ export class PoComponent implements OnInit {
             this.notifier.snack(res.message)
           }
         })
+      } else {
+        this.router.navigate(["po"]);
       }
     })
   }
@@ -299,9 +301,9 @@ export class PoComponent implements OnInit {
     if (decision === "rejected" && this.poData.isAmended) {
       this.collatePoData.isApproved = 0;
       this.poService.rejectAmendedPo(this.poData.purchaseOrderId).then(res => {
-        if (res.status === 201) {
-          this.notifier.snack(res.message)
+        if (res.statusCode === 201) {
           this.router.navigate(["po"]);
+          this.notifier.snack(res.message)
         }
         else {
           this.notifier.snack(res.message)

@@ -67,16 +67,20 @@
           </mat-form-field>
         </div>
 
-        <div
-          class="col-md-6 col-sm-4 col-xs-4 add-project-btn display-flex align-items-center"
-          [ngClass]="isMobile ? 'justify-content-flex-start height-25-px' : 'justify-content-flex-end'"
-        >
-          <div *ngIf="projectIds.length || supplierIds.length" class="p-r-20">
-            <a class="font-size16 cursor-pointer" matTooltip="Download"> <img src="../../../../assets/images/download-po.png" (click)="downloadExcel()" /> </a>
-          </div>
+        <div class="col-md-2 pt-4">
           <div *ngIf="supplierLiabiltyReportData" class="show-amount pt-0 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
             Display Amount
           </div>
+        </div>
+
+        <div
+          class="col-md-4 col-sm-4 col-xs-4 add-project-btn display-flex align-items-center pt-4"
+          [ngClass]="isMobile ? 'justify-content-flex-start height-25-px' : 'justify-content-flex-end'"
+        >
+          <div *ngIf="projectIds.length || supplierIds.length" class="p-r-20">
+            <a class="font-size16 cursor-pointer" matTooltip="Download Report"> <img src="../../../../assets/images/download-po.png" (click)="downloadExcel()" /> </a>
+          </div>
+          
           <!-- <button mat-raised-button class="main-background-color main-button color-white demo-title cursor-pointer">
             Generate Report
           </button> -->
