@@ -1,72 +1,74 @@
 <form *ngIf="signupForm" [formGroup]="signupForm" (ngSubmit)="signup()" class="sign-up-form">
   <div style="min-height: 311px;">
     <div class="row">
-      <div *ngIf="this.callingCode === '+91'" class="col-xs-4">
-        <mat-form-field class="border-select p-t-10 p-r-0 mat-form-field-flex-mm-padding select-country-code">
-          <mat-select formControlName="countryCode">
-            <div class="display-flex">
-              <input
-                class="p-l-10 p-b-5"
-                matInput
-                type="search"
-                placeholder="Search Country"
-                [(ngModel)]="searchCountry"
-                [ngModelOptions]="{standalone: true}"
-                (keydown)="$event.stopPropagation()"
-              />
-              <button mat-button matSuffix mat-icon-button>
-                <mat-icon>search</mat-icon>
-              </button>
+
+      <div class="col-md-12">
+        <div class="row">
+
+          <div *ngIf="this.callingCode === '+91'" class="col-xs-4 p-t-12">
+            <mat-form-field class="border-select mat-form-field-flex-mm-padding select-country-code si-gn">
+              <mat-select formControlName="countryCode">
+                <div class="display-flex">
+                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country"
+                    [(ngModel)]="searchCountry" [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()" />
+                  <button mat-button matSuffix mat-icon-button>
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </div>
+                <mat-select-trigger>
+                  <span
+                    matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}">
+                    <img class="w-30 p-r-5 country-flags" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                    <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                    <span class="font-size12">{{ selectedCountry && selectedCountry.callingCode }}</span>
+                  </span>
+                </mat-select-trigger>
+                <mat-option
+                  *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
+                  [value]="country">
+                  <span><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                    <span class="limited-character universal p-r-5"
+                      matTooltip="{{ country.name }}">{{ country.name }}</span>
+                    <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
+                  </span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-8" *ngIf="this.callingCode === '+91'">
+            <div class="row">
+              <div [ngClass]="lessOTPDigits ? 'col-xs-12' : 'col-xs-7' ">
+                <mat-form-field class="border-input p-t-12">
+                  <input matInput type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    formControlName="phone" #phone placeholder="Phone No." />
+                </mat-form-field>
+              </div>
+              <div class="col-xs-5">
+                <button type="button" *ngIf="!lessOTPDigits" mat-raised-button
+                  class="main-background-color main-button color-white pull-right otp-btn mt-4"
+                  [disabled]="phone.value.length != 10" (click)="sendOtpBtn()">
+                  Send OTP
+                </button>
+              </div>
             </div>
-            <mat-select-trigger>
-              <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}">
-                <img class="width35Percent p-r-5 country-flags" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-                <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
-                <span class="font-size12">{{ selectedCountry && selectedCountry.callingCode }}</span>
-              </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country">
-              <span
-                ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                <span class="limited-character universal p-r-5" matTooltip="{{ country.name }}">{{ country.name }}</span>
-                <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
-              </span>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      
-      <div *ngIf="this.callingCode === '+91'" class="phone-number col-xs-8 mobile-num" [ngClass]="{'p-t-10': lessOTPDigits}">
-        <mat-form-field class="border-input display-flex">
-          <input matInput type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" #phone placeholder="Phone No." />
-          <button
-            type="button"
-            *ngIf="!lessOTPDigits"
-            mat-raised-button
-            class="main-background-color main-button color-white pull-right otp-btn"
-            [disabled]="phone.value.length != 10"
-            (click)="sendOtpBtn()"
-          >
-            Send OTP
-          </button>
-        </mat-form-field>
-        <small *ngIf="signupForm.controls['phone'].hasError('required') && signupForm.controls['phone'].touched" class="signupForm-error-msg"> Phone No is required </small>
-        <small *ngIf="signupForm.controls['phone'].hasError('pattern') && signupForm.controls['phone'].touched" class="signupForm-error-msg"> Enter Valid Phone No</small>
-        <small *ngIf="lessOTPDigits" class="signupForm-error-msg green-colour"> Mobile Number is Verified</small>
+            <small *ngIf="signupForm.controls['phone'].hasError('required') && signupForm.controls['phone'].touched"
+              class="signupForm-error-msg"> Phone No is required </small>
+            <small *ngIf="signupForm.controls['phone'].hasError('pattern') && signupForm.controls['phone'].touched"
+              class="signupForm-error-msg"> Enter Valid Phone No</small>
+            <small *ngIf="lessOTPDigits" class="signupForm-error-msg green-colour"> Mobile Number is
+              Verified</small>
+          </div>
+
+        </div>
       </div>
 
       <mat-form-field class="col-xs-12 border-input" *ngIf="showOtp && !lessOTPDigits">
-        <input
-          matInput
-          type="number"
-          #otp
-          min="0"
-          onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-          formControlName="otp"
-          (input)="enterOTP($event)"
-          placeholder="Enter the OTP"
-        />
-        <small *ngIf="signupForm.controls['otp'].hasError('required') && signupForm.controls['otp'].touched" class="signupForm-error-msg"> OTP No is required </small>
+        <input matInput type="number" #otp min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+          formControlName="otp" (input)="enterOTP($event)" placeholder="Enter the OTP" />
+        <small *ngIf="signupForm.controls['otp'].hasError('required') && signupForm.controls['otp'].touched"
+          class="signupForm-error-msg"> OTP No is required </small>
         <small *ngIf="!lessOTPDigits && otp.value.length == 4" class="signupForm-error-msg"> Enter Valid OTP</small>
         <!-- <small class="signupForm-error-msg green-colour"> Resend OTP </small> -->
       </mat-form-field>
@@ -76,17 +78,17 @@
       </mat-form-field>
       <mat-form-field class="col-xs-12 border-input">
         <input matInput type="email" formControlName="email" placeholder="Email" />
-        <small *ngIf="signupForm.controls['email'].hasError('required') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Email is required </small>
-        <small *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched" class="signupForm-error-msg"> Enter Valid Email</small>
-        <small
-          *ngIf="
+        <small *ngIf="signupForm.controls['email'].hasError('required') && signupForm.controls['email'].touched"
+          class="signupForm-error-msg"> Email is required </small>
+        <small *ngIf="signupForm.controls['email'].hasError('pattern') && signupForm.controls['email'].touched"
+          class="signupForm-error-msg"> Enter Valid Email</small>
+        <small *ngIf="
             emailEnteredCounter &&
             !emailVerified &&
             !signupForm.controls['email'].hasError('required') &&
             !signupForm.controls['email'].hasError('pattern') &&
             signupForm.controls['email'].touched
-          "
-          >Email already in use.
+          ">Email already in use.
         </small>
       </mat-form-field>
 
@@ -99,26 +101,22 @@
                   </mat-form-field> -->
 
       <mat-form-field class="col-xs-12 border-input">
-        <input matInput [type]="showPassWordString ? 'text' : 'password'" formControlName="password" placeholder="Password" />
+        <input matInput [type]="showPassWordString ? 'text' : 'password'" formControlName="password"
+          placeholder="Password" />
         <a>
           <mat-icon class="password-eye" (click)="showPassWord()">remove_red_eye</mat-icon>
         </a>
-        <small *ngIf="signupForm.controls['password'].errors?.minlength && signupForm.controls['password'].touched" class="signupForm-error-msg"
-          >minimum characters required is 6</small
-        >
+        <small *ngIf="signupForm.controls['password'].errors?.minlength && signupForm.controls['password'].touched"
+          class="signupForm-error-msg">minimum characters required is 6</small>
       </mat-form-field>
       <!-- <mat-form-field class="col-xs-12 border-input">
                       <input matInput type="password" formControlName="confirmPassword" placeholder="Retype Password" />
                   </mat-form-field> -->
 
       <div mat-dialog-actions class="col-xs-12 p-t-10">
-        <button
-          mat-raised-button
-          class="main-background-color main-button color-white m-b-5"
-          cdkFocusInitial
+        <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
           style="width: 100%;"
-          [disabled]="this.callingCode === '+91' ? !signupForm.valid || !lessOTPDigits || !emailVerified : !signupForm.valid && !emailVerified"
-        >
+          [disabled]="this.callingCode === '+91' ? !signupForm.valid || !lessOTPDigits || !emailVerified : !signupForm.valid && !emailVerified">
           Sign Up
         </button>
       </div>

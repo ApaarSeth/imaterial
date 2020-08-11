@@ -14,9 +14,6 @@
   .mat-form-field-flex {
     padding-left: 0px !important;
   }
-  .mat-select-arrow-wrapper {
-    padding-top: 13px !important;
-  }
 
   small {
     color: red;
@@ -95,9 +92,6 @@
 
 .otp-btn{
   min-width: 60px !important;
-  .mat-button-wrapper{
-    margin-right: 35px;
-  }
 }
 
 .sign-in-up{
@@ -106,7 +100,17 @@
   }
 }
 
-@media only screen and (max-width: 1023px){
+.si-gn{
+  .mat-form-field-infix{
+    padding-bottom: 6px;
+  }
+}
+
+.mxw-500px{
+  max-width: 500px;
+}
+
+@media(max-width: 1024px){
   .landing-page-image{
     display: none !important;
   }
