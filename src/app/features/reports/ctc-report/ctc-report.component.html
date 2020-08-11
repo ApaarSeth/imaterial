@@ -43,21 +43,23 @@
           </mat-form-field>
         </div>
 
-        <div class="col-md-9 col-xs-6 add-project-btn display-flex justify-content-flex-end align-items-center">
+        <div class="col-md-2 pt-4">
+          <!------ Show Amount Field ------>
+          <div *ngIf="allProjectsData" class="show-amount-dropdown text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
+            Display Amount
+          </div>
+        </div>
+
+        <div class="col-md-7 col-xs-6 add-project-btn display-flex justify-content-flex-end align-items-center pt-4">
           <!------ Download Report ------>
           <div class="download-report pr-3" *ngIf="allProjectsData">
-            <a class="font-size16 cursor-pointer" matTooltip="Download" (click)="downloadExcel()"> <img src="../../../../assets/images/download-po.png" /></a>
+            <a class="font-size16 cursor-pointer" matTooltip="Download Report" (click)="downloadExcel()"> <img src="../../../../assets/images/download-po.png" /></a>
           </div>
 
           <!------ Generate Report (will use later) ------>
           <!-- <button mat-raised-button class="main-background-color main-button color-white demo-title cursor-pointer">
             Generate Report
           </button> -->
-
-          <!------ Show Amount Field ------>
-          <div *ngIf="allProjectsData" class="show-amount-dropdown text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
-            Display Amount
-          </div>
         </div>
 
         <!-- <div class="col-md-12 add-project-btn display-flex justify-content-flex-end showResponsiveReport">
@@ -109,13 +111,13 @@
                 }})</span>
               </th>
               <th class="mat-header-cell text-right projected-cost-col">Projected Cost 
-                <mat-icon matTooltip="(Quantity(Yet to be awarded) *Estimated Rate + Awarded Amount)" matTooltipPosition="above" class="ml-1">info</mat-icon>
+                <mat-icon matTooltip="(Quantity(Yet to be awarded) *Estimated Rate + Awarded Amount)" matTooltipPosition="above" class="ml-1" matTooltipClass="info-tooltip">info</mat-icon>
                 <span *ngIf="selectedMenu !== 'Full Figures'">({{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }})</span>
               </th>
               <th class="mat-header-cell text-right balance-cost-col">Balance Cost
-                <mat-icon matTooltip="(Projected Cost - Delivered Amount)" matTooltipPosition="above" class="ml-1">info</mat-icon>
+                <mat-icon matTooltip="(Projected Cost - Delivered Amount)" matTooltipPosition="above" class="ml-1" matTooltipClass="info-tooltip">info</mat-icon>
                 <span *ngIf="selectedMenu !== 'Full Figures'">({{
                   selectedMenu === "Full Figures" ? "" : selectedMenu
                 }})</span>
