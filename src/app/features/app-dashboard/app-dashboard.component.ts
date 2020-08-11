@@ -34,7 +34,7 @@ export class AppDashboardComponent implements OnInit {
   userId: number;
   projectCount: number;
   projectLists: ProjectDetails[];
-  label: string = 'po';
+  label: string;
   userGuidedata: GuideTourModel[] = [];
   permissionObj: permission;
   tab1: string;
@@ -80,6 +80,7 @@ export class AppDashboardComponent implements OnInit {
     const role = localStorage.getItem("role")
     if (role) {
       this.permissionObj = this.permissionService.checkPermission(role);
+      this.label = this.permissionObj.rfqFlag ? 'po' : 'indent';
       this.orgId = Number(localStorage.getItem("orgId"));
     }
     this.userId = Number(localStorage.getItem("userId"));

@@ -167,31 +167,32 @@ export class BomMyMaterialComponent implements OnInit {
         this.dataQty = res.data;
         if (this.dataQty) {
           this.selectedCategory.forEach((category: categoryNestedLevel) => {
-            category.materialList.forEach(
-              subcategory => {
-                for (let data of this.dataQty) {
-                  if (
-                    subcategory.materialGroup === data.materialGroup &&
-                    subcategory.materialName === data.materialName &&
-                    data.estimatedQty > 0
-                  ) {
-                    subcategory.materialUnit = data.materialUnit;
-                    subcategory.requestedQuantity = data.requestedQuantity
-                    subcategory.availableStock = data.availableStock
-                    subcategory.poAvailableQty = data.poAvailableQty
-                    subcategory.issueToProject = data.issueToProject
-                    subcategory.estimatedQty = data.estimatedQty;
-                    subcategory.estimatedRate = data.estimatedRate;
-                    subcategory.materialId = data.materialId;
-                  }
-                  else {
-                    subcategory.estimatedQty = null;
-                    subcategory.requestedQuantity = null;
-                    subcategory.availableStock = null;
-                    subcategory.issueToProject = null;
-                  }
+            for (let subcategory of category.materialList) {
+              for (let data of this.dataQty) {
+                if (
+                  subcategory.materialGroup === data.materialGroup &&
+                  subcategory.materialName === data.materialName &&
+                  data.estimatedQty > 0
+                ) {
+                  subcategory.materialUnit = data.materialUnit;
+                  subcategory.requestedQuantity = data.requestedQuantity
+                  subcategory.availableStock = data.availableStock
+                  subcategory.poAvailableQty = data.poAvailableQty
+                  subcategory.issueToProject = data.issueToProject
+                  subcategory.estimatedQty = data.estimatedQty;
+                  subcategory.estimatedRate = data.estimatedRate;
+                  subcategory.materialId = data.materialId;
+                  subcategory.matched = true;
+                  break;
                 }
-              });
+                else if (!subcategory.matched) {
+                  subcategory.estimatedQty = null;
+                  subcategory.requestedQuantity = null;
+                  subcategory.availableStock = null;
+                  subcategory.issueToProject = null;
+                }
+              }
+            };
           })
         } else {
           this.selectedCategory.forEach((category: categoryNestedLevel) => {
