@@ -21,7 +21,7 @@ export class GrnComponent implements OnInit {
     selectedIds: number[] = [];
     allProjectsGRNData: AllProjectsGRNData[] = [];
     noProjectDataFound: boolean;
-    countryCode: string;
+    baseCurrency: string;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -32,7 +32,6 @@ export class GrnComponent implements OnInit {
 
     ngOnInit() {
         this.allProjects = this.activatedRoute.snapshot.data.projectsList;
-        this.countryCode = localStorage.getItem("countryCode");
         this.formInit()
     }
 
