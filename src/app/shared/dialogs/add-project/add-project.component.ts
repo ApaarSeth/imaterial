@@ -13,9 +13,7 @@ import { Router } from '@angular/router';
 import { AppNavigationService } from '../../services/navigation.service';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
 import { CountryCode } from '../../models/currency';
-import { VisitorService } from '../../services/visitor.service';
 import { CommonService } from '../../services/commonService';
-import { runInThisContext } from 'vm';
 
 export interface City {
   value: string;
