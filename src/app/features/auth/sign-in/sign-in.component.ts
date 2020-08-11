@@ -140,7 +140,7 @@ export class SigninComponent implements OnInit {
           this.subscribeNotification()
         }
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
-        if (localStorage.CountryCode !== 'IN' && localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
+        if (localStorage.countryCode !== 'IN' && localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
           this.router.navigate(["/profile/email-verification"]);
         }
         else {
