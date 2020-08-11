@@ -173,3 +173,20 @@ $mat-row-horizontal-padding: 12px;
     flex: 0 0 306px;
   }
 }
+
+.add-receipts-panel{
+  .mat-expansion-panel-header{
+    padding: 0 12px;
+  }
+
+  .mat-expansion-indicator:after{
+    padding: 6px;
+  }
+}
+
+.inactive-receipt-docs{
+  pointer-events: none;
+  img{
+    opacity: 0.5;
+  }
+}

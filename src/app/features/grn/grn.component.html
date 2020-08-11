@@ -66,9 +66,9 @@
                         <td class="mat-cell grn-date-cell">{{ grnData.grnDate | date: "dd-MMM-yyy" }}</td>
                         <td class="mat-cell"></td>
                         <td class="mat-cell"></td>
-                        <td class="mat-cell grn-documents-cell" (click)="openDocuments(grnData.grnDocuments);mep.expanded = true">
+                        <td class="mat-cell grn-documents-cell text-right" (click)="openDocuments(grnData.grnDocuments);mep.expanded = true"
+                          [class.inactive-receipt-docs]="grnData.grnDocuments.length === 0">
                           <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-                          <span class="font-size-vary-grn main-color text-decoration-underline">Documents</span>
                         </td>
                       </tr>
                     </mat-expansion-panel-header>
@@ -80,7 +80,6 @@
                       <td class="mat-cell">{{ grnDetail.MaterialBrand }}</td>
                       <td class="mat-cell">{{ grnDetail.EstimatedQty }}</td>
                       <td class="mat-cell">{{ grnDetail.DeliveredQty }}</td>
-                      <!-- <td class="mat-cell"></td> -->
                       <td class="mat-cell text-center">{{ grnDetail.MaterialUnitPrice }}</td>
                       <td class="mat-cell text-center">{{ grnDetail.TotalAmount }}</td>
                       <td class="mat-cell">{{ grnDetail.SupplierName }}</td>
