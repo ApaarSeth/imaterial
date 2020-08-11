@@ -35,6 +35,7 @@
           </mat-select>
         </mat-form-field>
       </div>
+      
       <div *ngIf="this.callingCode === '+91'" class="phone-number col-xs-8 mobile-num" [ngClass]="{'p-t-10': lessOTPDigits}">
         <mat-form-field class="border-input display-flex">
           <input matInput type="number" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57" formControlName="phone" #phone placeholder="Phone No." />
