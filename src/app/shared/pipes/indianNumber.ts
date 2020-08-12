@@ -15,10 +15,10 @@ export class IndianNumberPipe implements PipeTransform {
             let decimalNumber = tempAmt.slice(tempAmt.indexOf('.') + 1, tempAmt.length);
             if (decimalNumber.length > 2) {
                 decimalNumber.slice(0, decimalNumber.length)
-                return `${tempAmt.slice(0, tempAmt.indexOf('.'))}.${decimalNumber.slice(0, 1)}`
+                return `${tempAmt.slice(0, tempAmt.indexOf('.'))}.${decimalNumber.slice(0, 2)}`
             }
-            else {
-                return `${tempAmt.slice(0, tempAmt.indexOf('.'))}.${decimalNumber.slice(0, decimalNumber.length)}`
+            else if (decimalNumber.length == 1) {
+                return `${tempAmt.slice(0, tempAmt.indexOf('.'))}.${decimalNumber.slice(0, decimalNumber.length)}0`
             }
         }
         else {
