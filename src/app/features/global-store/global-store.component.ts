@@ -73,6 +73,11 @@ export class GlobalStoreComponent implements OnInit {
   createRfq() {
     this.router.navigate(['/rfq/createRfq']);
   }
+
+  createPo() {
+    this.router.navigate(['/po/initiate-po']);
+  }
+
   materialShowDataLength(event) {
     this.materialDataLength = event;
     this.cdr.detectChanges();

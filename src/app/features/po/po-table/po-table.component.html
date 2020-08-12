@@ -45,26 +45,73 @@
       <div class="res-td">
         <section matSort class="mat-elevation-z2 mat-header-row">
           <span class="mat-header-cell po-sno-width" mat-sort-header="vesselName">S.No</span>
-          <span class="mat-header-cell po-material-width">Material Name <br/> & Makes</span>
+          <span class="mat-header-cell po-material-width"
+            >Material Name <br />
+            & Makes</span
+          >
           <span class="mat-header-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-unit-width' : 'po-unit-width'">Unit</span>
           <span class="mat-header-cell po-date-width">Fullfillment <br />Date</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Supplier Rate
+          <span
+            class="mat-header-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+            >Supplier Rate
             <span
               >({{
                 poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
               }})</span
             >
           </span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Awarded <br />quantity</span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Amount
+          <span
+            class="mat-header-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+            >Awarded <br />quantity</span
+          >
+          <span
+            class="mat-header-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+            >Amount
             <span style="display: block;"
               >({{
                 poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
               }})</span
             >
           </span>
-          <span class="mat-header-cell"
-            [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+          <span
+            class="mat-header-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          >
             <!-- {{ isInternational ? "Tax Amount ("+ ((poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)) + ')' : "GST %" }} -->
             <ng-container *ngIf="isInternational; else defaultGstPercent">
               Tax Amount <br />
@@ -74,7 +121,18 @@
               GST %
             </ng-template>
           </span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+          <span
+            class="mat-header-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          >
             <!-- {{ isInternational ? "Other Cost (" + ((poCurrency && poCurrency.exchangeCurrencyName) ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : (poData.currencyCode)) + ')' : "GST Amount" }} -->
             <ng-container *ngIf="isInternational; else defaultCurr">
               Other Cost <br />
@@ -84,7 +142,18 @@
               GST Amount
             </ng-template>
           </span>
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">Total Amount
+          <span
+            class="mat-header-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+            >Total Amount
             <span
               >({{
                 poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
@@ -93,7 +162,18 @@
           </span>
 
           <!---- Attached Image Column ---->
-          <span class="mat-header-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+          <span
+            class="mat-header-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          >
             Attached Images
           </span>
 
@@ -102,7 +182,15 @@
           <span
             class="mat-header-cell"
             *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
-            [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
           ></span>
         </section>
 
@@ -146,17 +234,61 @@
                 </mat-form-field>
               </ng-template>
             </span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"
+            <span
+              class="mat-cell"
+              [ngClass]="
+                isInternational && mode === 'edit'
+                  ? 'international-edit-po'
+                  : isInternational && mode !== 'edit'
+                  ? 'international-view-po'
+                  : !isInternational && mode === 'edit'
+                  ? 'national-edit-po'
+                  : 'national-view-po'
+              "
+            ></span>
+            <span
+              class="mat-cell"
+              [ngClass]="
+                isInternational && mode === 'edit'
+                  ? 'international-edit-po'
+                  : isInternational && mode !== 'edit'
+                  ? 'international-view-po'
+                  : !isInternational && mode === 'edit'
+                  ? 'national-edit-po'
+                  : 'national-view-po'
+              "
               >{{ getMaterialQuantity(m) | number: "1.2-2" }}
               <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
                 Must be less than {{material.poAvailableQty}}
               </span> -->
             </span>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
+            <span
+              class="mat-cell"
+              [ngClass]="
+                isInternational && mode === 'edit'
+                  ? 'international-edit-po'
+                  : isInternational && mode !== 'edit'
+                  ? 'international-view-po'
+                  : !isInternational && mode === 'edit'
+                  ? 'national-edit-po'
+                  : 'national-view-po'
+              "
+              >{{ getMaterialAmount(m) | number: "1.2-2" }}</span
+            >
 
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"
-             *ngIf="isInternational; else gstTotalBlock">{{ getTotalPOListTax(m) | number: "1.2-2" }}
+            <span
+              class="mat-cell"
+              [ngClass]="
+                isInternational && mode === 'edit'
+                  ? 'international-edit-po'
+                  : isInternational && mode !== 'edit'
+                  ? 'international-view-po'
+                  : !isInternational && mode === 'edit'
+                  ? 'national-edit-po'
+                  : 'national-view-po'
+              "
+              *ngIf="isInternational; else gstTotalBlock"
+              >{{ getTotalPOListTax(m) | number: "1.2-2" }}
               <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                 <span class="info-tootip__content">
@@ -171,11 +303,33 @@
             </span>
 
             <ng-template #gstTotalBlock>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
+              <span
+                class="mat-cell"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+              ></span>
             </ng-template>
 
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"
-             *ngIf="isInternational; else gstTotalAmountBlock">
+            <span
+              class="mat-cell"
+              [ngClass]="
+                isInternational && mode === 'edit'
+                  ? 'international-edit-po'
+                  : isInternational && mode !== 'edit'
+                  ? 'international-view-po'
+                  : !isInternational && mode === 'edit'
+                  ? 'national-edit-po'
+                  : 'national-view-po'
+              "
+              *ngIf="isInternational; else gstTotalAmountBlock"
+            >
               {{ ratesBaseCurr ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue | number: "1.2-2") : (this.poTableData[m].otherCostAmount | number: "1.2-2") }}
               <span *ngIf="this.poTableData[m].otherCostAmount" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
@@ -190,21 +344,67 @@
               </span></span
             >
             <ng-template #gstTotalAmountBlock>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span>
+              <span
+                class="mat-cell"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+                >{{ getMaterialGstAmount(m) | number: "1.2-2" }}</span
+              >
             </ng-template>
-            <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">{{
-              ratesBaseCurr
-                ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue + getMaterialTotalAmount(m) | number: "1.2-2")
-                : (this.poTableData[m].otherCostAmount + getMaterialTotalAmount(m) | number: "1.2-2")
-            }}</span>
+            <span
+              class="mat-cell"
+              [ngClass]="
+                isInternational && mode === 'edit'
+                  ? 'international-edit-po'
+                  : isInternational && mode !== 'edit'
+                  ? 'international-view-po'
+                  : !isInternational && mode === 'edit'
+                  ? 'national-edit-po'
+                  : 'national-view-po'
+              "
+              >{{
+                ratesBaseCurr
+                  ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue + getMaterialTotalAmount(m) | number: "1.2-2")
+                  : (this.poTableData[m].otherCostAmount + getMaterialTotalAmount(m) | number: "1.2-2")
+              }}</span
+            >
 
             <!---- Attached Column Images List ---->
-            <span class="mat-cell po-images-list" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+            <span
+              class="mat-cell po-images-list"
+              [ngClass]="
+                isInternational && mode === 'edit'
+                  ? 'international-edit-po'
+                  : isInternational && mode !== 'edit'
+                  ? 'international-view-po'
+                  : !isInternational && mode === 'edit'
+                  ? 'national-edit-po'
+                  : 'national-view-po'
+              "
+            >
               <!-- View image modal link -->
               <!-- material?.purchaseOrderDetailList[0]?.documentList?.length -->
-              <div *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length" class="images-lists"
-                [ngClass]="material.purchaseOrderDetailList[0].documentList.length === 1 ? 'single-image' : (material.purchaseOrderDetailList[0].documentList.length === 2 ? 'double-images' : 'triple-images')"
-                (click)="viewAllImages(material.materialId)">
+              <div
+                *ngIf="
+                  material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length
+                "
+                class="images-lists"
+                [ngClass]="
+                  material.purchaseOrderDetailList[0].documentList.length === 1
+                    ? 'single-image'
+                    : material.purchaseOrderDetailList[0].documentList.length === 2
+                    ? 'double-images'
+                    : 'triple-images'
+                "
+                (click)="viewAllImages(material.materialId)"
+              >
                 <ng-container *ngFor="let img of material.purchaseOrderDetailList[0].documentList; let i = index">
                   <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
                 </ng-container>
@@ -225,7 +425,15 @@
             <span
               class="mat-cell add-taxes-col"
               *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
-              [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"
+              [ngClass]="
+                isInternational && mode === 'edit'
+                  ? 'international-edit-po'
+                  : isInternational && mode !== 'edit'
+                  ? 'international-view-po'
+                  : !isInternational && mode === 'edit'
+                  ? 'national-edit-po'
+                  : 'national-view-po'
+              "
               ><button mat-button matRipple class="btn btn-link taxButton p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('taxesAndCost', m)">
                 Add Taxes & Costs
               </button></span
@@ -239,7 +447,18 @@
               <span class="mat-cell po-material-width">{{ purchaseOrder.materialBrand }}</span>
               <span class="mat-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-unit-width' : 'po-unit-width'"></span>
               <span class="mat-cell po-date-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"></span>
-              <span class="mat-cell supplier-rates" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+              <span
+                class="mat-cell supplier-rates"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+              >
                 <ng-container *ngIf="mode != 'edit'; else editRate">
                   {{
                     ratesBaseCurr ? (purchaseOrder.materialUnitPrice * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.materialUnitPrice | number: "1.2-2")
@@ -261,7 +480,18 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+              <span
+                class="mat-cell"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+              >
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity | number: "1.2-2" }}</ng-container>
                 <ng-template #editQuantity>
                   <mat-form-field class="border-input" [ngClass]="isInternational && mode === 'edit' ? 'width-60' : 'width50Percent'">
@@ -278,17 +508,51 @@
                   </mat-form-field>
                 </ng-template>
               </span>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+              <span
+                class="mat-cell"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+              >
                 <ng-container *ngIf="mode != 'edit'; else editAmount">{{ purchaseOrder.amount | number: "1.2-2" }} </ng-container>
                 <ng-template #editAmount>
                   {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["amount"].value | number: "1.2-2" }}
                 </ng-template>
               </span>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))" *ngIf="isInternational; else gstBlock">
+              <span
+                class="mat-cell"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+                *ngIf="isInternational; else gstBlock"
+              >
                 {{ isInternational && mode === "edit" ? (getPOListTax(m, p, "edit") | number: "1.2-2") : (getPOListTax(m, p, "view") | number: "1.2-2") }}
               </span>
               <ng-template #gstBlock>
-                <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+                <span
+                  class="mat-cell"
+                  [ngClass]="
+                    isInternational && mode === 'edit'
+                      ? 'international-edit-po'
+                      : isInternational && mode !== 'edit'
+                      ? 'international-view-po'
+                      : !isInternational && mode === 'edit'
+                      ? 'national-edit-po'
+                      : 'national-view-po'
+                  "
+                >
                   <span *ngIf="mode != 'edit'; else editGst" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
                     <span *ngIf="purchaseOrder && purchaseOrder.materialCgst == 0 && purchaseOrder.materialSgst === 0">
                       {{ purchaseOrder.materialIgst | number: "1.2-2" }}
@@ -313,17 +577,51 @@
                   </ng-template>
                 </span>
               </ng-template>
-              <span *ngIf="isInternational; else gstAmountBlock" class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+              <span
+                *ngIf="isInternational; else gstAmountBlock"
+                class="mat-cell"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+              >
               </span>
               <ng-template #gstAmountBlock>
-                <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+                <span
+                  class="mat-cell"
+                  [ngClass]="
+                    isInternational && mode === 'edit'
+                      ? 'international-edit-po'
+                      : isInternational && mode !== 'edit'
+                      ? 'international-view-po'
+                      : !isInternational && mode === 'edit'
+                      ? 'national-edit-po'
+                      : 'national-view-po'
+                  "
+                >
                   <ng-container *ngIf="mode != 'edit'; else editgstAmount"> {{ purchaseOrder.gstAmount | number: "1.2-2" }} </ng-container>
                   <ng-template #editgstAmount>
                     {{ poForms["controls"]["forms"]["controls"][m]["controls"]["purchaseOrderDetailList"]["controls"][p]["controls"]["gstAmount"].value | number: "1.2-2" }}
                   </ng-template>
                 </span>
               </ng-template>
-              <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+              <span
+                class="mat-cell"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+              >
                 <ng-container *ngIf="mode != 'edit'; else editTotal">{{ purchaseOrder.total | number: "1.2-2" }} </ng-container>
                 <ng-template #editTotal>
                   <span [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{
@@ -331,13 +629,47 @@
                   }}</span>
                 </ng-template>
               </span>
-              <span *ngIf="isInternational && mode === 'edit' && mode === 'edit'" class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
-              <span class="mat-cell po-images-list" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
-              <span class="mat-cell" *ngIf="mode === 'edit'" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
+              <span
+                *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
+                class="mat-cell"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+              ></span>
+              <span
+                class="mat-cell po-images-list"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+              ></span>
+              <span
+                class="mat-cell"
+                *ngIf="mode === 'edit'"
+                [ngClass]="
+                  isInternational && mode === 'edit'
+                    ? 'international-edit-po'
+                    : isInternational && mode !== 'edit'
+                    ? 'international-view-po'
+                    : !isInternational && mode === 'edit'
+                    ? 'national-edit-po'
+                    : 'national-view-po'
+                "
+              ></span>
             </div>
           </ng-container>
         </div>
-
 
         <div class="material-row" *ngIf="isInternational" [ngClass]="isMobile ? 'mpo-mh' : ''">
           <span *ngIf="mode === 'edit'; else viewAdditonalBlock" class="mat-cell text-right">
@@ -366,12 +698,13 @@
               </div>
               <div class="col-xs-2">
                 <span [ngClass]="isMobile ? 'text-align-right' : ''"
-                  ><button mat-button matRipple class="btn btn-link p-0 main-color text-decoration-underline small-text" (click)="openTaxesCostsDialog('otherCost')">Add other costs</button>
+                  ><button mat-button matRipple class="btn btn-link p-0 main-color text-decoration-underline small-text" (click)="openTaxesCostsDialog('otherCost')">
+                    Add other costs
+                  </button>
                 </span>
               </div>
             </div>
           </span>
-
 
           <ng-template #viewAdditonalBlock>
             <div class="row width-100">
@@ -409,16 +742,78 @@
           <span class="mat-cell po-material-width"></span>
           <span class="mat-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-unit-width' : 'po-unit-width'"></span>
           <span class="mat-cell po-date-width"></span>
-          <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
-          <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
-          <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
-          <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
-            <span *ngIf="isInternational" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''"><span>
-              Tax Amount
-              <span>({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})</span>
-            </span>
-            <br />{{ totalTaxAmount | number: "1.2-2" }}</span></span>
-          <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
+          <span
+            class="mat-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          ></span>
+          <span
+            class="mat-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          ></span>
+          <span
+            class="mat-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          ></span>
+          <span
+            class="mat-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          >
+            <span *ngIf="isInternational" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''"
+              ><span>
+                Tax Amount
+                <span
+                  >({{
+                    poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
+                  }})</span
+                >
+              </span>
+              <br />{{ totalTaxAmount | number: "1.2-2" }}</span
+            ></span
+          >
+          <span
+            class="mat-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          >
             <span *ngIf="isInternational; else totalGstAmount">
               <span
                 >Other Cost
@@ -432,21 +827,45 @@
             </span>
             <ng-template #totalGstAmount> <span> GST Amount </span> <br />{{ gstTotalAmount | number: "1.2-2" }} </ng-template>
           </span>
-          <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))">
-            <span>Total Amount
+          <span
+            class="mat-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          >
+            <span
+              >Total Amount
               <span
                 >({{
                   poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
-                }})</span>
-              </span>
+                }})</span
+              >
+            </span>
             <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue + totalAmount | number: "1.2-2") : (totalAmount + totalOtherAmount | number: "1.2-2") }}</span
           >
-          <span class="mat-cell" [ngClass]="isInternational && mode === 'edit' ? 'international-edit-po' : (isInternational && mode !== 'edit' ? 'international-view-po' : (!isInternational && mode === 'edit' ? 'national-edit-po' : 'national-view-po'))"></span>
+          <span
+            class="mat-cell"
+            [ngClass]="
+              isInternational && mode === 'edit'
+                ? 'international-edit-po'
+                : isInternational && mode !== 'edit'
+                ? 'international-view-po'
+                : !isInternational && mode === 'edit'
+                ? 'national-edit-po'
+                : 'national-view-po'
+            "
+          ></span>
           <span class="mat-cell mat-last-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-image-width' : 'po-sno-width'" *ngIf="mode === 'edit'"></span>
         </div>
 
         <div *ngIf="!isInternational" class="col-xs-12 text-right text-semi-bold m-t-10 p-r-35 font-size-vary-grn">
-          Net Payable Amount in Words :Rupees {{ totalAmount | numberToWords | async | titlecase }} <span class="text-semi-bold">Only /-</span>
+          Net Payable Amount in Words : Rupees {{ totalAmount | numberToWords | async | titlecase }} <span class="text-semi-bold">Only /-</span>
         </div>
       </div>
     </mat-accordion>
