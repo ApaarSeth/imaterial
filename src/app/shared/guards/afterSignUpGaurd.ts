@@ -33,9 +33,10 @@ export class AfterSignUpGuardService implements CanActivate {
                         if ((res.data[0].firstName !== "") && (res.data[0].lastName !== "")) {
                             return true;
                         }
-                    } else {
-                        this.router.navigate(['/profile/update-info']);
-                        return false;
+                        else {
+                            this.router.navigate(['/profile/update-info']);
+                            return false;
+                        }
                     }
                 }
 
