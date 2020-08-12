@@ -81,6 +81,7 @@ export class AppDashboardComponent implements OnInit {
     if (role) {
       this.permissionObj = this.permissionService.checkPermission(role);
       this.label = this.permissionObj.rfqFlag ? 'po' : 'indent';
+      this.permissionObj.rfqFlag ? this.poData = {} as PurchaseOrderData : this.indentData = {} as PurchaseOrderData
       this.orgId = Number(localStorage.getItem("orgId"));
     }
     this.userId = Number(localStorage.getItem("userId"));
@@ -145,14 +146,15 @@ export class AppDashboardComponent implements OnInit {
     else {
       const diffTime = Math.abs(range.fromDate.getTime() - range.toDate.getTime());
       this.diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      if (!this.newDiffDays) {
-        this.newDiffDays = this.diffDays;
-        this.getDashboardInfo(this.label);
-      }
-      else if (this.newDiffDays !== this.diffDays) {
-        this.newDiffDays = this.diffDays;
-        this.getDashboardInfo(this.label);
-      }
+      this.getDashboardInfo(this.label);
+      // if (!this.newDiffDays) {
+      //   this.newDiffDays = this.diffDays;
+      //   this.getDashboardInfo(this.label);
+      // }
+      // else if (this.newDiffDays !== this.diffDays) {
+      //   this.newDiffDays = this.diffDays;
+      //   this.getDashboardInfo(this.label);
+      // }
     }
   }
 
@@ -327,7 +329,7 @@ export class AppDashboardComponent implements OnInit {
         }
         if (label == 'rfq') {
           this.rfqData = res.data;
-          let chartData = data.range === 'Yearly' ? this.sortGraphData(this.poData.graphData ? this.poData.graphData : null) : this.poData.graphData;
+          let chartData = data.range === 'Yearly' ? this.sortGraphData(this.rfqData.graphData ? this.rfqData.graphData : null) : this.rfqData.graphData;
           this.chartService.barChartData.next(chartData ? [...chartData] : null)
         }
         if (label == 'indent') {
