@@ -39,13 +39,13 @@ export class DataService {
     //private token:environment TokenService,
     private router: Router
   ) {
-    this.baseUrl = environment.url + "/";
-    this.masterUrl = environment.masterUrl + "/";
-    this.ssoUrl = environment.ssoUrl + "/";
-    // this.baseStartUrl = Utils.baseUrl();
-    // this.baseUrl = this.baseStartUrl + "im/";
-    // this.masterUrl = this.baseStartUrl + "mm/";
-    // this.ssoUrl = this.baseStartUrl + "sso/";
+    // this.baseUrl = environment.url + "/";
+    // this.masterUrl = environment.masterUrl + "/";
+    // this.ssoUrl = environment.ssoUrl + "/";
+    this.baseStartUrl = Utils.baseUrl();
+    this.baseUrl = this.baseStartUrl + "im/";
+    this.masterUrl = this.baseStartUrl + "mm/";
+    this.ssoUrl = this.baseStartUrl + "sso/";
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.orgId = localStorage.getItem("orgId");
