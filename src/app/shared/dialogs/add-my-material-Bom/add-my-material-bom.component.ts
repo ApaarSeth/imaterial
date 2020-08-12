@@ -42,7 +42,7 @@ export class AddMyMaterialBomComponent implements OnInit {
   filteredOption: tradeRelatedCategory[] = [];
   searchUnit: string = '';
   // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
-
+  firefox: boolean;
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
@@ -62,7 +62,18 @@ export class AddMyMaterialBomComponent implements OnInit {
     this.getUserRoles();
     this.getMaterialUnit();
     this.getTrades();
+    this.getBrowser();
     this.formInit();
+  }
+
+  getBrowser() {
+    if (window.navigator.userAgent.indexOf('Mozilla') != -1) {
+      this.firefox = true;
+    }
+    else {
+      this.firefox = false;
+    }
+    console.log(this.firefox)
   }
 
   getCategories() {
