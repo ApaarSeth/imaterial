@@ -229,7 +229,6 @@
     margin: 0 15%;
 }
 
-
 .mlr-140px{
     margin-left: 140px;
     margin-right: 140px;
@@ -382,6 +381,10 @@
 }
 
 @media(max-width: 1300px){
+    .desp-block{
+        margin: 0 10%;
+    }
+    
     .subs-data{
         .mat-card-title{
             font-size: 130%;
@@ -395,6 +398,13 @@
                 font-size: 120%;
             }
         }
+    }
+}
+
+
+@media(max-width: 1024px){
+    .desp-block{
+        margin: 0 5%;
     }
 }
 

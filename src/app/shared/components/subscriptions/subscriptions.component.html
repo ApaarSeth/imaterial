@@ -44,7 +44,7 @@
                                 {{ plan.currencyCode }}
                                 {{getSubsciptionDiscounted(subscription.discountPercent, plan.planUnitPrice)}}
                               </div>
-                              <sub class="font-size-12 align-self-center ml-1">/ {{plan.planFrequencyAlias}}</sub>
+                              <sub class="font-size-12 align-self-center ml-1">/ Month</sub>
                             </span>
                           </ng-container>
                           <ng-template #flatPrice>
@@ -53,7 +53,7 @@
                               <div class="font-weight500">
                                 {{ plan.currencyCode }} {{ plan.planUnitPrice }}
                               </div>
-                              <sub class="font-size-12 align-self-center ml-1">/ {{plan.planFrequencyAlias}}</sub>
+                              <sub class="font-size-12 align-self-center ml-1">/ Month</sub>
                             </span>
                           </ng-template>
                           <!-- <sub class="font-size-40px prc-str">*</sub> -->
