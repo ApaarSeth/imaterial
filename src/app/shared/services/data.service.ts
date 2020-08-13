@@ -77,7 +77,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -122,7 +122,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -228,7 +228,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -277,7 +277,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -326,7 +326,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 
@@ -430,7 +430,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[0], hdrs[1]);
+        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
       }
     }
 

@@ -1,4 +1,4 @@
-<div class="page-start-point changeWidth mt-5 pt-4">
+<div class="page-start-point mt-5 pt-4">
   <div class="p-l-20 p-r-20 p-b-20 p-t-20 min-height bom-main-style">
     <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product"
       [disableEditDelete]="true"></card-layout>
@@ -57,14 +57,14 @@
                     <a (click)="downloadExcel('assets/images/bom_template.xlsx')"> Download BOM Excel</a>
                   </span>
                 </ng-container>
-                
+
                 <ng-template #downloadIconOnly>
                   <span class="cursor-pointer download-bom-template">
-                    <img src="assets/images/download-bom.svg" alt="download" class="img-fluid mr-2 w-45" 
-                    (click)="downloadExcel('assets/images/bom_template.xlsx')" />
+                    <img src="assets/images/download-bom.svg" alt="download" class="img-fluid mr-2 w-45"
+                      (click)="downloadExcel('assets/images/bom_template.xlsx')" />
                   </span>
                 </ng-template>
-                
+
               </div>
 
               <!-- Upload BOM Link -->
@@ -82,7 +82,7 @@
                 <ng-template #uploadIconOnly>
                   <img src="assets/images/upload-bom.svg" alt="upload" class="img-fluid mr-2 w-45 cursor-pointer" />
                 </ng-template>
-              
+
               </div>
 
               <!-- Add to BOM Button -->
@@ -115,7 +115,8 @@
                 </button>
                 <mat-menu #menu="matMenu" class="copy-and-add-materials-menus">
                   <button mat-menu-item (click)="openAddMyMaterial()">Add Custom Material</button>
-                  <button mat-menu-item [routerLink]="['/project-dashboard/bom/' + projectId + '/copy-materials']">Copy Material</button>
+                  <button mat-menu-item [routerLink]="['/project-dashboard/bom/' + projectId + '/copy-materials']">Copy
+                    Material</button>
                 </mat-menu>
               </div>
 
@@ -123,7 +124,7 @@
           </div>
         </div>
       </form>
-      
+
       <div class="row">
         <div class="col-md-9 display-flex m-t-20 col-left-width-9">
           <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
@@ -133,14 +134,14 @@
         </div>
 
         <!-- <div class="col-md-3 col-right-width-3 p-t-20 d-flex align-items-center justify-content-between"> -->
-          <!-- Copy Materials Link -->
-          <!-- <a href="javascript:void(0)" class="main-color text-semi-bold"
+        <!-- Copy Materials Link -->
+        <!-- <a href="javascript:void(0)" class="main-color text-semi-bold"
             [routerLink]="['/project-dashboard/bom/' + projectId + '/copy-materials']">
             Copy Materials
           </a> -->
 
-          <!-- Add Custom Material Link -->
-          <!-- <a href="javascript:void(0)" class="main-color text-semi-bold" (click)="openAddMyMaterial()">+ Add Custom
+        <!-- Add Custom Material Link -->
+        <!-- <a href="javascript:void(0)" class="main-color text-semi-bold" (click)="openAddMyMaterial()">+ Add Custom
             Material</a>
         </div> -->
       </div>
@@ -148,14 +149,14 @@
       <div *ngIf="showTable">
         <mat-tab-group (selectedTabChange)="tabClick($event)">
           <mat-tab label="Top Materials">
-            <app-bom-topMaterial *ngIf="showTopMaterial" #preview [category]="topMaterialData"
-              [searchMat]="searchAgain" (searchData)="searchData($event)" (inputEntered)="checkValidations($event)">
+            <app-bom-topMaterial *ngIf="showTopMaterial" #preview [category]="topMaterialData" [searchMat]="searchAgain"
+              (searchData)="searchData($event)" (inputEntered)="checkValidations($event)">
             </app-bom-topMaterial>
           </mat-tab>
           <mat-tab label="All Materials">
             <app-bom-allMaterial *ngIf="showAllMaterial" #preview1 [category]="allMaterialData"
-              [searchMat]="searchAgain" (searchData)="searchData($event)"
-              (inputEntered)="checkValidationsAll($event)"></app-bom-allMaterial>
+              [searchMat]="searchAgain" (searchData)="searchData($event)" (inputEntered)="checkValidationsAll($event)">
+            </app-bom-allMaterial>
           </mat-tab>
           <mat-tab label="My Materials">
             <app-bom-myMaterial *ngIf="showMyMaterial" #preview2 [category]="myMaterialData" [searchMat]="searchAgain"

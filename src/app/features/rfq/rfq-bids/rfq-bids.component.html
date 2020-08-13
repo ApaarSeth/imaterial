@@ -1,14 +1,11 @@
-<div class="page-start-point changeWidth mt-5 pt-4">
+<div class="page-start-point mt-5 pt-4">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <form *ngIf="rfqProjects.length" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
       <div class="row p-t-10 p-b-10">
         <div class="col-sm-12">
           <span>
-            <button
-              mat-raised-button
-              class="main-background-color main-button color-white pull-right"
-              [disabled]="getFormValidation() ? (getFormQtyValidation() ? true : false) : true"
-            >
+            <button mat-raised-button class="main-background-color main-button color-white pull-right"
+              [disabled]="getFormValidation() ? (getFormQtyValidation() ? true : false) : true">
               Create P.O
             </button>
           </span>
@@ -18,17 +15,22 @@
         </div>
       </div>
 
-      <div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="rfqProjects[0].rfqCurrency != null && rfqProjects[0].rfqCurrency.exchangeCurrencyName != null">
-        <span class="slideToggalColor p-r-10"><mat-slide-toggle [(ngModel)]="ratesBaseCurr" [ngModelOptions]="{standalone: true}"></mat-slide-toggle></span>
+      <div class="col-xs-12 p-t-10 p-b-20 text-right"
+        *ngIf="rfqProjects[0].rfqCurrency != null && rfqProjects[0].rfqCurrency.exchangeCurrencyName != null">
+        <span class="slideToggalColor p-r-10">
+          <mat-slide-toggle [(ngModel)]="ratesBaseCurr" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
+        </span>
         <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
           <span class="font-size-vary-grn color-grey">
-            <img width="25px" *ngIf="rfqProjects[0].rfqCurrency.exchangeCurrencyFlag" [src]="rfqProjects[0].rfqCurrency.exchangeCurrencyFlag" />
+            <img width="25px" *ngIf="rfqProjects[0].rfqCurrency.exchangeCurrencyFlag"
+              [src]="rfqProjects[0].rfqCurrency.exchangeCurrencyFlag" />
             {{ rfqProjects[0].rfqCurrency.exchangeCurrencyName }}
           </span>
           <span class="p-l-5"> = </span>
           <span class="p-l-5 color-6d6a6a color-grey"> {{ rfqProjects[0].rfqCurrency.exchangeValue }} </span>
           <span class="p-l-5 color-grey">
-            <img width="25px" *ngIf="rfqProjects[0].rfqCurrency.primaryCurrencyFlag" [src]="rfqProjects[0].rfqCurrency.primaryCurrencyFlag" />
+            <img width="25px" *ngIf="rfqProjects[0].rfqCurrency.primaryCurrencyFlag"
+              [src]="rfqProjects[0].rfqCurrency.primaryCurrencyFlag" />
             {{ rfqProjects[0].rfqCurrency.primaryCurrencyName }}
           </span>
         </span>
@@ -41,8 +43,7 @@
                 <mat-expansion-panel-header class="">
                   <span class="top-header-area">
                     <span class="project-name mr-5">{{ project.projectName }}</span>
-                    <span class="main-color"
-                      >{{ project.addressLine1 }}
+                    <span class="main-color">{{ project.addressLine1 }}
                       <span *ngIf="project.addressLine2">,{{ project.addressLine2 }}</span>
                       ,{{ project.city }},{{ project.country }},{{ project.state }},{{ project.pinCode }}
                     </span>
@@ -121,8 +122,10 @@
                     </section>
 
                     <ng-container formArrayName="supplierList">
-                      <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index" [formGroupName]="s">
-                        <span class="mat-cell maxwidth-15 p-l-25 limited-character view-bid-tbl" matTooltip=" {{ supplier.supplierName }}">
+                      <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index"
+                        [formGroupName]="s">
+                        <span class="mat-cell maxwidth-15 p-l-25 limited-character view-bid-tbl"
+                          matTooltip=" {{ supplier.supplierName }}">
                           <span class="supplier-name ml-0">{{ supplier.supplierName }}</span>
 
                           <span class="d-block supplier-rates ml-0 mgbn12 view-bid-supp-rating">
@@ -135,20 +138,15 @@
                         <div class="mat-cell maxwidth-75">
                           <div class="mat-row align-items-center">
                             <ng-container formArrayName="brandGroup">
-                              <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index" [formGroupName]="i">
+                              <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index"
+                                [formGroupName]="i">
                                 <div class="mat-cell maxwidth-10 text-center" style="overflow: initial;">
-                                  <ng-container *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
+                                  <ng-container
+                                    *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
                                     <mat-form-field class="border-input">
-                                      <input
-                                        type="text"
-                                        class="quantity"
-                                        appTwoDigitDecimaNumber
-                                        matInput
-                                        formControlName="quantity"
-                                        placeholder="qty"
-                                        min="0"
-                                        (input)="getQuanityValidation(p, m)"
-                                      />
+                                      <input type="text" class="quantity" appTwoDigitDecimaNumber matInput
+                                        formControlName="quantity" placeholder="qty" min="0"
+                                        (input)="getQuanityValidation(p, m)" />
                                     </mat-form-field>
                                   </ng-container>
 
@@ -176,19 +174,19 @@
                         <!-- Attached Image Column individual Supplier -->
                         <div class="mat-cell maxwidth-10 view-bid-images-preview text-center">
                           <ng-container *ngIf="supplier?.documentList?.length; else defaultImage">
-                            <div
-                              class="images-lists"
+                            <div class="images-lists"
                               [ngClass]="supplier.documentList.length === 1 ? 'single-image' : supplier.documentList.length === 2 ? 'double-images' : 'triple-images'"
-                              (click)="viewAllImages(material.materialId, supplier.supplierId, project.projectId)"
-                            >
+                              (click)="viewAllImages(material.materialId, supplier.supplierId, project.projectId)">
                               <ng-container *ngFor="let img of supplier.documentList; let i = index">
-                                <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
+                                <img [src]="img.documentThumbnailUrl" alt="project{{ i }}"
+                                  class="img-fluid attached-image" *ngIf="i < 3" />
                               </ng-container>
                             </div>
                           </ng-container>
 
                           <ng-template #defaultImage>
-                            <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
+                            <img src="assets/images/project-default-image.png" alt="default-material"
+                              class="img-fluid default-image" />
                           </ng-template>
 
                           <!-- <div *ngIf="supplier?.documentList?.length" class="images-lists" [ngClass]="supplier.documentList.length === 1 ? 'single-image' : (supplier.documentList.length === 2 ? 'double-images' : 'triple-images')"
