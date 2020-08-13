@@ -276,7 +276,6 @@
     </div>
   </div>
   <div mat-dialog-actions>
-    {{validPincode}}
     <div class="col-sm-12 col-md-12 add-edit-dialog-button" [ngClass]="isMobile ? 'sm-btn1' : '' ">
       <button mat-raised-button [disabled]="(!imageFileSize && localImg) ? true : (!form.valid || (!validPincode) )" class="main-background-color main-button color-white">
         <span *ngIf="!data.isEdit">Add</span>

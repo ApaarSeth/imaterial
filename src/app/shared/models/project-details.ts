@@ -53,6 +53,15 @@ export interface ProjectIds {
   projectIds?: Array<Number>;
 }
 
+export interface AllCTCReportData{
+  awardedAmount: number;
+  deliveredAmount: number;
+  estimatedAmount: number;
+  paidAmount: number;
+  projectDataList: AllCTCProjectData[];
+  projectedCost: number;
+}
+
 export interface AllCTCProjectData{
   projectId: number;
   projectName: string;

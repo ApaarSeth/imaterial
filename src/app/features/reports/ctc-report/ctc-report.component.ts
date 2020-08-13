@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
-import { ProjectDetails, AllCTCProjectData } from "src/app/shared/models/project-details";
+import { ProjectDetails, AllCTCReportData } from "src/app/shared/models/project-details";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { ReportService } from 'src/app/shared/services/supplierLiabilityReport.service';
 import { ActivatedRoute } from '@angular/router';
@@ -23,7 +23,7 @@ export class CTCReportComponent implements OnInit {
   selectedMenu: string;
   currency: string
   allProjectsList: ProjectDetails[] = [];
-  allProjectsData: AllCTCProjectData[];
+  allProjectsData: AllCTCReportData;
   allProjects: ProjectDetails[];
   selectedProjectIds: number[] = [];
   projectNumIds: number[] = [];
@@ -58,7 +58,7 @@ export class CTCReportComponent implements OnInit {
     if (this.projectIds.length > 0) {
       this.sendDataGetCTCReport();
     } else {
-      this.allProjectsData = [];
+      this.allProjectsData = null;
     }
   }
 
@@ -129,7 +129,7 @@ export class CTCReportComponent implements OnInit {
       this.sendDataGetCTCReport();
     } else {
       this.projectIds = [];
-      this.allProjectsData = [];
+      this.allProjectsData = null;
     }
   }
 }
