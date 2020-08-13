@@ -5,7 +5,7 @@
 // export const environment = {
 //   production: false,
 //   url: "http://localhost:1323/im",
-//   masterUrl: "http://localhost:1333/mm",
+//   masterUrl: "http://localhost:1333/mm",india
 //   ssoUrl: "http://localhost:8080/sso",
 //    debug_mode: true
 // };
