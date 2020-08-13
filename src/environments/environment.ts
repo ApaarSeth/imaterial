@@ -5,28 +5,28 @@
 // export const environment = {
 //   production: false,
 //   url: "http://localhost:1323/im",
-//   masterUrl: "http://localhost:1333/mm",
+//   masterUrl: "http://localhost:1333/mm",india
 //   ssoUrl: "http://localhost:8080/sso",
 //    debug_mode: true
 // };
 
-export const environment = {
-  production: false,
-  ga: "",
-  url: "https://stg-api.buildsupply.io/im",
-  masterUrl: "https://stg-api.buildsupply.io/mm",
-  ssoUrl: "https://stg-api.buildsupply.io/sso",
-  debug_mode: true
-};
-
 // export const environment = {
-//   ga: "",
 //   production: false,
-//   // url: "https://api.buildsupply.com/im",
-//   // masterUrl: "https://api.buildsupply.com/mm",
-//   // ssoUrl: "https://api.buildsupply.com/sso",
+//   ga: "",
+//   url: "https://stg-api.buildsupply.io/im",
+//   masterUrl: "https://stg-api.buildsupply.io/mm",
+//   ssoUrl: "https://stg-api.buildsupply.io/sso",
 //   debug_mode: true
 // };
+
+export const environment = {
+  ga: "",
+  production: false,
+  // url: "https://api.buildsupply.com/im",
+  // masterUrl: "https://api.buildsupply.com/mm",
+  // ssoUrl: "https://api.buildsupply.com/sso",
+  debug_mode: true
+};
 
 /*
  * For easier debugging in development mode, you can import the following file
