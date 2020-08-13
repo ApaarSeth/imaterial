@@ -25,14 +25,18 @@ export class PoSupplierComponent implements OnInit {
   displayedColumns: string[] = ["Supplier Name", "Email", "Phone No."];
   poCurrency: rfqCurrency;
   countryist: CountryCode[];
+  isMobile: boolean;
   constructor(private formBuilder: FormBuilder,
     private rfqService: RFQService,
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute, private commonService: CommonService) { }
+    private activatedRoute: ActivatedRoute,
+    private commonService: CommonService) { }
 
   ngOnInit() {
     this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data;
-    this.countryist = this.activatedRoute.snapshot.data.countryList
+    this.countryist = this.activatedRoute.snapshot.data.countryList;
+
+    this.isMobile = this.commonService.isMobile().matches;
 
     this.formInit();
   }
@@ -49,7 +53,7 @@ export class PoSupplierComponent implements OnInit {
     let orgId = Number(localStorage.getItem("orgId"));
 
     this.commonService.getSuppliers(orgId).then(data => {
-      this.allSuppliers = data.data;;
+      this.allSuppliers = data.data;
     });
   }
 

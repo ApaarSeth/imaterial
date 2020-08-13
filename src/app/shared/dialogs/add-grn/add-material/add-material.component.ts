@@ -1,12 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn, AbstractControl } from '@angular/forms';
 import { TaxInfo } from 'src/app/shared/models/tax-cost.model';
 import { Observable } from 'rxjs';
 import { BomService } from 'src/app/shared/services/bom/bom.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subcategory } from 'src/app/shared/models/subcategory-materials';
-import { MatRadioButton, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { MatRadioButton, MatSnackBar, MAT_DIALOG_DATA, MatStepper } from '@angular/material';
 import { Currency } from 'src/app/shared/models/currency';
+import { GrnFormMaterialList, GrnMaterialList } from 'src/app/shared/models/add-direct-grn';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
     selector: 'app-add-material',
@@ -14,16 +16,20 @@ import { Currency } from 'src/app/shared/models/currency';
 })
 
 export class GrnAddMaterialComponent implements OnInit {
-    filterMaterialName
+    filterMaterialName: Observable<Subcategory[]>
     filteredMaterialName: Subcategory[]
     addMaterialsForm: FormGroup;
     orgId: number
+    searchUnit: string = ''
     projectId: number
     materialUnit: string[]
     currency: string
+    alreadyPresent: boolean = false;
     constructor(private _snackbar: MatSnackBar, private route: ActivatedRoute,
+        private notifier: AppNotificationService,
         private bomService: BomService,
         private formBuilder: FormBuilder,
+        private stepper: MatStepper,
         @Inject(MAT_DIALOG_DATA) public data) { }
 
     ngOnInit() {
@@ -53,30 +59,77 @@ export class GrnAddMaterialComponent implements OnInit {
 
 
     addMaterialFormGroup() {
-        const frmGrp = this.formBuilder.group({
-            materialName: ['', Validators.required],
-            unit: ['', Validators.required],
-            quantity: ['', Validators.required],
+        let frmGrp = this.formBuilder.group({
+            materialName: ['', [Validators.required, Validators.maxLength(300)]],
+            materialUnit: ['', [Validators.required, Validators.maxLength(300)]],
+            deliveredQty: ['', [Validators.required, Validators.maxLength(300)]],
             index: [],
-            pendingQty: ['', Validators.required],
-            unitPrice: ['', Validators.required],
-            totalAmount: ['', Validators.required]
-
+            pendingQty: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(300)]],
+            materialUnitPrice: ['', [Validators.required, Validators.maxLength(300)]],
+            amount: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(300)]]
         });
+
         frmGrp.get("index").patchValue(this.addMaterialsForm.get('addMaterial')['controls'].length)
         frmGrp.controls['materialName'].valueChanges.subscribe(changes => {
             this.filterMaterialName = null;
-            const val: Subcategory[] = this._namefilter(changes)
+            const val: Subcategory[] = this._namefilter(typeof changes === 'string' ? changes.toLowerCase() : changes)
             this.filterMaterialName = new Observable((observer) => {
                 observer.next(val);
                 observer.complete();
             })
-            if (typeof changes === 'object') {
-                <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].patchValue({ unit: (<Subcategory>changes).materialUnit });
-                // <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['unit'].disable();
-                if (<FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['unit'].value.length) {
-                    <FormArray>this.addMaterialsForm.get('addMaterial')['controls'][frmGrp.get("index").value].controls['unit'].disable();
+            let index = frmGrp.get("index").value
+            let matGroup: FormGroup = null;
+            (<FormArray>this.addMaterialsForm.get('addMaterial'))['controls'].forEach((frmgrp: FormGroup) => {
+                if (frmGrp.value.index === index) {
+                    matGroup = frmgrp
                 }
+            }) as any
+            if (changes && typeof changes === 'object') {
+                matGroup.patchValue({ materialUnit: (<Subcategory>changes).materialUnit });
+                matGroup.patchValue({ pendingQty: (<Subcategory>changes).estimatedQty - (<Subcategory>changes).availableStock });
+                matGroup.get('deliveredQty').setValidators([matGroup.get('deliveredQty').validator, this.quantityCheck(changes)])
+                matGroup.controls['pendingQty'].disable();
+                if (matGroup.controls['materialUnit'].value.length) {
+                    matGroup.controls['materialUnit'].disable();
+                }
+            }
+            else {
+                matGroup.get('deliveredQty').setValidators([Validators.required, Validators.maxLength(300)])
+                matGroup.controls['pendingQty'].enable();
+                matGroup.patchValue({ pendingQty: 0 });
+                matGroup.controls['pendingQty'].disable();
+                matGroup.controls['materialUnit'].enable();;
+                matGroup.controls['materialUnit'].reset();
+
+            }
+        })
+        frmGrp.controls['materialUnitPrice'].valueChanges.subscribe(changes => {
+            let index = frmGrp.get("index").value
+            let matGroup: FormGroup = null;
+            (<FormArray>this.addMaterialsForm.get('addMaterial'))['controls'].forEach((frmgrp: FormGroup) => {
+                if (frmGrp.value.index === index) {
+                    matGroup = frmgrp
+                }
+            }) as any
+            if (typeof changes === 'string') {
+                let deliveredQty = matGroup.value['deliveredQty'] as number;
+                matGroup.get('amount').enable();
+                matGroup.patchValue({ amount: Number(changes) * (deliveredQty ? deliveredQty : 0) });
+                matGroup.get('amount').disable();
+
+            }
+        })
+        frmGrp.controls['deliveredQty'].valueChanges.subscribe(changes => {
+            let index = frmGrp.get("index").value
+            let matGroup: FormGroup = null;
+            (<FormArray>this.addMaterialsForm.get('addMaterial'))['controls'].forEach((frmgrp: FormGroup) => {
+                if (frmGrp.value.index === index) {
+                    matGroup = frmgrp
+                }
+            }) as any
+            if (typeof changes === 'string') {
+                let materialUnitPrice = matGroup.value['materialUnitPrice'] as number;
+                matGroup.patchValue({ amount: Number(changes) * (materialUnitPrice ? materialUnitPrice : 0) });
             }
         })
         return frmGrp;
@@ -90,11 +143,42 @@ export class GrnAddMaterialComponent implements OnInit {
         return filteredValue;
 
     }
-    onSubmitMaterials() {
-        if (!this.alreadyPresentMaterial) {
 
+    quantityCheck(changes): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: boolean } | null => {
+            let checkValue = (<Subcategory>changes).estimatedQty - (<Subcategory>changes).availableStock
+            if (checkValue > 0 && checkValue < control.value) {
+                this.notifier.snack("Cannot add quantity greater than " + checkValue);
+                control.setValue(0)
+                return { 'quanityExceed': true };
+            }
+            return null;
         }
     }
+
+    onSubmitMaterials() {
+        if (!this.alreadyPresentMaterial()) {
+            this.stepper.next()
+        } else {
+            this.snackbar("Material Name Already Added");
+            (<FormGroup>(<FormArray>this.addMaterialsForm.get('addMaterial')).controls[this.addMaterialCurrentIndex]).controls['materialName'].reset()
+        }
+    }
+
+    getMaterialList() {
+        return this.addMaterialsForm.getRawValue().addMaterial.map((mat: GrnFormMaterialList) => {
+            return {
+                materialName: typeof mat.materialName === 'object' ? mat.materialName.materialName : mat.materialName,
+                materialId: typeof mat.materialName === 'object' ? mat.materialName.materialId : null,
+                materialUnit: mat.materialUnit,
+                deliveredQty: Number(mat.deliveredQty),
+                materialUnitPrice: Number(mat.materialUnitPrice),
+                amount: Number(mat.amount)
+            } as GrnMaterialList
+        })
+    }
+
+
     deleteField(index) {
         (<FormArray>this.addMaterialsForm.get('addMaterial')).removeAt(index);
     }
@@ -120,6 +204,8 @@ export class GrnAddMaterialComponent implements OnInit {
     }
 
 
+
+
     alreadyPresentMaterial() {
         let currentMaterialName: string
         if (this.addMaterialCurrentIndex) {
@@ -129,7 +215,7 @@ export class GrnAddMaterialComponent implements OnInit {
         else {
             currentMaterialName = ''
         }
-        let alreadyPresent = this.addMaterialCurrentIndex == 0 ? false : (this.addMaterialsForm.get("addMateriald").value.some((val, i) => {
+        let alreadyPresent = this.addMaterialCurrentIndex == 0 ? false : (this.addMaterialsForm.get("addMaterial").value.some((val, i) => {
             let materialName = typeof val.materialName === 'string' ? val.materialName : val.materialName.materialName
             return (i !== this.addMaterialCurrentIndex && materialName.toLowerCase() === currentMaterialName.toLowerCase())
         }))

@@ -42,9 +42,11 @@ export interface Supplier {
     supplierId: number,
     supplier_name: string,
     contact_no: string,
+    phoneNo?: string,
     email: string,
     pan: string,
-    countryCallingCode: string;
+    countryCallingCode: string,
+    supplier_ratings: number
 }
 
 export interface TermsObj {
@@ -54,7 +56,9 @@ export interface TermsObj {
 }
 
 export interface Documents {
-    documentType: string,
-    DocumentDesc: string,
-    DocumentUrl: string
+    documentType: string;
+    DocumentDesc: string;
+    DocumentUrl: string;
+    documentId?: number;
+    documentName?: string;
 }

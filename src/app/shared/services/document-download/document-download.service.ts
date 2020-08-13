@@ -8,7 +8,7 @@ import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
   providedIn: "root"
 })
 export class DocumentUploadService {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
 
   postDocumentUpload(data) {
     return this.dataService
@@ -18,11 +18,19 @@ export class DocumentUploadService {
       });
   }
 
-  POSTSUPPLIERDOCUMENTUPLOAD(data){
+  POSTSUPPLIERDOCUMENTUPLOAD(data) {
     return this.dataService
-    .sendPostRequest(API.POSTSUPPLIERDOCUMENTUPLOAD, data)
-    .then(res => {
-      return res;
-    });
+      .sendPostRequest(API.POSTSUPPLIERDOCUMENTUPLOAD, data)
+      .then(res => {
+        return res;
+      });
   }
+
+  // uploadImage(data) {
+  //   return this.dataService.sendPostRequest(API.UPLOAD_IMAGE, data).then(res => res);
+  // }
+
+  // getSelectedImages(projectId: number, materialId: number){
+  //   return this.dataService.getRequest(API.VIEW_IMAGES(projectId, materialId));
+  // }
 }

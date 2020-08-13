@@ -22,6 +22,8 @@ import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
+import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -46,7 +48,9 @@ export class RfqQuantityMakesComponent implements OnInit {
     "Fullfillment Date",
     "Estimated Rate",
     "Quantity",
-    "Makes"
+    "Makes",
+    "Attached Images",
+    "Upload Images"
   ];
   rfqId: any;
   startDate: Date;
@@ -56,6 +60,8 @@ export class RfqQuantityMakesComponent implements OnInit {
   valid: boolean = false;
   primaryCurrencyCode: string;
   minDate = new Date();
+  isMobile: boolean;
+
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -68,6 +74,7 @@ export class RfqQuantityMakesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.primaryCurrencyCode = localStorage.getItem('currencyCode')
     this.startDate = new Date();
     // this.formsInit();
@@ -275,6 +282,55 @@ export class RfqQuantityMakesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       if (data != null) {
         this.rfqData.rfqCurrency = data;
+      }
+    });
+  }
+
+  /**
+   * function will call to upload new images
+   * @param selectedMaterial, type
+   */
+  uploadImage(selectedMaterial, type) {
+    const dialogRef = this.dialog.open(UploadImageComponent, {
+      disableClose: true,
+      width: "60vw",
+      panelClass: 'upload-image-modal',
+      data: {
+        selectedMaterial,
+        type,
+        rfqId: this.generatedRfq.rfqId
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== null) {
+        this.rfqData = this.generatedRfq;
+        this.projectSelectedMaterials.map(project => project.projectMaterialList.map(mat => mat.documentList = (mat.materialId === result.materialId) ? result.documentsList : mat.documentList));
+        // this.materialAdded();
+      }
+    });
+  }
+
+  /**
+   * function will call to open view image modal
+   * @param rfqId, materialId, type
+   */
+  viewAllImages(materialId, selectedMaterial) {
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        selectedMaterial,
+        rfqId: this.generatedRfq.rfqId,
+        materialId,
+        type: 'create-rfq',
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // console.log(result);
       }
     });
   }

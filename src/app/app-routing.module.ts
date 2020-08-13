@@ -13,6 +13,15 @@ import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-l
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
 import { ProfileComponent } from './features/profile/profile.component';
 import { CountryResolver } from './shared/resolver/country.resolver';
+import { SubscriptionsResolver } from './shared/components/subscriptions/subscriptions.resolver';
+import { MySubscriptionsComponent } from './features/users/my-subscriptions/my-subscriptions.component';
+import { SubscriptionRedirectionsComponent } from './features/subscription-redirections/subscription-redirections.component';
+import { MenuResolver } from './shared/resolver/menu.resolver';
+import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
+import { GrnComponent } from './features/grn/grn.component';
+import { GrnResolver } from './features/grn/resolver/grn.resolver';
+import { BuySubscriptionsComponent } from './shared/components/subscriptions/buy-subscriptions/buy-subscriptions.component';
+
 
 const routes: Routes = [
   {
@@ -55,6 +64,34 @@ const routes: Routes = [
   },
 
   {
+    path: "subscriptions/thankyou",
+    component: SubscriptionRedirectionsComponent,
+    data: {
+      type: 0
+    }
+  },
+  {
+    path: "subscriptions/payment-failed",
+    component: SubscriptionRedirectionsComponent,
+    data: {
+      type: 1
+    }
+  },
+  {
+    path: "subscriptions/unsubscribe",
+    component: SubscriptionRedirectionsComponent,
+    data: {
+      type: 2
+    }
+  },
+  {
+    path: "subscriptions/trial-expiry",
+    component: SubscriptionRedirectionsComponent,
+    data: {
+      type: 3
+    }
+  },
+  {
     path: "",
     component: ProfileLayoutComponent,
     canActivate: [AuthGuardService, UserDataGuardService],
@@ -66,11 +103,22 @@ const routes: Routes = [
       }
     ]
   },
-
+  {
+    path: "buy-subscriptions",
+    component: BuySubscriptionsComponent,
+    resolve: {
+      subsData: SubscriptionsResolver
+    },
+    data: { title: 'Subscriptions', breadcrumb: 'Subscriptions' }
+  },
   {
     path: "",
     component: MainLayoutComponent,
     canActivate: [AuthGuardService, AfterSignUpGuardService],
+    resolve: {
+      menu: MenuResolver,
+      subsData: SubscriptionsResolver
+    },
     children: [
       {
         path: "project-dashboard",
@@ -83,6 +131,20 @@ const routes: Routes = [
         path: 'profile-account',
         component: ProfileComponent,
         data: { title: 'profile' }
+      },
+      {
+        path: 'receipt',
+        component: GrnComponent,
+        data: { title: 'grn' },
+        resolve: { projectsList: GrnResolver }
+      },
+      {
+        path: "subscriptions",
+        component: MySubscriptionsComponent,
+        resolve: {
+          subsData: SubscriptionsResolver
+        },
+        data: { title: 'Subscriptions', breadcrumb: 'Subscriptions' }
       },
       {
         path: 'dashboard',
@@ -164,6 +226,7 @@ const routes: Routes = [
       }
     ]
   },
+
   {
     path: "404",
     component: NotFoundComponent
@@ -177,7 +240,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule],
-  providers: [CountryResolver]
+  providers: [CountryResolver, SubscriptionsResolver, MenuResolver, GrnResolver]
 })
 
 export class AppRoutingModule { }

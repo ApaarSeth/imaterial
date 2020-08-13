@@ -1,4 +1,4 @@
-import { DocumentList } from '../PO/po-data';
+import { DocumentList, ImageDocsLists } from '../PO/po-data';
 import { rfqCurrency } from './rfq-details';
 import { Currency } from '../currency';
 
@@ -25,6 +25,7 @@ export interface MaterialListSubmit {
   materialQty: number;
   brandName: string;
   materialUnitPrice: number;
+  documentList?: ImageDocsLists[];
 }
 export interface RfqProject {
   projectId: number;
@@ -146,6 +147,7 @@ export interface RfqMaterialList {
   supplierList: RfqSupplierList[];
   rfqSuppliers: null;
   brands: null;
+  documentList?: ImageDocsLists[];
 }
 
 export interface RfqSupplierList {
@@ -160,6 +162,7 @@ export interface RfqSupplierList {
   brandDetailList: RfqBrandDetail[];
   taxInfo?: RfqTaxInfo[];
   otherCostInfo?: OtherCostInfo[];
+  documentList?: ImageDocsLists[];
 }
 
 export interface RfqBrandDetail {

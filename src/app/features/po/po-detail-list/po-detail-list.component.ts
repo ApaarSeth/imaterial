@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   PODetailLists,
@@ -16,13 +16,16 @@ import { PermissionService } from 'src/app/shared/services/permission.service';
 import { permission } from 'src/app/shared/models/permissionObject';
 import { DownloadData } from 'src/app/shared/models/PO/po-data';
 import { PaymentRecordComponent } from 'src/app/shared/dialogs/payment-record/paymentRecord.component';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { Subscription } from 'rxjs';
+import { AdvanceSearchService } from 'src/app/shared/services/advance-search.service';
 
 @Component({
   selector: "po-detail-list",
   templateUrl: "./po-detail-list.component.html",
   styleUrls: ["../../../../assets/scss/main.scss"]
 })
-export class PODetailComponent implements OnInit {
+export class PODetailComponent implements OnInit, OnDestroy {
   poDetails: MatTableDataSource<PODetailLists>;
 
   poDraftedDetails: MatTableDataSource<PurchaseOrder>;
@@ -46,6 +49,9 @@ export class PODetailComponent implements OnInit {
     "Action"
   ];
 
+  isMobile: boolean;
+  poCount: number;
+
   public PODetailTour: GuidedTour = {
     tourId: 'po-detail-tour',
     useOrb: false,
@@ -65,26 +71,62 @@ export class PODetailComponent implements OnInit {
   userId: number;
   orgId: number;
   permissionObj: permission;
+  subscriptions: Subscription[] = [];
+  isFilter: boolean;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private poDetailService: POService,
     private permissionService: PermissionService,
     private route: Router,
+    private notifier: AppNotificationService,
     private poService: POService,
     private projectService: ProjectService,
     public dialog: MatDialog,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private advSearchService: AdvanceSearchService
   ) {
   }
 
   ngOnInit() {
     const role = localStorage.getItem("role")
     this.permissionObj = this.permissionService.checkPermission(role);
+    this.isMobile = this.commonService.isMobile().matches;
     this.PoData();
     this.getNotifications();
+    this.startSubscriptions();
   }
+
+  startSubscriptions() {
+    this.subscriptions.push(
+      this.advSearchService.POFilterRequest$.subscribe(res => {
+        this.poDetailService.getPODetails(res).then(data => {
+          this.poDraftedDetails = new MatTableDataSource(data.data.draftedPOList);
+          this.poCount = data.data.poCount;
+          this.acceptedRejectedPOList = new MatTableDataSource(data.data.acceptedRejectedPOList);
+          this.poApprovalDetails = new MatTableDataSource(data.data.sendForApprovalPOList);
+
+          this.poDetailsTemp = data.data;
+          this.poDraftedDetailsTemp = data.data.draftedPOList;
+          this.poApprovalDetailsTemp = data.data.sendForApprovalPOList;
+          this.acceptedRejectedPOListTemp = data.data.acceptedRejectedPOList;
+        });
+        this.isFilter = false;
+      }),
+      this.advSearchService.POFilterExportRequest$.subscribe(res => {
+        this.poService.postPOExport(res).then(res => {
+          if (res.data.url) {
+            window.open(res.data.url);
+          }
+        });
+        this.isFilter = false;
+      })
+    )
+  }
+
+
   getNotifications() {
     this.commonService.getNotification(this.userId);
   }
@@ -120,6 +162,8 @@ export class PODetailComponent implements OnInit {
     this.poApprovalDetails = new MatTableDataSource(
       this.activatedRoute.snapshot.data.poDetailList.sendForApprovalPOList
     );
+
+    this.poCount = this.activatedRoute.snapshot.data.poDetailList.poCount;
 
     this.poDetailsTemp = this.activatedRoute.snapshot.data.poDetailList;
     this.poDraftedDetailsTemp = this.activatedRoute.snapshot.data.poDetailList.draftedPOList;
@@ -196,6 +240,27 @@ export class PODetailComponent implements OnInit {
       detail: element
     } as ProjetPopupData);
   }
+
+  copyPo(poId: number) {
+    this.poService.getCopyPo(poId).then(res => {
+      if (res.statusCode === 201) {
+        this.poDetailService.getPODetails({}).then(data => {
+          this.poDraftedDetails = new MatTableDataSource(data.data.draftedPOList);
+        });
+        this.PoData();
+        this.notifier.snack(res.message)
+      } else {
+        this.notifier.snack(res.message, 8000)
+      }
+    }).catch(err => {
+      this.notifier.snack(err.message)
+    })
+  }
+
+  viewGrn(purchaseOrderId) {
+    this.route.navigate(["po/view-grn/" + purchaseOrderId]);
+  }
+
   openPaymentRecord(poDetail: PurchaseOrder) {
     this.poService.paymentDetail(poDetail.purchaseOrderId).then(res => {
       let data = {
@@ -208,6 +273,7 @@ export class PODetailComponent implements OnInit {
       });
     })
 
+
   }
 
   openDialogDeactiveUser(data: ProjetPopupData): void {
@@ -219,7 +285,7 @@ export class PODetailComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then((data) => {
-        this.poDetailService.getPODetails(this.orgId).then(data => {
+        this.poDetailService.getPODetails({}).then(data => {
           this.poDraftedDetails = new MatTableDataSource(data.data.draftedPOList);
           this.poDraftedDetailsTemp = data.data.draftedPOList
         });
@@ -235,5 +301,17 @@ export class PODetailComponent implements OnInit {
     var win = window.open(data.url, '_blank');
     win.blur();
     setTimeout(win.focus, 0);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(item => item.unsubscribe());
+  }
+
+  openFilter() {
+    this.isFilter = true;
+  }
+
+  closeFilter() {
+    this.isFilter = false;
   }
 }

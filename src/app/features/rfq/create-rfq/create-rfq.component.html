@@ -1,5 +1,5 @@
-<div class="page-start-point">
-  <div class="p-l-20 p-r-20 p-b-20 min-height parent">
+<div class="page-start-point mt-5 pt-4" [ngClass]="isMobile ? 'm-popd' : '' ">
+  <div class="p-b-20 min-height parent" [ngClass]="isMobile ? 'pl-2 pr-2' : 'p-l-20 p-r-20' ">
     <div class="row">
       <div class="col-xs-12 text-right">
         <!-- <span class="p-r-5">
@@ -32,33 +32,24 @@
       </div>
     </div>
     <!-- <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper> -->
-    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper>
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper
+      [ngClass]="isMobile ? 'm-stepper' : '' ">
       <mat-step stepControl="stepOne">
         <ng-template matStepLabel>Project & Material</ng-template>
-        <app-rfq-project-materials
-          [projectsList]="allProject"
-          *ngIf="allProject.length && currentIndex === 0 ? true : false"
-          (updatedRfq)="getMaterial($event)"
-          #projectrMaterial
-          [existingRfq]="rfqData"
-          [prevIndex]="prevIndex"
-        >
+        <app-rfq-project-materials [projectsList]="allProject"
+          *ngIf="allProject.length && currentIndex === 0 ? true : false" (updatedRfq)="getMaterial($event)"
+          #projectrMaterial [existingRfq]="rfqData" [prevIndex]="prevIndex">
         </app-rfq-project-materials>
       </mat-step>
       <mat-step stepControl="stepSecond">
         <ng-template matStepLabel>Add Quantity & Makes</ng-template>
-        <app-rfq-quantity-makes *ngIf="rfqMaterial && allSupplier" #rfqQtyMakes [generatedRfq]="rfqMaterial" (updatedRfq)="getQuantityAndMakes($event)"> </app-rfq-quantity-makes>
+        <app-rfq-quantity-makes *ngIf="rfqMaterial && allSupplier" #rfqQtyMakes [generatedRfq]="rfqMaterial"
+          (updatedRfq)="getQuantityAndMakes($event)"> </app-rfq-quantity-makes>
       </mat-step>
       <mat-step stepControl="stepThree">
         <ng-template matStepLabel>Select Supplier</ng-template>
-        <app-rfq-supplier
-          #rfqSupplier
-          *ngIf="countryList.length"
-          [cntryList]="this.countryList"
-          [suppliers]="allSupplier"
-          [finalRfq]="finalRfq"
-          (updatedRfq)="getSupplierData($event)"
-        >
+        <app-rfq-supplier #rfqSupplier *ngIf="countryList.length" [cntryList]="this.countryList"
+          [suppliers]="allSupplier" [finalRfq]="finalRfq" (updatedRfq)="getSupplierData($event)">
         </app-rfq-supplier>
       </mat-step>
     </mat-horizontal-stepper>

@@ -17,3 +17,62 @@
     text-overflow: ellipsis;
   }
 }
+
+.issue-to-indent-dialog{
+  mat-dialog-container {
+    padding: 0;
+  }
+
+  .indent-Modal{
+    overflow-x: hidden;
+  }
+
+  .indent-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 0.8rem 1.2rem;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+  }
+
+  .mat-dialog-title {
+    opacity: 0.7;
+    line-height: 20px;
+    font-size: 18px;
+  }
+
+  button.close{
+    font-weight: 100;
+    font-size: 3em;
+    line-height: 10px;
+  }
+
+  .mat-dialog-content {
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1rem;
+    width: 100%;
+    margin: auto;
+  }
+}
+
+.no-indent{
+  font-size: 18px;
+  margin: 20px;
+}
+
+.indent-header-bg{
+  background-color: #2197bb;
+  color: #ffffff;
+  border-color: #2197bb;
+}

@@ -1,65 +1,63 @@
-<ng-container *ngIf="selectedCategory">
-  <div *ngIf="!selectedCategory.length; else elseBlock" class="parent p-t-20 min-height">
-    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
-      <div class="add-user-img">
-        <img src="../../../../assets/images/addMyMatrial.svg" alt="Project Logo" />
-        <div>
-          <p>
-            There is no custom material added in the project. <br />
-            Please add material either from the above or BOM.
-          </p>
-        </div>
-      </div>
+<div class="width-99">
+  <div class="row p-t-10">
+    <div class="col-xs-6 p-l-10 text -left border-input">
+      <mat-form-field class="input-search-padding-zero width-40">
+        <input #text matInput placeholder="Search Material" type="search" (input)="searchCategory(text.value)" />
+        <button mat-button matSuffix mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="col-xs-6 text-right p-r-10">
+      <button mat-raised-button class="main-background-color main-button color-white" (click)="openAddMaterial()">+Add Material</button>
     </div>
   </div>
-  <ng-template #elseBlock>
-    <span *ngFor="let category of selectedCategory; let c = index">
-      <ng-container *ngIf="category.materialList.length">
-        <mat-accordion>
-          <div #myele *ngIf="!isSearching ? true : !category.allNull">
-            <mat-expansion-panel class="m-b-5 m-t-5 border-radius-panel mat-expansion-panel-header-not-expand mat-expansion-panel-header-wrapper bom-qty-page" [expanded]="true">
-              <mat-expansion-panel-header class="background-color-skyblue row">
-                <div class="col-xs-6 text-left p-l-25">
-                  <mat-panel-title class="color-white">
-                    {{ category.groupName }}
-                  </mat-panel-title>
+  <div *ngFor="let category of selectedCategory; let c = index">
+    <div *ngIf="category.materialList.length">
+      <mat-accordion>
+        <div #myele *ngIf="!isSearching ? true : !category.allNull">
+          <mat-expansion-panel class="m-b-5 m-t-5 border-radius-panel mat-expansion-panel-header-not-expand mat-expansion-panel-header-wrapper bom-qty-page" [expanded]="true">
+            <mat-expansion-panel-header class="background-color-skyblue row">
+              <div class="col-xs-6 text-left p-l-25">
+                <mat-panel-title class="color-white">
+                  {{ category.groupName }}
+                </mat-panel-title>
+              </div>
+              <div class="col-xs-3 text-left">
+                <mat-panel-title class="color-white">
+                  Unit
+                </mat-panel-title>
+              </div>
+              <div class="col-xs-3"></div>
+            </mat-expansion-panel-header>
+            <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index">
+              <div class="row" *ngIf="!subcategory.isNull">
+                <div class="col-xs-3 text-left p-t-10">
+                  <span class="limitcharacter-myMaterialName p-l-40" matTooltip="{{ subcategory.materialName }}">{{ subcategory.materialName }}</span>
                 </div>
-                <div class="col-xs-3 text-left">
-                  <mat-panel-title class="color-white">
-                    Unit
-                  </mat-panel-title>
+                <div class="col-xs-3 p-t-10">
+                  <span class="text-semi-bold">
+                    <span class="p-r-5">{{ subcategory.tradeName }}</span>
+                  </span>
                 </div>
-                <div class="col-xs-3"></div>
-              </mat-expansion-panel-header>
-              <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index">
-                <div class="row" *ngIf="!subcategory.isNull">
-                  <div class="col-xs-3 text-left p-t-10">
-                    <span class="limitcharacter-myMaterialName p-l-40" matTooltip="{{ subcategory.materialName }}">{{ subcategory.materialName }}</span>
-                  </div>
-                  <div class="col-xs-3 p-t-10">
-                    <span class="text-semi-bold">
-                      <span class="p-r-5">{{ subcategory.tradeName }}</span>
-                    </span>
-                  </div>
-                  <div class="col-xs-3 text-left p-t-10">
-                    <span>{{ subcategory.materialUnit }}</span>
-                  </div>
-                  <div class="col-xs-1 text-right p-t-10">
-                    <button class="material-icons cursor button-background main-color" matTooltip="Edit" (click)="openEditDialog(c, sc)">
-                      edit
-                    </button>
-                  </div>
-                  <div class="col-xs-1 p-t-10">
-                    <a href="javascript:void(0)" class="width-15-px cursor-pointer" matTooltip="Delete" (click)="onDelete(c, sc)">
-                      <img src="../../../../assets/images/delete-button.png" />
-                    </a>
-                  </div>
+                <div class="col-xs-3 text-left p-t-10">
+                  <span>{{ subcategory.materialUnit }}</span>
+                </div>
+                <div class="col-xs-1 text-right p-t-10">
+                  <button class="material-icons cursor button-background main-color" matTooltip="Edit" (click)="openEditDialog(c, sc)">
+                    edit
+                  </button>
+                </div>
+                <div class="col-xs-1 p-t-10">
+                  <a href="javascript:void(0)" class="width-15-px cursor-pointer" matTooltip="Delete" (click)="onDelete(c, sc)">
+                    <img src="../../../../assets/images/delete-button.png" />
+                  </a>
                 </div>
               </div>
-            </mat-expansion-panel>
-          </div>
-        </mat-accordion>
-      </ng-container>
-    </span>
-  </ng-template>
-</ng-container>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

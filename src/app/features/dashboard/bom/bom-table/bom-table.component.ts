@@ -25,6 +25,9 @@ import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-materia
 import { IndentService } from 'src/app/shared/services/indent/indent.service';
 import { AddGrnComponent } from 'src/app/shared/dialogs/add-grn/add-grn.component';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { AddGrnViaExcelComponent } from 'src/app/shared/dialogs/addGrn-viaExcel/addGrnViaExcel.component';
+import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 
 @Component({
   selector: "app-bom-table",
@@ -43,15 +46,16 @@ export class BomTableComponent implements OnInit {
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
-  isMobile: boolean;
-  innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "customColumn"];
+  columnsToDisplay = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
+
+  innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
   orgId: number;
   checkedSubcategory: Subcategory[] = [];
   permissionObj: permission;
+  isMobile: boolean;
 
   public BomDetailsashboardTour: GuidedTour = {
     tourId: 'bom-details-tour',
@@ -66,9 +70,9 @@ export class BomTableComponent implements OnInit {
 
       },
       {
-        title: 'Create RFQ',
+        title: 'Create RFP',
         selector: '.create-rfq-btn',
-        content: 'Select material from the bill of materials and add it in RFQ to receive the quotes.',
+        content: 'Select material from the bill of materials and add it in RFP to receive the quotes.',
         orientation: Orientation.Left
       },
       {
@@ -225,6 +229,24 @@ export class BomTableComponent implements OnInit {
       width: "1000px",
       data: this.projectId
     });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res === 'success') {
+        this.getMaterialWithQuantity()
+      }
+    })
+  }
+
+  openGrnViaExcelDialog() {
+    const dialogRef = this.dialog.open(AddGrnViaExcelComponent, {
+      width: "600px",
+      data: this.projectId
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res === 'success') {
+        this.getMaterialWithQuantity()
+      }
+    })
   }
 
   raiseIndent() {
@@ -263,6 +285,7 @@ export class BomTableComponent implements OnInit {
         mat.dueDate = category.dueDate;
         mat.fullfilmentDate = String(category.dueDate) === "" ? null : String(category.dueDate);
         mat.materialUnit = category.materialUnit;
+        mat.documentList = category.documentsList;
         materialList.push(mat);
       });
       let projectId = materialList[0].projectId;
@@ -374,10 +397,14 @@ export class BomTableComponent implements OnInit {
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(IssueToIndentDialogComponent, {
         width: "1200px",
-        data: { materialId: materialId, projectId: projectId }
+        data: { materialId: materialId, projectId: projectId },
+        disableClose: true,
+        panelClass: ["issue-to-indent-dialog"]
       });
       dialogRef.afterClosed().subscribe(result => {
-        this.getMaterialWithQuantity();
+        if (result !== null) {
+          this.getMaterialWithQuantity();
+        }
       });
     }
   }
@@ -401,5 +428,42 @@ export class BomTableComponent implements OnInit {
     if (disabledStatus != true) {
       this.openDeleteDialog(materialId, projectId);
     }
+  }
+
+  /**
+   * function will call to open view image modal
+   * @param id selected material id
+   */
+  viewAllImages(projectId, materialId) {
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        projectId,
+        materialId
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // console.log(result);
+      }
+    });
+  }
+
+  uploadImage(selectedMaterial) {
+    const dialogRef = this.dialog.open(UploadImageComponent, {
+      disableClose: true,
+      width: "60vw",
+      panelClass: 'upload-image-modal',
+      data: selectedMaterial
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'addImages') {
+        this.getMaterialWithQuantity();
+      }
+    });
   }
 }

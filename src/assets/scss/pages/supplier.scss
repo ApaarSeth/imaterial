@@ -30,6 +30,10 @@
   width: 100%;
   overflow: auto;
 
+  .mat-header-cell{
+    z-index: 9 !important;
+  }
+
   table {
     border-left: 1px solid #d6d6d6;
   }
@@ -583,6 +587,9 @@ mat-icon {
   display: flex;
   justify-content: center;
   align-items: center;
+  div:first-child{
+    margin-right: 25px;
+  }
 }
 
 .project-name-div {
@@ -1026,4 +1033,11 @@ h3 {
       order: 1;
     }
   }
+}
+
+.mat-row.supplierLevel {
+  height: auto;
+  min-height: auto;
+  max-height: 75px;
+  padding: 6px 0;
 }

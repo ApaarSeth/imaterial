@@ -1,31 +1,31 @@
-<div class="page-start-point">
-  <div class="p-l-20 p-r-20 p-b-20 min-height">
-    <div class="p-t-20">
-      <div class="row">
-        <div class="col-xs-6 text -left border-input">
-          <mat-form-field class="input-search-padding-zero width-40">
-            <input #text matInput placeholder="Search Material" type="search" (input)="searchMaterial(text.value)" />
-            <button mat-button matSuffix mat-icon-button>
-              <mat-icon>search</mat-icon>
-            </button>
-          </mat-form-field>
+<div class="page-start-point pt-4">
+  <div *ngIf="!selectedCategory.length; else elseBlock" class="parent p-t-20 min-height">
+    <div class="p-l-10 p-b-20 min-height parent wrapper-btn-center">
+      <div class="add-user-img">
+        <img src="../../../../assets/images/addMyMatrial.svg" alt="Project Logo" />
+        <div>
+          <p>
+            There is no custom material added in the project. <br />
+            Please add material either from below or BOM.
+          </p>
         </div>
-        <div class="col-xs-6 text-right">
-          <button mat-raised-button class="main-background-color main-button color-white" (click)="openAddMaterial()">+Add Material</button>
+        <div>
+          <button mat-raised-button class="main-background-color main-button color-white"
+            (click)="openAddMaterial()">+Add Material</button>
         </div>
       </div>
-      <!-- <div class="col-sm-12 col-md-12 choose-trades">
-          <mat-chip-list multiple id="chipList" [selectable]="true">
-            <mat-chip *ngFor="let trade of tradeList" [selected]="trade.tradeId" (click)="trade.selected = !trade.selected; changeSelected('s', trade)">
-              {{ trade.tradeName }}
-            </mat-chip>
-          </mat-chip-list>
-        </div> -->
-
-      <mat-tab-group (selectedTabChange)="tabClick($event)">
-        <mat-tab label="My Materials"> <app-my-material-tab *ngIf="showMyMaterial"></app-my-material-tab></mat-tab>
-        <!-- <mat-tab label="Unapproved My Materials"><app-unapproved-material-tab *ngIf="showUnapprovedMaterial"></app-unapproved-material-tab></mat-tab> -->
-      </mat-tab-group>
     </div>
   </div>
+  <ng-template #elseBlock>
+    <div class="p-l-10 p-b-20 min-height">
+      <div class="p-t-20">
+        <mat-tab-group (selectedTabChange)="tabClick($event)">
+          <mat-tab label="My Materials">
+            <app-my-material-tab *ngIf="showMyMaterial" [selectedCategory]="selectedCategory"></app-my-material-tab>
+          </mat-tab>
+          <!-- <mat-tab label="Unapproved My Materials"><app-unapproved-material-tab *ngIf="showUnapprovedMaterial"></app-unapproved-material-tab></mat-tab> -->
+        </mat-tab-group>
+      </div>
+    </div>
+  </ng-template>
 </div>

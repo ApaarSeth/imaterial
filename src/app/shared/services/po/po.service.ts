@@ -1,3 +1,4 @@
+import { TokenService } from 'src/app/shared/services/token.service';
 import { Injectable } from "@angular/core";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
@@ -17,8 +18,12 @@ export class POService {
   supplierAddress$ = new Subject();
   poNumber$ = new Subject();
 
-  getPODetails(organizationId: Number) {
-    return this.dataService.getRequest(API.GETPODETAILLIST(organizationId));
+  // getPODetails(organizationId: Number) {
+  //   return this.dataService.getRequest(API.GETPODETAILLIST(organizationId));
+  // }
+
+  getPODetails(data) {
+    return this.dataService.sendPostRequest(API.POSTPODETAILLIST, data);
   }
   getPoGenerateData(poId: Number) {
     return this.dataService.getRequest(API.GETPODATA(poId));
@@ -68,5 +73,25 @@ export class POService {
     return this.dataService.getRequest(API.PAYMENTDETAIL(poId))
   }
 
+  submitSupplierRating(data) {
+    return this.dataService.sendPostRequest(API.SUPPLIER_RATING, data)
+  }
 
+  getCopyPo(poId: number) {
+    return this.dataService.getRequest(API.COPYPO(poId))
+  }
+
+  shortClose(poId: number) {
+    return this.dataService.getRequest(API.SHORTCLOSE(poId))
+  }
+
+  postPOExport(data) {
+    return this.dataService.sendPostRequest(API.POSTPOEXPORTREQUEST, data).then(res => {
+      return res;
+    });
+  }
+
+  rejectAmendedPo(poId) {
+    return this.dataService.getRequest(API.REJECTAMENDPO(poId))
+  }
 }

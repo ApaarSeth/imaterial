@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Global_store" data-name="Global store" transform="translate(-20825 2413)">
+    <g id="Rectangle_19069" data-name="Rectangle 19069" transform="translate(20825 -2413)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0">
+      <rect width="24" height="24" stroke="none"/>
+      <rect x="0.5" y="0.5" width="23" height="23" fill="none"/>
+    </g>
+    <g id="global_store-2" data-name="global store" transform="translate(20820.088 -2411)">
+      <g id="Group_32243" data-name="Group 32243" transform="translate(6.913 -0.001)">
+        <g id="Group_32242" data-name="Group 32242" transform="translate(0 0)">
+          <circle id="Ellipse_29" data-name="Ellipse 29" cx="2.378" cy="2.378" r="2.378" transform="translate(5.362 15.36)" fill="#f47822"/>
+          <path id="Path_7805" data-name="Path 7805" d="M268.875,324.1h0a2.378,2.378,0,1,0,2.378,2.378A2.378,2.378,0,0,0,268.875,324.1Z" transform="translate(-254.195 -308.738)" fill="#f47822"/>
+          <path id="Path_7806" data-name="Path 7806" d="M25.645,12.933h-12.4L13,11.525H23.194a.728.728,0,0,0,.679-.461L26.3,4.95a.728.728,0,0,0-.679-.995H11.742L11.159.606A.728.728,0,0,0,10.431,0H7.641a.728.728,0,1,0,0,1.456H9.825l2.087,12.326a.728.728,0,0,0,.728.607H25.645a.728.728,0,0,0,0-1.456Z" transform="translate(-6.913 0.001)" fill="#0e3c55"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

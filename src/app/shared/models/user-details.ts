@@ -108,6 +108,7 @@ export interface UserDetails {
   orgPincode: string;
   trade: orgTrades[];
   myAccountUpdate: boolean;
+  isPlanAvailable?: any;
 }
 
 export interface TradeList {

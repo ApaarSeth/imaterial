@@ -23,7 +23,6 @@
 @import "./layout/loader.scss";
 @import "./pages/indent.scss";
 @import "./pages/release-notes.scss";
-// @import '../../../node_modules/ngx-guided-tour/scss/guided-tour-base-theme.scss';
 @import "./pages/select-project.scss";
 @import "./pages/walkthrough.scss";
 @import "./pages/common.scss";
@@ -32,7 +31,9 @@
 @import "./pages/paymentRecord.scss";
 @import "./pages/ngx-date.scss";
 @import "./pages/selectCurrency.scss";
-
+@import "./pages/subscriptions.scss";
+@import "./pages/advance-search.scss";
+@import "./pages/grn.scss";
 
 ::ng-deep .mat-horizontal-stepper-header {
   pointer-events: none !important;

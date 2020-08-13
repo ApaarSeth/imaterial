@@ -24,8 +24,12 @@ export class RFQService {
     });
   }
 
-  rfqDetail(organizationId: number) {
-    return this.dataService.getRequest(API.RFQDETAIL(organizationId));
+  // rfqDetail(organizationId: number) {
+  //   return this.dataService.getRequest(API.RFQDETAIL(organizationId));
+  // }
+
+  rfqDetail(organisationId: number, data) {
+    return this.dataService.sendPostRequest(API.RFQDETAIL(organisationId), data);
   }
 
   rfqPo(organizationId: number, rfqId: number) {
@@ -57,6 +61,13 @@ export class RFQService {
       return res;
     });
   }
+
+  postRFQExport(organisationId, data) {
+    return this.dataService.sendPostRequest(API.POSTRFQEXPORTREQUEST(organisationId), data).then(res => {
+      return res;
+    });
+  }
+
   deleteSuplier(supplierId: number) {
     return this.dataService.sendDeleteRequest(API.DELETESUPPLIER(supplierId), {}).then(res => {
       return res;

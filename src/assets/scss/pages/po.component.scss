@@ -5,8 +5,6 @@
     border-bottom: none;
   }
   .mat-accordion .mat-header-row {
-    padding-left: 1.5rem;
-    padding-right: 2rem;
     border-bottom: none;
   }
 
@@ -39,9 +37,10 @@
   .mat-header-row {
     display: flex;
     align-items: center;
-    padding: 0 $mat-row-horizontal-padding;
     box-sizing: border-box;
     width: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .mat-cell,
@@ -336,21 +335,118 @@ s .validTill {
   overflow-wrap: anywhere !important;
 }
 
-.mpo-table{
+.mpo-table {
   width: 100%;
   overflow-x: scroll;
 }
 
-.txt-nwrp{
+.txt-nwrp {
   white-space: normal !important;
   font-weight: normal !important;
 }
 
-.mpo-mh{
+.mpo-mh {
   height: 30px;
   padding-top: 10px !important;
 }
 
-.mpo-mh{
+.mpo-mh {
   height: 30px;
+}
+
+.str {
+  &:before {
+    font-size: 1rem !important;
+    padding: 0.3rem 0.1rem !important;
+  }
+}
+
+.customPo .po-table .material-row {
+  height: auto;
+}
+
+.add-taxes-col {
+  // min-width: 100px;
+  // max-width: 120px;
+  span {
+    white-space: normal;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .add-taxes-col {
+    min-width: 60px !important;
+    max-width: 80px;
+  }
+}
+
+.po-sno-width {
+  max-width: 4%;
+  min-width: 4% !important;
+}
+
+.po-date-width,
+.po-material-width {
+  max-width: 10%;
+  min-width: 10% !important;
+}
+
+.removePadding .mat-menu-content {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.international-edit-po{
+  max-width: 8.25%;
+  min-width: 8.25% !important;
+}
+
+.national-edit-po{
+  max-width: 9.4%;
+  min-width: 9.4% !important;
+}
+
+.international-view-po,
+.national-view-po{
+  max-width: 10%;
+  min-width: 10% !important;
+}
+
+.po-date-width .date-label{
+  .mat-form-field-label-wrapper{
+    top: -.84375em;
+  }
+
+  .form-placeholder {
+    font-size: 13px;
+  }
+}
+
+.po-unit-width{
+  max-width: 6%;
+  min-width: 6% !important;
+}
+
+.po-national-unit-width{
+  max-width: 7%;
+  min-width: 7% !important;
+}
+
+.po-national-image-width{
+  max-width: 3%;
+  min-width: 3% !important;
+}
+
+@media only screen and (max-width: 1199px){
+  .edit-view-purchase-order{
+    .mat-header-cell, .mat-cell, .add-taxes-col span, .small-text{
+      font-size: 13px;
+    }
+  }
+
+  .po-date-width .date-label{
+    .form-placeholder {
+      font-size: 12px;
+    }
+  }
 }

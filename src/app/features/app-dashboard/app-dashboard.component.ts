@@ -1,3 +1,4 @@
+import { GoogleChartService } from './../../shared/services/google-chart.service';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from "@angular/material";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
@@ -19,6 +20,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
 import { TokenService } from 'src/app/shared/services/token.service';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -41,12 +43,18 @@ export class AppDashboardComponent implements OnInit {
   searchText = '';
   filterForm: FormGroup;
   currentIndex: number = 0;
+  // isSideNavCollapsed: boolean;
   isMobile: boolean;
   cntryList: any[];
   isAdDisplay: string;
+  diffDays: number
+  rangeType: string = 'Custom';
+  newDiffDays: number;
+  prText: string;
 
   constructor(public dialog: MatDialog,
     private router: Router,
+    private chartService: GoogleChartService,
     private formbuilder: FormBuilder,
     private _userService: UserService,
     private userguideservice: UserGuideService,
@@ -54,6 +62,7 @@ export class AppDashboardComponent implements OnInit {
     private commonService: CommonService,
     private tokenService: TokenService,
     private permissionService: PermissionService,
+    private notifier: AppNotificationService,
     private activatedRoute: ActivatedRoute, private loader: GlobalLoaderService) { }
 
   range: Range = { fromDate: new Date(), toDate: new Date() };
@@ -63,8 +72,7 @@ export class AppDashboardComponent implements OnInit {
   projectData
 
   ngOnInit() {
-    this.loader.hide();
-    this.isAdDisplay = localStorage.getItem("countryCode");
+    this.isAdDisplay = localStorage.getItem("callingCode");
     // this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
@@ -72,12 +80,11 @@ export class AppDashboardComponent implements OnInit {
     const role = localStorage.getItem("role")
     if (role) {
       this.permissionObj = this.permissionService.checkPermission(role);
+      this.label = this.permissionObj.rfqFlag ? 'po' : 'indent';
+      this.permissionObj.rfqFlag ? this.poData = {} as PurchaseOrderData : this.indentData = {} as PurchaseOrderData
       this.orgId = Number(localStorage.getItem("orgId"));
     }
     this.userId = Number(localStorage.getItem("userId"));
-    this.getDashboardInfo('po');
-    this.getDashboardInfo('rfq');
-    this.getDashboardInfo('indent');
     window.dispatchEvent(new Event('resize'));
     if (!localStorage.getItem('ReleaseNotes') || (localStorage.getItem('ReleaseNotes') != '1')) {
       localStorage.setItem('ReleaseNotes', '0');
@@ -102,6 +109,7 @@ export class AppDashboardComponent implements OnInit {
       this.projectData = res[1];
       this.getProjectsNumber()
     })
+    this.isMobile ? this.prText = 'PR' : this.prText = 'Purchase Requisitions (PR)';
   }
 
 
@@ -116,32 +124,45 @@ export class AppDashboardComponent implements OnInit {
     this.options = {
       presets: this.presets,
       format: 'mediumDate',
-      range: { fromDate: new Date(tempDate.setDate(tempDate.getDate() - 30)), toDate: today },
+      range: { fromDate: new Date(today.getFullYear(), 0, 1), toDate: new Date(today.getFullYear(), 12, 0) },
       applyLabel: 'Submit',
       placeholder: 'Choose Date',
       calendarOverlayConfig: {
         shouldCloseOnBackdropClick: true,
         hasBackdrop: true
-      }
+      },
       // cancelLabel: "Cancel",
       // excludeWeekends:true,
       // fromMinMax: {fromDate:fromMin, toDate:fromMax},
-      // toMinMax: {fromDate:toMin, toDate:toMax}
+      // toMinMax: { fromDate: toMin, toDate: toMax }
     };
   }
 
   updateRange(range: Range) {
     this.range = range;
-    this.getDashboardInfo(this.label);
+    if (range.toDate < range.fromDate) {
+      this.notifier.snack("To date can'nt be earlier than from date")
+    }
+    else {
+      const diffTime = Math.abs(range.fromDate.getTime() - range.toDate.getTime());
+      this.diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      this.getDashboardInfo(this.label);
+      // if (!this.newDiffDays) {
+      //   this.newDiffDays = this.diffDays;
+      //   this.getDashboardInfo(this.label);
+      // }
+      // else if (this.newDiffDays !== this.diffDays) {
+      //   this.newDiffDays = this.diffDays;
+      //   this.getDashboardInfo(this.label);
+      // }
+    }
   }
 
   setupPresets() {
-
     const backDate = (numOfDays) => {
       const today = new Date();
       return new Date(today.setDate(today.getDate() - numOfDays));
     }
-
     const today = new Date();
     const yesterday = backDate(1);
     const minus7 = backDate(7)
@@ -150,21 +171,51 @@ export class AppDashboardComponent implements OnInit {
     const currMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
     const lastMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1);
     const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
-
+    const quarterFromDate = this.getQuartrDateRange().fromdate;
+    const quarterLastDate = this.getQuartrDateRange().toDate;
+    const yearFromDate = new Date(today.getFullYear(), 0, 1);
+    const yearToDate = new Date(today.getFullYear(), 12, 0);
     this.presets = [
-      { presetLabel: "Yesterday", range: { fromDate: yesterday, toDate: today } },
+      // { presetLabel: "Yesterday", range: { fromDate: yesterday, toDate: today } },
       { presetLabel: "Last 7 Days", range: { fromDate: minus7, toDate: today } },
-      { presetLabel: "Last 30 Days", range: { fromDate: minus30, toDate: today } },
+      // { presetLabel: "Last 30 Days", range: { fromDate: minus30, toDate: today } },
       { presetLabel: "This Month", range: { fromDate: currMonthStart, toDate: currMonthEnd } },
-      { presetLabel: "Last Month", range: { fromDate: lastMonthStart, toDate: lastMonthEnd } }
+      { presetLabel: "Last Month", range: { fromDate: lastMonthStart, toDate: lastMonthEnd } },
+      // { presetLabel: "Quarter", range: { fromDate: quarterFromDate, toDate: quarterLastDate } },
+      { presetLabel: "Yearly ", range: { fromDate: yearFromDate, toDate: yearToDate } }
     ]
+  }
+
+  getQuartrDateRange(): { fromdate: Date, toDate: Date } {
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1
+    if (1 <= currentMonth && currentMonth < 4) {
+      return { fromdate: new Date(today.getFullYear(), 0, 1), toDate: new Date(today.getFullYear(), 3, 0) }
+    }
+    else if (4 <= currentMonth && currentMonth < 7) {
+      return { fromdate: new Date(today.getFullYear(), 3, 1), toDate: new Date(today.getFullYear(), 6, 0) }
+    }
+    else if (7 <= currentMonth && currentMonth < 10) {
+      return { fromdate: new Date(today.getFullYear(), 6, 1), toDate: new Date(today.getFullYear(), 9, 0) }
+    }
+    else if (10 <= currentMonth) {
+      return { fromdate: new Date(today.getFullYear(), 9, 1), toDate: new Date(today.getFullYear(), 12, 0) }
+    }
   }
 
   formInit() {
     this.filterForm = this.formbuilder.group({
-      projectFilter: []
+      projectFilter: [],
+      poFilter: [],
+      rfpFilter: []
     })
     this.filterForm.get('projectFilter').valueChanges.subscribe(val => {
+      this.getDashboardInfo(this.label)
+    })
+    this.filterForm.get('poFilter').valueChanges.subscribe(val => {
+      this.getDashboardInfo(this.label)
+    })
+    this.filterForm.get('rfpFilter').valueChanges.subscribe(val => {
       this.getDashboardInfo(this.label)
     })
   }
@@ -218,31 +269,97 @@ export class AppDashboardComponent implements OnInit {
     return year + "-" + month + "-" + day;
   }
 
+  getRange() {
+    if (this.diffDays <= 31) {
+      return 'Custom'
+    } else if (88 <= this.diffDays && this.diffDays <= 93) {
+      return 'Weekly'
+    } else if (365 <= this.diffDays && this.diffDays <= 366) {
+      return 'Yearly'
+    }
+    else {
+      return null
+    }
+  }
+
+  getFilter(label) {
+    let poFilter
+    let rfpFilter
+    if (label == 'po') {
+      poFilter = this.filterForm.get("poFilter") && this.filterForm.get("poFilter").value ? this.filterForm.get("poFilter").value : 'all'
+    }
+    if (label == 'rfq') {
+      rfpFilter = this.filterForm.get("rfpFilter") && this.filterForm.get("rfpFilter").value ? this.filterForm.get("rfpFilter").value : 'all'
+    }
+
+    if (label == 'po') {
+      return poFilter ? poFilter : 'all'
+    }
+    else if (label == 'rfq') {
+      return rfpFilter ? rfpFilter : 'all'
+    }
+    else {
+      return null
+    }
+  }
+
   getDashboardInfo(label) {
     let projectIds = this.filterForm.get("projectFilter").value && this.filterForm.get("projectFilter").value.map(val => {
       return val.projectId;
     })
-    const data = {
-      "orgId": this.orgId,
-      "startDate": this.getFormatedDate(this.range.fromDate),
-      "endDate": this.getFormatedDate(this.range.toDate),
-      "dataSource": label,
-      "range": "Custom",
-      "projectList": projectIds ? projectIds : []
-    }
-    this._userService.getDashboardData(data, true).then(res => {
-      if (res.data.currencyCode) {
-        this.currencyCode = res.data.currencyCode;
+    this.rangeType = this.getRange()
+    if (this.rangeType) {
+      const data = {
+        "orgId": this.orgId,
+        "startDate": this.getFormatedDate(this.range.fromDate),
+        "endDate": this.getFormatedDate(this.range.toDate),
+        "dataSource": label,
+        "range": this.rangeType,
+        "projectList": projectIds ? projectIds : [],
+        "fliterFlag": this.getFilter(label)
       }
-      if (label == 'po')
-        this.poData = res.data;
+      this._userService.getDashboardData(data, true).then(res => {
+        if (res.data.currencyCode) {
+          this.currencyCode = res.data.currencyCode;
+        }
+        if (label == 'po') {
+          this.poData = res.data;
+          let chartData = data.range === 'Yearly' ? this.sortGraphData(this.poData.graphData ? this.poData.graphData : null) : this.poData.graphData;
+          this.chartService.barChartData.next(chartData ? [...chartData] : null)
+        }
+        if (label == 'rfq') {
+          this.rfqData = res.data;
+          let chartData = data.range === 'Yearly' ? this.sortGraphData(this.rfqData.graphData ? this.rfqData.graphData : null) : this.rfqData.graphData;
+          this.chartService.barChartData.next(chartData ? [...chartData] : null)
+        }
+        if (label == 'indent') {
+          this.indentData = res.data;
+          this.chartService.pieChartData.next([['PRs', 'Vaue'],
+          ['Fullfilled PRs', this.indentData.totalCount],
+          ['Raised PRs', this.indentData.totalValue],
+          ])
+        }
+      }).catch(error => console.log(error))
+    }
+    else {
+      this.notifier.snack('Selected date range can not be greater than 31 days')
+    }
+  }
 
-      if (label == 'rfq')
-        this.rfqData = res.data;
-
-      if (label == 'indent')
-        this.indentData = res.data;
-    })
+  sortGraphData(graphData: Array<any>) {
+    if (graphData) {
+      let tempGraphData = graphData.slice(1, graphData.length)
+      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      tempGraphData.sort(function (a, b) {
+        return months.indexOf(a[0])
+          - months.indexOf(b[0]);
+      });
+      tempGraphData.splice(0, 0, graphData[0])
+      return tempGraphData;
+    } else {
+      return null;
+    }
   }
 
   onTabChanged($event) {
@@ -276,7 +393,7 @@ export class AppDashboardComponent implements OnInit {
 
   openBomDialog() {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
-      width: "1000px",
+      width: "800px",
       data: this.projectLists
     });
 
@@ -293,24 +410,15 @@ export class AppDashboardComponent implements OnInit {
     });
 
   }
-  // onResize(event) {
-  //  if(event.target.innerWidth <= 494){
-  //    this.tab1 = "P.O.";
-  //    this.tab2 = "RFQ for Quotations";
-  //  }else{
-  //    this.tab1 = "Purchase Orders";
-  //    this.tab2 = "Request for Quotations";
-  //  }
-  // }
 
   @HostListener('window:resize', ['$event'])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 494) {
       this.tab1 = "P.O.";
-      this.tab2 = "RFQ";
+      this.tab2 = "RFPs";
     } else {
-      this.tab1 = "Purchase Orders";
-      this.tab2 = "Request for Quotations";
+      this.tab1 = "Purchase Orders (PO)";
+      this.tab2 = "Request for Price (RFPs)";
     }
   }
 }

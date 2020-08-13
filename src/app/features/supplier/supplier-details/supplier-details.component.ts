@@ -45,6 +45,8 @@ export class SupplierDetailComponent implements OnInit {
   orgId: number;
   countryList: any;
 
+  isMobile: boolean;
+
   public SupplierDashboardTour: GuidedTour = {
     tourId: 'supplier-tour',
     useOrb: false,
@@ -83,6 +85,7 @@ export class SupplierDetailComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
     this.countryList = this.activatedRoute.snapshot.data.countryList;
+    this.isMobile = this.commonService.isMobile().matches;
     window.dispatchEvent(new Event('resize'));
     this.getNotifications();
     this.getAllSupplier();
@@ -94,7 +97,9 @@ export class SupplierDetailComponent implements OnInit {
   getAllSupplier() {
     this.commonService.getSuppliers(this.orgId).then(data => {
       this.dataSource = new MatTableDataSource(data.data);
+
       this.dataSourceTemp = data.data;
+
       if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
         setTimeout(() => {
           this.guidedTourService.startTour(this.SupplierDashboardTour);

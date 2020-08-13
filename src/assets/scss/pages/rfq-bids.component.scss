@@ -214,3 +214,291 @@
   font-weight: 550;
   cursor: pointer;
 }
+
+.ratings {
+  margin: 0 0 10px 4px;
+
+  .fa{
+    margin-left: 5px;
+  }
+
+  .fa-star-o {
+    color: #c5c4c4;
+  }
+  .fa-star{
+    color: #f47721;
+  }
+}
+
+.supplier-company label{
+  margin-bottom: 0;
+}
+
+.rfq-final-step, .rfq-view-step{
+  width: 100%;
+  tr.mat-footer-row, tr.mat-row{
+    height: 66px;
+  }
+
+  .images-lists .attached-image:first-child {
+    top: -28px;
+    left: 80px;
+  }
+
+  .images-lists .attached-image:nth-child(2) {
+    left: 86px;
+    top: -23px;
+  }
+
+  .images-lists .attached-image:nth-child(3) {
+    left: 92px;
+    top: -17px;
+  }
+}
+
+.image-heading{
+  text-align: left;
+  margin-left: 8px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.supplier-img-heading{
+  width: 95%;
+  margin-left: 30px;
+}
+
+.supplier-bid-imgs{
+
+  max-width: 130px;
+  min-width: 130px;
+
+  .images-lists {
+    .attached-image{
+      position: relative;
+    }
+
+    .attached-image:first-child {
+      top: -8px;
+      left: 0px;
+    }
+
+    .attached-image:nth-child(2) {
+      left: 6px;
+      top: -2px;
+      position: absolute;
+    }
+
+    .attached-image:nth-child(3) {
+      left: 12px;
+      top: 4px;
+      position: absolute;
+    }
+  }
+
+}
+
+.view-bid-images-preview .images-lists{
+  position: relative;
+  .attached-image {
+    position: relative;
+
+    &:first-child{
+      top: 20px;
+      left: 10px;
+    }
+
+    &:nth-child(2){
+      left: 16px;
+      top: -21px;
+    }
+
+    &:nth-child(3){
+      left: 23px;
+      top: -60px;
+    }
+
+    &:nth-child(4), &:nth-child(5){
+      display: none;
+    }
+  }
+}
+
+.rfq-final-step .float-rfq-img-stack{
+  .attached-image{
+    &:first-child{
+      left: 39px;
+    }
+
+    &:nth-child(2){
+      left: 45px;
+    }
+
+    &:nth-child(3){
+      left: 52px;
+    }
+  }
+}
+
+.po-images-list{
+  min-height: 70px;
+  max-height: 75px;
+
+  .default-image{
+    margin-top: 10px;
+  }
+}
+
+.po-images-list {
+  .images-lists{
+    // position: absolute;
+    .attached-image{
+      position: relative;
+      &:first-child{
+        top: -30px;
+        left: 0px;
+      }
+
+      &:nth-child(2){
+        left: 6px;
+        top: -70px;
+      }
+
+      &:nth-child(3){
+        left: 13px;
+        top: -109px;
+      }
+    }
+  }
+
+  .images-lists.single-image{
+    .attached-image:first-child {
+      top: 12px;
+      left: -4px;
+    }
+  }
+
+  .images-lists.double-images{
+    .attached-image{
+      &:first-child {
+        top: 10px;
+        left: -4px;
+      }
+
+      &:nth-child(2) {
+        left: 3px;
+        top: -28px;
+      }
+    }
+  }
+
+  .images-lists.triple-images{
+    .attached-image{
+      &:first-child {
+        top: 10px;
+        left: -4px;
+      }
+
+      &:nth-child(2) {
+        left: 2px;
+        top: -30px;
+      }
+
+      &:nth-child(3) {
+        left: 8px;
+        top: -70px;
+      }
+    }
+  }
+}
+
+th.attached-images-col.mat-column-Attached-Images {
+  max-width: 80px;
+  white-space: normal;
+}
+
+th.fulfillment-date-col.mat-column-Fullfillment-Date {
+  max-width: 130px;
+}
+
+tr.tbl-body-cols.mat-row {
+  height: 65px;
+}
+
+.attached-images-col .images-lists{
+  .attached-image{
+    &:first-child{
+      top: -36px;
+      left: 20px;
+    }
+
+    &:nth-child(2){
+      top: -30px;
+      left: 26px;
+    }
+
+    &:nth-child(3){
+      top: -24px;
+      left: 32px;
+    }
+  }
+}
+
+.rfq-final-step{
+  .mat-header-cell.mat-column-Material-Name {
+    width: 20%;
+  }
+
+  .mat-header-cell.mat-column-Required-Date {
+    width: 15%;
+  }
+}
+
+.view-bid-images-preview{
+  .images-lists.single-image{
+    .attached-image:first-child {
+      left: 0;
+      top: 0;
+      margin: auto;
+    }
+  }
+
+  .images-lists.double-images{
+    .attached-image:first-child {
+      left: 42px;
+      top: 18px;
+    }
+
+    .attached-image:nth-child(2) {
+      left: 48px;
+    }
+  }
+
+  .images-lists.triple-images{
+    .attached-image:first-child {
+      left: 38px;
+      top: 36px;
+    }
+
+    .attached-image:nth-child(2) {
+      left: 44px;
+      top: -2px;
+    }
+
+    .attached-image:nth-child(3) {
+      left: 50px;
+      top: -40px;
+    }
+  }
+}
+
+/** view bid page - view rating and supplier rates column distortion css fixes **/
+@media only screen and (max-width: 1332px){
+  .view-bid-tbl{
+    max-width: 20% !important;
+  }
+
+  .supplier-rate-col-bid {
+    max-width: 15% !important;
+  }
+}

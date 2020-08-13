@@ -1,6 +1,6 @@
-<div class="page-start-point">
+<div class="page-start-point mt-5 pt-4">
   <div class="p-b-20 grn-dashboard min-height parent">
-    <div class="row p-t-20">
+    <div class="row align-items-center py-3">
       <!-- <div class="col-xs-6">PO Number: {{grnHeaders[0].poNumber}}</div> -->
       <div class="col-xs-6 text-semi-bold po-number-grn">
         PO Number:
@@ -23,9 +23,9 @@
 
     <div *ngIf="grnHeaders">
       <ng-container *ngFor="let grnHeader of grnHeaders">
-        <br />
-        <mat-accordion>
-          <mat-expansion-panel class="myPanel" #mep="matExpansionPanel" [expanded]="true">
+
+        <mat-accordion class="mb-3 d-block">
+          <mat-expansion-panel class="myPanel add-receipts-panel" #mep="matExpansionPanel" [expanded]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="row width100Percent">
@@ -34,26 +34,15 @@
                     {{ grnHeader.grnDate | date: "dd-MMM-yyy" }}
                   </div>
                   <div class="col-xs-4 col-md-4 col-lg-4 display-flex justify-content-flex-end p-0"
-                    (click)="openDocuments(grnHeader.documentList);mep.expanded = false">
+                    (click)="openDocuments(grnHeader.documentList);mep.expanded = false"
+                    [class.inactive-receipt-docs]="!grnHeader.documentList">
                     <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-                    <span class="font-size-vary-grn main-color text-decoration-underline">Documents</span>
+                    <!-- <span class="font-size-vary-grn main-color text-decoration-underline">Documents</span> -->
                   </div>
-                  <!-- <div class="col-md-4">
-                                            <div class="pull-right p-l-10 p-r-10">
-                                                <mat-icon>cloud_download</mat-icon>
-                                            </div>
-                                            <div class="pull-right p-l-10 p-r-10">
-                                                <mat-icon>remove_red_eye</mat-icon>
-                                            </div>
-                                            <div class="pull-right font-size14 p-l-10 p-r-10">300 kb</div>
-                                            <div class="pull-right font-size14 p-l-10 p-r-10">{{grnHeader.checklistFileUrl}}</div>
-                                            <div class="pull-right p-l-10 p-r-10">
-                                                <mat-icon>descriptions</mat-icon>
-                                            </div>
-                                        </div> -->
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
+
             <div class="add-grn-container mat-elevation-z8">
               <table mat-table [dataSource]="getData(grnHeader.poMaterialList)">
                 <ng-container matColumnDef="Material Name">
@@ -82,21 +71,6 @@
                   <td mat-cell *matCellDef="let element" class="text-align-center">{{ element.deliveredQty }}
                     {{ element.materialUnit }}</td>
                 </ng-container>
-
-                <!-- <ng-container matColumnDef="Date">
-                                    <ng-container matColumnDef="Received Quantity">
-                                        <th mat-header-cell *matHeaderCellDef class="text-align-center">Received Quantity</th>
-                                        <td mat-cell *matCellDef="let element" class="text-align-center">
-                                            {{ element.deliveredQty }}
-                                        </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="Date">
-                                        <th mat-header-cell *matHeaderCellDef>Date</th>
-                                        <td mat-cell *matCellDef="let element">
-                                            {{ element.deliveredDate | date }}
-                                        </td>
-                                    </ng-container> -->
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

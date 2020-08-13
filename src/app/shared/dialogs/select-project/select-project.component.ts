@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/userDashboard/user.service';
 import { ProjectService } from '../../services/projectDashboard/project.service';
 import { AddProjectComponent } from '../add-project/add-project.component';
+import { CommonService } from '../../services/commonService';
 
 @Component({
     selector: "select-project",
@@ -22,7 +23,8 @@ export class SelectProjectComponent implements OnInit {
         private _router: Router,
         public _dialog: MatDialog,
         private _userService: UserService,
-        private _projectService: ProjectService
+        private _projectService: ProjectService,
+        private commonService: CommonService
     ) { }
 
     ngOnInit() {
@@ -47,21 +49,21 @@ export class SelectProjectComponent implements OnInit {
     }
 
     addProject() {
-
         this.closeDialog();
+        this.commonService.getCountry().then(res => {
+            let data = {
+                isEdit: false,
+                isDelete: false,
+                countryList: res.data
+            };
+            const dialogRef = this._dialog.open(AddProjectComponent, {
+                width: "1000px",
+                data
+            });
 
-        let data = {
-            isEdit: false,
-            isDelete: false
-        };
-
-        const dialogRef = this._dialog.open(AddProjectComponent, {
-            width: "1000px",
-            data
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            this._router.navigate(['/dashboard']);
-        });
+            dialogRef.afterClosed().subscribe(result => {
+                this._router.navigate(['/dashboard']);
+            });
+        })
     }
 }

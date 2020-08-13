@@ -29,4 +29,15 @@ export class GRNService {
         });
     }
 
+    downloadGrnTempelate(projectId) {
+        return this.dataService.getRequest(API.GRNDOWNLOADTEMPELATE(projectId))
+    }
+
+    uploadGrnTempelate(data, projectId) {
+        return this.dataService.sendPostRequest(API.GRNUPLOADTEMPELATE(projectId), data)
+    }
+
+    getAllGRNData(projectIds){
+        return this.dataService.getRequest(API.GET_ALL_GRN, projectIds).then(res => res);
+    }
 }

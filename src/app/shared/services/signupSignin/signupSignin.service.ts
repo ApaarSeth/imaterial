@@ -31,7 +31,7 @@ export class SignInSignupService implements OnInit {
         }
       })
       .catch(e => {
-        if (e.error.error === 'invalid_grant' || e.error.error === 'unauthorized') {
+        if (e.error === 'invalid_grant' || e.error === 'unauthorized') {
           let data: any = {};
           data.erroType = 'Invalid Credentials';
           if (localStorage.getItem('countryCode') === 'IN') {

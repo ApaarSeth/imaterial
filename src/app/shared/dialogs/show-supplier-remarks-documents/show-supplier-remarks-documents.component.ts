@@ -8,11 +8,11 @@ import {
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/projectDashboard/project.service";
 import { FieldRegExConst } from "../../constants/field-regex-constants";
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { Router } from '@angular/router';
 import { AppNavigationService } from '../../services/navigation.service';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
 import { supplierRemarkList } from '../../models/RFQ/rfqBids';
+import { DocumentUploadService } from "../../services/document-download/document-download.service";
 
 export interface City {
   value: string;
@@ -75,7 +75,7 @@ export class ShowSupplierRemarksandDocs implements OnInit {
   closeDialog(): void {
     this.dialogRef.close(null);
   }
-  showSupplierDetails(index){
+  showSupplierDetails(index) {
     this.index = index;
   }
   downloadDoc(url: string) {
@@ -84,13 +84,13 @@ export class ShowSupplierRemarksandDocs implements OnInit {
   }
 
   downloadURI(uri, name) {
-  let link = document.createElement("a");
-  link.download = name;
-  link.href = uri;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+    let link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
-}
+  }
 
 }

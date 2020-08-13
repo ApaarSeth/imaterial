@@ -4,7 +4,9 @@ import {
   ViewChild,
   QueryList,
   ViewChildren,
-  ElementRef
+  ElementRef,
+  ChangeDetectorRef,
+  HostListener
 } from "@angular/core";
 import { FormControl, FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -80,6 +82,7 @@ export class BomComponent implements OnInit {
   showTopMaterial: boolean = true;
   showAllMaterial: boolean = true;
   showMyMaterial: boolean = true;
+  innerWidth: number;
 
   public BomDashboardTour: GuidedTour = {
     tourId: 'bom-tour',
@@ -124,7 +127,8 @@ export class BomComponent implements OnInit {
     private fbPixel: FacebookPixelService,
     private globalLoader: GlobalLoaderService,
     private _snackBar: MatSnackBar,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -148,7 +152,18 @@ export class BomComponent implements OnInit {
       })
       this.form.get('selectedTrades').setValue(selectedTrades)
       this.choosenTrade()
-    })
+    });
+
+    this.onResize(event);
+  }
+
+  /**
+   * @description to check the width of screen
+   * @param event 
+   */
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
   }
 
   setLocalStorage() {
@@ -166,18 +181,6 @@ export class BomComponent implements OnInit {
 
   searchMaterial(event) {
     this.bomService.searchText.next(event);
-  }
-
-  get status() {
-    if (this.currentIndex == 0) {
-      return this.topMaterial ? this.topMaterial.quantityForms.invalid : true
-    }
-    else if (this.currentIndex == 1) {
-      return this.allMaterial ? this.allMaterial.quantityForms.invalid : true
-    }
-    else if (this.currentIndex == 2) {
-      return this.myMaterial ? this.myMaterial.quantityForms.invalid : true
-    }
   }
 
   formInit() {
@@ -244,34 +247,6 @@ export class BomComponent implements OnInit {
       selectedTrade => selectedTrade.tradeName
     );
     this.callApi();
-    {// if (selectedTrades.length === 0) {
-      //   this.categoryData = [];
-      //   this.tradeNames = [];
-      //   return;
-      // }
-      // if (this.tradeNames.length === 0) {
-      //   tradeAdd = selectedTrades;
-      // } else if (this.tradeNames.length < selectedTrades.length) {
-      //   for (let id of selectedTrades) {
-      //     if (!this.tradeNames.includes(id)) {
-      //       tradeAdd.push(id);
-      //     }
-      //   }
-      // } else if (this.tradeNames.length >= selectedTrades.length) {
-      //   for (let id of this.tradeNames) {
-      //     if (!selectedTrades.includes(id)) {
-      //       tradeRemove.push(id);
-      //     }
-      //   }
-      //   this.categoryData = this.categoryData.filter(
-      //     (category: categoryNestedLevel) => {
-      //       return !tradeRemove.includes(category.tradeName);
-      //     }
-      //   );
-      // }
-      // if (tradeAdd.length) {
-
-    }
 
     this.tradeNames = [...this.selectedTrades];
   }
@@ -283,7 +258,6 @@ export class BomComponent implements OnInit {
       this.showTopMaterial = true;
       this.bomService.get25Trades({ tradeNames: this.selectedTrades.length ? [...this.selectedTrades] : null }).then(res => {
         this.topMaterialData = [...res];
-        this.searchAgain = this.text.nativeElement.value
         this.showTable = true;
       });
     }
@@ -293,20 +267,17 @@ export class BomComponent implements OnInit {
       this.showAllMaterial = true;
       this.bomService.getTrades({ tradeNames: this.selectedTrades.length ? [...this.selectedTrades] : null }).then(res => {
         this.allMaterialData = [...res];
-        this.searchAgain = this.text.nativeElement.value
       });
     }
     else if (this.buttonName == 2) {
       this.showAllMaterial = false;
       this.showTopMaterial = false;
       this.showMyMaterial = true;
-      this.commonService.getMyMaterial('all').then(res => {
+      this.commonService.getMyMaterial('allwithdeleted').then(res => {
         this.myMaterialData = [...res.data];
-        this.searchAgain = this.text.nativeElement.value
       });
     }
   }
-
 
   tabClick(event) {
     this.text.nativeElement.value = ""
@@ -339,7 +310,6 @@ export class BomComponent implements OnInit {
     }
   }
 
-
   openAddMyMaterial() {
     let data = this.projectId
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
@@ -347,10 +317,13 @@ export class BomComponent implements OnInit {
       data
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getProject(this.projectId);
-      this.callApi()
+      if (result !== null) {
+        this.getProject(this.projectId);
+        this.callApi()
+      }
     })
   }
+
   openAddBomDialog(index: number) {
     const dialogRef = this.dialog.open(AddBomWarningComponent, {
       width: "400px",
@@ -377,21 +350,6 @@ export class BomComponent implements OnInit {
       }
     })
   }
-
-
-  // finalisedCategory() {
-  //   this.showTable = true;
-
-  //   this.bomService
-  //     .getMaterialsWithSpecs({
-  //       pid: this.form.value.selectedTrades.map(
-  //         selectedCategory => selectedCategory.materialGroup
-  //       )
-  //     })
-  //     .then(res => {
-  //       this.topMaterialData = [...res];
-  //     });
-  // }
 
   checkValidations(event: boolean): void {
     this.valueChanged = event
@@ -446,7 +404,6 @@ export class BomComponent implements OnInit {
       isDelete: false,
       detail: this.product
     };
-
     this.openDialog(data);
   }
 
@@ -456,7 +413,6 @@ export class BomComponent implements OnInit {
       isDelete: true,
       detail: this.product
     };
-
     this.openDialog(data);
   }
 

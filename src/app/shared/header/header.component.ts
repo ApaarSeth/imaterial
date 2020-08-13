@@ -25,6 +25,7 @@ export class HeaderLayoutComponent implements OnInit {
   @Input('menu') menu: MatSidenav;
   subsriptions: Subscription[] = [];
   headerConst: { name: string, link: string, flag: boolean }[]
+  @Input('subscriptionsData') subscriptionsData: any;
 
   constructor(
     private permissionService: PermissionService,
@@ -141,7 +142,7 @@ export class HeaderLayoutComponent implements OnInit {
   // }
 
   routeTo(route) {
-    this.router.navigate([route]);
+    this.router.navigate([ route ]);
   }
 
   closeDialog() {

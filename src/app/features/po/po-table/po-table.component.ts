@@ -13,6 +13,8 @@ import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.compo
 import { OverallOtherCost } from 'src/app/shared/models/common.models';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
+import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 
 @Component({
   selector: "app-po-table",
@@ -30,7 +32,9 @@ export class PoTableComponent implements OnInit, OnDestroy {
   toggleCounter: number = 0;
   showResponsiveDesign: boolean;
   poCurrency: PurchaseOrderCurrency
-  constructor(private cdr: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar) { }
+  poId: number;
+  constructor(private cdr: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private commonService: CommonService, private poService: POService, private route: ActivatedRoute, private formBuilder: FormBuilder, private _snackBar: MatSnackBar,
+    private cdRef: ChangeDetectorRef) { }
   poForms: FormGroup;
   mode: string;
   initialCounter = 0;
@@ -45,11 +49,12 @@ export class PoTableComponent implements OnInit, OnDestroy {
   additonalCost: { additionalOtherCostAmount: number, additionalOtherCostInfo: OverallOtherCost[] }
   ratesBaseCurr: boolean = false;
   isMobile: boolean;
-
+  taxCounter: number = 0;
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
       this.mode = params.mode;
+      this.poId = Number(params['id']);
     });
     this.isMobile = this.commonService.isMobile().matches;
     this.formInit();
@@ -62,6 +67,11 @@ export class PoTableComponent implements OnInit, OnDestroy {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
   }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+  }
+
   formInit() {
     const frmArr: FormGroup[] = this.poTableData.map((poMaterial: PoMaterial, i) => {
       let purchaseGrp: FormGroup[] = poMaterial.purchaseOrderDetailList.map((purchaseorder: PurchaseOrder, j) => {
@@ -197,7 +207,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
   }
 
-
   get gstTotalAmount() {
     let sum = 0;
     if (this.mode === "edit" && this.initialCounter != 0) {
@@ -224,14 +233,14 @@ export class PoTableComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
+
   sumbit() {
     this.getData();
   }
+
   getUpdatedCurrency() {
     return this.poCurrency
   }
-
-
 
   getadditonalCost(): OtherCostInfo[] {
     return this.additonalCost.additionalOtherCostInfo;
@@ -373,8 +382,15 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
   getPOListTax(m, p, type) {
     let tax: number = 0;
+
     if (type === 'edit') {
-      tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+      if (!this.poTableData[m]['counter']) {
+        this.calculateTaxInfo(m)
+        tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+        this.poTableData[m]['counter'] = 1
+      } else {
+        tax = this.poTableData[m]['totalTax'] ? this.poTableData[m]['totalTax'] : null
+      }
     }
     else {
       this.calculateTaxInfo(m)
@@ -385,26 +401,32 @@ export class PoTableComponent implements OnInit, OnDestroy {
       return this.poTableData[m].purchaseOrderDetailList[p]['taxAmount']
     }
     else {
+      this.poTableData[m].purchaseOrderDetailList[p]['taxAmount'] = null
       return this.poTableData[m].purchaseOrderDetailList[p]['taxAmount']
     }
   }
 
-
+  calculateTaxInfo(mId) {
+    if (this.poTableData[mId].taxInfo && this.poTableData[mId].taxInfo.length > 0) {
+      if (this.poTableData[mId].taxInfo.length > 1) {
+        this.poTableData[mId]['totalTax'] = this.poTableData[mId].taxInfo.map(val => { return val.taxValue }).reduce((a, b) => (a + b))
+      }
+      else {
+        this.poTableData[mId]['totalTax'] = this.poTableData[mId].taxInfo[0].taxValue
+      }
+    } else {
+      this.poTableData[mId]['totalTax'] = 0
+    }
+  }
 
   getTotalPOListTax(m) {
     if (this.poTableData[m].purchaseOrderDetailList.length > 1) {
-      if (this.poTableData[m].purchaseOrderDetailList[0].taxAmount)
-        return this.poTableData[m].purchaseOrderDetailList.map(val => val.taxAmount).reduce((a, b) => (a + b))
-      else
-        return 0;
+      return this.poTableData[m].purchaseOrderDetailList.map(val => val.taxAmount).reduce((a, b) => (a + b))
     }
     else {
       return this.poTableData[m].purchaseOrderDetailList[0].taxAmount ? this.poTableData[m].purchaseOrderDetailList[0].taxAmount : 0;
     }
-
   }
-
-
 
   get totalTaxAmount() {
     let totalTax = 0;
@@ -428,7 +450,6 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
 
-
   getTotalOtherCost(m) {
     if (this.poTableData[m].otherCostAmount) {
       return this.poTableData[m].otherCostAmount;
@@ -438,18 +459,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  calculateTaxInfo(mId) {
-    if (this.poTableData[mId].taxInfo && this.poTableData[mId].taxInfo.length > 0) {
-      if (this.poTableData[mId].taxInfo.length > 1) {
-        this.poTableData[mId]['totalTax'] = this.poTableData[mId].taxInfo.map(val => { return val.taxValue }).reduce((a, b) => (a + b))
-      }
-      else {
-        this.poTableData[mId]['totalTax'] = this.poTableData[mId].taxInfo[0].taxValue
-      }
-    } else {
-      this.poTableData[mId]['totalTax'] = null
-    }
-  }
+
 
   calculateOtherTaxInfo(mId) {
     if (this.poTableData[mId].otherCostInfo && this.poTableData[mId].otherCostInfo.length > 0) {
@@ -460,7 +470,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
         this.poTableData[mId]['otherCostAmount'] = this.poTableData[mId].otherCostInfo[0].otherCostAmount
       }
     } else {
-      this.poTableData[mId]['otherCostAmount'] = null
+      this.poTableData[mId]['otherCostAmount'] = 0
     }
   }
 
@@ -485,18 +495,19 @@ export class PoTableComponent implements OnInit, OnDestroy {
         type,
         po: true,
         rfqId: null,
-        existingData
+        existingData,
+        currency: this.poCurrency ? this.poCurrency.exchangeCurrencyName : null
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
-        this.poTableData[mId].taxInfo = res.taxInfo ? res.taxInfo : null;
-        this.poTableData[mId].otherCostInfo = res.otherCostInfo ? res.otherCostInfo : null;
+        this.poTableData[mId].taxInfo = res && res.taxInfo ? res.taxInfo : null;
+        this.poTableData[mId].otherCostInfo = res && res.otherCostInfo ? res.otherCostInfo : null;
         this.calculateTaxInfo(mId);
         this.calculateOtherTaxInfo(mId);
       }
       if (type === 'otherCost') {
-        this.additonalCost.additionalOtherCostInfo = res.otherCostInfo ? res.otherCostInfo : null;
+        this.additonalCost.additionalOtherCostInfo = res && res.otherCostInfo ? res.otherCostInfo : null;
         otherCost();
       }
     });
@@ -514,5 +525,58 @@ export class PoTableComponent implements OnInit, OnDestroy {
       }
     }
 
+  }
+
+
+  /**
+   * function will call to upload new images
+   * @param selectedMaterial, type
+   */
+  uploadImage(selectedMaterial, type) {
+    const dialogRef = this.dialog.open(UploadImageComponent, {
+      disableClose: true,
+      width: "60vw",
+      panelClass: 'upload-image-modal',
+      data: {
+        selectedMaterial,
+        type,
+        purchaseOrderId: this.poId
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== null) {
+        this.poTableData.forEach(po => {
+          po.purchaseOrderDetailList.map(list => {
+            if (list.materialId === result.materialId) {
+              list.documentList = result.documentsList;
+            }
+          });
+        });
+      }
+    });
+  }
+
+  /**
+   * function will call to open view image modal
+   * @param rfqId, materialId, type
+   */
+  viewAllImages(materialId) {
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        purchaseOrderId: this.poId,
+        materialId,
+        type: 'po'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 }

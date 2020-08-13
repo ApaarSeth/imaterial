@@ -45,6 +45,9 @@ export interface material {
   requestedQuantity: number;
   availableStock: number;
   issueToProject: number;
+  status?: number;
+  poAvailableQty?: number;
+  matched?: boolean;
 }
 
 export interface categoryNestedLevel {

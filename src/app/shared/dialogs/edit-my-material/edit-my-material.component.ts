@@ -42,7 +42,7 @@ export class EditMyMaterialComponent implements OnInit {
   check: boolean;
   materialUnit: string[];
   tradesList: { tradeName: string, tradeId: number }[] = [];
-  filteredOption: [tradeRelatedCategory[]] = [null];
+  filteredOption: tradeRelatedCategory[] = [];
   // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
   addOtherFormGroup: FormGroup;
   editMaterialForm: FormGroup;
@@ -59,17 +59,14 @@ export class EditMyMaterialComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { materialList: material[], type: string }) { }
 
   ngOnInit() {
-
     this.creatorId = Number(localStorage.getItem("userId"));
     this.formInit();
     this.getUserData(this.creatorId);
     this.getUserRoles();
     this.getMaterialUnit();
-    this.getTrades();
-    this.formInit();
+    // this.getTrades();
+    // this.getCategories()
   }
-
-
 
   getTrades() {
     this.userService.getTrades().then(res => {
@@ -81,6 +78,14 @@ export class EditMyMaterialComponent implements OnInit {
     })
   }
 
+  getCategories() {
+    this.bomService.getAllCategories().then(res => {
+      this.filteredOption = res.data;
+      this.filteredOption.push({ categoriesCode: null, categoriesName: 'Others' });
+      (<FormGroup>(<FormArray>this.editMaterialForm.get('forms')).controls[0]).controls['category'].setValue(
+        { categoriesCode: this.data.materialList[0].materialGroupCode, categoriesName: this.data.materialList[0].materialGroup })
+    })
+  }
 
   getMaterialUnit() {
     this.bomService.getMaterialUnit().then(res => {
@@ -106,11 +111,11 @@ export class EditMyMaterialComponent implements OnInit {
     const addOtherFormGroup = this.data.materialList.map((data: material) => {
       let frmGrp = this._formBuilder.group({
         customMaterialId: data.customMaterialId,
-        materialName: [data.materialName, Validators.required],
+        materialName: [data.materialName, [Validators.required, Validators.maxLength(300)]],
         materialUnit: [data.materialUnit, Validators.required],
         index: [],
-        trade: [{ tradeName: data.tradeName, tradeId: data.tradeId }],
-        category: [{ categoriesCode: data.materialGroupCode, categoriesName: data.materialGroup }]
+        trade: [{ value: data.tradeName, disabled: true }],
+        category: [{ value: data.materialGroup, disabled: true }]
       });
       return frmGrp;
     });
@@ -185,8 +190,7 @@ export class EditMyMaterialComponent implements OnInit {
   }
 
   submit() {
-
-    let myMaterial: MyMaterialPost = this.editMaterialForm.get("forms").value.map(val => {
+    let myMaterial: MyMaterialPost = (this.editMaterialForm.get("forms") as FormArray).getRawValue().map(val => {
       return {
         customMaterialId: val.customMaterialId,
         estimatedPrice: null,
@@ -198,7 +202,7 @@ export class EditMyMaterialComponent implements OnInit {
         tradeId: val.trade.tradeId,
         tradeName: val.trade.tradeName
       };
-    });
+    }) as any;
 
     if (this.data.type === 'edit') {
       if (this.data.materialList[0].materialName === myMaterial[0].materialName) {
@@ -253,9 +257,9 @@ export class EditMyMaterialComponent implements OnInit {
     let updateMaterial = { materialName: myMaterial[0].materialName, materialUnit: myMaterial[0].materialUnit, customMaterialId: myMaterial[0].customMaterialId }
     this.myMaterialService.updateMyMaterial(updateMaterial).then(res => {
       if (res.message = "done") {
-        this.resetMaterialName("My Materials Added")
+        this.dialogRef.close('done');
+        // this.resetMaterialName("My Materials Added")
       }
-      this.dialogRef.close('done');
     });
   }
 

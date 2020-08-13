@@ -1,3 +1,4 @@
+import { CancelSubscriptionDialog } from './../components/subscriptions/subscription-cancel/cancel-subscription-dialog.component';
 import { AddProjectComponent } from "./add-project/add-project.component";
 import { DoubleConfirmationComponent } from "./double-confirmation/double-confirmation.component";
 import { SuppliersDialogComponent } from "./add-supplier/suppliers-dialog.component";
@@ -37,6 +38,9 @@ import { TaxCostComponent } from './tax-cost/tax-cost.component';
 import { AddGrnComponent } from './add-grn/add-grn.component';
 import { GrnAddMaterialComponent } from './add-grn/add-material/add-material.component';
 import { GrnAddSupplierComponent } from './add-grn/add-supplier/add-supplier.component';
+import { AddGrnViaExcelComponent } from './addGrn-viaExcel/addGrnViaExcel.component';
+import { DeleteMyMaterialComponent } from './delete-my-material-confirmation/delete-myMaterial-confirmation.component';
+import { ShortCloseConfirmationComponent } from './short-close-confirmation/short-close-confirmation.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -77,5 +81,9 @@ export const SharedDialogs = [
   TaxCostComponent,
   AddGrnComponent,
   GrnAddMaterialComponent,
-  GrnAddSupplierComponent
+  GrnAddSupplierComponent,
+  AddGrnViaExcelComponent,
+  DeleteMyMaterialComponent,
+  ShortCloseConfirmationComponent,
+  CancelSubscriptionDialog
 ];

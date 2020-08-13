@@ -1,0 +1,27 @@
+<div class="header-add-edit-dialog">
+  <h1 mat-dialog-title class="light-grey">Confirmation</h1>
+  <button type="button" class="close" (click)="close()" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<div mat-dialog-content class="padding-for-dialog-after-header">
+  <p class="text-center light-grey">
+    You are closing this Purchase Order . The quantities of materials pending in this PO will become 0 and you are free to add them in other Purchase Orders.
+    <br />
+    <br />
+    <span class="text-semi-bold p-t-20 light-grey">Do you still want to shortclose the PO?</span>
+  </p>
+</div>
+
+<div mat-dialog-actions>
+  <div class="col-sm-6 text-left save-btn-add-edit-user-modal">
+    <button mat-raised-button (click)="close()" class="main-color main-button pull-left">
+      Cancel
+    </button>
+  </div>
+  <div class="col-sm-6 text-right save-btn-add-edit-user-modal">
+    <button mat-raised-button (click)="delete()" class="main-background-color main-button color-white pull-right">
+      Send for Approval
+    </button>
+  </div>
+</div>

@@ -16,6 +16,8 @@ import { ConfigurationConstants } from "../constants/configuration-constants";
 import { ResolveData, Router } from "@angular/router";
 import { DataServiceOptions } from "../models/data-service-options";
 import { Utils } from '../helpers/utils';
+import { ErrorCodesConstants } from '../constants/error-code-constant';
+import { AppNotificationService } from './app-notification.service';
 //import { NotificationService } from './notification-service';
 
 @Injectable({
@@ -23,6 +25,7 @@ import { Utils } from '../helpers/utils';
 })
 export class DataService {
   private baseUrl: string;
+  paymentUrl: string;
   private baseStartUrl: string;
   private masterUrl: string;
   private ssoUrl: string;
@@ -32,14 +35,13 @@ export class DataService {
 
   constructor(
     private http: HttpClient,
-    //private notifier: NotificationService,
+    private notifier: AppNotificationService,
     //private token:environment TokenService,
     private router: Router
   ) {
     // this.baseUrl = environment.url + "/";
     // this.masterUrl = environment.masterUrl + "/";
     // this.ssoUrl = environment.ssoUrl + "/";
-    this.baseUrl = Utils.baseUrl();
     this.baseStartUrl = Utils.baseUrl();
     this.baseUrl = this.baseStartUrl + "im/";
     this.masterUrl = this.baseStartUrl + "mm/";
@@ -47,6 +49,7 @@ export class DataService {
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.orgId = localStorage.getItem("orgId");
+    this.paymentUrl = Utils.paymentUrl() + 'payment/';
   }
 
   getRequest(
@@ -365,13 +368,35 @@ export class DataService {
     //   window.location.reload();
     // }
 
-    if (
-      err
-    ) {
 
+    if ((!window.navigator.onLine) || ((typeof err === 'object') && (err.status === ErrorCodesConstants.ERROR_HTTP_NO_RESPONSE))) {
+      this.notifier.snack('INTERNET CONNECTION ISSUE');
+      throw undefined;
     }
-    //this.notifier.notify(err.error.message);
-    throw err;
+
+
+    if (err.status === ErrorCodesConstants.ERROR_HTTP_NOT_FOUND) {
+      throw err.error;
+    } else {
+      throw err.error;
+    }
+
+    // if (err.error.error === 'Unauthorized' && err.error.httpStatusCode === 401) {
+    //     localStorage.clear();
+    //     window.location.reload();
+    // }
+    // if (data) {
+    //   this.notifier.snack(err.error)
+
+    // }
+
+    // throw err.error || err;
+
+    // if (err) {
+
+    // }
+    // //this.notifier.notify(err.error.message);
+    // throw err;
   }
 
 

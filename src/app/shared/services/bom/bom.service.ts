@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { DataService } from "../data.service";
 import { API } from "../../constants/configuration-constants";
 import { sendIssuedQuantityObj } from "../../models/issue-to-indent";
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 export class BomService {
   constructor(private dataService: DataService) { }
 
-  searchText = new Subject<string>();
+  searchText = new BehaviorSubject<string>('');
 
 
   getMaterialsWithSpecs(categoryList) {
@@ -93,6 +93,8 @@ export class BomService {
     return this.dataService.getRequestMaster(API.ALLCATEGORY)
   }
 
-
+  addGrnWithoutPo(data) {
+    return this.dataService.sendPostRequest(API.ADDGRNWITHOUTPO, data)
+  }
 
 }

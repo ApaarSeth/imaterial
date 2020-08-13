@@ -3,10 +3,12 @@
     <div class="row">
       <div class="col-sm-12 terms-margin-set-width col-md-8 offset-md-2">
         <div class="update-info__popup p-20">
-          <form class="update-info__form" *ngIf="userInfoForm && users" [formGroup]="userInfoForm" (ngSubmit)="submit()">
+          <form class="update-info__form" *ngIf="userInfoForm && users" [formGroup]="userInfoForm"
+            (ngSubmit)="submit()">
             <div class="row">
               <div class="col-sm-12 col-md-12">
-                <h3 class="user-profile text-center text-uppercase pt-2 pb-4" *ngIf="users">{{ users.organizationName }}</h3>
+                <h3 class="user-profile text-center text-uppercase pt-2 pb-4" *ngIf="users">{{ users.organizationName }}
+                </h3>
               </div>
 
               <div class="col-sm-12 col-md-6">
@@ -35,7 +37,8 @@
                 <mat-form-field class="border-input w-100">
                   <input matInput type="text" placeholder="First Name*" formControlName="firstName" />
                 </mat-form-field>
-                <mat-error *ngIf="userInfoForm.controls['firstName'].errors && (userInfoForm.controls['firstName'].dirty || userInfoForm.controls['firstName'].touched)">
+                <mat-error
+                  *ngIf="userInfoForm.controls['firstName'].errors && (userInfoForm.controls['firstName'].dirty || userInfoForm.controls['firstName'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['firstName'].hasError('required')">
                     First name is required
                   </mat-error>
@@ -44,7 +47,8 @@
                 <mat-form-field class="border-input w-100">
                   <input matInput type="text" placeholder="Last Name*" formControlName="lastName" />
                 </mat-form-field>
-                <mat-error *ngIf="userInfoForm.controls['lastName'].errors && (userInfoForm.controls['lastName'].dirty || userInfoForm.controls['lastName'].touched)">
+                <mat-error
+                  *ngIf="userInfoForm.controls['lastName'].errors && (userInfoForm.controls['lastName'].dirty || userInfoForm.controls['lastName'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['lastName'].hasError('required')">
                     Last name is required
                   </mat-error>
@@ -53,11 +57,13 @@
                 <mat-form-field class="border-input w-100">
                   <input matInput type="text" placeholder="Email Id" formControlName="email" />
                 </mat-form-field>
-                <mat-error *ngIf="userInfoForm.controls['email'].errors && (userInfoForm.controls['email'].dirty || userInfoForm.controls['email'].touched)">
+                <mat-error
+                  *ngIf="userInfoForm.controls['email'].errors && (userInfoForm.controls['email'].dirty || userInfoForm.controls['email'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['email'].hasError('required')">
                     Email address is required
                   </mat-error>
-                  <mat-error *ngIf="userInfoForm.controls['email'].hasError('pattern') && userInfoForm.controls['email'].touched">
+                  <mat-error
+                    *ngIf="userInfoForm.controls['email'].hasError('pattern') && userInfoForm.controls['email'].touched">
                     Email address must be valid
                   </mat-error>
                 </mat-error>
@@ -67,45 +73,42 @@
                       <mat-label>Country Code</mat-label>
                       <mat-select formControlName="countryCode">
                         <div class="display-flex">
-                          <input
-                            class="p-l-10 p-b-5"
-                            matInput
-                            type="search"
-                            placeholder="Search Country"
-                            [(ngModel)]="searchCountry"
-                            [ngModelOptions]="{standalone: true}"
-                            (keydown)="$event.stopPropagation()"
-                          />
+                          <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country"
+                            [(ngModel)]="searchCountry" [ngModelOptions]="{standalone: true}"
+                            (keydown)="$event.stopPropagation()" />
                           <button mat-button matSuffix mat-icon-button>
                             <mat-icon>search</mat-icon>
                           </button>
                         </div>
                         <mat-select-trigger>
-                          <span
-                            ><img class="width-35-px p-r-10" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                          <span><img class="width-35-px p-r-10" [src]="selectedCountry && selectedCountry.imageUrl"
+                              alt="" />
                             <span class="p-r-5">{{ selectedCountry && selectedCountry.countryCode }}</span>
                             <span>{{ selectedCountry && selectedCountry.callingCode }}</span>
                           </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country"
-                          ><span
-                            ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                            <span matTooltip="{{ country.name }}" class="limited-character universal p-r-4">{{ country.name }}</span>
+                        <mat-option
+                          *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
+                          [value]="country"><span><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                            <span matTooltip="{{ country.name }}"
+                              class="limited-character universal p-r-4">{{ country.name }}</span>
                             <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
                           </span>
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
-                  <div class="col-xs-7 p-t-1">
+                  <div class="col-xs-7">
                     <mat-form-field class="border-input w-100">
                       <input matInput type="text" placeholder="{{ this.countryCode === 'IN' ? 'Phone No.*' : 'Phone No.' }}" formControlName="contactNo" />
                     </mat-form-field>
-                    <mat-error *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
+                    <mat-error
+                      *ngIf="userInfoForm.controls['contactNo'].errors && (userInfoForm.controls['contactNo'].dirty || userInfoForm.controls['contactNo'].touched)">
                       <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('required')">
                         Phone number is required
                       </mat-error>
-                      <mat-error *ngIf="userInfoForm.controls['contactNo'].hasError('pattern') && userInfoForm.controls['contactNo'].touched">
+                      <mat-error
+                        *ngIf="userInfoForm.controls['contactNo'].hasError('pattern') && userInfoForm.controls['contactNo'].touched">
                         Phone number must be valid
                       </mat-error>
                     </mat-error>
@@ -115,16 +118,20 @@
                 <mat-form-field *ngIf="users.roleName === 'l1'" class="border-input w-100">
                   <input matInput type="text" placeholder="Pincode" formControlName="orgPincode" />
                 </mat-form-field>
-                <mat-error *ngIf="userInfoForm.controls['orgPincode'].errors?.max && userInfoForm.controls['orgPincode'].touched">
+                <mat-error
+                  *ngIf="userInfoForm.controls['orgPincode'].errors?.max && userInfoForm.controls['orgPincode'].touched">
                   maximum characters allowed is 6
                 </mat-error>
-                <mat-error *ngIf="userInfoForm.controls['orgPincode'].errors?.pincodeInvalid && userInfoForm.controls['orgPincode'].touched">
+                <mat-error
+                  *ngIf="userInfoForm.controls['orgPincode'].errors?.pincodeInvalid && userInfoForm.controls['orgPincode'].touched">
                   Enter valid pincode
                 </mat-error>
                 <mat-error *ngIf="!validPincode && userInfoForm.controls['orgPincode'].touched">
                   Enter Correct pincode
                 </mat-error>
-                <small *ngIf="userInfoForm.controls['orgPincode'].errors?.maxlength && userInfoForm.controls['orgPincode'].touched" class="signupForm-error-msg"></small>
+                <small
+                  *ngIf="userInfoForm.controls['orgPincode'].errors?.maxlength && userInfoForm.controls['orgPincode'].touched"
+                  class="signupForm-error-msg"></small>
                 <mat-form-field class="border-select w-100" *ngIf="users.roleName != 'l3'">
                   <mat-label>Role</mat-label>
                   <mat-select formControlName="roleId">
@@ -137,7 +144,8 @@
                   <input matInput type="text" placeholder="Role" formControlName="roleDescription" />
                 </mat-form-field>
 
-                <mat-error *ngIf="userInfoForm.controls['roleId'].errors && (userInfoForm.controls['roleId'].dirty || userInfoForm.controls['roleId'].touched)">
+                <mat-error
+                  *ngIf="userInfoForm.controls['roleId'].errors && (userInfoForm.controls['roleId'].dirty || userInfoForm.controls['roleId'].touched)">
                   <mat-error *ngIf="userInfoForm.controls['roleId'].hasError('required')"> Role is required</mat-error>
                 </mat-error>
 
@@ -149,31 +157,29 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <mat-error *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
-                  <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')">Annual Turn over is required</mat-error>
+                <mat-error
+                  *ngIf="userInfoForm.controls['turnOverId'].errors && (userInfoForm.controls['turnOverId'].dirty || userInfoForm.controls['turnOverId'].touched)">
+                  <mat-error *ngIf="userInfoForm.controls['turnOverId'].hasError('required')">Annual Turn over is
+                    required</mat-error>
                 </mat-error>
-                <div *ngIf="users.roleName === 'l1'" class="row height12Percent m-t-10 border-round p-t-5 full-border-main width-70">
+                <div *ngIf="users.roleName === 'l1'"
+                  class="row height12Percent m-t-10 border-round p-t-5 full-border-main width-70">
                   <div class="col-xs-6 p-t-10 color-grey text-semi-bold p-r-0 font-size">Base Currency</div>
                   <div class="col-xs-6 p-l-0">
-                    <mat-form-field class="width-90 border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
+                    <mat-form-field
+                      class="width-90 border-select mat-form-field-infix-padding dropdown-padding mat-form-field-flex-mm-padding">
                       <mat-select formControlName="baseCurrency">
                         <div class="display-flex">
-                          <input
-                            class="p-l-10 p-b-5"
-                            matInput
-                            type="search"
-                            placeholder="Search Currency"
-                            [(ngModel)]="searchCurrency"
-                            [ngModelOptions]="{standalone: true}"
-                            (keydown)="$event.stopPropagation()"
-                          />
+                          <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Currency"
+                            [(ngModel)]="searchCurrency" [ngModelOptions]="{standalone: true}"
+                            (keydown)="$event.stopPropagation()" />
                           <button mat-button matSuffix mat-icon-button>
                             <mat-icon>search</mat-icon>
                           </button>
                         </div>
                         <mat-select-trigger>
-                          <span
-                            ><img class="width-55 p-r-10" [src]="selectedBaseCurrency && selectedBaseCurrency.imageUrl" alt="" />
+                          <span><img class="width-55 p-r-10"
+                              [src]="selectedBaseCurrency && selectedBaseCurrency.imageUrl" alt="" />
                             <span class="p-r-5">{{ selectedBaseCurrency && selectedBaseCurrency.currencyCode }}</span>
                           </span>
                         </mat-select-trigger>
@@ -206,12 +212,9 @@
               <div class="col-sm-12 col-md-12 choose-trades" *ngIf="users.roleName === 'l1'">
                 <p style="font-weight: 600;">Choose Trades</p>
                 <mat-chip-list multiple id="chipList" [selectable]="true">
-                  <mat-chip
-                    *ngFor="let trade of tradeList"
-                    [selected]="trade.tradeId"
+                  <mat-chip *ngFor="let trade of tradeList" [selected]="trade.tradeId"
                     [ngClass]="[trade.selected && trade.tradeId !== OthersId ? 'active' : '', trade.tradeId === OthersId ? 'user-Other-Trade' : '']"
-                    (click)="trade.selected = !trade.selected; changeSelected('s', trade)"
-                  >
+                    (click)="trade.selected = !trade.selected; changeSelected('s', trade)">
                     {{ trade.tradeName }}
                   </mat-chip>
                   <form [formGroup]="customTrade">
@@ -223,7 +226,8 @@
               </div>
 
               <div class="text-center col-md-12 mt-4">
-                <button class="btn btn-warning next-btn" [disabled]="imageFileSizeCheck && userInfoForm.valid ? false : true">Next</button>
+                <button class="btn btn-warning next-btn"
+                  [disabled]="imageFileSizeCheck && userInfoForm.valid ? false : true">Next</button>
               </div>
             </div>
           </form>

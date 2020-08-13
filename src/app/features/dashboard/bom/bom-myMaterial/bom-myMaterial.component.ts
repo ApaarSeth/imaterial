@@ -5,7 +5,9 @@ import {
   ViewChild,
   Output,
   EventEmitter,
-  ElementRef
+  ElementRef,
+  SimpleChange,
+  SimpleChanges
 } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
@@ -23,6 +25,7 @@ import { BomService } from "src/app/shared/services/bom/bom.service";
 import { parse } from "querystring";
 import { Materials } from "src/app/shared/models/subcategory-materials";
 import { range } from 'rxjs';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
   selector: "app-bom-myMaterial",
@@ -39,6 +42,7 @@ export class BomMyMaterialComponent implements OnInit {
   searchUnit: string = '';
   constructor(
     private router: Router,
+    private notifier: AppNotificationService,
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private bomService: BomService,
@@ -49,8 +53,6 @@ export class BomMyMaterialComponent implements OnInit {
   frmArr: FormGroup[];
   quantityForms: FormGroup;
   selectedCategory: categoryNestedLevel[] = [];
-  // searchMaterial: string;
-  // product: ProjectDetails;
   step = 0;
   isSearching: boolean;
   setStep(index: number) {
@@ -58,29 +60,18 @@ export class BomMyMaterialComponent implements OnInit {
   }
   currencyCode: string;
 
-
   ngOnInit() {
     this.currencyCode = localStorage.getItem('currencyCode')
-    this.route.params.subscribe(params => {
-      this.projectId = params["id"];
-    });
-    this.orgId = Number(localStorage.getItem("orgId"))
-    // this.projectService.getProject(this.orgId, this.projectId).then(data => {
-    // });
     this.bomService.getMaterialUnit().then(res => {
       this.materialUnit = res.data;
     });
-    this.selectedCategory = [...this.category];
-    this.mappingMaterialWithQuantity()
-    this.formInit();
-    this.searchCategory();
+    this.bomService.searchText.subscribe(val => {
+      this.searchCategory(val);
+    })
   }
 
-  searchCategory() {
-    if (this.category) {
-      this.selectedCategory = [...this.category];
-    }
-    this.bomService.searchText.subscribe(val => {
+  searchCategory(val) {
+    if (this.selectedCategory) {
       if (val && val !== '') {
         this.isSearching = true;
         for (let category of this.selectedCategory) {
@@ -105,20 +96,20 @@ export class BomMyMaterialComponent implements OnInit {
           category.allNull = false;
         }
       }
-    })
-
+    }
   }
 
-  ngOnChanges(): void {
-    this.selectedCategory = [...this.category];
-    this.mappingMaterialWithQuantity()
-    this.formInit();
-    if (this.searchMat != null && this.searchMat != "") {
-      this.bomService.searchText.next(this.searchMat);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.category && changes.category.currentValue) {
+      if (changes.category.currentValue.length) {
+        this.route.params.subscribe(params => {
+          this.projectId = params["id"];
+          this.orgId = Number(localStorage.getItem("orgId"))
+          this.selectedCategory = [...this.category];
+          this.mappingMaterialWithQuantity()
+        });
+      }
     }
-    this.formInit();
-    // this.enteredInput();
-
   }
 
   formInit() {
@@ -127,7 +118,7 @@ export class BomMyMaterialComponent implements OnInit {
         return this.formBuilder.group({
           materialId: [subcategory.materialId],
           materialMasterId: [subcategory.materialId],
-          estimatedQty: [subcategory.estimatedQty],
+          estimatedQty: [subcategory.estimatedQty, [this.estimatedQtyCheck(subcategory.poAvailableQty ? subcategory.poAvailableQty : 0)]],
           materialCode: [subcategory.materialCode],
           materialName: [subcategory.materialName],
           materialGroup: [subcategory.materialGroup],
@@ -144,8 +135,6 @@ export class BomMyMaterialComponent implements OnInit {
       { forms: this.formBuilder.array(frmArr) }
       , { validators: this.getMaterialLength() }
     );
-    // this.quantityForms.addControl("forms", new FormArray(frmArr, [this.getMaterialLength()]));
-    // this.enteredInput();r
 
 
     (<FormArray>this.quantityForms.get('forms')).controls.map((control: FormGroup) => {
@@ -157,56 +146,77 @@ export class BomMyMaterialComponent implements OnInit {
     })
   }
 
+  estimatedQtyCheck(checkVal): ValidatorFn {
+    return (control: FormControl): { [key: string]: boolean } | null => {
+      if (control.value >= checkVal || control.value == null || checkVal == 0) {
+        return null;
+      }
+      else {
+        this.notifier.snack("Estimated qty can'nt be less than available qty")
+        return {
+          incorrectValue: true,
+        };
+      }
+    }
+  }
+
   mappingMaterialWithQuantity() {
     this.bomService
       .getMaterialWithQuantity(this.orgId, this.projectId)
       .then(res => {
         this.dataQty = res.data;
         if (this.dataQty) {
-          this.selectedCategory.map((category: categoryNestedLevel) => {
-            category.materialList = category.materialList.map(
-              subcategory => {
-                for (let data of this.dataQty) {
-                  if (
-                    subcategory.materialGroup === data.materialGroup &&
-                    subcategory.materialName === data.materialName &&
-                    data.estimatedQty > 0
-                  ) {
-                    subcategory.materialUnit = data.materialUnit;
-                    subcategory.requestedQuantity = data.requestedQuantity
-                    subcategory.availableStock = data.availableStock
-                    subcategory.issueToProject = data.issueToProject
-                    subcategory.estimatedQty = data.estimatedQty;
-                    subcategory.estimatedRate = data.estimatedRate;
-                    subcategory.materialId = data.materialId;
-                  }
-                  else {
-                    subcategory.requestedQuantity = null;
-                    subcategory.availableStock = null;
-                    subcategory.issueToProject = null;
-                  }
+          this.selectedCategory.forEach((category: categoryNestedLevel) => {
+            for (let subcategory of category.materialList) {
+              for (let data of this.dataQty) {
+                if (
+                  subcategory.materialGroup === data.materialGroup &&
+                  subcategory.materialName === data.materialName &&
+                  data.estimatedQty > 0
+                ) {
+                  subcategory.materialUnit = data.materialUnit;
+                  subcategory.requestedQuantity = data.requestedQuantity
+                  subcategory.availableStock = data.availableStock
+                  subcategory.poAvailableQty = data.poAvailableQty
+                  subcategory.issueToProject = data.issueToProject
+                  subcategory.estimatedQty = data.estimatedQty;
+                  subcategory.estimatedRate = data.estimatedRate;
+                  subcategory.materialId = data.materialId;
+                  subcategory.matched = true;
+                  break;
                 }
-                return subcategory;
-              });
-            return category;
+                else if (!subcategory.matched) {
+                  subcategory.estimatedQty = null;
+                  subcategory.requestedQuantity = null;
+                  subcategory.availableStock = null;
+                  subcategory.issueToProject = null;
+                }
+              }
+            };
           })
-          this.formInit();
         } else {
-          this.selectedCategory.map((category: categoryNestedLevel) => {
-            category.materialList = category.materialList.map(
+          this.selectedCategory.forEach((category: categoryNestedLevel) => {
+            category.materialList.forEach(
               subcategory => {
                 subcategory.requestedQuantity = null;
                 subcategory.availableStock = null;
                 subcategory.issueToProject = null;
-                return subcategory;
               });
-            return category;
           })
         }
-        // this.searchData.emit(this.selectedCategory);
+        this.filterDeletedMaterial()
+        this.formInit();
       })
       .catch(err => {
       });
+  }
+
+  filterDeletedMaterial() {
+    this.selectedCategory.forEach(category => {
+      category.materialList = category.materialList.filter(material => {
+        return material.status === 0 || (material.status === 1 && material.estimatedQty !== null)
+      })
+    })
   }
 
   getMaterialLength(): ValidatorFn {
@@ -221,10 +231,6 @@ export class BomMyMaterialComponent implements OnInit {
           break;
         }
       }
-      // if (control.value) {
-      //   checked++;
-      // }
-
       if (!checked) {
         return {
           requireCheckboxToBeChecked: true,
@@ -246,7 +252,6 @@ export class BomMyMaterialComponent implements OnInit {
     }).flat()
 
   }
-
 
   customValidation(form: FormGroup) {
     if (form.value) {

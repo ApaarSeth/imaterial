@@ -1,0 +1,233 @@
+<div *ngIf="subscriptionsData" class="subs-data text-align-center">
+  <h2 class="mt-4" [ngClass]="isMobile ? 'ml-2 mr-2' : ''">Choose a Plan That's Right for Your Business</h2>
+
+  <ng-container *ngIf="trialAction">
+    <p class="mb-2 mt-2">{{ trialDays }} FREE TRIAL</p>
+  </ng-container>
+
+  <mat-tab-group mat-align-tabs="center" disableRipple>
+    <mat-tab *ngFor="let subscription of subscriptionsData">
+      <ng-template mat-tab-label>
+        <span *ngIf="subscription.discountPercent" class="sub-svtxt"
+          [ngClass]="isMobile ? 'font-size10' : 'font-size12'">(Save {{ subscription.discountPercent }}%)</span>
+        Pay {{ subscription.frequencyHeader }}
+      </ng-template>
+
+
+      <!-- <div class="col-md-7 col-sm-12 m-0-auto"> -->
+      <div class="desp-block">
+        <div class="row" [ngClass]="isMobile ? 'mt-2' : 'mt-3'">
+          <div *ngFor="let plan of subscription.planList" class="col-md-4 mb-3 d-flex">
+            <mat-card class="col-md-12 text-left p-0">
+              <mat-card-header [className]="'subs-head ' + getClassName(plan.planName)">
+                <!-- <mat-card-header class="subs-head"> -->
+                <mat-card-title>{{ plan.planName }} Plan
+                  <ng-container *ngIf="plan.activeSubscription !== null">
+                    <span class="font-size-12 font-weight500 mt-2">(My Plan)</span>
+                  </ng-container>
+                </mat-card-title>
+                <mat-card-subtitle class="text-left pl-5">
+
+
+                  <div class="row">
+                    <div class="col-xs-9">
+
+
+                      <ng-container *ngIf="plan.planName !== 'Custom'; else cstmSts">
+                        <div class="pt-2 pb-3">
+
+                          <ng-container *ngIf="subscription.discountPercent !== null; else flatPrice">
+                            <span class="line-through reg-price h-30px">{{ plan.currencyCode }}
+                              {{ plan.planUnitPrice }}</span>
+                            <span class="d-flex">
+                              <div class="font-weight500">
+                                {{ plan.currencyCode }}
+                                {{getSubsciptionDiscounted(subscription.discountPercent, plan.planUnitPrice)}}
+                              </div>
+                              <sub class="font-size-12 align-self-center ml-1">/ Month</sub>
+                            </span>
+                          </ng-container>
+                          <ng-template #flatPrice>
+                            <span class="h-30px d-block w-100">&nbsp;</span>
+                            <span class="d-flex">
+                              <div class="font-weight500">
+                                {{ plan.currencyCode }} {{ plan.planUnitPrice }}
+                              </div>
+                              <sub class="font-size-12 align-self-center ml-1">/ Month</sub>
+                            </span>
+                          </ng-template>
+                          <!-- <sub class="font-size-40px prc-str">*</sub> -->
+                          <p class="font-size-12">Add an additional user for {{ plan.currencyCode }}
+                            <ng-container *ngIf="plan.planName === 'Basic'">
+                              1000
+                            </ng-container>
+                            <ng-container *ngIf="plan.planName === 'Premium'">
+                              1500
+                            </ng-container>
+                          </p>
+
+                        </div>
+                      </ng-container>
+                      <ng-template #cstmSts>
+                        <span class="h-30px d-block w-100">&nbsp;</span>
+                        <div class="pl-2 pt-3">
+                          <strong>Get in touch with us for a price quote</strong>
+                        </div>
+                      </ng-template>
+
+
+
+                    </div>
+                    <div class="col-xs-3">
+                      <ng-container *ngIf="subscription.discountPercent !== null && plan.planName !== 'Custom'">
+                        <div class="offer-saving mt-4 ml-1">
+                          <h4 class="font-size18 font-weight-bold">{{subscription.discountPercent}}%</h4>
+                          <p class="font-size11">SAVING</p>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+
+
+                </mat-card-subtitle>
+              </mat-card-header>
+
+              <mat-card-content [ngClass]="isMobile ? 'sm-btn1' : '' ">
+
+                <ng-container *ngIf="plan.planName !== 'Custom'; else cstmActn">
+                  <ng-container *ngIf="plan.activeSubscription === null; else sbscrbd">
+                    <div class="susb-actions text-align-center p-10 d-block">
+                      <button *ngIf="trialAction && isActiveSubscription === 0" mat-button
+                        class="bordered-button fbtn mr-2"
+                        (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        Free Trial
+                      </button>
+                      <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
+                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        Buy Now
+                      </button>
+                    </div>
+                  </ng-container>
+                  <ng-template #sbscrbd>
+                    <div class="susb-actions text-align-center p-10 d-block">
+                      <!-- <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
+                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        Add More User
+                      </button> -->
+
+                      <ng-container *ngIf="(isFreeTrialSubscription === 1 && isActiveSubscription === 1); else blnkSpc">
+                        <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
+                          (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                          Buy Now
+                        </button>
+                      </ng-container>
+                      <ng-template #blnkSpc>
+                        <p style="height:20px;"></p>
+                      </ng-template>
+
+                    </div>
+                  </ng-template>
+                </ng-container>
+                <ng-template #cstmActn>
+                  <div class="susb-actions text-align-center p-10 d-block">
+                    <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
+                      (click)="contactSales()">
+                      Contact Sales
+                    </button>
+                  </div>
+                </ng-template>
+              </mat-card-content>
+
+              <ng-container *ngIf="isMobile">
+                <button mat-button class="w-100" (click)="showAllFeatures($event)">
+                  <span class="float-left brand-color">Show All Features</span>
+                  <span class="material-icons float-right mt-2">
+                    keyboard_arrow_down
+                  </span>
+                </button>
+              </ng-container>
+              <mat-card-actions class="feat-list pl-4 pb-3" [ngClass]="isMobile ? 'f-hide' : ''">
+                <ul>
+                  <li *ngFor="let feature of sortFeaturesObjList(plan.planFeatureObjList)"
+                    [ngClass]="feature.available ? 'active' : 'inactive'">
+                    <ng-container *ngIf="feature.available; else notAvailable">
+                      <span class="material-icons">done</span>
+                    </ng-container>
+                    <ng-template #notAvailable>
+                      <span class="material-icons">close</span>
+                    </ng-template>
+                    {{ feature.featureName }}
+                  </li>
+                </ul>
+
+                <!-- <ng-container
+                  *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && plan.isTrialActive === 0"> -->
+                <ng-container
+                  *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && isActiveSubscription === 1 && isFreeTrialSubscription === 0 && plan.activeSubscription.dateUnsubscribed === null">
+                  <p class="text-center mt-4 mr-4 brand-color">
+                    <button mat-button (click)="unsubscribePlan(plan.activeSubscription.subscriptionId)">
+                      Cancel Plan
+                    </button>
+                  </p>
+                </ng-container>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+    </mat-tab>
+  </mat-tab-group>
+  <!-- <p class="color-6d6a6a desp-block font-size14 mb-4 text-align-right">*Displayed prices all exclusive of taxes</p> -->
+
+  <!-- <div>
+    <div class="subs-terms">
+
+      <section class="example-section">
+        <mat-checkbox class="example-margin">I agree to terms & condition</mat-checkbox>
+      </section>
+
+      <h4 class="mt-2 mb-4">wPayment terms and conditions - Fees for purchased services</h4>
+
+      <h4>1. Subscription terms </h4>
+      <p>Material Manager offers a range of subscription plans. Each plan includes a certain number of users and
+        features.
+        You will select your plan as part of your registration, which may begin with a free trial. You may be billed
+        monthly, semi annually or annually as per your chosen cycle. </p>
+
+      <h4>2. Free Trial period </h4>
+      <p>2.1 During the registration process, you get a one time free trial to try out the Material Manager platform
+        from
+        the date you register without paying in advance. <br />
+        2.2 You can enjoy a free trial of the platform for a period of 30 days, post which the free trial ends and you
+        may
+        have to subscribe to any one of the plans to continue using the platform</p>
+
+      <h4>3. Payment terms, Refunds, Upgrades </h4>
+      <p>3.1 The fees of your plan are billed in advance, non-refundable and automatically renew on a monthly,
+        semi-annual
+        or annual basis as described in your plan. <br />
+        3.2 If you upgrade your plan, your credit card will be charged immediately on a prorated amount reflecting the
+        increased rate. You will be charged the full amount of the new rate as part of your new billing cyclebr <br>
+        3.3 Any discounts applied to the previous subscription may not be applied to the renewed subscription. <br>
+        3.4 You may also add users over and above the number mentioned as part of each plan. You will be charged an
+        amount
+        per user. If you add more users in the middle of the month/cycle, it would be considered as a new subscription
+        and
+        the amount remaining as part of the previous subscription will be adjusted in the next month. </p>
+
+
+      <h4>4. Subscription cancellation </h4>
+      <p>
+        4.1 The only method to cancel your subscription is doing so using the ‘Cancel’ option in the platform. <br>
+        4.2 If you cancel your plan before the end of your pre-paid period, you will not be charged again for your plan
+        beginning with the next billing cycle. If you cancel your plan, you will lose access to the data on the platform
+        upon expiration of your current pre-paid period. </p>
+
+      <h4>5. Payment failure</h4>
+      <p>5.1 If you fail to make payments on or before the due date (case of dishonored auto debit ), your subscription
+        will be paused immediately. You will regain access to the platform once the payment is made.</p>
+
+    </div>
+  </div> -->
+</div>

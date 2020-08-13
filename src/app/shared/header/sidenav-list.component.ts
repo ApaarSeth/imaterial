@@ -5,6 +5,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { AppNavigationService } from '../services/navigation.service';
+import { MenuList } from '../models/menu.model';
+import { CommonService } from '../services/commonService';
 @Component({
   selector: 'app-sidenav-list',
   templateUrl: './sidenav-list.html'
@@ -22,15 +24,34 @@ export class SidenavListComponent implements OnInit {
   subsriptions: Subscription[] = [];
   buttonName: string;
 
+  accountOwner: any;
+
+  isPlanAvailable: any;
+
+  @Input('menuData') data: MenuList;
+
   constructor(
     private permissionService: PermissionService,
     private navService: AppNavigationService,
-    private router: Router
+    private router: Router,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.role = localStorage.getItem("role");
+
+    this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
+    this.accountOwner = Number(localStorage.getItem('accountOwner'));
+
+    if (this.data.moduleList && this.data.moduleList.length) {
+      this.data.moduleList.forEach(itm => {
+        if (itm.modulePath === 'globalStore/') {
+          itm.modulePath = itm.modulePath + this.orgId;
+        }
+      });
+    }
+
     if (this.role) {
       this.permissionObj = this.permissionService.checkPermission(this.role);
       this.headerConst = HeaderConstants.PERMISSIONHEADER(this.permissionObj, this.orgId);
@@ -87,12 +108,19 @@ export class SidenavListComponent implements OnInit {
     this.sidenavClose.emit();
   }
   redirect(path) {
-    this.router.navigate([path]).then(_ => {
+    this.router.navigate([ path ]).then(_ => {
       this.sidenav.close();
     })
   }
+
+  goToMyPlans() {
+    this.router.navigate([ '/subscriptions' ]);
+    this.buttonName = 'My Plans';
+    this.sidenav.close();
+  }
+
   logout() {
-    this.router.navigate(['/auth/login']).then(_ => {
+    this.router.navigate([ '/auth/login' ]).then(_ => {
       localStorage.clear();
     });
   }

@@ -1,7 +1,8 @@
 <mat-sidenav-container>
   <mat-sidenav class="sidenav" #sidenav [fixedInViewport]="true" [mode]="'over'">
     <div class="side-navbar-header">
-      <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
+      <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/logo-profile-header.png'"
+        alt="Test" />
       <span class="user-name" (click)="goToProfile(sidenav)">
         {{ userName }}
       </span>
@@ -10,11 +11,21 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <app-sidenav-list [sidenav]="sidenav"></app-sidenav-list>
+    <app-sidenav-list [sidenav]="sidenav" [menuData]="menuData"></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header #header [menu]="sidenav"></app-header>
-
-    <router-outlet> </router-outlet>
+    <app-header #header [menu]="sidenav" [subscriptionsData]="subscriptionsData"></app-header>
+    <sidebar-navigation (collapseMenu)="isSidebarCollapsed($event)" [menuData]="menuData">
+    </sidebar-navigation>
+    <ng-container *ngIf="isFreeTrialActivate && accountOwner === 1; else noTrial">
+      <div class="mt-120 changeWidth">
+        <router-outlet> </router-outlet>
+      </div>
+    </ng-container>
+    <ng-template #noTrial>
+      <div class="mt-5 changeWidth">
+        <router-outlet> </router-outlet>
+      </div>
+    </ng-template>
   </mat-sidenav-content>
 </mat-sidenav-container>

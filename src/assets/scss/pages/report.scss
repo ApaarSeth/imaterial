@@ -51,6 +51,7 @@
   .backgound-total-amount{
     background: #d6d3d3;
     font-weight: 500;
+    padding-right: 40px !important;
   }
   .mat-select-value{
     padding-top: 5px;
@@ -79,6 +80,7 @@
   }
 
   $mat-header-row-height: 56px;
+  $ctc-mat-header-row-height: 75px;
   $mat-row-height: 48px;
   $material-row-height: 77px;
   $mat-row-horizontal-padding: 24px;
@@ -89,6 +91,12 @@
 
   .mat-header-row {
     min-height: $mat-header-row-height;
+    height: auto
+  }
+
+  .mat-header-row.ctc-report-header-row{
+    height: auto;
+    padding-right: 42px;
   }
 
   .mat-row {
@@ -103,7 +111,7 @@
   .mat-header-row {
     display: flex;
     align-items: center;
-    padding: 0 $mat-row-horizontal-padding;
+    padding: 0 15px;
     box-sizing: border-box;
   }
 
@@ -122,6 +130,7 @@
 
   .mat-header-row {
     background: #2197bb;
+    padding-right: 40px;
 
     span {
       color: #ffffff !important;
@@ -146,7 +155,11 @@
       background: #eaeaea;
     }
     .background-project-list{
-      background: #ffffff;
+      background: #EFEFEF;
+      padding-right: 40px;
+      padding-left: 10px;
+      border-left: 4px solid #2196ba;
+      border-bottom: 1px solid #cccccc;
     }
     .material-row {
       min-height: 38px;
@@ -165,6 +178,25 @@
         font-size: 12px;
       }
     }
+
+    .background-category{
+      background-color: #D5D5D5 !important;
+      .material-row {
+        background-color: #D5D5D5 !important;
+        border-bottom: 0.5px solid #979797;
+      }
+    }
+
+    .background-projects{
+      background-color: #ACACAC !important;
+      .material-row td{
+        color: #000;
+      }
+    }
+
+    .mat-expansion-indicator:after{
+      padding: 6px;
+    }
   }
 
   .radio-btn-group-report-table {
@@ -181,11 +213,15 @@
 
   .mat-expansion-panel-header{
     padding-left: 0px;
-    padding-right: 5px;
-    background: #979797;
+    padding-right: 12px;
+    // background: #979797;
   }
   .mat-expansion-panel-body{
     padding: 0;
+  }
+
+  .mat-content{
+    padding-right: 4px;
   }
 }
 .reportTablePo .mat-cell, .reportTablePo .mat-header-cell{
@@ -206,4 +242,52 @@
 }
 .reportTablePo .report-table .material-row{
   width: 100% !important;
+}
+
+.ctc-report .mat-select-panel-wrap{
+  margin-left: 40px;
+}
+
+.select-all-checkbox {
+  background-color: #eae8e8;
+}
+
+.projected-cost-col,
+.balance-cost-col{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-right: -6px;
+}
+
+.info-tooltip {
+  font-size: 14px !important;
+}
+
+.report-header{
+  font-size: 20px;
+}
+
+@media(max-width:599px){
+  .report-table {
+
+    .mat-expansion-indicator:after{
+      padding: 4px !important;
+      margin-top: -10px;
+    }
+  }
+  
+}
+
+@media only screen and (max-width: 410px){
+  .report {
+    .show-amount{
+      width: 50px;
+    }
+    .add-project-btn{
+      text-align: right;
+      justify-content: flex-end;
+    }
+  }
 }

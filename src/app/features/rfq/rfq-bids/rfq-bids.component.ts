@@ -16,6 +16,7 @@ import { AppNavigationService } from 'src/app/shared/services/navigation.service
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShowSupplierRemarksandDocs } from 'src/app/shared/dialogs/show-supplier-remarks-documents/show-supplier-remarks-documents.component';
 import { ProjectItemComponent } from 'src/app/shared/components/project-item/project-item.component';
+import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 
 @Component({
   selector: "app-rfq-bids",
@@ -45,6 +46,21 @@ export class RfqBidsComponent implements OnInit {
     });
     this.rfqService.rfqPo(this.orgId, this.rfqId).then(res => {
       this.rfqProjects = res.data;
+
+      // code to get the documentList of supplier whose materialUnitPrice is not null and concatenate those with material documentList
+      this.rfqProjects.forEach(project => {
+        project.materialList.forEach(matList => {
+            matList.supplierList.forEach((supp, i) => {
+                if(supp.brandDetailList && supp.brandDetailList.length > 0){
+                  const bidSubmitted = supp.brandDetailList.filter(brand => brand.materialUnitPrice !== null);
+                  if(bidSubmitted.length > 0){
+                      supp.documentList = [...(supp.documentList ? supp.documentList : []), ...(matList.documentList ? matList.documentList : [])];
+                  }
+                }
+            })
+        })
+      });
+
       this.formInit();
     });
   }
@@ -71,6 +87,7 @@ export class RfqBidsComponent implements OnInit {
                   materialSgst: supplier.materialSgst,
                   taxInfo: supplier.taxInfo ? this.formBuilder.array(supplier.taxInfo) : null,
                   otherCostInfo: supplier.otherCostInfo ? this.formBuilder.array(supplier.otherCostInfo) : null,
+                  documentList: supplier.documentList ? this.formBuilder.array(supplier.documentList) : null,
                   brandGroup: this.formBuilder.array(brandGrp)
                 });
               }
@@ -78,6 +95,7 @@ export class RfqBidsComponent implements OnInit {
 
             return this.formBuilder.group({
               materialId: material.materialId,
+              documentList: material.documentList ? this.formBuilder.array(material.documentList) : null,
               materialQty: material.materialQty,
               materialpoAvailableQty: material.poAvailableQty,
               validQtyBoolean: true,
@@ -149,7 +167,8 @@ export class RfqBidsComponent implements OnInit {
                     materialCgst: sup.materialCgst,
                     materialIgst: sup.materialIgst,
                     taxInfo: sup.taxInfo ? [...sup.taxInfo] : null,
-                    otherCostInfo: sup.otherCostInfo ? [...sup.otherCostInfo] : null
+                    otherCostInfo: sup.otherCostInfo ? [...sup.otherCostInfo] : null,
+                    documentList: (sup.documentList ? sup.documentList : [])
                   };
                 });
               });
@@ -195,6 +214,7 @@ export class RfqBidsComponent implements OnInit {
       },
       [] as RfqProjectSubmit[]
     );
+
     this.rfqService.rfqAddPo(submitData.flat(2)).then(res => {
       if (res.statusCode === 201) {
         this.navService.gaEvent({
@@ -258,5 +278,29 @@ export class RfqBidsComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then(result => { });
+  }
+
+  /**
+   * function will call to open view image modal
+   * @param rfqId, materialId, type
+   */
+  viewAllImages(materialId, supplierId, projectId) {
+    const dialogRef = this.dialog.open(ViewImageComponent, {
+      disableClose: true,
+      width: "500px",
+      panelClass: 'view-image-modal',
+      data: {
+        rfqId: this.rfqId,
+        materialId,
+        supplierId,
+        type: 'bid'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 }

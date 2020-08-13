@@ -77,7 +77,7 @@ a:hover {
 }
 
 .color-black {
-  color: $black-color;
+  color: $black-color !important;
 }
 
 .color-grey {
@@ -137,7 +137,7 @@ button:focus {
 }
 @media only screen and (min-width: 958px) {
   .page-start-point {
-    padding-top: 140px !important;
+    // padding-top: 140px !important;
     height: 100%;
     overflow-x: hidden;
   }
@@ -175,7 +175,7 @@ input {
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-label {
-  padding: 8px;
+  padding: 5px 8px 8px 0px;
 }
 
 .mat-form-field-infix {
@@ -295,7 +295,7 @@ input {
 .border-select .mat-form-field-flex {
   border-bottom: 2px solid $icon-color-gray;
   border-radius: 0px;
-  padding: 5px;
+  padding: 5px 5px 5px 0px;
 }
 
 .border-input.mat-form-field.mat-focused input,
@@ -327,34 +327,6 @@ input {
 
 .parent {
   position: relative;
-}
-
-.center-element {
-  position: absolute;
-  float: left;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.pull-right {
-  float: right;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.text-webkit-center {
-  text-align: -webkit-center;
-}
-
-.pull-left {
-  float: left;
 }
 
 a:hover {
@@ -814,15 +786,6 @@ mat-accordion {
   line-height: 1.6;
 }
 
-.justify-content-flex-end {
-  justify-content: flex-end;
-}
-.justify-content-space-around {
-  justify-content: space-around;
-}
-.justify-content-space-between {
-  justify-content: space-between;
-}
 .max-width-96 {
   max-width: 96px;
 }
@@ -861,4 +824,10 @@ mat-accordion {
 
 .material-info-padding.material-info {
   padding-top: 0px;
+}
+
+@media (max-width: 599px) {
+  .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button .mat-icon {
+    font-size: 20px !important;
+  }
 }

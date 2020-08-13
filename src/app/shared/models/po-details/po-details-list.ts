@@ -31,4 +31,5 @@ export interface PurchaseOrderData {
   endDate: string;
   totalCount: number;
   totalValue: number;
+  graphData: Array<any>;
 }

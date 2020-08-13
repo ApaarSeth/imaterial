@@ -12,6 +12,7 @@ export class UploadComponent implements OnInit {
   @Input("grnResponsive") public grnResponsive: boolean;
   @Input() documentListLength: number;
   fileTypes : string[] = ['pdf', 'doc', 'docx', 'jpeg', 'png', 'jpg'];
+  imgFileTypes : string[] = ['jpeg', 'png', 'jpg'];
 
   deletedDocs: number[] = [];
   uploadedDocs: DocumentDetails[];
@@ -22,12 +23,16 @@ export class UploadComponent implements OnInit {
   @Input("filesRemoved") filesRemoved: boolean;
   @Input('updateInfo') userInfo: boolean;
   @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
+  @Input() imageIntegration: boolean;
+  @Input() errorMessage: boolean;
+  @Output() fileSizeErr = new EventEmitter<string>();
+
   constructor(private documentUploadService: DocumentUploadService,
     private _snackBar:MatSnackBar
     ) { }
 
   ngOnInit(): void { }
-
+    
   /**
    * This function is used to add document to a particular RFQ Item
    * @param files Document to be upload
@@ -68,6 +73,12 @@ export class UploadComponent implements OnInit {
           }
           this.fileToUpload = newFiles.files;
           this.onFileUpdate.emit(this.fileToUpload);
+
+          // If same file upload in image integration twice then this code will work
+          if(this.imageIntegration){
+            this.myInputVariable.nativeElement.value = "";
+            this.fileToUpload = this.myInputVariable.nativeElement.value;
+          }
        }
        else{
            this._snackBar.open("We don't support "+fileType+" in Document upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
@@ -79,11 +90,21 @@ export class UploadComponent implements OnInit {
            
       }
       else{
-           this._snackBar.open("File must be less than 5 mb", "", {
-            duration: 2000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
+
+        /** If upload image is greater than 5 mb then it will check nested condition (if file extension matches accepted file format or not) **/
+        if(this.imageIntegration){
+          if(this.imgFileTypes.indexOf(fileType) === -1)
+            this.fileSizeErr.emit("File format should be .jpg, .jpeg, .png");
+
+          else
+            this.fileSizeErr.emit("File should be less than 5 MB");
+        }else{
+          this._snackBar.open("File must be less than 5 mb", "", {
+           duration: 2000,
+           panelClass: ["success-snackbar"],
+           verticalPosition: "bottom"
+         });
+        }
       }
   
   }

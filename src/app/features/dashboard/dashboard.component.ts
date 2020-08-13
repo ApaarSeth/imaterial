@@ -13,11 +13,12 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { CommonService } from 'src/app/shared/services/commonService';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { CountryCode } from 'src/app/shared/models/currency';
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
   selector: "dashboard",
   templateUrl: "./dashboard.component.html",
-  styleUrls: [ "../../../assets/scss/main.scss" ]
+  styleUrls: ["../../../assets/scss/main.scss"]
 })
 export class DashboardComponent implements OnInit {
   tourId: string;
@@ -33,6 +34,8 @@ export class DashboardComponent implements OnInit {
   userId: Number;
   permissionObj: any;
   countryList: CountryCode[] = [];
+
+  isMobile: boolean;
 
   public dashboardTour: GuidedTour = {
     tourId: 'purchases-tour',
@@ -76,7 +79,7 @@ export class DashboardComponent implements OnInit {
         orientation: Orientation.Bottom
       },
       {
-        title: 'Show Open Indents',
+        title: 'Show Open PRs',
         selector: '.showOpenIndents',
         content: 'Click here to view all your indents.',
         orientation: Orientation.Bottom
@@ -104,7 +107,8 @@ export class DashboardComponent implements OnInit {
     private guidedTourService: GuidedTourService,
     private commonService: CommonService,
     private permissionService: PermissionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notifier: AppNotificationService
   ) {
   }
 
@@ -113,6 +117,7 @@ export class DashboardComponent implements OnInit {
     this.permissionObj = this.permissionService.checkPermission(role);
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
+    this.isMobile = this.commonService.isMobile().matches;
     this.getAllProjects();
     this.countryList = this.route.snapshot.data.countryList;
 
@@ -202,11 +207,10 @@ export class DashboardComponent implements OnInit {
               .getProjects(this.orgId, this.userId)
               .then(data => {
                 this.allProjects = data.data;
-              });
-          }
-
-
-        });
+                this.notifier.snack(result)
+              })
+          };
+        })
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",

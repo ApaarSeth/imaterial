@@ -4,7 +4,8 @@ import {
   Input,
   ViewChild,
   Output,
-  EventEmitter
+  EventEmitter,
+  SimpleChanges
 } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
@@ -21,6 +22,7 @@ import {
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import { parse } from "querystring";
 import { Materials } from "src/app/shared/models/subcategory-materials";
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 
 @Component({
   selector: "app-bom-allMaterial",
@@ -36,6 +38,7 @@ export class BOMAllMaterialComponent implements OnInit {
   searchUnit: string = "";
   constructor(
     private router: Router,
+    private notifier: AppNotificationService,
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private bomService: BomService,
@@ -47,8 +50,6 @@ export class BOMAllMaterialComponent implements OnInit {
   quantityForms: FormGroup;
   selectedCategory: categoryNestedLevel[] = [];
   materialUnit: string[] = []
-  // searchMaterial: string;
-  // product: ProjectDetails;
   step = 0;
   isSearching: boolean;
   setStep(index: number) {
@@ -58,37 +59,31 @@ export class BOMAllMaterialComponent implements OnInit {
   currencyCode: string;
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.projectId = params["id"];
-    });
-    this.orgId = Number(localStorage.getItem("orgId"))
-    // this.projectService.getProject(this.orgId, this.projectId).then(data => {
-    // });
-    this.selectedCategory = [...this.category];
+    this.currencyCode = localStorage.getItem('currencyCode')
     this.bomService.getMaterialUnit().then(res => {
       this.materialUnit = res.data;
     });
-    this.mappingMaterialWithQuantity()
-    this.formInit();
-    this.searchCategory();
-    this.currencyCode = localStorage.getItem('currencyCode')
-
-  }
-
-  ngOnChanges(): void {
-    this.selectedCategory = [...this.category];
-    this.mappingMaterialWithQuantity();
-    if (this.searchMat != null && this.searchMat != "") {
-      this.bomService.searchText.next(this.searchMat);
-    }
-    this.formInit();
-    // this.enteredInput();
-  }
-
-
-
-  searchCategory() {
     this.bomService.searchText.subscribe(val => {
+      this.searchCategory(val);
+    })
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.category && changes.category.currentValue) {
+      if (changes.category.currentValue.length) {
+        this.route.params.subscribe(params => {
+          this.projectId = params["id"];
+          this.orgId = Number(localStorage.getItem("orgId"))
+          this.selectedCategory = [...this.category];
+          this.mappingMaterialWithQuantity()
+        });
+      }
+    }
+  }
+
+  searchCategory(val) {
+    if (this.category) {
+      this.selectedCategory = [...this.category];
       if (val && val !== '') {
         this.isSearching = true;
         for (let category of this.selectedCategory) {
@@ -112,8 +107,7 @@ export class BOMAllMaterialComponent implements OnInit {
           category.allNull = false;
         }
       }
-    })
-
+    }
   }
 
 
@@ -123,7 +117,7 @@ export class BOMAllMaterialComponent implements OnInit {
         return this.formBuilder.group({
           materialId: [subcategory.materialId],
           materialMasterId: [subcategory.materialId],
-          estimatedQty: [subcategory.estimatedQty],
+          estimatedQty: [subcategory.estimatedQty, [this.estimatedQtyCheck(subcategory.poAvailableQty ? subcategory.poAvailableQty : 0)]],
           materialCode: [subcategory.materialCode],
           materialName: [subcategory.materialName],
           materialGroup: [subcategory.materialGroup],
@@ -140,8 +134,6 @@ export class BOMAllMaterialComponent implements OnInit {
       { forms: this.formBuilder.array(frmArr) }
       , { validators: this.getMaterialLength() }
     );
-    // this.quantityForms.addControl("forms", new FormArray(frmArr, [this.getMaterialLength()]));
-    // this.enteredInput();r
     (<FormArray>this.quantityForms.get('forms')).controls.map((control: FormGroup) => {
       (<FormArray>control.get('materialGroup')).controls.map((control: FormGroup) => {
         control.get("estimatedQty").valueChanges.subscribe(changes => {
@@ -149,10 +141,23 @@ export class BOMAllMaterialComponent implements OnInit {
         })
       })
     })
-
     this.quantityForms.valueChanges.subscribe(changes => {
       this.inputEntered.emit(true);
     })
+  }
+
+  estimatedQtyCheck(checkVal): ValidatorFn {
+    return (control: FormControl): { [key: string]: boolean } | null => {
+      if (control.value >= checkVal || control.value == null || checkVal == 0) {
+        return null;
+      }
+      else {
+        this.notifier.snack("Estimated qty can'nt be less than available qty")
+        return {
+          incorrectValue: true,
+        };
+      }
+    }
   }
 
   mappingMaterialWithQuantity() {
@@ -161,8 +166,8 @@ export class BOMAllMaterialComponent implements OnInit {
       .then(res => {
         this.dataQty = res.data;
         if (this.dataQty) {
-          this.selectedCategory.map((category: categoryNestedLevel) => {
-            category.materialList = category.materialList.map(
+          this.selectedCategory.forEach((category: categoryNestedLevel) => {
+            category.materialList.forEach(
               subcategory => {
                 for (let data of this.dataQty) {
                   if (
@@ -173,6 +178,7 @@ export class BOMAllMaterialComponent implements OnInit {
                     subcategory.materialUnit = data.materialUnit;
                     subcategory.requestedQuantity = data.requestedQuantity
                     subcategory.availableStock = data.availableStock
+                    subcategory.poAvailableQty = data.poAvailableQty
                     subcategory.issueToProject = data.issueToProject
                     subcategory.estimatedQty = data.estimatedQty;
                     subcategory.materialId = data.materialId;
@@ -184,24 +190,19 @@ export class BOMAllMaterialComponent implements OnInit {
                     subcategory.issueToProject = null;
                   }
                 }
-                return subcategory;
               });
-            return category;
           })
-          // this.searchData.emit(this.selectedCategory);
-          this.formInit();
         } else {
-          this.selectedCategory.map((category: categoryNestedLevel) => {
-            category.materialList = category.materialList.map(
+          this.selectedCategory.forEach((category: categoryNestedLevel) => {
+            category.materialList.forEach(
               subcategory => {
                 subcategory.requestedQuantity = null;
                 subcategory.availableStock = null;
                 subcategory.issueToProject = null;
-                return subcategory;
               });
-            return category;
           })
         }
+        this.formInit();
       })
       .catch(err => {
       });
@@ -210,21 +211,6 @@ export class BOMAllMaterialComponent implements OnInit {
 
 
   getMaterialLength(minRequired = 1): ValidatorFn {
-    // if (!control.touched) {
-    //   return null;
-    // }
-
-    // if (!Object.keys(control.value).length) {
-    //   return { inValid: true };
-    // } else {
-    //   const isAllEmpty = control.value.forms.every(cat => !cat.estimatedQty);
-
-    //   if (isAllEmpty) {
-    //     return { inValid: true };
-    //   } else {
-    //     return null;
-    //   }
-    // }
     return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
       for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {
@@ -236,9 +222,6 @@ export class BOMAllMaterialComponent implements OnInit {
           break;
         }
       }
-      // if (control.value) {
-      //   checked++;
-      // }
 
       if (!checked) {
         return {

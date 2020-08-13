@@ -9,7 +9,6 @@ export class InitiatePoResolver implements Resolve<any> {
   constructor(
     private projectService: ProjectService,
     private commonService: CommonService
-
   ) { }
 
   resolve() {

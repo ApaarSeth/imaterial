@@ -39,6 +39,7 @@ export interface ProjectDetails {
   callingCode?: string;
   costUnit?: string;
   countryId: number;
+  selected?: boolean;
 }
 
 export interface ProjetPopupData {
@@ -52,6 +53,49 @@ export interface ProjectIds {
   projectIds?: Array<Number>;
 }
 
+export interface AllCTCReportData{
+  awardedAmount: number;
+  deliveredAmount: number;
+  estimatedAmount: number;
+  paidAmount: number;
+  projectDataList: AllCTCProjectData[];
+  projectedCost: number;
+}
+
+export interface AllCTCProjectData{
+  projectId: number;
+  projectName: string;
+  estimatedAmount: number;
+  awardedAmount: number;
+  deliveredAmount: number;
+  paidAmount: number;
+  projectedCost: number;
+  materialCategoryDataList: MaterialCategoryDataList[];
+}
+
+export interface MaterialCategoryDataList{
+  materialCategoryName: string;
+  materialUnit: string;
+  estimatedAmount: number;
+  awardedAmount: number;
+  deliveredAmount: number;
+  projectedCost: number;
+  materialCTCDataList: MaterialCTCDataList[];
+}
+
+export interface MaterialCTCDataList{
+  materialCode: string;
+  materialName: string;
+  materialGroup: string;
+  materialUnit: string;
+  projectId: number;
+  projectName: string;
+  estimatedAmount: number;
+  awardedAmount: number;
+  deliveredAmount: number;
+  pendingAmount: number;
+  projectedCTC: number;
+}
 
 export class DateValidators {
   static dateLessThan(dateField1: string, dateField2: string, validatorField: { [ key: string ]: boolean }): ValidatorFn {

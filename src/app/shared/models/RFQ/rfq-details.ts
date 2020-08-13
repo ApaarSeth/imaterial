@@ -1,4 +1,5 @@
 import { Suppliers } from "./suppliers";
+import { ImageDocsLists } from '../PO/po-data';
 
 export interface RfqMaterialResponse {
   projectId?: number;
@@ -23,6 +24,8 @@ export interface RfqMat {
   makes?: string[];
   materialUnit?: string;
   poAvailableQty?: number;
+  documentList?: ImageDocsLists[];
+  documentsList?: ImageDocsLists[];
 }
 export interface Address {
   projectId?: number;

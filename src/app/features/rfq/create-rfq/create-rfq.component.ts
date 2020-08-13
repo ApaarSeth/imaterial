@@ -46,6 +46,8 @@ export class CreateRfqComponent implements OnInit {
   finalRfq: AddRFQ;
   completed: boolean = false;
   countryList: CountryCode[] = [];
+  isMobile: boolean;
+
   public RfqProjectTour: GuidedTour = {
     tourId: 'rfq-project-tour',
     useOrb: false,
@@ -53,7 +55,7 @@ export class CreateRfqComponent implements OnInit {
       {
         title: 'Search Project',
         selector: '.select-project',
-        content: 'Select one/multiple projects to add material in the RFQ.',
+        content: 'Select one/multiple projects to add material in the RFP.',
         orientation: Orientation.Left
       }
     ],
@@ -69,7 +71,7 @@ export class CreateRfqComponent implements OnInit {
       {
         title: 'Add Supplier',
         selector: '.add-supplier-btn',
-        content: 'Add supplier to whom RFQ needs to be floated.',
+        content: 'Add supplier to whom RFP needs to be floated.',
         orientation: Orientation.Left
       }
     ],
@@ -117,6 +119,9 @@ export class CreateRfqComponent implements OnInit {
       this.countryList = res[2].data
     });
 
+    this.isMobile = this.commonService.isMobile().matches;
+    this.orgId = Number(localStorage.getItem("orgId"));
+    this.userId = Number(localStorage.getItem("userId"));
     if (this.stepper) {
       this.stepper.selectedIndex = history.state.selectedIndex;
       this.currentIndex = history.state.selectedIndex ? history.state.selectedIndex : 0;
@@ -203,6 +208,9 @@ export class CreateRfqComponent implements OnInit {
   }
 
   selectionChange(event) {
+    if (event.selectedIndex === 0) {
+      this.rfqData = null;
+    }
     this.currentIndex = event.selectedIndex;
     this.prevIndex = event.previouslySelectedIndex;
     this.rfqService.stepperIndex.next(this.prevIndex)

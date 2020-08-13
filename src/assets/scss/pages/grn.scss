@@ -1,0 +1,192 @@
+$mat-header-row-height: 56px;
+$mat-row-height: 48px;
+$material-row-height: 77px;
+$mat-row-horizontal-padding: 12px;
+
+.grnTable {
+  width: 100%;
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border: 1px solid #ababab;
+  }
+
+  td.mat-cell,
+  td.mat-footer-cell,
+  th.mat-header-cell {
+    border-bottom: none;
+  }
+  .mat-accordion .mat-header-row {
+    padding-left: 0.8rem;
+    padding-right: 2rem;
+    border-bottom: none;
+  }
+
+  .mat-expansion-panel-header.mat-row {
+    border-bottom: none;
+  }
+
+  .mat-table {
+    display: block;
+  }
+
+  .mat-header-row {
+    min-height: $mat-header-row-height;
+  }
+
+  .mat-row {
+    min-height: $mat-row-height;
+  }
+  .grn-material-row {
+    min-height: $mat-row-height;
+  }
+
+  .mat-row,
+  .grn-material-row,
+  .mat-header-row {
+    display: flex;
+    align-items: center;
+    padding: 0 $mat-row-horizontal-padding;
+    box-sizing: border-box;
+  }
+
+  .mat-cell,
+  .mat-header-cell {
+    flex: 1;
+    overflow: hidden;
+    word-wrap: break-word;
+    color: black;
+    min-width: 135px;
+    padding: 0 5px;
+  }
+
+  .widthReduce {
+    flex: none;
+    width: 55px;
+  }
+
+  .mat-header-row {
+    background: #2197bb;
+
+    span {
+      color: #ffffff !important;
+    }
+  }
+
+  .mat-cell.double-mat-cell {
+    min-width: 270px !important;
+  }
+
+  .mat-row {
+    min-height: 50px;
+
+    .mat-cell {
+      color: #707070;
+    }
+  }
+  .border-row {
+    border-bottom: 0.5px solid #979797;
+  }
+  .background-supplier {
+    background: #effbff;
+  }
+  .background-project {
+    background: #eaeaea;
+  }
+  .background-project-list {
+    background: #ffffff;
+    padding-right: 32px;
+  }
+  .grn-material-row {
+    min-height: 38px;
+    .mat-cell {
+      color: #707070;
+    }
+  }
+  .footer {
+    background-color: rgba(25, 33, 53, 0.2);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    min-height: 70px;
+
+    .mat-cell {
+      color: #000000;
+      font-weight: 500;
+      font-size: 12px;
+    }
+  }
+
+  .radio-btn-group-report-table {
+    padding-right: 10px;
+
+    mat-radio-button {
+      padding: 0px 5px;
+    }
+  }
+
+  .mat-row:focus {
+    background-color: white;
+  }
+
+  .mat-expansion-panel-header {
+    padding-left: 0px;
+    padding-right: 12px;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+
+  .backgound-project{
+    background-color: #fff !important;
+  }
+
+  .background-grn{
+    background-color: #e0e3ec !important;
+    .material-row {
+      background-color: #e0e3ec !important;
+      border-bottom: 0.5px solid #979797;
+      border-left: 0.5px solid #d0d0d0;
+    }
+  }
+
+  .mat-expansion-panel-header.background-grn.mat-expanded:focus, 
+  .mat-expansion-panel-header.background-grn.mat-expanded:hover{
+    background-color: #e0e3ec !important;
+  }
+
+  .mat-expansion-indicator:after{
+    padding: 6px;
+  }
+}
+
+/** css to make receipt page grn detail row's column aligned **/
+.grn-material-row{
+  .mat-cell.grn-name-cell,
+  .mat-cell.po-number-cell {
+    flex: 0 0 152px;
+    min-width: 152px;
+  }
+
+  .mat-cell.double-mat-cell.added-by-cell {
+    min-width: 306px;
+    flex: 0 0 306px;
+  }
+}
+
+.add-receipts-panel{
+  .mat-expansion-panel-header{
+    padding: 0 12px;
+  }
+
+  .mat-expansion-indicator:after{
+    padding: 6px;
+  }
+}
+
+.inactive-receipt-docs{
+  pointer-events: none;
+  img{
+    opacity: 0.5;
+  }
+}
