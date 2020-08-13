@@ -16,7 +16,7 @@ import { ShowDocumentComponent } from 'src/app/shared/dialogs/show-documents/sho
 @Component({
     selector: "view-grn",
     templateUrl: "./view-grn.component.html",
-    styleUrls: [ "/../../../../assets/scss/main.scss" ]
+    styleUrls: ["/../../../../assets/scss/main.scss"]
 })
 
 
@@ -60,9 +60,8 @@ export class ViewGRNComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.activatedRoute.params.subscribe(res => {
-            this.poId = Number(res[ "poId" ]);
+            this.poId = Number(res["poId"]);
             this.poService.getPoGenerateData(this.poId).then(res => {
                 this.poData = res.data;
                 if ((localStorage.getItem('grn') == "null") || (localStorage.getItem('grn') == '0')) {
@@ -71,7 +70,7 @@ export class ViewGRNComponent implements OnInit {
                     }, 1000);
                 }
             })
-            this.getGRNDetails(Number(res[ "poId" ]));
+            this.getGRNDetails(Number(res["poId"]));
         })
         this.getNotifications();
     }
@@ -104,7 +103,7 @@ export class ViewGRNComponent implements OnInit {
     }
 
     viewBack() {
-        this.route.navigate([ 'po' ]);
+        this.route.navigate(['po']);
     }
     addGRN() {
         const data: GRNPopupData = {
