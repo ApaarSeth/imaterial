@@ -329,6 +329,12 @@ body,
   margin: auto;
 }
 
+.bnrimgs{
+  border-radius: 10px;
+  box-shadow: 0 0 2px #b9b9b9;
+  padding: 2px;
+}
+
 @media only screen and (max-width: 958px) {
   .app-dashboard {
     // margin-top: 56px;
@@ -398,11 +404,11 @@ body,
 
 @media only screen and (min-width: 560px) {
   .project-dashboard {
-    padding-left: 20px;
+    padding-left: 10px;
     padding-right: 20px;
   }
   .dashboard-unique {
-    padding-left: 20px;
+    padding-left: 10px;
     padding-right: 20px;
     .example-form-field {
       width: 100% !important;
@@ -413,14 +419,14 @@ body,
     padding-right: 20px;
   }
   .create-po-dashboard {
-    padding-left: 20px;
+    padding-left: 10px;
     padding-right: 20px;
     .mat-expansion-panel-header-title {
       font-size: 15px !important;
     }
   }
   .users-dashboard {
-    padding-left: 20px;
+    padding-left: 10px;
     padding-right: 20px;
   }
   .back-btn-grn {

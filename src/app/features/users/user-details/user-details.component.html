@@ -1,5 +1,6 @@
-<div class="page-start-point changeWidth pt-4">
-  <ng-container *ngIf="(dataSourceActivateTemp == null || dataSourceActivateTemp.length == 0) && (dataSourceDeactivateTemp == null || dataSourceDeactivateTemp.length == 0)">
+<div class="page-start-point pt-4">
+  <ng-container
+    *ngIf="(dataSourceActivateTemp == null || dataSourceActivateTemp.length == 0) && (dataSourceDeactivateTemp == null || dataSourceDeactivateTemp.length == 0)">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
         <img src="../../../../assets/images/user-background.png" alt="BuildSupply_Logo" />
@@ -31,7 +32,8 @@
           <!-- <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="addProject()">
           + Add Project
         </button> -->
-          <button mat-raised-button (click)="addUser()" class="main-background-color main-button color-white demo-title">
+          <button mat-raised-button (click)="addUser()"
+            class="main-background-color main-button color-white demo-title">
             Add User
           </button>
         </div>
@@ -55,7 +57,8 @@
 
               <ng-container matColumnDef="User Name">
                 <th mat-header-cell *matHeaderCellDef>User Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.ProjectUser.firstName }} {{ element.ProjectUser.lastName }}</td>
+                <td mat-cell *matCellDef="let element">{{ element.ProjectUser.firstName }}
+                  {{ element.ProjectUser.lastName }}</td>
               </ng-container>
 
               <!-- Name Column -->
@@ -99,7 +102,8 @@
                         </button>
                       </ng-container>
                     </div>
-                    <div class="horizontal-align-center p-l-10" *ngIf="element.ProjectList && element.ProjectList.length > 2">
+                    <div class="horizontal-align-center p-l-10"
+                      *ngIf="element.ProjectList && element.ProjectList.length > 2">
                       <span class="material-info color-main cursor-pointer" [matMenuTriggerFor]="projectnames">
                         More
                       </span>
@@ -127,11 +131,14 @@
               <ng-container matColumnDef="star">
                 <th mat-header-cell *matHeaderCellDef class="edit-disable-user-details-width"></th>
                 <td mat-cell *matCellDef="let element" class="edit-disable-user-details-width">
-                  <mat-icon matTooltip="Deactivate User" *ngIf="element.ProjectUser.isAccountOwner == 0" aria-hidden="false" (click)="deactivateUser(element)">
+                  <mat-icon matTooltip="Deactivate User" *ngIf="element.ProjectUser.isAccountOwner == 0"
+                    aria-hidden="false" (click)="deactivateUser(element)">
                     <a class="width-22-px p-r-10 p-t-10 cursor-pointer">
-                      <img [src]="element.ProjectUser.userId !== userId ? '../../../../assets/images/user-disable.png' : '../../../../assets/images/user-disable-01.png'" /> </a
-                  ></mat-icon>
-                  <mat-icon class="cursor-default" *ngIf="element.ProjectUser.isAccountOwner == 1" aria-hidden="false"> <a class="width-22-px p-r-10 p-t-10"> </a></mat-icon>
+                      <img
+                        [src]="element.ProjectUser.userId !== userId ? '../../../../assets/images/user-disable.png' : '../../../../assets/images/user-disable-01.png'" />
+                    </a></mat-icon>
+                  <mat-icon class="cursor-default" *ngIf="element.ProjectUser.isAccountOwner == 1" aria-hidden="false">
+                    <a class="width-22-px p-r-10 p-t-10"> </a></mat-icon>
                   <i class="material-icons main-color" (click)="editProject(element)">
                     <a class="width-17-px p-r-20 cursor-pointer margin-top-minus3px">
                       <img src="../../../../assets/images/edit.png" />
@@ -167,7 +174,8 @@
               <!-- Position Column -->
               <ng-container matColumnDef="User Name">
                 <th mat-header-cell *matHeaderCellDef>User Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.ProjectUser.firstName }} {{ element.ProjectUser.lastName }}</td>
+                <td mat-cell *matCellDef="let element">{{ element.ProjectUser.firstName }}
+                  {{ element.ProjectUser.lastName }}</td>
               </ng-container>
 
               <!-- Name Column -->
@@ -208,7 +216,8 @@
                         </button>
                       </ng-container>
                     </div>
-                    <div class="horizontal-align-center p-l-10" *ngIf="element.ProjectList && element.ProjectList.length > 2">
+                    <div class="horizontal-align-center p-l-10"
+                      *ngIf="element.ProjectList && element.ProjectList.length > 2">
                       <span class="material-info color-main cursor-pointer" [matMenuTriggerFor]="projectnames">
                         More
                       </span>
