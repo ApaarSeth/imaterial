@@ -498,7 +498,8 @@ export class RFQSupplierDetailComponent implements OnInit {
       data: {
         type,
         rfqId: Number(this.activatedRoute.snapshot.params["rfqId"]),
-        prevData
+        prevData,
+        currency: this.rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName
       }
     });
     dialogRef.afterClosed().subscribe(res => {
