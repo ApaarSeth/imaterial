@@ -19,34 +19,76 @@
         <div class="row" [ngClass]="isMobile ? 'mt-2' : 'mt-3'">
           <div *ngFor="let plan of subscription.planList" class="col-md-4 mb-3 d-flex">
             <mat-card class="col-md-12 text-left p-0">
-              <mat-card-header [className]="getClassName(plan.planName)">
+              <mat-card-header [className]="'subs-head ' + getClassName(plan.planName)">
+                <!-- <mat-card-header class="subs-head"> -->
                 <mat-card-title>{{ plan.planName }} Plan
                   <ng-container *ngIf="plan.activeSubscription !== null">
                     <span class="font-size-12 font-weight500 mt-2">(My Plan)</span>
                   </ng-container>
                 </mat-card-title>
-                <mat-card-subtitle>
-                  <ng-container *ngIf="plan.planName !== 'Custom'; else cstmSts">
-                    <div class="pt-2 pb-3">
-                      <span>
-                        <ng-container *ngIf="subscription.discountPercent !== null; else flatPrice">
-                          {{ plan.currencyCode }}
-                          {{getSubsciptionDiscounted(subscription.discountPercent, plan.planUnitPrice)}}
-                        </ng-container>
-                        <ng-template #flatPrice>
-                          {{ plan.currencyCode }} {{ plan.planUnitPrice }}
-                        </ng-template>
-                        <sub class="font-size-40px prc-str">*</sub>
-                      </span>
-                      <!-- <p>Per Additional User: {{ plan.currencyCode }}
-                        {{ plan.planPrice }}</p> -->
+                <mat-card-subtitle class="text-left pl-5">
+
+
+                  <div class="row">
+                    <div class="col-xs-9">
+
+
+                      <ng-container *ngIf="plan.planName !== 'Custom'; else cstmSts">
+                        <div class="pt-2 pb-3">
+
+                          <ng-container *ngIf="subscription.discountPercent !== null; else flatPrice">
+                            <span class="line-through reg-price h-30px">{{ plan.currencyCode }}
+                              {{ plan.planUnitPrice }}</span>
+                            <span class="d-flex">
+                              <div class="font-weight500">
+                                {{ plan.currencyCode }}
+                                {{getSubsciptionDiscounted(subscription.discountPercent, plan.planUnitPrice)}}
+                              </div>
+                              <sub class="font-size-12 align-self-center ml-1">/ {{plan.planFrequencyAlias}}</sub>
+                            </span>
+                          </ng-container>
+                          <ng-template #flatPrice>
+                            <span class="h-30px d-block w-100">&nbsp;</span>
+                            <span class="d-flex">
+                              <div class="font-weight500">
+                                {{ plan.currencyCode }} {{ plan.planUnitPrice }}
+                              </div>
+                              <sub class="font-size-12 align-self-center ml-1">/ {{plan.planFrequencyAlias}}</sub>
+                            </span>
+                          </ng-template>
+                          <!-- <sub class="font-size-40px prc-str">*</sub> -->
+                          <p class="font-size-12">Add an additional user for {{ plan.currencyCode }}
+                            <ng-container *ngIf="plan.planName === 'Basic'">
+                              1000
+                            </ng-container>
+                            <ng-container *ngIf="plan.planName === 'Premium'">
+                              1500
+                            </ng-container>
+                          </p>
+
+                        </div>
+                      </ng-container>
+                      <ng-template #cstmSts>
+                        <span class="h-30px d-block w-100">&nbsp;</span>
+                        <div class="pl-2 pt-3">
+                          <strong>Get in touch with us for a price quote</strong>
+                        </div>
+                      </ng-template>
+
+
+
                     </div>
-                  </ng-container>
-                  <ng-template #cstmSts>
-                    <div class="pb-3 pl-5 pr-5 pt-3">
-                      <strong>Get in touch with us for a price quote</strong>
+                    <div class="col-xs-3">
+                      <ng-container *ngIf="subscription.discountPercent !== null && plan.planName !== 'Custom'">
+                        <div class="offer-saving mt-4 ml-1">
+                          <h4 class="font-size18 font-weight-bold">{{subscription.discountPercent}}%</h4>
+                          <p class="font-size11">SAVING</p>
+                        </div>
+                      </ng-container>
                     </div>
-                  </ng-template>
+                  </div>
+
+
                 </mat-card-subtitle>
               </mat-card-header>
 
@@ -58,7 +100,7 @@
                       <button *ngIf="trialAction && isActiveSubscription === 0" mat-button
                         class="bordered-button fbtn mr-2"
                         (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
-                        Start Free Trial
+                        Free Trial
                       </button>
                       <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
                         (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
@@ -136,9 +178,9 @@
 
     </mat-tab>
   </mat-tab-group>
-  <p class="color-6d6a6a desp-block font-size14 mb-4 text-align-right">*Displayed prices all exclusive of taxes</p>
+  <!-- <p class="color-6d6a6a desp-block font-size14 mb-4 text-align-right">*Displayed prices all exclusive of taxes</p> -->
 
-  <div>
+  <!-- <div>
     <div class="subs-terms">
 
       <section class="example-section">
@@ -187,5 +229,5 @@
         will be paused immediately. You will regain access to the platform once the payment is made.</p>
 
     </div>
-  </div>
+  </div> -->
 </div>

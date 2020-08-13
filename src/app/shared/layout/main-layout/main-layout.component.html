@@ -18,12 +18,12 @@
     <sidebar-navigation (collapseMenu)="isSidebarCollapsed($event)" [menuData]="menuData">
     </sidebar-navigation>
     <ng-container *ngIf="isFreeTrialActivate && accountOwner === 1; else noTrial">
-      <div class="mt-120">
+      <div class="mt-120 changeWidth">
         <router-outlet> </router-outlet>
       </div>
     </ng-container>
     <ng-template #noTrial>
-      <div class="mt-5">
+      <div class="mt-5 changeWidth">
         <router-outlet> </router-outlet>
       </div>
     </ng-template>

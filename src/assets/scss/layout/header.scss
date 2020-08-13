@@ -250,9 +250,11 @@ button.active {
 }
 
 .changeWidth{
-  max-width: 96%;
-  flex: 0 0 96%;
-  margin-left: 4%;
+  // max-width: 96%;
+  // flex: 0 0 96%;
+  // margin-left: 4%;
+  max-width: calc(100% - 70px);
+  margin-left: 70px;
 }
 
 .c-w{

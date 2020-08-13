@@ -1,4 +1,4 @@
-<div class="page-start-point changeWidth mt-5 pt-4">
+<div class="page-start-point mt-5 pt-4">
   <form *ngIf="allProjects" [formGroup]="form">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
@@ -66,7 +66,8 @@
                         <td class="mat-cell grn-date-cell">{{ grnData.grnDate | date: "dd-MMM-yyy" }}</td>
                         <td class="mat-cell"></td>
                         <td class="mat-cell"></td>
-                        <td class="mat-cell grn-documents-cell text-right" (click)="openDocuments(grnData.grnDocuments);mep.expanded = true"
+                        <td class="mat-cell grn-documents-cell text-right"
+                          (click)="openDocuments(grnData.grnDocuments);mep.expanded = true"
                           [class.inactive-receipt-docs]="grnData.grnDocuments.length === 0">
                           <img class="file-icon" src="../../../../assets/images/file-doc.png" />
                         </td>
@@ -121,7 +122,7 @@
         </ng-template>
       </ng-template>
 
-      
+
     </div>
   </form>
 </div>
