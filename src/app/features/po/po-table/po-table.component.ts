@@ -496,7 +496,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
         po: true,
         rfqId: null,
         existingData,
-        currency: this.poCurrency.exchangeCurrencyName
+        currency: this.poCurrency ? this.poCurrency.exchangeCurrencyName : null
       }
     });
     dialogRef.afterClosed().subscribe(res => {
