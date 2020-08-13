@@ -3,8 +3,9 @@
     [ngClass]="{'no-collapsed': !isCollapseMenu, collapsed: isCollapseMenu}">
     {{ !isCollapseMenu ? "keyboard_arrow_left" : "keyboard_arrow_right" }}
   </span>
-  <!-- <div class="sidenav sidebar-navigation" *ngIf="role" [ngClass]="!isCollapseMenu ? 'f-w' : 'c-w'" (mouseover)="showOnHover()" (mouseout)="hideOnHover()"> -->
-  <div class="sidenav sidebar-navigation" *ngIf="role" [ngClass]="!isCollapseMenu ? 'f-w' : 'c-w'">
+  <div class="sidenav sidebar-navigation" *ngIf="role" [ngClass]="!isCollapseMenu ? 'f-w' : 'c-w'"
+    (mouseover)="showOnHover()" (mouseout)="hideOnHover()">
+    <!-- <div class="sidenav sidebar-navigation" *ngIf="role" [ngClass]="!isCollapseMenu ? 'f-w' : 'c-w'"> -->
 
     <ng-container *ngIf="data && data.moduleList">
       <ng-container *ngFor="let item of data.moduleList">

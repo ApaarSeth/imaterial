@@ -31,7 +31,8 @@ body,
 }
 
 .things-to-do {
-  padding: 12px 20px 14px 20px;
+  padding: 10px 20px 14px 20px;
+  // padding: 12px 20px 14px 20px;
   h5 {
     font-size: 1.1rem;
   }
@@ -331,8 +332,9 @@ body,
 
 .bnrimgs{
   border-radius: 10px;
-  box-shadow: 0 0 2px #b9b9b9;
+  box-shadow: 0 0 4px #b9b9b9;
   padding: 2px;
+  background-color: #ffffff;
 }
 
 @media only screen and (max-width: 958px) {
