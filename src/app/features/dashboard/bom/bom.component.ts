@@ -404,7 +404,6 @@ export class BomComponent implements OnInit {
       isDelete: false,
       detail: this.product
     };
-
     this.openDialog(data);
   }
 
@@ -414,7 +413,6 @@ export class BomComponent implements OnInit {
       isDelete: true,
       detail: this.product
     };
-
     this.openDialog(data);
   }
 
