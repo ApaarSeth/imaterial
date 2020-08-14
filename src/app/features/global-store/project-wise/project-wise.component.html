@@ -49,7 +49,9 @@
           >
           <span class="mat-cell maxwidth-14 text-center"
             >{{
-              material.GlobalMaterial.deliveredQty != null ? material.GlobalMaterial.deliveredQty - (material.GlobalMaterial.issuedQty ? material.GlobalMaterial.issuedQty : 0) : 0
+              material.GlobalMaterial.deliveredQty != null
+                ? material.GlobalMaterial.deliveredQty - (material.GlobalMaterial.poAvailableQty ? material.GlobalMaterial.poAvailableQty : 0)
+                : 0
             }}
             <span class="p-l-5">{{ material.GlobalMaterial.materialUnit }}</span></span
           >
