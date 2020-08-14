@@ -1,8 +1,8 @@
 .release-notes{
-    color: #828282;
+    color:#4c4c4c;
      padding-left: 10px;
 
-    max-height: 350px;
+    max-height: 400px;
     overflow-y: auto;
 
     font-size: 14px;
@@ -13,21 +13,38 @@
          padding: 10px 0px;
          .heading{
             padding-left: 0px;
-            background: #66BF00;
-            padding: 5px 20px;
-            border-radius: 7px;
-            color: #ffffff;
+            padding: 0px;
+            color: #4c4c4c;
+            text-transform: uppercase;
+            font-weight: 500;
+            &:after{
+                content: '';
+                border-bottom: 1px solid #dedede;
+                width: 100%;
+                position: absolute;
+                top: 19px;
+                right: 0;
+            }
          }
      }
     
     .list-of-notes{
         padding-left: 20px;
-            ol{
+        ol{
+            padding-left: 0px;
+            li{
                 padding-left: 0px;
-                li{
-                    padding-left: 0px;
-                }
-            }  
-   
+            }
+        }  
+    }
+
+    .text-wh{
+        background-color: #fff;
+        padding-right: 10px;
+        z-index: 1;
+        display: block;
+        position: absolute;
+    }
+
 }
-}
+
