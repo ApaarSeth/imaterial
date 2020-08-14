@@ -61,7 +61,7 @@ export class ReleaseNoteComponent implements OnInit {
 
   // }
 
-  notes : ReleaseNotes;
+  notes: ReleaseNotes;
 
 
   constructor(
@@ -76,9 +76,13 @@ export class ReleaseNoteComponent implements OnInit {
   ngOnInit() {
     this.notes = this.data;
   }
-  
+
   close() {
     this.dialogRef.close('closed');
+  }
+
+  openDownloadLink(url) {
+    window.open(url, '_blank');
   }
 
 }
