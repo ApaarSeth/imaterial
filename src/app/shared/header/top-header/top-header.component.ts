@@ -76,7 +76,7 @@ export class TopHeaderComponent implements OnInit {
 
   checkFreeTrial() {
     const data = this.subscriptionsData;
-    if (data && data.planFrequencyList.length) {
+    if (data && data.planFrequencyList && data.planFrequencyList.length) {
       let checked = 0;
       for (let i = 0; i < data.planFrequencyList.length; i++) {
         for (let x = 0; x < data.planFrequencyList[ i ].planList.length; x++) {

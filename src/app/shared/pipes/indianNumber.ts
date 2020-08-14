@@ -13,7 +13,7 @@ export class IndianNumberPipe implements PipeTransform {
         let tempAmt = amount.toLocaleString(args)
         if (tempAmt.includes('.')) {
             let decimalNumber = tempAmt.slice(tempAmt.indexOf('.') + 1, tempAmt.length);
-            if (decimalNumber.length > 2) {
+            if (decimalNumber.length >= 2) {
                 decimalNumber.slice(0, decimalNumber.length)
                 return `${tempAmt.slice(0, tempAmt.indexOf('.'))}.${decimalNumber.slice(0, 2)}`
             }

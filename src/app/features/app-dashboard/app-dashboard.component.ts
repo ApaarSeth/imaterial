@@ -49,7 +49,7 @@ export class AppDashboardComponent implements OnInit {
   isAdDisplay: string;
   diffDays: number
   rangeType: string = 'Custom';
-
+  newDiffDays: number;
   prText: string;
 
   constructor(public dialog: MatDialog,
@@ -81,9 +81,12 @@ export class AppDashboardComponent implements OnInit {
     if (role) {
       this.permissionObj = this.permissionService.checkPermission(role);
       this.label = this.permissionObj.rfqFlag ? 'po' : 'indent';
+      this.permissionObj.rfqFlag ? this.poData = {} as PurchaseOrderData : this.indentData = {} as PurchaseOrderData
       this.orgId = Number(localStorage.getItem("orgId"));
     }
     this.userId = Number(localStorage.getItem("userId"));
+
+
     window.dispatchEvent(new Event('resize'));
     if (!localStorage.getItem('ReleaseNotes') || (localStorage.getItem('ReleaseNotes') != '1')) {
       localStorage.setItem('ReleaseNotes', '0');
@@ -98,14 +101,16 @@ export class AppDashboardComponent implements OnInit {
         }
       });
     }
-    Promise.all([this.userguideservice.getUserGuideFlag(),
+
+
+    Promise.all([ this.userguideservice.getUserGuideFlag(),
     this._projectService.getProjects(this.orgId, this.userId),
-    this.commonService.getNotification(this.userId)]).then(res => {
-      this.userGuidedata = res[0].data;
+    this.commonService.getNotification(this.userId) ]).then(res => {
+      this.userGuidedata = res[ 0 ].data;
       this.userGuidedata.forEach(element => {
         localStorage.setItem(element.moduleName, element.enableGuide);
       });
-      this.projectData = res[1];
+      this.projectData = res[ 1 ];
       this.getProjectsNumber()
     })
     this.isMobile ? this.prText = 'PR' : this.prText = 'Purchase Requisitions (PR)';
@@ -146,6 +151,14 @@ export class AppDashboardComponent implements OnInit {
       const diffTime = Math.abs(range.fromDate.getTime() - range.toDate.getTime());
       this.diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       this.getDashboardInfo(this.label);
+      // if (!this.newDiffDays) {
+      //   this.newDiffDays = this.diffDays;
+      //   this.getDashboardInfo(this.label);
+      // }
+      // else if (this.newDiffDays !== this.diffDays) {
+      //   this.newDiffDays = this.diffDays;
+      //   this.getDashboardInfo(this.label);
+      // }
     }
   }
 
@@ -228,7 +241,7 @@ export class AppDashboardComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result != null)
-          this.router.navigate(['/project-dashboard']);
+          this.router.navigate([ '/project-dashboard' ]);
       });
     });
   }
@@ -295,14 +308,10 @@ export class AppDashboardComponent implements OnInit {
   }
 
   getDashboardInfo(label) {
-
     let projectIds = this.filterForm.get("projectFilter").value && this.filterForm.get("projectFilter").value.map(val => {
       return val.projectId;
     })
-
-
     this.rangeType = this.getRange()
-
     if (this.rangeType) {
       const data = {
         "orgId": this.orgId,
@@ -319,17 +328,19 @@ export class AppDashboardComponent implements OnInit {
         }
         if (label == 'po') {
           this.poData = res.data;
-          this.chartService.barChartData.next(this.poData.graphData ? [...this.poData.graphData] : null)
+          let chartData = data.range === 'Yearly' ? this.sortGraphData(this.poData.graphData ? this.poData.graphData : null) : this.poData.graphData;
+          this.chartService.barChartData.next(chartData ? [ ...chartData ] : null)
         }
         if (label == 'rfq') {
           this.rfqData = res.data;
-          this.chartService.barChartData.next(this.rfqData.graphData ? [...this.rfqData.graphData] : null)
+          let chartData = data.range === 'Yearly' ? this.sortGraphData(this.rfqData.graphData ? this.rfqData.graphData : null) : this.rfqData.graphData;
+          this.chartService.barChartData.next(chartData ? [ ...chartData ] : null)
         }
         if (label == 'indent') {
           this.indentData = res.data;
-          this.chartService.pieChartData.next([['PRs', 'Vaue'],
-          ['Fullfilled PRs', this.indentData.totalCount],
-          ['Raised PRs', this.indentData.totalValue],
+          this.chartService.pieChartData.next([ [ 'PRs', 'Vaue' ],
+          [ 'Fullfilled PRs', this.indentData.totalCount ],
+          [ 'Raised PRs', this.indentData.totalValue ],
           ])
         }
       }).catch(error => console.log(error))
@@ -337,7 +348,22 @@ export class AppDashboardComponent implements OnInit {
     else {
       this.notifier.snack('Selected date range can not be greater than 31 days')
     }
+  }
 
+  sortGraphData(graphData: Array<any>) {
+    if (graphData) {
+      let tempGraphData = graphData.slice(1, graphData.length)
+      var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+      tempGraphData.sort(function (a, b) {
+        return months.indexOf(a[ 0 ])
+          - months.indexOf(b[ 0 ]);
+      });
+      tempGraphData.splice(0, 0, graphData[ 0 ])
+      return tempGraphData;
+    } else {
+      return null;
+    }
   }
 
   onTabChanged($event) {
@@ -389,7 +415,7 @@ export class AppDashboardComponent implements OnInit {
 
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', [ '$event' ])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 494) {
       this.tab1 = "P.O.";

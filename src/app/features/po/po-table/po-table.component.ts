@@ -496,18 +496,18 @@ export class PoTableComponent implements OnInit, OnDestroy {
         po: true,
         rfqId: null,
         existingData,
-        currency: this.poCurrency.exchangeCurrencyName
+        currency: this.poCurrency ? this.poCurrency.exchangeCurrencyName : null
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
-        this.poTableData[mId].taxInfo = res && res.taxInfo ? res.taxInfo : null;
-        this.poTableData[mId].otherCostInfo = res && res.otherCostInfo ? res.otherCostInfo : null;
+        this.poTableData[mId].taxInfo = res && res.taxInfo ? res.taxInfo : this.poTableData[mId].taxInfo ? this.poTableData[mId].taxInfo : null;
+        this.poTableData[mId].otherCostInfo = res && res.otherCostInfo ? res.otherCostInfo : this.poTableData[mId].otherCostInfo ? this.poTableData[mId].otherCostInfo : null;
         this.calculateTaxInfo(mId);
         this.calculateOtherTaxInfo(mId);
       }
       if (type === 'otherCost') {
-        this.additonalCost.additionalOtherCostInfo = res && res.otherCostInfo ? res.otherCostInfo : null;
+        this.additonalCost.additionalOtherCostInfo = res && res.otherCostInfo ? res.otherCostInfo : this.additonalCost.additionalOtherCostInfo ? this.additonalCost.additionalOtherCostInfo : null;
         otherCost();
       }
     });

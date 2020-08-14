@@ -124,7 +124,11 @@ export class SubscriptionsComponent implements OnInit {
     }
 
     contactSales() {
-        this.subsPayService.getContactSales();
+        this.subsPayService.getContactSales().then(res => {
+            if (res) {
+                this.notifier.snack(res.message);
+            }
+        });
     }
 
 

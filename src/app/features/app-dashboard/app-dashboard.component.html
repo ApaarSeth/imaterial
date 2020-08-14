@@ -4,9 +4,9 @@
     <div class="row">
       <!-- <sidebar-navigation (collapseMenu)="isSidebarCollapsed($event)"></sidebar-navigation> -->
       <!-- [class.changeWidth]="isSideNavCollapsed" -->
-      <div class="col-md-12 changeWidth">
+      <div class="col-md-12">
         <div class="row">
-          <div class="col-sm-12 pl-3">
+          <div class="col-sm-12 pl-3 d-none">
             <app-breadcrumb></app-breadcrumb>
           </div>
         </div>
@@ -114,7 +114,7 @@
                             </div>
                             <div class="p-r-0 customDatePicker"
                               [ngClass]="isMobile ? 'pl-0 w-100 wdpw-100' : 'widthWrapper width-35 p-t-7'">
-                              <ngx-mat-drp class="border-input input-font-size"
+                              <ngx-mat-drp *ngIf="poData" class="border-input input-font-size"
                                 (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker>
                               </ngx-mat-drp>
                             </div>
@@ -194,7 +194,7 @@
 
                             <div class="p-r-0 customDatePicker"
                               [ngClass]="isMobile ? 'pl-0 wdpw-100 w-100' : 'widthWrapper width-35 p-t-7'">
-                              <ngx-mat-drp class="border-input input-font-size"
+                              <ngx-mat-drp *ngIf="rfqData" class="border-input input-font-size"
                                 (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker>
                               </ngx-mat-drp>
                             </div>
@@ -265,7 +265,7 @@
                           <div [ngClass]="isMobile ? 'w-100' : 'width-88'">
                             <div class="p-r-0 customDatePicker"
                               [ngClass]="isMobile ? 'pl-0 wdpw-100 w-100' : 'widthWrapper p-t-7'">
-                              <ngx-mat-drp class="border-input input-font-size"
+                              <ngx-mat-drp *ngIf="indentData" class="border-input input-font-size"
                                 (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker>
                               </ngx-mat-drp>
                             </div>
@@ -309,7 +309,7 @@
               </div>
 
               <div class="banner mb-4">
-                <div class="banner__image">
+                <div class="banner__image bnrimgs">
                   <a href="javascript:void(0)" (click)="showVideo()">
                     <img src="assets/images/video-banner.png" alt="Video Banner" class="img-fluid" />
                   </a>
@@ -317,7 +317,7 @@
               </div>
 
               <div class="banner" *ngIf="isAdDisplay === '+91'">
-                <div class="banner__image">
+                <div class="banner__image bnrimgs">
                   <a target="_blank" href="https://www.buildsupply.com" class="cursor-pointer">
                     <img src="assets/images/fb_banner_new.png" alt="Facebook Banner" class="img-fluid" />
                   </a>
