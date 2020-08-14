@@ -27,10 +27,10 @@
                     </th>
                   </tr>
 
-                  <ng-container formArrayName="materialGroup">
-                    <tr class="mat-row bom-materials-row"
-                      *ngFor="let subcategory of category.materialList; let sc = index" [formGroupName]="sc">
-                      <ng-container class="" *ngIf="!subcategory.isNull">
+                  <ng-container formArrayName="materialGroup"
+                    *ngFor="let subcategory of category.materialList; let sc = index">
+                    <ng-container class="" *ngIf="!subcategory.isNull">
+                      <tr class="mat-row bom-materials-row" [formGroupName]="sc">
                         <td class="mat-cell material-category">{{ subcategory.materialName }}</td>
 
                         <td class="mat-cell bom-selected-trades">
@@ -108,9 +108,9 @@
                           </div>
                         </ng-container>
 
-                      </ng-container>
+                      </tr>
+                    </ng-container>
 
-                    </tr>
                   </ng-container>
                 </table>
               </div>
