@@ -1,6 +1,6 @@
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Input, Inject } from "@angular/core";
 import { CommonService } from 'src/app/shared/services/commonService';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
     selector: 'cancel-subscription-dialog',

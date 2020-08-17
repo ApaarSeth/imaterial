@@ -1,9 +1,9 @@
 import { Component, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { RfqMaterialResponse, Address } from "../../models/RFQ/rfq-details";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AddAddressService } from "../../services/add-address/add-address.service";
 import { FieldRegExConst } from '../../constants/field-regex-constants';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 export interface City {
   value: string;
@@ -42,11 +42,11 @@ export class AddAddressDialogComponent {
 
     // new address form
     this.newAddressForm = this.formBuilder.group({
-      addressLine1: [ "", [ Validators.required, Validators.maxLength(120) ] ],
-      addressLine2: [ "", Validators.maxLength(120) ],
-      pinCode: [ "", [ Validators.required, Validators.pattern(FieldRegExConst.PINCODE) ] ],
-      state: [ "", Validators.required ],
-      city: [ "", Validators.required ]
+      addressLine1: ["", [Validators.required, Validators.maxLength(120)]],
+      addressLine2: ["", Validators.maxLength(120)],
+      pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
+      state: ["", Validators.required],
+      city: ["", Validators.required]
     });
 
   }

@@ -4,9 +4,10 @@ import { NotificationInt } from 'src/app/shared/models/notification';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { Subscription, interval } from 'rxjs';
-import { MatSnackBar, MatSidenav } from '@angular/material';
 import { TokenService } from '../../services/token.service';
 import { SubscriptionPaymentsService } from '../../services/subscriptions-payments.service';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-top-header',
@@ -71,7 +72,7 @@ export class TopHeaderComponent implements OnInit {
   }
 
   choosePlan() {
-    this.router.navigate([ '/subscriptions' ]);
+    this.router.navigate(['/subscriptions']);
   }
 
   checkFreeTrial() {
@@ -79,14 +80,14 @@ export class TopHeaderComponent implements OnInit {
     if (data && data.planFrequencyList && data.planFrequencyList.length) {
       let checked = 0;
       for (let i = 0; i < data.planFrequencyList.length; i++) {
-        for (let x = 0; x < data.planFrequencyList[ i ].planList.length; x++) {
+        for (let x = 0; x < data.planFrequencyList[i].planList.length; x++) {
           if (checked == 0) {
-            if (data.planFrequencyList[ i ].planList[ x ].isTrialActive === 1) {
+            if (data.planFrequencyList[i].planList[x].isTrialActive === 1) {
               checked = 1;
-              this.isFreeTrial = data.planFrequencyList[ i ].planList[ x ];
-              const dates = data.planFrequencyList[ i ].planList[ x ].activeSubscription
+              this.isFreeTrial = data.planFrequencyList[i].planList[x];
+              const dates = data.planFrequencyList[i].planList[x].activeSubscription
               let tDate = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
-              data.planFrequencyList[ i ].planList[ x ][ 'daysLeft' ] = this.setTrialDaysLeft(tDate, dates.trialPeriodEndDate);
+              data.planFrequencyList[i].planList[x]['daysLeft'] = this.setTrialDaysLeft(tDate, dates.trialPeriodEndDate);
             }
           }
         }
@@ -121,7 +122,7 @@ export class TopHeaderComponent implements OnInit {
           this.newunreadMessage = notificationLength - this.unreadnotificationLength;
           this._snackBar.open('You have ' + this.newunreadMessage + ' new notifications', '', {
             duration: 2000,
-            panelClass: [ 'success-snackbar' ],
+            panelClass: ['success-snackbar'],
             verticalPosition: 'bottom'
           });
         }
@@ -157,18 +158,18 @@ export class TopHeaderComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigate([ '/auth/login' ]).then(_ => {
+    this.router.navigate(['/auth/login']).then(_ => {
       localStorage.clear();
       // this.tokenService.setAuthResponseData({ serviceToken: null, role: null, userId: null, orgId: null });
     });
   }
 
   goToProfile() {
-    this.router.navigate([ '/profile-account' ]);
+    this.router.navigate(['/profile-account']);
   }
 
   goToMyPlans() {
-    this.router.navigate([ '/subscriptions' ]);
+    this.router.navigate(['/subscriptions']);
   }
   openDiv() {
     if (this.notifClicked == true) {
@@ -223,7 +224,7 @@ export class TopHeaderComponent implements OnInit {
   }
 
   goToHome() {
-    this.router.navigate([ '/dashboard' ]);
+    this.router.navigate(['/dashboard']);
   }
 
 }

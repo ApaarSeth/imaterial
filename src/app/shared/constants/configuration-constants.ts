@@ -7,10 +7,6 @@ export const ConfigurationConstants = {
   LOADING_TIMEOUT: 500,
 }
 
-export class Froala {
-  public static key: string = 'iMFIZJNKLDXIREJI==';
-
-}
 
 export const HeaderConstants = {
   PERMISSIONHEADER: (permissionObj, orgId) => {

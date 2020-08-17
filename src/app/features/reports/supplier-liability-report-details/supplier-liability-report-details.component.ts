@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef, SimpleChanges } from "@angular/core";
-import { MatDialog, MatChipInputEvent, MatTableDataSource, MatMenuTrigger } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   ProjectDetails,
@@ -32,6 +31,9 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierAdd } from 'src/app/shared/models/supplier';
 import { SupplierLiabilityReport } from 'src/app/shared/models/supplierLiabiltityReport.model';
 import { ReportService } from 'src/app/shared/services/supplierLiabilityReport.service';
+import { MatMenuTrigger } from "@angular/material/menu";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
 
 // chip static data
 export interface Fruit {

@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
+import { MatDialogRef } from "@angular/material/dialog";
 import {
   FormBuilder,
   FormGroup,

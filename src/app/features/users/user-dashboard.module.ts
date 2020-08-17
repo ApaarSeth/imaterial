@@ -1,14 +1,14 @@
 
 import { NgModule } from "@angular/core";
-import { MaterialModule } from "src/app/shared/material-modules";
-import { LayoutModule } from "src/app/shared/layout/layout-module";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import { AppSharedModule } from "src/app/shared/app-shared-module";
 import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { UserDetailComponent } from './user-details/user-details.component';
 import { UserRoutingModule } from './user-dashboard-routing.module';
+import { MaterialModule } from "../../shared/material-modules";
+import { LayoutModule } from "@angular/cdk/layout";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AppSharedModule } from "../../shared/app-shared-module";
 
 @NgModule({
   imports: [

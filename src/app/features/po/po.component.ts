@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild, ViewChildren, HostListener, ChangeDetectorRef } from "@angular/core";
-import { POService } from "src/app/shared/services/po/po.service";
-import { AngularEditor } from 'src/app/shared/constants/angular-editor.constant';
 import {
   POData,
   PoMaterial,
@@ -29,14 +27,12 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { AppNotificationService } from "../../shared/services/app-notification.service";
 import { ShortCloseConfirmationComponent } from "../../shared/dialogs/short-close-confirmation/short-close-confirmation.component";
 import { SelectApproverComponent } from "../../shared/dialogs/selectPoApprover/selectPo.component";
+import { AngularEditor } from "../../shared/constants/angular-editor.constant";
+import { POService } from "../../shared/services/po/po.service";
 
 @Component({
   selector: "app-po",
-  templateUrl: "./po.component.html",
-  styleUrls: [
-    "/../../../assets/scss/main.scss",
-    "/../../../assets/scss/pages/po.component.scss"
-  ]
+  templateUrl: "./po.component.html"
 })
 export class PoComponent implements OnInit {
   jsonDoc = null;

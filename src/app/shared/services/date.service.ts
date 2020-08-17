@@ -1,5 +1,5 @@
-import { NativeDateAdapter } from '@angular/material';
 import { formatDate } from '@angular/common';
+import { NativeDateAdapter } from '@angular/material/core';
 
 export const PICK_FORMATS = {
     parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },

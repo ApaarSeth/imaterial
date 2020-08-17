@@ -4,7 +4,7 @@ import {
   PODetailLists,
   PurchaseOrder
 } from "src/app/shared/models/po-details/po-details-list";
-import { MatTableDataSource, MatDialog } from "@angular/material";
+import { MatTableDataSource } from "@angular/material/table";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
 import { ProjetPopupData } from "src/app/shared/models/project-details";
 import { DeleteDraftedPoComponent } from "src/app/shared/dialogs/delete-drafted-po/delete-drafted-po.component";
@@ -19,11 +19,11 @@ import { PaymentRecordComponent } from 'src/app/shared/dialogs/payment-record/pa
 import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 import { Subscription } from 'rxjs';
 import { AdvanceSearchService } from 'src/app/shared/services/advance-search.service';
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "po-detail-list",
-  templateUrl: "./po-detail-list.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./po-detail-list.component.html"
 })
 export class PODetailComponent implements OnInit, OnDestroy {
   poDetails: MatTableDataSource<PODetailLists>;

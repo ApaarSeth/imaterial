@@ -7,7 +7,6 @@ import { ActivatedRoute } from "@angular/router";
 import { POService } from "src/app/shared/services/po/po.service";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { MatSnackBar, MatDialog } from '@angular/material';
 import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OverallOtherCost } from 'src/app/shared/models/common.models';
@@ -15,6 +14,8 @@ import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-po-table",
