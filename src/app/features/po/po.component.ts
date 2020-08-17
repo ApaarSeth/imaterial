@@ -13,13 +13,9 @@ import {
 } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
-import { MatDialog, MatSnackBar } from "@angular/material";
-import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 import { PoDocumentsComponent } from "./po-documents/po-documents.component";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Terms } from 'src/app/shared/models/RFQ/rfq-details';
-import { Froala } from 'src/app/shared/constants/configuration-constants';
 import { Subscription, combineLatest } from 'rxjs';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { CommonService } from 'src/app/shared/services/commonService';
@@ -27,9 +23,12 @@ import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gstin-missing.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
-import { ShortCloseConfirmationComponent } from 'src/app/shared/dialogs/short-close-confirmation/short-close-confirmation.component';
-import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { OtherCostInfo } from "../../shared/models/tax-cost.model";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { AppNotificationService } from "../../shared/services/app-notification.service";
+import { ShortCloseConfirmationComponent } from "../../shared/dialogs/short-close-confirmation/short-close-confirmation.component";
+import { SelectApproverComponent } from "../../shared/dialogs/selectPoApprover/selectPo.component";
 
 @Component({
   selector: "app-po",
@@ -40,12 +39,6 @@ import { AppNotificationService } from 'src/app/shared/services/app-notification
   ]
 })
 export class PoComponent implements OnInit {
-  public froala: Object = {
-    placeholder: "Edit Me",
-    imageUpload: false,
-    imageBrowse: false,
-    apiKey: Froala.key
-  }
   jsonDoc = null;
   poData: POData = {} as POData;
   tableData: PoMaterial[] = [];

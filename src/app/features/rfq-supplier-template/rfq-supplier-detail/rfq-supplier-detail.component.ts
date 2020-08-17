@@ -75,12 +75,6 @@ export class RFQSupplierDetailComponent implements OnInit {
     private formBuilder: FormBuilder
   ) { }
 
-  public froala: Object = {
-    placeholder: "Edit Me",
-    imageUpload: false,
-    imageBrowse: false,
-    key: Froala.key
-  }
 
   config: AngularEditorConfig = {
     editable: true,
