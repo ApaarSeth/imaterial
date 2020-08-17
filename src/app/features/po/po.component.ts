@@ -351,13 +351,7 @@ export class PoComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
-  QuantityAmountValidation(event) {
-    if (this.ValidPOTemp)
-      this.isPoValid = event;
 
-    if (!this.ValidPOTemp)
-      this.isPoValid = false;
-  }
   downloadPo() {
     this.poService.downloadPo(this.poId).then(res => {
       this.downloadFile(res.data);

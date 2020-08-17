@@ -284,26 +284,11 @@ export class PoTableComponent implements OnInit, OnDestroy {
     if (this.mode != "edit") {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total: number, purchase: PurchaseOrder) => {
         return (total += Number(purchase.materialQuantity));
-      }, 0);
+      }, 0)
     } else {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
-        total += Number(purchase.qty);
-        if (Number(total.toFixed(2)) > Number(this.poTableData[m].poAvailableQty)) {
-          this.poTableData[m].validQuantity = false;
-        }
-        else {
-          this.poTableData[m].validQuantity = true;
-        }
-        let isValidQty: boolean = true;
-        this.poTableData.forEach(element => {
-          if (!element.validQuantity)
-            isValidQty = false;
-        });
-
-        this.QuantityAmountValidation.emit(isValidQty);
-
-        return total;
-      }, 0);
+      return this.poTableData[m].purchaseOrderDetailList.reduce((total: number, purchase: PurchaseOrder) => {
+        return (total += Number(purchase.qty));
+      }, 0)
     }
   }
 
@@ -346,9 +331,13 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
   checkQty(m, p, materialAvailableQty, event) {
+    let tempVal = this.poTableData[m].purchaseOrderDetailList[p].qty;
     this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
     let totalQty = this.getMaterialQuantity(m);
-    if (totalQty.toFixed(2) > materialAvailableQty) {
+    if (Number(totalQty.toFixed(2)) > materialAvailableQty) {
+      this.poTableData[m].validQuantity = false;
+      (<FormArray>(<FormArray>this.poForms.get('forms')).controls[m].get('purchaseOrderDetailList')).controls[p].get('materialQuantity').setValue(tempVal)
+      this.poTableData[m].purchaseOrderDetailList[p].qty = 0
       this._snackBar.open("Net Quantity must be less than " + materialAvailableQty, "", {
         duration: 2000,
         panelClass: ["success-snackbar"],
@@ -356,6 +345,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+
 
   selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
