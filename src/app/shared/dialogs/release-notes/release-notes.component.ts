@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -14,6 +13,8 @@ import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { ProjectService } from '../../services/projectDashboard/project.service';
 import { ProjectDetails } from '../../models/project-details';
 import { ReleaseNotes } from "../../models/release-notes";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 
 export interface City {
@@ -65,9 +66,8 @@ export class ReleaseNoteComponent implements OnInit {
 
 
   constructor(
-
-    private dialogRef: MatDialogRef<ReleaseNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ReleaseNotes,
+    private dialogRef: MatDialogRef<ReleaseNoteComponent>,
     private router: Router,
     private projectService: ProjectService,
     private _snackBar: MatSnackBar

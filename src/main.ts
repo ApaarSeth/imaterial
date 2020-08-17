@@ -1,5 +1,4 @@
 // import * as $ from 'jquery'; window["$"] = $; window["jQuery"] = $;
-//  import "froala-editor/js/froala_editor.pkgd.min.js";
 import "hammerjs";
 import { enableProdMode } from "@angular/core";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";

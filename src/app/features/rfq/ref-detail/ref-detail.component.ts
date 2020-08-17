@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { RfqList } from "src/app/shared/models/RFQ/rfq-details";
-import { MatTableDataSource } from "@angular/material";
 import { Router } from "@angular/router";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { Subscription } from 'rxjs';
 import { AdvanceSearchService } from 'src/app/shared/services/advance-search.service';
+import { MatTableDataSource } from "@angular/material/table";
 
 @Component({
   selector: "app-ref-detail",
@@ -116,14 +116,14 @@ export class RefDetailComponent implements OnInit, OnDestroy {
 
   viewRfq(element: RfqList) {
     if (element.rfqStatus === 0) {
-      this.router.navigate([ "../../rfq/createRfq", element.rfqId ]);
+      this.router.navigate(["../../rfq/createRfq", element.rfqId]);
     } else {
-      this.router.navigate([ "../../rfq/rfq-view", element.rfqId ]);
+      this.router.navigate(["../../rfq/rfq-view", element.rfqId]);
     }
   }
 
   createRfq() {
-    this.router.navigate([ "/rfq/createRfq" ]);
+    this.router.navigate(["/rfq/createRfq"]);
   }
 
   ngOnDestroy() {

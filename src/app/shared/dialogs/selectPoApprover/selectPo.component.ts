@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { POService } from "../../services/po/po.service";
 import { POData, ApproverData, DocumentList } from "../../models/PO/po-data";
 import { DocumentUploadService } from "../../services/document-download/document-download.service";

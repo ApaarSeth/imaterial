@@ -3,14 +3,13 @@ import { ActivatedRouteSnapshot, ActivatedRoute, Router } from "@angular/router"
 import { GlobalStoreService } from 'src/app/shared/services/global-store/global-store.service';
 import { GlobalProject } from 'src/app/shared/models/GlobalStore/projectWise';
 import { CommonService } from 'src/app/shared/services/commonService';
-import { MatDialog } from '@angular/material';
 import { SelectProjectComponent } from 'src/app/shared/dialogs/select-project/select-project.component';
 import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-global-store",
-  templateUrl: "./global-store.component.html",
-  styleUrls: ["../../../assets/scss/main.scss"]
+  templateUrl: "./global-store.component.html"
 })
 export class GlobalStoreComponent implements OnInit {
 

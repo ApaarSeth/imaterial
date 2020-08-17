@@ -7,14 +7,13 @@ import {
 } from "src/app/shared/models/project-details";
 import { AddProjectComponent } from 'src/app/shared/dialogs/add-project/add-project.component';
 import { DoubleConfirmationComponent } from 'src/app/shared/dialogs/double-confirmation/double-confirmation.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SingleIndentDetails } from 'src/app/shared/models/indent';
 import { IndentService } from 'src/app/shared/services/indent/indent.service';
 
 @Component({
     selector: "single-indent-details",
-    templateUrl: "./single-indent-details.component.html",
-    styleUrls: ["../../../../assets/scss/main.scss"]
+    templateUrl: "./single-indent-details.component.html"
 })
 export class SingleIndentDetailsComponent implements OnInit {
 
@@ -40,7 +39,7 @@ export class SingleIndentDetailsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.orgId=Number(localStorage.getItem("orgId"))
+        this.orgId = Number(localStorage.getItem("orgId"))
         this.route.params.subscribe(params => {
             this.projectId = params["id"];
             this.indentId = params["indentId"];

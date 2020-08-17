@@ -1,5 +1,4 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -11,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AllUserDetails, UserDetailsPopUpData } from '../../models/user-details';
 import { UserService } from '../../services/userDashboard/user.service';
 import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export interface City {
   value: string;

@@ -4,9 +4,10 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
 import { ProjectDetails, } from "src/app/shared/models/project-details";
-import { MatDialog, MatCheckbox } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import { Subcategory, Materials } from "src/app/shared/models/subcategory-materials";
+import { MatDialog } from "@angular/material/dialog";
+import { MatCheckbox } from "@angular/material/checkbox";
 
 @Component({
     selector: "bom-copy-materials",

@@ -1,16 +1,5 @@
-import { Component, OnInit, Inject, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import {
-  ProjectDetails,
-  ProjetPopupData
-} from "src/app/shared/models/project-details";
-import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
-import { MatDialog, MatSnackBar } from "@angular/material";
-import { IndentVO } from "src/app/shared/models/indent";
-import { IndentService } from "src/app/shared/services/indent/indent.service";
-import { Subcategory } from "src/app/shared/models/subcategory-materials";
 import {
   FormBuilder,
   FormArray,
@@ -18,7 +7,15 @@ import {
   Validators,
   FormControl
 } from "@angular/forms";
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Subcategory } from "../../shared/models/subcategory-materials";
+import { ProjectDetails, ProjetPopupData } from "../../shared/models/project-details";
+import { ProjectService } from "../../shared/services/projectDashboard/project.service";
+import { AppNavigationService } from "../../shared/services/navigation.service";
+import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "../../shared/dialogs/double-confirmation/double-confirmation.component";
+import { IndentService } from "../../shared/services/indent/indent.service";
 
 export interface PeriodicElement {
   materialName: string;
@@ -32,8 +29,7 @@ export interface PeriodicElement {
 
 @Component({
   selector: "dashboard",
-  templateUrl: "./indent-dashboard.component.html",
-  styleUrls: ["../../../assets/scss/main.scss"]
+  templateUrl: "./indent-dashboard.component.html"
 })
 export class IndentDashboardComponent implements OnInit {
   dueDate = new Date(1990, 0, 1);
@@ -164,7 +160,7 @@ export class IndentDashboardComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => { });
+        .then(() => { });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -174,7 +170,7 @@ export class IndentDashboardComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => { });
+        .then(() => { });
     }
   }
 
@@ -193,7 +189,7 @@ export class IndentDashboardComponent implements OnInit {
     newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
     return newDate;
   }
-  getStart(date, i) {
+  getStart(i) {
     this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
   }
   startDate(event) {

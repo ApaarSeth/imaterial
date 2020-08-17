@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +12,8 @@ import { AppNavigationService } from '../../services/navigation.service';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
 import { supplierRemarkList } from '../../models/RFQ/rfqBids';
 import { DocumentUploadService } from "../../services/document-download/document-download.service";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export interface City {
   value: string;

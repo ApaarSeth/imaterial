@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { MatSnackBar } from '@angular/material';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { OrganisationType } from '../signup/signup.component';
 import { auth } from 'src/app/shared/models/auth';
@@ -14,6 +13,7 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { VisitorService } from 'src/app/shared/services/visitor.service';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { CountryCode } from 'src/app/shared/models/currency';
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "forgot-password",

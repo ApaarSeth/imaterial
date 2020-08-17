@@ -18,7 +18,6 @@ import {
 } from "src/app/shared/models/project-details";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog, MatSnackBar } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import { BomTopMaterialComponent } from "./bom-topMaterial/bom-topMaterial.component";
 import {
@@ -39,6 +38,8 @@ import { BomMyMaterialComponent } from './bom-myMaterial/bom-myMaterial.componen
 import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SnackbarComponent } from 'src/app/shared/dialogs/snackbar/snackbar.compnent';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html"

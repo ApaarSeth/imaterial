@@ -13,10 +13,11 @@ import { map } from "rxjs/operators";
 import { Materials } from "src/app/shared/models/subcategory-materials";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShowSupplierRemarksandDocs } from 'src/app/shared/dialogs/show-supplier-remarks-documents/show-supplier-remarks-documents.component';
 import { ProjectItemComponent } from 'src/app/shared/components/project-item/project-item.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-rfq-bids",
@@ -50,14 +51,14 @@ export class RfqBidsComponent implements OnInit {
       // code to get the documentList of supplier whose materialUnitPrice is not null and concatenate those with material documentList
       this.rfqProjects.forEach(project => {
         project.materialList.forEach(matList => {
-            matList.supplierList.forEach((supp, i) => {
-                if(supp.brandDetailList && supp.brandDetailList.length > 0){
-                  const bidSubmitted = supp.brandDetailList.filter(brand => brand.materialUnitPrice !== null);
-                  if(bidSubmitted.length > 0){
-                      supp.documentList = [...(supp.documentList ? supp.documentList : []), ...(matList.documentList ? matList.documentList : [])];
-                  }
-                }
-            })
+          matList.supplierList.forEach((supp, i) => {
+            if (supp.brandDetailList && supp.brandDetailList.length > 0) {
+              const bidSubmitted = supp.brandDetailList.filter(brand => brand.materialUnitPrice !== null);
+              if (bidSubmitted.length > 0) {
+                supp.documentList = [...(supp.documentList ? supp.documentList : []), ...(matList.documentList ? matList.documentList : [])];
+              }
+            }
+          })
         })
       });
 
