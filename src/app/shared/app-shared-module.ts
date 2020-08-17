@@ -24,8 +24,7 @@ import { IndianNumberPipe } from './pipes/indianNumber';
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
   ],
   declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, IndianNumberPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective],
-  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective, IndianNumberPipe, AngularEditorModule],
-  entryComponents: [...SharedDialogs]
+  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective, IndianNumberPipe, AngularEditorModule]
 })
 
 export class AppSharedModule { }

@@ -33,7 +33,7 @@ const components = [ProjectItemComponent, ChipComponent, UploadComponent, Global
   ],
 
   declarations: components,
-  entryComponents: [UploadImageComponent, ViewImageComponent, SupplierRatingComponent],
+  // entryComponents: [UploadImageComponent, ViewImageComponent, SupplierRatingComponent],
   exports: components
 })
 export class SharedComponentsModule { }
