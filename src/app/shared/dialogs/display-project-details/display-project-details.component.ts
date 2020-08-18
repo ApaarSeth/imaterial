@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +12,8 @@ import { Router } from '@angular/router';
 import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { ProjectService } from '../../services/projectDashboard/project.service';
 import { ProjectDetails } from '../../models/project-details';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 
 export interface City {
@@ -34,7 +35,7 @@ export interface Unit {
 })
 
 export class DisplayProjectDetailsComponent implements OnInit {
-vid : any;
+  vid: any;
   projectDetails: ProjectDetails;
 
 
@@ -50,7 +51,7 @@ vid : any;
   ngOnInit() {
     this.projectDetails = this.data;
   }
-  
+
   close() {
     this.dialogRef.close(null);
   }

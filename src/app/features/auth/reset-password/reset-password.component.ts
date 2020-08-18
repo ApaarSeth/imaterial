@@ -2,12 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "reset-password",
-  templateUrl: "./reset-password.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./reset-password.component.html"
 })
 export class ResetPasswordComponent implements OnInit {
   forgetPassForm: FormGroup;

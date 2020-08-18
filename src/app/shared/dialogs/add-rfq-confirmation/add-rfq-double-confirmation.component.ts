@@ -1,5 +1,4 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +12,7 @@ import { ProjectService } from "../../services/projectDashboard/project.service"
 import { AddRFQ } from "../../models/RFQ/rfq-details";
 import { RFQService } from "../../services/rfq/rfq.service";
 import { AppNavigationService } from '../../services/navigation.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: "add-rfq-double-confirmation-dialog",

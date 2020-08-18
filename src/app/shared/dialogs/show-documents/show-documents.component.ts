@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Documents } from '../../models/RFQ/rfq-view';
 
 // Component for dialog box
@@ -9,7 +9,7 @@ import { Documents } from '../../models/RFQ/rfq-view';
 })
 
 export class ShowDocumentComponent implements OnInit {
-  documentList : Documents[];
+  documentList: Documents[];
   constructor(public dialogRef: MatDialogRef<ShowDocumentComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
   ) { }

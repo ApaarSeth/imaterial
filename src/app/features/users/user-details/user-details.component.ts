@@ -1,5 +1,7 @@
-import { AllUserDetails, UserAdd, UserDetailsPopUpData } from "../../../shared/models/user-details"; import { Component, OnInit, ChangeDetectorRef } from "@angular/core"; import { MatTableDataSource, MatDialog } from "@angular/material"; import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour"; import { ActivatedRoute, Router } from "@angular/router"; import { RFQService } from "../../../shared/services/rfq/rfq.service"; import { FormBuilder } from "@angular/forms"; import { UserService } from "../../../shared/services/userDashboard/user.service"; import { CommonService } from "../../../shared/services/commonService"; import { AddEditUserComponent } from "../../../shared/dialogs/add-edit-user/add-edit-user.component"; import { DeactiveUserComponent } from "../../../shared/dialogs/disable-user/disable-user.component";
+import { AllUserDetails, UserAdd, UserDetailsPopUpData } from "../../../shared/models/user-details"; import { Component, OnInit, ChangeDetectorRef } from "@angular/core"; import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour"; import { ActivatedRoute, Router } from "@angular/router"; import { RFQService } from "../../../shared/services/rfq/rfq.service"; import { FormBuilder } from "@angular/forms"; import { UserService } from "../../../shared/services/userDashboard/user.service"; import { CommonService } from "../../../shared/services/commonService"; import { AddEditUserComponent } from "../../../shared/dialogs/add-edit-user/add-edit-user.component"; import { DeactiveUserComponent } from "../../../shared/dialogs/disable-user/disable-user.component";
 import { UserGuideService } from "../../../shared/services/user-guide/user-guide.service";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
 
 
 // chip static data
@@ -12,8 +14,7 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 
 @Component({
   selector: "user-details",
-  templateUrl: "./user-details.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./user-details.component.html"
 })
 
 

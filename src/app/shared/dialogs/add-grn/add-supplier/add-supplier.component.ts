@@ -2,7 +2,6 @@ import { Component, OnInit, Inject, Input, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { AngularEditor } from 'src/app/shared/constants/angular-editor.constant';
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { SuppliersDialogComponent } from '../../add-supplier/suppliers-dialog.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -14,6 +13,8 @@ import { Supplier } from 'src/app/shared/models/RFQ/rfq-view';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-add-supplier',

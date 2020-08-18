@@ -17,7 +17,6 @@ import {
   AddRFQ,
   RfqMat
 } from "src/app/shared/models/RFQ/rfq-details";
-import { MatDialog, MatCheckbox } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { CommonService } from 'src/app/shared/services/commonService';
@@ -25,6 +24,8 @@ import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/
 import { LoaderInterceptor } from 'src/app/shared/http-interceptors/loader-interceptor';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
+import { MatDialog } from "@angular/material/dialog";
+import { MatCheckbox } from "@angular/material/checkbox";
 
 @Component({
   selector: "app-rfq-project-materials",

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
 import { Subscription, interval } from 'rxjs';
 import { RouterLink, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import { TokenService } from 'src/app/shared/services/token.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-email-verification',

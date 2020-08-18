@@ -8,7 +8,6 @@ import { ProjectService } from "src/app/shared/services/projectDashboard/project
 import { ProjectDetails, ProjetPopupData } from "src/app/shared/models/project-details";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog, MatSnackBar, MatSort, MatCheckbox } from "@angular/material";
 import { BomService } from "src/app/shared/services/bom/bom.service";
 import { Subcategory, Materials } from "src/app/shared/models/subcategory-materials";
 import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
@@ -28,6 +27,8 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { AddGrnViaExcelComponent } from 'src/app/shared/dialogs/addGrn-viaExcel/addGrnViaExcel.component';
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { MatDialog } from "@angular/material/dialog";
+import { MatCheckbox } from "@angular/material/checkbox";
 
 @Component({
   selector: "app-bom-table",

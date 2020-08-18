@@ -6,11 +6,12 @@ import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants'
 import { Router } from '@angular/router';
 import { elementAt, count, take, startWith, map, filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BomService } from '../../services/bom/bom.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { orgTrades, tradeRelatedCategory } from '../../models/trades';
 import { Subject, Observable, merge } from 'rxjs';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface City {
   value: string;

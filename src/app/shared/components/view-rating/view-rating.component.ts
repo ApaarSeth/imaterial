@@ -3,8 +3,7 @@ import { CommonService } from '../../services/commonService';
 
 @Component({
     selector: "view-rating",
-    templateUrl: "./view-rating.component.html",
-    styleUrls: [ "../../../../assets/scss/main.scss" ]
+    templateUrl: "./view-rating.component.html"
 })
 
 export class ViewRatingComponent implements OnInit {

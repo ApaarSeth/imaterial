@@ -4,7 +4,6 @@ import {
   RfqMaterialResponse,
   AddRFQ
 } from "src/app/shared/models/RFQ/rfq-details";
-import { MatDialog, MatCheckbox, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
@@ -14,6 +13,9 @@ import { Subject, Observable } from 'rxjs';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatCheckbox } from "@angular/material/checkbox";
 
 @Component({
   selector: "app-rfq-supplier",

@@ -7,7 +7,6 @@ import { ActivatedRoute } from "@angular/router";
 import { POService } from "src/app/shared/services/po/po.service";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { MatSnackBar, MatDialog } from '@angular/material';
 import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OverallOtherCost } from 'src/app/shared/models/common.models';
@@ -15,6 +14,8 @@ import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-po-table",
@@ -284,26 +285,11 @@ export class PoTableComponent implements OnInit, OnDestroy {
     if (this.mode != "edit") {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total: number, purchase: PurchaseOrder) => {
         return (total += Number(purchase.materialQuantity));
-      }, 0);
+      }, 0)
     } else {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
-        total += Number(purchase.qty);
-        if (Number(total.toFixed(2)) > Number(this.poTableData[m].poAvailableQty)) {
-          this.poTableData[m].validQuantity = false;
-        }
-        else {
-          this.poTableData[m].validQuantity = true;
-        }
-        let isValidQty: boolean = true;
-        this.poTableData.forEach(element => {
-          if (!element.validQuantity)
-            isValidQty = false;
-        });
-
-        this.QuantityAmountValidation.emit(isValidQty);
-
-        return total;
-      }, 0);
+      return this.poTableData[m].purchaseOrderDetailList.reduce((total: number, purchase: PurchaseOrder) => {
+        return (total += Number(purchase.qty));
+      }, 0)
     }
   }
 
@@ -346,9 +332,13 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
 
   checkQty(m, p, materialAvailableQty, event) {
+    let tempVal = this.poTableData[m].purchaseOrderDetailList[p].qty;
     this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
     let totalQty = this.getMaterialQuantity(m);
-    if (totalQty.toFixed(2) > materialAvailableQty) {
+    if (Number(totalQty.toFixed(2)) > materialAvailableQty) {
+      this.poTableData[m].validQuantity = false;
+      (<FormArray>(<FormArray>this.poForms.get('forms')).controls[m].get('purchaseOrderDetailList')).controls[p].get('materialQuantity').setValue(tempVal)
+      this.poTableData[m].purchaseOrderDetailList[p].qty = 0
       this._snackBar.open("Net Quantity must be less than " + materialAvailableQty, "", {
         duration: 2000,
         panelClass: ["success-snackbar"],
@@ -356,6 +346,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+
 
   selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {

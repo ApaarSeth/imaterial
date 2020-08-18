@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, HostListener } from "@angular/core";
-import { MatDialog, MatTableDataSource, MatDialogRef, MatSnackBar } from "@angular/material";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 import { UserService } from 'src/app/shared/services/userDashboard/user.service';
@@ -11,6 +10,9 @@ import { GuidedTourService, GuidedTour, Orientation } from 'ngx-guided-tour';
 import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { ActivatedRoute } from '@angular/router';
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 // chip static data
 export interface Fruit {
@@ -22,8 +24,7 @@ const ELEMENT_DATA: SupplierAdd[] = [];
 
 @Component({
   selector: "supplier-details",
-  templateUrl: "./supplier-details.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./supplier-details.component.html"
 })
 
 

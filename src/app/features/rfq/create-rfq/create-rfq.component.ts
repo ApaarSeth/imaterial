@@ -12,7 +12,7 @@ import {
   RfqMat
 } from "src/app/shared/models/RFQ/rfq-details";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MatStepper } from "@angular/material";
+import { MatStepper } from "@angular/material/stepper";
 import { FormBuilder } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { RfqQuantityMakesComponent } from "./rfq-quantity-makes/rfq-quantity-makes.component";

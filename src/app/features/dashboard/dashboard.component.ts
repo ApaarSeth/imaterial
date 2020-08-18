@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
 import { ProjectService } from "../../shared/services/projectDashboard/project.service";
-import { MatDialog } from "@angular/material";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
 import { ActivatedRoute } from "@angular/router";
 import {
@@ -14,11 +13,11 @@ import { CommonService } from 'src/app/shared/services/commonService';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "dashboard",
-  templateUrl: "./dashboard.component.html",
-  styleUrls: ["../../../assets/scss/main.scss"]
+  templateUrl: "./dashboard.component.html"
 })
 export class DashboardComponent implements OnInit {
   tourId: string;

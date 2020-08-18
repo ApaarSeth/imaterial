@@ -29,26 +29,21 @@ import { GuidedTourModule, GuidedTourService } from 'ngx-guided-tour';
 import { HeaderSharedModule } from './shared/header/header-shared.module';
 import { ProfileLayoutComponent } from './shared/layout/profile-layout/profile-layout.component';
 import { AfterSignUpGuardService } from './shared/guards/afterSignUpGaurd';
-import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { ProfileComponent } from './features/profile/profile.component';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthModule } from './features/auth/auth.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PICK_FORMATS, PickDateAdapter } from './shared/services/date.service';
-import { TwoDigitDecimaNumberDirective } from './shared/directives/appTwoDigit';
-import { OnlyNumberDirective } from './shared/directives/number-only2.directive';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
 import { TaxCostService } from './shared/services/taxcost.service';
 import { MySubscriptionsComponent } from './features/users/my-subscriptions/my-subscriptions.component';
 import { SubscriptionRedirectionsComponent } from './features/subscription-redirections/subscription-redirections.component';
-
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
 import { GrnComponent } from './features/grn/grn.component';
 import { BuySubscriptionsComponent } from './shared/components/subscriptions/buy-subscriptions/buy-subscriptions.component';
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -110,6 +105,6 @@ import { BuySubscriptionsComponent } from './shared/components/subscriptions/buy
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
     TaxCostService
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

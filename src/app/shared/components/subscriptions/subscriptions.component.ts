@@ -1,5 +1,5 @@
 import { CancelSubscriptionDialog } from './subscription-cancel/cancel-subscription-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnDestroy } from "@angular/core";
 import { SubscriptionsList } from '../../models/subscriptions';
 import { Router } from '@angular/router';
@@ -50,7 +50,7 @@ export class SubscriptionsComponent implements OnInit {
     getTrialDays(subs) {
 
         if (subs) {
-            const days = subs[ 0 ].trialDays;
+            const days = subs[0].trialDays;
             if (days < 30) {
                 this.trialDays = days + ' DAYS';
             } else if (days == 30) {
@@ -82,9 +82,9 @@ export class SubscriptionsComponent implements OnInit {
 
     getUserInformation(userId) {
         this._userService.getUserInfo(userId).then(res => {
-            this.users = res.data ? res.data[ 0 ] : null;
-            this.isFreeTrialSubscription = res.data[ 0 ].isFreeTrialSubscription;
-            this.isActiveSubscription = res.data[ 0 ].isActiveSubscription;
+            this.users = res.data ? res.data[0] : null;
+            this.isFreeTrialSubscription = res.data[0].isFreeTrialSubscription;
+            this.isActiveSubscription = res.data[0].isActiveSubscription;
             localStorage.setItem('isFreeTrialSubscription', this.isFreeTrialSubscription);
             localStorage.setItem('isActiveSubscription', this.isActiveSubscription);
         });
@@ -115,7 +115,7 @@ export class SubscriptionsComponent implements OnInit {
     }
 
     showAllFeatures(event) {
-        event.currentTarget.children[ 0 ].children[ 1 ].innerHTML === 'keyboard_arrow_down' ? event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_up' : event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_down';
+        event.currentTarget.children[0].children[1].innerHTML === 'keyboard_arrow_down' ? event.currentTarget.children[0].children[1].innerHTML = 'keyboard_arrow_up' : event.currentTarget.children[0].children[1].innerHTML = 'keyboard_arrow_down';
         event.currentTarget.nextElementSibling.classList.toggle('f-hide');
     }
 

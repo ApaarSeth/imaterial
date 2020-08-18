@@ -7,12 +7,12 @@ import {
 } from "src/app/shared/models/project-details";
 import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
 import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
-import { MatDialog } from "@angular/material";
 import { AllIndentListVO, IndentVO } from "src/app/shared/models/indent";
 import { AdvanceSearchService } from 'src/app/shared/services/advance-search.service';
 import { Subscription } from 'rxjs';
 import { IndentService } from 'src/app/shared/services/indent/indent.service';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { MatDialog } from "@angular/material/dialog";
 
 export interface IndentData {
   indentName: string;
@@ -24,8 +24,7 @@ export interface IndentData {
 
 @Component({
   selector: "app-indent-detail",
-  templateUrl: "./indent-detail.component.html",
-  styleUrls: [ "../../../../assets/scss/main.scss" ]
+  templateUrl: "./indent-detail.component.html"
 })
 export class IndentDetailComponent implements OnInit, OnDestroy {
   product: ProjectDetails;
@@ -59,7 +58,7 @@ export class IndentDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.projectId = params[ "id" ];
+      this.projectId = params["id"];
     });
     this.isMobile = this.commonService.isMobile().matches;
     this.orgId = Number(localStorage.getItem("orgId"));

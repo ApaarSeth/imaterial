@@ -6,7 +6,6 @@ import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
 import { Router, ActivatedRoute, Navigation, ActivatedRouteSnapshot } from "@angular/router";
 import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
 import { UserService } from "src/app/shared/services/userDashboard/user.service";
-import { MatSnackBar } from '@angular/material';
 import { TokenService } from 'src/app/shared/services/token.service';
 import { DataService } from 'src/app/shared/services/data.service';
 import { API } from 'src/app/shared/constants/configuration-constants';
@@ -16,6 +15,7 @@ import { VisitorService } from 'src/app/shared/services/visitor.service';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
 import { WebNotificationService } from 'src/app/shared/services/webNotificationService.service';
 import { SwPush, SwUpdate } from '@angular/service-worker';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
