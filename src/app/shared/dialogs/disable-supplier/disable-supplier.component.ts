@@ -1,19 +1,14 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import {
   FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
+
 } from "@angular/forms";
 
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
-import { RFQService } from '../../../services/rfq.service';
-import { Suppliers } from '../../../models/RFQ/suppliers';
-import { AllSupplierDetails, SupplierAdd, SupplierDetailsPopUpData } from '../../../models/supplier';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { SupplierAdd, SupplierDetailsPopUpData } from "../../models/supplier";
+import { RFQService } from "../../services/rfq.service";
 
 export interface City {
   value: string;
