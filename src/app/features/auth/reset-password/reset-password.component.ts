@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { SignInSignupService } from 'src/app/shared/services/signupSignin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { SignInSignupService } from "../../../shared/services/signupSignin.service";
 
 @Component({
   selector: "reset-password",

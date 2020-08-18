@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { SignupComponent } from '../signup/signup.component';
 import { FacebookPixelService } from "../../../shared/services/fb-pixel.service";
 import { CountryCode } from "../../../shared/models/currency";
 import { VisitorService } from "../../../shared/services/visitor.service";
-import { GlobalLoaderService } from "../../../shared/services/global-loader.service";
 import { CommonService } from "../../../shared/services/commonService";
-import { DataService } from "../../../shared/services/data.service";
-import { API } from "../../../shared/constants/configuration-constants";
 
 
 export interface OrganisationType {

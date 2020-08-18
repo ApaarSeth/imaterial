@@ -1,19 +1,18 @@
 import { Component, OnInit } from "@angular/core";
-import { TokenService } from 'src/app/shared/services/token.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { SignInSignupService } from 'src/app/shared/services/signupSignin.service';
-import { UserService } from 'src/app/shared/services/user.service';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { OrganisationType } from '../signup/signup.component';
-import { auth } from 'src/app/shared/models/auth';
-import { UserDetails } from 'src/app/shared/models/user-details';
-import { SignINDetailLists, ForgetPassDetails } from 'src/app/shared/models/signIn/signIn-detail-list';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { VisitorService } from 'src/app/shared/services/visitor.service';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { CountryCode } from 'src/app/shared/models/currency';
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { UserDetails } from "../../../shared/models/user-details";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { ForgetPassDetails } from "../../../shared/models/signIn/signIn-detail-list";
+import { CountryCode } from "../../../shared/models/currency";
+import { TokenService } from "../../../shared/services/token.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SignInSignupService } from "../../../shared/services/signupSignin.service";
+import { UserService } from "../../../shared/services/user.service";
+import { AppNavigationService } from "../../../shared/services/navigation.service";
+import { CommonService } from "../../../shared/services/commonService";
+import { VisitorService } from "../../../shared/services/visitor.service";
+import { FieldRegExConst } from "../../../shared/constants/field-regex-constants";
+import { OrganisationType } from "../sign-in-sign-up/sign-in-sign-up.component";
 
 @Component({
   selector: "forgot-password",

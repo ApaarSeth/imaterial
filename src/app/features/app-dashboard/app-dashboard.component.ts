@@ -1,4 +1,3 @@
-import { Range } from 'src/app/shared/models/datePicker';
 import { GoogleChartService } from './../../shared/services/google-chart.service';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
@@ -20,7 +19,8 @@ import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
 import { ReleaseNoteComponent } from '../../shared/dialogs/release-notes/release-notes.component';
 import { SelectProjectComponent } from '../../shared/dialogs/select-project/select-project.component';
 import { ViewVideoComponent } from '../../shared/dialogs/video-video/view-video.component';
-import { GuideTourModel } from 'src/app/shared/models/guided_tour';
+import { GuideTourModel } from '../../shared/models/guided_tour';
+import { DateRange } from '../../shared/models/datePicker';
 
 @Component({
   selector: 'app-app-dashboard',
@@ -66,7 +66,7 @@ export class AppDashboardComponent implements OnInit {
     private notifier: AppNotificationService,
     private activatedRoute: ActivatedRoute, private loader: GlobalLoaderService) { }
 
-  range: Range = { fromDate: new Date(), toDate: new Date() };
+  range: DateRange = { fromDate: new Date(), toDate: new Date() };
   options: NgxDrpOptions;
   presets: Array<PresetItem> = [];
   currencyCode: string;
@@ -143,7 +143,7 @@ export class AppDashboardComponent implements OnInit {
     };
   }
 
-  updateRange(range: Range) {
+  updateRange(range: DateRange) {
     this.range = range;
     if (range.toDate < range.fromDate) {
       this.notifier.snack("To date can'nt be earlier than from date")
