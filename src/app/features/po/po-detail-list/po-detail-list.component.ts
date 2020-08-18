@@ -9,8 +9,8 @@ import { ProjectService } from "src/app/shared/services/projectDashboard/project
 import { ProjetPopupData } from "src/app/shared/models/project-details";
 import { DeleteDraftedPoComponent } from "src/app/shared/dialogs/delete-drafted-po/delete-drafted-po.component";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { POService } from 'src/app/shared/services/po/po.service';
+import { UserGuideService } from 'src/app/shared/services/user-guide.service';
+import { POService } from 'src/app/shared/services/po.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { permission } from 'src/app/shared/models/permissionObject';

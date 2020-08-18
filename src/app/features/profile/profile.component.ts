@@ -1,13 +1,12 @@
-import { OnInit, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/models/user-details';
-import { Router } from '@angular/router';
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Currency, CountryCode } from 'src/app/shared/models/currency';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { Component, OnInit } from "@angular/core";
+import { UserRoles, UserDetails, TradeList, TurnOverList } from "../../shared/models/user-details";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Currency, CountryCode } from "../../shared/models/currency";
+import { UserService } from "../../shared/services/user.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
+import { CommonService } from "../../shared/services/commonService";
+import { FieldRegExConst } from "../../shared/constants/field-regex-constants";
 
 export interface City {
   value: string;

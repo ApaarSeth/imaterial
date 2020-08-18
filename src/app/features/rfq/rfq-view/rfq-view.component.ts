@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ViewDocumentsDialogComponent } from "src/app/shared/dialogs/view-documents/view-documents-dialog.component";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { RFQService } from "src/app/shared/services/rfq.service";
 import { ActivatedRoute } from '@angular/router';
 import { Rfq, Documents, TermsObj } from 'src/app/shared/models/RFQ/rfq-view';
 import { CommonService } from 'src/app/shared/services/commonService';

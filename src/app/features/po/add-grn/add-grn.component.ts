@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { GRNDetails, GRNList } from 'src/app/shared/models/grn';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GRNService } from 'src/app/shared/services/grn/grn.service';
+import { GRNService } from 'src/app/shared/services/grn.service';
 import { Validators, FormArray, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
+import { SignInSignupService } from 'src/app/shared/signupSignin/signupSignin.service';
 import { Subscription, interval } from 'rxjs';
 import { RouterLink, Router } from '@angular/router';
 import { TokenService } from 'src/app/shared/services/token.service';

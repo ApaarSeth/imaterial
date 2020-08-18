@@ -14,12 +14,12 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatStepper } from "@angular/material/stepper";
 import { FormBuilder } from "@angular/forms";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { RFQService } from "src/app/shared/services/rfq.service";
 import { RfqQuantityMakesComponent } from "./rfq-quantity-makes/rfq-quantity-makes.component";
 import { RfqSupplierComponent } from "./rfq-supplier/rfq-supplier.component";
 import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
 import { AddRFQConfirmationComponent } from 'src/app/shared/dialogs/add-rfq-confirmation/add-rfq-double-confirmation.component';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { UserGuideService } from 'src/app/shared/services/user-guide.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
 import { ProjectDetails } from 'src/app/shared/models/project-details';

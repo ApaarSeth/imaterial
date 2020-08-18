@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef, SimpleChanges } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import {
-  ProjectDetails,
-  ProjectIds
+  ProjectDetails
 } from "src/app/shared/models/project-details";
 import {
   FormBuilder,
@@ -11,22 +10,10 @@ import {
   Validators,
   FormControl
 } from "@angular/forms";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { stringify } from "querystring";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import {
-  RfqMat,
   RfqMaterialResponse,
   AddRFQ
 } from "src/app/shared/models/RFQ/rfq-details";
-import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
-import { AddEditUserComponent } from 'src/app/shared/dialogs/add-edit-user/add-edit-user.component';
-import { UserDetailsPopUpData, AllUserDetails, UserAdd } from 'src/app/shared/models/user-details';
-import { DeactiveUserComponent } from 'src/app/shared/dialogs/disable-user/disable-user.component';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { forEachChild, idText } from 'typescript';
-import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierAdd } from 'src/app/shared/models/supplier';
 import { SupplierLiabilityReport } from 'src/app/shared/models/supplierLiabiltityReport.model';

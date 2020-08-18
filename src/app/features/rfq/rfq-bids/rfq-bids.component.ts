@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { RFQService } from "src/app/shared/services/rfq.service";
 import {
   RfqProjects,
   RfqProject,

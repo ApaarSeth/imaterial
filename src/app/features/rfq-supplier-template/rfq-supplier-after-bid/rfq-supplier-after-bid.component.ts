@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { SendRfqObj } from "src/app/shared/models/RFQ/rfq-details-supplier";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { RFQService } from "src/app/shared/services/rfq.service";
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmRfqBidComponent } from 'src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component';
 @Component({

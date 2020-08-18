@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, ValidatorFn, AbstractControl } from '@angular/forms';
 import { TaxInfo } from 'src/app/shared/models/tax-cost.model';
 import { Observable } from 'rxjs';
-import { BomService } from 'src/app/shared/services/bom/bom.service';
+import { BomService } from 'src/app/shared/services/bom.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subcategory } from 'src/app/shared/models/subcategory-materials';
 import { Currency } from 'src/app/shared/models/currency';

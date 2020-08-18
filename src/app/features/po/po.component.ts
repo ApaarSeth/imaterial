@@ -17,7 +17,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription, combineLatest } from 'rxjs';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { CommonService } from 'src/app/shared/services/commonService';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { UserGuideService } from 'src/app/shared/services/user-guide.service';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gstin-missing.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';

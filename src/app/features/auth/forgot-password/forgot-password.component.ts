@@ -3,7 +3,7 @@ import { TokenService } from 'src/app/shared/services/token.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
+import { UserService } from 'src/app/shared/services/user.service';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { OrganisationType } from '../signup/signup.component';
 import { auth } from 'src/app/shared/models/auth';

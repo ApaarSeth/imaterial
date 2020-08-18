@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { BomService } from 'src/app/shared/services/bom/bom.service';
+import { BomService } from 'src/app/shared/services/bom.service';
 import { categoryNestedLevel } from 'src/app/shared/models/category';
 import { MatDialog } from '@angular/material/dialog';
 import { EditMyMaterialComponent } from 'src/app/shared/dialogs/edit-my-material/edit-my-material.component';

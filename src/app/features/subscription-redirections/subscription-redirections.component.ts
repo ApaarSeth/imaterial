@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SubscriptionPaymentsService } from './../../shared/services/subscriptions-payments.service';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
     selector: 'subscription-redirections',
@@ -50,27 +50,27 @@ export class SubscriptionRedirectionsComponent implements OnInit {
 
     getUserInformation(userId) {
         this._userService.getUserInfo(userId).then(res => {
-            localStorage.setItem('isFreeTrialSubscription', res.data[ 0 ].isFreeTrialSubscription);
-            localStorage.setItem('isActiveSubscription', res.data[ 0 ].isActiveSubscription);
+            localStorage.setItem('isFreeTrialSubscription', res.data[0].isFreeTrialSubscription);
+            localStorage.setItem('isActiveSubscription', res.data[0].isActiveSubscription);
             this.subsPayService.updateSubscriptionPlan$.next();
         });
     }
 
     redirectPageToDashboard() {
         if (this.pageType !== 3 && this.pageType !== 1) {
-            setTimeout(_ => { this.router.navigate([ "/dashboard" ]) }, 20000);
+            setTimeout(_ => { this.router.navigate(["/dashboard"]) }, 20000);
         }
         if (this.pageType === 1) {
-            setTimeout(_ => { this.router.navigate([ "/subscriptions" ]) }, 20000);
+            setTimeout(_ => { this.router.navigate(["/subscriptions"]) }, 20000);
         }
     }
 
     gotoMySubscriptions() {
-        this.router.navigate([ '/subscriptions' ]);
+        this.router.navigate(['/subscriptions']);
     }
 
     gotoSubscriptions() {
-        this.router.navigate([ '/buy-subscriptions' ]);
+        this.router.navigate(['/buy-subscriptions']);
     }
 
 }
