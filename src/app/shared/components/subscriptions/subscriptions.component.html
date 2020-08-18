@@ -23,7 +23,7 @@
                 <!-- <mat-card-header class="subs-head"> -->
                 <mat-card-title>{{ plan.planName }} Plan
                   <ng-container *ngIf="plan.activeSubscription !== null">
-                    <span class="font-size-12 font-weight500 mt-2">(My Plan)</span>
+                    <span class="font-size-12 font-weight500 mt-2">(MY PLAN)</span>
                   </ng-container>
                 </mat-card-title>
                 <mat-card-subtitle class="text-left pl-5">
@@ -162,6 +162,7 @@
 
                 <!-- <ng-container
                   *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && plan.isTrialActive === 0"> -->
+
                 <ng-container
                   *ngIf="plan.activeSubscription !== null && plan.planName !== 'Custom' && isActiveSubscription === 1 && isFreeTrialSubscription === 0 && plan.activeSubscription.dateUnsubscribed === null">
                   <p class="text-center mt-4 mr-4 brand-color">
@@ -170,6 +171,7 @@
                     </button>
                   </p>
                 </ng-container>
+
               </mat-card-actions>
             </mat-card>
           </div>
