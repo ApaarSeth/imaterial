@@ -5,7 +5,7 @@ import {
   Validators
 } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
-import { ProjectService } from "../../services/projectDashboard/project.service";
+import { ProjectService } from "../../services/project.service";
 import { FieldRegExConst } from "../../constants/field-regex-constants";
 import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { Router } from '@angular/router';

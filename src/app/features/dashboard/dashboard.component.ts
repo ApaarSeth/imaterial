@@ -1,19 +1,16 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
-import { ProjectService } from "../../shared/services/projectDashboard/project.service";
-import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
+import { ProjectService } from "../../shared/services/project.service";
 import { ActivatedRoute } from "@angular/router";
-import {
-  ProjectDetails,
-  ProjetPopupData
-} from "src/app/shared/models/project-details";
-import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { GuidedTourService, OrientationConfiguration, Orientation, GuidedTour } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { PermissionService } from 'src/app/shared/services/permission.service';
-import { CountryCode } from 'src/app/shared/models/currency';
-import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 import { MatDialog } from "@angular/material/dialog";
+import { ProjectDetails, ProjetPopupData } from "../../shared/models/project-details";
+import { CountryCode } from "../../shared/models/currency";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
+import { UserGuideService } from "../../shared/services/user-guide.service";
+import { CommonService } from "../../shared/services/commonService";
+import { PermissionService } from "../../shared/services/permission.service";
+import { AppNotificationService } from "../../shared/services/app-notification.service";
+import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "../../shared/dialogs/double-confirmation/double-confirmation.component";
 
 @Component({
   selector: "dashboard",

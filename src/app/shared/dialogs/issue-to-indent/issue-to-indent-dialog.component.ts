@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { IssueToIndentDetails, IndentVO, sendIssuedQuantityObj } from '../../models/issue-to-indent';
-import { BomService } from '../../services/bom/bom.service';
+import { BomService } from '../../services/bom.service';
 import {
   FormBuilder,
   FormArray,

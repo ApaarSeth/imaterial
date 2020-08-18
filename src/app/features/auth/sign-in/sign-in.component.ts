@@ -1,21 +1,21 @@
 import { CountryCode } from './../../../shared/models/currency';
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, SimpleChanges } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
-import { SignInSignupService } from "src/app/shared/services/signupSignin/signupSignin.service";
-import { SignInData } from "src/app/shared/models/signIn/signIn-detail-list";
-import { Router, ActivatedRoute, Navigation, ActivatedRouteSnapshot } from "@angular/router";
-import { FieldRegExConst } from "src/app/shared/constants/field-regex-constants";
-import { UserService } from "src/app/shared/services/userDashboard/user.service";
-import { TokenService } from 'src/app/shared/services/token.service';
-import { DataService } from 'src/app/shared/services/data.service';
-import { API } from 'src/app/shared/constants/configuration-constants';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { VisitorService } from 'src/app/shared/services/visitor.service';
-import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
-import { WebNotificationService } from 'src/app/shared/services/webNotificationService.service';
+import { Router, ActivatedRoute } from "@angular/router";
 import { SwPush, SwUpdate } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FieldRegExConst } from '../../../shared/constants/field-regex-constants';
+import { TokenService } from '../../../shared/services/token.service';
+import { WebNotificationService } from '../../../shared/services/webNotificationService.service';
+import { UserService } from '../../../shared/services/user.service';
+import { DataService } from '../../../shared/services/data.service';
+import { AppNavigationService } from '../../../shared/services/navigation.service';
+import { CommonService } from '../../../shared/services/commonService';
+import { VisitorService } from '../../../shared/services/visitor.service';
+import { GlobalLoaderService } from '../../../shared/services/global-loader.service';
+import { API } from '../../../shared/constants/configuration-constants';
+import { SignInSignupService } from '../../../shared/services/signupSignin.service';
+import { SignInData } from '../../../shared/models/signIn/signIn-detail-list';
 
 
 @Component({
@@ -62,47 +62,26 @@ export class SigninComponent implements OnInit {
   searchCountry: string = '';
   primaryCallingCode: string = '';
   callingCode: string;
-
+  selectedCountry: CountryCode;
   ngOnInit() {
-    // this.countryList = this.activatedRoute.snapshot.data.countryList;
-    this.countryList = this.actualCountryList;
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
     });
-    this.callingCode = this.actualCallingCode
-    this.formInit();
-    if (this.callingCode) {
-      this.getLocation();
-    }
   }
 
-  getLocation() {
-    let emailValidator = [
-      Validators.required,
-      Validators.pattern(FieldRegExConst.EMAIL)
-    ]
-    this.getCountryCode(this.callingCode, this.countryCode)
-    if (this.callingCode === '+91') {
-      // this.signinForm.get('email').setValidators(emailValidator)
-      this.signinForm.get('phone').setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE_NUMBER)])
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.actualCountryList && changes.actualCountryList.currentValue) {
+      this.formInit();
+      this.countryList = changes.actualCountryList.currentValue;
     }
-    else {
-      this.signinForm.get('email').setValidators(emailValidator)
-
+    if (changes.actualCallingCode && changes.actualCallingCode.currentValue) {
+      this.callingCode = changes.actualCallingCode.currentValue;
+      this.setValidation();
+    }
+    if (changes.countryCode && changes.countryCode.currentValue) {
+      this.getCountryCode(changes.countryCode.currentValue)
     }
   }
-
-  getCountryCode(callingCode, countryCode) {
-    this.livingCountry = this.countryList.filter(val => {
-      // if (callingCode === '+1') {
-      //   if (val.callingCode === callingCode && val.countryCode === countryCode)
-      //     return val;
-      // }
-      return val.countryCode.toLowerCase() === countryCode.toLowerCase();
-    })
-    this.signinForm.get('countryCode').setValue(this.livingCountry[0])
-  }
-
   formInit() {
     this.signinForm = this.formBuilder.group({
       countryCode: [{ value: '', disabled: true }],
@@ -112,12 +91,28 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  get selectedCountry() {
-    return this.signinForm.get('countryCode').value;
+  setValidation() {
+    let emailValidator = [
+      Validators.required,
+      Validators.pattern(FieldRegExConst.EMAIL)
+    ]
+    if (this.callingCode === '+91') {
+      this.signinForm.get('phone').setValidators([Validators.required, Validators.pattern(FieldRegExConst.MOBILE2)])
+    }
+    else {
+      this.signinForm.get('email').setValidators(emailValidator)
+    }
+  }
+
+  getCountryCode(countryCode) {
+    this.livingCountry = this.countryList.filter(val => {
+      return val.countryCode.toLowerCase() === countryCode.toLowerCase();
+    })
+    this.signinForm.get('countryCode').setValue(this.livingCountry[0])
+    this.selectedCountry = this.signinForm.get('countryCode').value
   }
 
   signin() {
-    this.loader.show()
     let params = new URLSearchParams();
     params.append("loginIdType", this.callingCode === '+91' ? 'PHONE' : 'EMAIL');
     this.callingCode === '+91' ? params.append('countryCode', this.callingCode) : null;
@@ -162,17 +157,14 @@ export class SigninComponent implements OnInit {
    */
   getUserInfo(userId) {
     this.dataService.getRequest(API.GET_USER_PROFILE(userId), null).then(res => {
-      if (res.data[0].firstName)
-        localStorage.setItem("userName", res.data[0].firstName);
+      localStorage.setItem("userName", res.data[0].firstName);
       localStorage.setItem("profileUrl", res.data[0].profileUrl);
       localStorage.setItem("currencyCode", res.data[0].baseCurrency ? res.data[0].baseCurrency.currencyCode : null);
-      // localStorage.setItem("countryCode", res.data[0].countryCode);
       localStorage.setItem("countryId", res.data[0].countryId);
       localStorage.setItem("isPlanAvailable", res.data[0].isPlanAvailable);
       localStorage.setItem('isFreeTrialSubscription', res.data[0].isFreeTrialSubscription);
       localStorage.setItem('isActiveSubscription', res.data[0].isActiveSubscription);
       localStorage.setItem('accountOwner', res.data[0].accountOwner);
-
       this.dataService.getRequest(API.CHECKTERMS, null).then(res => {
         this.acceptTerms = res.data;
         if (!this.acceptTerms) {
@@ -184,6 +176,7 @@ export class SigninComponent implements OnInit {
       })
     })
   }
+
   showPassWord() {
     if (!this.showPassWordString) {
       this.showPassWordString = true;
@@ -191,6 +184,7 @@ export class SigninComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
+
   goToForgetPass() {
     if (this.uniqueCode) {
       this.router.navigate(['auth/forgot-password/' + this.uniqueCode]);

@@ -6,7 +6,7 @@ import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants'
 import { Router } from '@angular/router';
 import { elementAt, count, take, startWith, map, filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { BomService } from '../../services/bom/bom.service';
+import { BomService } from '../../services/bom.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { orgTrades, tradeRelatedCategory } from '../../models/trades';
 import { Subject, Observable, merge } from 'rxjs';

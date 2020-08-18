@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { DataService } from "../data.service";
-import { API } from "../../constants/configuration-constants";
-import { GRNDetails, GRN, GRNList } from '../../models/grn';
+import { DataService } from "./data.service";
+import { API } from "../constants/configuration-constants";
+import { GRNDetails, GRN, GRNList } from '../models/grn';
 
 @Injectable({
     providedIn: "root"
@@ -37,7 +37,7 @@ export class GRNService {
         return this.dataService.sendPostRequest(API.GRNUPLOADTEMPELATE(projectId), data)
     }
 
-    getAllGRNData(projectIds){
+    getAllGRNData(projectIds) {
         return this.dataService.getRequest(API.GET_ALL_GRN, projectIds).then(res => res);
     }
 }

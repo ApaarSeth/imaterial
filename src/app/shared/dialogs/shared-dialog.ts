@@ -12,7 +12,7 @@ import { SelectPoRoleComponent } from "./select-po-role/select-po-role.component
 import { AddAddressPoDialogComponent } from "./add-address-po/add-addressPo.component";
 import { AddEditUserComponent } from "./add-edit-user/add-edit-user.component";
 import { DeactiveUserComponent } from "./disable-user/disable-user.component";
-import { DeactiveSupplierComponent } from "./disable-supplier/disable-supplier.component";
+import { DeactiveSupplierComponent } from "./add-supplier/disable-supplier/disable-supplier.component";
 import { ConfirmRfqBidComponent } from "./confirm-rfq-bid/confirm-frq-bid-component";
 import { DeleteBomComponent } from "./delete-bom/delete-bom.component";
 import { AddEditGrnComponent } from "./add-edit-grn/add-edit-grn.component";

@@ -5,10 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserRoles, UserDetails, TradeList, TurnOverList } from '../../../shared/models/user-details';
 import { Currency, CountryCode } from '../../../shared/models/currency';
 import { permission } from '../../../shared/models/permissionObject';
-import { UserService } from '../../../shared/services/userDashboard/user.service';
+import { UserService } from '../../../shared/services/user.service';
 import { PermissionService } from '../../../shared/services/permission.service';
 import { CommonService } from '../../../shared/services/commonService';
-import { DocumentUploadService } from '../../../shared/services/document-download/document-download.service';
+import { DocumentUploadService } from '../../../shared/services/document-download.service';
 import { AppNavigationService } from '../../../shared/services/navigation.service';
 import { FieldRegExConst } from '../../../shared/constants/field-regex-constants';
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { UserService } from '../services/userDashboard/user.service';
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class AfterSignUpGuardService implements CanActivate {

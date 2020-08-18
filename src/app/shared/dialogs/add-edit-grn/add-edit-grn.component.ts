@@ -1,6 +1,7 @@
+import { CommonService } from './../../services/commonService';
 import { Component, Inject, OnInit, HostListener, ViewChild, Input } from "@angular/core";
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl } from "@angular/forms";
-import { GRNService } from "../../services/grn/grn.service";
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators, AbstractControl, ValidatorFn } from "@angular/forms";
+import { GRNService } from "../../services/grn.service";
 import { GRNDetails, GRNPopupData, GRNList } from "../../models/grn";
 import { AppNavigationService } from '../../services/navigation.service';
 import { DocumentList } from '../../models/PO/po-data';
@@ -35,7 +36,7 @@ export class AddEditGrnComponent implements OnInit {
   dataSource: GRNDetails[];
   GRNDetails: GRNDetails;
   qtyEnteredValidation;
-  displayedColumns: string[] = ["Material Name", "Brand Name", "Unit", "Awarded Quantity", "Delivered Quantity", "Received Quantity"];
+  displayedColumns: string[] = ["Material Name", "Brand Name", "Unit", "Awarded Quantity", "Delivered Quantity", "Delivered Date", "Received Quantity"];
   materialForms: FormGroup;
   orgId: number;
   purchaseOrderId: any;
@@ -49,7 +50,8 @@ export class AddEditGrnComponent implements OnInit {
     private dialogRef: MatDialogRef<AddEditGrnComponent>,
     @Inject(MAT_DIALOG_DATA) public data: GRNPopupData,
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _commonService: CommonService
   ) { }
 
   ngOnInit() {
@@ -67,16 +69,15 @@ export class AddEditGrnComponent implements OnInit {
   formsInit() {
     this.GRNDetails = this.data.isEdit ? this.data.detail : ({} as GRNDetails);
     this.orgId = Number(localStorage.getItem("orgId"));
-
     const frmArr = this.dataSource.map((data, i) => {
-      const formGrp = this.formBuilder.group({
+      var formGrp = this.formBuilder.group({
         materialName: [data.materialName],
         materialBrand: [data.materialBrand],
         certifiedQty: [data.certifiedQty ? data.certifiedQty : null, this.checkValidation(data.deliverableQty)],
         materialId: [data.materialId],
         deliveredQty: [data.deliveredQty],
         awardedQty: [data.awardedQty],
-        deliveredDate: [data.deliveredDate],
+        deliveredDate: [data.deliveredDate, this.checkDateRequired()],
         deliverableQty: [data.deliverableQty],
         grnId: [data.grnId],
         grnDetailId: [data.grnDetailId],
@@ -86,20 +87,61 @@ export class AddEditGrnComponent implements OnInit {
       });
       formGrp.get('certifiedQty').valueChanges.subscribe(val => {
         if (Number(val) > 0) {
-          (<FormArray>this.materialForms.get('forms')).controls[formGrp.get('index').value].get('deliveredDate').setValidators(Validators.required)
+          (<FormGroup>(<FormArray>this.materialForms.get('forms')).controls[formGrp.get('index').value]).controls['deliveredDate'].setValue(null)
         } else {
-          (<FormArray>this.materialForms.get('forms')).controls[formGrp.get('index').value].get('deliveredDate').clearValidators()
+          (<FormArray>this.materialForms.get('forms')).controls[formGrp.get('index').value].get('deliveredDate').setValue('')
         }
       })
       return formGrp
     });
     this.materialForms = this.formBuilder.group({
       forms: new FormArray(frmArr)
-    });
+    }, { validators: this.checkRequiredQty() });
 
-    // this.materialForms.valueChanges.subscribe(val => {
-    //   this.checkValidation();
-    // });
+  }
+
+  checkRequiredQty(): ValidatorFn {
+    return (formGroup: FormGroup): { [key: string]: boolean } | null => {
+      let checked = false;
+      checked = formGroup.get('forms').value.some(material => {
+        return material.certifiedQty > 0
+      })
+      if (checked) {
+        return null;
+      }
+      else
+        return {
+          enterQuantity: true,
+        };
+    }
+  }
+
+  checkDateRequired(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (control.value === null) {
+        return { 'enterDate': true };
+      }
+      return null;
+    }
+  }
+
+  checkValidation(deliverableQty: number) {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (control.value > deliverableQty) {
+        this._snackBar.open(
+          "Received quantity cannot be greater than delivered qty",
+          "",
+          {
+            duration: 2000,
+            panelClass: ["warning-snackbar"],
+            verticalPosition: "bottom"
+          }
+        );
+        control.setValue(0)
+        return { 'incorrectValue': true };
+      }
+      return null;
+    }
   }
 
   postGRNDetails(formValues: GRNDetails[]) {
@@ -125,19 +167,12 @@ export class AddEditGrnComponent implements OnInit {
     });
   }
 
-  // getGRNDetails(grnId: number) {
-  //     this.grnService.getGRNDetails(grnId).then(data => {
-  //         this.grnDetails = data.data;
-  //         this.grnDetailsObj = data.data;
-  //         this.formsInit(this.grnDetailsObj);
-
-  //     });
-  // }
-
   addGrn() {
     const formValues: GRNDetails[] = [];
     this.materialForms.value.forms.forEach((element, i) => {
       element.certifiedQty = Number(element.certifiedQty)
+      element.deliveredDate = element.deliveredDate ? this._commonService.checkDate(element.deliveredDate) : null
+
       if (element.certifiedQty > 0) {
         delete element.index;
         formValues.push(element);
@@ -147,24 +182,6 @@ export class AddEditGrnComponent implements OnInit {
     this.postGRNDetails(formValues);
   }
 
-  checkValidation(deliverableQty: number) {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
-      if (control.value > deliverableQty) {
-        this._snackBar.open(
-          "Received quantity cannot be greater than delivered qty",
-          "",
-          {
-            duration: 2000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          }
-        );
-        control.setValue(0)
-        return { 'nameIsForbidden': true };
-      }
-      return null;
-    }
-  }
 
   valueEntered() {
     return this.materialForms.value.forms.some(element => {

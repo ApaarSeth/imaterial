@@ -2,8 +2,8 @@ import { Component, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { RfqMaterialResponse, Address } from "../../models/RFQ/rfq-details";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AddAddressService } from "../../services/add-address/add-address.service";
-import { ProjectService } from '../../services/projectDashboard/project.service';
+import { AddAddressService } from "../../services/add-address.service";
+import { ProjectService } from '../../services/project.service';
 
 export interface City {
   value: string;

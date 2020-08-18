@@ -12,9 +12,9 @@ import {
   AllUserDetails,
   UserDetailsPopUpData
 } from "../../models/user-details";
-import { UserService } from "../../services/userDashboard/user.service";
+import { UserService } from "../../services/user.service";
 import { Router } from "@angular/router";
-import { BomService } from "../../services/bom/bom.service";
+import { BomService } from "../../services/bom.service";
 
 export interface City {
   value: string;

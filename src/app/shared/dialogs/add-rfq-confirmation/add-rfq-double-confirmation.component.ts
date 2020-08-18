@@ -8,9 +8,9 @@ import {
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
-import { ProjectService } from "../../services/projectDashboard/project.service";
+import { ProjectService } from "../../services/project.service";
 import { AddRFQ } from "../../models/RFQ/rfq-details";
-import { RFQService } from "../../services/rfq/rfq.service";
+import { RFQService } from "../../services/rfq.service";
 import { AppNavigationService } from '../../services/navigation.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 

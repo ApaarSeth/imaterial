@@ -9,10 +9,10 @@ import {
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AllUserDetails, UserDetailsPopUpData } from '../../models/user-details';
-import { UserService } from '../../services/userDashboard/user.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { ProjectDetails, ProjetPopupData } from '../../models/project-details';
-import { ProjectService } from '../../services/projectDashboard/project.service';
+import { ProjectService } from '../../services/project.service';
 
 export interface City {
   value: string;

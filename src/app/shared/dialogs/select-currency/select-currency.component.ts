@@ -7,7 +7,7 @@ import {
 } from "@angular/forms";
 
 import { Router } from '@angular/router';
-import { RFQService } from '../../services/rfq/rfq.service';
+import { RFQService } from '../../services/rfq.service';
 import { rfqCurrency, CountryCurrency } from '../../models/RFQ/rfq-details';
 import { CommonService } from '../../services/commonService';
 import { Currency } from '../../models/currency';

@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { NativeDateAdapter } from '@angular/material/core';
+import { Injectable } from '@angular/core';
 
 export const PICK_FORMATS = {
     parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -10,7 +11,7 @@ export const PICK_FORMATS = {
         monthYearA11yLabel: { year: 'numeric', month: 'long' }
     }
 };
-
+@Injectable()
 export class PickDateAdapter extends NativeDateAdapter {
     format(date: Date, displayFormat: Object): string {
         if (displayFormat === 'input') {

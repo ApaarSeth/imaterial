@@ -1,13 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotificationInt } from 'src/app/shared/models/notification';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { CommonService } from 'src/app/shared/services/commonService';
 import { Subscription, interval } from 'rxjs';
-import { TokenService } from '../../services/token.service';
 import { SubscriptionPaymentsService } from '../../services/subscriptions-payments.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationInt } from '../../models/notification';
+import { CommonService } from '../../services/commonService';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-top-header',
