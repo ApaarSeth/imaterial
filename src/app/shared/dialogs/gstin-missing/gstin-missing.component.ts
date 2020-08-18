@@ -1,13 +1,5 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
+import { Component, Inject, OnInit } from "@angular/core";
+import { ProjectDetails } from "../../models/project-details";
 import { ProjectService } from "../../services/project.service";
 import { Router } from '@angular/router';
 import { POData } from '../../models/PO/po-data';

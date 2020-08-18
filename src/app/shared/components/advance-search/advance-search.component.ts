@@ -1,5 +1,3 @@
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
 import { CommonService } from '../../services/commonService';
 import { ProjectService } from '../../services/project.service';

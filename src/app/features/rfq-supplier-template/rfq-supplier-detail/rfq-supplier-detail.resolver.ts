@@ -1,12 +1,10 @@
 import { Injectable } from "@angular/core";
 import {
-  ActivatedRouteSnapshot,
   Resolve,
   Router,
   ActivatedRoute
 } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { RFQService } from "../../../shared/services/rfq.service";
 
 @Injectable()
 
@@ -15,7 +13,7 @@ export class RFQSupplierDetailResolver implements Resolve<any> {
     private route: ActivatedRoute,
     private router: Router,
     private rfqService: RFQService
-  ) {}
+  ) { }
 
   resolve() {
     return this.rfqService

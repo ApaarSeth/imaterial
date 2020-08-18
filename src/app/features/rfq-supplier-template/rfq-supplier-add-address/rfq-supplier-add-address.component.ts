@@ -1,18 +1,17 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { SendRfqObj } from "src/app/shared/models/RFQ/rfq-details-supplier";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmRfqBidComponent } from 'src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component';
-import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { POService } from 'src/app/shared/services/po/po.service';
-import { SupplierAddress, SupplierSelectedAddress } from 'src/app/shared/models/PO/po-data';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
-import { SelectSupplierAddressDialogComponent } from 'src/app/shared/dialogs/select-supplier-address/select-supplier-address.component';
-import { CountryCode } from 'src/app/shared/models/currency';
-import { VisitorService } from 'src/app/shared/services/visitor.service';
-import { CommonService } from 'src/app/shared/services/commonService';
+import { SendRfqObj } from "../../../shared/models/RFQ/rfq-details-supplier";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { CountryCode } from "../../../shared/models/currency";
+import { MatDialog } from "@angular/material/dialog";
+import { RFQService } from "../../../shared/services/rfq.service";
+import { POService } from "../../../shared/services/po.service";
+import { ProjectService } from "../../../shared/services/project.service";
+import { VisitorService } from "../../../shared/services/visitor.service";
+import { CommonService } from "../../../shared/services/commonService";
+import { FieldRegExConst } from "../../../shared/constants/field-regex-constants";
+import { ConfirmRfqBidComponent } from "../../../shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component";
+import { SelectSupplierAddressDialogComponent } from "../../../shared/dialogs/select-supplier-address/select-supplier-address.component";
 @Component({
   selector: "rfq-supplier-add-address",
   templateUrl: "./rfq-supplier-add-address.component.html"

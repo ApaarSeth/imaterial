@@ -6,12 +6,7 @@ import {
   HttpErrorResponse
 } from "@angular/common/http";
 import { environment } from "../../../environments/environment"
-//import { ErrorCodesConstants } from '../constants/error-codes-constants';
 import { isUndefined } from "util";
-//import { NotificationService } from './notification-service';
-//import { StaticText } from '../constants/static-text';
-//import { LoggerService } from './logger.service';
-//import { TokenService } from './token.service';
 import { ConfigurationConstants } from "../constants/configuration-constants";
 import { ResolveData, Router } from "@angular/router";
 import { DataServiceOptions } from "../models/data-service-options";
@@ -36,16 +31,14 @@ export class DataService {
   constructor(
     private http: HttpClient,
     private notifier: AppNotificationService,
-    //private token:environment TokenService,
-    private router: Router
   ) {
-    // this.baseUrl = environment.url + "/";
-    // this.masterUrl = environment.masterUrl + "/";
-    // this.ssoUrl = environment.ssoUrl + "/";
-    this.baseStartUrl = Utils.baseUrl();
-    this.baseUrl = this.baseStartUrl + "im/";
-    this.masterUrl = this.baseStartUrl + "mm/";
-    this.ssoUrl = this.baseStartUrl + "sso/";
+    this.baseUrl = environment.url + "/";
+    this.masterUrl = environment.masterUrl + "/";
+    this.ssoUrl = environment.ssoUrl + "/";
+    // this.baseStartUrl = Utils.baseUrl();
+    // this.baseUrl = this.baseStartUrl + "im/";
+    // this.masterUrl = this.baseStartUrl + "mm/";
+    // this.ssoUrl = this.baseStartUrl + "sso/";
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.orgId = localStorage.getItem("orgId");

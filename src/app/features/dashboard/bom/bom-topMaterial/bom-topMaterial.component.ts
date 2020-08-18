@@ -9,8 +9,6 @@ import {
   SimpleChanges
 } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { categoryNestedLevel, material } from "src/app/shared/models/category";
 import {
   FormGroup,
   FormControl,
@@ -20,11 +18,11 @@ import {
   ValidatorFn,
   AbstractControl
 } from "@angular/forms";
-import { BomService } from "src/app/shared/services/bom/bom.service";
-import { parse } from "querystring";
-import { Materials } from "src/app/shared/models/subcategory-materials";
-import { range } from 'rxjs';
-import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { categoryNestedLevel } from "../../../../shared/models/category";
+import { ProjectService } from "../../../../shared/services/project.service";
+import { BomService } from "../../../../shared/services/bom.service";
+import { AppNotificationService } from "../../../../shared/services/app-notification.service";
+import { Materials } from "../../../../shared/models/subcategory-materials";
 
 @Component({
   selector: "app-bom-topMaterial",
@@ -100,9 +98,9 @@ export class BomTopMaterialComponent implements OnInit {
     if (changes.category && changes.category.currentValue) {
       if (changes.category.currentValue.length) {
         this.route.params.subscribe(params => {
-          this.projectId = params[ "id" ];
+          this.projectId = params["id"];
           this.orgId = Number(localStorage.getItem("orgId"))
-          this.selectedCategory = [ ...this.category ];
+          this.selectedCategory = [...this.category];
           this.mappingMaterialWithQuantity()
         });
       }
@@ -113,14 +111,14 @@ export class BomTopMaterialComponent implements OnInit {
     let frmArr: FormGroup[] = this.selectedCategory.map((category: categoryNestedLevel) => {
       const matGrp: FormGroup[] = category.materialList.map(subcategory => {
         return this.formBuilder.group({
-          materialId: [ subcategory.materialId ],
-          materialMasterId: [ subcategory.materialId ],
-          estimatedQty: [ subcategory.estimatedQty, [ this.estimatedQtyCheck(subcategory.poAvailableQty ? subcategory.poAvailableQty : 0) ] ],
-          materialCode: [ subcategory.materialCode ],
-          materialName: [ subcategory.materialName ],
-          materialGroup: [ subcategory.materialGroup ],
-          materialUnit: [ subcategory.materialUnit ],
-          estimatedRate: [ subcategory.estimatedRate ]
+          materialId: [subcategory.materialId],
+          materialMasterId: [subcategory.materialId],
+          estimatedQty: [subcategory.estimatedQty, [this.estimatedQtyCheck(subcategory.poAvailableQty ? subcategory.poAvailableQty : 0)]],
+          materialCode: [subcategory.materialCode],
+          materialName: [subcategory.materialName],
+          materialGroup: [subcategory.materialGroup],
+          materialUnit: [subcategory.materialUnit],
+          estimatedRate: [subcategory.estimatedRate]
         });
       });
       return this.formBuilder.group({
@@ -143,7 +141,7 @@ export class BomTopMaterialComponent implements OnInit {
   }
 
   estimatedQtyCheck(checkVal): ValidatorFn {
-    return (control: FormControl): { [ key: string ]: boolean } | null => {
+    return (control: FormControl): { [key: string]: boolean } | null => {
       if (control.value >= checkVal || control.value == null || checkVal == 0) {
         return null;
       }
@@ -224,10 +222,10 @@ export class BomTopMaterialComponent implements OnInit {
 
 
   getMaterialLength(minRequired = 1): ValidatorFn {
-    return (formGroup: FormGroup): { [ key: string ]: boolean } | null => {
+    return (formGroup: FormGroup): { [key: string]: boolean } | null => {
       let checked = false;
       for (let key of Object.keys((<FormArray>formGroup.get('forms')).controls)) {
-        const control: FormArray = (<FormArray>formGroup.get('forms')).controls[ key ] as FormArray;
+        const control: FormArray = (<FormArray>formGroup.get('forms')).controls[key] as FormArray;
         checked = control.value.materialGroup.some(material => {
           return material.estimatedQty > 0
         })
@@ -267,6 +265,6 @@ export class BomTopMaterialComponent implements OnInit {
     }
   }
   saveCategory() {
-    this.router.navigate([ "/bom/" + this.projectId + "/bom-detail" ]);
+    this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
   }
 }

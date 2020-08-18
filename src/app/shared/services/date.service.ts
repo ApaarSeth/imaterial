@@ -11,7 +11,10 @@ export const PICK_FORMATS = {
         monthYearA11yLabel: { year: 'numeric', month: 'long' }
     }
 };
-@Injectable()
+
+@Injectable({
+    providedIn: 'root'
+})
 export class PickDateAdapter extends NativeDateAdapter {
     format(date: Date, displayFormat: Object): string {
         if (displayFormat === 'input') {

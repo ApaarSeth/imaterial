@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 
-@Injectable()
+
+@Injectable({
+    providedIn: 'root'
+})
 export class GlobalLoaderService {
     public isLoading = new BehaviorSubject(false);
 

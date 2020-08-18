@@ -1,12 +1,10 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import {
   FormBuilder,
-  FormGroup,
-  Validators
+  FormGroup
 } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { ProjectService } from "../../services/project.service";
-import { FieldRegExConst } from "../../constants/field-regex-constants";
 import { Router } from '@angular/router';
 import { AppNavigationService } from '../../services/navigation.service';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
