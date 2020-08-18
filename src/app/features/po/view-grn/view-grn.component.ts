@@ -31,6 +31,7 @@ export class ViewGRNComponent implements OnInit {
         "Material Name",
         "Brand Name",
         "Awarded Quantity",
+        "Delivered Date",
         "Delivered Quantity"
     ];
     grnHeaders: any;
