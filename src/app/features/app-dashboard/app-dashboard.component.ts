@@ -20,6 +20,8 @@ import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
 import { ReleaseNoteComponent } from '../../shared/dialogs/release-notes/release-notes.component';
 import { SelectProjectComponent } from '../../shared/dialogs/select-project/select-project.component';
 import { ViewVideoComponent } from '../../shared/dialogs/video-video/view-video.component';
+import { GuideTourModel } from 'src/app/shared/models/guided_tour';
+
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'

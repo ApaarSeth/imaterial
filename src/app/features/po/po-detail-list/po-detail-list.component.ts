@@ -5,7 +5,7 @@ import {
   PurchaseOrder
 } from "src/app/shared/models/po-details/po-details-list";
 import { MatTableDataSource } from "@angular/material/table";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
+import { ProjectService } from "src/app/shared/services/project.service";
 import { ProjetPopupData } from "src/app/shared/models/project-details";
 import { DeleteDraftedPoComponent } from "src/app/shared/dialogs/delete-drafted-po/delete-drafted-po.component";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';

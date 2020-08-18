@@ -21,7 +21,7 @@ import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
 import { AddRFQConfirmationComponent } from 'src/app/shared/dialogs/add-rfq-confirmation/add-rfq-double-confirmation.component';
 import { UserGuideService } from 'src/app/shared/services/user-guide.service';
 import { CommonService } from 'src/app/shared/services/commonService';
-import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
+import { ProjectService } from 'src/app/shared/services/project.service';
 import { ProjectDetails } from 'src/app/shared/models/project-details';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';

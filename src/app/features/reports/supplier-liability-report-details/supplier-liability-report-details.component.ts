@@ -21,6 +21,7 @@ import { ReportService } from 'src/app/shared/services/supplierLiabilityReport.s
 import { MatMenuTrigger } from "@angular/material/menu";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
+import { AllUserDetails, UserAdd } from "../../../shared/models/user-details";
 
 // chip static data
 export interface Fruit {

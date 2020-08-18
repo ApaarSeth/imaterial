@@ -1,3 +1,5 @@
+import { MyMaterialPost } from './../../models/myMaterial';
+import { MyMaterialService } from './../../services/myMaterial.service';
 import { Component, OnInit, Inject } from "@angular/core";
 import { UserRoles, UserDetails } from "../../models/user-details";
 import { FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms";
@@ -8,6 +10,7 @@ import { Router } from "@angular/router";
 import { AppNavigationService } from "../../services/navigation.service";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { material } from '../../models/category';
 
 export interface City {
   value: string;
