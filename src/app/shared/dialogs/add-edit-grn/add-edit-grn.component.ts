@@ -7,6 +7,7 @@ import { DocumentList } from '../../models/PO/po-data';
 import { GRNDocumentsComponent } from './grn-documents/grn-documents.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { threadId } from "worker_threads";
 export interface City {
   value: string;
   viewValue: string;
@@ -65,26 +66,32 @@ export class AddEditGrnComponent implements OnInit {
 
   formsInit() {
     this.GRNDetails = this.data.isEdit ? this.data.detail : ({} as GRNDetails);
-
     this.orgId = Number(localStorage.getItem("orgId"));
 
-    const frmArr = this.dataSource.map(data => {
-      return new FormGroup({
-        materialName: new FormControl(data.materialName),
-        materialBrand: new FormControl(data.materialBrand),
-        certifiedQty: new FormControl(data.certifiedQty ? data.certifiedQty : null, {
-          validators: [this.checkValidation(data.deliverableQty)]
-        }),
-        materialId: new FormControl(data.materialId),
-        deliveredQty: new FormControl(data.deliveredQty),
-        awardedQty: new FormControl(data.awardedQty),
-        deliveredDate: new FormControl(data.deliveredDate),
-        deliverableQty: new FormControl(data.deliverableQty),
-        grnId: new FormControl(data.grnId),
-        grnDetailId: new FormControl(data.grnDetailId),
-        purchaseOrderId: new FormControl(this.data.pID),
-        organizationId: new FormControl(this.orgId)
+    const frmArr = this.dataSource.map((data, i) => {
+      const formGrp = this.formBuilder.group({
+        materialName: [data.materialName],
+        materialBrand: [data.materialBrand],
+        certifiedQty: [data.certifiedQty ? data.certifiedQty : null, this.checkValidation(data.deliverableQty)],
+        materialId: [data.materialId],
+        deliveredQty: [data.deliveredQty],
+        awardedQty: [data.awardedQty],
+        deliveredDate: [data.deliveredDate],
+        deliverableQty: [data.deliverableQty],
+        grnId: [data.grnId],
+        grnDetailId: [data.grnDetailId],
+        purchaseOrderId: [this.data.pID],
+        organizationId: [this.orgId],
+        index: [i]
       });
+      formGrp.get('certifiedQty').valueChanges.subscribe(val => {
+        if (Number(val) > 0) {
+          (<FormArray>this.materialForms.get('forms')).controls[formGrp.get('index').value].get('deliveredDate').setValidators(Validators.required)
+        } else {
+          (<FormArray>this.materialForms.get('forms')).controls[formGrp.get('index').value].get('deliveredDate').clearValidators()
+        }
+      })
+      return formGrp
     });
     this.materialForms = this.formBuilder.group({
       forms: new FormArray(frmArr)
@@ -132,6 +139,7 @@ export class AddEditGrnComponent implements OnInit {
     this.materialForms.value.forms.forEach((element, i) => {
       element.certifiedQty = Number(element.certifiedQty)
       if (element.certifiedQty > 0) {
+        delete element.index;
         formValues.push(element);
       }
     });
