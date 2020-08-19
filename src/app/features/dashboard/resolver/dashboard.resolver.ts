@@ -4,7 +4,7 @@ import {
   Resolve,
   RouterStateSnapshot
 } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
+import { ProjectService } from "../../../shared/services/project.service";
 
 @Injectable()
 export class DashBoardResolver implements Resolve<any> {

@@ -8,7 +8,7 @@ import {
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AllUserDetails, UserDetailsPopUpData } from '../../models/user-details';
-import { UserService } from '../../services/userDashboard/user.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";

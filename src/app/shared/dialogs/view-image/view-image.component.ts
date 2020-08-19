@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { ImageService } from '../../services/image-integration/image.service';
+import { ImageService } from '../../services/image.service';
 import { ImageDocsLists, ImageList } from '../../models/PO/po-data';
 
 @Component({

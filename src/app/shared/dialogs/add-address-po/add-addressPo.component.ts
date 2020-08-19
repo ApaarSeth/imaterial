@@ -1,13 +1,13 @@
 import { Component, Inject } from "@angular/core";
-import { RfqMaterialResponse, Address } from "../../models/RFQ/rfq-details";
+import { Address } from "../../models/RFQ/rfq-details";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AddAddressService } from "../../services/add-address/add-address.service";
-import { ProjectService } from '../../services/projectDashboard/project.service';
+import { AddAddressService } from "../../services/add-address.service";
+import { ProjectService } from '../../services/project.service';
 import { FieldRegExConst } from '../../constants/field-regex-constants';
 import { VisitorService } from '../../services/visitor.service';
 import { CommonService } from '../../services/commonService';
 import { CountryCode } from '../../models/currency';
-import { UserService } from '../../services/userDashboard/user.service';
+import { UserService } from '../../services/user.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 

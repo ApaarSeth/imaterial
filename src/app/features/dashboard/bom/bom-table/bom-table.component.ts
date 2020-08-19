@@ -4,32 +4,31 @@ import { Observable, of } from "rxjs";
 import { DataSource } from "@angular/cdk/table";
 import { MatTableDataSource } from "@angular/material/table";
 import { Data, ActivatedRoute, Router } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { ProjectDetails, ProjetPopupData } from "src/app/shared/models/project-details";
-import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
-import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { BomService } from "src/app/shared/services/bom/bom.service";
-import { Subcategory, Materials } from "src/app/shared/models/subcategory-materials";
-import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
-import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
-import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom.component";
-import { GlobalLoaderService } from "src/app/shared/services/global-loader.service";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
-import { PermissionService } from "src/app/shared/services/permission.service";
-import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { permission } from 'src/app/shared/models/permissionObject';
-import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
-import { IndentService } from 'src/app/shared/services/indent/indent.service';
-import { AddGrnComponent } from 'src/app/shared/dialogs/add-grn/add-grn.component';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { AddGrnViaExcelComponent } from 'src/app/shared/dialogs/addGrn-viaExcel/addGrnViaExcel.component';
-import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
-import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { ProjectDetails, ProjetPopupData } from "../../../../shared/models/project-details";
+import { Subcategory, Materials } from "../../../../shared/models/subcategory-materials";
+import { AddRFQ, RfqMat } from "../../../../shared/models/RFQ/rfq-details";
+import { permission } from "../../../../shared/models/permissionObject";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
+import { PermissionService } from "../../../../shared/services/permission.service";
+import { RFQService } from "../../../../shared/services/rfq.service";
+import { ProjectService } from "../../../../shared/services/project.service";
 import { MatDialog } from "@angular/material/dialog";
+import { BomService } from "../../../../shared/services/bom.service";
+import { IndentService } from "../../../../shared/services/indent.service";
+import { GlobalLoaderService } from "../../../../shared/services/global-loader.service";
+import { UserGuideService } from "../../../../shared/services/user-guide.service";
+import { CommonService } from "../../../../shared/services/commonService";
+import { AddMyMaterialBomComponent } from "../../../../shared/dialogs/add-my-material-Bom/add-my-material-bom.component";
+import { AddGrnComponent } from "../../../../shared/dialogs/add-grn/add-grn.component";
+import { AddGrnViaExcelComponent } from "../../../../shared/dialogs/addGrn-viaExcel/addGrnViaExcel.component";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { MatSort } from '@angular/material/sort';
+import { AddProjectComponent } from "../../../../shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "../../../../shared/dialogs/double-confirmation/double-confirmation.component";
+import { IssueToIndentDialogComponent } from "../../../../shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
+import { DeleteBomComponent } from "../../../../shared/dialogs/delete-bom/delete-bom.component";
+import { ViewImageComponent } from "../../../../shared/dialogs/view-image/view-image.component";
+import { UploadImageComponent } from "../../../../shared/dialogs/upload-image/upload-image.component";
 
 @Component({
   selector: "app-bom-table",
@@ -185,7 +184,7 @@ export class BomTableComponent implements OnInit {
       
         return data[sortHeaderId];
       };
-      
+
       // this.dataSource.sortingDataAccessor = (data, header) => data[header];
       this.getProject(this.projectId);
       this.loading.hide();

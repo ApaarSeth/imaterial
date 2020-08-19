@@ -1,6 +1,6 @@
 import { Injectable, Inject } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
-import { BomService } from "../../services/bom/bom.service";
+import { BomService } from "../../services/bom.service";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Injectable()

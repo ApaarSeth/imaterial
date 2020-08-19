@@ -1,16 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-
-import { Roles, AllUserDetails, UserDetailsPopUpData, UserAdd } from '../../models/user-details';
-import { UserService } from '../../services/userDashboard/user.service';
 import { Router } from '@angular/router';
-import { FieldRegExConst } from '../../constants/field-regex-constants';
-import { ProjectService } from '../../services/projectDashboard/project.service';
+import { ProjectService } from '../../services/project.service';
 import { ProjectDetails } from '../../models/project-details';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";

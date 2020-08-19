@@ -17,7 +17,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription, combineLatest } from 'rxjs';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { CommonService } from 'src/app/shared/services/commonService';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { UserGuideService } from 'src/app/shared/services/user-guide.service';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gstin-missing.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -28,7 +28,7 @@ import { AppNotificationService } from "../../shared/services/app-notification.s
 import { ShortCloseConfirmationComponent } from "../../shared/dialogs/short-close-confirmation/short-close-confirmation.component";
 import { SelectApproverComponent } from "../../shared/dialogs/selectPoApprover/selectPo.component";
 import { AngularEditor } from "../../shared/constants/angular-editor.constant";
-import { POService } from "../../shared/services/po/po.service";
+import { POService } from "../../shared/services/po.service";
 
 @Component({
   selector: "app-po",

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectDetails } from 'src/app/shared/models/project-details';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { GRNService } from 'src/app/shared/services/grn/grn.service';
+import { GRNService } from 'src/app/shared/services/grn.service';
 import { AllProjectsGRNData } from 'src/app/shared/models/grn';
 import { ShowDocumentComponent } from 'src/app/shared/dialogs/show-documents/show-documents.component';
 import { MatDialog } from '@angular/material/dialog';

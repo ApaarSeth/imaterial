@@ -4,8 +4,6 @@ import {
   RfqMaterialResponse,
   AddRFQ
 } from "src/app/shared/models/RFQ/rfq-details";
-import { ActivatedRoute, Router } from "@angular/router";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
 import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';

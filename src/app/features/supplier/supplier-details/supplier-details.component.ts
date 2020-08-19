@@ -1,18 +1,19 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, HostListener } from "@angular/core";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { SuppliersDialogComponent } from 'src/app/shared/dialogs/add-supplier/suppliers-dialog.component';
-import { SupplierDetailsPopUpData, SupplierAdd } from 'src/app/shared/models/supplier';
-import { DeactiveSupplierComponent } from 'src/app/shared/dialogs/disable-supplier/disable-supplier.component';
-import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
-import { GuidedTourService, GuidedTour, Orientation } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
+import { GlobalLoaderService } from "../../../shared/services/global-loader.service";
+import { CommonService } from "../../../shared/services/commonService";
+import { ActivatedRoute } from "@angular/router";
+import { RFQService } from "../../../shared/services/rfq.service";
+import { UserGuideService } from "../../../shared/services/user-guide.service"
+import { DeactiveSupplierComponent } from "../../../shared/dialogs/disable-supplier/disable-supplier.component";
+import { SupplierAdd, SupplierDetailsPopUpData } from "../../../shared/models/supplier";
+import { AddAddressDialogComponent } from "../../../shared/dialogs/add-address/address-dialog.component";
+import { SuppliersDialogComponent } from "../../../shared/dialogs/add-supplier/suppliers-dialog.component";
+
+
 
 // chip static data
 export interface Fruit {

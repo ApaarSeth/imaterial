@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { RFQService } from "../../services/rfq/rfq.service";
+import { RFQService } from "../../services/rfq.service";
 import { Suppliers } from "../../models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FieldRegExConst } from '../../constants/field-regex-constants';

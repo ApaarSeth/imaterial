@@ -137,11 +137,11 @@ $mat-row-horizontal-padding: 12px;
     padding: 0;
   }
 
-  .backgound-project{
+  .backgound-project {
     background-color: #fff !important;
   }
 
-  .background-grn{
+  .background-grn {
     background-color: #e0e3ec !important;
     .material-row {
       background-color: #e0e3ec !important;
@@ -150,18 +150,18 @@ $mat-row-horizontal-padding: 12px;
     }
   }
 
-  .mat-expansion-panel-header.background-grn.mat-expanded:focus, 
-  .mat-expansion-panel-header.background-grn.mat-expanded:hover{
+  .mat-expansion-panel-header.background-grn.mat-expanded:focus,
+  .mat-expansion-panel-header.background-grn.mat-expanded:hover {
     background-color: #e0e3ec !important;
   }
 
-  .mat-expansion-indicator:after{
+  .mat-expansion-indicator:after {
     padding: 6px;
   }
 }
 
 /** css to make receipt page grn detail row's column aligned **/
-.grn-material-row{
+.grn-material-row {
   .mat-cell.grn-name-cell,
   .mat-cell.po-number-cell {
     flex: 0 0 152px;
@@ -174,19 +174,19 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
-.add-receipts-panel{
-  .mat-expansion-panel-header{
+.add-receipts-panel {
+  .mat-expansion-panel-header {
     padding: 0 12px;
   }
 
-  .mat-expansion-indicator:after{
+  .mat-expansion-indicator:after {
     padding: 6px;
   }
 }
 
-.inactive-receipt-docs{
+.inactive-receipt-docs {
   pointer-events: none;
-  img{
+  img {
     opacity: 0.5;
   }
 }

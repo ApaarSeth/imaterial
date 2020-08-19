@@ -3,7 +3,7 @@ import { RfqMaterialResponse, RfqMat, rfqCurrency } from "src/app/shared/models/
 import { FormBuilder, Validators, FormGroup, FormArray, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { initiatePo, initiatePoData } from "src/app/shared/models/PO/po-data";
-import { POService } from "src/app/shared/services/po/po.service";
+import { POService } from "src/app/shared/services/po.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { isPlatformBrowser } from "@angular/common";

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { DataService } from "../data.service";
-import { API } from "../../constants/configuration-constants";
-import { sendIssuedQuantityObj } from "../../models/issue-to-indent";
+import { DataService } from "./data.service";
+import { API } from "../constants/configuration-constants";
+import { sendIssuedQuantityObj } from "../models/issue-to-indent";
 import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({

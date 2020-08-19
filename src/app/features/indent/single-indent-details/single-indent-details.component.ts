@@ -1,15 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import {
-    ProjectDetails,
-    ProjetPopupData
-} from "src/app/shared/models/project-details";
-import { AddProjectComponent } from 'src/app/shared/dialogs/add-project/add-project.component';
-import { DoubleConfirmationComponent } from 'src/app/shared/dialogs/double-confirmation/double-confirmation.component';
-import { MatDialog } from '@angular/material/dialog';
-import { SingleIndentDetails } from 'src/app/shared/models/indent';
-import { IndentService } from 'src/app/shared/services/indent/indent.service';
+import { ProjectDetails, ProjetPopupData } from "../../../shared/models/project-details";
+import { SingleIndentDetails } from "../../../shared/models/indent";
+import { ProjectService } from "../../../shared/services/project.service";
+import { MatDialog } from "@angular/material/dialog";
+import { IndentService } from "../../../shared/services/indent.service";
+import { AddProjectComponent } from "../../../shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "../../../shared/dialogs/double-confirmation/double-confirmation.component";
 
 @Component({
     selector: "single-indent-details",

@@ -10,7 +10,7 @@ import { SelectPoRoleComponent } from "src/app/shared/dialogs/select-po-role/sel
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { Address } from "src/app/shared/models/RFQ/rfq-details";
 import { ActivatedRoute } from "@angular/router";
-import { POService } from 'src/app/shared/services/po/po.service';
+import { POService } from 'src/app/shared/services/po.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierRatingComponent } from "src/app/shared/dialogs/supplier-rating/supplier-rating.component";
 

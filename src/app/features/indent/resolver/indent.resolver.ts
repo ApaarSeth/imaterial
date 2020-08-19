@@ -5,7 +5,7 @@ import {
   ActivatedRoute,
   RouterStateSnapshot
 } from "@angular/router";
-import { IndentService } from "src/app/shared/services/indent/indent.service";
+import { IndentService } from "src/app/shared/services/indent.service";
 
 @Injectable()
 export class IndentResolver implements Resolve<any> {
@@ -16,7 +16,7 @@ export class IndentResolver implements Resolve<any> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    this.projectId = route.params[ "id" ];
+    this.projectId = route.params["id"];
     return this.indentService.getIndentList(this.projectId, {}).then(data => {
       return data.data;
     });

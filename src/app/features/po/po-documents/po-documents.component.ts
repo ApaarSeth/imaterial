@@ -6,7 +6,7 @@ import {
   Input,
   SimpleChanges
 } from "@angular/core";
-import { DocumentUploadService } from "src/app/shared/services/document-download/document-download.service";
+import { DocumentUploadService } from "src/app/shared/services/document-download.service";
 import { DocumentList } from "src/app/shared/models/PO/po-data";
 import { first } from "rxjs/operators";
 import { ActivatedRoute, Router } from "@angular/router";
