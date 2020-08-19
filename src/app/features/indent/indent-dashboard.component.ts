@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   FormBuilder,
@@ -16,6 +16,8 @@ import { AppNavigationService } from "../../shared/services/navigation.service";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "../../shared/dialogs/double-confirmation/double-confirmation.component";
 import { IndentService } from "../../shared/services/indent/indent.service";
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface PeriodicElement {
   materialName: string;
@@ -32,6 +34,9 @@ export interface PeriodicElement {
   templateUrl: "./indent-dashboard.component.html"
 })
 export class IndentDashboardComponent implements OnInit {
+
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  dataSource: MatTableDataSource<Subcategory>;
   dueDate = new Date(1990, 0, 1);
   subcategory: Subcategory[] = [];
   userId: 1;
@@ -40,9 +45,9 @@ export class IndentDashboardComponent implements OnInit {
   product: ProjectDetails;
   minDate = new Date();
   displayedColumns: string[] = [
-    "Material Name",
-    "Estimated Quantity",
-    "Requested Quantity",
+    "materialName",
+    "estimatedQty",
+    "requestedQuantity",
     "Required Quantity",
     "Required Date"
   ];
@@ -50,6 +55,7 @@ export class IndentDashboardComponent implements OnInit {
   materialForms: FormGroup;
   orgId: Number;
   startDateOfProject: Date;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -68,8 +74,21 @@ export class IndentDashboardComponent implements OnInit {
       this.getProject(this.projectId);
     });
     this.subcategory = this.indentService.raiseIndentData;
-    this.formsInit();
 
+    if(this.subcategory){
+      this.dataSource = new MatTableDataSource(this.subcategory);
+      this.dataSource.sort = this.sort;
+      // setTimeout(() => {
+      //   this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+      //       if (typeof data[sortHeaderId] === 'string') {
+      //       return data[sortHeaderId].toLocaleLowerCase();
+      //       }  
+      //       return data[sortHeaderId];
+      //   };
+      // });
+    }
+
+    this.formsInit();
   }
 
   formsInit() {
@@ -174,24 +193,16 @@ export class IndentDashboardComponent implements OnInit {
     }
   }
 
-  // formatDate(d: any, to?: string): string {
-  //   if (!d) {
-  //     return 'DD/MM/YYYY';
-  //   }
-  //   let date: Date = new Date(d);
-  //   if (to) {
-  //     date = new Date(date + to);
-  //   }
-  //   return `${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
-  // }
   formatDate(oldDate): Date {
     let newDate = new Date(oldDate);
     newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
     return newDate;
   }
+
   getStart(i) {
     this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
   }
+  
   startDate(event) {
     this.startDateOfProject = event;
   }

@@ -8,6 +8,7 @@ import { BomService } from "src/app/shared/services/bom/bom.service";
 import { Subcategory, Materials } from "src/app/shared/models/subcategory-materials";
 import { MatDialog } from "@angular/material/dialog";
 import { MatCheckbox } from "@angular/material/checkbox";
+import { MatSort } from '@angular/material/sort';
 
 @Component({
     selector: "bom-copy-materials",
@@ -23,8 +24,8 @@ import { MatCheckbox } from "@angular/material/checkbox";
 export class BomCopyMaterialComponent implements OnInit {
     projectId: number;
     projectData = {} as ProjectDetails;
-    columnsToDisplay = ["materialName", 'unit', "estimatedQty", "unitRate"];
-    innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "unitRate"];
+    columnsToDisplay = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate"];
+    innerDisplayedColumns = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate"];
     dataSource: MatTableDataSource<Subcategory>;
     sortedData: MatTableDataSource<Subcategory>;
     expandedElement: Subcategory | null;
@@ -37,6 +38,7 @@ export class BomCopyMaterialComponent implements OnInit {
     @ViewChild('allCh', { static: false }) allCh;
     searchText: string = null;
     selectProjectType: string;
+    @ViewChild(MatSort, {static: false}) sort: MatSort;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -86,8 +88,19 @@ export class BomCopyMaterialComponent implements OnInit {
     getProjectMaterials(projectId?: number, type?: string) {
         this.selectProjectType = type;
         this.bomService.getMaterialWithQuantity(this.orgId, projectId).then(res => {
-            this.projectMaterialsList = res.data;
-            this.dataSource = new MatTableDataSource(res.data);
+            if(res.data){
+                this.projectMaterialsList = res.data;
+                this.dataSource = new MatTableDataSource(res.data);
+                setTimeout(() => {
+                    this.dataSource.sort = this.sort;
+                    this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+                        if (typeof data[sortHeaderId] === 'string') {
+                        return data[sortHeaderId].toLocaleLowerCase();
+                        }  
+                        return data[sortHeaderId];
+                    };
+                });
+            }
         })
     }
 

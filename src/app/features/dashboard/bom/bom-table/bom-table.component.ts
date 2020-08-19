@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from "@angular/core";
 import { trigger, state, style, transition, animate } from "@angular/animations";
 import { Observable, of } from "rxjs";
 import { DataSource } from "@angular/cdk/table";
@@ -29,6 +29,7 @@ import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 import { MatDialog } from "@angular/material/dialog";
 import { MatCheckbox } from "@angular/material/checkbox";
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: "app-bom-table",
@@ -42,14 +43,15 @@ import { MatCheckbox } from "@angular/material/checkbox";
   ]
 })
 export class BomTableComponent implements OnInit {
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   projectId: number;
   projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
-
-  innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
+  columnsToDisplay = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
+  innerDisplayedColumns = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -173,8 +175,19 @@ export class BomTableComponent implements OnInit {
         this.subcategoryData = null;
       }
 
-      this.getProject(this.projectId);
       this.dataSource = new MatTableDataSource(this.subcategoryData);
+      this.dataSource.sort = this.sort;
+
+      this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+        if (typeof data[sortHeaderId] === 'string') {
+          return data[sortHeaderId].toLocaleLowerCase();
+        }
+      
+        return data[sortHeaderId];
+      };
+      
+      // this.dataSource.sortingDataAccessor = (data, header) => data[header];
+      this.getProject(this.projectId);
       this.loading.hide();
     });
   }
