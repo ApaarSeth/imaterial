@@ -1,13 +1,13 @@
-import { OnInit, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/models/user-details';
-import { Router } from '@angular/router';
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Currency, CountryCode } from 'src/app/shared/models/currency';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { Component, OnInit } from "@angular/core";
+import { UserRoles, UserDetails, TradeList, TurnOverList } from "../../shared/models/user-details";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Currency, CountryCode } from "../../shared/models/currency";
+import { UserService } from "../../shared/services/user.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
+import { CommonService } from "../../shared/services/commonService";
+import { FieldRegExConst } from "../../shared/constants/field-regex-constants";
+import { DocumentUploadService } from "../../shared/services/document-download.service";
 
 export interface City {
   value: string;
@@ -53,6 +53,7 @@ export class ProfileComponent implements OnInit {
   countryCode: string;
   validPincode: boolean = false;
   countryId: Number;
+
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -117,9 +118,9 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserInformation(res, tradeRes) {
-    this.users = res.data ? res.data[0] : null;
-    if (res.data[0].trade) {
-      res.data[0].trade.forEach(element => {
+    this.users = res.data ? res.data : null;
+    if (res.data.trade) {
+      res.data.trade.forEach(element => {
         this.usersTrade.push(element.tradeId);
         if (element.tradeId == 13) {
           if (element.tradeDescription)
@@ -338,7 +339,7 @@ export class ProfileComponent implements OnInit {
       data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
-      data.orgPincode = String(this.userInfoForm.value.orgPincode)
+      data.orgPincode = this.userInfoForm.value.orgPincode
       this._userService.submitUserDetails(data).then(res => {
         if (this.url) {
           this._userService.UpdateProfileImage.next(this.url);

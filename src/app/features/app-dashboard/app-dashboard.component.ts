@@ -2,25 +2,26 @@ import { GoogleChartService } from './../../shared/services/google-chart.service
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { PurchaseOrderData } from 'src/app/shared/models/po-details/po-details-list';
-import { Range } from 'src/app/shared/models/datePicker';
-import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
-import { SelectProjectComponent } from 'src/app/shared/dialogs/select-project/select-project.component';
-import { ProjectDetails } from 'src/app/shared/models/project-details';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { GuideTourModel } from 'src/app/shared/models/guided_tour';
-import { PermissionService } from 'src/app/shared/services/permission.service';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { ViewVideoComponent } from 'src/app/shared/dialogs/video-video/view-video.component';
-import { permission } from 'src/app/shared/models/permissionObject';
-import { ReleaseNoteComponent } from 'src/app/shared/dialogs/release-notes/release-notes.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
-import { TokenService } from 'src/app/shared/services/token.service';
-import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
-import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { PurchaseOrderData } from '../../shared/models/po-details/po-details-list';
+import { ProjectDetails } from '../../shared/models/project-details';
+import { permission } from '../../shared/models/permissionObject';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { UserService } from '../../shared/services/user.service';
+import { UserGuideService } from '../../shared/services/user-guide.service';
+import { ProjectService } from '../../shared/services/project.service';
+import { CommonService } from '../../shared/services/commonService';
+import { TokenService } from '../../shared/services/token.service';
+import { PermissionService } from '../../shared/services/permission.service';
+import { AppNotificationService } from '../../shared/services/app-notification.service';
+import { GlobalLoaderService } from '../../shared/services/global-loader.service';
+import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
+import { ReleaseNoteComponent } from '../../shared/dialogs/release-notes/release-notes.component';
+import { SelectProjectComponent } from '../../shared/dialogs/select-project/select-project.component';
+import { ViewVideoComponent } from '../../shared/dialogs/video-video/view-video.component';
+import { GuideTourModel } from '../../shared/models/guided_tour';
+import { DateRange } from '../../shared/models/datePicker';
+
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
@@ -65,7 +66,7 @@ export class AppDashboardComponent implements OnInit {
     private notifier: AppNotificationService,
     private activatedRoute: ActivatedRoute, private loader: GlobalLoaderService) { }
 
-  range: Range = { fromDate: new Date(), toDate: new Date() };
+  range: DateRange = { fromDate: new Date(), toDate: new Date() };
   options: NgxDrpOptions;
   presets: Array<PresetItem> = [];
   currencyCode: string;
@@ -142,7 +143,7 @@ export class AppDashboardComponent implements OnInit {
     };
   }
 
-  updateRange(range: Range) {
+  updateRange(range: DateRange) {
     this.range = range;
     if (range.toDate < range.fromDate) {
       this.notifier.snack("To date can'nt be earlier than from date")

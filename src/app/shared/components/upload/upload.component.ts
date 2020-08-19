@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, ElementRef, ViewChild } from "@angular/core";
 import { DocumentDetails } from "../../models/RFQ/rfq-details";
-import { DocumentUploadService } from "../../services/document-download/document-download.service";
+import { DocumentUploadService } from "../../services/document-download.service";
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

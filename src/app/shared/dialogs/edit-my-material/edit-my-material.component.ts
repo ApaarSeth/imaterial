@@ -1,20 +1,16 @@
-import { OnInit, Component, Inject, ViewChild, NgZone } from '@angular/core';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList, UserDetailsPopUpData } from 'src/app/shared/models/user-details';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { Router } from '@angular/router';
-import { elementAt, count, take, startWith, map, filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { BomService } from '../../services/bom/bom.service';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { orgTrades, tradeRelatedCategory } from '../../models/trades';
-import { MyMaterialPost } from '../../models/myMaterial';
-import { Subject, Observable, merge } from 'rxjs';
-import { categoryNestedLevel, material } from '../../models/category';
-import { MyMaterialService } from '../../services/myMaterial.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MyMaterialPost } from './../../models/myMaterial';
+import { MyMaterialService } from './../../services/myMaterial.service';
+import { Component, OnInit, Inject } from "@angular/core";
+import { UserRoles, UserDetails } from "../../models/user-details";
+import { FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms";
+import { tradeRelatedCategory } from "../../models/trades";
+import { UserService } from "../../services/user.service";
+import { BomService } from "../../services/bom.service";
+import { Router } from "@angular/router";
+import { AppNavigationService } from "../../services/navigation.service";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { material } from '../../models/category';
 
 export interface City {
   value: string;
@@ -102,8 +98,8 @@ export class EditMyMaterialComponent implements OnInit {
 
   getUserData(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      if (res.data[0].roleName) {
-        localStorage.setItem("role", res.data[0].roleName);
+      if (res.data.roleName) {
+        localStorage.setItem("role", res.data.roleName);
       }
     });
   }

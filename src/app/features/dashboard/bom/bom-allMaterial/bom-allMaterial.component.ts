@@ -8,21 +8,12 @@ import {
   SimpleChanges
 } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { categoryNestedLevel, material } from "src/app/shared/models/category";
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  FormArray,
-  Validators,
-  ValidatorFn,
-  AbstractControl
-} from "@angular/forms";
-import { BomService } from "src/app/shared/services/bom/bom.service";
-import { parse } from "querystring";
-import { Materials } from "src/app/shared/models/subcategory-materials";
-import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { categoryNestedLevel } from "../../../../shared/models/category";
+import { AppNotificationService } from "../../../../shared/services/app-notification.service";
+import { ProjectService } from "../../../../shared/services/project.service";
+import { BomService } from "../../../../shared/services/bom.service";
+import { FormBuilder, FormGroup, FormArray, ValidatorFn, FormControl } from "@angular/forms";
+import { Materials } from "../../../../shared/models/subcategory-materials";
 
 @Component({
   selector: "app-bom-allMaterial",

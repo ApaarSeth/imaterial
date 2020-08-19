@@ -1,11 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
-import { ActivatedRouteSnapshot, ActivatedRoute, Router } from "@angular/router";
-import { GlobalStoreService } from 'src/app/shared/services/global-store/global-store.service';
-import { GlobalProject } from 'src/app/shared/models/GlobalStore/projectWise';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { SelectProjectComponent } from 'src/app/shared/dialogs/select-project/select-project.component';
-import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
+import { ActivatedRoute, Router } from "@angular/router";
+import { GlobalProject } from "../../shared/models/GlobalStore/materialWise";
 import { MatDialog } from "@angular/material/dialog";
+import { ProjectService } from "../../shared/services/project.service";
+import { CommonService } from "../../shared/services/commonService";
+import { SelectProjectComponent } from "../../shared/dialogs/select-project/select-project.component";
+import { GlobalStoreService } from "../../shared/services/global-store.service";
 
 @Component({
   selector: "app-global-store",

@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChildren } from "@angular/core";
 import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { UserGuideService } from 'src/app/shared/services/user-guide.service';
 import { initiatePoData, initiatePo } from 'src/app/shared/models/PO/po-data';
 import { CommonService } from 'src/app/shared/services/commonService';
 

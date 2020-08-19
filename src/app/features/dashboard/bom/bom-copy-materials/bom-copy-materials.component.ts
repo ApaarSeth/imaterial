@@ -2,12 +2,12 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
 import { trigger, state, style, transition, animate } from "@angular/animations";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { ProjectDetails, } from "src/app/shared/models/project-details";
-import { BomService } from "src/app/shared/services/bom/bom.service";
-import { Subcategory, Materials } from "src/app/shared/models/subcategory-materials";
 import { MatDialog } from "@angular/material/dialog";
 import { MatCheckbox } from "@angular/material/checkbox";
+import { ProjectDetails } from "../../../../shared/models/project-details";
+import { Subcategory, Materials } from "../../../../shared/models/subcategory-materials";
+import { ProjectService } from "../../../../shared/services/project.service";
+import { BomService } from "../../../../shared/services/bom.service";
 
 @Component({
     selector: "bom-copy-materials",

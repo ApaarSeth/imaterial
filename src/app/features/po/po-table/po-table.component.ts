@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
 import { ignoreElements, debounceTime } from "rxjs/operators";
 import { Subscription, combineLatest } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { POService } from "src/app/shared/services/po/po.service";
+import { POService } from "src/app/shared/services/po.service";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';

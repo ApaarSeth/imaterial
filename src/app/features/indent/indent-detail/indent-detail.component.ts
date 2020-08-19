@@ -1,18 +1,15 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import {
-  ProjectDetails,
-  ProjetPopupData
-} from "src/app/shared/models/project-details";
-import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
-import { AllIndentListVO, IndentVO } from "src/app/shared/models/indent";
-import { AdvanceSearchService } from 'src/app/shared/services/advance-search.service';
-import { Subscription } from 'rxjs';
-import { IndentService } from 'src/app/shared/services/indent/indent.service';
-import { CommonService } from 'src/app/shared/services/commonService';
 import { MatDialog } from "@angular/material/dialog";
+import { ProjectDetails, ProjetPopupData } from "../../../shared/models/project-details";
+import { AllIndentListVO, IndentVO } from "../../../shared/models/indent";
+import { Subscription } from "rxjs";
+import { ProjectService } from "../../../shared/services/project.service";
+import { AdvanceSearchService } from "../../../shared/services/advance-search.service";
+import { IndentService } from "../../../shared/services/indent.service";
+import { CommonService } from "../../../shared/services/commonService";
+import { AddProjectComponent } from "../../../shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "../../../shared/dialogs/double-confirmation/double-confirmation.component";
 
 export interface IndentData {
   indentName: string;

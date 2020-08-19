@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { GlobalLoaderService } from '../../services/global-loader.service';
-import { BomService } from '../../services/bom/bom.service';
+import { BomService } from '../../services/bom.service';
 import { Router } from '@angular/router';
 import { SnackbarComponent } from '../snackbar/snackbar.compnent';
 import { ConfirmRfqBidComponent } from '../confirm-rfq-bid/confirm-frq-bid-component';
-import { GRNService } from '../../services/grn/grn.service';
+import { GRNService } from '../../services/grn.service';
 import { AppNotificationService } from '../../services/app-notification.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';

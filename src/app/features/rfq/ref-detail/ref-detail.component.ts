@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { RFQService } from "src/app/shared/services/rfq.service";
 import { RfqList } from "src/app/shared/models/RFQ/rfq-details";
 import { Router } from "@angular/router";
 import { CommonService } from 'src/app/shared/services/commonService';

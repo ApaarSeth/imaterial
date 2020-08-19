@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnDestroy } from "@angular/core";
 import { SubscriptionsList } from '../../models/subscriptions';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/userDashboard/user.service';
+import { UserService } from '../../services/user.service';
 import { UserDetails } from '../../models/user-details';
 import { SubscriptionPaymentsService } from '../../services/subscriptions-payments.service';
 import { API } from '../../constants/configuration-constants';
@@ -82,9 +82,9 @@ export class SubscriptionsComponent implements OnInit {
 
     getUserInformation(userId) {
         this._userService.getUserInfo(userId).then(res => {
-            this.users = res.data ? res.data[0] : null;
-            this.isFreeTrialSubscription = res.data[0].isFreeTrialSubscription;
-            this.isActiveSubscription = res.data[0].isActiveSubscription;
+            this.users = res.data ? res.data : null;
+            this.isFreeTrialSubscription = res.data.isFreeTrialSubscription;
+            this.isActiveSubscription = res.data.isActiveSubscription;
             localStorage.setItem('isFreeTrialSubscription', this.isFreeTrialSubscription);
             localStorage.setItem('isActiveSubscription', this.isActiveSubscription);
         });

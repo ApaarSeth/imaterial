@@ -11,11 +11,11 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Subcategory } from "../../shared/models/subcategory-materials";
 import { ProjectDetails, ProjetPopupData } from "../../shared/models/project-details";
-import { ProjectService } from "../../shared/services/projectDashboard/project.service";
+import { ProjectService } from "../../shared/services/project.service";
 import { AppNavigationService } from "../../shared/services/navigation.service";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "../../shared/dialogs/double-confirmation/double-confirmation.component";
-import { IndentService } from "../../shared/services/indent/indent.service";
+import { IndentService } from "../../shared/services/indent.service";
 
 export interface PeriodicElement {
   materialName: string;

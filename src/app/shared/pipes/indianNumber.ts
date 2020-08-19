@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { isConstructorDeclaration } from "typescript";
-import { POService } from "../services/po/po.service";
+import { POService } from "../services/po.service";
 import { DataService } from "../services/data.service";
 import { API } from "../constants/configuration-constants";
 

@@ -2,8 +2,8 @@ import { Component, Inject, OnInit, Input } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { DocumentList, ImageList, ImageDocsLists } from '../../models/PO/po-data';
 
-import { ImageService } from '../../services/image-integration/image.service';
-import { DocumentUploadService } from '../../services/document-download/document-download.service';
+import { ImageService } from '../../services/image.service';
+import { DocumentUploadService } from '../../services/document-download.service';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
