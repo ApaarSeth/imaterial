@@ -61,7 +61,7 @@ export class UpdateInfoComponent implements OnInit {
   userId: string;
   selectedCountry: CountryCode;
   selectedBaseCurrency: Currency
-
+  dataAvailable: boolean = false;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private permissionService: PermissionService,
@@ -96,6 +96,8 @@ export class UpdateInfoComponent implements OnInit {
       this.getCurrency(res[2])
       this.getCountry(res[3])
       this.getUserInformation(res[4])
+      this.getTradesList(res[5])
+      this.dataAvailable = true;
     })
   }
 
