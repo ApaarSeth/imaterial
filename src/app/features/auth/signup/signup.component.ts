@@ -121,7 +121,7 @@ export class SignupComponent implements OnInit {
 
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {
-      this.user = res.data[0];
+      this.user = res.data;
       // if (res.data[0].firstName)
       //   localStorage.setItem("userName", res.data[0].firstName);
       this.signupForm.setValue({
@@ -288,15 +288,22 @@ export class SignupComponent implements OnInit {
   verifyEmail(email) {
     if (email.match(FieldRegExConst.EMAIL)) {
       this.signInSignupService.verifyEMAIL(this.signupForm.value.email).then(res => {
-        if (res && res.data) {
-          this.emailVerified = res.data;
-          this.emailEnteredCounter++;
-          this.emailMessage = res.message;
+        if (res.statusCode === 201) {
+          if (res && res.data) {
+            this.emailVerified = res.data;
+            this.emailEnteredCounter++;
+            this.emailMessage = res.message;
+          }
+          else {
+            this.emailEnteredCounter++;
+            this.emailVerified = false;
+          }
         }
         else {
           this.emailEnteredCounter++;
           this.emailVerified = false;
         }
+
       });
     }
   }

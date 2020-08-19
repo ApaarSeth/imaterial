@@ -1,3 +1,4 @@
+import { AppNotificationService } from './../../../shared/services/app-notification.service';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,13 +10,15 @@ import { SignInSignupService } from "../../../shared/services/signupSignin.servi
   templateUrl: "./reset-password.component.html"
 })
 export class ResetPasswordComponent implements OnInit {
+
   forgetPassForm: FormGroup;
   showPassWordString: boolean = false;
   showRetypePassWordString: boolean = false;
   token: string;
   accessToken: string;
-  constructor(private snackbar: MatSnackBar, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private signInSignupService: SignInSignupService) { }
+  constructor(private notifier: AppNotificationService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private signInSignupService: SignInSignupService) { }
   passwordMatch = false;
+
   ngOnInit() {
     this.formInit();
     this.route.params.subscribe(param => {
@@ -71,13 +74,10 @@ export class ResetPasswordComponent implements OnInit {
     }
     this.signInSignupService.emailResetPassword(data).then(res => {
       if (res.data && res.data.success) {
-        this.snackbar.open("Password Changed Successfully", "", {
-          duration: 2000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
+        this.notifier.snack("Password Changed Successfully")
         this.router.navigate(['auth/login'])
       }
     })
   }
+
 }

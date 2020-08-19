@@ -71,8 +71,8 @@ export class SubscriptionPaymentsService {
 
                     // this.getUserInformation(localStorage.getItem('userId'));
                     this._userService.getUserInfo(localStorage.getItem('userId')).then(res => {
-                        localStorage.setItem('isFreeTrialSubscription', res.data[0].isFreeTrialSubscription);
-                        localStorage.setItem('isActiveSubscription', res.data[0].isActiveSubscription);
+                        localStorage.setItem('isFreeTrialSubscription', res.data.isFreeTrialSubscription);
+                        localStorage.setItem('isActiveSubscription', res.data.isActiveSubscription);
                         this.updateSubscriptionPlan$.next();
                         this._router.navigate(["/dashboard"]);
                         this.notifier.snack('Your free trial has been started successfully!');
@@ -115,8 +115,8 @@ export class SubscriptionPaymentsService {
 
     getUserInformation(userId) {
         this._userService.getUserInfo(userId).then(res => {
-            localStorage.setItem('isFreeTrialSubscription', res.data[0].isFreeTrialSubscription);
-            localStorage.setItem('isActiveSubscription', res.data[0].isActiveSubscription);
+            localStorage.setItem('isFreeTrialSubscription', res.data.isFreeTrialSubscription);
+            localStorage.setItem('isActiveSubscription', res.data.isActiveSubscription);
             this.updateSubscriptionPlan$.next();
         });
     }

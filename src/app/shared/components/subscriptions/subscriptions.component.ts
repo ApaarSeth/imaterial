@@ -82,9 +82,9 @@ export class SubscriptionsComponent implements OnInit {
 
     getUserInformation(userId) {
         this._userService.getUserInfo(userId).then(res => {
-            this.users = res.data ? res.data[0] : null;
-            this.isFreeTrialSubscription = res.data[0].isFreeTrialSubscription;
-            this.isActiveSubscription = res.data[0].isActiveSubscription;
+            this.users = res.data ? res.data : null;
+            this.isFreeTrialSubscription = res.data.isFreeTrialSubscription;
+            this.isActiveSubscription = res.data.isActiveSubscription;
             localStorage.setItem('isFreeTrialSubscription', this.isFreeTrialSubscription);
             localStorage.setItem('isActiveSubscription', this.isActiveSubscription);
         });

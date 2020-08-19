@@ -233,13 +233,11 @@ export class BomTopMaterialComponent implements OnInit {
           break;
         }
       }
-
       if (!checked) {
         return {
           requireCheckboxToBeChecked: true,
         };
       }
-
       return null;
     };
   }
@@ -253,17 +251,16 @@ export class BomTopMaterialComponent implements OnInit {
           return inputdata;
         });
     }).flat()
-
   }
 
+  // customValidation(form: FormGroup) {
+  //   if (form.value) {
+  //     return null;
+  //   } else {
+  //     return { valid: false };
+  //   }
+  // }
 
-  customValidation(form: FormGroup) {
-    if (form.value) {
-      return null;
-    } else {
-      return { valid: false };
-    }
-  }
   saveCategory() {
     this.router.navigate(["/bom/" + this.projectId + "/bom-detail"]);
   }

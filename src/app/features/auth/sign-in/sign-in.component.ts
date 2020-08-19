@@ -1,18 +1,14 @@
+import { UserService } from './../../../shared/services/user.service';
 import { CountryCode } from './../../../shared/models/currency';
 import { Component, OnInit, Input, SimpleChanges } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { SwPush, SwUpdate } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FieldRegExConst } from '../../../shared/constants/field-regex-constants';
 import { TokenService } from '../../../shared/services/token.service';
 import { WebNotificationService } from '../../../shared/services/webNotificationService.service';
-import { UserService } from '../../../shared/services/user.service';
 import { DataService } from '../../../shared/services/data.service';
 import { AppNavigationService } from '../../../shared/services/navigation.service';
-import { CommonService } from '../../../shared/services/commonService';
-import { VisitorService } from '../../../shared/services/visitor.service';
-import { GlobalLoaderService } from '../../../shared/services/global-loader.service';
 import { API } from '../../../shared/constants/configuration-constants';
 import { SignInSignupService } from '../../../shared/services/signupSignin.service';
 import { SignInData } from '../../../shared/models/signIn/signIn-detail-list';
@@ -29,24 +25,15 @@ export class SigninComponent implements OnInit {
   @Input("countryList") actualCountryList: CountryCode[];
 
 
-  // isEnabled = this.swPush.isEnabled;
-  // isGranted = Notification.permission === 'granted';
-
   constructor(private tokenService: TokenService, private router: Router,
     private webNotificationService: WebNotificationService,
-    private swPush: SwPush,
-    private swUpdate: SwUpdate,
     private signInSignupService: SignInSignupService,
-    private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private _userService: UserService,
     private route: ActivatedRoute,
     private dataService: DataService,
+    private userService: UserService,
     private _snackBar: MatSnackBar,
-    private navigationService: AppNavigationService,
-    private commonService: CommonService,
-    private visitorsService: VisitorService,
-    private loader: GlobalLoaderService) { }
+    private navigationService: AppNavigationService) { }
 
   ipaddress: string;
   emailVerified: boolean = true;
@@ -63,6 +50,7 @@ export class SigninComponent implements OnInit {
   primaryCallingCode: string = '';
   callingCode: string;
   selectedCountry: CountryCode;
+
   ngOnInit() {
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
@@ -82,6 +70,7 @@ export class SigninComponent implements OnInit {
       this.getCountryCode(changes.countryCode.currentValue)
     }
   }
+
   formInit() {
     this.signinForm = this.formBuilder.group({
       countryCode: [{ value: '', disabled: true }],
@@ -156,16 +145,16 @@ export class SigninComponent implements OnInit {
    * @description Function will get the data of logged in user
    */
   getUserInfo(userId) {
-    this.dataService.getRequest(API.GET_USER_PROFILE(userId), null).then(res => {
-      localStorage.setItem("userName", res.data[0].firstName);
-      localStorage.setItem("profileUrl", res.data[0].profileUrl);
-      localStorage.setItem("currencyCode", res.data[0].baseCurrency ? res.data[0].baseCurrency.currencyCode : null);
-      localStorage.setItem("countryId", res.data[0].countryId);
-      localStorage.setItem("isPlanAvailable", res.data[0].isPlanAvailable);
-      localStorage.setItem('isFreeTrialSubscription', res.data[0].isFreeTrialSubscription);
-      localStorage.setItem('isActiveSubscription', res.data[0].isActiveSubscription);
-      localStorage.setItem('accountOwner', res.data[0].accountOwner);
-      this.dataService.getRequest(API.CHECKTERMS, null).then(res => {
+    this.userService.getUserInfo(userId).then(res => {
+      localStorage.setItem("userName", res.data.firstName);
+      localStorage.setItem("profileUrl", res.data.profileUrl);
+      localStorage.setItem("currencyCode", res.data.baseCurrency ? res.data.baseCurrency.currencyCode : null);
+      localStorage.setItem("countryId", res.data.countryId);
+      localStorage.setItem("isPlanAvailable", res.data.isPlanAvailable);
+      localStorage.setItem('isFreeTrialSubscription', res.data.isFreeTrialSubscription);
+      localStorage.setItem('isActiveSubscription', res.data.isActiveSubscription);
+      localStorage.setItem('accountOwner', res.data.accountOwner);
+      this.signInSignupService.checkTerms().then(res => {
         this.acceptTerms = res.data;
         if (!this.acceptTerms) {
           this.router.navigate(["/profile/terms-conditions"]);

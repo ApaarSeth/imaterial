@@ -47,7 +47,6 @@ interface indentRequestData {
     indentRequestEndDate?: string;
 }
 
-
 @Component({
     selector: 'advance-search',
     templateUrl: './advance-search.component.html'
@@ -56,34 +55,27 @@ interface indentRequestData {
 export class AdvanceSearchComponent {
 
     @Input('filterType') filterType: string;
-
     @ViewChild('projectsSelect', { static: false, read: MatSelect }) projectsSelect: MatSelect;
     @ViewChild('suppliersSelect', { static: false, read: MatSelect }) suppliersSelect: MatSelect;
     @ViewChild('materialsSelect', { static: false, read: MatSelect }) materialsSelect: MatSelect;
     @ViewChild('usersSelect', { static: false, read: MatSelect }) usersSelect: MatSelect;
     @ViewChild('approversSelect', { static: false, read: MatSelect }) approversSelect: MatSelect;
     @ViewChild('createdSelect', { static: false, read: MatSelect }) createdSelect: MatSelect;
-
     @ViewChild('bidSubmitted', { static: false, read: MatCheckbox }) bidSubmitted: MatCheckbox;
     @ViewChild('notSubmitted', { static: false, read: MatCheckbox }) notSubmitted: MatCheckbox;
-
     @ViewChild('raisedFromPicker', { static: false, read: MatDatepicker }) raisedFromPicker: MatDatepicker<any>;
     @ViewChild('raisedToPicker', { static: false, read: MatDatepicker }) raisedToPicker: MatDatepicker<any>;
     @ViewChild('expiryFromPicker', { static: false, read: MatDatepicker }) expiryFromPicker: MatDatepicker<any>;
     @ViewChild('expiryToPicker', { static: false, read: MatDatepicker }) expiryToPicker: MatDatepicker<any>;
-
     @ViewChild('minAmt', { static: false, read: MatInput }) minAmt: MatInput;
     @ViewChild('maxAmt', { static: false, read: MatInput }) maxAmt: MatInput;
-
     @ViewChild('po1', { static: false, read: MatCheckbox }) po1: MatCheckbox;
     @ViewChild('po2', { static: false, read: MatCheckbox }) po2: MatCheckbox;
     @ViewChild('po3', { static: false, read: MatCheckbox }) po3: MatCheckbox;
     @ViewChild('indentOpen', { static: false, read: MatCheckbox }) indentOpen: MatCheckbox;
     @ViewChild('indentClosed', { static: false, read: MatCheckbox }) indentClosed: MatCheckbox;
-
     @ViewChild('requestedFromPicker', { static: false, read: MatDatepicker }) requestedFromPicker: MatDatepicker<any>;
     @ViewChild('requestedToPicker', { static: false, read: MatDatepicker }) requestedToPicker: MatDatepicker<any>;
-
     @ViewChild(MatAccordion, { static: false }) accordion: MatAccordion;
 
     userId: number;
@@ -543,6 +535,7 @@ export class AdvanceSearchComponent {
             }
         }
     }
+
     checkToDate(event, type, mType) {
         let d1 = new Date(event.target.value);
         let d2 = new Date(type._datepickerInput.value);

@@ -122,7 +122,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {
-      this.user = res.data[0];
+      this.user = res.data;
       this.forgetPassForm.patchValue({ phone: this.user ? this.user.contactNo : '' })
     });
   }

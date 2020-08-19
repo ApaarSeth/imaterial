@@ -57,7 +57,7 @@ export class MainLayoutComponent implements OnInit {
       this.isFreeTrialActivate = true;
     } else {
       this._userService.getUserInfo(userId).then(res => {
-        this.users = res.data ? res.data[0] : null;
+        this.users = res.data ? res.data : null;
         // this.checkFreeTrial();
         if ((this.users && this.users.isFreeTrialSubscription === 1)) {
           this.isFreeTrialActivate = true;

@@ -98,8 +98,8 @@ export class EditMyMaterialComponent implements OnInit {
 
   getUserData(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      if (res.data[0].roleName) {
-        localStorage.setItem("role", res.data[0].roleName);
+      if (res.data.roleName) {
+        localStorage.setItem("role", res.data.roleName);
       }
     });
   }

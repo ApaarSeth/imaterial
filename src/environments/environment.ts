@@ -4,10 +4,10 @@
 
 // export const environment = {
 //   production: false,
-//   url: "http://localhost:1323/im",
-//   masterUrl: "http://localhost:1333/mm",india
+//   url: "http://8883bc5ad5a4.ngrok.io",
+//   masterUrl: "http://localhost:1333/mm",
 //   ssoUrl: "http://localhost:8080/sso",
-//    debug_mode: true
+//   debug_mode: true
 // };
 
 // export const environment = {
@@ -22,9 +22,9 @@
 export const environment = {
   ga: "",
   production: false,
-  url: "https://api.buildsupply.com/im",
-  masterUrl: "https://api.buildsupply.com/mm",
-  ssoUrl: "https://api.buildsupply.com/sso",
+  // url: "https://api.buildsupply.com/im",
+  // masterUrl: "https://api.buildsupply.com/mm",
+  // ssoUrl: "https://api.buildsupply.com/sso",
   debug_mode: true
 };
 

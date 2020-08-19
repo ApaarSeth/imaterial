@@ -53,6 +53,7 @@ export class ProfileComponent implements OnInit {
   countryCode: string;
   validPincode: boolean = false;
   countryId: Number;
+
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -117,9 +118,9 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserInformation(res, tradeRes) {
-    this.users = res.data ? res.data[0] : null;
-    if (res.data[0].trade) {
-      res.data[0].trade.forEach(element => {
+    this.users = res.data ? res.data : null;
+    if (res.data.trade) {
+      res.data.trade.forEach(element => {
         this.usersTrade.push(element.tradeId);
         if (element.tradeId == 13) {
           if (element.tradeDescription)
@@ -338,7 +339,7 @@ export class ProfileComponent implements OnInit {
       data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
-      data.orgPincode = String(this.userInfoForm.value.orgPincode)
+      data.orgPincode = this.userInfoForm.value.orgPincode
       this._userService.submitUserDetails(data).then(res => {
         if (this.url) {
           this._userService.UpdateProfileImage.next(this.url);
