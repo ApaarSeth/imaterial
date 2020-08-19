@@ -1,4 +1,3 @@
-import { CountryCode } from './../../../shared/models/currency';
 import { OnInit, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';

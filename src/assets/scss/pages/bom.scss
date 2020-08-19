@@ -599,6 +599,10 @@ div.limited-character.bom {
   }
 }
 
+[mat-sort-header].cdk-keyboard-focused .mat-sort-header-container, [mat-sort-header].cdk-program-focused .mat-sort-header-container {
+  border-bottom: none !important;
+}
+
 @media only screen and (max-width: 1311px){
   .col-left-width {
     flex-basis: 40%;
