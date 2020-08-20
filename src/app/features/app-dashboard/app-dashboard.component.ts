@@ -1,7 +1,7 @@
 import { GoogleChartService } from './../../shared/services/google-chart.service';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { PurchaseOrderData } from '../../shared/models/po-details/po-details-list';
 import { ProjectDetails } from '../../shared/models/project-details';
 import { permission } from '../../shared/models/permissionObject';
@@ -14,7 +14,6 @@ import { CommonService } from '../../shared/services/commonService';
 import { TokenService } from '../../shared/services/token.service';
 import { PermissionService } from '../../shared/services/permission.service';
 import { AppNotificationService } from '../../shared/services/app-notification.service';
-import { GlobalLoaderService } from '../../shared/services/global-loader.service';
 import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
 import { ReleaseNoteComponent } from '../../shared/dialogs/release-notes/release-notes.component';
 import { SelectProjectComponent } from '../../shared/dialogs/select-project/select-project.component';
@@ -27,7 +26,7 @@ import { DateRange } from '../../shared/models/datePicker';
   templateUrl: './app-dashboard.component.html'
 })
 export class AppDashboardComponent implements OnInit {
-  @ViewChild('dateRangePicker', { static: false }) dateRangePicker;
+  @ViewChild('dateRangePicker') dateRangePicker;
   orgId: number;
   poData: PurchaseOrderData;
   rfqData: PurchaseOrderData;
@@ -64,7 +63,7 @@ export class AppDashboardComponent implements OnInit {
     private tokenService: TokenService,
     private permissionService: PermissionService,
     private notifier: AppNotificationService,
-    private activatedRoute: ActivatedRoute, private loader: GlobalLoaderService) { }
+  ) { }
 
   range: DateRange = { fromDate: new Date(), toDate: new Date() };
   options: NgxDrpOptions;

@@ -99,11 +99,12 @@ export class SignupComponent implements OnInit {
   setValidation() {
     let emailValidator = [
       Validators.required,
-      Validators.pattern(FieldRegExConst.EMAIL)
+      Validators.pattern(FieldRegExConst.EMAIL),
+      Validators.maxLength(50)
     ]
     if (this.callingCode === '+91') {
       this.signupForm.get('email').setValidators(emailValidator)
-      this.signupForm.get('phone').setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE_NUMBER)])
+      this.signupForm.get('phone').setValidators([Validators.required, Validators.pattern(FieldRegExConst.PHONE_NUMBER), Validators.maxLength(50)])
       this.signupForm.get('otp').setValidators([Validators.required])
     }
     else {
@@ -122,8 +123,6 @@ export class SignupComponent implements OnInit {
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {
       this.user = res.data;
-      // if (res.data[0].firstName)
-      //   localStorage.setItem("userName", res.data[0].firstName);
       this.signupForm.setValue({
         countryCode: this.signupForm.get('countryCode').value,
         email: this.user ? this.user.email : '',
@@ -135,8 +134,6 @@ export class SignupComponent implements OnInit {
       });
     });
   }
-
-
   organisationTypes: OrganisationType[] = [
     { value: "Contractor", viewValue: "Contractor" },
     { value: "Supplier", viewValue: "Supplier" }
@@ -147,7 +144,7 @@ export class SignupComponent implements OnInit {
       countryCode: [{ value: '', disabled: true }],
       email: [],
       phone: [],
-      organisationName: [{ value: '', disabled: this.organisationDisabled }, Validators.required],
+      organisationName: [{ value: '', disabled: this.organisationDisabled }, [Validators.required, Validators.maxLength(50)]],
       organisationType: ["Contractor", Validators.required],
       password: ["", [Validators.required, Validators.minLength(6)]],
       otp: []
@@ -157,36 +154,40 @@ export class SignupComponent implements OnInit {
     })
   }
 
-  signup() {
-    this.signInDetails.password = this.signupForm.value.password;
-    this.signInDetails.confirmPassword = this.signupForm.value.password;
-    this.signInDetails.phone = this.callingCode === '+91' ? this.signupForm.value.phone : null;
-    this.signInDetails.email = this.signupForm.value.email;
-    this.signInDetails.countryCode = this.callingCode === '+91' ? this.livingCountry[0].callingCode : null;
-    this.signInDetails.loginIdType = this.callingCode === '+91' ? 'PHONE' : 'EMAIL';
-    this.signInDetails.clientId = "fooClientIdPassword";
+
+  collateSignupData() {
+    this.signInDetails = {
+      password: this.signupForm.value.password,
+      confirmPassword: this.signupForm.value.password,
+      phone: this.callingCode === '+91' ? this.signupForm.value.phone : null,
+      email: this.signupForm.value.email,
+      countryCode: this.callingCode === '+91' ? this.livingCountry[0].callingCode : null,
+      loginIdType: this.callingCode === '+91' ? 'PHONE' : 'EMAIL',
+      clientId: "fooClientIdPassword",
+      customData: {
+        uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
+        countryCode: this.livingCountry[0].callingCode,
+        countryId: String(this.livingCountry[0].countryId),
+        organizationName: this.signupForm.value.organisationName,
+        organizationType: this.signupForm.value.organisationType,
+        organizationId: this.user ? this.user.organizationId.toString() : null,
+        userId: this.user ? this.user.userId.toString() : null,
+      }
+    } as SignINDetailLists
     if (this.uniqueCode) {
       this.signInDetails.firstName = this.user.firstName ? this.user.firstName : null;
       this.signInDetails.lastName = this.user.lastName ? this.user.lastName : null;
     }
-    this.signInDetails.customData = {
-      uniqueCode: this.uniqueCode !== "" ? this.uniqueCode : null,
-      countryCode: this.livingCountry[0].callingCode,
-      countryId: String(this.livingCountry[0].countryId),
-      organizationName: this.signupForm.value.organisationName,
-      organizationType: this.signupForm.value.organisationType,
-      organizationId: this.user ? this.user.organizationId.toString() : null,
-      userId: this.user ? this.user.userId.toString() : null,
-    };
+    return this.signInDetails
+  }
 
-    this.signInSignupService.signUp(this.signInDetails).then(data => {
+  signup() {
+    this.signInSignupService.signUp(this.collateSignupData()).then(data => {
       if (data.status === 1002) {
         this.notifier.snack(this.callingCode === "+91" ? "Phone Number already used" : "Email already used")
       }
       else if (data.data.serviceRawResponse.data as auth) {
-        if (!(/ipad|iphone|ipod/.test(window.navigator.userAgent.toLowerCase()))) {
-          this.subscribeNotification()
-        }
+        this.subscribeNotification()
         this.tokenService.setAuthResponseData(data.data.serviceRawResponse.data)
         this.fbPixel.fire('Lead')
         this.fbPixel.fire('PageView')
@@ -219,7 +220,9 @@ export class SignupComponent implements OnInit {
   }
 
   subscribeNotification() {
-    this.webNotificationService.subscribeToNotification();
+    if (!(/ipad|iphone|ipod/.test(window.navigator.userAgent.toLowerCase()))) {
+      this.webNotificationService.subscribeToNotification();
+    }
   }
 
 
@@ -249,27 +252,7 @@ export class SignupComponent implements OnInit {
     this.signInSignupService.sendOTP(value, countryCode).then(res => {
       if (res.data)
         this.showOtp = res.data.success;
-      this._snackBar.open("OTP has been sent on your phone number", "", {
-        duration: 2000,
-        panelClass: ["success-snackbar"],
-        verticalPosition: "bottom"
-      });
-
-    });
-  }
-
-  verifyMobile(mobile) {
-    let countryCode = this.signupForm.get('countryCode').value.callingCode;
-    this.signInSignupService.VerifyMobile(mobile, countryCode).then(res => {
-      this.verifiedMobile = res.data;
-      this._snackBar.open(res.message, "", {
-        duration: 2000,
-        panelClass: ["success-snackbar"],
-        verticalPosition: "bottom"
-      });
-      if (this.verifiedMobile) {
-        this.sendotp(mobile);
-      }
+      this.notifier.snack("OTP has been sent on your phone number");
     });
   }
 
@@ -283,6 +266,17 @@ export class SignupComponent implements OnInit {
         }
       });
     }
+  }
+
+  verifyMobile(mobile) {
+    let countryCode = this.signupForm.get('countryCode').value.callingCode;
+    this.signInSignupService.VerifyMobile(mobile, countryCode).then(res => {
+      this.verifiedMobile = res.data;
+      this.notifier.snack(res.message);
+      if (this.verifiedMobile) {
+        this.sendotp(mobile);
+      }
+    });
   }
 
   verifyEmail(email) {
@@ -303,7 +297,6 @@ export class SignupComponent implements OnInit {
           this.emailEnteredCounter++;
           this.emailVerified = false;
         }
-
       });
     }
   }

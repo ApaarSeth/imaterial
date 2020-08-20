@@ -31,6 +31,7 @@ export class SignInSignUpComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.countryList = this._activatedRoute.snapshot.data.countryList;
     this.fbPixel.load();
     this.fbPixel.fire('PageView');
     if (localStorage.getItem("accessToken")) {
@@ -41,13 +42,11 @@ export class SignInSignUpComponent implements OnInit {
       this.index = this.uniqueCode ? 1 : 0;
     });
 
-    Promise.all([this.visitorsService.getGEOLocation(), this.commonService.getCountry()]).then(res => {
-      this.countryList = res[1]['data']
-      this.callingCode = res[0]['countryCode'] === 'IN' ? '+91' : 'null';
-      this.countryCode = res[0]['countryCode']
+    this.visitorsService.getGEOLocation().then(res => {
+      this.callingCode = res['countryCode'] === 'IN' ? '+91' : 'null';
+      this.countryCode = res['countryCode']
       localStorage.setItem('countryCode', this.countryCode)
       localStorage.setItem('callingCode', this.callingCode)
-
     }).catch(err => {
       this.fallBackData()
     })
