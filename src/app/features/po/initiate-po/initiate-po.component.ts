@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChildren } from "@angular/core";
 import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
-import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide.service';
-import { initiatePoData, initiatePo } from 'src/app/shared/models/PO/po-data';
-import { CommonService } from 'src/app/shared/services/commonService';
+import { Suppliers } from "../../../shared/models/RFQ/suppliers";
+import { initiatePoData } from "../../../shared/models/PO/po-data";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
+import { UserGuideService } from "../../../shared/services/user-guide.service";
+import { CommonService } from "../../../shared/services/commonService";
 
 @Component({
   selector: "app-initiate-po",

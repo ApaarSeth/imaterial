@@ -167,5 +167,6 @@ export const API = {
   GET_ALL_GRN: 'all/grn',
   SUPPLIER_LIABILITY_EXCEL_DOWNLOAD: 'supplier/liabilityReportDownload',
   CTC_REPORT_EXCEL_DOWNLOAD: 'report/ctcDownload',
-  GET_CONTACTSALES: 'subscription/contact/sales'
+  GET_CONTACTSALES: 'subscription/contact/sales',
+  RESENDINVITE: (userid) => `resendemail/unique/${userid}`
 };

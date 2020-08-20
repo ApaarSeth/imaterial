@@ -1,15 +1,14 @@
+import { UserDetails } from './../../../shared/models/user-details';
+import { AppNotificationService } from './../../../shared/services/app-notification.service';
 import { UserService } from './../../../shared/services/user.service';
 import { CountryCode } from './../../../shared/models/currency';
 import { Component, OnInit, Input, SimpleChanges } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FieldRegExConst } from '../../../shared/constants/field-regex-constants';
 import { TokenService } from '../../../shared/services/token.service';
 import { WebNotificationService } from '../../../shared/services/webNotificationService.service';
-import { DataService } from '../../../shared/services/data.service';
 import { AppNavigationService } from '../../../shared/services/navigation.service';
-import { API } from '../../../shared/constants/configuration-constants';
 import { SignInSignupService } from '../../../shared/services/signupSignin.service';
 import { SignInData } from '../../../shared/models/signIn/signIn-detail-list';
 
@@ -30,9 +29,8 @@ export class SigninComponent implements OnInit {
     private signInSignupService: SignInSignupService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private dataService: DataService,
+    private notifier: AppNotificationService,
     private userService: UserService,
-    private _snackBar: MatSnackBar,
     private navigationService: AppNavigationService) { }
 
   ipaddress: string;
@@ -101,7 +99,7 @@ export class SigninComponent implements OnInit {
     this.selectedCountry = this.signinForm.get('countryCode').value
   }
 
-  signin() {
+  collateSignInData() {
     let params = new URLSearchParams();
     params.append("loginIdType", this.callingCode === '+91' ? 'PHONE' : 'EMAIL');
     this.callingCode === '+91' ? params.append('countryCode', this.callingCode) : null;
@@ -110,33 +108,32 @@ export class SigninComponent implements OnInit {
     params.append("grant_type", "password");
     params.append("client_id", "fooClientIdPassword");
     params.append("userType", "BUYER");
+    return params
+  }
 
-    this.signInSignupService.signIn(params.toString()).then(data => {
+  signin() {
+    this.signInSignupService.signIn(this.collateSignInData().toString()).then(data => {
       if (data.errorMessage) {
-        this._snackBar.open(data.errorMessage, "", {
-          duration: 2000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
+        this.notifier.snack(data.errorMessage);
       }
       else if (data.serviceRawResponse.data) {
-        if (!(/ipad|iphone|ipod/.test(window.navigator.userAgent.toLowerCase()))) {
-          this.subscribeNotification()
-        }
+        this.subscribeNotification()
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
+        this.navigationService.gaTag({ action: 'event', command: 'login', options: { 'method': this.tokenService.getOrgId() } })
         if (localStorage.countryCode !== 'IN' && localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
           this.router.navigate(["/profile/email-verification"]);
         }
         else {
           this.getUserInfo(data.serviceRawResponse.data.userId);
         }
-        this.navigationService.gaTag({ action: 'event', command: 'login', options: { 'method': this.tokenService.getOrgId() } })
       }
     });
   }
 
   subscribeNotification() {
-    this.webNotificationService.subscribeToNotification();
+    if (!(/ipad|iphone|ipod/.test(window.navigator.userAgent.toLowerCase()))) {
+      this.webNotificationService.subscribeToNotification();
+    }
   }
 
   /**
@@ -145,24 +142,23 @@ export class SigninComponent implements OnInit {
    * @description Function will get the data of logged in user
    */
   getUserInfo(userId) {
-    this.userService.getUserInfo(userId).then(res => {
-      localStorage.setItem("userName", res.data.firstName);
-      localStorage.setItem("profileUrl", res.data.profileUrl);
-      localStorage.setItem("currencyCode", res.data.baseCurrency ? res.data.baseCurrency.currencyCode : null);
-      localStorage.setItem("countryId", res.data.countryId);
-      localStorage.setItem("isPlanAvailable", res.data.isPlanAvailable);
-      localStorage.setItem('isFreeTrialSubscription', res.data.isFreeTrialSubscription);
-      localStorage.setItem('isActiveSubscription', res.data.isActiveSubscription);
-      localStorage.setItem('accountOwner', res.data.accountOwner);
-      this.signInSignupService.checkTerms().then(res => {
-        this.acceptTerms = res.data;
-        if (!this.acceptTerms) {
-          this.router.navigate(["/profile/terms-conditions"]);
-        }
-        else {
-          this.router.navigate(["/dashboard"]);
-        }
-      })
+    this.userService.getUserInfo(userId).then((res) => {
+      let data: UserDetails = res.data;
+      localStorage.setItem("userName", data.firstName);
+      localStorage.setItem("profileUrl", data.profileUrl);
+      localStorage.setItem("currencyCode", data.baseCurrency ? data.baseCurrency.currencyCode : null);
+      localStorage.setItem("countryId", String(data.countryId));
+      localStorage.setItem("isPlanAvailable", data.isPlanAvailable);
+      localStorage.setItem('isFreeTrialSubscription', String(data.isFreeTrialSubscription));
+      localStorage.setItem('isActiveSubscription', String(data.isActiveSubscription));
+      localStorage.setItem('accountOwner', String(data.accountOwner));
+      localStorage.setItem('appTermsAndCondition', String(data.appTermsAndCondition));
+      if (!data.appTermsAndCondition) {
+        this.router.navigate(["/profile/terms-conditions"]);
+      }
+      else {
+        this.router.navigate(["/dashboard"]);
+      }
     })
   }
 
