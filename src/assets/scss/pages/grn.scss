@@ -220,6 +220,52 @@ $mat-row-horizontal-padding: 12px;
   padding-left: 12px !important;
 }
 
+.report{
+  .mat-select-arrow-wrapper{
+    position: relative;
+    right: 7%;
+  }
+
+  .mat-form-field-appearance-legacy.select-project .mat-form-field-wrapper {
+    padding-top: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 1199px){
+  .report{
+    .mat-select-arrow-wrapper{
+      right: 8%;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .report{
+    .mat-select-arrow-wrapper{
+      right: 7%;
+    }
+  }
+
+  .receipts-outer-section{
+    padding-top: 5px !important;
+  }
+}
+
+@media only screen and (max-width: 599px){
+  .receipts-outer-section {
+    padding-top: 0px !important;
+    margin-top: -10px !important;
+  }
+}
+
+@media only screen and (max-width: 575px){
+  .report{
+    .mat-select-arrow-wrapper{
+      right: 9%;
+    }
+  }
+}
+
 @media only screen and (max-width: 462px){
   .grn-dashboard{
     .po-number-grn{
