@@ -31,7 +31,8 @@
             </div>
             <div class="text-right p-l-0 p-r-0" [ngClass]="this.data ? 'col-xs-1' : 'col-xs-2'">
               <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                <mat-select placeholder="Unit*" formControlName="materialUnit">
+                <mat-label class="mat-select-trades">Unit*</mat-label>
+                <mat-select formControlName="materialUnit">
                   <div class="display-flex">
                     <input
                       class="p-l-10 p-b-5"

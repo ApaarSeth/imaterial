@@ -41,11 +41,13 @@
                 </button>
               </div>
               <mat-select-trigger>
-                <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-                  ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-                  <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
-                  <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
-                </span>
+                <mat-label>
+                  <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
+                    ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                    <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                    <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
+                  </span>
+                </mat-label>
               </mat-select-trigger>
               <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country" selected="trade.isAttatched"
                 ><span

@@ -1,4 +1,4 @@
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule, HammerModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -62,7 +62,7 @@ import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/materia
   ],
   imports: [
     BrowserModule,
-
+    HammerModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,

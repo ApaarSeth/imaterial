@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
-import { OTPComponent } from "./otp/otp.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { SignInSignUpComponent } from "./sign-in-sign-up/sign-in-sign-up.component";
@@ -14,18 +13,6 @@ const routes: Routes = [
   {
     path: "login/:uniqueCode",
     component: SignInSignUpComponent
-  },
-  // {
-  //   path: "signup",
-  //   component: SignupComponent
-  // },
-  // {
-  //   path: "signin",
-  //   component: SigninComponent
-  // },
-  {
-    path: "otp",
-    component: OTPComponent
   },
   {
     path: "forgot-password",

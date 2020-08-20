@@ -81,4 +81,9 @@ export class UserService {
       localStorage.clear();
     });
   }
+
+  resendInvite(userId) {
+    return this.dataService.getRequest(API.RESENDINVITE(userId));
+  }
+
 }

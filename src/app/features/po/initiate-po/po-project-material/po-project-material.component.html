@@ -1,22 +1,28 @@
 <form [formGroup]="form">
-  <div class="row" [ngClass]="isMobile ? 'm-podr1' : 'p-t-10' ">
-    <div class="col-xs-6 col-sm-4 p-t-10 border-input m-itm" [ngClass]="isMobile ? 'm-srch mt-1' : '' ">
-      <mat-form-field class="input-search-padding-zero" [ngClass]="isMobile ? 'pl-0' : 'p-l-20' ">
-        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial"
-          [ngModelOptions]="{standalone: true}" />
+  <div class="row" [ngClass]="isMobile ? 'm-podr1' : 'p-t-10'">
+    <div class="col-xs-6 col-sm-4 p-t-10 border-input m-itm" [ngClass]="isMobile ? 'm-srch mt-1' : ''">
+      <mat-form-field class="input-search-padding-zero" [ngClass]="isMobile ? 'pl-0' : 'p-l-20'">
+        <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" [ngModelOptions]="{standalone: true}" />
         <button mat-button matSuffix mat-icon-button>
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field>
     </div>
-    <div class="col-xs-6 col-sm-4 text-right m-itm" [ngClass]="isMobile ? 'm-srch pt-3px mt-1' : '' ">
+    <div class="col-xs-6 col-sm-4 text-right m-itm" [ngClass]="isMobile ? 'm-srch pt-3px mt-1' : ''">
       <mat-form-field class="border-select select-project">
-        <mat-select formControlName="selectedProject" placeholder="Search project Name"
-          (selectionChange)="choosenProject($event)">
+        <mat-label>Search Project</mat-label>
+        <mat-select formControlName="selectedProject" (selectionChange)="choosenProject($event)">
           <div class="display-flex">
-            <input class="p-b-5" [ngClass]="isMobile ? 'pl-0' : 'p-l-10' " matInput type="search"
-              placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"
-              (keydown)="$event.stopPropagation()" />
+            <input
+              class="p-b-5"
+              [ngClass]="isMobile ? 'pl-0' : 'p-l-10'"
+              matInput
+              type="search"
+              placeholder="Search project Name"
+              [(ngModel)]="searchText"
+              [ngModelOptions]="{standalone: true}"
+              (keydown)="$event.stopPropagation()"
+            />
             <button mat-button matSuffix mat-icon-button>
               <mat-icon>search</mat-icon>
             </button>
@@ -29,24 +35,35 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="col-md-4 col-xs-12 text-right m-itm" [ngClass]="isMobile ? 'sm-btn1 mt-2 mb-1' : '' ">
+    <div class="col-md-4 col-xs-12 text-right m-itm" [ngClass]="isMobile ? 'sm-btn1 mt-2 mb-1' : ''">
       <span class="p-r-5">
-        <span (click)="selectCurrency()"
-          class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select
-          Currency</span>
-        <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white"
-          (click)="materialAdded()" type="button" [ngClass]="isMobile ? 'po-sm-btn' : '' ">Back</button>
+        <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
+        <button
+          mat-raised-button
+          matStepperPrevious
+          class="main-background-color main-button color-white"
+          (click)="materialAdded()"
+          type="button"
+          [ngClass]="isMobile ? 'po-sm-btn' : ''"
+        >
+          Back
+        </button>
       </span>
       <span>
-        <button mat-raised-button [disabled]="!(form.valid && counter > 0)" matStepperNext (click)="materialAdded()"
-          class="main-background-color main-button color-white" [ngClass]="isMobile ? 'po-sm-btn' : '' ">
+        <button
+          mat-raised-button
+          [disabled]="!(form.valid && counter > 0)"
+          matStepperNext
+          (click)="materialAdded()"
+          class="main-background-color main-button color-white"
+          [ngClass]="isMobile ? 'po-sm-btn' : ''"
+        >
           Next
         </button>
       </span>
     </div>
-    <div class="col-xs-12 p-t-10 p-b-20 text-right m-itm" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null"
-      [ngClass]="isMobile ? 'mt-2' : '' ">
-      <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10" [ngClass]="isMobile ? 'font-size12 mcrncy' : '' ">
+    <div class="col-xs-12 p-t-10 p-b-20 text-right m-itm" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null" [ngClass]="isMobile ? 'mt-2' : ''">
+      <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10" [ngClass]="isMobile ? 'font-size12 mcrncy' : ''">
         <span class="font-size-vary-grn color-grey">
           <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
           {{ poCurrency.exchangeCurrencyName }}
@@ -63,14 +80,13 @@
 </form>
 <mat-accordion *ngIf="poDetails" class="accordion-padding-zero">
   <form *ngIf="poDetails.length" [formGroup]="materialForm">
-    <mat-expansion-panel class="myPanel" [expanded]="true" [ngClass]="isMobile ? 'mt-2' : '' ">
-      <mat-expansion-panel-header [ngClass]="isMobile ? 'font-size12 pt-4 pb-4' : '' ">
+    <mat-expansion-panel class="myPanel" [expanded]="true" [ngClass]="isMobile ? 'mt-2' : ''">
+      <mat-expansion-panel-header [ngClass]="isMobile ? 'font-size12 pt-4 pb-4' : ''">
         <mat-panel-title>
           {{ poDetails[0].projectName }}
           <a href="javascript:void(0)" class="main-color p-l-15">
             {{ poDetails[0].defaultAddress.addressLine1 }}
-            <span *ngIf="poDetails[0].defaultAddress.addressLine2">,
-              {{ poDetails[0].defaultAddress.addressLine2 }}</span>
+            <span *ngIf="poDetails[0].defaultAddress.addressLine2">, {{ poDetails[0].defaultAddress.addressLine2 }}</span>
             <span *ngIf="poDetails[0].defaultAddress.city">, {{ poDetails[0].defaultAddress.city }}</span>
             <span *ngIf="poDetails[0].defaultAddress.state">, {{ poDetails[0].defaultAddress.state }}</span>
             <span *ngIf="poDetails[0].defaultAddress.pinCode">, {{ poDetails[0].defaultAddress.pinCode }}</span>
@@ -78,14 +94,12 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="example-container mat-elevation-z8">
-        <table mat-table [dataSource]="poDetails[0].projectMaterialList | SearchPipe: searchMaterial:['materialName']"
-          formArrayName="formArr">
+        <table mat-table [dataSource]="poDetails[0].projectMaterialList | SearchPipe: searchMaterial:['materialName']" formArrayName="formArr">
           <ng-container matColumnDef="Material Name">
             <th mat-header-cell *matHeaderCellDef>Material Name</th>
             <td mat-cell *matCellDef="let element; let i = index" formGroupName="{{ i }}">
               <mat-checkbox #ch [checked]="element.checked" (change)="materialChecked(ch, i, element)">
-                <div class="limited-character po-p-m" matTooltip=" {{ element.materialName }}">
-                  {{ element.materialName }} <br /></div>
+                <div class="limited-character po-p-m" matTooltip=" {{ element.materialName }}">{{ element.materialName }} <br /></div>
               </mat-checkbox>
             </td>
           </ng-container>
