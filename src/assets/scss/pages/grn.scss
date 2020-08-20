@@ -10,6 +10,7 @@ $mat-row-horizontal-padding: 12px;
   table {
     width: 100%;
     border: 1px solid #ababab;
+    border-bottom: none;
   }
 
   td.mat-cell,
@@ -158,6 +159,10 @@ $mat-row-horizontal-padding: 12px;
   .mat-expansion-indicator:after {
     padding: 6px;
   }
+
+  .mat-expansion-panel-content{
+    overflow-x: auto;
+  }
 }
 
 /** css to make receipt page grn detail row's column aligned **/
@@ -221,31 +226,12 @@ $mat-row-horizontal-padding: 12px;
 }
 
 .report{
-  .mat-select-arrow-wrapper{
-    position: relative;
-    right: 7%;
-  }
-
   .mat-form-field-appearance-legacy.select-project .mat-form-field-wrapper {
     padding-top: 0px !important;
   }
 }
 
-@media only screen and (max-width: 1199px){
-  .report{
-    .mat-select-arrow-wrapper{
-      right: 8%;
-    }
-  }
-}
-
 @media only screen and (max-width: 767px){
-  .report{
-    .mat-select-arrow-wrapper{
-      right: 7%;
-    }
-  }
-
   .receipts-outer-section{
     padding-top: 5px !important;
   }
@@ -255,14 +241,6 @@ $mat-row-horizontal-padding: 12px;
   .receipts-outer-section {
     padding-top: 0px !important;
     margin-top: -10px !important;
-  }
-}
-
-@media only screen and (max-width: 575px){
-  .report{
-    .mat-select-arrow-wrapper{
-      right: 9%;
-    }
   }
 }
 
