@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from "@angular/core";
 import { trigger, state, style, transition, animate } from "@angular/animations";
 import { Observable, of } from "rxjs";
 import { DataSource } from "@angular/cdk/table";
@@ -22,6 +22,7 @@ import { AddMyMaterialBomComponent } from "../../../../shared/dialogs/add-my-mat
 import { AddGrnComponent } from "../../../../shared/dialogs/add-grn/add-grn.component";
 import { AddGrnViaExcelComponent } from "../../../../shared/dialogs/addGrn-viaExcel/addGrnViaExcel.component";
 import { MatCheckbox } from "@angular/material/checkbox";
+import { MatSort } from '@angular/material/sort';
 import { AddProjectComponent } from "../../../../shared/dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "../../../../shared/dialogs/double-confirmation/double-confirmation.component";
 import { IssueToIndentDialogComponent } from "../../../../shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
@@ -41,14 +42,15 @@ import { UploadImageComponent } from "../../../../shared/dialogs/upload-image/up
   ]
 })
 export class BomTableComponent implements OnInit {
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   projectId: number;
   projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
-
-  innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
+  columnsToDisplay = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
+  innerDisplayedColumns = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -172,8 +174,19 @@ export class BomTableComponent implements OnInit {
         this.subcategoryData = null;
       }
 
-      this.getProject(this.projectId);
       this.dataSource = new MatTableDataSource(this.subcategoryData);
+      this.dataSource.sort = this.sort;
+
+      this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+        if (typeof data[sortHeaderId] === 'string') {
+          return data[sortHeaderId].toLocaleLowerCase();
+        }
+      
+        return data[sortHeaderId];
+      };
+
+      // this.dataSource.sortingDataAccessor = (data, header) => data[header];
+      this.getProject(this.projectId);
       this.loading.hide();
     });
   }
