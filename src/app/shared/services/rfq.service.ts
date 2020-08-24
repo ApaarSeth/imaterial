@@ -1,14 +1,11 @@
 import { Injectable } from "@angular/core";
-//import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject } from "rxjs";
-import { environment } from "src/environments/environment";
-import { DataService } from "../data.service";
-import { API } from "../../constants/configuration-constants";
-import { ProjectIds } from "../../models/project-details";
-import { RfqProjectSubmit } from "../../models/RFQ/rfqBids";
-import { Suppliers } from "../../models/RFQ/suppliers";
-import { AddRFQ } from "../../models/RFQ/rfq-details";
-import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
+import { Subject, BehaviorSubject } from "rxjs";
+import { DataService } from "./data.service";
+import { API } from "../constants/configuration-constants";
+import { RfqProjectSubmit } from "../models/RFQ/rfqBids";
+import { Suppliers } from "../models/RFQ/suppliers";
+import { AddRFQ } from "../models/RFQ/rfq-details";
+import { SendRfqObj } from "../models/RFQ/rfq-details-supplier";
 
 @Injectable({
   providedIn: "root"
@@ -24,9 +21,6 @@ export class RFQService {
     });
   }
 
-  // rfqDetail(organizationId: number) {
-  //   return this.dataService.getRequest(API.RFQDETAIL(organizationId));
-  // }
 
   rfqDetail(organisationId: number, data) {
     return this.dataService.sendPostRequest(API.RFQDETAIL(organisationId), data);

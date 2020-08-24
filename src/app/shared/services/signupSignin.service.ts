@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
-import { DataService } from "../data.service";
-import { API } from "../../constants/configuration-constants";
+import { DataService } from "./data.service";
+import { API } from "../constants/configuration-constants";
 import { Injectable, OnInit } from "@angular/core";
 
 @Injectable({

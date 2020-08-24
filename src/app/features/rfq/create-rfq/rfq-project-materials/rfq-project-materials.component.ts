@@ -7,24 +7,17 @@ import {
   SimpleChanges,
   ViewChild
 } from "@angular/core";
-import {
-  ProjectDetails,
-  ProjectIds
-} from "src/app/shared/models/project-details";
-import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
-import {
-  RfqMaterialResponse,
-  AddRFQ,
-  RfqMat
-} from "src/app/shared/models/RFQ/rfq-details";
-import { MatDialog, MatCheckbox } from "@angular/material";
+import { AddRFQ, RfqMaterialResponse, RfqMat } from "../../../../shared/models/RFQ/rfq-details";
+import { ProjectDetails } from "../../../../shared/models/project-details";
+import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { ProjectService } from "../../../../shared/services/project.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { CommonService } from 'src/app/shared/services/commonService';
-import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
-import { LoaderInterceptor } from 'src/app/shared/http-interceptors/loader-interceptor';
-import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
-import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
+import { RFQService } from "../../../../shared/services/rfq.service";
+import { CommonService } from "../../../../shared/services/commonService";
+import { GlobalLoaderService } from "../../../../shared/services/global-loader.service";
+import { MatCheckbox } from "@angular/material/checkbox";
+import { SelectCurrencyComponent } from "../../../../shared/dialogs/select-currency/select-currency.component";
 
 @Component({
   selector: "app-rfq-project-materials",

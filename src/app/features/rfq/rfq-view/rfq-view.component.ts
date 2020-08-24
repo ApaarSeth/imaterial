@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { ViewDocumentsDialogComponent } from "src/app/shared/dialogs/view-documents/view-documents-dialog.component";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { RFQService } from "src/app/shared/services/rfq.service";
 import { ActivatedRoute } from '@angular/router';
 import { Rfq, Documents, TermsObj } from 'src/app/shared/models/RFQ/rfq-view';
 import { CommonService } from 'src/app/shared/services/commonService';
@@ -9,8 +9,7 @@ import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image
 
 @Component({
     selector: "rfq-view",
-    templateUrl: "./rfq-view.component.html",
-    styleUrls: ["../../../../assets/scss/main.scss"]
+    templateUrl: "./rfq-view.component.html"
 })
 export class RFQViewComponent implements OnInit {
     displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Makes", "Attached Images"];

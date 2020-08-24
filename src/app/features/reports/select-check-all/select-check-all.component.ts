@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
     selector: 'app-select-check-all',
@@ -12,8 +12,8 @@ export class SelectCheckAllComponent {
     @Input() values = [];
     @Input() text = 'Select All';
     @Output() selectAllText = new EventEmitter<string>();
-    
-    ngOnInit(): void {}
+
+    ngOnInit(): void { }
 
     isChecked(): boolean {
         return this.model.value && this.values.length

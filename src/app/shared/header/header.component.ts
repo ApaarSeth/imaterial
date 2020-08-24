@@ -6,9 +6,9 @@ import { filter } from 'rxjs/operators';
 import { HeaderConstants, ConfigurationConstants } from '../constants/configuration-constants';
 import { FacebookPixelService } from '../services/fb-pixel.service';
 import { IfStmt } from '@angular/compiler';
-import { MatSidenav } from '@angular/material';
 import { AppNavigationService } from '../services/navigation.service';
 import { TokenService } from '../services/token.service';
+import { MatSidenav } from "@angular/material/sidenav";
 @Component({
   selector: "app-header",
   templateUrl: "./header.html"
@@ -142,7 +142,7 @@ export class HeaderLayoutComponent implements OnInit {
   // }
 
   routeTo(route) {
-    this.router.navigate([ route ]);
+    this.router.navigate([route]);
   }
 
   closeDialog() {

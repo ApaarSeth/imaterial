@@ -1,18 +1,17 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
-  FormGroup,
-  Validators
+  FormGroup
 } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
-import { ProjectService } from "../../services/projectDashboard/project.service";
-import { FieldRegExConst } from "../../constants/field-regex-constants";
+import { ProjectService } from "../../services/project.service";
 import { Router } from '@angular/router';
 import { AppNavigationService } from '../../services/navigation.service';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
 import { supplierRemarkList } from '../../models/RFQ/rfqBids';
-import { DocumentUploadService } from "../../services/document-download/document-download.service";
+import { DocumentUploadService } from "../../services/document-download.service";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export interface City {
   value: string;

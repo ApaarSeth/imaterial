@@ -9,6 +9,7 @@
             Please create one to continue.
           </p>
         </div>
+
         <button mat-raised-button [routerLink]="['./initiate-po']" class="main-background-color main-button color-white"
           matTooltip="Issue P.O. to supplier without Request For Quotations">
           Create P.O.
@@ -16,6 +17,7 @@
       </div>
     </div>
   </div>
+
   <div class="p-b-20 min-height parent create-po-dashboard"
     *ngIf="poApprovalDetailsTemp || poDraftedDetailsTemp || acceptedRejectedPOListTemp || poCount > 0">
     <div class="row" [ngClass]="isMobile ? 'ml-0' : '' ">
@@ -29,7 +31,7 @@
         </mat-form-field>
       </div>
 
-      <div class="text-right col-xs-6 create-po-btn p-r-20 p-t-10" [ngClass]="isMobile ? 'sm-btn1 d-flex' : '' ">
+      <div class="text-right col-xs-6 create-po-btn p-t-10" [ngClass]="isMobile ? 'sm-btn1 d-flex' : '' ">
         <ng-container *ngIf="isMobile">
           <button mat-button class="fltr-btn brand-color" (click)="openFilter()">
             <mat-icon inline="true">filter_list</mat-icon>
@@ -47,14 +49,17 @@
 
       <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2 align-top">
-          <advance-search filterType="po"></advance-search>
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)"
+            [config]="searchConfig">
+          </advance-search>
         </div>
       </ng-container>
 
       <ng-template #mobileSearch>
         <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close' ">
           <div class="sdb" (click)="closeFilter()"></div>
-          <advance-search class="mb-cl" filterType="po"></advance-search>
+          <advance-search class="mb-cl" *ngIf="searchConfig" (submitExport)="applyExport($event)"
+            (submitSearch)="applySearch($event)" [config]="searchConfig"></advance-search>
         </div>
       </ng-template>
 
@@ -150,7 +155,7 @@
 
 
             <div *ngIf="poApprovalDetailsTemp && permissionObj.poApprovalFlag">
-              <mat-expansion-panel class="myPanel" [expanded]="true">
+              <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
                 <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
                   [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
                   <mat-panel-title>
@@ -158,43 +163,49 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div class="example-container mat-elevation-z8">
-                  <table mat-table [dataSource]="poApprovalDetails">
-                    <ng-container matColumnDef="PO Number">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
+                <div class="example-container mat-elevation-z8 po-for-approval">
+                  <table mat-table [dataSource]="poApprovalDetails" #approvalPOSort="matSort" matSort>
+
+                    <!-- PO Number Column -->
+                    <ng-container matColumnDef="poNumber">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>PO Number</th>
+                      <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Raised Date">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">
+                    <!-- Raised Date Column -->
+                    <ng-container matColumnDef="poStatusChangedOn">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Raised Date</th>
+                      <td mat-cell class="text-center" *matCellDef="let element">
                         {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Supplier Name">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">
+                    <!-- Supplier Name Column -->
+                    <ng-container matColumnDef="supplierName">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Supplier Name</th>
+                      <td mat-cell class="text-center" *matCellDef="let element">
                         {{ element.supplierName }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Total Material">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef class="text-align-center">Total
-                        Material</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">
+                    <!-- Total Materials Column -->
+                    <ng-container matColumnDef="totalMaterials">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Material</th>
+                      <td mat-cell *matCellDef="let element">
                         {{ element.totalMaterials }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="PO Amount">
-                      <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount</th>
+                    <!-- PO Amount Column -->
+                    <ng-container matColumnDef="poAmount">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right">PO Amount</th>
                       <td mat-cell class="text-right" *matCellDef="let element">{{ element.poAmount | number: "1.2-2" }}
                         {{ element.currencyCode }}</td>
                     </ng-container>
 
+                    <!-- Action Buttons Column -->
                     <ng-container matColumnDef="Action">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef></th>
+                      <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                       <td mat-cell class="text-align-center actions-cell" *matCellDef="let element">
                         <span class="p-r-10">
                           <a href="javascript:void(0)" style="color: #f47721;"
@@ -214,46 +225,47 @@
                 </div>
               </mat-expansion-panel>
             </div>
-            <br />
+
+
             <div *ngIf="poDraftedDetailsTemp">
-              <mat-expansion-panel class="myPanel" [expanded]="true">
+              <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
                 <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
                   [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
                   <mat-panel-title>
                     Drafted P.O.
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="example-container mat-elevation-z8">
-                  <table mat-table [dataSource]="poDraftedDetails">
-                    <ng-container matColumnDef="PO Number">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
+
+                <div class="example-container mat-elevation-z8 drafted-po">
+                  <table mat-table [dataSource]="poDraftedDetails" #draftPOSort="matSort" matSort>
+                    <ng-container matColumnDef="poNumber">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>PO Number</th>
+                      <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Raised Date">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">
+                    <ng-container matColumnDef="poStatusChangedOn">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Raised Date</th>
+                      <td mat-cell class="text-center" *matCellDef="let element">
                         {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Supplier Name">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">
+                    <ng-container matColumnDef="supplierName">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Supplier Name</th>
+                      <td mat-cell class="text-center" *matCellDef="let element">
                         {{ element.supplierName }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Total Material">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef class="text-align-center">Total
-                        Material</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">
+                    <ng-container matColumnDef="totalMaterials">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Material</th>
+                      <td mat-cell *matCellDef="let element">
                         {{ element.totalMaterials }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="PO Amount">
-                      <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount</th>
+                    <ng-container matColumnDef="poAmount">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right">PO Amount</th>
                       <td mat-cell class="text-right" *matCellDef="let element">{{ element.poAmount | number: "1.2-2" }}
                         {{ element.currencyCode }}</td>
                     </ng-container>
@@ -279,9 +291,9 @@
                 </div>
               </mat-expansion-panel>
             </div>
-            <br />
+
             <div *ngIf="acceptedRejectedPOListTemp">
-              <mat-expansion-panel class="myPanel" [expanded]="true">
+              <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
                 <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
                   [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
                   <mat-panel-title>
@@ -293,36 +305,37 @@
                   </div> -->
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="example-container mat-elevation-z8">
-                  <table mat-table [dataSource]="acceptedRejectedPOList">
-                    <ng-container matColumnDef="PO Number">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef>PO Number</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">{{ element.poNumber }}</td>
+
+                <div class="example-container mat-elevation-z8 approved-po">
+                  <table mat-table [dataSource]="acceptedRejectedPOList" #approvedPOSort="matSort" matSort>
+                    <ng-container matColumnDef="poNumber">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>PO No.</th>
+                      <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Raised Date">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef>Raised Date</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">
+                    <ng-container matColumnDef="poStatusChangedOn">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Raised Date</th>
+                      <td mat-cell class="text-center" *matCellDef="let element">
                         {{ element.poStatusChangedOn | date: "dd-MMM-yyy" }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Supplier Name">
-                      <th mat-header-cell class="text-align-center" *matHeaderCellDef>Supplier Name</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">
+                    <ng-container matColumnDef="supplierName">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Supplier Name</th>
+                      <td mat-cell class="text-center" *matCellDef="let element">
                         {{ element.supplierName }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="Total Material">
-                      <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Material</th>
-                      <td mat-cell class="text-align-center" *matCellDef="let element">
+                    <ng-container matColumnDef="totalMaterials">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Material</th>
+                      <td mat-cell *matCellDef="let element">
                         {{ element.totalMaterials }}
                       </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="PO Amount">
-                      <th mat-header-cell *matHeaderCellDef class="text-right">PO Amount</th>
+                    <ng-container matColumnDef="poAmount">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right">PO Amount</th>
                       <td mat-cell *matCellDef="let element" class="text-right">{{ element.poAmount | number: "1.2-2" }}
                         {{ element.currencyCode }}</td>
                     </ng-container>

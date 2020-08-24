@@ -11,34 +11,30 @@ import {
 import { FormControl, FormBuilder, FormGroup, FormArray } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Location } from "@angular/common";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import {
-  ProjectDetails,
-  ProjetPopupData
-} from "src/app/shared/models/project-details";
-import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
-import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog, MatSnackBar } from "@angular/material";
-import { BomService } from "src/app/shared/services/bom/bom.service";
 import { BomTopMaterialComponent } from "./bom-topMaterial/bom-topMaterial.component";
-import {
-  categoryLevel,
-  categoryNestedLevel
-} from "src/app/shared/models/category";
-import { QtyData } from "src/app/shared/models/subcategory-materials";
-import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
-import { GuidedTourService, Orientation, GuidedTour } from 'ngx-guided-tour';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { orgTrades } from 'src/app/shared/models/trades';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { FacebookPixelService } from 'src/app/shared/services/fb-pixel.service';
-import { AddBomWarningComponent } from 'src/app/shared/dialogs/add-bom-warning/add-bom-warning.component';
-import { BOMAllMaterialComponent } from './bom-allMaterial/bom-allMaterial.component';
-import { BomMyMaterialComponent } from './bom-myMaterial/bom-myMaterial.component';
-import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { SnackbarComponent } from 'src/app/shared/dialogs/snackbar/snackbar.compnent';
+import { categoryNestedLevel, categoryLevel } from "../../../shared/models/category";
+import { ProjectDetails, ProjetPopupData } from "../../../shared/models/project-details";
+import { BOMAllMaterialComponent } from "./bom-allMaterial/bom-allMaterial.component";
+import { BomMyMaterialComponent } from "./bom-myMaterial/bom-myMaterial.component";
+import { QtyData } from "../../../shared/models/subcategory-materials";
+import { orgTrades } from "../../../shared/models/trades";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
+import { ProjectService } from "../../../shared/services/project.service";
+import { MatDialog } from "@angular/material/dialog";
+import { BomService } from "../../../shared/services/bom.service";
+import { UserService } from "../../../shared/services/user.service";
+import { GlobalLoaderService } from "../../../shared/services/global-loader.service";
+import { UserGuideService } from "../../../shared/services/user-guide.service";
+import { AppNavigationService } from "../../../shared/services/navigation.service";
+import { FacebookPixelService } from "../../../shared/services/fb-pixel.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { CommonService } from "../../../shared/services/commonService";
+import { SnackbarComponent } from "../../../shared/dialogs/snackbar/snackbar.compnent";
+import { AddMyMaterialBomComponent } from "../../../shared/dialogs/add-my-material-Bom/add-my-material-bom.component";
+import { AddBomWarningComponent } from "../../../shared/dialogs/add-bom-warning/add-bom-warning.component";
+import { AddProjectComponent } from "../../../shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "../../../shared/dialogs/double-confirmation/double-confirmation.component";
+
 @Component({
   selector: "app-bom",
   templateUrl: "./bom.component.html"

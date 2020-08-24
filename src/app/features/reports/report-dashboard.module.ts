@@ -26,7 +26,7 @@ import { SelectCheckAllComponent } from './select-check-all/select-check-all.com
     AppSharedModule,
     ReportRoutingModule
   ],
-  providers : [ SupplierLiabilityReportResolver ],
+  providers: [SupplierLiabilityReportResolver],
   declarations: [
     SupplierLiabilityReportDetailComponent,
     CTCReportComponent,

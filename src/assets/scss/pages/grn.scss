@@ -10,6 +10,7 @@ $mat-row-horizontal-padding: 12px;
   table {
     width: 100%;
     border: 1px solid #ababab;
+    border-bottom: none;
   }
 
   td.mat-cell,
@@ -137,11 +138,11 @@ $mat-row-horizontal-padding: 12px;
     padding: 0;
   }
 
-  .backgound-project{
+  .backgound-project {
     background-color: #fff !important;
   }
 
-  .background-grn{
+  .background-grn {
     background-color: #e0e3ec !important;
     .material-row {
       background-color: #e0e3ec !important;
@@ -150,18 +151,22 @@ $mat-row-horizontal-padding: 12px;
     }
   }
 
-  .mat-expansion-panel-header.background-grn.mat-expanded:focus, 
-  .mat-expansion-panel-header.background-grn.mat-expanded:hover{
+  .mat-expansion-panel-header.background-grn.mat-expanded:focus,
+  .mat-expansion-panel-header.background-grn.mat-expanded:hover {
     background-color: #e0e3ec !important;
   }
 
-  .mat-expansion-indicator:after{
+  .mat-expansion-indicator:after {
     padding: 6px;
+  }
+
+  .mat-expansion-panel-content{
+    overflow-x: auto;
   }
 }
 
 /** css to make receipt page grn detail row's column aligned **/
-.grn-material-row{
+.grn-material-row {
   .mat-cell.grn-name-cell,
   .mat-cell.po-number-cell {
     flex: 0 0 152px;
@@ -174,19 +179,202 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
-.add-receipts-panel{
-  .mat-expansion-panel-header{
+.add-receipts-panel {
+  .mat-expansion-panel-header {
     padding: 0 12px;
   }
 
-  .mat-expansion-indicator:after{
+  .mat-expansion-indicator:after {
     padding: 6px;
   }
 }
 
-.inactive-receipt-docs{
+.inactive-receipt-docs {
   pointer-events: none;
-  img{
+  img {
     opacity: 0.5;
+  }
+}
+
+.receipt-unit{
+  width: 80px;
+}
+
+.receipt-brand-name,
+.receipt-awarded-qty,
+.receipt-delivered-qty{
+  width: 100px;
+}
+
+.receipt-delivered-date {
+  width: 150px;
+  .mat-form-field-infix {
+    width: 100px;
+  }
+}
+
+.receipt-received-qty {
+  padding-right: 12px !important;
+  width: 130px;
+  .mat-form-field-infix {
+    width: 130px;
+  }
+}
+
+.receipt-material-name{
+  padding-left: 12px !important;
+}
+
+.report{
+  .mat-form-field-appearance-legacy.select-project .mat-form-field-wrapper {
+    padding-top: 0px !important;
+  }
+}
+
+/** Add Receipt Via System Dialog CSS **/
+.add-receipt-via-system{
+  .mat-dialog-container{
+    padding: 5px 24px 5px !important;
+  }
+
+  .mat-dialog-content{
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .mat-dialog-title{
+    opacity: 0.7;
+    line-height: 20px;
+    font-size: 18px;
+  }
+
+  .modal-header .close {
+    font-weight: 100;
+    font-size: 3em;
+    line-height: 10px;
+  }
+
+  .modal-body{
+    padding: 1rem 1.5rem;
+  }
+
+  .mat-horizontal-stepper-header-container .mat-step-header{
+    &:first-child{
+      padding-left: 0;
+    }
+
+    &:last-child{
+      padding-right: 0;
+    }
+  }
+
+  .col-add-btn{
+    flex-basis: 4.3333%;
+    max-width: 4.3333%;
+  }
+
+  .col-unit{
+    flex-basis: 10%;
+    max-width: 10%;
+  }
+
+  .col-material-name{
+    flex-basis: 18.666667%;
+    max-width: 18.666667%;
+  }
+
+  .mat-step-header:hover{
+    background-color: transparent !important;
+  }
+
+  .receipt-number, .receipt-date{
+    .mat-form-field-wrapper{
+     padding-top: 0px !important;
+   }
+  }
+
+  .supplier-details h5{
+    font-size: 1.2rem;
+  }
+
+  .show-download {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .receipts-outer-section{
+    padding-top: 5px !important;
+  }
+
+  .add-receipt-via-system{
+    .col-xs-12{
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+
+    .col-xs-5 {
+      flex-basis: 41.66666667%;
+      max-width: 41.66666667%;
+    }
+
+    .material-icons.add-material-btn{
+      font-size: 30px;
+      line-height: 1.5;
+    }
+
+    .receipt-number, .receipt-date{
+      & > span {
+        display: none;
+      }
+      
+      .mat-form-field{
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 599px){
+  .receipts-outer-section {
+    padding-top: 0px !important;
+    margin-top: -10px !important;
+  }
+}
+
+@media only screen and (max-width: 560px){
+  .add-receipt-via-system .modal-body {
+    padding: 1rem 1rem;
+  }
+}
+
+@media only screen and (max-width: 462px){
+  .grn-dashboard{
+    .po-number-grn{
+      margin: 0 0 10px 0;
+    }
+  }
+
+  .add-edit-receipts .grn-first-row{
+      padding-top: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 390px){
+  .uploaded-documents-details{
+    .col-xs-9, .col-xs-3{
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+
+    .show-download{
+      height: 12px;
+    }
+
+    .row{
+      margin-top: 20px !important;
+    }
   }
 }

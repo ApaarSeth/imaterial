@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
+import { MatDialogRef } from "@angular/material/dialog";
 
 // Component for dialog box
 @Component({
@@ -9,12 +9,12 @@ import { MatDialogRef } from "@angular/material";
 
 // Component class
 export class AddCommentDialogComponent {
-  constructor(public dialogRef: MatDialogRef<AddCommentDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<AddCommentDialogComponent>) { }
 
   onNoClick(): void {
     this.closeDialog();
   }
-  closeDialog(){
+  closeDialog() {
     this.dialogRef.close();
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { UserService } from '../services/userDashboard/user.service';
+import { UserService } from '../services/user.service';
 import { DataService } from '../services/data.service';
 import { API } from '../constants/configuration-constants';
 
@@ -19,7 +19,7 @@ export class UserDataGuardService implements CanActivate {
         const uniqueCode = localStorage.getItem("uniqueCode") ? localStorage.getItem("uniqueCode") : null;
 
         return this._userService.getUserInfo(userId).then(res => {
-            if (((res.data[0].firstName === null || res.data[0].firstName === "") && (res.data[0].lastName === null || res.data[0].lastName === "")) || uniqueCode != null || res.data[0].isActiveSubscription === 0) {
+            if (((res.data.firstName === null || res.data.firstName === "") && (res.data.lastName === null || res.data.lastName === "")) || uniqueCode != null || res.data.isActiveSubscription === 0) {
                 return true;
             }
             else {

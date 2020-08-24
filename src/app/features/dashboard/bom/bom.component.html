@@ -1,7 +1,6 @@
 <div class="page-start-point mt-5 pt-4">
   <div class="p-l-20 p-r-20 p-b-20 p-t-20 min-height bom-main-style">
-    <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product"
-      [disableEditDelete]="true"></card-layout>
+    <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
 
     <div class="add-to-bom-style p-t-10">
       <!-- <div class="parent"> -->
@@ -12,8 +11,7 @@
             <div class="row align-items-center">
               <!-- Search field -->
               <mat-form-field class="input-search-padding-zero ptop-15 search-input-bom mr-4">
-                <input #text matInput placeholder="Search Material" type="search"
-                  (input)="searchMaterial(text.value)" />
+                <input #text matInput placeholder="Search Material" type="search" (input)="searchMaterial(text.value)" />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
@@ -24,9 +22,15 @@
                 <mat-label *ngIf="!formArray.length" class="mat-select-trades">Select Trades</mat-label>
                 <mat-select formControlName="selectedTrades" multiple>
                   <div class="display-flex">
-                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Trade"
-                      [(ngModel)]="searchTrade" [ngModelOptions]="{standalone: true}"
-                      (keydown)="$event.stopPropagation()" />
+                    <input
+                      class="p-l-10 p-b-5"
+                      matInput
+                      type="search"
+                      placeholder="Search Trade"
+                      [(ngModel)]="searchTrade"
+                      [ngModelOptions]="{standalone: true}"
+                      (keydown)="$event.stopPropagation()"
+                    />
                     <button mat-button matSuffix mat-icon-button>
                       <mat-icon>search</mat-icon>
                     </button>
@@ -34,8 +38,8 @@
                   <mat-select-trigger>
                     <mat-label class="mat-select-trades">Select Trades</mat-label>
                   </mat-select-trigger>
-                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:['tradeName']" [value]="trade"
-                    selected="trade.isAttatched" (click)="choosenTrade()">{{ trade.tradeName }}
+                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:['tradeName']" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
+                    >{{ trade.tradeName }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -60,17 +64,23 @@
 
                 <ng-template #downloadIconOnly>
                   <span class="cursor-pointer download-bom-template">
-                    <img src="assets/images/download-bom.svg" alt="download" class="img-fluid mr-2 w-45"
-                      (click)="downloadExcel('assets/images/bom_template.xlsx')" />
+                    <img src="assets/images/download-bom.svg" alt="download" class="img-fluid mr-2 w-45" (click)="downloadExcel('assets/images/bom_template.xlsx')" />
                   </span>
                 </ng-template>
-
               </div>
 
               <!-- Upload BOM Link -->
               <div class="mr-3 cursor-pointer ptop-15 upload-bom-excel">
-                <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload cursor-pointer"
-                  style="display: none;" multiple (change)="uploadExcel($event.target.files)" />
+                <input
+                  type="file"
+                  accept=".xlsx"
+                  #fileDropRef
+                  id="fileDropRef"
+                  class="fileupload cursor-pointer"
+                  style="display: none;"
+                  multiple
+                  (change)="uploadExcel($event.target.files)"
+                />
 
                 <ng-container *ngIf="innerWidth > 575; else uploadIconOnly">
                   <label for="fileDropRef" class="cursor-pointer upload-template">
@@ -82,14 +92,15 @@
                 <ng-template #uploadIconOnly>
                   <img src="assets/images/upload-bom.svg" alt="upload" class="img-fluid mr-2 w-45 cursor-pointer" />
                 </ng-template>
-
               </div>
 
               <!-- Add to BOM Button -->
               <div class="add-bom-button">
-                <button mat-raised-button
+                <button
+                  mat-raised-button
                   class="main-background-color main-button color-white pull-right save-material-button"
-                  (click)="saveCategory()" [disabled]="
+                  (click)="saveCategory()"
+                  [disabled]="
                     this.currentIndex == 0
                       ? this.topMaterial && this.topMaterial.quantityForms
                         ? this.topMaterial.quantityForms.invalid
@@ -103,7 +114,8 @@
                         ? this.myMaterial.quantityForms.invalid
                         : true
                       : true
-                  ">
+                  "
+                >
                   Add to BOM
                 </button>
               </div>
@@ -115,11 +127,9 @@
                 </button>
                 <mat-menu #menu="matMenu" class="copy-and-add-materials-menus">
                   <button mat-menu-item (click)="openAddMyMaterial()">Add Custom Material</button>
-                  <button mat-menu-item [routerLink]="['/project-dashboard/bom/' + projectId + '/copy-materials']">Copy
-                    Material</button>
+                  <button mat-menu-item [routerLink]="['/project-dashboard/bom/' + projectId + '/copy-materials']">Copy Material</button>
                 </mat-menu>
               </div>
-
             </div>
           </div>
         </div>
@@ -128,8 +138,7 @@
       <div class="row">
         <div class="col-md-9 display-flex m-t-20 col-left-width-9">
           <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
-            <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }}
-            </mat-card>
+            <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
           </div>
         </div>
 
@@ -149,18 +158,36 @@
       <div *ngIf="showTable">
         <mat-tab-group (selectedTabChange)="tabClick($event)">
           <mat-tab label="Top Materials">
-            <app-bom-topMaterial *ngIf="showTopMaterial" #preview [category]="topMaterialData" [searchMat]="searchAgain"
-              (searchData)="searchData($event)" (inputEntered)="checkValidations($event)">
+            <app-bom-topMaterial
+              *ngIf="showTopMaterial"
+              #preview
+              [category]="topMaterialData"
+              [searchMat]="searchAgain"
+              (searchData)="searchData($event)"
+              (inputEntered)="checkValidations($event)"
+            >
             </app-bom-topMaterial>
           </mat-tab>
           <mat-tab label="All Materials">
-            <app-bom-allMaterial *ngIf="showAllMaterial" #preview1 [category]="allMaterialData"
-              [searchMat]="searchAgain" (searchData)="searchData($event)" (inputEntered)="checkValidationsAll($event)">
+            <app-bom-allMaterial
+              *ngIf="showAllMaterial"
+              #preview1
+              [category]="allMaterialData"
+              [searchMat]="searchAgain"
+              (searchData)="searchData($event)"
+              (inputEntered)="checkValidationsAll($event)"
+            >
             </app-bom-allMaterial>
           </mat-tab>
           <mat-tab label="My Materials">
-            <app-bom-myMaterial *ngIf="showMyMaterial" #preview2 [category]="myMaterialData" [searchMat]="searchAgain"
-              (searchData)="searchData($event)" (inputEntered)="checkValidationsAll($event)"></app-bom-myMaterial>
+            <app-bom-myMaterial
+              *ngIf="showMyMaterial"
+              #preview2
+              [category]="myMaterialData"
+              [searchMat]="searchAgain"
+              (searchData)="searchData($event)"
+              (inputEntered)="checkValidationsAll($event)"
+            ></app-bom-myMaterial>
           </mat-tab>
         </mat-tab-group>
       </div>

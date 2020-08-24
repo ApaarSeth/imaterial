@@ -16,7 +16,6 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDialogModule } from "@angular/material/dialog";
 import { ReviewComponent } from "./review/review.component";
-import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 import { RFQViewComponent } from "./rfq-view/rfq-view.component";
 import { CreateRfqComponent } from "./create-rfq/create-rfq.component";
 import { RfqQuantityMakesComponent } from "./create-rfq/rfq-quantity-makes/rfq-quantity-makes.component";
@@ -41,8 +40,6 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
     MatCheckboxModule,
     MatGridListModule,
     MatDialogModule,
-    FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot(),
     SharedComponentsModule
   ],
   providers: [RFQResolver, CreateRfqResolver],

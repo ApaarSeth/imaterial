@@ -4,7 +4,7 @@ import {
   Resolve,
   RouterStateSnapshot
 } from "@angular/router";
-import { GlobalStoreService } from "src/app/shared/services/global-store/global-store.service";
+import { GlobalStoreService } from "src/app/shared/services/global-store.service";
 
 @Injectable()
 export class GlobalStoreResolver implements Resolve<any> {

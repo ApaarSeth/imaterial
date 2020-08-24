@@ -57,6 +57,9 @@ const routes: Routes = [
     children: [
       {
         path: "auth",
+        resolve: {
+          countryList: CountryResolver
+        },
         loadChildren: () =>
           import("./features/auth/auth.module").then(m => m.AuthModule)
       }

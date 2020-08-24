@@ -1,16 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { ActivatedRoute } from "@angular/router";
-import { ProjectDetails, ProjectIds } from "src/app/shared/models/project-details";
-import { FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { POService } from "src/app/shared/services/po/po.service";
-import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
-import { RfqMaterialResponse, RfqMat, rfqCurrency } from "src/app/shared/models/RFQ/rfq-details";
-import { initiatePoData } from 'src/app/shared/models/PO/po-data';
-import { MatCheckbox, MatDialog } from "@angular/material";
-import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
-import { CommonService } from 'src/app/shared/services/commonService';
+import { MatDialog } from "@angular/material/dialog";
+import { MatCheckbox } from "@angular/material/checkbox";
+import { initiatePoData } from "../../../../shared/models/PO/po-data";
+import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import { ProjectDetails } from "../../../../shared/models/project-details";
+import { RfqMaterialResponse, rfqCurrency, RfqMat } from "../../../../shared/models/RFQ/rfq-details";
+import { POService } from "../../../../shared/services/po.service";
+import { CommonService } from "../../../../shared/services/commonService";
+import { SelectCurrencyComponent } from "../../../../shared/dialogs/select-currency/select-currency.component";
 
 @Component({
   selector: "app-po-project-material",
@@ -22,7 +20,7 @@ export class PoProjectMaterialComponent implements OnInit {
   existingPo: initiatePoData;
   counter: number = 0;
   searchText: string = null;
-  displayedColumns: string[] = [ "Material Name", "Required Date", "Requested Quantity", "Estimated Quantity" ];
+  displayedColumns: string[] = ["Material Name", "Required Date", "Requested Quantity", "Estimated Quantity"];
   form: FormGroup;
   materialForm: FormGroup;
   allProjects: ProjectDetails[];
@@ -40,7 +38,7 @@ export class PoProjectMaterialComponent implements OnInit {
 
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
-    this.allProjects = this.activatedRoute.snapshot.data.inititatePo[ 1 ].data;
+    this.allProjects = this.activatedRoute.snapshot.data.inititatePo[1].data;
     this.formInit();
   }
 
@@ -55,14 +53,14 @@ export class PoProjectMaterialComponent implements OnInit {
 
   formInit() {
     this.form = this.formBuilder.group({
-      selectedProject: [ "", [ Validators.required ] ]
+      selectedProject: ["", [Validators.required]]
     });
   }
 
   materialsForm() {
-    const formArr: FormGroup[] = this.poDetails[ 0 ].projectMaterialList.map(material => {
+    const formArr: FormGroup[] = this.poDetails[0].projectMaterialList.map(material => {
       return this.formBuilder.group({
-        material: [ material.checked ? material : null ]
+        material: [material.checked ? material : null]
       });
     });
     this.materialForm = new FormGroup({});
@@ -72,7 +70,7 @@ export class PoProjectMaterialComponent implements OnInit {
     this.projectIds = this.form.value.selectedProject.projectId;
     this.poService.projectMaterials(this.projectIds).then(res => {
       if (res.data) {
-        this.poDetails = [ ...res.data ];
+        this.poDetails = [...res.data];
         this.poDetails.map((project: RfqMaterialResponse) => {
           let proj = this.getCheckedMaterial(project);
           return proj;
@@ -99,7 +97,7 @@ export class PoProjectMaterialComponent implements OnInit {
           this.selectedProjects.push(project);
         }
       });
-      this.form.get("selectedProject").setValue(this.selectedProjects[ 0 ]);
+      this.form.get("selectedProject").setValue(this.selectedProjects[0]);
       this.checkedProjectList = this.existingPoData.selectedMaterial;
       this.checkedProjectIds = this.existingPoData.selectedMaterial.map(
         (projects: RfqMaterialResponse) => {
@@ -172,7 +170,7 @@ export class PoProjectMaterialComponent implements OnInit {
   }
 
   materialChecked(checked: MatCheckbox, i: number, element) {
-    const arr = this.materialForm.controls[ "formArr" ] as FormArray;
+    const arr = this.materialForm.controls["formArr"] as FormArray;
     const fGrp = arr.at(i) as FormGroup;
 
     if (checked.checked) {

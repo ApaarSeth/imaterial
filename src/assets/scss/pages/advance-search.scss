@@ -22,7 +22,7 @@
     }
     
     .mat-expansion-panel-header{
-        padding: 0 10px;
+        padding: 0 10px 0 0;
         height: 40px !important;
     }
 
@@ -54,6 +54,16 @@
     border:2px solid #f47721 !important;
 }
 
+.drp-inpt{
+    .mat-form-field-flex{
+        display: block !important;
+    }
+
+    .mat-form-field-infix{
+        width: 100% !important;
+    }
+}
+
 .selected-list{
     list-style: none;
     margin: 10px 0px 0px;
@@ -78,11 +88,11 @@
 @media(max-width: 599px){
     .search-block {
         .s-head{
-            padding: 15px 20px;
+            padding: 15px 10px 10px;
         }
         
         .mat-expansion-panel-header {
-            padding: 0 20px;
+            padding: 0 5px 0 0;
         }
 
         .mat-expansion-panel-body{

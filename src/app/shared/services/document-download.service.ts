@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 //import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpClient, HttpHeaders } from '@angular/common/http';
-import { DataService } from "../data.service";
-import { API } from "../../constants/configuration-constants";
-import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
+import { DataService } from "./data.service";
+import { API } from "../constants/configuration-constants";
+import { SendRfqObj } from "../models/RFQ/rfq-details-supplier";
 
 @Injectable({
   providedIn: "root"

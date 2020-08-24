@@ -1,143 +1,160 @@
 <form *ngIf="this.form" [formGroup]="this.form" (ngSubmit)="onSubmit()" autocomplete="off">
-  <div class="row">
-    <span class="col-md-3 col-xs-6 display-flex">
-      <span>
-        <span class="text-semi-bold p-r-5"> Receipt No.-</span>
-        <mat-form-field class="border-input width-50">
+  <div mat-dialog-content>
+
+    <!-- Receipt Number and Receipt Date Fields -->
+    <div class="row">
+      <div class="col-md-4 col-xs-6 display-flex align-items-center receipt-number">
+        <span class="text-semi-bold pr-3"> Receipt No. -</span>
+
+        <mat-form-field class="border-input">
           <input matInput type="string" formControlName="grnNo" placeholder="Receipts No." class="m-r-5" />
-          <small *ngIf="form.get('grnNo').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
+          <small *ngIf="form.get('grnNo').errors?.maxlength" class="warning-color">maximun characters allowed is
+            300</small>
         </mat-form-field>
-      </span>
-    </span>
-    <span class="col-md-3 col-xs-6 display-flex">
-      <span>
-        <span class="text-semi-bold p-r-10"> Date-</span>
-        <mat-form-field class="border-input width-50">
+      </div>
+
+      <div class="col-md-4 col-xs-6 display-flex align-items-center receipt-date">
+        <span class="text-semi-bold p-r-10"> Date -</span>
+
+        <mat-form-field class="border-input">
           <mat-label>Receipt Date*</mat-label>
-          <input #dateinput matInput formControlName="grnDate" [max]="todayDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly />
+          <input #dateinput matInput formControlName="grnDate" [max]="todayDate" [matDatepicker]="endDate"
+            (click)="endDate.open()" readonly />
           <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
           <mat-datepicker #endDate startView="month"></mat-datepicker>
         </mat-form-field>
-      </span>
-    </span>
-  </div>
-
-  <div class="p-t-20">
-    <h4>Supplier's Details</h4>
-    <div class="row">
-      <div class="col-md-3">
-        <mat-form-field class="width-95 border-select mat-form-field-flex-mm-padding label-font-size" [ngClass]="{'width-95': isMobile}">
-          <input type="text" placeholder="Contact Person*" matInput formControlName="supplierName" [matAutocomplete]="auto" />
-          <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
-            <mat-option matTooltip=" {{ option.supplier_name }}" *ngFor="let option of this.filterSupplierName | async" [value]="option">
-              {{ option.supplier_name }}
-            </mat-option>
-          </mat-autocomplete>
-          <small *ngIf="form.get('supplierName').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
-        </mat-form-field>
-      </div>
-
-      <div class="col-md-3 col-xs-12">
-        <mat-form-field class="border-select mat-form-field-flex-mm-padding" [ngClass]="{'width-95': isMobile}">
-          <mat-select formControlName="countryCode">
-            <div class="display-flex">
-              <input
-                class="p-l-10 p-b-5"
-                matInput
-                type="search"
-                placeholder="Search Country"
-                [(ngModel)]="searchCountry"
-                [ngModelOptions]="{standalone: true}"
-                (keydown)="$event.stopPropagation()"
-              />
-              <button mat-button matSuffix mat-icon-button>
-                <mat-icon>search</mat-icon>
-              </button>
-            </div>
-            <mat-select-trigger>
-              <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-                ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-                <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
-                <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
-              </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country"
-              ><span
-                ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
-                <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
-              </span>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-md-3 col-xs-12">
-        <mat-form-field class="border-input" [ngClass]="{'width-95': isMobile}">
-          <input matInput type="text" formControlName="contact" placeholder="Phone No." />
-          <small *ngIf="form.controls['contact'].hasError('pattern') && form.controls['contact'].touched" class="form-error-msg"> Enter Valid Phone No</small>
-        </mat-form-field>
-      </div>
-      <div class="col-md-3 col-xs-12">
-        <mat-form-field class="border-input" [ngClass]="{'width-95': isMobile}">
-          <!-- <label matTooltip=" {{ form.controls['email'].value }}">{{ form.controls["email"].value }}</label> -->
-          <!-- <div class="hiddenTooltip" matTooltipPosition="below" matTooltipClass="my-tooltip" matTooltip="hello" #tooltip="matTooltip"></div> -->
-          <input matInput type="email" formControlName="email" placeholder="Email*" title="{{ form.controls['email'].value }}" />
-          <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="form-error-msg"> Email is required </small>
-          <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="form-error-msg"> Enter Valid Email</small>
-          <small *ngIf="form.get('email').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
-        </mat-form-field>
       </div>
     </div>
-  </div>
-  <div class="row p-t-20">
-    <div class="col-md-5">
-      <mat-card class="width100Percent radius-10 p-t-10">
-        <mat-card-header class="upload-documents-mat-header">
-          <span class="text-semi-bold margin-auto">
-            <app-upload #uploadRef [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"> </app-upload>
-          </span>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-list class="pt-10">
-            <span>
-              <mat-list-item class="row height-100 p-r-0 mat-list-content-padding" *ngFor="let file of documentList; let i = index">
-                <!-- <mat-icon>file_copy</mat-icon> -->
-                <div class="col-md-9 display-flex">
-                  <span>
-                    <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-                    <span class="overflow-anywhere">{{ file.documentName }}</span>
-                  </span>
-                </div>
-                <div class="col-md-3 display-flex">
-                  <span class="show-download">
-                    <span class="p-r-10">
-                      <a type="button" target="_blank" class="width-40 p-r-5" [href]="file.Url" mat-icon-button>
-                        <i class="material-icons">
-                          remove_red_eye
-                        </i>
-                      </a>
-                    </span>
 
-                    <button type="button" class="width-21" (click)="removeFile(i)" mat-icon-button>
-                      <mat-icon class="font-size-16">cancel</mat-icon>
-                    </button>
-                  </span>
-                </div>
-              </mat-list-item>
+    <!-- Supplier details section -->
+    <div class="supplier-details pt-4">
+      <h5>Supplier's Details</h5>
+
+      <div class="row">
+        <div class="col-md-3 col-xs-12">
+          <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding label-font-size"
+            [ngClass]="{'width-95': isMobile}">
+            <input type="text" placeholder="Contact Person*" matInput formControlName="supplierName"
+              [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
+              <mat-option matTooltip=" {{ option.supplier_name }}"
+                *ngFor="let option of this.filterSupplierName | async" [value]="option">
+                {{ option.supplier_name }}
+              </mat-option>
+            </mat-autocomplete>
+            <small *ngIf="form.get('supplierName').errors?.maxlength" class="warning-color">maximun characters allowed
+              is 300</small>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2 col-xs-5">
+          <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding" [ngClass]="{'width-95': isMobile}">
+            <mat-select formControlName="countryCode">
+              <div class="display-flex">
+                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country"
+                  [(ngModel)]="searchCountry" [ngModelOptions]="{standalone: true}"
+                  (keydown)="$event.stopPropagation()" />
+                <button mat-button matSuffix mat-icon-button>
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+              <mat-select-trigger>
+                <span
+                  matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"><img
+                    class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                  <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                  <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
+                </span>
+              </mat-select-trigger>
+              <mat-option
+                *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
+                [value]="country"><span><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                  <span matTooltip="{{ country.name }}"
+                    class="limited-character universal p-r-5">{{ country.name }}</span>
+                  <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
+                </span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3 col-xs-7">
+          <mat-form-field class="w-100 border-input" [ngClass]="{'width-95': isMobile}">
+            <input matInput type="text" formControlName="contact" placeholder="Phone No." />
+            <small *ngIf="form.controls['contact'].hasError('pattern') && form.controls['contact'].touched"
+              class="form-error-msg"> Enter Valid Phone No</small>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4 col-xs-12">
+          <mat-form-field class="w-100 border-input" [ngClass]="{'width-95': isMobile}">
+            <input matInput type="email" formControlName="email" placeholder="Email*"
+              title="{{ form.controls['email'].value }}" />
+            <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
+              class="form-error-msg"> Email is required </small>
+            <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
+              class="form-error-msg"> Enter Valid Email</small>
+            <small *ngIf="form.get('email').errors?.maxlength" class="warning-color">maximun characters allowed is
+              300</small>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Documents and Text Editor Fields-->
+    <div class="row p-t-20">
+      <div class="col-md-5">
+
+        <mat-card class="w-100 p-t-10">
+          <mat-card-header class="upload-documents-mat-header">
+            <span class="text-semi-bold margin-auto">
+              <app-upload #uploadRef [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"
+                [grnResponsive]="isUploadResponsive"> </app-upload>
             </span>
-          </mat-list>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="col-md-7" [ngClass]="{'p-t-20': isMobile}">
-      <angular-editor formControlName="comments" [config]="config"></angular-editor>
+          </mat-card-header>
+
+          <mat-card-content class="uploaded-documents-details">
+            <div class="row align-items-center justify-content-between mt-2" *ngFor="let file of documentList; let i = index">
+              <div class="col-md-9 col-sm-9 col-xs-9">
+                <div class="file-information d-flex align-items-center">
+                  <img class="file-icon" src="../../../../assets/images/file-doc.png" />
+                  <span class="overflow-anywhere">{{ file.documentName }}</span>
+                </div>
+              </div>
+
+              <div class="col-md-3 col-sm-3 col-xs-3">
+                <span class="show-download">
+                  <span class="p-r-10">
+                    <a type="button" target="_blank" class="width-40 p-r-5" [href]="file.Url" mat-icon-button>
+                      <i class="material-icons">
+                        remove_red_eye
+                      </i>
+                    </a>
+                  </span>
+
+                  <button type="button" class="width-21" (click)="removeFile(i)" mat-icon-button>
+                    <mat-icon class="font-size-16">cancel</mat-icon>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-md-7" [class.mt-4]="isUploadResponsive">
+        <angular-editor formControlName="comments" [config]="config"></angular-editor>
+      </div>
     </div>
   </div>
-  <div mat-dialog-actions class="display-flex justify-content-center">
-    <button mat-button matStepperPrevious mat-raised-button type="button" class="main-background-color main-button color-white m-b-5 mb-0">
+
+  <div mat-dialog-actions class="display-flex justify-content-center mt-4">
+    <button mat-button matStepperPrevious mat-raised-button type="button"
+      class="main-background-color main-button color-white m-b-5 mb-0">
       Back
     </button>
-    <button mat-button mat-raised-button [disabled]="form.invalid" class="main-background-color main-button color-white m-b-5 mb-0">
+    <button mat-button mat-raised-button [disabled]="form.invalid"
+      class="main-background-color main-button color-white m-b-5 mb-0">
       Submit
     </button>
   </div>

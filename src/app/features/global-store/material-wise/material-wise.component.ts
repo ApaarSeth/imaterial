@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { getLocaleTimeFormat } from "@angular/common";
-import { GlobalStoreMaterial, GlobalProject } from "src/app/shared/models/GlobalStore/materialWise";
+import { GlobalStoreMaterial } from "src/app/shared/models/GlobalStore/materialWise";
 import { CommonService } from 'src/app/shared/services/commonService';
 
 @Component({
@@ -8,16 +7,19 @@ import { CommonService } from 'src/app/shared/services/commonService';
   templateUrl: "./material-wise.component.html",
   styleUrls: [ "./material-wise.component.scss" ]
 })
+
 export class MaterialWiseComponent implements OnInit {
   @Input("materialData") materialData: GlobalStoreMaterial[];
   @Output("materialDataLength") materialDataLength = new EventEmitter();
   newMaterialData: GlobalStoreMaterial[];
   isMobile: boolean;
+  searchMaterial: string = "";
+  searchProject: string = "";
+
   constructor(
     private commonService: CommonService
   ) { }
-  searchMaterial: string = "";
-  searchProject: string = "";
+  
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
     this.mappingMaterialData();
