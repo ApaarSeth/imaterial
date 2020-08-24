@@ -46,7 +46,6 @@ export class SignupComponent implements OnInit {
   searchCountry: string = '';
   countryList: CountryCode[] = [];
   primaryCallingCode: string = '';
-
   constructor(
     private webNotificationService: WebNotificationService,
     private tokenService: TokenService,
@@ -123,34 +122,31 @@ export class SignupComponent implements OnInit {
   getUserInfo(code) {
     this._userService.getUserInfoUniqueCode(code).then(res => {
       this.user = res.data;
-      this.signupForm.setValue({
-        countryCode: this.signupForm.get('countryCode').value,
-        email: this.user ? this.user.email : '',
-        phone: this.user ? this.user.contactNo : '',
-        organisationName: this.user ? this.user.companyName : '',
-        organisationType: "Contractor",
-        password: "",
-        otp: ""
-      });
+      if (this.user) {
+        this.signupForm.patchValue({
+          email: this.user.email,
+          phone: this.user.contactNo,
+          organisationName: this.user.companyName
+        });
+      }
     });
   }
-  organisationTypes: OrganisationType[] = [
-    { value: "Contractor", viewValue: "Contractor" },
-    { value: "Supplier", viewValue: "Supplier" }
-  ];
+
 
   formInit() {
     this.signupForm = this.formBuilder.group({
       countryCode: [{ value: '', disabled: true }],
-      email: [],
-      phone: [],
+      email: [''],
+      phone: [''],
       organisationName: [{ value: '', disabled: this.organisationDisabled }, [Validators.required, Validators.maxLength(50)]],
       organisationType: ["Contractor", Validators.required],
       password: ["", [Validators.required, Validators.minLength(6)]],
-      otp: []
+      otp: ['']
     });
     this.signupForm.get('email').valueChanges.pipe(debounceTime(30)).subscribe(data => {
-      this.verifyEmail(data)
+      if (data) {
+        this.verifyEmail(data)
+      }
     })
   }
 
