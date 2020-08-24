@@ -1,22 +1,22 @@
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SendRfqObj } from "src/app/shared/models/RFQ/rfq-details-supplier";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { MatDialog, MatSnackBar } from "@angular/material";
+import { RFQService } from "src/app/shared/services/rfq.service";
 import { ConfirmRfqBidComponent } from "src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component";
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { materialize } from 'rxjs/operators';
 import { formatDate, DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Froala } from 'src/app/shared/constants/configuration-constants';
 import { DocumentList, ImageList, ImageDocsLists } from 'src/app/shared/models/PO/po-data';
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
+import { DocumentUploadService } from 'src/app/shared/services/document-download.service';
 import { RFQDocumentsComponent } from '../rfq-bid-documents/rfq-bid-documents.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 interface prevTaxCost {
   dt: any;
@@ -75,12 +75,6 @@ export class RFQSupplierDetailComponent implements OnInit {
     private formBuilder: FormBuilder
   ) { }
 
-  public froala: Object = {
-    placeholder: "Edit Me",
-    imageUpload: false,
-    imageBrowse: false,
-    key: Froala.key
-  }
 
   config: AngularEditorConfig = {
     editable: true,

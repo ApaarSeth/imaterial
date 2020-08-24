@@ -1,18 +1,10 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AllUserDetails, UserDetailsPopUpData } from '../../models/user-details';
-import { UserService } from '../../services/userDashboard/user.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { FormBuilder } from "@angular/forms";
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { ProjectDetails, ProjetPopupData } from '../../models/project-details';
-import { ProjectService } from '../../services/projectDashboard/project.service';
+import { ProjectService } from '../../services/project.service';
 
 export interface City {
   value: string;
@@ -32,7 +24,7 @@ export interface Unit {
   templateUrl: "delete-drafted-po.component.html"
 })
 export class DeleteDraftedPoComponent implements OnInit {
-    projectDetails: ProjectDetails;
+  projectDetails: ProjectDetails;
   orgId: number;
   constructor(
     private userService: UserService,
@@ -40,31 +32,31 @@ export class DeleteDraftedPoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: ProjetPopupData,
     private formBuilder: FormBuilder,
     private router: Router,
-     private projectService: ProjectService
-  ) {}
+    private projectService: ProjectService
+  ) { }
 
   ngOnInit() {
-   
-     this.orgId = Number(localStorage.getItem("orgId"));
+
+    this.orgId = Number(localStorage.getItem("orgId"));
   }
 
-  deleteDraftedPO(){
+  deleteDraftedPO() {
     this.projectDetails = this.data.isDelete
       ? this.data.detail
       : ({} as ProjectDetails);
 
-    if(this.data.isDelete){
+    if (this.data.isDelete) {
       this.projectService.deleteDraftedPo(this.data.detail.purchaseOrderId).then(res => res.data);
     }
   }
 
-  cancel(){
-     this.dialogRef.close({ data: 'data' });
+  cancel() {
+    this.dialogRef.close({ data: 'data' });
   }
 
-  deactivateUser(){
-     this.dialogRef.close(this.deleteDraftedPO());
+  deactivateUser() {
+    this.dialogRef.close(this.deleteDraftedPO());
   }
 
- 
+
 }

@@ -1,17 +1,16 @@
 import { OnInit, Component } from '@angular/core';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/models/user-details';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
-import { debug } from 'util';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { MatSnackBar } from '@angular/material';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { Currency, CountryCode } from 'src/app/shared/models/currency';
-import { PermissionService } from 'src/app/shared/services/permission.service';
-import { permission } from 'src/app/shared/models/permissionObject';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserRoles, UserDetails, TradeList, TurnOverList } from '../../../shared/models/user-details';
+import { Currency, CountryCode } from '../../../shared/models/currency';
+import { permission } from '../../../shared/models/permissionObject';
+import { UserService } from '../../../shared/services/user.service';
+import { PermissionService } from '../../../shared/services/permission.service';
+import { CommonService } from '../../../shared/services/commonService';
+import { DocumentUploadService } from '../../../shared/services/document-download.service';
+import { AppNavigationService } from '../../../shared/services/navigation.service';
+import { FieldRegExConst } from '../../../shared/constants/field-regex-constants';
 
 export interface City {
   value: string;
@@ -48,7 +47,7 @@ export class UpdateInfoComponent implements OnInit {
   OthersId: number;
   imageFileSizeError: string;
   imageFileSizeCheck: boolean = true;
-  fileTypes: string[] = [ 'png', 'jpeg', 'jpg' ];
+  fileTypes: string[] = ['png', 'jpeg', 'jpg'];
   currencyList: Currency[] = [];
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
@@ -57,9 +56,11 @@ export class UpdateInfoComponent implements OnInit {
   countryId: Number;
   countryCode: string;
   validPincode: boolean = false;
-
   isPlanAvailable: any;
-
+  userId: string;
+  selectedCountry: CountryCode;
+  selectedBaseCurrency: Currency
+  dataAvailable: boolean = false;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private permissionService: PermissionService,
@@ -71,83 +72,96 @@ export class UpdateInfoComponent implements OnInit {
 
   ngOnInit() {
     this.role = localStorage.getItem("role");
+    this.userId = localStorage.getItem("userId");
     this.permissionObj = this.permissionService.checkPermission(this.role);
     this.isMobile = this.commonService.isMobile().matches;
     this.countryCode = localStorage.getItem('countryCode')
     this.countryId = Number(localStorage.getItem('countryId'));
     this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
     this.formInit();
-    this.getUserRoles();
-    this.getTradesList();
-    this.getCurrency();
-    this.getCountryCode();
+    this.getAllApi()
   }
-
-  getCurrency() {
-    this.commonService.getCurrency().then(res => {
-      this.currencyList = res.data;
+  getAllApi() {
+    let callingCode = localStorage.getItem('callingCode')
+    Promise.all([this.role !== 'l3' ? this._userService.getRoles() : null
+      , this.role !== 'l3' ? this._userService.getTurnOverList() : null,
+    this.commonService.getCurrency(),
+    this.commonService.getCountry(),
+    this._userService.getUserInfo(this.userId),
+    this._userService.getTrades()
+    ]).then(res => {
+      this.getUserRoles(res[0]);
+      this.getTurnOverList(res[1]);
+      this.getCurrency(res[2])
+      this.getCountry(res[3])
+      this.getUserInformation(res[4])
+      this.getTradesList(res[5])
+      this.dataAvailable = true;
     })
   }
 
-  getCountryCode() {
-    this.commonService.getCountry().then(res => {
-      const userId = localStorage.getItem("userId");
-      this.countryList = res.data;
-      this.getUserInformation(userId);
+  getUserRoles(res) {
+    this.roles = res.data;
+    this.roles.splice(2, 1);
+    const id = this.roles.filter(opt => opt.roleName === this.role);
+    this.roleId = id.length && id[0].roleId;
+  }
+
+  getTurnOverList(res) {
+    if (res) {
+      let callingCode = localStorage.getItem('callingCode')
+      this.turnOverList = res.data.filter(data => {
+        if (callingCode === '+91' && data.isInternational === 0) {
+          return data
+        }
+        else if (callingCode !== '+91' && data.isInternational === 1) {
+          return data
+        }
+      })
+    }
+  }
+
+  getCurrency(res) {
+    this.currencyList = res.data;
+  }
+
+  getCountry(res) {
+    this.countryList = res.data;
+  }
+
+  getUserInformation(res) {
+    if (!localStorage.getItem('countryId')) {
+      this.countryId = res.data.countryId;
+      localStorage.setItem('countryId', res.data.countryId)
+    }
+    this.users = res.data ? res.data : null;
+    localStorage.setItem('isPlanAvailable', this.users.isPlanAvailable);
+    if (this.users.roleName === 'l1') {
+      this.userInfoForm.controls.turnOverId.setValidators([Validators.required]);
+      this.userInfoForm.controls.turnOverId.updateValueAndValidity();
+    }
+    this.userInfoPatch();
+    this.setCountryAndCurrency()
+  }
+
+  setCountryAndCurrency() {
+    this.livingCountry = this.countryList.filter(val => {
+      return val.countryId === Number(this.users.countryId);
     })
-  }
-
-  get selectedCountry() {
-    return this.userInfoForm.get('countryCode').value;
-  }
-
-  get selectedBaseCurrency() {
-    return this.userInfoForm.get('baseCurrency').value;
-  }
-
-  getUserRoles() {
-    this._userService.getRoles().then(res => {
-      this.roles = res.data;
-      this.roles.splice(2, 1);
-      const id = this.roles.filter(opt => opt.roleName === this.role);
-      this.roleId = id.length && id[ 0 ].roleId;
+    let newCurrencyList: Currency[] = [];
+    newCurrencyList = this.currencyList.filter(val => {
+      return val.currencyId === Number(this.livingCountry[0].countryId)
     })
-  }
-
-  getUserInformation(userId) {
-    this._userService.getUserInfo(userId).then(res => {
-      if (!localStorage.getItem('countryId')) {
-        this.countryId = res.data[ 0 ].countryId;
-        localStorage.setItem('countryId', res.data[ 0 ].countryId)
-      }
-      this.users = res.data ? res.data[ 0 ] : null;
-      localStorage.setItem('isPlanAvailable', this.users.isPlanAvailable);
-      if (this.users.roleName === 'l1') {
-        this.userInfoForm.controls.turnOverId.setValidators([ Validators.required ]);
-        this.userInfoForm.controls.turnOverId.updateValueAndValidity();
-      }
-      if (this.countryList) {
-        this.livingCountry = this.countryList.filter(val => {
-          return val.countryId === this.users.countryId
-        })
-      }
-      let newcurrencyList: Currency[] = [];
-      if (this.livingCountry.length) {
-        newcurrencyList = this.currencyList.filter(val => {
-          return val.countryId === Number(this.livingCountry[ 0 ].countryId)
-        })
-      }
-      this.userInfoPatch();
-      this.getTurnOverList();
-
-      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[ 0 ] : null)
-    });
+    this.userInfoForm.get('baseCurrency').setValue(newCurrencyList[0])
+    this.userInfoForm.get('countryCode').setValue(this.livingCountry[0])
+    this.selectedCountry = this.userInfoForm.get('countryCode').value;
+    this.selectedBaseCurrency = this.userInfoForm.get('baseCurrency').value;
   }
 
   userInfoPatch() {
     this.userInfoForm.patchValue({
       baseCurrency: '',
-      countryCode: this.livingCountry[ 0 ] ? this.livingCountry[ 0 ] : null,
+      countryCode: this.livingCountry[0] ? this.livingCountry[0] : null,
       organizationName: this.users.organizationName,
       organizationId: this.users.organizationId,
       firstName: this.users.firstName,
@@ -159,69 +173,56 @@ export class UpdateInfoComponent implements OnInit {
       userId: this.users.userId,
       roleDescription: this.users.roleDescription,
       ssoId: this.users.ssoId,
-      countryId: this.livingCountry[ 0 ] ? this.livingCountry[ 0 ].countryId : null,
+      countryId: this.livingCountry[0] ? this.livingCountry[0].countryId : null,
       trade: '',
       profileUrl: '',
       orgPincode: '',
     })
   }
 
-  getTurnOverList() {
-    if (this.users.roleName !== "l3") {
-      this._userService.getTurnOverList().then(res => {
-        let callingCode = localStorage.getItem('callingCode')
-        this.turnOverList = res.data.filter(data => {
-          if (callingCode === '+91' && data.isInternational === 0) {
-            return data
-          }
-          else if (callingCode !== '+91' && data.isInternational === 1) {
-            return data
-          }
-        })
-      })
-    }
-  }
 
-  getTradesList() {
-    this._userService.getTrades().then(res => {
-      this.tradeList = res.data;
-      if (res.data) {
-        res.data.forEach(element => {
-          if (element.tradeName == 'Others') {
-            this.OthersId = element.tradeId;
-          }
-        });
-      }
-    })
+  getTradesList(res) {
+    this.tradeList = res.data;
+    if (res.data) {
+      res.data.forEach(element => {
+        if (element.tradeName == 'Others') {
+          this.OthersId = element.tradeId;
+        }
+      });
+    }
   }
 
   formInit() {
     this.userInfoForm = this._formBuilder.group({
-      baseCurrency: [ { value: '', disabled: this.permissionObj.rfqFlag ? false : true } ],
-      countryCode: [ { value: '', disabled: this.permissionObj.rfqFlag ? false : true } ],
+      baseCurrency: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
+      countryCode: [{ value: '', disabled: this.permissionObj.rfqFlag ? false : true }],
       organizationName: [],
       organizationId: [],
-      firstName: [ '', Validators.required ],
-      lastName: [ '', Validators.required ],
-      email: [ { value: '', disabled: this.countryCode !== "IN" ? true : false }, [ Validators.required, Validators.pattern(FieldRegExConst.EMAIL) ] ],
-      contactNo: [ { value: '', disabled: this.countryCode === "IN" ? true : false } ],
-      roleId: [ '', Validators.required ],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: [{ value: '', disabled: this.countryCode !== "IN" ? true : false }, [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
+      contactNo: [{ value: '', disabled: this.countryCode === "IN" ? true : false }],
+      roleId: ['', Validators.required],
       turnOverId: [],
       userId: [],
-      roleDescription: [ { value: '', disabled: true } ],
+      roleDescription: [{ value: '', disabled: true }],
       ssoId: [],
       countryId: [],
       trade: [],
-      profileUrl: [ '' ],
-      orgPincode: [ '', [ Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS) ] ]
+      profileUrl: [''],
+      orgPincode: ['', [Validators.max(999999), Validators.pattern(FieldRegExConst.POSITIVE_NUMBERS)]]
     });
 
     if (this.countryCode === "IN") {
-      this.userInfoForm.get('contactNo').setValidators([ Validators.required ])
+      this.userInfoForm.get('contactNo').setValidators([Validators.required])
     }
     this.customTrade = this._formBuilder.group({
       trade: []
     })
+    this.userInfoForm.get('baseCurrency').valueChanges.subscribe(currency => {
+      this.selectedBaseCurrency = currency;
+    })
+
     this.userInfoForm.get('countryCode').valueChanges.subscribe(country => {
       let newcurrencyList: Currency[] = [];
       if (country) {
@@ -229,8 +230,10 @@ export class UpdateInfoComponent implements OnInit {
           return val.countryId === Number(country.countryId)
         })
       }
-      this.countryId = newcurrencyList.length ? newcurrencyList[ 0 ].countryId : this.countryId;
-      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[ 0 ] : null)
+      this.countryId = newcurrencyList.length ? newcurrencyList[0].countryId : this.countryId;
+      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[0] : null)
+      this.selectedBaseCurrency = this.userInfoForm.get('baseCurrency').value;
+      this.selectedCountry = country;
     })
     this.userInfoForm.get('orgPincode').valueChanges.subscribe(val => {
       this.cityStateFetch(val)
@@ -240,8 +243,8 @@ export class UpdateInfoComponent implements OnInit {
   cityStateFetch(value) {
     this.commonService.getPincodeInternational(value, Number(this.countryId)).then(res => {
       if (res.data && res.data.length) {
-        let city = res.data[ 0 ].districtName;
-        let state = res.data[ 0 ].stateName;
+        let city = res.data[0].districtName;
+        let state = res.data[0].stateName;
         if (city && state)
           this.validPincode = true;
         else
@@ -269,7 +272,7 @@ export class UpdateInfoComponent implements OnInit {
   //   }
   // }
 
-  changeSelected(parameter: string, trade: TradeList) {
+  changeSelected(trade: TradeList) {
     let choosenIndex = -1;
     this.selectedTrades.forEach((trades, index) => {
       if (trades.tradeId === trade.tradeId) {
@@ -293,10 +296,10 @@ export class UpdateInfoComponent implements OnInit {
   onFileSelect(event) {
     if (event.target.files.length > 0) {
       var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[ 0 ]);
-      const file = event.target.files[ 0 ];
-      var fileSize = event.target.files[ 0 ].size; // in bytes
-      let fileType = event.target.files[ 0 ].name.split('.').pop();
+      reader.readAsDataURL(event.target.files[0]);
+      const file = event.target.files[0];
+      var fileSize = event.target.files[0].size; // in bytes
+      let fileType = event.target.files[0].name.split('.').pop();
 
       if (this.fileTypes.some(element => {
         return element === fileType
@@ -318,7 +321,7 @@ export class UpdateInfoComponent implements OnInit {
         this.localImg = '';
         this._snackBar.open("We don't support " + fileType + " in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
           duration: 2000,
-          panelClass: [ "success-snackbar" ],
+          panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
       }
@@ -345,9 +348,7 @@ export class UpdateInfoComponent implements OnInit {
         }
         return trade;
       })
-      // this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
-      this.userInfoForm.get('trade').setValue([ ...this.selectedTrades ]);
-      // this.userInfoForm.value.tradeId = [...this.selectedTrades];
+      this.userInfoForm.get('trade').setValue([...this.selectedTrades]);
       let countryCode = null;
       if (this.users.roleName === "l3") {
         countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
@@ -376,16 +377,15 @@ export class UpdateInfoComponent implements OnInit {
         localStorage.setItem('accountOwner', res.data.accountOwner);
         if (this.users.roleName === 'l1') {
           if (res.data.isPlanAvailable === 1) {
-            this._router.navigate([ 'profile/subscriptions' ]);
+            this._router.navigate(['profile/subscriptions']);
           } else {
-            this._router.navigate([ 'profile/add-user' ]);
+            this._router.navigate(['profile/add-user']);
           }
         }
         else if (this.users.roleName != 'l1') {
-          this._router.navigate([ 'dashboard' ]);
+          this._router.navigate(['dashboard']);
         }
       });
     }
   }
-
 }

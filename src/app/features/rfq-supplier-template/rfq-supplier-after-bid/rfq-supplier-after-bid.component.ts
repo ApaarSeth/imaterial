@@ -1,16 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { SendRfqObj } from "src/app/shared/models/RFQ/rfq-details-supplier";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { MatDialog } from '@angular/material';
+import { RFQService } from "src/app/shared/services/rfq.service";
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmRfqBidComponent } from 'src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component';
 @Component({
   selector: "rfq-supplier-after-bid",
-  templateUrl: "./rfq-supplier-after-bid.component.html",
-  styleUrls: [
-    "../../../../assets/scss/main.scss",
-    "../../../../assets/scss/pages/rfq-bids.component.scss"
-  ]
+  templateUrl: "./rfq-supplier-after-bid.component.html"
 })
 export class RFQSupplierAfterBidComponent implements OnInit {
 

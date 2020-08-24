@@ -46,9 +46,10 @@
             </div>
 
             <div class="row bom-details-table-div-part example-container mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="col-sm-12 bom-material-table">
+                <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="col-sm-12 bom-material-table">
+                    
                     <ng-container matColumnDef="materialName">
-                        <th *matHeaderCellDef class="bom-material-name-col">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="bom-material-name-col">
                             <mat-checkbox #allCh (change)="getElemenetChecked(allCh, dataSource, 'SelectAll')">
                                 Material Name
                             </mat-checkbox>
@@ -70,8 +71,8 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="unit">
-                        <th *matHeaderCellDef class="text-align-center justify-center">
+                    <ng-container matColumnDef="materialUnit">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center">
                             Unit
                         </th>
                         <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -81,7 +82,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="estimatedQty">
-                        <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">
                             Estimated Quantity
                         </th>
                         <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -90,8 +91,8 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="unitRate">
-                        <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
+                    <ng-container matColumnDef="estimatedRate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">
                             Unit Rate (INR)
                         </th>
                         <td class="text-align-center" mat-cell *matCellDef="let element"

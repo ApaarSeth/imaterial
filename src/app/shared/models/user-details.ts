@@ -109,6 +109,9 @@ export interface UserDetails {
   trade: orgTrades[];
   myAccountUpdate: boolean;
   isPlanAvailable?: any;
+  appTermsAndCondition?: boolean;
+  isFreeTrialSubscription?: number;
+  isActiveSubscription?: number;
 }
 
 export interface TradeList {

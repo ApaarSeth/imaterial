@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BomService } from 'src/app/shared/services/bom/bom.service';
-import { MatDialog } from '@angular/material';
+import { BomService } from 'src/app/shared/services/bom.service';
+import { MatDialog } from '@angular/material/dialog';
 import { AddMyMaterialComponent } from 'src/app/shared/dialogs/add-my-material/add-my-material.component';
 import { Subject } from 'rxjs';
 import { CommonService } from '../../shared/services/commonService';

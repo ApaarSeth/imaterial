@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: "supplier-rating-dialog",
@@ -20,7 +20,7 @@ export class SupplierRatingComponent implements OnInit {
   ngOnInit() {
     this.supplierId = this.data.supplierId;
   }
-  
+
   closeDialog() {
     this.dialogRef.close('closed');
   }
@@ -29,7 +29,7 @@ export class SupplierRatingComponent implements OnInit {
     this.rating = rating;
   }
 
-  ratingSubmission(){
+  ratingSubmission() {
     this.dialogRef.close(this.rating);
   }
 

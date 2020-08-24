@@ -21,15 +21,15 @@ export class ReportService {
         return this.dataService.sendPostRequest(API.SUPPLIERLIABILITYREPORT, data)
     }
 
-    getCTCReportData(projectIds){
+    getCTCReportData(projectIds) {
         return this.dataService.sendPostRequest(API.CTC_REPORT, projectIds);
     }
 
-    supplierLiabilityExcelDownload(data){
+    supplierLiabilityExcelDownload(data) {
         return this.dataService.sendPostRequest(API.SUPPLIER_LIABILITY_EXCEL_DOWNLOAD, data);
     }
 
-    ctcReportExcelDownload(data){
+    ctcReportExcelDownload(data) {
         return this.dataService.sendPostRequest(API.CTC_REPORT_EXCEL_DOWNLOAD, data);
     }
 }

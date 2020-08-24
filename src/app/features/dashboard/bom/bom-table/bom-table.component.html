@@ -43,12 +43,12 @@
     </div>
 
     <div class="row bom-details-table-div-part example-container mat-elevation-z8" [ngClass]="isMobile ? 'ml-0' : ''">
-      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="col-sm-12 bom-material-table">
+      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="col-sm-12 bom-material-table">
         <ng-container matColumnDef="materialName">
-          <th *matHeaderCellDef class="first-column-row-header">
+          <th mat-header-cell *matHeaderCellDef class="first-column-row-header" mat-sort-header>
             Material Name
           </th>
-          <td class="text-left" mat-cell *matCellDef="let element"
+          <td mat-cell class="text-left" *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
             <mat-checkbox #ch (change)="getElemenetChecked(ch, element)" [checked]="element.checked"
               [disabled]="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false">
@@ -63,8 +63,8 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="unit">
-          <th *matHeaderCellDef class="text-align-center justify-center">
+        <ng-container matColumnDef="materialUnit">
+          <th *matHeaderCellDef class="text-align-center justify-center" mat-header-cell mat-sort-header>
             Unit
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -72,8 +72,9 @@
             {{ element.materialUnit }}
           </td>
         </ng-container>
+
         <ng-container matColumnDef="estimatedQty">
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
+          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>
             Estimated Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -81,8 +82,9 @@
             {{ element.estimatedQty }}
           </td>
         </ng-container>
+
         <ng-container matColumnDef="estimatedRate">
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
+          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>
             Estimated Rate
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -90,8 +92,9 @@
             {{ element.estimatedRate }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="indentedQuantity">
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
+
+        <ng-container matColumnDef="requestedQuantity">
+          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>
             Requested Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -99,8 +102,9 @@
             {{ element.requestedQuantity }}
           </td>
         </ng-container>
+
         <ng-container matColumnDef="issueToProject">
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
+          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>
             Issued To Project
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -110,9 +114,10 @@
             <ng-template #showZEroDataIP> 0 </ng-template>
           </td>
         </ng-container>
+
         <ng-container matColumnDef="availableStock">
           <th *matHeaderCellDef [hidden]="!permissionObj.rfqFlag"
-            class="text-align-center justify-center minwidth-110-px">
+            class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>
             Available In Stock
           </th>
           <td class="text-align-center" mat-cell [hidden]="!permissionObj.rfqFlag" *matCellDef="let element"
@@ -273,6 +278,7 @@
             </div>
           </td>
         </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
         <tr mat-row *matRowDef="let element; columns: columnsToDisplay" (click)="toggleRow(element)"></tr>
       </table>

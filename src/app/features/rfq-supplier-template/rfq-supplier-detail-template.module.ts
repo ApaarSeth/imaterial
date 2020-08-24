@@ -11,7 +11,6 @@ import { RFQSupplierAfterBidComponent } from './rfq-supplier-after-bid/rfq-suppl
 import { RFQSupplierAddAddressComponent } from './rfq-supplier-add-address/rfq-supplier-add-address.component';
 import { RFQDocumentsComponent } from './rfq-bid-documents/rfq-bid-documents.component';
 import { AppSharedModule } from 'src/app/shared/app-shared-module';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 

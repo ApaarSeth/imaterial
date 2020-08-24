@@ -10,7 +10,7 @@ import { ViewGRNComponent } from "./view-grn/view-grn.component";
 import { AddGRNComponent } from "./add-grn/add-grn.component";
 import { InitiatePoComponent } from "./initiate-po/initiate-po.component";
 import { ViewGrnResolver } from "./add-grn/resolver/get-grn.resolver";
-import { CountryResolver } from 'src/app/shared/resolver/country.resolver';
+import { CountryResolver } from "../../shared/resolver/country.resolver";
 
 const routes: Routes = [
   {
@@ -43,6 +43,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ CommonModule, RouterModule.forChild(routes) ]
+  imports: [CommonModule, RouterModule.forChild(routes)]
 })
 export class PORoutingModule { }

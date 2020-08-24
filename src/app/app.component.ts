@@ -3,9 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FacebookPixelService } from './shared/services/fb-pixel.service';
 import { SwPush, SwUpdate } from '@angular/service-worker';
 import { WebNotificationService } from './shared/services/webNotificationService.service';
-import { Visitor } from '@angular/compiler/src/render3/r3_ast';
 import { VisitorService } from './shared/services/visitor.service';
-import { API } from './shared/constants/configuration-constants';
 
 @Component({
   selector: "app-root",

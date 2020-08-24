@@ -1,8 +1,8 @@
-import {Component, OnInit, Inject} from "@angular/core";
-import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
-import {POService} from "../../services/po/po.service";
-import {POData, ApproverData} from "../../models/PO/po-data";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import { Component, OnInit, Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { POService } from "../../services/po.service";
+import { POData, ApproverData } from "../../models/PO/po-data";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "select-supplier-dialog",
@@ -12,7 +12,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 export class SelectPoRoleComponent implements OnInit {
   displayedColumns: string[] = ["User Name", "Role", "Email", "Phone"];
   orgId: number;
-  constructor(private poService: POService, private dialogRef: MatDialogRef<SelectPoRoleComponent>, @Inject(MAT_DIALOG_DATA) public data, private formBuilder: FormBuilder) {}
+  constructor(private poService: POService, private dialogRef: MatDialogRef<SelectPoRoleComponent>, @Inject(MAT_DIALOG_DATA) public data, private formBuilder: FormBuilder) { }
   approverFrm: FormGroup;
   approverData: ApproverData[] = [];
   selectedApprover: ApproverData;
@@ -40,7 +40,7 @@ export class SelectPoRoleComponent implements OnInit {
   selectRole() {
     this.dialogRef.close([this.data.roleType, this.approverFrm.value]);
   }
-  closeDialog(){
+  closeDialog() {
     this.dialogRef.close();
   }
 }

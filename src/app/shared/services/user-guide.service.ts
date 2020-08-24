@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 //import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { DataService } from "../data.service";
-import { API } from "../../constants/configuration-constants";
-import { ProjectIds } from "../../models/project-details";
-import { RfqProjectSubmit } from "../../models/RFQ/rfqBids";
-import { Suppliers } from "../../models/RFQ/suppliers";
-import { AddRFQ } from "../../models/RFQ/rfq-details";
-import { SendRfqObj } from "../../models/RFQ/rfq-details-supplier";
+import { DataService } from "./data.service";
+import { API } from "../constants/configuration-constants";
+import { ProjectIds } from "../models/project-details";
+import { RfqProjectSubmit } from "../models/RFQ/rfqBids";
+import { Suppliers } from "../models/RFQ/suppliers";
+import { AddRFQ } from "../models/RFQ/rfq-details";
+import { SendRfqObj } from "../models/RFQ/rfq-details-supplier";
 
 @Injectable({
   providedIn: "root"

@@ -1,5 +1,4 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
@@ -9,11 +8,13 @@ import {
 
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AllUserDetails, UserDetailsPopUpData } from '../../models/user-details';
-import { UserService } from '../../services/userDashboard/user.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { POService } from '../../services/po/po.service';
-import { RFQService } from '../../services/rfq/rfq.service';
+import { POService } from '../../services/po.service';
+import { RFQService } from '../../services/rfq.service';
 import { AppNavigationService } from '../../services/navigation.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export interface City {
   value: string;

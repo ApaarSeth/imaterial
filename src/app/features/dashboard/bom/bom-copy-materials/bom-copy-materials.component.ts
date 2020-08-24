@@ -2,11 +2,13 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
 import { trigger, state, style, transition, animate } from "@angular/animations";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { ProjectDetails, } from "src/app/shared/models/project-details";
-import { MatDialog, MatCheckbox } from "@angular/material";
-import { BomService } from "src/app/shared/services/bom/bom.service";
-import { Subcategory, Materials } from "src/app/shared/models/subcategory-materials";
+import { MatDialog } from "@angular/material/dialog";
+import { MatCheckbox } from "@angular/material/checkbox";
+import { MatSort } from '@angular/material/sort';
+import { ProjectDetails } from "../../../../shared/models/project-details";
+import { Subcategory, Materials } from "../../../../shared/models/subcategory-materials";
+import { ProjectService } from "../../../../shared/services/project.service";
+import { BomService } from "../../../../shared/services/bom.service";
 
 @Component({
     selector: "bom-copy-materials",
@@ -22,8 +24,8 @@ import { Subcategory, Materials } from "src/app/shared/models/subcategory-materi
 export class BomCopyMaterialComponent implements OnInit {
     projectId: number;
     projectData = {} as ProjectDetails;
-    columnsToDisplay = ["materialName", 'unit', "estimatedQty", "unitRate"];
-    innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "unitRate"];
+    columnsToDisplay = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate"];
+    innerDisplayedColumns = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate"];
     dataSource: MatTableDataSource<Subcategory>;
     sortedData: MatTableDataSource<Subcategory>;
     expandedElement: Subcategory | null;
@@ -36,6 +38,7 @@ export class BomCopyMaterialComponent implements OnInit {
     @ViewChild('allCh', { static: false }) allCh;
     searchText: string = null;
     selectProjectType: string;
+    @ViewChild(MatSort, {static: false}) sort: MatSort;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -85,8 +88,19 @@ export class BomCopyMaterialComponent implements OnInit {
     getProjectMaterials(projectId?: number, type?: string) {
         this.selectProjectType = type;
         this.bomService.getMaterialWithQuantity(this.orgId, projectId).then(res => {
-            this.projectMaterialsList = res.data;
-            this.dataSource = new MatTableDataSource(res.data);
+            if(res.data){
+                this.projectMaterialsList = res.data;
+                this.dataSource = new MatTableDataSource(res.data);
+                setTimeout(() => {
+                    this.dataSource.sort = this.sort;
+                    this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+                        if (typeof data[sortHeaderId] === 'string') {
+                        return data[sortHeaderId].toLocaleLowerCase();
+                        }  
+                        return data[sortHeaderId];
+                    };
+                });
+            }
         })
     }
 

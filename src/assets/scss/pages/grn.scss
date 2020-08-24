@@ -137,11 +137,11 @@ $mat-row-horizontal-padding: 12px;
     padding: 0;
   }
 
-  .backgound-project{
+  .backgound-project {
     background-color: #fff !important;
   }
 
-  .background-grn{
+  .background-grn {
     background-color: #e0e3ec !important;
     .material-row {
       background-color: #e0e3ec !important;
@@ -150,18 +150,18 @@ $mat-row-horizontal-padding: 12px;
     }
   }
 
-  .mat-expansion-panel-header.background-grn.mat-expanded:focus, 
-  .mat-expansion-panel-header.background-grn.mat-expanded:hover{
+  .mat-expansion-panel-header.background-grn.mat-expanded:focus,
+  .mat-expansion-panel-header.background-grn.mat-expanded:hover {
     background-color: #e0e3ec !important;
   }
 
-  .mat-expansion-indicator:after{
+  .mat-expansion-indicator:after {
     padding: 6px;
   }
 }
 
 /** css to make receipt page grn detail row's column aligned **/
-.grn-material-row{
+.grn-material-row {
   .mat-cell.grn-name-cell,
   .mat-cell.po-number-cell {
     flex: 0 0 152px;
@@ -174,19 +174,60 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
-.add-receipts-panel{
-  .mat-expansion-panel-header{
+.add-receipts-panel {
+  .mat-expansion-panel-header {
     padding: 0 12px;
   }
 
-  .mat-expansion-indicator:after{
+  .mat-expansion-indicator:after {
     padding: 6px;
   }
 }
 
-.inactive-receipt-docs{
+.inactive-receipt-docs {
   pointer-events: none;
-  img{
+  img {
     opacity: 0.5;
+  }
+}
+
+.receipt-unit{
+  width: 80px;
+}
+
+.receipt-brand-name,
+.receipt-awarded-qty,
+.receipt-delivered-qty{
+  width: 100px;
+}
+
+.receipt-delivered-date {
+  width: 150px;
+  .mat-form-field-infix {
+    width: 100px;
+  }
+}
+
+.receipt-received-qty {
+  padding-right: 12px !important;
+  width: 130px;
+  .mat-form-field-infix {
+    width: 130px;
+  }
+}
+
+.receipt-material-name{
+  padding-left: 12px !important;
+}
+
+@media only screen and (max-width: 462px){
+  .grn-dashboard{
+    .po-number-grn{
+      margin: 0 0 10px 0;
+    }
+  }
+
+  .add-edit-receipts .grn-first-row{
+      padding-top: 0px !important;
   }
 }

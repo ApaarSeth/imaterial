@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { AddCommentDialogComponent } from "src/app/shared/dialogs/add-comment/comment-dialog.component";
 import { ViewDocumentsDialogComponent } from "src/app/shared/dialogs/view-documents/view-documents-dialog.component";
 import {
@@ -8,13 +8,13 @@ import {
 } from "src/app/shared/models/RFQ/rfq-details";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { RFQService } from "src/app/shared/services/rfq.service";
 import { AddRFQConfirmationComponent } from "src/app/shared/dialogs/add-rfq-confirmation/add-rfq-double-confirmation.component";
 import { DocumentList } from "src/app/shared/models/PO/po-data";
 import { Router, ActivatedRoute } from "@angular/router";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { CommonService } from 'src/app/shared/services/commonService';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { UserGuideService } from 'src/app/shared/services/user-guide.service';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 

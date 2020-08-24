@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import {
   FormBuilder,
   FormGroup,
@@ -12,9 +12,9 @@ import {
   AllUserDetails,
   UserDetailsPopUpData
 } from "../../models/user-details";
-import { UserService } from "../../services/userDashboard/user.service";
+import { UserService } from "../../services/user.service";
 import { Router } from "@angular/router";
-import { BomService } from "../../services/bom/bom.service";
+import { BomService } from "../../services/bom.service";
 
 export interface City {
   value: string;
@@ -40,9 +40,9 @@ export class DeleteBomComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   deactivateBomService() {
     this.bomService

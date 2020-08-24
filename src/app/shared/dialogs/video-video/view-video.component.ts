@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import { UserDetailsPopUpData } from '../../models/user-details';
 import { Router } from '@angular/router';
-import { ProjectService } from '../../services/projectDashboard/project.service';
+import { ProjectService } from '../../services/project.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Video } from "../../models/video";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "view-video-dialog",

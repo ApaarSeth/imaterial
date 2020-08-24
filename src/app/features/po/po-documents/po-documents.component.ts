@@ -6,11 +6,11 @@ import {
   Input,
   SimpleChanges
 } from "@angular/core";
-import { DocumentUploadService } from "src/app/shared/services/document-download/document-download.service";
+import { DocumentUploadService } from "src/app/shared/services/document-download.service";
 import { DocumentList } from "src/app/shared/models/PO/po-data";
 import { first } from "rxjs/operators";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-po-documents",
@@ -53,49 +53,49 @@ export class PoDocumentsComponent implements OnInit {
       const data = new FormData();
       const fileArr: File[] = [];
       data.append(`file`, this.docs[0]);
-      if(!(this.documentList.some(element => {
-       return element.documentName == this.docs[0].name;
-      }))){
-          return this.documentUploadService.postDocumentUpload(data).then(res => {
-        this.filesRemoved = false;
-        let name: string = res.data;
-        let firstName: number = res.data.fileName.indexOf("_");
-        let subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
-        this.documentsName.push(subFileName);
-        this.documentList.push({
-          documentType: "PO",
-          DocumentDesc: subFileName,
-          DocumentUrl: res.data.fileName,
-          documentName: subFileName,
-          Url: res.data.url
-        });
-        this.documentListLength = this.documentList.length;
-        subFileName = "";
-        this.filesRemoved = true;
-        
-        this._snackBar.open("File has been successfully uploaded", "", {
+      if (!(this.documentList.some(element => {
+        return element.documentName == this.docs[0].name;
+      }))) {
+        return this.documentUploadService.postDocumentUpload(data).then(res => {
+          this.filesRemoved = false;
+          let name: string = res.data;
+          let firstName: number = res.data.fileName.indexOf("_");
+          let subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
+          this.documentsName.push(subFileName);
+          this.documentList.push({
+            documentType: "PO",
+            DocumentDesc: subFileName,
+            DocumentUrl: res.data.fileName,
+            documentName: subFileName,
+            Url: res.data.url
+          });
+          this.documentListLength = this.documentList.length;
+          subFileName = "";
+          this.filesRemoved = true;
+
+          this._snackBar.open("File has been successfully uploaded", "", {
             duration: 2000,
             panelClass: ["success-snackbar"],
             verticalPosition: "bottom"
           });
-    
-      }).catch(err => {
-        this.filesRemoved = true;
-        this.docs = null;
-        this._snackBar.open(
-          err.error.message,
-          "",
-          {
-            duration: 4000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          }
-        );
-      });
+
+        }).catch(err => {
+          this.filesRemoved = true;
+          this.docs = null;
+          this._snackBar.open(
+            err.error.message,
+            "",
+            {
+              duration: 4000,
+              panelClass: ["warning-snackbar"],
+              verticalPosition: "bottom"
+            }
+          );
+        });
       }
-      else{
-         this._snackBar.open(
-         'Duplicate files are not allowed',
+      else {
+        this._snackBar.open(
+          'Duplicate files are not allowed',
           "",
           {
             duration: 4000,
