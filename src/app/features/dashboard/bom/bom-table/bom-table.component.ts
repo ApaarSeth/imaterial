@@ -240,7 +240,8 @@ export class BomTableComponent implements OnInit {
   openGrnDialog() {
     const dialogRef = this.dialog.open(AddGrnComponent, {
       width: "1000px",
-      data: this.projectId
+      data: this.projectId,
+      panelClass: 'add-receipt-via-system'
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res === 'success') {
