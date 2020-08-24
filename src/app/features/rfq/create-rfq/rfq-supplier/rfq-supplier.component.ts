@@ -141,16 +141,11 @@ export class RfqSupplierComponent implements OnInit {
   }
 
   supplierAdded() {
-    this.rfqData.supplierId = this.supplierForm.value.forms.map(supplier => {
-      if (supplier.supplier) {
-        return supplier.supplier.supplierId;
-      }
-    });
-    this.rfqData.supplierId = this.rfqData.supplierId.filter(supplierId => {
-      if (supplierId) {
-        return supplierId;
-      }
-    });
+    this.rfqData.supplierId = this.supplierForm.value.forms.filter(supplier => {
+      return supplier.supplier != null
+    }).map(supplier => {
+      return supplier.supplier.supplierId;
+    })
   }
 
   changeRfq() {
