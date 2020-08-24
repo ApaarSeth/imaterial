@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { AdvSearchConfig, AdvSearchOption, AdvSearchData } from './../../../shared/models/adv-search.model';
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { ProjectDetails, ProjetPopupData } from "../../../shared/models/project-details";
 import { AllIndentListVO, IndentVO } from "../../../shared/models/indent";
-import { Subscription } from "rxjs";
+import { forkJoin } from "rxjs";
 import { ProjectService } from "../../../shared/services/project.service";
 import { AdvanceSearchService } from "../../../shared/services/advance-search.service";
 import { IndentService } from "../../../shared/services/indent.service";
@@ -23,7 +24,7 @@ export interface IndentData {
   selector: "app-indent-detail",
   templateUrl: "./indent-detail.component.html"
 })
-export class IndentDetailComponent implements OnInit, OnDestroy {
+export class IndentDetailComponent implements OnInit {
   product: ProjectDetails;
   projectId: number;
 
@@ -40,9 +41,9 @@ export class IndentDetailComponent implements OnInit, OnDestroy {
   dataSource2: IndentVO[];
   orgId: number;
   isMobile: boolean;
-  susbcriptions: Subscription[] = [];
   isFilter: boolean;
 
+  searchConfig: AdvSearchConfig;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -55,7 +56,7 @@ export class IndentDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.projectId = params["id"];
+      this.projectId = params[ "id" ];
     });
     this.isMobile = this.commonService.isMobile().matches;
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -63,30 +64,53 @@ export class IndentDetailComponent implements OnInit, OnDestroy {
     this.allIndents = this.route.snapshot.data.indentList;
     this.dataSource1 = this.allIndents.ongoingIndentList;
     this.dataSource2 = this.allIndents.completedIndentList;
-    this.startSubscriptions();
+    this.getSearchReady();
   }
 
-  startSubscriptions() {
-    this.susbcriptions.push(
-      this.advSearchService.indentFilterRequest$.subscribe(res => {
-        res.projectId = Number(this.projectId);
-        this.indentService.getIndentList(this.projectId, res).then(data => {
-          this.allIndents = data.data;
-          this.dataSource1 = this.allIndents.ongoingIndentList;
-          this.dataSource2 = this.allIndents.completedIndentList;
-        })
-        this.isFilter = false;
-      }),
-      this.advSearchService.indentFilterExportRequest$.subscribe(res => {
-        res.projectId = Number(this.projectId);
-        this.indentService.postIndentExport(res).then(data => {
-          if (data.data.url) {
-            window.open(data.data.url);
-          }
-        });
-        this.isFilter = false;
-      })
-    )
+
+  getSearchReady(): void {
+    const options: AdvSearchOption[] = [
+      {
+        name: "Material Name",
+        type: "MULTI_SELECT_SEARCH",
+        key: "materialCodeList"
+      }, {
+        name: "Raised By",
+        type: "MULTI_SELECT_SEARCH",
+        key: "indentRaisedByList"
+      }, {
+        name: "Request Status",
+        type: "MULTI_SELECT",
+        key: "indentStatus"
+      }, {
+        name: "Raised Date",
+        type: 'DATE',
+        key: {
+          "from": "indentRaisedStartDate",
+          "to": "indentRaisedEndDate"
+        }
+      }, {
+        name: "Required Date",
+        type: 'DATE',
+        key: {
+          "from": "indentRequestStartDate",
+          "to": "indentRequestEndDate"
+        }
+      }
+    ]
+    forkJoin([ this.advSearchService.getMaterials(), this.advSearchService.getAllUsers(this.orgId) ]).toPromise().then(res => {
+      options[ 0 ].data = res[ 0 ] as AdvSearchData[];
+      options[ 1 ].data = res[ 1 ] as AdvSearchData[];
+      options[ 2 ].data = this.advSearchService.getReqStatus() as AdvSearchData[];
+      options[ 3 ].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
+      options[ 4 ].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
+
+      this.searchConfig = {
+        title: "Advance Search",
+        type: "PO",
+        options
+      }
+    });
   }
 
   getProject(id: number) {
@@ -148,15 +172,31 @@ export class IndentDetailComponent implements OnInit, OnDestroy {
     ]);
   }
 
-  ngOnDestroy() {
-    this.susbcriptions.forEach(itm => itm.unsubscribe());
-  }
-
   openFilter() {
     this.isFilter = true;
   }
 
   closeFilter() {
+    this.isFilter = false;
+  }
+
+  applySearch(data) {
+    data.projectId = Number(this.projectId);
+    this.indentService.getIndentList(this.projectId, data).then(data => {
+      this.allIndents = data.data;
+      this.dataSource1 = this.allIndents.ongoingIndentList;
+      this.dataSource2 = this.allIndents.completedIndentList;
+    })
+    this.isFilter = false;
+  }
+
+  applyExport(data) {
+    data.projectId = Number(this.projectId);
+    this.indentService.postIndentExport(data).then(data => {
+      if (data.data.url) {
+        window.open(data.data.url);
+      }
+    });
     this.isFilter = false;
   }
 

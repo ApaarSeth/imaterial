@@ -1,7 +1,7 @@
 .widthWrapper {
   .ngx-mat-drp-date-display {
     min-width: 90% !important;
-    width: 90% !important;
+    width: 98% !important;
   }
 
   .ngx-mat-drp-date-input {
@@ -57,15 +57,23 @@ td .mat-calendar-body-selected {
   margin-top: -1px;
 }
 
-.wdpw-100{
-  .mat-form-field{
+.wdpw-100 {
+  .mat-form-field {
     width: 100% !important;
     padding-right: 10px;
+  }
+  .ngx-mat-drp-date-input {
+    color: $main-color !important;
   }
 }
 
 .input-font-size {
   .mat-form-field-infix .ngx-mat-drp-date-input {
     font-size: 11px;
+  }
+}
+.input-font-size-large {
+  .mat-form-field-infix .ngx-mat-drp-date-input {
+    font-size: 14px;
   }
 }

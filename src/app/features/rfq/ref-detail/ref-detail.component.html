@@ -45,14 +45,17 @@
 
       <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2 align-top">
-          <advance-search filterType="rfq"></advance-search>
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)"
+            [config]="searchConfig">
+          </advance-search>
         </div>
       </ng-container>
 
       <ng-template #mobileSearch>
         <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close' ">
           <div class="sdb" (click)="closeFilter()"></div>
-          <advance-search class="mb-cl" filterType="rfq"></advance-search>
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)"
+            [config]="searchConfig" class="mb-cl"></advance-search>
         </div>
       </ng-template>
 
