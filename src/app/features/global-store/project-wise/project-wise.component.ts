@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { GlobalStoreMaterial } from "src/app/shared/models/GlobalStore/materialWise";
 import { GlobalProject } from "src/app/shared/models/GlobalStore/projectWise";
 import { CommonService } from 'src/app/shared/services/commonService';
 
@@ -8,15 +7,15 @@ import { CommonService } from 'src/app/shared/services/commonService';
   templateUrl: "./project-wise.component.html",
   styleUrls: [ "./project-wise.component.scss" ]
 })
+
 export class ProjectWiseComponent implements OnInit {
   @Input("projectData") projectData: GlobalProject[];
   @Output("projectDataLength") projectDataLength = new EventEmitter();
   newProjectData: GlobalProject[];
   searchProject: string = "";
   isMobile: boolean;
-  constructor(
-    private commonService: CommonService
-  ) { }
+
+  constructor(private commonService: CommonService) { }
 
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
@@ -25,11 +24,11 @@ export class ProjectWiseComponent implements OnInit {
 
   mappingMaterialData() {
     this.newProjectData = this.projectData.map((project: GlobalProject) => {
-      let projects: GlobalProject[] = [];
-      let recentDateProject: string;
+      // let projects: GlobalProject[] = [];
+      // let recentDateProject: string;
 
       for (let material of project.GlobalMaterials) {
-        let totalSum = 0;
+        // let totalSum = 0;
         let sum = 0;
         let nearDueDate: string = null;
         if (material.IndentMaterial) {

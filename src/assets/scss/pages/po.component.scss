@@ -207,6 +207,7 @@ s .validTill {
 
   .mat-table {
     overflow-x: scroll;
+    width: 100%;
   }
 
   .mat-cell,
@@ -215,7 +216,6 @@ s .validTill {
     display: table-cell;
     padding: 0px 10px;
     line-break: unset;
-    width: 2%;
     white-space: nowrap;
     overflow: hidden;
     vertical-align: middle;
@@ -274,6 +274,7 @@ s .validTill {
     font-size: 12px;
   }
 }
+
 @media only screen and (min-width: 576) {
   .font-size-vary-grn {
     font-size: 14px;
@@ -435,6 +436,32 @@ s .validTill {
 .po-national-image-width{
   max-width: 3%;
   min-width: 3% !important;
+}
+
+.po-for-approval, .drafted-po, .approved-po{
+  .mat-column-poNumber,
+  .mat-column-totalMaterials{
+    text-align: left;
+  }
+
+  .mat-column-poStatusChangedOn .mat-sort-header-container,
+  .mat-column-supplierName .mat-sort-header-container {
+    justify-content: center;
+  }
+
+  .mat-column-poAmount .mat-sort-header-container{
+    justify-content: flex-end;
+  }
+
+  .mat-expansion-indicator::after{
+    padding: 6px;
+  }
+
+  tr.mat-header-row,
+  tr.mat-row, 
+  tr.mat-footer-row{
+    height: 45px;
+  }
 }
 
 @media only screen and (max-width: 1199px){

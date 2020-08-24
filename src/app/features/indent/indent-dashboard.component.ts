@@ -77,15 +77,15 @@ export class IndentDashboardComponent implements OnInit {
 
     if(this.subcategory){
       this.dataSource = new MatTableDataSource(this.subcategory);
-      this.dataSource.sort = this.sort;
-      // setTimeout(() => {
-      //   this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
-      //       if (typeof data[sortHeaderId] === 'string') {
-      //       return data[sortHeaderId].toLocaleLowerCase();
-      //       }  
-      //       return data[sortHeaderId];
-      //   };
-      // });
+      setTimeout(() => {
+        this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+            if (typeof data[sortHeaderId] === 'string') {
+            return data[sortHeaderId].toLocaleLowerCase();
+            }  
+            return data[sortHeaderId];
+        };
+      });
     }
 
     this.formsInit();

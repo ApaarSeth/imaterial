@@ -1,3 +1,17 @@
+@media only screen and (max-width: 959px){
+  .liability-outer-secton, .liability-outer-secton .report, 
+  .ctc-report, .ctc-report .report,
+  .receipts-outer-section .report {
+    padding: 0 10px;
+  }
+}
+
+@media only screen and (max-width: 599px){
+  .liability-outer-secton, .ctc-report {
+    margin-top: -15px !important;
+  }
+}
+
 @media only screen and (max-width: 767px){
   .report{
     .showResponsiveReport{
@@ -24,8 +38,17 @@
     .show-amount{
       padding-top: 30px;
     }
+
+    .mobile-display-amount{
+      text-align: right;
+    }
   }  
+
+  .liability-outer-secton{
+    padding-top: 5px !important;
+  }
 }
+
 @media only screen and (min-width: 767px){
   .report{
     .showResponsiveReportSecond{
@@ -271,23 +294,9 @@
 
 @media(max-width:599px){
   .report-table {
-
     .mat-expansion-indicator:after{
       padding: 4px !important;
       margin-top: -10px;
-    }
-  }
-  
-}
-
-@media only screen and (max-width: 410px){
-  .report {
-    .show-amount{
-      width: 50px;
-    }
-    .add-project-btn{
-      text-align: right;
-      justify-content: flex-end;
     }
   }
 }

@@ -773,3 +773,9 @@ input::title {
 .h-30px {
   height: 30px !important;
 }
+
+@media only screen and (max-width: 959px){
+  .adjust-right-padding{
+    padding: 0 10px;
+  }
+}
