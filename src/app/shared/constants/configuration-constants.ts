@@ -7,10 +7,6 @@ export const ConfigurationConstants = {
   LOADING_TIMEOUT: 500,
 }
 
-export class Froala {
-  public static key: string = 'iMFIZJNKLDXIREJI==';
-
-}
 
 export const HeaderConstants = {
   PERMISSIONHEADER: (permissionObj, orgId) => {
@@ -171,5 +167,6 @@ export const API = {
   GET_ALL_GRN: 'all/grn',
   SUPPLIER_LIABILITY_EXCEL_DOWNLOAD: 'supplier/liabilityReportDownload',
   CTC_REPORT_EXCEL_DOWNLOAD: 'report/ctcDownload',
-  GET_CONTACTSALES: 'subscription/contact/sales'
+  GET_CONTACTSALES: 'subscription/contact/sales',
+  RESENDINVITE: (userid) => `resendemail/unique/${userid}`
 };

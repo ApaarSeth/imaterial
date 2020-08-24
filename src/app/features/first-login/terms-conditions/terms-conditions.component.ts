@@ -1,6 +1,4 @@
-import { OnInit, Component } from '@angular/core';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core"; import { UserService } from "../../../shared/services/user.service"; import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-terms-conditions',
@@ -10,27 +8,27 @@ import { Router } from '@angular/router';
 export class TermsConditionsComponent implements OnInit {
   agreeSelected: boolean = false;
 
-  constructor(private _userService: UserService, private router:Router) { }
+  constructor(private _userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    
+
   }
 
-  logout(){
-      this._userService.logoutUser();
+  logout() {
+    this._userService.logoutUser();
   }
-  acceptTerms(){
-    this._userService.postTerms(1).then(res=> {
-      if(res.data)
-       this.router.navigate(['/profile/update-info']);
+  acceptTerms() {
+    this._userService.postTerms(1).then(res => {
+      if (res.data)
+        this.router.navigate(['/profile/update-info']);
     })
   }
-  agree(event){
-    if(event.checked){
+  agree(event) {
+    if (event.checked) {
       this.agreeSelected = true;
     }
-    else{
-       this.agreeSelected = false;
+    else {
+      this.agreeSelected = false;
     }
   }
 }

@@ -1,10 +1,15 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
 import { CommonService } from '../../services/commonService';
-import { ProjectService } from '../../services/projectDashboard/project.service';
+import { ProjectService } from '../../services/project.service';
 import { AdvanceSearchService } from '../../services/advance-search.service';
-import { UserService } from '../../services/userDashboard/user.service';
-import { MatSelect, MatCheckbox, MatDatepicker, MatInput } from '@angular/material';
+import { UserService } from '../../services/user.service';
 import { MatAccordion } from '@angular/material/expansion';
+import { MatSelect } from '@angular/material/select';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatInput } from '@angular/material/input';
+import { MatDatepicker } from '@angular/material/datepicker';
+
+
 
 interface rfqRequestData {
     projectIDList?: any;
@@ -42,43 +47,35 @@ interface indentRequestData {
     indentRequestEndDate?: string;
 }
 
-
 @Component({
     selector: 'advance-search',
     templateUrl: './advance-search.component.html'
 })
 
-export class AdvanceSearchComponent implements OnInit {
+export class AdvanceSearchComponent {
 
     @Input('filterType') filterType: string;
-
     @ViewChild('projectsSelect', { static: false, read: MatSelect }) projectsSelect: MatSelect;
     @ViewChild('suppliersSelect', { static: false, read: MatSelect }) suppliersSelect: MatSelect;
     @ViewChild('materialsSelect', { static: false, read: MatSelect }) materialsSelect: MatSelect;
     @ViewChild('usersSelect', { static: false, read: MatSelect }) usersSelect: MatSelect;
     @ViewChild('approversSelect', { static: false, read: MatSelect }) approversSelect: MatSelect;
     @ViewChild('createdSelect', { static: false, read: MatSelect }) createdSelect: MatSelect;
-
     @ViewChild('bidSubmitted', { static: false, read: MatCheckbox }) bidSubmitted: MatCheckbox;
     @ViewChild('notSubmitted', { static: false, read: MatCheckbox }) notSubmitted: MatCheckbox;
-
-    @ViewChild('raisedFromPicker', { static: false, read: MatDatepicker }) raisedFromPicker: MatDatepicker<string>;
-    @ViewChild('raisedToPicker', { static: false, read: MatDatepicker }) raisedToPicker: MatDatepicker<string>;
-    @ViewChild('expiryFromPicker', { static: false, read: MatDatepicker }) expiryFromPicker: MatDatepicker<string>;
-    @ViewChild('expiryToPicker', { static: false, read: MatDatepicker }) expiryToPicker: MatDatepicker<string>;
-
+    @ViewChild('raisedFromPicker', { static: false, read: MatDatepicker }) raisedFromPicker: MatDatepicker<any>;
+    @ViewChild('raisedToPicker', { static: false, read: MatDatepicker }) raisedToPicker: MatDatepicker<any>;
+    @ViewChild('expiryFromPicker', { static: false, read: MatDatepicker }) expiryFromPicker: MatDatepicker<any>;
+    @ViewChild('expiryToPicker', { static: false, read: MatDatepicker }) expiryToPicker: MatDatepicker<any>;
     @ViewChild('minAmt', { static: false, read: MatInput }) minAmt: MatInput;
     @ViewChild('maxAmt', { static: false, read: MatInput }) maxAmt: MatInput;
-
     @ViewChild('po1', { static: false, read: MatCheckbox }) po1: MatCheckbox;
     @ViewChild('po2', { static: false, read: MatCheckbox }) po2: MatCheckbox;
     @ViewChild('po3', { static: false, read: MatCheckbox }) po3: MatCheckbox;
     @ViewChild('indentOpen', { static: false, read: MatCheckbox }) indentOpen: MatCheckbox;
     @ViewChild('indentClosed', { static: false, read: MatCheckbox }) indentClosed: MatCheckbox;
-
-    @ViewChild('requestedFromPicker', { static: false, read: MatDatepicker }) requestedFromPicker: MatDatepicker<string>;
-    @ViewChild('requestedToPicker', { static: false, read: MatDatepicker }) requestedToPicker: MatDatepicker<string>;
-
+    @ViewChild('requestedFromPicker', { static: false, read: MatDatepicker }) requestedFromPicker: MatDatepicker<any>;
+    @ViewChild('requestedToPicker', { static: false, read: MatDatepicker }) requestedToPicker: MatDatepicker<any>;
     @ViewChild(MatAccordion, { static: false }) accordion: MatAccordion;
 
     userId: number;
@@ -433,8 +430,8 @@ export class AdvanceSearchComponent implements OnInit {
 
         data.indentRaisedStartDate = this.raisedFromPickerEl ? this.raisedFromPickerEl : null;
         data.indentRaisedEndDate = this.raisedToPickerEl ? this.raisedToPickerEl : null;
-        data.indentRequestStartDate = this.requestedFromPicker._datepickerInput.value ? this.advSearchService.getDateInFormat(this.requestedFromPicker._datepickerInput.value) : null;
-        data.indentRequestEndDate = this.requestedToPicker._datepickerInput.value ? this.advSearchService.getDateInFormat(this.requestedToPicker._datepickerInput.value) : null;
+        data.indentRequestStartDate = this.requestedFromPicker._datepickerInput['value'] ? this.advSearchService.getDateInFormat(this.requestedFromPicker._datepickerInput['value']) : null;
+        data.indentRequestEndDate = this.requestedToPicker._datepickerInput['value'] ? this.advSearchService.getDateInFormat(this.requestedToPicker._datepickerInput['value']) : null;
         return data;
     }
 
@@ -476,8 +473,8 @@ export class AdvanceSearchComponent implements OnInit {
             this.isNotSubmitted = false;
             this.bidSubmitted.checked = false;
             this.notSubmitted.checked = false;
-            this.expiryFromPicker._datepickerInput.value = '';
-            this.expiryToPicker._datepickerInput.value = '';
+            this.expiryFromPicker._datepickerInput['value'] = '';
+            this.expiryToPicker._datepickerInput['value'] = '';
         }
 
         if (this.filterType === 'po') {
@@ -495,8 +492,8 @@ export class AdvanceSearchComponent implements OnInit {
         if (this.filterType === 'indent') {
             this.indentOpen.checked = false;
             this.indentClosed.checked = false;
-            this.requestedFromPicker._datepickerInput.value = '';
-            this.requestedToPicker._datepickerInput.value = '';
+            this.requestedFromPicker._datepickerInput['value'] = '';
+            this.requestedToPicker._datepickerInput['value'] = '';
         }
 
         this.selectedProjects = [];
@@ -514,8 +511,8 @@ export class AdvanceSearchComponent implements OnInit {
 
         this.materialsSelect.options.forEach(opt => opt.deselect());
 
-        this.raisedFromPicker._datepickerInput.value = '';
-        this.raisedToPicker._datepickerInput.value = '';
+        this.raisedFromPicker._datepickerInput['value'] = '';
+        this.raisedToPicker._datepickerInput['value'] = '';
         this.accordion.closeAll();
         this.getFilterRequest();
     }
@@ -538,6 +535,7 @@ export class AdvanceSearchComponent implements OnInit {
             }
         }
     }
+
     checkToDate(event, type, mType) {
         let d1 = new Date(event.target.value);
         let d2 = new Date(type._datepickerInput.value);

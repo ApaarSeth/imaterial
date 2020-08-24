@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { BomService } from "src/app/shared/services/bom/bom.service";
+import { Resolve } from "@angular/router";
+import { BomService } from "../../../shared/services/bom.service";
 
 @Injectable()
 export class BomResolver implements Resolve<any> {
-  constructor(private bomService: BomService) {}
+  constructor(private bomService: BomService) { }
 
   resolve() {
     return this.bomService.getCategory().then(data => {

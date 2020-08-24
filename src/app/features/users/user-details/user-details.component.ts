@@ -1,5 +1,8 @@
-import { AllUserDetails, UserAdd, UserDetailsPopUpData } from "../../../shared/models/user-details"; import { Component, OnInit, ChangeDetectorRef } from "@angular/core"; import { MatTableDataSource, MatDialog } from "@angular/material"; import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour"; import { ActivatedRoute, Router } from "@angular/router"; import { RFQService } from "../../../shared/services/rfq/rfq.service"; import { FormBuilder } from "@angular/forms"; import { UserService } from "../../../shared/services/userDashboard/user.service"; import { CommonService } from "../../../shared/services/commonService"; import { AddEditUserComponent } from "../../../shared/dialogs/add-edit-user/add-edit-user.component"; import { DeactiveUserComponent } from "../../../shared/dialogs/disable-user/disable-user.component";
-import { UserGuideService } from "../../../shared/services/user-guide/user-guide.service";
+import { AppNotificationService } from './../../../shared/services/app-notification.service';
+import { AllUserDetails, UserAdd, UserDetailsPopUpData } from "../../../shared/models/user-details"; import { Component, OnInit, ChangeDetectorRef } from "@angular/core"; import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour"; import { ActivatedRoute, Router } from "@angular/router"; import { RFQService } from "../../../shared/services/rfq.service"; import { FormBuilder } from "@angular/forms"; import { UserService } from "../../../shared/services/user.service"; import { CommonService } from "../../../shared/services/commonService"; import { AddEditUserComponent } from "../../../shared/dialogs/add-edit-user/add-edit-user.component"; import { DeactiveUserComponent } from "../../../shared/dialogs/disable-user/disable-user.component";
+import { UserGuideService } from "../../../shared/services/user-guide.service";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
 
 
 // chip static data
@@ -12,8 +15,7 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 
 @Component({
   selector: "user-details",
-  templateUrl: "./user-details.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./user-details.component.html"
 })
 
 
@@ -60,14 +62,11 @@ export class UserDetailComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private ref: ChangeDetectorRef,
     private userService: UserService,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private notifier: AppNotificationService
   ) {
   }
 
@@ -141,6 +140,8 @@ export class UserDetailComponent implements OnInit {
 
     } as UserDetailsPopUpData);
   }
+
+
   openDialog(data: UserDetailsPopUpData): void {
 
     const dialogRef = this.dialog.open(AddEditUserComponent, {
@@ -214,5 +215,14 @@ export class UserDetailComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSourceActivate.filter = filterValue.trim().toLowerCase();
     this.dataSourceDeactivate.filter = filterValue.trim().toLowerCase();
+  }
+
+
+  resendInvite(userId) {
+    this.userService.resendInvite(userId).then(res => {
+      if (res.statusCode === 201) {
+        this.notifier.snack(res.data)
+      }
+    })
   }
 }

@@ -13,9 +13,8 @@ import {
   Address
 } from "src/app/shared/models/RFQ/rfq-details";
 import { FormGroup, FormBuilder, Validators, FormArray, ValidatorFn, AbstractControl } from "@angular/forms";
-import { MatDialog, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { RFQService } from "src/app/shared/services/rfq.service";
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
 import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
@@ -24,6 +23,8 @@ import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants'
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-rfq-quantity-makes",

@@ -1,22 +1,24 @@
+import { AppNotificationService } from './../../../shared/services/app-notification.service';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { SignInSignupService } from "../../../shared/services/signupSignin.service";
 
 @Component({
   selector: "reset-password",
-  templateUrl: "./reset-password.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./reset-password.component.html"
 })
 export class ResetPasswordComponent implements OnInit {
+
   forgetPassForm: FormGroup;
   showPassWordString: boolean = false;
   showRetypePassWordString: boolean = false;
   token: string;
   accessToken: string;
-  constructor(private snackbar: MatSnackBar, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private signInSignupService: SignInSignupService) { }
+  constructor(private notifier: AppNotificationService, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private signInSignupService: SignInSignupService) { }
   passwordMatch = false;
+
   ngOnInit() {
     this.formInit();
     this.route.params.subscribe(param => {
@@ -72,13 +74,10 @@ export class ResetPasswordComponent implements OnInit {
     }
     this.signInSignupService.emailResetPassword(data).then(res => {
       if (res.data && res.data.success) {
-        this.snackbar.open("Password Changed Successfully", "", {
-          duration: 2000,
-          panelClass: ["warning-snackbar"],
-          verticalPosition: "bottom"
-        });
+        this.notifier.snack("Password Changed Successfully")
         this.router.navigate(['auth/login'])
       }
     })
   }
+
 }

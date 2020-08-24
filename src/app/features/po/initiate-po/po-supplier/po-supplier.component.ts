@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { RFQService } from 'src/app/shared/services/rfq/rfq.service';
+import { RFQService } from 'src/app/shared/services/rfq.service';
 import { SuppliersDialogComponent } from 'src/app/shared/dialogs/add-supplier/suppliers-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { initiatePo, initiatePoData } from 'src/app/shared/models/PO/po-data';

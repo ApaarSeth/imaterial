@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import { RFQService } from "../../services/rfq/rfq.service";
+import { RFQService } from "../../services/rfq.service";
 import { RfqTerms } from "../../models/RFQ/rfq-terms";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { POData } from "../../models/PO/po-data";
 import { AddRFQ } from "../../models/RFQ/rfq-details";
 import { Router } from '@angular/router';

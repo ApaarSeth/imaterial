@@ -5,12 +5,12 @@ import {
   SupplierAddress,
   CardData
 } from "src/app/shared/models/PO/po-data";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { SelectPoRoleComponent } from "src/app/shared/dialogs/select-po-role/select-po-role.component";
 import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { Address } from "src/app/shared/models/RFQ/rfq-details";
 import { ActivatedRoute } from "@angular/router";
-import { POService } from 'src/app/shared/services/po/po.service';
+import { POService } from 'src/app/shared/services/po.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierRatingComponent } from "src/app/shared/dialogs/supplier-rating/supplier-rating.component";
 
@@ -41,7 +41,7 @@ export class PoCardComponent implements OnInit {
   ngOnInit() {
     this.formInit();
     this.userId = Number(localStorage.getItem("userId"));
-    if(this.cardData.poStatus === '3' && this.cardData.poCreatedBy === this.userId && (this.cardData.sellerPORating === null || this.cardData.sellerPORating === undefined)){
+    if (this.cardData.poStatus === '3' && this.cardData.poCreatedBy === this.userId && (this.cardData.sellerPORating === null || this.cardData.sellerPORating === undefined)) {
       this.openSupplierRating();
     }
     window.dispatchEvent(new Event('resize'));
@@ -187,7 +187,7 @@ export class PoCardComponent implements OnInit {
       rating,
       purchaseOrderId: this.poId
     }
-    
+
     this.poService.submitSupplierRating(data).then(res => {
       this.cardData.sellerPORating = rating;
     });
@@ -206,9 +206,9 @@ export class PoCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result === 'closed' || result === undefined){
+      if (result === 'closed' || result === undefined) {
         this.checkRating(0);
-      }else{
+      } else {
         this.checkRating(result);
       }
     });

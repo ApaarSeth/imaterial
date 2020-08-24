@@ -1,16 +1,15 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   PODetailLists,
   PurchaseOrder
 } from "src/app/shared/models/po-details/po-details-list";
-import { MatTableDataSource, MatDialog } from "@angular/material";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
+import { MatTableDataSource } from "@angular/material/table";
 import { ProjetPopupData } from "src/app/shared/models/project-details";
 import { DeleteDraftedPoComponent } from "src/app/shared/dialogs/delete-drafted-po/delete-drafted-po.component";
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { POService } from 'src/app/shared/services/po/po.service';
+import { UserGuideService } from 'src/app/shared/services/user-guide.service';
+import { POService } from 'src/app/shared/services/po.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { PermissionService } from 'src/app/shared/services/permission.service';
 import { permission } from 'src/app/shared/models/permissionObject';
@@ -19,38 +18,35 @@ import { PaymentRecordComponent } from 'src/app/shared/dialogs/payment-record/pa
 import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 import { Subscription } from 'rxjs';
 import { AdvanceSearchService } from 'src/app/shared/services/advance-search.service';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: "po-detail-list",
-  templateUrl: "./po-detail-list.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./po-detail-list.component.html"
 })
-export class PODetailComponent implements OnInit, OnDestroy {
-  poDetails: MatTableDataSource<PODetailLists>;
 
+export class PODetailComponent implements OnInit, OnDestroy {
+  
+  poDetails: MatTableDataSource<PODetailLists>;
   poDraftedDetails: MatTableDataSource<PurchaseOrder>;
   poApprovalDetails: MatTableDataSource<PurchaseOrder>;
   acceptedRejectedPOList: MatTableDataSource<PurchaseOrder>;
-
   poDetailsTemp: PurchaseOrder[] = [];
-
   poDraftedDetailsTemp: PurchaseOrder[] = [];
-
   poApprovalDetailsTemp: PurchaseOrder[] = [];
-
   acceptedRejectedPOListTemp: PurchaseOrder[] = [];
-
-  displayedColumns = [
-    "PO Number",
-    "Raised Date",
-    "Supplier Name",
-    "Total Material",
-    "PO Amount",
-    "Action"
-  ];
-
   isMobile: boolean;
   poCount: number;
+  displayedColumns = ["poNumber", "poStatusChangedOn", "supplierName", "totalMaterials", "poAmount", "Action"];
+  userId: number;
+  orgId: number;
+  permissionObj: permission;
+  subscriptions: Subscription[] = [];
+  isFilter: boolean;
+  @ViewChild('approvalPOSort', {static: false}) approvalPOSort: MatSort;
+  @ViewChild('draftPOSort', {static: false}) draftPOSort: MatSort;
+  @ViewChild('approvedPOSort', {static: false}) approvedPOSort: MatSort;
 
   public PODetailTour: GuidedTour = {
     tourId: 'po-detail-tour',
@@ -68,11 +64,6 @@ export class PODetailComponent implements OnInit, OnDestroy {
       this.setLocalStorage()
     }
   };
-  userId: number;
-  orgId: number;
-  permissionObj: permission;
-  subscriptions: Subscription[] = [];
-  isFilter: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -81,14 +72,12 @@ export class PODetailComponent implements OnInit, OnDestroy {
     private route: Router,
     private notifier: AppNotificationService,
     private poService: POService,
-    private projectService: ProjectService,
     public dialog: MatDialog,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
     private commonService: CommonService,
     private advSearchService: AdvanceSearchService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     const role = localStorage.getItem("role")
@@ -159,9 +148,37 @@ export class PODetailComponent implements OnInit, OnDestroy {
     this.poDraftedDetails = new MatTableDataSource(
       this.activatedRoute.snapshot.data.poDetailList.draftedPOList
     );
+
     this.poApprovalDetails = new MatTableDataSource(
       this.activatedRoute.snapshot.data.poDetailList.sendForApprovalPOList
     );
+
+    setTimeout(() => {
+      this.poApprovalDetails.sort = this.approvalPOSort;
+      this.poDraftedDetails.sort = this.draftPOSort;
+      this.acceptedRejectedPOList.sort = this.approvedPOSort;
+
+      this.poApprovalDetails.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+          if (typeof data[sortHeaderId] === 'string') {
+          return data[sortHeaderId].toLocaleLowerCase();
+          }  
+          return data[sortHeaderId];
+      };
+
+      this.poDraftedDetails.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+        if (typeof data[sortHeaderId] === 'string') {
+        return data[sortHeaderId].toLocaleLowerCase();
+        }  
+        return data[sortHeaderId];
+      };
+
+      this.acceptedRejectedPOList.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+        if (typeof data[sortHeaderId] === 'string') {
+        return data[sortHeaderId].toLocaleLowerCase();
+        }  
+        return data[sortHeaderId];
+      };
+    });
 
     this.poCount = this.activatedRoute.snapshot.data.poDetailList.poCount;
 

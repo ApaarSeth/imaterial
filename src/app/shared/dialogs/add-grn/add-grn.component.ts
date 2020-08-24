@@ -5,7 +5,7 @@ import { PoTableComponent } from 'src/app/features/po/po-table/po-table.componen
 import { GrnAddMaterialComponent } from './add-material/add-material.component';
 import { GrnMaterialList } from '../../models/add-direct-grn';
 import { Supplier } from '../../models/RFQ/rfq-view';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-add-grn',

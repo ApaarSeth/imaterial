@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { HeaderConstants } from '../constants/configuration-constants';
 import { FacebookPixelService } from '../services/fb-pixel.service';
-import { MatSidenav } from '@angular/material';
 import { AppNavigationService } from '../services/navigation.service';
 import { TokenService } from '../services/token.service';
 import { MenuList } from '../models/menu.model';
 import { CommonService } from '../services/commonService';
+import { MatSidenav } from "@angular/material/sidenav";
 
 @Component({
   selector: "sidebar-navigation",
@@ -142,7 +142,7 @@ export class SidebarNavigationComponent implements OnInit {
   }
 
   routeTo(route) {
-    this.router.navigate([ route ]);
+    this.router.navigate([route]);
   }
 
   closeDialog() {

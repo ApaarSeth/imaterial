@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
-import { POService } from "src/app/shared/services/po/po.service";
+import { POService } from "src/app/shared/services/po.service";
 
 @Injectable()
 export class PODetailListResolver implements Resolve<any> {

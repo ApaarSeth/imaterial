@@ -1,9 +1,7 @@
-import { TokenService } from 'src/app/shared/services/token.service';
 import { Injectable } from "@angular/core";
-import { DataService } from "../data.service";
-import { API } from "../../constants/configuration-constants";
-import { initiatePo, SupplierAddress } from "../../models/PO/po-data";
-import { AllSupplierDetails } from "../../models/supplier";
+import { DataService } from "./data.service";
+import { API } from "../constants/configuration-constants";
+import { initiatePo, SupplierAddress } from "../models/PO/po-data";
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -58,21 +56,25 @@ export class POService {
   }
 
   getNumberToWords(currency: number) {
-    return this.dataService.getRequest(API.NUMBERTOWORDS(currency));
+    return this.dataService.getRequest(API.NUMBERTOWORDS(currency), null, { skipLoader: true })
   }
+
   downloadPo(purchaseOrderId) {
     return this.dataService.getRequest(API.DOWNLOADPO(purchaseOrderId));
   }
+
   paymentRecord(poId, data) {
     return this.dataService.sendPostRequest(API.PAYMENTRECORD(poId), data)
   }
+
   paymentHistory(poId) {
     return this.dataService.getRequest(API.PAYMENTHISTORY(poId))
   }
+
   paymentDetail(poId) {
     return this.dataService.getRequest(API.PAYMENTDETAIL(poId))
   }
-
+  
   submitSupplierRating(data) {
     return this.dataService.sendPostRequest(API.SUPPLIER_RATING, data)
   }
