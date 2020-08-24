@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { AdvSearchOption, AdvSearchData, AdvSearchConfig } from './../../../shared/models/adv-search.model';
+import { forkJoin } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
 import { RFQService } from "src/app/shared/services/rfq.service";
 import { RfqList } from "src/app/shared/models/RFQ/rfq-details";
 import { Router } from "@angular/router";
@@ -11,7 +13,7 @@ import { MatTableDataSource } from "@angular/material/table";
   selector: "app-ref-detail",
   templateUrl: "./ref-detail.component.html"
 })
-export class RefDetailComponent implements OnInit, OnDestroy {
+export class RefDetailComponent implements OnInit {
   userId: number;
   constructor(
     private router: Router,
@@ -31,7 +33,7 @@ export class RefDetailComponent implements OnInit, OnDestroy {
   submittedRfqList: MatTableDataSource<RfqList>;
   nonSubmittedRfqList: MatTableDataSource<RfqList>;
 
-  subscriptions: Subscription[] = [];
+  searchConfig: AdvSearchConfig;
 
   isFilter: boolean;
 
@@ -51,7 +53,70 @@ export class RefDetailComponent implements OnInit, OnDestroy {
     this.userId = Number(localStorage.getItem("userId"));
     this.getRFQDetails({ data: {} });
     this.getNotifications();
-    this.startSubscriptions();
+    this.getSearchReady();
+  }
+
+  getSearchReady(): void {
+
+    const options: AdvSearchOption[] = [
+      {
+        name: "Project Name",
+        type: 'MULTI_SELECT_SEARCH',
+        key: "projectIDList"
+      }, {
+        name: "Supplier Name",
+        type: 'MULTI_SELECT_SEARCH',
+        key: "supplierIDList"
+      }, {
+        name: "Material Name",
+        type: 'MULTI_SELECT_SEARCH',
+        key: "materialCodeList"
+      }, {
+        name: "Raised By",
+        type: 'MULTI_SELECT_SEARCH',
+        key: "userIDList"
+      }, {
+        name: "RPF Status",
+        type: 'MULTI_SELECT',
+        key: "rfqStatus"
+      }, {
+        name: "Raised Date",
+        type: 'DATE',
+        key: {
+          "from": "rfqRaisedStartDate",
+          "to": "rfqRaisedEndDate"
+        }
+      }, {
+        name: "Expiry Date",
+        type: 'DATE',
+        key: {
+          "from": "rfqExpiryStartDate",
+          "to": "rfqExpiryEndDate"
+        }
+      }
+
+    ]
+
+    forkJoin([
+      this.advSearchService.getProjects(this.orgId, this.userId), this.advSearchService.getSuppliers(this.orgId), this.advSearchService.getMaterials(), this.advSearchService.getAllUsers(this.orgId) ]).toPromise().then(res => {
+
+
+        options[ 0 ].data = res[ 0 ] as AdvSearchData[];
+        options[ 1 ].data = res[ 1 ] as AdvSearchData[];
+        options[ 2 ].data = res[ 2 ] as AdvSearchData[];
+        options[ 3 ].data = res[ 3 ] as AdvSearchData[];
+        options[ 4 ].data = this.advSearchService.getRFPBids() as AdvSearchData[];
+        options[ 5 ].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
+        options[ 6 ].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
+
+        this.searchConfig = {
+          title: "Advance Search",
+          type: "RFQ",
+          options
+        }
+
+      })
+
   }
 
   getRFQDetails(obj) {
@@ -88,22 +153,6 @@ export class RefDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  startSubscriptions() {
-    this.subscriptions.push(
-      this.advSearchService.RFQFilterRequest$.subscribe(res => {
-        this.getRFQDetails({ data: res });
-        this.isFilter = false;
-      }),
-      this.advSearchService.RFQFilterExportRequest$.subscribe(res => {
-        this.rfqService.postRFQExport(this.orgId, res).then(res => {
-          if (res.data.url) {
-            window.open(res.data.url);
-          }
-        });
-        this.isFilter = false;
-      })
-    );
-  }
 
   getNotifications() {
     this.commonService.getNotification(this.userId);
@@ -116,18 +165,14 @@ export class RefDetailComponent implements OnInit, OnDestroy {
 
   viewRfq(element: RfqList) {
     if (element.rfqStatus === 0) {
-      this.router.navigate(["../../rfq/createRfq", element.rfqId]);
+      this.router.navigate([ "../../rfq/createRfq", element.rfqId ]);
     } else {
-      this.router.navigate(["../../rfq/rfq-view", element.rfqId]);
+      this.router.navigate([ "../../rfq/rfq-view", element.rfqId ]);
     }
   }
 
   createRfq() {
-    this.router.navigate(["/rfq/createRfq"]);
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(item => item.unsubscribe());
+    this.router.navigate([ "/rfq/createRfq" ]);
   }
 
   openFilter() {
@@ -135,6 +180,20 @@ export class RefDetailComponent implements OnInit, OnDestroy {
   }
 
   closeFilter() {
+    this.isFilter = false;
+  }
+
+  applySearch(data) {
+    this.getRFQDetails({ data });
+    this.isFilter = false;
+  }
+
+  applyExport(data) {
+    this.rfqService.postRFQExport(this.orgId, data).then(res => {
+      if (res.data.url) {
+        window.open(res.data.url);
+      }
+    });
     this.isFilter = false;
   }
 

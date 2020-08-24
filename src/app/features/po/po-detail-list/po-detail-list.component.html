@@ -49,14 +49,17 @@
 
       <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2 align-top">
-          <advance-search filterType="po"></advance-search>
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)"
+            [config]="searchConfig">
+          </advance-search>
         </div>
       </ng-container>
 
       <ng-template #mobileSearch>
         <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close' ">
           <div class="sdb" (click)="closeFilter()"></div>
-          <advance-search class="mb-cl" filterType="po"></advance-search>
+          <advance-search class="mb-cl" *ngIf="searchConfig" (submitExport)="applyExport($event)"
+            (submitSearch)="applySearch($event)" [config]="searchConfig"></advance-search>
         </div>
       </ng-template>
 
@@ -223,7 +226,7 @@
               </mat-expansion-panel>
             </div>
 
-            
+
             <div *ngIf="poDraftedDetailsTemp">
               <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
                 <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
@@ -288,7 +291,7 @@
                 </div>
               </mat-expansion-panel>
             </div>
-            
+
             <div *ngIf="acceptedRejectedPOListTemp">
               <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
                 <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
