@@ -1,3 +1,7 @@
+import { AdvSearchItemComponent } from './adv-search-item/adv-search-item.component';
+import { AdvanceInputNumberItemComponent } from './adv-input-number-item/adv-input-number-item.component';
+import { AdvanceSelectItemComponent } from './adv-select-item/adv-select-item.component';
+import { AdvanceDateItemComponent } from './adv-date-item/adv-date-item.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
@@ -19,7 +23,7 @@ import { AdvanceSearchComponent } from './advance-search/advance-search.componen
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { NgModule } from '@angular/core';
 
-const components = [ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent, BarChartComponent, PieChartComponent];
+const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent, BarChartComponent, PieChartComponent, AdvanceDateItemComponent, AdvanceSelectItemComponent, AdvanceInputNumberItemComponent, AdvSearchItemComponent ];
 
 @NgModule({
   imports: [
