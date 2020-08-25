@@ -17,8 +17,8 @@ export class CreateRfqResolver implements Resolve<any> {
     let orgId = Number(localStorage.getItem("orgId"));
     let id = this.route.snapshot.params['rfqId']
     return Promise.all([
-      this.commonService.getSuppliers(orgId, id ? false : true),
-      this.projectService.getProjects(orgId, userId, id ? false : true)
+      this.commonService.getSuppliers(orgId),
+      this.commonService.getCountry()
     ]).then(data => {
       return data;
     });

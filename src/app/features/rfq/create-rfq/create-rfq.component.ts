@@ -83,7 +83,7 @@ export class CreateRfqComponent implements OnInit {
   userId: number;
   id: number;
   allProject: ProjectDetails[] = [];
-  allSupplier: Suppliers[] = [];
+  allSupplier: Suppliers[];
   constructor(
     private projectService: ProjectService,
     private router: Router,
@@ -114,7 +114,7 @@ export class CreateRfqComponent implements OnInit {
       this.commonService.getCountry()
     ]).then(res => {
       if (this.id) { this.loader.hide() }
-      this.allSupplier = res[0].data
+      this.allSupplier = res[0].data ? res[0].data : []
       this.allProject = res[1].data
       this.countryList = res[2].data
     });
