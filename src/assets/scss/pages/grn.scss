@@ -231,8 +231,8 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
-/** Add Receipt Via System Dialog CSS **/
-.add-receipt-via-system{
+/** Add Receipt Via System, Add Custom Material Dialog CSS **/
+.add-receipt-via-system, .add-custom-material{
   .mat-dialog-container{
     padding: 5px 24px 5px !important;
   }
@@ -258,6 +258,24 @@ $mat-row-horizontal-padding: 12px;
     padding: 1rem 1.5rem;
   }
 
+  .col-unit{
+    flex-basis: 10%;
+    max-width: 10%;
+  }
+
+  .col-material-name{
+    flex-basis: 18.666667%;
+    max-width: 18.666667%;
+  }
+}
+
+.add-receipt-via-system{
+
+  .col-add-btn{
+    flex-basis: 4.3333%;
+    max-width: 4.3333%;
+  }
+
   .mat-horizontal-stepper-header-container .mat-step-header{
     &:first-child{
       padding-left: 0;
@@ -268,22 +286,7 @@ $mat-row-horizontal-padding: 12px;
     }
   }
 
-  .col-add-btn{
-    flex-basis: 4.3333%;
-    max-width: 4.3333%;
-  }
-
-  .col-unit{
-    flex-basis: 10%;
-    max-width: 10%;
-  }
-
-  .col-material-name{
-    flex-basis: 18.666667%;
-    max-width: 18.666667%;
-  }
-
-  .mat-step-header:hover{
+  .mat-step-header.cdk-keyboard-focused, .mat-step-header.cdk-program-focused, .mat-step-header:hover{
     background-color: transparent !important;
   }
 
@@ -304,12 +307,36 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
+.add-custom-material{
+  .material-seperator{
+    margin-bottom: 0rem;
+  }
+
+  .col-unit-rate{
+    max-width: 14%;
+    flex-basis: 14%;
+  }
+
+  .col-add-btn{
+    max-width: 7.01107%;
+    flex-basis: 7.01107%;
+  }
+
+  .add-material-btn{
+    padding-right: 0px;
+  }
+}
+
 @media only screen and (max-width: 767px){
   .receipts-outer-section{
     padding-top: 5px !important;
   }
 
-  .add-receipt-via-system{
+  .add-custom-material, .add-receipt-via-system{
+    .col-add-btn{
+      display: none !important;
+    }
+
     .col-xs-12{
       flex-basis: 100%;
       max-width: 100%;
@@ -324,7 +351,9 @@ $mat-row-horizontal-padding: 12px;
       font-size: 30px;
       line-height: 1.5;
     }
+  }
 
+  .add-receipt-via-system{
     .receipt-number, .receipt-date{
       & > span {
         display: none;
@@ -333,6 +362,12 @@ $mat-row-horizontal-padding: 12px;
       .mat-form-field{
         width: 100%;
       }
+    }
+  }
+
+  .add-custom-material{
+    .mobile-padding, .col-material-name .mat-form-field-wrapper{
+      padding-top: 0px !important;
     }
   }
 }
@@ -345,7 +380,8 @@ $mat-row-horizontal-padding: 12px;
 }
 
 @media only screen and (max-width: 560px){
-  .add-receipt-via-system .modal-body {
+  .add-receipt-via-system .modal-body,
+  .add-custom-material .modal-body {
     padding: 1rem 1rem;
   }
 }
