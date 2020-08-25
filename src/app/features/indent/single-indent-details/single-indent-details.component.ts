@@ -81,7 +81,8 @@ export class SingleIndentDetailsComponent implements OnInit {
         if (data.isDelete == false) {
             const dialogRef = this.dialog.open(AddProjectComponent, {
                 width: "1000px",
-                data
+                data,
+                panelClass: 'add-project-dialog'
             });
 
             dialogRef

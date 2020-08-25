@@ -232,7 +232,8 @@ $mat-row-horizontal-padding: 12px;
 }
 
 /** Add Receipt Via System, Add Custom Material Dialog CSS **/
-.add-receipt-via-system, .add-custom-material{
+
+.create-receipt-excel, .add-receipt-via-system, .add-custom-material, .delete-bom, .add-project-dialog{
   .mat-dialog-container{
     padding: 5px 24px 5px !important;
   }
@@ -257,7 +258,9 @@ $mat-row-horizontal-padding: 12px;
   .modal-body{
     padding: 1rem 1.5rem;
   }
+}
 
+.add-receipt-via-system, .add-custom-material{
   .col-unit{
     flex-basis: 10%;
     max-width: 10%;
@@ -327,6 +330,44 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
+.create-receipt-excel{
+  .equal-height{
+    min-height: 85px;
+  }
+}
+
+.width-75px{
+  width: 75px !important;
+}
+
+@media only screen and (max-width: 992px) and (min-width: 768px){
+
+  .add-custom-material, .add-receipt-via-system{
+    .col-sm-12 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .add-custom-material{
+    .col-sm-6 {
+      flex-basis: 50%;
+      max-width: 50%;
+    }
+
+    .modal-body{
+      padding-top: 0;
+    }
+  }
+
+  .add-receipt-via-system{
+    .col-sm-4{
+      flex-basis: 33.33333333%;
+      max-width: 33.33333333%;
+    }
+  }
+}
+
 @media only screen and (max-width: 767px){
   .receipts-outer-section{
     padding-top: 5px !important;
@@ -381,8 +422,15 @@ $mat-row-horizontal-padding: 12px;
 
 @media only screen and (max-width: 560px){
   .add-receipt-via-system .modal-body,
-  .add-custom-material .modal-body {
+  .add-custom-material .modal-body,
+  .create-receipt-excel .modal-body {
     padding: 1rem 1rem;
+  }
+
+  .add-receipt-via-system .mat-dialog-content,
+  .add-custom-material .modal-dialog-content,
+  .create-receipt-excel .modal-dialog-content{
+    padding: 0px !important;
   }
 }
 

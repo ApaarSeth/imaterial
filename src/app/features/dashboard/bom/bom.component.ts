@@ -310,7 +310,8 @@ export class BomComponent implements OnInit {
     let data = this.projectId
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: "1400px",
-      data
+      data,
+      panelClass: 'add-custom-material'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== null) {
@@ -426,7 +427,8 @@ export class BomComponent implements OnInit {
     if (data.isDelete == false) {
       const dialogRef = this.dialog.open(AddProjectComponent, {
         width: "1000px",
-        data
+        data,
+        panelClass: 'add-project-dialog'
       });
 
       dialogRef
