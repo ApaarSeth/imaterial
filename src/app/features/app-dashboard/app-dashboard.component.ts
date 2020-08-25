@@ -237,7 +237,8 @@ export class AppDashboardComponent implements OnInit {
       };
       const dialogRef = this.dialog.open(AddProjectComponent, {
         width: "1000px",
-        data
+        data,
+        panelClass: 'add-project-dialog'
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result != null)

@@ -59,5 +59,13 @@
 }
 
 .gray-clr{
-color:#828282;
+    color:#828282;
+}
+
+.add-project-dialog{
+    .project-name-input{
+        .mat-form-field-wrapper{
+            padding-top: 0px !important;
+        }
+    }
 }
