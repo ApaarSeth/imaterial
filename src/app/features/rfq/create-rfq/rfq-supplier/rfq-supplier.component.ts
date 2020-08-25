@@ -1,3 +1,4 @@
+import { AppNotificationService } from './../../../../shared/services/app-notification.service';
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import {
@@ -8,7 +9,7 @@ import { MatDialog, MatCheckbox, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq/rfq.service";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
-import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
+import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractControl, FormControl } from "@angular/forms";
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
 import { Subject, Observable } from 'rxjs';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
@@ -32,7 +33,7 @@ export class RfqSupplierComponent implements OnInit {
     "Phone No."
   ];
   allSupplier = new Observable<Suppliers[]>();
-  allSuppliers: Suppliers[] = [];
+  allSuppliers: Suppliers[];
   selectedSuppliersList: Suppliers[] = [];
   selectedSupplierFlag: boolean = false;
   checkedMaterialsList: AddRFQ;
@@ -44,40 +45,39 @@ export class RfqSupplierComponent implements OnInit {
   newAddedId: number;
   countryist: CountryCode[];
   // countryist: any;
-
+  searchForm: FormGroup;
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar,
-    private commonService: CommonService
+    private notifier: AppNotificationService,
+    private commonService: CommonService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.isMobile = this.commonService.isMobile().matches;
-    if (this.suppliers) {
-      this.allSuppliers = this.suppliers;
-    } else {
-      this.allSuppliers = [];
-    }
-    this.countryist = this.cntryList;
-    this.formInit();
+    this.countryist = this.activatedRoute.snapshot.data.rfqData[1].data;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.rfqData = this.finalRfq;
-    if (this.rfqData) {
-      this.supplierCounter = 0;
-      this.allSuppliers = this.allSuppliers.map((supplier: Suppliers) => {
-        if (this.finalRfq.supplierId && this.finalRfq.supplierId.includes(supplier.supplierId)) {
-          supplier.checked = true;
-          this.supplierCounter++;
-        }
-        else {
-          supplier.checked = false
-        }
-        return supplier;
-      })
+    if (changes.finalRfq && changes.finalRfq.currentValue) {
+      this.rfqData = changes.finalRfq.currentValue;
+      if (this.rfqData) {
+        this.allSuppliers = this.activatedRoute.snapshot.data.rfqData[0].data ? this.activatedRoute.snapshot.data.rfqData[0].data : [];
+        this.supplierCounter = 0;
+        this.allSuppliers = this.allSuppliers.map((supplier: Suppliers) => {
+          supplier.show = true;
+          if (this.finalRfq.supplierId && this.finalRfq.supplierId.includes(supplier.supplierId)) {
+            supplier.checked = true;
+            this.supplierCounter++;
+          }
+          else {
+            supplier.checked = false
+          }
+          return supplier;
+        })
+      }
       this.formInit();
     }
   }
@@ -92,21 +92,29 @@ export class RfqSupplierComponent implements OnInit {
     this.supplierForm = this.formBuilder.group({
       forms: new FormArray(frmArr)
     });
-  }
 
-  supplierCheck() {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
-      let check = control.value.some(supp => {
-        return supp.supplier != null
-      })
-      if (check) {
-        return { 'selectSomeSupplier': true };
+    this.searchForm = this.formBuilder.group({
+      search: ['']
+    })
+
+    this.searchForm.get('search').valueChanges.subscribe(val => {
+      if (val && val != "") {
+        for (let supplier of this.allSuppliers) {
+          if (supplier.supplier_name.includes(val)) {
+            supplier.show = true
+          }
+          else {
+            supplier.show = false
+          }
+        }
       }
-      return null;
-    }
+      else {
+        for (let supplier of this.allSuppliers) {
+          supplier.show = true
+        }
+      }
+    })
   }
-
-
 
   valueChange(supplier: Suppliers, ch: MatCheckbox, i: number) {
     const sArr = this.supplierForm.controls["forms"] as FormArray;
@@ -117,7 +125,7 @@ export class RfqSupplierComponent implements OnInit {
         supplier.checked = true
         sGrp.get("supplier").setValue(supplier);
       } else {
-        this.supplierAlert();
+        this.notifier.snack("Cannot add more than 3 supplier");
         supplier.checked = false;
         ch.checked = false;
       }
@@ -125,14 +133,6 @@ export class RfqSupplierComponent implements OnInit {
       this.supplierCounter--;
       sGrp.get("supplier").reset();
     }
-  }
-
-  supplierAlert() {
-    this._snackBar.open("Cannot add more than 3 supplier", "", {
-      duration: 2000,
-      panelClass: ["warning-snackbar"],
-      verticalPosition: "bottom"
-    });
   }
 
   reviewRfq() {

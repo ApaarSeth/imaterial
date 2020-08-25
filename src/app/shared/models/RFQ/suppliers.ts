@@ -12,4 +12,5 @@ export interface Suppliers {
   pan: string;
   checked?: boolean;
   supplier_rating?: number;
+  show?: boolean;
 }

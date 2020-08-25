@@ -32,12 +32,12 @@ const routes: Routes = [
   },
   {
     path: "createRfq/:rfqId",
-    // resolve: { countryList: CountryResolver },
+    resolve: { rfqData: CreateRfqResolver },
     component: CreateRfqComponent
   },
   {
     path: "createRfq",
-    // resolve: { countryList: CountryResolver },
+    resolve: { rfqData: CreateRfqResolver },
     component: CreateRfqComponent
   }
 ];
