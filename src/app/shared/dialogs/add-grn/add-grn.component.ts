@@ -13,11 +13,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 
 export class AddGrnComponent implements OnInit {
+    
     @ViewChild("myMaterial", { static: false }) myMaterial: GrnAddMaterialComponent;
     currentIndex: number = 0;
     countryList: CountryCode[] = [];
     materialList: GrnMaterialList[] = [];
-    supplierList: Supplier[]
+    supplierList: Supplier[];
+
     constructor(private commonService: CommonService,
         private dialogRef: MatDialogRef<AddGrnComponent>,
         @Inject(MAT_DIALOG_DATA) public data

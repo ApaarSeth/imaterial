@@ -141,7 +141,8 @@ export class BomTableComponent implements OnInit {
     let data = this.projectId
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: "1400px",
-      data
+      data,
+      panelClass: 'add-custom-material'
     });
 
     dialogRef.afterClosed().subscribe(result => {

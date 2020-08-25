@@ -1,154 +1,126 @@
-<div class="row">
-  <div class="col-xs-12 header-border p-t-10">
-    <div class="row">
-      <div class="col-xs-10">
-        <h1 mat-dialog-title>Add Custom Material</h1>
-      </div>
-      <div class="col-xs-2">
-        <button type="button" class="close pull-right p-t-5" (click)="closeDialog()" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-    </div>
+<div mat-dialog-content>
+  <div class="modal-header">
+    <h5 mat-dialog-title class="mb-0">Add Custom Material</h5>
+
+    <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
   </div>
-  <mat-divider></mat-divider>
-  <div class="container">
+
+  <div class="modal-body">
     <form *ngIf="addMyMaterial" [formGroup]="addMyMaterial" (ngSubmit)="submit()">
-      <div class="row my-material-dialog-length">
-        <div formArrayName="myMaterial" *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
-          <div class="row p-t-10" [formGroupName]="i">
-            <div class="col-xs-2" [ngClass]="this.data ? 'col-xs-2' : 'col-xs-3 p-r-0'">
-              <mat-form-field class="border-input width-90">
-                <input type="text" placeholder="Material Name*" matInput formControlName="materialName" />
-                <small *ngIf="addMyMaterial.get('myMaterial')['controls'][i]['controls']['materialName'].errors?.maxlength" class="warning-color"
-                  >maximun characters allowed is 300</small
-                >
-              </mat-form-field>
-              <!-- <mat-error *ngIf="myMaterial.controls['email'].hasError('required') && myMaterial.controls['email'].touched">
-                  Email is required
-                </mat-error> -->
-              <!-- myMaterial.controls.myMaterial.controls.email.errors -->
-            </div>
-            <div class="text-right p-l-0 p-r-0" [ngClass]="this.data ? 'col-xs-1' : 'col-xs-2'">
-              <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                <mat-label class="mat-select-trades">Unit*</mat-label>
-                <mat-select formControlName="materialUnit">
-                  <div class="display-flex">
-                    <input
-                      class="p-l-10 p-b-5"
-                      matInput
-                      type="search"
-                      placeholder="Search Unit"
-                      [(ngModel)]="searchUnit"
-                      [ngModelOptions]="{standalone: true}"
-                      (keydown)="$event.stopPropagation()"
-                    />
-                    <button mat-button mat-icon-button>
-                      <mat-icon>search</mat-icon>
-                    </button>
-                  </div>
-                  <mat-option *ngFor="let unit of materialUnit | SearchPipe: searchUnit" [value]="unit">
-                    <span>
-                      {{ unit }}
-                    </span>
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div *ngIf="this.data" class="col-xs-2 text-center">
-              <span>
-                <mat-form-field class="border-input width-90">
-                  <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text" placeholder="Quantity*" />
-                </mat-form-field>
-              </span>
-            </div>
-            <div *ngIf="this.data" class="col-xs-2 text-center">
-              <span>
-                <mat-form-field class="border-input width-90">
-                  <input formControlName="estimatedPrice" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Rate({{ this.currencyCode }})" />
-                </mat-form-field>
-              </span>
-            </div>
-            <div class="col-xs-2" [ngClass]="this.data ? 'col-xs-2' : 'col-xs-3 p-l-20 p-r-0'">
-              <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                <mat-label>Trade*</mat-label>
-                <mat-select formControlName="trade">
-                  <div class="display-flex">
-                    <input
-                      class="p-l-10 p-b-5"
-                      matInput
-                      type="search"
-                      placeholder="Search Trade"
-                      [(ngModel)]="searchTrade"
-                      [ngModelOptions]="{standalone: true}"
-                      (keydown)="$event.stopPropagation()"
-                    />
-                    <button mat-button matSuffix mat-icon-button>
-                      <mat-icon>search</mat-icon>
-                    </button>
-                  </div>
-                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:['tradeName']" [value]="trade">
-                    {{ trade.tradeName }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col-xs-2 p-r-0" [ngClass]="this.data ? 'col-xs-2  p-r-0' : 'col-xs-3  p-r-0'">
-              <mat-form-field class="border-select width-90 mat-form-field-flex-mm-padding">
-                <mat-label>Category*</mat-label>
-                <mat-select formControlName="category">
-                  <div class="display-flex">
-                    <input
-                      class="p-l-10 p-b-5"
-                      matInput
-                      type="search"
-                      placeholder="Search Category"
-                      [(ngModel)]="searchCategory"
-                      [ngModelOptions]="{standalone: true}"
-                      (keydown)="$event.stopPropagation()"
-                    />
-                    <button mat-button mat-icon-button>
-                      <mat-icon>search</mat-icon>
-                    </button>
-                  </div>
-                  <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:['categoriesName']" [value]="option" matTooltip=" {{ option.categoriesName }}">
-                    {{ option.categoriesName }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <!-- <mat-form-field class="border-input width-95">
-                <input type="text" placeholder="Category" matInput formControlName="category" [matAutocomplete]="auto" />
-                <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
-                  <mat-option matTooltip=" {{ option.categoriesName }}" *ngFor="let option of this.filterOptions | async" [value]="option">
-                    {{ option.categoriesName }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field> -->
-            </div>
-            <div class="col-xs-1 text-center p-t-15" [ngClass]="this.firefox ? 'p-l-0' : 'p-l-5'">
-              <div class="row">
-                <div class="col-xs-1 p-t-5">
-                  <a href="javascript:void(0)" *ngIf="addMyMaterial.get('myMaterial').value.length > 1" class="width-15-px cursor-pointer" (click)="onDelete(i)">
-                    <img src="../../../../assets/images/delete-button.png" />
-                  </a>
-                </div>
-                <div class="col-xs-1">
-                  <button
-                    *ngIf="i == addMyMaterial.get('myMaterial').value.length - 1"
-                    type="button"
-                    [disabled]="!addMyMaterial.valid"
-                    (click)="onAddRow()"
-                    class="p-t-5 material-icons cursor button-background"
-                    [ngClass]="[!addMyMaterial.valid ? 'main-color-faded' : 'main-color']"
-                  >
-                    add_circle
+      <div formArrayName="myMaterial"
+        *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
+
+        <div class="row p-t-10 mobile-padding" [formGroupName]="i">
+
+          <!-- Material Name Input Field -->
+          <div class="" [ngClass]="this.data ? 'col-md-2 col-material-name col-xs-12' : 'col-md-4 col-xs-12'">
+            <mat-form-field class="border-input w-100">
+              <input type="text" placeholder="Material Name*" matInput formControlName="materialName" />
+              <small
+                *ngIf="addMyMaterial.get('myMaterial')['controls'][i]['controls']['materialName'].errors?.maxlength"
+                class="warning-color">maximun characters allowed is 300</small>
+            </mat-form-field>
+          </div>
+
+          <!-- Material Unit Dropdown Field -->
+          <div class="" [ngClass]="this.data ? 'col-md-1 col-unit col-xs-5' : 'col-md-2 col-xs-12'">
+            <mat-form-field class="border-select w-100 mat-form-field-flex-mm-padding">
+              <mat-label class="mat-select-trades">Unit*</mat-label>
+              <mat-select formControlName="materialUnit">
+                <div class="display-flex">
+                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Unit" [(ngModel)]="searchUnit"
+                    [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()" />
+                  <button mat-button mat-icon-button>
+                    <mat-icon>search</mat-icon>
                   </button>
                 </div>
-              </div>
-            </div>
+                <mat-option *ngFor="let unit of materialUnit | SearchPipe: searchUnit" [value]="unit">
+                  <span>
+                    {{ unit }}
+                  </span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-          <hr *ngIf="i < addMyMaterial.get('myMaterial').value.length - 1" />
+
+          <!-- Quantity Input Field -->
+          <div *ngIf="this.data" class="col-md-2 col-xs-7">
+            <mat-form-field class="border-input w-100">
+              <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text"
+                placeholder="Quantity*" />
+            </mat-form-field>
+          </div>
+
+          <!-- Unit Rate Input Field -->
+          <div *ngIf="this.data" class="col-md-2 col-xs-12 col-unit-rate">
+            <mat-form-field class="border-input w-100">
+              <input formControlName="estimatedPrice" appTwoDigitDecimaNumber matInput type="text"
+                placeholder="Unit Rate({{ this.currencyCode }})" />
+            </mat-form-field>
+          </div>
+
+          <!-- Trade Dropdown Field -->
+          <div class="" [ngClass]="this.data ? 'col-md-2 col-xs-12' : 'col-md-3 col-xs-12'">
+            <mat-form-field class="border-select w-100 mat-form-field-flex-mm-padding">
+              <mat-label>Trade*</mat-label>
+              <mat-select formControlName="trade">
+                <div class="display-flex">
+                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Trade"
+                    [(ngModel)]="searchTrade" [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()" />
+                  <button mat-button matSuffix mat-icon-button>
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </div>
+                <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:['tradeName']" [value]="trade">
+                  {{ trade.tradeName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Category Dropdown Field -->
+          <div class="" [ngClass]="this.data ? 'col-md-2 col-xs-12' : 'col-md-3 col-xs-12'">
+            <mat-form-field class="border-select w-100 mat-form-field-flex-mm-padding">
+              <mat-label>Category*</mat-label>
+              <mat-select formControlName="category">
+                <div class="display-flex">
+                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Category"
+                    [(ngModel)]="searchCategory" [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()" />
+                  <button mat-button mat-icon-button>
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </div>
+                <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:['categoriesName']"
+                  [value]="option" matTooltip=" {{ option.categoriesName }}">
+                  {{ option.categoriesName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Add Button Field -->
+          <div class="col-md-1 col-xs-12 col-add-btn display-flex align-items-center justify-content-end">
+            <!-- [ngClass]="this.firefox ? 'p-l-0' : 'p-l-5'" -->
+            <a href="javascript:void(0)" *ngIf="addMyMaterial.get('myMaterial').value.length > 1"
+              class="width-15-px cursor-pointer" (click)="onDelete(i)">
+              <img src="../../../../assets/images/delete-button.png" />
+            </a>
+
+            <button *ngIf="i == addMyMaterial.get('myMaterial').value.length - 1" type="button"
+              [disabled]="!addMyMaterial.valid" (click)="onAddRow()"
+              class="p-t-5 material-icons cursor button-background add-material-btn"
+              [ngClass]="[!addMyMaterial.valid ? 'main-color-faded' : 'main-color']">
+              add_circle
+            </button>
+          </div>
+
         </div>
+
+        <hr *ngIf="i < addMyMaterial.get('myMaterial').value.length - 1" class="material-seperator" />
       </div>
 
       <div class="text-align-center col-xs-12 mt-4">
