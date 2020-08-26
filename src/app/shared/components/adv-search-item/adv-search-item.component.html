@@ -31,7 +31,7 @@
     <ng-container *ngIf="   form.get('selected').value">
         <ul class="selected-list">
             <li *ngFor="let option of form.get('selected').value" class="d-flex justify-content-between">
-                {{ option.name }}
+                <div>{{ option.name }}</div>
                 <span class="font-size20">
                     <mat-icon (click)="remove(option.id)" inline="true">close</mat-icon>
                 </span>

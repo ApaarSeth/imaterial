@@ -74,9 +74,11 @@ export class ViewGRNComponent implements OnInit {
         })
         this.getNotifications();
     }
+
     getNotifications() {
         this.commonService.getNotification(this.userId);
     }
+
     setLocalStorage() {
         this.userId = Number(localStorage.getItem("userId"));
         const popovers = {

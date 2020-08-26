@@ -75,9 +75,10 @@ export class AddEditGrnComponent implements OnInit {
         index: [i]
       });
       formGrp.get('certifiedQty').valueChanges.subscribe(val => {
-        if (Number(val) > 0) {
+        let date = (<FormGroup>(<FormArray>this.materialForms.get('forms')).controls[formGrp.get('index').value]).controls['deliveredDate'].value;
+        if (Number(val) > 0 && date == '') {
           (<FormGroup>(<FormArray>this.materialForms.get('forms')).controls[formGrp.get('index').value]).controls['deliveredDate'].setValue(null)
-        } else {
+        } else if (date == '') {
           (<FormArray>this.materialForms.get('forms')).controls[formGrp.get('index').value].get('deliveredDate').setValue('')
         }
       })
