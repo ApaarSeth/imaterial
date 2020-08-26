@@ -1,5 +1,5 @@
-<div class="page-start-point mt-5 pt-4">
-  <div class="p-l-20 p-r-20 p-b-20 bom-table-style">
+<div class="page-start-point pt-1">
+  <div class="p-l-10 p-r-10 p-b-10 bom-table-style">
     <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()"
       [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"></card-layout>
 
@@ -34,7 +34,9 @@
             <mat-menu #menu="matMenu" class="bom-detail-dropdown-menus">
               <button mat-menu-item (click)="openGrnViaExcelDialog()">Create Receipt via Excel</button>
               <button mat-menu-item (click)="openGrnDialog()">Create Receipt via System</button>
-              <button mat-menu-item (click)="addMaterial()">Add/Edit Material</button>
+              <!-- <button mat-menu-item (click)="addMaterial()">Add/Edit Material</button> -->
+              <button mat-menu-item (click)="addMaterial()">Add Material</button>
+              <button mat-menu-item (click)="editMaterial()">Edit Material</button>
               <button mat-menu-item (click)="openAddMyMaterial()">Add Custom Material</button>
             </mat-menu>
           </div>
@@ -74,7 +76,8 @@
         </ng-container>
 
         <ng-container matColumnDef="estimatedQty">
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>
+          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell
+            mat-sort-header>
             Estimated Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -84,7 +87,8 @@
         </ng-container>
 
         <ng-container matColumnDef="estimatedRate">
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>
+          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell
+            mat-sort-header>
             Estimated Rate
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -94,7 +98,8 @@
         </ng-container>
 
         <ng-container matColumnDef="requestedQuantity">
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>
+          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell
+            mat-sort-header>
             Requested Quantity
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -104,7 +109,8 @@
         </ng-container>
 
         <ng-container matColumnDef="issueToProject">
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>
+          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell
+            mat-sort-header>
             Issued To Project
           </th>
           <td class="text-align-center" mat-cell *matCellDef="let element"

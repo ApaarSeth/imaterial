@@ -43,14 +43,14 @@ import { UploadImageComponent } from "../../../../shared/dialogs/upload-image/up
 })
 export class BomTableComponent implements OnInit {
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   projectId: number;
   projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
-  innerDisplayedColumns = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
+  columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
+  innerDisplayedColumns = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -113,7 +113,7 @@ export class BomTableComponent implements OnInit {
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
     this.route.params.subscribe(params => {
-      this.projectId = params["id"];
+      this.projectId = params[ "id" ];
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
@@ -154,7 +154,7 @@ export class BomTableComponent implements OnInit {
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
-      this.subcategories = res.data ? [...res.data] : null;
+      this.subcategories = res.data ? [ ...res.data ] : null;
       if (this.subcategories) {
         this.subcategories.forEach(subcategory => {
           if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
@@ -178,11 +178,11 @@ export class BomTableComponent implements OnInit {
       this.dataSource.sort = this.sort;
 
       this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
-        if (typeof data[sortHeaderId] === 'string') {
-          return data[sortHeaderId].toLocaleLowerCase();
+        if (typeof data[ sortHeaderId ] === 'string') {
+          return data[ sortHeaderId ].toLocaleLowerCase();
         }
-      
-        return data[sortHeaderId];
+
+        return data[ sortHeaderId ];
       };
 
       // this.dataSource.sortingDataAccessor = (data, header) => data[header];
@@ -268,7 +268,7 @@ export class BomTableComponent implements OnInit {
       if (this.checkedSubcategory.length) {
         let checkedList = this.checkedSubcategory;
         this.indentService.raiseIndentData = checkedList;
-        this.router.navigate(["/indent/" + this.projectId]);
+        this.router.navigate([ "/indent/" + this.projectId ]);
       }
     }
   }
@@ -301,7 +301,7 @@ export class BomTableComponent implements OnInit {
         mat.documentList = category.documentsList;
         materialList.push(mat);
       });
-      let projectId = materialList[0].projectId;
+      let projectId = materialList[ 0 ].projectId;
       this.addRfq = {
         id: null,
         status: null,
@@ -344,9 +344,9 @@ export class BomTableComponent implements OnInit {
         documentsList: null,
         terms: null
       };
-      this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
+      this.addRfq.rfqProjectsList[ 0 ].projectMaterialList = materialList;
       this.rfqService.addRFQ(this.addRfq).then(res => {
-        this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
+        this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
           state: { rfqData: res, selectedIndex: 1 }
         });
       });
@@ -355,7 +355,7 @@ export class BomTableComponent implements OnInit {
   }
 
   viewIndent() {
-    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
+    this.router.navigate([ "/indent/" + this.projectId + "/indent-detail" ]);
   }
 
   editProject() {
@@ -401,9 +401,13 @@ export class BomTableComponent implements OnInit {
         .then(result => { });
     }
   }
-  addMaterial() {
-    this.router.navigate(["/project-dashboard/bom/" + this.projectId]);
 
+  addMaterial() {
+    this.router.navigate([ "/project-dashboard/bom/" + this.projectId ]);
+  }
+
+  editMaterial() {
+    this.router.navigate([ "/project-dashboard/bom/" + this.projectId + "/edit-materials" ]);
   }
 
   issueToIndent(materialId, projectId): void {
@@ -412,7 +416,7 @@ export class BomTableComponent implements OnInit {
         width: "1200px",
         data: { materialId: materialId, projectId: projectId },
         disableClose: true,
-        panelClass: ["issue-to-indent-dialog"]
+        panelClass: [ "issue-to-indent-dialog" ]
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result !== null) {

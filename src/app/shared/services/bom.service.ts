@@ -19,11 +19,13 @@ export class BomService {
       categoryList
     );
   }
+
   getMaterialWithQuantity(organizationId: Number, projectId: Number) {
     return this.dataService.getRequest(
       API.GETMATERIALSWITHQUANTITY(organizationId, projectId)
     );
   }
+
   getCategory() {
     return this.dataService.getRequestMaster(API.GETCATERGORY).then(res => {
       return res;

@@ -54,13 +54,19 @@ export class AdvanceSearchService {
 
     getAllUsers(orgId) {
         return this.userService.getAllUsers(orgId).then(res => {
-            return res.data.activatedProjectList.map(itm => ({ ...itm, name: itm.ProjectUser.firstName + ' ' + itm.ProjectUser.firstName, id: itm.ProjectUser.userId }));
+            let users = [];
+            res.data.activatedProjectList.forEach(itm => {
+                if (itm.ProjectUser.firstName !== '' && itm.ProjectUser.lastName !== '') {
+                    users.push({ ...itm, name: itm.ProjectUser.firstName + ' ' + itm.ProjectUser.firstName, id: itm.ProjectUser.userId })
+                }
+            });
+            return users;
         });
     }
 
     getRFPBids() {
         let data = [];
-        data.push({ id: 0, name: 'Bid Submitted' });
+        data.push({ id: 2, name: 'Bid Submitted' });
         data.push({ id: 1, name: 'Not Submitted' });
         return data;
     }
