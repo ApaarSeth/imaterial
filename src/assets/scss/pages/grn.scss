@@ -233,34 +233,50 @@ $mat-row-horizontal-padding: 12px;
 
 /** Add Receipt Via System, Add Custom Material Dialog CSS **/
 
-.create-receipt-excel, .add-receipt-via-system, .add-custom-material, .delete-bom, .add-project-dialog{
+.create-receipt-excel, .add-receipt-via-system, .add-custom-material, .issue-to-indent-dialog, .upload-image-modal, .view-image-modal,
+.delete-bom, .payment-record-dialog, .add-receipts-dialog, .show-docs-dialog, .drafted-po-confirm-dialog, .select-currency-dialog,
+.add-project-dialog, .deactivate-user{
   .mat-dialog-container{
-    padding: 5px 24px 5px !important;
+    padding: 0px !important;
+    overflow-x: hidden;
   }
+}
 
+.create-receipt-excel, .add-receipt-via-system, .add-custom-material, .issue-to-indent-dialog, .upload-image-modal, .view-image-modal,
+.delete-bom, .payment-record-dialog, .add-receipts-dialog, .show-docs-dialog, .drafted-po-confirm-dialog, .select-currency-dialog,
+.add-project-dialog, .add-supplier-dialog, .add-users-dialog, .deactivate-user{
   .mat-dialog-content{
     padding: 0;
     overflow-x: hidden;
   }
 
   .mat-dialog-title{
-    opacity: 0.7;
-    line-height: 20px;
-    font-size: 18px;
+    font-size: 16px;
+    color: #020202;
+    line-height: 24px;
   }
 
-  .modal-header .close {
-    font-weight: 100;
-    font-size: 3em;
-    line-height: 10px;
-  }
-
-  .modal-body{
-    padding: 1rem 1.5rem;
+  .modal-header{
+    height: 54px;
+    background-color: #e7e7e7;
+    .close {
+      opacity: 1;
+      color: #020202;
+      font-weight: 100;
+      font-size: 32px;
+      line-height: 15px;
+    }
   }
 }
 
-.add-receipt-via-system, .add-custom-material{
+.create-receipt-excel, .add-receipt-via-system, .delete-bom, .add-project-dialog, .add-supplier-dialog, .payment-record-dialog,
+.add-receipts-dialog, .show-docs-dialog, .add-users-dialog, .deactivate-user{
+  .modal-body{
+    padding: 1rem 2.5rem;
+  }
+}
+
+.add-custom-material, .add-receipt-via-system{
   .col-unit{
     flex-basis: 10%;
     max-width: 10%;
@@ -274,9 +290,14 @@ $mat-row-horizontal-padding: 12px;
 
 .add-receipt-via-system{
 
+  .col-total-amount{
+    flex-basis: 15.666667%;
+    max-width: 15.666667%;
+  }
+
   .col-add-btn{
-    flex-basis: 4.3333%;
-    max-width: 4.3333%;
+    max-width: 5.66663599%;
+    flex-basis: 5.66663599%;
   }
 
   .mat-horizontal-stepper-header-container .mat-step-header{
@@ -316,8 +337,8 @@ $mat-row-horizontal-padding: 12px;
   }
 
   .col-unit-rate{
-    max-width: 14%;
-    flex-basis: 14%;
+    max-width: 14.32226299%;
+    flex-basis: 14.32226299%;
   }
 
   .col-add-btn{
@@ -328,11 +349,120 @@ $mat-row-horizontal-padding: 12px;
   .add-material-btn{
     padding-right: 0px;
   }
+
+  .modal-body{
+    padding: 0 2.5rem 1.5rem;
+  }
+}
+
+.issue-to-indent-dialog{
+  .modal-body{
+    width: 99%;
+    margin: auto;
+  }
+}
+
+.upload-image-modal{
+  .modal-body{
+    padding: 1.5rem 3rem;
+  }
+}
+
+.view-image-modal{
+  .modal-body{
+    padding: 0px 1rem;
+  }
+}
+
+.grn-docs{
+  padding: 2rem 0.5rem 1rem;
+
+  .upload-document-label label{
+    font-size: 16px;
+  }
+
+  .grey-dotted-border{
+    padding: 20px 30px !important;
+  }
+
+  .upload-green-tick {
+    margin: auto auto 20px;
+  }
+
+  .mat-list.mat-list-base {
+    padding: 0 0 0 3rem;
+  }
+
+  .add-receipt-message span.file-limit {
+    font-size: 12px;
+    color: #666;
+  }
+}
+
+.add-receipts-dialog, .show-docs-dialog{
+  .upload-image-info{
+    margin-left: 0px;
+    &:last-child{
+      margin-bottom: 0px !important;
+    }
+  }
+}
+
+.show-docs-dialog{
+
+  .modal-body{
+    padding: 1.5rem 2.5rem 1.5rem 3rem;
+  }
+
+  .image-info {
+    width: 80%;
+  }
+  
+  .image-actions {
+    width: 10%;
+    text-align: right;
+  }
+}
+
+.delete-bom, .drafted-po-confirm-dialog{
+  .modal-body{
+    padding: 1.5rem 2.5rem;
+  }
+}
+
+.add-supplier-dialog, .add-users-dialog{
+  .mat-dialog-container, .add-supplier-name .mat-form-field-wrapper,
+  .add-first-name .mat-form-field-wrapper{
+    padding: 0px !important;
+  }
+}
+
+.add-supplier-dialog{
+  .add-supplier-form{
+    overflow-x: hidden;
+  }
+
+  .mat-dialog-content{
+    padding: 0rem 0rem 2rem !important;
+  }
 }
 
 .create-receipt-excel{
   .equal-height{
     min-height: 85px;
+  }
+}
+
+.payment-record-dialog{
+  .po-details-div{
+    padding: 10px 20px;
+    border-radius: 6px;
+  }
+}
+
+.select-currency-dialog{
+  .modal-body{
+    padding: 1rem 2.5rem 2rem;
   }
 }
 
@@ -364,6 +494,28 @@ $mat-row-horizontal-padding: 12px;
     .col-sm-4{
       flex-basis: 33.33333333%;
       max-width: 33.33333333%;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px){
+  .show-docs-dialog {
+    .modal-body {
+      padding: 0.5rem 2.5rem 1rem 3rem;
+    }
+
+    .upload-image-info{
+      margin: 5px 0 5px !important;
+    }
+  }
+
+  .payment-record-dialog{
+    .po-details-div{
+      padding: 10px 10px;
+    }
+
+    .payment-outer{
+      font-size: 14px;
     }
   }
 }
@@ -408,7 +560,23 @@ $mat-row-horizontal-padding: 12px;
 
   .add-custom-material{
     .mobile-padding, .col-material-name .mat-form-field-wrapper{
-      padding-top: 0px !important;
+      padding-top: 8px !important;
+    }
+
+    .trade-input{
+      padding-bottom: 8px;
+    }
+  }
+
+  .payment-record-dialog{
+    .payment-grn-col{
+      margin-bottom: 0.25rem !important;
+    }
+  }
+
+  .add-supplier-dialog{
+    .modal-body {
+      padding-bottom: 0;
     }
   }
 }
@@ -418,14 +586,28 @@ $mat-row-horizontal-padding: 12px;
     padding-top: 0px !important;
     margin-top: -10px !important;
   }
+
+  .payment-record-dialog{
+    .col-base-currency{
+      flex: 0 0 100%;
+      max-width: 100%;
+      padding-right: .5rem!important;
+    }
+  }
+
+  .add-supplier-dialog{
+    .supplier-country-code span{
+      font-size: 12px;
+    }
+  }
 }
 
 @media only screen and (max-width: 560px){
-  .add-receipt-via-system .modal-body,
-  .add-custom-material .modal-body,
-  .create-receipt-excel .modal-body {
-    padding: 1rem 1rem;
-  }
+  // .add-receipt-via-system .modal-body,
+  // .add-custom-material .modal-body,
+  // .create-receipt-excel .modal-body {
+  //   padding: 1rem 1rem;
+  // }
 
   .add-receipt-via-system .mat-dialog-content,
   .add-custom-material .modal-dialog-content,

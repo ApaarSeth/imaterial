@@ -70,7 +70,8 @@ export class GrnComponent implements OnInit {
     openDocuments(data) {
         const dialogRef = this._dialog.open(ShowDocumentComponent, {
             width: "500px",
-            data
+            data,
+            panelClass: 'show-docs-dialog'
         });
         dialogRef.afterClosed().toPromise().then(result => {
             if (result) {

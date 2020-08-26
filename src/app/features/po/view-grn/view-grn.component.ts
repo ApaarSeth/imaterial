@@ -117,7 +117,8 @@ export class ViewGRNComponent implements OnInit {
     openDocuments(data) {
         const dialogRef = this.dialog.open(ShowDocumentComponent, {
             width: "500px",
-            data
+            data,
+            panelClass: 'show-docs-dialog'
         });
         dialogRef.afterClosed().toPromise().then(result => {
             if (result) {
@@ -129,7 +130,8 @@ export class ViewGRNComponent implements OnInit {
         if (data.isDelete == false) {
             const dialogRef = this.dialog.open(AddEditGrnComponent, {
                 width: "1000px",
-                data
+                data,
+                panelClass: 'add-receipts-dialog'
             });
             dialogRef.afterClosed().toPromise().then(result => {
                 if (result) {

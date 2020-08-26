@@ -353,7 +353,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "500px",
-      data: this.poCurrency
+      data: this.poCurrency,
+      panelClass: 'select-currency-dialog'
     });
 
     dialogRef.afterClosed().subscribe(data => {

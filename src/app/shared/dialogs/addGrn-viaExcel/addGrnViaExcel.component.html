@@ -1,44 +1,45 @@
-<div mat-dialog-content>
-
+<section class="modal-outer">
   <div class="modal-header">
     <h5 mat-dialog-title class="mb-0">Direct Receipt via excel</h5>
-
     <button type="button" class="close" (click)="cancel()" aria-label="Close">
       <span aria-hidden="true">×</span>
     </button>
   </div>
 
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-md-6 col-sm-6 col-xs-12 padding-for-dialog-after-header text-align-center">
-        <mat-card>
-          <div class="equal-height">
-            <a class="cursor-pointer" (click)="downloadExcel()"> 
-              <img src="assets/images/download_icon.png" alt="download" class="width-75px" />
-            </a>
-          </div>
+  <div mat-dialog-content>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12 padding-for-dialog-after-header text-align-center">
+          <mat-card>
+            <div class="equal-height">
+              <a class="cursor-pointer" (click)="downloadExcel()">
+                <img src="assets/images/download_icon.png" alt="download" class="width-75px" />
+              </a>
+            </div>
 
-          <mat-card-content class="m-t-10 main-color text-semi-bold fontsize-17-px">
-            <p>Download the template</p>
-          </mat-card-content>
-        </mat-card>
-      </div>
+            <mat-card-content class="m-t-10 main-color text-semi-bold fontsize-17-px">
+              <p>Download the template</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
 
-      <div class="col-md-6 col-sm-6 col-xs-12 padding-for-dialog-after-header text-align-center">
-        <mat-card>
-          <div class="equal-height">
-            <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload cursor-pointer"
-              style="display: none;" multiple (change)="uploadExcel($event.target.files)" />
-            <label for="fileDropRef">
-              <img src="assets/images/upload_icon.png" alt="upload" class="width-34 cursor-pointer" />
-            </label>
-          </div>
-    
-          <mat-card-content class="m-t-10 main-color text-semi-bold fontsize-17-px">
-            <p>Upload the template</p>
-          </mat-card-content>
-        </mat-card>
+        <div class="col-md-6 col-sm-6 col-xs-12 padding-for-dialog-after-header text-align-center">
+          <mat-card>
+            <div class="equal-height">
+              <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef" class="fileupload cursor-pointer"
+                style="display: none;" multiple (change)="uploadExcel($event.target.files)" />
+              <label for="fileDropRef">
+                <img src="assets/images/upload_icon.png" alt="upload" class="width-34 cursor-pointer" />
+              </label>
+            </div>
+
+            <mat-card-content class="m-t-10 main-color text-semi-bold fontsize-17-px">
+              <p>Upload the template</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+</section>

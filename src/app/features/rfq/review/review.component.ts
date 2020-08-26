@@ -182,7 +182,8 @@ export class ReviewComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "600px",
-      data: this.finalRfq.rfqCurrency
+      data: this.finalRfq.rfqCurrency,
+      panelClass: 'select-currency-dialog'
     });
 
     dialogRef.afterClosed().subscribe(data => {
