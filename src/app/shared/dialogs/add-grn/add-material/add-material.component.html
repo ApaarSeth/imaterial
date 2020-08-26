@@ -8,7 +8,7 @@
         <div class="row" [formGroupName]="i">
 
           <!-- Material Name Input Field -->
-          <div class="col-md-2 col-material-name col-xs-12">
+          <div class="col-md-2 col-material-name col-sm-4 col-xs-12">
             <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding label-font-size">
               <input type="text" placeholder="Material Name*" matInput formControlName="materialName"
                 [matAutocomplete]="auto" />
@@ -25,7 +25,7 @@
           </div>
 
           <!-- Material Unit Dropdown Field -->
-          <div class="col-md-1 col-unit col-xs-5">
+          <div class="col-md-1 col-unit col-sm-4 col-xs-5">
             <mat-form-field class="border-select label-font-size w-100 mat-form-field-flex-mm-padding">
               <mat-label>Unit*</mat-label>
               <mat-select formControlName="materialUnit">
@@ -49,7 +49,7 @@
           </div>
 
           <!-- Material Quantity Input Field -->
-          <div class="col-md-2 col-xs-7">
+          <div class="col-md-2 col-sm-4 col-xs-7">
             <mat-form-field class="border-input p-l-0 label-font-size w-100">
               <input formControlName="deliveredQty" appTwoDigitDecimaNumber matInput type="text"
                 placeholder="Quantity*" />
@@ -60,7 +60,7 @@
           </div>
 
           <!-- Material Pending Quantity Input Field -->
-          <div class="col-md-2 col-xs-12">
+          <div class="col-md-2 col-sm-4 col-xs-12">
             <mat-form-field class="border-input label-font-size w-100">
               <input formControlName="pendingQty" appTwoDigitDecimaNumber matInput type="text"
                 placeholder="Pending Qty*" />
@@ -71,7 +71,7 @@
           </div>
 
           <!-- Material Unit Price Input Field -->
-          <div class="col-md-2 col-xs-12">
+          <div class="col-md-2 col-sm-4 col-xs-12">
             <mat-form-field class="border-input label-font-size w-100">
               <input formControlName="materialUnitPrice" appTwoDigitDecimaNumber matInput type="text"
                 placeholder="Unit Price*({{ currency }})" />
@@ -82,7 +82,7 @@
           </div>
 
           <!-- Material Total Amount Input Field -->
-          <div class="col-md-2 col-xs-12">
+          <div class="col-md-2 col-sm-4 col-xs-12">
             <mat-form-field class="border-input label-font-size w-100">
               <input formControlName="amount" appTwoDigitDecimaNumber matInput type="text"
                 placeholder="Total Amt*({{ currency }})" />
@@ -92,7 +92,7 @@
           </div>
 
           <!-- Add Button Field -->
-          <div class="col-md-1 col-xs-12 col-add-btn display-flex align-center justify-content-end">
+          <div class="col-md-1 col-sm-12 col-xs-12 col-add-btn display-flex align-items-center justify-content-end">
             <span *ngIf="addMaterialsForm.get('addMaterial')['controls'].length > 1" matRipple
               class="cursor-pointer p-r-5" (click)="deleteField(i)">
               <img src="../../../../assets/images/delete-button.png" />

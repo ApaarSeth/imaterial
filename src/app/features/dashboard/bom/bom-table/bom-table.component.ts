@@ -141,7 +141,8 @@ export class BomTableComponent implements OnInit {
     let data = this.projectId
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: "1400px",
-      data
+      data,
+      panelClass: 'add-custom-material'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -253,7 +254,8 @@ export class BomTableComponent implements OnInit {
   openGrnViaExcelDialog() {
     const dialogRef = this.dialog.open(AddGrnViaExcelComponent, {
       width: "600px",
-      data: this.projectId
+      data: this.projectId,
+      panelClass: 'create-receipt-excel'
     });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -383,7 +385,8 @@ export class BomTableComponent implements OnInit {
     if (data.isDelete == false) {
       const dialogRef = this.dialog.open(AddProjectComponent, {
         width: "1000px",
-        data
+        data,
+        panelClass: 'add-project-dialog'
       });
 
       dialogRef
@@ -427,7 +430,8 @@ export class BomTableComponent implements OnInit {
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(DeleteBomComponent, {
         width: "800px",
-        data: { materialId: materialId, projectId: projectId }
+        data: { materialId: materialId, projectId: projectId },
+        panelClass: 'delete-bom'
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result.data == "close") {
