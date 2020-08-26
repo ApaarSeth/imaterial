@@ -384,6 +384,7 @@ export class BomComponent implements OnInit {
       tradelist: [...this.form.value.selectedTrades]
     }
     this.bomService.setProjTrades(tradeData);
+    this.bomService.searchText.next('')
     this.bomService
       .sumbitCategory(this.userId, this.projectId, this.categoriesInputData)
       .then(res => {
