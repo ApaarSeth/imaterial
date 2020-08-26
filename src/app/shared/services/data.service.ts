@@ -391,10 +391,10 @@ export class DataService {
     } else if (err.status === ErrorCodesConstants.ERROR_HTTP_NOT_FOUND) {
       this.notifier.snack(err.error)
     } else if (err.status === ErrorCodesConstants.ERROR_HTTP_UNAUTHORIZED) {
-      if (err.url.includes('sso/auth/token')) {
+      if (err.url.includes('sso/oauth/token')) {
         throw (err.error)
       } else {
-        this.notifier.snack(`err.error.error.toUpperCase()`)
+        this.notifier.snack(err.error.error.toUpperCase())
         console.log(`Error Staus:${err.status} Error Message:${err.message} Url:${err.url}`)
       }
     } else if (err.status === ErrorCodesConstants.ERROR_HTTP_UNAUTHORIZED_ROLE) {
