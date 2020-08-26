@@ -79,6 +79,14 @@
         &:last-of-type{
             margin-bottom: 0px;
         }
+        div{
+            white-space: nowrap;
+            width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: initial;
+            margin-top: 5px;
+        }
         span{
             cursor: pointer;
         }

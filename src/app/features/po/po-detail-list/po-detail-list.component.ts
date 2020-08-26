@@ -154,7 +154,7 @@ export class PODetailComponent implements OnInit {
   getApproversList(res): AdvSearchData[] {
     let arr = [];
     res.forEach(item => {
-      if (item.ProjectUser.roleName !== 'l3') {
+      if (item && item.ProjectUser.roleName !== 'l3') {
         arr.push(item);
       }
     });

@@ -1,5 +1,5 @@
-<div class="page-start-point mt-5 pt-4">
-    <div class="p-l-20 p-r-20 p-b-20 copy-bom-materials-outer">
+<div class="page-start-point pt-1">
+    <div class="p-l-10 p-r-10 p-b-10 copy-bom-materials-outer">
         <card-layout *ngIf="projectData" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2">
         </card-layout>
 
@@ -46,8 +46,9 @@
             </div>
 
             <div class="row bom-details-table-div-part example-container mat-elevation-z8">
-                <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="col-sm-12 bom-material-table">
-                    
+                <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows
+                    class="col-sm-12 bom-material-table">
+
                     <ng-container matColumnDef="materialName">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="bom-material-name-col">
                             <mat-checkbox #allCh (change)="getElemenetChecked(allCh, dataSource, 'SelectAll')">
@@ -82,7 +83,8 @@
                     </ng-container>
 
                     <ng-container matColumnDef="estimatedQty">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                            class="text-align-center justify-center minwidth-110-px">
                             Estimated Quantity
                         </th>
                         <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -92,7 +94,8 @@
                     </ng-container>
 
                     <ng-container matColumnDef="estimatedRate">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                            class="text-align-center justify-center minwidth-110-px">
                             Unit Rate (INR)
                         </th>
                         <td class="text-align-center" mat-cell *matCellDef="let element"

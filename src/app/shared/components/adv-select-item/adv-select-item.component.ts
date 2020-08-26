@@ -41,7 +41,7 @@ export class AdvanceSelectItemComponent implements OnInit {
 
         this.form.valueChanges.subscribe(val => {
             const selectedOrderIds = this.form.value.checkBoxes.map((checked, i) => checked ? this.config.list[ i ].id : null).filter(v => v !== null);
-            val && val.length ? this.selectionUpdate.emit(selectedOrderIds) : this.selectionUpdate.emit([]);
+            this.selectionUpdate.emit(selectedOrderIds);
         })
     }
 

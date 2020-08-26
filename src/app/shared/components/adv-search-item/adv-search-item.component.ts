@@ -39,7 +39,7 @@ export class AdvSearchItemComponent implements OnInit {
 
         this.form.get('searchInput').valueChanges.subscribe(val => {
             if (val) {
-                this.filtered = this.config.list.filter(itm => itm.name.toLowerCase().indexOf(val) !== -1);
+                this.filtered = this.config.list.filter(itm => itm.name.toLowerCase().indexOf(val.toLowerCase()) !== -1);
             } else {
                 this.filtered = null
             }
@@ -47,7 +47,7 @@ export class AdvSearchItemComponent implements OnInit {
         })
 
         this.form.get('selected').valueChanges.subscribe(val => {
-            val && val.length ? this.selectionUpdate.emit(val) : this.selectionUpdate.emit([]);
+            this.selectionUpdate.emit(val);
         })
     }
 
