@@ -39,7 +39,7 @@ import { DeleteMyMaterialComponent } from './delete-my-material-confirmation/del
 import { ShortCloseConfirmationComponent } from './short-close-confirmation/short-close-confirmation.component';
 import { DeactiveSupplierComponent } from './disable-supplier/disable-supplier.component';
 import { ConfirmRfqBidComponent } from './confirm-rfq-bid/confirm-frq-bid-component';
-import { AddAddressDialogComponent } from './add-address-po/add-address.component';
+import { AddAddressDialogComponent } from './add-address/add-address.component';
 
 export const SharedDialogs = [
   AddProjectComponent,

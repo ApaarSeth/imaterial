@@ -10,7 +10,7 @@ import { ActivatedRoute } from "@angular/router";
 import { POService } from 'src/app/shared/services/po.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierRatingComponent } from "src/app/shared/dialogs/supplier-rating/supplier-rating.component";
-import { AddAddressDialogComponent } from "../../../shared/dialogs/add-address-po/add-address.component";
+import { AddAddressDialogComponent } from "../../../shared/dialogs/add-address/add-address.component";
 
 @Component({
   selector: "app-po-card",
