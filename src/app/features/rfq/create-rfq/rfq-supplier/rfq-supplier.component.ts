@@ -159,7 +159,8 @@ export class RfqSupplierComponent implements OnInit {
 
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "660px",
-      data
+      data,
+      panelClass: 'add-supplier-dialog'
     });
     dialogRef
       .afterClosed()
@@ -191,10 +192,10 @@ export class RfqSupplierComponent implements OnInit {
   openRfqTermsDialog(data: AddRFQ): void {
     const dialogRef = this.dialog.open(SelectRfqTermsComponent, {
       width: "400px",
-      data
+      data,
+      panelClass: 'select-rfq-terms-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
-      // data.defaultAddress = result[1];
     });
   }
 
@@ -202,7 +203,8 @@ export class RfqSupplierComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "600px",
-      data: this.rfqData ? this.rfqData.rfqCurrency : null
+      data: this.rfqData ? this.rfqData.rfqCurrency : null,
+      panelClass: 'select-currency-dialog'
     });
 
     dialogRef.afterClosed().subscribe(data => {

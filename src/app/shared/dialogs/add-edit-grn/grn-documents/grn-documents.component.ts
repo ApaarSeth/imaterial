@@ -17,6 +17,7 @@ import { DocumentUploadService } from 'src/app/shared/services/document-download
   templateUrl: "./grn-documents.component.html"
 })
 export class GRNDocumentsComponent implements OnInit {
+  
   @Input("documentListLength") public documentListLength: number;
   @Input("documentData") documentData: DocumentList[];
   documentList: DocumentList[] = [];
@@ -26,6 +27,7 @@ export class GRNDocumentsComponent implements OnInit {
   mode: string;
   filesRemoved: boolean;
   showResponsive: boolean;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,

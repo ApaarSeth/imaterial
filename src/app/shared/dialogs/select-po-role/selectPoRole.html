@@ -1,67 +1,40 @@
-<form *ngIf="approverData" [formGroup]="approverFrm">
-  <div class="header-add-edit-dialog">
-    <h1 mat-dialog-title>Select Project Contact Person</h1>
-    <button type="button" class="close cursor-pointer" (click)="closeDialog()" aria-label="Close">
-      <span aria-hidden="true">×</span>
-    </button>
-  </div>
+<section class="modal-outer">
+  <form *ngIf="approverData" [formGroup]="approverFrm">
+    <div class="modal-header">
+      <h5 mat-dialog-title class="mb-0">Select Project Contact Person</h5>
+      <button type="button" class="close cursor-pointer" (click)="closeDialog()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
 
-  <!-- 
-    <table mat-table [dataSource]="approverData" class="col-sm-12 approver-tbl">
-      <ng-container matColumnDef="User Name">
-        <th mat-header-cell *matHeaderCellDef>User</th>
-        <td mat-cell *matCellDef=" let element;let i=index">
-          <mat-radio-group name="aprrover" aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="approver">
-            <mat-radio-button class="example-radio-button" [value]="element" [checked]="element.checked">
-              {{element.firstName}}{{element.lastName}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </td>
-      </ng-container>
+    <div mat-dialog-content>
+      <div class="modal-body">
+        <ng-container *ngFor="let element of approverData;let i=index">
+          <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-7 display-flex">
+              <mat-radio-group name="aprrover" aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="approver">
+                <mat-radio-button class="example-radio-button" [value]="element" [checked]="element.checked"> </mat-radio-button>
+              </mat-radio-group>
 
-      <ng-container matColumnDef="Role">
-        <th mat-header-cell *matHeaderCellDef>Role</th>
-        <td mat-cell *matCellDef="let element">{{element.roleDescription}}</td>
-      </ng-container>
+              <div class="person-personal-info">
+                <div class="w-100 word-break-all text-semi-bold">{{element.firstName}} {{element.lastName}}</div>
+                <div class="color-grey w-100 word-break-all">{{element.email}}</div>
+                <div class="color-grey w-100 word-break-all">{{element.contactNo}}</div>
+              </div>
+            </div>
 
-      <ng-container matColumnDef="Email">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let element">{{element.email}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="Phone">
-        <th mat-header-cell *matHeaderCellDef>Phone</th>
-        <td mat-cell *matCellDef="let element">{{element.contactNo}}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table> -->
-
-  <div class="maxheight-300-px overflow-y-auto overflow-x-hidden">
-    <ng-container *ngFor="let element of approverData;let i=index">
-      <div
-        [ngClass]="(i!=(approverData.length - 1))? 'row width-99 margin-0-auto font-size-vary-grn p-t-10 gray-bottom-border' : 'row width-99 margin-0-auto font-size-vary-grn p-t-10'"
-      >
-        <div class="col-xs-8 display-flex">
-          <div>
-            <mat-radio-group name="aprrover" aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="approver">
-              <mat-radio-button class="example-radio-button" [value]="element" [checked]="element.checked"> </mat-radio-button>
-            </mat-radio-group>
+            <div class="col-md-4 col-sm-4 col-xs-5">
+              <span class="person-role color-grey word-break-all text-semi-bold"> {{ element.roleDescription }} </span>
+            </div>
           </div>
+        </ng-container>
 
-          <div>
-            <div class="width-100 word-break-all text-semi-bold">{{element.firstName}} {{element.lastName}}</div>
-            <div class="color-grey width-100 word-break-all">{{element.email}}</div>
-            <div class="color-grey width-100 word-break-all">{{element.contactNo}}</div>
+        <div mat-dialog-actions>
+          <div class="col-sm-12 d-flex justify-content-center py-2">
+            <button mat-raised-button class="main-background-color main-button color-white" (click)="selectRole()">Save</button>
           </div>
         </div>
-        <div class="col-xs-4 color-grey width-100 word-break-all text-semi-bold">{{element.roleDescription}}</div>
       </div>
-    </ng-container>
-  </div>
-
-  <div class="row col-xs-12 p-t-10 justify-content-center">
-    <button mat-raised-button class="main-background-color main-button color-white" (click)="selectRole()">Save</button>
-  </div>
-</form>
+    </div>
+  </form>
+</section>

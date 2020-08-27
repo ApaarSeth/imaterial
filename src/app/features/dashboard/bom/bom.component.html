@@ -1,8 +1,8 @@
-<div class="page-start-point mt-5 p-t-4">
-  <div class="p-l-20 p-r-20 p-b-20 p-t-20 min-height bom-main-style">
+<div class="page-start-point p-t-1">
+  <div class="p-l-10 p-r-10 p-b-10 min-height bom-main-style">
     <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
 
-    <div class="add-to-bom-style p-t-10">
+    <div class="add-to-bom-style">
       <!-- <div class="parent"> -->
       <form [formGroup]="form">
         <div class="row align-items-center row-sm-screen">
@@ -71,6 +71,7 @@
 
               <!-- Upload BOM Link -->
               <div class="mr-3 cursor-pointer ptop-15 upload-bom-excel">
+                <<<<<<< HEAD
                 <input
                   type="file"
                   accept=".xlsx"
@@ -81,6 +82,18 @@
                   multiple
                   (change)="uploadExcel($event.target.files)"
                 />
+                =======
+                <input
+                  type="file"
+                  accept=".xlsx"
+                  #fileDropRef
+                  id="fileDropRef"
+                  class="fileupload cursor-pointer"
+                  style="display: none"
+                  multiple
+                  (change)="uploadExcel($event.target.files)"
+                />
+                >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
 
                 <ng-container *ngIf="innerWidth > 575; else uploadIconOnly">
                   <label for="fileDropRef" class="cursor-pointer upload-template">
@@ -136,9 +149,13 @@
       </form>
 
       <div class="row">
-        <div class="col-md-9 display-flex m-t-20 col-left-width-9">
+        <div class="col-md-9 display-flex mt-2 col-left-width-9">
           <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
+            <<<<<<< HEAD
             <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 fontsize-14-px background-color-skyblue color-white">{{ trades }} </mat-card>
+            =======
+            <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
+            >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
           </div>
         </div>
 

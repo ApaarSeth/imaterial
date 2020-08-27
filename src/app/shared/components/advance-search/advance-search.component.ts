@@ -57,6 +57,7 @@ export class AdvanceSearchComponent implements OnInit {
 
     clearFilter() {
         this.advSearchService.clearFilter$.next(true);
+        this.submitSearch.emit(this.dataToSubmit = {});
     }
 
 }

@@ -24,8 +24,8 @@ import { BomService } from "../../../../shared/services/bom.service";
 export class BomCopyMaterialComponent implements OnInit {
     projectId: number;
     projectData = {} as ProjectDetails;
-    columnsToDisplay = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate"];
-    innerDisplayedColumns = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate"];
+    columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate" ];
+    innerDisplayedColumns = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate" ];
     dataSource: MatTableDataSource<Subcategory>;
     sortedData: MatTableDataSource<Subcategory>;
     expandedElement: Subcategory | null;
@@ -38,7 +38,7 @@ export class BomCopyMaterialComponent implements OnInit {
     @ViewChild('allCh', { static: false }) allCh;
     searchText: string = null;
     selectProjectType: string;
-    @ViewChild(MatSort, {static: false}) sort: MatSort;
+    @ViewChild(MatSort, { static: false }) sort: MatSort;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -51,7 +51,7 @@ export class BomCopyMaterialComponent implements OnInit {
     }
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.projectId = params["id"];
+            this.projectId = params[ "id" ];
         });
         this.orgId = Number(localStorage.getItem("orgId"));
         this.userId = Number(localStorage.getItem("userId"));
@@ -88,16 +88,16 @@ export class BomCopyMaterialComponent implements OnInit {
     getProjectMaterials(projectId?: number, type?: string) {
         this.selectProjectType = type;
         this.bomService.getMaterialWithQuantity(this.orgId, projectId).then(res => {
-            if(res.data){
+            if (res.data) {
                 this.projectMaterialsList = res.data;
                 this.dataSource = new MatTableDataSource(res.data);
                 setTimeout(() => {
                     this.dataSource.sort = this.sort;
                     this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
-                        if (typeof data[sortHeaderId] === 'string') {
-                        return data[sortHeaderId].toLocaleLowerCase();
-                        }  
-                        return data[sortHeaderId];
+                        if (typeof data[ sortHeaderId ] === 'string') {
+                            return data[ sortHeaderId ].toLocaleLowerCase();
+                        }
+                        return data[ sortHeaderId ];
                     };
                 });
             }
@@ -158,7 +158,7 @@ export class BomCopyMaterialComponent implements OnInit {
 
         this.bomService.sumbitCategory(this.userId, this.projectId, data).then(res => {
             if (res.status === 1) {
-                this.router.navigate(['/project-dashboard/bom/' + this.projectId + '/bom-detail']);
+                this.router.navigate([ '/project-dashboard/bom/' + this.projectId + '/bom-detail' ]);
             }
         })
     }

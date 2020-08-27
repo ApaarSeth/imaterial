@@ -211,13 +211,15 @@ export class RfqQuantityMakesComponent implements OnInit {
       width: "1200px",
       data: {
         roleType: "projectBillingAddressId",
-        id: data.projectId
-      }
+        id: data.projectId,
+      },
+      panelClass: 'add-address-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       data.defaultAddress = result ? result[1].address : data.defaultAddress;
     });
   }
+
   getFormStatus() {
     return this.materialForms;
   }
@@ -274,7 +276,8 @@ export class RfqQuantityMakesComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "600px",
-      data: this.rfqData.rfqCurrency
+      data: this.rfqData.rfqCurrency,
+      panelClass: 'select-currency-dialog'
     });
 
     dialogRef.afterClosed().subscribe(data => {

@@ -1,5 +1,5 @@
-<div class="page-start-point mt-5 p-t-4">
-  <div class="p-l-20 p-r-20 p-b-20 copy-bom-materials-outer">
+<div class="page-start-point pt-1">
+  <div class="p-l-10 p-r-10 p-b-10 copy-bom-materials-outer">
     <card-layout *ngIf="projectData" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"> </card-layout>
 
     <div class="row align-items-center copy-bom-small-screen">
@@ -96,6 +96,7 @@
             </td>
           </ng-container>
 
+          <<<<<<< HEAD
           <ng-container matColumnDef="estimatedQty">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">Estimated Quantity</th>
             <td
@@ -119,6 +120,31 @@
               {{ element.estimatedRate }}
             </td>
           </ng-container>
+          =======
+          <ng-container matColumnDef="estimatedQty">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">Estimated Quantity</th>
+            <td
+              class="text-align-center"
+              mat-cell
+              *matCellDef="let element"
+              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+            >
+              {{ element.estimatedQty }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="estimatedRate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">Unit Rate (INR)</th>
+            <td
+              class="text-align-center"
+              mat-cell
+              *matCellDef="let element"
+              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
+            >
+              {{ element.estimatedRate }}
+            </td>
+          </ng-container>
+          >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
 
           <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
           <tr mat-row *matRowDef="let element; columns: columnsToDisplay" (click)="toggleRow(element)"></tr>

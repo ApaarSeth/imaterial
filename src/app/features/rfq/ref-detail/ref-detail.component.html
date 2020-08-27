@@ -52,9 +52,9 @@
       <div class="col-md-10 align-top">
         <ng-container *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp; else emptyReports">
           <div class="rfq-list-detail-custom">
-            <mat-accordion *ngIf="submittedRfqListTemp" class="m-b-10">
-              <mat-expansion-panel class="myPanel" [expanded]="true">
-                <mat-expansion-panel-header [ngClass]="isMobile ? 'p-t-3 p-b-3' : ''">
+            <mat-accordion *ngIf="submittedRfqListTemp">
+              <mat-expansion-panel class="myPanel mb-4" [expanded]="true">
+                <mat-expansion-panel-header [ngClass]="isMobile ? 'pt-3 pb-3' : ''">
                   <mat-panel-title> Quotes Received </mat-panel-title>
                 </mat-expansion-panel-header>
 
@@ -138,7 +138,6 @@
                 </div>
               </mat-expansion-panel>
             </mat-accordion>
-            <br />
             <mat-accordion *ngIf="nonSubmittedRfqListTemp">
               <mat-expansion-panel class="myPanel" [expanded]="true">
                 <mat-expansion-panel-header [ngClass]="isMobile ? 'p-t-3 p-b-3' : ''">

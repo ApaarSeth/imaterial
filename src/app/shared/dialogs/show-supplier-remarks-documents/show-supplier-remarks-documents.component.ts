@@ -1,35 +1,14 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup
-} from "@angular/forms";
-import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
-import { ProjectService } from "../../services/project.service";
-import { Router } from '@angular/router';
-import { AppNavigationService } from '../../services/navigation.service';
-import { FacebookPixelService } from '../../services/fb-pixel.service';
+import { FormGroup } from "@angular/forms";
+import { ProjectDetails } from "../../models/project-details";
 import { supplierRemarkList } from '../../models/RFQ/rfqBids';
-import { DocumentUploadService } from "../../services/document-download.service";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-
-export interface City {
-  value: string;
-  viewValue: string;
-}
-
-export interface ProjectType {
-  type: string;
-}
-
-export interface Unit {
-  value: string;
-}
 
 @Component({
   selector: "show-supplier-remarks-documents-dialog",
   templateUrl: "show-supplier-remarks-documents.component.html"
 })
+
 export class ShowSupplierRemarksandDocs implements OnInit {
 
   form: FormGroup;
@@ -54,15 +33,8 @@ export class ShowSupplierRemarksandDocs implements OnInit {
   index: number = 0;
 
   constructor(
-    private projectService: ProjectService,
     private dialogRef: MatDialogRef<ShowSupplierRemarksandDocs>,
-    @Inject(MAT_DIALOG_DATA) public data: supplierRemarkList[],
-    private _uploadImageService: DocumentUploadService,
-    private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar,
-    private _router: Router,
-    private navService: AppNavigationService,
-    private fbPixel: FacebookPixelService
+    @Inject(MAT_DIALOG_DATA) public data: supplierRemarkList[]
   ) { }
 
   ngOnInit() {
@@ -74,9 +46,11 @@ export class ShowSupplierRemarksandDocs implements OnInit {
   closeDialog(): void {
     this.dialogRef.close(null);
   }
+
   showSupplierDetails(index) {
     this.index = index;
   }
+
   downloadDoc(url: string) {
     var win = window.open(url, "_blank");
     win.focus();
@@ -89,7 +63,5 @@ export class ShowSupplierRemarksandDocs implements OnInit {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
   }
-
 }

@@ -8,12 +8,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: "./upload.component.html"
 })
 export class UploadComponent implements OnInit {
+
   fileToUpload: FileList;
   @Input("grnResponsive") public grnResponsive: boolean;
   @Input() documentListLength: number;
   fileTypes: string[] = ['pdf', 'doc', 'docx', 'jpeg', 'png', 'jpg'];
   imgFileTypes: string[] = ['jpeg', 'png', 'jpg'];
-
   deletedDocs: number[] = [];
   uploadedDocs: DocumentDetails[];
 
@@ -26,10 +26,9 @@ export class UploadComponent implements OnInit {
   @Input() imageIntegration: boolean;
   @Input() errorMessage: boolean;
   @Output() fileSizeErr = new EventEmitter<string>();
+  @Input() maxDocsLimit: boolean;
 
-  constructor(private documentUploadService: DocumentUploadService,
-    private _snackBar: MatSnackBar
-  ) { }
+  constructor(private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void { }
 

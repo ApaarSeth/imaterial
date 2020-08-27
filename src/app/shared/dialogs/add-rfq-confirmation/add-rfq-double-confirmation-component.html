@@ -1,11 +1,6 @@
-<div class="header-add-edit-dialog">
-  <h1 mat-dialog-title>Confirmation</h1>
-  <button type="button" class="close" (click)="close(null)" aria-label="Close">
-    <span aria-hidden="true">×</span>
-  </button>
-</div>
-<br />
+<section class="modal-outer">
 
+<<<<<<< HEAD
 <div class="text-center p-b-10 color-grey fontsize-14-px" *ngIf="exchangeValue>0">
   You are floating the RFP in <span>{{exchangeCurrency}}</span> with conversion rate of <span>{{exchangeValue}} </span><span>{{primaryCurrency}}</span>.Suppliers will have to
   submit the quote in this selected currency
@@ -18,5 +13,41 @@
   </div>
   <div class="col-xs-6">
     <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="addRFQ()">Float RFP</button>
+=======
+  <div class="modal-header">
+    <h5 mat-dialog-title class="mb-0">Confirmation</h5>
+
+    <button type="button" class="close" (click)="close(null)" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
   </div>
-</div>
+
+  <div mat-dialog-content>
+
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="text-center mb-0" *ngIf="exchangeValue > 0">
+            You are floating the RFP in <span>{{exchangeCurrency}}</span> with conversion rate of <span>{{exchangeValue}} </span><span>{{primaryCurrency}}</span>.Suppliers will have to
+            submit the quote in this selected currency
+          </p>
+          <p class="text-center mb-0">Do you want to float the RFP?</p>
+        </div>
+      </div>
+
+      <div class="pt-4 pb-4" mat-dialog-actions>
+        <div class="col-xs-6">
+          <button mat-raised-button class="main-color main-button pull-left" (click)="close(null)">
+            Cancel
+          </button>
+        </div>
+        <div class="col-xs-6">
+          <button mat-raised-button class="main-background-color main-button color-white pull-right" (click)="addRFQ()">
+            Float RFP
+          </button>
+        </div>
+      </div>
+    </div>
+>>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
+  </div>
+</section>

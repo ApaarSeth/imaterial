@@ -132,9 +132,11 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   openDialog(data: SupplierDetailsPopUpData): void {
+
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "660px",
-      data
+      data,
+      panelClass: 'add-supplier-dialog'
     });
 
     dialogRef.afterClosed().toPromise().then((data) => {
@@ -142,7 +144,6 @@ export class SupplierDetailComponent implements OnInit {
         this.getAllSupplier();
       }
     });
-
   }
 
   deactivateUser(data) {

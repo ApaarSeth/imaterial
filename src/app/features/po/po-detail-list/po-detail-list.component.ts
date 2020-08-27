@@ -154,7 +154,7 @@ export class PODetailComponent implements OnInit {
   getApproversList(res): AdvSearchData[] {
     let arr = [];
     res.forEach(item => {
-      if (item.ProjectUser.roleName !== 'l3') {
+      if (item && item.ProjectUser.roleName !== 'l3') {
         arr.push(item);
       }
     });
@@ -332,7 +332,8 @@ export class PODetailComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(PaymentRecordComponent, {
         width: "800px",
-        data
+        data,
+        panelClass: 'payment-record-dialog'
       });
     })
 
@@ -342,19 +343,21 @@ export class PODetailComponent implements OnInit {
   openDialogDeactiveUser(data: ProjetPopupData): void {
     const dialogRef = this.dialog.open(DeleteDraftedPoComponent, {
       width: "800px",
-      data
+      data,
+      panelClass: 'drafted-po-confirm-dialog'
     });
     dialogRef
-      .afterClosed()
-      .toPromise()
-      .then((data) => {
-        this.poDetailService.getPODetails({}).then(data => {
-          this.poDraftedDetails = new MatTableDataSource(data.data.draftedPOList);
-          this.poDraftedDetailsTemp = data.data.draftedPOList
-        });
-        this.PoData();
+      .afterClosed().toPromise().then((data) => {
+        if(data !== null){
+          this.poDetailService.getPODetails({}).then(data => {
+            this.poDraftedDetails = new MatTableDataSource(data.data.draftedPOList);
+            this.poDraftedDetailsTemp = data.data.draftedPOList
+          });
+          this.PoData();
+        }
       });
   }
+  
   downloadPo(purchaseOrderId) {
     this.poDetailService.downloadPo(purchaseOrderId).then(res => {
       this.downloadFile(res.data);

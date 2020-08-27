@@ -13,7 +13,7 @@
         <div class="d-flex">
           <input
             formControlName="searchInput"
-            class="p-l-3"
+            class="pl-3"
             #projectInput
             matInput
             focused="'true'"
@@ -36,8 +36,8 @@
   <ng-container *ngIf="form.get('selected').value">
     <ul class="selected-list">
       <li *ngFor="let option of form.get('selected').value" class="d-flex justify-content-between">
-        {{ option.name }}
-        <span class="fontsize-20-px">
+        <div>{{ option.name }}</div>
+        <span class="font-size20">
           <mat-icon (click)="remove(option.id)" inline="true">close</mat-icon>
         </span>
       </li>

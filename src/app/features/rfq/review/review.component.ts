@@ -169,11 +169,14 @@ export class ReviewComponent implements OnInit {
         width: "500px",
         data: {
           dataKey: data
-        }
+        },
+        panelClass: 'float-rfq-confirm-dialog'
       });
       dialogRef.afterClosed().subscribe(result => {
-        if (result.statusCode === 201) {
-          this.router.navigate(["rfq"]);
+        if(result !== null){
+          if (result.statusCode === 201) {
+            this.router.navigate(["rfq"]);
+          }
         }
       });
     }
@@ -182,7 +185,8 @@ export class ReviewComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "600px",
-      data: this.finalRfq.rfqCurrency
+      data: this.finalRfq.rfqCurrency,
+      panelClass: 'select-currency-dialog'
     });
 
     dialogRef.afterClosed().subscribe(data => {
