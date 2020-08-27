@@ -55,9 +55,7 @@
         </div>
 
         <div class="material-rfq-supplies p-15 p-l-30 font-bold">
-          <span>
-            Payment Details :
-          </span>
+          <span> Payment Details : </span>
           <span
             *ngIf="rfqSupplierDetailList && rfqSupplierDetailList.terms && rfqSupplierDetailList.terms.otherDesc === null && rfqSupplierDetailList.terms.termsDesc != null"
             class="p-l-20"
@@ -76,7 +74,7 @@
 
           <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1 && rfqSupplierDetailList.rfqCurrency">
             <div class="float-right d-inline-block">
-              <span class="base-currency pl-3 pr-3 border-dark p-t-10 p-b-10">
+              <span class="base-currency p-l-3 p-r-3 border-dark p-t-10 p-b-10">
                 <span class="font-size-vary-grn color-grey">
                   <img width="25px" *ngIf="rfqSupplierDetailList.rfqCurrency.exchangeCurrencyFlag" [src]="rfqSupplierDetailList.rfqCurrency.exchangeCurrencyFlag" />
                   {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}
@@ -92,17 +90,17 @@
           </ng-container>
         </div>
 
-        <div style="width: 100%; overflow-x: scroll;">
+        <div style="width: 100%; overflow-x: scroll">
           <table class="table rfq-bids-table" *ngFor="let projects of rfqSupplierDetailList.projectList">
             <!-- Project Name Header -->
             <tr class="blue-background-color color-white">
-              <th class="font-size18 limited-character">
+              <th class="fontsize-18-px limited-character">
                 <span>
                   {{ projects.projectName }}
                 </span>
               </th>
 
-              <th class="font-size14" colspan="3">
+              <th class="fontsize-14-px" colspan="3">
                 <span *ngIf="projects.addressLine1">
                   {{ projects.addressLine1 }}
                 </span>
@@ -133,21 +131,21 @@
             <!-- Material Info -->
             <ng-container *ngFor="let material of projects.materialList">
               <tr matSort class="material-rfq-supplies">
-                <td class="font-size14 limited-character">
+                <td class="fontsize-14-px limited-character">
                   <span>{{ material.materialName }}</span>
                   <!-- Upload Image Modal Link -->
                   <!-- <div class="add-edit-image d-block">
                     <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(material, 'supplier')">Add/Edit Image</a>
                   </div> -->
                 </td>
-                <td class="font-size14">
+                <td class="fontsize-14-px">
                   Requested Quantity: {{ material.materialQuantity }}
                   {{ material.materialUnit }}
                 </td>
-                <td class="font-size14">Required Date : {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</td>
+                <td class="fontsize-14-px">Required Date : {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</td>
 
                 <!-- View image modal link -->
-                <td class="font-size14 text-center supplier-bid-imgs">
+                <td class="fontsize-14-px text-center supplier-bid-imgs">
                   <div class="d-flex align-items-center justify-content-between">
                     <!-- View Image Section -->
                     <div class="view-image-section">
@@ -172,7 +170,7 @@
                 </td>
 
                 <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1">
-                  <td class="font-size14">
+                  <td class="fontsize-14-px">
                     <ng-container
                       *ngIf="
                         taxAndCostData &&
@@ -184,7 +182,7 @@
                     >
                       <strong>Other Cost: </strong>
                       <span
-                        style="margin-right: 5px;"
+                        style="margin-right: 5px"
                         *ngIf="
                           taxAndCostData &&
                           taxAndCostData[projects.projectId] &&
@@ -208,7 +206,7 @@
                     </ng-container>
                   </td>
                 </ng-container>
-                <td class="text-align-right" [ngClass]="rfqSupplierDetailList.isInternational === 1 ? 'pt-1' : ''">
+                <td class="text-align-right" [ngClass]="rfqSupplierDetailList.isInternational === 1 ? 'p-t-1' : ''">
                   <ng-container *ngIf="rfqSupplierDetailList.isInternational === 0; else txBtn">
                     <mat-form-field class="border-input">
                       <input
@@ -222,7 +220,7 @@
                         (keyup)="valueChange(rfqSupplierDetailList)"
                       />
                     </mat-form-field>
-                    <div class="d-flex justify-content-center" style="padding-left: 50px !important;">
+                    <div class="d-flex justify-content-center" style="padding-left: 50px !important">
                       <small *ngIf="!material.validGst" class="error-msg">Enter Valid GST%</small>
                     </div>
                   </ng-container>
@@ -242,14 +240,14 @@
               <!-- Brand Header for GST-->
               <ng-container *ngIf="rfqSupplierDetailList.isInternational === 0; else intBHeader">
                 <tr matSort class="brand-name-rfq-supplies">
-                  <th class="font-size14">Brand Name</th>
-                  <th class="font-size14">
+                  <th class="fontsize-14-px">Brand Name</th>
+                  <th class="fontsize-14-px">
                     Rate <ng-container *ngIf="rfqSupplierDetailList.baseCurrencyCode"> ({{ rfqSupplierDetailList.baseCurrencyCode }})</ng-container>
                   </th>
-                  <th class="font-size14 text-align-right" colspan="2">
+                  <th class="fontsize-14-px text-align-right" colspan="2">
                     Total Amount <ng-container *ngIf="rfqSupplierDetailList.baseCurrencyCode"> ({{ rfqSupplierDetailList.baseCurrencyCode }})</ng-container>
                   </th>
-                  <th class="font-size14 text-align-right">
+                  <th class="fontsize-14-px text-align-right">
                     GST Amount <ng-container *ngIf="rfqSupplierDetailList.baseCurrencyCode"> ({{ rfqSupplierDetailList.baseCurrencyCode }})</ng-container>
                   </th>
                 </tr>
@@ -284,21 +282,21 @@
               </ng-container>
               <ng-template #intBHeader>
                 <tr matSort class="brand-name-rfq-supplies">
-                  <th class="font-size14">Brand Name</th>
-                  <th class="font-size14">
+                  <th class="fontsize-14-px">Brand Name</th>
+                  <th class="fontsize-14-px">
                     Unit Rate <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode"> ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
                     <ng-template #bsCrCode>
                       {{ rfqSupplierDetailList.baseCurrencyCode }}
                     </ng-template>
                   </th>
-                  <th class="font-size14 text-align-right">
+                  <th class="fontsize-14-px text-align-right">
                     Amount
                     <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode"> ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
                     <ng-template #bsCrCode>
                       {{ rfqSupplierDetailList.baseCurrencyCode }}
                     </ng-template>
                   </th>
-                  <th class="font-size14 text-align-right">
+                  <th class="fontsize-14-px text-align-right">
                     Tax Amount
                     <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode"> ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
                     <ng-template #bsCrCode>
@@ -324,7 +322,7 @@
                       </span>
                     </span>
                   </th>
-                  <th class="font-size14 text-align-right" colspan="2">
+                  <th class="fontsize-14-px text-align-right" colspan="2">
                     Total Amount
                     <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode"> ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>
                     <ng-template #bsCrCode>
@@ -404,10 +402,10 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="font-size14 pt-3">
+                <td class="fontsize-14-px p-t-3">
                   <ng-container *ngIf="otherCostData && otherCostData.otherCostInfo && otherCostData.otherCostInfo.length">
                     <strong>Other Cost: </strong>
-                    <span style="margin-right: 5px;">
+                    <span style="margin-right: 5px">
                       {{ getotherCostInfoTotal(otherCostData.otherCostInfo) }}
                       <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency"> {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}</ng-container></span
                     >
@@ -439,9 +437,7 @@
         <app-rfq-bid-documents #rfqDocument [documentData]="documentList"></app-rfq-bid-documents>
       </div>
       <div class="col-md-8 col-sm-12">
-        <div class="text-align-center font-size16 text-semi-bold">
-          Comments
-        </div>
+        <div class="text-align-center fontsize-16-px text-semi-bold">Comments</div>
         <form [formGroup]="rfqTerms">
           <angular-editor formControlName="textArea" [config]="config"></angular-editor>
         </form>

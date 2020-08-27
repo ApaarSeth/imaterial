@@ -18,11 +18,11 @@ export interface City {
 // Component for dialog box
 @Component({
   selector: "address-dialog",
-  templateUrl: "./add-addressPo.component.html"
+  templateUrl: "./add-address.component.html"
 })
 
 // Component class
-export class AddAddressPoDialogComponent {
+export class AddAddressDialogComponent {
   validPincode: boolean;
   searchCountry: string = ''
   pincodeLength: number;
@@ -30,7 +30,7 @@ export class AddAddressPoDialogComponent {
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
   constructor(
-    public dialogRef: MatDialogRef<AddAddressPoDialogComponent>,
+    public dialogRef: MatDialogRef<AddAddressDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
     private addAddressService: AddAddressService,

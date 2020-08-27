@@ -1,4 +1,4 @@
-<div class="page-start-point mt-5 pt-4">
+<div class="page-start-point mt-5 p-t-4">
   <div class="p-l-20 p-r-20 p-b-20 p-t-20 min-height bom-main-style">
     <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
 
@@ -77,7 +77,7 @@
                   #fileDropRef
                   id="fileDropRef"
                   class="fileupload cursor-pointer"
-                  style="display: none;"
+                  style="display: none"
                   multiple
                   (change)="uploadExcel($event.target.files)"
                 />
@@ -85,7 +85,7 @@
                 <ng-container *ngIf="innerWidth > 575; else uploadIconOnly">
                   <label for="fileDropRef" class="cursor-pointer upload-template">
                     <img src="assets/images/upload-bom.svg" alt="upload" class="img-fluid mr-2 w-45 cursor-pointer" />
-                    <a style="color: #222;">Upload BOM Excel</a>
+                    <a style="color: #222">Upload BOM Excel</a>
                   </label>
                 </ng-container>
 
@@ -138,7 +138,7 @@
       <div class="row">
         <div class="col-md-9 display-flex m-t-20 col-left-width-9">
           <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
-            <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
+            <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 fontsize-14-px background-color-skyblue color-white">{{ trades }} </mat-card>
           </div>
         </div>
 

@@ -13,6 +13,8 @@ $green-color: #7ed321;
 $skyblue-color: #2197bb;
 $light-grey: #707070;
 $dark-blue: #0c3d56;
+
+/*******************************************Colors*******************************************/
 .ink-color {
   color: $dark-blue;
 }
@@ -34,13 +36,6 @@ a:hover {
   color: $light-grey !important;
 }
 
-.backgound-none {
-  background: none;
-}
-.backgound-none-important {
-  background: none !important;
-}
-
 .warning-color {
   color: $alert-color;
 }
@@ -58,18 +53,6 @@ a:hover {
 
 .background-white-color {
   background-color: $white-color;
-}
-
-.full-border.mat-form-field.mat-focused input {
-  border: 2px solid $main-color;
-}
-
-.full-border-main {
-  border: 2px solid $main-color;
-}
-
-.full-border.mat-form-field input {
-  border: 2px solid $icon-color-gray;
 }
 
 .color-white {
@@ -96,25 +79,6 @@ a:hover {
   background-color: $main-color;
 }
 
-.max-height-300 {
-  max-height: 300px;
-}
-.overflow-y-auto {
-  overflow-y: auto;
-}
-.overflow-x-auto {
-  overflow-x: auto;
-}
-.overflow-y-hidden {
-  overflow-y: hidden !important;
-}
-.overflow-x-hidden {
-  overflow-x: hidden !important;
-}
-.border-bottom-grey {
-  border-bottom: 1px solid #d8d8d8;
-}
-
 .blue-color {
   color: $blue-color;
 }
@@ -131,16 +95,136 @@ a:hover {
   background-color: $background-table-color-grey;
 }
 
+.color-6d6a6a {
+  color: #6d6a6a !important;
+}
+
+.grey-border {
+  border-bottom: 2px solid $icon-color-gray;
+}
+
+.grey-full-border {
+  border: 2px solid $icon-color-gray;
+}
+
+.color-main {
+  color: #f4772a;
+}
+
+.signupForm-error-msg.green-colour {
+  color: #569414;
+}
+
+.signupForm-error-msg.green-colour {
+  color: #569414;
+}
+
+.color-brand {
+  color: #6b6969;
+}
+
+.angular-editor-textarea {
+  background-color: #ffffff !important;
+}
+
+.white-radiobutton .mat-radio-outer-circle {
+  border-color: $white-color;
+}
+
+.white-radiobutton .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: $main-color;
+}
+
+.grey-dotted-border {
+  border: 2px dotted $icon-color-gray;
+}
+.dark-gray-color {
+  color: $background-color-grey;
+}
+
+.mat-form-field textarea,
+.gray-border {
+  border: 1px solid $icon-color-gray;
+}
+
+.error-msg {
+  color: red;
+}
+.success-msg {
+  color: green;
+}
+.error-msg.sameStartEndDate {
+  padding-left: 4px;
+  color: red;
+}
+
+.black-border {
+  border-bottom: 2px solid;
+  position: relative;
+  top: 45px;
+}
+
+.dark-blu-color-bg {
+  background-color: #0c3c55;
+}
+.dark-blu-color {
+  color: #0c3c55;
+}
+/*********************************************************************************/
+
+.backgound-none {
+  background: none !important;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+.overflow-x-auto {
+  overflow-x: auto;
+}
+.overflow-y-hidden {
+  overflow-y: hidden !important;
+}
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+
+.text-semi-bold {
+  font-weight: 500;
+}
+
+.text-very-light {
+  font-weight: 300;
+}
+.text-size-light {
+  font-weight: 400;
+}
+.text-decoration-underline {
+  text-decoration: underline !important;
+}
+
+.text-align-center {
+  text-align: center !important;
+}
+.text-align-right {
+  text-align: right !important;
+}
+
+.text-bold {
+  font-weight: 800;
+}
+
+.margin-0-auto {
+  margin: 0 auto;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
 button:focus {
   outline: 0px;
   outline: 0px;
-}
-@media only screen and (min-width: 958px) {
-  .page-start-point {
-    // padding-top: 140px !important;
-    height: 100%;
-    overflow-x: hidden;
-  }
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-underline {
@@ -156,10 +240,6 @@ input {
   // background: $white-color;
   padding: 10px;
   border-radius: 5px;
-}
-
-.display-flex-important {
-  display: flex !important;
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button .mat-icon {
@@ -203,83 +283,6 @@ input {
     font-weight: 500;
     max-height: 40px;
   }
-}
-.text-bold {
-  font-weight: 800;
-}
-
-.text-semi-bold {
-  font-weight: 500;
-}
-.text-very-light {
-  font-weight: 300;
-}
-.text-size-light {
-  font-weight: 400;
-}
-
-.font-size14 {
-  font-size: 14px;
-}
-.font-size9 {
-  font-size: 9px;
-}
-.font-size10 {
-  font-size: 10px;
-}
-.font-size11 {
-  font-size: 11px;
-}
-.font-size12 {
-  font-size: 12px;
-}
-
-.font-size20 {
-  font-size: 20px;
-}
-
-.font-size18 {
-  font-size: 18px;
-}
-.font-size16 {
-  font-size: 16px;
-}
-
-.width35Percent {
-  width: 35%;
-}
-
-.width17Percent {
-  width: 17%;
-}
-
-.width55Percent {
-  width: 50%;
-}
-
-.width50Percent {
-  width: 50%;
-}
-.width70Percent {
-  width: 70%;
-}
-.width78Percent {
-  width: 78%;
-}
-
-.width80Percent {
-  width: 80%;
-}
-
-.height12Percent {
-  height: 12%;
-}
-
-.max-width-128 {
-  max-width: 128px;
-}
-.min-width-128 {
-  min-width: 128px;
 }
 
 .brand-view-style {
@@ -362,80 +365,12 @@ a:hover {
   padding-top: 0px !important;
 }
 
-@media only screen and (max-width: 576px) {
-  .add-grn-responsive-div {
-    position: relative;
-    width: 110%;
-    left: -5%;
-  }
-}
-.color-6d6a6a {
-  color: #6d6a6a !important;
-}
-.text-decoration-underline {
-  text-decoration: underline !important;
-}
 .padd-box-none {
   padding: 0 !important;
   box-shadow: none !important;
   .upload-documents-mat-header {
     padding: 0px !important;
     overflow-x: hidden;
-  }
-}
-.add-grn-responsive-div {
-  max-height: 270px;
-  overflow-y: auto;
-  .add-edit-grn-popup-accordian.mat-accordion {
-    .mat-expansion-panel-header {
-      min-height: 72px;
-      background: #f3f3f3;
-    }
-
-    .mat-form-field {
-      text-align: left;
-      position: absolute;
-      top: 12%;
-      left: 0%;
-    }
-    .mat-form-field-infix {
-      display: block;
-      position: relative;
-      flex: auto;
-      min-width: 0;
-      width: 112px;
-      font-size: 12px;
-    }
-    .myPanel .mat-expansion-panel-body {
-      background: #fafafa;
-    }
-    .mat-expansion-panel-header {
-      padding: 0 5px;
-    }
-  }
-}
-
-@media only screen and (min-width: 576px) {
-  .add-grn-responsive-div {
-    max-height: 220px;
-    overflow-y: auto;
-    .add-edit-grn-popup-accordian.mat-accordion {
-      .mat-expansion-panel-header {
-        min-height: 72px;
-        background: #f3f3f3;
-      }
-
-      .mat-form-field {
-        text-align: left;
-        position: absolute;
-        top: 12%;
-        left: 12%;
-        width: 100%;
-      }
-      .mat-form-field-infix {
-        font-size: 14px;
-      }
-    }
   }
 }
 
@@ -451,29 +386,6 @@ a:hover {
   border-right: 1px solid black;
 }
 
-.white-radiobutton .mat-radio-outer-circle {
-  border-color: $white-color;
-}
-
-.white-radiobutton .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: $main-color;
-}
-
-.black-border {
-  border-bottom: 2px solid;
-  position: relative;
-  top: 45px;
-}
-.border-radius {
-  border-radius: 10px !important;
-}
-.border-round {
-  border-radius: 10px !important;
-}
-
-.border-radius-panel {
-  border-radius: 7px 7px 0px 0px !important;
-}
 //Muskaan's edit
 .round-button {
   border: none;
@@ -485,26 +397,6 @@ a:hover {
   overflow: auto;
 }
 
-.grey-border {
-  border-bottom: 2px solid $icon-color-gray;
-}
-
-.grey-full-border {
-  border: 2px solid $icon-color-gray;
-}
-
-.h-290 {
-  height: 290px;
-}
-
-.h-200 {
-  height: 200px;
-}
-
-.grey-dotted-border {
-  border: 2px dotted $icon-color-gray;
-}
-
 .myPanel .mat-expansion-panel-body {
   padding: 0;
 }
@@ -514,55 +406,6 @@ a:hover {
 //   border-right: 1px solid rgba(0,0,0,.12);
 // }
 
-.dark-gray-color {
-  color: $background-color-grey;
-}
-
-.width100Percent {
-  width: 100%;
-}
-
-.width103Percent {
-  width: 103%;
-}
-
-.width96Percent {
-  width: 96%;
-}
-.width40Percent {
-  width: 40%;
-}
-.width50Percent {
-  width: 50%;
-}
-.width94Percent {
-  width: 94%;
-}
-.width98Percent {
-  width: 98%;
-}
-.width80Percent {
-  width: 80%;
-}
-.width60Percent {
-  width: 60%;
-}
-.Width99Percent {
-  width: 99%;
-}
-.margin-0-auto {
-  margin: 0 auto;
-}
-
-.margin-auto {
-  margin: auto;
-}
-
-.mat-form-field textarea,
-.gray-border {
-  border: 1px solid $icon-color-gray;
-}
-
 .drag-and-drop {
   position: absolute;
   left: 0;
@@ -570,12 +413,6 @@ a:hover {
   width: 100%;
   height: 100%;
   opacity: 0;
-}
-
-.password-eye {
-  float: left;
-  position: absolute;
-  right: 10px;
 }
 
 .icon-inverse {
@@ -614,13 +451,6 @@ mat-accordion {
   }
 }
 
-.text-align-center {
-  text-align: center !important;
-}
-.text-align-right {
-  text-align: right !important;
-}
-
 // Custom Css for ScrollBar
 /* width */
 ::-webkit-scrollbar {
@@ -648,18 +478,6 @@ mat-accordion {
   cursor: pointer !important;
 }
 
-.width-100 {
-  width: 100%;
-}
-
-.width-90 {
-  width: 90%;
-}
-
-.width-95 {
-  width: 95%;
-}
-
 .width-15-px {
   img {
     width: 15px;
@@ -685,17 +503,6 @@ mat-accordion {
 //   }
 // }
 
-.error-msg {
-  color: red;
-}
-.success-msg {
-  color: green;
-}
-.error-msg.sameStartEndDate {
-  padding-left: 4px;
-  color: red;
-}
-
 .justify-center {
   .mat-sort-header-container {
     justify-content: center;
@@ -706,19 +513,17 @@ mat-accordion {
   padding-top: 5px !important;
 }
 
-.font-size {
-  font-size: 15px;
-}
-
 .mat-header-cell {
   background: #2197bb;
   font-size: 15px;
   font-weight: 450;
 }
+
 .mat-checkbox-inner-container {
   width: 19px !important;
-  height: 19px !important;
+  height: 19px 100 !important;
 }
+
 .display-block {
   display: block;
 }
@@ -738,9 +543,7 @@ mat-accordion {
 .float-right {
   float: right;
 }
-.color-main {
-  color: #f4772a;
-}
+
 .font-bold {
   font-weight: 500;
 }
@@ -749,13 +552,6 @@ mat-accordion {
   cursor: pointer;
 }
 
-.signupForm-error-msg.green-colour {
-  color: #569414;
-}
-
-.signupForm-error-msg.green-colour {
-  color: #569414;
-}
 .material-info {
   padding-top: 8px;
   font-size: 16px;
@@ -776,9 +572,6 @@ mat-accordion {
   word-wrap: break-word;
 }
 
-.text-align-justify {
-  text-align: justify !important;
-}
 .line-height-1 {
   line-height: 1;
 }
@@ -786,9 +579,6 @@ mat-accordion {
   line-height: 1.6;
 }
 
-.max-width-96 {
-  max-width: 96px;
-}
 .word-break-word {
   word-break: break-word;
 }
@@ -814,14 +604,6 @@ mat-accordion {
   }
 }
 
-.color-brand {
-  color: #6b6969;
-}
-
-.angular-editor-textarea {
-  background-color: #ffffff !important;
-}
-
 .material-info-padding.material-info {
   padding-top: 0px;
 }
@@ -829,5 +611,13 @@ mat-accordion {
 @media (max-width: 599px) {
   .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button .mat-icon {
     font-size: 20px !important;
+  }
+}
+
+@media only screen and (min-width: 958px) {
+  .page-start-point {
+    // padding-top: 140px !important;
+    height: 100%;
+    overflow-x: hidden;
   }
 }

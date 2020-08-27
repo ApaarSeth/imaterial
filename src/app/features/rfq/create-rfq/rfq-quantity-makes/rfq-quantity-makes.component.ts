@@ -16,8 +16,6 @@ import { FormGroup, FormBuilder, Validators, FormArray, ValidatorFn, AbstractCon
 import { ActivatedRoute, Router } from "@angular/router";
 import { RFQService } from "src/app/shared/services/rfq.service";
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
-import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
-import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
@@ -25,6 +23,7 @@ import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { AddAddressDialogComponent } from "../../../../shared/dialogs/add-address-po/add-address.component";
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -208,18 +207,16 @@ export class RfqQuantityMakesComponent implements OnInit {
   }
 
   openDialog(data: RfqMaterialResponse): void {
-    if (AddAddressDialogComponent) {
-      const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
-        width: "1200px",
-        data: {
-          roleType: "projectBillingAddressId",
-          id: data.projectId
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        data.defaultAddress = result ? result[1].address : data.defaultAddress;
-      });
-    }
+    const dialogRef = this.dialog.open(AddAddressDialogComponent, {
+      width: "1200px",
+      data: {
+        roleType: "projectBillingAddressId",
+        id: data.projectId
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      data.defaultAddress = result ? result[1].address : data.defaultAddress;
+    });
   }
   getFormStatus() {
     return this.materialForms;

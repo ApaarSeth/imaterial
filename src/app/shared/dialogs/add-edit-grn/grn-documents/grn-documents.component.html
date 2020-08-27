@@ -1,8 +1,9 @@
 <div [ngClass]="showResponsive ? 'row p-t-15' : 'row p-t-15 grn-responsive-file-list'">
-  <mat-card [ngClass]="showResponsive ? 'display-flex-important width98Percent margin-0-auto' : 'width98Percent margin-0-auto padd-box-none'">
+  <mat-card [ngClass]="showResponsive ? 'display-flex width-98 margin-0-auto' : 'width-98 margin-0-auto padd-box-none'">
     <mat-card-header class="upload-documents-mat-header col-xs-12 col-sm-6 col-md-6">
-      <span class="text-semi-bold width100Percent">
-        <app-upload #uploadRef [documentListLength]="documentListLength" [grnResponsive]="!showResponsive" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"> </app-upload>
+      <span class="text-semi-bold width-100">
+        <app-upload #uploadRef [documentListLength]="documentListLength" [grnResponsive]="!showResponsive" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)">
+        </app-upload>
       </span>
       <!-- <span class="col-xs-12 text-align-center text-semi-bold">
         View Document
@@ -15,44 +16,36 @@
             <!-- <mat-icon>file_copy</mat-icon> -->
             <img class="file-icon" src="../../../../assets/images/file-doc.png" />
             <span>{{ file.DocumentDesc }}</span>
-              <span class="show-download">
-                 <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
-                  <i class="material-icons">
-                    remove_red_eye
-                  </i>
-                </a>
-              </span>
-           
+            <span class="show-download">
+              <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
+                <i class="material-icons"> remove_red_eye </i>
+              </a>
+            </span>
           </mat-list-item>
         </span>
-      
+
         <span *ngIf="documentList.length > 0">
-          <div *ngIf="showResponsive" class="font-size16 p-l-15 color-6d6a6a"> Uploaded Documents </div>
+          <div *ngIf="showResponsive" class="fontsize-16-px p-l-15 color-6d6a6a">Uploaded Documents</div>
           <div class="grn-responsive-file-list-down">
             <mat-list-item class="files-list grn-doc" *ngFor="let file of documentList; let i = index">
               <!-- <mat-icon>file_copy</mat-icon> -->
               <img class="file-icon" src="../../../../assets/images/file-doc.png" />
               <span class="color-6d6a6a">{{ file.documentName }}</span>
               <span class="show-download">
-                <a type="button" target="_blank"  [href]="file.Url" mat-icon-button>
-                <i class="material-icons">
-                  remove_red_eye
-                </i>
-              </a>
+                <a type="button" target="_blank" [href]="file.Url" mat-icon-button>
+                  <i class="material-icons"> remove_red_eye </i>
+                </a>
               </span>
               <button type="button" (click)="removeFile(i)" mat-icon-button>
-                <mat-icon class="font-size-16">cancel</mat-icon>
+                <mat-icon>cancel</mat-icon>
               </button>
             </mat-list-item>
           </div>
         </span>
 
         <span *ngIf="!documentData">
-            <div *ngIf="showResponsive" class="col-xs-12 font-size-vary-grn text-align-center color-#989898">
-              *maximum 4 documents are allowed
-            </div>
+          <div *ngIf="showResponsive" class="col-xs-12 font-size-vary-grn text-align-center color-#989898">*maximum 4 documents are allowed</div>
         </span>
-        
       </mat-list>
     </mat-card-content>
   </mat-card>

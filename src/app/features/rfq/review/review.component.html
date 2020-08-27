@@ -1,17 +1,14 @@
 <form *ngIf="finalRfq" [formGroup]="form" (ngSubmit)="submit()">
-  <div class="page-start-point mt-5 pt-4">
-    <div class="min-height parent" [ngClass]="isMobile ? 'pl-2 pr-2 pb-2' : 'p-l-20 p-r-20 p-b-20'">
+  <div class="page-start-point mt-5 p-t-4">
+    <div class="min-height parent" [ngClass]="isMobile ? 'p-l-2 p-r-2 p-b-2' : 'p-l-20 p-r-20 p-b-20'">
       <div class="row m-b-10">
         <div class="col-md-12">
           <div class="row">
             <div class="col-xs-12 p-t-10" [ngClass]="isMobile ? 'sm-btn1' : ''">
-              <button mat-raised-button class="main-background-color main-button color-white pull-right float-rfq-btn"
-                [disabled]="!form.valid">
-                Float RFP
-              </button>
-              <span (click)="selectCurrency()"
-                class="text-decoration-underline main-color pull-right font-size-vary-grn p-t-10 p-r-10 text-semi-bold cursor-pointer">Select
-                Currency</span>
+              <button mat-raised-button class="main-background-color main-button color-white pull-right float-rfq-btn" [disabled]="!form.valid">Float RFP</button>
+              <span (click)="selectCurrency()" class="text-decoration-underline main-color pull-right font-size-vary-grn p-t-10 p-r-10 text-semi-bold cursor-pointer"
+                >Select Currency</span
+              >
             </div>
           </div>
           <!-- first row -->
@@ -35,8 +32,7 @@
               <mat-form-field class="border-input" [ngClass]="isMobile ? 'd-block' : ''">
                 <mat-label>RFP End Date*</mat-label>
                 <!-- <span class="form-placeholder">{{ form["controls"]["dueDate"].value | date: "dd-MMM-yyy" }}</span> -->
-                <input matInput [matDatepicker]="endDate" formControlName="dueDate" [min]="minDate"
-                  (click)="endDate.open()" readonly />
+                <input matInput [matDatepicker]="endDate" formControlName="dueDate" [min]="minDate" (click)="endDate.open()" readonly />
                 <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                 <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
                 <!-- <small *ngIf="sameStartEndDate" class="error-msg"> End Date must be greater than Start Date </small> -->
@@ -53,32 +49,29 @@
                 </button>
               </div> -->
 
-            <div class="col-md-3 col-xs-12 p-l-0 p-t-20 text-right m-itm"
+            <div
+              class="col-md-3 col-xs-12 p-l-0 p-t-20 text-right m-itm"
               *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null"
-              [ngClass]="isMobile ? 'p-b-10' : 'p-b-20'">
+              [ngClass]="isMobile ? 'p-b-10' : 'p-b-20'"
+            >
               <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
                 <span class="font-size-vary-grn color-grey">
-                  <img width="25px" *ngIf="finalRfq.rfqCurrency.exchangeCurrencyFlag"
-                    [src]="finalRfq.rfqCurrency.exchangeCurrencyFlag" />
+                  <img width="25px" *ngIf="finalRfq.rfqCurrency.exchangeCurrencyFlag" [src]="finalRfq.rfqCurrency.exchangeCurrencyFlag" />
                   {{ finalRfq.rfqCurrency.exchangeCurrencyName }}
                 </span>
                 <span class="p-l-5"> = </span>
                 <span class="p-l-5 color-6d6a6a color-grey"> {{ finalRfq.rfqCurrency.exchangeValue }} </span>
                 <span class="p-l-5 color-grey">
-                  <img width="25px" *ngIf="finalRfq.rfqCurrency.primaryCurrencyFlag"
-                    [src]="finalRfq.rfqCurrency.primaryCurrencyFlag" />
+                  <img width="25px" *ngIf="finalRfq.rfqCurrency.primaryCurrencyFlag" [src]="finalRfq.rfqCurrency.primaryCurrencyFlag" />
                   {{ finalRfq.rfqCurrency.primaryCurrencyName }}
                 </span>
               </span>
               <div class="display-inline-block p-l-5">
-                <span *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null"
-                  class="info-icon info-tootip"><img src="./../../../../assets/images/i_icon.png"
-                    class="img-responsive" />
+                <span *ngIf="finalRfq.rfqCurrency != null && finalRfq.rfqCurrency.exchangeCurrencyName != null" class="info-icon info-tootip"
+                  ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                   <span class="info-tootip__content rt-0">
                     <div class="tooltip-table ml-0">
-                      <div class="row text-center color-grey text-semi-bold">
-                        Supplier will have to submit the quote in this selected currency
-                      </div>
+                      <div class="row text-center color-grey text-semi-bold">Supplier will have to submit the quote in this selected currency</div>
                     </div>
                   </span>
                 </span>
@@ -102,8 +95,7 @@
           </div>
           <!-- second row -->
           <div class="row main-flex" [ngClass]="!isMobile ? 'm-b-10' : ''">
-            <div class="col-md-3" *ngFor="let supplier of selectedSuppliersList"
-              [ngClass]="isMobile ? 'mb-3 pl-0 pr-0' : ''">
+            <div class="col-md-3" *ngFor="let supplier of selectedSuppliersList" [ngClass]="isMobile ? 'mb-3 p-l-0 p-r-0' : ''">
               <mat-card class="w-100">
                 <div class="col-md-12 text-bold">
                   <label for="company" class="mb-0">{{ supplier.supplier_name }}</label>
@@ -120,7 +112,8 @@
           </div>
         </div>
       </div>
-      <mat-card class="m-b-10 p-b-10" *ngIf="this.finalRfq.terms">Payment Terms:
+      <mat-card class="m-b-10 p-b-10" *ngIf="this.finalRfq.terms"
+        >Payment Terms:
         <span classs="p-l-15">
           {{ this.finalRfq.terms.termsDesc.trim() === "Others" ? this.finalRfq.terms.otherDesc : this.finalRfq.terms.termsDesc }}
         </span>
@@ -129,7 +122,7 @@
       <mat-accordion>
         <ng-template ngFor let-project [ngForOf]="checkedList" let-i="index">
           <mat-expansion-panel class="myPanel" [expanded]="true" [ngClass]="isMobile ? 'mt-2' : ''">
-            <mat-expansion-panel-header [ngClass]="isMobile ? 'font-size12 pt-4 pb-4' : ''">
+            <mat-expansion-panel-header [ngClass]="isMobile ? 'fontsize-12-px p-t-4 p-b-4' : ''">
               <mat-panel-title>
                 {{ project.projectName }}
                 <a href="javascript:void(0)" class="main-color p-l-15">
@@ -178,21 +171,16 @@
 
                 <!-- View image modal link -->
                 <ng-container matColumnDef="Attached Images">
-                  <th mat-header-cell *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">
-                    Attached Images
-                  </th>
+                  <th mat-header-cell *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">Attached Images</th>
                   <td class="text-align-center" mat-cell *matCellDef="let element">
-                    <div *ngIf="element?.documentList?.length" class="images-lists float-rfq-img-stack"
-                      (click)="viewAllImages(element.materialId)">
+                    <div *ngIf="element?.documentList?.length" class="images-lists float-rfq-img-stack" (click)="viewAllImages(element.materialId)">
                       <ng-container *ngFor="let img of element.documentList; let i = index">
-                        <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image"
-                          *ngIf="i < 3" />
+                        <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
                       </ng-container>
                     </div>
 
                     <ng-container *ngIf="!element?.documentList">
-                      <img src="assets/images/project-default-image.png" alt="default-material"
-                        class="img-fluid default-image" />
+                      <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
                     </ng-container>
                   </td>
                 </ng-container>

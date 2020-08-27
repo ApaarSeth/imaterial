@@ -17,9 +17,7 @@
         <ng-container matColumnDef="Material Name">
           <th mat-header-cell *matHeaderCellDef class="receipt-material-name">Material Name</th>
           <td mat-cell *matCellDef="let element" class="grn-material-name receipt-material-name">
-            <div class="limited-character global">
-              {{ element.materialName }}
-            </div>
+            <div class="limited-character global">{{ element.materialName }}</div>
           </td>
         </ng-container>
         <ng-container matColumnDef="Brand Name">
@@ -29,25 +27,17 @@
         <ng-container matColumnDef="Unit">
           <th mat-header-cell *matHeaderCellDef class="text-align-center receipt-unit">Unit</th>
           <td mat-cell *matCellDef="let element" class="text-align-center receipt-unit">
-            <span *ngIf="element.materialUnit != ''">
-              {{ element.materialUnit }}
-            </span>
-            <span *ngIf="element.materialUnit == ''">
-              -
-            </span>
+            <span *ngIf="element.materialUnit != ''"> {{ element.materialUnit }} </span>
+            <span *ngIf="element.materialUnit == ''"> - </span>
           </td>
         </ng-container>
         <ng-container matColumnDef="Awarded Quantity">
           <th mat-header-cell *matHeaderCellDef class="text-align-center receipt-awarded-qty">Awarded <br />Quantity</th>
-          <td mat-cell *matCellDef="let element" class="text-align-center receipt-awarded-qty">
-            {{ element.materialQuantity }}
-          </td>
+          <td mat-cell *matCellDef="let element" class="text-align-center receipt-awarded-qty">{{ element.materialQuantity }}</td>
         </ng-container>
         <ng-container matColumnDef="Delivered Quantity">
           <th mat-header-cell *matHeaderCellDef class="text-align-center receipt-delivered-qty">Delivered <br />Quantity</th>
-          <td mat-cell *matCellDef="let element" class="text-align-center receipt-delivered-qty">
-            {{ element.deliveredQty }}
-          </td>
+          <td mat-cell *matCellDef="let element" class="text-align-center receipt-delivered-qty">{{ element.deliveredQty }}</td>
         </ng-container>
         <ng-container matColumnDef="Delivered Date">
           <th mat-header-cell *matHeaderCellDef class="text-align-center receipt-delivered-date">Delivered <br />Date</th>
@@ -85,12 +75,10 @@
           <mat-expansion-panel class="myPanel" [expanded]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <div class="row width100Percent">
+                <div class="row width-100">
                   <div class="col-xs-8 col-md-8 p-t-10 p-b-10 font-size-vary-grn">
                     {{data.materialName}}
-                    <div class="font-size-vary-grn color-brand">
-                      {{data.materialBrand}}
-                    </div>
+                    <div class="font-size-vary-grn color-brand">{{data.materialBrand}}</div>
                   </div>
                   <div class="col-xs-4 col-md-4">
                     <mat-form-field [formGroupName]="i" class="border-input table-input add-grn-popup">
@@ -100,18 +88,12 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="row width100Percent">
-              <div class="col-xs-12 font-size-vary-grn p-t-10 p-l-15">
-                Unit : {{data.materialUnit}}
-              </div>
+            <div class="row width-100">
+              <div class="col-xs-12 font-size-vary-grn p-t-10 p-l-15">Unit : {{data.materialUnit}}</div>
             </div>
-            <div class="row width100Percent">
-              <div class="col-xs-6 font-size-vary-grn p-t-10 p-b-10 p-l-15">
-                Awarded Quantity : {{data.materialQuantity}}
-              </div>
-              <div class="col-xs-6 font-size-vary-grn text-align-right p-t-10 p-b-10">
-                Delivered Quantity : {{data.deliveredQty}}
-              </div>
+            <div class="row width-100">
+              <div class="col-xs-6 font-size-vary-grn p-t-10 p-b-10 p-l-15">Awarded Quantity : {{data.materialQuantity}}</div>
+              <div class="col-xs-6 font-size-vary-grn text-align-right p-t-10 p-b-10">Delivered Quantity : {{data.deliveredQty}}</div>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -121,12 +103,8 @@
     <grn-documents #grnDocument [documentData]="documentList"></grn-documents>
     <div mat-dialog-actions>
       <div class="col-sm-12 save-btn-add-edit-user-modal">
-        <button mat-raised-button type="button" (click)="closeDialog()" class="main-background-color main-button color-white pull-left">
-          Cancel
-        </button>
-        <button mat-raised-button type="submit" class="main-background-color main-button color-white pull-right" [disabled]="!materialForms.valid">
-          Save
-        </button>
+        <button mat-raised-button type="button" (click)="closeDialog()" class="main-background-color main-button color-white pull-left">Cancel</button>
+        <button mat-raised-button type="submit" class="main-background-color main-button color-white pull-right" [disabled]="!materialForms.valid">Save</button>
       </div>
     </div>
   </form>

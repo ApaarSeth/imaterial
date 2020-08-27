@@ -82,7 +82,7 @@
     <mat-tab-group (selectedTabChange)="tabClick($event)">
       <mat-tab label="Add Payment">
         <form *ngIf="paymentDetail != null" [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
-          <div class="row width100Percent">
+          <div class="row width-100">
             <div [ngClass]="paymentDetail.purchaseOrderCurrency ? 'col-xs-3' : 'col-xs-4'">
               <mat-form-field class="border-input width-90">
                 <input formControlName="amountPaid" appTwoDigitDecimaNumber matInput type="text" placeholder="Amount Paid*" />

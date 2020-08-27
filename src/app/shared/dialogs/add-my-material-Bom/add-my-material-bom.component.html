@@ -9,18 +9,15 @@
 
   <div class="modal-body">
     <form *ngIf="addMyMaterial" [formGroup]="addMyMaterial" (ngSubmit)="submit()">
-      <div formArrayName="myMaterial"
-        *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
-
+      <div formArrayName="myMaterial" *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
         <div class="row p-t-10 mobile-padding" [formGroupName]="i">
-
           <!-- Material Name Input Field -->
           <div [ngClass]="this.data ? 'col-md-2 col-material-name col-sm-6 col-xs-12' : 'col-md-4 col-sm-6 col-xs-12'">
             <mat-form-field class="border-input w-100">
               <input type="text" placeholder="Material Name*" matInput formControlName="materialName" />
-              <small
-                *ngIf="addMyMaterial.get('myMaterial')['controls'][i]['controls']['materialName'].errors?.maxlength"
-                class="warning-color">maximun characters allowed is 300</small>
+              <small *ngIf="addMyMaterial.get('myMaterial')['controls'][i]['controls']['materialName'].errors?.maxlength" class="warning-color"
+                >maximun characters allowed is 300</small
+              >
             </mat-form-field>
           </div>
 
@@ -30,8 +27,15 @@
               <mat-label class="mat-select-trades">Unit*</mat-label>
               <mat-select formControlName="materialUnit">
                 <div class="display-flex">
-                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Unit" [(ngModel)]="searchUnit"
-                    [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()" />
+                  <input
+                    class="p-l-10 p-b-5"
+                    matInput
+                    type="search"
+                    placeholder="Search Unit"
+                    [(ngModel)]="searchUnit"
+                    [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()"
+                  />
                   <button mat-button mat-icon-button>
                     <mat-icon>search</mat-icon>
                   </button>
@@ -48,16 +52,14 @@
           <!-- Quantity Input Field -->
           <div *ngIf="this.data" class="col-md-2 col-sm-6 col-xs-7">
             <mat-form-field class="border-input w-100">
-              <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text"
-                placeholder="Quantity*" />
+              <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text" placeholder="Quantity*" />
             </mat-form-field>
           </div>
 
           <!-- Unit Rate Input Field -->
           <div *ngIf="this.data" class="col-md-2 col-sm-6 col-xs-12 col-unit-rate">
             <mat-form-field class="border-input w-100">
-              <input formControlName="estimatedPrice" appTwoDigitDecimaNumber matInput type="text"
-                placeholder="Unit Rate({{ this.currencyCode }})" />
+              <input formControlName="estimatedPrice" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Rate({{ this.currencyCode }})" />
             </mat-form-field>
           </div>
 
@@ -67,9 +69,15 @@
               <mat-label>Trade*</mat-label>
               <mat-select formControlName="trade">
                 <div class="display-flex">
-                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Trade"
-                    [(ngModel)]="searchTrade" [ngModelOptions]="{standalone: true}"
-                    (keydown)="$event.stopPropagation()" />
+                  <input
+                    class="p-l-10 p-b-5"
+                    matInput
+                    type="search"
+                    placeholder="Search Trade"
+                    [(ngModel)]="searchTrade"
+                    [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()"
+                  />
                   <button mat-button matSuffix mat-icon-button>
                     <mat-icon>search</mat-icon>
                   </button>
@@ -87,15 +95,20 @@
               <mat-label>Category*</mat-label>
               <mat-select formControlName="category">
                 <div class="display-flex">
-                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Category"
-                    [(ngModel)]="searchCategory" [ngModelOptions]="{standalone: true}"
-                    (keydown)="$event.stopPropagation()" />
+                  <input
+                    class="p-l-10 p-b-5"
+                    matInput
+                    type="search"
+                    placeholder="Search Category"
+                    [(ngModel)]="searchCategory"
+                    [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()"
+                  />
                   <button mat-button mat-icon-button>
                     <mat-icon>search</mat-icon>
                   </button>
                 </div>
-                <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:['categoriesName']"
-                  [value]="option" matTooltip=" {{ option.categoriesName }}">
+                <mat-option *ngFor="let option of this.filteredOption | SearchPipe: searchCategory:['categoriesName']" [value]="option" matTooltip=" {{ option.categoriesName }}">
                   {{ option.categoriesName }}
                 </mat-option>
               </mat-select>
@@ -104,19 +117,21 @@
 
           <!-- Add Button Field -->
           <div class="col-md-1 col-sm-12 col-xs-12 col-add-btn display-flex align-items-center justify-content-end">
-            <a href="javascript:void(0)" *ngIf="addMyMaterial.get('myMaterial').value.length > 1"
-              class="width-15-px cursor-pointer" (click)="onDelete(i)">
+            <a href="javascript:void(0)" *ngIf="addMyMaterial.get('myMaterial').value.length > 1" class="width-15-px cursor-pointer" (click)="onDelete(i)">
               <img src="../../../../assets/images/delete-button.png" />
             </a>
 
-            <button *ngIf="i == addMyMaterial.get('myMaterial').value.length - 1" type="button"
-              [disabled]="!addMyMaterial.valid" (click)="onAddRow()"
+            <button
+              *ngIf="i == addMyMaterial.get('myMaterial').value.length - 1"
+              type="button"
+              [disabled]="!addMyMaterial.valid"
+              (click)="onAddRow()"
               class="p-t-5 material-icons cursor button-background add-material-btn"
-              [ngClass]="[!addMyMaterial.valid ? 'main-color-faded' : 'main-color']">
+              [ngClass]="[!addMyMaterial.valid ? 'main-color-faded' : 'main-color']"
+            >
               add_circle
             </button>
           </div>
-
         </div>
 
         <hr *ngIf="i < addMyMaterial.get('myMaterial').value.length - 1" class="material-seperator" />

@@ -5,14 +5,12 @@
   </button>
 </div>
 <form [formGroup]="form" (ngSubmit)="submit()">
-  <div class="row select-currency" [ngClass]="isMobile ? 'text-left font-size12 pt-4' : 'p-t-10'">
+  <div class="row select-currency" [ngClass]="isMobile ? 'text-left fontsize-12-px p-t-4' : 'p-t-10'">
     <div class="col-md-6 col-xs-7">
       <div class="base-currency">
-        <span class="text-semi-bold font-size-vary-grn color-6d6a6a">
-          Base Currency
-        </span>
+        <span class="text-semi-bold font-size-vary-grn color-6d6a6a"> Base Currency </span>
         <span class="p-l-10">
-          <img *ngIf="this.primaryCurrencyData" [src]="this.primaryCurrencyData.imageUrl" [ngClass]="isMobile ? 'w-20-px' : 'w-25-px'" />
+          <img *ngIf="this.primaryCurrencyData" [src]="this.primaryCurrencyData.imageUrl" [ngClass]="isMobile ? 'width-20-px' : 'width-25-px'" />
           {{ this.primaryCurrencyData && this.primaryCurrencyData.currencyCode }}
         </span>
       </div>
@@ -20,7 +18,7 @@
   </div>
   <div class="row select-currency">
     <div class="col-xs-12 col-sm-6 col-md-6 country-currency">
-      <mat-form-field class="border-select width100Percent">
+      <mat-form-field class="border-select width-100">
         <mat-label class="value-currencies-label">Currency *</mat-label>
         <mat-select formControlName="exchangeCurrency" placeholder="Search Currency" (selectionChange)="setExchangeCurrency($event)">
           <div class="display-flex" *ngIf="this.currencies">
@@ -65,7 +63,7 @@
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 conversion-rate">
-      <mat-form-field class="border-input width100Percent">
+      <mat-form-field class="border-input width-100">
         <mat-label>Conversion Rate </mat-label>
         <input matInput type="text" appTwoDigitDecimaNumber #conversionValue appTwoDigitDecimaNumber formControlName="exchangeValue" min="0" required />
         <!-- <small *ngIf="form.controls['cost'].hasError('required') && form.controls['cost'].touched" class="error-msg"> Construction cost is required </small>
@@ -75,9 +73,7 @@
         </small>
       </mat-form-field>
     </div>
-    <div class="col-xs-12 col-sm-12 col-sm-12 font-size12 color-6d6a6a">
-      *Supplier will have to submit the quote in this selected currency.
-    </div>
+    <div class="col-xs-12 col-sm-12 col-sm-12 fontsize-12-px color-6d6a6a">*Supplier will have to submit the quote in this selected currency.</div>
   </div>
 
   <div mat-dialog-actions class="p-t-25 p-b-15">

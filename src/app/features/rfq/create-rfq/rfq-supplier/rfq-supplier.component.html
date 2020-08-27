@@ -1,56 +1,65 @@
-<div class="row" [ngClass]="isMobile ? 'm-podr' : '' ">
-  <div class="col-xs-6 p-t-10 m-itm" [ngClass]="isMobile ? 'mb-2' : '' ">
+<div class="row" [ngClass]="isMobile ? 'm-podr' : ''">
+  <div class="col-xs-6 p-t-10 m-itm" [ngClass]="isMobile ? 'mb-2' : ''">
     <mat-form-field class="input-search-padding-zero border-input">
-      <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText"
-        [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()" />
+      <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()" />
       <button mat-button matSuffix mat-icon-button>
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
   </div>
-  <div class="col-md-6 col-xs-12 text-right m-itm" [ngClass]="isMobile ? 'pt-0 pb-0 pl-0 pr-2 sm-btn1' : '' ">
-    <span (click)="selectCurrency()"
-      class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select
-      Currency</span>
+  <div class="col-md-6 col-xs-12 text-right m-itm" [ngClass]="isMobile ? 'p-t-0 p-b-0 p-l-0 p-r-2 sm-btn1' : ''">
+    <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
     <span class="p-r-5">
-      <span class="m-b-5 font-bold color-main cursor-pointer add-supplier-btn"
+      <span
+        class="m-b-5 font-bold color-main cursor-pointer add-supplier-btn"
         (click)="openSupplierDialog(this.rfqData.rfqProjectsList[0].projectId)"
-        [ngClass]="isMobile ? 'text-decoration-underline ml-1 mr-1' : 'm-r-10 m-l-15' ">
-        <span [ngClass]="isMobile ? 'font-size14' : 'font-size20' ">
-          +
-        </span>
-        <span [ngClass]="isMobile ? 'font-size12' : '' ">
-          Supplier
-        </span>
+        [ngClass]="isMobile ? 'text-decoration-underline ml-1 mr-1' : 'm-r-10 m-l-15'"
+      >
+        <span [ngClass]="isMobile ? 'fontsize-14-px' : 'fontsize-20-px'"> + </span>
+        <span [ngClass]="isMobile ? 'fontsize-12-px' : ''"> Supplier </span>
       </span>
     </span>
     <span class="p-r-5">
-      <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white"
-        (click)="changeRfq()" type="button" [ngClass]="isMobile ? 'po-sm-btn' : '' ">Back</button>
+      <button
+        mat-raised-button
+        matStepperPrevious
+        class="main-background-color main-button color-white"
+        (click)="changeRfq()"
+        type="button"
+        [ngClass]="isMobile ? 'po-sm-btn' : ''"
+      >
+        Back
+      </button>
     </span>
     <!-- (click)="navigateToUploadPage()" -->
     <span class="xs-scrn-btn">
-      <button mat-raised-button matStepperNext [disabled]="this.supplierCounter === 0" (click)="reviewRfq()"
-        class="main-background-color main-button color-white" [ngClass]="isMobile ? 'po-sm-btn' : '' ">
+      <button
+        mat-raised-button
+        matStepperNext
+        [disabled]="this.supplierCounter === 0"
+        (click)="reviewRfq()"
+        class="main-background-color main-button color-white"
+        [ngClass]="isMobile ? 'po-sm-btn' : ''"
+      >
         Next
       </button>
     </span>
   </div>
 
-  <div class="col-md-12 col-xs-6 p-b-20 text-right m-itm"
+  <div
+    class="col-md-12 col-xs-6 p-b-20 text-right m-itm"
     *ngIf="rfqData && rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null"
-    [ngClass]="isMobile ? 'pt-3' : 'p-t-10' ">
-    <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'font-size12 mcrncy pt-2 pb-2' : 'p-t-10 p-b-10' ">
+    [ngClass]="isMobile ? 'p-t-3' : 'p-t-10'"
+  >
+    <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-12-px mcrncy p-t-2 p-b-2' : 'p-t-10 p-b-10'">
       <span class="font-size-vary-grn color-grey">
-        <img width="25px" *ngIf="rfqData.rfqCurrency.exchangeCurrencyFlag"
-          [src]="rfqData.rfqCurrency.exchangeCurrencyFlag" />
+        <img width="25px" *ngIf="rfqData.rfqCurrency.exchangeCurrencyFlag" [src]="rfqData.rfqCurrency.exchangeCurrencyFlag" />
         {{ rfqData.rfqCurrency.exchangeCurrencyName }}
       </span>
       <span class="p-l-5"> = </span>
       <span class="p-l-5 color-6d6a6a color-grey"> {{ rfqData.rfqCurrency.exchangeValue }} </span>
       <span class="p-l-5 color-grey">
-        <img width="25px" *ngIf="rfqData.rfqCurrency.primaryCurrencyFlag"
-          [src]="rfqData.rfqCurrency.primaryCurrencyFlag" />
+        <img width="25px" *ngIf="rfqData.rfqCurrency.primaryCurrencyFlag" [src]="rfqData.rfqCurrency.primaryCurrencyFlag" />
         {{ rfqData.rfqCurrency.primaryCurrencyName }}
       </span>
     </span>
@@ -58,17 +67,14 @@
 </div>
 
 <form *ngIf="allSuppliers.length" [formGroup]="supplierForm">
-
   <div class="example-container mat-elevation-z8">
-
-    <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:['supplier_name']" formArrayName="forms"
-      class="mat-elevation-z4 col-sm-12 mt-3">
+    <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:['supplier_name']" formArrayName="forms" class="mat-elevation-z4 col-sm-12 m-t-3">
       <ng-container matColumnDef="Supplier Name">
         <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
-        <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i" class="pt-2">
+        <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i" class="p-t-2">
           <mat-checkbox #ch [checked]="element.checked" (change)="valueChange(element, ch, i)"> </mat-checkbox>
           <span class="supplier-name ml-3 position-absolute">{{ element.supplier_name }}</span>
-          <span class="d-block supplier-rates rfq-supplier-rates min-w-150px">
+          <span class="d-block supplier-rates rfq-supplier-rates minwidth-150-px">
             <view-rating [supplierId]="element.supplierId" [ratings]="element.supplier_rating"></view-rating>
           </span>
         </td>
@@ -92,7 +98,5 @@
       <tr mat-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-
   </div>
-
 </form>

@@ -1,12 +1,10 @@
 <div class="row margin-auto">
-  <mat-card class="width100Percent radius-10 p-t-10">
+  <mat-card class="width-100 radius-10 p-t-10">
     <mat-card-header class="upload-documents-mat-header">
       <span class="text-semi-bold margin-auto" *ngIf="mode === 'edit'">
         <app-upload #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"> </app-upload>
       </span>
-      <span *ngIf="mode !== 'edit'" class="col-xs-12 text-align-center text-semi-bold">
-        View Document
-      </span>
+      <span *ngIf="mode !== 'edit'" class="col-xs-12 text-align-center text-semi-bold"> View Document </span>
     </mat-card-header>
     <mat-card-content>
       <mat-list class="pt-10">
@@ -20,9 +18,7 @@
             <div class="col-xs-2">
               <span class="show-download">
                 <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
-                  <i class="material-icons">
-                    remove_red_eye
-                  </i>
+                  <i class="material-icons"> remove_red_eye </i>
                 </a>
               </span>
             </div>
@@ -30,9 +26,7 @@
         </span>
         <span *ngIf="mode != 'edit' && !documentData">
           <mat-list-item>
-            <div class="col-xs-12 text-align-center">
-              No files to preview
-            </div>
+            <div class="col-xs-12 text-align-center">No files to preview</div>
           </mat-list-item>
         </span>
         <span *ngIf="mode === 'edit'">
@@ -45,12 +39,10 @@
             <div class="col-xs-3">
               <span class="show-download">
                 <a type="button" target="_blank" class="width-40 p-r-5" [href]="file.Url" mat-icon-button>
-                  <i class="material-icons">
-                    remove_red_eye
-                  </i>
+                  <i class="material-icons"> remove_red_eye </i>
                 </a>
                 <button type="button" class="width-21" (click)="removeFile(i)" mat-icon-button>
-                  <mat-icon class="font-size-16">cancel</mat-icon>
+                  <mat-icon>cancel</mat-icon>
                 </button>
               </span>
             </div>

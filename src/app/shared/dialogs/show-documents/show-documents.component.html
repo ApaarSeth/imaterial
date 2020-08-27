@@ -1,46 +1,37 @@
-
-  <div class="header-add-edit-dialog">
-      <h1 mat-dialog-title>Attached Documents</h1>
-      <button type="button" class="close" (click)="onNoClick()" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
-  </div>
+<div class="header-add-edit-dialog">
+  <h1 mat-dialog-title>Attached Documents</h1>
+  <button type="button" class="close" (click)="onNoClick()" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
 
 <div mat-dialog-content>
   <div class="row display-flex justify-content-center">
     <!-- Documents -->
-    <ng-container *ngIf="documentList !=null && documentList.length > 0">
-      <ng-container class="files-list"*ngFor="let file of documentList">
-        <div class="display-flex width94Percent justify-content-space-between">
-            <div class="documents-name p-t-10">
-              <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-              <span class="word-break-all">{{ file.DocumentDesc }}</span>
-            </div>
-  
-            <div class="show-download">
-              <!-- <img src="../../../../assets/images/download-po.png" (click)="downloadURI(file.DocumentUrl,file.DocumentDesc)"/> -->
-                <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
-                <i class="material-icons">
-                  remove_red_eye
-                </i>
-              </a>
-            </div>
+    <ng-container *ngIf="documentList != null && documentList.length > 0">
+      <ng-container class="files-list" *ngFor="let file of documentList">
+        <div class="display-flex width-94 justify-content-space-between">
+          <div class="documents-name p-t-10">
+            <img class="file-icon" src="../../../../assets/images/file-doc.png" />
+            <span class="word-break-all">{{ file.DocumentDesc }}</span>
+          </div>
+
+          <div class="show-download">
+            <!-- <img src="../../../../assets/images/download-po.png" (click)="downloadURI(file.DocumentUrl,file.DocumentDesc)"/> -->
+            <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
+              <i class="material-icons"> remove_red_eye </i>
+            </a>
+          </div>
         </div>
-        </ng-container>
+      </ng-container>
     </ng-container>
     <ng-container *ngIf="documentList == null || (documentList && documentList.length == 0)">
       <div class="p-t-10 display-flex justify-content-center">
-        <img class="width40Percent" src="../../../../assets/images/docs.png">
+        <img class="width-40" src="../../../../assets/images/docs.png" />
       </div>
       <div>
-        <span  class="p-t-10 p-b-10 display-flex justify-content-center text-align-justify">
-         <span class="text-semi-bold p-r-5">
-          Oops!
-         </span>  You have no documents to see.
-        </span>
+        <span class="p-t-10 p-b-10 display-flex justify-content-center text-align-justify"> <span class="text-semi-bold p-r-5"> Oops! </span> You have no documents to see. </span>
       </div>
     </ng-container>
-     
-        </div>
-      </div>
-   
+  </div>
+</div>
