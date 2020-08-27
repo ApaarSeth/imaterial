@@ -74,7 +74,7 @@
 
           <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1 && rfqSupplierDetailList.rfqCurrency">
             <div class="float-right d-inline-block">
-              <span class="base-currency p-l-3 p-r-3 border-dark p-t-10 p-b-10">
+              <span class="base-currency pl-3 pr-3 border-dark p-t-10 p-b-10">
                 <span class="font-size-vary-grn color-grey">
                   <img width="25px" *ngIf="rfqSupplierDetailList.rfqCurrency.exchangeCurrencyFlag" [src]="rfqSupplierDetailList.rfqCurrency.exchangeCurrencyFlag" />
                   {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}
@@ -206,7 +206,7 @@
                     </ng-container>
                   </td>
                 </ng-container>
-                <td class="text-align-right" [ngClass]="rfqSupplierDetailList.isInternational === 1 ? 'p-t-1' : ''">
+                <td class="text-align-right" [ngClass]="rfqSupplierDetailList.isInternational === 1 ? 'pt-1' : ''">
                   <ng-container *ngIf="rfqSupplierDetailList.isInternational === 0; else txBtn">
                     <mat-form-field class="border-input">
                       <input
@@ -402,7 +402,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="fontsize-14-px p-t-3">
+                <td class="fontsize-14-px pt-3">
                   <ng-container *ngIf="otherCostData && otherCostData.otherCostInfo && otherCostData.otherCostInfo.length">
                     <strong>Other Cost: </strong>
                     <span style="margin-right: 5px">

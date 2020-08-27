@@ -81,7 +81,7 @@
 <mat-accordion *ngIf="poDetails" class="accordion-padding-zero">
   <form *ngIf="poDetails.length" [formGroup]="materialForm">
     <mat-expansion-panel class="myPanel" [expanded]="true" [ngClass]="isMobile ? 'mt-2' : ''">
-      <mat-expansion-panel-header [ngClass]="isMobile ? 'fontsize-12-px p-t-4 p-b-4' : ''">
+      <mat-expansion-panel-header [ngClass]="isMobile ? 'fontsize-12-px pt-4 pb-4' : ''">
         <mat-panel-title>
           {{ poDetails[0].projectName }}
           <a href="javascript:void(0)" class="main-color p-l-15">

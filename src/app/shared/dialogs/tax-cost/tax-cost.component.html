@@ -39,10 +39,10 @@
                     <input matInput type="number" placeholder="Tax %" formControlName="taxValue" />
                   </mat-form-field>
                   <ng-container *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').touched">
-                    <mat-error class="mt-mns p-t-1 p-b-2 fontsize-11-px" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.max">
+                    <mat-error class="mt-mns pt-1 pb-2 fontsize-11-px" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.max">
                       Max 100 qty is Allowed
                     </mat-error>
-                    <mat-error class="mt-mns p-t-1 p-b-2 fontsize-11-px" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.min">
+                    <mat-error class="mt-mns pt-1 p b-2 fontsize-11-px" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.min">
                       Min 1 qty is Allowed
                     </mat-error>
                   </ng-container>
@@ -90,7 +90,7 @@
                     <span class="p-l-5">{{ this.data.currency }}</span>
                   </div>
                   <ng-container *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
-                    <mat-error class="mt-mns p-t-1 p-b-2 fontsize-11-px" *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
+                    <mat-error class="mt-mns pt-1 pb-2 fontsize-11-px" *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
                       Min 1 qty is Allowed
                     </mat-error>
                   </ng-container>
@@ -154,7 +154,7 @@
                 <span class="p-l-5">{{ this.data.currency }}</span>
               </div>
               <ng-container *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
-                <mat-error class="mt-mns p-t-1 p-b-2 fontsize-11-px" *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
+                <mat-error class="mt-mns pt-1 pb-2 fontsize-11-px" *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
                   Min 1 qty is Allowed
                 </mat-error>
               </ng-container>
