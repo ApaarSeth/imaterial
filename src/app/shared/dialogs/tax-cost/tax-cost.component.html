@@ -47,7 +47,7 @@
                     </mat-error>
                   </ng-container>
                 </div>
-                <div class="col-1 p-r-0 display-flex p-t-3 align-items-center justify-content-end">
+                <div class="col-1 p-r-0 display-flex pt-3 align-items-center justify-content-end">
                   <div matRipple class="cursor-pointer" (click)="deleteField('taxInfo', i)">
                     <img src="../../../../assets/images/delete-button.png" />
                   </div>
@@ -65,7 +65,7 @@
               </div>
             </div>
 
-            <p class="tctnc d-flex w-100 p-t-4">* Tax amount will be calculated on the basis of total tax %.</p>
+            <p class="tctnc d-flex w-100 pt-4">* Tax amount will be calculated on the basis of total tax %.</p>
           </div>
         </mat-tab>
         <mat-tab label="Other Costs" class="addressDialog">
@@ -95,7 +95,7 @@
                     </mat-error>
                   </ng-container>
                 </div>
-                <div class="col-1 p-r-0 display-flex p-t-3 align-items-center justify-content-end">
+                <div class="col-1 p-r-0 display-flex pt-3 align-items-center justify-content-end">
                   <div matRipple class="cursor-pointer" (click)="deleteField('otherCostInfo', i)">
                     <img src="../../../../assets/images/delete-button.png" />
                   </div>
@@ -111,7 +111,7 @@
                 </div>
               </div>
             </div>
-            <p class="tctnc d-flex w-100 p-t-4">* Other Tax amount will be calculated on the basis of total tax %.</p>
+            <p class="tctnc d-flex w-100 pt-4">* Other Tax amount will be calculated on the basis of total tax %.</p>
           </div>
         </mat-tab>
       </mat-tab-group>
@@ -160,7 +160,7 @@
               </ng-container>
             </div>
 
-            <div class="col-1 p-r-0 display-flex p-t-3 align-items-center justify-content-end">
+            <div class="col-1 p-r-0 display-flex pt-3 align-items-center justify-content-end">
               <div matRipple class="cursor-pointer" (click)="deleteField('otherCostInfo', i)">
                 <img src="../../../../assets/images/delete-button.png" />
               </div>
@@ -168,7 +168,7 @@
                 *ngIf="i == otherCostForm.get('otherCostInfo').value.length - 1"
                 [ngClass]="[!checkValidationOther ? 'main-color-faded' : 'main-color']"
                 matRipple
-                class="material-icons cursor-pointer main-color m-t-3"
+                class="material-icons cursor-pointer main-color mt-3"
                 (click)="addNewOtherField()"
               >
                 add_circle
@@ -177,7 +177,7 @@
           </div>
         </div>
 
-        <p class="tctnc d-flex w-100 p-t-4">* Total amount will be shown as overall other costs on all the materials.</p>
+        <p class="tctnc d-flex w-100 pt-4">* Total amount will be shown as overall other costs on all the materials.</p>
       </div>
     </div>
 

@@ -1,4 +1,4 @@
-<div class="page-start-point mt-5 p-t-2 liability-outer-secton">
+<div class="page-start-point mt-5 pt-2 liability-outer-secton">
   <form *ngIf="allProjects" [formGroup]="form" autocomplete="off">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
@@ -73,14 +73,14 @@
 
         <div class="col-xs-7 d-md-none"></div>
 
-        <div class="col-md-2 col-sm-3 col-xs-4 p-t-4 mobile-display-amount">
+        <div class="col-md-2 col-sm-3 col-xs-4 pt-4 mobile-display-amount">
           <div *ngIf="supplierLiabiltyReportData" class="show-amount p-t-0 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
             Display Amount
           </div>
         </div>
 
         <div
-          class="col-md-4 col-sm-1 col-xs-1 add-project-btn display-flex align-items-center p-t-4"
+          class="col-md-4 col-sm-1 col-xs-1 add-project-btn display-flex align-items-center pt-4"
           [ngClass]="isMobile ? 'justify-content-flex-start height-25-px' : 'justify-content-flex-end'"
         >
           <div *ngIf="projectIds.length || supplierIds.length">
