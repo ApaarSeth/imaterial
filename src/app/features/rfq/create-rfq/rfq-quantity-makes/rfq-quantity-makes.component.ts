@@ -14,8 +14,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { CommonService } from "../../../../shared/services/commonService";
 import { FieldRegExConst } from "../../../../shared/constants/field-regex-constants";
 import { SelectCurrencyComponent } from "../../../../shared/dialogs/select-currency/select-currency.component";
-import { AddRFQ, RfqMaterialResponse, RfqMat } from "../../../../shared/models/RFQ/rfq-details";
-import { Address } from "cluster";
+import { AddRFQ, RfqMaterialResponse, RfqMat, Address } from "../../../../shared/models/RFQ/rfq-details";
 import { UploadImageComponent } from "../../../../shared/dialogs/upload-image/upload-image.component";
 import { ViewImageComponent } from "../../../../shared/dialogs/view-image/view-image.component";
 

@@ -1,4 +1,4 @@
-<div class="page-start-point p-t-1">
+<div class="page-start-point pt-1">
   <div class="p-l-10 p-r-10 p-b-10 bom-table-style">
     <card-layout *ngIf="projectData" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"></card-layout>
 
@@ -84,7 +84,6 @@
         </ng-container>
 
         <ng-container matColumnDef="estimatedQty">
-          <<<<<<< HEAD
           <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>Estimated Quantity</th>
           <td
             class="text-align-center"
@@ -92,23 +91,11 @@
             *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
           >
-            =======
-          </td>
-
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>Estimated Quantity</th>
-          <td
-            class="text-align-center"
-            mat-cell
-            *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-          >
-            >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
             {{ element.estimatedQty }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="estimatedRate">
-          <<<<<<< HEAD
           <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>Estimated Rate</th>
           <td
             class="text-align-center"
@@ -116,23 +103,11 @@
             *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
           >
-            =======
-          </td>
-
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>Estimated Rate</th>
-          <td
-            class="text-align-center"
-            mat-cell
-            *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-          >
-            >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
             {{ element.estimatedRate }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="requestedQuantity">
-          <<<<<<< HEAD
           <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>Requested Quantity</th>
           <td
             class="text-align-center"
@@ -140,23 +115,11 @@
             *matCellDef="let element"
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
           >
-            =======
-          </td>
-
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>Requested Quantity</th>
-          <td
-            class="text-align-center"
-            mat-cell
-            *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-          >
-            >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
             {{ element.requestedQuantity }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="issueToProject">
-          <<<<<<< HEAD
           <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>Issued To Project</th>
           <td
             class="text-align-center"
@@ -165,18 +128,6 @@
             [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
           >
             <ng-container *ngIf="element.issueToProject; else showZEroDataIP"> {{ element.issueToProject }} </ng-container>
-            =======
-          </td>
-
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px" mat-header-cell mat-sort-header>Issued To Project</th>
-          <td
-            class="text-align-center"
-            mat-cell
-            *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-          >
-            <ng-container *ngIf="element.issueToProject; else showZEroDataIP"> {{ element.issueToProject }} </ng-container>
-            >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
             <ng-template #showZEroDataIP> 0 </ng-template>
           </td>
         </ng-container>
