@@ -1,29 +1,28 @@
 <div class="header-add-edit-dialog relnote-head">
-  <h1 mat-dialog-title>{{notes.headerText}}</h1>
+  <h1 mat-dialog-title>{{ notes.headerText }}</h1>
   <button type="button" class="close" (click)="close()" aria-label="Close">
     <!-- <span aria-hidden="true">×</span> -->
     <mat-icon class="font-size-26px">close</mat-icon>
   </button>
 </div>
 <div class="row release-notes">
-  <p *ngIf="notes.subhead" class="font-weight500 mb-1">{{notes.subhead}}</p>
+  <p *ngIf="notes.subhead" class="font-weight500 mb-1">{{ notes.subhead }}</p>
   <div class="notes-description">
-    {{notes.description}}
+    {{ notes.description }}
   </div>
   <ng-container *ngFor="let note of notes.releaseList">
-
     <ng-container *ngIf="note.releaseFixes">
       <div class="col-sm-12 heading-div">
         <span class="heading">
           <div class="text-wh">
-            {{note.releaseFixes}}
+            {{ note.releaseFixes }}
           </div>
         </span>
       </div>
-      <div class="col-sm-12 list-of-notes mt-3">
+      <div class="col-sm-12 list-of-notes m-t-3">
         <ol>
           <li *ngFor="let item of note.items">
-            {{item.description}}
+            {{ item.description }}
           </li>
         </ol>
       </div>
@@ -33,14 +32,14 @@
       <div class="col-sm-12 heading-div">
         <span class="heading">
           <div class="text-wh">
-            {{note.releaseEnhancement}}
+            {{ note.releaseEnhancement }}
           </div>
         </span>
       </div>
-      <div class="col-sm-12 list-of-notes mt-3">
+      <div class="col-sm-12 list-of-notes m-t-3">
         <ol>
           <li *ngFor="let item of note.items">
-            {{item.description}}
+            {{ item.description }}
           </li>
         </ol>
       </div>
@@ -49,10 +48,7 @@
 
   <ng-container *ngIf="notes.isDownload === 1">
     <div class="col-sm-12 display-flex justify-content-center">
-      <button mat-raised-button (click)="openDownloadLink(notes.downloadLink)"
-        class="main-background-color main-button color-white">
-        Download Release Note
-      </button>
+      <button mat-raised-button (click)="openDownloadLink(notes.downloadLink)" class="main-background-color main-button color-white">Download Release Note</button>
     </div>
   </ng-container>
 </div>

@@ -6,7 +6,7 @@
           <form class="update-info__form" *ngIf="addUserForm" [formGroup]="addUserForm">
             <div class="row">
               <div class="col-md-12">
-                <h3 class="user-profile text-center text-uppercase pt-2 pb-4">Invite Team Members</h3>
+                <h3 class="user-profile text-center text-uppercase p-t-2 p-b-4">Invite Team Members</h3>
               </div>
             </div>
 
@@ -17,12 +17,8 @@
                     <input matInput type="email" placeholder="*Email" (input)="verifyEmail($event, other.controls['email'], i)" formControlName="email" />
                   </mat-form-field>
 
-                  <mat-error *ngIf="other.controls['email'].hasError('required') && other.controls['email'].touched">
-                    Email is required
-                  </mat-error>
-                  <mat-error *ngIf="other.controls['email'].hasError('pattern') && other.controls['email'].touched">
-                    Enter Valid Email
-                  </mat-error>
+                  <mat-error *ngIf="other.controls['email'].hasError('required') && other.controls['email'].touched"> Email is required </mat-error>
+                  <mat-error *ngIf="other.controls['email'].hasError('pattern') && other.controls['email'].touched"> Enter Valid Email </mat-error>
                   <small class="form-error-msg" *ngIf="index[i] === 'false'">Email already in use.</small>
                   <!-- other.controls.other.controls.email.errors -->
                 </div>
@@ -47,9 +43,7 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                  <mat-error *ngIf="other.controls['roleId'].hasError('required') && other.controls['roleId'].touched">
-                    Role is required
-                  </mat-error>
+                  <mat-error *ngIf="other.controls['roleId'].hasError('required') && other.controls['roleId'].touched"> Role is required </mat-error>
                 </div>
                 <div class="col-md-1 text-center p-t-15">
                   <a *ngIf="addUserForm.get('other').value.length > 1" class="width-15-px p-l-5 cursor-pointer float-right-invite-delBtn" matTooltip="Delete" (click)="onDelete(i)">

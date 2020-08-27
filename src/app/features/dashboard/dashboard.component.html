@@ -1,5 +1,5 @@
 <!-- <fix-header></fix-header> -->
-<div class="page-start-point pt-4">
+<div class="page-start-point p-t-4">
   <div *ngIf="!allProjects || (allProjects && allProjects.length == 0)" class="parent p-t-20 min-height">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
@@ -11,15 +11,10 @@
           </p>
         </div>
         <div *ngIf="!permissionObj.rfqFlag">
-          <p>
-            You haven't been assigned any project yet.
-          </p>
+          <p>You haven't been assigned any project yet.</p>
         </div>
       </div>
-      <button *ngIf="permissionObj.addProject" mat-raised-button (click)="addProject()"
-        class="main-background-color main-button color-white">
-        Add First Project
-      </button>
+      <button *ngIf="permissionObj.addProject" mat-raised-button (click)="addProject()" class="main-background-color main-button color-white">Add First Project</button>
     </div>
   </div>
   <div *ngIf="allProjects && allProjects.length > 0" class="project-dashboard p-b-20 min-height parent">
@@ -33,18 +28,13 @@
           </button>
         </mat-form-field>
       </div>
-      <div *ngIf="permissionObj.addProject" class="text-right col-xs-5 add-project-btn p-t-10"
-        [ngClass]="isMobile ? 'sm-btn1' : ''">
-        <button mat-raised-button class="main-background-color main-button color-white demo-title"
-          (click)="addProject()">
-          + Add Project
-        </button>
+      <div *ngIf="permissionObj.addProject" class="text-right col-xs-5 add-project-btn p-t-10" [ngClass]="isMobile ? 'sm-btn1' : ''">
+        <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="addProject()">+ Add Project</button>
       </div>
     </div>
     <!-- end fix part -->
     <div class="mb-3" *ngFor="let projDetails of allProjects | SearchPipe: searchText:['projectName']">
-      <card-layout (onEdit)="editProject($event)" (onDelete)="deleteProject($event)" [projectDetails]="projDetails">
-      </card-layout>
+      <card-layout (onEdit)="editProject($event)" (onDelete)="deleteProject($event)" [projectDetails]="projDetails"> </card-layout>
     </div>
   </div>
 </div>

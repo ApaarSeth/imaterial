@@ -11,7 +11,6 @@
       <mat-tab-group class="overflow-remove" (selectedTabChange)="tabClick($event)">
         <mat-tab label="Choose Address" class="addressDialog">
           <ng-container *ngIf="address && address[0].addressId > 0; else noAddress">
-
             <form *ngIf="address" [formGroup]="selectAddressFrm">
               <div class="row py-3">
                 <div class="col-md-12 col-xs-12">
@@ -33,19 +32,16 @@
               </div>
 
               <div class="pull-right p-t-5">
-                <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial
-                  (click)="onselectAddress()">
-                  Save
-                </button>
+                <button mat-raised-button class="main-background-color main-button color-white m-b-5" cdkFocusInitial (click)="onselectAddress()">Save</button>
               </div>
             </form>
           </ng-container>
-    
+
           <ng-template #noAddress>
             <p class="py-5 text-center">No address available.</p>
           </ng-template>
         </mat-tab>
-    
+
         <mat-tab label="Add Address">
           <form [formGroup]="newAddressForm">
             <div class="add-address-dialog-div-main">
@@ -55,14 +51,10 @@
                     <mat-form-field class="col-xs-12">
                       <input matInput type="text" placeholder="Address Line 1" formControlName="addressLine1" />
                     </mat-form-field>
-                    <small
-                      *ngIf="newAddressForm.controls['addressLine1'].hasError('required') && newAddressForm.controls['addressLine1'].touched"
-                      class="form-error-msg p-l-15">
+                    <small *ngIf="newAddressForm.controls['addressLine1'].hasError('required') && newAddressForm.controls['addressLine1'].touched" class="form-error-msg p-l-15">
                       Address Line1 is required
                     </small>
-                    <small
-                      *ngIf="newAddressForm.controls['addressLine1'].value.length > 120 && newAddressForm.controls['addressLine1'].touched"
-                      class="form-error-msg p-l-15">
+                    <small *ngIf="newAddressForm.controls['addressLine1'].value.length > 120 && newAddressForm.controls['addressLine1'].touched" class="form-error-msg p-l-15">
                       Address should be less than 120 characters
                     </small>
                   </div>
@@ -72,9 +64,7 @@
                   <div class="row border-input p-t-0">
                     <mat-form-field class="col-xs-12">
                       <input matInput type="text" placeholder="Address Line 2" formControlName="addressLine2" />
-                      <small
-                        *ngIf="newAddressForm.controls['addressLine2'].value.length > 120 && newAddressForm.controls['addressLine2'].touched"
-                        class="form-error-msg p-l-15">
+                      <small *ngIf="newAddressForm.controls['addressLine2'].value.length > 120 && newAddressForm.controls['addressLine2'].touched" class="form-error-msg p-l-15">
                         Address should be less than 120 characters
                       </small>
                     </mat-form-field>
@@ -88,16 +78,25 @@
                   <mat-form-field class="border-select address-select-country mat-form-field-infix-padding-top mat-form-field-flex-mm-padding mt6p width-100">
                     <mat-select formControlName="countryCode" (selectionChange)="blankPincode()">
                       <div class="display-flex">
-                        <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country"
-                          [(ngModel)]="searchCountry" [ngModelOptions]="{standalone: true}"
-                          (keydown)="$event.stopPropagation()" />
+                        <input
+                          class="p-l-10 p-b-5"
+                          matInput
+                          type="search"
+                          placeholder="Search Country"
+                          [(ngModel)]="searchCountry"
+                          [ngModelOptions]="{standalone: true}"
+                          (keydown)="$event.stopPropagation()"
+                        />
                         <button mat-button matSuffix mat-icon-button>
                           <mat-icon>search</mat-icon>
                         </button>
                       </div>
 
                       <mat-select-trigger>
-                        <span class="d-flex selected-country" matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}">
+                        <span
+                          class="d-flex selected-country"
+                          matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
+                        >
                           <img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                           <span class="p-r-5 color-brand font-size16">{{ selectedCountry && selectedCountry.name }}</span>
                         </span>
@@ -105,10 +104,11 @@
 
                       <mat-option
                         *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
-                        [value]="country" selected="trade.isAttatched"><span><img class="width17Percent p-r-10"
-                            [src]="country.imageUrl" alt="" />
-                          <span matTooltip="{{ country.name }}"
-                            class="limited-character universal p-r-5">{{ country.name }}</span>
+                        [value]="country"
+                        selected="trade.isAttatched"
+                        ><span
+                          ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                          <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
                           <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
                         </span>
                       </mat-option>
@@ -119,19 +119,13 @@
                 <div class="col-xs-6">
                   <div class="row border-input p-t-0">
                     <mat-form-field class="col-xs-12">
-                      <input matInput type="string" (input)="getPincode($event)" placeholder="Pincode"
-                        formControlName="pinCode" />
+                      <input matInput type="string" (input)="getPincode($event)" placeholder="Pincode" formControlName="pinCode" />
                     </mat-form-field>
                     <ng-container *ngIf="newAddressForm.controls['pinCode'].touched">
-                      <small *ngIf="newAddressForm.controls['pinCode'].hasError('required') && pincodeLength <= 0"
-                        class="form-error-msg p-l-15">
-                        Pincode is required
-                      </small>
+                      <small *ngIf="newAddressForm.controls['pinCode'].hasError('required') && pincodeLength <= 0" class="form-error-msg p-l-15"> Pincode is required </small>
                       <!-- <small *ngIf="newAddressForm.controls['pinCode'].hasError('pattern') && newAddressForm.controls['pinCode'].touched"
                                         class="form-error-msg p-l-15"> Enter Valid Pincode</small> -->
-                      <small *ngIf="!validPincode && pincodeLength > 0" class="error-msg p-l-15">
-                        Enter Valid Pincode
-                      </small>
+                      <small *ngIf="!validPincode && pincodeLength > 0" class="error-msg p-l-15"> Enter Valid Pincode </small>
                     </ng-container>
                   </div>
                 </div>
@@ -159,22 +153,24 @@
                     <mat-form-field class="col-xs-12">
                       <input matInput type="text" placeholder="GSTIN" formControlName="gstNo" />
                     </mat-form-field>
-                    <small
-                      *ngIf="newAddressForm.controls['gstNo'].hasError('required') && newAddressForm.controls['gstNo'].touched"
-                      class="form-error-msg p-l-15">
+                    <small *ngIf="newAddressForm.controls['gstNo'].hasError('required') && newAddressForm.controls['gstNo'].touched" class="form-error-msg p-l-15">
                       GSTIN is required
                     </small>
-                    <small
-                      *ngIf="newAddressForm.controls['gstNo'].hasError('pattern') && newAddressForm.controls['gstNo'].touched"
-                      class="form-error-msg p-l-15">
-                      Enter Valid GSTIN</small>
+                    <small *ngIf="newAddressForm.controls['gstNo'].hasError('pattern') && newAddressForm.controls['gstNo'].touched" class="form-error-msg p-l-15">
+                      Enter Valid GSTIN</small
+                    >
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-xs-12 text-center p-t-10">
-              <button mat-raised-button [disabled]="!newAddressForm.valid || !validPincode"
-                class="main-background-color main-button color-white m-b-5" cdkFocusInitial (click)="onAddAddress()">
+              <button
+                mat-raised-button
+                [disabled]="!newAddressForm.valid || !validPincode"
+                class="main-background-color main-button color-white m-b-5"
+                cdkFocusInitial
+                (click)="onAddAddress()"
+              >
                 Add
               </button>
             </div>

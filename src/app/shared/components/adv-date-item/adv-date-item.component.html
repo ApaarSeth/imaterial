@@ -1,32 +1,27 @@
 <mat-expansion-panel class="mt-1 border-bottom" [(expanded)]="isOpen">
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            {{ config.title}}
-        </mat-panel-title>
-    </mat-expansion-panel-header>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ config.title }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
 
+  <div *ngIf="config?.list">
+    <form [formGroup]="form">
+      <!-- <h4 class="m-t-3 mb-2 fontsize-16-px font-weight-normal">{{ config.title }}</h4> -->
 
-    <div *ngIf="config?.list">
-        <form [formGroup]="form">
-            <!-- <h4 class="mt-3 mb-2 font-size16 font-weight-normal">{{ config.title }}</h4> -->
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ config.list[0].name }}</mat-label>
+        <input matInput [max]="maxDate" [matDatepicker]="fromDatePicker" formControlName="from" (dateChange)="checkToDate()" />
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+      </mat-form-field>
 
-            <mat-form-field appearance="fill" class="w-100">
-                <mat-label>{{ config.list[0].name }}</mat-label>
-                <input matInput [max]="maxDate" [matDatepicker]="fromDatePicker" formControlName="from"
-                    (dateChange)="checkToDate()" />
-                <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #fromDatePicker></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" class="w-100">
-                <mat-label>{{ config.list[1].name }}</mat-label>
-                <input matInput [min]="minDate" [matDatepicker]="toDatePicker" formControlName="to"
-                    (dateChange)="checkFromDate()" />
-                <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #toDatePicker></mat-datepicker>
-            </mat-form-field>
-
-        </form>
-    </div>
-
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{ config.list[1].name }}</mat-label>
+        <input matInput [min]="minDate" [matDatepicker]="toDatePicker" formControlName="to" (dateChange)="checkFromDate()" />
+        <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+      </mat-form-field>
+    </form>
+  </div>
 </mat-expansion-panel>

@@ -8,18 +8,14 @@ import { CountryCode } from '../../models/currency';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
-export interface City {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: "address-dialog",
-  templateUrl: "./add-addressPo.component.html"
+  templateUrl: "./add-address.component.html"
 })
 
-export class AddAddressPoDialogComponent implements OnInit {
-  
+export class AddAddressDialogComponent implements OnInit {
+
   validPincode: boolean;
   searchCountry: string = '';
   pincodeLength: number;
@@ -36,7 +32,7 @@ export class AddAddressPoDialogComponent implements OnInit {
   countryCode: string
 
   constructor(
-    public dialogRef: MatDialogRef<AddAddressPoDialogComponent>,
+    public dialogRef: MatDialogRef<AddAddressDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
     private addAddressService: AddAddressService,
@@ -69,11 +65,6 @@ export class AddAddressPoDialogComponent implements OnInit {
     }
   }
 
-  cities: City[] = [
-    { value: "Gurgaon", viewValue: "Gurgaon" },
-    { value: "Delhi-1", viewValue: "Delhi" },
-    { value: "Karnal", viewValue: "Karnal" }
-  ];
 
   blankPincode() {
     this.newAddressForm.get('pinCode').setValue('');

@@ -9,7 +9,7 @@
           [ngClass]="isMobile ? 'd-block mb-3' : ''"
           >Select Currency</span
         >
-        <span *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null" [ngClass]="isMobile ? 'd-block pb-2' : ''">
+        <span *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null" [ngClass]="isMobile ? 'd-block p-b-2' : ''">
           <span class="slideToggalColor p-r-10">
             <mat-slide-toggle (toggleChange)="changeCurrency($event)" [(ngModel)]="ratesBaseCurr" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
           </span>
@@ -94,7 +94,7 @@
                 : 'national-view-po'
             "
             >Amount
-            <span style="display: block;"
+            <span style="display: block"
               >({{
                 poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
               }})</span
@@ -117,9 +117,7 @@
               Tax Amount <br />
               ({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})
             </ng-container>
-            <ng-template #defaultGstPercent>
-              GST %
-            </ng-template>
+            <ng-template #defaultGstPercent> GST % </ng-template>
           </span>
           <span
             class="mat-header-cell"
@@ -138,9 +136,7 @@
               Other Cost <br />
               ({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})
             </ng-container>
-            <ng-template #defaultCurr>
-              GST Amount
-            </ng-template>
+            <ng-template #defaultCurr> GST Amount </ng-template>
           </span>
           <span
             class="mat-header-cell"
@@ -258,7 +254,7 @@
                   : 'national-view-po'
               "
               >{{ getMaterialQuantity(m) | number: "1.2-2" }}
-              <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap font-size9 min-width-128">
+              <!-- <span *ngIf="getMaterialQuantity(m) > material.poAvailableQty" class="error-msg white-space-nowrap fontsize-9-px minwidth-128-px">
                 Must be less than {{material.poAvailableQty}}
               </span> -->
             </span>
@@ -494,7 +490,7 @@
               >
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity | number: "1.2-2" }}</ng-container>
                 <ng-template #editQuantity>
-                  <mat-form-field class="border-input" [ngClass]="isInternational && mode === 'edit' ? 'width-60' : 'width50Percent'">
+                  <mat-form-field class="border-input" [ngClass]="isInternational && mode === 'edit' ? 'width-60' : 'width-50'">
                     <input
                       type="text"
                       matInput
@@ -790,7 +786,7 @@
                 : 'national-view-po'
             "
           >
-            <span *ngIf="isInternational" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''"
+            <span *ngIf="isInternational" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp p-t-2' : ''"
               ><span>
                 Tax Amount
                 <span

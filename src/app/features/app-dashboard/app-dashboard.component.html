@@ -1,17 +1,17 @@
 <div class="dashboard app-dashboard">
-  <div class="container-fluid bg-gray pl-0 pr-3">
-    <!-- <div class="container-fluid bg-gray pl-0 pr-3 mt-120"> -->
+  <div class="container-fluid bg-gray p-l-0 p-r-3">
+    <!-- <div class="container-fluid bg-gray p-l-0 p-r-3 mt-120"> -->
     <div class="row">
       <!-- <sidebar-navigation (collapseMenu)="isSidebarCollapsed($event)"></sidebar-navigation> -->
       <!-- [class.changeWidth]="isSideNavCollapsed" -->
       <div class="col-md-12">
         <div class="row">
-          <div class="col-sm-12 pl-3 d-none">
+          <div class="col-sm-12 p-l-3 d-none">
             <app-breadcrumb></app-breadcrumb>
           </div>
         </div>
-        <div class="row mt-3">
-          <div class="col-sm-12 col-md-9 pl-3" [ngClass]="isMobile ? 'pr-0' : ''">
+        <div class="row m-t-3">
+          <div class="col-sm-12 col-md-9 p-l-3" [ngClass]="isMobile ? 'p-r-0' : ''">
             <div class="things-to-do bg-white mb-4 equal-height sml-d1">
               <!-- <h5 class="mb-3">Things to do</h5> -->
               <div class="things-to-do__inner d-flex justify-content-between align-items-center sml-db">
@@ -134,7 +134,7 @@
                               >
                               </ngx-mat-drp>
                             </div>
-                            <div class="p-r-0" [ngClass]="isMobile ? 'w-100 pl-0' : 'width-35 p-l-10'">
+                            <div class="p-r-0" [ngClass]="isMobile ? 'w-100 p-l-0' : 'width-35 p-l-10'">
                               <mat-form-field class="border-select select-project mat-form-field-flex-mm-padding" [ngClass]="isMobile ? 'w-100' : 'w-100'">
                                 <mat-label matTooltip="Status Filter">Status Filter</mat-label>
                                 <mat-select formControlName="poFilter">
@@ -208,7 +208,7 @@
                               </mat-form-field>
                             </div>
 
-                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdpw-100 w-100' : 'widthWrapper width-35 p-t-7'">
+                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'p-l-0 wdpw-100 w-100' : 'widthWrapper width-35 p-t-7'">
                               <ngx-mat-drp
                                 *ngIf="rfqData"
                                 [ngClass]="isMobile ? '' : 'input-font-size'"
@@ -286,7 +286,7 @@
                             </form>
                           </div>
                           <div [ngClass]="isMobile ? 'w-100' : 'width-88'">
-                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'pl-0 wdpw-100 w-100' : 'widthWrapper p-t-4'">
+                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'p-l-0 wdpw-100 w-100' : 'widthWrapper p-t-4'">
                               <ngx-mat-drp
                                 *ngIf="indentData"
                                 [ngClass]="isMobile ? '' : 'input-font-size-large'"
@@ -318,7 +318,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-12 col-md-3" [ngClass]="isMobile ? 'pr-0' : ''">
+          <div class="col-sm-12 col-md-3" [ngClass]="isMobile ? 'p-r-0' : ''">
             <div class="dashboard__right">
               <div class="project-tile cursor" [routerLink]="['/project-dashboard']">
                 <div class="project-tile__tile equal-height w-100 mb-4 stats px-3 py-3 d-flex align-items-center mr-3">

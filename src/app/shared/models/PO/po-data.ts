@@ -230,7 +230,10 @@ export interface ApproverData {
   lastName: string;
   profileImageUrl: string;
   accountStatus: number;
+  checked?: any;
+  roleDescription?: string
 }
+
 
 export interface initiatePo {
   projectId: number;

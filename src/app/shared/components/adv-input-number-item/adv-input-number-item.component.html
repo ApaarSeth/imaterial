@@ -1,26 +1,22 @@
 <mat-expansion-panel class="mt-1 border-bottom" [(expanded)]="isOpen">
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            {{ config.title}}
-        </mat-panel-title>
-    </mat-expansion-panel-header>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ config.title }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
 
+  <div *ngIf="config?.list">
+    <form [formGroup]="form">
+      <!-- <h4 class="m-t-3 fontsize-16-px font-weight-normal">{{ config.title }}</h4> -->
+      <mat-form-field class="w-100 border-input">
+        <mat-label>{{ config.list[0].name }}</mat-label>
+        <input matInput type="number" min="0" autocomplete="off" formControlName="min" (input)="checkAmount($event)" />
+      </mat-form-field>
 
-    <div *ngIf="config?.list">
-        <form [formGroup]="form">
-            <!-- <h4 class="mt-3 font-size16 font-weight-normal">{{ config.title }}</h4> -->
-            <mat-form-field class="w-100 border-input">
-                <mat-label>{{ config.list[0].name }}</mat-label>
-                <input matInput type="number" min="0" autocomplete="off" formControlName="min"
-                    (input)="checkAmount($event)" />
-            </mat-form-field>
-
-            <mat-form-field class="w-100 border-input">
-                <mat-label>{{ config.list[1].name }}</mat-label>
-                <input matInput type="number" min="0" autocomplete="off" formControlName="max"
-                    (input)="checkAmount($event)" />
-            </mat-form-field>
-        </form>
-    </div>
-
+      <mat-form-field class="w-100 border-input">
+        <mat-label>{{ config.list[1].name }}</mat-label>
+        <input matInput type="number" min="0" autocomplete="off" formControlName="max" (input)="checkAmount($event)" />
+      </mat-form-field>
+    </form>
+  </div>
 </mat-expansion-panel>

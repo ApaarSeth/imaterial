@@ -1,18 +1,16 @@
 import { Component, OnInit, Input, HostListener } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
-  ProjectAddress,
-  SupplierAddress,
   CardData
 } from "src/app/shared/models/PO/po-data";
 import { MatDialog } from "@angular/material/dialog";
 import { SelectPoRoleComponent } from "src/app/shared/dialogs/select-po-role/select-po-role.component";
-import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
 import { Address } from "src/app/shared/models/RFQ/rfq-details";
 import { ActivatedRoute } from "@angular/router";
 import { POService } from 'src/app/shared/services/po.service';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierRatingComponent } from "src/app/shared/dialogs/supplier-rating/supplier-rating.component";
+import { AddAddressDialogComponent } from "../../../shared/dialogs/add-address/add-address.component";
 
 @Component({
   selector: "app-po-card",
@@ -125,7 +123,7 @@ export class PoCardComponent implements OnInit {
   }
   openaddressDialog(roleType: string, id: number) {
     let international = this.cardData.isInternational;
-    const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
+    const dialogRef = this.dialog.open(AddAddressDialogComponent, {
       width: "800px",
       data: { roleType, id, international },
       panelClass: 'add-address-dialog'
