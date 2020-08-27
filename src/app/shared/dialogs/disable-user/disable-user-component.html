@@ -1,5 +1,4 @@
-<div mat-dialog-content>
-  
+<section class="modal-outer">
   <div class="modal-header">
     <h5 mat-dialog-title class="mb-0">Confirmation</h5>
     <button type="button" class="close" (click)="cancel()" aria-label="Close">
@@ -7,23 +6,25 @@
     </button>
   </div>
 
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-sm-12">
-        <p class="text-center mb-0">Are you sure you want to deactivate this user?</p>
+  <div mat-dialog-content>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="text-center mb-0">Are you sure you want to deactivate this user?</p>
+        </div>
       </div>
-    </div>
 
-    <div mat-dialog-actions>
-      <div class="col-sm-12 save-btn-add-edit-user-modal">
-        <button mat-raised-button (click)="cancel()" class="main-color main-button pull-left">
-          Cancel
-        </button>
-        <button mat-raised-button (click)="deactivateUser()"
-          class="main-background-color main-button color-white pull-right">
-          Deactivate
-        </button>
+      <div mat-dialog-actions>
+        <div class="col-sm-12 save-btn-add-edit-user-modal">
+          <button mat-raised-button (click)="cancel()" class="main-color main-button pull-left">
+            Cancel
+          </button>
+          <button mat-raised-button (click)="deactivateUser()"
+            class="main-background-color main-button color-white pull-right">
+            Deactivate
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>

@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { RFQService } from "../../services/rfq.service";
 import { AppNavigationService } from '../../services/navigation.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
@@ -8,9 +8,12 @@ import { AddRFQ } from "../../models/RFQ/rfq-details";
   selector: "add-rfq-double-confirmation-dialog",
   templateUrl: "add-rfq-double-confirmation-component.html"
 })
+
 export class AddRFQConfirmationComponent implements OnInit {
+
   rfqDetails: AddRFQ;
   selectBuildsupplyAsSupplier: boolean = true;
+  
   constructor(
     private dialogRef: MatDialogRef<AddRFQConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { dataKey: AddRFQ },
@@ -35,7 +38,6 @@ export class AddRFQConfirmationComponent implements OnInit {
     return this.rfqDetails.rfqCurrency ? this.rfqDetails.rfqCurrency.exchangeValue : null
   }
 
-  getExcha
   close(data) {
     this.dialogRef.close(data);
   }

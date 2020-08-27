@@ -192,10 +192,10 @@ export class RfqSupplierComponent implements OnInit {
   openRfqTermsDialog(data: AddRFQ): void {
     const dialogRef = this.dialog.open(SelectRfqTermsComponent, {
       width: "400px",
-      data
+      data,
+      panelClass: 'select-rfq-terms-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
-      // data.defaultAddress = result[1];
     });
   }
 

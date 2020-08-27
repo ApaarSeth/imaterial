@@ -213,8 +213,9 @@ export class RfqQuantityMakesComponent implements OnInit {
         width: "1200px",
         data: {
           roleType: "projectBillingAddressId",
-          id: data.projectId
-        }
+          id: data.projectId,
+        },
+        panelClass: 'add-address-dialog'
       });
       dialogRef.afterClosed().subscribe(result => {
         data.defaultAddress = result ? result[1].address : data.defaultAddress;

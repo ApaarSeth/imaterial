@@ -493,6 +493,12 @@ s .validTill {
   }
 }
 
+.select-contact-person-dialog{
+  .person-personal-info{
+    margin-top: -2px;
+  }
+}
+
 @media only screen and (max-width: 1199px){
   .edit-view-purchase-order{
     .mat-header-cell, .mat-cell, .add-taxes-col span, .small-text{

@@ -3,7 +3,6 @@ import { RFQService } from "../../services/rfq.service";
 import { RfqTerms } from "../../models/RFQ/rfq-terms";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { POData } from "../../models/PO/po-data";
 import { AddRFQ } from "../../models/RFQ/rfq-details";
 import { Router } from '@angular/router';
 
@@ -11,8 +10,13 @@ import { Router } from '@angular/router';
   selector: "app-selectrfq-terms",
   templateUrl: "./selectrfq-terms.component.html"
 })
+
 export class SelectRfqTermsComponent implements OnInit {
   selectedPayment: string = '';
+  rfqTerms: RfqTerms[] = [];
+  termsForm: FormGroup;
+  customTermForm: FormGroup;
+
   constructor(
     private router: Router,
     public dialogRef: MatDialogRef<SelectRfqTermsComponent>,
@@ -20,15 +24,14 @@ export class SelectRfqTermsComponent implements OnInit {
     private rfqService: RFQService,
     @Inject(MAT_DIALOG_DATA) public data: AddRFQ
   ) { }
-  rfqTerms: RfqTerms[] = [];
-  termsForm: FormGroup;
-  customTermForm: FormGroup;
+
   ngOnInit() {
     this.rfqService.getRfqTerms().then(res => {
       this.rfqTerms = res.data as RfqTerms[];
     });
     this.formInit();
   }
+
   formInit() {
     this.termsForm = this.formBuilder.group({
       term: [this.rfqTerms[0], [Validators.required]]
@@ -47,6 +50,7 @@ export class SelectRfqTermsComponent implements OnInit {
     });
     this.dialogRef.close();
   }
+  
   submitRfq() {
     this.data.terms = {
       termsId: this.termsForm.value.term.termsId,
