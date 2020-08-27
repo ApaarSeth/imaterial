@@ -14,7 +14,7 @@
 
       <!-- <div class="col-md-7 col-sm-12 m-0-auto"> -->
       <div class="desp-block">
-        <div class="row" [ngClass]="isMobile ? 'mt-2' : 'm-t-3'">
+        <div class="row" [ngClass]="isMobile ? 'mt-2' : 'mt-3'">
           <div *ngFor="let plan of subscription.planList" class="col-md-4 mb-3 d-flex">
             <mat-card class="col-md-12 text-left p-0">
               <mat-card-header [className]="'subs-head ' + getClassName(plan.planName)">
