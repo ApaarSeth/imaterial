@@ -1,14 +1,28 @@
-<div>
-  <h1 mat-dialog-title>Select Purchase Order Approver</h1>
-  <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="selectedApprover">
-    <div *ngFor="let approver of approverData">
-      <mat-radio-button class="example-radio-button" [value]="approver"> {{approver.firstName}} <span class="p-l-5">{{approver.lastName}}</span> </mat-radio-button>
-      <mat-divider></mat-divider>
-    </div>
-  </mat-radio-group>
-  <div class="col-xs-12 text-center">
-    <button mat-raised-button class="main-background-color main-button color-white" (click)="sendPo()">
-      Select Approver
+<section class="modal-outer">
+  <div class="modal-header">
+    <h1 mat-dialog-title class="mb-0">Select Purchase Order Approver</h1>
+
+    <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+      <span aria-hidden="true">×</span>
     </button>
   </div>
-</div>
+
+  <div mat-dialog-content>
+    <div class="modal-body">
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="selectedApprover">
+        <div *ngFor="let approver of approverData" class="individual-approver pb-3">
+          <mat-radio-button class="example-radio-button" [value]="approver"> {{approver.firstName}} <span class="p-l-5">{{approver.lastName}}</span> </mat-radio-button>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-radio-group>
+
+      <div mat-dialog-actions>
+        <div class="col-xs-12 text-center pb-3">
+          <button mat-raised-button class="main-background-color main-button color-white" (click)="sendPo()">
+            Select Approver
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

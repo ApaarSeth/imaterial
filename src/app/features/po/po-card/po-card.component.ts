@@ -91,7 +91,8 @@ export class PoCardComponent implements OnInit {
   openDialog(roleType: string, projectId: number) {
     const dialogRef = this.dialog.open(SelectPoRoleComponent, {
       width: "700px",
-      data: { roleType, projectId }
+      data: { roleType, projectId },
+      panelClass: 'select-contact-person-dialog'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -126,7 +127,8 @@ export class PoCardComponent implements OnInit {
     let international = this.cardData.isInternational;
     const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
       width: "800px",
-      data: { roleType, id, international }
+      data: { roleType, id, international },
+      panelClass: 'add-address-dialog'
     });
 
     dialogRef.afterClosed().subscribe((result: Address) => {

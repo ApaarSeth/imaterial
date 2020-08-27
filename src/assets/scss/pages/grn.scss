@@ -235,7 +235,8 @@ $mat-row-horizontal-padding: 12px;
 
 .create-receipt-excel, .add-receipt-via-system, .add-custom-material, .issue-to-indent-dialog, .upload-image-modal, .view-image-modal,
 .delete-bom, .payment-record-dialog, .add-receipts-dialog, .show-docs-dialog, .drafted-po-confirm-dialog, .select-currency-dialog,
-.add-project-dialog, .deactivate-user{
+.select-contact-person-dialog, .add-address-dialog, .select-approver-dialog, .show-supplier-remarks-docs, .select-rfq-terms-dialog,
+.float-rfq-confirm-dialog, .add-users-dialog, .add-project-dialog, .deactivate-user, .add-my-material{
   .mat-dialog-container{
     padding: 0px !important;
     overflow-x: hidden;
@@ -244,7 +245,8 @@ $mat-row-horizontal-padding: 12px;
 
 .create-receipt-excel, .add-receipt-via-system, .add-custom-material, .issue-to-indent-dialog, .upload-image-modal, .view-image-modal,
 .delete-bom, .payment-record-dialog, .add-receipts-dialog, .show-docs-dialog, .drafted-po-confirm-dialog, .select-currency-dialog,
-.add-project-dialog, .add-supplier-dialog, .add-users-dialog, .deactivate-user{
+.select-contact-person-dialog, .add-address-dialog, .add-project-dialog, .add-supplier-dialog, .select-approver-dialog, .show-supplier-remarks-docs, 
+.select-rfq-terms-dialog, .float-rfq-confirm-dialog, .add-users-dialog, .deactivate-user, .add-my-material{
   .mat-dialog-content{
     padding: 0;
     overflow-x: hidden;
@@ -270,7 +272,7 @@ $mat-row-horizontal-padding: 12px;
 }
 
 .create-receipt-excel, .add-receipt-via-system, .delete-bom, .add-project-dialog, .add-supplier-dialog, .payment-record-dialog,
-.add-receipts-dialog, .show-docs-dialog, .add-users-dialog, .deactivate-user{
+.add-receipts-dialog, .show-docs-dialog, .select-contact-person-dialog, .add-address-dialog, .show-supplier-remarks-docs, .add-my-material{
   .modal-body{
     padding: 1rem 2.5rem;
   }
@@ -424,7 +426,7 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
-.delete-bom, .drafted-po-confirm-dialog{
+.delete-bom, .drafted-po-confirm-dialog, .add-users-dialog{
   .modal-body{
     padding: 1.5rem 2.5rem;
   }
@@ -432,8 +434,28 @@ $mat-row-horizontal-padding: 12px;
 
 .add-supplier-dialog, .add-users-dialog{
   .mat-dialog-container, .add-supplier-name .mat-form-field-wrapper,
-  .add-first-name .mat-form-field-wrapper{
+  .add-first-name .mat-form-field-wrapper, .add-last-name .mat-form-field-wrapper{
     padding: 0px !important;
+  }
+
+  .projects-field .mat-form-field-wrapper, .user-role-field .mat-form-field-wrapper{
+    padding-top: 10px !important;
+  }
+}
+
+.select-rfq-terms-dialog{
+  .other-terms-input{
+    .mat-form-field-wrapper{
+      padding-top: 0px !important;
+    }
+
+    .mat-input-element{
+      color: #020202;
+    }
+  }
+
+  .skip-btn{
+    padding: 0px 20px;
   }
 }
 
@@ -460,9 +482,59 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
-.select-currency-dialog{
+.select-currency-dialog, .select-contact-person-dialog, .select-rfq-terms-dialog, .deactivate-user{
   .modal-body{
     padding: 1rem 2.5rem 2rem;
+  }
+}
+
+.add-address-dialog{
+  .mat-radio-group .address-line{
+    &:not(:first-child){
+      border: 1px solid #b8b8b8;
+      padding: 10px 0px;
+    }
+    &:first-child{
+      border: 1px solid #b8b8b8;
+      border-bottom: none;
+      padding: 10px 0px;
+    }
+
+    .mat-radio-label{
+      margin-bottom: 0px;
+    }
+  }
+
+  .address-select-country{
+    .mat-form-field-infix{
+      padding-bottom: 3px;
+    }
+  }
+}
+
+.select-approver-dialog{
+  .modal-body{
+    padding: 1.5rem 2.5rem;
+  }
+}
+
+.show-supplier-remarks-docs{
+  .upload-image-info{
+    margin: 0px 0 10px 0 !important;
+  }
+
+  .default-remarks-image{
+    width: 20%;
+  }
+
+  .image-info span{
+    font-size: 14px;
+  }
+}
+
+.float-rfq-confirm-dialog{
+  .modal-body{
+    padding: 1rem 2.5rem 1.5rem;
   }
 }
 
@@ -579,6 +651,30 @@ $mat-row-horizontal-padding: 12px;
       padding-bottom: 0;
     }
   }
+
+  .add-address-dialog{
+    .modal-body{
+      padding-top: 0px;
+    }
+  }
+
+  .select-rfq-terms-dialog{
+    .mat-radio-label-content{
+      font-size: 14px;
+    }
+  }
+
+  .add-users-dialog{
+    .add-last-name, .projects-field{
+      .mat-form-field-wrapper{
+        padding-top: 15px !important;
+      }
+    }
+
+    .modal-body{
+      padding: 1rem 2.5rem;
+    }
+  }
 }
 
 @media only screen and (max-width: 599px){
@@ -600,15 +696,48 @@ $mat-row-horizontal-padding: 12px;
       font-size: 12px;
     }
   }
+
+  .select-contact-person-dialog{
+    .col-xs-7, .col-xs-5{
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+
+    .person-role{
+      padding-left: 28px;
+    }
+  }
+
+  .add-address-dialog {
+    .address-line {
+      font-size: 14px;
+    }
+
+    .selected-country{
+      img{
+        width: 20px;
+      }
+
+      span{
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 576px){
+  .select-approver-dialog{
+    .mat-radio-group .mat-radio-label-content {
+      font-size: 14px;
+    }
+
+    .individual-approver{
+      padding-bottom: 0.5rem!important;
+    }
+  }
 }
 
 @media only screen and (max-width: 560px){
-  // .add-receipt-via-system .modal-body,
-  // .add-custom-material .modal-body,
-  // .create-receipt-excel .modal-body {
-  //   padding: 1rem 1rem;
-  // }
-
   .add-receipt-via-system .mat-dialog-content,
   .add-custom-material .modal-dialog-content,
   .create-receipt-excel .modal-dialog-content{

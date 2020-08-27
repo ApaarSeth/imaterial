@@ -169,11 +169,14 @@ export class ReviewComponent implements OnInit {
         width: "500px",
         data: {
           dataKey: data
-        }
+        },
+        panelClass: 'float-rfq-confirm-dialog'
       });
       dialogRef.afterClosed().subscribe(result => {
-        if (result.statusCode === 201) {
-          this.router.navigate(["rfq"]);
+        if(result !== null){
+          if (result.statusCode === 201) {
+            this.router.navigate(["rfq"]);
+          }
         }
       });
     }
