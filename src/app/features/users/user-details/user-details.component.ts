@@ -146,7 +146,8 @@ export class UserDetailComponent implements OnInit {
 
     const dialogRef = this.dialog.open(AddEditUserComponent, {
       width: "660px",
-      data
+      data,
+      panelClass: 'add-users-dialog'
     });
 
     dialogRef.afterClosed().toPromise().then(data => {
@@ -174,7 +175,8 @@ export class UserDetailComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DeactiveUserComponent, {
       width: "500px",
-      data
+      data,
+      panelClass: 'deactivate-user'
     });
     dialogRef.afterClosed().toPromise().then(data => {
       if (data && data != null) {

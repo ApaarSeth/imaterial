@@ -1,91 +1,95 @@
-<form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()" class="common-dg">
-  <div class="header-add-edit-dialog">
-    <h1 mat-dialog-title>Add Supplier</h1>
-    <button type="button" class="close" (click)="close()" aria-label="Close">
-      <span aria-hidden="true">×</span>
-    </button>
-  </div>
+<div class="modal-outer">
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()" class="add-supplier-form common-dg">
 
-  <div mat-dialog-content>
-    <div class="row p-t-15 p-b-10">
-      <div class="col-xs-12 display-flex supplier-dialog">
-        <mat-form-field class="border-input">
-          <input matInput type="text" formControlName="supplier_name" placeholder="Supplier Name *" />
-        </mat-form-field>
-      </div>
-
-      <div class="col-xs-12 display-flex supplier-dialog">
-        <mat-form-field class="border-input">
-          <input matInput type="email" formControlName="email" placeholder="Email *" />
-          <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="form-error-msg"> Email is required </small>
-          <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="form-error-msg"> Enter Valid Email</small>
-        </mat-form-field>
-      </div>
-
-      <div class="col-xs-12 display-flex supplier-dialog pl-0 pr-0">
-        <div class="col-xs-4 col-md-2">
-          <mat-form-field class="border-select mat-form-field-flex-mm-padding">
-            <mat-select formControlName="countryCode">
-              <div class="display-flex">
-                <input
-                  class="p-l-10 p-b-5"
-                  matInput
-                  type="search"
-                  placeholder="Search Country"
-                  [(ngModel)]="searchCountry"
-                  [ngModelOptions]="{standalone: true}"
-                  (keydown)="$event.stopPropagation()"
-                />
-                <button mat-button matSuffix mat-icon-button>
-                  <mat-icon>search</mat-icon>
-                </button>
-              </div>
-              <mat-select-trigger>
-                <mat-label>
-                  <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-                    ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-                    <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
-                    <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
-                  </span>
-                </mat-label>
-              </mat-select-trigger>
-              <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country" selected="trade.isAttatched"
-                ><span
-                  ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                  <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
-                  <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
-                </span>
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="col-xs-8 col-md-10">
-          <mat-form-field class="border-input">
-            <ng-container *ngIf="isNational; else nonInt">
-              <input matInput type="text" formControlName="contact_no" placeholder="Phone No. *" />
-              <small *ngIf="form.controls['contact_no'].hasError('required') && form.controls['contact_no'].touched" class="form-error-msg"> Phone No is required </small>
-              <small *ngIf="form.controls['contact_no'].hasError('pattern') && form.controls['contact_no'].touched" class="form-error-msg"> Enter Valid Phone No</small>
-            </ng-container>
-            <ng-template #nonInt>
-              <input matInput type="text" formControlName="contact_no" placeholder="Phone No." />
-              <small *ngIf="form.controls['contact_no'].hasError('pattern') && form.controls['contact_no'].touched" class="form-error-msg"> Enter Valid Phone No</small>
-            </ng-template>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <!-- <div class="col-xs-12 display-flex supplier-dialog">
-        <mat-form-field class="border-input">
-          <input matInput type="text" formControlName="pan" placeholder="PAN" />
-        </mat-form-field>
-      </div> -->
+    <div class="modal-header">
+      <h5 mat-dialog-title class="mb-0">Add Supplier</h5>
+      <button type="button" class="close" (click)="close()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
     </div>
-  </div>
 
-  <div mat-dialog-actions class="save-btn-add-edit-user-modal" [ngClass]="isMobile ? 'sm-btn1' : '' ">
-    <button mat-raised-button [disabled]="!form.valid" class="main-background-color main-button color-white m-b-5">
-      Add
-    </button>
-  </div>
-</form>
+    <div mat-dialog-content>
+      <div class="modal-body">
+        <div class="row p-b-10">
+          <div class="col-xs-12 display-flex supplier-dialog">
+            <mat-form-field class="border-input add-supplier-name">
+              <input matInput type="text" formControlName="supplier_name" placeholder="Supplier Name *" />
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12 display-flex supplier-dialog">
+            <mat-form-field class="border-input">
+              <input matInput type="email" formControlName="email" placeholder="Email *" />
+              <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
+                class="form-error-msg"> Email is required </small>
+              <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
+                class="form-error-msg"> Enter Valid Email</small>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12 display-flex supplier-dialog pl-0 pr-0">
+            <div class="col-xs-4 col-md-2">
+              <mat-form-field class="border-select mat-form-field-flex-mm-padding">
+                <mat-select formControlName="countryCode">
+                  <div class="display-flex">
+                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country"
+                      [(ngModel)]="searchCountry" [ngModelOptions]="{standalone: true}"
+                      (keydown)="$event.stopPropagation()" />
+                    <button mat-button matSuffix mat-icon-button>
+                      <mat-icon>search</mat-icon>
+                    </button>
+                  </div>
+
+                  <mat-select-trigger>
+                    <mat-label class="supplier-country-code">
+                      <div
+                        matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"><img
+                          class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                        <span class="p-r-5 font-size14">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                        <span
+                          class="font-size14 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
+                      </div>
+                    </mat-label>
+                  </mat-select-trigger>
+
+                  <mat-option
+                    *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
+                    [value]="country" selected="trade.isAttatched"><span><img class="width17Percent p-r-10"
+                        [src]="country.imageUrl" alt="" />
+                      <span matTooltip="{{ country.name }}"
+                        class="limited-character universal p-r-5">{{ country.name }}</span>
+                      <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
+                    </span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-xs-8 col-md-10">
+              <mat-form-field class="border-input">
+                <ng-container *ngIf="isNational; else nonInt">
+                  <input matInput type="text" formControlName="contact_no" placeholder="Phone No. *" />
+                  <small *ngIf="form.controls['contact_no'].hasError('required') && form.controls['contact_no'].touched"
+                    class="form-error-msg"> Phone No is required </small>
+                  <small *ngIf="form.controls['contact_no'].hasError('pattern') && form.controls['contact_no'].touched"
+                    class="form-error-msg"> Enter Valid Phone No</small>
+                </ng-container>
+                <ng-template #nonInt>
+                  <input matInput type="text" formControlName="contact_no" placeholder="Phone No." />
+                  <small *ngIf="form.controls['contact_no'].hasError('pattern') && form.controls['contact_no'].touched"
+                    class="form-error-msg"> Enter Valid Phone No</small>
+                </ng-template>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div mat-dialog-actions class="save-btn-add-edit-user-modal" [ngClass]="isMobile ? 'sm-btn1' : '' ">
+        <button mat-raised-button [disabled]="!form.valid" class="main-background-color main-button color-white m-b-5">
+          Add
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -2,19 +2,22 @@
   .base-currency {
     border: 1px solid #d0d0d0;
     border-radius: 5px;
-    padding: 3px;
-    text-align: center;
+    padding: 5px;
     background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
   .country-currency {
     .mat-form-field-infix {
-      // padding: 8px 0px 0px 0px !important;
       padding: 8px 0px !important;
     }
     .mat-select-arrow {
       margin-top: 12px !important;
     }
   }
+
   .conversion-rate {
     padding-top: 5px;
   }
@@ -23,13 +26,8 @@
     .mat-form-field-wrapper {
       .mat-form-field-flex {
         padding-bottom: 0px !important;
-        // padding-left: 0px !important;
-        .mat-form-field-infix {
-          .mat-form-field-label-wrapper {
-            .mat-form-field-label {
-              padding-left: 0px !important;
-            }
-          }
+        .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label {
+          padding-left: 0px !important;
         }
       }
     }
@@ -42,4 +40,18 @@
   padding: 3px;
   text-align: center;
   background: #ffffff;
+}
+
+@media only screen and (max-width: 576px){
+  .select-currency-dialog{
+    .currency-name{
+      img{
+        width: 20px;
+      }
+
+      span{
+        font-size: 12px;
+      }
+    }
+  }
 }

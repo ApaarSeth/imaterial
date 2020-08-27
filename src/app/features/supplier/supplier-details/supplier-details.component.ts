@@ -136,7 +136,8 @@ export class SupplierDetailComponent implements OnInit {
     if (AddAddressDialogComponent) {
       const dialogRef = this.dialog.open(SuppliersDialogComponent, {
         width: "660px",
-        data
+        data,
+        panelClass: 'add-supplier-dialog'
       });
 
       dialogRef.afterClosed().toPromise().then((data) => {
