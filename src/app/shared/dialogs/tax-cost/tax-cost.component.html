@@ -39,15 +39,15 @@
                     <input matInput type="number" placeholder="Tax %" formControlName="taxValue" />
                   </mat-form-field>
                   <ng-container *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').touched">
-                    <mat-error class="mt-mns pt-1 pb-2 fontsize-11-px" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.max">
+                    <mat-error class="mt-mns p-rem-t-0.25 p-rem-b-0.5 fontsize-11-px" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.max">
                       Max 100 qty is Allowed
                     </mat-error>
-                    <mat-error class="mt-mns pt-1 p b-2 fontsize-11-px" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.min">
+                    <mat-error class="mt-mns p-rem-t-0.25 p b-2 fontsize-11-px" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.min">
                       Min 1 qty is Allowed
                     </mat-error>
                   </ng-container>
                 </div>
-                <div class="col-1 p-r-0 display-flex pt-3 align-items-center justify-content-end">
+                <div class="col-1 p-r-0 display-flex p-t-1-rem align-items-center justify-content-end">
                   <div matRipple class="cursor-pointer" (click)="deleteField('taxInfo', i)">
                     <img src="../../../../assets/images/delete-button.png" />
                   </div>
@@ -65,7 +65,7 @@
               </div>
             </div>
 
-            <p class="tctnc d-flex w-100 pt-4">* Tax amount will be calculated on the basis of total tax %.</p>
+            <p class="tctnc d-flex w-100 p-rem-t-1.5">* Tax amount will be calculated on the basis of total tax %.</p>
           </div>
         </mat-tab>
         <mat-tab label="Other Costs" class="addressDialog">
@@ -90,12 +90,12 @@
                     <span class="p-l-5">{{ this.data.currency }}</span>
                   </div>
                   <ng-container *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
-                    <mat-error class="mt-mns pt-1 pb-2 fontsize-11-px" *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
+                    <mat-error class="mt-mns p-rem-t-0.25 p-rem-b-0.5 fontsize-11-px" *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
                       Min 1 qty is Allowed
                     </mat-error>
                   </ng-container>
                 </div>
-                <div class="col-1 p-r-0 display-flex pt-3 align-items-center justify-content-end">
+                <div class="col-1 p-r-0 display-flex p-t-1-rem align-items-center justify-content-end">
                   <div matRipple class="cursor-pointer" (click)="deleteField('otherCostInfo', i)">
                     <img src="../../../../assets/images/delete-button.png" />
                   </div>
@@ -111,7 +111,7 @@
                 </div>
               </div>
             </div>
-            <p class="tctnc d-flex w-100 pt-4">* Other Tax amount will be calculated on the basis of total tax %.</p>
+            <p class="tctnc d-flex w-100 p-rem-t-1.5">* Other Tax amount will be calculated on the basis of total tax %.</p>
           </div>
         </mat-tab>
       </mat-tab-group>
@@ -154,13 +154,13 @@
                 <span class="p-l-5">{{ this.data.currency }}</span>
               </div>
               <ng-container *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
-                <mat-error class="mt-mns pt-1 pb-2 fontsize-11-px" *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
+                <mat-error class="mt-mns p-rem-t-0.25 p-rem-b-0.5 fontsize-11-px" *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
                   Min 1 qty is Allowed
                 </mat-error>
               </ng-container>
             </div>
 
-            <div class="col-1 p-r-0 display-flex pt-3 align-items-center justify-content-end">
+            <div class="col-1 p-r-0 display-flex p-t-1-rem align-items-center justify-content-end">
               <div matRipple class="cursor-pointer" (click)="deleteField('otherCostInfo', i)">
                 <img src="../../../../assets/images/delete-button.png" />
               </div>
@@ -177,7 +177,7 @@
           </div>
         </div>
 
-        <p class="tctnc d-flex w-100 pt-4">* Total amount will be shown as overall other costs on all the materials.</p>
+        <p class="tctnc d-flex w-100 p-rem-t-1.5">* Total amount will be shown as overall other costs on all the materials.</p>
       </div>
     </div>
 

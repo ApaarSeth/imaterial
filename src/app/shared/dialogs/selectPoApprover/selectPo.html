@@ -10,17 +10,15 @@
   <div mat-dialog-content>
     <div class="modal-body">
       <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="selectedApprover">
-        <div *ngFor="let approver of approverData" class="individual-approver pb-3">
+        <div *ngFor="let approver of approverData" class="individual-approver p-b-1-rem">
           <mat-radio-button class="example-radio-button" [value]="approver"> {{approver.firstName}} <span class="p-l-5">{{approver.lastName}}</span> </mat-radio-button>
           <mat-divider></mat-divider>
         </div>
       </mat-radio-group>
 
       <div mat-dialog-actions>
-        <div class="col-xs-12 text-center pb-3">
-          <button mat-raised-button class="main-background-color main-button color-white" (click)="sendPo()">
-            Select Approver
-          </button>
+        <div class="col-xs-12 text-center p-b-1-rem">
+          <button mat-raised-button class="main-background-color main-button color-white" (click)="sendPo()">Select Approver</button>
         </div>
       </div>
     </div>

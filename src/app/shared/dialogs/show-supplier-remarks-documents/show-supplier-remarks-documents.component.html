@@ -9,14 +9,12 @@
   <div mat-dialog-content>
     <div class="modal-body">
       <div class="row remarks-suppliers">
-
         <div class="col-md-3 col-sm-5 col-xs-12 suppliers-list">
-          <div class="main-heading pl-2">Select Supplier</div>
+          <div class="main-heading p-rem-l-0.5">Select Supplier</div>
           <div class="supplier-list-name">
-            <ng-container *ngFor="let supplier of supplierList;let i=index;">
-              <div [ngClass]="index == i ? 'list-of-suppliers active' : 'list-of-suppliers'"
-                (click)="showSupplierDetails(i)">
-                <div class="p-5">{{supplier.supplierName}}</div>
+            <ng-container *ngFor="let supplier of supplierList; let i = index">
+              <div [ngClass]="index == i ? 'list-of-suppliers active' : 'list-of-suppliers'" (click)="showSupplierDetails(i)">
+                <div class="p-5">{{ supplier.supplierName }}</div>
               </div>
             </ng-container>
           </div>
@@ -25,36 +23,31 @@
         <div class="col-md-9 col-sm-7 col-xs-12 suppliers-details">
           <ng-container *ngIf="supplierList[index] && supplierList[index].comments">
             <div class="main-heading">Terms and Conditions</div>
-            <div class="comments-of-supplier pt-0 pb-4" [innerHTML]=supplierList[index].comments>
-            </div>
+            <div class="comments-of-supplier p-t-0 p-rem-b-1.5" [innerHTML]="supplierList[index].comments"></div>
           </ng-container>
 
           <ng-container *ngIf="supplierList[index] && supplierList[index].documentsList">
             <div class="main-heading">Documents</div>
 
-            <div class="upload-image-info mb-3 pr-2 d-flex align-items-center justify-content-between"
-              *ngFor="let file of supplierList[index].documentsList">
+            <div class="upload-image-info mb-3 p-rem-r-0.5 d-flex align-items-center justify-content-between" *ngFor="let file of supplierList[index].documentsList">
               <div class="image-info d-flex align-items-center">
                 <img class="img-fluid file-icon" src="../../../../assets/images/file-doc.png" />
                 <span class="ml-2">{{ file.DocumentDesc }}</span>
               </div>
 
               <div class="image-actions d-flex align-items-center justify-content-end">
-                <a type="button" target="_blank" [href]="file.DocumentUrl" style="color: #020202;">
+                <a type="button" target="_blank" [href]="file.DocumentUrl" style="color: #020202">
                   <i class="material-icons">remove_red_eye</i>
                 </a>
               </div>
             </div>
           </ng-container>
 
-          <ng-container
-            *ngIf="supplierList[index] && !supplierList[index].comments && !supplierList[index].documentsList">
+          <ng-container *ngIf="supplierList[index] && !supplierList[index].comments && !supplierList[index].documentsList">
             <div class="p-t-50 display-flex justify-content-center">
-              <img src="../../../../assets/images/supplier-remarks-image.png" class="default-remarks-image">
+              <img src="../../../../assets/images/supplier-remarks-image.png" class="default-remarks-image" />
             </div>
-            <div class="p-t-10 p-b-50 display-flex justify-content-center text-align-justify">
-              Supplier has not sent any terms & conditions and documents for review !
-            </div>
+            <div class="p-t-10 p-b-50 display-flex justify-content-center text-align-justify">Supplier has not sent any terms & conditions and documents for review !</div>
           </ng-container>
         </div>
       </div>

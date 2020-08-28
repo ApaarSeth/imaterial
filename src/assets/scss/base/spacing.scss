@@ -1,6 +1,21 @@
 $spaceamounts: (
   0,
+  0.06,
+  0.13,
+  0.19,
+  0.25,
+  0.3,
+  0.4,
+  0.5,
+  0.6,
+  0.8,
+  0.9,
   1,
+  1.1,
+  1.3,
+  1.5,
+  1.6,
+  1.8,
   2,
   3,
   4,
@@ -118,7 +133,7 @@ $spaceamounts: (
   350
 ); // Adjust this to include the pixel amounts you need.
 $sides: (top, bottom, left, right); // Leave this variable alone
-$spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.8rem, 0.9rem, 1rem, 1.1rem, 1.3rem, 1.5rem, 1.6rem, 1.8rem, 2rem, 3rem, 4rem, 5rem, 6rem);
+// $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.25rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.8rem, 0.9rem, 1, 1.1rem, 1.3rem, 1.5rem, 1.6rem, 1.8rem, 2rem, 3rem, 4rem, 5rem, 6rem);
 
 @each $space in $spaceamounts {
   .m-#{$space} {
@@ -182,6 +197,7 @@ $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.
   .border-radius-#{$space} {
     border-radius: #{$space}px !important ;
   }
+
   @each $side in $sides {
     .m-#{str-slice($side, 0, 1)}-#{$space} {
       margin-#{$side}: #{$space}px !important;
@@ -189,6 +205,14 @@ $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.
 
     .p-#{str-slice($side, 0, 1)}-#{$space} {
       padding-#{$side}: #{$space}px !important;
+    }
+
+    .p-rem-#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space}rem !important;
+    }
+
+    .m-rem-#{str-slice($side, 0, 1)}-#{$space}-rem {
+      margin-#{$side}: #{$space}rem !important;
     }
   }
 }
