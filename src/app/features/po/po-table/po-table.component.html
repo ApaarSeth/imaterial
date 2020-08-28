@@ -9,7 +9,7 @@
           [ngClass]="isMobile ? 'd-block mb-3' : ''"
           >Select Currency</span
         >
-        <span *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null" [ngClass]="isMobile ? 'd-block pb-2' : ''">
+        <span *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null" [ngClass]="isMobile ? 'd-block p-rem-r-0.50' : ''">
           <span class="slideToggalColor p-r-10">
             <mat-slide-toggle (toggleChange)="changeCurrency($event)" [(ngModel)]="ratesBaseCurr" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
           </span>
@@ -786,7 +786,7 @@
                 : 'national-view-po'
             "
           >
-            <span *ngIf="isInternational" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp pt-2' : ''"
+            <span *ngIf="isInternational" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp p-rem-r-0.50' : ''"
               ><span>
                 Tax Amount
                 <span

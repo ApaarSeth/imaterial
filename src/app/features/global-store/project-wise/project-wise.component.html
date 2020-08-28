@@ -10,13 +10,25 @@
 <mat-accordion displayMode="flat" multi class="mat-table res-table" *ngIf="this.newProjectData.length && this.newProjectData.length > 0">
   <div class="res-td">
     <section matSort class="mat-elevation-z2 mat-header-row blue-background-color-color-white-section">
-      <span class="mat-header-cell maxwidth-20 material material-Name" mat-sort-header="name" [ngClass]="isMobile ? 'text-center pl-1 pr-1' : ''"><span>Material Name</span> </span>
-      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="estimatedQuantity" [ngClass]="isMobile ? 'text-center pl-1 pr-1' : ''">Estimated Quantity</span>
-      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="indentedQuantity" [ngClass]="isMobile ? 'text-center pl-1 pr-1' : ''">Indented Quantity</span>
-      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="requiredDate" [ngClass]="isMobile ? 'text-center pl-1 pr-1' : ''">Required Date</span>
-      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="deliveredQuantity" [ngClass]="isMobile ? 'text-center pl-1 pr-1' : ''">Awarded Quantity</span>
-      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="awardedQuantity" [ngClass]="isMobile ? 'text-center pl-1 pr-1' : ''">Delivered Quantity</span>
-      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="availableQuantity" [ngClass]="isMobile ? 'text-center pl-1 pr-1' : ''">Available Stock</span>
+      <span class="mat-header-cell maxwidth-20 material material-Name" mat-sort-header="name" [ngClass]="isMobile ? 'text-center p-rem-l-0.25 p-rem-r-0.25' : ''"
+        ><span>Material Name</span>
+      </span>
+      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="estimatedQuantity" [ngClass]="isMobile ? 'text-center p-rem-l-0.25 p-rem-r-0.25' : ''"
+        >Estimated Quantity</span
+      >
+      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="indentedQuantity" [ngClass]="isMobile ? 'text-center p-rem-l-0.25 p-rem-r-0.25' : ''"
+        >Indented Quantity</span
+      >
+      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="requiredDate" [ngClass]="isMobile ? 'text-center p-rem-l-0.25 p-rem-r-0.25' : ''">Required Date</span>
+      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="deliveredQuantity" [ngClass]="isMobile ? 'text-center p-rem-l-0.25 p-rem-r-0.25' : ''"
+        >Awarded Quantity</span
+      >
+      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="awardedQuantity" [ngClass]="isMobile ? 'text-center p-rem-l-0.25 p-rem-r-0.25' : ''"
+        >Delivered Quantity</span
+      >
+      <span class="mat-header-cell maxwidth-20 material" mat-sort-header="availableQuantity" [ngClass]="isMobile ? 'text-center p-rem-l-0.25 p-rem-r-0.25' : ''"
+        >Available Stock</span
+      >
       <!--  5 5 -->
     </section>
     <mat-expansion-panel *ngFor="let project of newProjectData | SearchPipe: searchProject:['ProjectGlobal.projectName']" class="myPanel">
