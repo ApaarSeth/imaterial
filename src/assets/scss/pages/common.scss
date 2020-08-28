@@ -385,6 +385,15 @@ div.limited-character.universal {
     width: auto;
     overflow: visible;
   }
+  .tx-cst {
+    img {
+      width: 15px;
+    }
+  }
+  // .adcrcl{
+  //   font-size: 22px;
+  //   padding-top: 2px;
+  // }
 }
 
 ngx-mat-drp-picker-overlay {
@@ -772,6 +781,10 @@ input::title {
 
 .h-30px {
   height: 30px !important;
+}
+
+.w-90{
+  width: 90% !important;
 }
 
 @media only screen and (max-width: 959px){

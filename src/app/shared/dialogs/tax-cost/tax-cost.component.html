@@ -24,13 +24,16 @@
       <mat-tab-group (selectedTabChange)="onTabChanged($event)">
         <mat-tab label="Taxes" class="addressDialog">
           <div formArrayName="taxInfo">
-            <div *ngFor="let tax of taxCostForm.get('taxInfo')['controls']; let i = index" class="float-left w-95">
+            <div *ngFor="let tax of taxCostForm.get('taxInfo')['controls']; let i = index" class="float-left"
+              [ngClass]="isMobile ? 'w-90' : 'w-95' ">
               <div class="row" [formGroupName]="i">
-                <div class="col-7">
+                <div class="col-7" [ngClass]="isMobile ? 'col-xs-6' : '' ">
                   <mat-form-field class="w-100 border-bottom">
-                    <input type="text" placeholder="Tax Label" matInput formControlName="taxName" [matAutocomplete]="auto" />
+                    <input type="text" placeholder="Tax Label" matInput formControlName="taxName"
+                      [matAutocomplete]="auto" />
                     <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
-                      <mat-option matTooltip=" {{ option.taxName }}" *ngFor="let option of this.filterOptionsTax | async" [value]="option">
+                      <mat-option matTooltip=" {{ option.taxName }}"
+                        *ngFor="let option of this.filterOptionsTax | async" [value]="option">
                         {{ option.taxName }}
                       </mat-option>
                     </mat-autocomplete>
@@ -41,10 +44,12 @@
                     <input matInput type="number" placeholder="Tax %" formControlName="taxValue" />
                   </mat-form-field>
                   <ng-container *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').touched">
-                    <mat-error class="mt-mns pt-1 pb-2 font-size11" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.max">
+                    <mat-error class="mt-mns pt-1 pb-2 font-size11"
+                      *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.max">
                       Max 100 qty is Allowed
                     </mat-error>
-                    <mat-error class="mt-mns pt-1 pb-2 font-size11" *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.min">
+                    <mat-error class="mt-mns pt-1 pb-2 font-size11"
+                      *ngIf="taxCostForm.get('taxInfo')['controls'][i].get('taxValue').errors?.min">
                       Min 1 qty is Allowed
                     </mat-error>
                   </ng-container>
@@ -56,7 +61,8 @@
                 </div>
               </div>
             </div>
-            <span [ngClass]="[!checkValidation ? 'main-color-faded' : 'main-color']" matRipple class="material-icons cursor-pointer float-left mt-3" (click)="addNewTaxField()">
+            <span [ngClass]="[!checkValidation ? 'main-color-faded' : 'main-color']" matRipple
+              class="material-icons cursor-pointer float-left mt-3" (click)="addNewTaxField()">
               add_circle
             </span>
             <p class="tctnc d-flex w-100 pt-4">* Tax amount will be calculated on the basis of total tax %.</p>
@@ -64,13 +70,16 @@
         </mat-tab>
         <mat-tab label="Other Costs" class="addressDialog">
           <div formArrayName="otherCostInfo">
-            <div *ngFor="let tax of taxCostForm.get('otherCostInfo')['controls']; let i = index" class="float-left w-95">
+            <div *ngFor="let tax of taxCostForm.get('otherCostInfo')['controls']; let i = index" class="float-left"
+              [ngClass]="isMobile ? 'w-90' : 'w-95' ">
               <div class="row" [formGroupName]="i">
-                <div class="col-7">
+                <div class="col-7" [ngClass]="isMobile ? 'col-xs-6' : '' ">
                   <mat-form-field class="w-100 border-bottom">
-                    <input type="text" placeholder="Cost Label" matInput formControlName="otherCostName" [matAutocomplete]="auto" />
+                    <input type="text" placeholder="Cost Label" matInput formControlName="otherCostName"
+                      [matAutocomplete]="auto" />
                     <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFnOther">
-                      <mat-option matTooltip=" {{ option.otherCostName }}" *ngFor="let option of this.filterOptionsOther | async" [value]="option">
+                      <mat-option matTooltip=" {{ option.otherCostName }}"
+                        *ngFor="let option of this.filterOptionsOther | async" [value]="option">
                         {{ option.otherCostName }}
                       </mat-option>
                     </mat-autocomplete>
@@ -81,22 +90,25 @@
                     <mat-form-field class="width-90 border-bottom">
                       <input matInput type="number" placeholder="Amount" formControlName="otherCostAmount" />
                     </mat-form-field>
-                    <span class="p-l-5">{{ this.data.currency }}</span>
+                    <span class="p-l-5" [ngClass]="isMobile ? 'font-size12' : '' ">{{ this.data.currency }}</span>
                   </div>
                   <ng-container *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
-                    <mat-error class="mt-mns pt-1 pb-2 font-size11" *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
+                    <mat-error class="mt-mns pt-1 pb-2 font-size11"
+                      *ngIf="taxCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
                       Min 1 qty is Allowed
                     </mat-error>
                   </ng-container>
                 </div>
                 <div class="col-1">
-                  <span matRipple class="cursor-pointer position-absolute pt-3" (click)="deleteField('otherCostInfo', i)">
+                  <span matRipple class="cursor-pointer position-absolute pt-3"
+                    (click)="deleteField('otherCostInfo', i)">
                     <img src="../../../../assets/images/delete-button.png" />
                   </span>
                 </div>
               </div>
             </div>
-            <span [ngClass]="[!checkValidation ? 'main-color-faded' : 'main-color']" matRipple class="material-icons cursor-pointer float-left mt-3" (click)="addNewOtherField()">
+            <span [ngClass]="[!checkValidation ? 'main-color-faded' : 'main-color']" matRipple
+              class="material-icons cursor-pointer float-left mt-3" (click)="addNewOtherField()">
               add_circle
             </span>
             <p class="tctnc d-flex w-100 pt-4">* Other Tax amount will be calculated on the basis of total tax %.</p>
@@ -105,13 +117,8 @@
       </mat-tab-group>
     </div>
     <div mat-dialog-actions class="flex-column">
-      <button
-        [disabled]="!checkValidation"
-        mat-button
-        mat-raised-button
-        class="main-background-color main-button color-white m-b-5 mb-0"
-        [disabled]="taxCostForm && !taxCostForm.valid"
-      >
+      <button [disabled]="!checkValidation" mat-button mat-raised-button
+        class="main-background-color main-button color-white m-b-5 mb-0" [disabled]="taxCostForm && !taxCostForm.valid">
         Save
       </button>
     </div>
@@ -122,13 +129,16 @@
   <form *ngIf="otherCostForm" [formGroup]="otherCostForm" (ngSubmit)="onSubmitOtherCost()">
     <div mat-dialog-content class="overflow-remove tx-cst">
       <div formArrayName="otherCostInfo">
-        <div *ngFor="let tax of otherCostForm.get('otherCostInfo')['controls']; let i = index" class="float-left w-95">
+        <div *ngFor="let tax of otherCostForm.get('otherCostInfo')['controls']; let i = index" class="float-left"
+          [ngClass]="isMobile ? 'w-90' : 'w-95' ">
           <div class="row" [formGroupName]="i">
-            <div class="col-7">
+            <div class="col-7" [ngClass]="isMobile ? 'col-xs-6' : '' ">
               <mat-form-field class="w-100 border-bottom">
-                <input type="text" placeholder="Cost Label" matInput formControlName="otherCostName" [matAutocomplete]="auto" />
+                <input type="text" placeholder="Cost Label" matInput formControlName="otherCostName"
+                  [matAutocomplete]="auto" />
                 <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFnOther">
-                  <mat-option matTooltip=" {{ option.otherCostName }}" *ngFor="let option of this.filterOptionsOther | async" [value]="option">
+                  <mat-option matTooltip=" {{ option.otherCostName }}"
+                    *ngFor="let option of this.filterOptionsOther | async" [value]="option">
                     {{ option.otherCostName }}
                   </mat-option>
                 </mat-autocomplete>
@@ -139,10 +149,11 @@
                 <mat-form-field class="width-90 border-bottom">
                   <input matInput type="number" placeholder="Amount" formControlName="otherCostAmount" />
                 </mat-form-field>
-                <span class="p-l-5">{{ this.data.currency }}</span>
+                <span class="p-l-5" [ngClass]="isMobile ? 'font-size12' : '' ">{{ this.data.currency }}</span>
               </div>
               <ng-container *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').touched">
-                <mat-error class="mt-mns pt-1 pb-2 font-size11" *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
+                <mat-error class="mt-mns pt-1 pb-2 font-size11"
+                  *ngIf="otherCostForm.get('otherCostInfo')['controls'][i].get('otherCostAmount').errors?.min">
                   Min 1 qty is Allowed
                 </mat-error>
               </ng-container>
@@ -155,12 +166,8 @@
             </div>
           </div>
         </div>
-        <span
-          [ngClass]="[!checkValidationOther ? 'main-color-faded' : 'main-color']"
-          matRipple
-          class="material-icons cursor-pointer main-color float-left mt-3"
-          (click)="addNewOtherField()"
-        >
+        <span [ngClass]="[!checkValidationOther ? 'main-color-faded' : 'main-color']" matRipple
+          class="material-icons cursor-pointer main-color float-left mt-3" (click)="addNewOtherField()">
           add_circle
         </span>
         <p class="tctnc d-flex w-100 pt-4">* Total amount will be shown as overall other costs on all the materials.</p>
@@ -168,13 +175,9 @@
     </div>
 
     <div mat-dialog-actions class="flex-column">
-      <button
-        [disabled]="!checkValidationOther"
-        mat-button
-        mat-raised-button
+      <button [disabled]="!checkValidationOther" mat-button mat-raised-button
         class="main-background-color main-button color-white m-b-5 mb-0"
-        [disabled]="otherCostForm && !otherCostForm.valid"
-      >
+        [disabled]="otherCostForm && !otherCostForm.valid">
         Save
       </button>
     </div>
