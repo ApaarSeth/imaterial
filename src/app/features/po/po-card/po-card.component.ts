@@ -204,7 +204,8 @@ export class PoCardComponent implements OnInit {
     const dialogRef = this.dialog.open(SupplierRatingComponent, {
       disableClose: true,
       width: "500px",
-      data: this.cardData.supplierAddress
+      data: this.cardData.supplierAddress,
+      panelClass: 'vendor-rating-dialog'
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -10,11 +10,11 @@
     <div class="modal-body">
       <mat-tab-group class="overflow-remove" (selectedTabChange)="tabClick($event)">
         <mat-tab label="Choose Address" class="addressDialog">
-          <ng-container *ngIf="address && address[0].addressId > 0; else noAddress">
 
+          <ng-container *ngIf="address && address[0].addressId > 0; else noAddress">
             <form *ngIf="address" [formGroup]="selectAddressFrm">
               <div class="row py-3">
-                <div class="col-md-12 col-xs-12">
+                <div class="col-md-12 col-xs-12" [class.single-address-line]="address.length === 1">
                   <mat-radio-group aria-label="Select an option" name="address" formControlName="address">
                     <div class="address-line" *ngFor="let add of address">
                       <mat-radio-button class="p-l-15" [value]="add" [checked]="add.primaryAddress === 1">
