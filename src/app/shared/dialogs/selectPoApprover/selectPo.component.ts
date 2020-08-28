@@ -33,4 +33,8 @@ export class SelectApproverComponent implements OnInit {
     this.data.approverId = this.selectedApprover.userId;
     this.dialogRef.close(this.data);
   }
+
+  close() {
+    this.dialogRef.close(null);
+  }
 }
