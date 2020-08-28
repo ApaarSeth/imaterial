@@ -74,8 +74,9 @@ export class UserService {
   }
 
   verifyEMAIL(email) {
-    return this.dataService.getRequest(API.VERIFYEMAIL(email)).then(res => { return res });
+    return this.dataService.getRequest(API.VERIFYEMAIL(email), null, { skipLoader: true }).then(res => { return res });
   }
+
   logoutUser() {
     this._router.navigate(['/auth/login']).then(_ => {
       localStorage.clear();
