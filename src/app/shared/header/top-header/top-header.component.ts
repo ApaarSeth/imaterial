@@ -22,7 +22,6 @@ export class TopHeaderComponent implements OnInit {
   allnotificationLength: number = null;
   userName: string;
   url: string;
-
   notificationObj: NotificationInt[] = [];
   readnotification: NotificationInt[] = [];
   unreadnotification: NotificationInt[] = [];
@@ -32,14 +31,12 @@ export class TopHeaderComponent implements OnInit {
   isWhatsappIconDisplay: string;
   isMobile: boolean;
   @Input('subscriptionsData') subscriptionsData: any;
-
   isFreeTrial: any;
   isFreeTrialActivate: boolean;
   accountOwner: any;
-
   users: any;
-
   isPlanAvailable: any;
+  isBookNow: number;
 
   constructor(
     private commonService: CommonService,
@@ -52,14 +49,13 @@ export class TopHeaderComponent implements OnInit {
   ngOnInit() {
 
     this.isMobile = this.commonService.isMobile().matches;
-
     this.userId = Number(localStorage.getItem('userId'));
     this.userName = localStorage.getItem('userName');
     this.url = localStorage.getItem('profileUrl');
     this.isWhatsappIconDisplay = localStorage.getItem("callingCode");
     this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
-
     this.accountOwner = Number(localStorage.getItem('accountOwner'));
+    this.isBookNow = Number(localStorage.getItem('isFreeTrialSubscription'));
 
     this.getNotifications();
     this.startSubscriptions();
