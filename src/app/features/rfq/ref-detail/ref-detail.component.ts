@@ -76,7 +76,7 @@ export class RefDetailComponent implements OnInit {
         type: 'MULTI_SELECT_SEARCH',
         key: "userIDList"
       }, {
-        name: "RPF Status",
+        name: "RFP Status",
         type: 'MULTI_SELECT',
         key: "rfqStatus"
       }, {

@@ -6,7 +6,7 @@
           <form class="update-info__form" *ngIf="userInfoForm" [formGroup]="userInfoForm" (ngSubmit)="submit()">
             <div class="row">
               <div class="col-xs-11 col-sm-11 col-md-11">
-                <h3 class="user-profile text-center text-uppercase pt-2 pb-4 profile" *ngIf="users">Personal Information</h3>
+                <h3 class="user-profile text-center text-uppercase p-rem-r-0.50 p-rem-b-1.5 profile" *ngIf="users">Personal Information</h3>
               </div>
               <div class="col-xs-1 col-sm-1 col-md-1">
                 <button type="button" class="close pull-right p-t-5" (click)="redirectToDashboard()" aria-label="Close">

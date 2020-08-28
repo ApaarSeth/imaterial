@@ -8,7 +8,7 @@
       </button>
     </mat-form-field>
   </div>
-  <div class="col-xs-12 col-md-6 text-right p-t-10 m-itm" [ngClass]="isMobile ? 'pt-0 pb-0 pl-0 pr-2 sm-btn1' : ''">
+  <div class="col-xs-12 col-md-6 text-right p-t-10 m-itm" [ngClass]="isMobile ? 'p-t-0 p-b-0 p-l-0 p-rem-r-0.50 sm-btn1' : ''">
     <!-- <span>
       <mat-form-field class="example-form-field border-input p-l-20 border-input p-r-20">
           <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
@@ -41,8 +41,8 @@
       </button>
     </span>
   </div>
-  <div class="col-md-12 col-xs-6 text-right m-itm" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null" [ngClass]="isMobile ? 'pt-3 p-l-0 p-b-10' : 'p-t-10 p-b-20'">
-    <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-10-px mcrncy pt-2 pb-2 cntry' : 'p-t-10 p-b-10'">
+  <div class="col-md-12 col-xs-6 text-right m-itm" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null" [ngClass]="isMobile ? 'p-t-1-rem p-l-0 p-b-10' : 'p-t-10 p-b-20'">
+    <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-10-px mcrncy p-rem-r-0.50 p-rem-r-0.50 cntry' : 'p-t-10 p-b-10'">
       <span class="font-size-vary-grn color-grey">
         <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
         {{ poCurrency.exchangeCurrencyName }}
@@ -63,7 +63,7 @@
       <!-- Supplier Name Column -->
       <ng-container matColumnDef="Supplier Name">
         <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
-        <td mat-cell *matCellDef="let element" class="pt-2">
+        <td mat-cell *matCellDef="let element" class="p-rem-r-0.50">
           <mat-radio-group name="aprrover" aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="supplier">
             <mat-radio-button class="example-radio-button" [value]="element" [checked]="element.checked">
               {{ element.firstName }}{{ element.lastName }}

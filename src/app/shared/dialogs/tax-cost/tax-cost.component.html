@@ -15,7 +15,6 @@
 
   <div mat-dialog-content>
     <div class="modal-body">
-
       <!-- Taxes and cost -->
       <ng-container *ngIf="data.type === 'taxesAndCost'">
         <form *ngIf="taxCostForm" [formGroup]="taxCostForm" (ngSubmit)="onSubmitTaxCost()">
@@ -123,7 +122,6 @@
                           add_circle
                         </div>
                       </div>
-
                     </div>
                   </ng-container>
 
@@ -137,7 +135,9 @@
           <div mat-dialog-actions class="flex-column">
             <button [disabled]="!checkValidation" mat-button mat-raised-button
               class="main-background-color main-button color-white m-b-5 mb-0"
-              [disabled]="taxCostForm && !taxCostForm.valid">Save</button>
+              [disabled]="taxCostForm && !taxCostForm.valid">
+              Save
+            </button>
           </div>
         </form>
       </ng-container>

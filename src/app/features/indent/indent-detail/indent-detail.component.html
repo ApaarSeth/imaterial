@@ -1,4 +1,4 @@
-<div class="page-start-point mt-5 pt-4">
+<div class="page-start-point mt-5 p-rem-t-1.5">
   <div class="dashboard-unique p-b-20 min-height parent">
     <div class="row">
       <div class="col-sm-12 p-l-10 p-r-10">
@@ -33,7 +33,7 @@
         <ng-container *ngIf="dataSource1 || dataSource2; else emptyReports">
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'pt-2 pb-2' : ''">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Ongoing Purchase Requisition</span>
@@ -111,7 +111,7 @@
           <p></p>
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'pt-2 pb-2' : ''">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Completed Purchase Requisition</span>
@@ -186,7 +186,7 @@
         <ng-template #emptyReports>
           <div class="d-block text-align-center mt-3">
             <img src="../../../../assets/images/empty-report.svg" alt="empty report" />
-            <p class="font-weight-light m-0 pt-3"><strong class="font-weight500">Oops!</strong> You have nothing to see.</p>
+            <p class="font-weight-light m-0 p-t-1-rem"><strong class="font-weight500">Oops!</strong> You have nothing to see.</p>
             <p class="font-weight-light m-0 mt-1">Try Again !</p>
           </div>
         </ng-template>

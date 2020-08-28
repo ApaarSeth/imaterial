@@ -1,3 +1,4 @@
+import { Validators } from '@angular/forms';
 import { CommonService } from './../../../../shared/services/commonService';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
@@ -74,7 +75,9 @@ export class BomEditMaterialComponent implements OnInit {
         this.form = this.formBuilder.group({
             material: matCtrl
         })
-        // this.form.get('material').valueChanges.subscribe(data => console.log(data));
+        // this.form.get('material').valueChanges.subscribe(data => {
+        //     console.log(this.form.valid);
+        // });
     }
 
     setMaterialArr(data) {
@@ -82,20 +85,25 @@ export class BomEditMaterialComponent implements OnInit {
             materialId: [ data.materialId ],
             materialName: [ data.materialName ],
             materialUnit: [ data.materialUnit ],
-            estimatedQty: [ data.estimatedQty ],
+            estimatedQty: [ data.estimatedQty, Validators.compose([ Validators.min(data.poAvailableQty && data.poAvailableQty > 0 ? data.poAvailableQty : 0) ]) ],
             materialCode: [ data.materialCode ],
             materialGroup: [ data.materialGroup ],
             materialMasterId: [ data.materialMasterId ],
-            estimatedRate: [ data.estimatedRate ]
+            estimatedRate: [ data.estimatedRate ],
+            requestedQuantity: [ data.requestedQuantity ],
+            issueToProject: [ data.issueToProject ],
+            availableStock: [ data.availableStock ]
         });
     }
 
     update() {
-        this.bomService
-            .sumbitCategory(this.userId, this.projectId, this.form.get('material').value)
-            .then(res => {
-                this.router.navigate([ "project-dashboard/bom/" + this.projectId + "/bom-detail" ]);
-            });
+        if (this.form.valid) {
+            this.bomService
+                .sumbitCategory(this.userId, this.projectId, this.form.get('material').value)
+                .then(res => {
+                    this.router.navigate([ "project-dashboard/bom/" + this.projectId + "/bom-detail" ]);
+                });
+        }
     }
 
     /**
@@ -113,6 +121,26 @@ export class BomEditMaterialComponent implements OnInit {
             ? (this.expandedElement = this.expandedElement === element ? null : element)
             : null;
         this.cd.detectChanges();
+    }
+
+    checkInput(event) {
+        event.target.value = event.target.value;
+    }
+
+    getUnitsData(data) {
+        if (data) {
+            return data.split(',');
+        } else {
+            return [];
+        }
+    }
+
+    filterUnits(event, inpt) {
+        if (event.target.value) {
+            inpt.dataset.filterData = this.materialUnits.filter(itm => itm.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1);
+        } else {
+            inpt.dataset.filterData = this.materialUnits;
+        }
     }
 
 }

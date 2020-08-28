@@ -1,12 +1,12 @@
-<div class="page-start-point pt-1">
+<div class="page-start-point p-rem-t-0.25">
     <div class="p-l-10 p-r-10 p-b-10 copy-bom-materials-outer">
         <card-layout *ngIf="projectData" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2">
         </card-layout>
 
         <div class="row align-items-center copy-bom-small-screen">
             <div class="col-xs-12 col-md-12 text-right copy-bom-button-action">
-                <button mat-raised-button class="main-background-color main-button color-white"
-                    (click)="update()">Update</button>
+                <button mat-raised-button class="main-background-color main-button color-white" (click)="update()"
+                    [disabled]="!form.valid">Update</button>
             </div>
         </div>
 
@@ -23,20 +23,33 @@
                             <th class="mat-header-cell">Estimated Quantity</th>
                             <th class="mat-header-cell">Estimated Rate</th>
                         </tr>
-                        <tr *ngFor="let item of matData; let i = index" [formGroupName]="i">
-                            <td [ngClass]="isMobile ? 'font-size12' : '' ">{{ item.materialName }}</td>
+                        <tr *ngFor="let item of form['controls'].material['controls']; let i = index"
+                            [formGroupName]="i">
+                            <td [ngClass]="isMobile ? 'font-size12' : '' ">
+                                {{ item.value.materialName }}
+                                <div class="limited-character bom" matTooltip=" {{ item.value.materialGroup }}">
+                                    <span class="category-name">
+                                        {{ item.value.materialGroup }}
+                                    </span>
+                                </div>
+                            </td>
                             <td>
                                 <mat-form-field
-                                    class="border-select w-75 bom-unit-col mat-form-field-padding mat-form-field-flex-mm-padding">
-                                    <mat-select formControlName="materialUnit" placeholder="Unit">
-                                        <!-- <div class="display-flex border-bottom">
+                                    class="border-select w-75 bom-unit-col mat-form-field-padding mat-form-field-flex-mm-padding p-t-10">
+                                    <mat-select formControlName="materialUnit" placeholder="Unit"
+                                        [disabled]="(item.value.requestedQuantity > 0 || item.value.issueToProject > 0 || item.value.availableStock > 0)">
+                                        <div class="display-flex border-bottom">
                                             <input #inpt class="p-l-10 p-b-5" matInput autocomplete="off" type="search"
-                                                placeholder="Search Unit" />
+                                                placeholder="Search Unit" (keydown)="$event.stopPropagation()"
+                                                [attr.data-filter-data]="materialUnits"
+                                                (input)="filterUnits($event, inpt)" />
                                             <button mat-button mat-icon-button>
                                                 <mat-icon>search</mat-icon>
                                             </button>
-                                        </div> -->
-                                        <mat-option *ngFor="let unit of materialUnits" [value]="unit">
+                                        </div>
+                                        <mat-option
+                                            *ngFor="let unit of getUnitsData(inpt.dataset.filterData).length ? getUnitsData(inpt.dataset.filterData) : materialUnits"
+                                            [value]="unit">
                                             <span>
                                                 {{ unit }}
                                             </span>
@@ -46,18 +59,21 @@
                             </td>
                             <td>
                                 <mat-form-field
-                                    class="border-input widthZero mat-form-field-padding bom-same-width-col">
+                                    class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10">
                                     <mat-label>Estimated Quantity</mat-label>
                                     <input matInput type="number" formControlName="estimatedQty"
-                                        [value]="item.estimatedQty">
+                                        [value]="item.estimatedQty" autocomplete="off" (input)="checkInput($event)">
                                 </mat-form-field>
+                                <mat-error class="font-size12" *ngIf="item.get('estimatedQty').errors !== null">
+                                    It must be more than {{item.get('estimatedQty').errors.min.min}}
+                                </mat-error>
                             </td>
                             <td>
                                 <mat-form-field
-                                    class="border-input widthZero mat-form-field-padding bom-same-width-col">
+                                    class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10">
                                     <mat-label>Estimated Rate</mat-label>
                                     <input matInput type="number" formControlName="estimatedRate"
-                                        [value]="item.estimatedRate">
+                                        [value]="item.estimatedRate" autocomplete="off" (input)="checkInput($event)">
                                 </mat-form-field>
                             </td>
                         </tr>
