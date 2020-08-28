@@ -22,7 +22,6 @@ export class TaxCostComponent implements OnInit {
   filteredOptionsOther: OtherCostInfo[];
   filterOptionsTax: Observable<TaxInfo[]>;
   filterOptionsOther: Observable<OtherCostInfo[]>
-
   constructor(
     private _snackBar: MatSnackBar,
     private commonService: CommonService,
@@ -39,9 +38,9 @@ export class TaxCostComponent implements OnInit {
       this.filteredOptionsOther = res.data.otherCostInfo;
       if (this.data.type === 'taxesAndCost') {
         this.taxCostFormInit();
-        if ((this.data.prevData && this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
-          if (this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.length) {
-            this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].taxInfo.forEach((itm, index) => {
+        if ((this.data.prevData && this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[ this.data.prevData.pId ] && this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ])) {
+          if (this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].taxInfo.length) {
+            this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].taxInfo.forEach((itm, index) => {
               this.addNewTaxField();
               const txInfoArr = this.taxCostForm.get('taxInfo') as FormArray;
               const txItem = txInfoArr.at(index);
@@ -52,8 +51,8 @@ export class TaxCostComponent implements OnInit {
             this.addNewTaxField();
           }
 
-          if (this.data.prevData && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].otherCostInfo.length) {
-            this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId].otherCostInfo.forEach((itm, index) => {
+          if (this.data.prevData && this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].otherCostInfo.length) {
+            this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ].otherCostInfo.forEach((itm, index) => {
               this.addNewOtherField();
               let othInfoArr = this.taxCostForm.get('otherCostInfo') as FormArray;
               let txItem = othInfoArr.at(index);
@@ -73,7 +72,7 @@ export class TaxCostComponent implements OnInit {
       }
       if (this.data.type === 'otherCost') {
         this.otherCostFormInit();
-        if (this.data.prevData && this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) {
+        if (this.data.prevData && this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) {
 
           if (this.data.prevData.dt.otherCostInfo.length) {
             this.data.prevData.dt.otherCostInfo.forEach((itm, index) => {
@@ -169,10 +168,10 @@ export class TaxCostComponent implements OnInit {
 
   addtaxesFormGroup() {
     const frmGrp = this.formBuilder.group({
-      taxName: ['', Validators.required],
-      taxValue: [null, { validators: [Validators.required, Validators.min(1), Validators.max(100)] }]
+      taxName: [ '', Validators.required ],
+      taxValue: [ null, { validators: [ Validators.required, Validators.min(1), Validators.max(100) ] } ]
     });
-    frmGrp.controls['taxName'].valueChanges.subscribe(changes => {
+    frmGrp.controls[ 'taxName' ].valueChanges.subscribe(changes => {
       this.filterOptionsTax = null;
       const val: TaxInfo[] = this._taxfilter(changes)
       this.filterOptionsTax = new Observable((observer) => {
@@ -189,7 +188,7 @@ export class TaxCostComponent implements OnInit {
       if (filterValue === '') {
         return this.filteredOptionsTax;
       }
-      let filteredValue: TaxInfo[] | [string] = !this.filteredOptionsTax ? [] : this.filteredOptionsTax.filter(option => option.taxName.toLowerCase().includes(filterValue));
+      let filteredValue: TaxInfo[] | [ string ] = !this.filteredOptionsTax ? [] : this.filteredOptionsTax.filter(option => option.taxName.toLowerCase().includes(filterValue));
       if (!filteredValue.length) {
         filteredValue = [
           {
@@ -204,7 +203,7 @@ export class TaxCostComponent implements OnInit {
             taxDescription: null,
             taxValue: 0,
             organizationId: 0,
-          }]
+          } ]
       }
       return filteredValue;
     }
@@ -212,10 +211,10 @@ export class TaxCostComponent implements OnInit {
 
   addOtherCostFormGroup() {
     const frmGrp = this.formBuilder.group({
-      otherCostName: ['', Validators.required],
-      otherCostAmount: [null, { validators: [Validators.required, Validators.min(1)] }]
+      otherCostName: [ '', Validators.required ],
+      otherCostAmount: [ null, { validators: [ Validators.required, Validators.min(1) ] } ]
     });
-    frmGrp.controls['otherCostName'].valueChanges.subscribe(changes => {
+    frmGrp.controls[ 'otherCostName' ].valueChanges.subscribe(changes => {
       this.filterOptionsOther = null;
       const val: OtherCostInfo[] = this.otherCostfilter(changes)
       this.filterOptionsOther = new Observable((observer) => {
@@ -235,7 +234,7 @@ export class TaxCostComponent implements OnInit {
       if (filterValue === '') {
         return this.filteredOptionsOther;
       }
-      let filteredValue: OtherCostInfo[] | [string] = !this.filteredOptionsOther ? [] : this.filteredOptionsOther.filter(option => option.otherCostName.toLowerCase().includes(filterValue));
+      let filteredValue: OtherCostInfo[] | [ string ] = !this.filteredOptionsOther ? [] : this.filteredOptionsOther.filter(option => option.otherCostName.toLowerCase().includes(filterValue));
       if (!filteredValue.length) {
         filteredValue = [
           {
@@ -251,7 +250,7 @@ export class TaxCostComponent implements OnInit {
             otherCostDescription: null,
             otherCostAmount: 0,
             organizationId: 0
-          }]
+          } ]
       }
       return filteredValue;
     }
@@ -263,27 +262,27 @@ export class TaxCostComponent implements OnInit {
   }
 
   get taxCurrentIndex() {
-    return this.taxCostForm.get('taxInfo')['controls'].length
-      ? this.taxCostForm.get('taxInfo')['controls'].length - 1 : 0
+    return this.taxCostForm.get('taxInfo')[ 'controls' ].length
+      ? this.taxCostForm.get('taxInfo')[ 'controls' ].length - 1 : 0
   }
 
   get taxOtherCurrentIndex() {
-    return this.taxCostForm.get('otherCostInfo')['controls'].length
-      ? this.taxCostForm.get('otherCostInfo')['controls'].length - 1 : 0
+    return this.taxCostForm.get('otherCostInfo')[ 'controls' ].length
+      ? this.taxCostForm.get('otherCostInfo')[ 'controls' ].length - 1 : 0
   }
 
 
   get otherCurrentIndex() {
-    return this.otherCostForm.get('otherCostInfo')['controls'].length
-      ? this.otherCostForm.get('otherCostInfo')['controls'].length - 1 : 0;
+    return this.otherCostForm.get('otherCostInfo')[ 'controls' ].length
+      ? this.otherCostForm.get('otherCostInfo')[ 'controls' ].length - 1 : 0;
   }
 
 
   alreadyPresentTax() {
     let currentTaxName: string
     if (this.taxCurrentIndex) {
-      let val = (<FormGroup>(<FormArray>this.taxCostForm.get('taxInfo')).controls[this.taxCurrentIndex]).value['taxName'];
-      currentTaxName = typeof val === 'string' ? val : val['taxName']
+      let val = (<FormGroup>(<FormArray>this.taxCostForm.get('taxInfo')).controls[ this.taxCurrentIndex ]).value[ 'taxName' ];
+      currentTaxName = typeof val === 'string' ? val : val[ 'taxName' ]
     }
     else {
       currentTaxName = ''
@@ -297,10 +296,10 @@ export class TaxCostComponent implements OnInit {
 
   alreadyPresentOtherCost() {
     let currentCostName: string
-    this.taxOtherCurrentIndex ? (<FormGroup>(<FormArray>this.taxCostForm.get('otherCostInfo')).controls[this.taxOtherCurrentIndex]).value['otherCostName']['otherCostName'] : '';
+    this.taxOtherCurrentIndex ? (<FormGroup>(<FormArray>this.taxCostForm.get('otherCostInfo')).controls[ this.taxOtherCurrentIndex ]).value[ 'otherCostName' ][ 'otherCostName' ] : '';
     if (this.taxOtherCurrentIndex) {
-      let val = (<FormGroup>(<FormArray>this.taxCostForm.get('otherCostInfo')).controls[this.taxOtherCurrentIndex]).value['otherCostName'];
-      currentCostName = typeof val === 'string' ? val : val['otherCostName']
+      let val = (<FormGroup>(<FormArray>this.taxCostForm.get('otherCostInfo')).controls[ this.taxOtherCurrentIndex ]).value[ 'otherCostName' ];
+      currentCostName = typeof val === 'string' ? val : val[ 'otherCostName' ]
     }
     else {
       currentCostName = ''
@@ -315,8 +314,8 @@ export class TaxCostComponent implements OnInit {
   alreadyPresentAdditionalCost() {
     let currentCostName: string
     if (this.otherCurrentIndex) {
-      let val = (<FormGroup>(<FormArray>this.otherCostForm.get('otherCostInfo')).controls[this.otherCurrentIndex]).value['otherCostName'];
-      currentCostName = typeof val === 'string' ? val : val['otherCostName']
+      let val = (<FormGroup>(<FormArray>this.otherCostForm.get('otherCostInfo')).controls[ this.otherCurrentIndex ]).value[ 'otherCostName' ];
+      currentCostName = typeof val === 'string' ? val : val[ 'otherCostName' ]
     }
     else {
       currentCostName = ''
@@ -330,7 +329,7 @@ export class TaxCostComponent implements OnInit {
   }
 
   addNewTaxField() {
-    let len = this.taxCostForm.get('taxInfo')['controls'].length;
+    let len = this.taxCostForm.get('taxInfo')[ 'controls' ].length;
     if (this.checkValidation || len < 1) {
       if (!this.alreadyPresentTax()) {
         (<FormArray>this.taxCostForm.get('taxInfo')).push(this.addtaxesFormGroup());
@@ -343,8 +342,8 @@ export class TaxCostComponent implements OnInit {
   }
 
   addNewOtherField() {
-    let len = this.data.type === 'taxesAndCost' ? this.taxCostForm.get('otherCostInfo')['controls'].length
-      : this.otherCostForm.get('otherCostInfo')['controls'].length;
+    let len = this.data.type === 'taxesAndCost' ? this.taxCostForm.get('otherCostInfo')[ 'controls' ].length
+      : this.otherCostForm.get('otherCostInfo')[ 'controls' ].length;
 
     if (this.data.type === 'taxesAndCost') {
       if (this.checkValidation || len < 1) {
@@ -406,12 +405,12 @@ export class TaxCostComponent implements OnInit {
   checkIfHaveDataAlready() {
     let result;
     if (this.data.type === 'taxesAndCost') {
-      if ((this.data.prevData && this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[this.data.prevData.pId] && this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId])) {
-        result = this.data.prevData.dt[this.data.prevData.pId][this.data.prevData.mId];
+      if ((this.data.prevData && this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) && (this.data.prevData.dt[ this.data.prevData.pId ] && this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ])) {
+        result = this.data.prevData.dt[ this.data.prevData.pId ][ this.data.prevData.mId ];
       }
     }
     if (this.data.type === 'otherCost') {
-      if (this.data.prevData && this.data.prevData['dt'] && Object.keys(this.data.prevData.dt).length) {
+      if (this.data.prevData && this.data.prevData[ 'dt' ] && Object.keys(this.data.prevData.dt).length) {
         result = this.data.prevData.dt;
       }
     }
@@ -574,7 +573,7 @@ export class TaxCostComponent implements OnInit {
   snackbar(msg) {
     this._snackBar.open(msg, "", {
       duration: 4000,
-      panelClass: ["warning-snackbar"],
+      panelClass: [ "warning-snackbar" ],
       verticalPosition: "bottom"
     });
   }

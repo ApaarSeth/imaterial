@@ -1,18 +1,17 @@
+import { CommonService } from './../../../shared/services/commonService';
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SendRfqObj } from "src/app/shared/models/RFQ/rfq-details-supplier";
 import { RFQService } from "src/app/shared/services/rfq.service";
 import { ConfirmRfqBidComponent } from "src/app/shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component";
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { materialize } from 'rxjs/operators';
-import { formatDate, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { DocumentList, ImageList, ImageDocsLists } from 'src/app/shared/models/PO/po-data';
+import { DocumentList } from 'src/app/shared/models/PO/po-data';
 import { DocumentUploadService } from 'src/app/shared/services/document-download.service';
 import { RFQDocumentsComponent } from '../rfq-bid-documents/rfq-bid-documents.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
-import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 import { MatDialog } from "@angular/material/dialog";
@@ -39,7 +38,6 @@ export class RFQSupplierDetailComponent implements OnInit {
   materialCount: number = 0;
   brandCount: number = 0;
   minDate = new Date();
-  defaultTaxBtn: string = "IGST";
   materialIGSTFlag: boolean = false;
   brandRateFlag: boolean = false;
   submitButtonValidationFlag: boolean = false;
@@ -50,7 +48,6 @@ export class RFQSupplierDetailComponent implements OnInit {
   dateDue: string = "";
   brandNotMatchedCount: number = 0;
   oneBrandAtMaterialSelected: boolean;
-  dotCount: any;
   rateValid: boolean;
   gstValid: boolean;
   ALLVALID: boolean;
@@ -58,12 +55,11 @@ export class RFQSupplierDetailComponent implements OnInit {
   showDateError: string;
   endstring: string;
   rfqTerms: FormGroup;
-  docs: FileList;
-  filesRemoved: boolean;
   documentList: DocumentList[] = [];
-  documentsName: string[] = [];
   taxAndCostData: any = {};
   otherCostData: any = {};
+
+  isMobile: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -72,7 +68,8 @@ export class RFQSupplierDetailComponent implements OnInit {
     private documentUploadService: DocumentUploadService,
     private router: Router,
     private _snackBar: MatSnackBar,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private commonService: CommonService
   ) { }
 
 
@@ -85,21 +82,22 @@ export class RFQSupplierDetailComponent implements OnInit {
     defaultParagraphSeparator: 'p',
     defaultFontName: 'Arial',
     toolbarHiddenButtons: [
-      ['backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript']
+      [ 'backgroundColor', 'insertImage', 'insertVideo', 'strikeThrough', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull', 'indent', 'outdent', 'htmlcode', 'link', 'unlink', 'toggleEditorMode', 'subscript', 'superscript' ]
     ],
 
   };
 
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.rfqService
       .getRFQDetailSupplier(
-        this.activatedRoute.snapshot.params["rfqId"],
-        this.activatedRoute.snapshot.params["supplierId"]
+        this.activatedRoute.snapshot.params[ "rfqId" ],
+        this.activatedRoute.snapshot.params[ "supplierId" ]
       )
       .then(data => {
         if (data.data.rfqSupplierBidFlag === 1) {
-          this.router.navigate(['/rfq-bids/finish']);
+          this.router.navigate([ '/rfq-bids/finish' ]);
         }
         this.rfqSupplierDetailList = data.data;
         localStorage.setItem('isInternational', JSON.stringify(this.rfqSupplierDetailList.isInternational));
@@ -170,7 +168,7 @@ export class RFQSupplierDetailComponent implements OnInit {
         }
       });
       if (Object.keys(this.otherCostData).length && this.otherCostData.hasOwnProperty('otherCostInfo')) {
-        rfqSupplierObj.otherCostRfqList = this.otherCostData['otherCostInfo'];
+        rfqSupplierObj.otherCostRfqList = this.otherCostData[ 'otherCostInfo' ];
       }
 
       this.submitBidInternational(rfqSupplierObj);
@@ -181,9 +179,9 @@ export class RFQSupplierDetailComponent implements OnInit {
 
   updateItemTaxInfo(item) {
     item.materialList.forEach(itm => {
-      if (this.taxAndCostData[item.projectId].hasOwnProperty(itm.materialId)) {
-        itm.taxInfo = this.taxAndCostData[item.projectId][itm.materialId] !== null ? this.taxAndCostData[item.projectId][itm.materialId].taxInfo : [];
-        itm.otherCostInfo = this.taxAndCostData[item.projectId][itm.materialId] !== null ? this.taxAndCostData[item.projectId][itm.materialId].otherCostInfo : [];
+      if (this.taxAndCostData[ item.projectId ].hasOwnProperty(itm.materialId)) {
+        itm.taxInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ] !== null ? this.taxAndCostData[ item.projectId ][ itm.materialId ].taxInfo : [];
+        itm.otherCostInfo = this.taxAndCostData[ item.projectId ][ itm.materialId ] !== null ? this.taxAndCostData[ item.projectId ][ itm.materialId ].otherCostInfo : [];
       }
     });
     return item;
@@ -205,9 +203,9 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
-    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
-    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
+    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
+    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
+    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
     this.router.navigate([
@@ -229,9 +227,9 @@ export class RFQSupplierDetailComponent implements OnInit {
       return rfqSupplier;
     })
     rfqSupplierObj.dueDate = rfqSupplierObj.quoteValidTill;
-    rfqSupplierObj.comments = this.rfqTerms.value['textArea'];
-    let supplierId = this.activatedRoute.snapshot.params["supplierId"];
-    let rfqId = Number(this.activatedRoute.snapshot.params["rfqId"]);
+    rfqSupplierObj.comments = this.rfqTerms.value[ 'textArea' ];
+    let supplierId = this.activatedRoute.snapshot.params[ "supplierId" ];
+    let rfqId = Number(this.activatedRoute.snapshot.params[ "rfqId" ]);
     rfqSupplierObj.rfqId = rfqId;
     rfqSupplierObj.DocumentsList = this.rfqDocument.getData();
     this.router.navigate([
@@ -396,7 +394,7 @@ export class RFQSupplierDetailComponent implements OnInit {
             this.oneBrandAtMaterialSelected = brand.brandRateFlag;
           }
 
-          if ((brand == material.rfqBrandList[material.rfqBrandList.length - 1])) {
+          if ((brand == material.rfqBrandList[ material.rfqBrandList.length - 1 ])) {
 
             if (this.rfqSupplierDetailList.isInternational === 0) {
 
@@ -491,7 +489,7 @@ export class RFQSupplierDetailComponent implements OnInit {
       width: "600px",
       data: {
         type,
-        rfqId: Number(this.activatedRoute.snapshot.params["rfqId"]),
+        rfqId: Number(this.activatedRoute.snapshot.params[ "rfqId" ]),
         prevData,
         currency: this.rfqSupplierDetailList.rfqCurrency ? this.rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName : null
       },
@@ -500,9 +498,9 @@ export class RFQSupplierDetailComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
         if (!this.taxAndCostData.hasOwnProperty(pId)) {
-          this.taxAndCostData[pId] = {};
+          this.taxAndCostData[ pId ] = {};
         }
-        this.taxAndCostData[pId][mId] = res;
+        this.taxAndCostData[ pId ][ mId ] = res;
       }
       if (type === 'otherCost') {
         this.otherCostData = res;
@@ -556,8 +554,8 @@ export class RFQSupplierDetailComponent implements OnInit {
       data: {
         selectedMaterial,
         type,
-        rfqId: this.activatedRoute.snapshot.params["rfqId"],
-        supplierId: this.activatedRoute.snapshot.params["supplierId"],
+        rfqId: this.activatedRoute.snapshot.params[ "rfqId" ],
+        supplierId: this.activatedRoute.snapshot.params[ "supplierId" ],
         prevUploadedImages: prevUploadedImageList ? prevUploadedImageList : []
       }
     });
@@ -569,7 +567,7 @@ export class RFQSupplierDetailComponent implements OnInit {
 
         this.rfqSupplierDetailList.projectList.map(project => {
           project.materialList.map(mat => {
-            if (mat.materialId === matId[0]) {
+            if (mat.materialId === matId[ 0 ]) {
               mat.documentsList = result;
             }
           })
@@ -598,7 +596,7 @@ export class RFQSupplierDetailComponent implements OnInit {
       width: "500px",
       panelClass: 'view-image-modal',
       data: {
-        rfqId: this.activatedRoute.snapshot.params["rfqId"],
+        rfqId: this.activatedRoute.snapshot.params[ "rfqId" ],
         materialId,
         type: 'supplier',
         displayImages: allSupplierImages
