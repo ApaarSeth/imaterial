@@ -171,7 +171,7 @@
       background: #fafafa;
       margin: auto;
       width: 650px;
-      text-align: center;
+      // text-align: center;
       display: block;
       border-radius: 8px;
 
@@ -190,8 +190,7 @@
 }
 
 .submit-bid-row-add {
-  padding: 50px;
-  width: 100%;
+  margin: 70px 50px 50px;
 }
 
 .bid-material {
@@ -219,8 +218,7 @@
 
 .buildsupply-logo-header {
   img {
-    width: 250px;
-    height: 50px;
+    width: 200px;
     padding-left: 10px;
   }
 }
@@ -659,11 +657,11 @@ mat-icon {
 
 .supplier-details-heading-add-address {
   font-weight: 500;
-  margin: 0 auto;
-  width: 90%;
+  margin-bottom: 10px;
   font-size: 18px;
   font-weight: 500;
   font-size: 18px;
+  padding:10px;
   border-bottom: 1px solid #ebe3f5;
 }
 
@@ -1035,15 +1033,8 @@ h3 {
       order: 1;
     }
   }
-}
-@media only screen and (min-width: 576px) {
-  .supplier-screen {
-    .column-1 {
-      order: 1;
-    }
-    .column-2 {
-      order: 1;
-    }
+  .submit-bid-row-add {
+    margin: 70px 15px 20px;
   }
 }
 
