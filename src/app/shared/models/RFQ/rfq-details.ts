@@ -31,6 +31,7 @@ export interface Address {
   projectId?: number;
   projectName?: string;
   addressID?: number;
+  addressId?: number;
   addressShortname?: string;
   addressLine1?: string;
   addressLine2?: string;
