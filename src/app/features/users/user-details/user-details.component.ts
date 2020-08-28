@@ -21,8 +21,8 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 
 export class UserDetailComponent implements OnInit {
 
-  displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
-  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
+  displayedColumns: string[] = ['User Name', 'Email Id', 'Contact No', 'Role', 'Project', 'star'];
+  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Contact No', 'Role'];
 
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;
