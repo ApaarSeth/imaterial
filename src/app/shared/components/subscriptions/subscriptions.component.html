@@ -14,7 +14,7 @@
 
       <!-- <div class="col-md-7 col-sm-12 m-0-auto"> -->
       <div class="desp-block">
-        <div class="row" [ngClass]="isMobile ? 'mt-2' : 'm-t-3'">
+        <div class="row" [ngClass]="isMobile ? 'mt-2' : 'mt-3'">
           <div *ngFor="let plan of subscription.planList" class="col-md-4 mb-3 d-flex">
             <mat-card class="col-md-12 text-left p-0">
               <mat-card-header [className]="'subs-head ' + getClassName(plan.planName)">
@@ -25,11 +25,11 @@
                     <span class="font-size-12 font-weight500 mt-2">(MY PLAN)</span>
                   </ng-container>
                 </mat-card-title>
-                <mat-card-subtitle class="text-left p-l-5">
+                <mat-card-subtitle class="text-left pl-5">
                   <div class="row">
                     <div class="col-xs-9">
                       <ng-container *ngIf="plan.planName !== 'Custom'; else cstmSts">
-                        <div class="p-t-2 p-b-3">
+                        <div class="pt-2 pb-3">
                           <ng-container *ngIf="subscription.discountPercent !== null; else flatPrice">
                             <span class="line-through reg-price height-30-px">{{ plan.currencyCode }} {{ plan.planUnitPrice }}</span>
                             <span class="d-flex">
@@ -57,7 +57,7 @@
                       </ng-container>
                       <ng-template #cstmSts>
                         <span class="height-30-px d-block w-100">&nbsp;</span>
-                        <div class="p-l-2 p-t-3">
+                        <div class="pl-2 pt-3">
                           <strong>Get in touch with us for a price quote</strong>
                         </div>
                       </ng-template>
@@ -132,7 +132,7 @@
                   <span class="material-icons float-right mt-2"> keyboard_arrow_down </span>
                 </button>
               </ng-container>
-              <mat-card-actions class="feat-list p-l-4 p-b-3" [ngClass]="isMobile ? 'f-hide' : ''">
+              <mat-card-actions class="feat-list pl-4 pb-3" [ngClass]="isMobile ? 'f-hide' : ''">
                 <ul>
                   <li *ngFor="let feature of sortFeaturesObjList(plan.planFeatureObjList)" [ngClass]="feature.available ? 'active' : 'inactive'">
                     <ng-container *ngIf="feature.available; else notAvailable">

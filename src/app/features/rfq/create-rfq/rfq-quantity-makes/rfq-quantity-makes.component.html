@@ -31,7 +31,7 @@
       [ngClass]="isMobile ? 'p-t-5 p-b-10' : 'p-t-10 p-b-20'"
       *ngIf="rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null"
     >
-      <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-12-px mcrncy p-t-2 p-b-2' : 'p-t-10 p-b-10'">
+      <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-12-px mcrncy pt-2 pb-2' : 'p-t-10 p-b-10'">
         <span class="font-size-vary-grn color-grey">
           <img width="25px" *ngIf="rfqData.rfqCurrency.exchangeCurrencyFlag" [src]="rfqData.rfqCurrency.exchangeCurrencyFlag" />
           {{ rfqData.rfqCurrency.exchangeCurrencyName }}
@@ -50,7 +50,7 @@
     <ng-container *ngIf="material.projectMaterialList.length">
       <mat-accordion class="accordion-padding-zero" formArrayName="forms">
         <mat-expansion-panel [expanded]="true" [ngClass]="isMobile ? 'mt-2' : ''">
-          <mat-expansion-panel-header [ngClass]="isMobile ? 'fontsize-12-px p-t-4 p-b-4' : ''">
+          <mat-expansion-panel-header [ngClass]="isMobile ? 'fontsize-12-px pt-4 pb-4' : ''">
             <mat-panel-title>
               {{ material.projectName }}
               <a href="javascript:void(0)" (click)="openDialog(material)" class="main-color p-l-15"
@@ -156,7 +156,7 @@
                   [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
                 >
                   <!-- View image modal link -->
-                  <div *ngIf="element?.documentList?.length" class="images-lists m-t-3" (click)="viewAllImages(element.materialId, element)">
+                  <div *ngIf="element?.documentList?.length" class="images-lists mt-3" (click)="viewAllImages(element.materialId, element)">
                     <ng-container *ngFor="let img of element.documentList; let i = index">
                       <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
                     </ng-container>
