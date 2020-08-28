@@ -21,8 +21,8 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 
 export class UserDetailComponent implements OnInit {
 
-  displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
-  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
+  displayedColumns: string[] = ['User Name', 'Email Id', 'Contact No', 'Role', 'Project', 'star'];
+  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Contact No', 'Role'];
 
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;
@@ -146,7 +146,8 @@ export class UserDetailComponent implements OnInit {
 
     const dialogRef = this.dialog.open(AddEditUserComponent, {
       width: "660px",
-      data
+      data,
+      panelClass: 'add-users-dialog'
     });
 
     dialogRef.afterClosed().toPromise().then(data => {
@@ -174,7 +175,8 @@ export class UserDetailComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DeactiveUserComponent, {
       width: "500px",
-      data
+      data,
+      panelClass: 'deactivate-user'
     });
     dialogRef.afterClosed().toPromise().then(data => {
       if (data && data != null) {

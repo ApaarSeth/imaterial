@@ -1,5 +1,4 @@
-<div mat-dialog-content>
-
+<section class="modal-outer">
   <div class="modal-header">
     <h5 mat-dialog-title class="mb-0">Direct Receipts via system</h5>
 
@@ -8,21 +7,24 @@
     </button>
   </div>
 
-  <div class="modal-body">
-    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper>
+  <div mat-dialog-content>
 
-      <mat-step stepControl="Add Materials">
-        <ng-template matStepLabel>Add Materials</ng-template>
-        <app-add-material #myMaterial> </app-add-material>
-      </mat-step>
+    <div class="modal-body">
+      <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper>
 
-      <mat-step stepControl="Add Supplier">
-        <ng-template matStepLabel>Add Supplier</ng-template>
-        <app-add-supplier *ngIf="materialList.length" [projectId]="this.data" [materialList]="this.materialList"
-          [countryList]="this.countryList" [supplierList]="this.supplierList">
-        </app-add-supplier>
-      </mat-step>
+        <mat-step stepControl="Add Materials">
+          <ng-template matStepLabel>Add Materials</ng-template>
+          <app-add-material #myMaterial> </app-add-material>
+        </mat-step>
 
-    </mat-horizontal-stepper>
+        <mat-step stepControl="Add Supplier">
+          <ng-template matStepLabel>Add Supplier</ng-template>
+          <app-add-supplier *ngIf="materialList.length" [projectId]="this.data" [materialList]="this.materialList"
+            [countryList]="this.countryList" [supplierList]="this.supplierList">
+          </app-add-supplier>
+        </mat-step>
+
+      </mat-horizontal-stepper>
+    </div>
   </div>
-</div>
+</section>

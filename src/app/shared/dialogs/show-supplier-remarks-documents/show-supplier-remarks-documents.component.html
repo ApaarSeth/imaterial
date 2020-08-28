@@ -1,75 +1,56 @@
-
-  <div class="header-add-edit-dialog">
-    <h1 mat-dialog-title>Review Documents</h1>
+<section class="modal-outer">
+  <div class="modal-header">
+    <h5 mat-dialog-title class="mb-0">Review Documents</h5>
     <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
       <span aria-hidden="true">×</span>
     </button>
   </div>
+
   <div mat-dialog-content>
-  <div class="row remarks-suppliers">
-    <div class="col-md-3 suppliers-list">
-      <div class="heading">
-          Select Supplier
-      </div>
-      <div class="supplier-list-name"> 
-        <ng-container *ngFor="let supplier of supplierList;let i=index;">
-        <div [ngClass]="index == i ? 'list-of-suppliers active' : 'list-of-suppliers'" (click)="showSupplierDetails(i)" >
-         <div class="p-5">
-           {{supplier.supplierName}}
-         </div> 
-        </div>
-      </ng-container>
-      </div>
-      
-    </div>
-    <div class="col-md-9 suppliers-details">
-     <ng-container *ngIf="supplierList[index] && supplierList[index].comments">
-       <div class="heading">
-          Terms and Condition
-        </div> 
-
-        <div class="comments-of-supplier" [innerHTML]=supplierList[index].comments>
-        </div>
-     </ng-container>
-       
-     <ng-container *ngIf="supplierList[index] && supplierList[index].documentsList">
-         <div class="heading">
-            Documents
+    <div class="modal-body">
+      <div class="row remarks-suppliers">
+        <div class="col-md-3 col-sm-5 col-xs-12 suppliers-list">
+          <div class="main-heading p-rem-r-0.50">Select Supplier</div>
+          <div class="supplier-list-name">
+            <ng-container *ngFor="let supplier of supplierList; let i = index">
+              <div [ngClass]="index == i ? 'list-of-suppliers active' : 'list-of-suppliers'" (click)="showSupplierDetails(i)">
+                <div class="p-5">{{ supplier.supplierName }}</div>
+              </div>
+            </ng-container>
           </div>
+        </div>
 
-        <div class="documents-show-div">
-            <mat-list-item class="files-list"*ngFor="let file of supplierList[index].documentsList">
-            <div class="display-flex justify-content-space-between">
-                <div class="documents-name">
-                  <img class="file-icon" src="../../../../assets/images/file-doc.png" />
-                  <span>{{ file.DocumentDesc }}</span>
-                </div>
+        <div class="col-md-9 col-sm-7 col-xs-12 suppliers-details">
+          <ng-container *ngIf="supplierList[index] && supplierList[index].comments">
+            <div class="main-heading">Terms and Conditions</div>
+            <div class="comments-of-supplier p-t-0 p-rem-b-1.5" [innerHTML]="supplierList[index].comments"></div>
+          </ng-container>
 
-                <div class="show-download">
-                  <!-- <img src="../../../../assets/images/download-po.png" (click)="downloadURI(file.DocumentUrl,file.DocumentDesc)"/> -->
-                    <a type="button" target="_blank" [href]="file.DocumentUrl" mat-icon-button>
-                    <i class="material-icons">
-                      remove_red_eye
-                    </i>
-                  </a>
-                </div>
+          <ng-container *ngIf="supplierList[index] && supplierList[index].documentsList">
+            <div class="main-heading">Documents</div>
+
+            <div class="upload-image-info mb-3 p-rem-r-0.50 d-flex align-items-center justify-content-between" *ngFor="let file of supplierList[index].documentsList">
+              <div class="image-info d-flex align-items-center">
+                <img class="img-fluid file-icon" src="../../../../assets/images/file-doc.png" />
+                <span class="ml-2">{{ file.DocumentDesc }}</span>
+              </div>
+
+              <div class="image-actions d-flex align-items-center justify-content-end">
+                <a type="button" target="_blank" [href]="file.DocumentUrl" style="color: #020202">
+                  <i class="material-icons">remove_red_eye</i>
+                </a>
+              </div>
             </div>
-            </mat-list-item>
-        </div>
-          
-      </ng-container>
+          </ng-container>
 
-      <ng-container *ngIf="supplierList[index] && !supplierList[index].comments && !supplierList[index].documentsList">
-        <div class="p-t-50 display-flex justify-content-center">
-          <img src="../../../../assets/images/supplier-remarks-image.png">
+          <ng-container *ngIf="supplierList[index] && !supplierList[index].comments && !supplierList[index].documentsList">
+            <div class="p-t-50 display-flex justify-content-center">
+              <img src="../../../../assets/images/supplier-remarks-image.png" class="default-remarks-image" />
+            </div>
+            <div class="p-t-10 p-b-50 display-flex justify-content-center text-align-justify">Supplier has not sent any terms & conditions and documents for review !</div>
+          </ng-container>
         </div>
-        <div>
-          <span  class="p-t-10 p-b-50 display-flex justify-content-center text-align-justify">
-            Supplier has not sent any terms & conditions and documents for review !
-          </span>
-        </div>
-      </ng-container>
+      </div>
     </div>
   </div>
-  </div>
-  
+</section>

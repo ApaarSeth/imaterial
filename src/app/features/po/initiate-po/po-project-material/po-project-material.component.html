@@ -1,21 +1,21 @@
 <form [formGroup]="form">
   <div class="row" [ngClass]="isMobile ? 'm-podr1' : 'p-t-10'">
     <div class="col-xs-6 col-sm-4 p-t-10 border-input m-itm" [ngClass]="isMobile ? 'm-srch mt-1' : ''">
-      <mat-form-field class="input-search-padding-zero" [ngClass]="isMobile ? 'pl-0' : 'p-l-20'">
+      <mat-form-field class="input-search-padding-zero" [ngClass]="isMobile ? 'p-l-0' : 'p-l-20'">
         <input matInput placeholder="Search Material" type="search" [(ngModel)]="searchMaterial" [ngModelOptions]="{standalone: true}" />
         <button mat-button matSuffix mat-icon-button>
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field>
     </div>
-    <div class="col-xs-6 col-sm-4 text-right m-itm" [ngClass]="isMobile ? 'm-srch pt-3px mt-1' : ''">
+    <div class="col-xs-6 col-sm-4 text-right m-itm" [ngClass]="isMobile ? 'm-srch p-t-3 mt-1' : ''">
       <mat-form-field class="border-select select-project">
         <mat-label>Search Project</mat-label>
         <mat-select formControlName="selectedProject" (selectionChange)="choosenProject($event)">
           <div class="display-flex">
             <input
               class="p-b-5"
-              [ngClass]="isMobile ? 'pl-0' : 'p-l-10'"
+              [ngClass]="isMobile ? 'p-l-0' : 'p-l-10'"
               matInput
               type="search"
               placeholder="Search project Name"
@@ -63,7 +63,7 @@
       </span>
     </div>
     <div class="col-xs-12 p-t-10 p-b-20 text-right m-itm" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null" [ngClass]="isMobile ? 'mt-2' : ''">
-      <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10" [ngClass]="isMobile ? 'font-size12 mcrncy' : ''">
+      <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10" [ngClass]="isMobile ? 'fontsize-12-px mcrncy' : ''">
         <span class="font-size-vary-grn color-grey">
           <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
           {{ poCurrency.exchangeCurrencyName }}
@@ -81,7 +81,7 @@
 <mat-accordion *ngIf="poDetails" class="accordion-padding-zero">
   <form *ngIf="poDetails.length" [formGroup]="materialForm">
     <mat-expansion-panel class="myPanel" [expanded]="true" [ngClass]="isMobile ? 'mt-2' : ''">
-      <mat-expansion-panel-header [ngClass]="isMobile ? 'font-size12 pt-4 pb-4' : ''">
+      <mat-expansion-panel-header [ngClass]="isMobile ? 'fontsize-12-px p-rem-t-1.5 p-rem-b-1.5' : ''">
         <mat-panel-title>
           {{ poDetails[0].projectName }}
           <a href="javascript:void(0)" class="main-color p-l-15">

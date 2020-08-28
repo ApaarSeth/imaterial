@@ -270,7 +270,8 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     if (this.AddressValid) {
       const dialogRef = this.dialog.open(SelectSupplierAddressDialogComponent, {
         data: { supplierAddresses: this.supplierAddress },
-        width: "800px"
+        width: "800px",
+        panelClass: 'choose-address-dialog'
       });
 
       dialogRef

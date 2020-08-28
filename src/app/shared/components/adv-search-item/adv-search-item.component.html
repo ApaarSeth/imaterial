@@ -1,46 +1,48 @@
 <div *ngIf="config?.list">
-
-
-    <!-- <mat-expansion-panel>
+  <!-- <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 {{ config.title}}
             </mat-panel-title>
         </mat-expansion-panel-header> -->
 
+  <form *ngIf="form" [formGroup]="form">
+    <mat-form-field class="d-block border-bottom-dark drp-inpt">
+      <mat-label>{{ config.title }}</mat-label>
+      <mat-select formControlName="selected" multiple (openedChange)="projectInput.focus()">
+        <div class="d-flex">
+          <input
+            formControlName="searchInput"
+            class="p-rem-l-1"
+            #projectInput
+            matInput
+            focused="'true'"
+            type="text"
+            autocomplete="off"
+            placeholder="search"
+            (keydown)="$event.stopPropagation()"
+          />
+          <button mat-button matSuffix mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-option *ngFor="let item of filtered || config.list" [value]="item">
+          {{ item.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <ng-container *ngIf="form.get('selected').value">
+    <ul class="selected-list">
+      <li *ngFor="let option of form.get('selected').value" class="d-flex justify-content-between">
+        <div>{{ option.name }}</div>
+        <span class="font-size20">
+          <mat-icon (click)="remove(option.id)" inline="true">close</mat-icon>
+        </span>
+      </li>
+    </ul>
+  </ng-container>
 
-    <form *ngIf="form" [formGroup]="form">
-        <mat-form-field class="d-block border-bottom-dark drp-inpt">
-            <mat-label>{{ config.title }}</mat-label>
-            <mat-select formControlName="selected" multiple (openedChange)="projectInput.focus()">
-                <div class="d-flex">
-                    <input formControlName="searchInput" class="pl-3" #projectInput matInput focused="'true'"
-                        type="text" autocomplete="off" placeholder="search" (keydown)="$event.stopPropagation()" />
-                    <button mat-button matSuffix mat-icon-button>
-                        <mat-icon>search</mat-icon>
-                    </button>
-                </div>
-                <mat-divider></mat-divider>
-                <mat-option *ngFor="let item of (filtered || config.list)" [value]="item">
-                    {{ item.name }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-    </form>
-    <ng-container *ngIf="   form.get('selected').value">
-        <ul class="selected-list">
-            <li *ngFor="let option of form.get('selected').value" class="d-flex justify-content-between">
-                <div>{{ option.name }}</div>
-                <span class="font-size20">
-                    <mat-icon (click)="remove(option.id)" inline="true">close</mat-icon>
-                </span>
-            </li>
-        </ul>
-    </ng-container>
-
-
-    <!-- </mat-expansion-panel> -->
-
-
+  <!-- </mat-expansion-panel> -->
 </div>

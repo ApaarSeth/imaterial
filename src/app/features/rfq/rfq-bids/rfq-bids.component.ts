@@ -270,15 +270,12 @@ export class RfqBidsComponent implements OnInit {
   }
 
   viewRemarks() {
-
     const dialogRef = this.dialog.open(ShowSupplierRemarksandDocs, {
       width: "1000px",
-      data: this.rfqProjects[0].supplierRemarkList
+      data: this.rfqProjects[0].supplierRemarkList,
+      panelClass: 'show-supplier-remarks-docs'
     });
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(result => { });
+    dialogRef.afterClosed().toPromise().then(result => { });
   }
 
   /**

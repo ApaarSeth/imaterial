@@ -90,10 +90,6 @@
     border-left: 1px solid #d6d6d6;
   }
 }
-.user-details-table-div-active-inactive-single {
-  overflow-y: auto;
-  max-height: 350px;
-}
 
 .btn-project-user-details {
   background: #f0f0f0;
@@ -108,23 +104,16 @@
    max-width: 200px;
    white-space: pre-line;
 }
+
 .add-user-container {
   .mat-header-cell{
     z-index: 9 !important;
   }
+
   .project-user-details-width {
-   max-width: 400px;
-   min-width: 400px !important;
-}
-    .edit-disable-user-details-width {
-      min-width: 100px;
-      mat-icon {
-        float: right;
-      }
-      i {
-        float: right;
-      }
-    }
+    max-width: 400px;
+    min-width: 400px !important;
+  }
 }
 
 
@@ -480,98 +469,118 @@
   }
 }
 
-@media only screen and (max-width: 1010px) {
- .terms-margin-set-width {
-   margin-left:0px;
-   margin-right:0px ;
-   width:100%;
-   .user-profile{
-     padding-bottom: 0px !important;
+.background-green{
+  border: 1px solid #81e212;
+   background-color: #81e212  !important;
+}
+.buildsupply-material-video{
+ width: 100%;
+ height: 337px;
+}
+.form-add-edit-grn-div{
+ max-height: 200px;
+ overflow-y: auto;
+}
+
+.add-user-container {
+ width: 100%;
+ min-width: 0px;
+ overflow-x: auto;
+
+.mat-table {
+     overflow-x: scroll;
    }
-   .profile{
-     padding-left : 47px;
+
+.mat-cell,
+.mat-header-cell {
+   word-wrap: initial;
+   display: table-cell;
+   padding: 0px 10px;
+   line-break: unset;
+   text-align: left;
+   width: 2%;
+   white-space: nowrap;
+   overflow: hidden;
+   vertical-align: middle;
+   font-weight: 500;
+}
+.mat-row,
+.mat-header-row {
+   display: table-row;
+}
+.grn-material-name{
+ text-align: left;
+}
+}
+
+.add-unique-container {
+ width: 100%;
+ min-width: 0px;
+ overflow-x: auto;
+
+.mat-table {
+     overflow-x: scroll;
    }
-   .choose-trades{
-     padding-top: 20px;
-   }
+
+.mat-cell,
+.mat-header-cell {
+   word-wrap: initial;
+   display: table-cell;
+   padding: 0px 10px;
+   line-break: unset;
+   text-align: left;
+   width: 2%;
+   white-space: nowrap;
+   overflow: hidden;
+   vertical-align: middle;
+   font-weight: 500;
+}
+.mat-row,
+.mat-header-row {
+   display: table-row;
+}
+}
+
+.project-listing-menu{
+  min-height: auto !important;
+  .mat-menu-content:not(:empty) {
+    padding: 0px;
+    max-height: 200px;
+  }
+
+  .mat-menu-item{
+    line-height: 34px;
+    height: 34px;
+    border-bottom: 1px solid #bbbbbb;
+    cursor: default;
   }
 }
+
+.edit-disable-user-details-width {
+  min-width: 200px;
+}
+
+@media only screen and (max-width: 1010px) {
+  .terms-margin-set-width {
+    margin-left:0px;
+    margin-right:0px ;
+    width:100%;
+    .user-profile{
+      padding-bottom: 0px !important;
+    }
+    .profile{
+      padding-left : 47px;
+    }
+    .choose-trades{
+      padding-top: 20px;
+    }
+   }
+ }
 
 @media only screen and (max-width: 768px){
   .float-right-invite-delBtn{
     float: right;
   }
-}
-.background-green{
-   border: 1px solid #81e212;
-    background-color: #81e212  !important;
-}
-.buildsupply-material-video{
-  width: 100%;
-  height: 337px;
-}
-.form-add-edit-grn-div{
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.add-user-container {
-  width: 100%;
-  min-width: 0px;
-  overflow-x: auto;
-
-.mat-table {
-      overflow-x: scroll;
-    }
-
-.mat-cell,
-.mat-header-cell {
-    word-wrap: initial;
-    display: table-cell;
-    padding: 0px 10px;
-    line-break: unset;
-    text-align: left;
-    width: 2%;
-    white-space: nowrap;
-    overflow: hidden;
-    vertical-align: middle;
-    font-weight: 500;
-}
-.mat-row,
-.mat-header-row {
-    display: table-row;
-}
-.grn-material-name{
-  text-align: left;
-}
-}
-
-.add-unique-container {
-  width: 100%;
-  min-width: 0px;
-  overflow-x: auto;
-
-.mat-table {
-      overflow-x: scroll;
-    }
-
-.mat-cell,
-.mat-header-cell {
-    word-wrap: initial;
-    display: table-cell;
-    padding: 0px 10px;
-    line-break: unset;
-    text-align: left;
-    width: 2%;
-    white-space: nowrap;
-    overflow: hidden;
-    vertical-align: middle;
-    font-weight: 500;
-}
-.mat-row,
-.mat-header-row {
-    display: table-row;
-}
 }
 
 @media only screen and (max-width : 900px){

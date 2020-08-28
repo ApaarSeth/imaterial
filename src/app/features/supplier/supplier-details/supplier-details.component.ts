@@ -10,7 +10,6 @@ import { RFQService } from "../../../shared/services/rfq.service";
 import { UserGuideService } from "../../../shared/services/user-guide.service"
 import { DeactiveSupplierComponent } from "../../../shared/dialogs/disable-supplier/disable-supplier.component";
 import { SupplierAdd, SupplierDetailsPopUpData } from "../../../shared/models/supplier";
-import { AddAddressDialogComponent } from "../../../shared/dialogs/add-address/address-dialog.component";
 import { SuppliersDialogComponent } from "../../../shared/dialogs/add-supplier/suppliers-dialog.component";
 
 
@@ -133,18 +132,18 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   openDialog(data: SupplierDetailsPopUpData): void {
-    if (AddAddressDialogComponent) {
-      const dialogRef = this.dialog.open(SuppliersDialogComponent, {
-        width: "660px",
-        data
-      });
 
-      dialogRef.afterClosed().toPromise().then((data) => {
-        if (data && data != null) {
-          this.getAllSupplier();
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(SuppliersDialogComponent, {
+      width: "660px",
+      data,
+      panelClass: 'add-supplier-dialog'
+    });
+
+    dialogRef.afterClosed().toPromise().then((data) => {
+      if (data && data != null) {
+        this.getAllSupplier();
+      }
+    });
   }
 
   deactivateUser(data) {
@@ -169,17 +168,16 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   openDialogDeactiveUser(data: SupplierDetailsPopUpData): void {
-    if (AddAddressDialogComponent) {
-      const dialogRef = this.dialog.open(DeactiveSupplierComponent, {
-        width: "500px",
-        data
-      });
-      dialogRef.afterClosed().toPromise().then((data) => {
-        if (data && data != null) {
-          this.getAllSupplier();
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(DeactiveSupplierComponent, {
+      width: "500px",
+      data
+    });
+    dialogRef.afterClosed().toPromise().then((data) => {
+      if (data && data != null) {
+        this.getAllSupplier();
+      }
+    });
+
   }
 
   applyFilter(filterValue: string) {

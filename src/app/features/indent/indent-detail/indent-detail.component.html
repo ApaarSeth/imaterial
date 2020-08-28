@@ -1,9 +1,8 @@
-<div class="page-start-point mt-5 pt-4">
+<div class="page-start-point mt-5 p-rem-t-1.5">
   <div class="dashboard-unique p-b-20 min-height parent">
     <div class="row">
       <div class="col-sm-12 p-l-10 p-r-10">
-        <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product"
-          [disableEditDelete]="true"></card-layout>
+        <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
       </div>
     </div>
 
@@ -11,38 +10,30 @@
       <p class="text-right mt-3 mb-2">
         <button mat-button class="fltr-btn" (click)="openFilter()">
           <mat-icon class="brand-color" inline="true">filter_list</mat-icon>
-          <span class="color-6d6a6a font-size18 ml-2">Filter</span>
+          <span class="color-6d6a6a fontsize-18-px ml-2">Filter</span>
         </button>
       </p>
     </ng-container>
 
-
     <div class="row">
-
       <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2 align-top">
-          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)"
-            [config]="searchConfig">
-          </advance-search>
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)" [config]="searchConfig"> </advance-search>
         </div>
       </ng-container>
 
       <ng-template #mobileSearch>
-        <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close' ">
+        <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close'">
           <div class="sdb" (click)="closeFilter()"></div>
-          <advance-search class="mb-cl" *ngIf="searchConfig" (submitExport)="applyExport($event)"
-            (submitSearch)="applySearch($event)" [config]="searchConfig"></advance-search>
+          <advance-search class="mb-cl" *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)" [config]="searchConfig"></advance-search>
         </div>
       </ng-template>
 
       <div class="col-md-10 align-top">
-
-        <ng-container *ngIf="(dataSource1 || dataSource2) else emptyReports">
-
+        <ng-container *ngIf="dataSource1 || dataSource2; else emptyReports">
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
-                [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Ongoing Purchase Requisition</span>
@@ -89,7 +80,7 @@
                   <ng-container matColumnDef="View Indent">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                      <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721;">View Request</a>
+                      <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721">View Request</a>
                     </td>
                   </ng-container>
 
@@ -120,8 +111,7 @@
           <p></p>
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
-                [ngClass]="isMobile ? 'pt-2 pb-2' : '' ">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Completed Purchase Requisition</span>
@@ -169,7 +159,7 @@
                   <ng-container matColumnDef="View Indent">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                      <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721;">View Request</a>
+                      <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721">View Request</a>
                     </td>
                   </ng-container>
 
@@ -191,23 +181,16 @@
               <!-- end of first structure -->
             </mat-expansion-panel>
           </ng-container>
-
         </ng-container>
-
 
         <ng-template #emptyReports>
           <div class="d-block text-align-center mt-3">
-            <img src="../../../../assets/images/empty-report.svg" alt="empty report">
-            <p class="font-weight-light m-0 pt-3"><strong class="font-weight500">Oops!</strong> You have nothing to see.
-            </p>
+            <img src="../../../../assets/images/empty-report.svg" alt="empty report" />
+            <p class="font-weight-light m-0 p-t-1-rem"><strong class="font-weight500">Oops!</strong> You have nothing to see.</p>
             <p class="font-weight-light m-0 mt-1">Try Again !</p>
           </div>
         </ng-template>
-
       </div>
-
     </div>
-
-
   </div>
 </div>

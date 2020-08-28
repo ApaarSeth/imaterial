@@ -57,7 +57,7 @@
           <ng-container *ngIf="rfqSupplierDetailList.isInternational === 1 && rfqSupplierDetailList.rfqCurrency">
             <div class="float-right d-inline-block">
               <span class="base-currency border-dark"
-                [ngClass]="isMobile ? 'mcrncy font-size10 p-5' : 'pl-3 pr-3 p-t-10 p-b-10' ">
+                [ngClass]="isMobile ? 'mcrncy font-size10 p-5' : 'p-l-1rem p-r-1rem p-t-10 p-b-10' ">
                 <span class="font-size-vary-grn color-grey">
                   <img width="25px" *ngIf="rfqSupplierDetailList.rfqCurrency.exchangeCurrencyFlag"
                     [src]="rfqSupplierDetailList.rfqCurrency.exchangeCurrencyFlag" />
@@ -76,7 +76,7 @@
           </ng-container>
         </div>
 
-        <div style="width: 100%; overflow-x: scroll;">
+        <div style="width: 100%; overflow-x: scroll">
           <table class="table rfq-bids-table" *ngFor="let projects of rfqSupplierDetailList.projectList">
             <!-- Project Name Header -->
             <tr class="blue-background-color color-white">
@@ -86,7 +86,7 @@
                 </span>
               </th>
 
-              <th class="font-size14 pt-3" colspan="3" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
+              <th class="font-size14 p-t-1rem" colspan="3" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
                 <span *ngIf="projects.addressLine1">
                   {{ projects.addressLine1 }}
                 </span>
@@ -113,18 +113,18 @@
             <!-- Material Info -->
             <ng-container *ngFor="let material of projects.materialList">
               <tr matSort class="material-rfq-supplies">
-                <td class="limited-character pt-4" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
+                <td class="limited-character p-t-1.5rem" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
                   <span>{{ material.materialName }}</span>
                   <!-- Upload Image Modal Link -->
                   <!-- <div class="add-edit-image d-block">
                     <a href="javascript:void(0)" class="orange-text" (click)="uploadImage(material, 'supplier')">Add/Edit Image</a>
                   </div> -->
                 </td>
-                <td class="pt-4" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
+                <td class="p-t-1.5rem" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
                   Requested Quantity: {{ material.materialQuantity }}
                   {{ material.materialUnit }}
                 </td>
-                <td class="pt-4 min-w-120px" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">Required Date :
+                <td class="p-t-1.5rem min-w-120px" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">Required Date :
                   {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</td>
 
                 <!-- View image modal link -->
@@ -196,7 +196,7 @@
                       <input matInput type="text" title="" placeholder="GST %" [(ngModel)]="material.Igst" min="0"
                         appTwoDigitDecimaNumber (keyup)="valueChange(rfqSupplierDetailList)" />
                     </mat-form-field>
-                    <div class="d-flex justify-content-center" style="padding-left: 50px !important;">
+                    <div class="d-flex justify-content-center" style="padding-left: 50px !important">
                       <small *ngIf="!material.validGst" class="error-msg">Enter Valid GST%</small>
                     </div>
                   </ng-container>
@@ -365,11 +365,11 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="pt-3" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
+                <td class="p-t-1-rem" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
                   <ng-container
                     *ngIf="otherCostData && otherCostData.otherCostInfo && otherCostData.otherCostInfo.length">
                     <strong>Other Cost: </strong>
-                    <span style="margin-right: 5px;">
+                    <span style="margin-right: 5px">
                       {{ getotherCostInfoTotal(otherCostData.otherCostInfo) }}
                       <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency">
                         {{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }}</ng-container></span>
@@ -403,9 +403,7 @@
         <app-rfq-bid-documents #rfqDocument [documentData]="documentList"></app-rfq-bid-documents>
       </div>
       <div class="col-md-8 col-sm-12">
-        <div class="text-align-center font-size16 text-semi-bold">
-          Comments
-        </div>
+        <div class="text-align-center fontsize-16-px text-semi-bold">Comments</div>
         <form [formGroup]="rfqTerms">
           <angular-editor formControlName="textArea" [config]="config"></angular-editor>
         </form>

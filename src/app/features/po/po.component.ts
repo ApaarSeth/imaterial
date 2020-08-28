@@ -245,34 +245,38 @@ export class PoComponent implements OnInit {
   openDialog(data: POData) {
     const dialogRef = this.dialog.open(SelectApproverComponent, {
       width: "400px",
-      data
+      data,
+      panelClass: 'select-approver-dialog',
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.poService.sendPoData(result).then(res => {
-        if (res.status === 0 && res.message === "gst field missing from billing address") {
-          this.openProjectDialog(data);
-        }
-
-        else {
-          this.navService.gaEvent({
-            action: 'submit',
-            category: 'sent_approval_po',
-            label: null,
-            value: null
-          });
-          this._snackBar.open(
-            res.message,
-            "",
-            {
-              duration: 2000,
-              panelClass: ["warning-snackbar"],
-              verticalPosition: "bottom"
-            }
-          );
-          this.router.navigate(["po"]);
-        }
-      });
+      if(result !== null){
+        this.poService.sendPoData(result).then(res => {
+          if (res.status === 0 && res.message === "gst field missing from billing address") {
+            this.openProjectDialog(data);
+          }
+  
+          else {
+            this.navService.gaEvent({
+              action: 'submit',
+              category: 'sent_approval_po',
+              label: null,
+              value: null
+            });
+            this._snackBar.open(
+              res.message,
+              "",
+              {
+                duration: 2000,
+                panelClass: ["warning-snackbar"],
+                verticalPosition: "bottom"
+              }
+            );
+            this.router.navigate(["po"]);
+          }
+        });
+      }
     });
   }
 

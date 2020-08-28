@@ -6,25 +6,17 @@ import {
   Output,
   EventEmitter
 } from "@angular/core";
-import {
-  RfqMaterialResponse,
-  RfqMat,
-  AddRFQ,
-  Address
-} from "src/app/shared/models/RFQ/rfq-details";
 import { FormGroup, FormBuilder, Validators, FormArray, ValidatorFn, AbstractControl } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { RFQService } from "src/app/shared/services/rfq.service";
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
-import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
-import { AddAddressPoDialogComponent } from "src/app/shared/dialogs/add-address-po/add-addressPo.component";
-import { CommonService } from 'src/app/shared/services/commonService';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
-import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
-import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
-import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { AddAddressDialogComponent } from "../../../../shared/dialogs/add-address/add-address.component";
+import { MatDialog } from "@angular/material/dialog";
+import { CommonService } from "../../../../shared/services/commonService";
+import { FieldRegExConst } from "../../../../shared/constants/field-regex-constants";
+import { SelectCurrencyComponent } from "../../../../shared/dialogs/select-currency/select-currency.component";
+import { AddRFQ, RfqMaterialResponse, RfqMat, Address } from "../../../../shared/models/RFQ/rfq-details";
+import { UploadImageComponent } from "../../../../shared/dialogs/upload-image/upload-image.component";
+import { ViewImageComponent } from "../../../../shared/dialogs/view-image/view-image.component";
 
 @Component({
   selector: "app-rfq-quantity-makes",
@@ -65,10 +57,7 @@ export class RfqQuantityMakesComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService,
     private formBuilder: FormBuilder,
-    private router: Router,
     private _snackBar: MatSnackBar,
     private commonService: CommonService
 
@@ -125,7 +114,6 @@ export class RfqQuantityMakesComponent implements OnInit {
       { forms: this.formBuilder.array(frmArr) }
 
     );
-    //  this.materialForms.addControl("forms", new FormArray(frmArr));
     this.materialForms.valueChanges.subscribe(val => {
     })
   }
@@ -208,19 +196,19 @@ export class RfqQuantityMakesComponent implements OnInit {
   }
 
   openDialog(data: RfqMaterialResponse): void {
-    if (AddAddressDialogComponent) {
-      const dialogRef = this.dialog.open(AddAddressPoDialogComponent, {
-        width: "1200px",
-        data: {
-          roleType: "projectBillingAddressId",
-          id: data.projectId
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        data.defaultAddress = result ? result[1].address : data.defaultAddress;
-      });
-    }
+    const dialogRef = this.dialog.open(AddAddressDialogComponent, {
+      width: "1200px",
+      data: {
+        roleType: "projectBillingAddressId",
+        id: data.projectId,
+      },
+      panelClass: 'add-address-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      data.defaultAddress = result ? result[1].address : data.defaultAddress;
+    });
   }
+
   getFormStatus() {
     return this.materialForms;
   }
@@ -277,7 +265,8 @@ export class RfqQuantityMakesComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "600px",
-      data: this.rfqData.rfqCurrency
+      data: this.rfqData.rfqCurrency,
+      panelClass: 'select-currency-dialog'
     });
 
     dialogRef.afterClosed().subscribe(data => {

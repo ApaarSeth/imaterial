@@ -8,24 +8,14 @@ import { DocumentList } from '../../models/PO/po-data';
 import { GRNDocumentsComponent } from './grn-documents/grn-documents.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-export interface City {
-  value: string;
-  viewValue: string;
-}
-
-export interface ProjectType {
-  type: string;
-}
-
-export interface Unit {
-  value: string;
-}
 
 @Component({
   selector: "add-edit-grn-dialog",
   templateUrl: "add-edit-grn-component.html"
 })
+
 export class AddEditGrnComponent implements OnInit {
+
   @Input("documentListLength") public documentListLength: number;
   @Input("documentData") documentData: DocumentList[];
   @ViewChild("grnDocument", { static: false }) grnDocument: GRNDocumentsComponent;
@@ -43,6 +33,7 @@ export class AddEditGrnComponent implements OnInit {
   status: boolean = false;
   showtable: boolean;
   documentList
+
   constructor(
     private grnService: GRNService,
     private navService: AppNavigationService,
@@ -61,7 +52,6 @@ export class AddEditGrnComponent implements OnInit {
       this.formsInit();
     });
     window.dispatchEvent(new Event('resize'));
-
     this.purchaseOrderId = this.data.pID;
   }
 

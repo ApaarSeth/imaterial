@@ -1,26 +1,21 @@
 <form *ngIf="addMaterialsForm" autocomplete="off" [formGroup]="addMaterialsForm" (ngSubmit)="onSubmitMaterials()">
   <div mat-dialog-content class="overflow-remove">
-
     <!-- Add Material Form -->
     <div formArrayName="addMaterial">
       <ng-container *ngFor="let material of addMaterialsForm.get('addMaterial')['controls']; let i = index">
-
         <div class="row" [formGroupName]="i">
-
           <!-- Material Name Input Field -->
           <div class="col-md-2 col-material-name col-sm-4 col-xs-12">
             <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding label-font-size">
-              <input type="text" placeholder="Material Name*" matInput formControlName="materialName"
-                [matAutocomplete]="auto" />
+              <input type="text" placeholder="Material Name*" matInput formControlName="materialName" [matAutocomplete]="auto" />
               <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
-                <mat-option matTooltip=" {{ option.materialName }}"
-                  *ngFor="let option of this.filterMaterialName | async" [value]="option">
+                <mat-option matTooltip=" {{ option.materialName }}" *ngFor="let option of this.filterMaterialName | async" [value]="option">
                   {{ option.materialName }}
                 </mat-option>
               </mat-autocomplete>
-              <small
-                *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['materialName'].errors?.maxlength"
-                class="warning-color">maximun characters allowed is 300</small>
+              <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['materialName'].errors?.maxlength" class="warning-color"
+                >maximun characters allowed is 300</small
+              >
             </mat-form-field>
           </div>
 
@@ -30,8 +25,15 @@
               <mat-label>Unit*</mat-label>
               <mat-select formControlName="materialUnit">
                 <div class="display-flex">
-                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Unit" [(ngModel)]="searchUnit"
-                    [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()" />
+                  <input
+                    class="p-l-10 p-b-5"
+                    matInput
+                    type="search"
+                    placeholder="Search Unit"
+                    [(ngModel)]="searchUnit"
+                    [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()"
+                  />
                   <button mat-button mat-icon-button>
                     <mat-icon>search</mat-icon>
                   </button>
@@ -42,83 +44,77 @@
                   </span>
                 </mat-option>
               </mat-select>
-              <small
-                *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['materialUnit'].errors?.maxlength"
-                class="warning-color">maximun characters allowed is 300</small>
+              <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['materialUnit'].errors?.maxlength" class="warning-color"
+                >maximun characters allowed is 300</small
+              >
             </mat-form-field>
           </div>
 
           <!-- Material Quantity Input Field -->
           <div class="col-md-2 col-sm-4 col-xs-7">
             <mat-form-field class="border-input p-l-0 label-font-size w-100">
-              <input formControlName="deliveredQty" appTwoDigitDecimaNumber matInput type="text"
-                placeholder="Quantity*" />
-              <small
-                *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['deliveredQty'].errors?.maxlength"
-                class="warning-color">maximun characters allowed is 300</small>
+              <input formControlName="deliveredQty" appTwoDigitDecimaNumber matInput type="text" placeholder="Quantity*" />
+              <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['deliveredQty'].errors?.maxlength" class="warning-color"
+                >maximun characters allowed is 300</small
+              >
             </mat-form-field>
           </div>
 
           <!-- Material Pending Quantity Input Field -->
           <div class="col-md-2 col-sm-4 col-xs-12">
             <mat-form-field class="border-input label-font-size w-100">
-              <input formControlName="pendingQty" appTwoDigitDecimaNumber matInput type="text"
-                placeholder="Pending Qty*" />
-              <small
-                *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['pendingQty'].errors?.maxlength"
-                class="warning-color">maximun characters allowed is 300</small>
+              <input formControlName="pendingQty" appTwoDigitDecimaNumber matInput type="text" placeholder="Pending Qty*" />
+              <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['pendingQty'].errors?.maxlength" class="warning-color"
+                >maximun characters allowed is 300</small
+              >
             </mat-form-field>
           </div>
 
           <!-- Material Unit Price Input Field -->
           <div class="col-md-2 col-sm-4 col-xs-12">
             <mat-form-field class="border-input label-font-size w-100">
-              <input formControlName="materialUnitPrice" appTwoDigitDecimaNumber matInput type="text"
-                placeholder="Unit Price*({{ currency }})" />
-              <small
-                *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['materialUnitPrice'].errors?.maxlength"
-                class="warning-color">maximun characters allowed is 300</small>
+              <input formControlName="materialUnitPrice" appTwoDigitDecimaNumber matInput type="text" placeholder="Unit Price*({{ currency }})" />
+              <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['materialUnitPrice'].errors?.maxlength" class="warning-color"
+                >maximun characters allowed is 300</small
+              >
             </mat-form-field>
           </div>
 
           <!-- Material Total Amount Input Field -->
-          <div class="col-md-2 col-sm-4 col-xs-12">
+          <div class="col-md-2 col-total-amount col-sm-4 col-xs-12">
             <mat-form-field class="border-input label-font-size w-100">
-              <input formControlName="amount" appTwoDigitDecimaNumber matInput type="text"
-                placeholder="Total Amt*({{ currency }})" />
-              <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['amount'].errors?.maxlength"
-                class="warning-color">maximun characters allowed is 300</small>
+              <input formControlName="amount" appTwoDigitDecimaNumber matInput type="text" placeholder="Total Amt*({{ currency }})" />
+              <small *ngIf="addMaterialsForm.get('addMaterial')['controls'][i]['controls']['amount'].errors?.maxlength" class="warning-color"
+                >maximun characters allowed is 300</small
+              >
             </mat-form-field>
           </div>
 
           <!-- Add Button Field -->
           <div class="col-md-1 col-sm-12 col-xs-12 col-add-btn display-flex align-items-center justify-content-end">
-            <span *ngIf="addMaterialsForm.get('addMaterial')['controls'].length > 1" matRipple
-              class="cursor-pointer p-r-5" (click)="deleteField(i)">
+            <span *ngIf="addMaterialsForm.get('addMaterial')['controls'].length > 1" matRipple class="cursor-pointer p-r-5" (click)="deleteField(i)">
               <img src="../../../../assets/images/delete-button.png" />
             </span>
             <span
               [ngClass]="[addMaterialsForm.get('addMaterial')['controls'][i].valid ? 'main-color' : 'main-color-faded']"
-              matRipple class="material-icons cursor-pointer add-material-btn" (click)="addNewMaterialField()">
+              matRipple
+              class="material-icons cursor-pointer add-material-btn"
+              (click)="addNewMaterialField()"
+            >
               add_circle
             </span>
           </div>
-
         </div>
-
       </ng-container>
     </div>
 
-    <div class="short-information pt-3">
-      <p class="light-grey fontsize-13-px">
-        * Total amount and unit price are inclusive of GST
-      </p>
+    <div class="short-information p-t-1-rem">
+      <p class="light-grey fontsize-13-px">* Total amount and unit price are inclusive of GST</p>
     </div>
   </div>
 
   <div mat-dialog-actions class="flex-column">
-    <button mat-button mat-raised-button [disabled]="addMaterialsForm.invalid"
-      class="main-background-color main-button color-white m-b-5 mb-0">
+    <button mat-button mat-raised-button [disabled]="addMaterialsForm.invalid" class="main-background-color main-button color-white m-b-5 mb-0">
       <!-- <button mat-button matStepperNext mat-raised-button class="main-background-color main-button color-white m-b-5 mb-0" [disabled]="addMaterialsForm && !addMaterialsForm.valid"> -->
       Next
     </button>

@@ -1,54 +1,45 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { Address } from "../../models/RFQ/rfq-details";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AddAddressService } from "../../services/add-address.service";
-import { ProjectService } from '../../services/project.service';
 import { FieldRegExConst } from '../../constants/field-regex-constants';
-import { VisitorService } from '../../services/visitor.service';
 import { CommonService } from '../../services/commonService';
 import { CountryCode } from '../../models/currency';
-import { UserService } from '../../services/user.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
-export interface City {
-  value: string;
-  viewValue: string;
-}
-// Component for dialog box
+
 @Component({
   selector: "address-dialog",
-  templateUrl: "./add-addressPo.component.html"
+  templateUrl: "./add-address.component.html"
 })
 
-// Component class
-export class AddAddressPoDialogComponent {
+export class AddAddressDialogComponent implements OnInit {
+
   validPincode: boolean;
-  searchCountry: string = ''
+  searchCountry: string = '';
   pincodeLength: number;
   ipaddress: string;
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
-  constructor(
-    public dialogRef: MatDialogRef<AddAddressPoDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data,
-    private formBuilder: FormBuilder,
-    private addAddressService: AddAddressService,
-    private projectService: ProjectService,
-    private visitorsService: VisitorService,
-    private _snackBar: MatSnackBar,
-    private _userService: UserService,
-    private commonService: CommonService
-  ) { }
-
   selectAddressFrm: FormGroup;
   newAddressForm: FormGroup;
-  address: Address;
+  address: Address[];
   city: string;
   state: string;
   selectedCountryId: number;
   currentIndex: number = 0;
   countryCode: string
+
+  constructor(
+    public dialogRef: MatDialogRef<AddAddressDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data,
+    private formBuilder: FormBuilder,
+    private addAddressService: AddAddressService,
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService
+  ) { }
+
   ngOnInit() {
     this.countryCode = localStorage.getItem('countryCode')
     if (this.data.roleType === "projectBillingAddressId") {
@@ -66,6 +57,7 @@ export class AddAddressPoDialogComponent {
     }
     this.formInit();
   }
+
   tabClick($event) {
     this.currentIndex = $event.index;
     if (this.currentIndex === 1) {
@@ -73,11 +65,6 @@ export class AddAddressPoDialogComponent {
     }
   }
 
-  cities: City[] = [
-    { value: "Gurgaon", viewValue: "Gurgaon" },
-    { value: "Delhi-1", viewValue: "Delhi" },
-    { value: "Karnal", viewValue: "Karnal" }
-  ];
 
   blankPincode() {
     this.newAddressForm.get('pinCode').setValue('');
@@ -103,8 +90,6 @@ export class AddAddressPoDialogComponent {
     }
     return this.newAddressForm.get('countryCode').value;
   }
-
-
 
   formInit() {
     this.selectAddressFrm = this.formBuilder.group({
@@ -179,8 +164,8 @@ export class AddAddressPoDialogComponent {
         this.newAddressForm.get('state').setValue(res.data[0].stateName);
       }
     });
-
   }
+
   close() {
     this.dialogRef.close(null);
   }

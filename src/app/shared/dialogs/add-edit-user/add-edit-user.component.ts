@@ -18,20 +18,6 @@ import { CommonService } from '../../services/commonService';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
-
-export interface City {
-  value: string;
-  viewValue: string;
-}
-
-export interface ProjectType {
-  type: string;
-}
-
-export interface Unit {
-  value: string;
-}
-
 @Component({
   selector: "add-edit-user-dialog",
   templateUrl: "add-edit-user-component.html"

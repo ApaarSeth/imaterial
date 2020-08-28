@@ -81,7 +81,8 @@ export class PoSupplierComponent implements OnInit {
     let data = { countryList: this.countryist }
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "660px",
-      data
+      data,
+      panelClass: 'add-supplier-dialog'
     });
     dialogRef
       .afterClosed()
@@ -97,7 +98,8 @@ export class PoSupplierComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "500px",
-      data: this.poCurrency
+      data: this.poCurrency,
+      panelClass: 'select-currency-dialog'
     });
 
     dialogRef.afterClosed().subscribe(data => {

@@ -17,7 +17,8 @@
                 <!-- <i class="material-icons mr-2">location_on</i> -->
                 <!-- <img src="assets/images/location-icon.png" class="img-fluid mr-2" alt="Location Icon" /> -->
                 <strong class="d-flex font-weight500">{{ project.projectName }}</strong>
-                <span class="font-size14">{{ project.addressLine1 }}
+                <span class="fontsize-14-px"
+                  >{{ project.addressLine1 }}
                   <span *ngIf="project.addressLine2">, {{ project.addressLine2 }}</span>
                   , {{ project.city }}, {{ project.country }}, {{ project.state }}, {{ project.pinCode }}
                 </span>
@@ -36,12 +37,11 @@
           <span aria-hidden="true">×</span>
         </button>
 
-        <div class="mx-auto text-center pt-4">
+        <div class="mx-auto text-center p-rem-t-1.5">
           <img src="assets/images/project-background.png" alt="No projects available" class="img-fluid" />
           <h5 class="mt-4">You haven't added any project yet.</h5>
           <h5 class="mb-3">Please add one to continue.</h5>
-          <button (click)="addProject()" mat-raised-button class="main-background-color main-button color-white">Add
-            First Project</button>
+          <button (click)="addProject()" mat-raised-button class="main-background-color main-button color-white">Add First Project</button>
         </div>
       </div>
     </div>

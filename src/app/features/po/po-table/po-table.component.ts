@@ -353,7 +353,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "500px",
-      data: this.poCurrency
+      data: this.poCurrency,
+      panelClass: 'select-currency-dialog'
     });
 
     dialogRef.afterClosed().subscribe(data => {
@@ -489,7 +490,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
         rfqId: null,
         existingData,
         currency: this.poCurrency ? this.poCurrency.exchangeCurrencyName : null
-      }
+      },
+      panelClass: 'tax-dialog'
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {

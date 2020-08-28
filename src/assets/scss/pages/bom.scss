@@ -171,8 +171,7 @@ div.limited-character.bom {
 }
 
 .upload-image-info {
-  width: 95%;
-  margin-left: 30px;
+  margin-left: 20px;
 }
 
 .image-info {
@@ -210,12 +209,6 @@ div.limited-character.bom {
     opacity: 0.7;
     line-height: 20px;
     font-size: 18px;
-  }
-}
-
-.upload-img-dialog {
-  .modal-body {
-    padding: 30px 50px;
   }
 }
 
@@ -805,6 +798,13 @@ div.limited-character.bom {
   .upload-img-dialog {
     .col-md-6:last-child{
       padding-left: 5px;
+    }
+
+    .img-integration {
+      padding: 15px 15px 15px !important;
+      .upload-green-tick {
+        margin-bottom: 10px;
+      }
     }
   }
 

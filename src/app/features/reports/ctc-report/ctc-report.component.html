@@ -1,10 +1,9 @@
-<div class="page-start-point mt-5 pt-2 ctc-report">
+<div class="page-start-point mt-5 p-rem-r-0.50 ctc-report">
   <form *ngIf="allProjectsList" [formGroup]="form">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Generate Report and amount  -->
       <div class="row align-items-center mt-2 ctc-upper-section">
-
-        <div class="col-md-12 mb-0 pl-2">
+        <div class="col-md-12 mb-0 p-rem-r-0.50">
           <h4 class="report-header">Cost To Complete Report</h4>
         </div>
 
@@ -14,9 +13,16 @@
             <mat-label>Select Project</mat-label>
             <mat-select formControlName="selectedProject" multiple>
               <div class="search-project-div d-flex align-items-center">
-                <input class="p-b-5" matInput type="Search Project..." placeholder="Search project Name"
-                  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()"
-                  autocomplete="off" />
+                <input
+                  class="p-b-5"
+                  matInput
+                  type="Search Project..."
+                  placeholder="Search project Name"
+                  [(ngModel)]="searchText"
+                  [ngModelOptions]="{standalone: true}"
+                  (keydown)="$event.stopPropagation()"
+                  autocomplete="off"
+                />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
@@ -29,28 +35,29 @@
               </div> -->
 
               <!-- <mat-option #allSelected (click)="toggleAllSelection(allSelected)" [value]="projectNumIds">Select All</mat-option> -->
-              <mat-option *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']"
-                [value]="project.projectId" (click)="getProjectMaterials()" class="project-list-dropdown">
+              <mat-option
+                *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']"
+                [value]="project.projectId"
+                (click)="getProjectMaterials()"
+                class="project-list-dropdown"
+              >
                 {{ project.projectName }}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
 
-        <div class="col-md-2 col-sm-6 col-xs-5 pt-2">
+        <div class="col-md-2 col-sm-6 col-xs-5 p-rem-r-0.50">
           <!------ Show Amount Field ------>
-          <div *ngIf="allProjectsData"
-            class="show-amount-dropdown text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn
-            [matMenuTriggerFor]="amount">
+          <div *ngIf="allProjectsData" class="show-amount-dropdown text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
             Display Amount
           </div>
         </div>
 
-        <div class="col-md-7 col-sm-1 col-xs-1 add-project-btn display-flex justify-content-flex-end align-items-center pt-2">
+        <div class="col-md-7 col-sm-1 col-xs-1 add-project-btn display-flex justify-content-flex-end align-items-center p-rem-r-0.50">
           <!------ Download Report ------>
           <div class="download-report" *ngIf="allProjectsData">
-            <a class="font-size16 cursor-pointer" matTooltip="Download Report" (click)="downloadExcel()"> <img
-                src="../../../../assets/images/download-po.png" /></a>
+            <a class="fontsize-16-px cursor-pointer" matTooltip="Download Report" (click)="downloadExcel()"> <img src="../../../../assets/images/download-po.png" /></a>
           </div>
 
           <!------ Generate Report (will use later) ------>
@@ -82,44 +89,38 @@
       <ng-container *ngIf="allProjectsData?.projectDataList?.length; else noDataAvailable">
         <div class="reportTablePo">
           <p class="fontsize-14-px p-b-0 p-t-10 mb-1">*All the values are in base currency ({{ currency }})</p>
-          <!-- <p class="fontsize-14-px pb-0">**All the values are inclusive of taxes.</p> -->
+          <!-- <p class="fontsize-14-px p-b-0">**All the values are inclusive of taxes.</p> -->
           <table class="report-table">
             <tr matSort class="mat-elevation-z2 mat-header-row ctc-report-header-row">
               <th class="mat-header-cell">Materials</th>
               <th class="mat-header-cell">Unit</th>
-              <th class="mat-header-cell text-right">Estimated Amount <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">({{
-                  selectedMenu === "Full Figures" ? "" : selectedMenu
-                }})</span>
+              <th class="mat-header-cell text-right">
+                Estimated Amount <br />
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{ selectedMenu === "Full Figures" ? "" : selectedMenu }})</span>
               </th>
-              <th class="mat-header-cell text-right">Awarded Amount <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">({{
-                  selectedMenu === "Full Figures" ? "" : selectedMenu
-                }})</span>
+              <th class="mat-header-cell text-right">
+                Awarded Amount <br />
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{ selectedMenu === "Full Figures" ? "" : selectedMenu }})</span>
               </th>
-              <th class="mat-header-cell text-right">Delivered Amount <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">({{
-                  selectedMenu === "Full Figures" ? "" : selectedMenu
-                }})</span>
+              <th class="mat-header-cell text-right">
+                Delivered Amount <br />
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{ selectedMenu === "Full Figures" ? "" : selectedMenu }})</span>
               </th>
-              <th class="mat-header-cell text-right">Paid Amount <br />
-                <span *ngIf="selectedMenu !== 'Full Figures'">({{
-                  selectedMenu === "Full Figures" ? "" : selectedMenu
-                }})</span>
+              <th class="mat-header-cell text-right">
+                Paid Amount <br />
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{ selectedMenu === "Full Figures" ? "" : selectedMenu }})</span>
               </th>
-              <th class="mat-header-cell text-right projected-cost-col">Projected Cost
-                <mat-icon matTooltip="(Quantity(Yet to be awarded) *Estimated Rate + Awarded Amount)"
-                  matTooltipPosition="above" class="ml-1" matTooltipClass="info-tooltip">info</mat-icon>
-                <span *ngIf="selectedMenu !== 'Full Figures'">({{
-                  selectedMenu === "Full Figures" ? "" : selectedMenu
-                }})</span>
+              <th class="mat-header-cell text-right projected-cost-col">
+                Projected Cost
+                <mat-icon matTooltip="(Quantity(Yet to be awarded) *Estimated Rate + Awarded Amount)" matTooltipPosition="above" class="ml-1" matTooltipClass="info-tooltip"
+                  >info</mat-icon
+                >
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{ selectedMenu === "Full Figures" ? "" : selectedMenu }})</span>
               </th>
-              <th class="mat-header-cell text-right balance-cost-col">Balance Cost
-                <mat-icon matTooltip="(Projected Cost - Delivered Amount)" matTooltipPosition="above" class="ml-1"
-                  matTooltipClass="info-tooltip">info</mat-icon>
-                <span *ngIf="selectedMenu !== 'Full Figures'">({{
-                  selectedMenu === "Full Figures" ? "" : selectedMenu
-                }})</span>
+              <th class="mat-header-cell text-right balance-cost-col">
+                Balance Cost
+                <mat-icon matTooltip="(Projected Cost - Delivered Amount)" matTooltipPosition="above" class="ml-1" matTooltipClass="info-tooltip">info</mat-icon>
+                <span *ngIf="selectedMenu !== 'Full Figures'">({{ selectedMenu === "Full Figures" ? "" : selectedMenu }})</span>
               </th>
             </tr>
 
@@ -127,7 +128,7 @@
               <!-- Project List Data -->
               <mat-expansion-panel>
                 <mat-expansion-panel-header class="background-projects">
-                  <tr class="material-row backgound-none-important p-r-10">
+                  <tr class="material-row backgound-none p-r-10">
                     <td class="mat-cell">{{ project.projectName }}</td>
                     <td class="mat-cell"></td>
                     <td class="mat-cell text-right">
@@ -177,8 +178,7 @@
                   </mat-expansion-panel-header>
 
                   <!-- material details of specific material category -->
-                  <tr class="material-row background-project-list"
-                    *ngFor="let material of matCategory.materialCTCDataList">
+                  <tr class="material-row background-project-list" *ngFor="let material of matCategory.materialCTCDataList">
                     <td class="mat-cell">{{ material.materialName }}</td>
                     <td class="mat-cell">{{ material.materialUnit }}</td>
                     <td class="mat-cell text-right">
@@ -220,10 +220,7 @@
                 {{ allProjectsData.projectedCost / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
               </td>
               <td class="mat-cell text-right">
-                {{
-                  (allProjectsData.projectedCost - allProjectsData.deliveredAmount) / this.conversionNumber
-                    | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US")
-                }}
+                {{ (allProjectsData.projectedCost - allProjectsData.deliveredAmount) / this.conversionNumber | indianNumber: (this.countryCode == "IN" ? "en-IN" : "en-US") }}
               </td>
             </tr>
           </table>

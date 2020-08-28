@@ -1,4 +1,4 @@
-<div class="page-start-point pt-4">
+<div class="page-start-point p-rem-t-1">
   <div *ngIf="!submittedRfqListTemp && !nonSubmittedRfqListTemp && rfqCount === 0" class="parent min-height">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
@@ -11,14 +11,11 @@
         </div>
       </div>
 
-      <button mat-raised-button [routerLink]="['/rfq/createRfq']" class="main-background-color main-button color-white">
-        Create RFP
-      </button>
+      <button mat-raised-button [routerLink]="['/rfq/createRfq']" class="main-background-color main-button color-white">Create RFP</button>
     </div>
   </div>
 
-  <div class="create-po-dashboard p-b-20 min-height parent"
-    *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp || rfqCount > 0">
+  <div class="create-po-dashboard p-b-20 min-height parent" *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp || rfqCount > 0">
     <div class="row" [ngClass]="isMobile ? 'ml-0' : ''">
       <div class="col-xs-6">
         <mat-form-field class="example-form-field border-input project" [ngClass]="isMobile ? 'w-100' : ' w-vw-14'">
@@ -34,28 +31,21 @@
             <mat-icon inline="true">filter_list</mat-icon>
           </button>
         </ng-container>
-        <button mat-raised-button class="main-background-color main-button color-white demo-title"
-          (click)="createRfq()">
-          Create RFP
-        </button>
+        <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="createRfq()">Create RFP</button>
       </div>
     </div>
 
     <div class="row">
-
       <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2 align-top">
-          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)"
-            [config]="searchConfig">
-          </advance-search>
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)" [config]="searchConfig"> </advance-search>
         </div>
       </ng-container>
 
       <ng-template #mobileSearch>
-        <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close' ">
+        <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close'">
           <div class="sdb" (click)="closeFilter()"></div>
-          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)"
-            [config]="searchConfig" class="mb-cl"></advance-search>
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)" [config]="searchConfig" class="mb-cl"></advance-search>
         </div>
       </ng-template>
 
@@ -64,10 +54,8 @@
           <div class="rfq-list-detail-custom">
             <mat-accordion *ngIf="submittedRfqListTemp">
               <mat-expansion-panel class="myPanel mb-4" [expanded]="true">
-                <mat-expansion-panel-header [ngClass]="isMobile ? 'pt-3 pb-3' : '' ">
-                  <mat-panel-title>
-                    Quotes Received
-                  </mat-panel-title>
+                <mat-expansion-panel-header [ngClass]="isMobile ? 'p-t-1-rem p-b-1-rem' : ''">
+                  <mat-panel-title> Quotes Received </mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <div class="add-unique-container mat-elevation-z8">
@@ -114,13 +102,14 @@
 
                           <div class="show-detail-supplier rfq-icon-material-i" *ngIf="element.supplierList.length > 0">
                             <!-- <img src="../../../../assets/images/i_icon.png" /> -->
-                            <i class="material-icons md-24 mt-2" style="padding-top: 0px;">info</i>
+                            <i class="material-icons md-24 mt-2" style="padding-top: 0px">info</i>
                             <div id="detail-supplier">
                               <div class="row">
                                 <div class="col-sm-12">
                                   <span class="supplier-name-tag">Supplier Name</span>
                                   <ng-container *ngFor="let name of element.supplierList">
-                                    <span><br />
+                                    <span
+                                      ><br />
                                       {{ name.supplierName }}
                                     </span>
                                   </ng-container>
@@ -134,14 +123,13 @@
                     <ng-container matColumnDef="action1">
                       <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                       <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                        <a [routerLink]="['./rfq-view', element.rfqId]" style="color: #f47721;">View RFP</a>
+                        <a [routerLink]="['./rfq-view', element.rfqId]" style="color: #f47721">View RFP</a>
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="action2">
                       <th mat-header-cell *matHeaderCellDef></th>
                       <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center">
-                        <a [routerLink]="['./rfq-bid/', element.rfqId]" class="text-align-center"
-                          style="color: #f47721;">View Bids</a>
+                        <a [routerLink]="['./rfq-bid/', element.rfqId]" class="text-align-center" style="color: #f47721">View Bids</a>
                       </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -152,10 +140,8 @@
             </mat-accordion>
             <mat-accordion *ngIf="nonSubmittedRfqListTemp">
               <mat-expansion-panel class="myPanel" [expanded]="true">
-                <mat-expansion-panel-header [ngClass]="isMobile ? 'pt-3 pb-3' : '' ">
-                  <mat-panel-title>
-                    Quotes Not Received
-                  </mat-panel-title>
+                <mat-expansion-panel-header [ngClass]="isMobile ? 'p-t-1-rem p-b-1-rem' : ''">
+                  <mat-panel-title> Quotes Not Received </mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <div class="add-unique-container mat-elevation-z8">
@@ -209,7 +195,8 @@
                                 <div class="col-sm-12">
                                   <span class="supplier-name-tag">Supplier Name</span>
                                   <ng-container *ngFor="let name of element.supplierList">
-                                    <span><br />
+                                    <span
+                                      ><br />
                                       {{ name.supplierName }}
                                     </span>
                                   </ng-container>
@@ -223,14 +210,12 @@
                     <ng-container matColumnDef="action1">
                       <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                       <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
-                        <a (click)="viewRfq(element)" class="cursor"
-                          style="color: #f47721;">{{ element.rfqStatus === 0 ? "Complete RFP" : "View RFP" }}</a>
+                        <a (click)="viewRfq(element)" class="cursor" style="color: #f47721">{{ element.rfqStatus === 0 ? "Complete RFP" : "View RFP" }}</a>
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="action2">
                       <th mat-header-cell *matHeaderCellDef></th>
-                      <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center">
-                      </td>
+                      <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center"></td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -243,8 +228,7 @@
         <ng-template #emptyReports>
           <div class="d-block text-align-center mt-3">
             <img src="../../../../assets/images/empty-report.svg" alt="empty report" />
-            <p class="font-weight-light m-0 pt-3"><strong class="font-weight500">Oops!</strong> You have nothing to see.
-            </p>
+            <p class="font-weight-light m-0 p-t-1-rem"><strong class="font-weight500">Oops!</strong> You have nothing to see.</p>
             <p class="font-weight-light m-0 mt-1">Try Again !</p>
           </div>
         </ng-template>
