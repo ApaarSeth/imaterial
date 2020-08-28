@@ -49,7 +49,7 @@
       *ngIf="addRfq.rfqCurrency != null && addRfq.rfqCurrency.exchangeCurrencyName != null"
       [ngClass]="isMobile ? 'p-t-1-rem' : 'p-t-10'"
     >
-      <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-12-px mcrncy p-rem-t-0.5 p-rem-b-0.5' : 'p-t-10 p-b-10'">
+      <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-12-px mcrncy p-rem-r-0.50 p-rem-r-0.50' : 'p-t-10 p-b-10'">
         <span class="font-size-vary-grn color-grey">
           <img width="25px" *ngIf="addRfq.rfqCurrency.exchangeCurrencyFlag" [src]="addRfq.rfqCurrency.exchangeCurrencyFlag" />
           {{ addRfq.rfqCurrency.exchangeCurrencyName }}

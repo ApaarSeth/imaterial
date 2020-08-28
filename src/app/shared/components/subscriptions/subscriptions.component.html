@@ -29,7 +29,7 @@
                   <div class="row">
                     <div class="col-xs-9">
                       <ng-container *ngIf="plan.planName !== 'Custom'; else cstmSts">
-                        <div class="p-rem-t-0.5 p-b-1-rem">
+                        <div class="p-rem-r-0.50 p-b-1-rem">
                           <ng-container *ngIf="subscription.discountPercent !== null; else flatPrice">
                             <span class="line-through reg-price height-30-px">{{ plan.currencyCode }} {{ plan.planUnitPrice }}</span>
                             <span class="d-flex">
@@ -57,7 +57,7 @@
                       </ng-container>
                       <ng-template #cstmSts>
                         <span class="height-30-px d-block w-100">&nbsp;</span>
-                        <div class="p-rem-l-0.5 p-t-1-rem">
+                        <div class="p-rem-r-0.50 p-t-1-rem">
                           <strong>Get in touch with us for a price quote</strong>
                         </div>
                       </ng-template>

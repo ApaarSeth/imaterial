@@ -24,13 +24,13 @@
       <div class="row" *ngIf="materialDataLength > 0 || projectDataLength > 0">
         <div class="col-md-6 col-sm-6 col-xs-6">
           <a href="javascript:void(0)" (click)="setButtonName('materialWise')">
-            <button [class.active]="buttonName == 'materialWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'p-rem-l-0.5 p-rem-r-0.5' : ''">
+            <button [class.active]="buttonName == 'materialWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
               All Materials
             </button>
           </a>
 
           <a href="javascript:void(0)" (click)="setButtonName('projectWise')">
-            <button [class.active]="buttonName == 'projectWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'p-rem-l-0.5 p-rem-r-0.5' : ''">Projects</button>
+            <button [class.active]="buttonName == 'projectWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">Projects</button>
           </a>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6 text-right">

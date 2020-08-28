@@ -102,7 +102,7 @@
                 class="box-custom color-text-card cursor-pointer showAllMaterials material-details-box"
                 (click)="navigationToBOM(projectDetails.projectId, projectDetails)"
                 matTooltip="View All Materials"
-                [ngClass]="isMobile ? 'p-rem-l-0.5' : 'p-t-10 display-flex'"
+                [ngClass]="isMobile ? 'p-rem-r-0.50' : 'p-t-10 display-flex'"
               >
                 <div class="fontsize-20-px text-bold card-counts">
                   <span *ngIf="projectDetails.matCount" class="maxwidth-96-px word-break-word">
@@ -122,7 +122,7 @@
                 class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
                 (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
                 matTooltip="View All Open Purchase Requisition"
-                [ngClass]="isMobile ? 'p-rem-l-0.5' : 'p-t-10 display-flex'"
+                [ngClass]="isMobile ? 'p-rem-r-0.50' : 'p-t-10 display-flex'"
               >
                 <div class="fontsize-20-px text-bold card-counts">
                   <span *ngIf="!projectDetails.openIndentCount" class="maxwidth-96-px word-break-word"> 0 </span>
@@ -143,7 +143,7 @@
                 class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
                 (click)="redirectToPurchaseOrder()"
                 matTooltip="View All Purchase Orders"
-                [ngClass]="isMobile ? 'p-rem-l-0.5' : 'p-t-10 display-flex'"
+                [ngClass]="isMobile ? 'p-rem-r-0.50' : 'p-t-10 display-flex'"
               >
                 <div class="fontsize-20-px color-text-card text-bold card-counts">
                   <span *ngIf="projectDetails.purchaseOrderCount" class="maxwidth-96-px word-break-word">
@@ -317,7 +317,7 @@
                 class="box-custom color-text-card cursor-pointer showAllMaterials material-details-box"
                 (click)="navigationToBOM(projectDetails.projectId, projectDetails)"
                 matTooltip="View All Materials"
-                [ngClass]="isMobile ? 'p-rem-l-0.5' : 'p-t-10 display-flex'"
+                [ngClass]="isMobile ? 'p-rem-r-0.50' : 'p-t-10 display-flex'"
               >
                 <div class="fontsize-20-px text-bold card-counts">
                   <span *ngIf="projectDetails.matCount" class="maxwidth-96-px word-break-word">
@@ -337,7 +337,7 @@
                 class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
                 (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
                 matTooltip="View All Open Purchase Requisition"
-                [ngClass]="isMobile ? 'p-rem-l-0.5' : 'p-t-10 display-flex'"
+                [ngClass]="isMobile ? 'p-rem-r-0.50' : 'p-t-10 display-flex'"
               >
                 <div class="fontsize-20-px text-bold card-counts">
                   <span *ngIf="!projectDetails.openIndentCount" class="maxwidth-96-px word-break-word"> 0 </span>
@@ -357,7 +357,7 @@
                 class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
                 (click)="redirectToPurchaseOrder()"
                 matTooltip="View All Purchase Orders"
-                [ngClass]="isMobile ? 'p-rem-l-0.5' : 'p-t-10 display-flex'"
+                [ngClass]="isMobile ? 'p-rem-r-0.50' : 'p-t-10 display-flex'"
               >
                 <div class="fontsize-20-px color-text-card text-bold card-counts">
                   <span *ngIf="projectDetails.purchaseOrderCount" class="maxwidth-96-px word-break-word">

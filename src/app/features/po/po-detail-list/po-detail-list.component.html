@@ -152,7 +152,7 @@
           <ng-container *ngIf="(poApprovalDetailsTemp && permissionObj.poApprovalFlag) || poDraftedDetailsTemp || acceptedRejectedPOListTemp; else emptyReports">
             <div *ngIf="poApprovalDetailsTemp && permissionObj.poApprovalFlag">
               <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
-                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-t-0.5 p-rem-b-0.5' : ''">
+                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
                   <mat-panel-title> P.O. For Approval </mat-panel-title>
                 </mat-expansion-panel-header>
 
@@ -218,7 +218,7 @@
 
             <div *ngIf="poDraftedDetailsTemp">
               <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
-                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-t-0.5 p-rem-b-0.5' : ''">
+                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
                   <mat-panel-title> Drafted P.O. </mat-panel-title>
                 </mat-expansion-panel-header>
 
@@ -280,7 +280,7 @@
 
             <div *ngIf="acceptedRejectedPOListTemp">
               <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
-                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-t-0.5 p-rem-b-0.5' : ''">
+                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
                   <mat-panel-title>
                     <div class="col-xs-5 text-left approved">Approved P.O.</div>
                     <!-- <div class="col-xs-7 text-right grn-note">

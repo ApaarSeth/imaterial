@@ -121,7 +121,7 @@
 
           <ng-container matColumnDef="suppliername">
             <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
-            <td mat-cell *matCellDef="let element" class="p-rem-t-0.5">
+            <td mat-cell *matCellDef="let element" class="p-rem-r-0.50">
               <span class="supplier-name">{{ element.supplier_name }}</span>
               <span class="d-block supplier-rates">
                 <view-rating [supplierId]="element.supplierId" [ratings]="element.supplier_rating"></view-rating>

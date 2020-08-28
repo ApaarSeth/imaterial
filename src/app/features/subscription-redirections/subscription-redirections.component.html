@@ -13,7 +13,7 @@
               for Choosing <ng-container *ngIf="planName">{{ planName }}</ng-container> Plan
             </h2>
 
-            <div class="shadow-tag p-rem-l-3 p-rem-r-3 p-rem-t-0.5 p-rem-b-0.5">
+            <div class="shadow-tag p-rem-l-3 p-rem-r-3 p-rem-r-0.50 p-rem-r-0.50">
               <ng-container *ngIf="userCount">{{ userCount }}</ng-container> Users
             </div>
 
@@ -68,7 +68,7 @@
 
             <p class="mt-2 fontsize-20-px">We don't want to see you go</p>
 
-            <div class="shadow-tag p-rem-l-1.5 p-rem-r-1.5 p-rem-t-0.5 p-rem-b-0.5">We promise security of your data until next payment</div>
+            <div class="shadow-tag p-rem-l-1.5 p-rem-r-1.5 p-rem-r-0.50 p-rem-r-0.50">We promise security of your data until next payment</div>
 
             <div class="mt-4">
               <button mat-flat-button class="brand-color" [ngClass]="isMobile ? 'fontsize-20-px' : 'font-size-26px'">Unsubscribe</button>
@@ -95,7 +95,7 @@
         </ng-container>
 
         <ng-container *ngIf="pageType !== 3">
-          <div class="p-t-0 p-rem-b-0.5 text-center">
+          <div class="p-t-0 p-rem-r-0.50 text-center">
             <button mat-button class="brand-color" routerLink="/dashboard">Back to Dashboard</button>
           </div>
         </ng-container>

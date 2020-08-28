@@ -211,6 +211,25 @@ $sides: (top, bottom, left, right); // Leave this variable alone
       padding-#{$side}: #{$space}rem !important;
     }
 
+    @for $i from 1 through 100 {
+      .p-rem-#{str-slice($side, 0, 1)}-0\.#{$i} {
+        padding-#{$side}: #{$i / 100}rem !important;
+      }
+    }
+
+    @for $i from 1 through 100 {
+      .p-rem-#{str-slice($side, 0, 1)}-1\.#{$i} {
+        padding-#{$side}: #{($i / 100) + 1}rem !important;
+      }
+    }
+
+    // @for $i from 1 through 100 {
+    //   .p-rem-#{str-slice($side, 0, 1)}-2\.#{$i} {
+    //     padding-#{$side}: #{($i / 100) + 2}rem !important;
+    //     // @include hide($i / 100 * 1s);
+    //   }
+    // }
+
     .m-rem-#{str-slice($side, 0, 1)}-#{$space}-rem {
       margin-#{$side}: #{$space}rem !important;
     }
