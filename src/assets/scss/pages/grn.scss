@@ -236,7 +236,8 @@ $mat-row-horizontal-padding: 12px;
 .create-receipt-excel, .add-receipt-via-system, .add-custom-material, .issue-to-indent-dialog, .upload-image-modal, .view-image-modal,
 .delete-bom, .payment-record-dialog, .add-receipts-dialog, .show-docs-dialog, .drafted-po-confirm-dialog, .select-currency-dialog,
 .select-contact-person-dialog, .add-address-dialog, .select-approver-dialog, .show-supplier-remarks-docs, .select-rfq-terms-dialog,
-.float-rfq-confirm-dialog, .add-users-dialog, .add-project-dialog, .deactivate-user, .vendor-rating-dialog, .tax-dialog, .choose-address-dialog{
+.float-rfq-confirm-dialog, .add-users-dialog, .add-project-dialog, .deactivate-user, .vendor-rating-dialog, .tax-dialog, 
+.choose-address-dialog, .select-projects-dialog, .view-video-dialog, .release-note-dialog{
   .mat-dialog-container{
     padding: 0px !important;
     overflow-x: hidden;
@@ -246,7 +247,8 @@ $mat-row-horizontal-padding: 12px;
 .create-receipt-excel, .add-receipt-via-system, .add-custom-material, .issue-to-indent-dialog, .upload-image-modal, .view-image-modal,
 .delete-bom, .payment-record-dialog, .add-receipts-dialog, .show-docs-dialog, .drafted-po-confirm-dialog, .select-currency-dialog,
 .select-contact-person-dialog, .add-address-dialog, .add-project-dialog, .add-supplier-dialog, .select-approver-dialog, .show-supplier-remarks-docs, 
-.select-rfq-terms-dialog, .float-rfq-confirm-dialog, .add-users-dialog, .deactivate-user, .vendor-rating-dialog, .tax-dialog, .choose-address-dialog{
+.select-rfq-terms-dialog, .float-rfq-confirm-dialog, .add-users-dialog, .deactivate-user, .vendor-rating-dialog, .tax-dialog, 
+.choose-address-dialog, .select-projects-dialog, .view-video-dialog, .release-note-dialog{
   .mat-dialog-content{
     padding: 0;
     overflow-x: hidden;
@@ -271,8 +273,9 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
-.create-receipt-excel, .add-receipt-via-system, .delete-bom, .add-project-dialog, .add-supplier-dialog, .payment-record-dialog,
-.add-receipts-dialog, .show-docs-dialog, .select-contact-person-dialog, .add-address-dialog, .show-supplier-remarks-docs, .vendor-rating-dialog{
+.create-receipt-excel, .add-receipt-via-system, .delete-bom, .add-supplier-dialog, .payment-record-dialog,
+.add-receipts-dialog, .show-docs-dialog, .select-contact-person-dialog, .add-address-dialog, .show-supplier-remarks-docs, 
+.vendor-rating-dialog, .select-projects-dialog, .view-video-dialog, .release-note-dialog{
   .modal-body{
     padding: 1rem 2.5rem;
   }
@@ -429,7 +432,7 @@ $mat-row-horizontal-padding: 12px;
   }
 }
 
-.delete-bom, .drafted-po-confirm-dialog, .add-users-dialog, .choose-address-dialog{
+.delete-bom, .drafted-po-confirm-dialog, .add-users-dialog, .choose-address-dialog, .add-project-dialog{
   .modal-body{
     padding: 1.5rem 2.5rem;
   }
