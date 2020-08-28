@@ -7,7 +7,8 @@
         src="../../../../assets/images/loginLogo.png" alt="logo" /></span>
     <span class="menu-spacer"></span>
 
-    <ng-container *ngIf="isWhatsappIconDisplay === '+91'">
+    <!-- wahtsapp button will visible if isFreeTrialSubscription == 0 && country == india -->
+    <ng-container *ngIf="(isWhatsappIconDisplay === '+91') && (isBookNow === 0)">
       <a href="https://api.whatsapp.com/send?phone=+918512060007" target="_blank" [ngClass]="isMobile ? 'p-1' : '' ">
         <div class="whatsapp-div-header">
           <div>
@@ -18,6 +19,12 @@
           </div>
         </div>
       </a>
+    </ng-container>
+
+    <!-- book now button visible if isFreeTrialSubscription flag is 1 for all countries -->
+    <ng-container *ngIf="isBookNow === 1">
+      <a mat-raised-button href="https://calendly.com/mm_support/discovery_call" target="_blank"
+        class="main-color main-button pull-left">Book Now</a>
     </ng-container>
 
     <button class="pull-right p-t-10 notification-bell-icon" [ngClass]="isMobile ? 'p-1' : '' " mat-button
