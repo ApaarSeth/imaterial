@@ -73,14 +73,14 @@
 
         <div class="col-xs-7 d-md-none"></div>
 
-        <div class="col-md-2 col-sm-3 col-xs-4 p-rem-t-1.5 mobile-display-amount">
+        <div class="col-md-2 col-sm-3 col-xs-4 p-rem-t-1.50 mobile-display-amount">
           <div *ngIf="supplierLiabiltyReportData" class="show-amount p-t-0 text-semi-bold main-color font-size-vary-grn cursor-pointer" #triggerBtn [matMenuTriggerFor]="amount">
             Display Amount
           </div>
         </div>
 
         <div
-          class="col-md-4 col-sm-1 col-xs-1 add-project-btn display-flex align-items-center p-rem-t-1.5"
+          class="col-md-4 col-sm-1 col-xs-1 add-project-btn display-flex align-items-center p-rem-t-1.50"
           [ngClass]="isMobile ? 'justify-content-flex-start height-25-px' : 'justify-content-flex-end'"
         >
           <div *ngIf="projectIds.length || supplierIds.length">

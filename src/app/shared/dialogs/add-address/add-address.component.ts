@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { Address } from "../../models/RFQ/rfq-details";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AddAddressService } from "../../services/add-address.service";
@@ -7,15 +7,16 @@ import { CommonService } from '../../services/commonService';
 import { CountryCode } from '../../models/currency';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-
-
+import { MatTabGroup } from "@angular/material/tabs";
 @Component({
   selector: "address-dialog",
   templateUrl: "./add-address.component.html"
 })
 
-export class AddAddressDialogComponent implements OnInit {
 
+
+export class AddAddressDialogComponent implements OnInit {
+  @ViewChild('tabs') tabGroup: MatTabGroup;
   validPincode: boolean;
   searchCountry: string = '';
   pincodeLength: number;
@@ -65,6 +66,15 @@ export class AddAddressDialogComponent implements OnInit {
     }
   }
 
+  changeIndex(add: Address) {
+    this.tabGroup.selectedIndex = 1;
+    this.newAddressForm.patchValue({
+      addressLine1: add.addressLine1,
+      addressLine2: add.addressLine2,
+      pinCode: add.pinCode,
+      gstNo: add.gstNo,
+    })
+  }
 
   blankPincode() {
     this.newAddressForm.get('pinCode').setValue('');
