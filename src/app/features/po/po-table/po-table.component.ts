@@ -490,7 +490,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
         rfqId: null,
         existingData,
         currency: this.poCurrency ? this.poCurrency.exchangeCurrencyName : null
-      }
+      },
+      panelClass: 'tax-dialog'
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {

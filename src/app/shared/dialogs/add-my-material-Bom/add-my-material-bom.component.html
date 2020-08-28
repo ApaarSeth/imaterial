@@ -10,10 +10,14 @@
   <div mat-dialog-content>
     <div class="modal-body">
       <form *ngIf="addMyMaterial" [formGroup]="addMyMaterial" (ngSubmit)="submit()">
-        <div formArrayName="myMaterial" *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
-          <div class="row p-t-10 mobile-padding" [formGroupName]="i">
+        <div formArrayName="myMaterial"
+          *ngFor="let myMaterial of addMyMaterial.get('myMaterial')['controls']; let i = index">
+
+          <div class="row mobile-padding" [formGroupName]="i">
+
             <!-- Material Name Input Field -->
-            <div [ngClass]="this.data ? 'col-md-2 col-material-name col-sm-6 col-xs-12' : 'col-md-4 col-sm-6 col-xs-12'">
+            <div
+              [ngClass]="this.data ? 'col-md-2 col-material-name col-sm-6 col-xs-12' : 'col-md-3 col-sm-6 col-xs-12'">
               <mat-form-field class="border-input w-100">
                 <input type="text" placeholder="Material Name*" matInput formControlName="materialName" />
                 <small *ngIf="addMyMaterial.get('myMaterial')['controls'][i]['controls']['materialName'].errors?.maxlength" class="warning-color"

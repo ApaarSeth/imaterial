@@ -3,7 +3,6 @@
 .customBid {
   .mat-expansion-panel-header.mat-expanded:focus,
   .mat-expansion-panel-header.mat-expanded:hover {
-    // background: $background-color-grey !important;
     background-color: rgba(169, 174, 188, 0.21) !important;
   }
 
@@ -492,6 +491,12 @@ tr.tbl-body-cols.mat-row {
   }
 }
 
+.tax-dialog{
+  .plus-btn{
+    padding-top: 1em;
+  }
+}
+
 /** view bid page - view rating and supplier rates column distortion css fixes **/
 @media only screen and (max-width: 1332px){
   .view-bid-tbl{
@@ -502,3 +507,32 @@ tr.tbl-body-cols.mat-row {
     max-width: 15% !important;
   }
 }
+
+@media only screen and (max-width: 645px){
+  .tax-dialog{
+    .width-mobile{
+      width: 93% !important;
+    }
+
+    .plus-btn{
+      margin-left: 6px;
+    }
+  }
+}
+
+/** will use later **/
+/*@media only screen and (max-width: 575px){
+  .tax-dialog{
+    .float-left:not(:first-child) {
+      margin-top: 2em;
+    }
+
+    .delete-button-icon{
+      padding-top: 0px !important;
+    }
+
+    .delete-btn-position-mobile{
+      text-align: right;
+    }
+  }
+}*/

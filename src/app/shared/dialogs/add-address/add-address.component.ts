@@ -24,7 +24,7 @@ export class AddAddressDialogComponent implements OnInit {
   livingCountry: CountryCode[] = [];
   selectAddressFrm: FormGroup;
   newAddressForm: FormGroup;
-  address: Address;
+  address: Address[];
   city: string;
   state: string;
   selectedCountryId: number;

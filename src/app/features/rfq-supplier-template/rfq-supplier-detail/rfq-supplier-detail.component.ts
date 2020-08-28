@@ -494,7 +494,8 @@ export class RFQSupplierDetailComponent implements OnInit {
         rfqId: Number(this.activatedRoute.snapshot.params["rfqId"]),
         prevData,
         currency: this.rfqSupplierDetailList.rfqCurrency ? this.rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName : null
-      }
+      },
+      panelClass: 'tax-dialog'
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {

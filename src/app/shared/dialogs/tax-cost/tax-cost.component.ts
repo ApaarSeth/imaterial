@@ -1,10 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { TaxInfo, OtherCostInfo } from '../../models/tax-cost.model';
 import { TaxCostService } from '../../services/taxcost.service';
 import { CommonService } from '../../services/commonService';
 import { Observable } from 'rxjs';
-import { isTemplateExpression } from 'typescript';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -12,21 +11,22 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-tax-cost',
   templateUrl: './tax-cost.component.html'
 })
+
 export class TaxCostComponent implements OnInit {
+
   taxCostForm: FormGroup;
   otherCostForm: FormGroup;
   rfqId: number;
   currentIndex: number = 0
-  i
   filteredOptionsTax: TaxInfo[];
   filteredOptionsOther: OtherCostInfo[];
   filterOptionsTax: Observable<TaxInfo[]>;
   filterOptionsOther: Observable<OtherCostInfo[]>
+
   constructor(
     private _snackBar: MatSnackBar,
     private commonService: CommonService,
     public dialogRef: MatDialogRef<TaxCostComponent>,
-
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
     private taxcostService: TaxCostService
