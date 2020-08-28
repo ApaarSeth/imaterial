@@ -132,7 +132,7 @@
                   <span class="material-icons float-right mt-2"> keyboard_arrow_down </span>
                 </button>
               </ng-container>
-              <mat-card-actions class="feat-list p-rem-l-1.5 p-b-1-rem" [ngClass]="isMobile ? 'f-hide' : ''">
+              <mat-card-actions class="feat-list p-rem-l-1.50 p-b-1-rem" [ngClass]="isMobile ? 'f-hide' : ''">
                 <ul>
                   <li *ngFor="let feature of sortFeaturesObjList(plan.planFeatureObjList)" [ngClass]="feature.available ? 'active' : 'inactive'">
                     <ng-container *ngIf="feature.available; else notAvailable">

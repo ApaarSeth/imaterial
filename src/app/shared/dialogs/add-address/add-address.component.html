@@ -8,7 +8,7 @@
 
   <div mat-dialog-content class="mat-tab-add-address-modal-po">
     <div class="modal-body">
-      <mat-tab-group class="overflow-remove" (selectedTabChange)="tabClick($event)">
+      <mat-tab-group #tabs class="overflow-remove" (selectedTabChange)="tabClick($event)">
         <mat-tab label="Choose Address" class="addressDialog">
           <ng-container *ngIf="address && address[0].addressId > 0; else noAddress">
             <form *ngIf="address" [formGroup]="selectAddressFrm">
@@ -24,6 +24,7 @@
                           <span *ngIf="add.state">, {{ add.state }}</span>
                           <span *ngIf="add.pinCode">, {{ add.pinCode }}</span>
                           <span *ngIf="add.gstNo"> | {{ add.gstNo }}</span>
+                          <button (click)="changeIndex(add)">edit</button>
                         </div>
                       </mat-radio-button>
                     </div>
