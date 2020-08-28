@@ -1,6 +1,5 @@
 <form *ngIf="this.form" [formGroup]="this.form" (ngSubmit)="onSubmit()" autocomplete="off">
   <div mat-dialog-content>
-
     <!-- Receipt Number and Receipt Date Fields -->
     <div class="row">
       <div class="col-md-4 col-xs-6 display-flex align-items-center receipt-number">
@@ -8,8 +7,7 @@
 
         <mat-form-field class="border-input">
           <input matInput type="string" formControlName="grnNo" placeholder="Receipts No." class="m-r-5" />
-          <small *ngIf="form.get('grnNo').errors?.maxlength" class="warning-color">maximun characters allowed is
-            300</small>
+          <small *ngIf="form.get('grnNo').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
         </mat-form-field>
       </div>
 
@@ -18,8 +16,7 @@
 
         <mat-form-field class="border-input">
           <mat-label>Receipt Date*</mat-label>
-          <input #dateinput matInput formControlName="grnDate" [max]="todayDate" [matDatepicker]="endDate"
-            (click)="endDate.open()" readonly />
+          <input #dateinput matInput formControlName="grnDate" [max]="todayDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly />
           <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
           <mat-datepicker #endDate startView="month"></mat-datepicker>
         </mat-form-field>
@@ -32,18 +29,14 @@
 
       <div class="row">
         <div class="col-md-3 col-xs-12">
-          <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding label-font-size"
-            [ngClass]="{'width-95': isMobile}">
-            <input type="text" placeholder="Contact Person*" matInput formControlName="supplierName"
-              [matAutocomplete]="auto" />
+          <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding label-font-size" [ngClass]="{'width-95': isMobile}">
+            <input type="text" placeholder="Contact Person*" matInput formControlName="supplierName" [matAutocomplete]="auto" />
             <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
-              <mat-option matTooltip=" {{ option.supplier_name }}"
-                *ngFor="let option of this.filterSupplierName | async" [value]="option">
+              <mat-option matTooltip=" {{ option.supplier_name }}" *ngFor="let option of this.filterSupplierName | async" [value]="option">
                 {{ option.supplier_name }}
               </mat-option>
             </mat-autocomplete>
-            <small *ngIf="form.get('supplierName').errors?.maxlength" class="warning-color">maximun characters allowed
-              is 300</small>
+            <small *ngIf="form.get('supplierName').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
           </mat-form-field>
         </div>
 
@@ -51,26 +44,30 @@
           <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding" [ngClass]="{'width-95': isMobile}">
             <mat-select formControlName="countryCode">
               <div class="display-flex">
-                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country"
-                  [(ngModel)]="searchCountry" [ngModelOptions]="{standalone: true}"
-                  (keydown)="$event.stopPropagation()" />
+                <input
+                  class="p-l-10 p-b-5"
+                  matInput
+                  type="search"
+                  placeholder="Search Country"
+                  [(ngModel)]="searchCountry"
+                  [ngModelOptions]="{standalone: true}"
+                  (keydown)="$event.stopPropagation()"
+                />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
               <mat-select-trigger>
-                <span
-                  matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"><img
-                    class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-                  <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
-                  <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
+                <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
+                  ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                  <span class="p-r-5 fontsize-12-px">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                  <span class="fontsize-12-px text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
                 </span>
               </mat-select-trigger>
-              <mat-option
-                *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
-                [value]="country"><span><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
-                  <span matTooltip="{{ country.name }}"
-                    class="limited-character universal p-r-5">{{ country.name }}</span>
+              <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country"
+                ><span
+                  ><img class="width-17 p-r-10" [src]="country.imageUrl" alt="" />
+                  <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
                   <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
                 </span>
               </mat-option>
@@ -81,21 +78,16 @@
         <div class="col-md-3 col-xs-7">
           <mat-form-field class="w-100 border-input" [ngClass]="{'width-95': isMobile}">
             <input matInput type="text" formControlName="contact" placeholder="Phone No." />
-            <small *ngIf="form.controls['contact'].hasError('pattern') && form.controls['contact'].touched"
-              class="form-error-msg"> Enter Valid Phone No</small>
+            <small *ngIf="form.controls['contact'].hasError('pattern') && form.controls['contact'].touched" class="form-error-msg"> Enter Valid Phone No</small>
           </mat-form-field>
         </div>
 
         <div class="col-md-4 col-xs-12">
           <mat-form-field class="w-100 border-input" [ngClass]="{'width-95': isMobile}">
-            <input matInput type="email" formControlName="email" placeholder="Email*"
-              title="{{ form.controls['email'].value }}" />
-            <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
-              class="form-error-msg"> Email is required </small>
-            <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
-              class="form-error-msg"> Enter Valid Email</small>
-            <small *ngIf="form.get('email').errors?.maxlength" class="warning-color">maximun characters allowed is
-              300</small>
+            <input matInput type="email" formControlName="email" placeholder="Email*" title="{{ form.controls['email'].value }}" />
+            <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="form-error-msg"> Email is required </small>
+            <small *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="form-error-msg"> Enter Valid Email</small>
+            <small *ngIf="form.get('email').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>
           </mat-form-field>
         </div>
       </div>
@@ -104,12 +96,10 @@
     <!-- Upload Documents and Text Editor Fields-->
     <div class="row p-t-20">
       <div class="col-md-5">
-
         <mat-card class="w-100 p-t-10">
           <mat-card-header class="upload-documents-mat-header">
             <span class="text-semi-bold margin-auto">
-              <app-upload #uploadRef [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"
-                [grnResponsive]="isUploadResponsive"> </app-upload>
+              <app-upload #uploadRef [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)" [grnResponsive]="isUploadResponsive"> </app-upload>
             </span>
           </mat-card-header>
 
@@ -126,14 +116,12 @@
                 <span class="show-download">
                   <span class="p-r-10">
                     <a type="button" target="_blank" class="width-40 p-r-5" [href]="file.Url" mat-icon-button>
-                      <i class="material-icons">
-                        remove_red_eye
-                      </i>
+                      <i class="material-icons"> remove_red_eye </i>
                     </a>
                   </span>
 
                   <button type="button" class="width-21" (click)="removeFile(i)" mat-icon-button>
-                    <mat-icon class="font-size-16">cancel</mat-icon>
+                    <mat-icon>cancel</mat-icon>
                   </button>
                 </span>
               </div>
@@ -149,13 +137,7 @@
   </div>
 
   <div mat-dialog-actions class="display-flex justify-content-center mt-4">
-    <button mat-button matStepperPrevious mat-raised-button type="button"
-      class="main-background-color main-button color-white m-b-5 mb-0">
-      Back
-    </button>
-    <button mat-button mat-raised-button [disabled]="form.invalid"
-      class="main-background-color main-button color-white m-b-5 mb-0">
-      Submit
-    </button>
+    <button mat-button matStepperPrevious mat-raised-button type="button" class="main-background-color main-button color-white m-b-5 mb-0">Back</button>
+    <button mat-button mat-raised-button [disabled]="form.invalid" class="main-background-color main-button color-white m-b-5 mb-0">Submit</button>
   </div>
 </form>

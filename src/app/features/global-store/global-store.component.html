@@ -11,8 +11,7 @@
             </p>
           </div>
           <div>
-            <button mat-raised-button class="main-background-color main-button color-white"
-              (click)="openBomDialog()">Add Material</button>
+            <button mat-raised-button class="main-background-color main-button color-white" (click)="openBomDialog()">Add Material</button>
           </div>
           <!-- <button  mat-raised-button  (click)="addUser()" class="main-background-color main-button color-white">
                       Add First User
@@ -25,26 +24,16 @@
       <div class="row" *ngIf="materialDataLength > 0 || projectDataLength > 0">
         <div class="col-md-6 col-sm-6 col-xs-6">
           <a href="javascript:void(0)" (click)="setButtonName('materialWise')">
-            <button [class.active]="buttonName == 'materialWise'" class="color-black actv-btn" mat-button
-              [ngClass]="isMobile ? 'pl-2 pr-2' : ''">
-              All Materials
-            </button>
+            <button [class.active]="buttonName == 'materialWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'pl-2 pr-2' : ''">All Materials</button>
           </a>
 
           <a href="javascript:void(0)" (click)="setButtonName('projectWise')">
-            <button [class.active]="buttonName == 'projectWise'" class="color-black actv-btn" mat-button
-              [ngClass]="isMobile ? 'pl-2 pr-2' : ''">
-              Projects
-            </button>
+            <button [class.active]="buttonName == 'projectWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'pl-2 pr-2' : ''">Projects</button>
           </a>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6 text-right">
-          <button mat-raised-button (click)="createRfq()" class="main-background-color main-button color-white m-r-10">
-            Create RFP
-          </button>
-          <button mat-raised-button (click)="createPo()" class="main-background-color main-button color-white">
-            Create PO
-          </button>
+          <button mat-raised-button (click)="createRfq()" class="main-background-color main-button color-white m-r-10">Create RFP</button>
+          <button mat-raised-button (click)="createPo()" class="main-background-color main-button color-white">Create PO</button>
         </div>
       </div>
 
@@ -71,12 +60,10 @@
     </mat-card> -->
 
       <div *ngIf="buttonName === 'materialWise'; else elseBlock">
-        <app-material-wise (materialDataLength)="materialShowDataLength($event)" [materialData]="globalStoreData">
-        </app-material-wise>
+        <app-material-wise (materialDataLength)="materialShowDataLength($event)" [materialData]="globalStoreData"> </app-material-wise>
       </div>
       <ng-template #elseBlock>
-        <app-project-wise *ngIf="projectWiseData.length" (projectDataLength)="projectShowDataLength($event)"
-          [projectData]="projectWiseData"></app-project-wise>
+        <app-project-wise *ngIf="projectWiseData.length" (projectDataLength)="projectShowDataLength($event)" [projectData]="projectWiseData"></app-project-wise>
       </ng-template>
     </ng-container>
   </div>

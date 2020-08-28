@@ -11,12 +11,8 @@
       <div class="row">
         <div class="col-md-6 col-sm-12">
           <div class="upload-image-section">
-            <app-upload #uploadRef (onFileUpdate)="fileUpdate($event)" [imageIntegration]="true" [errorMessage]="true"
-              (fileSizeErr)="getFileSizeErr($event)">
-            </app-upload>
-            <span class="uploaded-filename" *ngIf="subFileName && !errorMessage && isDisplayErr">{{subFileName}} has
-              been successfully
-              uploaded.</span>
+            <app-upload #uploadRef (onFileUpdate)="fileUpdate($event)" [imageIntegration]="true" [errorMessage]="true" (fileSizeErr)="getFileSizeErr($event)"> </app-upload>
+            <span class="uploaded-filename" *ngIf="subFileName && !errorMessage && isDisplayErr">{{ subFileName }} has been successfully uploaded.</span>
           </div>
 
           <div class="d-block mx-auto mt-3">
@@ -26,44 +22,34 @@
           </div>
         </div>
 
-
         <div class="col-md-6 col-sm-12">
-
-          <p class="image-heading supplier-img-heading" *ngIf="data.type === 'supplier' || data.type === 'po'">Images
-            uploaded by you</p>
+          <p class="image-heading supplier-img-heading" *ngIf="data.type === 'supplier' || data.type === 'po'">Images uploaded by you</p>
 
           <!-- If previous images exists -->
           <ng-container *ngIf="prevDocumentList?.length">
-            <div class="upload-image-info mb-3 d-flex align-items-center justify-content-between"
-              *ngFor="let file of prevDocumentList; let i = index">
+            <div class="upload-image-info mb-3 d-flex align-items-center justify-content-between" *ngFor="let file of prevDocumentList; let i = index">
               <div class="image-info d-flex align-items-center">
-                <img [src]="file.documentThumbnailUrl" alt="" class="img-fluid thumbnail-img">
+                <img [src]="file.documentThumbnailUrl" alt="" class="img-fluid thumbnail-img" />
                 <span class="ml-2">{{ file.documentDesc }}</span>
               </div>
 
               <div class="image-actions d-flex align-items-center">
-                <img src="assets/images/delete-button.png" class="mr-3 ml-2 cursor-pointer"
-                  (click)="removeImage(file.documentShortUrl)" />
-                <img src="assets/images/download-po.png" class="orange-text cursor-pointer"
-                  (click)="downloadImage(file.documentShortUrl, file.documentUrl)" />
+                <img src="assets/images/delete-button.png" class="mr-3 ml-2 cursor-pointer" (click)="removeImage(file.documentShortUrl)" />
+                <img src="assets/images/download-po.png" class="orange-text cursor-pointer" (click)="downloadImage(file.documentShortUrl, file.documentUrl)" />
               </div>
-
             </div>
           </ng-container>
 
           <!-- If new image uploads -->
-          <div class="upload-image-info mb-3 d-flex align-items-center justify-content-between"
-            *ngFor="let file of documentList; let i = index">
+          <div class="upload-image-info mb-3 d-flex align-items-center justify-content-between" *ngFor="let file of documentList; let i = index">
             <div class="image-info d-flex align-items-center">
-              <img [src]="file.documentThumbnailUrl" alt="" class="img-fluid thumbnail-img">
+              <img [src]="file.documentThumbnailUrl" alt="" class="img-fluid thumbnail-img" />
               <span class="ml-2">{{ file.documentDesc }}</span>
             </div>
 
             <div class="image-actions d-flex align-items-center">
-              <img src="assets/images/delete-button.png" class="mr-3 ml-2 cursor-pointer"
-                (click)="removeImage(file.documentShortUrl)" />
-              <img src="assets/images/download-po.png" class="orange-text cursor-pointer"
-                (click)="downloadImage(file.documentShortUrl, file.documentUrl)" />
+              <img src="assets/images/delete-button.png" class="mr-3 ml-2 cursor-pointer" (click)="removeImage(file.documentShortUrl)" />
+              <img src="assets/images/download-po.png" class="orange-text cursor-pointer" (click)="downloadImage(file.documentShortUrl, file.documentUrl)" />
             </div>
           </div>
 
@@ -72,27 +58,23 @@
             <div class="upload-image-info mb-3">
               <hr />
               <p class="image-heading">Images uploaded by contractor</p>
-              <div *ngFor="let file of contractorImagesList; let i = index"
-                class="d-flex align-items-center justify-content-between mb-2">
+              <div *ngFor="let file of contractorImagesList; let i = index" class="d-flex align-items-center justify-content-between mb-2">
                 <div class="image-info d-flex align-items-center">
-                  <img [src]="file.documentThumbnailUrl" alt="" class="img-fluid thumbnail-img">
+                  <img [src]="file.documentThumbnailUrl" alt="" class="img-fluid thumbnail-img" />
                   <span class="ml-2">{{ file.documentDesc }}</span>
                 </div>
 
                 <div class="image-actions d-flex align-items-center">
-                  <img src="assets/images/download-po.png" class="orange-text cursor-pointer"
-                    (click)="downloadImage(file.documentShortUrl, file.documentUrl)" />
+                  <img src="assets/images/download-po.png" class="orange-text cursor-pointer" (click)="downloadImage(file.documentShortUrl, file.documentUrl)" />
                 </div>
               </div>
             </div>
           </ng-container>
-
         </div>
       </div>
 
       <p class="text-center mb-0 mt-4">
         <button class="btn save-button" [disabled]="!isEmptyImgList" (click)="addImage()">Add</button>
-        <!-- [disabled]="!((documentList && documentList.length) || (prevDocumentList && prevDocumentList.length))" -->
       </p>
     </div>
   </div>

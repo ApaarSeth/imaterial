@@ -1,6 +1,5 @@
 <div mat-dialog-content>
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()" class="add-project-component-dialog">
-
     <div class="modal-header">
       <h5 mat-dialog-title class="mb-0">Project Details</h5>
 
@@ -13,8 +12,7 @@
       <div class="row">
         <div class="col-md-2 col-sm-2 col-xs-8 image-project-div">
           <div class="project-profile">
-            <img *ngIf="data.detail"
-              [src]="localImg || data.detail.imageUrl || '../../../../assets/images/project-default-image.png'" />
+            <img *ngIf="data.detail" [src]="localImg || data.detail.imageUrl || '../../../../assets/images/project-default-image.png'" />
             <img *ngIf="!data.detail" [src]="localImg || '../../../../assets/images/project-default-image.png'" />
           </div>
           <div class="upload-photo-btn browser-method p-t-10">
@@ -32,16 +30,13 @@
         <div class="col-md-10 col-sm-10 col-xs-12 add-edit-form-dialog">
           <!-- first row -->
           <div class="row">
-            <div class="col-sm-12" [ngClass]="isMobile ? 'pl-2 pr-0' : '' ">
+            <div class="col-sm-12" [ngClass]="isMobile ? 'pl-2 p-r-0' : '' ">
               <!-- project Name -->
               <mat-form-field class="border-input project-name-input w-100">
                 <mat-label>Project Name*</mat-label>
                 <input matInput type="text" formControlName="projectName" />
               </mat-form-field>
-              <small *ngIf="form.controls['projectName'].hasError('required') && form.controls['projectName'].touched"
-                class="form-error-msg">
-                Project name is required
-              </small>
+              <small *ngIf="form.controls['projectName'].hasError('required') && form.controls['projectName'].touched" class="form-error-msg"> Project name is required </small>
             </div>
           </div>
 
@@ -52,14 +47,8 @@
               <mat-form-field class="border-input w-100">
                 <mat-label>Address 1*</mat-label>
                 <input matInput type="text" formControlName="addressLine1" />
-                <small
-                  *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched"
-                  class="form-error-msg">
-                  Address is required
-                </small>
-                <small
-                  *ngIf="form.controls['addressLine1'].hasError('maxlength') && form.controls['addressLine1'].touched"
-                  class="form-error-msg">
+                <small *ngIf="form.controls['addressLine1'].hasError('required') && form.controls['addressLine1'].touched" class="form-error-msg"> Address is required </small>
+                <small *ngIf="form.controls['addressLine1'].hasError('maxlength') && form.controls['addressLine1'].touched" class="form-error-msg">
                   Address should be less than 120 characters
                 </small>
               </mat-form-field>
@@ -70,9 +59,7 @@
               <mat-form-field class="border-input w-100">
                 <mat-label>Address 2</mat-label>
                 <input matInput type="text" formControlName="addressLine2" />
-                <small
-                  *ngIf="form.controls['addressLine2'].hasError('maxlength') && form.controls['addressLine2'].touched"
-                  class="form-error-msg">
+                <small *ngIf="form.controls['addressLine2'].hasError('maxlength') && form.controls['addressLine2'].touched" class="form-error-msg">
                   Address should be less than 120 characters
                 </small>
               </mat-form-field>
@@ -83,30 +70,33 @@
           <div class="row">
             <div class="col-sm-6">
               <!-- country -->
-              <mat-form-field class="border-select mat-form-field-flex-mm-padding mt6p w-100">
+              <mat-form-field class="border-select mat-form-field-flex-mm-padding m-t-6 w-100">
                 <mat-select formControlName="countryCode" (selectionChange)="blankPincode()">
                   <div class="display-flex">
-                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country"
-                      [(ngModel)]="searchCountry" [ngModelOptions]="{standalone: true}"
-                      (keydown)="$event.stopPropagation()" />
+                    <input
+                      class="p-l-10 p-b-5"
+                      matInput
+                      type="search"
+                      placeholder="Search Country"
+                      [(ngModel)]="searchCountry"
+                      [ngModelOptions]="{standalone: true}"
+                      (keydown)="$event.stopPropagation()"
+                    />
                     <button mat-button matSuffix mat-icon-button>
                       <mat-icon>search</mat-icon>
                     </button>
                   </div>
                   <mat-select-trigger>
-                    <span
-                      matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"><img
-                        class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-                      <span class="p-r-5 color-brand font-size16">{{ selectedCountry && selectedCountry.name }}</span>
-                      <!-- <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span> -->
+                    <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
+                      ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                      <span class="p-r-5 color-brand fontsize-16-px">{{ selectedCountry && selectedCountry.name }}</span>
+                      <!-- <span class="fontsize-12-px text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span> -->
                     </span>
                   </mat-select-trigger>
-                  <mat-option
-                    *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
-                    [value]="country" selected="trade.isAttatched"><span><img class="width17Percent p-r-10"
-                        [src]="country.imageUrl" alt="" />
-                      <span matTooltip="{{ country.name }}"
-                        class="limited-character universal p-r-5">{{ country.name }}</span>
+                  <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country" selected="trade.isAttatched"
+                    ><span
+                      ><img class="width-17 p-r-10" [src]="country.imageUrl" alt="" />
+                      <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
                       <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
                     </span>
                   </mat-option>
@@ -120,13 +110,9 @@
                 <mat-label>Pincode*</mat-label>
                 <input matInput type="text" (input)="getPincode($event)" formControlName="pinCode" />
                 <!-- <mat-error>PinCode is Required</mat-error> -->
-                <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched"
-                  class="error-msg"> Pincode is required </small>
+                <small *ngIf="form.controls['pinCode'].hasError('required') && form.controls['pinCode'].touched" class="error-msg"> Pincode is required </small>
                 <!-- <small *ngIf="form.controls['pinCode'].hasError('pattern') && form.controls['pinCode'].touched" class="error-msg"> Enter Valid Pincode</small> -->
-                <small *ngIf="form.controls['pinCode'].touched && (!validPincode) && (pincodeLength>0)"
-                  class="error-msg">
-                  Enter Valid Pincode
-                </small>
+                <small *ngIf="form.controls['pinCode'].touched && (!validPincode) && (pincodeLength>0)" class="error-msg"> Enter Valid Pincode </small>
               </mat-form-field>
             </div>
           </div>
@@ -168,15 +154,11 @@
               <mat-form-field class="border-input w-100">
                 <mat-label>Project Start Date*</mat-label>
                 <!-- <span class="form-placeholder">{{form["controls"]["startDate"].value | date: "dd-MMM-yyy" }}</span> -->
-                <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref
-                  (dateChange)="getStart(ref.value)" (click)="startDate.open()" readonly />
+                <input matInput [matDatepicker]="startDate" formControlName="startDate" #ref (dateChange)="getStart(ref.value)" (click)="startDate.open()" readonly />
 
                 <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
                 <mat-datepicker #startDate startView="month" [startAt]="startDate"></mat-datepicker>
-                <small *ngIf="form.controls['startDate'].hasError('required') && form.controls['startDate'].touched"
-                  class="form-error-msg">
-                  Start date is required
-                </small>
+                <small *ngIf="form.controls['startDate'].hasError('required') && form.controls['startDate'].touched" class="form-error-msg"> Start date is required </small>
               </mat-form-field>
             </div>
 
@@ -185,17 +167,21 @@
               <mat-form-field class="border-input w-100">
                 <mat-label>Project End Date*</mat-label>
                 <!-- <span class="form-placeholder" >{{ form["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
-                <input matInput [matDatepicker]="endDate" formControlName="endDate" #refEnd
-                  (dateChange)="getEndDate(refEnd.value)" [min]="projectEndDate" (click)="endDate.open()" readonly />
+                <input
+                  matInput
+                  [matDatepicker]="endDate"
+                  formControlName="endDate"
+                  #refEnd
+                  (dateChange)="getEndDate(refEnd.value)"
+                  [min]="projectEndDate"
+                  (click)="endDate.open()"
+                  readonly
+                />
                 <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                 <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
-                <small *ngIf="form.controls['endDate'].hasError('required') && form.controls['endDate'].touched"
-                  class="form-error-msg">
-                  End date is required
-                </small>
+                <small *ngIf="form.controls['endDate'].hasError('required') && form.controls['endDate'].touched" class="form-error-msg"> End date is required </small>
               </mat-form-field>
-              <small *ngIf="sameStartEndDate" class="error-msg sameStartEndDate"> End Date must be greater than Start
-                Date </small>
+              <small *ngIf="sameStartEndDate" class="error-msg sameStartEndDate"> End Date must be greater than Start Date </small>
             </div>
           </div>
 
@@ -206,15 +192,10 @@
               <mat-form-field class="border-select w-100">
                 <mat-label>Project Type*</mat-label>
                 <mat-select formControlName="type">
-                  <mat-option *ngFor="let projectType of projectTypes" [value]="projectType.type">
-                    {{projectType.type}}
-                  </mat-option>
+                  <mat-option *ngFor="let projectType of projectTypes" [value]="projectType.type"> {{projectType.type}} </mat-option>
                 </mat-select>
               </mat-form-field>
-              <small *ngIf="form.controls['type'].hasError('required') && form.controls['type'].touched"
-                class="form-error-msg">
-                Project type is required
-              </small>
+              <small *ngIf="form.controls['type'].hasError('required') && form.controls['type'].touched" class="form-error-msg"> Project type is required </small>
             </div>
 
             <div class="col-xs-6 col-sm-3">
@@ -223,8 +204,7 @@
                 <mat-label>Area</mat-label>
                 <!-- <mat-error>ProjectArea is Required</mat-error> -->
                 <input matInput type="text" formControlName="area" min="0" appTwoDigitDecimaNumber required />
-                <small *ngIf="form.controls['area'].hasError('required') && form.controls['area'].touched"
-                  class="error-msg"> Area is required </small>
+                <small *ngIf="form.controls['area'].hasError('required') && form.controls['area'].touched" class="error-msg"> Area is required </small>
                 <!-- <small *ngIf="form.controls['area'].hasError('pattern') && form.controls['area'].touched"
                   class="error-msg"> Enter valid area </small> -->
               </mat-form-field>
@@ -235,13 +215,10 @@
               <mat-form-field class="border-select w-100">
                 <mat-label>Unit *</mat-label>
                 <mat-select formControlName="unit">
-                  <mat-option *ngFor="let unit of units" [value]="unit.value">
-                    {{unit.value}}
-                  </mat-option>
+                  <mat-option *ngFor="let unit of units" [value]="unit.value"> {{unit.value}} </mat-option>
                 </mat-select>
               </mat-form-field>
-              <small *ngIf="form.controls['unit'].hasError('required') && form.controls['unit'].touched"
-                class="error-msg">Area unit is required </small>
+              <small *ngIf="form.controls['unit'].hasError('required') && form.controls['unit'].touched" class="error-msg">Area unit is required </small>
             </div>
           </div>
 
@@ -252,10 +229,8 @@
               <mat-form-field class="border-input w-100" matTooltip="Construction Cost {{ currencyCode }}">
                 <mat-label>Construction Cost {{currencyCode}}</mat-label>
                 <input matInput type="text" appTwoDigitDecimaNumber formControlName="cost" min="0" required />
-                <small *ngIf="form.controls['cost'].hasError('required') && form.controls['cost'].touched"
-                  class="error-msg"> Construction cost is required </small>
-                <small *ngIf="form.controls['cost'].hasError('pattern') && form.controls['cost'].touched"
-                  class="error-msg"> Enter valid construction cost </small>
+                <small *ngIf="form.controls['cost'].hasError('required') && form.controls['cost'].touched" class="error-msg"> Construction cost is required </small>
+                <small *ngIf="form.controls['cost'].hasError('pattern') && form.controls['cost'].touched" class="error-msg"> Enter valid construction cost </small>
               </mat-form-field>
             </div>
 
@@ -268,13 +243,10 @@
                     CR
                   </mat-option> -->
                 <mat-select formControlName="costUnit">
-                  <mat-option *ngFor="let unit of costUnits" [value]="unit.value">
-                    {{unit.value}}
-                  </mat-option>
+                  <mat-option *ngFor="let unit of costUnits" [value]="unit.value"> {{unit.value}} </mat-option>
                 </mat-select>
               </mat-form-field>
-              <small *ngIf="form.controls['costUnit'].hasError('required') && form.controls['costUnit'].touched"
-                class="error-msg">Cost unit is required </small>
+              <small *ngIf="form.controls['costUnit'].hasError('required') && form.controls['costUnit'].touched" class="error-msg">Cost unit is required </small>
             </div>
 
             <div class="col-sm-6">
@@ -284,8 +256,7 @@
                 <input matInput type="text" formControlName="gstNo" />
                 <!-- <small *ngIf="form.controls['gstNo'].hasError('required') && form.controls['gstNo'].touched"
                   class="form-error-msg"> Gst No is required </small> -->
-                <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched"
-                  class="form-error-msg"> Enter Valid Gst No</small>
+                <small *ngIf="form.controls['gstNo'].hasError('pattern') && form.controls['gstNo'].touched" class="form-error-msg"> Enter Valid Gst No</small>
                 <!-- <mat-error>Address is Required</mat-error> -->
               </mat-form-field>
             </div>
@@ -296,14 +267,12 @@
 
       <div mat-dialog-actions class="d-flex justify-content-end mt-4">
         <!-- <div class="col-md-12 col-sm-12 add-edit-dialog-button" [ngClass]="isMobile ? 'sm-btn1' : '' "> -->
-          <button mat-raised-button [disabled]="(!imageFileSize && localImg) ? true : (!form.valid || (!validPincode) )"
-            class="main-background-color main-button color-white">
-            <span *ngIf="!data.isEdit">Add</span>
-            <span *ngIf="data.isEdit">Save</span>
-          </button>
+        <button mat-raised-button [disabled]="(!imageFileSize && localImg) ? true : (!form.valid || (!validPincode) )" class="main-background-color main-button color-white">
+          <span *ngIf="!data.isEdit">Add</span>
+          <span *ngIf="data.isEdit">Save</span>
+        </button>
         <!-- </div> -->
       </div>
     </div>
-
   </form>
 </div>

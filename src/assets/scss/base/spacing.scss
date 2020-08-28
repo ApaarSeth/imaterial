@@ -106,11 +106,14 @@ $spaceamounts: (
   125,
   130,
   135,
+  140,
   150,
   180,
+  200,
   230,
   250,
   270,
+  290,
   300,
   350
 ); // Adjust this to include the pixel amounts you need.
@@ -153,6 +156,12 @@ $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.
   }
   .height-#{$space}-em {
     height: #{$space}em !important;
+  }
+  .maxheight-#{$space}-px {
+    max-height: #{$space}px !important;
+  }
+  .maxheight-#{$space} {
+    max-height: #{$space}% !important;
   }
   .w-vw-#{$space} {
     width: #{$space}vw !important;

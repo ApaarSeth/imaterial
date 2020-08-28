@@ -1,63 +1,46 @@
-<!-- <div class="row margin-auto"> -->
-  <!-- <div class="width100Percent radius-10 p-t-10"> -->
-    <!-- <div class="col-md-4 upload-documents-mat-header"> -->
-      <div class="view-upload-docs">
-        <div class="view-upload-docs-inner text-center mb-2">
-          <span class="text-semi-bold margin-auto" *ngIf="mode === 'edit'">
-            <app-upload class="po-docs-outer" #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"></app-upload>
-          </span>
-          <span *ngIf="mode !== 'edit'" class="col-xs-12 text-align-center text-semi-bold">
-            View Document
-          </span>
+<div class="view-upload-docs">
+  <div class="view-upload-docs-inner text-center mb-2">
+    <span class="text-semi-bold margin-auto" *ngIf="mode === 'edit'">
+      <app-upload class="po-docs-outer" #uploadRef [documentListLength]="documentListLength" [filesRemoved]="filesRemoved" (onFileUpdate)="fileUpdate($event)"></app-upload>
+    </span>
+    <span *ngIf="mode !== 'edit'" class="col-xs-12 text-align-center text-semi-bold"> View Document </span>
+  </div>
+
+  <div class="view-upload-docs-info">
+    <ng-container *ngIf="documentData">
+      <div class="upload-image-info mb-2 d-flex align-items-center justify-content-between" *ngFor="let file of documentData; let i = index">
+        <div class="image-info d-flex align-items-center">
+          <img class="img-fluid file-icon" src="../../../../assets/images/file-doc.png" />
+          <span class="overflow-anywhere ml-2">{{ file.DocumentDesc }}</span>
         </div>
-        
-        <div class="view-upload-docs-info">
-          <ng-container *ngIf="documentData">
-            <div class="upload-image-info mb-2 d-flex align-items-center justify-content-between" *ngFor="let file of documentData; let i = index">
-              <div class="image-info d-flex align-items-center">
-                <img class="img-fluid file-icon" src="../../../../assets/images/file-doc.png" />
-                <span class="overflow-anywhere ml-2">{{ file.DocumentDesc }}</span>
-              </div>
 
-              <div class="image-actions d-flex align-items-center justify-content-end">
-                <a type="button" target="_blank" [href]="file.DocumentUrl" style="color: #000000;">
-                  <i class="material-icons">remove_red_eye</i>
-                </a>
-              </div>
-            </div>
-          </ng-container>
-
-          <div *ngIf="mode != 'edit' && !documentData">
-            <p class="text-align-center">No files to preview</p>
-          </div>
-
-          <div *ngIf="mode === 'edit'">
-            <div class="upload-image-info mb-2 d-flex align-items-center justify-content-between" *ngFor="let file of documentList; let i = index">
-              <div class="image-info d-flex align-items-center">
-                <img class="img-fluid file-icon" src="../../../../assets/images/file-doc.png" />
-                <span class="overflow-anywhere ml-2">{{ file.documentName }}</span>
-              </div>
-
-              <div class="image-actions d-flex align-items-center">
-                <a target="_blank" class="width-40 p-r-5" [href]="file.Url" style="color: #000000; line-height: 0px;">
-                  <i class="material-icons">remove_red_eye</i>
-                </a>
-
-                <img src="assets/images/delete-button.png" class="ml-3 cursor-pointer" (click)="removeFile(i)"/>
-
-                <!-- <button type="button" class="width-21" (click)="removeFile(i)">
-                  <mat-icon class="font-size-16">cancel</mat-icon>
-                </button> -->
-              </div>
-            </div>
-          </div>
-
+        <div class="image-actions d-flex align-items-center justify-content-end">
+          <a type="button" target="_blank" [href]="file.DocumentUrl" style="color: #000000">
+            <i class="material-icons">remove_red_eye</i>
+          </a>
         </div>
       </div>
+    </ng-container>
 
-    <!-- </div> -->
+    <div *ngIf="mode != 'edit' && !documentData">
+      <p class="text-align-center">No files to preview</p>
+    </div>
 
-    <!-- <div class="col-md-8"> -->
-    <!-- </div> -->
-  <!-- </div> -->
-<!-- </div> -->
+    <div *ngIf="mode === 'edit'">
+      <div class="upload-image-info mb-2 d-flex align-items-center justify-content-between" *ngFor="let file of documentList; let i = index">
+        <div class="image-info d-flex align-items-center">
+          <img class="img-fluid file-icon" src="../../../../assets/images/file-doc.png" />
+          <span class="overflow-anywhere ml-2">{{ file.documentName }}</span>
+        </div>
+
+        <div class="image-actions d-flex align-items-center">
+          <a target="_blank" class="width-40 p-r-5" [href]="file.Url" style="color: #000000; line-height: 0px">
+            <i class="material-icons">remove_red_eye</i>
+          </a>
+
+          <img src="assets/images/delete-button.png" class="ml-3 cursor-pointer" (click)="removeFile(i)" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,41 +1,35 @@
 <ng-container *ngIf="type === '2'">
-  <mat-card class="box-shadow outside" [ngClass]="isMobile ? 'p-10' : 'm-t-5 m-b-10' ">
+  <mat-card class="box-shadow outside" [ngClass]="isMobile ? 'p-10' : 'm-t-5 m-b-10'">
     <mat-card-content class="mat-card-content card-project-dashboard project-info-section">
       <div class="row">
-
         <div class="col-lg-2 image-big-screen">
-          <img class="radius-10 project-item-image" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl"
-            alt="project image" />
-          <img class="radius-10 project-item-image" *ngIf="!projectDetails.imageUrl"
-            [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
+          <img class="radius-10 project-item-image" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl" alt="project image" />
+          <img class="radius-10 project-item-image" *ngIf="!projectDetails.imageUrl" [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
         </div>
 
         <div class="col-lg-10 col-md-12 col-xs-12 card-project-dialog project-info-card">
           <div class="row">
-            <div [ngClass]="isMobile ? 'pl-3 col-xs-12' : 'col-xs-10' ">
+            <div [ngClass]="isMobile ? 'pl-3 col-xs-12' : 'col-xs-10'">
               <div class="row">
-
                 <!-- Project Image -->
                 <div class="col-md-3 col-xs-3 image-small-screen">
                   <div>
-                    <img class="image-project-card" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl"
-                      alt="project image" />
-                    <img class="image-project-card" *ngIf="!projectDetails.imageUrl"
-                      [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
+                    <img class="image-project-card" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl" alt="project image" />
+                    <img class="image-project-card" *ngIf="!projectDetails.imageUrl" [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
                   </div>
                 </div>
 
                 <!-- Project Other info -->
-                <div class="col-md-9 col-xs-9" [ngClass]="isMobile ? 'pl-3' : 'p-l-25' ">
+                <div class="col-md-9 col-xs-9" [ngClass]="isMobile ? 'pl-3' : 'p-l-25'">
                   <div class="text-bold">
                     <span class="main-color card-project-name" href="javascript:void(0)">{{ projectDetails.projectName }}</span>
                   </div>
 
                   <div class="row">
-                    <div class=" col-xs-12 display-flex">
-                      <div class="font-size12  color-text-card text-left firstOne line-height">
+                    <div class="col-xs-12 display-flex">
+                      <div class="fontsize-12-px color-text-card text-left firstOne line-height">
                         <div>
-                          <i class="material-icons font-size12 color-text-card">room</i>
+                          <i class="material-icons fontsize-12-px color-text-card">room</i>
                           <span *ngIf="projectDetails.addressLine1">{{ projectDetails.addressLine1 }}</span>
                           <span *ngIf="projectDetails.addressLine2">, {{ projectDetails.addressLine2 }}</span>
                           <span *ngIf="projectDetails.city">, {{ projectDetails.city }}</span>
@@ -43,33 +37,30 @@
                           <span *ngIf="projectDetails.pinCode">, {{ projectDetails.pinCode }}</span>
                         </div>
 
-                        <div class="firstOne-details" (click)="showDetails(projectDetails)"
-                          [ngClass]="isMobile ? 'pl-0' : '' ">
-                          View Details
-                        </div>
+                        <div class="firstOne-details" (click)="showDetails(projectDetails)" [ngClass]="isMobile ? 'p-l-0' : ''">View Details</div>
                       </div>
 
-                      <div class="font-size12 color-text-card text-left others">
-                        <i class="material-icons font-size12 color-text-card">format_shapes</i>
+                      <div class="fontsize-12-px color-text-card text-left others">
+                        <i class="material-icons fontsize-12-px color-text-card">format_shapes</i>
                         <span class="p-l-5">Project Area: {{ projectDetails.area }} {{ projectDetails.unit }}</span>
                       </div>
-
                     </div>
                   </div>
 
                   <div class="row">
-                    <div class=" col-xs-12 display-flex">
-                      <div class="font-size12 color-text-card text-left others">
-                        <i class="material-icons font-size12 color-text-card">today</i>
+                    <div class="col-xs-12 display-flex">
+                      <div class="fontsize-12-px color-text-card text-left others">
+                        <i class="material-icons fontsize-12-px color-text-card">today</i>
                         <span class="p-l-5">{{ projectDetails.startDate | date: "dd MMM yyy" }}</span> to
                         <span>{{ projectDetails.endDate | date: "dd MMM yyy" }}</span>
                       </div>
-                      <div class="font-size12 color-text-card text-left others">
+                      <div class="fontsize-12-px color-text-card text-left others">
                         <span>
                           <ng-container *ngIf="this.currencyCode">
                             {{ this.currencyCode }}
                           </ng-container>
-                          <span class="p-l-5"> Construction Cost: {{ projectDetails.cost | number: "1.2-2" }}
+                          <span class="p-l-5">
+                            Construction Cost: {{ projectDetails.cost | number: "1.2-2" }}
                             <ng-container *ngIf="projectDetails.costUnit">
                               {{ projectDetails.costUnit }}
                             </ng-container>
@@ -84,130 +75,134 @@
 
             <div class="col-xs-2 text-right">
               <div class="icons">
-                <a *ngIf="!disableEditDelete && permissionObj.projectEdit"
-                  class="width-17-px p-l-10 p-r-10 cursor-pointer edit-project mr-2" matTooltip="Edit Project"
-                  (click)="edit(projectDetails.projectId, $event)">
+                <a
+                  *ngIf="!disableEditDelete && permissionObj.projectEdit"
+                  class="width-17-px p-l-10 p-r-10 cursor-pointer edit-project mr-2"
+                  matTooltip="Edit Project"
+                  (click)="edit(projectDetails.projectId, $event)"
+                >
                   <img src="../../../../assets/images/edit.png" />
                 </a>
 
-                <a *ngIf="!disableEditDelete && permissionObj.projectEdit"
-                  class="width-15-px p-l-10 p-r-10 cursor-pointer delete-project" matTooltip="Delete Project"
-                  (click)="delete(projectDetails.projectId, $event)">
+                <a
+                  *ngIf="!disableEditDelete && permissionObj.projectEdit"
+                  class="width-15-px p-l-10 p-r-10 cursor-pointer delete-project"
+                  matTooltip="Delete Project"
+                  (click)="delete(projectDetails.projectId, $event)"
+                >
                   <img src="../../../../assets/images/delete-button.png" />
                 </a>
               </div>
             </div>
           </div>
 
-
-          <div class="row tiles" [ngClass]="isMobile ? 'mt-2' : 'm-t-20' ">
-
+          <div class="row tiles" [ngClass]="isMobile ? 'mt-2' : 'm-t-20'">
             <div class="col-xs-6 col-sm-4 col-md-3 display-material-indent-po-box">
-              <div class="box-custom color-text-card cursor-pointer showAllMaterials material-details-box"
-                (click)="navigationToBOM(projectDetails.projectId, projectDetails)" matTooltip="View All Materials"
-                [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex' ">
-
-                <div class="font-size20 text-bold card-counts">
-                  <span *ngIf="projectDetails.matCount" class="max-width-96 word-break-word">
+              <div
+                class="box-custom color-text-card cursor-pointer showAllMaterials material-details-box"
+                (click)="navigationToBOM(projectDetails.projectId, projectDetails)"
+                matTooltip="View All Materials"
+                [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex'"
+              >
+                <div class="fontsize-20-px text-bold card-counts">
+                  <span *ngIf="projectDetails.matCount" class="maxwidth-96-px word-break-word">
                     {{ projectDetails.matCount }}
                   </span>
-                  <span *ngIf="!projectDetails.matCount" class="max-width-96 word-break-word">
-                    0
-                  </span>
+                  <span *ngIf="!projectDetails.matCount" class="maxwidth-96-px word-break-word"> 0 </span>
                 </div>
-                
-                <div class="card-info" [ngClass]="isMobile ? 'font-size11 line-height-1' : 'p-l-15 p-t-5 font-size12' ">
-                  <div class="max-width-96 word-break-word">
-                    All Materials
-                  </div>
+
+                <div class="card-info" [ngClass]="isMobile ? 'fontsize-11-px line-height-1' : 'p-l-15 p-t-5 fontsize-12-px'">
+                  <div class="maxwidth-96-px word-break-word">All Materials</div>
                 </div>
               </div>
             </div>
 
-            <div class="col-xs-6 col-sm-4 col-md-3  display-material-indent-po-box">
-              <div class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
+            <div class="col-xs-6 col-sm-4 col-md-3 display-material-indent-po-box">
+              <div
+                class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
                 (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
-                matTooltip="View All Open Purchase Requisition" [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex' ">
-
-                <div class="font-size20 text-bold card-counts">
-                  <span *ngIf="!projectDetails.openIndentCount" class="max-width-96 word-break-word">
-                    0
-                  </span>
-                  <span *ngIf="projectDetails.openIndentCount" class="max-width-96 word-break-word">
+                matTooltip="View All Open Purchase Requisition"
+                [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex'"
+              >
+                <div class="fontsize-20-px text-bold card-counts">
+                  <span *ngIf="!projectDetails.openIndentCount" class="maxwidth-96-px word-break-word"> 0 </span>
+                  <span *ngIf="projectDetails.openIndentCount" class="maxwidth-96-px word-break-word">
                     {{ projectDetails.openIndentCount }}
                   </span>
                 </div>
 
-                <div class="color-text-card card-info"
-                  [ngClass]="isMobile ? 'font-size11 line-height-1' : 'p-l-15 p-t-5 font-size12' ">
-                  <div class="max-width-96 word-break-word">
-                    Open Purchase Requisition
-                  </div>
+                <div class="color-text-card card-info" [ngClass]="isMobile ? 'fontsize-11-px line-height-1' : 'p-l-15 p-t-5 fontsize-12-px'">
+                  <div class="maxwidth-96-px word-break-word">Open Purchase Requisition</div>
                 </div>
               </div>
             </div>
 
             <div class="col-xs-6 col-sm-4 col-md-3 display-material-indent-po-box last-material-box">
-              <div *ngIf="permissionObj.purchaseOrderFlag"
-                class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box" (click)="redirectToPurchaseOrder()"
-                matTooltip="View All Purchase Orders" [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex' ">
-
-                <div class="font-size20 color-text-card text-bold card-counts">
-                  <span *ngIf="projectDetails.purchaseOrderCount" class="max-width-96 word-break-word">
+              <div
+                *ngIf="permissionObj.purchaseOrderFlag"
+                class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
+                (click)="redirectToPurchaseOrder()"
+                matTooltip="View All Purchase Orders"
+                [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex'"
+              >
+                <div class="fontsize-20-px color-text-card text-bold card-counts">
+                  <span *ngIf="projectDetails.purchaseOrderCount" class="maxwidth-96-px word-break-word">
                     {{ projectDetails.purchaseOrderCount }}
                   </span>
-                  <span *ngIf="!projectDetails.purchaseOrderCount" class="max-width-96 word-break-word">
-                    0
-                  </span>
+                  <span *ngIf="!projectDetails.purchaseOrderCount" class="maxwidth-96-px word-break-word"> 0 </span>
                 </div>
 
-                <div class="color-text-card card-info" [ngClass]="isMobile ? 'font-size11' : 'p-l-15 p-t-5 font-size12'">
+                <div class="color-text-card card-info" [ngClass]="isMobile ? 'fontsize-11-px' : 'p-l-15 p-t-5 fontsize-12-px'">
                   <ng-container *ngIf="isMobile">
-                    <span class="font-weight-normal font-size12">PO</span>
+                    <span class="font-weight-normal fontsize-12-px">PO</span>
                   </ng-container>
 
                   <ng-container *ngIf="!isMobile">
-                    <div class="max-width-96 word-break-word">
-                      Purchase Orders
-                    </div>
+                    <div class="maxwidth-96-px word-break-word">Purchase Orders</div>
                   </ng-container>
                   <div>
-                    <span class="max-width-96 word-break-word" *ngIf="projectDetails.purchaseOrderCost"
-                      [ngClass]="isMobile ? 'font-size11 line-height-1' : 'purchase-amount font-size12' ">
+                    <span
+                      class="maxwidth-96-px word-break-word"
+                      *ngIf="projectDetails.purchaseOrderCost"
+                      [ngClass]="isMobile ? 'fontsize-11-px line-height-1' : 'purchase-amount fontsize-12-px'"
+                    >
                       <ng-container *ngIf="this.currencyCode">
                         {{ this.currencyCode }}
                       </ng-container>
                       {{ projectDetails.purchaseOrderCost | number: "1.2-2" }}
                     </span>
 
-                    <!-- <span class="font-size12 purchase-amount max-width-96 word-break-word"> ₹ 6,54,354,35,464 </span> -->
+                    <!-- <span class="fontsize-12-px purchase-amount maxwidth-96-px word-break-word"> ₹ 6,54,354,35,464 </span> -->
                   </div>
-
                 </div>
               </div>
             </div>
 
             <div class="col-xs-6 text-right add-project-mobile">
-              <button mat-raised-button class="background-white-color main-button main-color view-project"
+              <button
+                mat-raised-button
+                class="background-white-color main-button main-color view-project"
                 *ngIf="url === '/project-dashboard'"
-                (click)="navigationToBOM(projectDetails.projectId, projectDetails)">
+                (click)="navigationToBOM(projectDetails.projectId, projectDetails)"
+              >
                 View Project
               </button>
             </div>
 
-            <div class="col-md-3 "></div>
-
+            <div class="col-md-3"></div>
           </div>
 
           <div class="row m-t-10">
             <div class="col-xs-6 text-left last-row">
-              <div class="font-size12 color-text-card">Created : {{ projectDetails.createdAt | date: "fullDate" }} By
-                {{ projectDetails.createdBy }}</div>
+              <div class="fontsize-12-px color-text-card">Created : {{ projectDetails.createdAt | date: "fullDate" }} By {{ projectDetails.createdBy }}</div>
             </div>
             <div class="col-xs-6 text-right last-row">
-              <button mat-raised-button class="background-white-color main-button main-color view-project"
+              <button
+                mat-raised-button
+                class="background-white-color main-button main-color view-project"
                 *ngIf="url === '/project-dashboard'"
-                (click)="navigationToBOM(projectDetails.projectId, projectDetails)">
+                (click)="navigationToBOM(projectDetails.projectId, projectDetails)"
+              >
                 View Project
               </button>
             </div>
@@ -216,44 +211,37 @@
       </div>
     </mat-card-content>
   </mat-card>
-
 </ng-container>
 
-
 <ng-container *ngIf="type !== '2'">
-  <mat-card class="box-shadow inside" [ngClass]="isMobile ? 'p-10' : 'm-t-5 m-b-10' ">
+  <mat-card class="box-shadow inside" [ngClass]="isMobile ? 'p-10' : 'm-t-5 m-b-10'">
     <mat-card-content class="mat-card-content card-project-dashboard project-info-section">
       <div class="row">
         <div class="col-lg-2 image-big-screen">
-          <img class="radius-10 project-item-image" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl"
-            alt="project image" />
-          <img class="radius-10 project-item-image" *ngIf="!projectDetails.imageUrl"
-            [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
+          <img class="radius-10 project-item-image" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl" alt="project image" />
+          <img class="radius-10 project-item-image" *ngIf="!projectDetails.imageUrl" [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
         </div>
 
         <div class="col-lg-10 col-md-12 col-xs-12 card-project-dialog project-info-card">
           <div class="row">
-            <div class="col-xs-10" [ngClass]="isMobile ? 'pl-3' : '' ">
+            <div class="col-xs-10" [ngClass]="isMobile ? 'pl-3' : ''">
               <div class="row">
                 <div class="col-xs-3 image-small-screen">
                   <div>
-                    <img class="image-project-card" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl"
-                      alt="project image" />
-                    <img class="image-project-card" *ngIf="!projectDetails.imageUrl"
-                      [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
+                    <img class="image-project-card" *ngIf="projectDetails.imageUrl" [src]="projectDetails.imageUrl" alt="project image" />
+                    <img class="image-project-card" *ngIf="!projectDetails.imageUrl" [src]="'../../../../assets/images/project-default-image.png'" alt="project image" />
                   </div>
                 </div>
-                <div class="col-xs-9" [ngClass]="isMobile ? 'pl-3' : 'p-l-25' ">
+                <div class="col-xs-9" [ngClass]="isMobile ? 'pl-3' : 'p-l-25'">
                   <div class="text-bold">
-                    <span class="main-color card-project-name"
-                      href="javascript:void(0)">{{ projectDetails.projectName }}</span>
+                    <span class="main-color card-project-name" href="javascript:void(0)">{{ projectDetails.projectName }}</span>
                   </div>
 
                   <div class="row">
-                    <div class=" col-xs-12 display-flex">
-                      <div class="font-size12  color-text-card text-left firstOne line-height">
+                    <div class="col-xs-12 display-flex">
+                      <div class="fontsize-12-px color-text-card text-left firstOne line-height">
                         <div>
-                          <i class="material-icons font-size12 color-text-card">room</i>
+                          <i class="material-icons fontsize-12-px color-text-card">room</i>
                           <span *ngIf="projectDetails.addressLine1">{{ projectDetails.addressLine1 }}</span>
                           <span *ngIf="projectDetails.addressLine2">, {{ projectDetails.addressLine2 }}</span>
                           <span *ngIf="projectDetails.city">, {{ projectDetails.city }}</span>
@@ -261,33 +249,30 @@
                           <span *ngIf="projectDetails.pinCode">, {{ projectDetails.pinCode }}</span>
                         </div>
 
-                        <div class="firstOne-details" (click)="showDetails(projectDetails)"
-                          [ngClass]="isMobile ? 'pl-0' : '' ">
-                          View Details
-                        </div>
+                        <div class="firstOne-details" (click)="showDetails(projectDetails)" [ngClass]="isMobile ? 'p-l-0' : ''">View Details</div>
                       </div>
 
-                      <div class="font-size12 color-text-card text-left others">
-                        <i class="material-icons font-size12 color-text-card">format_shapes</i>
+                      <div class="fontsize-12-px color-text-card text-left others">
+                        <i class="material-icons fontsize-12-px color-text-card">format_shapes</i>
                         <span class="p-l-5">Project Area: {{ projectDetails.area }} {{ projectDetails.unit }}</span>
                       </div>
-
                     </div>
                   </div>
 
                   <div class="row">
-                    <div class=" col-xs-12 display-flex">
-                      <div class="font-size12 color-text-card text-left others">
-                        <i class="material-icons font-size12 color-text-card">today</i>
+                    <div class="col-xs-12 display-flex">
+                      <div class="fontsize-12-px color-text-card text-left others">
+                        <i class="material-icons fontsize-12-px color-text-card">today</i>
                         <span class="p-l-5">{{ projectDetails.startDate | date: "dd MMM yyy" }}</span> to
                         <span>{{ projectDetails.endDate | date: "dd MMM yyy" }}</span>
                       </div>
-                      <div class="font-size12 color-text-card text-left others">
+                      <div class="fontsize-12-px color-text-card text-left others">
                         <span>
                           <ng-container *ngIf="this.currencyCode">
                             {{ this.currencyCode }}
                           </ng-container>
-                          <span class="p-l-5"> Construction Cost: {{ projectDetails.cost | number: "1.2-2" }}
+                          <span class="p-l-5">
+                            Construction Cost: {{ projectDetails.cost | number: "1.2-2" }}
                             <ng-container *ngIf="projectDetails.costUnit">
                               {{ projectDetails.costUnit }}
                             </ng-container>
@@ -302,137 +287,136 @@
 
             <div class="col-xs-2 text-right">
               <div class="icons">
-                <a *ngIf="!disableEditDelete && permissionObj.projectEdit"
-                  class="width-17-px p-l-10 p-r-10 cursor-pointer edit-project mr-2" matTooltip="Edit Project"
-                  (click)="edit(projectDetails.projectId, $event)">
+                <a
+                  *ngIf="!disableEditDelete && permissionObj.projectEdit"
+                  class="width-17-px p-l-10 p-r-10 cursor-pointer edit-project mr-2"
+                  matTooltip="Edit Project"
+                  (click)="edit(projectDetails.projectId, $event)"
+                >
                   <img src="../../../../assets/images/edit.png" />
                 </a>
 
-                <a *ngIf="!disableEditDelete && permissionObj.projectEdit"
-                  class="width-15-px p-l-10 p-r-10 cursor-pointer delete-project" matTooltip="Delete Project"
-                  (click)="delete(projectDetails.projectId, $event)">
+                <a
+                  *ngIf="!disableEditDelete && permissionObj.projectEdit"
+                  class="width-15-px p-l-10 p-r-10 cursor-pointer delete-project"
+                  matTooltip="Delete Project"
+                  (click)="delete(projectDetails.projectId, $event)"
+                >
                   <img src="../../../../assets/images/delete-button.png" />
                 </a>
               </div>
               <!-- <a href="javascript:void(0)"
                 ><i class="material-icons main-color">file_copy</i></a
               > -->
-
             </div>
           </div>
 
-
-
-          <div class="row tiles" [ngClass]="isMobile ? 'mt-2' : 'm-t-20' ">
-
+          <div class="row tiles" [ngClass]="isMobile ? 'mt-2' : 'm-t-20'">
             <div class="col-xs-6 col-sm-4 col-md-3 display-material-indent-po-box">
-              <div class="box-custom color-text-card cursor-pointer showAllMaterials material-details-box"
-                (click)="navigationToBOM(projectDetails.projectId, projectDetails)" matTooltip="View All Materials"
-                [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex' ">
-                <div class="font-size20 text-bold card-counts">
-                  <span *ngIf="projectDetails.matCount" class="max-width-96 word-break-word">
+              <div
+                class="box-custom color-text-card cursor-pointer showAllMaterials material-details-box"
+                (click)="navigationToBOM(projectDetails.projectId, projectDetails)"
+                matTooltip="View All Materials"
+                [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex'"
+              >
+                <div class="fontsize-20-px text-bold card-counts">
+                  <span *ngIf="projectDetails.matCount" class="maxwidth-96-px word-break-word">
                     {{ projectDetails.matCount }}
                   </span>
-                  <span *ngIf="!projectDetails.matCount" class="max-width-96 word-break-word">
-                    0
-                  </span>
+                  <span *ngIf="!projectDetails.matCount" class="maxwidth-96-px word-break-word"> 0 </span>
                 </div>
 
-                <div class="card-info" [ngClass]="isMobile ? 'font-size11 line-height-1' : 'p-l-15 p-t-5 font-size12' ">
-                  <div class="max-width-96 word-break-word">
-                    All Materials
-                  </div>
+                <div class="card-info" [ngClass]="isMobile ? 'fontsize-11-px line-height-1' : 'p-l-15 p-t-5 fontsize-12-px'">
+                  <div class="maxwidth-96-px word-break-word">All Materials</div>
                 </div>
               </div>
             </div>
 
-
-            <div class="col-xs-6 col-sm-4 col-md-3  display-material-indent-po-box">
-              <div class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
+            <div class="col-xs-6 col-sm-4 col-md-3 display-material-indent-po-box">
+              <div
+                class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
                 (click)="redirectToOpenIndentCount(projectDetails.projectId, projectDetails)"
-                matTooltip="View All Open Purchase Requisition" [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex' ">
-                <div class="font-size20 text-bold card-counts">
-                  <span *ngIf="!projectDetails.openIndentCount" class="max-width-96 word-break-word">
-                    0
-                  </span>
-                  <span *ngIf="projectDetails.openIndentCount" class="max-width-96 word-break-word">
+                matTooltip="View All Open Purchase Requisition"
+                [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex'"
+              >
+                <div class="fontsize-20-px text-bold card-counts">
+                  <span *ngIf="!projectDetails.openIndentCount" class="maxwidth-96-px word-break-word"> 0 </span>
+                  <span *ngIf="projectDetails.openIndentCount" class="maxwidth-96-px word-break-word">
                     {{ projectDetails.openIndentCount }}
                   </span>
                 </div>
-                <div class="color-text-card card-info"
-                  [ngClass]="isMobile ? 'font-size11 line-height-1' : 'p-l-15 p-t-5 font-size12' ">
-                  <div class="max-width-96 word-break-word">
-                    Open Purchase Requisition
-                  </div>
+                <div class="color-text-card card-info" [ngClass]="isMobile ? 'fontsize-11-px line-height-1' : 'p-l-15 p-t-5 fontsize-12-px'">
+                  <div class="maxwidth-96-px word-break-word">Open Purchase Requisition</div>
                 </div>
               </div>
             </div>
 
-
-
-            <div class="col-xs-6 col-sm-4 col-md-3 display-material-indent-po-box last-material-box" [ngClass]="isMobile ? ' mt-3' : '' ">
-              <div *ngIf="permissionObj.purchaseOrderFlag"
-                class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box" (click)="redirectToPurchaseOrder()"
-                matTooltip="View All Purchase Orders" [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex' ">
-
-                <div class="font-size20 color-text-card text-bold card-counts">
-                  <span *ngIf="projectDetails.purchaseOrderCount" class="max-width-96 word-break-word">
+            <div class="col-xs-6 col-sm-4 col-md-3 display-material-indent-po-box last-material-box" [ngClass]="isMobile ? ' mt-3' : ''">
+              <div
+                *ngIf="permissionObj.purchaseOrderFlag"
+                class="box-custom color-text-card cursor-pointer showOpenIndents material-details-box"
+                (click)="redirectToPurchaseOrder()"
+                matTooltip="View All Purchase Orders"
+                [ngClass]="isMobile ? 'pl-2' : 'p-t-10 display-flex'"
+              >
+                <div class="fontsize-20-px color-text-card text-bold card-counts">
+                  <span *ngIf="projectDetails.purchaseOrderCount" class="maxwidth-96-px word-break-word">
                     {{ projectDetails.purchaseOrderCount }}
                   </span>
-                  <span *ngIf="!projectDetails.purchaseOrderCount" class="max-width-96 word-break-word">
-                    0
-                  </span>
+                  <span *ngIf="!projectDetails.purchaseOrderCount" class="maxwidth-96-px word-break-word"> 0 </span>
                 </div>
 
-                <div class="color-text-card card-info" [ngClass]="isMobile ? 'font-size11' : 'p-l-15 p-t-5 font-size12' ">
-
+                <div class="color-text-card card-info" [ngClass]="isMobile ? 'fontsize-11-px' : 'p-l-15 p-t-5 fontsize-12-px'">
                   <ng-container *ngIf="isMobile">
-                    <span class="font-weight-normal font-size12">PO</span>
+                    <span class="font-weight-normal fontsize-12-px">PO</span>
                   </ng-container>
 
                   <ng-container *ngIf="!isMobile">
-                    <div class="max-width-96 word-break-word">
-                      Purchase Orders
-                    </div>
+                    <div class="maxwidth-96-px word-break-word">Purchase Orders</div>
                   </ng-container>
 
                   <div>
-                    <span class="max-width-96 word-break-word" *ngIf="projectDetails.purchaseOrderCost"
-                      [ngClass]="isMobile ? 'font-size11 line-height-1' : 'purchase-amount font-size12' ">
+                    <span
+                      class="maxwidth-96-px word-break-word"
+                      *ngIf="projectDetails.purchaseOrderCost"
+                      [ngClass]="isMobile ? 'fontsize-11-px line-height-1' : 'purchase-amount fontsize-12-px'"
+                    >
                       <ng-container *ngIf="this.currencyCode">
                         {{ this.currencyCode }}
                       </ng-container>
                       {{ projectDetails.purchaseOrderCost | number: "1.2-2" }}
                     </span>
                   </div>
-
                 </div>
               </div>
             </div>
 
             <div class="col-xs-6 text-right add-project-mobile">
-              <button mat-raised-button class="background-white-color main-button main-color view-project"
-                *ngIf="url === '/project-dashboard'" (click)="navigationToBOM(projectDetails.projectId, projectDetails)"
-                [ngClass]="isMobile ? 'mr-2' : '' ">
+              <button
+                mat-raised-button
+                class="background-white-color main-button main-color view-project"
+                *ngIf="url === '/project-dashboard'"
+                (click)="navigationToBOM(projectDetails.projectId, projectDetails)"
+                [ngClass]="isMobile ? 'mr-2' : ''"
+              >
                 View Project
               </button>
             </div>
 
-            <div class="col-md-3 "></div>
-
-
-
+            <div class="col-md-3"></div>
           </div>
 
           <div class="row m-t-10">
             <div class="col-xs-6 text-left last-row">
-              <div class="font-size12 color-text-card">Created : {{ projectDetails.createdAt | date: "fullDate" }} By
-                {{ projectDetails.createdBy }}</div>
+              <div class="fontsize-12-px color-text-card">Created : {{ projectDetails.createdAt | date: "fullDate" }} By {{ projectDetails.createdBy }}</div>
             </div>
             <div class="col-xs-6 text-right last-row">
-              <button mat-raised-button class="background-white-color main-button main-color view-project"
+              <button
+                mat-raised-button
+                class="background-white-color main-button main-color view-project"
                 *ngIf="url === '/project-dashboard'"
-                (click)="navigationToBOM(projectDetails.projectId, projectDetails)">
+                (click)="navigationToBOM(projectDetails.projectId, projectDetails)"
+              >
                 View Project
               </button>
             </div>
@@ -441,5 +425,4 @@
       </div>
     </mat-card-content>
   </mat-card>
-
 </ng-container>

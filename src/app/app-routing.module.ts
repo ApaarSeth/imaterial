@@ -117,7 +117,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
-    canActivate: [AuthGuardService, AfterSignUpGuardService],
+    // canActivate: [AuthGuardService, AfterSignUpGuardService],
     resolve: {
       menu: MenuResolver,
       subsData: SubscriptionsResolver

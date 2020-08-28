@@ -3,8 +3,7 @@
     <button class="hamburger" fxShow="true" fxHide.gt-sm (click)="openMenu()" mat-icon-button>
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="cursor-pointer" (click)="goToHome()"><img class="buildsupply-logo"
-        src="../../../../assets/images/loginLogo.png" alt="logo" /></span>
+    <span class="cursor-pointer" (click)="goToHome()"><img class="buildsupply-logo" src="../../../../assets/images/loginLogo.png" alt="logo" /></span>
     <span class="menu-spacer"></span>
 
     <!-- wahtsapp button will visible if isFreeTrialSubscription == 0 && country == india -->
@@ -14,9 +13,7 @@
           <div>
             <img src="../../../../assets/images/whatsapp-main.png" class="whatsapp-icon" />
           </div>
-          <div class="whatsapp-icon-number">
-            +91 8512060007
-          </div>
+          <div class="whatsapp-icon-number">+91 8512060007</div>
         </div>
       </a>
     </ng-container>
@@ -30,45 +27,41 @@
     <button class="pull-right p-t-10 notification-bell-icon" [ngClass]="isMobile ? 'p-1' : '' " mat-button
       [matMenuTriggerFor]="notifs">
       <a href="javascript:void(0)" (click)="openDiv()">
-        <mat-icon [ngClass]="{'bell-icon-active': notifClicked === true, 'bell-icon': notifClicked === false}"
-          matBadge="{{ newunreadMessage }}" matBadgeSize="small" matBadge="15" matBadgeColor="warn">
-          notifications</mat-icon>
+        <mat-icon
+          [ngClass]="{'bell-icon-active': notifClicked === true, 'bell-icon': notifClicked === false}"
+          matBadge="{{ newunreadMessage }}"
+          matBadgeSize="small"
+          matBadge="15"
+          matBadgeColor="warn"
+        >
+          notifications</mat-icon
+        >
       </a>
     </button>
 
     <div class="logo-profile-header">
-      <button mat-button [matMenuTriggerFor]="logIn" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false"
-        fxShow="true">
-        <img class="img-circle" height="36" width="38"
-          [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
+      <button mat-button [matMenuTriggerFor]="logIn" fxShow.gt-md="true" fxShow.sm="false" fxShow.xs="false" fxShow="true">
+        <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
         <span class="username">
           {{ userName }}
         </span>
         <mat-icon aria-hidden="false" aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
       </button>
       <mat-menu #logIn="matMenu">
-        <button mat-menu-item class="background-white-color" (click)="goToProfile()">
-          My Account
-        </button>
+        <button mat-menu-item class="background-white-color" (click)="goToProfile()">My Account</button>
         <ng-container *ngIf="isPlanAvailable === 1 && accountOwner === 1">
-          <button mat-menu-item class="background-white-color" (click)="goToMyPlans()">
-            My Plan / Upgrade
-          </button>
+          <button mat-menu-item class="background-white-color" (click)="goToMyPlans()">My Plan / Upgrade</button>
         </ng-container>
-        <button mat-menu-item class="background-white-color" (click)="logout()"
-          routerLinkActive="router-link-active">Logout</button>
+        <button mat-menu-item class="background-white-color" (click)="logout()" routerLinkActive="router-link-active">Logout</button>
       </mat-menu>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
 <ng-container *ngIf="isFreeTrialActivate && isFreeTrial !== null && accountOwner === 1">
   <ng-container *ngIf="isFreeTrial && isFreeTrial.planName && isFreeTrial.daysLeft">
-    <div class="trial-block" [ngClass]="isMobile ? 'font-size10' : '' ">
-      <span class="mr-1">Your free trial of {{ isFreeTrial.planName }} plan ends in {{ isFreeTrial.daysLeft }}
-        days</span>
-      <button mat-button class="brand-bg-color color-white" [ngClass]="isMobile ? 'font-size10 mt-1' : 'ml-2' "
-        (click)="choosePlan()">Choose
-        Plan</button>
+    <div class="trial-block" [ngClass]="isMobile ? 'fontsize-10-px' : ''">
+      <span class="mr-1">Your free trial of {{ isFreeTrial.planName }} plan ends in {{ isFreeTrial.daysLeft }} days</span>
+      <button mat-button class="brand-bg-color color-white" [ngClass]="isMobile ? 'fontsize-10-px mt-1' : 'ml-2'" (click)="choosePlan()">Choose Plan</button>
     </div>
   </ng-container>
 </ng-container>
@@ -80,9 +73,7 @@
       <div class="body-of-notification">
         <ng-container *ngIf="unreadnotification && unreadnotification.length > 0">
           <div class="read-unread-heading p-10 cursor-pointer">
-            <span>
-              Recent
-            </span>
+            <span> Recent </span>
             <span class="pull-right"> You have {{ unreadnotification.length }} unread notifications </span>
           </div>
           <ng-container *ngFor="let notification of unreadnotification">
@@ -100,9 +91,7 @@
 
         <ng-container *ngIf="readnotification && readnotification.length > 0">
           <div class="read-unread-heading">
-            <span class="p-5">
-              Earlier
-            </span>
+            <span class="p-5"> Earlier </span>
           </div>
           <ng-container *ngFor="let notification of readnotification">
             <div class="p-l-10 p-r-10 p-t-10 p-b-10 read-background cursor-pointer">

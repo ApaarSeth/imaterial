@@ -7,13 +7,11 @@
 
         <div *ngIf="this.mode === 'view'" class="float-right">
           <span class="text-semi-bold color-main cursor-pointer p-r-15"
-            ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO">
+            ><a (click)="downloadPo()" class="fontsize-16-px" matTooltip="Download PO">
               <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15" *ngIf="!showResponsiveDesign">Download P.O</span></a
             ></span
           >
-          <button mat-raised-button class="main-background-color main-button color-white send-for-approval-btn" (click)="openShortClose()">
-            Short Close
-          </button>
+          <button mat-raised-button class="main-background-color main-button color-white send-for-approval-btn" (click)="openShortClose()">Short Close</button>
         </div>
       </div>
 
@@ -22,7 +20,7 @@
         <div [ngClass]="!showResponsiveDesign ? 'display-flex justify-content-flex-end' : 'display-flex justify-content-space-between'">
           <div class="p-r-10 p-t-10">
             <span class="text-semi-bold color-main cursor-pointer"
-              ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO">
+              ><a (click)="downloadPo()" class="fontsize-16-px" matTooltip="Download PO">
                 <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15" *ngIf="!showResponsiveDesign">Download P.O</span></a
               ></span
             >
@@ -38,18 +36,14 @@
         <div class="display-flex justify-content-space-between">
           <div class="p-r-10 p-t-10">
             <span class="text-semi-bold color-main cursor-pointer"
-              ><a (click)="downloadPo()" class="font-size16" matTooltip="Download PO">
+              ><a (click)="downloadPo()" class="fontsize-16-px" matTooltip="Download PO">
                 <img src="../../../../assets/images/download-po.png" /> <span class="p-l-5 font-size15" *ngIf="!showResponsiveDesign">Download P.O</span></a
               ></span
             >
           </div>
           <div>
-            <button mat-raised-button class="background-color-white main-button main-color m-r-5" (click)="poApproval('rejected')">
-              Reject
-            </button>
-            <button mat-raised-button class="main-background-color main-button color-white" (click)="poApproval('approved')">
-              Approve
-            </button>
+            <button mat-raised-button class="background-color-white main-button main-color m-r-5" (click)="poApproval('rejected')">Reject</button>
+            <button mat-raised-button class="main-background-color main-button color-white" (click)="poApproval('approved')">Approve</button>
           </div>
         </div>
       </div>

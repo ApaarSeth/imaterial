@@ -1,5 +1,5 @@
 <form *ngIf="signupForm" [formGroup]="signupForm" (ngSubmit)="signup()" class="sign-up-form">
-  <div style="min-height: 311px;">
+  <div style="min-height: 311px">
     <div class="row">
       <div class="col-md-12">
         <div class="row">
@@ -23,13 +23,13 @@
                 <mat-select-trigger>
                   <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}">
                     <img class="w-30 p-r-5 country-flags" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
-                    <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
-                    <span class="font-size12">{{ selectedCountry && selectedCountry.callingCode }}</span>
+                    <span class="p-r-5 fontsize-12-px">{{ selectedCountry && selectedCountry.countryCode }}</span>
+                    <span class="fontsize-12-px">{{ selectedCountry && selectedCountry.callingCode }}</span>
                   </span>
                 </mat-select-trigger>
                 <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country">
                   <span
-                    ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                    ><img class="width-17 p-r-10" [src]="country.imageUrl" alt="" />
                     <span class="limited-character universal p-r-5" matTooltip="{{ country.name }}">{{ country.name }}</span>
                     <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
                   </span>
@@ -121,7 +121,7 @@
           mat-raised-button
           class="main-background-color main-button color-white m-b-5"
           cdkFocusInitial
-          style="width: 100%;"
+          style="width: 100%"
           [disabled]="this.callingCode === '+91' ? !signupForm.valid || !lessOTPDigits || !emailVerified : !signupForm.valid && !emailVerified"
         >
           Sign Up

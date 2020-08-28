@@ -4,56 +4,55 @@
       <ng-container [formGroupName]="c">
         <mat-accordion class="bom-top-materials-lists">
           <div #myele *ngIf="!isSearching ? true : !category.allNull">
-            <mat-expansion-panel class="m-b-5 m-t-5 border-radius-panel bom-qty-page mat-expansion-panel-header-wrapper"
-              [expanded]="true">
+            <mat-expansion-panel class="m-b-5 m-t-5 border-radius-panel bom-qty-page mat-expansion-panel-header-wrapper" [expanded]="true">
               <mat-expansion-panel-header class="mat-elevation-z8">
                 <mat-panel-title>{{ category.groupName }}</mat-panel-title>
               </mat-expansion-panel-header>
 
-              <div class="bom-top-material-container mat-elevation-z8" style="overflow-x: auto; width: 100%;">
-
+              <div class="bom-top-material-container mat-elevation-z8" style="overflow-x: auto; width: 100%">
                 <table class="bom-select-material-table w-100">
                   <tr matSort class="mat-elevation-z2 mat-header-row background-color-skyblue">
                     <th class="mat-header-cell material-category">Material Name</th>
                     <th class="mat-header-cell material-trade">Trade</th>
                     <th class="mat-header-cell material-unit-col">Unit</th>
-                    <th class="mat-header-cell material-estimatedQty">
-                      Estimated <br />Quantity
-                    </th>
+                    <th class="mat-header-cell material-estimatedQty">Estimated <br />Quantity</th>
                     <th class="mat-header-cell text-right estimated-rate-column-header">
                       Estimated Rate
                       <span class="display-block">({{ currencyCode }})</span>
                     </th>
                   </tr>
 
-                  <ng-container formArrayName="materialGroup"
-                    *ngFor="let subcategory of category.materialList; let sc = index">
+                  <ng-container formArrayName="materialGroup" *ngFor="let subcategory of category.materialList; let sc = index">
                     <ng-container *ngIf="!subcategory.isNull">
                       <tr class="mat-row bom-materials-row" [formGroupName]="sc">
-
                         <td class="mat-cell material-category">{{ subcategory.materialName }}</td>
 
                         <td class="mat-cell bom-selected-trades">
                           <span class="text-semi-bold" *ngFor="let trades of subcategory.tradeList; let i = index">
-                            <span>{{ trades }}<span
-                                *ngIf="subcategory.tradeList.length > 1 && i !== subcategory.tradeList.length - 1">,
-                              </span> </span>
+                            <span>{{ trades }}<span *ngIf="subcategory.tradeList.length > 1 && i !== subcategory.tradeList.length - 1">, </span> </span>
                           </span>
                         </td>
 
                         <td class="mat-cell bom-materials-unit-column">
-                          <span *ngIf="
-                                (subcategory.requestedQuantity === 0 || subcategory.requestedQuantity === null) &&
-                                  (subcategory.issueToProject === 0 || subcategory.issueToProject === null);
-                                else elseBlock
-                              ">
-                            <mat-form-field
-                              class="border-select width35Percent bom-unit-col mat-form-field-padding mat-form-field-flex-mm-padding">
+                          <span
+                            *ngIf="
+                              (subcategory.requestedQuantity === 0 || subcategory.requestedQuantity === null) &&
+                                (subcategory.issueToProject === 0 || subcategory.issueToProject === null);
+                              else elseBlock
+                            "
+                          >
+                            <mat-form-field class="border-select width-35 bom-unit-col mat-form-field-padding mat-form-field-flex-mm-padding">
                               <mat-select formControlName="materialUnit" placeholder="Unit">
                                 <div class="display-flex">
-                                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Unit"
-                                    [(ngModel)]="searchUnit" [ngModelOptions]="{standalone: true}"
-                                    (keydown)="$event.stopPropagation()" />
+                                  <input
+                                    class="p-l-10 p-b-5"
+                                    matInput
+                                    type="search"
+                                    placeholder="Search Unit"
+                                    [(ngModel)]="searchUnit"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (keydown)="$event.stopPropagation()"
+                                  />
                                   <button mat-button mat-icon-button>
                                     <mat-icon>search</mat-icon>
                                   </button>
@@ -75,32 +74,34 @@
 
                         <td class="mat-cell bom-materials-qty-column">
                           <mat-form-field class="border-input widthZero mat-form-field-padding bom-same-width-col">
-                            <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text"
-                              class="p-b-5 shortWidth" placeholder="Enter Quantity" />
+                            <input formControlName="estimatedQty" appTwoDigitDecimaNumber matInput type="text" class="p-b-5 shortWidth" placeholder="Enter Quantity" />
                           </mat-form-field>
                         </td>
 
                         <td class="mat-cell text-right estimated-rate-column">
                           <span class="bom-estimated-rate-col">
                             <mat-form-field class="border-input widthZero mat-form-field-padding bom-same-width-col">
-                              <input formControlName="estimatedRate" appTwoDigitDecimaNumber matInput type="text"
-                                class="p-b-5 shortWidth" placeholder="Enter Rate" />
+                              <input formControlName="estimatedRate" appTwoDigitDecimaNumber matInput type="text" class="p-b-5 shortWidth" placeholder="Enter Rate" />
                             </mat-form-field>
                           </span>
                         </td>
 
                         <ng-container *ngIf="subcategory.Specs">
-                          <div class="row background-color-bom-sub-sub-category p-0"
-                            *ngFor="let material of subcategory.Specs">
+                          <div class="row background-color-bom-sub-sub-category p-0" *ngFor="let material of subcategory.Specs">
                             <div class="col-xs-6">
                               <span class="pull-left p-l-60 p-t-20">{{ material.label }}</span>
                             </div>
                             <div class="col-xs-6">
                               <span class="pull-right p-r-40">
                                 <mat-form-field class="border-input widthZero">
-                                  <input matInput class="p-b-5 shortWidth" type="number" min="0"
+                                  <input
+                                    matInput
+                                    class="p-b-5 shortWidth"
+                                    type="number"
+                                    min="0"
                                     placeholder="Enter Quantity"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                  />
                                   <span class="p-b-15 p-l-5">{{ subcategory.materialUnit }}</span>
                                 </mat-form-field>
                               </span>
@@ -111,7 +112,6 @@
                     </ng-container>
                   </ng-container>
                 </table>
-
               </div>
             </mat-expansion-panel>
           </div>

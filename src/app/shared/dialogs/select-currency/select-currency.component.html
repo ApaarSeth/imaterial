@@ -1,5 +1,4 @@
 <section class="modal-outer">
-
   <div class="modal-header">
     <h5 mat-dialog-title class="mb-0">Select Currency</h5>
     <button type="button" class="close" (click)="close()" aria-label="Close">
@@ -9,14 +8,11 @@
 
   <div mat-dialog-content>
     <div class="modal-body">
-
       <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="row select-currency" [ngClass]="isMobile ? 'text-left font-size12' : ''">
           <div class="col-md-6 col-sm-6 col-xs-7">
             <div class="base-currency">
-              <span class="text-semi-bold font-size-vary-grn color-6d6a6a mr-3">
-                Base Currency
-              </span>
+              <span class="text-semi-bold font-size-vary-grn color-6d6a6a mr-3"> Base Currency </span>
 
               <div class="currency-name d-flex">
                 <img class="mr-2" *ngIf="this.primaryCurrencyData" [src]="this.primaryCurrencyData.imageUrl" [ngClass]="isMobile ? 'w-20-px' : 'w-25-px'" />
@@ -83,11 +79,9 @@
             </mat-form-field>
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-sm-12 font-size12 color-6d6a6a">
-            *Supplier will have to submit the quote in this selected currency.
-          </div>
+          <div class="col-xs-12 col-sm-12 col-sm-12 font-size12 color-6d6a6a">*Supplier will have to submit the quote in this selected currency.</div>
         </div>
-      
+
         <div mat-dialog-actions class="p-t-25 p-b-15">
           <div class="col-sm-12 col-md-12 text-align-center">
             <button mat-raised-button class="main-background-color main-button color-white" [disabled]="!form.valid">
@@ -96,8 +90,6 @@
           </div>
         </div>
       </form>
-    
     </div>
   </div>
 </section>
-

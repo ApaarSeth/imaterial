@@ -1,19 +1,17 @@
-<div class="page-start-point mt-5 pt-4" [ngClass]="isMobile ? 'm-popd' : '' ">
-  <div class="p-b-20 min-height parent" [ngClass]="isMobile ? 'pl-2 pr-2' : 'p-l-20 p-r-20' ">
+<div class="page-start-point mt-5 pt-4" [ngClass]="isMobile ? 'm-popd' : ''">
+  <div class="p-b-20 min-height parent" [ngClass]="isMobile ? 'pl-2 pr-2' : 'p-l-20 p-r-20'">
     <div class="row">
       <div class="col-xs-6"></div>
       <div class="col-xs-6"></div>
     </div>
-    <mat-horizontal-stepper [linear]="true" (selectionChange)="selectionChange($event)" #stepper
-      [ngClass]="isMobile ? 'm-stepper' : '' ">
+    <mat-horizontal-stepper [linear]="true" (selectionChange)="selectionChange($event)" #stepper [ngClass]="isMobile ? 'm-stepper' : ''">
       <mat-step stepControl="stepOne">
         <ng-template matStepLabel>Select Supplier</ng-template>
         <app-po-supplier [poData]="existingPoData" (selectedSupplier)="getSupplier($event)"></app-po-supplier>
       </mat-step>
       <mat-step stepControl="stepSecond">
         <ng-template matStepLabel>Project & Material</ng-template>
-        <app-po-project-material [existingPoData]="existingPoData" (selectedMaterial)="getMaterial($event)">
-        </app-po-project-material>
+        <app-po-project-material [existingPoData]="existingPoData" (selectedMaterial)="getMaterial($event)"> </app-po-project-material>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Add Quantity & Makes</ng-template>

@@ -9,9 +9,7 @@
             Please create one to continue.
           </p>
         </div>
-        <button mat-raised-button (click)="addUser()" class="main-background-color main-button color-white">
-          Add First User
-        </button>
+        <button mat-raised-button (click)="addUser()" class="main-background-color main-button color-white">Add First User</button>
       </div>
     </div>
   </ng-container>
@@ -31,9 +29,7 @@
           <!-- <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="addProject()">
           + Add Project
         </button> -->
-          <button mat-raised-button (click)="addUser()" class="main-background-color main-button color-white demo-title">
-            Add User
-          </button>
+          <button mat-raised-button (click)="addUser()" class="main-background-color main-button color-white demo-title">Add User</button>
         </div>
       </div>
 
@@ -100,9 +96,7 @@
                       </ng-container>
                     </div>
                     <div class="horizontal-align-center p-l-10" *ngIf="element.ProjectList && element.ProjectList.length > 2">
-                      <span class="material-info color-main cursor-pointer" [matMenuTriggerFor]="projectnames">
-                        More
-                      </span>
+                      <span class="material-info color-main cursor-pointer" [matMenuTriggerFor]="projectnames"> More </span>
                       <mat-menu #projectnames="matMenu" class="header-project-menu">
                         <div class="main-div-bell" mat-menu-item [disableRipple]="true">
                           <div id="project-names">
@@ -217,9 +211,7 @@
                       </ng-container>
                     </div>
                     <div class="horizontal-align-center p-l-10" *ngIf="element.ProjectList && element.ProjectList.length > 2">
-                      <span class="material-info color-main cursor-pointer" [matMenuTriggerFor]="projectnames">
-                        More
-                      </span>
+                      <span class="material-info color-main cursor-pointer" [matMenuTriggerFor]="projectnames"> More </span>
                       <mat-menu #projectnames="matMenu" class="header-project-menu">
                         <div class="main-div-bell" mat-menu-item [disableRipple]="true">
                           <div id="project-names">

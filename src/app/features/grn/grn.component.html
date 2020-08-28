@@ -4,18 +4,21 @@
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
       <div class="row mb-4">
         <div class="col-md-3 col-sm-4 col-xs-8">
-          <mat-form-field class="border-select select-project width100Percent font-size-vary-grn">
+          <mat-form-field class="border-select select-project width-100 font-size-vary-grn">
             <mat-label>Select Project</mat-label>
             <mat-select formControlName="selectedProject" panelClass="dropDown-project-panel" multiple>
               <div class="display-flex">
-                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name"
-                  [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
+                <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
                 <button mat-button matSuffix mat-icon-button>
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
-              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']"
-                [value]="project.projectId" selected="project.clicked" (click)="getProjectGRNData()">
+              <mat-option
+                *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']"
+                [value]="project.projectId"
+                selected="project.clicked"
+                (click)="getProjectGRNData()"
+              >
                 {{ project.projectName }}
               </mat-option>
             </mat-select>
@@ -28,7 +31,6 @@
         <div class="grnTable mb-4" *ngFor="let project of allProjectsGRNData">
           <mat-accordion>
             <mat-expansion-panel [expanded]="true">
-
               <mat-expansion-panel-header class="backgound-project">
                 <div class="grn-material-row p-r-10">
                   {{ project.projectName }}
@@ -37,15 +39,39 @@
 
               <table class="grnTable">
                 <tr matSort class="mat-elevation-z2 mat-header-row">
-                  <thead class="mat-header-cell material">Material Name</thead>
-                  <thead class="mat-header-cell material-unit">Unit</thead>
-                  <thead class="mat-header-cell material">Brand</thead>
-                  <thead class="mat-header-cell material">Awarded <br />Quantity</thead>
-                  <thead class="mat-header-cell material">Delivered <br />Quantity</thead>
+                  <thead class="mat-header-cell material">
+                    Material Name
+                  </thead>
+                  <thead class="mat-header-cell material-unit">
+                    Unit
+                  </thead>
+                  <thead class="mat-header-cell material">
+                    Brand
+                  </thead>
+                  <thead class="mat-header-cell material">
+                    Awarded
+                    <br />Quantity
+                  </thead>
+                  <thead class="mat-header-cell material">
+                    Delivered
+                    <br />Quantity
+                  </thead>
                   <!-- <thead class="mat-header-cell material">Pending <br />Quantity</thead> -->
-                  <thead class="mat-header-cell material text-center">Unit Price <br />({{ project.baseCurrency }})</thead>
-                  <thead class="mat-header-cell material text-center">Total Amount <br />({{ project.baseCurrency }})</thead>
-                  <thead class="mat-header-cell material">Supplier</thead>
+                  <thead class="mat-header-cell material text-center">
+                    Unit Price
+                    <br />({{
+                      project.baseCurrency
+                    }})
+                  </thead>
+                  <thead class="mat-header-cell material text-center">
+                    Total Amount
+                    <br />({{
+                      project.baseCurrency
+                    }})
+                  </thead>
+                  <thead class="mat-header-cell material">
+                    Supplier
+                  </thead>
                 </tr>
 
                 <mat-accordion *ngFor="let grnData of project.grnDataList">
@@ -54,28 +80,25 @@
                       <tr class="grn-material-row p-r-10 w-100">
                         <td class="mat-cell grn-name-cell">{{ grnData.grnName }}</td>
                         <td class="mat-cell po-number-cell">
-                          <ng-container *ngIf="grnData.poNumber; else directGRN">
-                            PO ID - {{ grnData.poNumber }}
-                          </ng-container>
+                          <ng-container *ngIf="grnData.poNumber; else directGRN"> PO ID - {{ grnData.poNumber }} </ng-container>
 
-                          <ng-template #directGRN>
-                            Direct
-                          </ng-template>
+                          <ng-template #directGRN> Direct </ng-template>
                         </td>
                         <td class="mat-cell double-mat-cell added-by-cell">Added by - {{ grnData.addedBy }}</td>
                         <td class="mat-cell grn-date-cell">{{ grnData.grnDate | date: "dd-MMM-yyy" }}</td>
                         <td class="mat-cell"></td>
                         <td class="mat-cell"></td>
-                        <td class="mat-cell grn-documents-cell text-right"
-                          (click)="openDocuments(grnData.grnDocuments);mep.expanded = true"
-                          [class.inactive-receipt-docs]="grnData.grnDocuments.length === 0">
+                        <td
+                          class="mat-cell grn-documents-cell text-right"
+                          (click)="openDocuments(grnData.grnDocuments); mep.expanded = true"
+                          [class.inactive-receipt-docs]="grnData.grnDocuments.length === 0"
+                        >
                           <img class="file-icon" src="../../../../assets/images/file-doc.png" />
                         </td>
                       </tr>
                     </mat-expansion-panel-header>
 
-                    <tr class="grn-material-row border-row background-project-list"
-                      *ngFor="let grnDetail of grnData.grnDetailList">
+                    <tr class="grn-material-row border-row background-project-list" *ngFor="let grnDetail of grnData.grnDetailList">
                       <td class="mat-cell">{{ grnDetail.MaterialName }}</td>
                       <td class="mat-cell material-unit">{{ grnDetail.MaterialUnit }}</td>
                       <td class="mat-cell">{{ grnDetail.MaterialBrand }}</td>
@@ -85,7 +108,6 @@
                       <td class="mat-cell text-center">{{ grnDetail.TotalAmount }}</td>
                       <td class="mat-cell">{{ grnDetail.SupplierName }}</td>
                     </tr>
-
                   </mat-expansion-panel>
                 </mat-accordion>
               </table>
@@ -96,13 +118,10 @@
 
       <!-- Report Default Image If No data is Present -->
       <ng-template #noDataAvailable>
-
         <ng-container *ngIf="noProjectDataFound; else defaultImageMsg">
           <div class="wrapper-btn-center">
             <div class="report-image">
-              <p class="p-t-10 font-size-vary-grn">
-                No GRN created for selected project.
-              </p>
+              <p class="p-t-10 font-size-vary-grn">No GRN created for selected project.</p>
             </div>
           </div>
         </ng-container>
@@ -121,8 +140,6 @@
           </div>
         </ng-template>
       </ng-template>
-
-
     </div>
   </form>
 </div>

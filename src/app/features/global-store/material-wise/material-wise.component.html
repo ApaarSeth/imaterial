@@ -7,28 +7,20 @@
   </mat-form-field>
 </div>
 
-<mat-accordion displayMode="flat" multi class="mat-table res-table"
-  *ngIf="this.newMaterialData && this.newMaterialData.length > 0">
+<mat-accordion displayMode="flat" multi class="mat-table res-table" *ngIf="this.newMaterialData && this.newMaterialData.length > 0">
   <div class="res-td">
     <section matSort class="mat-elevation-z2 mat-header-row blue-background-color-color-white-section">
-      <span class="mat-header-cell mat-header-cell maxwidth-20 material material-Name" mat-sort-header="name"
-        [ngClass]="isMobile ? 'text-center pl-1 pr-1' : ''">Material Name</span>
-      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="estimatedQty"
-        [ngClass]="isMobile ? 'text-center' : ''">Estimated Quantity</span>
-      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="indentedQuantity"
-        [ngClass]="isMobile ? 'text-center' : ''">Indented Quantity</span>
-      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="requiredDate"
-        [ngClass]="isMobile ? 'text-center' : ''">Required Date</span>
-      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="deliveredQuantity"
-        [ngClass]="isMobile ? 'text-center' : ''">Awarded Quantity</span>
-      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="requestedQuantity"
-        [ngClass]="isMobile ? 'text-center' : ''">Delivered Quantity</span>
-      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="availableQuantity"
-        [ngClass]="isMobile ? 'text-center' : ''">Available Stock</span>
+      <span class="mat-header-cell mat-header-cell maxwidth-20 material material-Name" mat-sort-header="name" [ngClass]="isMobile ? 'text-center pl-1 pr-1' : ''"
+        >Material Name</span
+      >
+      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="estimatedQty" [ngClass]="isMobile ? 'text-center' : ''">Estimated Quantity</span>
+      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="indentedQuantity" [ngClass]="isMobile ? 'text-center' : ''">Indented Quantity</span>
+      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="requiredDate" [ngClass]="isMobile ? 'text-center' : ''">Required Date</span>
+      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="deliveredQuantity" [ngClass]="isMobile ? 'text-center' : ''">Awarded Quantity</span>
+      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="requestedQuantity" [ngClass]="isMobile ? 'text-center' : ''">Delivered Quantity</span>
+      <span class="mat-header-cell mat-header-cell maxwidth-20 material" mat-sort-header="availableQuantity" [ngClass]="isMobile ? 'text-center' : ''">Available Stock</span>
     </section>
-    <mat-expansion-panel
-      *ngFor="let material of newMaterialData | SearchPipe: searchMaterial:['GlobalMaterial.materialName']"
-      class="myPanel">
+    <mat-expansion-panel *ngFor="let material of newMaterialData | SearchPipe: searchMaterial:['GlobalMaterial.materialName']" class="myPanel">
       <mat-expansion-panel-header class="mat-row material-row">
         <span class="mat-cell maxwidth-20" matTooltip="{{ material.GlobalMaterial.materialName }}">
           <div class="limited-character globalStore fr-row">
@@ -55,13 +47,11 @@
             </div>
           </div>
         </span>
-        <span
-          class="mat-cell maxwidth-20 text-center">{{ material.GlobalMaterial.nearDueDate | date: "dd MMM yyy" }}</span>
+        <span class="mat-cell maxwidth-20 text-center">{{ material.GlobalMaterial.nearDueDate | date: "dd MMM yyy" }}</span>
         <span class="mat-cell maxwidth-20 text-center">
           <div class="row">
             <div class="col-xs-6 text-right p-r-0">
-              <span
-                class="p-r-5">{{ material.GlobalMaterial.deliveredQty != null ? material.GlobalMaterial.deliveredQty : 0 }}</span>
+              <span class="p-r-5">{{ material.GlobalMaterial.deliveredQty != null ? material.GlobalMaterial.deliveredQty : 0 }}</span>
             </div>
             <div class="col-xs-6 text-left p-l-0">
               <span>{{ material.GlobalMaterial.materialUnit }}</span>
@@ -71,8 +61,7 @@
         <span class="mat-cell maxwidth-20 text-center">
           <div class="row">
             <div class="col-xs-6 text-right p-r-0">
-              <span
-                class="p-r-5">{{ material.GlobalMaterial.issuedQty != null ? material.GlobalMaterial.issuedQty : 0 }}</span>
+              <span class="p-r-5">{{ material.GlobalMaterial.issuedQty != null ? material.GlobalMaterial.issuedQty : 0 }}</span>
             </div>
             <div class="col-xs-6 text-left p-l-0">
               <span>{{ material.GlobalMaterial.materialUnit }}</span>
@@ -87,7 +76,8 @@
                   material.GlobalMaterial.deliveredQty != null
                     ? material.GlobalMaterial.deliveredQty - (material.GlobalMaterial.issuedQty ? material.GlobalMaterial.issuedQty : 0)
                     : 0
-                }}</span>
+                }}</span
+              >
             </div>
             <div class="col-xs-6 text-left p-l-0">
               <span>{{ material.GlobalMaterial.materialUnit }}</span>

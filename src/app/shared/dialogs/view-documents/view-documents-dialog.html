@@ -1,26 +1,25 @@
-
-  <div class="header-add-edit-dialog">
-      <h1 mat-dialog-title>View Terms & Conditions/Documents</h1>
-      <button type="button" class="close" (click)="onNoClick()" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
-  </div>
+<div class="header-add-edit-dialog">
+  <h1 mat-dialog-title>View Terms & Conditions/Documents</h1>
+  <button type="button" class="close" (click)="onNoClick()" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
 
 <div mat-dialog-content *ngIf="data">
-  <div class="row ">
+  <div class="row">
     <!-- Documents -->
     <div class="col-md-6">
       <div class="col-md-8 pull-right">
         <label>Documents</label>
       </div>
       <div>
-        <div class="col-md-8 scroll-box h-290 pull-right">
+        <div class="col-md-8 scroll-box height-290-px pull-right">
           <div *ngFor="let doc of data.documentsList;" class="row grey-full-border p-t-5 m-b-10">
             <div class="col-xs-2">
               <mat-icon>descriptions</mat-icon>
             </div>
-            <div class="col-xs-5 font-size14">{{doc.DocumentDesc}}</div>
-            <div class="col-xs-3 font-size14">300 kb</div>
+            <div class="col-xs-5 fontsize-14-px">{{doc.DocumentDesc}}</div>
+            <div class="col-xs-3 fontsize-14-px">300 kb</div>
             <div class="col-xs-2">
               <mat-icon>cloud_download</mat-icon>
             </div>
@@ -35,9 +34,7 @@
         <label>Add Terms & Conditions</label>
       </div>
       <div class="col-xs-12 grey-full-border">
-        <div class="p-t-20 m-l-20 h-290 scroll-box">
-          {{data.termsDesc}}
-        </div>
+        <div class="p-t-20 m-l-20 height-290-px scroll-box">{{data.termsDesc}}</div>
       </div>
     </div>
   </div>
