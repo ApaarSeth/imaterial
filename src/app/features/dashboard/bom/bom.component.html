@@ -71,7 +71,6 @@
 
               <!-- Upload BOM Link -->
               <div class="mr-3 cursor-pointer ptop-15 upload-bom-excel">
-                <<<<<<< HEAD
                 <input
                   type="file"
                   accept=".xlsx"
@@ -82,19 +81,6 @@
                   multiple
                   (change)="uploadExcel($event.target.files)"
                 />
-                =======
-                <input
-                  type="file"
-                  accept=".xlsx"
-                  #fileDropRef
-                  id="fileDropRef"
-                  class="fileupload cursor-pointer"
-                  style="display: none"
-                  multiple
-                  (change)="uploadExcel($event.target.files)"
-                />
-                >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
-
                 <ng-container *ngIf="innerWidth > 575; else uploadIconOnly">
                   <label for="fileDropRef" class="cursor-pointer upload-template">
                     <img src="assets/images/upload-bom.svg" alt="upload" class="img-fluid mr-2 w-45 cursor-pointer" />
@@ -151,11 +137,7 @@
       <div class="row">
         <div class="col-md-9 display-flex mt-2 col-left-width-9">
           <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
-            <<<<<<< HEAD
-            <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 fontsize-14-px background-color-skyblue color-white">{{ trades }} </mat-card>
-            =======
             <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
-            >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
           </div>
         </div>
 

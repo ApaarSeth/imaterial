@@ -89,7 +89,8 @@ export class GlobalStoreComponent implements OnInit {
   openBomDialog() {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
       width: "600px",
-      data: this.projectList
+      data: this.projectList,
+      panelClass: 'select-projects-dialog'
     });
 
     // dialogRef.afterClosed().subscribe(result => {

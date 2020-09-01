@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { NotificationInt } from '../models/notification';
 import { API } from '../constants/configuration-constants';
 import { DataService } from './data.service';
-import { Router } from '@angular/router';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ProjetPopupData } from '../models/project-details';

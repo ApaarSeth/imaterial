@@ -74,7 +74,6 @@ export class AddProjectComponent implements OnInit {
     private _uploadImageService: DocumentUploadService,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    private _router: Router,
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
     private commonService: CommonService

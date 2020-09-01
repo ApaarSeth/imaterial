@@ -250,7 +250,8 @@ export class AppDashboardComponent implements OnInit {
   openReleaseNote(data, releaseNoteId) {
     const dialogRef = this.dialog.open(ReleaseNoteComponent, {
       disableClose: true,
-      width: "500px", data
+      width: "500px", data,
+      panelClass: 'release-note-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null && result == 'closed') {
@@ -399,7 +400,8 @@ export class AppDashboardComponent implements OnInit {
   openBomDialog() {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
       width: "800px",
-      data: this.projectLists
+      data: this.projectLists,
+      panelClass: 'select-projects-dialog'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -411,7 +413,8 @@ export class AppDashboardComponent implements OnInit {
   showVideo(): void {
 
     const dialogRef = this.dialog.open(ViewVideoComponent, {
-      width: "660px"
+      width: "660px",
+      panelClass: 'view-video-dialog'
     });
 
   }
