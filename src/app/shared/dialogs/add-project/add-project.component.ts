@@ -31,7 +31,7 @@ export interface Unit {
 
 @Component({
   selector: "add-project-dialog",
-  templateUrl: "add-project-component.html"
+  templateUrl: "./add-project.component.html"
 })
 export class AddProjectComponent implements OnInit {
 
@@ -102,10 +102,19 @@ export class AddProjectComponent implements OnInit {
         this.cityStateFetch(this.data.detail.pinCode);
       }
     }
-
   }
 
   getLocation() {
+    if (this.countryList) {
+      this.countryCodeCondition()
+    }
+    this.commonService.getCountry().then((res) => {
+      this.countryList = res.data
+      this.countryCodeCondition()
+    });
+  }
+
+  countryCodeCondition() {
     if (this.data.isEdit && this.data.detail.countryId) {
       this.getCountryCode({ callingCode: null, countryId: this.data.detail.countryId });
     } else if (this.cntryId) {

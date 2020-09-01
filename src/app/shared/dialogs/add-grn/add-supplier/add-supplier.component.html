@@ -3,7 +3,7 @@
     <!-- Receipt Number and Receipt Date Fields -->
     <div class="row">
       <div class="col-md-4 col-xs-6 display-flex align-items-center receipt-number">
-        <span class="text-semi-bold p-rem-r-1"> Receipt No. -</span>
+        <span class="text-semi-bold p-rem-r-10"> Receipt No. -</span>
 
         <mat-form-field class="border-input">
           <input matInput type="string" formControlName="grnNo" placeholder="Receipts No." class="m-r-5" />
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Supplier details section -->
-    <div class="supplier-details p-rem-t-1.50">
+    <div class="supplier-details p-rem-t-15">
       <h5>Supplier's Details</h5>
 
       <div class="row">
@@ -59,7 +59,7 @@
               </div>
               <mat-select-trigger>
                 <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-                  ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                  ><img class="width-27-px p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                   <span class="p-r-5 fontsize-12-px">{{ selectedCountry && selectedCountry.countryCode }}</span>
                   <span class="fontsize-12-px text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
                 </span>

@@ -99,7 +99,6 @@ export class DashboardComponent implements OnInit {
     private projectService: ProjectService,
     private userGuideService: UserGuideService,
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
     private guidedTourService: GuidedTourService,
     private commonService: CommonService,
     private permissionService: PermissionService,
@@ -116,7 +115,6 @@ export class DashboardComponent implements OnInit {
     this.isMobile = this.commonService.isMobile().matches;
     this.getAllProjects();
     this.countryList = this.route.snapshot.data.countryList;
-
   }
 
   setLocalStorage() {
@@ -137,6 +135,7 @@ export class DashboardComponent implements OnInit {
   getNotifications() {
     this.commonService.getNotification(this.userId);
   }
+
   getAllProjects() {
     this.projectService.getProjects(this.orgId, this.userId).then(data => {
       this.allProjects = data.data;
@@ -148,23 +147,33 @@ export class DashboardComponent implements OnInit {
           }, 1000);
         }
       }
-      this.route.queryParams.subscribe(params => {
-        if (params.projectId) {
-          this.editProject(Number(params.projectId))
-        }
-      })
+      // this.route.queryParams.subscribe(params => {
+      //   if (params.projectId) {
+      //     this.editProject(Number(params.projectId))
+      //   }
+      // })
     });
   }
 
-  editProject(projectId: number) {
-    const data: ProjetPopupData = {
-      isEdit: true,
-      isDelete: false,
-      detail: this.allProjects.find(pro => pro.projectId === projectId),
-      countryList: this.countryList
-    };
+  // editProject(projectId: number) {
+  //   const data: ProjetPopupData = {
+  //     isEdit: true,
+  //     isDelete: false,
+  //     detail: this.allProjects.find(pro => pro.projectId === projectId),
+  //     countryList: this.countryList
+  //   };
 
-    this.openDialog(data);
+  //   this.openDialog(data);
+  // }
+
+  projectDeleteOrEdit(event) {
+    if (event) {
+      this.projectService
+        .getProjects(this.orgId, this.userId)
+        .then(data => {
+          this.allProjects = data.data;
+        })
+    }
   }
 
   addProject() {
@@ -176,57 +185,55 @@ export class DashboardComponent implements OnInit {
     // this.getAllProjects();
   }
 
-  deleteProject(projectId: number) {
-    const data: ProjetPopupData = {
-      isEdit: false,
-      isDelete: true,
-      detail: this.allProjects.find(pro => pro.projectId === projectId)
-    };
+  // deleteProject(projectId: number) {
+  //   const data: ProjetPopupData = {
+  //     isEdit: false,
+  //     isDelete: true,
+  //     detail: this.allProjects.find(pro => pro.projectId === projectId)
+  //   };
 
-    this.openDialog(data);
-  }
+  //   this.openDialog(data);
+  // }
 
   // modal function
   openDialog(data: ProjetPopupData): void {
-    if (data.isDelete == false) {
-      const dialogRef = this.dialog.open(AddProjectComponent, {
-        width: "1000px",
-        data,
-        panelClass: 'add-project-dialog'
-      });
+    // if (data.isDelete == false) {
+    const dialogRef = this.dialog.open(AddProjectComponent, {
+      width: "1000px",
+      data,
+      panelClass: 'add-project-dialog'
+    });
+    dialogRef
+      .afterClosed()
+      .toPromise()
+      .then(result => {
+        if (result && result != null) {
+          this.projectService
+            .getProjects(this.orgId, this.userId)
+            .then(data => {
+              this.allProjects = data.data;
+              this.notifier.snack(result)
+            })
+        };
+      })
+    //   } else if (data.isDelete == true) {
+    //     const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
+    //       width: "500px",
+    //       data
+    //     });
 
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => {
-          if (result && result != null) {
-            this.projectService
-              .getProjects(this.orgId, this.userId)
-              .then(data => {
-                this.allProjects = data.data;
-                this.notifier.snack(result)
-              })
-          };
-        })
-    } else if (data.isDelete == true) {
-      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
-        width: "500px",
-        data
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => {
-          if (result && result != null) {
-            this.projectService
-              .getProjects(this.orgId, this.userId)
-              .then(data => {
-                this.allProjects = data.data;
-              });
-          }
-
-        });
-    }
+    //     dialogRef
+    //       .afterClosed()
+    //       .toPromise()
+    //       .then(result => {
+    //         if (result && result != null) {
+    //           this.projectService
+    //             .getProjects(this.orgId, this.userId)
+    //             .then(data => {
+    //               this.allProjects = data.data;
+    //             });
+    //         }
+    //       });
+    //   }
   }
 }

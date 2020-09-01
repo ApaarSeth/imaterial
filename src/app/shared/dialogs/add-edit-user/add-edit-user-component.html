@@ -40,15 +40,22 @@
             <mat-form-field class="border-select mat-form-field-flex-mm-padding">
               <mat-select formControlName="countriesList">
                 <div class="display-flex">
-                  <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Country" [(ngModel)]="searchCountry" 
-                  [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()"/>
+                  <input
+                    class="p-l-10 p-b-5"
+                    matInput
+                    type="search"
+                    placeholder="Search Country"
+                    [(ngModel)]="searchCountry"
+                    [ngModelOptions]="{standalone: true}"
+                    (keydown)="$event.stopPropagation()"
+                  />
                   <button mat-button matSuffix mat-icon-button>
                     <mat-icon>search</mat-icon>
                   </button>
                 </div>
                 <mat-select-trigger>
                   <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-                    ><img class="w-30 p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
+                    ><img class="width-27-px p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                     <span class="p-r-5 font-size12">{{ selectedCountry && selectedCountry.countryCode }}</span>
                     <span class="font-size12 text-semi-bold">{{ selectedCountry && selectedCountry.callingCode }}</span>
                   </span>
@@ -82,7 +89,7 @@
               <mat-error class="mat-error-add-edit-form-modal p-t-20">Role is Required</mat-error>
             </mat-form-field>
           </div>
-          
+
           <!-- Project Dropdown Field -->
           <div class="col-md-6 col-sm-6 col-xs-12">
             <mat-form-field class="border-select projects-field add-edit-user-form-modal">

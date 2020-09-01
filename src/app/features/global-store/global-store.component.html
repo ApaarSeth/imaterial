@@ -1,4 +1,4 @@
-<div class="page-start-point p-rem-t-1.50">
+<div class="page-start-point p-rem-t-40">
   <div class="p-l-10 p-r-20 p-b-20 min-height p-t-20 adjust-right-padding">
     <ng-container *ngIf="materialDataLength == 0 && projectWiseData.length == 0">
       <div class="wrapper-btn-center">
@@ -24,13 +24,11 @@
       <div class="row" *ngIf="materialDataLength > 0 || projectDataLength > 0">
         <div class="col-md-6 col-sm-6 col-xs-6">
           <a href="javascript:void(0)" (click)="setButtonName('materialWise')">
-            <button [class.active]="buttonName == 'materialWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
-              All Materials
-            </button>
+            <button [class.active]="buttonName == 'materialWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">All Materials</button>
           </a>
 
           <a href="javascript:void(0)" (click)="setButtonName('projectWise')">
-            <button [class.active]="buttonName == 'projectWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">Projects</button>
+            <button [class.active]="buttonName == 'projectWise'" class="color-black actv-btn" mat-button [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">Projects</button>
           </a>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6 text-right">
