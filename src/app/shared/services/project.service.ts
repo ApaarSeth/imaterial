@@ -1,14 +1,17 @@
 import { Injectable } from "@angular/core";
 import { DataService } from "./data.service";
 import { API } from "../constants/configuration-constants";
-import { ProjectDetails } from "../models/project-details";
-import { IndentVO } from "../models/indent";
+import { ProjectDetails, ProjetPopupData } from "../models/project-details";
+import { Subject } from "rxjs";
+import { MatDialog } from "@angular/material/dialog";
 
 @Injectable({
   providedIn: "root"
 })
 export class ProjectService {
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+    public dialog: MatDialog,
+  ) { }
 
   getProjects(organizationId: Number, userId: Number, skipLoader?: boolean) {
     return this.dataService
@@ -101,4 +104,6 @@ export class ProjectService {
         return res;
       });
   }
+
+
 }

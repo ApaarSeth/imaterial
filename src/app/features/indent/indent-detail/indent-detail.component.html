@@ -1,8 +1,8 @@
-<div class="page-start-point mt-5 p-rem-t-1.50">
+<div class="page-start-point mt-5 p-rem-t-15">
   <div class="dashboard-unique p-b-20 min-height parent">
     <div class="row">
       <div class="col-sm-12 p-l-10 p-r-10">
-        <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
+        <card-layout *ngIf="product" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
       </div>
     </div>
 
@@ -33,7 +33,7 @@
         <ng-container *ngIf="dataSource1 || dataSource2; else emptyReports">
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Ongoing Purchase Requisition</span>
@@ -111,7 +111,7 @@
           <p></p>
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Completed Purchase Requisition</span>

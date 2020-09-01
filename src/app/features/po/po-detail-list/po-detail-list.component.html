@@ -1,4 +1,4 @@
-<div class="page-start-point p-rem-t-1.50">
+<div class="page-start-point p-rem-t-40">
   <div *ngIf="!poApprovalDetailsTemp && !poDraftedDetailsTemp && !acceptedRejectedPOListTemp && poCount === 0">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
@@ -152,7 +152,7 @@
           <ng-container *ngIf="(poApprovalDetailsTemp && permissionObj.poApprovalFlag) || poDraftedDetailsTemp || acceptedRejectedPOListTemp; else emptyReports">
             <div *ngIf="poApprovalDetailsTemp && permissionObj.poApprovalFlag">
               <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
-                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
+                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
                   <mat-panel-title> P.O. For Approval </mat-panel-title>
                 </mat-expansion-panel-header>
 
@@ -218,7 +218,7 @@
 
             <div *ngIf="poDraftedDetailsTemp">
               <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
-                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
+                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
                   <mat-panel-title> Drafted P.O. </mat-panel-title>
                 </mat-expansion-panel-header>
 
@@ -286,7 +286,7 @@
 
             <div *ngIf="acceptedRejectedPOListTemp">
               <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
-                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-0.50 p-rem-r-0.50' : ''">
+                <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
                   <mat-panel-title>
                     <div class="col-xs-5 text-left approved">Approved P.O.</div>
                   </mat-panel-title>

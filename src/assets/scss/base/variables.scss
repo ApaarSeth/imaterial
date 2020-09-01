@@ -13,7 +13,7 @@ $green-color: #7ed321;
 $skyblue-color: #2197bb;
 $light-grey: #707070;
 $dark-blue: #0c3d56;
-
+$modal-background-color: #e7e7e7;
 /*******************************************Colors*******************************************/
 .ink-color {
   color: $dark-blue;
@@ -30,6 +30,10 @@ $dark-blue: #0c3d56;
 a:hover {
   color: $main-color !important;
   text-decoration: none;
+}
+
+.modal-header-color {
+  background-color: $modal-background-color;
 }
 
 .light-grey {
@@ -581,13 +585,13 @@ a:hover {
   padding-top: 0px;
 }
 
-.inpt-0{
-  .mat-form-field-wrapper{
+.inpt-0 {
+  .mat-form-field-wrapper {
     padding-top: 0 !important;
   }
 }
 
-.min-w-120px{
+.min-w-120px {
   min-width: 120px;
 }
 
