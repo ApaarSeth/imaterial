@@ -10,7 +10,7 @@
     <div class="modal-body">
       <ng-container *ngIf="paymentDetail.purchaseOrderCurrency">
         <div class="row" *ngIf="paymentDetail.purchaseOrderCurrency && paymentDetail.purchaseOrderCurrency.exchangeCurrencyName != null">
-          <div class="col-md-4 col-sm-6 col-base-currency p-rem-r-0.50">
+          <div class="col-md-4 col-sm-6 col-base-currency p-rem-r-5">
             <span class="base-currency d-block mb-3">
               <span class="color-grey">
                 <img width="25px" *ngIf="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" [src]="paymentDetail.purchaseOrderCurrency.exchangeCurrencyFlag" />

@@ -14,7 +14,7 @@
                   {{ term.termsDesc }}
                 </mat-radio-button>
 
-                <form [formGroup]="customTermForm" class="display-inline-block p-rem-l-1">
+                <form [formGroup]="customTermForm" class="display-inline-block p-rem-l-10">
                   <mat-form-field *ngIf="term.termsDesc.trim() === 'Others'" class="border-input main-color other-terms-input">
                     <input matInput formControlName="customTerm" type="text" placeholder="Add Custom Term" />
                   </mat-form-field>

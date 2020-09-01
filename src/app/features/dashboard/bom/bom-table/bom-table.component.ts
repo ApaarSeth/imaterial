@@ -361,50 +361,6 @@ export class BomTableComponent implements OnInit {
     this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
   }
 
-  editProject() {
-    const data: ProjetPopupData = {
-      isEdit: true,
-      isDelete: false,
-      detail: this.projectData
-    };
-
-    this.openDialog(data);
-  }
-
-  deleteProject() {
-    const data: ProjetPopupData = {
-      isEdit: false,
-      isDelete: true,
-      detail: this.projectData
-    };
-
-    this.openDialog(data);
-  }
-
-  openDialog(data: ProjetPopupData): void {
-    if (data.isDelete == false) {
-      const dialogRef = this.dialog.open(AddProjectComponent, {
-        width: "1000px",
-        data,
-        panelClass: 'add-project-dialog'
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => { });
-    } else if (data.isDelete == true) {
-      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
-        width: "500px",
-        data
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => { });
-    }
-  }
 
   addMaterial() {
     this.router.navigate(["/project-dashboard/bom/" + this.projectId]);

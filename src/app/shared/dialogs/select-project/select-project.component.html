@@ -16,7 +16,8 @@
               <div class="select-project__detail">
                 <p class="mb-0 select-project__location gray-clr">
                   <strong class="d-flex font-weight500">{{ project.projectName }}</strong>
-                  <span class="fontsize-14-px">{{ project.addressLine1 }}
+                  <span class="fontsize-14-px"
+                    >{{ project.addressLine1 }}
                     <span *ngIf="project.addressLine2">, {{ project.addressLine2 }}</span>
                     , {{ project.city }}, {{ project.country }}, {{ project.state }}, {{ project.pinCode }}
                   </span>
@@ -44,8 +45,7 @@
           <img src="assets/images/project-background.png" alt="No projects available" class="no-projects img-fluid" />
           <h5 class="m-t-20">You haven't added any project yet.</h5>
           <h5 class="m-b-10">Please add one to continue.</h5>
-          <button (click)="addProject()" mat-raised-button class="main-background-color main-button color-white m-t-10">Add
-            First Project</button>
+          <button (click)="addProject()" mat-raised-button class="main-background-color main-button color-white m-t-10">Add First Project</button>
         </div>
       </div>
     </div>
