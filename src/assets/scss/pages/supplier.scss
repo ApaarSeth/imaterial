@@ -87,11 +87,6 @@
 
 .material-rfq-supplies {
   background: #c7c7c7;
-  // display: flex;
-  // width: 100%;
-  // align-items: center;
-  // padding: 10px 20px;
-  // justify-content: space-between;
 
   div {
     display: flex;
@@ -105,15 +100,9 @@
 
 .brand-name-rfq-supplies {
   background: #e6e6e6;
-  // display: flex;
-  // width: 100%;
-  // justify-content: space-between;
-  // padding: 13px 20px;
 
   div {
     display: flex;
-    //flex: 0 0 27%;
-    // flex: 0 0 30%;
     color: #121212 !important;
   }
 }
@@ -127,27 +116,11 @@
 
 .table-white-background-color {
   background: #ffffff;
-  // display: flex;
-  // width: 100%;
-  // justify-content: space-between;
-  // padding: 12px 20px;
-  // border: 1px solid #CBCBCB;
-  // border-top: none;
-  // align-items: center;
 
   .mat-cell {
     display: flex;
-    //flex: 0 0 27%;
-    // flex: 0 0 30%;
     color: #707070;
   }
-
-  //    .mat-form-field-flex{
-  //        width: 100%;
-  //    }
-  // input.mat-input-element{
-  //     width: 75%;
-  // }
 }
 
 .parent {
@@ -171,7 +144,6 @@
       background: #fafafa;
       margin: auto;
       width: 650px;
-      // text-align: center;
       display: block;
       border-radius: 8px;
 
@@ -211,10 +183,6 @@
 .no-indent-list {
   text-align: center;
 }
-
-// body {
-//   overflow-x: hidden;
-// }
 
 .buildsupply-logo-header {
   img {
@@ -414,7 +382,6 @@ div.limited-character.globalStore {
 }
 
 .blue-background-color-color-white-section {
-  // background: #192135;
   background: #2197bb;
   border-radius: 0px;
 
@@ -468,31 +435,12 @@ div.limited-character.globalStore {
   }
 }
 
-mat-expansion-panel-header:hover {
-  background: #eeeeee;
-  border-radius: 0px !important;
-}
-
-mat-expansion-panel:hover {
-  background: #eeeeee;
-  border-radius: 0px !important;
-}
-
+mat-accordion,
+mat-expansion-panel,
+mat-expansion-panel-header,
+mat-expansion-panel-header:hover,
+mat-expansion-panel:hover,
 mat-accordion:hover {
-  background: #eeeeee;
-  border-radius: 0px !important;
-}
-
-////////
-mat-expansion-panel-header {
-  border-radius: 0px !important;
-}
-
-mat-expansion-panel {
-  border-radius: 0px !important;
-}
-
-mat-accordion {
   border-radius: 0px !important;
 }
 
@@ -516,22 +464,10 @@ mat-icon {
   content: none;
 }
 
-// .table-width{
-//     min-width: 600px;
-//     max-width: 600px;
-//     margin: auto;
-//     display: block;
-// }
-
 .mat-tab-add-address-modal-po {
   .mat-tab-body-wrapper {
     height: auto;
   }
-
-  // .show-address-po-modal{
-  //     max-height calc(100vh - 350px);
-  //     overflow-y: auto;
-  // }
 }
 .show-address-supplier-modal {
   max-height: 235px;
@@ -542,15 +478,6 @@ mat-icon {
   display: block;
   width: 22%;
   padding: 10px;
-}
-
-.po-list-detail-custom {
-  .mat-row .mat-cell {
-    min-width: 80px;
-  }
-  .mat-row .actions-cell.mat-cell {
-    min-width: 220px;
-  }
 }
 
 .show-detail-supplier:hover #detail-supplier {
@@ -870,7 +797,6 @@ h3 {
   color: #333;
   background: #fff;
   cursor: default;
-  //font-weight:bold;
   font-size: 14px;
   padding: 8px;
   margin: 0;

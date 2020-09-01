@@ -11,7 +11,6 @@
 .bom-material-table {
   tr.mat-header-row {
     background: #2197bb;
-    height: 45px;
     th {
       font-weight: 500;
       font-size: 14px;
@@ -36,7 +35,6 @@
   }
 }
 .bom-details-table-div-part {
-  // max-height: 453px;
   overflow-y: auto;
   z-index: 0;
   position: relative;
@@ -149,17 +147,6 @@ div.limited-character.bom {
     padding: 0;
   }
 
-  // button.close {
-  //   position: absolute;
-  //   right: 10px;
-  //   z-index: 99;
-  //   opacity: 1;
-  //   font-size: 50px;
-  //   font-weight: 100;
-  //   color: #f47721;
-  //   text-shadow: none;
-  // }
-
   h4 {
     font-size: 1.25rem;
   }
@@ -263,7 +250,6 @@ div.limited-character.bom {
 
 .default-image {
   height: 50px;
-  // box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .red-border {
@@ -277,11 +263,6 @@ div.limited-character.bom {
 }
 
 .bom-select-menus {
-  // .mat-select-trigger,
-  // .mat-select-placeholder {
-  //   height: 45px;
-  // }
-
   .label-adjust .mat-form-field-label-wrapper {
     top: -.84375em !important;
     padding-top: .84375em !important;
@@ -535,14 +516,6 @@ div.limited-character.bom {
       background-color: #f5f5f5 !important;
     }
   }
-
-  // .bom-materials-info{
-  //   padding: 0 24px;
-  // }
-
-  // .bom-materials-body-info{
-  //   padding: 15px 24px 2px;
-  // }
 
   .bom-estimated-rate-col .mat-form-field{
     text-align: right;
