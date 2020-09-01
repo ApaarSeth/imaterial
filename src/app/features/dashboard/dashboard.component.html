@@ -34,7 +34,7 @@
     </div>
     <!-- end fix part -->
     <div class="mb-3" *ngFor="let projDetails of allProjects | SearchPipe: searchText:['projectName']">
-      <card-layout [projectDetails]="projDetails"> </card-layout>
+      <card-layout (onEditOrDelete)="projectDeleteOrEdit($event)" [projectDetails]="projDetails"> </card-layout>
     </div>
   </div>
 </div>

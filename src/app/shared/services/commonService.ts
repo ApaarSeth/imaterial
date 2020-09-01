@@ -4,8 +4,12 @@ import { API } from '../constants/configuration-constants';
 import { DataService } from './data.service';
 import { Router } from '@angular/router';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { Currency } from '../models/currency';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { ProjetPopupData } from '../models/project-details';
+import { AddProjectComponent } from '../dialogs/add-project/add-project.component';
+import { DoubleConfirmationComponent } from '../dialogs/double-confirmation/double-confirmation.component';
+import { MatDialog } from "@angular/material/dialog";
+
 @Injectable({
   providedIn: "root"
 })
@@ -18,12 +22,13 @@ export class CommonService {
   allnotificationLength: number = null;
   unreadnotificationLength: number = null;
   onUserUpdate$ = new Subject<number>();
+  onEditOrDelete = new Subject<string>()
   materialAdded = new Subject<boolean>();
   baseCurrency = new BehaviorSubject(null);
   XSmall: string = '(max-width: 599px)';
   constructor(
     private dataService: DataService,
-    private _router: Router,
+    public dialog: MatDialog,
     private mediaMatcher: MediaMatcher
   ) { }
 
@@ -140,6 +145,38 @@ export class CommonService {
 
   getMaterials() {
     return this.dataService.getRequest(API.GETDISTINCTMATERIALS);
+  }
+
+  openDialog(data: ProjetPopupData): void {
+    if (data.isDelete == false) {
+      const dialogRef = this.dialog.open(AddProjectComponent, {
+        width: "1200px",
+        data,
+        panelClass: 'add-project-dialog'
+      });
+      dialogRef
+        .afterClosed()
+        .toPromise()
+        .then(result => {
+          if (result && result != null) {
+            this.onEditOrDelete.next(result)
+          }
+        })
+    } else if (data.isDelete == true) {
+      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
+        width: "500px",
+        data
+      });
+
+      dialogRef
+        .afterClosed()
+        .toPromise()
+        .then(result => {
+          if (result && result != null) {
+            this.onEditOrDelete.next(result)
+          }
+        });
+    }
   }
 
 }

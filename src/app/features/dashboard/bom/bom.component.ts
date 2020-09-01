@@ -395,23 +395,6 @@ export class BomComponent implements OnInit {
       });
   }
 
-  editProject() {
-    const data: ProjetPopupData = {
-      isEdit: true,
-      isDelete: false,
-      detail: this.product
-    };
-    this.openDialog(data);
-  }
-
-  deleteProject() {
-    const data: ProjetPopupData = {
-      isEdit: false,
-      isDelete: true,
-      detail: this.product
-    };
-    this.openDialog(data);
-  }
 
   clearSelectedCategory(category) {
     this.selectedCategory = this.selectedCategory.filter(
@@ -423,30 +406,6 @@ export class BomComponent implements OnInit {
     if (this.form.value.selectedTrades) return this.form.value.selectedTrades.length;
   }
 
-  openDialog(data: ProjetPopupData): void {
-    if (data.isDelete == false) {
-      const dialogRef = this.dialog.open(AddProjectComponent, {
-        width: "1000px",
-        data,
-        panelClass: 'add-project-dialog'
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => { });
-    } else if (data.isDelete == true) {
-      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
-        width: "500px",
-        data
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => { });
-    }
-  }
 
   searchData(event) {
     this.searchDataValues = event;

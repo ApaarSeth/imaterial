@@ -1,31 +1,20 @@
 import { AppNotificationService } from './../../services/app-notification.service';
-import { CountryCode } from './../../models/currency';
 import {
   Component,
   OnInit,
   Output,
   EventEmitter,
-  OnDestroy,
   Input,
-  ViewChild,
   SimpleChanges
 } from "@angular/core";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl
-} from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
 import { PermissionService } from "../../services/permission.service";
-import { Orientation, GuidedTour, GuidedTourService } from 'ngx-guided-tour';
 import { DisplayProjectDetailsComponent } from "../../dialogs/display-project-details/display-project-details.component";
 import { MatDialog } from "@angular/material/dialog";
 import { CommonService } from '../../services/commonService';
 import { AddProjectComponent } from "../../dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "../../dialogs/double-confirmation/double-confirmation.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "card-layout",
@@ -47,12 +36,9 @@ export class ProjectItemComponent implements OnInit {
   ) { }
 
   @Output('startDate') startDate = new EventEmitter<Date>();
-  @Output("onEdit") onEdit = new EventEmitter<number>();
-  @Output("onDelete") onDelete = new EventEmitter<number>();
-  @Output("onEditOrDelete") onEditOrDelete = new EventEmitter<boolean>();
+  @Output("onEditOrDelete") onEditOrDelete = new EventEmitter<string>();
   @Input("projectDetails") projectDetails: ProjectDetails;
   @Input("disableEditDelete") disableEditDelete: boolean;
-  @Input('pageType') type: string;
 
   ngOnInit(): void {
     this.isMobile = this.commonService.isMobile().matches;
@@ -113,7 +99,7 @@ export class ProjectItemComponent implements OnInit {
       isDelete: false,
       detail: this.projectDetails
     };
-    this.openDialog(data);
+    this.commonService.openDialog(data);
   }
 
   deleteProject() {
@@ -122,7 +108,7 @@ export class ProjectItemComponent implements OnInit {
       isDelete: true,
       detail: this.projectDetails
     };
-    this.openDialog(data);
+    this.commonService.openDialog(data);
   }
 
   openDialog(data: ProjetPopupData): void {
@@ -137,12 +123,7 @@ export class ProjectItemComponent implements OnInit {
         .toPromise()
         .then(result => {
           if (result && result != null) {
-            this.onEditOrDelete.next(true)
-            this.notifier.snack('Project Edit successfull')
-          }
-          else {
-            this.onEditOrDelete.next(false)
-            this.notifier.snack('Project Edit Not Successfull')
+            this.onEditOrDelete.next('edit')
           }
         })
     } else if (data.isDelete == true) {
@@ -156,12 +137,7 @@ export class ProjectItemComponent implements OnInit {
         .toPromise()
         .then(result => {
           if (result && result != null) {
-            this.onEditOrDelete.next(true)
-            this.notifier.snack('Project Deleted successfully')
-          }
-          else {
-            this.onEditOrDelete.next(false)
-            this.notifier.snack('Project Deleteion Not Successfull')
+            this.onEditOrDelete.next('delete')
           }
         });
     }
