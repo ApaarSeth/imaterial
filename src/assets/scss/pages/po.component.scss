@@ -12,24 +12,8 @@
     border-bottom: none;
   }
 
-  $mat-header-row-height: 56px;
-  $mat-row-height: 48px;
-  $material-row-height: 77px;
-  $mat-row-horizontal-padding: 24px;
-
   .mat-table {
     display: block;
-  }
-
-  .mat-header-row {
-    min-height: $mat-header-row-height;
-  }
-
-  .mat-row {
-    min-height: $mat-row-height;
-  }
-  .material-row {
-    min-height: $mat-row-height;
   }
 
   .mat-row,
@@ -180,13 +164,13 @@ s .validTill {
   .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
-    padding: 0px 10px;
+    // padding: 0px 10px;
     line-break: unset;
     width: 2%;
     white-space: nowrap;
     overflow: hidden;
     vertical-align: middle;
-    font-weight: 500;
+    // font-weight: 500;
   }
   .brand-name {
     text-align: left;
@@ -214,70 +198,16 @@ s .validTill {
   .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
-    padding: 0px 10px;
+    // padding: 0px 10px;
     line-break: unset;
     white-space: nowrap;
     overflow: hidden;
     vertical-align: middle;
-    font-weight: 500;
+    // font-weight: 500;
   }
   .mat-row,
   .mat-header-row {
     display: table-row;
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .example-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-  }
-  .add-grn-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-    .brand-name {
-      text-align: left;
-    }
-  }
-  .add-user-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-    .project-user-details-width {
-      button {
-        font-size: 12px;
-      }
-    }
-  }
-
-  .add-unique-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-    .project-user-details-width {
-      button {
-        font-size: 12px;
-      }
-    }
-  }
-
-  .po-number-grn {
-    font-size: 14px;
-  }
-  .font-size-vary-grn {
-    font-size: 12px;
-  }
-}
-
-@media only screen and (min-width: 576) {
-  .font-size-vary-grn {
-    font-size: 14px;
   }
 }
 
@@ -367,17 +297,8 @@ s .validTill {
 }
 
 .add-taxes-col {
-  // min-width: 100px;
-  // max-width: 120px;
   span {
     white-space: normal;
-  }
-}
-
-@media only screen and (max-width: 1300px) {
-  .add-taxes-col {
-    min-width: 60px !important;
-    max-width: 80px;
   }
 }
 
@@ -456,12 +377,6 @@ s .validTill {
   .mat-expansion-indicator::after{
     padding: 6px;
   }
-
-  tr.mat-header-row,
-  tr.mat-row, 
-  tr.mat-footer-row{
-    height: 45px;
-  }
 }
 
 .po-docs-outer .row {
@@ -499,6 +414,28 @@ s .validTill {
   }
 }
 
+.po-list-detail-custom {
+  .mat-row .mat-cell {
+    min-width: 80px;
+  }
+  .mat-row .actions-cell.mat-cell {
+    min-width: 160px;
+  }
+}
+
+@media only screen and (min-width: 576) {
+  .font-size-vary-grn {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .add-taxes-col {
+    min-width: 60px !important;
+    max-width: 80px;
+  }
+}
+
 @media only screen and (max-width: 1199px){
   .edit-view-purchase-order{
     .mat-header-cell, .mat-cell, .add-taxes-col span, .small-text{
@@ -510,5 +447,59 @@ s .validTill {
     .form-placeholder {
       font-size: 12px;
     }
+  }
+
+  .po-list-detail-custom {
+    .mat-row .actions-cell.mat-cell {
+      min-width: 220px;
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .example-container {
+    .mat-cell,
+    .mat-header-cell {
+      font-size: 12px;
+    }
+  }
+  .add-grn-container {
+    .mat-cell,
+    .mat-header-cell {
+      font-size: 12px;
+    }
+    .brand-name {
+      text-align: left;
+    }
+  }
+  .add-user-container {
+    .mat-cell,
+    .mat-header-cell {
+      font-size: 12px;
+    }
+    .project-user-details-width {
+      button {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .add-unique-container {
+    .mat-cell,
+    .mat-header-cell {
+      font-size: 12px;
+    }
+    .project-user-details-width {
+      button {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .po-number-grn {
+    font-size: 14px;
+  }
+  .font-size-vary-grn {
+    font-size: 12px;
   }
 }

@@ -2,11 +2,6 @@
   width: 7rem !important;
 }
 
-.mat-expansion-panel-header.mat-expanded:focus,
-.mat-expansion-panel-header.mat-expanded:hover {
-  background: $background-color-grey !important;
-}
-
 .widthZero .mat-form-field-infix {
   min-width: 0;
   width: auto !important;
@@ -36,9 +31,8 @@
   }
 }
 
-input[type=file], /* FF, IE7+, chrome (except button) */
+input[type=file],
 input[type=file]::-webkit-file-upload-button {
-  /* chromes and blink button */
   cursor: pointer;
   color: transparent;
 }

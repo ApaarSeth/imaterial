@@ -684,6 +684,50 @@ input::title {
   text-decoration-line: line-through;
 }
 
+/******* Table and Expansion panel height css start *********/
+.mat-expansion-panel-header{
+  height: 45px !important;
+  padding: 0 16px !important;
+
+  &:after{
+    padding: 5px;
+    margin-top: -8px;
+  }
+
+  .mat-expansion-panel-header-title{
+    color: #545454;
+    font-weight: 450;
+  }
+}
+
+tr.mat-header-row{
+  height: 50px !important;
+}
+
+tr.mat-row, tr.mat-footer-row {
+  height: 42px !important;
+}
+
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
+  padding-right: 16px !important;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 16px !important;
+}
+
+.mat-row{
+  .mat-cell{
+    color: #545454;
+  }
+
+  .actions-cell .mat-icon-button{
+      width: auto;
+  }
+}
+
+/******* Table and Expansion panel height css end *********/
+
 @media only screen and (max-width: 959px) {
   .adjust-right-padding {
     padding: 0 10px;
@@ -700,6 +744,14 @@ input::title {
     flex-direction: column;
     min-width: auto !important;
     height: auto !important;
+  }
+
+  .mat-expansion-panel-header{
+    height: 42px !important;
+  }
+  
+  tr.mat-header-row{
+    height: 45px !important;
   }
 }
 
@@ -734,20 +786,7 @@ input::title {
       }
     }
   }
-  .mat-table .mat-cell {
-    height: auto;
-    margin-top: auto;
-    border-bottom: 0px;
-    text-align: left;
-  }
-  .mat-expansion-panel-header {
-    min-height: auto !important;
-    height: auto !important;
-    max-height: auto !important;
-  }
-  // .mat-expansion-indicator{
-  //   margin-top: -50px;
-  // }
+
   .fr-row {
     text-align: left;
     width: auto;
