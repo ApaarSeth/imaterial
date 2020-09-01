@@ -120,7 +120,7 @@ export class ViewGRNComponent implements OnInit {
         const dialogRef = this.dialog.open(ShowDocumentComponent, {
             width: "500px",
             data,
-            panelClass: 'show-docs-dialog'
+            panelClass: ['common-modal-style', 'show-docs-dialog']
         });
         dialogRef.afterClosed().toPromise().then(result => {
             if (result) {
@@ -133,7 +133,7 @@ export class ViewGRNComponent implements OnInit {
             const dialogRef = this.dialog.open(AddEditGrnComponent, {
                 width: "1000px",
                 data,
-                panelClass: 'add-receipts-dialog'
+                panelClass: ['common-modal-style', 'add-receipts-dialog']
             });
             dialogRef.afterClosed().toPromise().then(result => {
                 if (result) {

@@ -219,22 +219,20 @@ $mat-row-horizontal-padding: 12px;
 
 /** Add Receipt Via System, Add Custom Material Dialog CSS **/
 
-.create-receipt-excel, .add-receipt-via-system, .add-custom-material, .issue-to-indent-dialog, .upload-image-modal, .view-image-modal,
-.delete-bom, .payment-record-dialog, .add-receipts-dialog, .show-docs-dialog, .drafted-po-confirm-dialog, .select-currency-dialog,
-.select-contact-person-dialog, .add-address-dialog, .select-approver-dialog, .show-supplier-remarks-docs, .select-rfq-terms-dialog,
-.float-rfq-confirm-dialog, .add-users-dialog, .add-project-dialog, .deactivate-user, .vendor-rating-dialog, .tax-dialog, 
-.choose-address-dialog, .select-projects-dialog, .view-video-dialog, .release-note-dialog{
+// .create-receipt-excel, .add-receipt-via-system, .add-custom-material, .issue-to-indent-dialog, .upload-image-modal, .view-image-modal,
+// .delete-bom, .payment-record-dialog, .add-receipts-dialog, .show-docs-dialog, .drafted-po-confirm-dialog, .select-currency-dialog,
+// .select-contact-person-dialog, .add-address-dialog, .select-approver-dialog, .show-supplier-remarks-docs, .select-rfq-terms-dialog,
+// .float-rfq-confirm-dialog, .add-users-dialog, .add-project-dialog, .deactivate-user, .vendor-rating-dialog, .tax-dialog, 
+// .choose-address-dialog, .select-projects-dialog, .view-video-dialog, .release-note-dialog
+
+.common-modal-style{
   .mat-dialog-container{
     padding: 0px !important;
     overflow-x: hidden;
   }
 }
 
-.create-receipt-excel, .add-receipt-via-system, .add-custom-material, .issue-to-indent-dialog, .upload-image-modal, .view-image-modal,
-.delete-bom, .payment-record-dialog, .add-receipts-dialog, .show-docs-dialog, .drafted-po-confirm-dialog, .select-currency-dialog,
-.select-contact-person-dialog, .add-address-dialog, .add-project-dialog, .add-supplier-dialog, .select-approver-dialog, .show-supplier-remarks-docs, 
-.select-rfq-terms-dialog, .float-rfq-confirm-dialog, .add-users-dialog, .deactivate-user, .vendor-rating-dialog, .tax-dialog, 
-.choose-address-dialog, .select-projects-dialog, .view-video-dialog, .release-note-dialog{
+.common-modal-style, .add-supplier-dialog{
   .mat-dialog-content{
     padding: 0;
     overflow-x: hidden;

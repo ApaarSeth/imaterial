@@ -58,18 +58,18 @@
           <div class="supplier-list-rfq-view col-md-3 main-flex" *ngFor="let supplier of rfqDetails.supplierDetails; let i = index">
             <mat-card class="w-100">
               <div class="col-md-12 text-bold supplier-company">
-                <label for="company " class="word-break-all">{{ supplier.supplier_name }}</label>
+                <label for="company " class="word-break-all">{{ supplier.supplierName }}</label>
               </div>
 
               <span class="d-block supplier-rates ml-1">
-                <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplier_rating"></view-rating>
+                <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplierRating"></view-rating>
               </span>
 
               <div class="col-md-12">
                 <label for="email" class="word-break-all">{{ supplier.email }}</label>
               </div>
               <div class="col-md-12">
-                <label for="phoneNumber" class="word-break-all"> {{ supplier.countryCallingCode }}-{{ supplier.contact_no }} </label>
+                <label for="phoneNumber" class="word-break-all"> {{ supplier.countryCallingCode }}-{{ supplier.contactNo }} </label>
               </div>
             </mat-card>
           </div>

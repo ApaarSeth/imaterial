@@ -1,15 +1,18 @@
 .customPo {
   td.mat-cell,
   td.mat-footer-cell,
-  th.mat-header-cell {
-    border-bottom: none;
-  }
-  .mat-accordion .mat-header-row {
+  th.mat-header-cell,
+  .mat-accordion .mat-header-row,
+  .mat-expansion-panel-header.mat-row {
     border-bottom: none;
   }
 
-  .mat-expansion-panel-header.mat-row {
-    border-bottom: none;
+  .mat-header-row{
+    height: 50px;
+  }
+
+  .mat-row{
+    height: 42px;
   }
 
   .mat-table {
@@ -452,6 +455,26 @@ s .validTill {
   .po-list-detail-custom {
     .mat-row .actions-cell.mat-cell {
       min-width: 220px;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 600px){
+  .po-detail-list {
+    advance-search {
+      margin: 10px 0 10px;
+      display: block;
+    }
+  }
+
+  .po-details{
+    .project{
+      padding-left: 8px;
+      width: 75% !important;
+    }
+
+    .create-po-btn {
+      padding-right: 0.9rem;
     }
   }
 }

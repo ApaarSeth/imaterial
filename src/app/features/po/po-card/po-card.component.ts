@@ -90,7 +90,7 @@ export class PoCardComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectPoRoleComponent, {
       width: "700px",
       data: { roleType, projectId },
-      panelClass: 'select-contact-person-dialog'
+      panelClass: ['common-modal-style', 'select-contact-person-dialog']
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -126,7 +126,7 @@ export class PoCardComponent implements OnInit {
     const dialogRef = this.dialog.open(AddAddressDialogComponent, {
       width: "800px",
       data: { roleType, id, international },
-      panelClass: 'add-address-dialog'
+      panelClass: ['common-modal-style', 'add-address-dialog']
     });
 
     dialogRef.afterClosed().subscribe((result: Address) => {
@@ -203,7 +203,7 @@ export class PoCardComponent implements OnInit {
       disableClose: true,
       width: "500px",
       data: this.cardData.supplierAddress,
-      panelClass: 'vendor-rating-dialog'
+      panelClass: ['common-modal-style', 'vendor-rating-dialog']
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -31,7 +31,7 @@ export class MyMaterialComponent implements OnInit {
   openAddMaterial() {
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: '720px',
-      panelClass: 'add-custom-material'
+      panelClass: ['common-modal-style', 'add-custom-material']
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'done') {

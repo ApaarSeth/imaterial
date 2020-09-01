@@ -154,14 +154,23 @@
   white-space: nowrap;
 }
 
-.select-address-tag {
-  float: left;
+.select-address-tag, .reset-form-tag{
   font-size: 14px;
   color: #f47721;
-  text-decoration: underline;
   font-weight: 550;
   cursor: pointer;
+  margin-top: 20px;
 }
+
+.select-address-tag {
+  float: left;
+  text-decoration: underline;
+}
+
+.reset-form-tag {
+  float: right;
+}
+
 .select-address-tag-disabled {
   float: left;
   padding-left: 28px;
@@ -169,13 +178,6 @@
   color: #d0d0dd;
   text-decoration: underline;
   font-weight: 550;
-}
-.reset-form-tag {
-  float: right;
-  font-size: 14px;
-  color: #f47721;
-  font-weight: 550;
-  cursor: pointer;
 }
 
 .ratings {
@@ -468,6 +470,20 @@ tr.tbl-body-cols.mat-row {
 
   .supplier-rate-col-bid {
     max-width: 15% !important;
+  }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 600px){
+  .ref-detail {
+    .project{
+      padding-left: 8px;
+      width: 75% !important;
+    }
+
+    advance-search {
+      margin: 10px 0 10px;
+      display: block;
+    }
   }
 }
 

@@ -273,7 +273,7 @@ export class RfqBidsComponent implements OnInit {
     const dialogRef = this.dialog.open(ShowSupplierRemarksandDocs, {
       width: "1000px",
       data: this.rfqProjects[0].supplierRemarkList,
-      panelClass: 'show-supplier-remarks-docs'
+      panelClass: ['common-modal-style', 'show-supplier-remarks-docs']
     });
     dialogRef.afterClosed().toPromise().then(result => { });
   }
@@ -286,7 +286,7 @@ export class RfqBidsComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: 'view-image-modal',
+      panelClass: ['common-modal-style', 'view-image-modal'],
       data: {
         rfqId: this.rfqId,
         materialId,
