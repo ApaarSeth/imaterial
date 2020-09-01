@@ -471,6 +471,20 @@ tr.tbl-body-cols.mat-row {
   }
 }
 
+@media only screen and (max-width: 767px) and (min-width: 600px){
+  .ref-detail {
+    .project{
+      padding-left: 8px;
+      width: 75% !important;
+    }
+
+    advance-search {
+      margin: 10px 0 10px;
+      display: block;
+    }
+  }
+}
+
 @media only screen and (max-width: 645px){
   .tax-dialog{
     .width-mobile{

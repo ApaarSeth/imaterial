@@ -49,11 +49,11 @@ export class PoSupplierComponent implements OnInit {
   selectProject() { }
 
   getSuppliers() {
-    let userId = Number(localStorage.getItem("userId"));
     let orgId = Number(localStorage.getItem("orgId"));
 
     this.commonService.getSuppliers(orgId).then(data => {
       this.allSuppliers = data.data;
+      debugger
     });
   }
 

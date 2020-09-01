@@ -456,6 +456,26 @@ s .validTill {
   }
 }
 
+@media only screen and (max-width: 767px) and (min-width: 600px){
+  .po-detail-list {
+    advance-search {
+      margin: 10px 0 10px;
+      display: block;
+    }
+  }
+
+  .po-details{
+    .project{
+      padding-left: 8px;
+      width: 75% !important;
+    }
+
+    .create-po-btn {
+      padding-right: 0.9rem;
+    }
+  }
+}
+
 @media only screen and (max-width: 576px) {
   .example-container {
     .mat-cell,
