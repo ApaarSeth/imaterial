@@ -1,3 +1,4 @@
+import { AddProjectService } from './../../shared/services/add-project.service';
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
 import { ProjectService } from "../../shared/services/project.service";
 import { ActivatedRoute } from "@angular/router";
@@ -101,7 +102,8 @@ export class DashboardComponent implements OnInit {
     private commonService: CommonService,
     private permissionService: PermissionService,
     private route: ActivatedRoute,
-    private notifier: AppNotificationService
+    private notifier: AppNotificationService,
+    private addProjectService: AddProjectService
   ) {
   }
 
@@ -113,7 +115,7 @@ export class DashboardComponent implements OnInit {
     this.isMobile = this.commonService.isMobile().matches;
     this.getAllProjects();
     this.countryList = this.route.snapshot.data.countryList;
-    this.commonService.onEditOrDelete.subscribe(res => {
+    this.addProjectService.onEditOrDelete.subscribe(res => {
       this.projectDeleteOrEdit(res)
     })
   }
@@ -167,7 +169,7 @@ export class DashboardComponent implements OnInit {
     });
   }
   addProject() {
-    this.commonService.openDialog({
+    this.addProjectService.openDialog({
       isEdit: false,
       isDelete: false,
       countryList: this.countryList

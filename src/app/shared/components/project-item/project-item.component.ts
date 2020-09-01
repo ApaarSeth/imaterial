@@ -1,4 +1,4 @@
-import { AppNotificationService } from './../../services/app-notification.service';
+import { AddProjectService } from './../../services/add-project.service';
 import {
   Component,
   OnInit,
@@ -15,6 +15,7 @@ import { CommonService } from '../../services/commonService';
 import { AddProjectComponent } from "../../dialogs/add-project/add-project.component";
 import { DoubleConfirmationComponent } from "../../dialogs/double-confirmation/double-confirmation.component";
 import { Router } from '@angular/router';
+import { ProjectService } from "../../services/project.service";
 
 @Component({
   selector: "card-layout",
@@ -32,13 +33,14 @@ export class ProjectItemComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private commonService: CommonService,
-    private notifier: AppNotificationService
+    private addProjectService: AddProjectService
   ) { }
 
   @Output('startDate') startDate = new EventEmitter<Date>();
   @Output("onEditOrDelete") onEditOrDelete = new EventEmitter<string>();
   @Input("projectDetails") projectDetails: ProjectDetails;
   @Input("disableEditDelete") disableEditDelete: boolean;
+  @Input('pageType') type: string;
 
   ngOnInit(): void {
     this.isMobile = this.commonService.isMobile().matches;
@@ -99,7 +101,7 @@ export class ProjectItemComponent implements OnInit {
       isDelete: false,
       detail: this.projectDetails
     };
-    this.commonService.openDialog(data);
+    this.addProjectService.openDialog(data);
   }
 
   deleteProject() {
@@ -108,7 +110,7 @@ export class ProjectItemComponent implements OnInit {
       isDelete: true,
       detail: this.projectDetails
     };
-    this.commonService.openDialog(data);
+    this.addProjectService.openDialog(data);
   }
 
   openDialog(data: ProjetPopupData): void {
