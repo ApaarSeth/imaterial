@@ -99,8 +99,6 @@ export class RefDetailComponent implements OnInit {
 
     forkJoin([
       this.advSearchService.getProjects(this.orgId, this.userId), this.advSearchService.getSuppliers(this.orgId), this.advSearchService.getMaterials(), this.advSearchService.getAllUsers(this.orgId) ]).toPromise().then(res => {
-
-
         options[ 0 ].data = res[ 0 ] as AdvSearchData[];
         options[ 1 ].data = res[ 1 ] as AdvSearchData[];
         options[ 2 ].data = res[ 2 ] as AdvSearchData[];

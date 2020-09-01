@@ -1,15 +1,18 @@
 .customPo {
   td.mat-cell,
   td.mat-footer-cell,
-  th.mat-header-cell {
-    border-bottom: none;
-  }
-  .mat-accordion .mat-header-row {
+  th.mat-header-cell,
+  .mat-accordion .mat-header-row,
+  .mat-expansion-panel-header.mat-row {
     border-bottom: none;
   }
 
-  .mat-expansion-panel-header.mat-row {
-    border-bottom: none;
+  .mat-header-row{
+    height: 50px;
+  }
+
+  .mat-row{
+    height: 42px;
   }
 
   .mat-table {

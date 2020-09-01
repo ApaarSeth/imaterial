@@ -40,13 +40,13 @@ export interface RfqMaterials {
 
 export interface Supplier {
     supplierId: number,
-    supplier_name: string,
-    contact_no: string,
+    supplierName: string,
+    contactNo: string,
     phoneNo?: string,
     email: string,
     pan: string,
     countryCallingCode: string,
-    supplier_ratings: number
+    supplierRating: number;
 }
 
 export interface TermsObj {

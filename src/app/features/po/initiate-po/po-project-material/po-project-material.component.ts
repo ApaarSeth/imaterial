@@ -189,7 +189,7 @@ export class PoProjectMaterialComponent implements OnInit {
       disableClose: true,
       width: "500px",
       data: this.poCurrency,
-      panelClass: 'select-currency-dialog'
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {

@@ -1,7 +1,7 @@
 <div class="row" [ngClass]="isMobile ? 'm-podr' : ''">
   <div class="col-xs-6 d-flex m-itm">
     <!-- flex-column-reverse -->
-    <mat-form-field class="example-form-field border-input border-input" [ngClass]="!isMobile ? 'p-l-20 p-r-20' : 'po-sm-fm'">
+    <mat-form-field class="example-form-field border-input border-input" [ngClass]="!isMobile ? 'p-r-20' : 'po-sm-fm'">
       <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
       <button mat-button matSuffix mat-icon-button [ngClass]="isMobile ? 'm-srch' : ''">
         <mat-icon>search</mat-icon>
@@ -59,7 +59,7 @@
 
 <form *ngIf="allSuppliers" [formGroup]="form" (click)="choosenSupplier()">
   <div class="example-container mat-elevation-z8">
-    <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:['supplier_name']" class="mat-elevation-z8 col-sm-12">
+    <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:['supplierName']" class="mat-elevation-z8 col-sm-12 supplier-details-tbl">
       <!-- Supplier Name Column -->
       <ng-container matColumnDef="Supplier Name">
         <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
@@ -70,9 +70,9 @@
               {{ element.user_d }}
             </mat-radio-button>
           </mat-radio-group>
-          <span class="supplier-name">{{ element.supplier_name }}</span>
+          <span class="supplier-name">{{ element.supplierName }}</span>
           <span class="d-block supplier-rates rfq-supplier-rates">
-            <view-rating [supplierId]="element.supplierId" [ratings]="element.supplier_rating"></view-rating>
+            <view-rating [supplierId]="element.supplierId" [ratings]="element.supplierRating"></view-rating>
           </span>
         </td>
       </ng-container>
@@ -86,7 +86,7 @@
       <!-- Phone No. Column -->
       <ng-container matColumnDef="Phone No.">
         <th mat-header-cell *matHeaderCellDef>Phone No.</th>
-        <td mat-cell *matCellDef="let element">{{ element.contact_no }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.contactNo }}</td>
       </ng-container>
 
       <!-- PAN No. Column -->

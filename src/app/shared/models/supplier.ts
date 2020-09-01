@@ -8,11 +8,11 @@ export interface AllSupplierDetails {
   lastUpdatedBy?: string,
   lastUpdatedAt?: string,
   supplierId?: number,
-  supplier_name?: string,
-  contact_no?: number,
+  supplierName?: string,
+  contactNo?: number,
   email?: string,
   pan?: string,
-  supplier_rating?: number,
+  supplierRating?: number,
 }
 
 export interface SupplierDetailsPopUpData {
@@ -26,13 +26,12 @@ export interface SupplierIds {
   userIds?: Array<Number>;
 }
 
-
 export interface SupplierAdd {
   id?: number,
   status?: number,
   supplierId?: number,
-  supplier_name?: string,
-  contact_no?: number,
+  supplierName?: string,
+  contactNo?: number,
   email?: string,
   pan?: string
 }

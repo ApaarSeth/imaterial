@@ -144,9 +144,6 @@ export class CommonService {
   getMaterials() {
     return this.dataService.getRequest(API.GETDISTINCTMATERIALS);
   }
-
-
-
 }
 
 

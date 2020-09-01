@@ -689,18 +689,20 @@ input::title {
   height: 45px !important;
   padding: 0 16px !important;
 
-  &:after{
-    padding: 5px;
-    margin-top: -8px;
-  }
-
   .mat-expansion-panel-header-title{
     color: #545454;
     font-weight: 450;
   }
 }
 
-tr.mat-header-row{
+.mat-expansion-indicator{
+  &:after{
+    padding: 5px !important;
+    margin-top: -8px;
+  }
+}
+
+tr.mat-header-row, thead tr.mat-row{
   height: 50px !important;
 }
 
@@ -750,7 +752,7 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
     height: 42px !important;
   }
   
-  tr.mat-header-row{
+  tr.mat-header-row, thead tr.mat-row{
     height: 45px !important;
   }
 }

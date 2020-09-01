@@ -98,14 +98,14 @@
             <div class="col-md-3" *ngFor="let supplier of selectedSuppliersList" [ngClass]="isMobile ? 'mb-3 p-l-0 p-r-0' : ''">
               <mat-card class="w-100">
                 <div class="col-md-12 text-bold">
-                  <label for="company" class="mb-0">{{ supplier.supplier_name }}</label>
+                  <label for="company" class="mb-0">{{ supplier.supplierName }}</label>
                 </div>
-                <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplier_rating"></view-rating>
-                <div class="col-md-12 mgtn12">
-                  <label for="email">{{ supplier.email }}</label>
+                <view-rating [supplierId]="supplier.supplierId" [ratings]="supplier.supplierRating"></view-rating>
+                <div class="col-md-12">
+                  <label for="email" class="m-b-2">{{ supplier.email }}</label>
                 </div>
                 <div class="col-md-12">
-                  <label for="phoneNumber">{{ supplier.contact_no }}</label>
+                  <label for="phoneNumber">{{ supplier.contactNo }}</label>
                 </div>
               </mat-card>
             </div>

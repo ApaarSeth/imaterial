@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, HostListener } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -12,14 +12,6 @@ import { DeactiveSupplierComponent } from "../../../shared/dialogs/disable-suppl
 import { SupplierAdd, SupplierDetailsPopUpData } from "../../../shared/models/supplier";
 import { SuppliersDialogComponent } from "../../../shared/dialogs/add-supplier/suppliers-dialog.component";
 
-
-
-// chip static data
-export interface Fruit {
-  name: string;
-}
-
-
 const ELEMENT_DATA: SupplierAdd[] = [];
 
 @Component({
@@ -27,8 +19,8 @@ const ELEMENT_DATA: SupplierAdd[] = [];
   templateUrl: "./supplier-details.component.html"
 })
 
-
 export class SupplierDetailComponent implements OnInit {
+
   displayedColumns: string[] = ['suppliername', 'email', 'contactNo', 'status'];
   displayedColumnsDeactivate: string[] = ['username', 'email', 'contactNo', 'roleName', 'ProjectList'];
   dataSource = new MatTableDataSource<SupplierAdd>();
@@ -37,16 +29,13 @@ export class SupplierDetailComponent implements OnInit {
   @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
   deactivateUsers: Array<SupplierAdd> = new Array<SupplierAdd>();
   activateUsers: Array<SupplierAdd> = new Array<SupplierAdd>();
-
-
   suppliersDetailsTemp: SupplierAdd = {};
-
-
   addUserBtn: boolean = false;
   orgId: number;
   countryList: any;
-
   isMobile: boolean;
+  userId: number;
+  showResponsiveDesignIcons: boolean;
 
   public SupplierDashboardTour: GuidedTour = {
     tourId: 'supplier-tour',
@@ -67,8 +56,6 @@ export class SupplierDetailComponent implements OnInit {
       this.setLocalStorage()
     }
   };
-  userId: number;
-  showResponsiveDesignIcons: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -79,8 +66,7 @@ export class SupplierDetailComponent implements OnInit {
     private userGuideService: UserGuideService,
     private commonService: CommonService,
     private activatedRoute: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -95,10 +81,10 @@ export class SupplierDetailComponent implements OnInit {
   getNotifications() {
     this.commonService.getNotification(this.userId);
   }
+
   getAllSupplier() {
     this.commonService.getSuppliers(this.orgId).then(data => {
       this.dataSource = new MatTableDataSource(data.data);
-
       this.dataSourceTemp = data.data;
 
       if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
@@ -107,16 +93,11 @@ export class SupplierDetailComponent implements OnInit {
         }, 1000);
       }
 
-      // this.dataSource.filterPredicate = (data, filterValue) => {
-      //   const dataStr = data.supplier_name.toString() + data.email.toString() + data.pan.toString() + data.contact_no.toString() + data.status;
-      //   return dataStr.indexOf(filterValue) != -1;
-      // }
-
       this.dataSource.filterPredicate = (data, filterValue) => {
         const dataStr =
-          data.supplier_name.toString().toLowerCase() +
+          data.supplierName.toString().toLowerCase() +
           data.email.toString().toLowerCase() +
-          data.contact_no.toString();
+          data.contactNo.toString();
         return dataStr.indexOf(filterValue) != -1;
       };
 
@@ -132,7 +113,6 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   openDialog(data: SupplierDetailsPopUpData): void {
-
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "660px",
       data,
@@ -154,6 +134,7 @@ export class SupplierDetailComponent implements OnInit {
       detail: this.suppliersDetailsTemp
     } as SupplierDetailsPopUpData);
   }
+
   setLocalStorage() {
     const popovers = {
       "userId": this.userId,
@@ -177,7 +158,6 @@ export class SupplierDetailComponent implements OnInit {
         this.getAllSupplier();
       }
     });
-
   }
 
   applyFilter(filterValue: string) {
@@ -236,14 +216,13 @@ export class SupplierDetailComponent implements OnInit {
     var win = window.open(url, "_blank");
     win.focus();
   }
-  @HostListener('window:resize', ['$event'])
 
+  @HostListener('window:resize', ['$event'])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 1025) {
       this.showResponsiveDesignIcons = true;
     } else {
       this.showResponsiveDesignIcons = false;
     }
-
   }
 }

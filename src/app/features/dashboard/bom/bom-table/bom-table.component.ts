@@ -142,7 +142,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: "1400px",
       data,
-      panelClass: 'add-custom-material'
+      panelClass: ['common-modal-style', 'add-custom-material']
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -242,7 +242,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(AddGrnComponent, {
       width: "1000px",
       data: this.projectId,
-      panelClass: 'add-receipt-via-system'
+      panelClass: ['common-modal-style', 'add-receipt-via-system']
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res === 'success') {
@@ -255,7 +255,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(AddGrnViaExcelComponent, {
       width: "600px",
       data: this.projectId,
-      panelClass: 'create-receipt-excel'
+      panelClass: ['common-modal-style', 'create-receipt-excel']
     });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -376,7 +376,7 @@ export class BomTableComponent implements OnInit {
         width: "1200px",
         data: { materialId: materialId, projectId: projectId },
         disableClose: true,
-        panelClass: ["issue-to-indent-dialog"]
+        panelClass: ['common-modal-style', "issue-to-indent-dialog"]
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result !== null) {
@@ -391,7 +391,7 @@ export class BomTableComponent implements OnInit {
       const dialogRef = this.dialog.open(DeleteBomComponent, {
         width: "800px",
         data: { materialId: materialId, projectId: projectId },
-        panelClass: 'delete-bom'
+        panelClass: ['common-modal-style', 'delete-bom']
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result.data == "close") {
@@ -416,7 +416,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: 'view-image-modal',
+      panelClass: ['common-modal-style', 'view-image-modal'],
       data: {
         projectId,
         materialId
@@ -434,7 +434,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
       width: "60vw",
-      panelClass: 'upload-image-modal',
+      panelClass: ['common-modal-style', 'upload-image-modal'],
       data: selectedMaterial
     });
 

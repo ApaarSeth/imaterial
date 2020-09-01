@@ -90,7 +90,7 @@ export class GlobalStoreComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
       width: "600px",
       data: this.projectList,
-      panelClass: 'select-projects-dialog'
+      panelClass: ['common-modal-style', 'select-projects-dialog']
     });
 
     // dialogRef.afterClosed().subscribe(result => {

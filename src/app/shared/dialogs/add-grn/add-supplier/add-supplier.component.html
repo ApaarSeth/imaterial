@@ -32,8 +32,8 @@
           <mat-form-field class="w-100 border-select mat-form-field-flex-mm-padding label-font-size" [ngClass]="{'width-95': isMobile}">
             <input type="text" placeholder="Contact Person*" matInput formControlName="supplierName" [matAutocomplete]="auto" />
             <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'15em'" [displayWith]="displayFn">
-              <mat-option matTooltip=" {{ option.supplier_name }}" *ngFor="let option of this.filterSupplierName | async" [value]="option">
-                {{ option.supplier_name }}
+              <mat-option matTooltip=" {{ option.supplierName }}" *ngFor="let option of this.filterSupplierName | async" [value]="option">
+                {{ option.supplierName }}
               </mat-option>
             </mat-autocomplete>
             <small *ngIf="form.get('supplierName').errors?.maxlength" class="warning-color">maximun characters allowed is 300</small>

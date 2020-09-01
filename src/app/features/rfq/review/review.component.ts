@@ -2,10 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { AddCommentDialogComponent } from "src/app/shared/dialogs/add-comment/comment-dialog.component";
 import { ViewDocumentsDialogComponent } from "src/app/shared/dialogs/view-documents/view-documents-dialog.component";
-import {
-  RfqMaterialResponse,
-  AddRFQ
-} from "src/app/shared/models/RFQ/rfq-details";
+import { RfqMaterialResponse, AddRFQ } from "src/app/shared/models/RFQ/rfq-details";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { RFQService } from "src/app/shared/services/rfq.service";
@@ -22,7 +19,9 @@ import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image
   selector: "review",
   templateUrl: "./review.component.html"
 })
+
 export class ReviewComponent implements OnInit {
+
   displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Makes", "Attached Images"];
   finalRfq: AddRFQ;
   selectedSuppliersList: Suppliers[];
@@ -34,6 +33,8 @@ export class ReviewComponent implements OnInit {
   rfqId: number;
   minDate = new Date();
   isMobile: boolean;
+  userId: number;
+
   public RfqPreviewTour: GuidedTour = {
     tourId: 'rfq-preview-tour',
     useOrb: false,
@@ -53,7 +54,6 @@ export class ReviewComponent implements OnInit {
       this.setLocalStorage()
     }
   };
-  userId: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -64,16 +64,9 @@ export class ReviewComponent implements OnInit {
     private guidedTourService: GuidedTourService,
     private commonService: CommonService,
     private userGuideService: UserGuideService
-  ) {
-
-
-  }
+  ) {}
 
   ngOnInit() {
-    // this.finalRfq = history.state.finalRfq;
-    // this.checkedList = this.finalRfq.rfqProjectsList;
-    // this.selectedSuppliersList = this.finalRfq.supplierDetails;
-
     this.isMobile = this.commonService.isMobile().matches;
     this.userId = Number(localStorage.getItem("userId"));
 
@@ -91,12 +84,8 @@ export class ReviewComponent implements OnInit {
           }
         })
       }
+    });
 
-    })
-
-
-    // this.documentList = history.state.documentsList;
-    // this.supplierIds = this.selectedSuppliersList.map(x => x.supplierId);
     this.initForm();
   }
 
@@ -112,6 +101,7 @@ export class ReviewComponent implements OnInit {
       }
     })
   }
+
   initForm() {
     this.form = this.formBuilder.group({
       rfqName: ["", Validators.required],
@@ -122,8 +112,6 @@ export class ReviewComponent implements OnInit {
   submit() {
     this.setRFQDetailsValue();
   }
-
-
 
   setRFQDetailsValue() {
     if (this.form.value) {
@@ -136,13 +124,7 @@ export class ReviewComponent implements OnInit {
 
       this.finalRfq.dueDate = year + "-" + month + "-" + day
     }
-    // this.rfqDetails.rfqProjectsList = this.checkedMaterialsList;
-    // this.rfqDetails.supplierId = this.supplierIds;
-    // this.rfqDetails.documentsList = this.documentList;
-    // this.rfqDetails.terms = {
-    //   termsDesc: "qwert hjk ghgjhkj vhj hhv jh",
-    //   termsType: "RFQ"
-    // };
+
     this.openDialog3(this.finalRfq);
   }
 
@@ -154,6 +136,7 @@ export class ReviewComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => { });
     }
   }
+
   openDialog2(): void {
     if (ViewDocumentsDialogComponent) {
       const dialogRef = this.dialog.open(ViewDocumentsDialogComponent, {
@@ -170,7 +153,7 @@ export class ReviewComponent implements OnInit {
         data: {
           dataKey: data
         },
-        panelClass: 'float-rfq-confirm-dialog'
+        panelClass: ['common-modal-style', 'float-rfq-confirm-dialog']
       });
       dialogRef.afterClosed().subscribe(result => {
         if(result !== null){
@@ -181,12 +164,13 @@ export class ReviewComponent implements OnInit {
       });
     }
   }
+  
   selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "600px",
       data: this.finalRfq.rfqCurrency,
-      panelClass: 'select-currency-dialog'
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {
@@ -204,7 +188,7 @@ export class ReviewComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: 'view-image-modal',
+      panelClass: ['common-modal-style', 'view-image-modal'],
       data: {
         rfqId: this.rfqId,
         materialId,

@@ -154,14 +154,23 @@
   white-space: nowrap;
 }
 
-.select-address-tag {
-  float: left;
+.select-address-tag, .reset-form-tag{
   font-size: 14px;
   color: #f47721;
-  text-decoration: underline;
   font-weight: 550;
   cursor: pointer;
+  margin-top: 20px;
 }
+
+.select-address-tag {
+  float: left;
+  text-decoration: underline;
+}
+
+.reset-form-tag {
+  float: right;
+}
+
 .select-address-tag-disabled {
   float: left;
   padding-left: 28px;
@@ -169,13 +178,6 @@
   color: #d0d0dd;
   text-decoration: underline;
   font-weight: 550;
-}
-.reset-form-tag {
-  float: right;
-  font-size: 14px;
-  color: #f47721;
-  font-weight: 550;
-  cursor: pointer;
 }
 
 .ratings {
