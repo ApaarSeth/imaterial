@@ -1,4 +1,4 @@
-<div class="page-start-point p-rem-t-40 p-rem-r-5 receipts-outer-section">
+<div class="page-start-point p-rem-t-10 p-rem-r-5 receipts-outer-section">
   <form *ngIf="allProjects" [formGroup]="form">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
@@ -28,17 +28,15 @@
 
       <!-- table For Showing Reports-->
       <ng-container *ngIf="allProjectsGRNData?.length; else noDataAvailable">
-        <div class="grnTable mb-4" *ngFor="let project of allProjectsGRNData">
+        <div class="receipt-section m-b-10" *ngFor="let project of allProjectsGRNData">
           <mat-accordion>
             <mat-expansion-panel [expanded]="true">
               <mat-expansion-panel-header class="backgound-project">
-                <div class="grn-material-row p-r-10">
-                  {{ project.projectName }}
-                </div>
+                <div class="receipt-project-name">{{ project.projectName }}</div>
               </mat-expansion-panel-header>
 
-              <table class="grnTable">
-                <tr matSort class="mat-elevation-z2 mat-header-row">
+              <table class="receipt-table">
+                <tr matSort class="mat-header-row">
                   <thead class="mat-header-cell material">
                     Material Name
                   </thead>
@@ -56,7 +54,6 @@
                     Delivered
                     <br />Quantity
                   </thead>
-                  <!-- <thead class="mat-header-cell material">Pending <br />Quantity</thead> -->
                   <thead class="mat-header-cell material text-center">
                     Unit Price
                     <br />({{
@@ -76,8 +73,8 @@
 
                 <mat-accordion *ngFor="let grnData of project.grnDataList">
                   <mat-expansion-panel #mep="matExpansionPanel">
-                    <mat-expansion-panel-header class="border-row background-grn">
-                      <tr class="grn-material-row p-r-10 w-100">
+                    <mat-expansion-panel-header class="bg-receipt-details">
+                      <tr class="receipt-row">
                         <td class="mat-cell grn-name-cell">{{ grnData.grnName }}</td>
                         <td class="mat-cell po-number-cell">
                           <ng-container *ngIf="grnData.poNumber; else directGRN"> PO ID - {{ grnData.poNumber }} </ng-container>
@@ -98,7 +95,7 @@
                       </tr>
                     </mat-expansion-panel-header>
 
-                    <tr class="grn-material-row border-row background-project-list" *ngFor="let grnDetail of grnData.grnDetailList">
+                    <tr class="receipt-row bg-project-list" *ngFor="let grnDetail of grnData.grnDetailList">
                       <td class="mat-cell">{{ grnDetail.MaterialName }}</td>
                       <td class="mat-cell material-unit">{{ grnDetail.MaterialUnit }}</td>
                       <td class="mat-cell">{{ grnDetail.MaterialBrand }}</td>

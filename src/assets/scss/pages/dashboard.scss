@@ -405,13 +405,11 @@ body,
 }
 
 @media only screen and (min-width: 560px) {
-  .project-dashboard {
-    padding-left: 10px;
-    padding-right: 20px;
-  }
-  .dashboard-unique {
+  .project-dashboard, .users-dashboard, .create-po-dashboard, .dashboard-unique {
     padding-left: 10px;
     padding-right: 10px;
+  }
+  .dashboard-unique {
     .example-form-field {
       width: 100% !important;
     }
@@ -421,15 +419,9 @@ body,
     padding-right: 20px;
   }
   .create-po-dashboard {
-    padding-left: 10px;
-    padding-right: 10px;
     .mat-expansion-panel-header-title {
       font-size: 15px !important;
     }
-  }
-  .users-dashboard {
-    padding-left: 10px;
-    padding-right: 20px;
   }
   .back-btn-grn {
     display: block;
