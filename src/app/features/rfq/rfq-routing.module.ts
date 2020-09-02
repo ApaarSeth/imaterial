@@ -1,16 +1,16 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
-import { RefDetailComponent } from "./ref-detail/ref-detail.component";
 import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
 import { ReviewComponent } from "./review/review.component";
 import { RFQViewComponent } from "./rfq-view/rfq-view.component";
 import { CreateRfqComponent } from "./create-rfq/create-rfq.component";
+import { RfqDetailComponent } from "./rfq-detail/rfq-detail.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: RefDetailComponent
+    component: RfqDetailComponent
   },
   {
     path: "rfq-bid/:id",
