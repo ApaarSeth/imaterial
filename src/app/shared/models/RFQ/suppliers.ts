@@ -6,10 +6,10 @@ export interface Suppliers {
   lastUpdatedBy: string;
   lastUpdatedAt: string;
   supplierId: number;
-  supplier_name: string;
-  contact_no: number;
+  supplierName: string;
+  contactNo: number;
   email: string;
   pan: string;
   checked?: boolean;
-  supplier_rating?: number;
+  supplierRating?: number;
 }

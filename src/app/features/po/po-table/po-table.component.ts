@@ -354,7 +354,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
       disableClose: true,
       width: "500px",
       data: this.poCurrency,
-      panelClass: 'select-currency-dialog'
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {
@@ -491,7 +491,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
         existingData,
         currency: this.poCurrency ? this.poCurrency.exchangeCurrencyName : null
       },
-      panelClass: 'tax-dialog'
+      panelClass: ['common-modal-style', 'tax-dialog']
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
@@ -530,7 +530,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
       width: "60vw",
-      panelClass: 'upload-image-modal',
+      panelClass: ['common-modal-style', 'upload-image-modal'],
       data: {
         selectedMaterial,
         type,
@@ -559,7 +559,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: 'view-image-modal',
+      panelClass: ['common-modal-style', 'view-image-modal'],
       data: {
         purchaseOrderId: this.poId,
         materialId,

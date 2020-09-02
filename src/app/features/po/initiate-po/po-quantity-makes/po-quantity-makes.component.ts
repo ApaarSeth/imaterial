@@ -109,7 +109,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       this.initiatePoData.projectAddressId = project.defaultAddress.projectAddressId;
       this.initiatePoData.supplierId = this.poData.selectedSupplier.supplierId;
       this.initiatePoData.supplierAddressId = null;
-      this.initiatePoData.supplierName = this.poData.selectedSupplier.supplier_name;
+      this.initiatePoData.supplierName = this.poData.selectedSupplier.supplierName;
       this.initiatePoData.rfqId = null;
       this.materialForms.value.forms = this.materialForms.value.forms.map(material => {
         material.materialUnitPrice = Number(material.materialUnitPrice);
@@ -169,7 +169,7 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       disableClose: true,
       width: "500px",
       data: this.poCurrency,
-      panelClass: 'select-currency-dialog'
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {

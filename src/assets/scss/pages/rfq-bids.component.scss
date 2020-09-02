@@ -19,16 +19,11 @@
     border-bottom: none;
   }
 
-  $mat-header-row-height: 56px;
-  $mat-row-height: 52px;
-  $mat-row-horizontal-padding: 24px;
-
   .mat-table {
     display: block;
   }
 
   .mat-header-row {
-    min-height: $mat-header-row-height;
     background: #2297bb;
 
     span {
@@ -36,24 +31,11 @@
     }
   }
 
-  .mat-row {
-    min-height: $mat-row-height;
-  }
-
   .mat-row,
   .mat-header-row {
     display: flex;
     align-items: center;
     box-sizing: border-box;
-
-    // Workaround for https://goo.gl/pFmjJD in IE 11. Adds a pseudo
-    // element that will stretch the row the correct height. See:
-    // https://connect.microsoft.com/IE/feedback/details/802625
-    // &::after {
-    //   display: inline-block;
-    //   min-height: inherit;
-    //   content: '';
-    // }
   }
 
   .mat-cell,
@@ -121,7 +103,6 @@
     background: rgba(169, 174, 188, 0.21) !important;
     border: 1px solid #979797;
     color: #707070;
-    font-weight: 500;
   }
 
   .mat-accordion .mat-expansion-panel-header {
@@ -142,20 +123,7 @@
   .mat-row .mat-cell {
     min-width: 80px;
   }
-  tr.mat-header-row {
-    height: 45px;
-  }
-  .mat-expansion-panel-header {
-    min-height: 48px;
-  }
 }
-
-// .customBid .mat-expansion-panel-header,
-// .customBid .mat-expansion-panel-header.mat-expanded,
-// .customBid .mat-expansion-panel-header.mat-expanded:focus,
-// .customBid .mat-expansion-panel-header.mat-expanded:hover {
-//   background-color: #ffffff !important;
-// }
 
 .rfqbid-header-color {
   background-color: (169, 174, 188, 0.21) !important;
@@ -186,15 +154,23 @@
   white-space: nowrap;
 }
 
-.select-address-tag {
-  float: left;
-  // padding-left: 28px;
+.select-address-tag, .reset-form-tag{
   font-size: 14px;
   color: #f47721;
-  text-decoration: underline;
   font-weight: 550;
   cursor: pointer;
+  margin-top: 20px;
 }
+
+.select-address-tag {
+  float: left;
+  text-decoration: underline;
+}
+
+.reset-form-tag {
+  float: right;
+}
+
 .select-address-tag-disabled {
   float: left;
   padding-left: 28px;
@@ -202,14 +178,6 @@
   color: #d0d0dd;
   text-decoration: underline;
   font-weight: 550;
-}
-.reset-form-tag {
-  float: right;
-  // width: 24%;
-  font-size: 14px;
-  color: #f47721;
-  font-weight: 550;
-  cursor: pointer;
 }
 
 .ratings {
@@ -348,7 +316,6 @@
 
 .po-images-list {
   .images-lists{
-    // position: absolute;
     .attached-image{
       position: relative;
       &:first-child{
@@ -506,6 +473,20 @@ tr.tbl-body-cols.mat-row {
   }
 }
 
+@media only screen and (max-width: 767px) and (min-width: 600px){
+  .ref-detail {
+    .project{
+      padding-left: 8px;
+      width: 75% !important;
+    }
+
+    advance-search {
+      margin: 10px 0 10px;
+      display: block;
+    }
+  }
+}
+
 @media only screen and (max-width: 645px){
   .tax-dialog{
     .width-mobile{
@@ -517,20 +498,3 @@ tr.tbl-body-cols.mat-row {
     }
   }
 }
-
-/** will use later **/
-/*@media only screen and (max-width: 575px){
-  .tax-dialog{
-    .float-left:not(:first-child) {
-      margin-top: 2em;
-    }
-
-    .delete-button-icon{
-      padding-top: 0px !important;
-    }
-
-    .delete-btn-position-mobile{
-      text-align: right;
-    }
-  }
-}*/

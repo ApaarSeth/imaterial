@@ -202,7 +202,7 @@ export class RfqQuantityMakesComponent implements OnInit {
         roleType: "projectBillingAddressId",
         id: data.projectId,
       },
-      panelClass: 'add-address-dialog'
+      panelClass: ['common-modal-style', 'add-address-dialog']
     });
     dialogRef.afterClosed().subscribe(result => {
       data.defaultAddress = result ? result[1].address : data.defaultAddress;
@@ -266,7 +266,7 @@ export class RfqQuantityMakesComponent implements OnInit {
       disableClose: true,
       width: "600px",
       data: this.rfqData.rfqCurrency,
-      panelClass: 'select-currency-dialog'
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {
@@ -284,7 +284,7 @@ export class RfqQuantityMakesComponent implements OnInit {
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
       width: "60vw",
-      panelClass: 'upload-image-modal',
+      panelClass: ['common-modal-style', 'upload-image-modal'],
       data: {
         selectedMaterial,
         type,
@@ -309,7 +309,7 @@ export class RfqQuantityMakesComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: 'view-image-modal',
+      panelClass: ['common-modal-style', 'view-image-modal'],
       data: {
         selectedMaterial,
         rfqId: this.generatedRfq.rfqId,

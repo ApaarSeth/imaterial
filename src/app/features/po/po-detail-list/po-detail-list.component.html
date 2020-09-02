@@ -22,10 +22,10 @@
     </div>
   </div>
 
-  <div class="p-b-20 min-height parent create-po-dashboard" *ngIf="poApprovalDetailsTemp || poDraftedDetailsTemp || acceptedRejectedPOListTemp || poCount > 0">
+  <div class="p-b-20 min-height parent create-po-dashboard po-details" *ngIf="poApprovalDetailsTemp || poDraftedDetailsTemp || acceptedRejectedPOListTemp || poCount > 0">
     <div class="row" [ngClass]="isMobile ? 'ml-0' : ''">
       <div class="col-xs-6">
-        <mat-form-field class="example-form-field border-input project" [ngClass]="isMobile ? 'w-100 p-l-10' : ' w-vw-14'">
+        <mat-form-field class="example-form-field border-input project" [ngClass]="isMobile ? 'w-100' : 'width-30'">
           <input matInput placeholder="Search PO" type="search" (keyup)="applyFilter($event.target.value)" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
@@ -33,7 +33,7 @@
         </mat-form-field>
       </div>
 
-      <div class="text-right col-xs-6 create-po-btn p-t-10" [ngClass]="isMobile ? 'sm-btn1 d-flex' : ''">
+      <div class="text-right col-xs-6 create-po-btn p-t-10" [ngClass]="isMobile ? 'sm-btn1 d-flex justify-content-flex-end p-r-15' : ''">
         <ng-container *ngIf="isMobile">
           <button mat-button class="fltr-btn brand-color" (click)="openFilter()">
             <mat-icon inline="true">filter_list</mat-icon>
@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row po-detail-list">
       <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2 align-top">
           <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)" [config]="searchConfig"> </advance-search>
@@ -196,14 +196,14 @@
 
                     <!-- Action Buttons Column -->
                     <ng-container matColumnDef="Action">
-                      <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
-                      <td mat-cell class="text-align-center actions-cell" *matCellDef="let element">
-                        <span class="p-r-10">
+                      <th mat-header-cell *matHeaderCellDef class="text-align-right"></th>
+                      <td mat-cell class="actions-cell" *matCellDef="let element">
+                        <span class="p-r-20">
                           <a href="javascript:void(0)" style="color: #f47721" [routerLink]="['./po-generate/', element.purchaseOrderId, 'requiredApproval']">View P.O</a>
                         </span>
 
-                        <span>&nbsp;</span>
-                        <span class="p-r-10 float-right cursor-pointer"
+                        <!-- <span>&nbsp;</span> -->
+                        <span class="cursor-pointer"
                           ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
                         ></span>
                       </td>
@@ -258,16 +258,22 @@
                     <ng-container matColumnDef="Action">
                       <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
                       <td mat-cell class="text-align-center" *matCellDef="let element" class="actions-cell">
-                        <span class="p-r-10"
-                          ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['./po-generate/', element.purchaseOrderId, 'edit']">Review Draft P.O.</a></span
-                        >
-                        <span>&nbsp;</span>
-                        <span class="p-r-10 float-right cursor-pointer"
-                          ><a (click)="deleteDraftedPo(element)" matTooltip="Delete"> <img src="../../../../assets/images/delete-button.png" /> </a
-                        ></span>
-                        <span class="p-r-10 float-right cursor-pointer"
-                          ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
-                        ></span>
+                        <span class="p-r-15">
+                          <a href="javascript:void(0)" style="color: #f47721" [routerLink]="['./po-generate/', element.purchaseOrderId, 'edit']">Review Draft P.O.</a>
+                        </span>
+                        
+                        <span class="p-r-15 cursor-pointer">
+                          <a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> 
+                            <img src="../../../../assets/images/download-po.png" />
+                          </a>
+                        </span>
+
+                        <span class="cursor-pointer">
+                          <a (click)="deleteDraftedPo(element)" matTooltip="Delete"> 
+                            <img src="../../../../assets/images/delete-button.png" />
+                          </a>
+                        </span>
+                        
                       </td>
                     </ng-container>
 
@@ -281,12 +287,7 @@
             <div *ngIf="acceptedRejectedPOListTemp">
               <mat-expansion-panel class="myPanel mb-2" [expanded]="true">
                 <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
-                  <mat-panel-title>
-                    <div class="col-xs-5 text-left approved">Approved P.O.</div>
-                    <!-- <div class="col-xs-7 text-right grn-note">
-                    *GRN = Goods Receive Note
-                  </div> -->
-                  </mat-panel-title>
+                  <mat-panel-title>Approved P.O.</mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <div class="example-container mat-elevation-z8 approved-po">
@@ -325,16 +326,11 @@
                     <ng-container matColumnDef="Action">
                       <th mat-header-cell class="text-align-right" *matHeaderCellDef></th>
                       <td mat-cell *matCellDef="let element" class="actions-cell">
-                        <span class="p-r-10 display-inline-block p-t-5"
+                        <span class="p-r-15 display-inline-block"
                           ><a href="javascript:void(0)" style="color: #f47721" [routerLink]="['./po-generate/', element.purchaseOrderId, 'view']">View P.O.</a></span
                         >
-                        <!-- <span class="p-r-10 display-inline-block p-t-5"
-                        ><a href="javascript:void(0)" style="color: #f47721;" [routerLink]="['./view-grn/', element.purchaseOrderId]">Add/View Receipts</a></span
-                      > -->
-                        <!-- <span class="p-r-10 cursor-pointer"
-                        ><a (click)="openPaymentRecord(element)" matTooltip="Payment Record"><img src="../../../../assets/images/trackpayment.svg" /></a
-                      ></span> -->
-                        <span class="p-r-10 cursor-pointer display-inline-block p-t-5"
+
+                        <span class="p-r-15 cursor-pointer display-inline-block"
                           ><a (click)="downloadPo(element.purchaseOrderId)" matTooltip="Download PO"> <img src="../../../../assets/images/download-po.png" /> </a
                         ></span>
 

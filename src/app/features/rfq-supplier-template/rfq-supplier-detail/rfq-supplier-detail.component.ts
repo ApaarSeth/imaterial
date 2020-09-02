@@ -493,7 +493,7 @@ export class RFQSupplierDetailComponent implements OnInit {
         prevData,
         currency: this.rfqSupplierDetailList.rfqCurrency ? this.rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName : null
       },
-      panelClass: 'tax-dialog'
+      panelClass: ['common-modal-style', 'tax-dialog']
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
@@ -550,7 +550,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
       width: "60vw",
-      panelClass: 'upload-image-modal',
+      panelClass: ['common-modal-style', 'upload-image-modal'],
       data: {
         selectedMaterial,
         type,
@@ -594,7 +594,7 @@ export class RFQSupplierDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: 'view-image-modal',
+      panelClass: ['common-modal-style', 'view-image-modal'],
       data: {
         rfqId: this.activatedRoute.snapshot.params[ "rfqId" ],
         materialId,

@@ -4,18 +4,17 @@ import { SendRfqObj } from "../../../shared/models/RFQ/rfq-details-supplier";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { CountryCode } from "../../../shared/models/currency";
 import { MatDialog } from "@angular/material/dialog";
-import { RFQService } from "../../../shared/services/rfq.service";
 import { POService } from "../../../shared/services/po.service";
-import { ProjectService } from "../../../shared/services/project.service";
-import { VisitorService } from "../../../shared/services/visitor.service";
 import { CommonService } from "../../../shared/services/commonService";
 import { FieldRegExConst } from "../../../shared/constants/field-regex-constants";
 import { ConfirmRfqBidComponent } from "../../../shared/dialogs/confirm-rfq-bid/confirm-frq-bid-component";
 import { SelectSupplierAddressDialogComponent } from "../../../shared/dialogs/select-supplier-address/select-supplier-address.component";
+
 @Component({
   selector: "rfq-supplier-add-address",
   templateUrl: "./rfq-supplier-add-address.component.html"
 })
+
 export class RFQSupplierAddAddressComponent implements OnInit {
 
   materialCount: number = 0;
@@ -33,7 +32,6 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   selectedAddress: any;
   AddressValid: boolean;
   disabledAddress: boolean = false;
-
   ipaddress: string;
   countryList: CountryCode[] = [];
   livingCountry: CountryCode[] = [];
@@ -45,12 +43,9 @@ export class RFQSupplierAddAddressComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService,
     private formBuilder: FormBuilder,
     private poService: POService,
     private router: Router,
-    private projectService: ProjectService,
-    private visitorsService: VisitorService,
     private commonService: CommonService
   ) { }
 
@@ -166,10 +161,10 @@ export class RFQSupplierAddAddressComponent implements OnInit {
     this.form = this.formBuilder.group({
 
       supplierName: [
-        { value: this.supplierAddress.data ? this.supplierAddress.data[ 0 ].supplier_name : "", disabled: true }
+        { value: this.supplierAddress.data ? this.supplierAddress.data[ 0 ].supplierName : "", disabled: true }
       ],
       contactNo: [
-        { value: this.supplierAddress.data ? this.supplierAddress.data[ 0 ].contact_no : "", disabled: true }
+        { value: this.supplierAddress.data ? this.supplierAddress.data[ 0 ].contactNo : "", disabled: true }
       ],
       email: [
         { value: this.supplierAddress.data ? this.supplierAddress.data[ 0 ].email : "", disabled: true }
@@ -271,7 +266,7 @@ export class RFQSupplierAddAddressComponent implements OnInit {
       const dialogRef = this.dialog.open(SelectSupplierAddressDialogComponent, {
         data: { supplierAddresses: this.supplierAddress },
         width: "800px",
-        panelClass: 'choose-address-dialog'
+        panelClass: ['common-modal-style', 'choose-address-dialog']
       });
 
       dialogRef

@@ -335,7 +335,7 @@ export class RfqProjectMaterialsComponent implements OnInit {
       disableClose: true,
       width: "500px",
       data: this.addRfq.rfqCurrency,
-      panelClass: 'select-currency-dialog'
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {

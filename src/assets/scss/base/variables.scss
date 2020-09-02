@@ -245,7 +245,6 @@ button:focus {
 }
 
 input {
-  // background: $white-color;
   padding: 10px;
   border-radius: 5px;
 }
@@ -408,11 +407,6 @@ a:hover {
 .myPanel .mat-expansion-panel-body {
   padding: 0;
 }
-// .myPanel{
-//   box-shadow: none !important;
-//   border-left: 1px solid rgba(0,0,0,.12);
-//   border-right: 1px solid rgba(0,0,0,.12);
-// }
 
 .drag-and-drop {
   position: absolute;
@@ -434,30 +428,10 @@ a:hover {
   margin: 0px auto;
 }
 
-.mat-expansion-panel-header.mat-expanded:focus,
-.mat-expansion-panel-header.mat-expanded:hover {
-  background: #ffffff !important;
-}
-
-tr.mat-header-row {
-  height: 45px;
-}
-
-tr.mat-footer-row,
-tr.mat-row {
-  height: 35px;
-}
-section.mat-header-row.blue-background-color-color-white-section {
-  min-height: 45px;
-}
-mat-accordion {
-  mat-expansion-panel-header {
-    max-height: 38px;
-  }
-  .mat-row {
-    max-height: 38px;
-  }
-}
+// .mat-expansion-panel-header.mat-expanded:focus,
+// .mat-expansion-panel-header.mat-expanded:hover {
+//   background: #ffffff !important;
+// }
 
 // Custom Css for ScrollBar
 /* width */
@@ -529,7 +503,7 @@ mat-accordion {
 
 .mat-checkbox-inner-container {
   width: 19px !important;
-  height: 19px 100 !important;
+  height: 19px !important;
 }
 
 .display-block {
@@ -545,7 +519,6 @@ mat-accordion {
 }
 
 .fr-box.fr-basic .fr-element {
-  //   line-height: 0.6 !important;
   min-height: 106px !important;
 }
 .float-right {
@@ -634,7 +607,6 @@ mat-accordion {
 
 @media only screen and (min-width: 958px) {
   .page-start-point {
-    // padding-top: 140px !important;
     height: 100%;
     overflow-x: hidden;
   }

@@ -1,184 +1,3 @@
-$mat-header-row-height: 56px;
-$mat-row-height: 48px;
-$material-row-height: 77px;
-$mat-row-horizontal-padding: 12px;
-
-.grnTable {
-  width: 100%;
-  overflow-x: auto;
-
-  table {
-    width: 100%;
-    border: 1px solid #ababab;
-    border-bottom: none;
-  }
-
-  td.mat-cell,
-  td.mat-footer-cell,
-  th.mat-header-cell {
-    border-bottom: none;
-  }
-  .mat-accordion .mat-header-row {
-    padding-left: 0.8rem;
-    padding-right: 2rem;
-    border-bottom: none;
-  }
-
-  .mat-expansion-panel-header.mat-row {
-    border-bottom: none;
-  }
-
-  .mat-table {
-    display: block;
-  }
-
-  .mat-header-row {
-    min-height: $mat-header-row-height;
-  }
-
-  .mat-row {
-    min-height: $mat-row-height;
-  }
-  .grn-material-row {
-    min-height: $mat-row-height;
-  }
-
-  .mat-row,
-  .grn-material-row,
-  .mat-header-row {
-    display: flex;
-    align-items: center;
-    padding: 0 $mat-row-horizontal-padding;
-    box-sizing: border-box;
-  }
-
-  .mat-cell,
-  .mat-header-cell {
-    flex: 1;
-    overflow: hidden;
-    word-wrap: break-word;
-    color: black;
-    min-width: 135px;
-    padding: 0 5px;
-  }
-
-  .widthReduce {
-    flex: none;
-    width: 55px;
-  }
-
-  .mat-header-row {
-    background: #2197bb;
-
-    span {
-      color: #ffffff !important;
-    }
-  }
-
-  .mat-cell.double-mat-cell {
-    min-width: 270px !important;
-  }
-
-  .mat-row {
-    min-height: 50px;
-
-    .mat-cell {
-      color: #707070;
-    }
-  }
-  .border-row {
-    border-bottom: 0.5px solid #979797;
-  }
-  .background-supplier {
-    background: #effbff;
-  }
-  .background-project {
-    background: #eaeaea;
-  }
-  .background-project-list {
-    background: #ffffff;
-    padding-right: 32px;
-  }
-  .grn-material-row {
-    min-height: 38px;
-    .mat-cell {
-      color: #707070;
-    }
-  }
-  .footer {
-    background-color: rgba(25, 33, 53, 0.2);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    min-height: 70px;
-
-    .mat-cell {
-      color: #000000;
-      font-weight: 500;
-      font-size: 12px;
-    }
-  }
-
-  .radio-btn-group-report-table {
-    padding-right: 10px;
-
-    mat-radio-button {
-      padding: 0px 5px;
-    }
-  }
-
-  .mat-row:focus {
-    background-color: white;
-  }
-
-  .mat-expansion-panel-header {
-    padding-left: 0px;
-    padding-right: 12px;
-  }
-
-  .mat-expansion-panel-body {
-    padding: 0;
-  }
-
-  .backgound-project {
-    background-color: #fff !important;
-  }
-
-  .background-grn {
-    background-color: #e0e3ec !important;
-    .material-row {
-      background-color: #e0e3ec !important;
-      border-bottom: 0.5px solid #979797;
-      border-left: 0.5px solid #d0d0d0;
-    }
-  }
-
-  .mat-expansion-panel-header.background-grn.mat-expanded:focus,
-  .mat-expansion-panel-header.background-grn.mat-expanded:hover {
-    background-color: #e0e3ec !important;
-  }
-
-  .mat-expansion-indicator:after {
-    padding: 6px;
-  }
-
-  .mat-expansion-panel-content {
-    overflow-x: auto;
-  }
-}
-
-/** css to make receipt page grn detail row's column aligned **/
-.grn-material-row {
-  .mat-cell.grn-name-cell,
-  .mat-cell.po-number-cell {
-    flex: 0 0 152px;
-    min-width: 152px;
-  }
-
-  .mat-cell.double-mat-cell.added-by-cell {
-    min-width: 306px;
-    flex: 0 0 306px;
-  }
-}
-
 .add-receipts-panel {
   .mat-expansion-panel-header {
     padding: 0 12px;
@@ -232,68 +51,15 @@ $mat-row-horizontal-padding: 12px;
 }
 
 /** Add Receipt Via System, Add Custom Material Dialog CSS **/
-
-.create-receipt-excel,
-.add-receipt-via-system,
-.add-custom-material,
-.issue-to-indent-dialog,
-.upload-image-modal,
-.view-image-modal,
-.delete-bom,
-.payment-record-dialog,
-.add-receipts-dialog,
-.show-docs-dialog,
-.drafted-po-confirm-dialog,
-.select-currency-dialog,
-.select-contact-person-dialog,
-.add-address-dialog,
-.select-approver-dialog,
-.show-supplier-remarks-docs,
-.select-rfq-terms-dialog,
-.float-rfq-confirm-dialog,
-.add-users-dialog,
-.add-project-dialog,
-.deactivate-user,
-.vendor-rating-dialog,
-.tax-dialog,
-.choose-address-dialog,
-.select-projects-dialog,
-.view-video-dialog,
-.release-note-dialog {
+.common-modal-style {
   .mat-dialog-container {
     padding: 0px !important;
     overflow-x: hidden;
   }
 }
 
-.create-receipt-excel,
-.add-receipt-via-system,
-.add-custom-material,
-.issue-to-indent-dialog,
-.upload-image-modal,
-.view-image-modal,
-.delete-bom,
-.payment-record-dialog,
-.add-receipts-dialog,
-.show-docs-dialog,
-.drafted-po-confirm-dialog,
-.select-currency-dialog,
-.select-contact-person-dialog,
-.add-address-dialog,
-.add-project-dialog,
-.add-supplier-dialog,
-.select-approver-dialog,
-.show-supplier-remarks-docs,
-.select-rfq-terms-dialog,
-.float-rfq-confirm-dialog,
-.add-users-dialog,
-.deactivate-user,
-.vendor-rating-dialog,
-.tax-dialog,
-.choose-address-dialog,
-.select-projects-dialog,
-.view-video-dialog,
-.release-note-dialog {
+.common-modal-style,
+.add-supplier-dialog {
   .mat-dialog-content {
     padding: 0;
     overflow-x: hidden;
@@ -435,6 +201,10 @@ $mat-row-horizontal-padding: 12px;
 .view-image-modal {
   .modal-body {
     padding: 0px 1rem;
+  }
+
+  .carousel-caption h4 {
+    word-break: break-word;
   }
 }
 
@@ -671,10 +441,6 @@ $mat-row-horizontal-padding: 12px;
 }
 
 @media only screen and (max-width: 767px) {
-  .receipts-outer-section {
-    padding-top: 5px !important;
-  }
-
   .add-custom-material,
   .add-receipt-via-system {
     .col-add-btn {

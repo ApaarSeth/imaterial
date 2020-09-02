@@ -333,7 +333,7 @@ export class PODetailComponent implements OnInit {
       const dialogRef = this.dialog.open(PaymentRecordComponent, {
         width: "800px",
         data,
-        panelClass: 'payment-record-dialog'
+        panelClass: ['common-modal-style', 'payment-record-dialog']
       });
     })
 
@@ -344,7 +344,7 @@ export class PODetailComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDraftedPoComponent, {
       width: "800px",
       data,
-      panelClass: 'drafted-po-confirm-dialog'
+      panelClass: ['common-modal-style', 'drafted-po-confirm-dialog']
     });
     dialogRef
       .afterClosed().toPromise().then((data) => {

@@ -18,7 +18,7 @@ export class AddProjectService {
             const dialogRef = this.dialog.open(AddProjectComponent, {
                 width: "1200px",
                 data,
-                panelClass: 'add-project-dialog'
+                panelClass: ['common-modal-style', 'add-project-dialog']
             });
             dialogRef
                 .afterClosed()

@@ -1,19 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import {
-  ProjectDetails
-} from "src/app/shared/models/project-details";
-import {
-  FormBuilder,
-  FormArray,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-import {
-  RfqMaterialResponse,
-  AddRFQ
-} from "src/app/shared/models/RFQ/rfq-details";
+import { ProjectDetails } from "src/app/shared/models/project-details";
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import { RfqMaterialResponse, AddRFQ } from "src/app/shared/models/RFQ/rfq-details";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierAdd } from 'src/app/shared/models/supplier';
 import { SupplierLiabilityReport } from 'src/app/shared/models/supplierLiabiltityReport.model';
@@ -23,12 +12,6 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { AllUserDetails, UserAdd } from "../../../shared/models/user-details";
 
-// chip static data
-export interface Fruit {
-  name: string;
-}
-
-
 const ELEMENT_DATA: AllUserDetails[] = [];
 
 @Component({
@@ -36,8 +19,8 @@ const ELEMENT_DATA: AllUserDetails[] = [];
   templateUrl: "./supplier-liability-report-details.component.html"
 })
 
-
 export class SupplierLiabilityReportDetailComponent implements OnInit {
+
   @ViewChild(MatMenuTrigger, { static: false }) triggerBtn: MatMenuTrigger;
   displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
   displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
@@ -79,6 +62,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   projectNumIds: number[];
   allSuppIds: number[];
   countryCode: string;
+  
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,

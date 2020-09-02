@@ -255,7 +255,7 @@ export class PoComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectApproverComponent, {
       width: "400px",
       data,
-      panelClass: 'select-approver-dialog',
+      panelClass: ['common-modal-style', 'select-approver-dialog'],
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {

@@ -54,7 +54,7 @@ export class SelectProjectComponent implements OnInit {
             const dialogRef = this._dialog.open(AddProjectComponent, {
                 width: "1000px",
                 data,
-                panelClass: 'add-project-dialog'
+                panelClass: ['common-modal-style', 'add-project-dialog']
             });
 
             dialogRef.afterClosed().subscribe(result => {
