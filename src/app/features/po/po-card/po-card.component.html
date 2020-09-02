@@ -2,31 +2,26 @@
   <div class="row">
     <span class="col-xs-6">
       <span class="m-r-35 p-l-15">
-        <span class="text-semi-bold"> P.O. No.:</span>
-        <span class="text-semi-bold" *ngIf="mode != 'edit'; else editBlock">{{ cardData.poNumber }}</span>
-        <ng-template #editBlock>
+        <span>
           <mat-form-field class="border-input">
             <input matInput type="string" formControlName="orderNo" placeholder="P.O. No." class="m-r-5" />
+            <small *ngIf="projectDetails.controls['orderNo'].hasError('required') && projectDetails.controls['orderNo'].touched" class="form-error-msg">
+              P.O. No. is required
+            </small>
           </mat-form-field>
-        </ng-template>
+        </span>
       </span>
     </span>
     <span class="col-xs-6 date-dialog-add-edit">
-      <span class="text-semi-bold" *ngIf="mode !== 'edit'; else editDateBlock">
-        P.O. Valid Till: <span class="p-l-5">{{ cardData.poValidUpto | date: "dd-MMM-yyy" }}</span>
+      <span>
+        <mat-form-field class="border-input">
+          <mat-label>Valid Till</mat-label>
+          <!-- <span class="form-placeholder">{{ projectDetails["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
+          <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly [min]="minDate" />
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate startView="month"></mat-datepicker>
+        </mat-form-field>
       </span>
-      <ng-template #editDateBlock>
-        <span class="text-semi-bold">
-          P.O. Valid Till:
-          <mat-form-field class="border-input">
-            <mat-label>Valid Till</mat-label>
-            <!-- <span class="form-placeholder">{{ projectDetails["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
-            <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly [min]="minDate" />
-            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-            <mat-datepicker #endDate startView="month"></mat-datepicker>
-          </mat-form-field>
-        </span>
-      </ng-template>
     </span>
   </div>
   <mat-grid-list cols="2" rowHeight="100px" class="poCard">
@@ -133,7 +128,7 @@
             <span>{{ cardData.supplierAddress.city }} </span>
           </mat-list-item>
           <mat-list-item mat-subheader>
-            <span class="font-weight-500"> GSTIN: </span>
+            <span class="font-weight-500"> {{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }} </span>
             <span>{{ cardData.supplierAddress.gstNo }}</span>
           </mat-list-item>
         </mat-list>
@@ -185,7 +180,7 @@
                 <span>{{ cardData.billingAddress.city }}</span>
               </mat-list-item>
               <mat-list-item mat-subheader>
-                <span class="font-weight-500"> GSTIN: </span>
+                <span class="font-weight-500"> {{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }} </span>
                 <span>{{ cardData.billingAddress.gstNo }}</span>
               </mat-list-item>
             </div>
@@ -322,7 +317,7 @@
         <span class="text-very-light word-break-all">{{ cardData.billingAddress.city }}</span>
       </div>
       <div class="width-100">
-        <span class="text-size-light"> GSTIN: </span>
+        <span class="text-size-light"> {{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }} </span>
         <span class="text-very-light word-break-all">{{ cardData.billingAddress.gstNo }}</span>
       </div>
     </div>
@@ -368,7 +363,7 @@
       </div>
 
       <div class="width-100">
-        <span class="text-size-light"> GSTIN: </span>
+        <span class="text-size-light"> {{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }} </span>
         <span class="text-very-light word-break-all">{{ cardData.supplierAddress.gstNo }}</span>
       </div>
     </div>

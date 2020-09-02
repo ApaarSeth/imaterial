@@ -42,7 +42,6 @@ export class TokenInterceptor implements HttpInterceptor {
                     request.url.indexOf('trade/get/all/categories') > -1 ||
                     request.url.indexOf('api/auth/forgotPassword') > -1 ||
                     request.url.indexOf('api/auth/verifyResetPassword') > -1 ||
-
                     request.url.indexOf('supplier/documents/upload') > -1) {
                     return next.handle(request)
                 }

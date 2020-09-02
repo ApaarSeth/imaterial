@@ -1,3 +1,5 @@
+import { AddProjectService } from './../../shared/services/add-project.service';
+import { ProjectService } from './../../shared/services/project.service';
 import { Component, OnInit, ViewChild, ViewChildren, HostListener, ChangeDetectorRef } from "@angular/core";
 import {
   POData,
@@ -29,6 +31,8 @@ import { ShortCloseConfirmationComponent } from "../../shared/dialogs/short-clos
 import { SelectApproverComponent } from "../../shared/dialogs/selectPoApprover/selectPo.component";
 import { AngularEditor } from "../../shared/constants/angular-editor.constant";
 import { POService } from "../../shared/services/po.service";
+import { ProjetPopupData } from "../../shared/models/project-details";
+import { data } from "jquery";
 
 @Component({
   selector: "app-po",
@@ -69,6 +73,7 @@ export class PoComponent implements OnInit {
       this.setLocalStorage()
     }
   };
+  orgId: number;
   userId: number;
   ValidPOTemp: boolean;
   showResponsiveDesign: boolean;
@@ -85,16 +90,19 @@ export class PoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private guidedTourService: GuidedTourService,
     private _snackBar: MatSnackBar,
-    private commonService: CommonService,
+    private projectService: ProjectService,
     private userGuideService: UserGuideService,
     private navService: AppNavigationService,
-    private notifier: AppNotificationService
+    private notifier: AppNotificationService,
+    private addProjectService: AddProjectService
   ) {
   }
   poId: number;
   mode: string;
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
+    this.orgId = Number(localStorage.getItem('orgId'))
+    this.userId = Number(localStorage.getItem('userId'))
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
       this.mode = poParams.mode;
@@ -242,6 +250,7 @@ export class PoComponent implements OnInit {
     let data: POData = this.collateResults();
     this.openDialog(data);
   }
+
   openDialog(data: POData) {
     const dialogRef = this.dialog.open(SelectApproverComponent, {
       width: "400px",
@@ -249,14 +258,12 @@ export class PoComponent implements OnInit {
       panelClass: 'select-approver-dialog',
       disableClose: true
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if(result !== null){
+      if (result !== null) {
         this.poService.sendPoData(result).then(res => {
           if (res.status === 0 && res.message === "gst field missing from billing address") {
             this.openProjectDialog(data);
           }
-  
           else {
             this.navService.gaEvent({
               action: 'submit',
@@ -281,10 +288,17 @@ export class PoComponent implements OnInit {
   }
 
   openProjectDialog(data: POData) {
-    const dialogRef = this.dialog.open(GSTINMissingComponent, {
-      width: "400px",
-      data
-    });
+    this.projectService.getProjects(this.orgId, this.userId).then(res => {
+      const projectDetails = res.data.find(res => {
+        return res.projectId === data.projectId
+      })
+      const editData: ProjetPopupData = {
+        isEdit: true,
+        isDelete: false,
+        detail: projectDetails
+      };
+      this.addProjectService.openDialog(editData);
+    })
   }
 
   poApproval(decision) {

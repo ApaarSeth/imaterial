@@ -288,11 +288,14 @@
               <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                 <span class="info-tootip__content">
-                  <div class="tooltip-table">
-                    <p class="row mb-1" *ngFor="let tax of this.poTableData[m].taxInfo">
-                      <strong class="col" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ tax.taxName }}</strong
-                      ><span class="col" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ tax.taxValue }}%</span>
-                    </p>
+                  <div class="tooltip-table p-t-0 p-r-0 p-l-0">
+                    <div class="width-100 border-radius-tltr-5px background-modal-grey p-t-5 text-center gray-bottom-border m-b-5">
+                      <span class="text-semi-bold">Tax Details</span>
+                    </div>
+                    <div class="display-flex justify-content-space-between gray-bottom-border" *ngFor="let tax of this.poTableData[m].taxInfo">
+                      <span class="text-semi-bold" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ tax.taxName }}</span
+                      ><span [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ tax.taxValue }}%</span>
+                    </div>
                   </div>
                 </span>
               </span>
@@ -330,11 +333,19 @@
               <span *ngIf="this.poTableData[m].otherCostAmount" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                 <span class="info-tootip__content">
-                  <div class="tooltip-table">
-                    <p class="row mb-1" *ngFor="let cost of this.poTableData[m].otherCostInfo" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
-                      <strong class="col">{{ cost.otherCostName }}</strong
-                      ><span class="col">{{ cost.otherCostAmount }}</span>
-                    </p>
+                  <div class="tooltip-table p-t-0 p-r-0 p-l-0">
+                    <div class="width-100 border-radius-tltr-5px background-modal-grey p-t-5 text-center gray-bottom-border m-b-5">
+                      <span class="text-semi-bold">Other Cost</span>
+                    </div>
+
+                    <div
+                      class="display-flex justify-content-space-between gray-bottom-border"
+                      *ngFor="let cost of this.poTableData[m].otherCostInfo"
+                      [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''"
+                    >
+                      <span class="text-semi-bold">{{ cost.otherCostName }}</span
+                      ><span>{{ cost.otherCostAmount }}</span>
+                    </div>
                   </div>
                 </span>
               </span></span
@@ -682,11 +693,14 @@
                   <span *ngIf="this.additonalCost.additionalOtherCostInfo && this.additonalCost.additionalOtherCostInfo.length" class="info-icon info-tootip"
                     ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                     <span class="info-tootip__content">
-                      <div class="tooltip-table">
-                        <p class="row mb-1" *ngFor="let cost of this.additonalCost.additionalOtherCostInfo">
-                          <strong class="col" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ cost.otherCostName }}</strong
-                          ><span class="col" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ cost.otherCostAmount }}</span>
-                        </p>
+                      <div class="tooltip-table p-t-0 p-r-0 p-l-0">
+                        <div class="width-100 border-radius-tltr-5px background-modal-grey p-t-5 gray-bottom-border m-b-5">
+                          <span>Additional Cost Details</span>
+                        </div>
+                        <div class="display-flex justify-content-space-between gray-bottom-border" *ngFor="let cost of this.additonalCost.additionalOtherCostInfo">
+                          <span class="text-semi-bold" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ cost.otherCostName }}</span
+                          ><span [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ cost.otherCostAmount }}</span>
+                        </div>
                       </div>
                     </span></span
                   >
@@ -718,11 +732,14 @@
                   <span *ngIf="this.additonalCost.additionalOtherCostInfo.length" class="info-icon info-tootip"
                     ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                     <span class="info-tootip__content">
-                      <div class="tooltip-table">
-                        <p class="row mb-1" *ngFor="let cost of this.additonalCost.additionalOtherCostInfo">
-                          <strong class="col" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ cost.otherCostName }}</strong
-                          ><span class="col" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ cost.otherCostAmount }}</span>
-                        </p>
+                      <div class="tooltip-table p-t-0 p-r-0 p-l-0">
+                        <div class="width-100 border-radius-tltr-5px background-modal-grey p-t-5 text-center gray-bottom-border m-b-5">
+                          <span>Additional Cost Details</span>
+                        </div>
+                        <div class="display-flex justify-content-space-between gray-bottom-border" *ngFor="let cost of this.additonalCost.additionalOtherCostInfo">
+                          <span class="text-semi-bold" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ cost.otherCostName }}</span
+                          ><span [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ cost.otherCostAmount }}</span>
+                        </div>
                       </div>
                     </span></span
                   >
