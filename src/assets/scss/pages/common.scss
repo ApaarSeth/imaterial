@@ -728,6 +728,11 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
   }
 }
 
+.mat-sort-header-arrow{
+  color: #ffffff;
+  opacity: 0.75 !important;
+}
+
 /******* Table and Expansion panel height css end *********/
 
 @media only screen and (max-width: 959px) {
