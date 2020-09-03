@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { BomService } from 'src/app/shared/services/bom.service';
 import { categoryNestedLevel } from 'src/app/shared/models/category';
 import { MatDialog } from '@angular/material/dialog';
 import { EditMyMaterialComponent } from 'src/app/shared/dialogs/edit-my-material/edit-my-material.component';
@@ -18,16 +17,17 @@ export class MyMaterialTabComponent implements OnInit {
 	@Input("selectedCategory") selectedCategry: categoryNestedLevel[]
 	selectedCategory: categoryNestedLevel[] = [];
 	isSearching: boolean;
-	search: string = ''
-	constructor(public dialog: MatDialog,
-		private notifier: AppNotificationService, private materialService: MyMaterialService, private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
+	search: string = '';
+
+	constructor(
+		public dialog: MatDialog,
+		private notifier: AppNotificationService, 
+		private materialService: MyMaterialService, 
+		private commonService: CommonService,
+		private dialogRef: MatDialog) { }
 
 	ngOnInit() {
-		// this.commonService.materialAdded.subscribe(val => {
-		// 	if (val) {
-		// 		this.getMyMaterial();
-		// 	}
-		// })
+		// debugger
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
