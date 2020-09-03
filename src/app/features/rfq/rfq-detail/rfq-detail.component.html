@@ -99,24 +99,21 @@
                           <div>
                             {{ element.supplierList != null ? element.supplierList.length : "" }}
                           </div>
-
-                          <div class="show-detail-supplier rfq-icon-material-i" *ngIf="element.supplierList.length > 0">
-                            <!-- <img src="../../../../assets/images/i_icon.png" /> -->
-                            <i class="material-icons md-24 mt-2" style="padding-top: 0px">info</i>
-                            <div id="detail-supplier">
-                              <div class="row">
-                                <div class="col-sm-12">
-                                  <span class="supplier-name-tag">Supplier Name</span>
-                                  <ng-container *ngFor="let name of element.supplierList">
-                                    <span
-                                      ><br />
-                                      {{ name.supplierName }}
-                                    </span>
-                                  </ng-container>
+                          <span *ngIf="element.supplierList.length" class="info-icon info-tootip"
+                            ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                            <span class="info-tootip__content">
+                              <div class="tooltip-table p-t-0 p-l-0 p-r-0">
+                                <div class="width-100 background-modal-grey gray-bottom-border p-t-10 m-b-10">
+                                  <span class="text-semi-bold">Supplier Name</span>
+                                </div>
+                                <div class="width-99 gray-bottom-border m-b-10" *ngFor="let name of element.supplierList">
+                                  <span>
+                                    {{ name.supplierName }}
+                                  </span>
                                 </div>
                               </div>
-                            </div>
-                          </div>
+                            </span>
+                          </span>
                         </div>
                       </td>
                     </ng-container>
@@ -187,23 +184,21 @@
                             {{ element.supplierList != null ? element.supplierList.length : "" }}
                           </div>
 
-                          <div class="show-detail-supplier rfq-icon-material-i" *ngIf="element.supplierList">
-                            <!-- <img src="../../../../assets/images/i_icon.png" /> -->
-                            <mat-icon class="material-icons md-24 mt-2">info</mat-icon>
-                            <div id="detail-supplier">
-                              <div class="row">
-                                <div class="col-sm-12">
-                                  <span class="supplier-name-tag">Supplier Name</span>
-                                  <ng-container *ngFor="let name of element.supplierList">
-                                    <span
-                                      ><br />
-                                      {{ name.supplierName }}
-                                    </span>
-                                  </ng-container>
+                          <span *ngIf="element.supplierList && element.supplierList.length" class="info-icon info-tootip"
+                            ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                            <span class="info-tootip__content">
+                              <div class="tooltip-table p-t-0 p-r-0 p-l-0">
+                                <div class="width-100 background-modal-grey p-t-10 gray-bottom-border m-b-10">
+                                  <span class="text-semi-bold">Supplier Name</span>
+                                </div>
+                                <div class="width-99 gray-bottom-border m-b-10" *ngFor="let name of element.supplierList">
+                                  <span>
+                                    {{ name.supplierName }}
+                                  </span>
                                 </div>
                               </div>
-                            </div>
-                          </div>
+                            </span>
+                          </span>
                         </div>
                       </td>
                     </ng-container>
