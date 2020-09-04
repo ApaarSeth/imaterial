@@ -142,6 +142,9 @@ div.limited-character.universal {
 .full-border.mat-form-field input {
   border: 2px solid $icon-color-gray;
 }
+.no-border{
+  border:0 !important;
+}
 /***************************************************************************************/
 
 /***********************************Input and Dropdown Related Padding*****************/
@@ -726,4 +729,19 @@ input::title {
     width: auto;
     overflow: visible;
   }
+}
+
+.outline-0{
+  outline: 0 !important;
+  &:hover{
+    outline: 0;
+  }
+}
+
+.d-contents{
+  display: contents !important;
+}
+
+.bg-shadow-1px{
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) !important;
 }

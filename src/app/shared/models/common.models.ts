@@ -1,3 +1,4 @@
+import { material } from './category';
 export interface GaEventsData {
     action: string;
     category?: string;
@@ -62,3 +63,4 @@ export interface OverallOtherCost {
     rfqSupplierId: number
     status: number
 }
+

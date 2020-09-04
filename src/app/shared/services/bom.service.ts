@@ -12,7 +12,6 @@ export class BomService {
 
   searchText = new BehaviorSubject<string>('');
 
-
   getMaterialsWithSpecs(categoryList) {
     return this.dataService.getRequestMaster(
       API.GETMATERIALSWITHSPECS,
@@ -81,8 +80,9 @@ export class BomService {
     return this.dataService.getRequest(API.MATERIALUNIT)
   }
 
-  getTradeCategory(tradeName) {
-    return this.dataService.getRequestMaster(API.TRADERELATEDCATEGORY(tradeName))
+  getTradeCategory(tradeList) {
+    // return this.dataService.getRequestMaster(API.TRADERELATEDCATEGORY(tradeName))
+    return this.dataService.getRequestMaster(API.TRADERELATEDCATEGORY, tradeList)
   }
 
   getMaterialExist(data) {
@@ -97,6 +97,14 @@ export class BomService {
 
   addGrnWithoutPo(data) {
     return this.dataService.sendPostRequest(API.ADDGRNWITHOUTPO, data)
+  }
+
+  getNames(data) {
+    return data.map(item => item.name);
+  }
+
+  getCategoriesByIDName(data) {
+    return data.map(item => ({ ...item, name: item.categoriesName, id: item.categoriesCode }));
   }
 
 }

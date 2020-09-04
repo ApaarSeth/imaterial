@@ -10,7 +10,6 @@
             </div>
         </div>
 
-
         <ng-container *ngIf="dataSource">
 
             <div class="bom-details-table-div-part example-container mat-elevation-z8 mt-2 table-responsive">
@@ -34,28 +33,12 @@
                                 </div>
                             </td>
                             <td>
-                                <mat-form-field
-                                    class="border-select w-75 bom-unit-col mat-form-field-padding mat-form-field-flex-mm-padding p-t-10">
-                                    <mat-select formControlName="materialUnit" placeholder="Unit"
-                                        [disabled]="(item.value.requestedQuantity > 0 || item.value.issueToProject > 0 || item.value.availableStock > 0)">
-                                        <div class="display-flex border-bottom">
-                                            <input #inpt class="p-l-10 p-b-5" matInput autocomplete="off" type="search"
-                                                placeholder="Search Unit" (keydown)="$event.stopPropagation()"
-                                                [attr.data-filter-data]="materialUnits"
-                                                (input)="filterUnits($event, inpt)" />
-                                            <button mat-button mat-icon-button>
-                                                <mat-icon>search</mat-icon>
-                                            </button>
-                                        </div>
-                                        <mat-option
-                                            *ngFor="let unit of getUnitsData(inpt.dataset.filterData).length ? getUnitsData(inpt.dataset.filterData) : materialUnits"
-                                            [value]="unit">
-                                            <span>
-                                                {{ unit }}
-                                            </span>
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+                                <app-search-unit [config]="{
+                                    isDisable: getIsDisableSearchUnit(item.value.requestedQuantity, item.value.issueToProject, item.value.availableStock),
+                                    materialUnits: materialUnits,
+                                    item: item,
+                                    selectedUnit: item.value.materialUnit
+                                }" (getSelectedUnit)="item.value.materialUnit = $event"></app-search-unit>
                             </td>
                             <td>
                                 <mat-form-field
@@ -86,4 +69,5 @@
         </ng-container>
 
     </div>
+
 </div>
