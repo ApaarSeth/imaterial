@@ -1,20 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { RFQService } from "src/app/shared/services/rfq.service";
-import {
-  RfqProjects,
-  RfqProject,
-  RfqMaterialList,
-  RfqProjectSubmit,
-  MaterialListSubmit,
-  RfqSupplierList
-} from "src/app/shared/models/RFQ/rfqBids";
+import { RfqProject, RfqMaterialList, RfqProjectSubmit, MaterialListSubmit, RfqSupplierList } from "src/app/shared/models/RFQ/rfqBids";
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
-import { map } from "rxjs/operators";
-import { Materials } from "src/app/shared/models/subcategory-materials";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { ShowSupplierRemarksandDocs } from 'src/app/shared/dialogs/show-supplier-remarks-documents/show-supplier-remarks-documents.component';
-import { ProjectItemComponent } from 'src/app/shared/components/project-item/project-item.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -23,7 +13,14 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   selector: "app-rfq-bids",
   templateUrl: "./rfq-bids.component.html"
 })
+
 export class RfqBidsComponent implements OnInit {
+
+  rfqProjects: RfqProject[] = [];
+  rfqForms: FormGroup;
+  rfqId: number;
+  orgId: number;
+  ratesBaseCurr: boolean = false;
 
   constructor(
     private router: Router,
@@ -35,11 +32,6 @@ export class RfqBidsComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) { }
 
-  rfqProjects: RfqProject[] = [];
-  rfqForms: FormGroup;
-  rfqId: number;
-  orgId: number;
-  ratesBaseCurr: boolean = false;
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.route.params.subscribe(rfqId => {
@@ -65,6 +57,7 @@ export class RfqBidsComponent implements OnInit {
       this.formInit();
     });
   }
+
   formInit() {
     const frmArr: FormGroup[] = this.rfqProjects.map(
       (project: RfqProject, m) => {
@@ -228,6 +221,7 @@ export class RfqBidsComponent implements OnInit {
       }
     });
   }
+
   getFormValidation() {
     return this.rfqForms.value.forms.some(value => {
       return value.materialList.some(materials => {
@@ -239,6 +233,7 @@ export class RfqBidsComponent implements OnInit {
       });
     });
   }
+  
   getFormQtyValidation() {
     return this.rfqForms.value.forms.some(value => {
       return value.materialList.some(materials => {

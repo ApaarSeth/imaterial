@@ -1,4 +1,4 @@
-<div class="page-start-point p-rem-t-40">
+<div class="page-start-point p-rem-r-10 my-material-tabs">
   <div *ngIf="!selectedCategory.length; else elseBlock" class="parent p-t-20 min-height">
     <div class="p-l-10 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
@@ -17,14 +17,11 @@
   </div>
   <ng-template #elseBlock>
     <div class="p-l-10 p-b-20 min-height">
-      <div class="p-t-20">
-        <mat-tab-group (selectedTabChange)="tabClick($event)">
-          <mat-tab label="My Materials">
-            <app-my-material-tab *ngIf="showMyMaterial" [selectedCategory]="selectedCategory"></app-my-material-tab>
-          </mat-tab>
-          <!-- <mat-tab label="Unapproved My Materials"><app-unapproved-material-tab *ngIf="showUnapprovedMaterial"></app-unapproved-material-tab></mat-tab> -->
-        </mat-tab-group>
-      </div>
+      <mat-tab-group (selectedTabChange)="tabClick($event)">
+        <mat-tab label="My Materials">
+          <app-my-material-tab *ngIf="showMyMaterial" [selectedCategory]="selectedCategory"></app-my-material-tab>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </ng-template>
 </div>

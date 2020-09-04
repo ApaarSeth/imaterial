@@ -40,6 +40,10 @@
   text-align: right;
 }
 
+.text-center{
+  text-align: center;
+}
+
 .text-webkit-center {
   text-align: -webkit-center;
 }
@@ -236,23 +240,6 @@ div.limited-character.universal {
   }
 }
 
-.mat-expansion-panel-header-wrapper {
-  .mat-expansion-panel-header.mat-expanded:focus,
-  .mat-expansion-panel-header.mat-expanded:hover,
-  .mat-expansion-panel-header {
-    background: $skyblue-color !important;
-    border-radius: 18px 18px 0px 0px !important;
-  }
-}
-
-.mat-expansion-panel-header-not-expand {
-  .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled="true"]),
-  .mat-expansion-panel-header:not([aria-disabled="true"]) {
-    background: $skyblue-color !important;
-    border-radius: 18px 18px 0px 0px !important;
-  }
-}
-
 .breadcrumb {
   background: none;
   font-size: 0.9em;
@@ -358,6 +345,47 @@ div.limited-character.universal {
     display: none;
     margin-top: 10px;
     position: absolute;
+    left: 10px;
+  }
+}
+
+.tooltip-info{
+  left: auto;
+  background: #ffffff;
+  border: 1px solid #bbbbbb;
+  margin-top: 0px;
+
+  .tooltip-info-header, .tooltip-info-body span{
+    padding: 0.5em;
+  }
+
+  .tooltip-info-header {
+    background-color: #eeeeee;
+    margin-right: 0px !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #bbbbbb;
+  }
+
+  .tooltip-info-body {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    max-height: 27.5vh;
+    overflow-y: auto;
+    span {
+      display: block;
+      &:not(:last-child){
+        border-bottom: 1px solid #bbbbbb;
+      }
+    }
+  }
+}
+
+.rfp-details-tbl .mat-row{
+  &:last-child, &:nth-last-child(2), &:nth-last-child(3){
+    .mat-column-Total-Supplier .tooltip-info{
+      bottom: 10px;
+    }
   }
 }
 
@@ -366,7 +394,7 @@ div.limited-character.universal {
   max-width: 200px;
   background-color: #ffffff;
   border-radius: 5px;
-  padding: 5px 2px 0px;
+  padding: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   margin-top: 10px;
   margin-left: -62%;
@@ -816,5 +844,11 @@ td.mat-footer-cell:first-of-type {
     text-align: left;
     width: auto;
     overflow: visible;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .info-tootip:hover .info-tootip__content{
+    left: 0px;
   }
 }

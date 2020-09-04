@@ -80,8 +80,8 @@ div.limited-character.bom {
     max-width: 100%;
     height: auto;
     border: 1px solid #828282;
-    height: 45px;
-    width: 45px;
+    height: 35px;
+    width: 35px;
     -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -91,7 +91,7 @@ div.limited-character.bom {
 
     &:first-child {
       z-index: 0;
-      top: -30px;
+      top: -24px;
       left: 10px;
     }
 
@@ -247,7 +247,7 @@ div.limited-character.bom {
 }
 
 .default-image {
-  height: 50px;
+  height: 40px;
 }
 
 .red-border {
@@ -395,7 +395,7 @@ div.limited-character.bom {
     }
 
     .attached-image:first-child {
-      left: 20px;
+      left: 30px;
     }
   }
 }

@@ -1,4 +1,4 @@
-<div class="page-start-point mt-5 p-rem-t-15">
+<div class="page-start-point mt-5">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <form *ngIf="rfqProjects.length" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
       <div class="row p-t-10 p-b-10">
@@ -33,6 +33,7 @@
           </span>
         </span>
       </div>
+
       <div formArrayName="forms">
         <div class="customBid">
           <div *ngFor="let project of rfqProjects; let p = index" [formGroupName]="p">
@@ -77,85 +78,71 @@
                   
                 </table-->
 
-                <div>
-                  <section class="mat-header-row">
-                    <span class="mat-cell maxwidth-15 p-l-25 view-bid-tbl">Material Name</span>
-                    <span class="mat-cell maxwidth-10">Quantity</span>
-                    <span class="mat-cell maxwidth-15">Makes & Rates</span>
-                  </section>
-                </div>
+                <table class="view-bids-tbl width-100">
+                  <tr matSort class="mat-header-row">
+                    <th class="mat-header-cell maxwidth-20">Material Name</th>
+                    <th class="mat-header-cell maxwidth-10">Quantity</th>
+                    <th class="mat-header-cell maxwidth-60">Makes & Rates</th>
+                    <th class="mat-header-cell maxwidth-10"></th>
+                  </tr>
+                </table>
 
                 <ng-container formArrayName="materialList">
                   <div class="p-0" *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
-                    <section class="mat-row rfqbid-header-color">
-                      <span class="mat-cell maxwidth-15 view-bid-tbl p-l-25">
-                        <div class="limited-character" matTooltip=" {{ material.materialName }}">
-                          {{ material.materialName }} <br />
-                          <!-- <span *ngIf="!rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.value" class="error-msg fontsize-9-px"> Net Quantity Should be less than {{material.poAvailableQty}} </span> -->
-                        </div>
-                      </span>
-                      <span class="mat-cell maxwidth-10">
+
+                    <tr class="mat-row material-details-row">
+                      <td class="mat-cell maxwidth-20" matTooltip=" {{ material.materialName }}">{{ material.materialName }}</td>    
+                      <!-- <span *ngIf="!rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.value" class="error-msg fontsize-9-px"> Net Quantity Should be less than {{material.poAvailableQty}} </span> -->
+
+                      <td class="mat-cell maxwidth-10">
                         {{ material.rfqMaterialQty }}
                         <span class="p-l-5">{{ material.materialUnit }}</span>
-                      </span>
+                      </td>
 
-                      <span class="mat-cell maxwidth-75">
-                        <div class="mat-row align-items-center">
+                      <td class="mat-cell maxwidth-60">
+                        <tr class="mat-row makes-details-row">
                           <ng-container *ngFor="let brand of material.brandNames">
-                            <span class="mat-cell maxwidth-10 text-center">
-                              {{ brand }}
-                            </span>
-                            <span class="mat-cell maxwidth-10 text-center supplier-rate-col-bid">
-                              Supplier Rates
-                              <span *ngIf="this.rfqProjects[0].rfqCurrency" class="p-r-5 p-t-2">({{ currency }})</span>
-                            </span>
-
-                            <!-- <span class="col-sm-1"></span> -->
+                            <td class="mat-cell maxwidth-10 text-center">{{ brand }}</td>
+                            <td class="mat-cell maxwidth-15 text-center supplier-rate-col-bid">Supplier Rates
+                              <span *ngIf="this.rfqProjects[0].rfqCurrency" class="p-r-5">({{ currency }})</span>
+                            </td>
                           </ng-container>
-                        </div>
-                      </span>
+                        </tr>
+                      </td>
 
-                      <span class="mat-cell maxwidth-10 text-center"> Attached Images </span>
-                    </section>
+                      <td class="mat-cell maxwidth-10 text-center">Attached Images</td>
+                    </tr>
 
                     <ng-container formArrayName="supplierList">
-                      <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index" [formGroupName]="s">
-                        <span class="mat-cell maxwidth-15 p-l-25 limited-character view-bid-tbl" matTooltip=" {{ supplier.supplierName }}">
+                      <tr class="mat-row supplier-details-row" *ngFor="let supplier of material.supplierList; let s = index" [formGroupName]="s">
+                        <td class="mat-cell maxwidth-20" matTooltip=" {{ supplier.supplierName }}">
                           <span class="supplier-name ml-0">{{ supplier.supplierName }}</span>
 
-                          <span class="d-block supplier-rates ml-0 mgbn12 view-bid-supp-rating">
+                          <span class="d-block supplier-rates ml-0 view-bid-supp-rating">
                             <view-rating [supplierId]="material.materialId" [ratings]="supplier.rating"></view-rating>
                           </span>
-                        </span>
+                        </td>
 
-                        <span class="mat-cell maxwidth-10"></span>
+                        <td class="mat-cell maxwidth-10"></td>
 
-                        <div class="mat-cell maxwidth-75">
-                          <div class="mat-row align-items-center">
+                        <td class="mat-cell maxwidth-60">
+                          <tr class="mat-row">
                             <ng-container formArrayName="brandGroup">
                               <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index" [formGroupName]="i">
-                                <div class="mat-cell maxwidth-10 text-center" style="overflow: initial">
+                                <td class="mat-cell maxwidth-10 text-center" style="overflow: initial">
                                   <ng-container *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
                                     <mat-form-field class="border-input">
-                                      <input
-                                        type="text"
-                                        class="quantity"
-                                        appTwoDigitDecimaNumber
-                                        matInput
-                                        formControlName="quantity"
-                                        placeholder="qty"
-                                        min="0"
-                                        (input)="getQuanityValidation(p, m)"
-                                      />
+                                      <input type="text" class="quantity" appTwoDigitDecimaNumber matInput 
+                                      formControlName="quantity" placeholder="qty" min="0" (input)="getQuanityValidation(p, m)" />
                                     </mat-form-field>
                                   </ng-container>
 
                                   <ng-template #dashedLine>
                                     <span>--</span>
                                   </ng-template>
-                                </div>
+                                </td>
 
-                                <span class="mat-cell maxwidth-10 text-center supplier-rate-col-bid">
+                                <td class="mat-cell maxwidth-15 text-center supplier-rate-col-bid">
                                   {{
                                     brandInfo.materialUnitPrice != null
                                       ? ratesBaseCurr
@@ -163,16 +150,14 @@
                                         : (brandInfo.materialUnitPrice | number: "1.2-2")
                                       : "--"
                                   }}
-                                </span>
-
-                                <!-- <span class="col-sm-1"></span> -->
+                                </td>
                               </ng-container>
                             </ng-container>
-                          </div>
-                        </div>
+                          </tr>
+                        </td>
 
                         <!-- Attached Image Column individual Supplier -->
-                        <div class="mat-cell maxwidth-10 view-bid-images-preview text-center">
+                        <td class="mat-cell maxwidth-10 view-bid-images-preview text-center">
                           <ng-container *ngIf="supplier?.documentList?.length; else defaultImage">
                             <div
                               class="images-lists"
@@ -188,19 +173,9 @@
                           <ng-template #defaultImage>
                             <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
                           </ng-template>
+                        </td>
+                      </tr>
 
-                          <!-- <div *ngIf="supplier?.documentList?.length" class="images-lists" [ngClass]="supplier.documentList.length === 1 ? 'single-image' : (supplier.documentList.length === 2 ? 'double-images' : 'triple-images')"
-                            (click)="viewAllImages(material.materialId, supplier.supplierId, project.projectId)">
-                            <ng-container *ngFor="let img of supplier.documentList; let i = index">
-                              <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
-                            </ng-container>
-                          </div>
-              
-                          <ng-container *ngIf="!supplier?.documentList">
-                            <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
-                          </ng-container>  -->
-                        </div>
-                      </div>
                     </ng-container>
                   </div>
                 </ng-container>

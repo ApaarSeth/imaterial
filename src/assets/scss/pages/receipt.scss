@@ -50,6 +50,10 @@
     .receipt-row {
         width: 100%;
 
+        td.mat-cell{
+            border-bottom: none;
+        }
+
         td.mat-cell:first-of-type {
             padding-left: 0px !important;
         }
@@ -71,6 +75,12 @@
         .material-unit, .po-number-cell {
             min-width: 100px !important;
         }
+    }
+}
+
+@media only screen and (max-width: 959px){
+    .common-padding-mobile{
+        padding-right: 0px !important;
     }
 }
 

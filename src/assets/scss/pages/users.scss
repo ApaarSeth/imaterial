@@ -116,7 +116,6 @@
   }
 }
 
-
 .add-user-details-button-right {
   padding-bottom: 8px;
 }
@@ -487,9 +486,13 @@
  min-width: 0px;
  overflow-x: auto;
 
+ .mat-row .mat-cell{
+   font-weight: 400;
+ }
+
 .mat-table {
-     overflow-x: scroll;
-   }
+  overflow-x: scroll;
+}
 
 .mat-cell,
 .mat-header-cell {
