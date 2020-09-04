@@ -197,16 +197,19 @@
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
                 <div class="display-flex">
-                  <mat-form-field class="border-input date-label date-picker-button-padding date-button mat-form-field-padding width-80 p-l-0" [ngClass]="isMobile ? 'fontsize-10-px' : ''">
-                    <mat-label *ngIf="!inputDate.value">Select Date</mat-label>
-                    <span class="form-placeholder" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{
-                      poForms["controls"]["forms"]["controls"][m]["controls"]["fullfilmentDate"].value | date: "dd-MMM-yyy"
-                    }}</span>
-                    <input #inputDate hidden matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" placeholde="Enter Date" (click)="dueDate.open()" [min]="minDate" readonly />
+                  <mat-form-field class="border-input width-83 mat-form-field-label-size" [ngClass]="isMobile ? 'fontsize-10-px' : ''">
+                    <mat-label>Select Date*</mat-label>
+                    <input #inputDate class="fontsize-12-px" matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" [min]="minDate" readonly />
                     <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                     <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
                   </mat-form-field>
-                  <span class="display-flex align-item-end" *ngIf="poForms['controls']['forms']['controls'][m]['controls']['fullfilmentDate'].hasError('required')">
+                  <span
+                    class="display-flex align-item-end p-b-5"
+                    *ngIf="
+                      poForms['controls']['forms']['controls'][m]['controls']['fullfilmentDate'].hasError('required') &&
+                      poForms['controls']['forms']['controls'][m]['controls']['fullfilmentDate'].touched
+                    "
+                  >
                     <app-error-message [msg]="'Date is required'"></app-error-message>
                   </span>
                 </div>
