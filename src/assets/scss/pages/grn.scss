@@ -192,7 +192,7 @@
   }
 }
 
-.upload-image-modal {
+.upload-image-modal, .edit-my-material-dialog {
   .modal-body {
     padding: 1.5rem 3rem;
   }
@@ -262,7 +262,8 @@
 .drafted-po-confirm-dialog,
 .add-users-dialog,
 .choose-address-dialog,
-.add-project-dialog {
+.add-project-dialog,
+.delete-my-material-dialog {
   .modal-body {
     padding: 1.5rem 2.5rem;
   }
@@ -523,6 +524,10 @@
       padding: 1rem 2.5rem;
     }
   }
+
+  .edit-my-material-dialog .modal-body {
+    padding-top: 0.5rem;
+  }
 }
 
 @media only screen and (max-width: 599px) {
@@ -587,10 +592,14 @@
 }
 
 @media only screen and (max-width: 560px) {
-  .add-receipt-via-system .mat-dialog-content,
-  .add-custom-material .modal-dialog-content,
-  .create-receipt-excel .modal-dialog-content {
-    padding: 0px !important;
+  .add-receipt-via-system,.add-custom-material, .create-receipt-excel{
+    .modal-dialog-content {
+      padding: 0px !important;
+    }
+  } 
+
+  .add-receipt-via-system .mobile-device-top-padding.mat-dialog-content{
+    padding-top: 10px !important;
   }
 }
 

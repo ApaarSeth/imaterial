@@ -1,13 +1,10 @@
-<div class="page-start-point p-rem-t-40">
+<div class="page-start-point">
   <div *ngIf="!submittedRfqListTemp && !nonSubmittedRfqListTemp && rfqCount === 0" class="parent min-height">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
         <img src="../../../../assets/images/rfq-details.png" alt="Project Logo" />
         <div>
-          <p>
-            You haven't created any RFP yet. <br />
-            Please create one to continue.
-          </p>
+          <p>You haven't created any RFP yet. <br />Please create one to continue.</p>
         </div>
       </div>
 
@@ -53,13 +50,13 @@
         <ng-container *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp; else emptyReports">
           <div class="rfq-list-detail-custom">
             <mat-accordion *ngIf="submittedRfqListTemp">
-              <mat-expansion-panel class="myPanel mb-4" [expanded]="true">
+              <mat-expansion-panel class="myPanel m-b-10" [expanded]="true">
                 <mat-expansion-panel-header [ngClass]="isMobile ? 'p-t-1-rem p-b-1-rem' : ''">
                   <mat-panel-title> Quotes Received </mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <div class="add-unique-container mat-elevation-z8">
-                  <table mat-table [dataSource]="submittedRfqList">
+                  <table mat-table [dataSource]="submittedRfqList" class="rfp-details-tbl">
                     <ng-container matColumnDef="RFQ Name">
                       <th mat-header-cell *matHeaderCellDef>RFP Name</th>
                       <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
@@ -92,37 +89,40 @@
                         {{ element.materialCount }}
                       </td>
                     </ng-container>
+
                     <ng-container matColumnDef="Total Supplier">
                       <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
                       <td mat-cell *matCellDef="let element" class="text-align-center">
                         <div class="supplier-qty-div">
-                          <div>
-                            {{ element.supplierList != null ? element.supplierList.length : "" }}
-                          </div>
-                          <span *ngIf="element.supplierList.length" class="info-icon info-tootip"
-                            ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
-                            <span class="info-tootip__content">
-                              <div class="tooltip-table p-t-0 p-l-0 p-r-0">
-                                <div class="width-100 background-modal-grey gray-bottom-border p-t-10 m-b-10">
-                                  <span class="text-semi-bold">Supplier Name</span>
-                                </div>
-                                <div class="width-99 gray-bottom-border m-b-10" *ngFor="let name of element.supplierList">
-                                  <span>
-                                    {{ name.supplierName }}
-                                  </span>
-                                </div>
-                              </div>
+                          <span>{{ element.supplierList != null ? element.supplierList.length : "" }}</span>
+
+                          <div class="info-tootip m-l-10">
+                            <span *ngIf="element.supplierList.length" class="info-icon">
+                              <img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                             </span>
-                          </span>
+                            
+                            <!-- tootlip containes supplier name -->
+                            <div class="info-tootip__content tooltip-info">
+                              <div class="tooltip-info-header">
+                                <span>Supplier Name</span>
+                              </div>
+                              <div class="tooltip-info-body">
+                                <span *ngFor="let name of element.supplierList">{{ name.supplierName }}</span>
+                              </div>
+                            </div>
+                          </div>
+
                         </div>
                       </td>
                     </ng-container>
+
                     <ng-container matColumnDef="action1">
                       <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                       <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
                         <a [routerLink]="['./rfq-view', element.rfqId]" style="color: #f47721">View RFP</a>
                       </td>
                     </ng-container>
+
                     <ng-container matColumnDef="action2">
                       <th mat-header-cell *matHeaderCellDef></th>
                       <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center">
@@ -135,6 +135,7 @@
                 </div>
               </mat-expansion-panel>
             </mat-accordion>
+
             <mat-accordion *ngIf="nonSubmittedRfqListTemp">
               <mat-expansion-panel class="myPanel" [expanded]="true">
                 <mat-expansion-panel-header [ngClass]="isMobile ? 'p-t-1-rem p-b-1-rem' : ''">
@@ -142,7 +143,7 @@
                 </mat-expansion-panel-header>
 
                 <div class="add-unique-container mat-elevation-z8">
-                  <table mat-table [dataSource]="nonSubmittedRfqList">
+                  <table mat-table [dataSource]="nonSubmittedRfqList" class="rfp-details-tbl">
                     <ng-container matColumnDef="RFQ Name">
                       <th mat-header-cell *matHeaderCellDef>RFP Name</th>
                       <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
@@ -179,39 +180,41 @@
                     <ng-container matColumnDef="Total Supplier">
                       <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
                       <td mat-cell *matCellDef="let element" class="text-align-center">
-                        <div class="supplier-qty-div">
-                          <div>
-                            {{ element.supplierList != null ? element.supplierList.length : "" }}
-                          </div>
 
-                          <span *ngIf="element.supplierList && element.supplierList.length" class="info-icon info-tootip"
-                            ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
-                            <span class="info-tootip__content">
-                              <div class="tooltip-table p-t-0 p-r-0 p-l-0">
-                                <div class="width-100 background-modal-grey p-t-10 gray-bottom-border m-b-10">
-                                  <span class="text-semi-bold">Supplier Name</span>
-                                </div>
-                                <div class="width-99 gray-bottom-border m-b-10" *ngFor="let name of element.supplierList">
-                                  <span>
-                                    {{ name.supplierName }}
-                                  </span>
-                                </div>
-                              </div>
+                        <div class="supplier-qty-div">
+                          <span>{{ element.supplierList != null ? element.supplierList.length : "" }}</span>
+
+                          <div class="info-tootip m-l-10">
+                            <span *ngIf="element.supplierList?.length" class="info-icon">
+                              <img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                             </span>
-                          </span>
+                            
+                            <!-- tootlip containes supplier name -->
+                            <div class="info-tootip__content tooltip-info">
+                              <div class="tooltip-info-header">
+                                <span>Supplier Name</span>
+                              </div>
+                              <div class="tooltip-info-body">
+                                <span *ngFor="let name of element.supplierList">{{ name.supplierName }}</span>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </td>
                     </ng-container>
+
                     <ng-container matColumnDef="action1">
                       <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
                       <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
                         <a (click)="viewRfq(element)" class="cursor" style="color: #f47721">{{ element.rfqStatus === 0 ? "Complete RFP" : "View RFP" }}</a>
                       </td>
                     </ng-container>
+
                     <ng-container matColumnDef="action2">
                       <th mat-header-cell *matHeaderCellDef></th>
                       <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center"></td>
                     </ng-container>
+                    
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                   </table>
@@ -220,6 +223,7 @@
             </mat-accordion>
           </div>
         </ng-container>
+
         <ng-template #emptyReports>
           <div class="d-block text-align-center mt-3">
             <img src="../../../../assets/images/empty-report.svg" alt="empty report" />
