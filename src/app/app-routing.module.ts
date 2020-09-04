@@ -1,7 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { DashboardComponent } from "./features/dashboard/dashboard.component";
-import { BomResolver } from "./features/dashboard/bom/bom.resolver";
 import { AuthLayoutComponent } from "./shared/layout/auth-layout/auth-layout.component";
 import { MainLayoutComponent } from "./shared/layout/main-layout/main-layout.component";
 import { NotFoundComponent } from "./features/not-found/not-found.component";
@@ -17,7 +15,6 @@ import { SubscriptionsResolver } from './shared/components/subscriptions/subscri
 import { MySubscriptionsComponent } from './features/users/my-subscriptions/my-subscriptions.component';
 import { SubscriptionRedirectionsComponent } from './features/subscription-redirections/subscription-redirections.component';
 import { MenuResolver } from './shared/resolver/menu.resolver';
-import { SubscriptionGaurdService } from './shared/guards/subscription.gaurd';
 import { GrnComponent } from './features/grn/grn.component';
 import { GrnResolver } from './features/grn/resolver/grn.resolver';
 import { BuySubscriptionsComponent } from './shared/components/subscriptions/buy-subscriptions/buy-subscriptions.component';

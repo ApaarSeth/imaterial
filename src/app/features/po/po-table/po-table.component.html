@@ -63,11 +63,7 @@
                 : 'national-view-po'
             "
             >Supplier Rate
-            <span
-              >({{
-                poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
-              }})</span
-            >
+            <span>({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})</span>
           </span>
           <span
             class="mat-header-cell"
@@ -95,9 +91,7 @@
             "
             >Amount
             <span style="display: block"
-              >({{
-                poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
-              }})</span
+              >({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})</span
             >
           </span>
           <span
@@ -150,11 +144,7 @@
                 : 'national-view-po'
             "
             >Total Amount
-            <span
-              >({{
-                poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
-              }})</span
-            >
+            <span>({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})</span>
           </span>
 
           <!---- Attached Image Column ---->
@@ -206,28 +196,20 @@
             <span class="mat-cell po-date-width" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp mt-4' : ''">
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
-                <mat-form-field
-                  class="border-input date-label date-picker-button-padding date-button mat-form-field-padding width-80 p-l-0"
-                  [ngClass]="isMobile ? 'fontsize-10-px' : ''"
-                >
-                  <mat-label *ngIf="!inputDate.value">Select Date</mat-label>
-                  <span class="form-placeholder" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{
-                    poForms["controls"]["forms"]["controls"][m]["controls"]["fullfilmentDate"].value | date: "dd-MMM-yyy"
-                  }}</span>
-                  <input
-                    #inputDate
-                    hidden
-                    matInput
-                    [matDatepicker]="dueDate"
-                    formControlName="fullfilmentDate"
-                    placeholde="Enter Date"
-                    (click)="dueDate.open()"
-                    [min]="minDate"
-                    readonly
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
-                  <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
-                </mat-form-field>
+                <div class="display-flex">
+                  <mat-form-field class="border-input date-label date-picker-button-padding date-button mat-form-field-padding width-80 p-l-0" [ngClass]="isMobile ? 'fontsize-10-px' : ''">
+                    <mat-label *ngIf="!inputDate.value">Select Date</mat-label>
+                    <span class="form-placeholder" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{
+                      poForms["controls"]["forms"]["controls"][m]["controls"]["fullfilmentDate"].value | date: "dd-MMM-yyy"
+                    }}</span>
+                    <input #inputDate hidden matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" placeholde="Enter Date" (click)="dueDate.open()" [min]="minDate" readonly />
+                    <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                    <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
+                  </mat-form-field>
+                  <span class="display-flex align-item-end" *ngIf="poForms['controls']['forms']['controls'][m]['controls']['fullfilmentDate'].hasError('required')">
+                    <app-error-message [msg]="'Date is required'"></app-error-message>
+                  </span>
+                </div>
               </ng-template>
             </span>
             <span
@@ -399,16 +381,10 @@
               <!-- View image modal link -->
               <!-- material?.purchaseOrderDetailList[0]?.documentList?.length -->
               <div
-                *ngIf="
-                  material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length
-                "
+                *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length"
                 class="images-lists"
                 [ngClass]="
-                  material.purchaseOrderDetailList[0].documentList.length === 1
-                    ? 'single-image'
-                    : material.purchaseOrderDetailList[0].documentList.length === 2
-                    ? 'double-images'
-                    : 'triple-images'
+                  material.purchaseOrderDetailList[0].documentList.length === 1 ? 'single-image' : material.purchaseOrderDetailList[0].documentList.length === 2 ? 'double-images' : 'triple-images'
                 "
                 (click)="viewAllImages(material.materialId)"
               >
@@ -441,9 +417,7 @@
                   ? 'national-edit-po'
                   : 'national-view-po'
               "
-              ><button mat-button matRipple class="btn btn-link taxButton p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('taxesAndCost', m)">
-                Add Taxes & Costs
-              </button></span
+              ><button mat-button matRipple class="btn btn-link taxButton p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('taxesAndCost', m)">Add Taxes & Costs</button></span
             >
           </div>
 
@@ -467,9 +441,7 @@
                 "
               >
                 <ng-container *ngIf="mode != 'edit'; else editRate">
-                  {{
-                    ratesBaseCurr ? (purchaseOrder.materialUnitPrice * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.materialUnitPrice | number: "1.2-2")
-                  }}</ng-container
+                  {{ ratesBaseCurr ? (purchaseOrder.materialUnitPrice * poCurrency.exchangeValue | number: "1.2-2") : (purchaseOrder.materialUnitPrice | number: "1.2-2") }}</ng-container
                 >
                 <ng-template #editRate>
                   <mat-form-field class="border-input width-65-px">
@@ -501,18 +473,12 @@
               >
                 <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ purchaseOrder.materialQuantity | number: "1.2-2" }}</ng-container>
                 <ng-template #editQuantity>
-                  <mat-form-field class="border-input" [ngClass]="isInternational && mode === 'edit' ? 'width-60' : 'width-50'">
-                    <input
-                      type="text"
-                      matInput
-                      #quantity
-                      appTwoDigitDecimaNumber
-                      formControlName="materialQuantity"
-                      placeholder="quantity"
-                      min="0"
-                      (input)="checkQty(m, p, material.poAvailableQty, $event)"
-                    />
+                  <mat-form-field class="border-input p-r-2" [ngClass]="isInternational && mode === 'edit' ? 'width-60' : 'width-50'">
+                    <input type="text" matInput #quantity appTwoDigitDecimaNumber formControlName="materialQuantity" placeholder="quantity" min="0" />
                   </mat-form-field>
+                  <span *ngIf="poForms['controls']['forms']['controls'][m]['controls']['purchaseOrderDetailList']['controls'][p]['controls']['materialQuantity'].hasError('greaterQuantity')">
+                    <app-error-message [msg]="'Cannot add quantity greater than ' + material.poAvailableQty"></app-error-message>
+                  </span>
                 </ng-template>
               </span>
               <span
@@ -685,9 +651,7 @@
                 <span class="p-r-0">
                   <span class="p-r-5" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
                     {{
-                      ratesBaseCurr
-                        ? (this.additonalCost.additionalOtherCostAmount * poCurrency.exchangeValue | number: "1.2-2")
-                        : (this.additonalCost.additionalOtherCostAmount | number: "1.2-2")
+                      ratesBaseCurr ? (this.additonalCost.additionalOtherCostAmount * poCurrency.exchangeValue | number: "1.2-2") : (this.additonalCost.additionalOtherCostAmount | number: "1.2-2")
                     }}</span
                   >
                   <span *ngIf="this.additonalCost.additionalOtherCostInfo && this.additonalCost.additionalOtherCostInfo.length" class="info-icon info-tootip"
@@ -708,9 +672,7 @@
               </div>
               <div class="col-xs-2">
                 <span [ngClass]="isMobile ? 'text-align-right' : ''"
-                  ><button mat-button matRipple class="btn btn-link p-0 main-color text-decoration-underline small-text" (click)="openTaxesCostsDialog('otherCost')">
-                    Add other costs
-                  </button>
+                  ><button mat-button matRipple class="btn btn-link p-0 main-color text-decoration-underline small-text" (click)="openTaxesCostsDialog('otherCost')">Add other costs</button>
                 </span>
               </div>
             </div>
@@ -724,9 +686,7 @@
                   <span class="light-grey small-text">Other Cost:</span>
                   <span class="p-r-5 light-grey" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">
                     {{
-                      ratesBaseCurr
-                        ? (this.additonalCost.additionalOtherCostAmount * poCurrency.exchangeValue | number: "1.2-2")
-                        : (this.additonalCost.additionalOtherCostAmount | number: "1.2-2")
+                      ratesBaseCurr ? (this.additonalCost.additionalOtherCostAmount * poCurrency.exchangeValue | number: "1.2-2") : (this.additonalCost.additionalOtherCostAmount | number: "1.2-2")
                     }}</span
                   >
                   <span *ngIf="this.additonalCost.additionalOtherCostInfo.length" class="info-icon info-tootip"
@@ -806,11 +766,7 @@
             <span *ngIf="isInternational" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp p-rem-r-5' : ''"
               ><span>
                 Tax Amount
-                <span
-                  >({{
-                    poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
-                  }})</span
-                >
+                <span>({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})</span>
               </span>
               <br />{{ totalTaxAmount | number: "1.2-2" }}</span
             ></span
@@ -830,11 +786,7 @@
             <span *ngIf="isInternational; else totalGstAmount">
               <span
                 >Other Cost
-                <span
-                  >({{
-                    poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
-                  }})</span
-                ></span
+                <span>({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})</span></span
               >
               <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue | number: "1.2-2") : (totalOtherAmount | number: "1.2-2") }}
             </span>
@@ -854,11 +806,7 @@
           >
             <span
               >Total Amount
-              <span
-                >({{
-                  poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode
-                }})</span
-              >
+              <span>({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})</span>
             </span>
             <br />{{ ratesBaseCurr ? (totalOtherAmount * poCurrency.exchangeValue + totalAmount | number: "1.2-2") : (totalAmount + totalOtherAmount | number: "1.2-2") }}</span
           >

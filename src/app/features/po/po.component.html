@@ -25,7 +25,13 @@
               ></span
             >
           </div>
-          <button mat-raised-button class="main-background-color main-button color-white send-for-approval-btn" (click)="selectApprover()" [disabled]="!isPoValid">
+          <button
+            mat-raised-button
+            class="main-background-color main-button color-white send-for-approval-btn"
+            (click)="selectApprover()"
+            [disabled]="this.poTable && this.poTable.poForms && this.poCard && this.poCard.projectDetails
+             ? this.poTable.poForms.invalid ||this.poCard.projectDetails.invalid: true"
+          >
             Send P.O For Approval
           </button>
         </div>
@@ -52,15 +58,7 @@
       <div class="main-div-po m-b-45">
         <app-po-card #poCard *ngIf="tableData.length" [cardData]="cardData"> </app-po-card>
       </div>
-      <app-po-table
-        #poTable
-        *ngIf="tableData.length"
-        [poTableData]="tableData"
-        [purchaseOrderCurrency]="currency"
-        [additionalOtherCostInfo]="additionalOtherCost"
-        [poData]="poData"
-      >
-      </app-po-table>
+      <app-po-table #poTable *ngIf="tableData.length" [poTableData]="tableData" [purchaseOrderCurrency]="currency" [additionalOtherCostInfo]="additionalOtherCost" [poData]="poData"> </app-po-table>
     </div>
 
     <div class="row mt-3">
@@ -73,11 +71,7 @@
         </form>
       </div>
       <div
-        [ngClass]="
-          showResponsiveDesignDown
-            ? 'col-sm-12 col-md-8 background-white-color border-radius parent no-terms-window'
-            : 'col-sm-12 col-md-8 background-white-color border-radius parent'
-        "
+        [ngClass]="showResponsiveDesignDown ? 'col-sm-12 col-md-8 background-white-color border-radius parent no-terms-window' : 'col-sm-12 col-md-8 background-white-color border-radius parent'"
         *ngIf="mode === 'view' || mode === 'requiredApproval'"
       >
         <div class="word-wrap" *ngIf="this.terms && terms.termsDesc !== '' ? true : false" [innerHTML]="terms.termsDesc"></div>

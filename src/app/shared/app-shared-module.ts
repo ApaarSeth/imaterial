@@ -18,13 +18,13 @@ import { IndianNumberPipe } from './pipes/indianNumber';
 import { DateAdapter, MAT_DATE_FORMATS } from "@angular/material/core";
 
 @NgModule({
-  imports: [ CommonModule, RouterModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule, AngularEditorModule, NgbModule ],
-  providers: [ DataService,
+  imports: [CommonModule, RouterModule, SharedComponentsModule, MaterialModule, FormsModule, ReactiveFormsModule, AngularEditorModule, NgbModule],
+  providers: [DataService,
     { provide: DateAdapter, useClass: PickDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
   ],
-  declarations: [ ...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, IndianNumberPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective ],
-  exports: [ ...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective, IndianNumberPipe, AngularEditorModule ]
+  declarations: [...SharedDialogs, SearchPipe, SearchMaterialPipe, NumberToWordsPipe, IndianNumberPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective],
+  exports: [...SharedDialogs, SearchPipe, SearchMaterialPipe, SharedComponentsModule, NumberToWordsPipe, OnlyNumberDirective, TwoDigitDecimaNumberDirective, IndianNumberPipe, AngularEditorModule]
 })
 
 export class AppSharedModule { }
