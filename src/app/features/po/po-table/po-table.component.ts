@@ -1,13 +1,12 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild, Output, EventEmitter, HostListener, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, HostListener, ChangeDetectorRef } from "@angular/core";
 import { PoMaterial, PurchaseOrder, PurchaseOrderCurrency, POData } from "src/app/shared/models/PO/po-data";
-import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
-import { ignoreElements, debounceTime } from "rxjs/operators";
-import { Subscription, combineLatest } from "rxjs";
+import { FormBuilder, FormGroup, FormArray, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
+import { debounceTime } from "rxjs/operators";
+import { Subscription } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { POService } from "src/app/shared/services/po.service";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OverallOtherCost } from 'src/app/shared/models/common.models';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
@@ -95,7 +94,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
           purchaseOrderId: [purchaseorder.purchaseOrderId],
           materialId: [purchaseorder.materialId],
           materialBrand: [purchaseorder.materialBrand],
-          materialQuantity: [purchaseorder.materialQuantity],
+          materialQuantity: [purchaseorder.materialQuantity, this.checkQty(poMaterial.poAvailableQty)],
           materialUnit: [],
           materialUnitPrice: [purchaseorder.materialUnitPrice, Validators.pattern(FieldRegExConst.RATES)],
           materialIgst: [1],
@@ -152,7 +151,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
         issueToProject: [poMaterial.issueToProject],
         availableStock: [poMaterial.availableStock],
         indentDetailList: null,
-        fullfilmentDate: [poMaterial.fullfilmentDate],
+        fullfilmentDate: [poMaterial.fullfilmentDate, Validators.required],
         purchaseOrderDetailList: this.formBuilder.array(purchaseGrp)
       });
     });
@@ -161,6 +160,29 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
   setRateBaseCurr(value) {
     this.resetRate();
+  }
+
+  checkQty(materialAvailableQty): ValidatorFn {
+    // let tempVal = this.poTableData[m].purchaseOrderDetailList[p].qty;
+    // this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
+    // let totalQty = this.getMaterialQuantity(m);
+    // if (Number(totalQty.toFixed(2)) > materialAvailableQty) {
+    //   this.poTableData[m].validQuantity = false;
+    //   (<FormArray>(<FormArray>this.poForms.get('forms')).controls[m].get('purchaseOrderDetailList')).controls[p].get('materialQuantity').setValue(tempVal)
+    //   this.poTableData[m].purchaseOrderDetailList[p].qty = 0
+    //   this._snackBar.open("Net Quantity must be less than " + materialAvailableQty, "", {
+    //     duration: 2000,
+    //     panelClass: ["success-snackbar"],
+    //     verticalPosition: "bottom"
+    //   });
+    // }
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (Number(control.value) > materialAvailableQty) {
+        return { 'greaterQuantity': true };
+      }
+      return null;
+    }
+
   }
 
   resetRate() {
@@ -331,21 +353,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkQty(m, p, materialAvailableQty, event) {
-    let tempVal = this.poTableData[m].purchaseOrderDetailList[p].qty;
-    this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
-    let totalQty = this.getMaterialQuantity(m);
-    if (Number(totalQty.toFixed(2)) > materialAvailableQty) {
-      this.poTableData[m].validQuantity = false;
-      (<FormArray>(<FormArray>this.poForms.get('forms')).controls[m].get('purchaseOrderDetailList')).controls[p].get('materialQuantity').setValue(tempVal)
-      this.poTableData[m].purchaseOrderDetailList[p].qty = 0
-      this._snackBar.open("Net Quantity must be less than " + materialAvailableQty, "", {
-        duration: 2000,
-        panelClass: ["success-snackbar"],
-        verticalPosition: "bottom"
-      });
-    }
-  }
+
 
 
 
