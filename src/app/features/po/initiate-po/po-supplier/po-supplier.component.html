@@ -1,14 +1,14 @@
 <div class="row" [ngClass]="isMobile ? 'm-podr' : ''">
   <div class="col-xs-6 d-flex m-itm">
     <!-- flex-column-reverse -->
-    <mat-form-field class="example-form-field border-input border-input" [ngClass]="!isMobile ? 'p-l-20 p-r-20' : 'po-sm-fm'">
+    <mat-form-field class="example-form-field border-input border-input" [ngClass]="!isMobile ? 'p-r-20' : 'po-sm-fm'">
       <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
       <button mat-button matSuffix mat-icon-button [ngClass]="isMobile ? 'm-srch' : ''">
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
   </div>
-  <div class="col-xs-12 col-md-6 text-right p-t-10 m-itm" [ngClass]="isMobile ? 'p-t-0 p-b-0 p-l-0 p-rem-r-0.50 sm-btn1' : ''">
+  <div class="col-xs-12 col-md-6 text-right p-t-10 m-itm" [ngClass]="isMobile ? 'p-t-0 p-b-0 p-l-0 p-rem-r-5 sm-btn1' : ''">
     <!-- <span>
       <mat-form-field class="example-form-field border-input p-l-20 border-input p-r-20">
           <input matInput placeholder="Search Supplier" type="search" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
@@ -42,7 +42,7 @@
     </span>
   </div>
   <div class="col-md-12 col-xs-6 text-right m-itm" *ngIf="poCurrency && poCurrency.exchangeCurrencyName != null" [ngClass]="isMobile ? 'p-t-1-rem p-l-0 p-b-10' : 'p-t-10 p-b-20'">
-    <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-10-px mcrncy p-rem-r-0.50 p-rem-r-0.50 cntry' : 'p-t-10 p-b-10'">
+    <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-10-px mcrncy p-rem-r-5 p-rem-r-5 cntry' : 'p-t-10 p-b-10'">
       <span class="font-size-vary-grn color-grey">
         <img width="25px" *ngIf="poCurrency.exchangeCurrencyFlag" [src]="poCurrency.exchangeCurrencyFlag" />
         {{ poCurrency.exchangeCurrencyName }}
@@ -59,20 +59,20 @@
 
 <form *ngIf="allSuppliers" [formGroup]="form" (click)="choosenSupplier()">
   <div class="example-container mat-elevation-z8">
-    <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:['supplier_name']" class="mat-elevation-z8 col-sm-12">
+    <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:['supplierName']" class="mat-elevation-z8 col-sm-12 supplier-details-tbl">
       <!-- Supplier Name Column -->
       <ng-container matColumnDef="Supplier Name">
         <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
-        <td mat-cell *matCellDef="let element" class="p-rem-r-0.50">
+        <td mat-cell *matCellDef="let element" class="p-rem-r-5">
           <mat-radio-group name="aprrover" aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="supplier">
             <mat-radio-button class="example-radio-button" [value]="element" [checked]="element.checked">
               {{ element.firstName }}{{ element.lastName }}
               {{ element.user_d }}
             </mat-radio-button>
           </mat-radio-group>
-          <span class="supplier-name">{{ element.supplier_name }}</span>
+          <span class="supplier-name">{{ element.supplierName }}</span>
           <span class="d-block supplier-rates rfq-supplier-rates">
-            <view-rating [supplierId]="element.supplierId" [ratings]="element.supplier_rating"></view-rating>
+            <view-rating [supplierId]="element.supplierId" [ratings]="element.supplierRating"></view-rating>
           </span>
         </td>
       </ng-container>
@@ -86,7 +86,7 @@
       <!-- Phone No. Column -->
       <ng-container matColumnDef="Phone No.">
         <th mat-header-cell *matHeaderCellDef>Phone No.</th>
-        <td mat-cell *matCellDef="let element">{{ element.contact_no }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.contactNo }}</td>
       </ng-container>
 
       <!-- PAN No. Column -->

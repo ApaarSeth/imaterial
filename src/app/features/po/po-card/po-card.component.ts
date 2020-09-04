@@ -1,3 +1,4 @@
+import { CountryCode } from 'src/app/shared/models/currency';
 import { Component, OnInit, Input, HostListener } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
@@ -27,7 +28,7 @@ export class PoCardComponent implements OnInit {
   rating: number;
   poId: number;
   userId: number;
-
+  countryCode: string;
   constructor(
     private poService: POService,
     private route: ActivatedRoute,
@@ -37,8 +38,8 @@ export class PoCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.formInit();
     this.userId = Number(localStorage.getItem("userId"));
+    this.countryCode = localStorage.getItem('countryCode')
     if (this.cardData.poStatus === '3' && this.cardData.poCreatedBy === this.userId && (this.cardData.sellerPORating === null || this.cardData.sellerPORating === undefined)) {
       this.openSupplierRating();
     }
@@ -46,6 +47,7 @@ export class PoCardComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.poId = Number(params.id);
       this.mode = params.mode;
+      this.formInit();
     });
     this.cardData.projectAddress.projectUserId && this.poService.projectRole$.next();
     this.cardData.billingAddress.projectBillingUserId && this.poService.billingRole$.next();
@@ -59,9 +61,9 @@ export class PoCardComponent implements OnInit {
 
   formInit() {
     this.projectDetails = this.formBuilder.group({
-      orderNo: [this.cardData.poNumber, Validators.required],
+      orderNo: [{ value: this.cardData.poNumber, disabled: this.mode === 'edit' ? false : true }, Validators.required],
       openingDate: [],
-      endDate: [this.cardData.poValidUpto],
+      endDate: [{ value: this.cardData.poValidUpto, disabled: this.mode === 'edit' ? false : true }],
       billingAddress: [this.cardData.billingAddress],
       projectAddress: [this.cardData.projectAddress],
       supplierAddress: [this.cardData.supplierAddress],
@@ -83,14 +85,14 @@ export class PoCardComponent implements OnInit {
       const day = date.getDate() > 9 ? date.getDate().toString() : "0" + date.getDate().toString();
       this.projectDetails.get("endDate").setValue(year + "-" + month + "-" + day)
     }
-    return this.projectDetails.value;
+    return this.projectDetails.getRawValue();
   }
 
   openDialog(roleType: string, projectId: number) {
     const dialogRef = this.dialog.open(SelectPoRoleComponent, {
       width: "700px",
       data: { roleType, projectId },
-      panelClass: 'select-contact-person-dialog'
+      panelClass: ['common-modal-style', 'select-contact-person-dialog']
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -126,7 +128,7 @@ export class PoCardComponent implements OnInit {
     const dialogRef = this.dialog.open(AddAddressDialogComponent, {
       width: "800px",
       data: { roleType, id, international },
-      panelClass: 'add-address-dialog'
+      panelClass: ['common-modal-style', 'add-address-dialog']
     });
 
     dialogRef.afterClosed().subscribe((result: Address) => {
@@ -203,7 +205,7 @@ export class PoCardComponent implements OnInit {
       disableClose: true,
       width: "500px",
       data: this.cardData.supplierAddress,
-      panelClass: 'vendor-rating-dialog'
+      panelClass: ['common-modal-style', 'vendor-rating-dialog']
     });
 
     dialogRef.afterClosed().subscribe(result => {

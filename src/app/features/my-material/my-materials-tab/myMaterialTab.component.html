@@ -1,63 +1,68 @@
-<div class="width-99">
-  <div class="row p-t-10">
-    <div class="col-xs-6 p-l-10 text -left border-input">
-      <mat-form-field class="input-search-padding-zero width-40">
-        <input #text matInput placeholder="Search Material" type="search" (input)="searchCategory(text.value)" />
-        <button mat-button matSuffix mat-icon-button>
-          <mat-icon>search</mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
-    <div class="col-xs-6 text-right p-r-10">
-      <button mat-raised-button class="main-background-color main-button color-white" (click)="openAddMaterial()">+Add Material</button>
-    </div>
+<div class="row p-t-10 p-b-10">
+  <div class="col-md-3 col-sm-5 col-xs-6 p-l-10 border-input">
+    <mat-form-field class="input-search-padding-zero width-100">
+      <input #text matInput placeholder="Search Material" type="search" (input)="searchCategory(text.value)" />
+      <button mat-button matSuffix mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
   </div>
-  <div *ngFor="let category of selectedCategory; let c = index">
-    <div *ngIf="category.materialList.length">
-      <mat-accordion>
-        <div #myele *ngIf="!isSearching ? true : !category.allNull">
-          <mat-expansion-panel class="m-b-5 m-t-5 border-radius-panel mat-expansion-panel-header-not-expand mat-expansion-panel-header-wrapper bom-qty-page" [expanded]="true">
-            <mat-expansion-panel-header class="background-color-skyblue row">
-              <div class="col-xs-6 text-left p-l-25">
-                <mat-panel-title class="color-white">
-                  {{ category.groupName }}
-                </mat-panel-title>
-              </div>
-              <div class="col-xs-3 text-left">
-                <mat-panel-title class="color-white">
-                  Unit
-                </mat-panel-title>
-              </div>
-              <div class="col-xs-3"></div>
-            </mat-expansion-panel-header>
-            <div class="background-color-bom-sub-category p-0" *ngFor="let subcategory of category.materialList; let sc = index">
-              <div class="row" *ngIf="!subcategory.isNull">
-                <div class="col-xs-3 text-left p-t-10">
-                  <span class="limitcharacter-myMaterialName p-l-40" matTooltip="{{ subcategory.materialName }}">{{ subcategory.materialName }}</span>
-                </div>
-                <div class="col-xs-3 p-t-10">
-                  <span class="text-semi-bold">
-                    <span class="p-r-5">{{ subcategory.tradeName }}</span>
-                  </span>
-                </div>
-                <div class="col-xs-3 text-left p-t-10">
-                  <span>{{ subcategory.materialUnit }}</span>
-                </div>
-                <div class="col-xs-1 text-right p-t-10">
-                  <button class="material-icons cursor button-background main-color" matTooltip="Edit" (click)="openEditDialog(c, sc)">
-                    edit
-                  </button>
-                </div>
-                <div class="col-xs-1 p-t-10">
-                  <a href="javascript:void(0)" class="width-15-px cursor-pointer" matTooltip="Delete" (click)="onDelete(c, sc)">
-                    <img src="../../../../assets/images/delete-button.png" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </div>
-      </mat-accordion>
-    </div>
+  <div class="col-md-9 col-sm-7 col-xs-6 text-right p-r-10">
+    <button mat-raised-button class="main-background-color main-button color-white" (click)="openAddMaterial()">+Add
+      Material</button>
   </div>
 </div>
+
+<mat-accordion>
+  <div class="my-material-section">
+    <table class="my-material-tbl width-100">
+      <tr matSort class="mat-header-row">
+        <th class="mat-header-cell">Material Name</th>
+        <th class="mat-header-cell">Trade</th>
+        <th class="mat-header-cell">Unit</th>
+        <th class="mat-header-cell"></th>
+      </tr>
+
+      <div *ngFor="let category of selectedCategory; let c = index">
+        <div *ngIf="category.materialList.length">
+          <div #myele *ngIf="!isSearching ? true : !category.allNull">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header class="bg-material-category">
+                <tr class="mat-row width-100">
+                  <td class="mat-cell">{{ category.groupName }}</td>
+                  <td class="mat-cell">{{ category.tradeName }}</td>
+                  <td class="mat-cell"></td>
+                  <td class="mat-cell"></td>
+                </tr>
+              </mat-expansion-panel-header>
+
+              <div class="background-color-bom-sub-category p-0"
+                *ngFor="let subcategory of category.materialList; let sc = index">
+
+                <tr class="mat-row" *ngIf="!subcategory.isNull">
+                  <td class="mat-cell" matTooltip="{{ subcategory.materialName }}">{{ subcategory.materialName }}</td>
+
+                  <td class="mat-cell">{{ subcategory.tradeName }}</td>
+
+                  <td class="mat-cell">{{ subcategory.materialUnit }}</td>
+
+                  <td class="mat-cell display-flex align-center justify-content-flex-end">
+                    <button class="material-icons cursor button-background main-color" matTooltip="Edit"
+                      (click)="openEditDialog(c, sc)">
+                      edit
+                    </button>
+                    <a href="javascript:void(0)" class="width-15-px cursor-pointer" matTooltip="Delete"
+                      (click)="onDelete(c, sc)">
+                      <img src="../../../../assets/images/delete-button.png" />
+                    </a>
+                  </td>
+                </tr>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </div>
+      </div>
+
+    </table>
+  </div>
+</mat-accordion>

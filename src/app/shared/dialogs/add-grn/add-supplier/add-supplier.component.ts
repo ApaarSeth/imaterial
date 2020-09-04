@@ -104,7 +104,7 @@ export class GrnAddSupplierComponent implements OnInit {
         if (value === '') {
             return this.supplierList;
         }
-        let filteredValue: Supplier[] = !this.supplierList ? [] : this.supplierList.filter(option => option.supplier_name.toLowerCase().includes(value));
+        let filteredValue: Supplier[] = !this.supplierList ? [] : this.supplierList.filter(option => option.supplierName.toLowerCase().includes(value));
         return filteredValue;
 
     }
@@ -121,7 +121,7 @@ export class GrnAddSupplierComponent implements OnInit {
     }
 
     displayFn(option: Supplier) {
-        return option && option.supplier_name ? option.supplier_name : ''
+        return option && option.supplierName ? option.supplierName : ''
     }
 
     fileUpdate(files: FileList) {
@@ -200,7 +200,7 @@ export class GrnAddSupplierComponent implements OnInit {
         let materialList = this.materialList
         let documentList = this.documentList
         let supplierId = typeof (this.form.value.supplierName) === 'object' ? Number(this.form.value.supplierName.supplierId) : null;
-        supplierName = typeof (this.form.value.supplierName) === 'object' ? this.form.value.supplierName.supplier_name : this.form.value.supplierName;
+        supplierName = typeof (this.form.value.supplierName) === 'object' ? this.form.value.supplierName.supplierName : this.form.value.supplierName;
         if (grnDate) {
             grnDate = this.commonService.getFormatedDate(grnDate)
         }

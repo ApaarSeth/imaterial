@@ -123,6 +123,10 @@ div.limited-character.universal {
 .border-radius {
   border-radius: 10px !important;
 }
+.border-radius-tltr-5px {
+  border-radius: 5px 5px 0px 0px !important;
+}
+
 .border-round {
   border-radius: 10px !important;
 }
@@ -178,6 +182,33 @@ div.limited-character.universal {
 }
 /***************************************************************************************/
 
+/**************************Modal Related Classes****************************************/
+.modal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+}
+
+.modal-body {
+  position: relative;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1rem;
+}
+
+/***************************************************************************************/
+
 .password-eye {
   float: left;
   position: absolute;
@@ -201,22 +232,22 @@ div.limited-character.universal {
   }
 }
 
-.mat-expansion-panel-header-wrapper {
-  .mat-expansion-panel-header.mat-expanded:focus,
-  .mat-expansion-panel-header.mat-expanded:hover,
-  .mat-expansion-panel-header {
-    background: $skyblue-color !important;
-    border-radius: 18px 18px 0px 0px !important;
-  }
-}
+// .mat-expansion-panel-header-wrapper {
+//   .mat-expansion-panel-header.mat-expanded:focus,
+//   .mat-expansion-panel-header.mat-expanded:hover,
+//   .mat-expansion-panel-header {
+//     background: $skyblue-color !important;
+//     border-radius: 18px 18px 0px 0px !important;
+//   }
+// }
 
-.mat-expansion-panel-header-not-expand {
-  .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled="true"]),
-  .mat-expansion-panel-header:not([aria-disabled="true"]) {
-    background: $skyblue-color !important;
-    border-radius: 18px 18px 0px 0px !important;
-  }
-}
+// .mat-expansion-panel-header-not-expand {
+//   .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled="true"]),
+//   .mat-expansion-panel-header:not([aria-disabled="true"]) {
+//     background: $skyblue-color !important;
+//     border-radius: 18px 18px 0px 0px !important;
+//   }
+// }
 
 .breadcrumb {
   background: none;
@@ -323,6 +354,7 @@ div.limited-character.universal {
     display: none;
     margin-top: 10px;
     position: absolute;
+    left: 10px;
   }
 }
 
@@ -331,7 +363,7 @@ div.limited-character.universal {
   max-width: 200px;
   background-color: #ffffff;
   border-radius: 5px;
-  padding: 5px 2px 0px;
+  padding: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   margin-top: 10px;
   margin-left: -62%;
@@ -589,7 +621,7 @@ ngx-mat-drp-picker-overlay {
   }
   .main-button.mat-button-base {
     min-width: auto;
-    max-height: 30px;
+    max-height: 32px;
   }
 }
 
@@ -660,6 +692,57 @@ input::title {
   text-decoration-line: line-through;
 }
 
+/******* Table and Expansion panel height css start *********/
+.mat-expansion-panel-header{
+  height: 45px !important;
+  padding: 0 16px !important;
+
+  .mat-expansion-panel-header-title{
+    color: #545454;
+    font-weight: 450;
+  }
+}
+
+.mat-expansion-indicator{
+  &:after{
+    padding: 5px !important;
+    margin-top: -8px;
+  }
+}
+
+tr.mat-header-row, thead tr.mat-row{
+  height: 50px !important;
+}
+
+tr.mat-row, tr.mat-footer-row {
+  height: 42px !important;
+}
+
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
+  padding-right: 16px !important;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 16px !important;
+}
+
+.mat-row{
+  .mat-cell{
+    color: #545454;
+  }
+
+  .actions-cell .mat-icon-button{
+      width: auto;
+  }
+}
+
+.mat-sort-header-arrow{
+  color: #ffffff;
+  opacity: 0.75 !important;
+}
+
+/******* Table and Expansion panel height css end *********/
+
 @media only screen and (max-width: 959px) {
   .adjust-right-padding {
     padding: 0 10px;
@@ -676,6 +759,14 @@ input::title {
     flex-direction: column;
     min-width: auto !important;
     height: auto !important;
+  }
+
+  .mat-expansion-panel-header{
+    height: 42px !important;
+  }
+  
+  tr.mat-header-row, thead tr.mat-row{
+    height: 45px !important;
   }
 }
 
@@ -710,20 +801,7 @@ input::title {
       }
     }
   }
-  .mat-table .mat-cell {
-    height: auto;
-    margin-top: auto;
-    border-bottom: 0px;
-    text-align: left;
-  }
-  .mat-expansion-panel-header {
-    min-height: auto !important;
-    height: auto !important;
-    max-height: auto !important;
-  }
-  // .mat-expansion-indicator{
-  //   margin-top: -50px;
-  // }
+
   .fr-row {
     text-align: left;
     width: auto;
@@ -744,4 +822,10 @@ input::title {
 
 .bg-shadow-1px{
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) !important;
+}
+
+@media only screen and (max-width: 330px) {
+  .info-tootip:hover .info-tootip__content{
+    left: 0px;
+  }
 }

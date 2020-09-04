@@ -1,14 +1,10 @@
-import { map } from 'rxjs/operators';
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import {
-  RfqMaterialResponse,
-  AddRFQ
-} from "src/app/shared/models/RFQ/rfq-details";
+import { AddRFQ } from "src/app/shared/models/RFQ/rfq-details";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
-import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
+import { FormGroup, FormBuilder, FormArray, AbstractControl } from "@angular/forms";
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { CommonService } from 'src/app/shared/services/commonService';
@@ -20,7 +16,9 @@ import { MatCheckbox } from "@angular/material/checkbox";
   selector: "app-rfq-supplier",
   templateUrl: "./rfq-supplier.component.html"
 })
+
 export class RfqSupplierComponent implements OnInit {
+
   @Input() finalRfq: AddRFQ;
   @Input() cntryList: CountryCode[];
   @Input() suppliers: Suppliers[];
@@ -44,7 +42,6 @@ export class RfqSupplierComponent implements OnInit {
   supplierCounter: number = 0;
   newAddedId: number;
   countryist: CountryCode[];
-  // countryist: any;
 
   constructor(
     public dialog: MatDialog,
@@ -106,8 +103,6 @@ export class RfqSupplierComponent implements OnInit {
       return null;
     }
   }
-
-
 
   valueChange(supplier: Suppliers, ch: MatCheckbox, i: number) {
     const sArr = this.supplierForm.controls["forms"] as FormArray;
@@ -193,7 +188,7 @@ export class RfqSupplierComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectRfqTermsComponent, {
       width: "400px",
       data,
-      panelClass: 'select-rfq-terms-dialog'
+      panelClass: ['common-modal-style', 'select-rfq-terms-dialog']
     });
     dialogRef.afterClosed().subscribe(result => {
     });
@@ -204,7 +199,7 @@ export class RfqSupplierComponent implements OnInit {
       disableClose: true,
       width: "600px",
       data: this.rfqData ? this.rfqData.rfqCurrency : null,
-      panelClass: 'select-currency-dialog'
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {

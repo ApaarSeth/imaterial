@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { NotificationInt } from '../models/notification';
 import { API } from '../constants/configuration-constants';
 import { DataService } from './data.service';
-import { Router } from '@angular/router';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { Currency } from '../models/currency';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { ProjetPopupData } from '../models/project-details';
+import { DoubleConfirmationComponent } from '../dialogs/double-confirmation/double-confirmation.component';
+import { MatDialog } from "@angular/material/dialog";
+import { AddProjectComponent } from '../dialogs/add-project/add-project.component';
+
 @Injectable({
   providedIn: "root"
 })
@@ -23,7 +26,7 @@ export class CommonService {
   XSmall: string = '(max-width: 599px)';
   constructor(
     private dataService: DataService,
-    private _router: Router,
+    public dialog: MatDialog,
     private mediaMatcher: MediaMatcher
   ) { }
 
@@ -141,7 +144,6 @@ export class CommonService {
   getMaterials() {
     return this.dataService.getRequest(API.GETDISTINCTMATERIALS);
   }
-
 }
 
 

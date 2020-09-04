@@ -56,7 +56,7 @@ export class IndentDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.projectId = params[ "id" ];
+      this.projectId = params["id"];
     });
     this.isMobile = this.commonService.isMobile().matches;
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -98,12 +98,12 @@ export class IndentDetailComponent implements OnInit {
         }
       }
     ]
-    forkJoin([ this.advSearchService.getMaterials(), this.advSearchService.getAllUsers(this.orgId) ]).toPromise().then(res => {
-      options[ 0 ].data = res[ 0 ] as AdvSearchData[];
-      options[ 1 ].data = res[ 1 ] as AdvSearchData[];
-      options[ 2 ].data = this.advSearchService.getReqStatus() as AdvSearchData[];
-      options[ 3 ].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
-      options[ 4 ].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
+    forkJoin([this.advSearchService.getMaterials(), this.advSearchService.getAllUsers(this.orgId)]).toPromise().then(res => {
+      options[0].data = res[0] as AdvSearchData[];
+      options[1].data = res[1] as AdvSearchData[];
+      options[2].data = this.advSearchService.getReqStatus() as AdvSearchData[];
+      options[3].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
+      options[4].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
 
       this.searchConfig = {
         title: "Advance Search",
@@ -120,52 +120,6 @@ export class IndentDetailComponent implements OnInit {
   }
 
   // dialog function
-
-  editProject() {
-    const data: ProjetPopupData = {
-      isEdit: true,
-      isDelete: false,
-      detail: this.product
-    };
-
-    this.openDialog(data);
-  }
-
-  deleteProject() {
-    const data: ProjetPopupData = {
-      isEdit: false,
-      isDelete: true,
-      detail: this.product
-    };
-
-    this.openDialog(data);
-  }
-
-  // modal function
-  openDialog(data: ProjetPopupData): void {
-    if (data.isDelete == false) {
-      const dialogRef = this.dialog.open(AddProjectComponent, {
-        width: "1000px",
-        data,
-        panelClass: 'add-project-dialog'
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => { });
-    } else if (data.isDelete == true) {
-      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
-        width: "500px",
-        data
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => { });
-    }
-  }
 
   viewIndentDetails(row) {
     this.router.navigate([

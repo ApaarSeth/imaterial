@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { Address } from "../../models/RFQ/rfq-details";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AddAddressService } from "../../services/add-address.service";
@@ -7,15 +7,16 @@ import { CommonService } from '../../services/commonService';
 import { CountryCode } from '../../models/currency';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-
-
+import { MatTabGroup } from "@angular/material/tabs";
 @Component({
   selector: "address-dialog",
   templateUrl: "./add-address.component.html"
 })
 
-export class AddAddressDialogComponent implements OnInit {
 
+
+export class AddAddressDialogComponent implements OnInit {
+  @ViewChild('tabs') tabGroup: MatTabGroup;
   validPincode: boolean;
   searchCountry: string = '';
   pincodeLength: number;
@@ -30,7 +31,7 @@ export class AddAddressDialogComponent implements OnInit {
   selectedCountryId: number;
   currentIndex: number = 0;
   countryCode: string
-
+  tab2Label: string = "Add Address"
   constructor(
     public dialogRef: MatDialogRef<AddAddressDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -63,8 +64,21 @@ export class AddAddressDialogComponent implements OnInit {
     if (this.currentIndex === 1) {
       this.getCountryCode(localStorage.getItem('countryId'))
     }
+    else if (this.currentIndex === 0) {
+      this.tab2Label = "Add Address"
+    }
   }
 
+  changeIndex(add: Address) {
+    this.tabGroup.selectedIndex = 1;
+    this.tab2Label = "Edit Address"
+    this.newAddressForm.patchValue({
+      addressLine1: add.addressLine1,
+      addressLine2: add.addressLine2,
+      pinCode: add.pinCode,
+      gstNo: add.gstNo,
+    })
+  }
 
   blankPincode() {
     this.newAddressForm.get('pinCode').setValue('');
@@ -109,6 +123,9 @@ export class AddAddressDialogComponent implements OnInit {
       countryId: [null],
       countryCode: []
     });
+    this.newAddressForm.get('pinCode').valueChanges.subscribe(res => {
+      this.getPincode(res)
+    })
   }
 
   onselectAddress(): void {
@@ -116,10 +133,15 @@ export class AddAddressDialogComponent implements OnInit {
   }
 
   onAddAddress(): void {
-    this.postAddAddress(
-      this.data.roleType === "projectBillingAddressId" ? "project" : "supplier",
-      this.newAddressForm.getRawValue()
-    );
+    if (this.tab2Label === 'Add Address') {
+      this.postAddAddress(
+        this.data.roleType === "projectBillingAddressId" ? "project" : "supplier",
+        this.newAddressForm.getRawValue()
+      );
+    }
+    else {
+
+    }
   }
 
   postAddAddress(role, address) {
@@ -139,14 +161,16 @@ export class AddAddressDialogComponent implements OnInit {
   }
 
   getPincode(event) {
-    this.validPincode = false;
-    this.city = "";
-    this.state = "";
-    this.newAddressForm.get('city').setValue("");
-    this.newAddressForm.get('state').setValue("");
-    this.pincodeLength = event.target.value.length;
-    if (event.target.value.length >= 3) {
-      this.cityStateFetch(event.target.value);
+    if (event) {
+      this.validPincode = false;
+      this.city = "";
+      this.state = "";
+      this.newAddressForm.get('city').setValue("");
+      this.newAddressForm.get('state').setValue("");
+      // this.pincodeLength = event;
+      if (event.length >= 3) {
+        this.cityStateFetch(event);
+      }
     }
   }
 

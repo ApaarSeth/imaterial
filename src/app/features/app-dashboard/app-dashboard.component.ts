@@ -73,7 +73,6 @@ export class AppDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.isAdDisplay = localStorage.getItem("callingCode");
-    // this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
     this.isMobile = this.commonService.isMobile().matches;
@@ -238,7 +237,7 @@ export class AppDashboardComponent implements OnInit {
       const dialogRef = this.dialog.open(AddProjectComponent, {
         width: "1000px",
         data,
-        panelClass: 'add-project-dialog'
+        panelClass: ['common-modal-style', 'add-project-dialog']
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result != null)
@@ -250,7 +249,8 @@ export class AppDashboardComponent implements OnInit {
   openReleaseNote(data, releaseNoteId) {
     const dialogRef = this.dialog.open(ReleaseNoteComponent, {
       disableClose: true,
-      width: "500px", data
+      width: "500px", data,
+      panelClass: ['common-modal-style', 'release-note-dialog']
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null && result == 'closed') {
@@ -399,7 +399,8 @@ export class AppDashboardComponent implements OnInit {
   openBomDialog() {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
       width: "800px",
-      data: this.projectLists
+      data: this.projectLists,
+      panelClass: ['common-modal-style', 'select-projects-dialog']
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -411,7 +412,8 @@ export class AppDashboardComponent implements OnInit {
   showVideo(): void {
 
     const dialogRef = this.dialog.open(ViewVideoComponent, {
-      width: "660px"
+      width: "660px",
+      panelClass: ['common-modal-style', 'view-video-dialog']
     });
 
   }

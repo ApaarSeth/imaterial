@@ -1,4 +1,4 @@
-<div class="page-start-point pt-4">
+<div class="page-start-point p-rem-t-40">
   <ng-container *ngIf="(dataSourceActivateTemp == null || dataSourceActivateTemp.length == 0) && (dataSourceDeactivateTemp == null || dataSourceDeactivateTemp.length == 0)">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
@@ -144,7 +144,7 @@
 
       <!-- Deactivate users list -->
       <ng-container *ngIf="dataSourceDeactivateTemp && dataSourceDeactivateTemp.length > 0" class="user-dts">
-        <mat-expansion-panel class="myPanel" [expanded]="true">
+        <mat-expansion-panel class="myPanel m-t-10" [expanded]="true">
           <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
             <div class="row">
               <div class="col-sm-12">
@@ -184,45 +184,6 @@
                   {{ element.ProjectUser.roleDescription }}
                 </td>
               </ng-container>
-
-              <!-- Project count Column -->
-              <!-- <ng-container matColumnDef="Project">
-                <th mat-header-cell *matHeaderCellDef class="project-user-details-width text-right">Project</th>
-                <td mat-cell *matCellDef="let element" class="project-user-details-width text-right">
-                  <div class="display-flex">
-                    <div class="project-name-div width-97">
-                      <ng-container *ngFor="let x of element.ProjectList; let i = index">
-                        <button mat-button class="btn-project-user-details" *ngIf="i < 2">
-                          <div>
-                            {{ x.projectName }}
-                          </div>
-                        </button>
-                      </ng-container>
-                    </div>
-                    <div class="horizontal-align-center p-l-10"
-                      *ngIf="element.ProjectList && element.ProjectList.length > 2">
-                      <span class="material-info color-main cursor-pointer" [matMenuTriggerFor]="projectnames"> More
-                      </span>
-                      <mat-menu #projectnames="matMenu" class="header-project-menu">
-                        <div class="main-div-bell" mat-menu-item [disableRipple]="true">
-                          <div id="project-names">
-                            <h3>Project Names</h3>
-                            <div class="body-of-notification">
-                              <ng-container *ngFor="let x of element.ProjectList; let i = index">
-                                <button mat-button class="btn-project-user-details">
-                                  <div>
-                                    {{ x.projectName }}
-                                  </div>
-                                </button>
-                              </ng-container>
-                            </div>
-                          </div>
-                        </div>
-                      </mat-menu>
-                    </div>
-                  </div>
-                </td>
-              </ng-container> -->
 
               <tr mat-header-row *matHeaderRowDef="displayedColumnsDeactivate; sticky: true"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumnsDeactivate"></tr>

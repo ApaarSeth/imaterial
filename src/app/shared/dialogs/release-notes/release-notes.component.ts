@@ -1,23 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { Router } from '@angular/router';
-import { ProjectService } from '../../services/project.service';
 import { ReleaseNotes } from "../../models/release-notes";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-
-
-export interface City {
-  value: string;
-  viewValue: string;
-}
-
-export interface ProjectType {
-  type: string;
-}
-
-export interface Unit {
-  value: string;
-}
 
 @Component({
   selector: "release-notes-dialog",
@@ -53,13 +36,9 @@ export class ReleaseNoteComponent implements OnInit {
 
   notes: ReleaseNotes;
 
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ReleaseNotes,
-    private dialogRef: MatDialogRef<ReleaseNoteComponent>,
-    private router: Router,
-    private projectService: ProjectService,
-    private _snackBar: MatSnackBar
+    private dialogRef: MatDialogRef<ReleaseNoteComponent>
   ) { }
 
   ngOnInit() {
@@ -73,5 +52,4 @@ export class ReleaseNoteComponent implements OnInit {
   openDownloadLink(url) {
     window.open(url, '_blank');
   }
-
 }

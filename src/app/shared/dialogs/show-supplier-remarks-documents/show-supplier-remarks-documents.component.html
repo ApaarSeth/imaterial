@@ -10,7 +10,7 @@
     <div class="modal-body">
       <div class="row remarks-suppliers">
         <div class="col-md-3 col-sm-5 col-xs-12 suppliers-list">
-          <div class="main-heading p-rem-r-0.50">Select Supplier</div>
+          <div class="main-heading p-l-10">Select Supplier</div>
           <div class="supplier-list-name">
             <ng-container *ngFor="let supplier of supplierList; let i = index">
               <div [ngClass]="index == i ? 'list-of-suppliers active' : 'list-of-suppliers'" (click)="showSupplierDetails(i)">
@@ -23,13 +23,13 @@
         <div class="col-md-9 col-sm-7 col-xs-12 suppliers-details">
           <ng-container *ngIf="supplierList[index] && supplierList[index].comments">
             <div class="main-heading">Terms and Conditions</div>
-            <div class="comments-of-supplier p-t-0 p-rem-b-1.5" [innerHTML]="supplierList[index].comments"></div>
+            <div class="comments-of-supplier" [innerHTML]="supplierList[index].comments"></div>
           </ng-container>
 
           <ng-container *ngIf="supplierList[index] && supplierList[index].documentsList">
-            <div class="main-heading">Documents</div>
+            <div class="main-heading p-t-15">Documents</div>
 
-            <div class="upload-image-info mb-3 p-rem-r-0.50 d-flex align-items-center justify-content-between" *ngFor="let file of supplierList[index].documentsList">
+            <div class="upload-image-info mb-3 p-rem-r-5 d-flex align-items-center justify-content-between" *ngFor="let file of supplierList[index].documentsList">
               <div class="image-info d-flex align-items-center">
                 <img class="img-fluid file-icon" src="../../../../assets/images/file-doc.png" />
                 <span class="ml-2">{{ file.DocumentDesc }}</span>

@@ -8,3 +8,37 @@
   font-size: 12px;
   color: #888888;
 }
+
+.tax-dialog{
+  .col-tax-percent{
+    flex-basis: 37.333333%;
+    max-width: 37.333333%;
+  }
+
+  .col-action-btns{
+    flex-basis: 12.666667%;
+    max-width: 12.666667%;
+  }
+
+  .col-other-tax-percent {
+    flex-basis: 45.666667%;
+    max-width: 45.666667%;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .tax-dialog{
+    .col-xs-12{
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+
+    .delete-button-icon {
+      padding-top: 0px !important;
+    }
+
+    .add-button-icon {
+      padding-top: 3px !important;
+    }
+  }
+}

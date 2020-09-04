@@ -1,8 +1,8 @@
-<div class="page-start-point mt-5 p-rem-t-1.5">
+<div class="page-start-point mt-5 p-rem-t-15">
   <div class="row" class="dashboard-unique p-b-20 min-height parent">
     <div class="row">
       <div class="col-sm-12 p-l-10 p-r-10">
-        <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product"> </card-layout>
+        <card-layout *ngIf="product" [projectDetails]="product" [disableEditDelete]="true"> </card-layout>
       </div>
     </div>
 

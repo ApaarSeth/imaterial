@@ -2,8 +2,6 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
 import { ProjetPopupData, ProjectDetails } from "../../models/project-details";
 import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { ProjectService } from '../../services/project.service';
 import { AddProjectComponent } from '../add-project/add-project.component';
 import { CommonService } from '../../services/commonService';
 
@@ -22,15 +20,12 @@ export class SelectProjectComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: ProjectDetails[] | ProjetPopupData[],
         private _router: Router,
         public _dialog: MatDialog,
-        private _userService: UserService,
-        private _projectService: ProjectService,
         private commonService: CommonService
     ) { }
 
     ngOnInit() {
         this.orgId = Number(localStorage.getItem("orgId"));
         this.userId = Number(localStorage.getItem("userId"));
-        // this.data = this.data;
     }
 
     closeDialog(): void {
@@ -59,7 +54,7 @@ export class SelectProjectComponent implements OnInit {
             const dialogRef = this._dialog.open(AddProjectComponent, {
                 width: "1000px",
                 data,
-                panelClass: 'add-project-dialog'
+                panelClass: ['common-modal-style', 'add-project-dialog']
             });
 
             dialogRef.afterClosed().subscribe(result => {

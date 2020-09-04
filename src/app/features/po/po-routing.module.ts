@@ -4,7 +4,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { PODetailListResolver } from "./resolver/po-detail-list-resolver";
 import { PoComponent } from "./po.component";
 import { PODetailComponent } from "./po-detail-list/po-detail-list.component";
-import { PoSupplierComponent } from "./initiate-po/po-supplier/po-supplier.component";
 import { InitiatePoResolver } from "./initiate-po/resolver/po.resolver";
 import { ViewGRNComponent } from "./view-grn/view-grn.component";
 import { AddGRNComponent } from "./add-grn/add-grn.component";

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from "@angular/core"; import { UserRoles, UserDetails } from "../../models/user-details"; import { FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms"; import { orgTrades, tradeRelatedCategory } from "../../models/trades"; import { UserService } from "../../services/user.service"; import { BomService } from "../../services/bom.service"; import { Router } from "@angular/router"; import { AppNavigationService } from "../../services/navigation.service"; import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog"; import { MatSnackBar } from "@angular/material/snack-bar";
+import { Component, OnInit, Inject } from "@angular/core"; import { UserRoles, UserDetails } from "../../models/user-details"; import { FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms"; import { orgTrades, tradeRelatedCategory } from "../../models/trades"; import { UserService } from "../../services/user.service"; import { BomService } from "../../services/bom.service"; import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog"; import { MatSnackBar } from "@angular/material/snack-bar";
 
 export interface City {
   value: string;
@@ -34,10 +34,7 @@ export class AddMyMaterialBomComponent implements OnInit {
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
-    private userService: UserService,
     private bomService: BomService,
-    private _router: Router,
-    private navService: AppNavigationService,
     private dialogRef: MatDialogRef<AddMyMaterialBomComponent>,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data) { }

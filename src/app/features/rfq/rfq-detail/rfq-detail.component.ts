@@ -1,4 +1,4 @@
-import { AdvSearchOption, AdvSearchData, AdvSearchConfig } from './../../../shared/models/adv-search.model';
+import { AdvSearchOption, AdvSearchData, AdvSearchConfig } from '../../../shared/models/adv-search.model';
 import { forkJoin } from 'rxjs';
 import { Component, OnInit } from "@angular/core";
 import { RFQService } from "src/app/shared/services/rfq.service";
@@ -10,10 +10,10 @@ import { AdvanceSearchService } from 'src/app/shared/services/advance-search.ser
 import { MatTableDataSource } from "@angular/material/table";
 
 @Component({
-  selector: "app-ref-detail",
-  templateUrl: "./ref-detail.component.html"
+  selector: "app-rfq-detail",
+  templateUrl: "./rfq-detail.component.html"
 })
-export class RefDetailComponent implements OnInit {
+export class RfqDetailComponent implements OnInit {
   userId: number;
   constructor(
     private router: Router,
@@ -98,16 +98,14 @@ export class RefDetailComponent implements OnInit {
     ]
 
     forkJoin([
-      this.advSearchService.getProjects(this.orgId, this.userId), this.advSearchService.getSuppliers(this.orgId), this.advSearchService.getMaterials(), this.advSearchService.getAllUsers(this.orgId) ]).toPromise().then(res => {
-
-
-        options[ 0 ].data = res[ 0 ] as AdvSearchData[];
-        options[ 1 ].data = res[ 1 ] as AdvSearchData[];
-        options[ 2 ].data = res[ 2 ] as AdvSearchData[];
-        options[ 3 ].data = res[ 3 ] as AdvSearchData[];
-        options[ 4 ].data = this.advSearchService.getRFPBids() as AdvSearchData[];
-        options[ 5 ].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
-        options[ 6 ].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
+      this.advSearchService.getProjects(this.orgId, this.userId), this.advSearchService.getSuppliers(this.orgId), this.advSearchService.getMaterials(), this.advSearchService.getAllUsers(this.orgId)]).toPromise().then(res => {
+        options[0].data = res[0] as AdvSearchData[];
+        options[1].data = res[1] as AdvSearchData[];
+        options[2].data = res[2] as AdvSearchData[];
+        options[3].data = res[3] as AdvSearchData[];
+        options[4].data = this.advSearchService.getRFPBids() as AdvSearchData[];
+        options[5].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
+        options[6].data = this.advSearchService.getRaisedDates() as AdvSearchData[];
 
         this.searchConfig = {
           title: "Advance Search",
@@ -165,14 +163,14 @@ export class RefDetailComponent implements OnInit {
 
   viewRfq(element: RfqList) {
     if (element.rfqStatus === 0) {
-      this.router.navigate([ "../../rfq/createRfq", element.rfqId ]);
+      this.router.navigate(["../../rfq/createRfq", element.rfqId]);
     } else {
-      this.router.navigate([ "../../rfq/rfq-view", element.rfqId ]);
+      this.router.navigate(["../../rfq/rfq-view", element.rfqId]);
     }
   }
 
   createRfq() {
-    this.router.navigate([ "/rfq/createRfq" ]);
+    this.router.navigate(["/rfq/createRfq"]);
   }
 
   openFilter() {

@@ -1,11 +1,9 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { UserDetailsPopUpData } from '../../models/user-details';
-import { Router } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Video } from "../../models/video";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "view-video-dialog",
@@ -19,9 +17,7 @@ export class ViewVideoComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<ViewVideoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserDetailsPopUpData,
-    private router: Router,
     private projectService: ProjectService,
-    private _snackBar: MatSnackBar,
     private _sanitizer: DomSanitizer
   ) { }
 
@@ -55,5 +51,4 @@ export class ViewVideoComponent implements OnInit {
   close() {
     this.dialogRef.close(null);
   }
-
 }
