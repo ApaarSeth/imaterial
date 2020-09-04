@@ -26,7 +26,8 @@ export class UnapprovedMaterialTabComponent implements OnInit {
         let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'add' }
         this.dialogRef.open(EditMyMaterialComponent, {
             width: "750px",
-            data
+            data,
+            panelClass: ['common-modal-style', 'edit-my-material-dialog']
         })
     }
 

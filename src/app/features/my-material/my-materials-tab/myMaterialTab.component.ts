@@ -60,7 +60,8 @@ export class MyMaterialTabComponent implements OnInit {
 		let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'edit' }
 		const dialogRef = this.dialogRef.open(EditMyMaterialComponent, {
 			width: "750px",
-			data
+			data,
+			panelClass: ['common-modal-style', 'edit-my-material-dialog']
 		})
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === 'done') {
@@ -73,7 +74,9 @@ export class MyMaterialTabComponent implements OnInit {
 	onDelete(c, sc) {
 		const dialogRef = this.dialogRef.open(DeleteMyMaterialComponent, {
 			width: "750px",
+			panelClass: ['common-modal-style', 'delete-my-material-dialog']
 		})
+
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === 'yes') {
 				this.materialService.deleteApi(this.selectedCategory[c].materialList[sc].customMaterialId).then(res => {

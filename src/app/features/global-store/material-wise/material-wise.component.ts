@@ -9,6 +9,7 @@ import { CommonService } from 'src/app/shared/services/commonService';
 })
 
 export class MaterialWiseComponent implements OnInit {
+  
   @Input("materialData") materialData: GlobalStoreMaterial[];
   @Output("materialDataLength") materialDataLength = new EventEmitter();
   newMaterialData: GlobalStoreMaterial[];

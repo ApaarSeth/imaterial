@@ -426,6 +426,14 @@ s .validTill {
   }
 }
 
+.po-list-tbl{
+  .mat-column-totalMaterials{
+    .mat-sort-header-container{
+      justify-content: center;
+    }
+  }
+}
+
 @media only screen and (min-width: 576) {
   .font-size-vary-grn {
     font-size: 14px;

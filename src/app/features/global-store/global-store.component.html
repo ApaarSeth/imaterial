@@ -1,4 +1,4 @@
-<div class="page-start-point p-rem-t-40">
+<div class="page-start-point">
   <div class="p-l-10 p-r-20 p-b-20 min-height p-t-20 adjust-right-padding">
     <ng-container *ngIf="materialDataLength == 0 && projectWiseData.length == 0">
       <div class="wrapper-btn-center">
@@ -13,9 +13,6 @@
           <div>
             <button mat-raised-button class="main-background-color main-button color-white" (click)="openBomDialog()">Add Material</button>
           </div>
-          <!-- <button  mat-raised-button  (click)="addUser()" class="main-background-color main-button color-white">
-                      Add First User
-                    </button> -->
         </div>
       </div>
     </ng-container>
@@ -36,28 +33,6 @@
           <button mat-raised-button (click)="createPo()" class="main-background-color main-button color-white">Create PO</button>
         </div>
       </div>
-
-      <!-- <mat-card>
-      <div class="row">
-       
-        <div class="right-pipe" style="width: 25%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div class="right-pipe" style="width: 25%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div class="right-pipe" style="width: 25%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-        <div style="width: 25%;">
-          <span class="p-l-10 p-r-20 pull-left">23</span>
-          <span class="pull-left">Low Stock Material</span>
-        </div>
-      </div>
-    </mat-card> -->
 
       <div *ngIf="buttonName === 'materialWise'; else elseBlock">
         <app-material-wise (materialDataLength)="materialShowDataLength($event)" [materialData]="globalStoreData"> </app-material-wise>
