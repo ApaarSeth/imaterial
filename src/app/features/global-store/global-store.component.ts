@@ -40,7 +40,7 @@ export class GlobalStoreComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
 
     this.route.data.subscribe(data => {
-      this.globalStoreData = data.globalData.data;
+      this.globalStoreData = data.globalData.data.globalStoreMaterialObj;
     });
 
     this.getNotifications();

@@ -1,0 +1,73 @@
+.gs-default-image img {
+    height: 300px;
+    margin: 1.5rem auto 0.8rem;
+    display: block;
+}
+
+.material-wise-tbl{
+    .mat-header-row, .mat-row{
+        display: flex;
+        align-items: center;
+    }
+
+    .mat-header-row{
+        background-color: #2197bb;
+    }
+
+    .mat-row {
+        min-height: 42px !important;
+        height: auto !important;
+    }
+
+    .mat-expansion-panel-header{
+        min-height: 45px !important;
+        height: auto !important;
+    }
+
+    .mat-header-row, .material-indent-tbl .mat-row{
+        padding: 0 16px;
+    }
+
+    .material-indent-tbl .mat-row{
+        padding-right: 26px;
+    }
+
+    .mat-header-cell,.mat-cell{
+        border: none !important;
+        min-width: 14%;
+        
+        &:first-child{
+            min-width: 20%;
+        }
+
+        &:nth-child(2){
+            min-width: 10%;
+        }
+
+        &:first-of-type{
+            padding-left: 0px !important;
+        }
+
+        &:last-of-type{
+            padding-right: 0px !important;
+        }
+    }
+
+    .mat-expansion-panel-header, .materials-tbl .mat-row, .material-indent-tbl .mat-row {
+        border-bottom: 1px solid #bbbbbb;
+    }
+
+    .material-row-bg {
+        background: #d3d6dd !important;
+    }
+
+    .project-row-bg {
+        background: #eeeeee !important;
+    }
+}
+
+.material-wise-section{
+    .mat-expansion-panel-body {
+        padding: 0 !important;
+    }
+}
