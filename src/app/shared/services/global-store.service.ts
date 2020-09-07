@@ -19,6 +19,6 @@ export class GlobalStoreService {
   }
 
   getMaterialIndents(materialId){
-    return this.dataService.getRequest(API.GET_ALL_INDENTS_LIST(materialId));
+    return this.dataService.getRequest(API.GET_ALL_INDENTS_LIST(materialId), null, { skipLoader: true });
   }
 }
