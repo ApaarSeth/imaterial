@@ -1,27 +1,20 @@
 import { Injectable } from "@angular/core";
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot
-} from "@angular/router";
+import { Resolve } from "@angular/router";
 import { GlobalStoreService } from "src/app/shared/services/global-store.service";
 
 @Injectable()
+
 export class GlobalStoreResolver implements Resolve<any> {
+
+  pageNo = 1;
+  pageSize = 10;
+
   constructor(private globalStoreService: GlobalStoreService) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-
-    let orgId = Number(localStorage.getItem("orgId"));
-
-    return this.globalStoreService.getMaterialWiseData(orgId).then(res => {
+  resolve() {
+    return this.globalStoreService.getMaterialWiseData(this.pageNo, this.pageSize).then(res => {
+      console.log(res);
       return res;
     })
-
-    // return Promise.all([
-    //   this.globalStoreService.getMaterialWiseData(orgId),
-    //   this.globalStoreService.getProjectWiseData(orgId)
-    // ]).then(res => res);
-
   }
 }

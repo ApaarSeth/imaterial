@@ -38,6 +38,7 @@
 @import "./pages/receipt.scss";
 @import "./pages/error.scss";
 @import "./pages/my-material.scss";
+@import "./pages/global-store";
 
 ::ng-deep .mat-horizontal-stepper-header {
   pointer-events: none !important;
