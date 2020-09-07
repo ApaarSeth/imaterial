@@ -261,7 +261,7 @@
               class="mat-cell"
               [ngClass]="
                 isInternational && mode === 'edit'
-                  ? 'international-edit-po'
+                  ? 'international-edit-po display-flex'
                   : isInternational && mode !== 'edit'
                   ? 'international-view-po'
                   : !isInternational && mode === 'edit'
@@ -270,19 +270,24 @@
               "
               *ngIf="isInternational; else gstTotalBlock"
               >{{ getTotalPOListTax(m) | number: "1.2-2" }}
-              <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon info-tootip"
-                ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
-                <span class="info-tootip__content">
-                  <div class="tooltip-table p-t-0 p-r-0 p-l-0">
-                    <div class="width-100 border-radius-tltr-5px background-modal-grey p-t-5 text-center gray-bottom-border m-b-5">
-                      <span class="text-semi-bold">Tax Details</span>
+              <span>
+                <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon info-tootip"
+                  ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                  <span class="info-tootip__content">
+                    <div class="tooltip-table p-t-0 p-r-0 p-l-0">
+                      <div class="width-100 border-radius-tltr-5px background-modal-grey p-t-5 text-center gray-bottom-border m-b-5">
+                        <span class="text-semi-bold">Tax Details</span>
+                      </div>
+                      <div class="display-flex justify-content-space-between gray-bottom-border" *ngFor="let tax of this.poTableData[m].taxInfo">
+                        <span class="text-semi-bold" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ tax.taxName }}</span
+                        ><span [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ tax.taxValue }}%</span>
+                      </div>
                     </div>
-                    <div class="display-flex justify-content-space-between gray-bottom-border" *ngFor="let tax of this.poTableData[m].taxInfo">
-                      <span class="text-semi-bold" [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ tax.taxName }}</span
-                      ><span [ngClass]="isMobile ? 'fontsize-10-px txt-nwrp' : ''">{{ tax.taxValue }}%</span>
-                    </div>
-                  </div>
+                  </span>
                 </span>
+                <span class="btn btn-link taxButton p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('taxesAndCost', m)"
+                  ><span class="material-icons"> add_circle </span>Tax</span
+                >
               </span>
             </span>
 
@@ -383,45 +388,34 @@
             >
               <!-- View image modal link -->
               <!-- material?.purchaseOrderDetailList[0]?.documentList?.length -->
-              <div
-                *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length"
-                class="images-lists"
-                [ngClass]="
-                  material.purchaseOrderDetailList[0].documentList.length === 1 ? 'single-image' : material.purchaseOrderDetailList[0].documentList.length === 2 ? 'double-images' : 'triple-images'
-                "
-                (click)="viewAllImages(material.materialId)"
-              >
-                <ng-container *ngFor="let img of material.purchaseOrderDetailList[0].documentList; let i = index">
-                  <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
-                </ng-container>
-              </div>
+              <span class="display-flex align-item-baseline">
+                <span>
+                  <div
+                    *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length"
+                    class="images-lists"
+                    [ngClass]="
+                      material.purchaseOrderDetailList[0].documentList.length === 1 ? 'single-image' : material.purchaseOrderDetailList[0].documentList.length === 2 ? 'double-images' : 'triple-images'
+                    "
+                    (click)="viewAllImages(material.materialId)"
+                  >
+                    <ng-container *ngFor="let img of material.purchaseOrderDetailList[0].documentList; let i = index">
+                      <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
+                    </ng-container>
+                  </div>
 
-              <ng-container *ngIf="!(material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList)">
-                <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
-              </ng-container>
+                  <ng-container *ngIf="!(material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList)">
+                    <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
+                  </ng-container>
+                </span>
+
+                <span [ngClass]="!isInternational && mode === 'edit' ? 'po-national-image-width' : 'po-sno-width'" *ngIf="mode === 'edit'">
+                  <!-- Upload Image Link -->
+                  <a class="cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image" (click)="uploadImage(material, 'po')">
+                    <img class="width-20-px mt-1 mr-2" src="assets/images/upload-image-icon.svg" />
+                  </a>
+                </span>
+              </span>
             </span>
-
-            <span class="mat-cell" [ngClass]="!isInternational && mode === 'edit' ? 'po-national-image-width' : 'po-sno-width'" *ngIf="mode === 'edit'">
-              <!-- Upload Image Link -->
-              <a class="cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image" (click)="uploadImage(material, 'po')">
-                <img class="width-20-px mt-1 mr-2" src="assets/images/upload-image-icon.svg" />
-              </a>
-            </span>
-
-            <span
-              class="mat-cell add-taxes-col"
-              *ngIf="isInternational && mode === 'edit' && mode === 'edit'"
-              [ngClass]="
-                isInternational && mode === 'edit'
-                  ? 'international-edit-po'
-                  : isInternational && mode !== 'edit'
-                  ? 'international-view-po'
-                  : !isInternational && mode === 'edit'
-                  ? 'national-edit-po'
-                  : 'national-view-po'
-              "
-              ><button mat-button matRipple class="btn btn-link taxButton p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('taxesAndCost', m)">Add Taxes & Costs</button></span
-            >
           </div>
 
           <!---------------- other table row (white bh color) --------------------------->
