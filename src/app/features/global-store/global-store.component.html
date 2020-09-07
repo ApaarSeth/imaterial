@@ -15,7 +15,7 @@
       </div>
     </ng-container>
 
-    <div class="row" *ngIf="materialDataLength > 0 || projectDataLength > 0">
+    <div class="row global-store-main-row" *ngIf="materialDataLength > 0 || projectDataLength > 0">
       <div class="col-md-6 col-sm-6 col-xs-6">
         <a href="javascript:void(0)" (click)="setButtonName('materialWise')">
           <button [class.active]="buttonName == 'materialWise'" class="color-black actv-btn" mat-button
@@ -45,6 +45,6 @@
       <app-project-wise *ngIf="projectWiseData.length" (projectDataLength)="projectShowDataLength($event)"
         [projectData]="projectWiseData"></app-project-wise>
     </ng-template>
-    
+
   </div>
 </div>
