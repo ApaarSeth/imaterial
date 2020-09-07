@@ -14,6 +14,7 @@ $skyblue-color: #2197bb;
 $light-grey: #707070;
 $dark-blue: #0c3d56;
 $modal-background-color: #e7e7e7;
+$error-message-color: #ffe8ed;
 /*******************************************Colors*******************************************/
 .ink-color {
   color: $dark-blue;
@@ -21,6 +22,10 @@ $modal-background-color: #e7e7e7;
 
 .navy-blue-color {
   color: #193764;
+}
+
+.background-error-message {
+  background-color: $error-message-color;
 }
 
 .off-white-background {
