@@ -11,7 +11,7 @@
       <div class="row">
         <!-- View documents, if available -->
         <ng-container *ngIf="documentList != null && documentList.length > 0">
-          <div class="upload-image-info mb-3 d-flex align-items-center justify-content-between w-100" *ngFor="let file of documentList">
+          <div class="upload-image-info mb-1 d-flex align-items-center justify-content-between w-100" *ngFor="let file of documentList">
             <div class="image-info d-flex align-items-center">
               <img class="img-fluid file-icon" src="../../../../assets/images/file-doc.png" />
               <span class="word-break-all ml-2">{{ file.DocumentDesc }}</span>

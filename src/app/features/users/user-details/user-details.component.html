@@ -15,7 +15,7 @@
   </ng-container>
 
   <ng-container *ngIf="dataSourceActivateTemp.length > 0 || dataSourceDeactivateTemp.length > 0">
-    <div class="row" class="users-dashboard p-b-20 min-height parent">
+    <div class="row" class="add-user-style users-dashboard p-b-20 min-height parent">
       <div class="row">
         <div class="col-xs-7">
           <mat-form-field class="example-form-field border-input project">
@@ -81,7 +81,7 @@
                     <div class="project-name-div">{{ element.ProjectList.length }}</div>
 
                     <ng-container *ngIf="element.ProjectList?.length === 0">
-                      <span class="width-37"></span>
+                      <span class="width-30"></span>
                     </ng-container>
 
                     <div class="more-projects-list" *ngIf="element.ProjectList?.length > 0">
@@ -107,7 +107,7 @@
                       <span
                         (click)="resendInvite(element.ProjectUser.userId)"
                         class="main-color font-size-vary-grn p-r-15 text-semi-bold cursor-pointer"
-                        [ngClass]="isMobile ? 'd-block mb-3' : ''"
+                        [ngClass]="isMobile ? 'd-block' : ''"
                         >Resend Invite</span
                       >
                     </div>
