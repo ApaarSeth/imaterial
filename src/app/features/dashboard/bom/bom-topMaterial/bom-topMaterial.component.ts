@@ -66,6 +66,7 @@ export class BomTopMaterialComponent implements OnInit {
       this.searchCategory(val);
     })
   }
+  
   searchCategory(val) {
     if (this.selectedCategory) {
       if (val && val !== '') {

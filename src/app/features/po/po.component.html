@@ -1,4 +1,4 @@
-<div class="page-start-point mt-5 p-rem-t-15">
+<div class="page-start-point m-rem-t-50">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <div class="row p-t-20">
       <div class="col-sm-12 col-md-12 m-t-5 text-semi-bold text-left" *ngIf="this.mode === 'view'">
@@ -8,7 +8,7 @@
         <div *ngIf="this.mode === 'view'" class="float-right">
           <span class="text-semi-bold color-main cursor-pointer p-r-15"
             ><a (click)="downloadPo()" class="fontsize-16-px" matTooltip="Download PO">
-              <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 font-size15" *ngIf="!showResponsiveDesign">Download P.O</span></a
+              <img src="../../../../assets/images/download-po.png" /><span class="p-l-5 fontsize-15-px" *ngIf="!showResponsiveDesign">Download P.O</span></a
             ></span
           >
           <button mat-raised-button class="main-background-color main-button color-white send-for-approval-btn" (click)="openShortClose()">Short Close</button>
@@ -29,8 +29,7 @@
             mat-raised-button
             class="main-background-color main-button color-white send-for-approval-btn"
             (click)="selectApprover()"
-            [disabled]="this.poTable && this.poTable.poForms && this.poCard && this.poCard.projectDetails
-             ? this.poTable.poForms.invalid ||this.poCard.projectDetails.invalid: true"
+            [disabled]="this.poTable && this.poTable.poForms && this.poCard && this.poCard.projectDetails ? this.poTable.poForms.invalid || this.poCard.projectDetails.invalid : true"
           >
             Send P.O For Approval
           </button>

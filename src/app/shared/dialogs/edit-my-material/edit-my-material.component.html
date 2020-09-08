@@ -12,24 +12,28 @@
       <form *ngIf="data" [formGroup]="editMaterialForm" (ngSubmit)="submit()">
         <div class="row my-material-dialog-length">
           <div formArrayName="forms" class="width-100" *ngFor="let myMaterial of data.materialList; let i = index">
-
             <div class="row" [formGroupName]="i">
-
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <mat-form-field class="border-input width-100">
                   <input type="text" placeholder="Material Name*" matInput formControlName="materialName" />
-                  <small *ngIf="editMaterialForm.get('forms')['controls'][i]['controls']['materialName'].errors?.maxlength" class="warning-color">
-                    maximum characters allowed is 300
-                  </small>
+                  <small *ngIf="editMaterialForm.get('forms')['controls'][i]['controls']['materialName'].errors?.maxlength" class="warning-color"> maximum characters allowed is 300 </small>
                 </mat-form-field>
               </div>
 
               <div class="col-md-2 col-sm-6 col-xs-12">
                 <mat-form-field class="border-select width-100 mat-form-field-flex-mm-padding">
-                  <mat-select placeholder="*Unit" formControlName="materialUnit">
+                  <mat-label>Unit*</mat-label>
+                  <mat-select formControlName="materialUnit">
                     <div class="display-flex">
-                      <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search Unit" [(ngModel)]="searchUnit"
-                        [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()"/>
+                      <input
+                        class="p-l-10 p-b-5"
+                        matInput
+                        type="search"
+                        placeholder="Search Unit"
+                        [(ngModel)]="searchUnit"
+                        [ngModelOptions]="{standalone: true}"
+                        (keydown)="$event.stopPropagation()"
+                      />
                       <button mat-button mat-icon-button>
                         <mat-icon>search</mat-icon>
                       </button>
@@ -43,26 +47,25 @@
               </div>
 
               <div class="col-md-3 col-sm-6 col-xs-12">
-                  <mat-form-field class="border-select width-100 mat-form-field-flex-mm-padding">
-                    <input type="text" placeholder="Trade" matInput formControlName="trade" />
-                  </mat-form-field>
+                <mat-form-field class="border-select width-100 mat-form-field-flex-mm-padding">
+                  <input type="text" placeholder="Trade" matInput formControlName="trade" />
+                </mat-form-field>
               </div>
 
               <div class="col-md-3 col-sm-6 col-xs-12">
-                  <mat-form-field class="border-select width-100 mat-form-field-flex-mm-padding">
-                    <input type="text" placeholder="Category" matInput formControlName="category" />
-                  </mat-form-field>
+                <mat-form-field class="border-select width-100 mat-form-field-flex-mm-padding">
+                  <input type="text" placeholder="Category" matInput formControlName="category" />
+                </mat-form-field>
               </div>
             </div>
           </div>
         </div>
-  
+
         <div mat-dialog-actions>
           <div class="col-xs-12 p-t-20 p-b-20 text-center">
             <button class="btn btn-warning next-btn">Save</button>
           </div>
         </div>
-
       </form>
     </div>
   </div>

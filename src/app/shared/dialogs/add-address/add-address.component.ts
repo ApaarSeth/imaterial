@@ -43,6 +43,7 @@ export class AddAddressDialogComponent implements OnInit {
 
   ngOnInit() {
     this.countryCode = localStorage.getItem('countryCode')
+    this.formInit();
     if (this.data.roleType === "projectBillingAddressId") {
       this.addAddressService
         .getPoAddAddress("Project", this.data.id)
@@ -56,7 +57,29 @@ export class AddAddressDialogComponent implements OnInit {
           this.address = res.data;
         });
     }
-    this.formInit();
+  }
+
+  formInit() {
+    this.selectAddressFrm = this.formBuilder.group({
+      address: []
+    });
+
+    // new address form
+    this.newAddressForm = this.formBuilder.group({
+      addressLine1: ["", [Validators.required, Validators.maxLength(120)]],
+      addressLine2: ["", Validators.maxLength(120)],
+      // pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
+      pinCode: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
+      state: [{ value: "", disabled: true }, Validators.required],
+      city: [{ value: "", disabled: true }, Validators.required],
+      gstNo: ["", [Validators.pattern(FieldRegExConst.GSTIN)]],
+      imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
+      countryId: [null],
+      countryCode: []
+    });
+    this.newAddressForm.get('pinCode').valueChanges.subscribe(res => {
+      this.getPincode(res)
+    })
   }
 
   tabClick($event) {
@@ -105,28 +128,7 @@ export class AddAddressDialogComponent implements OnInit {
     return this.newAddressForm.get('countryCode').value;
   }
 
-  formInit() {
-    this.selectAddressFrm = this.formBuilder.group({
-      address: []
-    });
 
-    // new address form
-    this.newAddressForm = this.formBuilder.group({
-      addressLine1: ["", [Validators.required, Validators.maxLength(120)]],
-      addressLine2: ["", Validators.maxLength(120)],
-      // pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
-      pinCode: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
-      state: [{ value: "", disabled: true }, Validators.required],
-      city: [{ value: "", disabled: true }, Validators.required],
-      gstNo: ["", [Validators.pattern(FieldRegExConst.GSTIN)]],
-      imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
-      countryId: [null],
-      countryCode: []
-    });
-    this.newAddressForm.get('pinCode').valueChanges.subscribe(res => {
-      this.getPincode(res)
-    })
-  }
 
   onselectAddress(): void {
     this.dialogRef.close([this.data.roleType, this.selectAddressFrm.value]);

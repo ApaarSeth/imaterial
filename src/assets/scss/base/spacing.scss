@@ -231,7 +231,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     // }
 
     .m-rem-#{str-slice($side, 0, 1)}-#{$space}-rem {
-      margin-#{$side}: #{$space}rem !important;
+      margin-#{$side}: #{$space/10}rem !important;
     }
   }
 }
