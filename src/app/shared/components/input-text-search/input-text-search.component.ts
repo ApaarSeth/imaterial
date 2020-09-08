@@ -1,3 +1,6 @@
+import { OnDestroy } from '@angular/core';
+import { BomService } from 'src/app/shared/services/bom.service';
+import { Subscription } from 'rxjs';
 import { BomFilterItemConfig } from './../../models/bom.model';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
@@ -9,21 +12,23 @@ import { Component, OnInit, Input } from '@angular/core';
     templateUrl: './input-text-search.component.html'
 })
 
-export class InputTextSearchCompoent implements OnInit {
+export class InputTextSearchCompoent implements OnInit, OnDestroy {
 
     form: FormGroup
 
     constructor(
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private bomService: BomService
     ) { }
 
     @Output() selectionUpdate = new EventEmitter<string>();
     @Input() config: BomFilterItemConfig;
 
-    isOpen: boolean;
+    subscriptions: Subscription[] = [];
 
     ngOnInit(): void {
         this.formInit();
+        this.startSubscription();
     }
 
     formInit() {
@@ -35,4 +40,17 @@ export class InputTextSearchCompoent implements OnInit {
             this.selectionUpdate.emit(val.searchInput);
         })
     }
+
+    startSubscription() {
+        this.subscriptions.push(
+            this.bomService.resetBomFilter$.subscribe(_ => {
+                this.form.reset();
+            })
+        )
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(item => item.unsubscribe);
+    }
+
 }

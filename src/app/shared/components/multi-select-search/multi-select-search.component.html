@@ -1,7 +1,7 @@
 <div *ngIf="config?.list">
 
     <form *ngIf="form" [formGroup]="form">
-        <mat-form-field class="d-block bom-multi-search border-dark drp-inpt">
+        <mat-form-field class="d-block border-bottom border-dark drp-inpt">
             <mat-label>{{ config.title }}</mat-label>
             <mat-select formControlName="selected" multiple (openedChange)="projectInput.focus()">
                 <div class="d-flex">

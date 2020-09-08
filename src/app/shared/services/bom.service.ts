@@ -11,6 +11,7 @@ export class BomService {
   constructor(private dataService: DataService) { }
 
   searchText = new BehaviorSubject<string>('');
+  resetBomFilter$ = new Subject<any>();
 
   getMaterialsWithSpecs(categoryList) {
     return this.dataService.getRequestMaster(

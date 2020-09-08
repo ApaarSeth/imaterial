@@ -1,3 +1,5 @@
+import { SearchPipe } from 'src/app/shared/pipes/searchPipe';
+import { PaginatorComponent } from './paginator/paginator.component';
 import { InputTextSearchCompoent } from './input-text-search/input-text-search.component';
 import { MultiSelectSearchComponent } from './multi-select-search/multi-select-search.component';
 import { BomFilterComponent } from './bom-filters/bom-filter.component';
@@ -28,7 +30,7 @@ import { AdvanceSearchComponent } from './advance-search/advance-search.componen
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { NgModule } from '@angular/core';
 
-const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent, BarChartComponent, PieChartComponent, AdvanceDateItemComponent, AdvanceSelectItemComponent, AdvanceInputNumberItemComponent, AdvSearchItemComponent, SearchUnitComponent, BomCommonTableComponent, BomFilterComponent, MultiSelectSearchComponent, InputTextSearchCompoent ];
+const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent, BarChartComponent, PieChartComponent, AdvanceDateItemComponent, AdvanceSelectItemComponent, AdvanceInputNumberItemComponent, AdvSearchItemComponent, SearchUnitComponent, BomCommonTableComponent, BomFilterComponent, MultiSelectSearchComponent, InputTextSearchCompoent, PaginatorComponent ];
 
 @NgModule({
   imports: [
@@ -40,8 +42,8 @@ const components = [ ProjectItemComponent, ChipComponent, UploadComponent, Globa
     NgbModule
   ],
 
-  declarations: components,
+  declarations: [ ...components, SearchPipe ],
   // entryComponents: [UploadImageComponent, ViewImageComponent, SupplierRatingComponent],
-  exports: components
+  exports: [ ...components, SearchPipe ]
 })
 export class SharedComponentsModule { }

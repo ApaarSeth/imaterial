@@ -34,12 +34,9 @@ export class DataService {
     // this.masterUrl = environment.masterUrl + "/";
     // this.ssoUrl = environment.ssoUrl + "/";
     this.baseStartUrl = Utils.baseUrl();
-    // this.baseUrl = this.baseStartUrl + "im/";
-    // this.masterUrl = this.baseStartUrl + "mm/";
-    this.baseUrl = "http://aa3b0c0b6806.ngrok.io/im/";
-    this.masterUrl = "http://99a57eac3255.ngrok.io/mm/";
-    // this.ssoUrl = this.baseStartUrl + "sso/";
-    this.ssoUrl = "http://0837b4f5b628.ngrok.io/sso/";
+    this.baseUrl = this.baseStartUrl + "im/";
+    this.masterUrl = this.baseStartUrl + "mm/";
+    this.ssoUrl = this.baseStartUrl + "sso/";
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.orgId = localStorage.getItem("orgId");

@@ -105,6 +105,6 @@ import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/materia
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
     TaxCostService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

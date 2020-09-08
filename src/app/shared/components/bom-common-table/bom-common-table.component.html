@@ -5,10 +5,10 @@
         title: 'Search Material',
         placeholder: 'Search Material',
         list: ''
-    }" (selectionUpdate)="getData($event)"></input-text-search>
+    }" (selectionUpdate)="getSearchData($event)"></input-text-search>
     </div>
 
-    <ng-container *ngIf="dataSource && tableHeads?.length">
+    <ng-container *ngIf="matData?.length && tableHeads?.length">
 
         <div class="bom-details-table-div-part example-container mat-elevation-z8 mt-2 bg-shadow-1px table-responsive">
 
@@ -20,24 +20,26 @@
                         </tr>
                     </thead>
 
-                    <div class="d-contents">
 
-                        <ng-container *ngFor="let itm of form['controls'].material['controls']; let ig = index"
-                            [formGroupName]="ig">
-                            <tr class="cursor-pointer bg-gray" style="border-bottom:2px solid #d6d2d2;">
-                                <td [colSpan]="tableHeads.length"
-                                    (click)="toggleMaterials($event, itm.value.groupName)">
-                                    <span>{{ itm.value.groupName }}</span>
-                                    <span class="pull-right bom-arrow">
-                                        <mat-icon inline="true">keyboard_arrow_up</mat-icon>
-                                    </span>
-                                </td>
-                            </tr>
+                    <ng-container *ngFor="let itm of form['controls'].material['controls']; let ig = index"
+                        [formGroupName]="ig">
+                        <tr class="cursor-pointer bg-gray" style="border-bottom:2px solid #d6d2d2;">
+                            <td [colSpan]="tableHeads.length" (click)="toggleMaterials($event, itm.value.groupName)">
+                                <span>{{ itm.value.groupName }}</span>
+                                <span class="pull-right bom-arrow">
+                                    <mat-icon inline="true">keyboard_arrow_up</mat-icon>
+                                </span>
+                            </td>
+                        </tr>
 
-                            <tbody *ngIf="itm.get('materialList')" formArrayName="materialList"
-                                [attr.data-trgroup]="itm.value.groupName">
-                                <tr *ngFor="let item of itm.get('materialList').controls; let i = index"
-                                    [formGroupName]="i">
+                        <tbody *ngIf="itm.get('materialList')" formArrayName="materialList"
+                            [attr.data-trgroup]="itm.value.groupName">
+
+                            <tr *ngFor="let item of itm.get('materialList').controls; let i = index"
+                                [formGroupName]="i">
+
+                                <ng-container *ngIf="item.value.isNull">
+
                                     <td [ngClass]="isMobile ? 'font-size12' : '' ">
                                         {{ item.value.materialName }}
                                         <div class="limited-character bom" matTooltip=" {{ item.value.materialGroup }}">
@@ -49,13 +51,16 @@
                                     <td [ngClass]="isMobile ? 'font-size12' : '' ">
                                         {{ item.value.tradeList.length ? item.value.tradeList : item.value.tradeName }}
                                     </td>
-                                    <td>
-                                        <app-search-unit [config]="{
-                                        isDisable: 'false',
-                                        materialUnits: materialUnits,
-                                        item: item,
-                                        selectedUnit: item.value.materialUnit
-                                    }" (getSelectedUnit)="item.get('materialUnit').setValue($event)"></app-search-unit>
+                                    <td class="p-b-20">
+                                        <ng-container *ngIf="materialUnits?.length">
+                                            <app-search-unit [config]="{
+                                            isDisable: 'false',
+                                            materialUnits: materialUnits,
+                                            item: item,
+                                            selectedUnit: item.value.materialUnit
+                                        }" (getSelectedUnit)="item.get('materialUnit').setValue($event)">
+                                            </app-search-unit>
+                                        </ng-container>
                                     </td>
                                     <td>
                                         <mat-form-field
@@ -73,20 +78,25 @@
                                                 [value]="item.estimatedRate" autocomplete="off">
                                         </mat-form-field>
                                     </td>
-                                </tr>
-                            </tbody>
-                        </ng-container>
 
-                    </div>
+                                </ng-container>
+
+
+                            </tr>
+
+                        </tbody>
+                    </ng-container>
+
 
                 </table>
             </form>
         </div>
-
     </ng-container>
-    <!-- <mat-paginator class="pagi-st" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
 
-    <mat-paginator changes="Projects Per Page" class="pagi-st" [length]="100" [pageSize]="10"
-        [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <ng-container *ngIf="config.paginatorOptions">
+        <app-paginator class="pagi-st" [config]="config.paginatorOptions"
+            (updatePaginator)="updatePaginatorOptions($event)">
+        </app-paginator>
+    </ng-container>
 
 </div>

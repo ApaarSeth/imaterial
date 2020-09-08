@@ -1,3 +1,7 @@
+import { material } from './../../../shared/models/category';
+import { AppNavigationService } from './../../../shared/services/navigation.service';
+import { FacebookPixelService } from './../../../shared/services/fb-pixel.service';
+
 import { SnackbarComponent } from './../../../shared/dialogs/snackbar/snackbar.compnent';
 import { Router } from '@angular/router';
 import { GlobalLoaderService } from './../../../shared/services/global-loader.service';
@@ -19,11 +23,14 @@ export class BomComponent implements OnInit {
     product: ProjectDetails;
     projectId: number;
     orgId: number;
+    userId: number;
     tabs: BomTabsConfig[] = [];
     searchConfig: BomFilterConfig;
     selectedIndex: number = 0;
     filterOptions: BomFilterData = {};
     isMobile: boolean;
+    isFormValid: boolean = false;
+    formData: any;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -32,7 +39,9 @@ export class BomComponent implements OnInit {
         private commonService: CommonService,
         private _snackBar: MatSnackBar,
         private loading: GlobalLoaderService,
-        private router: Router
+        private router: Router,
+        private fbPixel: FacebookPixelService,
+        private navService: AppNavigationService
     ) {
     }
 
@@ -42,24 +51,27 @@ export class BomComponent implements OnInit {
             this.projectId = params[ "id" ];
         });
         this.orgId = Number(localStorage.getItem("orgId"));
+        this.userId = Number(localStorage.getItem("userId"));
         this.getReadyBomFilter();
         this.getTabsData();
         this.getProject(this.projectId);
     }
+
+    // creating bom filter options configuration 
 
     getReadyBomFilter() {
         let options: BomFilterOptions[] = [
             {
                 name: 'Trades',
                 type: 'MULTI_SELECT_SEARCH',
-                key: 'tradeList',
+                key: 'tradeNames',
                 id: 0,
                 preSelected: []
             },
             {
                 name: 'Category',
                 type: 'MULTI_SELECT_SEARCH',
-                key: 'categoryList',
+                key: 'categoryNames',
                 id: 1,
                 dependSearch: 0
             },
@@ -77,10 +89,10 @@ export class BomComponent implements OnInit {
             options[ 0 ].preSelected = this.preselectedTrade(options[ 0 ].data);
             options[ 1 ].data = [];
 
-            this.filterOptions.tradeList = this.bomService.getNames(options[ 0 ].preSelected);
+            this.filterOptions[ options[ 0 ].key ] = options[ 0 ].preSelected;
 
             this.searchConfig = {
-                title: 'Filter By',
+                title: 'Search In',
                 options
             }
             this.getTableData();
@@ -108,25 +120,24 @@ export class BomComponent implements OnInit {
         return trades;
     }
 
+    // creating tabs configuration 
+
     getTabsData() {
         let data = [
             {
                 name: 'Top Materials',
                 data: [],
-                functionName: 'getTrades',
-                key: 'tradeList'
+                functionName: 'getTrades'
             },
             {
                 name: 'All Materials',
                 data: [],
-                functionName: 'getTrades',
-                key: 'tradeList'
+                functionName: 'getTrades'
             },
             {
                 name: 'My Materials',
                 data: [],
-                functionName: 'getMyMaterial',
-                key: 'tradeList'
+                functionName: 'getMyMaterial'
             }
         ]
         this.tabs = data as BomTabsConfig[];
@@ -163,54 +174,100 @@ export class BomComponent implements OnInit {
 
     tabClick(event) {
         this.selectedIndex = event.index ? event.index : 0;
+
+        this.filterOptions.limit = this.filterOptions.limit ? this.filterOptions.limit : 25;
+        this.filterOptions.pageNumber = this.filterOptions.pageNumber ? this.filterOptions.pageNumber : 1;
         this.getTableData();
     }
+
+    // get table data on load or based on filter 
 
     getTableData() {
         if (this.selectedIndex === 2) {
             this.commonService.getMyMaterial('allwithdeleted').then(res => {
-                console.log(res.data);
-                this.tabs[ this.selectedIndex ].data = [ ...res.data ];
+                this.tabs[ this.selectedIndex ].data = res.data;
                 this.getBomTableConfig();
             });
         } else {
-            let tradeObj = {};
+
+            let tradeObj: any = {};
+            for (let i in this.filterOptions) {
+                if (i === 'tradeNames' || i === 'categoryNames') {
+                    tradeObj[ i ] = this.bomService.getNames(this.filterOptions[ i ]);
+                } else {
+                    tradeObj[ i ] = this.filterOptions[ i ];
+                }
+            }
+            tradeObj.limit = tradeObj.limit ? tradeObj.limit : 25;
+            tradeObj.pageNumber = tradeObj.pageNumber ? tradeObj.pageNumber : 1;
+            tradeObj[ 'isTopMaterial' ] = this.selectedIndex === 0 ? 1 : 0;
             this.bomService[ this.tabs[ this.selectedIndex ][ 'functionName' ] ](tradeObj).then(res => {
-                console.log(res);
-                this.tabs[ this.selectedIndex ].data = [ ...res ];
+                this.tabs[ this.selectedIndex ].data = res.materialTrades;
+                this.tabs[ this.selectedIndex ].paginatorOptions = {
+                    limit: res.limit,
+                    pageNumber: res.pageNumber,
+                    totalCount: res.totalCount
+                }
                 this.getBomTableConfig();
             });
         }
     }
 
+    // get data after applying filter 
 
-    getFilterBomData(event) {
-        console.log(event);
+    getFilterBomData(data) {
+        const tabConfig = {
+            name: 'Search Materials',
+            data: [],
+            functionName: 'getTrades'
+        }
+        const tabExist = this.tabs.some(item => item.name === 'Search Materials');
+        if (!tabExist) {
+            this.tabs.push(tabConfig);
+        }
+
+        this.selectedIndex = 3;
+        for (let i in data) {
+            this.filterOptions[ i ] = data[ i ];
+        }
         this.getTableData();
     }
+
+    // creating bom table data configuration as per the requirement. field can be managed which need to show
 
     getBomTableConfig() {
         let tableConfig: BomCommonTableConfig = {};
         tableConfig.groupName = { visible: true, formProperty: true } as BomTableProptery;
         tableConfig.materialList = {} as BomTableMaterials;
-        if (this.selectedIndex === 0 || this.selectedIndex === 1 || this.selectedIndex === 2) {
-            tableConfig.materialList.materialName = { visible: true, formProperty: true, headName: 'Material Name' } as BomTableProptery;
-            tableConfig.materialList.tradeList = { visible: true, formProperty: true, headName: 'Trade' } as BomTableProptery;
-            tableConfig.materialList.materialUnit = { visible: true, formProperty: true, headName: 'Unit' } as BomTableProptery;
-            tableConfig.materialList.estimatedQty = { visible: true, formProperty: true, headName: 'Estimated Quantity' } as BomTableProptery;
-            tableConfig.materialList.estimatedRate = { visible: true, formProperty: true, headName: 'Estimated Rate' } as BomTableProptery;
-            tableConfig.materialList.id = { visible: true, formProperty: true } as BomTableProptery;
-            tableConfig.materialList.materialCode = { visible: false, formProperty: true } as BomTableProptery;
-            tableConfig.materialList.materialGroup = { visible: false, formProperty: false } as BomTableProptery;
-            tableConfig.materialList.pid = { visible: false, formProperty: false } as BomTableProptery;
-            tableConfig.materialList.treadId = { visible: false, formProperty: true } as BomTableProptery;
-            tableConfig.materialList.tradeName = { visible: false, formProperty: true } as BomTableProptery;
-        }
+
+        tableConfig.materialList.materialName = { visible: true, formProperty: true, headName: 'Material Name' } as BomTableProptery;
+        tableConfig.materialList.tradeList = { visible: true, formProperty: true, headName: 'Trade' } as BomTableProptery;
+        tableConfig.materialList.materialUnit = { visible: true, formProperty: true, headName: 'Unit', any: 1 } as BomTableProptery;
+        tableConfig.materialList.estimatedQty = { visible: true, formProperty: true, headName: 'Estimated Quantity', any: 1 } as BomTableProptery;
+        tableConfig.materialList.estimatedRate = { visible: true, formProperty: true, headName: 'Estimated Rate' } as BomTableProptery;
+        tableConfig.materialList.id = { visible: false, formProperty: true } as BomTableProptery;
+        tableConfig.materialList.materialCode = { visible: false, formProperty: true } as BomTableProptery;
+        tableConfig.materialList.materialGroup = { visible: false, formProperty: false } as BomTableProptery;
+        tableConfig.materialList.pid = { visible: false, formProperty: false } as BomTableProptery;
+        tableConfig.materialList.treadId = { visible: false, formProperty: true } as BomTableProptery;
+        tableConfig.materialList.tradeName = { visible: false, formProperty: true } as BomTableProptery;
+
         this.tabs[ this.selectedIndex ][ 'table' ] = tableConfig;
     }
 
     saveCategory() {
-
+        this.bomService
+            .sumbitCategory(this.userId, this.projectId, this.formData)
+            .then(res => {
+                this.fbPixel.fire('AddToCart');
+                this.navService.gaEvent({
+                    action: 'submit',
+                    category: 'material_added',
+                    label: 'material name',
+                    value: null
+                });
+                this.router.navigate([ "project-dashboard/bom/" + this.projectId + "/bom-detail" ]);
+            });
     }
 
     openAddMyMaterial() {
@@ -228,10 +285,14 @@ export class BomComponent implements OnInit {
         // })
     }
 
+    // download material data excel template 
+
     downloadExcel(url: string) {
         var win = window.open(url, "_blank");
         win.focus();
     }
+
+    // upload material list excel 
 
     uploadExcel(files: FileList) {
         const data = new FormData();
@@ -271,5 +332,20 @@ export class BomComponent implements OnInit {
         });
     }
 
+    // paginator data poRequestData
+
+    getPaginationRequest(data) {
+        for (let i in data) {
+            this.filterOptions[ i ] = data[ i ];
+        }
+        this.getTableData();
+    }
+
+    // Bom table data request on change in table 
+
+    getBomTableRequest(data) {
+        this.isFormValid = data.valid;
+        this.formData = data.value.material;
+    }
 
 }

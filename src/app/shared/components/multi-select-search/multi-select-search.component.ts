@@ -1,19 +1,24 @@
+import { BomService } from 'src/app/shared/services/bom.service';
+import { Subscription } from 'rxjs';
 import { BomSearchData, BomFilterItemConfig } from './../../models/bom.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from "@angular/core";
 
 @Component({
     selector: 'multi-select-search',
     templateUrl: './multi-select-search.component.html'
 })
 
-export class MultiSelectSearchComponent implements OnInit {
+export class MultiSelectSearchComponent implements OnInit, OnDestroy {
 
     constructor(
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private bomService: BomService
     ) { }
 
     form: FormGroup;
+
+    subscriptions: Subscription[] = [];
 
     @Output() selectionUpdate = new EventEmitter<number[]>();
     @Input() config: BomFilterItemConfig;
@@ -22,6 +27,7 @@ export class MultiSelectSearchComponent implements OnInit {
     filtered: BomSearchData[];
     ngOnInit(): void {
         this.formInit();
+        this.startSubscription();
     }
 
     formInit() {
@@ -46,6 +52,20 @@ export class MultiSelectSearchComponent implements OnInit {
         this.form.get('selected').valueChanges.subscribe(val => {
             this.selectionUpdate.emit(val);
         })
+    }
+
+    startSubscription() {
+        this.subscriptions.push(
+            this.bomService.resetBomFilter$.subscribe(_ => {
+                if (this.config.key !== 'tradeNames') {
+                    this.form.reset();
+                }
+            })
+        )
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(item => item.unsubscribe);
     }
 
 }

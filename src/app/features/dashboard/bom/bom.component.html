@@ -8,13 +8,13 @@
             <div class="row">
                 <div class="col-md-6">
 
-                    <div class="row">
+                    <div class="row m-t-5 m-l-5">
                         <!-- Download BOM Link -->
                         <div class="download-bom-excel excl-btn">
                             <ng-container *ngIf="!isMobile; else downloadIconOnly">
                                 <span class="cursor-pointer download-bom-template">
-                                    <img src="assets/images/download-bom.svg" alt="download"
-                                        class="img-fluid m-r-2 width-30-px" />
+                                    <img src="assets/images/download-arrow-icon.svg" alt="download"
+                                        class="img-fluid m-r-2 height-25-px" />
                                     <a (click)="downloadExcel('assets/images/bom_template.xlsx')"> Download BOM
                                         Excel</a>
                                 </span>
@@ -22,8 +22,8 @@
 
                             <ng-template #downloadIconOnly>
                                 <span class="cursor-pointer download-bom-template">
-                                    <img src="assets/images/download-bom.svg" alt="download"
-                                        class="img-fluid m-r-5 width-30-px"
+                                    <img src="assets/images/download-arrow-icon.svg" alt="download"
+                                        class="img-fluid m-r-5 height-25-px"
                                         (click)="downloadExcel('assets/images/bom_template.xlsx')" />
                                 </span>
                             </ng-template>
@@ -36,16 +36,16 @@
                                 (change)="uploadExcel($event.target.files)" />
 
                             <ng-container *ngIf="!isMobile; else uploadIconOnly">
-                                <label for="fileDropRef" class="cursor-pointer upload-template m-b-0 m-t-5">
-                                    <img src="assets/images/upload-bom.svg" alt="upload"
-                                        class="img-fluid m-r-5 width-30-px cursor-pointer" />
+                                <label for="fileDropRef" class="cursor-pointer upload-template m-t-8">
+                                    <img src="assets/images/upload-arrow-icon.svg" alt="upload"
+                                        class="img-fluid m-r-5 height-25-px cursor-pointer" />
                                     <a>Upload BOM Excel</a>
                                 </label>
                             </ng-container>
 
                             <ng-template #uploadIconOnly>
-                                <img src="assets/images/upload-bom.svg" alt="upload"
-                                    class="img-fluid m-r-2 width-30-px cursor-pointer" />
+                                <img src="assets/images/upload-arrow-icon.svg" alt="upload"
+                                    class="img-fluid m-r-2 height-25-px cursor-pointer" />
                             </ng-template>
                         </div>
 
@@ -56,7 +56,7 @@
 
                     <div class="m-r-15 m-t-5 m-b-15 d-inline-block">
                         <button mat-raised-button class="main-background-color main-button color-white"
-                            (click)="saveCategory()">
+                            (click)="saveCategory()" [disabled]="!isFormValid">
                             Add to BOM
                         </button>
                     </div>
@@ -79,10 +79,13 @@
             <bom-filter [config]="searchConfig" (getBomFilers)="getFilterBomData($event)"></bom-filter>
 
             <ng-container *ngIf="tabs && tabs.length">
-                <mat-tab-group (selectedTabChange)="tabClick($event)">
+                <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="tabClick($event)">
                     <mat-tab *ngFor="let tab of tabs" [label]="tab.name">
                         <ng-container *ngIf="tab.data && tab.table">
-                            <bom-common-table [config]="{data: tab.data, table: tab.table, label: tab.name}">
+                            <bom-common-table
+                                [config]="{data: tab.data, table: tab.table, label: tab.name, paginatorOptions: tab.paginatorOptions}"
+                                (updateBomPaginator)="getPaginationRequest($event)"
+                                (updateBomTable)="getBomTableRequest($event)">
                             </bom-common-table>
                         </ng-container>
                     </mat-tab>

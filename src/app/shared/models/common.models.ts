@@ -64,3 +64,8 @@ export interface OverallOtherCost {
     status: number
 }
 
+export interface PaginatorConfig {
+    limit?: number;
+    pageNumber?: number;
+    totalCount?: number;
+}

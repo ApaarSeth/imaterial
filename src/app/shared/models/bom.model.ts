@@ -1,8 +1,10 @@
+import { PaginatorConfig } from './common.models';
 export interface BomTabsConfig {
     name: string;
     preSelectData?: any;
     data?: any;
     table?: any;
+    paginatorOptions?: PaginatorConfig;
 }
 
 export type BomFilterType = 'MULTI_SELECT_SEARCH' | 'INPUT_TEXT_SEARCH';
@@ -36,12 +38,15 @@ export interface BomFilterItemConfig {
     placeholder: string;
     list: BomSearchData[];
     preSelected?: any;
+    key?: any;
 }
 
 export interface BomFilterData {
-    tradeList?: any;
-    categoryList?: any;
+    tradeNames?: any;
+    categoryNames?: any;
     materialName?: string;
+    limit?: number;
+    pageNumber?: number;
 }
 
 export interface BomCommonTableConfig {
@@ -53,6 +58,8 @@ export interface BomTableProptery {
     visible?: boolean;
     formProperty?: boolean;
     headName?: string;
+    required?: any[];
+    any?: number; // if any one required in form
 }
 
 export interface BomTableMaterials {

@@ -19,9 +19,19 @@ export class SearchUnitComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.getSelectedUnit.emit(this.config.selectedUnit);
-
+        // this.getSelectedUnit.emit(this.config.selectedUnit);
+        this.checkSelectedUnitCase();
         this.formInit();
+    }
+
+    checkSelectedUnitCase() {
+        if (this.config.selectedUnit) {
+            this.config.materialUnits.forEach(item => {
+                if (this.config.selectedUnit.toLowerCase() == item.toLowerCase()) {
+                    this.config.selectedUnit = item;
+                }
+            });
+        }
     }
 
     formInit() {
