@@ -33,9 +33,7 @@
       <ng-container *ngIf="dataSourceActivateTemp.length > 0" class="user-dts">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-            <mat-panel-title>
-                Active Users
-            </mat-panel-title>
+            <mat-panel-title> Active Users </mat-panel-title>
           </mat-expansion-panel-header>
 
           <div class="add-user-container mat-elevation-z8">
@@ -104,10 +102,7 @@
                 <td mat-cell *matCellDef="let element" class="edit-disable-user-details-width">
                   <div class="display-flex align-items-center justify-content-flex-end">
                     <div class="p-r-20" *ngIf="element.ProjectUser.accountStatus == 0">
-                      <span
-                        (click)="resendInvite(element.ProjectUser.userId)"
-                        class="main-color font-size-vary-grn p-r-15 text-semi-bold cursor-pointer"
-                        [ngClass]="isMobile ? 'd-block mb-3' : ''"
+                      <span (click)="resendInvite(element.ProjectUser.userId)" class="main-color font-size-vary-grn p-r-15 text-semi-bold cursor-pointer" [ngClass]="isMobile ? 'd-block mb-3' : ''"
                         >Resend Invite</span
                       >
                     </div>
@@ -144,9 +139,7 @@
       <ng-container *ngIf="dataSourceDeactivateTemp && dataSourceDeactivateTemp.length > 0" class="user-dts">
         <mat-expansion-panel class="myPanel m-t-10" [expanded]="true">
           <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-            <mat-panel-title>
-                Deactivated Users
-            </mat-panel-title>
+            <mat-panel-title> Deactivated Users </mat-panel-title>
           </mat-expansion-panel-header>
 
           <div class="add-user-container mat-elevation-z8">

@@ -96,19 +96,13 @@
                       </div>
 
                       <mat-select-trigger>
-                        <span
-                          class="d-flex selected-country"
-                          matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}"
-                        >
+                        <span class="d-flex selected-country" matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}">
                           <img class="width-27-px p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                           <span class="p-r-5 color-brand font-size16">{{ selectedCountry && selectedCountry.name }}</span>
                         </span>
                       </mat-select-trigger>
 
-                      <mat-option
-                        *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
-                        [value]="country"
-                        selected="trade.isAttatched"
+                      <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country" selected="trade.isAttatched"
                         ><span
                           ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
                           <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
@@ -153,27 +147,15 @@
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
                   <div class="row border-input p-t-0">
-                    <mat-form-field class="col-xs-12">
-                      <input matInput type="text" placeholder="{{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }}" formControlName="gstNo" />
-                    </mat-form-field>
-                    <small *ngIf="newAddressForm.controls['gstNo'].hasError('required') && newAddressForm.controls['gstNo'].touched" class="form-error-msg p-l-15">
-                      GSTIN is required
-                    </small>
-                    <small *ngIf="newAddressForm.controls['gstNo'].hasError('pattern') && newAddressForm.controls['gstNo'].touched" class="form-error-msg p-l-15">
-                      Enter Valid GSTIN</small
-                    >
+                    <mat-form-field class="col-xs-12"> <input matInput type="text" placeholder="{{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }}" formControlName="gstNo" /> </mat-form-field>
+                    <small *ngIf="newAddressForm.controls['gstNo'].hasError('required') && newAddressForm.controls['gstNo'].touched" class="form-error-msg p-l-15"> GSTIN is required </small>
+                    <small *ngIf="newAddressForm.controls['gstNo'].hasError('pattern') && newAddressForm.controls['gstNo'].touched" class="form-error-msg p-l-15"> Enter Valid GSTIN</small>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-xs-12 text-center p-t-10">
-              <button
-                mat-raised-button
-                [disabled]="!newAddressForm.valid || !validPincode"
-                class="main-background-color main-button color-white m-b-5"
-                cdkFocusInitial
-                (click)="onAddAddress()"
-              >
+              <button mat-raised-button [disabled]="!newAddressForm.valid || !validPincode" class="main-background-color main-button color-white m-b-5" cdkFocusInitial (click)="onAddAddress()">
                 {{ tab2Label === "Add Address" ? "Add" : "Edit" }}
               </button>
             </div>

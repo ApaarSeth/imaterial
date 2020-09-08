@@ -192,6 +192,17 @@ div.limited-character.universal {
   }
 }
 
+.mat-form-field-highlight {
+  .mat-form-field-wrapper .mat-form-field-flex {
+    background-color: #e8e8e8;
+    border-radius: 2px;
+    padding-top: 10px;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
 /***************************************************************************************/
 
 /**************************Modal Related Classes****************************************/
@@ -823,8 +834,8 @@ td.mat-footer-cell:first-of-type {
       display: inline-flex !important;
       span {
         font-size: 10px;
-        padding-right: 2px !important;
-        padding-left: 2px !important;
+        // padding-right: 2px !important;
+        // padding-left: 2px !important;
       }
     }
     .mat-expansion-panel {
@@ -837,12 +848,12 @@ td.mat-footer-cell:first-of-type {
     width: max-content;
     span {
       font-size: 10px;
-      white-space: nowrap;
-      font-weight: normal;
+      // white-space: nowrap;
+      // font-weight: normal;
       div,
       .mat-cell {
         font-weight: normal;
-        padding-right: 10px;
+        // padding-right: 10px;
       }
     }
   }
@@ -857,5 +868,11 @@ td.mat-footer-cell:first-of-type {
 @media only screen and (max-width: 330px) {
   .info-tootip:hover .info-tootip__content {
     left: 0px;
+  }
+}
+
+.whiteSpace-normal {
+  span {
+    white-space: normal !important;
   }
 }

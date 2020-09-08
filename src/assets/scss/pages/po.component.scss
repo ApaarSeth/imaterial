@@ -51,7 +51,8 @@
     }
   }
 
-  .po-table {
+  .po-table,
+  .res-table {
     .mat-row {
       border-bottom: 0.5px solid #979797;
       min-height: 50px;
@@ -279,14 +280,13 @@ s .validTill {
   font-weight: normal !important;
 }
 
-.mpo-mh {
-  height: 30px;
-  padding-top: 10px !important;
-}
+// .mpo-mh {
+//   height: 30px;
+// }
 
-.mpo-mh {
-  height: 30px;
-}
+// .mpo-mh {
+//   height: 30px;
+// }
 
 .str {
   &:before {
@@ -322,19 +322,19 @@ s .validTill {
 }
 
 .international-edit-po {
-  max-width: 12.25%;
-  min-width: 10.11% !important;
+  max-width: 10%;
+  min-width: 10% !important;
 }
 
 .national-edit-po {
-  max-width: 9.4%;
-  min-width: 9.4% !important;
+  max-width: 9.9%;
+  min-width: 9.9% !important;
 }
 
 .international-view-po,
 .national-view-po {
-  max-width: 10%;
-  min-width: 10% !important;
+  max-width: 9%;
+  min-width: 9% !important;
 }
 
 .po-date-width .date-label {
@@ -450,14 +450,14 @@ s .validTill {
 }
 
 @media only screen and (max-width: 1199px) {
-  .edit-view-purchase-order {
-    .mat-header-cell,
-    .mat-cell,
-    .add-taxes-col span,
-    .small-text {
-      font-size: 13px;
-    }
-  }
+  // .edit-view-purchase-order {
+  //   .mat-header-cell,
+  //   .mat-cell,
+  //   .add-taxes-col span,
+  //   .small-text {
+  //     font-size: 13px;
+  //   }
+  // }
 
   .po-date-width .date-label {
     .form-placeholder {
@@ -538,4 +538,14 @@ s .validTill {
   .font-size-vary-grn {
     font-size: 12px;
   }
+}
+
+.input-padding.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-top: 7px !important;
+}
+
+.po-border-input input,
+.po-border-input select {
+  border-bottom: 2px solid $icon-color-gray;
+  border-radius: 0px;
 }
