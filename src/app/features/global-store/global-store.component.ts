@@ -11,6 +11,7 @@ import { GlobalStoreService } from "../../shared/services/global-store.service";
   selector: "app-global-store",
   templateUrl: "./global-store.component.html"
 })
+
 export class GlobalStoreComponent implements OnInit {
 
   buttonName: string = "materialWise";
@@ -22,7 +23,10 @@ export class GlobalStoreComponent implements OnInit {
   sidebarNav: boolean;
   isMobile: boolean;
   orgId: Number;
-  projectList
+  projectList: any;
+  pageNo = 1;
+  pageSize = 10;
+
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
     private projectService: ProjectService,
@@ -35,11 +39,14 @@ export class GlobalStoreComponent implements OnInit {
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
     this.userId = Number(localStorage.getItem("userId"));
-    this.orgId = Number(localStorage.getItem("orgId"))
+    this.orgId = Number(localStorage.getItem("orgId"));
+
     this.route.data.subscribe(data => {
-      this.globalStoreData = data.globalData.data;
+      this.globalStoreData = data.globalData.data.globalStoreMaterialObj;
     });
+
     this.getNotifications();
+
     Promise.all([this.projectService.getProjects(this.orgId, this.userId),
     this.projectService.getProjects(this.orgId, this.userId), this.getNotifications]).then(res => {
       this.projectList = res[0].data
@@ -54,18 +61,14 @@ export class GlobalStoreComponent implements OnInit {
   getNotifications() {
     this.commonService.getNotification(this.userId);
   }
-  setButtonName(name: string) {
 
+  setButtonName(name: string) {
     this.buttonName = name;
 
     if (this.buttonName === 'projectWise') {
-
-      const orgId = Number(localStorage.getItem("orgId"));
-
-      this.globalStoreService.getProjectWiseData(orgId).then(res => {
-        this.projectWiseData = res.data;
+      this.globalStoreService.getProjectWiseData(this.pageNo, this.pageSize).then(res => {
+        this.projectWiseData = res.data.globalStoreProjectObj;
       })
-
     }
   }
 
@@ -81,6 +84,7 @@ export class GlobalStoreComponent implements OnInit {
     this.materialDataLength = event;
     this.cdr.detectChanges();
   }
+  
   projectShowDataLength(event) {
     this.projectDataLength = event;
     this.cdr.detectChanges();
@@ -92,10 +96,5 @@ export class GlobalStoreComponent implements OnInit {
       data: this.projectList,
       panelClass: ['common-modal-style', 'select-projects-dialog']
     });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.getProjectsNumber();
-    //   return;
-    // });
   }
 }

@@ -23,6 +23,7 @@
 
     .mat-header-cell, .mat-cell{
         word-break: break-word;
+        border-bottom: none;
 
         &:first-child{
             min-width: 35%;
@@ -101,7 +102,7 @@
                 }
         
                 &:nth-child(3), &:last-child {
-                    min-width: 100px;
+                    min-width: 120px;
                 }                
             }
         }

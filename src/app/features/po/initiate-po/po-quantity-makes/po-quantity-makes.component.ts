@@ -1,17 +1,16 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter } from "@angular/core";
-import { RfqMaterialResponse, RfqMat, rfqCurrency } from "src/app/shared/models/RFQ/rfq-details";
 import { FormBuilder, Validators, FormGroup, FormArray, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { initiatePo, initiatePoData } from "src/app/shared/models/PO/po-data";
 import { POService } from "src/app/shared/services/po.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { isPlatformBrowser } from "@angular/common";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { RfqMaterialResponse, rfqCurrency, RfqMat } from "../../../../shared/models/RFQ/rfq-details";
 
 
 @Component({
@@ -33,11 +32,9 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private commonService: CommonService,
     private navService: AppNavigationService,
-    private route: ActivatedRoute,
     private router: Router,
     private poService: POService,
-    private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar) { }
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
@@ -60,36 +57,36 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
           subCat.prevMatListLength = this.checkedMaterialsList[i - 1].projectMaterialList.length;
         }
         return subCat.projectMaterialList.map(item => {
-          let dueDate = item.dueDate ? (new Date(item.dueDate) < new Date() ? null : item.dueDate) : null;
 
           return this.formBuilder.group({
             materialUnitPrice: [item.estimatedRate, Validators.pattern(FieldRegExConst.RATES)],
             materialQty: [item.quantity, [Validators.required, this.quantityCheck(item.poAvailableQty < 0 ? 0 : item.poAvailableQty)]],
             brandNames: [item.makes],
             materialId: [item.materialId],
-            fullfilmentDate: [dueDate]
+            fullfilmentDate: [item.dueDate, [this.dateCheck()]]
           });
         });
       })
       .flat();
     this.materialForms = this.formBuilder.group({});
     this.materialForms.addControl("forms", new FormArray(frmArr));
+    console.log(this.materialForms)
 
+  }
+
+  dateCheck(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (control.value != '' && control.value != null && new Date(control.value) < new Date()) {
+        return { 'oldDate': true };
+      }
+      return null;
+    }
   }
   quantityCheck(availableQuantity): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       if (availableQuantity < control.value) {
-        this._snackBar.open(
-          "Cannot add quantity greater than " + availableQuantity,
-          "",
-          {
-            duration: 2000,
-            panelClass: ["warning-snackbar"],
-            verticalPosition: "bottom"
-          }
-        );
         control.setValue(0)
-        return { 'nameIsForbidden': true };
+        return { 'greaterQuantity': true };
       }
       return null;
     }

@@ -1,4 +1,4 @@
-<div class="page-start-point p-rem-t-40">
+<div class="page-start-point">
   <div *ngIf="!poApprovalDetailsTemp && !poDraftedDetailsTemp && !acceptedRejectedPOListTemp && poCount === 0">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
@@ -157,7 +157,7 @@
                 </mat-expansion-panel-header>
 
                 <div class="example-container mat-elevation-z8 po-for-approval">
-                  <table mat-table [dataSource]="poApprovalDetails" #approvalPOSort="matSort" matSort>
+                  <table mat-table [dataSource]="poApprovalDetails" #approvalPOSort="matSort" matSort class="po-list-tbl">
                     <!-- PO Number Column -->
                     <ng-container matColumnDef="poNumber">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>PO Number</th>
@@ -182,10 +182,8 @@
 
                     <!-- Total Materials Column -->
                     <ng-container matColumnDef="totalMaterials">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Material</th>
-                      <td mat-cell *matCellDef="let element">
-                        {{ element.totalMaterials }}
-                      </td>
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Total Material</th>
+                      <td mat-cell *matCellDef="let element" class="text-center">{{ element.totalMaterials }}</td>
                     </ng-container>
 
                     <!-- PO Amount Column -->
@@ -223,7 +221,7 @@
                 </mat-expansion-panel-header>
 
                 <div class="example-container mat-elevation-z8 drafted-po">
-                  <table mat-table [dataSource]="poDraftedDetails" #draftPOSort="matSort" matSort>
+                  <table mat-table [dataSource]="poDraftedDetails" #draftPOSort="matSort" matSort class="po-list-tbl">
                     <ng-container matColumnDef="poNumber">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>PO Number</th>
                       <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
@@ -245,9 +243,7 @@
 
                     <ng-container matColumnDef="totalMaterials">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Material</th>
-                      <td mat-cell *matCellDef="let element">
-                        {{ element.totalMaterials }}
-                      </td>
+                      <td mat-cell *matCellDef="let element" class="text-center">{{ element.totalMaterials }}</td>
                     </ng-container>
 
                     <ng-container matColumnDef="poAmount">
@@ -291,7 +287,7 @@
                 </mat-expansion-panel-header>
 
                 <div class="example-container mat-elevation-z8 approved-po">
-                  <table mat-table [dataSource]="acceptedRejectedPOList" #approvedPOSort="matSort" matSort>
+                  <table mat-table [dataSource]="acceptedRejectedPOList" #approvedPOSort="matSort" matSort class="po-list-tbl">
                     <ng-container matColumnDef="poNumber">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>PO No.</th>
                       <td mat-cell *matCellDef="let element">{{ element.poNumber }}</td>
@@ -313,9 +309,7 @@
 
                     <ng-container matColumnDef="totalMaterials">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Material</th>
-                      <td mat-cell *matCellDef="let element">
-                        {{ element.totalMaterials }}
-                      </td>
+                      <td mat-cell *matCellDef="let element" class="text-center">{{ element.totalMaterials }}</td>
                     </ng-container>
 
                     <ng-container matColumnDef="poAmount">

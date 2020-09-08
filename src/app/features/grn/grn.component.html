@@ -1,4 +1,4 @@
-<div class="page-start-point p-rem-t-10 p-rem-r-5 receipts-outer-section">
+<div class="page-start-point p-rem-t-10 p-rem-r-5 receipts-outer-section common-padding-mobile">
   <form *ngIf="allProjects" [formGroup]="form">
     <div class="row" class="users-dashboard p-b-20 min-height parent report">
       <!-- In case of WEB View - design for search Projects, Supplier, Generate Report and amount  -->
@@ -118,7 +118,7 @@
         <ng-container *ngIf="noProjectDataFound; else defaultImageMsg">
           <div class="wrapper-btn-center">
             <div class="report-image">
-              <p class="p-t-10 font-size-vary-grn">No GRN created for selected project.</p>
+              <p class="p-t-10 font-size-vary-grn">No Receipt created for selected project.</p>
             </div>
           </div>
         </ng-container>

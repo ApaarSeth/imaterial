@@ -40,6 +40,10 @@
   text-align: right;
 }
 
+.text-center{
+  text-align: center;
+}
+
 .text-webkit-center {
   text-align: -webkit-center;
 }
@@ -180,6 +184,13 @@ div.limited-character.universal {
     padding-bottom: 0px !important;
   }
 }
+
+.mat-form-field-label-size {
+  .mat-form-field-label-wrapper .mat-form-field-label mat-label {
+    font-size: 12px;
+  }
+}
+
 /***************************************************************************************/
 
 /**************************Modal Related Classes****************************************/
@@ -231,23 +242,6 @@ div.limited-character.universal {
     padding-left: 16px !important;
   }
 }
-
-// .mat-expansion-panel-header-wrapper {
-//   .mat-expansion-panel-header.mat-expanded:focus,
-//   .mat-expansion-panel-header.mat-expanded:hover,
-//   .mat-expansion-panel-header {
-//     background: $skyblue-color !important;
-//     border-radius: 18px 18px 0px 0px !important;
-//   }
-// }
-
-// .mat-expansion-panel-header-not-expand {
-//   .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled="true"]),
-//   .mat-expansion-panel-header:not([aria-disabled="true"]) {
-//     background: $skyblue-color !important;
-//     border-radius: 18px 18px 0px 0px !important;
-//   }
-// }
 
 .breadcrumb {
   background: none;
@@ -355,6 +349,46 @@ div.limited-character.universal {
     margin-top: 10px;
     position: absolute;
     left: 10px;
+  }
+}
+
+.tooltip-info{
+  left: auto;
+  background: #ffffff;
+  border: 1px solid #bbbbbb;
+  margin-top: 0px;
+
+  .tooltip-info-header, .tooltip-info-body span{
+    padding: 0.5em;
+  }
+
+  .tooltip-info-header {
+    background-color: #eeeeee;
+    margin-right: 0px !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #bbbbbb;
+  }
+
+  .tooltip-info-body {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    max-height: 27.5vh;
+    overflow-y: auto;
+    span {
+      display: block;
+      &:not(:last-child){
+        border-bottom: 1px solid #bbbbbb;
+      }
+    }
+  }
+}
+
+.rfp-details-tbl .mat-row{
+  &:last-child, &:nth-last-child(2), &:nth-last-child(3){
+    .mat-column-Total-Supplier .tooltip-info{
+      bottom: 10px;
+    }
   }
 }
 
@@ -693,50 +727,60 @@ input::title {
 }
 
 /******* Table and Expansion panel height css start *********/
-.mat-expansion-panel-header{
+.mat-expansion-panel-header {
   height: 45px !important;
   padding: 0 16px !important;
 
-  .mat-expansion-panel-header-title{
+  .mat-expansion-panel-header-title {
     color: #545454;
     font-weight: 450;
   }
 }
 
-.mat-expansion-indicator{
-  &:after{
+.mat-expansion-indicator {
+  &:after {
     padding: 5px !important;
     margin-top: -8px;
   }
 }
 
-tr.mat-header-row, thead tr.mat-row{
+tr.mat-header-row,
+thead tr.mat-row {
   height: 50px !important;
 }
 
-tr.mat-row, tr.mat-footer-row {
+tr.mat-row,
+tr.mat-footer-row {
   height: 42px !important;
 }
 
-th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
   padding-right: 16px !important;
 }
 
-th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
   padding-left: 16px !important;
 }
 
-.mat-row{
-  .mat-cell{
+.mat-header-cell, .mat-cell{
+  border-bottom: none !important;
+}
+
+.mat-row {
+  .mat-cell {
     color: #545454;
   }
 
-  .actions-cell .mat-icon-button{
-      width: auto;
+  .actions-cell .mat-icon-button {
+    width: auto;
   }
 }
 
-.mat-sort-header-arrow{
+.mat-sort-header-arrow {
   color: #ffffff;
   opacity: 0.75 !important;
 }
@@ -745,7 +789,7 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 
 @media only screen and (max-width: 959px) {
   .adjust-right-padding {
-    padding: 0 10px;
+    padding: 0 10px !important;
   }
 }
 
@@ -761,13 +805,23 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
     height: auto !important;
   }
 
-  .mat-expansion-panel-header{
+  .mat-expansion-panel-header {
     height: 42px !important;
   }
-  
-  tr.mat-header-row, thead tr.mat-row{
+
+  tr.mat-header-row,
+  thead tr.mat-row {
     height: 45px !important;
   }
+
+  .mat-header-cell, .mat-cell {
+    font-size: 12px;
+  }
+
+  .add-user-style .mat-expansion-panel-header-title {
+    font-size: 13.5px;
+  }
+
 }
 
 @media only screen and (max-width: 600px) {

@@ -1,4 +1,3 @@
-import { CountryCode } from 'src/app/shared/models/currency';
 import { Component, OnInit, Input, HostListener } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
@@ -49,11 +48,11 @@ export class PoCardComponent implements OnInit {
       this.mode = params.mode;
       this.formInit();
     });
-    this.cardData.projectAddress.projectUserId && this.poService.projectRole$.next();
-    this.cardData.billingAddress.projectBillingUserId && this.poService.billingRole$.next();
-    this.cardData.billingAddress.projectBillingAddressId && this.poService.billingAddress$.next();
-    this.cardData.supplierAddress.supplierAddressId && this.poService.supplierAddress$.next();
-    this.cardData.poNumber && this.poService.poNumber$.next()
+    // this.cardData.projectAddress.projectUserId && this.poService.projectRole$.next();
+    // this.cardData.billingAddress.projectBillingUserId && this.poService.billingRole$.next();
+    // this.cardData.billingAddress.projectBillingAddressId && this.poService.billingAddress$.next();
+    // this.cardData.supplierAddress.supplierAddressId && this.poService.supplierAddress$.next();
+    // this.cardData.poNumber && this.poService.poNumber$.next()
   }
 
   ngOnChanges(): void {
@@ -67,11 +66,12 @@ export class PoCardComponent implements OnInit {
       billingAddress: [this.cardData.billingAddress],
       projectAddress: [this.cardData.projectAddress],
       supplierAddress: [this.cardData.supplierAddress],
+      projectUserId: [this.cardData.projectAddress.projectUserId, Validators.required],
+      projectBillingUserId: [this.cardData.billingAddress.projectBillingUserId, Validators.required],
+      projectBillingAddressId: [this.cardData.billingAddress.projectBillingAddressId, Validators.required],
+      supplierAddressId: [this.cardData.supplierAddress.supplierAddressId, Validators.required],
       projectId: []
     });
-    this.projectDetails.valueChanges.subscribe((val) => {
-      val.orderNo && this.poService.poNumber$.next();
-    })
   }
   submit() {
   }
@@ -104,7 +104,8 @@ export class PoCardComponent implements OnInit {
           this.cardData.billingAddress.lastName = result[1].approver.lastName;
           this.cardData.billingAddress.projectBillingUserId =
             result[1].approver.userId;
-          result[1].approver.userId && this.poService.billingRole$.next();
+          this.projectDetails.get('projectBillingUserId').setValue(result[1].approver.userId)
+          // result[1].approver.userId && this.poService.billingRole$.next();
           this.projectDetails.controls["billingAddress"].setValue(
             this.cardData.billingAddress
           );
@@ -114,15 +115,18 @@ export class PoCardComponent implements OnInit {
           this.cardData.projectAddress.firstName = result[1].approver.firstName;
           this.cardData.projectAddress.lastName = result[1].approver.lastName;
           this.cardData.projectAddress.projectUserId = result[1].approver.userId;
-          result[1].approver.userId && this.poService.projectRole$.next();
+          // result[1].approver.userId && this.poService.projectRole$.next();
           this.projectDetails.controls["projectAddress"].setValue(
             this.cardData.projectAddress
           );
+          this.projectDetails.get('projectUserId').setValue(result[1].approver.userId)
+
         }
       }
 
     });
   }
+
   openaddressDialog(roleType: string, id: number) {
     let international = this.cardData.isInternational;
     const dialogRef = this.dialog.open(AddAddressDialogComponent, {
@@ -143,11 +147,13 @@ export class PoCardComponent implements OnInit {
           this.cardData.billingAddress.pinCode = result[1].address.pinCode;
           this.cardData.billingAddress.projectBillingAddressId =
             result[1].address.projectAddressId;
-          result[1].address.projectAddressId && this.poService.billingAddress$.next();
+          // result[1].address.projectAddressId && this.poService.billingAddress$.next();
           this.cardData.billingAddress.gstNo = result[1].address.gstNo;
           this.projectDetails.controls["billingAddress"].setValue(
             this.cardData.billingAddress
           );
+          this.projectDetails.controls["projectBillingAddressId"].setValue(
+            result[1].address.projectAddressId);
         } else {
           this.cardData.supplierAddress.addressLine1 =
             result[1].address.addressLine1;
@@ -158,11 +164,13 @@ export class PoCardComponent implements OnInit {
           this.cardData.supplierAddress.pinCode = result[1].address.pinCode;
           this.cardData.supplierAddress.supplierAddressId =
             result[1].address.supplierAddressId;
-          result[1].address.supplierAddressId && this.poService.supplierAddress$.next();
+          // result[1].address.supplierAddressId && this.poService.supplierAddress$.next();
           this.cardData.supplierAddress.gstNo = result[1].address.gstNo;
           this.projectDetails.controls["supplierAddress"].setValue(
             this.cardData.supplierAddress
           );
+          this.projectDetails.controls["supplierAddressId"].setValue(
+            result[1].address.supplierAddressId);
         }
       }
 

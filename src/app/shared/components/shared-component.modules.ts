@@ -29,8 +29,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdvanceSearchComponent } from './advance-search/advance-search.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { NgModule } from '@angular/core';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
-const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent, BarChartComponent, PieChartComponent, AdvanceDateItemComponent, AdvanceSelectItemComponent, AdvanceInputNumberItemComponent, AdvSearchItemComponent, SearchUnitComponent, BomCommonTableComponent, BomFilterComponent, MultiSelectSearchComponent, InputTextSearchCompoent, PaginatorComponent ];
+const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent, BarChartComponent, PieChartComponent, AdvanceDateItemComponent, AdvanceSelectItemComponent, AdvanceInputNumberItemComponent, AdvSearchItemComponent, SearchUnitComponent, BomCommonTableComponent, BomFilterComponent, MultiSelectSearchComponent, InputTextSearchCompoent, PaginatorComponent, ErrorMessageComponent ];
 
 @NgModule({
   imports: [

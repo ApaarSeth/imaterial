@@ -1,4 +1,4 @@
-<div class="page-start-point p-rem-t-40">
+<div class="page-start-point">
   <ng-container *ngIf="(dataSourceActivateTemp == null || dataSourceActivateTemp.length == 0) && (dataSourceDeactivateTemp == null || dataSourceDeactivateTemp.length == 0)">
     <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
       <div class="add-user-img">
@@ -15,7 +15,7 @@
   </ng-container>
 
   <ng-container *ngIf="dataSourceActivateTemp.length > 0 || dataSourceDeactivateTemp.length > 0">
-    <div class="row" class="users-dashboard p-b-20 min-height parent">
+    <div class="row" class="add-user-style users-dashboard p-b-20 min-height parent">
       <div class="row">
         <div class="col-xs-7">
           <mat-form-field class="example-form-field border-input project">
@@ -33,14 +33,12 @@
       <ng-container *ngIf="dataSourceActivateTemp.length > 0" class="user-dts">
         <mat-expansion-panel class="myPanel" [expanded]="true">
           <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-            <div class="row">
-              <div class="col-sm-12">
-                <span>Active Users</span>
-              </div>
-            </div>
+            <mat-panel-title>
+                Active Users
+            </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="add-user-container mat-elevation-z8 user-details-table-div-active-inactive-single">
+          <div class="add-user-container mat-elevation-z8">
             <table mat-table [dataSource]="dataSourceActivate">
               <!-- User name Column -->
               <ng-container matColumnDef="User Name">
@@ -83,7 +81,7 @@
                     <div class="project-name-div">{{ element.ProjectList.length }}</div>
 
                     <ng-container *ngIf="element.ProjectList?.length === 0">
-                      <span class="width-37"></span>
+                      <span class="width-30"></span>
                     </ng-container>
 
                     <div class="more-projects-list" *ngIf="element.ProjectList?.length > 0">
@@ -109,7 +107,7 @@
                       <span
                         (click)="resendInvite(element.ProjectUser.userId)"
                         class="main-color font-size-vary-grn p-r-15 text-semi-bold cursor-pointer"
-                        [ngClass]="isMobile ? 'd-block mb-3' : ''"
+                        [ngClass]="isMobile ? 'd-block' : ''"
                         >Resend Invite</span
                       >
                     </div>
@@ -146,14 +144,12 @@
       <ng-container *ngIf="dataSourceDeactivateTemp && dataSourceDeactivateTemp.length > 0" class="user-dts">
         <mat-expansion-panel class="myPanel m-t-10" [expanded]="true">
           <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
-            <div class="row">
-              <div class="col-sm-12">
-                <span>Deactivated Users</span>
-              </div>
-            </div>
+            <mat-panel-title>
+                Deactivated Users
+            </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="add-user-container mat-elevation-z8 user-details-table-div-active-inactive-single">
+          <div class="add-user-container mat-elevation-z8">
             <table mat-table [dataSource]="dataSourceDeactivate">
               <!-- User name Column -->
               <ng-container matColumnDef="User Name">

@@ -73,16 +73,19 @@
             <ng-container matColumnDef="Fullfillment Date" class="date-dialog-add-edit">
               <th mat-header-cell *matHeaderCellDef class="fulfillment-date-col">Fullfillment Date</th>
               <td mat-cell *matCellDef="let element; let i = index" class="fulfillment-date-col">
-                <mat-form-field class="border-input" [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)">
-                  <!-- <mat-label>Fullfil </mat-label> -->
-                  <!-- <span class="form-placeholder">{{
-                  materialForms["controls"]["forms"]["controls"][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]["controls"]["fullfilmentDate"].value
-                    | date: "dd-MMM-yyy"
-                }}</span> -->
-                  <input matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" readonly />
-                  <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
-                  <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
-                </mat-form-field>
+                <span class="display-flex">
+                  <mat-form-field class="border-input" [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)">
+                    <input matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" readonly />
+                    <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                    <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
+                    <span
+                      class="p-l-2"
+                      *ngIf="materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['fullfilmentDate'].hasError('oldDate')"
+                    >
+                      <app-error-message [msg]="'Choose the date greater than current date'"></app-error-message>
+                    </span>
+                  </mat-form-field>
+                </span>
               </td>
             </ng-container>
 
@@ -101,9 +104,8 @@
                   <input matInput formControlName="materialUnitPrice" appTwoDigitDecimaNumber type="text" placeholder="Awarded Rate" min="0" />
                   <small
                     *ngIf="
-                      materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].hasError(
-                        'pattern'
-                      ) && materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].touched
+                      materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].hasError('pattern') &&
+                      materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].touched
                     "
                     class="error-msg"
                   >
@@ -117,7 +119,12 @@
               <th mat-header-cell class="text-center" *matHeaderCellDef>Quantity</th>
               <td mat-cell class="text-center" *matCellDef="let element; let i = index">
                 <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input">
-                  <input matInput formControlName="materialQty" type="text" placeholder="Quantity" min="0" appTwoDigitDecimaNumber />
+                  <div class="display-flex">
+                    <input matInput formControlName="materialQty" type="text" placeholder="Quantity" min="0" appTwoDigitDecimaNumber />
+                    <span *ngIf="materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialQty'].hasError('greaterQuantity')">
+                      <app-error-message [msg]="'Cannot add quantity greater than ' + element.poAvailableQty"></app-error-message>
+                    </span>
+                  </div>
                 </mat-form-field>
               </td>
             </ng-container>
