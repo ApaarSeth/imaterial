@@ -65,7 +65,8 @@
   }
 
   .bg-po-data, .bg-project-list, .bg-total-amount, .bg-ctc-total-amount{
-    height: 42px;
+    min-height: 42px;
+    height: auto;
   }
 
   .bg-po-data, .bg-total-amount{
@@ -105,6 +106,11 @@
       flex: 0.5;
     }
   }
+}
+
+.mat-expansion-panel-header {
+  min-height: 42px !important;
+  height: auto !important;
 }
 
 @media only screen and (max-width: 1199px) and (min-width: 992px){
@@ -155,10 +161,6 @@
     }
   }
 
-  .report-header{
-    margin-bottom: 0px;
-  }
-
   .liability-report{
     .mobile-extra-col{
       order: 1;
@@ -191,6 +193,10 @@
     .select-suppliers{
       order: 5;
     }
+
+    .report-header{
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -211,6 +217,10 @@
 @media only screen and (max-width: 599px){
   .liability-report, .ctc-report {
     padding-top: 0rem !important;
+  }
+
+  .report-header {
+    font-size: 16px;
   }
 }
 

@@ -24,6 +24,8 @@ export class GlobalStoreComponent implements OnInit {
   isMobile: boolean;
   orgId: Number;
   projectList: any;
+  pageNo = 1;
+  pageSize = 10;
 
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -40,7 +42,7 @@ export class GlobalStoreComponent implements OnInit {
     this.orgId = Number(localStorage.getItem("orgId"));
 
     this.route.data.subscribe(data => {
-      this.globalStoreData = data.globalData.data;
+      this.globalStoreData = data.globalData.data.globalStoreMaterialObj;
     });
 
     this.getNotifications();
@@ -61,13 +63,11 @@ export class GlobalStoreComponent implements OnInit {
   }
 
   setButtonName(name: string) {
-
     this.buttonName = name;
 
     if (this.buttonName === 'projectWise') {
-      const orgId = Number(localStorage.getItem("orgId"));
-      this.globalStoreService.getProjectWiseData(orgId).then(res => {
-        this.projectWiseData = res.data;
+      this.globalStoreService.getProjectWiseData(this.pageNo, this.pageSize).then(res => {
+        this.projectWiseData = res.data.globalStoreProjectObj;
       })
     }
   }

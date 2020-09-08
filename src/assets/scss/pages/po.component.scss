@@ -493,43 +493,31 @@ s .validTill {
 }
 
 @media only screen and (max-width: 576px) {
-  .example-container {
+  .example-container,
+  .add-user-container,
+  .add-grn-container,
+  .add-unique-container {
     .mat-cell,
     .mat-header-cell {
+      font-size: 12px !important;
+    }
+  }
+
+  .add-user-container,
+  .add-unique-container {
+    .project-user-details-width button {
       font-size: 12px;
     }
   }
+
   .add-grn-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
     .brand-name {
       text-align: left;
     }
   }
-  .add-user-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-    .project-user-details-width {
-      button {
-        font-size: 12px;
-      }
-    }
-  }
 
-  .add-unique-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-    .project-user-details-width {
-      button {
-        font-size: 12px;
-      }
-    }
+  .font-size-vary-grn {
+    font-size: 12px;
   }
 
   .po-number-grn {

@@ -108,7 +108,7 @@
 
       <!-- all suppliers data table structure -->
       <div class="supplier-details-table-div add-unique-container mat-elevation-z8" *ngIf="dataSourceTemp && dataSourceTemp.length > 0">
-        <table mat-table [dataSource]="dataSource">
+        <table mat-table [dataSource]="dataSource" class="supplier-data-tbl">
 
           <!-- Supplier name Column -->
           <ng-container matColumnDef="suppliername">

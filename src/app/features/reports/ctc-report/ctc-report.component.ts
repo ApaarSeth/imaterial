@@ -78,7 +78,7 @@ export class CTCReportComponent implements OnInit {
     });
 
     this.form.get('amountDisplay').valueChanges.subscribe(res => {
-      console.log(res)
+      // console.log(res)
     })
   }
 

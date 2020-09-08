@@ -81,21 +81,21 @@ export class SuppliersDialogComponent {
 
   initForm() {
     this.form = this.formBuilder.group({
-      supplier_name: ["", Validators.required],
+      supplierName: ["", Validators.required],
       email: ["", [Validators.required, Validators.pattern(FieldRegExConst.EMAIL)]],
-      contact_no: [null, [Validators.pattern(FieldRegExConst.MOBILE3)]],
+      contactNo: [null, [Validators.pattern(FieldRegExConst.MOBILE3)]],
       pan: [""],
       countryCallingCode: [null],
       countryCode: []
     });
     if (this.isNational) {
-      this.form.get('contact_no').setValidators([Validators.required, Validators.pattern(FieldRegExConst.MOBILE3)]);
+      this.form.get('contactNo').setValidators([Validators.required, Validators.pattern(FieldRegExConst.MOBILE3)]);
     }
   }
 
   submit() {
     let data = this.form.value;
-    if (data.contact_no) {
+    if (data.contactNo) {
       data['countryCallingCode'] = this.form.get('countryCode').value.callingCode;
     }
     delete data.countryCode;

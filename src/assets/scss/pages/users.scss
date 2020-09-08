@@ -37,13 +37,6 @@
   }
 }
 
-
-.add-user-img.global-store-image{
-    img {
-    margin-top: 0%;
-    height: 400px;
-  }
-}
 .add-edit-user-form-modal {
   width: 90%;
   padding-left: 5%;
@@ -113,6 +106,14 @@
   .project-user-details-width {
     max-width: 400px;
     min-width: 400px !important;
+  }
+
+  .mat-cell{
+    white-space: normal !important;
+  }
+
+  .mat-row{
+    border-bottom: 1px solid #bbbbbb;
   }
 }
 
@@ -561,6 +562,28 @@
   min-width: 200px;
 }
 
+@media only screen and (max-width: 1199px){
+  .add-user-container{
+    .mat-header-cell, .mat-cell {
+      &:first-child {
+        min-width: 180px;
+      }
+
+      &:nth-child(3){
+        min-width: 150px;
+      }
+
+      &:nth-child(4) {
+        min-width: 200px;
+      }
+
+      &:nth-child(5) {
+        min-width: 100px;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1010px) {
   .terms-margin-set-width {
     margin-left:0px;
@@ -576,18 +599,24 @@
       padding-top: 20px;
     }
    }
- }
-
+}
+ 
+@media only screen and (max-width : 900px){
+  .raise-indent-table{
+    .mat-table .mat-cell{
+      height: 58px !important;
+    }
+  }
+}
+  
 @media only screen and (max-width: 768px){
   .float-right-invite-delBtn{
     float: right;
   }
 }
 
-@media only screen and (max-width : 900px){
-  .raise-indent-table{
-    .mat-table .mat-cell{
-        height: 58px !important;
-    }
+@media only screen and (max-width: 599px){
+  .more-projects-list .material-icons{
+    font-size: 20px;
   }
 }

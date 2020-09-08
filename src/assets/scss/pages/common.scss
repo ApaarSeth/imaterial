@@ -781,6 +781,10 @@ td.mat-footer-cell:first-of-type {
   padding-left: 16px !important;
 }
 
+.mat-header-cell, .mat-cell{
+  border-bottom: none !important;
+}
+
 .mat-row {
   .mat-cell {
     color: #545454;
@@ -800,7 +804,7 @@ td.mat-footer-cell:first-of-type {
 
 @media only screen and (max-width: 959px) {
   .adjust-right-padding {
-    padding: 0 10px;
+    padding: 0 10px !important;
   }
 }
 
@@ -824,6 +828,15 @@ td.mat-footer-cell:first-of-type {
   thead tr.mat-row {
     height: 45px !important;
   }
+
+  .mat-header-cell, .mat-cell {
+    font-size: 12px;
+  }
+
+  .add-user-style .mat-expansion-panel-header-title {
+    font-size: 13.5px;
+  }
+
 }
 
 @media only screen and (max-width: 600px) {
