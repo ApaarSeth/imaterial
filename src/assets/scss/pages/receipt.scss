@@ -43,18 +43,23 @@
     }
 
     .bg-project-list {
-        height: 45px;
-        padding: 0 16px 0;
+        min-height: 45px;
+        height: auto;
+        padding: 0 2rem 0 16px;
+
+        .mat-cell:last-of-type {
+            padding-right: 0px !important;
+        }
     }
 
     .receipt-row {
         width: 100%;
 
-        td.mat-cell{
-            border-bottom: none;
+        .mat-header-cell, .mat-cell{
+            border-bottom: none !important;
         }
 
-        td.mat-cell:first-of-type {
+        .mat-cell:first-of-type {
             padding-left: 0px !important;
         }
 
@@ -94,5 +99,11 @@
         .bg-project-list .mat-cell, .mat-header-cell{
             min-width: 150px;
         }
+    }
+}
+
+@media only screen and (max-width: 599px){
+    .receipt-project-name{
+        font-size: 13.5px;
     }
 }

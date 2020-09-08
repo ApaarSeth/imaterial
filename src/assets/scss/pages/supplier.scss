@@ -873,6 +873,24 @@ h3 {
   padding: 10px 0.5rem 0 0.5rem;
 }
 
+.supplier-data-tbl{
+
+  .supplier-rates .rating-value {
+    margin: 0px 0 0 4px;
+  }
+
+  .mat-cell:first-child, .mat-cell:nth-child(2) {
+    min-width: 200px;
+    white-space: normal;
+    word-break: break-word;
+    padding-right: 10px;
+  }
+
+  .mat-row {
+    border-bottom: 1px solid #bbbbbb;
+  }
+}
+
 @media only screen and (min-width: 576px) and (max-width: 768px) {
   .header-project-menu.mat-menu-panel {
     width: 200px;
@@ -915,6 +933,18 @@ h3 {
 
   .small-screen-left-padding{
     padding-left: 10px;
+  }
+
+  .supplier-rates{
+    .rfq-rates .str:before {
+      font-size: 0.85rem !important;
+    }
+  } 
+
+  .supplier-data-tbl{
+    .supplier-name {
+      margin-left: 2px;
+    }
   }
 }
 
