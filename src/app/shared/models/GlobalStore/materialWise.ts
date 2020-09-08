@@ -28,6 +28,7 @@ export interface ProjectMaterialObj extends MaterialCommonObj{
   materialId: number;
   projectId: number;
   projectName: string;
+  isIndent?: boolean;
 }
 
 export interface IndentObj{

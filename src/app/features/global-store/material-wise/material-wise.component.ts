@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { IndentObj, GlobalStoreObj } from "src/app/shared/models/GlobalStore/materialWise";
+import { IndentObj, GlobalStoreObj, ProjectMaterialObj } from "src/app/shared/models/GlobalStore/materialWise";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { GlobalStoreService } from 'src/app/shared/services/global-store.service';
 
@@ -23,11 +23,15 @@ export class MaterialWiseComponent implements OnInit {
   
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
-    console.log(this.materialData);
     this.materialDataLength.emit(this.materialData?.length);
   }
 
-  getIndentsList(projectObj, event){
+  /**
+   * @description get material's indent list after click on specific project row
+   * @param projectObj 
+   * @param event 
+   */
+  getIndentsList(projectObj: ProjectMaterialObj, event){
     if(event){
       this._globalStoreService.getMaterialIndents(projectObj.materialId).then(res => {
         if(res.data && res.data.length > 0){
