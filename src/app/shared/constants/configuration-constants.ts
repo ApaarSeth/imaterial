@@ -169,6 +169,7 @@ export const API = {
   CTC_REPORT_EXCEL_DOWNLOAD: 'report/ctcDownload',
   GET_CONTACTSALES: 'subscription/contact/sales',
   RESENDINVITE: (userid) => `resendemail/unique/${userid}`,
-  GLOBAL_STORE_MATERIAL_WISE: (pageNo, PageSize) => `global/materials/${pageNo}/${PageSize}`,
+  GLOBAL_STORE_MATERIAL_WISE: (pageNo, pageSize) => `global/materials/${pageNo}/${pageSize}`,
   GET_ALL_INDENTS_LIST: (materialId) => `global/indents/${materialId}`,
+  GLOBAL_STORE_PROJECT_WISE: (pageNo, pageSize) => `global/projects/${pageNo}/${pageSize}`,
 };

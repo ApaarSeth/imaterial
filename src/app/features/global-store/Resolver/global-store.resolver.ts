@@ -13,7 +13,6 @@ export class GlobalStoreResolver implements Resolve<any> {
 
   resolve() {
     return this.globalStoreService.getMaterialWiseData(this.pageNo, this.pageSize).then(res => {
-      console.log(res);
       return res;
     })
   }
