@@ -891,6 +891,27 @@ h3 {
   }
 }
 
+.supplier-company-name{
+  font-weight: 600;
+  word-break: break-word;;
+}
+
+.rfp-supplier{
+  .supplier-rates{
+    margin-top: 0px;
+    margin-left: -4px;
+  }
+
+  .rfp-supplier-contact{
+    font-size: 15px;
+    margin-top: 4px;
+  }
+
+  span{
+    display: block;
+  }
+}
+
 @media only screen and (min-width: 576px) and (max-width: 768px) {
   .header-project-menu.mat-menu-panel {
     width: 200px;
@@ -925,10 +946,6 @@ h3 {
   .remarks-suppliers .suppliers-details {
     padding: 0px 8px 0px 8px;
     color: #716d6d;
-  }
-  .supplier-list-rfq-view{
-    padding: 0;
-    padding-top: 5px;
   }
 
   .small-screen-left-padding{
