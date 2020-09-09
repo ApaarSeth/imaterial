@@ -17,6 +17,14 @@ export class AddAddressService {
       });
   }
 
+  postEditAddress(addressId: number, address: Address) {
+    return this.dataService
+      .sendPostRequest(API.POSTEDITADDRESS(addressId), address)
+      .then(res => {
+        return res;
+      });
+  }
+
   getPoAddAddress(type: string, id: number) {
     return this.dataService.getRequest(API.GETPOADDADDRESS(type, id));
   }
