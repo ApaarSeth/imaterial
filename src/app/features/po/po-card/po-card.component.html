@@ -196,28 +196,25 @@
 <form [formGroup]="projectDetails" (ngSubmit)="submit()" class="po-view" *ngIf="showResponsiveDesign">
   <div class="row p-b-10 border-bottom-po-view">
     <div class="col-xs-6 col-sm-6 display-flex">
-      <div class="text-semi-bold fontsize-12-px">P.O. No.:</div>
-      <div class="text-semi-bold fontsize-12-px" *ngIf="mode != 'edit'; else editBlock">{{ cardData.poNumber }}</div>
-      <ng-template #editBlock>
-        <mat-form-field class="border-input width-60 p-t-0">
-          <input matInput type="string" formControlName="orderNo" placeholder="P.O. No." class="width-60" />
+      <span>
+        <mat-form-field class="border-input width-77 p-t-0">
+          <input matInput type="string" formControlName="orderNo" placeholder="P.O. No." />
         </mat-form-field>
-      </ng-template>
+        <span *ngIf="projectDetails.controls['orderNo'].hasError('required') && projectDetails.controls['orderNo'].touched" class="form-error-msg">
+          <app-error-message msg="P.O. No. is required"></app-error-message>
+        </span>
+      </span>
     </div>
-    <div class="col-xs-6 col-sm-6 display-flex date-dialog-add-edit">
-      <div class="text-semi-bold fontsize-12-px" *ngIf="mode !== 'edit'; else editDateBlock">
-        P.O. Valid Till: <span class="p-l-5 fontsize-12-px">{{ cardData.poValidUpto | date: "dd-MMM-yyy" }}</span>
-      </div>
-      <ng-template #editDateBlock>
-        <div class="text-semi-bold fontsize-12-px">P.O. Valid Till:</div>
-        <mat-form-field class="border-input width-60 p-t-0">
+    <div class="col-xs-6 col-sm-6 display-flex date-dialog-add-edit text-center">
+      <span>
+        <mat-form-field class="border-input width-57">
           <mat-label>Valid Till</mat-label>
           <!-- <span class="form-placeholder">{{ projectDetails["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
-          <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly [min]="minDate" class="width-60" />
+          <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly [min]="minDate" />
           <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
           <mat-datepicker #endDate startView="month"></mat-datepicker>
         </mat-form-field>
-      </ng-template>
+      </span>
     </div>
   </div>
 

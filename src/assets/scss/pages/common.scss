@@ -2,6 +2,10 @@
 .align-item-end {
   align-items: flex-end;
 }
+
+.align-item-baseline {
+  align-items: baseline;
+}
 .align-center {
   align-items: center;
 }
@@ -40,7 +44,7 @@
   text-align: right;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
 
@@ -188,6 +192,17 @@ div.limited-character.universal {
 .mat-form-field-label-size {
   .mat-form-field-label-wrapper .mat-form-field-label mat-label {
     font-size: 12px;
+  }
+}
+
+.mat-form-field-highlight {
+  .mat-form-field-wrapper .mat-form-field-flex {
+    background-color: #e8e8e8;
+    border-radius: 2px;
+    padding-top: 10px;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 
@@ -352,13 +367,14 @@ div.limited-character.universal {
   }
 }
 
-.tooltip-info{
+.tooltip-info {
   left: auto;
   background: #ffffff;
   border: 1px solid #bbbbbb;
   margin-top: 0px;
 
-  .tooltip-info-header, .tooltip-info-body span{
+  .tooltip-info-header,
+  .tooltip-info-body span {
     padding: 0.5em;
   }
 
@@ -377,16 +393,18 @@ div.limited-character.universal {
     overflow-y: auto;
     span {
       display: block;
-      &:not(:last-child){
+      &:not(:last-child) {
         border-bottom: 1px solid #bbbbbb;
       }
     }
   }
 }
 
-.rfp-details-tbl .mat-row{
-  &:last-child, &:nth-last-child(2), &:nth-last-child(3){
-    .mat-column-Total-Supplier .tooltip-info{
+.rfp-details-tbl .mat-row {
+  &:last-child,
+  &:nth-last-child(2),
+  &:nth-last-child(3) {
+    .mat-column-Total-Supplier .tooltip-info {
       bottom: 10px;
     }
   }
@@ -832,8 +850,8 @@ td.mat-footer-cell:first-of-type {
       display: inline-flex !important;
       span {
         font-size: 10px;
-        padding-right: 2px !important;
-        padding-left: 2px !important;
+        // padding-right: 2px !important;
+        // padding-left: 2px !important;
       }
     }
     .mat-expansion-panel {
@@ -846,12 +864,12 @@ td.mat-footer-cell:first-of-type {
     width: max-content;
     span {
       font-size: 10px;
-      white-space: nowrap;
-      font-weight: normal;
+      // white-space: nowrap;
+      // font-weight: normal;
       div,
       .mat-cell {
         font-weight: normal;
-        padding-right: 10px;
+        // padding-right: 10px;
       }
     }
   }
@@ -879,7 +897,13 @@ td.mat-footer-cell:first-of-type {
 }
 
 @media only screen and (max-width: 330px) {
-  .info-tootip:hover .info-tootip__content{
+  .info-tootip:hover .info-tootip__content {
     left: 0px;
+  }
+}
+
+.whiteSpace-normal {
+  span {
+    white-space: normal !important;
   }
 }

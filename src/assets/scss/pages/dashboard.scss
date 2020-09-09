@@ -330,7 +330,7 @@ body,
   margin: auto;
 }
 
-.bnrimgs{
+.bnrimgs {
   border-radius: 10px;
   box-shadow: 0 0 4px #b9b9b9;
   padding: 2px;
@@ -405,7 +405,10 @@ body,
 }
 
 @media only screen and (min-width: 560px) {
-  .project-dashboard, .users-dashboard, .create-po-dashboard, .dashboard-unique {
+  .project-dashboard,
+  .users-dashboard,
+  .create-po-dashboard,
+  .dashboard-unique {
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -532,7 +535,7 @@ body,
 
   // }
 
-  .grn-transparent-btn{
+  .grn-transparent-btn {
     display: block !important;
   }
 }
@@ -648,5 +651,13 @@ body,
 @media (max-width: 340px) {
   .things-to-do__icons {
     min-width: 76px !important;
+  }
+}
+
+.po-res-td {
+  span {
+    div {
+      font-weight: normal;
+    }
   }
 }
