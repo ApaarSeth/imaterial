@@ -34,6 +34,8 @@ export class AddAddressDialogComponent implements OnInit {
   countryCode: string
   tab2Label: string = "Add Address"
   addressId: number;
+  projectAddressId: number;
+  supplierAddressId: number;
   constructor(
     public dialogRef: MatDialogRef<AddAddressDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -75,6 +77,8 @@ export class AddAddressDialogComponent implements OnInit {
   changeIndex(add: Address) {
     this.tabGroup.selectedIndex = 1;
     this.addressId = add.addressId;
+    this.projectAddressId = add.projectAddressId ? add.projectAddressId : null;
+    this.supplierAddressId = add.supplierAddressId ? add.supplierAddressId : null;
     this.tab2Label = "Edit Address"
     this.newAddressForm.patchValue({
       addressLine1: add.addressLine1,
@@ -122,7 +126,7 @@ export class AddAddressDialogComponent implements OnInit {
       pinCode: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
       state: [{ value: "", disabled: true }, Validators.required],
       city: [{ value: "", disabled: true }, Validators.required],
-      gstNo: [""],
+      gstNo: [],
       imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
       countryId: [null],
       countryCode: []
@@ -132,7 +136,7 @@ export class AddAddressDialogComponent implements OnInit {
     })
 
     if (this.countryCode == 'IN') {
-      this.newAddressForm.get('gstNo').setValidators([Validators.required, Validators.pattern(FieldRegExConst.GSTIN)])
+      // this.newAddressForm.get('gstNo').setValidators([Validators.required, Validators.pattern(FieldRegExConst.GSTIN)])
     }
   }
 
@@ -150,7 +154,9 @@ export class AddAddressDialogComponent implements OnInit {
     else {
       let data = {
         type: this.data.roleType === "projectBillingAddressId" ? "project" : "supplier",
-        address: this.addressId,
+        addressId: this.addressId,
+        projectAddressId: this.projectAddressId,
+        supplierAddressId: this.supplierAddressId,
         ...this.newAddressForm.getRawValue()
       }
       this.postEditAddress(data);

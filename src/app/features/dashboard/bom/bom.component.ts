@@ -1,4 +1,3 @@
-import { material } from './../../../shared/models/category';
 import { AppNavigationService } from './../../../shared/services/navigation.service';
 import { FacebookPixelService } from './../../../shared/services/fb-pixel.service';
 
@@ -48,7 +47,7 @@ export class BomComponent implements OnInit {
     ngOnInit() {
         this.isMobile = this.commonService.isMobile().matches;
         this.activatedRoute.params.subscribe(params => {
-            this.projectId = params[ "id" ];
+            this.projectId = params["id"];
         });
         this.orgId = Number(localStorage.getItem("orgId"));
         this.userId = Number(localStorage.getItem("userId"));
@@ -84,12 +83,12 @@ export class BomComponent implements OnInit {
         ]
 
 
-        forkJoin([ this.bomService.getOrgTrades(this.projectId) ]).toPromise().then(res => {
-            options[ 0 ].data = this.getTradesList(res[ 0 ]);
-            options[ 0 ].preSelected = this.preselectedTrade(options[ 0 ].data);
-            options[ 1 ].data = [];
+        forkJoin([this.bomService.getOrgTrades(this.projectId)]).toPromise().then(res => {
+            options[0].data = this.getTradesList(res[0]);
+            options[0].preSelected = this.preselectedTrade(options[0].data);
+            options[1].data = [];
 
-            this.filterOptions[ options[ 0 ].key ] = options[ 0 ].preSelected;
+            this.filterOptions[options[0].key] = options[0].preSelected;
 
             this.searchConfig = {
                 title: 'Search In',
@@ -185,7 +184,7 @@ export class BomComponent implements OnInit {
     getTableData() {
         if (this.selectedIndex === 2) {
             this.commonService.getMyMaterial('allwithdeleted').then(res => {
-                this.tabs[ this.selectedIndex ].data = res.data;
+                this.tabs[this.selectedIndex].data = res.data;
                 this.getBomTableConfig();
             });
         } else {
@@ -193,17 +192,17 @@ export class BomComponent implements OnInit {
             let tradeObj: any = {};
             for (let i in this.filterOptions) {
                 if (i === 'tradeNames' || i === 'categoryNames') {
-                    tradeObj[ i ] = this.bomService.getNames(this.filterOptions[ i ]);
+                    tradeObj[i] = this.bomService.getNames(this.filterOptions[i]);
                 } else {
-                    tradeObj[ i ] = this.filterOptions[ i ];
+                    tradeObj[i] = this.filterOptions[i];
                 }
             }
             tradeObj.limit = tradeObj.limit ? tradeObj.limit : 25;
             tradeObj.pageNumber = tradeObj.pageNumber ? tradeObj.pageNumber : 1;
-            tradeObj[ 'isTopMaterial' ] = this.selectedIndex === 0 ? 1 : 0;
-            this.bomService[ this.tabs[ this.selectedIndex ][ 'functionName' ] ](tradeObj).then(res => {
-                this.tabs[ this.selectedIndex ].data = res.materialTrades;
-                this.tabs[ this.selectedIndex ].paginatorOptions = {
+            tradeObj['isTopMaterial'] = this.selectedIndex === 0 ? 1 : 0;
+            this.bomService[this.tabs[this.selectedIndex]['functionName']](tradeObj).then(res => {
+                this.tabs[this.selectedIndex].data = res.materialTrades;
+                this.tabs[this.selectedIndex].paginatorOptions = {
                     limit: res.limit,
                     pageNumber: res.pageNumber,
                     totalCount: res.totalCount
@@ -228,7 +227,7 @@ export class BomComponent implements OnInit {
 
         this.selectedIndex = 3;
         for (let i in data) {
-            this.filterOptions[ i ] = data[ i ];
+            this.filterOptions[i] = data[i];
         }
         this.getTableData();
     }
@@ -252,7 +251,7 @@ export class BomComponent implements OnInit {
         tableConfig.materialList.treadId = { visible: false, formProperty: true } as BomTableProptery;
         tableConfig.materialList.tradeName = { visible: false, formProperty: true } as BomTableProptery;
 
-        this.tabs[ this.selectedIndex ][ 'table' ] = tableConfig;
+        this.tabs[this.selectedIndex]['table'] = tableConfig;
     }
 
     saveCategory() {
@@ -266,7 +265,7 @@ export class BomComponent implements OnInit {
                     label: 'material name',
                     value: null
                 });
-                this.router.navigate([ "project-dashboard/bom/" + this.projectId + "/bom-detail" ]);
+                this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
             });
     }
 
@@ -296,15 +295,15 @@ export class BomComponent implements OnInit {
 
     uploadExcel(files: FileList) {
         const data = new FormData();
-        data.append("file", files[ 0 ]);
-        var fileSize = files[ 0 ].size; // in bytes
+        data.append("file", files[0]);
+        var fileSize = files[0].size; // in bytes
         if (fileSize < 5000000) {
             this.postMaterialExcel(data);
         }
         else {
             this._snackBar.open("File must be less than 5 mb", "", {
                 duration: 2000,
-                panelClass: [ "success-snackbar" ],
+                panelClass: ["success-snackbar"],
                 verticalPosition: "bottom"
             });
         }
@@ -313,19 +312,19 @@ export class BomComponent implements OnInit {
     postMaterialExcel(data) {
         this.loading.show();
         this.bomService.postMaterialExcel(data, this.projectId).then(res => {
-            this.router.navigate([ "project-dashboard/bom/" + this.projectId + "/bom-detail" ]);
+            this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
             this.loading.hide();
             if (res.statusCode === 201) {
                 this._snackBar.openFromComponent(SnackbarComponent, {
                     data: res.data,
                     duration: 6000,
-                    panelClass: [ "success-snackbar" ],
+                    panelClass: ["success-snackbar"],
                     verticalPosition: "bottom"
                 });
             } else {
                 this._snackBar.open(res.message, "", {
                     duration: 2000,
-                    panelClass: [ "success-snackbar" ],
+                    panelClass: ["success-snackbar"],
                     verticalPosition: "bottom"
                 });
             }
@@ -336,7 +335,7 @@ export class BomComponent implements OnInit {
 
     getPaginationRequest(data) {
         for (let i in data) {
-            this.filterOptions[ i ] = data[ i ];
+            this.filterOptions[i] = data[i];
         }
         this.getTableData();
     }
