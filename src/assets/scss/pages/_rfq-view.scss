@@ -1,4 +1,4 @@
-.currency-converter{
+.currency-converter, .base-currency-selector{
     .info-tootip__content{
         left: auto;
         right: 20px;
@@ -11,36 +11,14 @@
     }
 }
 
+.rfp-supplier {
+    .supplier-rates .rfq-rates {
+        margin-left: 3px !important;
+    }
+}
+
 .rfq-view-step{
-    .mat-row{
-        border-bottom: 1px solid #bbbbbb;
-        .mat-cell{
-            white-space: normal;
-        }
-    }
-
-    .mat-header-row .mat-header-cell, .mat-row .mat-cell {
-        &:nth-child(2){
-            min-width: 100px;
-        }
-
-        &:nth-child(4){
-            min-width: 150px;
-        }
-    }
-
-    .mat-header-cell, .mat-row .mat-cell{
-        &:not(:last-child){
-            padding-right: 10px;
-        }
-    }
-
     .rfq-view-image-lists{
-
-        .default-image {
-            height: 30px;
-        }
-
         .triple-images .attached-image{
             &:first-child {
                 top: -19px;
@@ -76,10 +54,82 @@
                 left: 110px;
             }
         }
+    }
+}
+
+.rfq-final-step{
+    .rfq-view-image-lists{
+        .triple-images .attached-image{
+            &:first-child {
+                top: -19px;
+                left: 55px;       
+            }
+
+            &:nth-child(2) {
+                top: -16px;
+                left: 59px;
+            }
+
+            &:nth-child(3){
+                top: -13px;
+                left: 63px;
+            }
+        }
+
+        .double-images .attached-image {
+            &:first-child {
+                top: -18px;
+                left: 55px;
+            }
+
+            &:nth-child(2) {
+                top: -14px;
+                left: 59px;
+            }
+        }
+
+        .single-image .attached-image{
+            &:first-child {
+                top: -15px;
+                left: 55px;
+            }
+        }
+    }
+}
+
+.rfq-view-step, .rfq-final-step{
+
+    .rfq-view-image-lists{
+        .default-image {
+            height: 30px;
+        }
 
         .images-lists .attached-image{
             width: 30px;
             height: 30px;
+        }
+    }
+
+    .mat-row{
+        border-bottom: 1px solid #bbbbbb;
+        .mat-cell{
+            white-space: normal;
+        }
+    }
+
+    .mat-header-row .mat-header-cell, .mat-row .mat-cell {
+        &:nth-child(2){
+            min-width: 100px;
+        }
+
+        &:nth-child(4){
+            min-width: 150px;
+        }
+    }
+
+    .mat-header-cell, .mat-row .mat-cell{
+        &:not(:last-child){
+            padding-right: 10px;
         }
     }
 }
@@ -113,6 +163,27 @@
     }
 }
 
+@media only screen and (max-width: 959px){
+    .rfp-review-style{
+        padding-left: 0.5rem;
+    }
+}
+
+@media only screen and (max-width: 767px){
+    .base-currency-selector {
+        margin: 20px 0 5px;
+        order: 1;
+    }
+
+    .rfp-name-input{
+        order: 2;
+    }
+
+    .rfp-end-date-input{
+        order: 3;
+    }
+}
+
 @media only screen and (max-width: 559px){
     .supplier-list-row{
         .col-xs-6{
@@ -121,7 +192,7 @@
         }
     }
 
-    .create-po-dashboard .view-rfp-accordion{
+    .create-po-dashboard .view-rfp-accordion, .float-rfp-review{
         .mat-expansion-panel-header-title {
             font-size: 13.5px !important;
         }
