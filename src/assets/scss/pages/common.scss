@@ -157,6 +157,9 @@ div.limited-character.universal {
 .full-border.mat-form-field input {
   border: 2px solid $icon-color-gray;
 }
+.no-border{
+  border:0 !important;
+}
 /***************************************************************************************/
 
 /***********************************Input and Dropdown Related Padding*****************/
@@ -790,6 +793,7 @@ td.mat-footer-cell:first-of-type {
 }
 
 .mat-row {
+  border-bottom: 1px solid #bbbbbb;
   .mat-cell {
     color: #545454;
   }
@@ -841,6 +845,21 @@ td.mat-footer-cell:first-of-type {
   .add-user-style .mat-expansion-panel-header-title {
     font-size: 13.5px;
   }
+}
+
+.outline-0{
+  outline: 0 !important;
+  &:hover{
+    outline: 0;
+  }
+}
+
+.d-contents{
+  display: contents !important;
+}
+
+.bg-shadow-1px{
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) !important;
 }
 
 @media only screen and (max-width: 330px) {

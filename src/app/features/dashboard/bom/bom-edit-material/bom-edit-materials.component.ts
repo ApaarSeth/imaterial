@@ -25,7 +25,7 @@ import { BomService } from "../../../../shared/services/bom.service";
 export class BomEditMaterialComponent implements OnInit {
     projectId: number;
     projectData = {} as ProjectDetails;
-    dataSource = new MatTableDataSource<Subcategory>();;
+    dataSource = new MatTableDataSource<Subcategory>();
     expandedElement: Subcategory | null;
     orgId: number;
     userId: number;
@@ -36,7 +36,6 @@ export class BomEditMaterialComponent implements OnInit {
     form: FormGroup;
     materialUnits: string[] = [];
     matData: any;
-    searchUnit: string = '';
     isMobile: boolean;
 
     constructor(
@@ -49,15 +48,14 @@ export class BomEditMaterialComponent implements OnInit {
         private router: Router,
         private commonService: CommonService
     ) {
+        this.bomService.getMaterialUnit().then(res => {
+            this.materialUnits = res.data;
+        });
     }
     ngOnInit() {
         this.matData = this.route.snapshot.data.editMaterialsData;
         this.route.params.subscribe(params => {
             this.projectId = params[ "id" ];
-        });
-        this.bomService.getMaterialUnit().then(res => {
-            this.materialUnits = res.data;
-            // this.matData = this.matData.map(item => ({ ...item, materialUnits: this.materialUnits }));
         });
         this.orgId = Number(localStorage.getItem("orgId"));
         this.userId = Number(localStorage.getItem("userId"));
@@ -127,20 +125,12 @@ export class BomEditMaterialComponent implements OnInit {
         event.target.value = event.target.value;
     }
 
-    getUnitsData(data) {
-        if (data) {
-            return data.split(',');
-        } else {
-            return [];
+    getIsDisableSearchUnit(v1, v2, v3) {
+        let result = false;
+        if (v1 > 0 || v2 > 0 || v3 > 0) {
+            result = true;
         }
-    }
-
-    filterUnits(event, inpt) {
-        if (event.target.value) {
-            inpt.dataset.filterData = this.materialUnits.filter(itm => itm.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1);
-        } else {
-            inpt.dataset.filterData = this.materialUnits;
-        }
+        return result;
     }
 
 }

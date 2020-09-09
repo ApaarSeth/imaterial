@@ -444,14 +444,26 @@ div.limited-character.bom {
   color: #888888;
 }
 
-.copy-and-add-materials,
+.copy-and-add-materials{
+  background-color: #f47728;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  .material-icons{
+    color: #ffffff;
+  }
+  button{
+    padding: 1px 5px;
+    min-width: 40px;
+  }
+}
+
 .bom-detail-dropdown {
   .material-icons {
     color: #f4783d;
     font-size: 34px;
   }
-
-  button {
+  button{
     padding: 0;
     min-width: 50px;
   }
@@ -829,4 +841,48 @@ div.limited-character.bom {
     }
   }
   /** create bom css end here **/
+}
+
+
+.bom-filter{
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  padding:5px;
+}
+
+.bom-multi-search{
+  box-shadow: 0 0 2px rgba(0,0,0, 0.5);
+  padding: 0px 5px 10px;
+  margin-top: 10px;
+}
+
+.bom-arrow{
+  font-size: 30px;
+  line-height: initial;
+  margin-bottom: 0px;
+  height: 10px;
+}
+
+.excl-btn{
+  background-color: #ffffff;
+  border: 2px solid #f47728;
+  border-radius: 25px;
+  padding: 0 20px;
+  color: #f47728 !important;
+  span{
+    line-height: 40px;
+  }
+  input:not(:checked) ~ label {
+    color: #f47728 !important;
+  }
+}
+
+th, td{
+  vertical-align: middle!important;
+}
+
+.pagi-st{
+  .mat-paginator-page-size{
+    margin-top: -20px;
+  }
 }
