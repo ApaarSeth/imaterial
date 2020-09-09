@@ -50,7 +50,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
   ratesBaseCurr: boolean = false;
   isMobile: boolean;
   taxCounter: number = 0;
-  imageAvailable: number = 0
+  imageAvailable: number
 
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
