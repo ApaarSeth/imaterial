@@ -82,6 +82,28 @@
     }
   }
 
+  .res-table {
+    overflow-x: auto;
+    // display: flex;
+    section {
+      span {
+        font-size: 10px;
+      }
+    }
+  }
+
+  .res-td {
+    display: grid;
+    width: max-content;
+    span {
+      font-size: 10px;
+      div,
+      .mat-cell {
+        font-weight: normal;
+      }
+    }
+  }
+
   .radio-btn-group-po-table {
     padding-right: 10px;
 
@@ -270,11 +292,6 @@ s .validTill {
   overflow-wrap: anywhere !important;
 }
 
-.mpo-table {
-  width: 100%;
-  overflow-x: scroll;
-}
-
 .txt-nwrp {
   white-space: normal !important;
   font-weight: normal !important;
@@ -312,18 +329,28 @@ s .validTill {
 
 .po-date-width,
 .po-material-width {
-  max-width: 10%;
+  max-width: 13%;
+  min-width: 10% !important;
+}
+
+.po-edit-date-width {
+  max-width: 15%;
+  min-width: 15% !important;
+}
+
+.po-supplier-rate-width {
+  max-width: 5%;
+  min-width: 5% !important;
+}
+
+.international-edit-po {
+  max-width: 13%;
   min-width: 10% !important;
 }
 
 .removePadding .mat-menu-content {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
-}
-
-.international-edit-po {
-  max-width: 10%;
-  min-width: 10% !important;
 }
 
 .national-edit-po {
@@ -333,8 +360,8 @@ s .validTill {
 
 .international-view-po,
 .national-view-po {
-  max-width: 9%;
-  min-width: 9% !important;
+  max-width: 13%;
+  min-width: 10% !important;
 }
 
 .po-date-width .date-label {
@@ -349,9 +376,13 @@ s .validTill {
 
 .po-unit-width {
   max-width: 6%;
-  min-width: 6% !important;
+  min-width: 4% !important;
 }
 
+.po-header-unit-width {
+  max-width: 6%;
+  min-width: 4% !important;
+}
 .po-national-unit-width {
   max-width: 7%;
   min-width: 7% !important;
@@ -532,8 +563,19 @@ s .validTill {
   padding-top: 7px !important;
 }
 
+.infix-padding.mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 11px 0px 4px 0px;
+}
+
 .po-border-input input,
 .po-border-input select {
   border-bottom: 2px solid $icon-color-gray;
   border-radius: 0px;
+}
+
+.suffix-padding {
+  .mat-form-field-wrapper .mat-form-field-suffix {
+    width: 22% !important;
+    margin-left: -20px !important ;
+  }
 }

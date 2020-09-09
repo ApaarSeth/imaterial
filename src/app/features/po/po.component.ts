@@ -41,7 +41,8 @@ import { data } from "jquery";
 export class PoComponent implements OnInit {
   jsonDoc = null;
   poData: POData = {} as POData;
-  tableData: PoMaterial[] = [];
+  tableData: PoMaterial[];
+  imageAvailable: number
   cardData: CardData;
   viewMode = false;
   collatePoData = {} as poApproveReject;
@@ -135,6 +136,7 @@ export class PoComponent implements OnInit {
 
       this.poData = res.data;
       this.tableData = this.poData.materialData;
+      this.imageAvailable = this.poData.moduleFeatures.featureList[1].isAvailable
       this.currency = { isInternational: this.poData.isInternational, purchaseOrderCurrency: this.poData.purchaseOrderCurrency }
       this.additionalOtherCost = { additionalOtherCostAmount: this.poData.additionalOtherCostAmount, additionalOtherCostInfo: this.poData.additionalOtherCostInfo }
       this.cardData = {

@@ -1,3 +1,4 @@
+import { AppNotificationService } from './../../services/app-notification.service';
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { Address } from "../../models/RFQ/rfq-details";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -32,18 +33,19 @@ export class AddAddressDialogComponent implements OnInit {
   currentIndex: number = 0;
   countryCode: string
   tab2Label: string = "Add Address"
+  addressId: number;
   constructor(
     public dialogRef: MatDialogRef<AddAddressDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private formBuilder: FormBuilder,
     private addAddressService: AddAddressService,
     private _snackBar: MatSnackBar,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private notifier: AppNotificationService
   ) { }
 
   ngOnInit() {
     this.countryCode = localStorage.getItem('countryCode')
-    this.formInit();
     if (this.data.roleType === "projectBillingAddressId") {
       this.addAddressService
         .getPoAddAddress("Project", this.data.id)
@@ -57,29 +59,7 @@ export class AddAddressDialogComponent implements OnInit {
           this.address = res.data;
         });
     }
-  }
-
-  formInit() {
-    this.selectAddressFrm = this.formBuilder.group({
-      address: []
-    });
-
-    // new address form
-    this.newAddressForm = this.formBuilder.group({
-      addressLine1: ["", [Validators.required, Validators.maxLength(120)]],
-      addressLine2: ["", Validators.maxLength(120)],
-      // pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
-      pinCode: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
-      state: [{ value: "", disabled: true }, Validators.required],
-      city: [{ value: "", disabled: true }, Validators.required],
-      gstNo: ["", [Validators.pattern(FieldRegExConst.GSTIN)]],
-      imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
-      countryId: [null],
-      countryCode: []
-    });
-    this.newAddressForm.get('pinCode').valueChanges.subscribe(res => {
-      this.getPincode(res)
-    })
+    this.formInit();
   }
 
   tabClick($event) {
@@ -94,6 +74,7 @@ export class AddAddressDialogComponent implements OnInit {
 
   changeIndex(add: Address) {
     this.tabGroup.selectedIndex = 1;
+    this.addressId = add.addressId;
     this.tab2Label = "Edit Address"
     this.newAddressForm.patchValue({
       addressLine1: add.addressLine1,
@@ -128,7 +109,32 @@ export class AddAddressDialogComponent implements OnInit {
     return this.newAddressForm.get('countryCode').value;
   }
 
+  formInit() {
+    this.selectAddressFrm = this.formBuilder.group({
+      address: []
+    });
 
+    // new address form
+    this.newAddressForm = this.formBuilder.group({
+      addressLine1: ["", [Validators.required, Validators.maxLength(120)]],
+      addressLine2: ["", Validators.maxLength(120)],
+      // pinCode: ["", [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]],
+      pinCode: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(6)]],
+      state: [{ value: "", disabled: true }, Validators.required],
+      city: [{ value: "", disabled: true }, Validators.required],
+      gstNo: [""],
+      imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
+      countryId: [null],
+      countryCode: []
+    });
+    this.newAddressForm.get('pinCode').valueChanges.subscribe(res => {
+      this.getPincode(res)
+    })
+
+    if (this.countryCode == 'IN') {
+      this.newAddressForm.get('gstNo').setValidators([Validators.required, Validators.pattern(FieldRegExConst.GSTIN)])
+    }
+  }
 
   onselectAddress(): void {
     this.dialogRef.close([this.data.roleType, this.selectAddressFrm.value]);
@@ -142,21 +148,36 @@ export class AddAddressDialogComponent implements OnInit {
       );
     }
     else {
-
+      let data = {
+        type: this.data.roleType === "projectBillingAddressId" ? "project" : "supplier",
+        address: this.addressId,
+        ...this.newAddressForm.getRawValue()
+      }
+      this.postEditAddress(data);
     }
+  }
+
+  postEditAddress(data) {
+    this.addAddressService.postEditAddress(this.addressId, data).then(res => {
+      if (res.statusCode == 201) {
+        this.notifier.snack(res.message)
+        this.dialogRef.close([this.data.roleType, { address: res.data[0] }]);
+      }
+      else {
+        this.notifier.snack(res.message)
+      }
+    });
   }
 
   postAddAddress(role, address) {
     this.addAddressService
       .postAddAddress(role, this.data.id, address)
       .then(res => {
-        if (res.status == 0) {
-          this._snackBar.open(res.message, "", {
-            duration: 2000, panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
+        if (res.statusCode == 201) {
+          this.notifier.snack(res.message)
         }
         else {
+          this.notifier.snack(res.message)
           this.dialogRef.close([this.data.roleType, { address: res.data }]);
         }
       });
