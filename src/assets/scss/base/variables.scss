@@ -286,6 +286,24 @@ input {
   font-weight: 600;
   height: 40px;
 }
+
+.bs-button.mat-button-base {
+  border: 2px solid $main-color !important;
+  border-radius: 25px;
+  padding: 0px 20px;
+  font-weight: 600;
+  height: 40px;
+}
+
+.bs-gray-button.mat-button-base {
+  border: 2px solid #f2f2f2 !important;
+  background-color: #f2f2f2;
+  border-radius: 25px;
+  padding: 0px 20px;
+  font-weight: 600;
+  height: 40px;
+}
+
 @media only screen and (max-width: 576px) {
   .main-button.mat-button-base {
     border: 2px solid $main-color !important;

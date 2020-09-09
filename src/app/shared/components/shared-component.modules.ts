@@ -1,3 +1,10 @@
+import { SearchPipe } from 'src/app/shared/pipes/searchPipe';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { InputTextSearchCompoent } from './input-text-search/input-text-search.component';
+import { MultiSelectSearchComponent } from './multi-select-search/multi-select-search.component';
+import { BomFilterComponent } from './bom-filters/bom-filter.component';
+import { BomCommonTableComponent } from './bom-common-table/bom-common-table.component';
+import { SearchUnitComponent } from './search-unit/search-unit-component';
 import { AdvSearchItemComponent } from './adv-search-item/adv-search-item.component';
 import { AdvanceInputNumberItemComponent } from './adv-input-number-item/adv-input-number-item.component';
 import { AdvanceSelectItemComponent } from './adv-select-item/adv-select-item.component';
@@ -24,7 +31,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { NgModule } from '@angular/core';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 
-const components = [ProjectItemComponent, ErrorMessageComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent, BarChartComponent, PieChartComponent, AdvanceDateItemComponent, AdvanceSelectItemComponent, AdvanceInputNumberItemComponent, AdvSearchItemComponent];
+const components = [ ProjectItemComponent, ChipComponent, UploadComponent, GlobalLoaderComponent, BreadcrumbComponent, RangeDatePicker, SubscriptionsComponent, ViewRatingComponent, UploadImageComponent, ViewImageComponent, SupplierRatingComponent, AdvanceSearchComponent, BarChartComponent, PieChartComponent, AdvanceDateItemComponent, AdvanceSelectItemComponent, AdvanceInputNumberItemComponent, AdvSearchItemComponent, SearchUnitComponent, BomCommonTableComponent, BomFilterComponent, MultiSelectSearchComponent, InputTextSearchCompoent, PaginatorComponent, ErrorMessageComponent ];
 
 @NgModule({
   imports: [
@@ -36,8 +43,8 @@ const components = [ProjectItemComponent, ErrorMessageComponent, ChipComponent, 
     NgbModule
   ],
 
-  declarations: components,
+  declarations: [ ...components, SearchPipe ],
   // entryComponents: [UploadImageComponent, ViewImageComponent, SupplierRatingComponent],
-  exports: components
+  exports: [ ...components, SearchPipe ]
 })
 export class SharedComponentsModule { }

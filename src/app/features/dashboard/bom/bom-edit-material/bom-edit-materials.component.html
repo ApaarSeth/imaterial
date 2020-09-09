@@ -1,15 +1,19 @@
-<div class="page-start-point p-rem-t-40">
+<div class="page-start-point p-rem-t-0.25">
   <div class="p-l-10 p-r-10 p-b-10 copy-bom-materials-outer">
-    <card-layout *ngIf="projectData" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"> </card-layout>
+    <card-layout *ngIf="projectData" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2">
+    </card-layout>
 
     <div class="row align-items-center copy-bom-small-screen">
       <div class="col-xs-12 col-md-12 text-right copy-bom-button-action">
-        <button mat-raised-button class="main-background-color main-button color-white" (click)="update()" [disabled]="!form.valid">Update</button>
+        <button mat-raised-button class="main-background-color main-button color-white" (click)="update()"
+          [disabled]="!form.valid">Update</button>
       </div>
     </div>
 
     <ng-container *ngIf="dataSource">
+
       <div class="bom-details-table-div-part example-container mat-elevation-z8 mt-2 table-responsive">
+
         <form [formGroup]="form">
           <table formArrayName="material" class="table mb-0 bg-white bom-material-table">
             <tr matSort class="mat-elevation-z2 mat-header-row background-color-skyblue">
@@ -19,7 +23,7 @@
               <th class="mat-header-cell">Estimated Rate</th>
             </tr>
             <tr *ngFor="let item of form['controls'].material['controls']; let i = index" [formGroupName]="i">
-              <td [ngClass]="isMobile ? 'font-size12' : ''">
+              <td [ngClass]="isMobile ? 'font-size12' : '' ">
                 {{ item.value.materialName }}
                 <div class="limited-character bom" matTooltip=" {{ item.value.materialGroup }}">
                   <span class="category-name">
@@ -28,53 +32,44 @@
                 </div>
               </td>
               <td>
-                <mat-form-field class="border-select w-75 bom-unit-col mat-form-field-padding mat-form-field-flex-mm-padding p-t-10">
-                  <mat-select
-                    formControlName="materialUnit"
-                    placeholder="Unit"
-                    [disabled]="item.value.requestedQuantity > 0 || item.value.issueToProject > 0 || item.value.availableStock > 0"
-                  >
-                    <div class="display-flex border-bottom">
-                      <input
-                        #inpt
-                        class="p-l-10 p-b-5"
-                        matInput
-                        autocomplete="off"
-                        type="search"
-                        placeholder="Search Unit"
-                        (keydown)="$event.stopPropagation()"
-                        [attr.data-filter-data]="materialUnits"
-                        (input)="filterUnits($event, inpt)"
-                      />
-                      <button mat-button mat-icon-button>
-                        <mat-icon>search</mat-icon>
-                      </button>
-                    </div>
-                    <mat-option *ngFor="let unit of getUnitsData(inpt.dataset.filterData).length ? getUnitsData(inpt.dataset.filterData) : materialUnits" [value]="unit">
-                      <span>
-                        {{ unit }}
-                      </span>
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+                <app-search-unit [config]="{
+                                    isDisable: getIsDisableSearchUnit(item.value.requestedQuantity, item.value.issueToProject, item.value.availableStock),
+                                    materialUnits: materialUnits,
+                                    item: item,
+                                    selectedUnit: item.value.materialUnit
+                                }" (getSelectedUnit)="item.value.materialUnit = $event"></app-search-unit>
               </td>
               <td>
                 <mat-form-field class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10">
                   <mat-label>Estimated Quantity</mat-label>
-                  <input matInput type="number" formControlName="estimatedQty" [value]="item.estimatedQty" autocomplete="off" (input)="checkInput($event)" />
+                  <input matInput type="number" formControlName="estimatedQty" [value]="item.estimatedQty"
+                    autocomplete="off" (input)="checkInput($event)">
                 </mat-form-field>
-                <mat-error class="font-size12" *ngIf="item.get('estimatedQty').errors !== null"> It must be more than {{ item.get("estimatedQty").errors.min.min }} </mat-error>
+                <mat-error class="font-size12" *ngIf="item.get('estimatedQty').errors !== null">
+                  It must be more than {{item.get('estimatedQty').errors.min.min}}
+                </mat-error>
               </td>
               <td>
                 <mat-form-field class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10">
                   <mat-label>Estimated Rate</mat-label>
-                  <input matInput type="number" formControlName="estimatedRate" [value]="item.estimatedRate" autocomplete="off" (input)="checkInput($event)" />
+                  <input matInput type="number" formControlName="estimatedRate" [value]="item.estimatedRate"
+                    autocomplete="off" (input)="checkInput($event)">
                 </mat-form-field>
               </td>
             </tr>
           </table>
+
         </form>
+
       </div>
+
     </ng-container>
+
+    <div class="row align-items-center copy-bom-small-screen">
+      <div class="col-xs-12 col-md-12 text-right copy-bom-button-action">
+        <button mat-raised-button class="main-background-color main-button color-white" (click)="update()"
+          [disabled]="!form.valid">Update</button>
+      </div>
+    </div>
+
   </div>
-</div>

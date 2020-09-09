@@ -1,0 +1,21 @@
+<form *ngIf="config.materialUnits && config.materialUnits.length " [formGroup]="form">
+    <mat-form-field class="border-select bom-unit-col mat-form-field-padding mat-form-field-flex-mm-padding p-t-10">
+        <mat-select formControlName="materialUnit" placeholder="Unit" [disabled]="config.isDisable">
+            <div class="display-flex border-bottom">
+                <input #inpt class="p-l-10 p-b-5 no-border width-100 outline-0" autocomplete="off" type="text"
+                    placeholder="Search Unit" (keydown)="$event.stopPropagation()"
+                    [attr.data-filter-data]="config.materialUnits" (input)="filterUnits($event, inpt)" />
+                <button mat-button mat-icon-button>
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+            <mat-option
+                *ngFor="let unit of getUnitsData(inpt.dataset.filterData).length ? getUnitsData(inpt.dataset.filterData) : config.materialUnits"
+                [value]="unit">
+                <span>
+                    {{ unit }}
+                </span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

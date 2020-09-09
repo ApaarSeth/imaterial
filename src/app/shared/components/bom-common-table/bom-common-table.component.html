@@ -1,0 +1,102 @@
+<div class="p-t-5 p-b-20 p-l-20 p-r-20 bg-white">
+
+    <div class="width-18">
+        <input-text-search [config]="{
+        title: 'Search Material',
+        placeholder: 'Search Material',
+        list: ''
+    }" (selectionUpdate)="getSearchData($event)"></input-text-search>
+    </div>
+
+    <ng-container *ngIf="matData?.length && tableHeads?.length">
+
+        <div class="bom-details-table-div-part example-container mat-elevation-z8 mt-2 bg-shadow-1px table-responsive">
+
+            <form *ngIf="form" [formGroup]="form">
+                <table formArrayName="material" class="table mb-0 bg-white bom-material-table">
+                    <thead>
+                        <tr matSort class="mat-elevation-z2 mat-header-row background-color-skyblue">
+                            <th class="mat-header-cell" *ngFor="let item of tableHeads">{{item}}</th>
+                        </tr>
+                    </thead>
+
+
+                    <ng-container *ngFor="let itm of form['controls'].material['controls']; let ig = index"
+                        [formGroupName]="ig">
+                        <tr class="cursor-pointer bg-gray" style="border-bottom:2px solid #d6d2d2;">
+                            <td [colSpan]="tableHeads.length" (click)="toggleMaterials($event, itm.value.groupName)">
+                                <span>{{ itm.value.groupName }}</span>
+                                <span class="pull-right bom-arrow">
+                                    <mat-icon inline="true">keyboard_arrow_up</mat-icon>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tbody *ngIf="itm.get('materialList')" formArrayName="materialList"
+                            [attr.data-trgroup]="itm.value.groupName">
+
+                            <tr *ngFor="let item of itm.get('materialList').controls; let i = index"
+                                [formGroupName]="i">
+
+                                <ng-container *ngIf="item.value.isNull">
+
+                                    <td [ngClass]="isMobile ? 'font-size12' : '' ">
+                                        {{ item.value.materialName }}
+                                        <div class="limited-character bom" matTooltip=" {{ item.value.materialGroup }}">
+                                            <span class="category-name">
+                                                {{ item.value.materialGroup }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td [ngClass]="isMobile ? 'font-size12' : '' ">
+                                        {{ item.value.tradeList.length ? item.value.tradeList : item.value.tradeName }}
+                                    </td>
+                                    <td class="p-b-20">
+                                        <ng-container *ngIf="materialUnits?.length">
+                                            <app-search-unit [config]="{
+                                            isDisable: 'false',
+                                            materialUnits: materialUnits,
+                                            item: item,
+                                            selectedUnit: item.value.materialUnit
+                                        }" (getSelectedUnit)="item.get('materialUnit').setValue($event)">
+                                            </app-search-unit>
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <mat-form-field
+                                            class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10">
+                                            <mat-label>Estimated Quantity</mat-label>
+                                            <input matInput type="number" formControlName="estimatedQty"
+                                                [value]="item.estimatedQty" autocomplete="off">
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field
+                                            class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10">
+                                            <mat-label>Estimated Rate</mat-label>
+                                            <input matInput type="number" formControlName="estimatedRate"
+                                                [value]="item.estimatedRate" autocomplete="off">
+                                        </mat-form-field>
+                                    </td>
+
+                                </ng-container>
+
+
+                            </tr>
+
+                        </tbody>
+                    </ng-container>
+
+
+                </table>
+            </form>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="config.paginatorOptions">
+        <app-paginator class="pagi-st" [config]="config.paginatorOptions"
+            (updatePaginator)="updatePaginatorOptions($event)">
+        </app-paginator>
+    </ng-container>
+
+</div>
