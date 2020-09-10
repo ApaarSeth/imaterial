@@ -5,6 +5,7 @@ export interface BomTabsConfig {
     data?: any;
     table?: any;
     paginatorOptions?: PaginatorConfig;
+    selectedMaterialLength?: number;
 }
 
 export type BomFilterType = 'MULTI_SELECT_SEARCH' | 'INPUT_TEXT_SEARCH';

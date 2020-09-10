@@ -81,9 +81,14 @@
             <ng-container *ngIf="tabs && tabs.length">
                 <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="tabClick($event)">
                     <mat-tab *ngFor="let tab of tabs" [label]="tab.name">
-                        <ng-container *ngIf="tab.data && tab.table">
-                            <bom-common-table
-                                [config]="{data: tab.data, table: tab.table, label: tab.name, paginatorOptions: tab.paginatorOptions}"
+                        <ng-container *ngIf="tab.data && tab.table; let i = index">
+                            <bom-common-table [config]="{
+                                    data: tab.data,
+                                    table: tab.table,
+                                    label: tab.name,
+                                    paginatorOptions: tab.paginatorOptions,
+                                    storeDataByUser: tab.storeDataByUser
+                                }" [selectedMaterialLength]="tab.selectedMaterialLength"
                                 (updateBomPaginator)="getPaginationRequest($event)"
                                 (updateBomTable)="getBomTableRequest($event)">
                             </bom-common-table>
