@@ -140,8 +140,9 @@ export class UpdateInfoComponent implements OnInit {
       this.userInfoForm.controls.turnOverId.setValidators([Validators.required]);
       this.userInfoForm.controls.turnOverId.updateValueAndValidity();
     }
-    this.userInfoPatch();
     this.setCountryAndCurrency()
+    this.userInfoPatch();
+
   }
 
   setCountryAndCurrency() {
