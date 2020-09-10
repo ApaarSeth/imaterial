@@ -17,6 +17,7 @@ export class PaginatorComponent implements OnInit {
     pageSizeOptions: number[] = [ 25, 50, 75, 100 ];
 
     ngOnInit(): void {
+        console.log(this.config, "pagination");
         this.length = this.config.totalCount ? this.config.totalCount : 25;
     }
 

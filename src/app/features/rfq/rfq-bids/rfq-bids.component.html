@@ -50,34 +50,6 @@
                   </span>
                 </mat-expansion-panel-header>
 
-                <!--table class="table">
-                  <tr>
-                    <th>Material Name</th>
-                    <th>Quantity</th>
-                    <th>Makes & Rates</th>
-                  </tr>
-
-                  <ng-container formArrayName="materialList">
-                    <ng-container *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
-                      <tr>
-                        <td>{{ material.materialName }}</td>
-                        <td>{{ material.rfqMaterialQty }}</td>
-                        <td>
-                          <ng-container *ngFor="let brand of material.brandNames">
-                            <span class="col-xs-1">
-                              {{ brand }}
-                            </span>
-                            <span class="col-xs-1">
-                              Supplier Rates
-                            </span>
-                          </ng-container>
-                        </td>
-                      </tr>
-                    </ng-container>
-                  </ng-container>
-                  
-                </table-->
-
                 <table class="view-bids-tbl width-100">
                   <tr matSort class="mat-header-row">
                     <th class="mat-header-cell maxwidth-20">Material Name</th>
@@ -92,7 +64,6 @@
 
                     <tr class="mat-row material-details-row">
                       <td class="mat-cell maxwidth-20" matTooltip=" {{ material.materialName }}">{{ material.materialName }}</td>    
-                      <!-- <span *ngIf="!rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.value" class="error-msg fontsize-9-px"> Net Quantity Should be less than {{material.poAvailableQty}} </span> -->
 
                       <td class="mat-cell maxwidth-10">
                         {{ material.rfqMaterialQty }}

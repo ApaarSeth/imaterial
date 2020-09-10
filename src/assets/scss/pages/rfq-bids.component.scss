@@ -5,6 +5,10 @@
     background-color: #ffffff !important;
   }
 
+  .rfp-bids-tbl .mat-header-cell, .rfp-bids-tbl .mat-cell{
+    border-bottom: none;
+  }
+
   .mat-table {
     display: block;
   }
@@ -185,28 +189,6 @@
   margin-bottom: 0;
 }
 
-.rfq-final-step{
-  width: 100%;
-  tr.mat-footer-row, tr.mat-row{
-    height: 66px;
-  }
-
-  .images-lists .attached-image:first-child {
-    top: -28px;
-    left: 80px;
-  }
-
-  .images-lists .attached-image:nth-child(2) {
-    left: 86px;
-    top: -23px;
-  }
-
-  .images-lists .attached-image:nth-child(3) {
-    left: 92px;
-    top: -17px;
-  }
-}
-
 .image-heading{
   text-align: left;
   margin-left: 8px;
@@ -271,22 +253,6 @@
 
     &:nth-child(4), &:nth-child(5){
       display: none;
-    }
-  }
-}
-
-.rfq-final-step .float-rfq-img-stack{
-  .attached-image{
-    &:first-child{
-      left: 39px;
-    }
-
-    &:nth-child(2){
-      left: 45px;
-    }
-
-    &:nth-child(3){
-      left: 52px;
     }
   }
 }
@@ -391,16 +357,6 @@ tr.tbl-body-cols.mat-row {
       top: -24px;
       left: 32px;
     }
-  }
-}
-
-.rfq-final-step{
-  .mat-header-cell.mat-column-Material-Name {
-    width: 20%;
-  }
-
-  .mat-header-cell.mat-column-Required-Date {
-    width: 15%;
   }
 }
 

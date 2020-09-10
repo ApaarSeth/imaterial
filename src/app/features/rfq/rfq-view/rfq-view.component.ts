@@ -13,7 +13,7 @@ import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image
 
 export class RFQViewComponent implements OnInit {
 
-    displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Makes", "Attached Images"];
+    displayedColumns: string[] = ["Material Name", "Required Date", "Quantity", "Attached Images", "Makes"];
     rfqDetails: Rfq = {} as Rfq;
     rfqId: number;
     terms: TermsObj;

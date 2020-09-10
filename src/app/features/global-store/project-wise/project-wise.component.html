@@ -74,3 +74,8 @@
     </table>
   </div>
 </mat-accordion>
+
+<ng-container *ngIf="paginationConfig">
+  <app-paginator class="pagi-st" [config]="paginationConfig" (updatePaginator)="updatePaginatorOptions($event)">
+  </app-paginator>
+</ng-container>
