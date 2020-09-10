@@ -1,3 +1,10 @@
+import { Subscription } from 'rxjs';
+import { AddBomWarningComponent } from './../../../shared/dialogs/add-bom-warning/add-bom-warning.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddMyMaterialBomComponent } from './../../../shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
+import { formatDate } from '@angular/common';
+import { PaginatorConfig } from './../../../shared/models/common.models';
+import { material } from './../../../shared/models/category';
 import { AppNavigationService } from './../../../shared/services/navigation.service';
 import { FacebookPixelService } from './../../../shared/services/fb-pixel.service';
 
@@ -13,6 +20,7 @@ import { ProjectService } from './../../../shared/services/project.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectDetails, ProjetPopupData } from './../../../shared/models/project-details';
 import { Component, OnInit } from "@angular/core";
+
 @Component({
     selector: "app-bom",
     templateUrl: "./bom.component.html"
@@ -29,7 +37,8 @@ export class BomComponent implements OnInit {
     filterOptions: BomFilterData = {};
     isMobile: boolean;
     isFormValid: boolean = false;
-    formData: any;
+    tabsFormData: any = {};
+    subscriptions: Subscription[] = [];
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -40,17 +49,19 @@ export class BomComponent implements OnInit {
         private loading: GlobalLoaderService,
         private router: Router,
         private fbPixel: FacebookPixelService,
-        private navService: AppNavigationService
+        private navService: AppNavigationService,
+        private dialog: MatDialog
     ) {
     }
 
     ngOnInit() {
         this.isMobile = this.commonService.isMobile().matches;
         this.activatedRoute.params.subscribe(params => {
-            this.projectId = params["id"];
+            this.projectId = params[ "id" ];
         });
         this.orgId = Number(localStorage.getItem("orgId"));
         this.userId = Number(localStorage.getItem("userId"));
+        this.startSubscription();
         this.getReadyBomFilter();
         this.getTabsData();
         this.getProject(this.projectId);
@@ -83,12 +94,12 @@ export class BomComponent implements OnInit {
         ]
 
 
-        forkJoin([this.bomService.getOrgTrades(this.projectId)]).toPromise().then(res => {
-            options[0].data = this.getTradesList(res[0]);
-            options[0].preSelected = this.preselectedTrade(options[0].data);
-            options[1].data = [];
+        forkJoin([ this.bomService.getOrgTrades(this.projectId) ]).toPromise().then(res => {
+            options[ 0 ].data = this.getTradesList(res[ 0 ]);
+            options[ 0 ].preSelected = this.preselectedTrade(options[ 0 ].data);
+            options[ 1 ].data = [];
 
-            this.filterOptions[options[0].key] = options[0].preSelected;
+            this.filterOptions[ options[ 0 ].key ] = options[ 0 ].preSelected;
 
             this.searchConfig = {
                 title: 'Search In',
@@ -145,11 +156,6 @@ export class BomComponent implements OnInit {
     getProject(id: number) {
         this.projectService.getProject(this.orgId, id).then(data => {
             this.product = data.data;
-            //   if ((localStorage.getItem('addBom') == "null") || (localStorage.getItem('addBom') == '0')) {
-            // setTimeout(() => {
-            //   this.guidedTourService.startTour(this.BomDashboardTour);
-            // }, 1000);
-            //   }
         });
     }
 
@@ -172,11 +178,14 @@ export class BomComponent implements OnInit {
     }
 
     tabClick(event) {
-        this.selectedIndex = event.index ? event.index : 0;
-
-        this.filterOptions.limit = this.filterOptions.limit ? this.filterOptions.limit : 25;
-        this.filterOptions.pageNumber = this.filterOptions.pageNumber ? this.filterOptions.pageNumber : 1;
-        this.getTableData();
+        if (this.tabsFormData[ this.selectedIndex ] && this.tabsFormData[ this.selectedIndex ].length) {
+            this.openAddBomDialog(event.index);
+        } else {
+            this.selectedIndex = event.index ? event.index : 0;
+            this.filterOptions.limit = this.filterOptions.limit ? this.filterOptions.limit : 25;
+            this.filterOptions.pageNumber = this.filterOptions.pageNumber ? this.filterOptions.pageNumber : 1;
+            this.getTableData();
+        }
     }
 
     // get table data on load or based on filter 
@@ -184,32 +193,51 @@ export class BomComponent implements OnInit {
     getTableData() {
         if (this.selectedIndex === 2) {
             this.commonService.getMyMaterial('allwithdeleted').then(res => {
-                this.tabs[this.selectedIndex].data = res.data;
+                this.tabs[ this.selectedIndex ].data = this.setSelectedTabDataByUser(this.tabsFormData[ this.selectedIndex ], res.data);
+                // this.tabs[ this.selectedIndex ].data = res.data;
                 this.getBomTableConfig();
             });
         } else {
 
             let tradeObj: any = {};
             for (let i in this.filterOptions) {
-                if (i === 'tradeNames' || i === 'categoryNames') {
-                    tradeObj[i] = this.bomService.getNames(this.filterOptions[i]);
+                if ((i === 'tradeNames' || i === 'categoryNames') && this.filterOptions[ i ] && this.filterOptions[ i ].length) {
+                    tradeObj[ i ] = this.bomService.getNames(this.filterOptions[ i ]);
                 } else {
-                    tradeObj[i] = this.filterOptions[i];
+                    if (this.filterOptions[ i ]) {
+                        tradeObj[ i ] = this.filterOptions[ i ];
+                    }
                 }
             }
+            const checkIsValidQueryParam = this.getIsValidQueryParam(tradeObj);
             tradeObj.limit = tradeObj.limit ? tradeObj.limit : 25;
             tradeObj.pageNumber = tradeObj.pageNumber ? tradeObj.pageNumber : 1;
-            tradeObj['isTopMaterial'] = this.selectedIndex === 0 ? 1 : 0;
-            this.bomService[this.tabs[this.selectedIndex]['functionName']](tradeObj).then(res => {
-                this.tabs[this.selectedIndex].data = res.materialTrades;
-                this.tabs[this.selectedIndex].paginatorOptions = {
-                    limit: res.limit,
-                    pageNumber: res.pageNumber,
-                    totalCount: res.totalCount
-                }
-                this.getBomTableConfig();
-            });
+            tradeObj[ 'isTopMaterial' ] = this.selectedIndex === 0 ? 1 : 0;
+            if (checkIsValidQueryParam) {
+                this.bomService[ this.tabs[ this.selectedIndex ][ 'functionName' ] ](tradeObj).then(res => {
+
+                    this.tabs[ this.selectedIndex ].data = this.setSelectedTabDataByUser(this.tabsFormData[ this.selectedIndex ], res.materialTrades);
+
+                    // this.tabs[ this.selectedIndex ].data = res.materialTrades;
+                    this.tabs[ this.selectedIndex ].paginatorOptions = {
+                        limit: res.limit,
+                        pageNumber: res.pageNumber,
+                        totalCount: res.totalCount
+                    } as PaginatorConfig;
+                    this.getBomTableConfig();
+                });
+            }
         }
+    }
+
+    getIsValidQueryParam(data) {
+        let result = false;
+        for (let key in data) {
+            if ((data[ key ] !== null && (key === 'tradeNames' && data[ key ].length) || (key === 'categoryNames' && data[ key ].length) || (key === 'materialName' && data[ key ]))) {
+                result = true;
+            }
+        }
+        return result;
     }
 
     // get data after applying filter 
@@ -224,11 +252,14 @@ export class BomComponent implements OnInit {
         if (!tabExist) {
             this.tabs.push(tabConfig);
         }
-
-        this.selectedIndex = 3;
         for (let i in data) {
-            this.filterOptions[i] = data[i];
+            if (data[ i ]) {
+                this.filterOptions[ i ] = data[ i ];
+            } else {
+                this.filterOptions[ i ] = null;
+            }
         }
+        this.selectedIndex = 3;
         this.getTableData();
     }
 
@@ -241,8 +272,8 @@ export class BomComponent implements OnInit {
 
         tableConfig.materialList.materialName = { visible: true, formProperty: true, headName: 'Material Name' } as BomTableProptery;
         tableConfig.materialList.tradeList = { visible: true, formProperty: true, headName: 'Trade' } as BomTableProptery;
-        tableConfig.materialList.materialUnit = { visible: true, formProperty: true, headName: 'Unit', any: 1 } as BomTableProptery;
-        tableConfig.materialList.estimatedQty = { visible: true, formProperty: true, headName: 'Estimated Quantity', any: 1 } as BomTableProptery;
+        tableConfig.materialList.materialUnit = { visible: true, formProperty: true, headName: 'Unit' } as BomTableProptery;
+        tableConfig.materialList.estimatedQty = { visible: true, formProperty: true, headName: 'Estimated Quantity' } as BomTableProptery;
         tableConfig.materialList.estimatedRate = { visible: true, formProperty: true, headName: 'Estimated Rate' } as BomTableProptery;
         tableConfig.materialList.id = { visible: false, formProperty: true } as BomTableProptery;
         tableConfig.materialList.materialCode = { visible: false, formProperty: true } as BomTableProptery;
@@ -251,12 +282,19 @@ export class BomComponent implements OnInit {
         tableConfig.materialList.treadId = { visible: false, formProperty: true } as BomTableProptery;
         tableConfig.materialList.tradeName = { visible: false, formProperty: true } as BomTableProptery;
 
-        this.tabs[this.selectedIndex]['table'] = tableConfig;
+        this.tabs[ this.selectedIndex ][ 'table' ] = tableConfig;
     }
 
     saveCategory() {
+        this.tabsFormData[ this.selectedIndex ].forEach(item => {
+
+            item[ 'estimatedRate' ] = item[ 'estimatedRate' ] !== null ? item[ 'estimatedRate' ] : 0;
+            delete item[ 'isNull' ];
+            delete item[ 'tradeList' ];
+            delete item[ 'treadId' ];
+        })
         this.bomService
-            .sumbitCategory(this.userId, this.projectId, this.formData)
+            .sumbitCategory(this.userId, this.projectId, this.tabsFormData[ this.selectedIndex ])
             .then(res => {
                 this.fbPixel.fire('AddToCart');
                 this.navService.gaEvent({
@@ -265,23 +303,26 @@ export class BomComponent implements OnInit {
                     label: 'material name',
                     value: null
                 });
-                this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
+                this.tabsFormData[ this.selectedIndex ] = [];
+                this.tabs[ this.selectedIndex ].selectedMaterialLength = 0;
+                this.isFormValid = false;
+                this.router.navigate([ "project-dashboard/bom/" + this.projectId + "/bom-detail" ]);
             });
     }
 
     openAddMyMaterial() {
-        // let data = this.projectId
-        // const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
-        //   width: "1400px",
-        //   data,
-        //   panelClass: 'add-custom-material'
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //   if (result !== null) {
-        //     this.getProject(this.projectId);
-        //     this.callApi()
-        //   }
-        // })
+        let data = this.projectId
+        const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
+            width: "1400px",
+            data,
+            panelClass: 'add-custom-material'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== null) {
+                this.getProject(this.projectId);
+                this.getTableData();
+            }
+        })
     }
 
     // download material data excel template 
@@ -295,15 +336,15 @@ export class BomComponent implements OnInit {
 
     uploadExcel(files: FileList) {
         const data = new FormData();
-        data.append("file", files[0]);
-        var fileSize = files[0].size; // in bytes
+        data.append("file", files[ 0 ]);
+        var fileSize = files[ 0 ].size; // in bytes
         if (fileSize < 5000000) {
             this.postMaterialExcel(data);
         }
         else {
             this._snackBar.open("File must be less than 5 mb", "", {
                 duration: 2000,
-                panelClass: ["success-snackbar"],
+                panelClass: [ "success-snackbar" ],
                 verticalPosition: "bottom"
             });
         }
@@ -312,19 +353,19 @@ export class BomComponent implements OnInit {
     postMaterialExcel(data) {
         this.loading.show();
         this.bomService.postMaterialExcel(data, this.projectId).then(res => {
-            this.router.navigate(["project-dashboard/bom/" + this.projectId + "/bom-detail"]);
+            this.router.navigate([ "project-dashboard/bom/" + this.projectId + "/bom-detail" ]);
             this.loading.hide();
             if (res.statusCode === 201) {
                 this._snackBar.openFromComponent(SnackbarComponent, {
                     data: res.data,
                     duration: 6000,
-                    panelClass: ["success-snackbar"],
+                    panelClass: [ "success-snackbar" ],
                     verticalPosition: "bottom"
                 });
             } else {
                 this._snackBar.open(res.message, "", {
                     duration: 2000,
-                    panelClass: ["success-snackbar"],
+                    panelClass: [ "success-snackbar" ],
                     verticalPosition: "bottom"
                 });
             }
@@ -335,7 +376,7 @@ export class BomComponent implements OnInit {
 
     getPaginationRequest(data) {
         for (let i in data) {
-            this.filterOptions[i] = data[i];
+            this.filterOptions[ i ] = data[ i ];
         }
         this.getTableData();
     }
@@ -343,8 +384,121 @@ export class BomComponent implements OnInit {
     // Bom table data request on change in table 
 
     getBomTableRequest(data) {
-        this.isFormValid = data.valid;
-        this.formData = data.value.material;
+        const filterData = this.upateStoreDataByUser(this.tabsFormData[ this.selectedIndex ], data);
+        if (filterData.length) {
+            this.tabsFormData[ this.selectedIndex ] = filterData;
+        }
+        this.tabs[ this.selectedIndex ].selectedMaterialLength = filterData.length;
+        this.isFormValid = this.checkIsFormValid(filterData);
     }
+
+
+    checkIsFormValid(data) {
+        let result = false;
+        data.forEach(itm => {
+            if (itm.estimatedQty && itm.materialUnit) {
+                result = true;
+            }
+        });
+        return result;
+    }
+
+    upateStoreDataByUser(prevData, data) {
+        data.forEach(item => {
+            item.materialList.forEach(item => {
+                if (prevData && prevData.length) {
+                    let x = 0;
+                    prevData.forEach(itm => {
+                        if (itm.id === item.id) {
+                            x = 1;
+                            itm.estimatedRate = item.estimatedRate;
+                            itm.estimatedQty = item.estimatedQty;
+                            itm.materialUnit = item.materialUnit;
+                        }
+                    })
+                    if (x == 0) {
+                        if (item.estimatedQty || item.estimatedRate) {
+                            prevData.push(item);
+                        }
+                    }
+                } else {
+                    prevData = [];
+                    if (item.estimatedQty || item.estimatedRate) {
+                        prevData.push(item);
+                    }
+                }
+            });
+        });
+        let finalData = [];
+        prevData.forEach(item => {
+            if (item.estimatedQty || item.estimatedRate) {
+                finalData.push(item);
+            }
+        })
+        return finalData;
+    }
+
+    setSelectedTabDataByUser(prevData, data) {
+        if (prevData && prevData.length) {
+            data.forEach(item => {
+                item.materialList.forEach(itm => {
+                    prevData.forEach(key => {
+                        if (key.id === itm.id) {
+                            itm.estimatedRate = key.estimatedRate;
+                            itm.estimatedQty = key.estimatedQty;
+                            itm.materialUnit = key.materialUnit;
+                        }
+                    })
+                });
+            })
+        }
+        return data;
+    }
+
+
+    openAddBomDialog(index) {
+        const dialogRef = this.dialog.open(AddBomWarningComponent, {
+            width: "400px",
+            // backdropClass: 'backdropBackground'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.saveCategory();
+            } else {
+                this.isFormValid = false;
+                this.tabsFormData[ this.selectedIndex ] = [];
+                this.tabs[ this.selectedIndex ].selectedMaterialLength = 0;
+                this.getTableData();
+            }
+            this.selectedIndex = index ? index : 0;
+        })
+    }
+
+    startSubscription() {
+        this.subscriptions.push(
+            this.bomService.resetBomFilter$.subscribe(_ => {
+                this.tabs.forEach((item, index) => {
+                    if (item.name === 'Search Materials') {
+                        if (this.selectedIndex === index) {
+                            this.selectedIndex = 0;
+                        }
+                        this.tabs.splice(index, 1);
+                    }
+                })
+                for (let i in this.filterOptions) {
+                    if (i !== 'tradeNames') {
+                        this.filterOptions[ i ] = null;
+                    }
+                }
+                this.getTableData();
+            })
+        )
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(item => item.unsubscribe);
+    }
+
 
 }
