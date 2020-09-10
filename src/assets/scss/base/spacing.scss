@@ -175,6 +175,9 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   .maxheight-#{$space}-px {
     max-height: #{$space}px !important;
   }
+  .minheight-#{$space}-px {
+    min-height: #{$space}px !important;
+  }
   .maxheight-#{$space} {
     max-height: #{$space}% !important;
   }
