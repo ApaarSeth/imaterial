@@ -829,7 +829,7 @@ td.mat-footer-cell:first-of-type {
   }
 
   .mat-header-cell, .mat-cell {
-    font-size: 12px;
+    font-size: 12px !important;
   }
 
   .add-user-style .mat-expansion-panel-header-title {

@@ -39,12 +39,12 @@
         .double-images .attached-image {
             &:first-child {
                 top: -18px;
-                left: 0px;
+                left: 110px;
             }
 
             &:nth-child(2) {
                 top: -14px;
-                left: 4px;
+                left: 114px;
             }
         }
 
@@ -122,7 +122,7 @@
             min-width: 100px;
         }
 
-        &:nth-child(4){
+        &:last-child{
             min-width: 150px;
         }
     }
@@ -130,6 +130,34 @@
     .mat-header-cell, .mat-row .mat-cell{
         &:not(:last-child){
             padding-right: 10px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1199px){
+    .rfq-view-step{
+        .rfq-view-image-lists{
+            .triple-images .attached-image, .double-images .attached-image{
+                &:first-child {
+                    left: 96px;       
+                }
+    
+                &:nth-child(2) {
+                    left: 100px;
+                }
+            }
+
+            .triple-images .attached-image{
+                &:nth-child(3){
+                    left: 104px;
+                }
+            }
+    
+            .single-image .attached-image{
+                &:first-child {
+                    left: 98px;
+                }
+            }
         }
     }
 }
@@ -150,7 +178,7 @@
 }
 
 @media only screen and (max-width: 992px){
-    .rfq-view-step{
+    .rfq-view-step, .rfq-final-step{
         .mat-header-row .mat-header-cell, .mat-row .mat-cell {
             &:first-child{
                 min-width: 150px;
@@ -158,6 +186,32 @@
     
             &:nth-child(2){
                 min-width: 80px;
+            }
+        }
+    }
+
+    .rfq-view-step{
+        .rfq-view-image-lists{
+            .triple-images .attached-image, .double-images .attached-image{
+                &:first-child {
+                    left: 72px;       
+                }
+    
+                &:nth-child(2) {
+                    left: 76px;
+                }
+            }
+
+            .triple-images .attached-image{    
+                &:nth-child(3){
+                    left: 80px;
+                }
+            }
+    
+            .single-image .attached-image{
+                &:first-child {
+                    left: 74px;
+                }
             }
         }
     }
@@ -182,6 +236,32 @@
     .rfp-end-date-input{
         order: 3;
     }
+
+    .rfq-view-step{
+        .rfq-view-image-lists{
+            .triple-images .attached-image, .double-images .attached-image{
+                &:first-child {
+                    left: 56px;       
+                }
+    
+                &:nth-child(2) {
+                    left: 60px;
+                }
+            }
+
+            .triple-images .attached-image{    
+                &:nth-child(3){
+                    left: 64px;
+                }
+            }
+    
+            .single-image .attached-image{
+                &:first-child {
+                    left: 58px;
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: 559px){
@@ -195,6 +275,32 @@
     .create-po-dashboard .view-rfp-accordion, .float-rfp-review{
         .mat-expansion-panel-header-title {
             font-size: 13.5px !important;
+        }
+    }
+
+    .rfq-view-step{
+        .rfq-view-image-lists{
+            .triple-images .attached-image, .double-images .attached-image{
+                &:first-child {
+                    left: 36px;       
+                }
+    
+                &:nth-child(2) {
+                    left: 40px;
+                }
+            }
+
+            .triple-images .attached-image{    
+                &:nth-child(3){
+                    left: 44px;
+                }
+            }
+    
+            .single-image .attached-image{
+                &:first-child {
+                    left: 38px;
+                }
+            }
         }
     }
 }

@@ -5,6 +5,10 @@
     background-color: #ffffff !important;
   }
 
+  .rfp-bids-tbl .mat-header-cell, .rfp-bids-tbl .mat-cell{
+    border-bottom: none;
+  }
+
   .mat-table {
     display: block;
   }
