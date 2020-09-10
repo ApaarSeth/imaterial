@@ -136,7 +136,7 @@ export class AddAddressDialogComponent implements OnInit {
     })
 
     if (this.countryCode == 'IN') {
-      // this.newAddressForm.get('gstNo').setValidators([Validators.required, Validators.pattern(FieldRegExConst.GSTIN)])
+      this.newAddressForm.get('gstNo').setValidators([Validators.required, Validators.pattern(FieldRegExConst.GSTIN)])
     }
   }
 
@@ -167,7 +167,7 @@ export class AddAddressDialogComponent implements OnInit {
     this.addAddressService.postEditAddress(this.addressId, data).then(res => {
       if (res.statusCode == 201) {
         this.notifier.snack(res.message)
-        this.dialogRef.close([this.data.roleType, { address: res.data[0] }]);
+        this.dialogRef.close([this.data.roleType, { address: res.data }]);
       }
       else {
         this.notifier.snack(res.message)
@@ -181,10 +181,10 @@ export class AddAddressDialogComponent implements OnInit {
       .then(res => {
         if (res.statusCode == 201) {
           this.notifier.snack(res.message)
+          this.dialogRef.close([this.data.roleType, { address: res.data }]);
         }
         else {
           this.notifier.snack(res.message)
-          this.dialogRef.close([this.data.roleType, { address: res.data }]);
         }
       });
   }
