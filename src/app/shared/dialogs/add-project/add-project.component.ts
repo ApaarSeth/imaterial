@@ -254,6 +254,7 @@ export class AddProjectComponent implements OnInit {
 
   updateProjects(projectDetails: ProjectDetails) {
     if (projectDetails) {
+      projectDetails.gstNo = projectDetails.gstNo === '' ? null : projectDetails.gstNo
       let projectId = this.data.detail.projectId;
       let organizationId = this.data.detail.organizationId;
       this.projectService
