@@ -32,7 +32,20 @@ export interface POData {
   poCreatedBy?: number;
   isAmended?: number;
   poStatus?: string;
+  moduleFeatures?: PremiumFeatures;
 }
+
+export interface PremiumFeatures {
+  featureList: FeaturesList[]
+  planId: number
+
+}
+
+export interface FeaturesList {
+  featureName: string;
+  isAvailable: number;
+}
+
 
 
 export interface PurchaseOrderCurrency {

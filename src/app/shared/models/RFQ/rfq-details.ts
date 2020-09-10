@@ -43,6 +43,8 @@ export interface Address {
   addressType?: string;
   projectAddressId: number;
   projectdefaultAddressId: number;
+  supplierAddressId?: number;
+  supplierId?: number;
   primaryAddress: number;
 }
 
