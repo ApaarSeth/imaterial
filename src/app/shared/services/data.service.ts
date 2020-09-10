@@ -68,7 +68,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -113,7 +113,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -219,7 +219,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -268,7 +268,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -317,7 +317,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -366,7 +366,7 @@ export class DataService {
       if (reqOptions.headers) {
         const hdrs = reqOptions.headers.split(",");
 
-        headers = headers.append(hdrs[ 0 ], hdrs[ 1 ]);
+        headers = headers.append(hdrs[0], hdrs[1]);
       }
     }
 
@@ -388,8 +388,9 @@ export class DataService {
   private handleError(err: HttpErrorResponse) {
     if ((!window.navigator.onLine) || ((typeof err === 'object') && (err.status === ErrorCodesConstants.ERROR_HTTP_NO_RESPONSE))) {
       this.notifier.snack('INTERNET CONNECTION ISSUE');
-    } else if (err.status === ErrorCodesConstants.ERROR_HTTP_NOT_FOUND) {
-      this.notifier.snack(err.error)
+    } else if (err.status === ErrorCodesConstants.ERROR_HTTP_NOT_FOUND || ErrorCodesConstants.ERROR_HTTP_SERVER_ISSUE) {
+      this.notifier.snack('Something went wrong')
+      throw (err.error)
     } else if (err.status === ErrorCodesConstants.ERROR_HTTP_UNAUTHORIZED) {
       if (err.url.includes('sso/oauth/token')) {
         throw (err.error)
@@ -402,10 +403,12 @@ export class DataService {
       console.log(`Error Staus:${err.status} Error Message:${err.message} Url:${err.url}`)
       localStorage.clear();
       window.location.reload();
-    } else if (err.status === ErrorCodesConstants.ERROR_HTTP_SERVER_ISSUE) {
-      this.notifier.snack("Something went wrong")
-      throw (err.error)
-    } else {
+    }
+    // else if (err.status === ErrorCodesConstants.ERROR_HTTP_SERVER_ISSUE) {
+    //   this.notifier.snack("Something went wrong")
+    //   throw (err.error)
+    // }
+    else {
       throw (err.error)
     }
   }

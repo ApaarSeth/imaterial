@@ -69,7 +69,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     this.additonalCost = this.additionalOtherCostInfo;
 
     if (changes.poData && changes.poData.currentValue) {
-      // this.imageAvailable = this.poData.moduleFeatures.featureList[1].isAvailable
+      this.imageAvailable = this.poData.moduleFeatures.featureList[1].isAvailable
     }
 
 

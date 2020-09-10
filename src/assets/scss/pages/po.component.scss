@@ -63,6 +63,7 @@
     }
 
     .material-row {
+      min-height: 55px;
       border-bottom: 0.5px solid #979797;
       width: 100%;
       .mat-cell {
@@ -96,7 +97,7 @@
     display: grid;
     width: max-content;
     span {
-      font-size: 10px;
+      font-size: 12px;
       div,
       .mat-cell {
         font-weight: normal;
@@ -333,14 +334,24 @@ s .validTill {
   min-width: 10% !important;
 }
 
+.po-nedit-date-width {
+  max-width: 13%;
+  min-width: 12% !important;
+}
+
 .po-edit-date-width {
-  max-width: 15%;
-  min-width: 15% !important;
+  max-width: 13%;
+  min-width: 11% !important;
+}
+
+.po-nsupplier-rate-width {
+  max-width: 13%;
+  min-width: 8% !important;
 }
 
 .po-supplier-rate-width {
-  max-width: 5%;
-  min-width: 5% !important;
+  max-width: 13%;
+  min-width: 9% !important;
 }
 
 .international-edit-po {
@@ -358,8 +369,7 @@ s .validTill {
   min-width: 9.9% !important;
 }
 
-.international-view-po,
-.national-view-po {
+.international-view-po {
   max-width: 13%;
   min-width: 10% !important;
 }
@@ -377,20 +387,6 @@ s .validTill {
 .po-unit-width {
   max-width: 6%;
   min-width: 4% !important;
-}
-
-.po-header-unit-width {
-  max-width: 6%;
-  min-width: 4% !important;
-}
-.po-national-unit-width {
-  max-width: 7%;
-  min-width: 7% !important;
-}
-
-.po-national-image-width {
-  max-width: 3%;
-  min-width: 3% !important;
 }
 
 .po-for-approval,
@@ -575,7 +571,7 @@ s .validTill {
 
 .suffix-padding {
   .mat-form-field-wrapper .mat-form-field-suffix {
-    width: 22% !important;
-    margin-left: -20px !important ;
+    width: 18% !important;
+    margin-left: -17px !important ;
   }
 }
