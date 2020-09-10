@@ -96,7 +96,6 @@ export class ProjectItemComponent implements OnInit {
   }
 
   editProject() {
-    this.projectDetails.gstNo = this.projectDetails.gstNo === '' ? null : this.projectDetails.gstNo;
     const data: ProjetPopupData = {
       isEdit: true,
       isDelete: false,

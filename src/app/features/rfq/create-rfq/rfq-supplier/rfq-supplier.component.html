@@ -20,16 +20,7 @@
       </span>
     </span>
     <span class="p-r-5">
-      <button
-        mat-raised-button
-        matStepperPrevious
-        class="main-background-color main-button color-white"
-        (click)="changeRfq()"
-        type="button"
-        [ngClass]="isMobile ? 'po-sm-btn' : ''"
-      >
-        Back
-      </button>
+      <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="changeRfq()" type="button" [ngClass]="isMobile ? 'po-sm-btn' : ''">Back</button>
     </span>
     <!-- (click)="navigateToUploadPage()" -->
     <span class="xs-scrn-btn">
@@ -47,9 +38,9 @@
   </div>
 
   <div
-    class="col-md-12 col-xs-6 p-b-20 text-right m-itm"
+    class="col-md-12 col-xs-6 text-right m-itm"
     *ngIf="rfqData && rfqData.rfqCurrency != null && rfqData.rfqCurrency.exchangeCurrencyName != null"
-    [ngClass]="isMobile ? 'p-t-1-rem' : 'p-t-10'"
+    [ngClass]="isMobile ? 'p-t-20 p-b-0 p-t-1-rem' : 'p-b-20 p-t-10'"
   >
     <span class="base-currency p-l-5 p-r-5" [ngClass]="isMobile ? 'fontsize-12-px mcrncy p-rem-r-5 p-rem-r-5' : 'p-t-10 p-b-10'">
       <span class="font-size-vary-grn color-grey">

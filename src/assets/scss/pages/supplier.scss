@@ -30,7 +30,7 @@
   width: 100%;
   overflow: auto;
 
-  .mat-header-cell{
+  .mat-header-cell {
     z-index: 9 !important;
   }
 
@@ -495,7 +495,7 @@ mat-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  div:first-child{
+  div:first-child {
     margin-right: 25px;
   }
 }
@@ -571,7 +571,7 @@ mat-icon {
   font-size: 18px;
   font-weight: 500;
   font-size: 18px;
-  padding:10px;
+  padding: 10px;
   border-bottom: 1px solid #ebe3f5;
 }
 
@@ -597,7 +597,7 @@ mat-icon {
 }
 
 .header-bell-menu.mat-menu-panel {
-  min-width: 412px !important;
+  min-width: 100% !important;
 }
 .header-bell-menu.mat-menu-item {
   height: auto;
@@ -703,8 +703,8 @@ mat-icon {
   }
 }
 
-.supplier-details-tbl{
-  .mat-radio-label{
+.supplier-details-tbl {
+  .mat-radio-label {
     margin: 0;
     padding-top: 6px;
   }
@@ -760,7 +760,7 @@ h3 {
   }
 }
 .unread-background {
-  background: #3cbcc512;
+  background: $modal-background-color;
   cursor: default;
 }
 .time-notification {
@@ -771,6 +771,7 @@ h3 {
   font-size: 12px;
 }
 .read-background {
+  background: $white-color;
   cursor: pointer;
 }
 .bell-icon {
@@ -788,7 +789,8 @@ h3 {
 }
 
 .remarks-suppliers {
-  .suppliers-list, .suppliers-details{
+  .suppliers-list,
+  .suppliers-details {
     .main-heading {
       color: #020202;
       font-weight: 500;
@@ -796,27 +798,27 @@ h3 {
     }
   }
 
-  .suppliers-list{
+  .suppliers-list {
     border-right: 1px solid #d0d0d0;
     padding: 0 20px 0 0;
-    
+
     .supplier-list-name {
       max-height: 350px;
       overflow-y: auto;
     }
-  
+
     .list-of-suppliers {
       font-size: 15px;
       color: #484444;
       cursor: pointer;
       padding: 2.5px 0px 2.5px 10px;
     }
-  
+
     .active {
       background: #f3f3f7;
     }
   }
-  
+
   .suppliers-details {
     padding: 0px 0px 0px 1.5rem;
     color: #716d6d;
@@ -850,7 +852,6 @@ h3 {
       }
     }
   }
-
 }
 
 .show-download {
@@ -869,17 +870,17 @@ h3 {
   padding: 6px 0;
 }
 
-.supplier-email-input{
+.supplier-email-input {
   padding: 10px 0.5rem 0 0.5rem;
 }
 
-.supplier-data-tbl{
-
+.supplier-data-tbl {
   .supplier-rates .rating-value {
     margin: 0px 0 0 4px;
   }
 
-  .mat-cell:first-child, .mat-cell:nth-child(2) {
+  .mat-cell:first-child,
+  .mat-cell:nth-child(2) {
     min-width: 200px;
     white-space: normal;
     word-break: break-word;
@@ -891,23 +892,23 @@ h3 {
   }
 }
 
-.supplier-company-name{
+.supplier-company-name {
   font-weight: 600;
-  word-break: break-word;;
+  word-break: break-word;
 }
 
-.rfp-supplier{
-  .supplier-rates{
+.rfp-supplier {
+  .supplier-rates {
     margin-top: 0px;
     margin-left: -4px;
   }
 
-  .rfp-supplier-contact{
+  .rfp-supplier-contact {
     font-size: 15px;
     margin-top: 4px;
   }
 
-  span{
+  span {
     display: block;
   }
 }
@@ -948,17 +949,17 @@ h3 {
     color: #716d6d;
   }
 
-  .small-screen-left-padding{
+  .small-screen-left-padding {
     padding-left: 10px;
   }
 
-  .supplier-rates{
+  .supplier-rates {
     .rfq-rates .str:before {
       font-size: 0.85rem !important;
     }
-  } 
+  }
 
-  .supplier-data-tbl{
+  .supplier-data-tbl {
     .supplier-name {
       margin-left: 2px;
     }
@@ -1033,17 +1034,18 @@ h3 {
   }
 }
 
-@media only screen and (max-width: 450px){
-  .search-col, .actions-col {
+@media only screen and (max-width: 450px) {
+  .search-col,
+  .actions-col {
     max-width: 100%;
     flex-basis: 100%;
   }
 
-  .search-col .search-form-input{
+  .search-col .search-form-input {
     width: 50% !important;
   }
 
-  .mobile-icons{
+  .mobile-icons {
     width: 40px !important;
   }
 }
