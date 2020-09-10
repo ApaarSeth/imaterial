@@ -54,8 +54,8 @@
                   <tr matSort class="mat-header-row">
                     <th class="mat-header-cell maxwidth-20">Material Name</th>
                     <th class="mat-header-cell maxwidth-10">Quantity</th>
+                    <th class="mat-header-cell maxwidth-10 text-center">Attached Images</th>
                     <th class="mat-header-cell maxwidth-60">Makes & Rates</th>
-                    <th class="mat-header-cell maxwidth-10"></th>
                   </tr>
                 </table>
 
@@ -70,18 +70,19 @@
                         <span class="p-l-5">{{ material.materialUnit }}</span>
                       </td>
 
+                      <td class="mat-cell maxwidth-10 text-center"></td>
+
+                      <!-- Makes name, quantity and rate column -->
                       <td class="mat-cell maxwidth-60">
-                        <tr class="mat-row makes-details-row">
+                        <tr class="mat-row makes-details-row makes-header-row">
                           <ng-container *ngFor="let brand of material.brandNames">
-                            <td class="mat-cell maxwidth-10 text-center">{{ brand }}</td>
-                            <td class="mat-cell maxwidth-15 text-center supplier-rate-col-bid">Supplier Rates
-                              <span *ngIf="this.rfqProjects[0].rfqCurrency" class="p-r-5">({{ currency }})</span>
+                            <td class="mat-cell maxwidth-8 text-center">{{ brand }}</td>
+                            <td class="mat-cell maxwidth-17 text-center supplier-rate-col-bid">Rate
+                              <span *ngIf="rfqProjects[0].rfqCurrency" class="p-r-5">({{ currency }})</span>
                             </td>
                           </ng-container>
                         </tr>
                       </td>
-
-                      <td class="mat-cell maxwidth-10 text-center">Attached Images</td>
                     </tr>
 
                     <ng-container formArrayName="supplierList">
@@ -95,37 +96,6 @@
                         </td>
 
                         <td class="mat-cell maxwidth-10"></td>
-
-                        <td class="mat-cell maxwidth-60">
-                          <tr class="mat-row">
-                            <ng-container formArrayName="brandGroup">
-                              <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index" [formGroupName]="i">
-                                <td class="mat-cell maxwidth-10 text-center" style="overflow: initial">
-                                  <ng-container *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
-                                    <mat-form-field class="border-input">
-                                      <input type="text" class="quantity" appTwoDigitDecimaNumber matInput 
-                                      formControlName="quantity" placeholder="qty" min="0" (input)="getQuanityValidation(p, m)" />
-                                    </mat-form-field>
-                                  </ng-container>
-
-                                  <ng-template #dashedLine>
-                                    <span>--</span>
-                                  </ng-template>
-                                </td>
-
-                                <td class="mat-cell maxwidth-15 text-center supplier-rate-col-bid">
-                                  {{
-                                    brandInfo.materialUnitPrice != null
-                                      ? ratesBaseCurr
-                                        ? (brandInfo.materialUnitPrice * project.rfqCurrency.exchangeValue | number: "1.2-2")
-                                        : (brandInfo.materialUnitPrice | number: "1.2-2")
-                                      : "--"
-                                  }}
-                                </td>
-                              </ng-container>
-                            </ng-container>
-                          </tr>
-                        </td>
 
                         <!-- Attached Image Column individual Supplier -->
                         <td class="mat-cell maxwidth-10 view-bid-images-preview text-center">
@@ -145,9 +115,41 @@
                             <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
                           </ng-template>
                         </td>
-                      </tr>
 
+                        <!-- Makes name, quantity and rate column -->
+                        <td class="mat-cell maxwidth-60">
+                          <tr class="mat-row makes-details-row makes-body-row">
+                            <ng-container formArrayName="brandGroup">
+                              <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index" [formGroupName]="i">
+                                <td class="mat-cell maxwidth-8 text-center" style="overflow: initial">
+                                  <ng-container *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
+                                    <mat-form-field class="border-input width-100">
+                                      <input type="text" class="quantity" appTwoDigitDecimaNumber matInput 
+                                      formControlName="quantity" placeholder="qty" min="0" (input)="getQuanityValidation(p, m)" />
+                                    </mat-form-field>
+                                  </ng-container>
+
+                                  <ng-template #dashedLine>
+                                    <span>--</span>
+                                  </ng-template>
+                                </td>
+
+                                <td class="mat-cell maxwidth-17 text-center supplier-rate-col-bid">
+                                  {{
+                                    brandInfo.materialUnitPrice != null
+                                      ? ratesBaseCurr
+                                        ? (brandInfo.materialUnitPrice * project.rfqCurrency.exchangeValue | number: "1.2-2")
+                                        : (brandInfo.materialUnitPrice | number: "1.2-2")
+                                      : "--"
+                                  }}
+                                </td>
+                              </ng-container>
+                            </ng-container>
+                          </tr>
+                        </td>                        
+                      </tr>
                     </ng-container>
+
                   </div>
                 </ng-container>
               </mat-expansion-panel>
