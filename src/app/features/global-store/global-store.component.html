@@ -36,14 +36,16 @@
 
     <!-- Material wise section -->
     <ng-container *ngIf="buttonName === 'materialWise'; else elseBlock">
-      <app-material-wise (materialDataLength)="materialShowDataLength($event)" [materialData]="globalStoreData">
+      <app-material-wise (materialDataLength)="materialShowDataLength($event)" [materialData]="globalStoreData" 
+        [pageNumber]="materialPageNumber" [pageLimit]="materialPageLimit" [totalPageCount]="materialTotalPageCount" (sendMaterialPaginationInfo)="getMaterialPaginationInfo($event)">
       </app-material-wise>
     </ng-container>
     
     <!-- Project wise section -->
     <ng-template #elseBlock>
-      <app-project-wise *ngIf="projectWiseData.length" (projectDataLength)="projectShowDataLength($event)"
-        [projectData]="projectWiseData"></app-project-wise>
+      <app-project-wise *ngIf="projectWiseData.length" (projectDataLength)="projectShowDataLength($event)" [projectData]="projectWiseData"
+      [pageNumber]="projectPageNumber" [pageLimit]="projectPageLimit" [totalPageCount]="projectTotalPageCount" (sendProjectPaginationInfo)="getProjectPaginationInfo($event)">
+    </app-project-wise>
     </ng-template>
 
   </div>

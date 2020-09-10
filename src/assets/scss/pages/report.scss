@@ -6,6 +6,10 @@
     width: 100%;
   }
 
+  .mat-header-cell, .mat-cell{
+    border-bottom: none !important;
+  }
+
   .mat-row, .mat-header-row, .liability-row, .ctc-row {
     display: flex;
     align-items: center;

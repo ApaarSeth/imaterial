@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { IndentObj, GlobalStoreObj, ProjectMaterialObj } from "src/app/shared/models/GlobalStore/materialWise";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { GlobalStoreService } from 'src/app/shared/services/global-store.service';
+import { PaginatorConfig } from 'src/app/shared/models/common.models';
 
 @Component({
   selector: "app-material-wise",
@@ -11,10 +12,15 @@ import { GlobalStoreService } from 'src/app/shared/services/global-store.service
 export class MaterialWiseComponent implements OnInit {
   
   @Input("materialData") materialData: GlobalStoreObj[];
+  @Input() pageNumber: number;
+  @Input() pageLimit: number;
+  @Input() totalPageCount: number;
   @Output("materialDataLength") materialDataLength = new EventEmitter();
+  @Output() sendMaterialPaginationInfo = new EventEmitter<any>();
   isMobile: boolean;
   searchMaterial: string = "";
   indentList: IndentObj[];
+  paginationConfig: PaginatorConfig;
 
   constructor(
     private commonService: CommonService,
@@ -24,6 +30,11 @@ export class MaterialWiseComponent implements OnInit {
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
     this.materialDataLength.emit(this.materialData?.length);
+    this.paginationConfig = {
+      limit: this.pageLimit,
+      pageNumber: this.pageNumber,
+      totalCount: this.totalPageCount
+    }
   }
 
   /**
@@ -40,5 +51,9 @@ export class MaterialWiseComponent implements OnInit {
         }
       });
     }
+  }
+
+  updatePaginatorOptions(data){
+    this.sendMaterialPaginationInfo.emit(data);
   }
 }
