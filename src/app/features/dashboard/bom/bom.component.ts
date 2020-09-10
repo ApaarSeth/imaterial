@@ -20,8 +20,7 @@ import { ProjectService } from './../../../shared/services/project.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectDetails, ProjetPopupData } from './../../../shared/models/project-details';
 import { Component, OnInit } from "@angular/core";
-import { removeData } from 'jquery';
-import { filter } from 'rxjs/operators';
+
 @Component({
     selector: "app-bom",
     templateUrl: "./bom.component.html"

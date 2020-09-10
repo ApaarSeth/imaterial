@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, HostListener, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, HostListener, ChangeDetectorRef, SimpleChanges } from "@angular/core";
 import { PoMaterial, PurchaseOrder, PurchaseOrderCurrency, POData } from "src/app/shared/models/PO/po-data";
 import { FormBuilder, FormGroup, FormArray, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { debounceTime } from "rxjs/operators";
@@ -50,6 +50,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
   ratesBaseCurr: boolean = false;
   isMobile: boolean;
   taxCounter: number = 0;
+  imageAvailable: number
+
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
@@ -60,10 +62,17 @@ export class PoTableComponent implements OnInit, OnDestroy {
     this.formInit();
   }
 
-  ngOnChanges(): void {
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.isInternational = this.currency.isInternational;
     this.poCurrency = this.currency.purchaseOrderCurrency;
     this.additonalCost = this.additionalOtherCostInfo;
+
+    if (changes.poData && changes.poData.currentValue) {
+      this.imageAvailable = this.poData.moduleFeatures.featureList[1].isAvailable
+    }
+
+
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
   }

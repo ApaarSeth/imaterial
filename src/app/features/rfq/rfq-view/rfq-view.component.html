@@ -49,7 +49,7 @@
 
     <!-- suppliers list row -->
     <div class="row supplier-list-row m-t-15">
-      <div class="col-md-3 col-xs-6" *ngFor="let supplier of rfqDetails.supplierDetails; let i = index">
+      <div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let supplier of rfqDetails.supplierDetails; let i = index">
         <mat-card class="w-100 rfp-supplier m-b-15">
 
           <span class="supplier-company-name">{{ supplier.supplierName }}</span>
@@ -117,16 +117,6 @@
                 </td>
               </ng-container>
 
-              <!-- Makes Column -->
-              <ng-container matColumnDef="Makes">
-                <th class="fontsize-14-px" mat-header-cell *matHeaderCellDef>Makes</th>
-                <td mat-cell *matCellDef="let element">
-                  <ng-container *ngIf="element.makes.length">
-                    <span class="brand-view-style m-r-5" *ngFor="let make of element.makes">{{ make }}</span>
-                  </ng-container>
-                </td>
-              </ng-container>
-
               <!-- View image Column -->
               <ng-container matColumnDef="Attached Images">
                 <th mat-header-cell *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">Attached Images</th>
@@ -144,6 +134,16 @@
                   <ng-container *ngIf="!element?.documentList">
                     <img src="assets/images/project-default-image.png" alt="default-material"
                       class="img-fluid default-image" />
+                  </ng-container>
+                </td>
+              </ng-container>
+
+              <!-- Makes Column -->
+              <ng-container matColumnDef="Makes">
+                <th class="fontsize-14-px" mat-header-cell *matHeaderCellDef>Makes</th>
+                <td mat-cell *matCellDef="let element">
+                  <ng-container *ngIf="element.makes.length">
+                    <span class="brand-view-style m-r-5" *ngFor="let make of element.makes">{{ make }}</span>
                   </ng-container>
                 </td>
               </ng-container>
