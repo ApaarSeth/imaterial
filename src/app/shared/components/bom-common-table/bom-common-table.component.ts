@@ -1,3 +1,5 @@
+import { debounceTime } from 'rxjs/operators';
+import { CommonService } from './../../services/commonService';
 import { material } from './../../models/category';
 import { SimpleChanges } from '@angular/core';
 import { OnChanges } from '@angular/core';
@@ -17,6 +19,7 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
     @Output() updateBomTable = new EventEmitter<any>();
     @Output() updateBomPaginator = new EventEmitter<any>();
     @Input() config: any;
+    @Input() selectedMaterialLength: number;
     dataSource = new MatTableDataSource<Subcategory>();
 
     form: FormGroup;
@@ -25,11 +28,11 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
     isMobile: boolean;
     tableHeads: string[] = [];
     getRangeLabel: any;
-    searchText: string = '';
 
     constructor(
         private formBuilder: FormBuilder,
-        private bomService: BomService
+        private bomService: BomService,
+        private commonService: CommonService
     ) {
         this.bomService.getMaterialUnit().then(res => {
             this.materialUnits = res.data;
@@ -37,6 +40,7 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
+        this.isMobile = this.commonService.isMobile().matches;
         this.dataSource = this.config.data;
         this.matData = this.config.data;
         if (this.config.table) {
@@ -53,9 +57,8 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
         this.form = this.formBuilder.group({
             material: matCtrl
         })
-        this.form.setValidators(this.checkFormValidation);
-        this.form.valueChanges.subscribe(val => {
-            this.updateBomTable.emit(this.form);
+        this.form.get('material').valueChanges.subscribe(val => {
+            this.updateBomTable.emit(val);
         });
     }
 
@@ -66,29 +69,24 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
         });
     }
 
+    // set material list group object 
+
     getTableMaterialConfig(data: any) {
         const mtcrl = new FormArray([]);
         data.materialList.forEach(item => {
             let tableConfig: any = {};
-            let commonValidation = new FormArray([]);
             for (let i in this.config.table.materialList) {
-                let vGroup: any = {};
                 if (this.config.table.materialList[ i ].formProperty) {
                     tableConfig[ i ] = new FormControl((item[ i ] ? item[ i ] : null));
                 }
                 tableConfig[ 'isNull' ] = true;
-                if (this.config.table.materialList[ i ].any) {
-                    vGroup[ i ] = new FormControl(i);
-                }
-                if (Object.keys(vGroup).length) {
-                    commonValidation.push(this.formBuilder.group({ ...vGroup }));
-                }
-                tableConfig[ 'commonValidation' ] = commonValidation;
             }
             mtcrl.push(this.formBuilder.group({ ...tableConfig }));
         })
         return mtcrl;
     }
+
+    // check table headings which can be dynamic adjust for each table 
 
     getTableHeads() {
         let headList = [];
@@ -99,6 +97,8 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
         }
         this.tableHeads = headList;
     }
+
+    // function to toggle material group child data 
 
     toggleMaterials(event, attrVal: string) {
         // const dataSetGroup = document.querySelectorAll('tbody[data-trgroup]');
@@ -114,6 +114,8 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
             event.target.parentNode.nextElementSibling.hidden = false;
         }
     }
+
+    // inline table search and storing the data entered by user 
 
     getSearchData(data) {
         if (data) {
@@ -145,28 +147,6 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
             this.matData = this.config.data;
             this.formInit();
         }
-    }
-
-    checkFormValidation(form) {
-        let result = false;
-        form.value.material.forEach(item => {
-            item.materialList.forEach(itm => {
-                if (itm.commonValidation && itm.commonValidation.length) {
-                    let vals = [];
-                    itm.commonValidation.forEach(key => {
-                        for (let i in itm) {
-                            if (key[ i ] && key[ i ] == i) {
-                                if (itm[ i ]) vals.push(itm[ i ])
-                            }
-                        }
-                    });
-                    if (vals.length === itm.commonValidation.length) {
-                        result = true;
-                    }
-                }
-            });
-        })
-        return result ? null : { result };
     }
 
 }
