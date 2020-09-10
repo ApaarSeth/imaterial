@@ -1,12 +1,19 @@
 <div class="p-t-5 p-b-20 p-l-20 p-r-20 bg-white">
 
-    <div class="width-18">
+    <div class="width-18 display-inline-block">
         <input-text-search [config]="{
         title: 'Search Material',
         placeholder: 'Search Material',
         list: ''
     }" (selectionUpdate)="getSearchData($event)"></input-text-search>
     </div>
+
+    <ng-container *ngIf="selectedMaterialLength > 0">
+        <div class="display-inline-block pull-right">
+            <span class="display-block p-r-20 p-l-20 p-t-10 p-b-10 m-t-10 sel-mat-blk">Selected Material:
+                {{ selectedMaterialLength }}</span>
+        </div>
+    </ng-container>
 
     <ng-container *ngIf="matData?.length && tableHeads?.length">
 
@@ -24,8 +31,10 @@
                     <ng-container *ngFor="let itm of form['controls'].material['controls']; let ig = index"
                         [formGroupName]="ig">
                         <tr class="cursor-pointer bg-gray" style="border-bottom:2px solid #d6d2d2;">
-                            <td [colSpan]="tableHeads.length" (click)="toggleMaterials($event, itm.value.groupName)">
-                                <span>{{ itm.value.groupName }}</span>
+                            <td [colSpan]="tableHeads.length" (click)="toggleMaterials($event, itm.value.groupName)"
+                                class="p-l-10">
+                                <span
+                                    [ngClass]="isMobile ? 'fontsize-12-px' : 'fontsize-14-px' ">{{ itm.value.groupName }}</span>
                                 <span class="pull-right bom-arrow">
                                     <mat-icon inline="true">keyboard_arrow_up</mat-icon>
                                 </span>
@@ -40,7 +49,7 @@
 
                                 <ng-container *ngIf="item.value.isNull">
 
-                                    <td [ngClass]="isMobile ? 'font-size12' : '' ">
+                                    <td [ngClass]="isMobile ? 'fontsize-12-px' : 'fontsize-14-px' ">
                                         {{ item.value.materialName }}
                                         <div class="limited-character bom" matTooltip=" {{ item.value.materialGroup }}">
                                             <span class="category-name">
@@ -48,7 +57,7 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td [ngClass]="isMobile ? 'font-size12' : '' ">
+                                    <td [ngClass]="isMobile ? 'fontsize-12-px' : 'fontsize-14-px' ">
                                         {{ item.value.tradeList.length ? item.value.tradeList : item.value.tradeName }}
                                     </td>
                                     <td class="p-b-20">

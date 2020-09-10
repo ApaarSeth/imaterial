@@ -111,6 +111,14 @@ export class PoComponent implements OnInit {
       this.formInit();
     });
 
+    this.addProjectService.onEditOrDelete.subscribe(res => {
+      if (res && res != null) {
+        this.poService.getPoGenerateData(this.poId).then(res => {
+          this.cardData.billingAddress = res.data.billingAddress
+        })
+      }
+    })
+
   }
 
   generatePoApi() {

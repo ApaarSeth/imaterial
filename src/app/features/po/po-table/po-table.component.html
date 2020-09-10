@@ -44,7 +44,7 @@
     <mat-accordion displayMode="flat" multi class="mat-table" formArrayName="forms" [ngClass]="isMobile ? 'res-table' : 'po-table'">
       <div [ngClass]="isMobile ? 'res-td' : ''">
         <section matSort class="mat-elevation-z2 mat-header-row">
-          <span class="mat-header-cell po-sno-width" mat-sort-header="vesselName">S.No</span>
+          <span class="mat-header-cell po-sno-width">S.No</span>
           <span class="mat-header-cell po-material-width"
             >Material Name <br />
             & Makes</span
@@ -94,12 +94,21 @@
               <span>{{ material.materialName }}</span>
             </span>
             <span class="mat-cell po-unit-width">{{ material.materialUnit }}</span>
-            <span class="mat-cell" [ngClass]="mode === 'edit' ? (isInternational ? 'international-edit-po' : isMobile ? 'po-edit-date-width' : 'international-edit-po') : 'international-view-po'">
+            <span class="mat-cell" [ngClass]="mode === 'edit' ? (isMobile ? (isInternational ? 'po-edit-date-width' : 'po-nedit-date-width') : 'international-edit-po') : 'international-view-po'">
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
                 <mat-form-field class="po-border-input suffix-padding infix-padding width-100 mat-form-field-label-size mat-form-field-highlight input-padding">
                   <mat-label>Select Date*</mat-label>
-                  <input #inputDate class="fontsize-12-px" matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" [min]="minDate" readonly />
+                  <input
+                    #inputDate
+                    [ngClass]="isMobile ? 'fontsize-10-px' : 'fontsize-12-px'"
+                    matInput
+                    [matDatepicker]="dueDate"
+                    formControlName="fullfilmentDate"
+                    (click)="dueDate.open()"
+                    [min]="minDate"
+                    readonly
+                  />
                   <mat-datepicker-toggle matSuffix [for]="dueDate"> </mat-datepicker-toggle>
                   <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
                 </mat-form-field>
@@ -116,7 +125,7 @@
             </span>
             <span
               class="mat-cell"
-              [ngClass]="mode === 'edit' ? (isInternational ? 'international-edit-po' : isMobile ? 'po-supplier-rate-width' : 'international-edit-po') : 'international-view-po'"
+              [ngClass]="mode === 'edit' ? (isMobile ? (isInternational ? 'po-supplier-rate-width' : 'po-nsupplier-rate-width') : 'international-edit-po') : 'international-view-po'"
             ></span>
             <span class="mat-cell" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'"
               >{{ getMaterialQuantity(m) | number: "1.2-2" }}
@@ -126,7 +135,7 @@
             </span>
             <span class="mat-cell" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'">{{ getMaterialAmount(m) | number: "1.2-2" }}</span>
             <span class="mat-cell" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'" *ngIf="isInternational; else gstTotalBlock">
-              <span>
+              <span class="p-l-2">
                 {{ getTotalPOListTax(m) | number: "1.2-2" }}
               </span>
               <span>
@@ -153,7 +162,9 @@
             </ng-template>
 
             <span class="mat-cell" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'" *ngIf="isInternational; else gstTotalAmountBlock">
-              {{ ratesBaseCurr ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue | number: "1.2-2") : (this.poTableData[m].otherCostAmount | number: "1.2-2") }}
+              <span class="p-l-2">{{
+                ratesBaseCurr ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue | number: "1.2-2") : (this.poTableData[m].otherCostAmount | number: "1.2-2")
+              }}</span>
               <span *ngIf="this.poTableData[m].otherCostAmount" class="info-icon info-tootip"
                 ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                 <span class="info-tootip__content">
@@ -316,10 +327,10 @@
           <span *ngIf="mode === 'edit'; else viewAdditonalBlock" class="mat-cell text-right">
             <div class="row">
               <div class="col-xs-8"></div>
-              <div class="col-xs-4 p-t-5 p-b-5 text-left" [ngClass]="isMobile ? 'p-l-47' : 'p-l-20'">
+              <div class="col-xs-4 p-t-5 p-b-5 p-l-0 text-left" [ngClass]="imageAvailable ? 'p-l-47' : '  '">
                 <span class="p-r-0">
                   <span>
-                    <span class="p-r-5">{{
+                    <span class="p-l-2">{{
                       ratesBaseCurr ? (this.additonalCost.additionalOtherCostAmount * poCurrency.exchangeValue | number: "1.2-2") : (this.additonalCost.additionalOtherCostAmount | number: "1.2-2")
                     }}</span>
                     <span *ngIf="this.additonalCost.additionalOtherCostInfo && this.additonalCost.additionalOtherCostInfo.length" class="info-icon info-tootip"
@@ -339,7 +350,6 @@
                   </span>
                 </span>
                 <br />
-
                 <div class="btn btn-link fontsize-13-px taxButton p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('otherCost')">Add Other Tax</div>
               </div>
             </div>

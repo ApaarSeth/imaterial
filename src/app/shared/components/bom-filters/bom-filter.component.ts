@@ -24,7 +24,9 @@ export class BomFilterComponent {
         this.allData[ obj.type ] = obj.data;
         this.config.options.forEach(item => {
             if (item.dependSearch === obj.id) {
-                this.bomService.getTradeCategory({ tradeNames: [ ...this.bomService.getNames(obj.data) ] }).then(res => {
+                this.allData[ item.key ] = null;
+                const tradeList = this.bomService.getNames(obj.data);
+                this.bomService.getTradeCategory({ tradeNames: tradeList.length ? [ ...tradeList ] : null }).then(res => {
                     item.data = this.bomService.getCategoriesByIDName(res.data);
                 });
             }
