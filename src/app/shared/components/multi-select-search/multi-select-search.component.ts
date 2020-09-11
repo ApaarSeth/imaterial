@@ -2,14 +2,14 @@ import { BomService } from 'src/app/shared/services/bom.service';
 import { Subscription } from 'rxjs';
 import { BomSearchData, BomFilterItemConfig } from './../../models/bom.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output, Input, OnDestroy, OnChanges, SimpleChanges } from "@angular/core";
 
 @Component({
     selector: 'multi-select-search',
     templateUrl: './multi-select-search.component.html'
 })
 
-export class MultiSelectSearchComponent implements OnInit, OnDestroy {
+export class MultiSelectSearchComponent implements OnInit, OnDestroy, OnChanges {
 
     constructor(
         private formBuilder: FormBuilder,
@@ -20,7 +20,7 @@ export class MultiSelectSearchComponent implements OnInit, OnDestroy {
 
     subscriptions: Subscription[] = [];
 
-    @Output() selectionUpdate = new EventEmitter<number[]>();
+    @Output() selectionUpdate = new EventEmitter<BomSearchData[]>();
     @Input() config: BomFilterItemConfig;
 
 
@@ -33,11 +33,10 @@ export class MultiSelectSearchComponent implements OnInit, OnDestroy {
     formInit() {
         this.form = this.formBuilder.group({
             searchInput: [ '' ],
-            selected: []
+            selected: [ this.config.preSelected ]
         })
 
         if (this.config.preSelected && this.config.preSelected.length) {
-            this.form.get('selected').setValue(this.config.preSelected);
             this.selectionUpdate.emit(this.config.preSelected);
         }
 
@@ -66,6 +65,17 @@ export class MultiSelectSearchComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscriptions.forEach(item => item.unsubscribe);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.config) {
+            this.form.get('selected').setValue(this.config.preSelected);
+            this.form.get('selected').updateValueAndValidity();
+        }
+    }
+
+    compareValues(Val1: any, val2: any): boolean {
+        return Val1.id === val2.id;
     }
 
 }

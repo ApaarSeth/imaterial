@@ -83,6 +83,7 @@ export class BomComponent implements OnInit {
                 type: 'MULTI_SELECT_SEARCH',
                 key: 'categoryNames',
                 id: 1,
+                preSelected: [],
                 dependSearch: 0
             },
             {
@@ -197,11 +198,11 @@ export class BomComponent implements OnInit {
                 // this.tabs[ this.selectedIndex ].data = res.data;
                 this.getBomTableConfig();
             });
-        } else {
+        } else if (this.selectedIndex === 3) {
 
             let tradeObj: any = {};
             for (let i in this.filterOptions) {
-                if ((i === 'tradeNames' || i === 'categoryNames') && this.filterOptions[ i ] && this.filterOptions[ i ].length) {
+                if (i === 'tradeNames' || i === 'categoryNames') {
                     tradeObj[ i ] = this.bomService.getNames(this.filterOptions[ i ]);
                 } else {
                     if (this.filterOptions[ i ]) {
@@ -209,35 +210,42 @@ export class BomComponent implements OnInit {
                     }
                 }
             }
-            const checkIsValidQueryParam = this.getIsValidQueryParam(tradeObj);
+
             tradeObj.limit = tradeObj.limit ? tradeObj.limit : 25;
             tradeObj.pageNumber = tradeObj.pageNumber ? tradeObj.pageNumber : 1;
+            tradeObj[ 'isTopMaterial' ] = 0;
+
+            this.bomService[ this.tabs[ this.selectedIndex ][ 'functionName' ] ](tradeObj).then(res => {
+
+                this.tabs[ this.selectedIndex ].data = this.setSelectedTabDataByUser(this.tabsFormData[ this.selectedIndex ], res.materialTrades);
+
+                this.tabs[ this.selectedIndex ].paginatorOptions = {
+                    limit: res.limit,
+                    pageNumber: res.pageNumber,
+                    totalCount: res.totalCount
+                } as PaginatorConfig;
+                this.getBomTableConfig();
+            });
+
+        } else {
+
+            let tradeObj: any = {};
+            tradeObj.tradeNames = this.bomService.getNames(this.filterOptions.tradeNames);
+            tradeObj.limit = this.filterOptions.limit ? this.filterOptions.limit : 25;
+            tradeObj.pageNumber = this.filterOptions.pageNumber ? this.filterOptions.pageNumber : 1;
             tradeObj[ 'isTopMaterial' ] = this.selectedIndex === 0 ? 1 : 0;
-            if (checkIsValidQueryParam) {
-                this.bomService[ this.tabs[ this.selectedIndex ][ 'functionName' ] ](tradeObj).then(res => {
+            this.bomService[ this.tabs[ this.selectedIndex ][ 'functionName' ] ](tradeObj).then(res => {
+                this.tabs[ this.selectedIndex ].data = this.setSelectedTabDataByUser(this.tabsFormData[ this.selectedIndex ], res.materialTrades);
+                this.tabs[ this.selectedIndex ].paginatorOptions = {
+                    limit: res.limit,
+                    pageNumber: res.pageNumber,
+                    totalCount: res.totalCount
+                } as PaginatorConfig;
+                this.getBomTableConfig();
+            });
 
-                    this.tabs[ this.selectedIndex ].data = this.setSelectedTabDataByUser(this.tabsFormData[ this.selectedIndex ], res.materialTrades);
-
-                    // this.tabs[ this.selectedIndex ].data = res.materialTrades;
-                    this.tabs[ this.selectedIndex ].paginatorOptions = {
-                        limit: res.limit,
-                        pageNumber: res.pageNumber,
-                        totalCount: res.totalCount
-                    } as PaginatorConfig;
-                    this.getBomTableConfig();
-                });
-            }
         }
-    }
 
-    getIsValidQueryParam(data) {
-        let result = false;
-        for (let key in data) {
-            if ((data[ key ] !== null && (key === 'tradeNames' && data[ key ].length) || (key === 'categoryNames' && data[ key ].length) || (key === 'materialName' && data[ key ]))) {
-                result = true;
-            }
-        }
-        return result;
     }
 
     // get data after applying filter 
@@ -260,7 +268,6 @@ export class BomComponent implements OnInit {
             }
         }
         this.selectedIndex = 3;
-        this.getTableData();
     }
 
     // creating bom table data configuration as per the requirement. field can be managed which need to show

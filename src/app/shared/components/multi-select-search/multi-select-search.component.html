@@ -3,16 +3,17 @@
     <form *ngIf="form" [formGroup]="form">
         <mat-form-field class="d-block border-bottom border-dark drp-inpt">
             <mat-label>{{ config.title }}</mat-label>
-            <mat-select formControlName="selected" multiple (openedChange)="projectInput.focus()">
+            <mat-select formControlName="selected" multiple (openedChange)="projectInput.focus()"
+                [compareWith]="compareValues">
                 <div class="d-flex">
-                    <input formControlName="searchInput" class="p-rem-l-1" #projectInput matInput focused="'true'"
+                    <input formControlName="searchInput" class="p-l-4" #projectInput matInput focused="'true'"
                         type="text" autocomplete="off" placeholder="search" (keydown)="$event.stopPropagation()" />
                     <button mat-button matSuffix mat-icon-button>
                         <mat-icon>search</mat-icon>
                     </button>
                 </div>
                 <mat-divider></mat-divider>
-                <mat-option *ngFor="let item of filtered || config.list" [value]="item">
+                <mat-option *ngFor="let item of (filtered || config.list)" [value]="item">
                     {{ item.name }}
                 </mat-option>
             </mat-select>
