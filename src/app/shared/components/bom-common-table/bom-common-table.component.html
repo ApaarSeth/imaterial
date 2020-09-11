@@ -1,6 +1,6 @@
 <div class="p-t-5 p-b-20 p-l-20 p-r-20 bg-white">
 
-    <div class="width-18 display-inline-block">
+    <div class="display-inline-block" [ngClass]="isMobile ? 'width-80' : 'width-18' ">
         <input-text-search [config]="{
         title: 'Search Material',
         placeholder: 'Search Material',

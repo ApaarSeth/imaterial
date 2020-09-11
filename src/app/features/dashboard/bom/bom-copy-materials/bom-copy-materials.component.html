@@ -1,6 +1,7 @@
 <div class="page-start-point p-rem-t-40">
   <div class="p-l-10 p-r-10 p-b-10 copy-bom-materials-outer">
-    <card-layout *ngIf="projectData" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2"> </card-layout>
+    <card-layout *ngIf="projectData" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2">
+    </card-layout>
 
     <div class="row align-items-center copy-bom-small-screen">
       <div class="col-xs-6 col-md-3 copy-bom-search-input">
@@ -17,25 +18,15 @@
           <mat-label>Select Project</mat-label>
           <mat-select>
             <div class="search-project-div d-flex align-items-center">
-              <input
-                class="p-b-5"
-                matInput
-                type="Search Project..."
-                placeholder="Search project Name"
-                [(ngModel)]="searchText"
-                [ngModelOptions]="{standalone: true}"
-                (keydown)="$event.stopPropagation()"
-                autocomplete="off"
-              />
+              <input class="p-b-5" matInput type="Search Project..." placeholder="Search project Name"
+                [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (keydown)="$event.stopPropagation()"
+                autocomplete="off" />
               <button mat-button matSuffix mat-icon-button>
                 <mat-icon>search</mat-icon>
               </button>
             </div>
-            <mat-option
-              *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']"
-              [value]="project.projectName"
-              (click)="getProjectMaterials(project.projectId)"
-            >
+            <mat-option *ngFor="let project of allProjectsList | SearchPipe: searchText:['projectName']"
+              [value]="project.projectName" (click)="getProjectMaterials(project.projectId)">
               {{ project.projectName }}
             </mat-option>
           </mat-select>
@@ -43,7 +34,8 @@
       </div>
 
       <div class="col-xs-12 col-md-6 text-right copy-bom-button-action">
-        <button mat-raised-button class="main-background-color main-button color-white" (click)="copySelectedMaterials()">Copy</button>
+        <button mat-raised-button class="main-background-color main-button color-white"
+          (click)="copySelectedMaterials()">Copy</button>
       </div>
     </div>
 
@@ -57,20 +49,13 @@
         <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="col-sm-12 bom-material-table">
           <ng-container matColumnDef="materialName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="bom-material-name-col">
-              <mat-checkbox #allCh (change)="getElemenetChecked(allCh, dataSource, 'SelectAll')"> Material Name </mat-checkbox>
+              <mat-checkbox #allCh (change)="getElemenetChecked(allCh, dataSource, 'SelectAll')"> Material Name
+              </mat-checkbox>
             </th>
-            <td
-              class="text-left"
-              mat-cell
-              *matCellDef="let element"
-              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-            >
-              <mat-checkbox
-                #ch
-                (change)="getElemenetChecked(ch, element, 'Select')"
-                [checked]="element.checked"
-                [disabled]="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false"
-              >
+            <td class="text-left" mat-cell *matCellDef="let element"
+              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+              <mat-checkbox #ch (change)="getElemenetChecked(ch, element, 'Select')" [checked]="element.checked"
+                [disabled]="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false">
                 <div class="limited-character bom" matTooltip=" {{ element.materialName }}">
                   {{ element.materialName }}
                   <br />
@@ -86,64 +71,29 @@
 
           <ng-container matColumnDef="materialUnit">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center">Unit</th>
-            <td
-              class="text-align-center"
-              mat-cell
-              *matCellDef="let element"
-              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-            >
+            <td class="text-align-center" mat-cell *matCellDef="let element"
+              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
               {{ element.materialUnit }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="estimatedQty">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">Estimated Quantity</th>
-            <td
-              class="text-align-center"
-              mat-cell
-              *matCellDef="let element"
-              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-            >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
+              class="text-align-center justify-center minwidth-110-px">Estimated Quantity</th>
+            <td class="text-align-center" mat-cell *matCellDef="let element"
+              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
               {{ element.estimatedQty }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="estimatedRate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">Unit Rate (INR)</th>
-            <td
-              class="text-align-center"
-              mat-cell
-              *matCellDef="let element"
-              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-            >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header
+              class="text-align-center justify-center minwidth-110-px">Unit Rate (INR)</th>
+            <td class="text-align-center" mat-cell *matCellDef="let element"
+              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
               {{ element.estimatedRate }}
             </td>
           </ng-container>
-          =======
-          <ng-container matColumnDef="estimatedQty">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">Estimated Quantity</th>
-            <td
-              class="text-align-center"
-              mat-cell
-              *matCellDef="let element"
-              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-            >
-              {{ element.estimatedQty }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="estimatedRate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center minwidth-110-px">Unit Rate (INR)</th>
-            <td
-              class="text-align-center"
-              mat-cell
-              *matCellDef="let element"
-              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}"
-            >
-              {{ element.estimatedRate }}
-            </td>
-          </ng-container>
-          >>>>>>> 20227b84527c65e5b9c5be3e18004c81a1aeb9c4
 
           <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
           <tr mat-row *matRowDef="let element; columns: columnsToDisplay" (click)="toggleRow(element)"></tr>
@@ -160,7 +110,8 @@
           </div>
 
           <div class="no-project-selected-info">
-            <p class="text-center">You need to select any project to see and copy the materials! Please select the project from the above to proceed.</p>
+            <p class="text-center">You need to select any project to see and copy the materials! Please select the
+              project from the above to proceed.</p>
           </div>
         </div>
       </div>
