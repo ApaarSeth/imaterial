@@ -68,7 +68,7 @@ export interface AddRFQ {
   lastUpdatedBy: string;
   lastUpdatedAt: string;
   rfqId: number;
-  rfq_status: string;
+  rfqStatus: string;
   rfqName: string;
   dueDate: string;
   supplierId: number[];

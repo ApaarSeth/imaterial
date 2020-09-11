@@ -148,7 +148,7 @@ export class PoCardComponent implements OnInit {
           this.cardData.billingAddress.projectBillingAddressId =
             result[1].address.projectAddressId;
           // result[1].address.projectAddressId && this.poService.billingAddress$.next();
-          this.cardData.billingAddress.gstNo = result[1].address.gstNo;
+          this.cardData.billingAddress.gstNo = result[1].address.gstNo === '' ? null : result[1].address.gstNo;
           this.projectDetails.controls["billingAddress"].setValue(
             this.cardData.billingAddress
           );
@@ -165,7 +165,7 @@ export class PoCardComponent implements OnInit {
           this.cardData.supplierAddress.supplierAddressId =
             result[1].address.supplierAddressId;
           // result[1].address.supplierAddressId && this.poService.supplierAddress$.next();
-          this.cardData.supplierAddress.gstNo = result[1].address.gstNo;
+          this.cardData.supplierAddress.gstNo = result[1].address.gstNo === '' ? null : result[1].address.gstNo;
           this.projectDetails.controls["supplierAddress"].setValue(
             this.cardData.supplierAddress
           );

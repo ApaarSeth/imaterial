@@ -313,7 +313,7 @@ export class BomTableComponent implements OnInit {
         lastUpdatedBy: null,
         lastUpdatedAt: null,
         rfqId: null,
-        rfq_status: null,
+        rfqStatus: null,
         rfqName: null,
         dueDate: null,
         supplierId: null,

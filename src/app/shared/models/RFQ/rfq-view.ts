@@ -4,7 +4,7 @@ import { Currency } from '../currency';
 export interface Rfq {
     rfqName: string,
     dueDate: string,
-    rfq_status: string,
+    rfqStatus: string,
     supplierId: number[],
     supplierDetails: Supplier[],
     rfqProjectsList: RfqProjects[],
