@@ -37,6 +37,8 @@ export class MultiSelectSearchComponent implements OnInit, OnDestroy, OnChanges 
         })
 
         if (this.config.preSelected && this.config.preSelected.length) {
+            this.form.get('selected').setValue(this.config.preSelected);
+            this.form.get('selected').updateValueAndValidity();
             this.selectionUpdate.emit(this.config.preSelected);
         }
 
@@ -69,8 +71,7 @@ export class MultiSelectSearchComponent implements OnInit, OnDestroy, OnChanges 
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.config) {
-            this.form.get('selected').setValue(this.config.preSelected);
-            this.form.get('selected').updateValueAndValidity();
+            this.formInit();
         }
     }
 
