@@ -1,4 +1,5 @@
 import { Component, OnInit, SimpleChanges, Input, HostListener } from "@angular/core"; import { CountryCode } from "../../../models/currency"; import { Supplier } from "../../../models/RFQ/rfq-view"; import { GrnMaterialList } from "../../../models/add-direct-grn"; import { Observable } from "rxjs"; import { FormGroup, FormBuilder, Validators } from "@angular/forms"; import { DocumentList } from "../../../models/PO/po-data"; import { AngularEditorConfig } from "@kolkov/angular-editor"; import { AngularEditor } from "../../../constants/angular-editor.constant"; import { AppNotificationService } from "../../../services/app-notification.service"; import { CommonService } from "../../../services/commonService"; import { BomService } from "../../../services/bom.service"; import { MatSnackBar } from "@angular/material/snack-bar"; import { DocumentUploadService } from "../../../services/document-download.service"; import { MatDialogRef } from "@angular/material/dialog"; import { FieldRegExConst } from "../../../constants/field-regex-constants";
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
     selector: 'app-add-supplier',
@@ -34,6 +35,7 @@ export class GrnAddSupplierComponent implements OnInit {
         private _snackBar: MatSnackBar,
         private formBuilder: FormBuilder,
         private documentUploadService: DocumentUploadService,
+        private navService: AppNavigationService,
         private dialogRef: MatDialogRef<GrnAddSupplierComponent>
     ) { }
 
@@ -56,7 +58,7 @@ export class GrnAddSupplierComponent implements OnInit {
             this.projectId = changes.prjctId.currentValue
         }
     }
-    
+
     initForm() {
         this.form = this.formBuilder.group({
             grnNo: ['', Validators.maxLength(300)],
@@ -207,6 +209,12 @@ export class GrnAddSupplierComponent implements OnInit {
         let data = { ...this.form.getRawValue(), grnDate, supplierName, supplierId, materialList, documentList, countryCode, projectId: Number(this.projectId) }
         this.bomService.addGrnWithoutPo(data).then(res => {
             if (res.statusCode === 201) {
+                this.navService.gaEvent({
+                    action: 'submit',
+                    category: 'add_grn',
+                    label: null,
+                    value: null
+                });
                 this.notifier.snack("GRN Created Successfully!")
                 this.dialogRef.close("success")
             }

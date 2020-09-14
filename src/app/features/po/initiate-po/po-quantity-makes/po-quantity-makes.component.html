@@ -100,8 +100,8 @@
             <ng-container matColumnDef="Estimated Rate">
               <th mat-header-cell class="text-center" *matHeaderCellDef>Awarded Rate</th>
               <td mat-cell class="text-center" *matCellDef="let element; let i = index">
-                <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input" [ngClass]="isMobile ? 'text-center' : ''">
-                  <input matInput formControlName="materialUnitPrice" appTwoDigitDecimaNumber type="text" [ngClass]="isMobile ? 'p-r-5 width-70' : ''" placeholder="Awarded Rate" min="0" />
+                <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input width-67">
+                  <input matInput formControlName="materialUnitPrice" appTwoDigitDecimaNumber type="text" placeholder="Awarded Rate" min="0" />
                   <small
                     *ngIf="
                       materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].hasError('pattern') &&
@@ -118,9 +118,9 @@
             <ng-container matColumnDef="Quantity">
               <th mat-header-cell class="text-center" *matHeaderCellDef>Quantity</th>
               <td mat-cell class="text-center" *matCellDef="let element; let i = index">
-                <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input text-center">
+                <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input width-67">
                   <div class="display-flex justify-content-flex-center">
-                    <input matInput formControlName="materialQty" type="text" [ngClass]="isMobile ? 'width-70' : ''" placeholder="Quantity" min="0" appTwoDigitDecimaNumber />
+                    <input matInput formControlName="materialQty" type="text" placeholder="Quantity" min="0" appTwoDigitDecimaNumber />
                     <span *ngIf="materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialQty'].hasError('greaterQuantity')">
                       <app-error-message [msg]="'Cannot add quantity greater than ' + element.poAvailableQty"></app-error-message>
                     </span>
