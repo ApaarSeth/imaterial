@@ -38,16 +38,7 @@
     <div class="col-md-4 col-xs-12 text-right m-itm" [ngClass]="isMobile ? 'sm-btn1 mt-2 mb-1' : ''">
       <span class="p-r-5">
         <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
-        <button
-          mat-raised-button
-          matStepperPrevious
-          class="main-background-color main-button color-white"
-          (click)="materialAdded()"
-          type="button"
-          [ngClass]="isMobile ? 'po-sm-btn' : ''"
-        >
-          Back
-        </button>
+        <button mat-raised-button matStepperPrevious class="main-background-color main-button color-white" (click)="materialAdded()" type="button" [ngClass]="isMobile ? 'po-sm-btn' : ''">Back</button>
       </span>
       <span>
         <button
@@ -105,14 +96,14 @@
           </ng-container>
 
           <ng-container matColumnDef="Required Date">
-            <th mat-header-cell *matHeaderCellDef>Required Date</th>
+            <th mat-header-cell *matHeaderCellDef [ngClass]="isMobile ? 'p-r-5' : ''">Required Date</th>
             <td mat-cell *matCellDef="let element; let i = index">
               {{ element.dueDate ? (element.dueDate | date: "dd-MMM-yyy") : "" }}
             </td>
           </ng-container>
           <!-- Name Column -->
           <ng-container matColumnDef="Requested Quantity">
-            <th mat-header-cell *matHeaderCellDef>Requested Quantity</th>
+            <th mat-header-cell *matHeaderCellDef [ngClass]="isMobile ? 'p-r-5' : ''">Requested Quantity</th>
             <td mat-cell *matCellDef="let element">
               {{ element.requestedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
             </td>

@@ -97,21 +97,40 @@
             <span class="mat-cell" [ngClass]="mode === 'edit' ? (isMobile ? (isInternational ? 'po-edit-date-width' : 'po-nedit-date-width') : 'international-edit-po') : 'international-view-po'">
               <ng-container *ngIf="mode != 'edit'; else editQuantity"> {{ material.fullfilmentDate | date: "dd-MMM-yyy" }}</ng-container>
               <ng-template #editQuantity>
-                <mat-form-field class="po-border-input suffix-padding infix-padding width-100 mat-form-field-label-size mat-form-field-highlight input-padding">
-                  <mat-label>Select Date*</mat-label>
-                  <input
-                    #inputDate
-                    [ngClass]="isMobile ? 'fontsize-10-px' : 'fontsize-12-px'"
-                    matInput
-                    [matDatepicker]="dueDate"
-                    formControlName="fullfilmentDate"
-                    (click)="dueDate.open()"
-                    [min]="minDate"
-                    readonly
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="dueDate"> </mat-datepicker-toggle>
-                  <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
-                </mat-form-field>
+                <div class="higlight-input">
+                  <mat-form-field
+                    class="po-border-input suffix-padding infix-padding mat-form-field-label-size input-padding"
+                    [ngClass]="
+                      poForms['controls']['forms']['controls'][m]['controls']['fullfilmentDate'].hasError('required') &&
+                      poForms['controls']['forms']['controls'][m]['controls']['fullfilmentDate'].touched
+                        ? 'width-77'
+                        : 'width-100'
+                    "
+                  >
+                    <mat-label>Select Date*</mat-label>
+                    <input
+                      #inputDate
+                      [ngClass]="isMobile ? 'fontsize-10-px' : 'fontsize-12-px'"
+                      matInput
+                      [matDatepicker]="dueDate"
+                      formControlName="fullfilmentDate"
+                      (click)="dueDate.open()"
+                      [min]="minDate"
+                      readonly
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="dueDate"> </mat-datepicker-toggle>
+                    <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
+                  </mat-form-field>
+                  <span
+                    *ngIf="
+                      poForms['controls']['forms']['controls'][m]['controls']['fullfilmentDate'].hasError('required') &&
+                      poForms['controls']['forms']['controls'][m]['controls']['fullfilmentDate'].touched
+                    "
+                  >
+                    <app-error-message [width]="'22'" [msg]="'Choose the date greater than current date'"></app-error-message>
+                  </span>
+                </div>
+
                 <!-- <span
                   *ngIf="
                     poForms['controls']['forms']['controls'][m]['controls']['fullfilmentDate'].hasError('required') &&
@@ -138,21 +157,22 @@
               <span class="p-l-2">
                 {{ getTotalPOListTax(m) | number: "1.2-2" }}
               </span>
-              <span>
-                <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon info-tootip"
-                  ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
-                  <span class="info-tootip__content">
-                    <div class="tooltip-table p-t-0 p-r-0 p-l-0">
-                      <div class="width-100 border-radius-tltr-5px background-modal-grey p-t-5 text-center gray-bottom-border m-b-5">
-                        <span class="text-semi-bold">Tax Details</span>
-                      </div>
-                      <div class="display-flex justify-content-space-between gray-bottom-border" *ngFor="let tax of this.poTableData[m].taxInfo">
-                        <span class="text-semi-bold">{{ tax.taxName }}</span
-                        ><span>{{ tax.taxValue }}%</span>
-                      </div>
-                    </div>
-                  </span>
+              <span class="info-tootip">
+                <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon">
+                  <img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                 </span>
+                <!-- tootlip containes supplier name -->
+                <div class="info-tootip__content tooltip-info">
+                  <div class="tooltip-info-header">
+                    <span>Tax Details</span>
+                  </div>
+                  <div class="tooltip-info-body">
+                    <div class="display-flex justify-content-space-between gray-bottom-border" *ngFor="let tax of this.poTableData[m].taxInfo">
+                      <span class="text-semi-bold noborder-bottom">{{ tax.taxName }}</span
+                      ><span>{{ tax.taxValue }}%</span>
+                    </div>
+                  </div>
+                </div>
               </span>
               <br />
               <div *ngIf="mode === 'edit'" class="btn btn-link fontsize-13-px taxButton p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('taxesAndCost', m)">Add Tax</div>
@@ -162,23 +182,26 @@
             </ng-template>
 
             <span class="mat-cell" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'" *ngIf="isInternational; else gstTotalAmountBlock">
-              <span class="p-l-2">{{
+              <span class="p-l-2 p-r-4">{{
                 ratesBaseCurr ? (this.poTableData[m].otherCostAmount * poCurrency.exchangeValue | number: "1.2-2") : (this.poTableData[m].otherCostAmount | number: "1.2-2")
               }}</span>
-              <span *ngIf="this.poTableData[m].otherCostAmount" class="info-icon info-tootip"
-                ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
-                <span class="info-tootip__content">
-                  <div class="tooltip-table p-t-0 p-r-0 p-l-0">
-                    <div class="width-100 border-radius-tltr-5px background-modal-grey p-t-5 text-center gray-bottom-border m-b-5">
-                      <span class="text-semi-bold">Other Cost</span>
-                    </div>
 
+              <span class="info-tootip">
+                <span *ngIf="this.poTableData[m].taxInfo && this.poTableData[m].taxInfo.length" class="info-icon">
+                  <img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                </span>
+                <!-- tootlip containes supplier name -->
+                <div class="info-tootip__content tooltip-info">
+                  <div class="tooltip-info-header">
+                    <span>Other Cost</span>
+                  </div>
+                  <div class="tooltip-info-body">
                     <div class="display-flex justify-content-space-between gray-bottom-border" *ngFor="let cost of this.poTableData[m].otherCostInfo">
-                      <span class="text-semi-bold">{{ cost.otherCostName }}</span
-                      ><span>{{ cost.otherCostAmount }}</span>
+                      <span class="text-semi-bold noborder-bottom">{{ cost.otherCostName }}</span
+                      ><span>{{ cost.otherCostAmount }}%</span>
                     </div>
                   </div>
-                </span>
+                </div>
               </span>
               <br />
               <div *ngIf="mode === 'edit'" class="btn btn-link taxButton fontsize-13-px p-0 main-color text-decoration-underline" (click)="openTaxesCostsDialog('taxesAndCost', m)">Other Cost</div>
@@ -330,10 +353,27 @@
               <div class="col-xs-4 p-t-5 p-b-5 p-l-0 text-left" [ngClass]="imageAvailable ? 'p-l-47' : '  '">
                 <span class="p-r-0">
                   <span>
-                    <span class="p-l-2">{{
+                    <span class="p-l-2 p-r-4">{{
                       ratesBaseCurr ? (this.additonalCost.additionalOtherCostAmount * poCurrency.exchangeValue | number: "1.2-2") : (this.additonalCost.additionalOtherCostAmount | number: "1.2-2")
                     }}</span>
-                    <span *ngIf="this.additonalCost.additionalOtherCostInfo && this.additonalCost.additionalOtherCostInfo.length" class="info-icon info-tootip"
+                    <span class="info-tootip">
+                      <span *ngIf="this.additonalCost.additionalOtherCostInfo && this.additonalCost.additionalOtherCostInfo.length" class="info-icon">
+                        <img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                      </span>
+                      <!-- tootlip containes supplier name -->
+                      <div class="info-tootip__content tooltip-info">
+                        <div class="tooltip-info-header">
+                          <span>Additional Cost Details</span>
+                        </div>
+                        <div class="tooltip-info-body">
+                          <div class="display-flex justify-content-space-between gray-bottom-border" *ngFor="let cost of this.additonalCost.additionalOtherCostInfo">
+                            <span class="text-semi-bold noborder-bottom">{{ cost.otherCostName }}</span
+                            ><span>{{ cost.otherCostAmount }}%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </span>
+                    <!-- <span *ngIf="this.additonalCost.additionalOtherCostInfo && this.additonalCost.additionalOtherCostInfo.length" class="info-icon info-tootip"
                       ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
                       <span class="info-tootip__content">
                         <div class="tooltip-table p-t-0 p-r-0 p-l-0">
@@ -346,7 +386,7 @@
                           </div>
                         </div>
                       </span>
-                    </span>
+                    </span> -->
                   </span>
                 </span>
                 <br />
