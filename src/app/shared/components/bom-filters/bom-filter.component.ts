@@ -24,13 +24,30 @@ export class BomFilterComponent {
         this.allData[ obj.type ] = obj.data;
         this.config.options.forEach(item => {
             if (item.dependSearch === obj.id) {
-                this.allData[ item.key ] = null;
                 const tradeList = this.bomService.getNames(obj.data);
                 this.bomService.getTradeCategory({ tradeNames: tradeList.length ? [ ...tradeList ] : null }).then(res => {
                     item.data = this.bomService.getCategoriesByIDName(res.data);
+                    item.preSelected = this.filterPreselected(this.allData[ item.key ], this.allData[ obj.type ]);
                 });
             }
         })
+    }
+
+    filterPreselected(data1, data2) {
+        let result = [];
+        if ((data1 && data1.length) && (data2 && data2.length)) {
+            data1.forEach(item => {
+                let idMatches = data2.some(itm => {
+                    if (itm.tradeId && itm.tradeId === item.tradeId) {
+                        return true;
+                    }
+                })
+                if (idMatches) {
+                    result.push(item);
+                }
+            })
+        }
+        return result;
     }
 
     getAllData() {

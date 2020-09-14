@@ -1,13 +1,11 @@
-import { debounceTime } from 'rxjs/operators';
+
 import { CommonService } from './../../services/commonService';
-import { material } from './../../models/category';
 import { SimpleChanges } from '@angular/core';
-import { OnChanges } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { BomService } from 'src/app/shared/services/bom.service';
 import { Subcategory } from './../../models/subcategory-materials';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'bom-common-table',
