@@ -6,7 +6,7 @@
         <div class="col-md-3 col-sm-4 col-xs-8">
           <mat-form-field class="border-select select-project width-100 font-size-vary-grn">
             <mat-label>Select Project</mat-label>
-            <mat-select formControlName="selectedProject" panelClass="dropDown-project-panel" multiple>
+            <mat-select formControlName="selectedProject" panelClass="selected-project-panel" multiple>
               <div class="display-flex">
                 <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchProject" [ngModelOptions]="{standalone: true}" />
                 <button mat-button matSuffix mat-icon-button>

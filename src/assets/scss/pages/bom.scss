@@ -593,8 +593,8 @@ div.limited-character.bom {
   border-bottom: none !important;
 }
 
-#cdk-overlay-0, #cdk-overlay-1{
-  transform: translateX(-10px) translateY(-15px) !important;
+.selected-project-panel{
+  transform: translateX(30px) translateY(15px) !important;
 }
 
 @media only screen and (max-width: 1311px) {
@@ -745,6 +745,10 @@ div.limited-character.bom {
 
   .upload-img-dialog .modal-body {
     padding: 20px 10px;
+  }
+
+  .selected-project-panel {
+    transform: translateX(0px) translateY(15px) !important;
   }
   /** create bom css end here **/
 }
