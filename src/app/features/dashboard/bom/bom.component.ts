@@ -202,7 +202,7 @@ export class BomComponent implements OnInit {
 
             let tradeObj: any = {};
             for (let i in this.filterOptions) {
-                if (i === 'tradeNames' || i === 'categoryNames') {
+                if ((i === 'tradeNames' || i === 'categoryNames') && (this.filterOptions[ i ] && this.filterOptions[ i ].length)) {
                     tradeObj[ i ] = this.bomService.getNames(this.filterOptions[ i ]);
                 } else {
                     if (this.filterOptions[ i ]) {
@@ -266,6 +266,9 @@ export class BomComponent implements OnInit {
             } else {
                 this.filterOptions[ i ] = null;
             }
+        }
+        if (this.selectedIndex > 2) {
+            this.getTableData();
         }
         this.selectedIndex = 3;
     }

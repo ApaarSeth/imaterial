@@ -1,6 +1,6 @@
 <div class="p-t-5 p-b-20 p-l-20 p-r-20 bg-white">
 
-    <div class="display-inline-block" [ngClass]="isMobile ? 'width-80' : 'width-18' ">
+    <div class="display-inline-block" [ngClass]="isMobile ? 'width-50' : 'width-18' ">
         <input-text-search [config]="{
         title: 'Search Material',
         placeholder: 'Search Material',
@@ -96,16 +96,14 @@
                         </tbody>
                     </ng-container>
 
-
                 </table>
             </form>
         </div>
-    </ng-container>
+        <ng-container *ngIf="config.paginatorOptions">
+            <app-paginator class="pagi-st" [config]="config.paginatorOptions"
+                (updatePaginator)="updatePaginatorOptions($event)">
+            </app-paginator>
+        </ng-container>
 
-    <ng-container *ngIf="config.paginatorOptions">
-        <app-paginator class="pagi-st" [config]="config.paginatorOptions"
-            (updatePaginator)="updatePaginatorOptions($event)">
-        </app-paginator>
     </ng-container>
-
 </div>
