@@ -47,9 +47,14 @@
                   <input matInput type="number" formControlName="estimatedQty" [value]="item.estimatedQty"
                     autocomplete="off" (input)="checkInput($event)">
                 </mat-form-field>
-                <mat-error class="font-size12" *ngIf="item.get('estimatedQty').errors !== null">
-                  It must be more than {{item.get('estimatedQty').errors.min.min}}
-                </mat-error>
+                <ng-container *ngIf="item.get('estimatedQty').errors !== null">
+                  <mat-error class="fontsize-10-px" *ngIf="item.get('estimatedQty').hasError('min')">
+                    It must be more than {{item.get('estimatedQty').errors.min.min}}
+                  </mat-error>
+                  <mat-error class="fontsize-10-px" *ngIf="item.get('estimatedQty').hasError('pattern')">
+                    Decimal valud is invalid
+                  </mat-error>
+                </ng-container>
               </td>
               <td>
                 <mat-form-field class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10">
@@ -57,6 +62,10 @@
                   <input matInput type="number" formControlName="estimatedRate" [value]="item.estimatedRate"
                     autocomplete="off" (input)="checkInput($event)">
                 </mat-form-field>
+                <mat-error class="fontsize-10-px"
+                  *ngIf="item.get('estimatedRate').errors !== null && item.get('estimatedRate').hasError('pattern')">
+                  Decimal valud is invalid
+                </mat-error>
               </td>
             </tr>
           </table>

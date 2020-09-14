@@ -74,7 +74,7 @@ export class BomEditMaterialComponent implements OnInit {
             material: matCtrl
         })
         // this.form.get('material').valueChanges.subscribe(data => {
-        //     console.log(this.form.valid);
+        //     console.log(this.form);
         // });
     }
 
@@ -83,11 +83,11 @@ export class BomEditMaterialComponent implements OnInit {
             materialId: [ data.materialId ],
             materialName: [ data.materialName ],
             materialUnit: [ data.materialUnit ],
-            estimatedQty: [ data.estimatedQty, Validators.compose([ Validators.min(data.poAvailableQty && data.poAvailableQty > 0 ? data.poAvailableQty : 0) ]) ],
+            estimatedQty: [ data.estimatedQty, Validators.compose([ Validators.min(data.poAvailableQty && data.poAvailableQty > 0 ? data.poAvailableQty : 0), Validators.pattern(/^(?:\d*\.\d{1,2}|\d+)$/) ]) ],
             materialCode: [ data.materialCode ],
             materialGroup: [ data.materialGroup ],
             materialMasterId: [ data.materialMasterId ],
-            estimatedRate: [ data.estimatedRate ],
+            estimatedRate: [ data.estimatedRate, Validators.compose([ Validators.pattern(/^(?:\d*\.\d{1,2}|\d+)$/) ]) ],
             requestedQuantity: [ data.requestedQuantity ],
             issueToProject: [ data.issueToProject ],
             availableStock: [ data.availableStock ]

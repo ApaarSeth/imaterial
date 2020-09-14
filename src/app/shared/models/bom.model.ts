@@ -27,18 +27,18 @@ export interface BomFilterOptions {
 }
 
 export interface BomSearchData {
-    id: number;
+    id: any;
     name: string;
     [ x: string ]: any;
     type?: string;
-    preSelected?: any;
+    selected?: boolean;
 }
 
 export interface BomFilterItemConfig {
     title: string;
     placeholder: string;
     list: BomSearchData[];
-    preSelected?: any;
+    preSelected?: BomSearchData[];
     key?: any;
 }
 
