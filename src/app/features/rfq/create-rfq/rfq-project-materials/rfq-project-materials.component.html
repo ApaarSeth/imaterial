@@ -16,9 +16,9 @@
       </mat-form-field>
     </div>
 
-    <div class="col-md-4 col-xs-6 text-right m-itm" [ngClass]="isMobile ? 'p-r-0' : ''">
-      <mat-form-field class="border-select select-project" [ngClass]="isMobile ? 'd-inline-block w-100' : ''">
-        <mat-label *ngIf="!rfqDetails.length">Select Project</mat-label>
+    <div class="col-md-4 col-xs-6 p-t-7 text-right m-itm" [ngClass]="isMobile ? 'p-r-0' : ''">
+      <mat-form-field class="border-select select-project mat-form-field-flex-nopadding-bottom" [ngClass]="isMobile ? 'd-inline-block w-100' : ''">
+        <mat-label>Select Project</mat-label>
 
         <mat-select formControlName="selectedProject" multiple>
           <div class="display-flex">

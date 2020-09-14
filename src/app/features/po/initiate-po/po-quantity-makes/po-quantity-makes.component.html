@@ -55,14 +55,14 @@
             </ng-container>
 
             <ng-container matColumnDef="Required Date">
-              <th mat-header-cell *matHeaderCellDef>Required Date</th>
+              <th mat-header-cell *matHeaderCellDef [ngClass]="isMobile ? 'p-r-5' : ''">Required Date</th>
               <td mat-cell *matCellDef="let element; let i = index">
                 {{ element.dueDate | date: "dd-MMM-yyy" }}
               </td>
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="Requested Qty">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Requested Qty</th>
+              <th mat-header-cell class="text-center" [ngClass]="isMobile ? 'p-r-5' : ''" *matHeaderCellDef>Requested Qty</th>
               <td mat-cell class="text-center" *matCellDef="let element">
                 {{ element.requestedQty }} <span class="p-l-5">{{ element.materialUnit }}</span>
               </td>
@@ -74,15 +74,15 @@
               <th mat-header-cell *matHeaderCellDef class="fulfillment-date-col">Fullfillment Date</th>
               <td mat-cell *matCellDef="let element; let i = index" class="fulfillment-date-col">
                 <span class="display-flex">
-                  <mat-form-field class="border-input" [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)">
-                    <input matInput [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" readonly />
+                  <mat-form-field [ngClass]="isMobile ? 'width-80' : ''" class="border-input" [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)">
+                    <input matInput [ngClass]="isMobile ? 'fontsize-11-px' : ''" [matDatepicker]="dueDate" formControlName="fullfilmentDate" (click)="dueDate.open()" readonly />
                     <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
                     <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
                     <span
                       class="p-l-2"
                       *ngIf="materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['fullfilmentDate'].hasError('oldDate')"
                     >
-                      <app-error-message [msg]="'Choose the date greater than current date'"></app-error-message>
+                      <app-error-message [width]="'20'" [msg]="'Choose the date greater than current date'"></app-error-message>
                     </span>
                   </mat-form-field>
                 </span>
@@ -100,8 +100,8 @@
             <ng-container matColumnDef="Estimated Rate">
               <th mat-header-cell class="text-center" *matHeaderCellDef>Awarded Rate</th>
               <td mat-cell class="text-center" *matCellDef="let element; let i = index">
-                <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input">
-                  <input matInput formControlName="materialUnitPrice" appTwoDigitDecimaNumber type="text" placeholder="Awarded Rate" min="0" />
+                <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input" [ngClass]="isMobile ? 'text-center' : ''">
+                  <input matInput formControlName="materialUnitPrice" appTwoDigitDecimaNumber type="text" [ngClass]="isMobile ? 'p-r-5 width-70' : ''" placeholder="Awarded Rate" min="0" />
                   <small
                     *ngIf="
                       materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialUnitPrice'].hasError('pattern') &&
@@ -118,9 +118,9 @@
             <ng-container matColumnDef="Quantity">
               <th mat-header-cell class="text-center" *matHeaderCellDef>Quantity</th>
               <td mat-cell class="text-center" *matCellDef="let element; let i = index">
-                <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input">
-                  <div class="display-flex">
-                    <input matInput formControlName="materialQty" type="text" placeholder="Quantity" min="0" appTwoDigitDecimaNumber />
+                <mat-form-field [formGroupName]="i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)" class="border-input table-input text-center">
+                  <div class="display-flex justify-content-flex-center">
+                    <input matInput formControlName="materialQty" type="text" [ngClass]="isMobile ? 'width-70' : ''" placeholder="Quantity" min="0" appTwoDigitDecimaNumber />
                     <span *ngIf="materialForms['controls']['forms']['controls'][i + (mati ? checkedMaterialsList[mati].prevMatListLength : 0)]['controls']['materialQty'].hasError('greaterQuantity')">
                       <app-error-message [msg]="'Cannot add quantity greater than ' + element.poAvailableQty"></app-error-message>
                     </span>
