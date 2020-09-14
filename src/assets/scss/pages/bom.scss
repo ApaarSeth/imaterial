@@ -593,6 +593,10 @@ div.limited-character.bom {
   border-bottom: none !important;
 }
 
+#cdk-overlay-0, #cdk-overlay-1{
+  transform: translateX(-10px) translateY(-15px) !important;
+}
+
 @media only screen and (max-width: 1311px) {
   .col-left-width {
     flex-basis: 40%;
