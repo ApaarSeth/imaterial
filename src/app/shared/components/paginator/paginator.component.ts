@@ -1,24 +1,28 @@
-import { OnInit } from '@angular/core';
 import { PaginatorConfig } from './../../models/common.models';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, EventEmitter, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-paginator',
     templateUrl: './paginator.component.html'
 })
 
-export class PaginatorComponent implements OnInit {
+export class PaginatorComponent implements OnInit, OnChanges {
 
     @Output() updatePaginator = new EventEmitter<PaginatorConfig>();
-    @Input() config: any;
+    @Input() config: PaginatorConfig;
 
     length: number;
     pageSize = 25;
     pageSizeOptions: number[] = [ 25, 50, 75, 100 ];
 
     ngOnInit(): void {
-        console.log(this.config, "pagination");
         this.length = this.config.totalCount ? this.config.totalCount : 25;
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.config) {
+            this.length = this.config.totalCount ? this.config.totalCount : 25;
+        }
     }
 
     pageEvent(event) {

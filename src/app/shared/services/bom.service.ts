@@ -105,7 +105,7 @@ export class BomService {
   }
 
   getCategoriesByIDName(data) {
-    return data.map((item, index) => ({ ...item, name: item.categoriesName, id: item.categoriesCode }));
+    return data.map(item => ({ ...item, name: item.categoriesName, id: item.categoriesCode }));
   }
 
 }

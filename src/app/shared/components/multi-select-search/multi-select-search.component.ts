@@ -16,15 +16,13 @@ export class MultiSelectSearchComponent implements OnInit, OnDestroy, OnChanges 
         private bomService: BomService
     ) { }
 
-    form: FormGroup;
-
-    subscriptions: Subscription[] = [];
-
     @Output() selectionUpdate = new EventEmitter<BomSearchData[]>();
     @Input() config: BomFilterItemConfig;
 
-
+    form: FormGroup;
+    subscriptions: Subscription[] = [];
     filtered: BomSearchData[];
+
     ngOnInit(): void {
         this.formInit();
         this.startSubscription();
@@ -53,6 +51,31 @@ export class MultiSelectSearchComponent implements OnInit, OnDestroy, OnChanges 
         this.form.get('selected').valueChanges.subscribe(val => {
             this.selectionUpdate.emit(val);
         })
+    }
+
+    getValueOnChangeOption(event) {
+        if (event.isUserInput) {
+            if (this.config.preSelected.length) {
+                if (event.source.selected) {
+                    const isValExist = this.config.preSelected.some(item => item.id === event.source.value.id);
+                    if (!isValExist) {
+                        this.config.preSelected.push(event.source.value);
+                    }
+                } else {
+                    this.config.preSelected.forEach((item, index) => {
+                        if (item.id === event.source.value.id) {
+                            this.config.preSelected.splice(index, 1);
+                        }
+                    });
+                }
+            } else {
+                if (event.source.selected) {
+                    this.config.preSelected.push(event.source.value);
+                }
+            }
+            this.filtered = this.config.list;
+            this.formInit();
+        }
     }
 
     startSubscription() {
