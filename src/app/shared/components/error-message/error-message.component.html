@@ -9,4 +9,6 @@
   </span></span
 > -->
 
-<span matTooltipClass="custom-tooltip" [matTooltipPosition]="position" matTooltip="{{ msg }}"><img src="./../../../../assets/images/warning.svg" class="img-responsive" /></span>
+<span #tooltip="matTooltip" matTooltipClass="custom-tooltip" [matTooltipPosition]="position" matTooltip="{{ msg }}"
+  ><img [ngClass]="this.width ? this.width : ''" src="./../../../../assets/images/warning.svg" class="img-responsive"
+/></span>

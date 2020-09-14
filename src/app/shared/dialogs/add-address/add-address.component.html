@@ -104,7 +104,7 @@
 
                         <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country" selected="trade.isAttatched"
                           ><span
-                            ><img class="width17Percent p-r-10" [src]="country.imageUrl" alt="" />
+                            ><img class="width-17 p-r-10" [src]="country.imageUrl" alt="" />
                             <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
                             <span class="text-semi-bold color-grey">{{ country.callingCode }}</span>
                           </span>

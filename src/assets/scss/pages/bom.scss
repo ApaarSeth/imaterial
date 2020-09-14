@@ -20,8 +20,8 @@
     padding-left: 48px;
   }
 
-  .bom-material-name-col {
-    padding-left: 24px;
+  .bom-select-checkbox-col {
+    width: 4%;
     .mat-checkbox-frame {
       border-color: rgb(255, 255, 255);
     }
@@ -593,6 +593,10 @@ div.limited-character.bom {
   border-bottom: none !important;
 }
 
+.selected-project-panel{
+  transform: translateX(30px) translateY(15px) !important;
+}
+
 @media only screen and (max-width: 1311px) {
   .col-left-width {
     flex-basis: 40%;
@@ -741,6 +745,10 @@ div.limited-character.bom {
 
   .upload-img-dialog .modal-body {
     padding: 20px 10px;
+  }
+
+  .selected-project-panel {
+    transform: translateX(0px) translateY(15px) !important;
   }
   /** create bom css end here **/
 }

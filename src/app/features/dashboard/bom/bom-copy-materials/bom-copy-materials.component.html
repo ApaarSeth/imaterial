@@ -1,4 +1,4 @@
-<div class="page-start-point p-rem-t-40">
+<div class="page-start-point">
   <div class="p-l-10 p-r-10 p-b-10 copy-bom-materials-outer">
     <card-layout *ngIf="projectData" [projectDetails]="projectData" [disableEditDelete]="true" pageType="2">
     </card-layout>
@@ -47,15 +47,26 @@
 
       <div class="row bom-details-table-div-part example-container mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="col-sm-12 bom-material-table">
-          <ng-container matColumnDef="materialName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="bom-material-name-col">
-              <mat-checkbox #allCh (change)="getElemenetChecked(allCh, dataSource, 'SelectAll')"> Material Name
+
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef class="bom-select-checkbox-col">
+              <mat-checkbox #allCh (change)="getElemenetChecked(allCh, dataSource, 'SelectAll')">
               </mat-checkbox>
             </th>
             <td class="text-left" mat-cell *matCellDef="let element"
               [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
               <mat-checkbox #ch (change)="getElemenetChecked(ch, element, 'Select')" [checked]="element.checked"
                 [disabled]="element.materialCustomFlag === 1 ? element.isApproved !== 1 : false">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="materialName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="bom-material-name-col">
+              Material Name
+            </th>
+            <td class="text-left" mat-cell *matCellDef="let element"
+              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
                 <div class="limited-character bom" matTooltip=" {{ element.materialName }}">
                   {{ element.materialName }}
                   <br />
@@ -65,7 +76,6 @@
                     {{ element.materialGroup }}
                   </span>
                 </div>
-              </mat-checkbox>
             </td>
           </ng-container>
 

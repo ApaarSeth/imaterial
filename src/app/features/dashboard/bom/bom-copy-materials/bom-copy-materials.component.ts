@@ -24,8 +24,8 @@ import { BomService } from "../../../../shared/services/bom.service";
 export class BomCopyMaterialComponent implements OnInit {
     projectId: number;
     projectData = {} as ProjectDetails;
-    columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate" ];
-    innerDisplayedColumns = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate" ];
+    columnsToDisplay = ["select", "materialName", 'materialUnit', "estimatedQty", "estimatedRate" ];
+    innerDisplayedColumns = ["select", "materialName", 'materialUnit', "estimatedQty", "estimatedRate" ];
     dataSource: MatTableDataSource<Subcategory>;
     sortedData: MatTableDataSource<Subcategory>;
     expandedElement: Subcategory | null;

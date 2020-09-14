@@ -401,6 +401,18 @@ tr.tbl-body-cols.mat-row {
   }
 }
 
+.text-ellipsis {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-name-col{
+  display: flex;
+  align-items: center;
+}
+
 /** view bid page - view rating and supplier rates column distortion css fixes **/
 @media only screen and (max-width: 1332px){
   .view-bid-tbl{
@@ -494,7 +506,9 @@ tr.tbl-body-cols.mat-row {
 
 @media only screen and (max-width: 559px){
 
-  .mat-header-cell:nth-child(2), .material-details-row > .mat-cell:nth-child(2), .supplier-details-row > .mat-cell:nth-child(2) {
+  .view-bids-tbl .mat-header-cell:nth-child(2), 
+  .material-details-row > .mat-cell:nth-child(2), 
+  .supplier-details-row > .mat-cell:nth-child(2) {
       min-width: 100px;
   }
 
