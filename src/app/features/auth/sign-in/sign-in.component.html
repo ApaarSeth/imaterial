@@ -37,7 +37,7 @@
             </mat-form-field>
           </div>
           <div *ngIf="callingCode === '+91'" class="col-xs-8">
-            <mat-form-field class="border-input">
+            <mat-form-field class="border-input" [ngClass]="isMobile ? 'p-t-1' : '' ">
               <input matInput formControlName="phone" type="number" min="0"
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Phone No." />
               <small *ngIf="signinForm.controls['phone'].hasError('required') && signinForm.controls['phone'].touched"

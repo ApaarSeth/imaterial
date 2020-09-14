@@ -142,7 +142,8 @@
   .submit-bid-div-add {
     background: #fafafa;
     margin: auto;
-    width: 650px;
+    max-width: 650px;
+    width:100%;
     display: block;
     border-radius: 8px;
     padding: 20px;

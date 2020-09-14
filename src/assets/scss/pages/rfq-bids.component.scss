@@ -431,19 +431,19 @@ tr.tbl-body-cols.mat-row {
     }
   }
 
-  .mat-header-cell:first-child, .material-details-row > .mat-cell:first-child, .supplier-details-row > .mat-cell:first-child{
+  .view-bids-tbl .mat-header-cell:first-child, .material-details-row > .mat-cell:first-child, .supplier-details-row > .mat-cell:first-child{
       min-width: 250px;
   }
 
-  .mat-header-cell:nth-child(2), .material-details-row > .mat-cell:nth-child(2), .supplier-details-row > .mat-cell:nth-child(2) {
+  .view-bids-tbl  .mat-header-cell:nth-child(2), .material-details-row > .mat-cell:nth-child(2), .supplier-details-row > .mat-cell:nth-child(2) {
       min-width: 140px;
   }
 
-  .mat-header-cell:nth-child(3), .material-details-row > .mat-cell:nth-child(3), .supplier-details-row > .mat-cell:nth-child(3) {
+  .view-bids-tbl  .mat-header-cell:nth-child(3), .material-details-row > .mat-cell:nth-child(3), .supplier-details-row > .mat-cell:nth-child(3) {
     min-width: 120px;
   }
 
-  .mat-header-cell:last-child, .material-details-row > .mat-cell:last-child, .supplier-details-row > .mat-cell:last-child {
+  .view-bids-tbl .mat-header-cell:last-child, .material-details-row > .mat-cell:last-child, .supplier-details-row > .mat-cell:last-child {
     min-width: 767px;
   }
 
