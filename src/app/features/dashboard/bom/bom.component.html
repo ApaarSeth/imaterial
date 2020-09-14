@@ -6,7 +6,7 @@
         <div class="add-to-bom-style">
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-xs-6 col-md-6">
 
                     <div class="row m-t-5 m-l-5">
                         <!-- Download BOM Link -->
@@ -30,7 +30,8 @@
                         </div>
 
                         <!-- Upload BOM Link -->
-                        <div class="m-l-10 cursor-pointer upload-bom-excel excl-btn">
+                        <div class="m-l-10 cursor-pointer upload-bom-excel excl-btn"
+                            [ngClass]="isMobile ? 'p-t-7' : '' ">
                             <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef"
                                 class="fileupload cursor-pointer" style="display: none" multiple
                                 (change)="uploadExcel($event.target.files)" />
@@ -52,7 +53,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-xs-6 col-md-6 text-right">
 
                     <div class="m-r-15 m-t-5 m-b-15 d-inline-block">
                         <button mat-raised-button class="main-background-color main-button color-white"
