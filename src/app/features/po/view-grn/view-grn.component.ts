@@ -107,6 +107,7 @@ export class ViewGRNComponent implements OnInit {
     viewBack() {
         this.route.navigate(['po']);
     }
+
     addGRN() {
         const data: GRNPopupData = {
             isEdit: false,
@@ -116,6 +117,7 @@ export class ViewGRNComponent implements OnInit {
         };
         this.openDialog(data);
     }
+
     openDocuments(data) {
         const dialogRef = this.dialog.open(ShowDocumentComponent, {
             width: "500px",

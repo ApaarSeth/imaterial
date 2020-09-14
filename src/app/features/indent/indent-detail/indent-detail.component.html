@@ -18,14 +18,16 @@
     <div class="row">
       <ng-container *ngIf="!isMobile; else mobileSearch">
         <div class="col-md-2 align-top">
-          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)" [config]="searchConfig"> </advance-search>
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)"
+            [config]="searchConfig"> </advance-search>
         </div>
       </ng-container>
 
       <ng-template #mobileSearch>
         <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close'">
           <div class="sdb" (click)="closeFilter()"></div>
-          <advance-search class="mb-cl" *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)" [config]="searchConfig"></advance-search>
+          <advance-search class="mb-cl" *ngIf="searchConfig" (submitExport)="applyExport($event)"
+            (submitSearch)="applySearch($event)" [config]="searchConfig"></advance-search>
         </div>
       </ng-template>
 
@@ -33,7 +35,8 @@
         <ng-container *ngIf="dataSource1 || dataSource2; else emptyReports">
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
+                [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Ongoing Purchase Requisition</span>
@@ -49,13 +52,13 @@
 
                   <!-- Position Column -->
                   <ng-container matColumnDef="Indent Number">
-                    <th mat-header-cell *matHeaderCellDef>Purchase Requisition Number</th>
+                    <th mat-header-cell *matHeaderCellDef class="p-r-10">Purchase Requisition Number</th>
                     <td mat-cell *matCellDef="let element">{{ element.indentId }}</td>
                   </ng-container>
 
                   <!-- Name Column -->
                   <ng-container matColumnDef="Indented Date">
-                    <th mat-header-cell *matHeaderCellDef>Requested Date</th>
+                    <th mat-header-cell *matHeaderCellDef class="p-r-10">Requested Date</th>
                     <td mat-cell *matCellDef="let element">
                       {{ element.createdAt | date: "dd-MMM-yyy" }}
                     </td>
@@ -63,7 +66,7 @@
 
                   <!-- Weight Column -->
                   <ng-container matColumnDef="Total No Of Material">
-                    <th mat-header-cell *matHeaderCellDef class="text-align-center">Total No Of Material</th>
+                    <th mat-header-cell *matHeaderCellDef class="text-align-center p-r-10">Total No Of Material</th>
                     <td mat-cell *matCellDef="let element" class="text-align-center">
                       {{ element.materialCount }}
                     </td>
@@ -71,15 +74,15 @@
 
                   <!-- Symbol Column -->
                   <ng-container matColumnDef="Created By">
-                    <th mat-header-cell *matHeaderCellDef>Created By</th>
+                    <th mat-header-cell *matHeaderCellDef class="p-r-10">Created By</th>
                     <td mat-cell *matCellDef="let element">
                       {{ element.createdBy }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="View Indent">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef class="p-r-10"></th>
+                    <td mat-cell *matCellDef="let element" class="p-l-10">
                       <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721">View Request</a>
                     </td>
                   </ng-container>
@@ -111,7 +114,8 @@
           <p></p>
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'" [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
+                [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
                 <div class="row">
                   <div class="col-sm-12">
                     <span>Completed Purchase Requisition</span>
@@ -128,13 +132,13 @@
 
                   <!-- Position Column -->
                   <ng-container matColumnDef="Indent Number">
-                    <th mat-header-cell *matHeaderCellDef>Purchase Requisition Number</th>
+                    <th mat-header-cell *matHeaderCellDef class="p-r-10">Purchase Requisition Number</th>
                     <td mat-cell *matCellDef="let element">{{ element.indentId }}</td>
                   </ng-container>
 
                   <!-- Name Column -->
                   <ng-container matColumnDef="Indented Date">
-                    <th mat-header-cell *matHeaderCellDef>Requested Date</th>
+                    <th mat-header-cell *matHeaderCellDef class="p-r-10">Requested Date</th>
                     <td mat-cell *matCellDef="let element">
                       {{ element.createdAt | date: "dd-MMM-yyy" }}
                     </td>
@@ -142,7 +146,7 @@
 
                   <!-- Weight Column -->
                   <ng-container matColumnDef="Total No Of Material">
-                    <th mat-header-cell *matHeaderCellDef class="text-align-center">Total No Of Material</th>
+                    <th mat-header-cell *matHeaderCellDef class="text-align-center p-r-10">Total No Of Material</th>
                     <td mat-cell *matCellDef="let element" class="text-align-center">
                       {{ element.materialCount }}
                     </td>
@@ -150,15 +154,15 @@
 
                   <!-- Symbol Column -->
                   <ng-container matColumnDef="Created By">
-                    <th mat-header-cell *matHeaderCellDef>Created By</th>
+                    <th mat-header-cell *matHeaderCellDef class="p-r-10">Created By</th>
                     <td mat-cell *matCellDef="let element">
                       {{ element.createdBy }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="View Indent">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef class="p-r-10"></th>
+                    <td mat-cell *matCellDef="let element" class="p-l-10">
                       <a (click)="viewIndentDetails(element)" class="cursor" style="color: #f47721">View Request</a>
                     </td>
                   </ng-container>
@@ -186,7 +190,8 @@
         <ng-template #emptyReports>
           <div class="d-block text-align-center mt-3">
             <img src="../../../../assets/images/empty-report.svg" alt="empty report" />
-            <p class="font-weight-light m-0 p-t-1-rem"><strong class="font-weight500">Oops!</strong> You have nothing to see.</p>
+            <p class="font-weight-light m-0 p-t-1-rem"><strong class="font-weight500">Oops!</strong> You have nothing to
+              see.</p>
             <p class="font-weight-light m-0 mt-1">Try Again !</p>
           </div>
         </ng-template>

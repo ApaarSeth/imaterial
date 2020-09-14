@@ -96,8 +96,10 @@ export class BomEditMaterialComponent implements OnInit {
 
     update() {
         if (this.form.valid) {
+            const finalData = this.form.get('material').value.map(item => ({ ...item, estimatedQty: new Number(item.estimatedQty), estimatedRate: new Number(item.estimatedRate) }))
+            console.log(finalData);
             this.bomService
-                .sumbitCategory(this.userId, this.projectId, this.form.get('material').value)
+                .sumbitCategory(this.userId, this.projectId, finalData)
                 .then(res => {
                     this.router.navigate([ "project-dashboard/bom/" + this.projectId + "/bom-detail" ]);
                 });

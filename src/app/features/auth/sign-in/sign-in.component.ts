@@ -1,3 +1,4 @@
+import { CommonService } from './../../../shared/services/commonService';
 import { UserDetails } from './../../../shared/models/user-details';
 import { AppNotificationService } from './../../../shared/services/app-notification.service';
 import { UserService } from './../../../shared/services/user.service';
@@ -31,7 +32,8 @@ export class SigninComponent implements OnInit {
     private route: ActivatedRoute,
     private notifier: AppNotificationService,
     private userService: UserService,
-    private navigationService: AppNavigationService) { }
+    private navigationService: AppNavigationService,
+    private commonService: CommonService) { }
 
   ipaddress: string;
   emailVerified: boolean = true;
@@ -48,11 +50,13 @@ export class SigninComponent implements OnInit {
   primaryCallingCode: string = '';
   callingCode: string;
   selectedCountry: CountryCode;
+  isMobile: boolean;
 
   ngOnInit() {
     this.route.params.subscribe(param => {
-      this.uniqueCode = param["uniqueCode"];
+      this.uniqueCode = param[ "uniqueCode" ];
     });
+    this.isMobile = this.commonService.isMobile().matches;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -71,10 +75,10 @@ export class SigninComponent implements OnInit {
 
   formInit() {
     this.signinForm = this.formBuilder.group({
-      countryCode: [{ value: '', disabled: true }],
-      phone: [""],
-      password: ["", Validators.required],
-      email: [''],
+      countryCode: [ { value: '', disabled: true } ],
+      phone: [ "" ],
+      password: [ "", Validators.required ],
+      email: [ '' ],
     });
   }
 
@@ -84,7 +88,7 @@ export class SigninComponent implements OnInit {
       Validators.pattern(FieldRegExConst.EMAIL)
     ]
     if (this.callingCode === '+91') {
-      this.signinForm.get('phone').setValidators([Validators.required, Validators.pattern(FieldRegExConst.MOBILE2)])
+      this.signinForm.get('phone').setValidators([ Validators.required, Validators.pattern(FieldRegExConst.MOBILE2) ])
     }
     else {
       this.signinForm.get('email').setValidators(emailValidator)
@@ -95,7 +99,7 @@ export class SigninComponent implements OnInit {
     this.livingCountry = this.countryList.filter(val => {
       return val.countryCode.toLowerCase() === countryCode.toLowerCase();
     })
-    this.signinForm.get('countryCode').setValue(this.livingCountry[0])
+    this.signinForm.get('countryCode').setValue(this.livingCountry[ 0 ])
     this.selectedCountry = this.signinForm.get('countryCode').value
   }
 
@@ -121,7 +125,7 @@ export class SigninComponent implements OnInit {
         this.tokenService.setAuthResponseData(data.serviceRawResponse.data)
         this.navigationService.gaTag({ action: 'event', command: 'login', options: { 'method': this.tokenService.getOrgId() } })
         if (localStorage.countryCode !== 'IN' && localStorage.getItem('accountStatus') && !Number(localStorage.getItem('accountStatus'))) {
-          this.router.navigate(["/profile/email-verification"]);
+          this.router.navigate([ "/profile/email-verification" ]);
         }
         else {
           this.getUserInfo(data.serviceRawResponse.data.userId);
@@ -154,10 +158,10 @@ export class SigninComponent implements OnInit {
       localStorage.setItem('accountOwner', String(data.accountOwner));
       localStorage.setItem('appTermsAndCondition', String(data.appTermsAndCondition));
       if (!data.appTermsAndCondition) {
-        this.router.navigate(["/profile/terms-conditions"]);
+        this.router.navigate([ "/profile/terms-conditions" ]);
       }
       else {
-        this.router.navigate(["/dashboard"]);
+        this.router.navigate([ "/dashboard" ]);
       }
     })
   }
@@ -172,10 +176,10 @@ export class SigninComponent implements OnInit {
 
   goToForgetPass() {
     if (this.uniqueCode) {
-      this.router.navigate(['auth/forgot-password/' + this.uniqueCode]);
+      this.router.navigate([ 'auth/forgot-password/' + this.uniqueCode ]);
     }
     else {
-      this.router.navigate(['auth/forgot-password']);
+      this.router.navigate([ 'auth/forgot-password' ]);
     }
   }
 
