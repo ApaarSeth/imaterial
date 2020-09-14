@@ -63,7 +63,14 @@
                   <div class="p-0" *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
 
                     <tr class="mat-row material-details-row">
-                      <td class="mat-cell maxwidth-20" matTooltip=" {{ material.materialName }}">{{ material.materialName }}</td>    
+                      <td class="mat-cell maxwidth-20 mat-name-col" matTooltip=" {{ material.materialName }}">
+                        <span [class.text-ellipsis]="material.materialName.length > 65">{{ material.materialName }}</span>
+
+                        <!-- if text length is too large then three dots menu will appear -->
+                        <ng-container *ngIf="material.materialName.length > 65">
+                          <mat-icon>more_vert</mat-icon>
+                        </ng-container>
+                      </td>    
 
                       <td class="mat-cell maxwidth-10">
                         {{ material.rfqMaterialQty }}

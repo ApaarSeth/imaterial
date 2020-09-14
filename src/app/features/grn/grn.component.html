@@ -27,7 +27,7 @@
       </div>
 
       <!-- table For Showing Reports-->
-      <ng-container *ngIf="allProjectsGRNData?.length; else noDataAvailable">
+      <ng-container *ngIf="(allProjectsGRNData?.length && !noProjectDataFound); else noDataAvailable">
         <div class="receipt-section m-b-10" *ngFor="let project of allProjectsGRNData">
           <mat-accordion>
             <mat-expansion-panel [expanded]="true">
