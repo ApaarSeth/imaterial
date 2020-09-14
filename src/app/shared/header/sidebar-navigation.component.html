@@ -11,7 +11,7 @@
       <ng-container *ngFor="let item of data.moduleList">
         <a class="sidenav-btns" href="javascript:void(0)" [routerLink]="'/' + item.modulePath"
           (click)="isCollapseMenu = true">
-          <button [class.active]="buttonName === item.moduleName" class="header-links" mat-button>
+          <button [class.active]="buttonName === item.modulePath" class="header-links" mat-button>
             <img src="../../../assets/images/sidenav_{{ item.moduleIcon }}" class="ml-1 mr-3" />
             <span>{{ item.moduleName }}</span>
           </button>
