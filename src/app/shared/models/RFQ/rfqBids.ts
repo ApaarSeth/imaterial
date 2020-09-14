@@ -158,6 +158,7 @@ export interface RfqSupplierList {
   supplierName: string;
   materialSgst: number,
   materialCgst: number,
+  rating?: any;
   materialIgst: number,
   brandDetailList: RfqBrandDetail[];
   taxInfo?: RfqTaxInfo[];

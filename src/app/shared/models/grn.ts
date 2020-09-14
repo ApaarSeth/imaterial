@@ -49,12 +49,13 @@ export interface GRNPopupData {
   detail?: GRNDetails;
 }
 
-export interface AllProjectsGRNData{
+export interface AllProjectsGRNData {
   projectName: string;
+  baseCurrency?: any
   grnDataList: GRNDataList[];
 }
 
-export interface GRNDataList{
+export interface GRNDataList {
   grnName: string;
   GrnId: number;
   poNumber: string;
@@ -65,9 +66,10 @@ export interface GRNDataList{
   grnDocuments: GRNDocuments[];
 }
 
-export interface GRNDetailList{
+export interface GRNDetailList {
   GrnId: number;
   GrnNumber: string;
+  MaterialBrand?: string;
   GrnDate: string;
   MaterialId: number
   PurchaseOrderId: number;
@@ -86,7 +88,7 @@ export interface GRNDetailList{
   AddedBy: string;
 }
 
-export interface GRNDocuments{
+export interface GRNDocuments {
   documentId: number;
   documentType: string;
   documentDesc: string;

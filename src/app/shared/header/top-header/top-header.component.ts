@@ -1,3 +1,4 @@
+import { AppNavigationService } from './../../services/navigation.service';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, interval } from 'rxjs';
@@ -37,19 +38,21 @@ export class TopHeaderComponent implements OnInit {
   users: any;
   isPlanAvailable: any;
   isBookNow: number;
-
+  email: string;
+  phoneNo: string;
   constructor(
     private commonService: CommonService,
     private _snackBar: MatSnackBar,
     private _userService: UserService,
     private router: Router,
-    private subsPayService: SubscriptionPaymentsService
+    private subsPayService: SubscriptionPaymentsService,
+    private navService: AppNavigationService
   ) { }
 
   ngOnInit() {
-
     this.isMobile = this.commonService.isMobile().matches;
-
+    this.email = localStorage.getItem('email');
+    this.phoneNo = localStorage.getItem('phoneNo');
     this.userId = Number(localStorage.getItem('userId'));
     this.userName = localStorage.getItem('userName');
     this.url = localStorage.getItem('profileUrl');
@@ -221,6 +224,20 @@ export class TopHeaderComponent implements OnInit {
 
   goToHome() {
     this.router.navigate(['/dashboard']);
+  }
+
+  openCallendly() {
+    this.navService.gaEvent({
+      action: 'submit',
+      category: 'Book_demo',
+      label: `Email: ${this.email} PhoneNo.: ${this.phoneNo}`,
+      value: null
+    });
+    const link = document.createElement('a');
+    link.target = '_blank';
+    link.href = 'https://calendly.com/mm_support/discovery_call';
+    link.setAttribute('visibility', 'hidden');
+    link.click();
   }
 
 }

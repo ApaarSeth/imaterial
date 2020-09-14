@@ -1,3 +1,4 @@
+import { AppNavigationService } from './../../shared/services/navigation.service';
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { GlobalProject } from "../../shared/models/GlobalStore/materialWise";
@@ -37,10 +38,17 @@ export class GlobalStoreComponent implements OnInit {
     private router: Router,
     private globalStoreService: GlobalStoreService,
     private commonService: CommonService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private navService: AppNavigationService
   ) { }
 
   ngOnInit() {
+    this.navService.gaEvent({
+      action: 'submit',
+      category: 'navService',
+      label: null,
+      value: null
+    });
     this.isMobile = this.commonService.isMobile().matches;
     this.userId = Number(localStorage.getItem("userId"));
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -61,9 +69,9 @@ export class GlobalStoreComponent implements OnInit {
     })
   }
 
-  getMaterialwiseData(){
+  getMaterialwiseData() {
     this.globalStoreService.getMaterialWiseData(this.materialPageNumber, this.materialPageLimit).then(res => {
-      if(res.data){
+      if (res.data) {
         const allData = res.data;
         this.materialPageNumber = allData.pageNo;
         this.materialTotalPageCount = allData.totalCount;
@@ -73,9 +81,9 @@ export class GlobalStoreComponent implements OnInit {
     });
   }
 
-  getProjectwiseData(){
+  getProjectwiseData() {
     this.globalStoreService.getProjectWiseData(this.projectPageNumber, this.projectPageLimit).then(res => {
-      if(res.data){
+      if (res.data) {
         const allData = res.data;
         this.projectPageNumber = allData.pageNo;
         this.projectTotalPageCount = allData.totalCount;
@@ -102,9 +110,9 @@ export class GlobalStoreComponent implements OnInit {
       this.getProjectwiseData();
     }
 
-    if(this.buttonName === 'materialWise'){
+    if (this.buttonName === 'materialWise') {
       this.materialPageNumber = 1;
-      this.materialPageLimit = 25;      
+      this.materialPageLimit = 25;
       this.getMaterialwiseData();
     }
   }
@@ -121,7 +129,7 @@ export class GlobalStoreComponent implements OnInit {
     this.materialDataLength = event;
     this.cdr.detectChanges();
   }
-  
+
   projectShowDataLength(event) {
     this.projectDataLength = event;
     this.cdr.detectChanges();
@@ -135,14 +143,14 @@ export class GlobalStoreComponent implements OnInit {
     });
   }
 
-  getMaterialPaginationInfo(data){
+  getMaterialPaginationInfo(data) {
     this.materialPageNumber = data.pageNumber;
     this.materialPageLimit = data.limit;
     this.materialTotalPageCount = data.totalCount;
     this.getMaterialwiseData();
   }
 
-  getProjectPaginationInfo(data){
+  getProjectPaginationInfo(data) {
     this.projectPageNumber = data.pageNumber;
     this.projectPageLimit = data.limit;
     this.projectTotalPageCount = data.totalCount;

@@ -13,12 +13,7 @@
                   <mat-icon>search</mat-icon>
                 </button>
               </div>
-              <mat-option
-                *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']"
-                [value]="project.projectId"
-                selected="project.clicked"
-                (click)="getProjectGRNData()"
-              >
+              <mat-option *ngFor="let project of allProjects | SearchPipe: searchProject:['projectName']" [value]="project.projectId" selected="project.clicked" (click)="getProjectGRNData()">
                 {{ project.projectName }}
               </mat-option>
             </mat-select>
