@@ -6,7 +6,8 @@
     <div class="row align-items-center copy-bom-small-screen">
       <div class="col-xs-6 col-md-3 copy-bom-search-input">
         <mat-form-field class="search-form-field border-input w-100" [class.disable-input]="isSearchDisabled">
-          <input matInput placeholder="Search Materials" type="search" (keyup)="applyFilter($event)" [disabled]="isSearchDisabled" />
+          <input matInput placeholder="Search Materials" type="search" (keyup)="applyFilter($event)"
+            [disabled]="isSearchDisabled" />
           <button mat-button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
@@ -45,10 +46,10 @@
         <div class="row mt-4">
           <p>*Select materials to make BOM of project "{{ projectData.projectName }}"</p>
         </div>
-  
+
         <div class="row bom-details-table-div-part example-container mat-elevation-z8">
           <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="col-sm-12 bom-material-table">
-  
+
             <ng-container matColumnDef="select">
               <th mat-header-cell *matHeaderCellDef class="bom-select-checkbox-col">
                 <mat-checkbox #allCh (change)="getElemenetChecked(allCh, dataSource, 'SelectAll')">
@@ -61,25 +62,25 @@
                 </mat-checkbox>
               </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="materialName">
               <th mat-header-cell *matHeaderCellDef mat-sort-header class="bom-material-name-col">
                 Material Name
               </th>
               <td class="text-left" mat-cell *matCellDef="let element"
                 [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
-                  <div class="limited-character bom" matTooltip=" {{ element.materialName }}">
-                    {{ element.materialName }}
-                    <br />
-                  </div>
-                  <div class="limited-character bom" matTooltip=" {{ element.materialGroup }}">
-                    <span class="category-name">
-                      {{ element.materialGroup }}
-                    </span>
-                  </div>
+                <div class="limited-character bom" matTooltip=" {{ element.materialName }}">
+                  {{ element.materialName }}
+                  <br />
+                </div>
+                <div class="limited-character bom" matTooltip=" {{ element.materialGroup }}">
+                  <span class="category-name">
+                    {{ element.materialGroup }}
+                  </span>
+                </div>
               </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="materialUnit">
               <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center justify-center">Unit</th>
               <td class="text-align-center" mat-cell *matCellDef="let element"
@@ -87,7 +88,7 @@
                 {{ element.materialUnit }}
               </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="estimatedQty">
               <th mat-header-cell *matHeaderCellDef mat-sort-header
                 class="text-align-center justify-center minwidth-110-px">Estimated Quantity</th>
@@ -96,7 +97,7 @@
                 {{ element.estimatedQty }}
               </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="estimatedRate">
               <th mat-header-cell *matHeaderCellDef mat-sort-header
                 class="text-align-center justify-center minwidth-110-px">Unit Rate (INR)</th>
@@ -105,7 +106,7 @@
                 {{ element.estimatedRate }}
               </td>
             </ng-container>
-  
+
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
             <tr mat-row *matRowDef="let element; columns: columnsToDisplay" (click)="toggleRow(element)"></tr>
           </table>
@@ -131,6 +132,6 @@
           </div>
         </div>
       </div>
-    </ng-template>    
+    </ng-template>
   </div>
 </div>

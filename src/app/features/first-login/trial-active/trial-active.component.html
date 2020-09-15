@@ -1,0 +1,45 @@
+<div class="m-auto maxwidth-600-px width-100 m-t-50">
+
+    <div class="text-center m-l-10 m-r-10">
+        <mat-card class="p-t-15 p-t-15">
+
+            <div class="ta-close-btn">
+                <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <mat-card-content>
+                <h2 class="mt-4 mb-2 color-brand" [ngClass]="isMobile ? 'fontsize-24-px' : 'fontsize-40-px'">Welcome
+                    aboard!
+                </h2>
+
+                <p class="color-grey m-b-0" [ngClass]="isMobile ? 'fontsize-16-px' : 'fontsize-22-px'">Make the most of
+                    your</p>
+
+                <h2 class="mt-0 mb-0 color-brand" [ngClass]="isMobile ? 'fontsize-24-px' : 'fontsize-40-px'">free
+                    30-days
+                    premium trial
+                </h2>
+
+                <p class="color-grey" [ngClass]="isMobile ? 'fontsize-16-px' : 'fontsize-22-px'">by bringing your entire
+                    team on board and adding your first
+                    project.</p>
+
+                <div class="display-flex justify-content-flex-center m-b-20 m-t-30">
+                    <button mat-button class="bs-button brand-color font-weight-normal m-r-20" (click)="openCallendly()"
+                        [ngClass]="isMobile ? 'fontsize-14-px' : 'fontsize-18-px' ">
+                        Book a Demo
+                    </button>
+                    <button mat-button
+                        class="main-background-color main-button color-white font-weight-normal p-l-30 p-r-30"
+                        (click)="addProject()" [ngClass]="isMobile ? 'fontsize-14-px' : 'fontsize-18-px' ">
+                        Add Project
+                    </button>
+                </div>
+            </mat-card-content>
+
+        </mat-card>
+
+    </div>
+</div>
