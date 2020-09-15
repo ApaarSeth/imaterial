@@ -597,6 +597,20 @@ div.limited-character.bom {
   transform: translateX(30px) translateY(15px) !important;
 }
 
+.search-form-field.disable-input{
+  .mat-form-field-label{
+    color: rgba(0,0,0,0.21);
+  }
+
+  .mat-form-field-suffix .mat-icon-button .mat-icon{
+    color: rgba(0, 0, 0, 0.13);
+  }
+
+  input{
+    border-bottom: 2px solid rgba(0,0,0,0.11);
+  }
+}
+
 @media only screen and (max-width: 1311px) {
   .col-left-width {
     flex-basis: 40%;

@@ -56,6 +56,7 @@ export class SupplierDetailComponent implements OnInit {
       this.setLocalStorage()
     }
   };
+  noSearchResults: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -76,6 +77,7 @@ export class SupplierDetailComponent implements OnInit {
     window.dispatchEvent(new Event('resize'));
     this.getNotifications();
     this.getAllSupplier();
+    this.noSearchResults = false;
   }
 
   getNotifications() {
@@ -84,8 +86,9 @@ export class SupplierDetailComponent implements OnInit {
 
   getAllSupplier() {
     this.commonService.getSuppliers(this.orgId).then(data => {
-      this.dataSource = new MatTableDataSource(data.data);
-      this.dataSourceTemp = data.data;
+      this.dataSource = new MatTableDataSource(data.data.supplierList);
+      console.log(this.dataSource);
+      this.dataSourceTemp = data.data.supplierList;
 
       if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
         setTimeout(() => {
@@ -93,13 +96,10 @@ export class SupplierDetailComponent implements OnInit {
         }, 1000);
       }
 
-      this.dataSource.filterPredicate = (data, filterValue) => {
-        const dataStr =
-          data.supplierName.toString().toLowerCase() +
-          data.email.toString().toLowerCase() +
-          data.contactNo.toString();
-        return dataStr.indexOf(filterValue) != -1;
-      };
+      // this.dataSource.filterPredicate = (data.data.supplierList, filterValue) => {
+      //   const dataStr = data.supplierName.toString().toLowerCase() + data.email.toString().toLowerCase() + data.contactNo.toString();
+      //   return dataStr.indexOf(filterValue) != -1;
+      // };
 
     });
   }
@@ -162,6 +162,12 @@ export class SupplierDetailComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if((this.dataSource.filteredData.length > 0 && filterValue !== "") || filterValue == ""){
+        this.noSearchResults = false;
+    }else {
+        this.noSearchResults = true;
+    }
   }
 
   uploadExcel(files: FileList) {
