@@ -87,7 +87,6 @@ export class SupplierDetailComponent implements OnInit {
   getAllSupplier() {
     this.commonService.getSuppliers(this.orgId).then(data => {
       this.dataSource = new MatTableDataSource(data.data.supplierList);
-      console.log(this.dataSource);
       this.dataSourceTemp = data.data.supplierList;
 
       if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {

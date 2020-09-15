@@ -12,7 +12,7 @@ export class WebNotificationService {
     private swPush: SwPush, private commonService: CommonService) { }
   subscribeToNotification() {
     if (!this.swPush.isEnabled) {
-      console.log('Notification is not enabled')
+      // console.log('Notification is not enabled')
       return;
     }
     // subscribeNotification() {

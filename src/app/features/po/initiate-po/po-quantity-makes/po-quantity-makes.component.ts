@@ -70,8 +70,6 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
       .flat();
     this.materialForms = this.formBuilder.group({});
     this.materialForms.addControl("forms", new FormArray(frmArr));
-    console.log(this.materialForms)
-
   }
 
   dateCheck(): ValidatorFn {
