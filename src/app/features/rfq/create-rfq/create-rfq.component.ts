@@ -32,6 +32,7 @@ import { GlobalLoaderService } from 'src/app/shared/services/global-loader.servi
 })
 
 export class CreateRfqComponent implements OnInit {
+
   @ViewChild("stepper", { static: true, read: MatStepper }) stepper: MatStepper;
   @ViewChild("rfqQtyMakes", { static: true })
   rfqQtyMakes: RfqQuantityMakesComponent;
@@ -47,6 +48,11 @@ export class CreateRfqComponent implements OnInit {
   completed: boolean = false;
   countryList: CountryCode[] = [];
   isMobile: boolean;
+  orgId: number;
+  userId: number;
+  id: number;
+  allProject: ProjectDetails[] = [];
+  allSupplier: Suppliers[] = [];
 
   public RfqProjectTour: GuidedTour = {
     tourId: 'rfq-project-tour',
@@ -79,11 +85,7 @@ export class CreateRfqComponent implements OnInit {
       this.setLocalStorage()
     }
   };
-  orgId: number;
-  userId: number;
-  id: number;
-  allProject: ProjectDetails[] = [];
-  allSupplier: Suppliers[] = [];
+  
   constructor(
     private projectService: ProjectService,
     private router: Router,
@@ -94,9 +96,7 @@ export class CreateRfqComponent implements OnInit {
     private formBuilder: FormBuilder,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService
-  ) {
-
-  }
+  ) { }
 
   ngOnChanges(): void {
     this.commonService.baseCurrency.subscribe(val => {
@@ -108,13 +108,9 @@ export class CreateRfqComponent implements OnInit {
     let orgId = Number(localStorage.getItem("orgId"));
     this.id = this.route.snapshot.params['rfqId'];
 
-    Promise.all([
-      this.commonService.getSuppliers(orgId),
-      this.projectService.getProjects(orgId, userId),
-      this.commonService.getCountry()
-    ]).then(res => {
+    Promise.all([this.commonService.getSuppliers(orgId), this.projectService.getProjects(orgId, userId), this.commonService.getCountry()]).then(res => {
       if (this.id) { this.loader.hide() }
-      this.allSupplier = res[0].data
+      this.allSupplier = res[0].data.supplierList;
       this.allProject = res[1].data
       this.countryList = res[2].data
     });

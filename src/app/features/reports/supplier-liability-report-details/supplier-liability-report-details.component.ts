@@ -80,7 +80,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     this.amountRange = this.countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions', 'Billions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data;
+    this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data.supplierList;
     this.allProjects = this.activatedRoute.snapshot.data.resolverData[1].data;
     this.formInit();
     this.getNotifications();

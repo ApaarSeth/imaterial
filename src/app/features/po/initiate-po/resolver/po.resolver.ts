@@ -15,10 +15,7 @@ export class InitiatePoResolver implements Resolve<any> {
     let userId = Number(localStorage.getItem("userId"))
     let orgId = Number(localStorage.getItem("orgId"))
 
-    return Promise.all([
-      this.commonService.getSuppliers(orgId),
-      this.projectService.getProjects(orgId, userId)
-    ]).then(data => {
+    return Promise.all([this.commonService.getSuppliers(orgId),this.projectService.getProjects(orgId, userId)]).then(data => {
       return data;
     });
   }

@@ -43,6 +43,7 @@ export class InitiatePoComponent implements OnInit {
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
   }
+  
   setLocalStorage() {
     this.userId = Number(localStorage.getItem("userId"));
 
@@ -62,10 +63,12 @@ export class InitiatePoComponent implements OnInit {
   getSupplier(poData: initiatePoData) {
     this.existingPoData = poData;
   }
+
   getMaterial(poData: initiatePoData) {
     this.existingPoData = poData;
     this.poDetail = poData;
   }
+  
   selectionChange(event) {
     if (event.selectedIndex == 1) {
       if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {
