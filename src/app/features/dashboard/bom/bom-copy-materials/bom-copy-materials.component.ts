@@ -9,6 +9,7 @@ import { ProjectDetails } from "../../../../shared/models/project-details";
 import { Subcategory, Materials } from "../../../../shared/models/subcategory-materials";
 import { ProjectService } from "../../../../shared/services/project.service";
 import { BomService } from "../../../../shared/services/bom.service";
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: "bom-copy-materials",
@@ -21,7 +22,9 @@ import { BomService } from "../../../../shared/services/bom.service";
         ])
     ]
 })
+
 export class BomCopyMaterialComponent implements OnInit {
+
     projectId: number;
     projectData = {} as ProjectDetails;
     columnsToDisplay = ["select", "materialName", 'materialUnit', "estimatedQty", "estimatedRate" ];
@@ -39,6 +42,8 @@ export class BomCopyMaterialComponent implements OnInit {
     searchText: string = null;
     selectProjectType: string;
     @ViewChild(MatSort, { static: false }) sort: MatSort;
+    noSearchResults: boolean;
+    isSearchDisabled: boolean;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -49,6 +54,7 @@ export class BomCopyMaterialComponent implements OnInit {
         private bomService: BomService
     ) {
     }
+
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.projectId = params[ "id" ];
@@ -57,6 +63,8 @@ export class BomCopyMaterialComponent implements OnInit {
         this.userId = Number(localStorage.getItem("userId"));
         this.getProject(this.projectId);
         this.getAllProjects();
+
+        this.isSearchDisabled = true;
     }
 
     /**
@@ -90,6 +98,7 @@ export class BomCopyMaterialComponent implements OnInit {
         this.bomService.getMaterialWithQuantity(this.orgId, projectId).then(res => {
             if (res.data) {
                 this.projectMaterialsList = res.data;
+                this.isSearchDisabled = false;
                 this.dataSource = new MatTableDataSource(res.data);
                 setTimeout(() => {
                     this.dataSource.sort = this.sort;
@@ -100,10 +109,13 @@ export class BomCopyMaterialComponent implements OnInit {
                         return data[ sortHeaderId ];
                     };
                 });
+            }else{
+                this.projectMaterialsList = [];
+                this.isSearchDisabled = true;
             }
-        })
+        });
     }
-
+    
     /**
      * @description will execute when select or deselect any material
      * @param ch checkbox checked or not
@@ -163,13 +175,26 @@ export class BomCopyMaterialComponent implements OnInit {
         })
     }
 
+    /**
+     * @description To search project in projects dropdown
+     * @param e 
+     */
     searchProject(e) {
-        this.allProjectsList.filter(proj => proj.projectName === e.value);
+        if(this.allProjectsList?.length > 0){
+            this.allProjectsList.filter(proj => proj.projectName === e.value);
+        }
     }
 
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
+        let obj = this.projectMaterialsList.find(elem => elem.materialName.trim().toLowerCase().includes(this.dataSource.filter));
+
+        if((obj && filterValue !== "") || filterValue == ""){
+            this.noSearchResults = false;
+        }else {
+            this.noSearchResults = true;
+        }
     }
 
     toggleRow(element: Subcategory) {

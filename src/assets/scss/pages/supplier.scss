@@ -913,6 +913,14 @@ h3 {
   }
 }
 
+.no-suppliers{
+  text-align: center;
+  margin: 20px auto;
+  img{
+    margin-bottom: 20px;
+  }
+}
+
 @media only screen and (min-width: 576px) and (max-width: 768px) {
   .header-project-menu.mat-menu-panel {
     width: 200px;
