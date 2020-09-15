@@ -27,7 +27,7 @@ export class MyMaterialTabComponent implements OnInit {
 		private dialogRef: MatDialog) { }
 
 	ngOnInit() {
-		// debugger
+		
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {

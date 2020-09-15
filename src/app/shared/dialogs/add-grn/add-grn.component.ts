@@ -29,7 +29,8 @@ export class AddGrnComponent implements OnInit {
         let orgId = Number(localStorage.getItem('orgId'));
         Promise.all([this.commonService.getSuppliers(orgId), this.commonService.getCountry()])
             .then(res => {
-                this.supplierList = res[0].data;
+                this.supplierList = res[0].data.supplierList;
+                debugger
                 this.countryList = res[1].data;
             })
     }
