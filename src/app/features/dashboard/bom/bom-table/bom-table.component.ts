@@ -49,8 +49,8 @@ export class BomTableComponent implements OnInit {
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
-  innerDisplayedColumns = ["materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
+  columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
+  innerDisplayedColumns = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -113,7 +113,7 @@ export class BomTableComponent implements OnInit {
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
     this.route.params.subscribe(params => {
-      this.projectId = params["id"];
+      this.projectId = params[ "id" ];
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
@@ -142,7 +142,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: "1400px",
       data,
-      panelClass: ['common-modal-style', 'add-custom-material']
+      panelClass: [ 'common-modal-style', 'add-custom-material' ]
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -155,7 +155,7 @@ export class BomTableComponent implements OnInit {
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
-      this.subcategories = res.data ? [...res.data] : null;
+      this.subcategories = res.data ? [ ...res.data ] : null;
       if (this.subcategories) {
         this.subcategories.forEach(subcategory => {
           if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
@@ -179,11 +179,11 @@ export class BomTableComponent implements OnInit {
       this.dataSource.sort = this.sort;
 
       this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
-        if (typeof data[sortHeaderId] === 'string') {
-          return data[sortHeaderId].toLocaleLowerCase();
+        if (typeof data[ sortHeaderId ] === 'string') {
+          return data[ sortHeaderId ].toLocaleLowerCase();
         }
 
-        return data[sortHeaderId];
+        return data[ sortHeaderId ];
       };
 
       // this.dataSource.sortingDataAccessor = (data, header) => data[header];
@@ -230,11 +230,11 @@ export class BomTableComponent implements OnInit {
   getProject(id: number) {
     this.projectService.getProject(this.orgId, id).then(data => {
       this.projectData = data.data;
-      if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
-        setTimeout(() => {
-          this.guidedTourService.startTour(this.BomDetailsashboardTour);
-        }, 1000);
-      }
+      // if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
+      //   setTimeout(() => {
+      //     this.guidedTourService.startTour(this.BomDetailsashboardTour);
+      //   }, 1000);
+      // }
     });
   }
 
@@ -242,7 +242,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(AddGrnComponent, {
       width: "1000px",
       data: this.projectId,
-      panelClass: ['common-modal-style', 'add-receipt-via-system']
+      panelClass: [ 'common-modal-style', 'add-receipt-via-system' ]
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res === 'success') {
@@ -255,7 +255,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(AddGrnViaExcelComponent, {
       width: "600px",
       data: this.projectId,
-      panelClass: ['common-modal-style', 'create-receipt-excel']
+      panelClass: [ 'common-modal-style', 'create-receipt-excel' ]
     });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -271,7 +271,7 @@ export class BomTableComponent implements OnInit {
       if (this.checkedSubcategory.length) {
         let checkedList = this.checkedSubcategory;
         this.indentService.raiseIndentData = checkedList;
-        this.router.navigate(["/indent/" + this.projectId]);
+        this.router.navigate([ "/indent/" + this.projectId ]);
       }
     }
   }
@@ -304,7 +304,7 @@ export class BomTableComponent implements OnInit {
         mat.documentList = category.documentsList;
         materialList.push(mat);
       });
-      let projectId = materialList[0].projectId;
+      let projectId = materialList[ 0 ].projectId;
       this.addRfq = {
         id: null,
         status: null,
@@ -347,9 +347,9 @@ export class BomTableComponent implements OnInit {
         documentsList: null,
         terms: null
       };
-      this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
+      this.addRfq.rfqProjectsList[ 0 ].projectMaterialList = materialList;
       this.rfqService.addRFQ(this.addRfq).then(res => {
-        this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
+        this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
           state: { rfqData: res, selectedIndex: 1 }
         });
       });
@@ -358,16 +358,16 @@ export class BomTableComponent implements OnInit {
   }
 
   viewIndent() {
-    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
+    this.router.navigate([ "/indent/" + this.projectId + "/indent-detail" ]);
   }
 
 
   addMaterial() {
-    this.router.navigate(["/project-dashboard/bom/" + this.projectId]);
+    this.router.navigate([ "/project-dashboard/bom/" + this.projectId ]);
   }
 
   editMaterial() {
-    this.router.navigate(["/project-dashboard/bom/" + this.projectId + "/edit-materials"]);
+    this.router.navigate([ "/project-dashboard/bom/" + this.projectId + "/edit-materials" ]);
   }
 
   issueToIndent(materialId, projectId): void {
@@ -376,7 +376,7 @@ export class BomTableComponent implements OnInit {
         width: "1200px",
         data: { materialId: materialId, projectId: projectId },
         disableClose: true,
-        panelClass: ['common-modal-style', "issue-to-indent-dialog"]
+        panelClass: [ 'common-modal-style', "issue-to-indent-dialog" ]
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result !== null) {
@@ -391,7 +391,7 @@ export class BomTableComponent implements OnInit {
       const dialogRef = this.dialog.open(DeleteBomComponent, {
         width: "800px",
         data: { materialId: materialId, projectId: projectId },
-        panelClass: ['common-modal-style', 'delete-bom']
+        panelClass: [ 'common-modal-style', 'delete-bom' ]
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result.data == "close") {
@@ -416,7 +416,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: ['common-modal-style', 'view-image-modal'],
+      panelClass: [ 'common-modal-style', 'view-image-modal' ],
       data: {
         projectId,
         materialId
@@ -434,7 +434,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
       width: "60vw",
-      panelClass: ['common-modal-style', 'upload-image-modal'],
+      panelClass: [ 'common-modal-style', 'upload-image-modal' ],
       data: selectedMaterial
     });
 

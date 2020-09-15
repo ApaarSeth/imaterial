@@ -1,3 +1,4 @@
+import { AppNavigationService } from './navigation.service';
 import { Injectable } from '@angular/core';
 import { NotificationInt } from '../models/notification';
 import { API } from '../constants/configuration-constants';
@@ -27,7 +28,8 @@ export class CommonService {
   constructor(
     private dataService: DataService,
     public dialog: MatDialog,
-    private mediaMatcher: MediaMatcher
+    private mediaMatcher: MediaMatcher,
+    private navService: AppNavigationService
   ) { }
 
   formatDate(oldDate): string {
@@ -144,6 +146,21 @@ export class CommonService {
   getMaterials() {
     return this.dataService.getRequest(API.GETDISTINCTMATERIALS);
   }
+
+  openCallendly(email, phoneNo) {
+    this.navService.gaEvent({
+      action: 'submit',
+      category: 'Book_demo',
+      label: `Email: ${email} PhoneNo.: ${phoneNo}`,
+      value: null
+    });
+    const link = document.createElement('a');
+    link.target = '_blank';
+    link.href = 'https://calendly.com/mm_support/discovery_call';
+    link.setAttribute('visibility', 'hidden');
+    link.click();
+  }
+
 }
 
 

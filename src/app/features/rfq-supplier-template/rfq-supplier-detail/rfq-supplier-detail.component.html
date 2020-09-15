@@ -35,7 +35,7 @@
 
         <div class="material-rfq-supplies font-bold"
           [ngClass]="isMobile ? 'display-inline-block m-b-10 width-100 p-10' : 'p-15' ">
-          <div [ngClass]="isMobile ? 'display-block' : '' ">
+          <div [ngClass]="isMobile ? 'display-block' : 'display-inline-block' ">
             <span>
               Payment Details :
             </span>
@@ -256,7 +256,7 @@
                 </tr>
               </ng-container>
               <ng-template #intBHeader>
-                <tr matSort class="brand-name-rfq-supplies">
+                <tr matSort class="brand-name-rfq-supplies text-ellipsis">
                   <th [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">Brand Name</th>
                   <th [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
                     Unit Rate <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
@@ -273,7 +273,7 @@
                       {{ rfqSupplierDetailList.baseCurrencyCode }}
                     </ng-template>
                   </th>
-                  <th class="text-align-right" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
+                  <th class="text-align-right minwidth-200-px" [ngClass]="isMobile ? 'font-size12' : 'font-size14' ">
                     Tax Amount
                     <ng-container *ngIf="rfqSupplierDetailList.rfqCurrency; else bsCrCode">
                       ({{ rfqSupplierDetailList.rfqCurrency.exchangeCurrencyName }})</ng-container>

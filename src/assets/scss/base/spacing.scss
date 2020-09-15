@@ -130,7 +130,11 @@ $spaceamounts: (
   270,
   290,
   300,
-  350
+  350,
+  400,
+  450,
+  500,
+  600
 ); // Adjust this to include the pixel amounts you need.
 $sides: (top, bottom, left, right); // Leave this variable alone
 // $spaceremamounts: (0.06rem, 0.13rem, 0.19rem, 0.25rem, 0.3rem, 0.4rem, 0.5rem, 0.6rem, 0.8rem, 0.9rem, 1, 1.1rem, 1.3rem, 1.5rem, 1.6rem, 1.8rem, 2rem, 3rem, 4rem, 5rem, 6rem);
@@ -199,6 +203,10 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 
   .border-radius-#{$space} {
     border-radius: #{$space}px !important ;
+  }
+
+  .font-space-#{$space} {
+    letter-spacing: #{$space}px !important;
   }
 
   @each $side in $sides {
