@@ -349,9 +349,11 @@ export class BomTableComponent implements OnInit {
       };
       this.addRfq.rfqProjectsList[ 0 ].projectMaterialList = materialList;
       this.rfqService.addRFQ(this.addRfq).then(res => {
-        this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
-          state: { rfqData: res, selectedIndex: 1 }
-        });
+        if (res.data) {
+          this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
+            state: { rfqData: res, selectedIndex: 1 }
+          });
+        }
       });
     }
 
