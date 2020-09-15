@@ -296,13 +296,15 @@ export class BomComponent implements OnInit {
     }
 
     saveCategory() {
-        this.tabsFormData[ this.selectedIndex ].forEach(item => {
+        if (this.tabsFormData[ this.selectedIndex ].length) {
+            this.tabsFormData[ this.selectedIndex ].forEach(item => {
 
-            item[ 'estimatedRate' ] = item[ 'estimatedRate' ] !== null ? item[ 'estimatedRate' ] : 0;
-            delete item[ 'isNull' ];
-            delete item[ 'tradeList' ];
-            delete item[ 'treadId' ];
-        })
+                item[ 'estimatedRate' ] = item[ 'estimatedRate' ] !== null ? item[ 'estimatedRate' ] : 0;
+                delete item[ 'isNull' ];
+                delete item[ 'tradeList' ];
+                delete item[ 'treadId' ];
+            })
+        }
         this.bomService
             .sumbitCategory(this.userId, this.projectId, this.tabsFormData[ this.selectedIndex ])
             .then(res => {

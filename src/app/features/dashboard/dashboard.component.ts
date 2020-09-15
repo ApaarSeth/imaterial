@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
   countryList: CountryCode[] = [];
 
   isMobile: boolean;
+  openAddProject: string;
 
   public dashboardTour: GuidedTour = {
     tourId: 'purchases-tour',
@@ -103,7 +104,8 @@ export class DashboardComponent implements OnInit {
     private permissionService: PermissionService,
     private route: ActivatedRoute,
     private notifier: AppNotificationService,
-    private addProjectService: AddProjectService
+    private addProjectService: AddProjectService,
+    private activeRoute: ActivatedRoute
   ) {
   }
 
@@ -118,6 +120,10 @@ export class DashboardComponent implements OnInit {
     this.addProjectService.onEditOrDelete.subscribe(res => {
       this.projectDeleteOrEdit(res)
     })
+    this.openAddProject = this.activeRoute.snapshot.queryParams[ "openAddProject" ];
+    if (this.openAddProject && this.openAddProject === '1') {
+      this.addProject();
+    }
   }
 
   projectDeleteOrEdit(event) {
