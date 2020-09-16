@@ -1,3 +1,4 @@
+import { UserFeedbackComponent } from './features/user-feedback/user-feedback.component';
 import { BrowserModule, HammerModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
@@ -53,6 +54,7 @@ import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/materia
     NotFoundComponent,
     SupplierBidLayoutComponent,
     AppDashboardComponent,
+    UserFeedbackComponent,
     ProfileLayoutComponent,
     ProfileComponent,
     MySubscriptionsComponent,
@@ -105,6 +107,6 @@ import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/materia
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
     TaxCostService
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

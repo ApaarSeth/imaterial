@@ -1,0 +1,45 @@
+<section class="update-info height-86 flex-center email-verification" style="background-image: none">
+  <div class="container text-webkit-center">
+    <div class="row background-white-color border-radius-10 p-20 mt-5 width-60">
+      <div class="col-md-12 text-center">
+        <h2 class="p-r-10 p-t-10 p-b-20">We Love feedback!</h2>
+        <form #userFBForm="ngForm" (ngSubmit)="onSubmit(userFBForm)">
+          <div class="col-xs-12 custom-slider">
+            <p class="text-left">How Happy are you with Material Manager?*</p>
+            <mat-slider required ngModel class="width-99" name="How Happy are you with Material Manager?" [max]="5" [min]="1" [step]="1" [thumbLabel]="true" [tickInterval]="true"> </mat-slider>
+          </div>
+          <div class="col-xs-12 custom-slider">
+            <p class="text-left">How user-friendly is our software's interface?*</p>
+            <mat-slider required ngModel class="width-99" name="How user-friendly is our software's interface?*" [max]="5" [min]="1" [step]="1" [thumbLabel]="true" [tickInterval]="true"> </mat-slider>
+          </div>
+          <div class="col-xs-12 p-b-10">
+            <p class="text-left m-b-0">How can we improve our software?</p>
+            <mat-form-field class="width-100">
+              <textarea ngModel name="How can we improve our software?" class="height-120-px radius-5 gray-border" matInput></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="col-xs-12">
+            <p class="text-left">Are you using any other procurement and inventory management software?*</p>
+            <div class="text-left">
+              <mat-radio-group required class="example-radio-group" ngModel #radioAns="ngModel" name="Are you using any other procurement and inventory management software?*">
+                <mat-radio-button class="p-r-10" value="yes"> Yes </mat-radio-button>
+                <mat-radio-button value="No"> No </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div *ngIf="radioAns.value === 'yes'">
+              <mat-form-field class="width-100 mat-form-field-wrapper-nopadding p-b-10">
+                <textarea ngModel name="Other Software Names" class="radius-5 gray-border" matInput></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button mat-raised-button class="background-white-color main-button main-color m-r-10" type="button" (click)="onCancel()">Cancel</button>
+
+            <button mat-raised-button class="main-background-color main-button color-white" type="submit" [disabled]="!userFBForm.form.valid">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

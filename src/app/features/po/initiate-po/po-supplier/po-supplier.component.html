@@ -18,25 +18,14 @@
         </mat-form-field>
     </span> -->
     <span class="p-r-5">
-      <span
-        class="m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer font-size-vary-grn"
-        (click)="openSupplierDialog()"
-        [ngClass]="isMobile ? 'text-decoration-underline' : ''"
-      >
+      <span class="m-b-5 m-r-10 m-l-15 font-bold color-main cursor-pointer font-size-vary-grn" (click)="openSupplierDialog()" [ngClass]="isMobile ? 'text-decoration-underline' : ''">
         <span [ngClass]="isMobile ? 'fontsize-14-px' : 'fontsize-20-px'"> + </span>
         <span> Supplier </span>
       </span>
     </span>
     <span>
       <span (click)="selectCurrency()" class="text-decoration-underline main-color font-size-vary-grn p-r-10 text-semi-bold cursor-pointer">Select Currency</span>
-      <button
-        [disabled]="!form.valid"
-        mat-raised-button
-        matStepperNext
-        (click)="choosenSupplier()"
-        class="main-background-color main-button color-white"
-        [ngClass]="isMobile ? 'po-sm-btn' : ''"
-      >
+      <button [disabled]="!form.valid" mat-raised-button matStepperNext (click)="choosenSupplier()" class="main-background-color main-button color-white" [ngClass]="isMobile ? 'po-sm-btn' : ''">
         Next
       </button>
     </span>
@@ -57,7 +46,7 @@
   </div>
 </div>
 
-<form *ngIf="allSuppliers" [formGroup]="form" (click)="choosenSupplier()">
+<form *ngIf="allSuppliers && allSuppliers.length > 0" [formGroup]="form" (click)="choosenSupplier()">
   <div class="example-container mat-elevation-z8">
     <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:['supplierName']" class="mat-elevation-z8 col-sm-12 supplier-details-tbl">
       <!-- Supplier Name Column -->

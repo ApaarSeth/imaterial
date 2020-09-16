@@ -65,6 +65,7 @@
               <!-- country -->
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <mat-form-field class="border-select mat-form-field-flex-mm-padding m-t-6 select-country width-100">
+                  <mat-label class="value-currencies-label">Select Country</mat-label>
                   <mat-select formControlName="countryCode" (selectionChange)="blankPincode()">
                     <div class="display-flex">
                       <input
@@ -86,10 +87,7 @@
                         <span class="p-r-5 color-brand fontsize-16-px">{{ selectedCountry && selectedCountry.name }}</span>
                       </span>
                     </mat-select-trigger>
-                    <mat-option
-                      *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']"
-                      [value]="country"
-                      selected="trade.isAttatched"
+                    <mat-option *ngFor="let country of countryList | SearchPipe: searchCountry:['name', 'countryCode', 'callingCode']" [value]="country" selected="trade.isAttatched"
                       ><span
                         ><img class="width-17 p-r-10" [src]="country.imageUrl" alt="" />
                         <span matTooltip="{{ country.name }}" class="limited-character universal p-r-5">{{ country.name }}</span>
@@ -141,16 +139,7 @@
               <div class="col-md-6 col-sm-6 col-xs-6 date-dialog-add-edit">
                 <mat-form-field class="border-input width-100">
                   <mat-label>Project End Date*</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="endDate"
-                    formControlName="endDate"
-                    #refEnd
-                    (dateChange)="getEndDate(refEnd.value)"
-                    [min]="projectEndDate"
-                    (click)="endDate.open()"
-                    readonly
-                  />
+                  <input matInput [matDatepicker]="endDate" formControlName="endDate" #refEnd (dateChange)="getEndDate(refEnd.value)" [min]="projectEndDate" (click)="endDate.open()" readonly />
                   <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                   <mat-datepicker #endDate startView="month" [startAt]="endDate"></mat-datepicker>
                   <small *ngIf="form.controls['endDate'].hasError('required') && form.controls['endDate'].touched" class="form-error-msg"> End date is required </small>
