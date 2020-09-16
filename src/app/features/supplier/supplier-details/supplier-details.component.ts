@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -36,6 +36,7 @@ export class SupplierDetailComponent implements OnInit {
   isMobile: boolean;
   userId: number;
   showResponsiveDesignIcons: boolean;
+  @ViewChild('searchVal', {static: false}) searchVal: ElementRef<any>;
 
   public SupplierDashboardTour: GuidedTour = {
     tourId: 'supplier-tour',
@@ -121,6 +122,9 @@ export class SupplierDetailComponent implements OnInit {
     dialogRef.afterClosed().toPromise().then((data) => {
       if (data && data != null) {
         this.getAllSupplier();
+        // code - after add new supplier, search input should be clear and also all supplier list should appear
+        this.searchVal.nativeElement.value = "";
+        this.noSearchResults = false;
       }
     });
   }
@@ -189,6 +193,7 @@ export class SupplierDetailComponent implements OnInit {
     this.loading.show();
     this.rfqService.postSupplierExcel(data, this.orgId).then(res => {
       if (res.statusCode === 201) {
+        debugger
         this._snackBar.open(res.message, "", {
           duration: 2000,
           panelClass: ["success-snackbar"],
@@ -206,6 +211,12 @@ export class SupplierDetailComponent implements OnInit {
         });
         this.loading.hide();
       }
+
+      // code - after add new supplier, search input should be clear and also all supplier list should appear
+      this.searchVal.nativeElement.value = "";
+      this.noSearchResults = false;
+      this.dataSource = new MatTableDataSource(this.dataSourceTemp);
+      console.log(this.dataSource);
     }).catch(err => {
       this.myInputVariable.nativeElement.value = "";
       this._snackBar.open(err.error.message, "", {

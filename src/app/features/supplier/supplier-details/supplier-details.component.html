@@ -34,11 +34,10 @@
   <!-- supplier details table -->
   <ng-container *ngIf="dataSourceTemp && dataSourceTemp.length > 0">
     <div class="dashboard-unique p-b-20 min-height parent supplier-screen">
-
       <div class="row align-items-center">
         <div class="col-md-3 col-sm-4 col-xs-6 small-screen-left-padding search-col">
           <mat-form-field class="example-form-field border-input search-form-input">
-            <input matInput placeholder="Search Suppliers" type="search" (keyup)="applyFilter($event.target.value)" />
+            <input matInput placeholder="Search Suppliers" type="search" (keyup)="applyFilter($event.target.value)" #searchVal />
             <button mat-button matSuffix mat-icon-button>
               <mat-icon>search</mat-icon>
             </button>
@@ -82,8 +81,8 @@
       <!-- all suppliers data table structure -->
       <ng-container *ngIf="dataSourceTemp && dataSourceTemp.length > 0">
         <div class="supplier-details-table-div add-unique-container mat-elevation-z8" *ngIf="!noSearchResults">
+          
           <table mat-table [dataSource]="dataSource" class="supplier-data-tbl">
-  
             <!-- Supplier name Column -->
             <ng-container matColumnDef="suppliername">
               <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
