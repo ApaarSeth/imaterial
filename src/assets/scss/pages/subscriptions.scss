@@ -380,6 +380,15 @@
     }
 }
 
+.ta-close-btn{
+    .close{
+        color: #020202;
+        font-weight: 100;
+        font-size: 32px;
+        line-height: 15px;
+    }
+}
+
 @media(max-width: 1300px){
     .desp-block{
         margin: 0 10%;

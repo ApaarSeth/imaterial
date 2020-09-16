@@ -1,3 +1,5 @@
+import { TrialActiveResolver } from './trial-active/trial-active.resolver';
+import { TrialActiveComponent } from './trial-active/trial-active.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
@@ -36,6 +38,13 @@ const routes: Routes = [
         resolve: {
             subsData: SubscriptionsResolver
         }
+    },
+    {
+        path: "trial-active",
+        component: TrialActiveComponent,
+        resolve: {
+            trialActive: TrialActiveResolver
+        }
     }
 
 
@@ -43,7 +52,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [ CommonModule, RouterModule.forChild(routes) ],
-    providers: [ SubscriptionsResolver ]
+    providers: [ SubscriptionsResolver, TrialActiveResolver ]
 })
 
 export class FirstLoginRoutingModule { }

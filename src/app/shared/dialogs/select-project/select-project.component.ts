@@ -35,10 +35,10 @@ export class SelectProjectComponent implements OnInit {
     radioChange(event) {
         const id = event.value;
         const project = Object.entries(this.data).flat().filter(op => op.projectId === id);
-        if (project[0].matCount === 0 || project[0].matCount === null) {
-            this._router.navigate([`project-dashboard/bom/${project[0].projectId}`]);
+        if (project[ 0 ].matCount === 0 || project[ 0 ].matCount === null) {
+            this._router.navigate([ `project-dashboard/bom/${project[ 0 ].projectId}` ]);
         } else {
-            this._router.navigate([`project-dashboard/bom/${project[0].projectId}/bom-detail`]);
+            this._router.navigate([ `project-dashboard/bom/${project[ 0 ].projectId}/bom-detail` ]);
         }
         this.closeDialog();
     }
@@ -54,11 +54,11 @@ export class SelectProjectComponent implements OnInit {
             const dialogRef = this._dialog.open(AddProjectComponent, {
                 width: "1000px",
                 data,
-                panelClass: ['common-modal-style', 'add-project-dialog']
+                panelClass: [ 'common-modal-style', 'add-project-dialog' ]
             });
 
             dialogRef.afterClosed().subscribe(result => {
-                this._router.navigate(['/dashboard']);
+                this._router.navigate([ '/dashboard' ]);
             });
         })
     }
