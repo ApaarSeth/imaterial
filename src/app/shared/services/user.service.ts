@@ -87,4 +87,8 @@ export class UserService {
     return this.dataService.getRequest(API.RESENDINVITE(userId));
   }
 
+  postUserFeedback(data) {
+    return this.dataService.sendPostRequest(API.POSTUSERFEEDBACK, data);
+  }
+
 }

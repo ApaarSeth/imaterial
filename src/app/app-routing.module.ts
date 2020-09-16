@@ -1,3 +1,4 @@
+import { UserFeedbackComponent } from './features/user-feedback/user-feedback.component';
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthLayoutComponent } from "./shared/layout/auth-layout/auth-layout.component";
@@ -131,7 +132,11 @@ const routes: Routes = [
         loadChildren: () =>
           import("./features/dashboard/dashboard.module").then(m => m.DashboardModule)
       },
-      // resolve: { dashBoardData: DashBoardResolver }
+      {
+        path: "user-feedback",
+        component: UserFeedbackComponent,
+        data: { title: 'user-feedback' }
+      },
       {
         path: 'profile-account',
         component: ProfileComponent,
