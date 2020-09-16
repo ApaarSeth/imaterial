@@ -47,9 +47,9 @@
                 <td class="mat-cell text-center">{{ material.estimatedQty }}</td>
                 <td class="mat-cell text-center">{{ material.indentQnt }}</td>
                 <td class="mat-cell text-center">{{ material.dueDate | date: "dd MMM yyy" }}</td>
-                <td class="mat-cell text-center">{{ material.deliveredQty }}</td>
+                <td class="mat-cell text-center">{{ material.deliveredQty + material.directDeliveredQty }}</td>
                 <td class="mat-cell text-center">{{ material.issuedQty }}</td>
-                <td class="mat-cell text-center">{{ material.deliveredQty - material.issuedQty }}</td>
+                <td class="mat-cell text-center">{{ (material.deliveredQty + material.directDeliveredQty) - material.issuedQty }}</td>
               </tr>
             </mat-expansion-panel-header>
 
@@ -59,11 +59,12 @@
                 <tr class="mat-row" *ngFor="let indent of indentList">
                   <td class="mat-cell"></td>
                   <td class="mat-cell"></td>
-                  <td class="mat-cell text-center"></td>
+                  <td class="mat-cell"></td>
                   <td class="mat-cell text-center">{{ indent.intendedQnt }}</td>
                   <td class="mat-cell text-center">{{ indent.dueDate | date: "dd MMM yyy" }}</td>
+                  <td class="mat-cell"></td>
                   <td class="mat-cell text-center">{{ indent.issuedQnt }}</td>
-                  <td class="mat-cell text-center"></td>
+                  <td class="mat-cell"></td>
                 </tr>
               </div>
             </ng-container>

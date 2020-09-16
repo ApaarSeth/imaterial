@@ -12,25 +12,28 @@ export class TwoDigitDecimaNumberDirective {
 
   constructor(private el: ElementRef) {
   }
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
+  @HostListener('beforeinput', ['$event'])
+  onKeyDown(event: any) {
     // Allow Backspace, tab, end, and home keys
-    if (!event.key) {
+    const key = event.data.slice(event.data.length - 1, event.data.length)
+    if (!key) {
       event.preventDefault();
 
       return;
     }
 
-    if (this.specialKeys.indexOf(event.key) !== -1) {
+    if (this.specialKeys.indexOf(key) !== -1) {
       return;
     }
 
     let current: string = this.el.nativeElement.value;
-    const position = this.el.nativeElement.selectionStart;
-    const next: string = [current.slice(0, position), event.key == 'Decimal' ? '.' : event.key, current.slice(position)].join('');
+    const position = this.el.nativeElement.selectionEnd;
+    const next: string = [current.slice(0, position), key == 'Decimal' ? '.' : key, current.slice(position)].join('');
     if (next && !String(next).match(this.regex)) {
-      event.preventDefault();
+      // this.el.nativeElement.value = current;
+      return false;
     }
   }
+
 
 } 

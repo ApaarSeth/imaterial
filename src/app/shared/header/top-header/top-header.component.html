@@ -50,6 +50,8 @@
         <ng-container *ngIf="isPlanAvailable === 1 && accountOwner === 1">
           <button mat-menu-item class="background-white-color" (click)="goToMyPlans()">My Plan / Upgrade</button>
         </ng-container>
+        <button mat-menu-item class="background-white-color" (click)="goToUserFeedback()" routerLinkActive="router-link-active">Share Feedback</button>
+
         <button mat-menu-item class="background-white-color" (click)="logout()" routerLinkActive="router-link-active">Logout</button>
       </mat-menu>
     </div>

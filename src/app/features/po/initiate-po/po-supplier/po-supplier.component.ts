@@ -34,7 +34,8 @@ export class PoSupplierComponent implements OnInit {
     private commonService: CommonService) { }
 
   ngOnInit() {
-    this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data;
+    this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data.supplierList;
+    console.log("suppliers", this.allSuppliers);
     this.countryist = this.activatedRoute.snapshot.data.countryList;
     this.isMobile = this.commonService.isMobile().matches;
     this.formInit();
@@ -49,7 +50,7 @@ export class PoSupplierComponent implements OnInit {
   getSuppliers() {
     let orgId = Number(localStorage.getItem("orgId"));
     this.commonService.getSuppliers(orgId).then(data => {
-      this.allSuppliers = data.data;
+      this.allSuppliers = data.data.supplierList;
     });
   }
 
@@ -79,14 +80,11 @@ export class PoSupplierComponent implements OnInit {
       data,
       panelClass: 'add-supplier-dialog'
     });
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(result => {
-        if (result === 'Supplier Successfully added') {
-          this.getSuppliers();
-        }
-      });
+    dialogRef.afterClosed().toPromise().then(result => {
+      if (result === 'Supplier Successfully added') {
+        this.getSuppliers();
+      }
+    });
   }
 
   selectCurrency() {
