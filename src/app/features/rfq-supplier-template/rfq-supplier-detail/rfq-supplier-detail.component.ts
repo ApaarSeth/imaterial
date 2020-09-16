@@ -545,8 +545,6 @@ export class RFQSupplierDetailComponent implements OnInit {
       })
     });
 
-    console.log(prevUploadedImageList);
-
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
       width: "60vw",
@@ -605,7 +603,7 @@ export class RFQSupplierDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
+        // console.log(result);
       }
     });
   }

@@ -58,7 +58,6 @@ export class AddMyMaterialBomComponent implements OnInit {
     else {
       this.firefox = false;
     }
-    console.log(this.firefox)
   }
 
   getCategories() {
