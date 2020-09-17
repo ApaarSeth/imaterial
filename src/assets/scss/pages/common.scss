@@ -286,10 +286,13 @@ div.limited-character.universal {
   .mat-slider-thumb-label {
     background-color: $main-color !important;
     color: $white-color;
+    transform: rotate(45deg) !important;
+    border-radius: 50% 50% 0 !important;
   }
 
   .mat-slider-thumb-label-text {
     color: $white-color;
+    opacity: 1 !important;
   }
 
   .mat-accent .mat-slider-thumb {
@@ -299,6 +302,10 @@ div.limited-character.universal {
     border: solid 2px gray;
     bottom: -20px;
     right: -20px;
+  }
+
+  .mat-slider-thumb {
+    transform: scale(0) !important;
   }
 }
 /***************************************************************************************/
