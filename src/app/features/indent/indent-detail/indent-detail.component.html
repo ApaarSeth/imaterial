@@ -35,10 +35,9 @@
         <ng-container *ngIf="dataSource1 || dataSource2; else emptyReports">
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
-                [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
                 <div class="row">
-                  <div class="col-sm-12">
+                  <div class="col-sm-12" [ngClass]="isMobile ? 'p-l-7' : ''">
                     <span>Ongoing Purchase Requisition</span>
                   </div>
                 </div>
@@ -114,10 +113,9 @@
           <p></p>
           <ng-container class="user-dts">
             <mat-expansion-panel class="myPanel" [expanded]="true">
-              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'"
-                [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : ''">
+              <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
                 <div class="row">
-                  <div class="col-sm-12">
+                  <div class="col-sm-12" [ngClass]="isMobile ? 'p-l-7' : ''">
                     <span>Completed Purchase Requisition</span>
                   </div>
                 </div>

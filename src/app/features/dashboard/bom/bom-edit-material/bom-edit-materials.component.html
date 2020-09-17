@@ -20,7 +20,11 @@
               <th class="mat-header-cell p-l-10">Material Name</th>
               <th class="mat-header-cell p-l-10">Unit</th>
               <th class="mat-header-cell p-l-10">Estimated Quantity</th>
-              <th class="mat-header-cell p-l-10">Estimated Rate</th>
+              <th class="mat-header-cell p-l-10">Estimated Rate
+                <span>
+                  ({{curencyCode}})
+                </span>
+              </th>
             </tr>
             <tr *ngFor="let item of form['controls'].material['controls']; let i = index" [formGroupName]="i">
               <td [ngClass]="isMobile ? 'font-size12 minwidth-250-px' : '' ">

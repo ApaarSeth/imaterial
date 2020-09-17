@@ -81,11 +81,11 @@
                     <div class="susb-actions text-align-center p-10 d-block">
                       <button *ngIf="trialAction && isActiveSubscription === 0" mat-button
                         class="bordered-button fbtn mr-2"
-                        (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        (click)="choosePlan('1', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId, plan.planName)">
                         Free Trial
                       </button>
                       <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
-                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId, plan.planName)">
                         Buy Now
                       </button>
                     </div>
@@ -93,13 +93,13 @@
                   <ng-template #sbscrbd>
                     <div class="susb-actions text-align-center p-10 d-block">
                       <!-- <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
-                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                        (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId, plan.planName)">
                         Add More User
                       </button> -->
 
                       <ng-container *ngIf="isFreeTrialSubscription === 1 && isActiveSubscription === 1; else blnkSpc">
                         <button mat-button mat-button-base class="sbtn main-background-color color-white demo-title"
-                          (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId)">
+                          (click)="choosePlan('0', plan.planId, plan.offerId, plan.planPricingId, plan.planEncryptId, plan.planPricingEncryptId, plan.planName)">
                           Buy Now
                         </button>
                       </ng-container>

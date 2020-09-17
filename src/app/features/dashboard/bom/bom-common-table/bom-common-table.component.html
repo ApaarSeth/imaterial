@@ -23,7 +23,11 @@
                 <table formArrayName="material" class="table mb-0 bg-white bom-material-table">
                     <thead>
                         <tr matSort class="mat-elevation-z2 mat-header-row background-color-skyblue">
-                            <th class="mat-header-cell p-l-10" *ngFor="let item of tableHeads">{{item}}</th>
+                            <th class="mat-header-cell p-l-10" *ngFor="let item of tableHeads">{{item}}
+                                <span *ngIf="item === 'Estimated Rate'">
+                                    ({{curencyCode}})
+                                </span>
+                            </th>
                         </tr>
                     </thead>
 
