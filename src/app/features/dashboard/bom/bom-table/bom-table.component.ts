@@ -49,8 +49,8 @@ export class BomTableComponent implements OnInit {
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
-  innerDisplayedColumns = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
+  columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "customColumn" ];
+  innerDisplayedColumns = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "customColumn" ];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -58,6 +58,7 @@ export class BomTableComponent implements OnInit {
   checkedSubcategory: Subcategory[] = [];
   permissionObj: permission;
   isMobile: boolean;
+  isImageFeatureAvaible: boolean;
 
   public BomDetailsashboardTour: GuidedTour = {
     tourId: 'bom-details-tour',
@@ -176,6 +177,12 @@ export class BomTableComponent implements OnInit {
       }
 
       this.dataSource = new MatTableDataSource(this.subcategoryData);
+      this.isImageFeatureAvaible = this.subcategoryData[ 0 ][ 'moduleFeatures' ].featureList.some(item => (item.featureName.includes('image integration') && item.isAvailable === 1));
+
+      if (this.isImageFeatureAvaible) {
+        this.columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
+        this.innerDisplayedColumns = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
+      }
       this.dataSource.sort = this.sort;
 
       this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
@@ -299,7 +306,7 @@ export class BomTableComponent implements OnInit {
         mat.estimatedQty = category.estimatedQty;
         mat.estimatedRate = category.estimatedRate;
         mat.dueDate = category.dueDate;
-        mat.fullfilmentDate = String(category.dueDate) === "" ? null : String(category.dueDate);
+        mat.fullfilmentDate = category.dueDate ? String(category.dueDate) : null;
         mat.materialUnit = category.materialUnit;
         mat.documentList = category.documentsList;
         materialList.push(mat);
