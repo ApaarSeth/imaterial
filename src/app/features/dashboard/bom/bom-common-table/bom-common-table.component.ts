@@ -26,6 +26,7 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
     isMobile: boolean;
     tableHeads: string[] = [];
     getRangeLabel: any;
+    curencyCode: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -39,6 +40,7 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.isMobile = this.commonService.isMobile().matches;
+        this.curencyCode = localStorage.getItem('currencyCode');
         this.dataSource = this.config.data;
         this.matData = this.config.data;
         if (this.config.table) {
