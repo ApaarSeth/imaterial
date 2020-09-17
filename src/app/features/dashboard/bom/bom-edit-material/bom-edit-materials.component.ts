@@ -37,6 +37,7 @@ export class BomEditMaterialComponent implements OnInit {
     materialUnits: string[] = [];
     matData: any;
     isMobile: boolean;
+    curencyCode: string;
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -54,6 +55,7 @@ export class BomEditMaterialComponent implements OnInit {
     }
     ngOnInit() {
         this.matData = this.route.snapshot.data.editMaterialsData;
+        this.curencyCode = localStorage.getItem('currencyCode');
         this.route.params.subscribe(params => {
             this.projectId = params[ "id" ];
         });

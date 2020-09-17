@@ -1,3 +1,4 @@
+import { AppNavigationService } from './../../services/navigation.service';
 import { CancelSubscriptionDialog } from './subscription-cancel/cancel-subscription-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnDestroy } from "@angular/core";
@@ -28,6 +29,8 @@ export class SubscriptionsComponent implements OnInit {
 
     isFreeTrialSubscription: any;
     isActiveSubscription: any;
+    email: string;
+    phoneNo: string;
 
     constructor(
         private _router: Router,
@@ -35,11 +38,14 @@ export class SubscriptionsComponent implements OnInit {
         private subsPayService: SubscriptionPaymentsService,
         private commonService: CommonService,
         private dialog: MatDialog,
-        private notifier: AppNotificationService
+        private notifier: AppNotificationService,
+        private navService: AppNavigationService
     ) { }
 
     ngOnInit() {
         this.isMobile = this.commonService.isMobile().matches;
+        this.email = localStorage.getItem('email');
+        this.phoneNo = localStorage.getItem('phoneNo');
         this.getUserInformation(localStorage.getItem('userId'));
         this.isFreeTrialSubscription = Number(localStorage.getItem('isFreeTrialSubscription'));
         this.isActiveSubscription = Number(localStorage.getItem('isActiveSubscription'));
@@ -50,7 +56,7 @@ export class SubscriptionsComponent implements OnInit {
     getTrialDays(subs) {
 
         if (subs) {
-            const days = subs[0].trialDays;
+            const days = subs[ 0 ].trialDays;
             if (days < 30) {
                 this.trialDays = days + ' DAYS';
             } else if (days == 30) {
@@ -110,12 +116,28 @@ export class SubscriptionsComponent implements OnInit {
         })
     }
 
-    choosePlan(type, planId, offerId, price, planEncryptId, planPricingEncryptId) {
+    choosePlan(type, planId, offerId, price, planEncryptId, planPricingEncryptId, planName) {
+        if (planName === 'Basic') {
+            this.navService.gaEvent({
+                action: 'submit',
+                category: 'buy_now_basic',
+                label: `Email: ${this.email} PhoneNo.: ${this.phoneNo}`,
+                value: null
+            });
+        }
+        if (planName === 'Premium') {
+            this.navService.gaEvent({
+                action: 'submit',
+                category: 'buy_now_premium',
+                label: `Email: ${this.email} PhoneNo.: ${this.phoneNo}`,
+                value: null
+            });
+        }
         this.subsPayService.chooseSubcriptionPlan(type, planId, offerId, price, planEncryptId, planPricingEncryptId, this.users);
     }
 
     showAllFeatures(event) {
-        event.currentTarget.children[0].children[1].innerHTML === 'keyboard_arrow_down' ? event.currentTarget.children[0].children[1].innerHTML = 'keyboard_arrow_up' : event.currentTarget.children[0].children[1].innerHTML = 'keyboard_arrow_down';
+        event.currentTarget.children[ 0 ].children[ 1 ].innerHTML === 'keyboard_arrow_down' ? event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_up' : event.currentTarget.children[ 0 ].children[ 1 ].innerHTML = 'keyboard_arrow_down';
         event.currentTarget.nextElementSibling.classList.toggle('f-hide');
     }
 
@@ -127,6 +149,12 @@ export class SubscriptionsComponent implements OnInit {
         this.subsPayService.getContactSales().then(res => {
             if (res) {
                 this.notifier.snack(res.message);
+                this.navService.gaEvent({
+                    action: 'submit',
+                    category: 'custom_plan',
+                    label: `Email: ${this.email} PhoneNo.: ${this.phoneNo}`,
+                    value: null
+                });
             }
         });
     }
