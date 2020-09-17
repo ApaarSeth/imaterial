@@ -37,6 +37,8 @@ export class SupplierDetailComponent implements OnInit {
   userId: number;
   showResponsiveDesignIcons: boolean;
   @ViewChild('searchVal', {static: false}) searchVal: ElementRef<any>;
+  noSearchResults: boolean;
+  isRatingFeatureShow: any;
 
   public SupplierDashboardTour: GuidedTour = {
     tourId: 'supplier-tour',
@@ -57,7 +59,6 @@ export class SupplierDetailComponent implements OnInit {
       this.setLocalStorage()
     }
   };
-  noSearchResults: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -87,20 +88,23 @@ export class SupplierDetailComponent implements OnInit {
 
   getAllSupplier() {
     this.commonService.getSuppliers(this.orgId).then(data => {
-      this.dataSource = new MatTableDataSource(data.data.supplierList);
-      this.dataSourceTemp = data.data.supplierList;
 
-      if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
-        setTimeout(() => {
-          this.guidedTourService.startTour(this.SupplierDashboardTour);
-        }, 1000);
+      if(data.data){
+        this.dataSource = new MatTableDataSource(data.data.supplierList);
+        this.dataSourceTemp = data.data.supplierList;
+  
+        this.isRatingFeatureShow = (data.data.moduleFeatures.featureList[1].featureName === "supplier rating" && data.data.moduleFeatures.featureList[1].isAvailable === 1) ? true : false;
+  
+        if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
+          setTimeout(() => {
+            this.guidedTourService.startTour(this.SupplierDashboardTour);
+          }, 1000);
+        }
       }
-
       // this.dataSource.filterPredicate = (data.data.supplierList, filterValue) => {
       //   const dataStr = data.supplierName.toString().toLowerCase() + data.email.toString().toLowerCase() + data.contactNo.toString();
       //   return dataStr.indexOf(filterValue) != -1;
       // };
-
     });
   }
 

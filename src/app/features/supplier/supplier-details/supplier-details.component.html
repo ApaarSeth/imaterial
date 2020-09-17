@@ -88,7 +88,7 @@
               <th mat-header-cell *matHeaderCellDef>Supplier Name</th>
               <td mat-cell *matCellDef="let element" class="p-rem-r-5">
                 <span class="supplier-name">{{ element.supplierName }}</span>
-                <span class="d-block supplier-rates">
+                <span class="d-block supplier-rates" *ngIf="isRatingFeatureShow">
                   <view-rating [supplierId]="element.supplierId" [ratings]="element.supplierRating"></view-rating>
                 </span>
               </td>
