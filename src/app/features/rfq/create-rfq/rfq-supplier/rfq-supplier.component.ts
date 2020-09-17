@@ -1,3 +1,4 @@
+import { featureList } from './../../../../shared/models/menu.model';
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { AddRFQ } from "src/app/shared/models/RFQ/rfq-details";
@@ -22,6 +23,7 @@ export class RfqSupplierComponent implements OnInit {
   @Input() finalRfq: AddRFQ;
   @Input() cntryList: CountryCode[];
   @Input() suppliers: Suppliers[];
+  @Input() supplierModuleFeature: any;
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   searchText: string = null;
   buttonName: string = "selectSupplier";
@@ -42,6 +44,7 @@ export class RfqSupplierComponent implements OnInit {
   supplierCounter: number = 0;
   newAddedId: number;
   countryist: CountryCode[];
+  isRatingAvailable: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -53,6 +56,9 @@ export class RfqSupplierComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.isMobile = this.commonService.isMobile().matches;
+    if (this.supplierModuleFeature.featureList) {
+      this.isRatingAvailable = this.supplierModuleFeature.featureList.some(item => (item.featureName.includes('supplier rating') && item.isAvailable === 1));
+    }
     if (this.suppliers) {
       this.allSuppliers = this.suppliers;
     } else {
@@ -84,7 +90,7 @@ export class RfqSupplierComponent implements OnInit {
   formInit() {
     const frmArr: FormGroup[] = this.allSuppliers.map(supplier => {
       return this.formBuilder.group({
-        supplier: [supplier.checked ? supplier : null]
+        supplier: [ supplier.checked ? supplier : null ]
       });
     });
     this.supplierForm = this.formBuilder.group({
@@ -93,7 +99,7 @@ export class RfqSupplierComponent implements OnInit {
   }
 
   supplierCheck() {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
+    return (control: AbstractControl): { [ key: string ]: boolean } | null => {
       let check = control.value.some(supp => {
         return supp.supplier != null
       })
@@ -105,7 +111,7 @@ export class RfqSupplierComponent implements OnInit {
   }
 
   valueChange(supplier: Suppliers, ch: MatCheckbox, i: number) {
-    const sArr = this.supplierForm.controls["forms"] as FormArray;
+    const sArr = this.supplierForm.controls[ "forms" ] as FormArray;
     const sGrp = sArr.at(i) as FormGroup;
     if (ch.checked) {
       if (this.supplierCounter < 3) {
@@ -126,7 +132,7 @@ export class RfqSupplierComponent implements OnInit {
   supplierAlert() {
     this._snackBar.open("Cannot add more than 3 supplier", "", {
       duration: 2000,
-      panelClass: ["warning-snackbar"],
+      panelClass: [ "warning-snackbar" ],
       verticalPosition: "bottom"
     });
   }
@@ -187,7 +193,7 @@ export class RfqSupplierComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectRfqTermsComponent, {
       width: "400px",
       data,
-      panelClass: ['common-modal-style', 'select-rfq-terms-dialog']
+      panelClass: [ 'common-modal-style', 'select-rfq-terms-dialog' ]
     });
     dialogRef.afterClosed().subscribe(result => {
     });
@@ -198,7 +204,7 @@ export class RfqSupplierComponent implements OnInit {
       disableClose: true,
       width: "600px",
       data: this.rfqData ? this.rfqData.rfqCurrency : null,
-      panelClass: ['common-modal-style', 'select-currency-dialog']
+      panelClass: [ 'common-modal-style', 'select-currency-dialog' ]
     });
 
     dialogRef.afterClosed().subscribe(data => {
