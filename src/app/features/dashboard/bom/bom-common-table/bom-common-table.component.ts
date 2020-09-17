@@ -1,9 +1,9 @@
+import { CommonService } from './../../../../shared/services/commonService';
+import { Subcategory } from './../../../../shared/models/subcategory-materials';
 
-import { CommonService } from './../../services/commonService';
 import { SimpleChanges } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { BomService } from 'src/app/shared/services/bom.service';
-import { Subcategory } from './../../models/subcategory-materials';
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 

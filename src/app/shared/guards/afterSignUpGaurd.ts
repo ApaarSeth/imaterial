@@ -22,11 +22,12 @@ export class AfterSignUpGuardService implements CanActivate {
             else {
                 if (res.data.isActiveSubscription === 0 && res.data.isFreeTrialSubscription === 0 && res.data.isPlanAvailable === 1) {
                     // this.router.navigate([ '/subscriptions/trial-expiry' ]);
-                    this.router.navigate(['/profile/subscriptions']);
+                    // this.router.navigate(['/profile/subscriptions']);
+                    this.router.navigate([ '/profile/trial-active' ]);
                     return false;
                 }
                 else if (res.data.isActiveSubscription === 2 && res.data.isPlanAvailable === 1) {
-                    this.router.navigate(['/subscriptions/trial-expiry']);
+                    this.router.navigate([ '/subscriptions/trial-expiry' ]);
                     return false;
                 } else {
                     if (res.data.isPlanAvailable === 0) {
@@ -34,7 +35,7 @@ export class AfterSignUpGuardService implements CanActivate {
                             return true;
                         }
                         else {
-                            this.router.navigate(['/profile/update-info']);
+                            this.router.navigate([ '/profile/update-info' ]);
                             return false;
                         }
                     }

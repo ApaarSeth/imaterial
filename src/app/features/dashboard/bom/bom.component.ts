@@ -299,7 +299,8 @@ export class BomComponent implements OnInit {
         if (this.tabsFormData[ this.selectedIndex ].length) {
             this.tabsFormData[ this.selectedIndex ].forEach(item => {
 
-                item[ 'estimatedRate' ] = item[ 'estimatedRate' ] !== null ? item[ 'estimatedRate' ] : 0;
+                item[ 'estimatedRate' ] = item[ 'estimatedRate' ] !== null ? Number(item[ 'estimatedRate' ]) : 0;
+                item[ 'estimatedQty' ] = item[ 'estimatedQty' ] !== null ? Number(item[ 'estimatedQty' ]) : 0;
                 delete item[ 'isNull' ];
                 delete item[ 'tradeList' ];
                 delete item[ 'treadId' ];
