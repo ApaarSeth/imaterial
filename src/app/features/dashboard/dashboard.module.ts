@@ -1,3 +1,4 @@
+import { BomCommonTableComponent } from './bom/bom-common-table/bom-common-table.component';
 import { NgModule } from "@angular/core";
 import { DashboardComponent } from "./dashboard.component";
 import { MaterialModule } from "src/app/shared/material-modules";
@@ -37,7 +38,8 @@ import { BomEditMaterialComponent } from './bom/bom-edit-material/bom-edit-mater
     BomTableComponent,
     BomMyMaterialComponent,
     BomCopyMaterialComponent,
-    BomEditMaterialComponent
+    BomEditMaterialComponent,
+    BomCommonTableComponent
   ]
 })
 export class DashboardModule { }
