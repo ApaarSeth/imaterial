@@ -44,7 +44,6 @@ export class ViewVideoComponent implements OnInit {
 
       // Final video url
       this.safeURL = this._sanitizer.bypassSecurityTrustResourceUrl(videoURL);
-      console.log(this.safeURL)
     });
   }
 

@@ -377,25 +377,30 @@ div.limited-character.bom {
 
   .images-lists.double-images {
     .attached-image:first-child {
-      left: 24px;
+      left: 42px;
+      top: -18px;
     }
 
     .attached-image:nth-child(2) {
-      left: 30px;
+      left: 46px;
+      top: -14px;
     }
   }
 
   .images-lists.triple-images {
     .attached-image:nth-child(3) {
-      left: 32px;
+      left: 50px;
+      top: -14px;
     }
 
     .attached-image:nth-child(2) {
-      left: 26px;
+      left: 46px;
+      top: -18px;
     }
 
     .attached-image:first-child {
-      left: 30px;
+      left: 42px;
+      top: -22px;
     }
   }
 }

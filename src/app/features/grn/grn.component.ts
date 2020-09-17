@@ -75,7 +75,7 @@ export class GrnComponent implements OnInit {
         });
         dialogRef.afterClosed().toPromise().then(result => {
             if (result) {
-                console.log(result);
+                // console.log(result);
             }
         });
     }

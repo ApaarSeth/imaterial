@@ -27,6 +27,7 @@ export class PoSupplierComponent implements OnInit {
   poCurrency: rfqCurrency;
   countryist: CountryCode[];
   isMobile: boolean;
+  isRatingFeatureShow: boolean;
 
   constructor(private formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -35,7 +36,6 @@ export class PoSupplierComponent implements OnInit {
 
   ngOnInit() {
     this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data.supplierList;
-    console.log("suppliers", this.allSuppliers);
     this.countryist = this.activatedRoute.snapshot.data.countryList;
     this.isMobile = this.commonService.isMobile().matches;
     this.formInit();
@@ -50,7 +50,8 @@ export class PoSupplierComponent implements OnInit {
   getSuppliers() {
     let orgId = Number(localStorage.getItem("orgId"));
     this.commonService.getSuppliers(orgId).then(data => {
-      this.allSuppliers = data.data;
+      this.allSuppliers = data.data.supplierList;
+      this.isRatingFeatureShow = (data.data.moduleFeatures.featureList[1].featureName === "supplier rating" && data.data.moduleFeatures.featureList[1].isAvailable === 1) ? true : false;
     });
   }
 

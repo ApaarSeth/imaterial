@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -36,6 +36,9 @@ export class SupplierDetailComponent implements OnInit {
   isMobile: boolean;
   userId: number;
   showResponsiveDesignIcons: boolean;
+  @ViewChild('searchVal', {static: false}) searchVal: ElementRef<any>;
+  noSearchResults: boolean;
+  isRatingFeatureShow: any;
 
   public SupplierDashboardTour: GuidedTour = {
     tourId: 'supplier-tour',
@@ -56,7 +59,6 @@ export class SupplierDetailComponent implements OnInit {
       this.setLocalStorage()
     }
   };
-  noSearchResults: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -86,21 +88,23 @@ export class SupplierDetailComponent implements OnInit {
 
   getAllSupplier() {
     this.commonService.getSuppliers(this.orgId).then(data => {
-      this.dataSource = new MatTableDataSource(data.data.supplierList);
-      console.log(this.dataSource);
-      this.dataSourceTemp = data.data.supplierList;
 
-      if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
-        setTimeout(() => {
-          this.guidedTourService.startTour(this.SupplierDashboardTour);
-        }, 1000);
+      if(data.data){
+        this.dataSource = new MatTableDataSource(data.data.supplierList);
+        this.dataSourceTemp = data.data.supplierList;
+  
+        this.isRatingFeatureShow = (data.data.moduleFeatures.featureList[1].featureName === "supplier rating" && data.data.moduleFeatures.featureList[1].isAvailable === 1) ? true : false;
+  
+        if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
+          setTimeout(() => {
+            this.guidedTourService.startTour(this.SupplierDashboardTour);
+          }, 1000);
+        }
       }
-
       // this.dataSource.filterPredicate = (data.data.supplierList, filterValue) => {
       //   const dataStr = data.supplierName.toString().toLowerCase() + data.email.toString().toLowerCase() + data.contactNo.toString();
       //   return dataStr.indexOf(filterValue) != -1;
       // };
-
     });
   }
 
@@ -122,6 +126,9 @@ export class SupplierDetailComponent implements OnInit {
     dialogRef.afterClosed().toPromise().then((data) => {
       if (data && data != null) {
         this.getAllSupplier();
+        // code - after add new supplier, search input should be clear and also all supplier list should appear
+        this.searchVal.nativeElement.value = "";
+        this.noSearchResults = false;
       }
     });
   }
@@ -209,13 +216,18 @@ export class SupplierDetailComponent implements OnInit {
       }
     }).catch(err => {
       this.myInputVariable.nativeElement.value = "";
-      this._snackBar.open(err.error.message, "", {
+      this._snackBar.open(err.message, "", {
         duration: 5000,
         panelClass: ["success-snackbar"],
         verticalPosition: "bottom"
       });
       this.loading.hide();
     });
+
+    // code - after add new supplier, search input should be clear and also all supplier list should appear
+    this.searchVal.nativeElement.value = "";
+    this.noSearchResults = false;
+    this.dataSource = new MatTableDataSource(this.dataSourceTemp);
   }
 
   downloadExcel(url: string) {

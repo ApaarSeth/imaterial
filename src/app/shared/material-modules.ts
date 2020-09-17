@@ -26,6 +26,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   exports: [
@@ -55,7 +56,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatBadgeModule,
     MatAutocompleteModule,
     MatSlideToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSliderModule
   ]
 })
 export class MaterialModule { }

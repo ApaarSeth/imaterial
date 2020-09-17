@@ -166,6 +166,9 @@ export class TopHeaderComponent implements OnInit {
   goToProfile() {
     this.router.navigate([ '/profile-account' ]);
   }
+  goToUserFeedback() {
+    this.router.navigate(['/user-feedback']);
+  }
 
   goToMyPlans() {
     this.router.navigate([ '/subscriptions' ]);

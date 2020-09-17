@@ -30,7 +30,6 @@ export class AddGrnComponent implements OnInit {
         Promise.all([this.commonService.getSuppliers(orgId), this.commonService.getCountry()])
             .then(res => {
                 this.supplierList = res[0].data.supplierList;
-                debugger
                 this.countryList = res[1].data;
             })
     }
