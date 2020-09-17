@@ -72,6 +72,12 @@ export class TopHeaderComponent implements OnInit {
 
   choosePlan() {
     this.router.navigate([ '/subscriptions' ]);
+    this.navService.gaEvent({
+      action: 'submit',
+      category: 'choose_plan',
+      label: `Email: ${this.email} PhoneNo.: ${this.phoneNo}`,
+      value: null
+    });
   }
 
   checkFreeTrial() {
@@ -167,7 +173,7 @@ export class TopHeaderComponent implements OnInit {
     this.router.navigate([ '/profile-account' ]);
   }
   goToUserFeedback() {
-    this.router.navigate(['/user-feedback']);
+    this.router.navigate([ '/user-feedback' ]);
   }
 
   goToMyPlans() {

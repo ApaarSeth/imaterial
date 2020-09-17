@@ -218,33 +218,40 @@
             <span *ngIf="imageAvailable" class="mat-cell po-images-list" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'">
               <!-- View image modal link -->
               <!-- material?.purchaseOrderDetailList[0]?.documentList?.length -->
-              <span class="display-flex align-item-baseline">
-                <span [ngClass]="isMobile ? 'p-r-3' : ''">
-                  <div
-                    *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length"
-                    class="images-lists"
-                    [ngClass]="
-                      material.purchaseOrderDetailList[0].documentList.length === 1 ? 'single-image' : material.purchaseOrderDetailList[0].documentList.length === 2 ? 'double-images' : 'triple-images'
-                    "
-                    (click)="viewAllImages(material.materialId)"
-                  >
-                    <ng-container *ngFor="let img of material.purchaseOrderDetailList[0].documentList; let i = index">
-                      <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
+              <div class="row p-t-10">
+                <div class="col-xs-8">
+                  <span [ngClass]="isMobile ? 'p-r-3' : ''">
+                    <div
+                      *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length"
+                      class="images-lists"
+                      [ngClass]="
+                        material.purchaseOrderDetailList[0].documentList.length === 1
+                          ? 'single-image'
+                          : material.purchaseOrderDetailList[0].documentList.length === 2
+                          ? 'double-images'
+                          : 'triple-images'
+                      "
+                      (click)="viewAllImages(material.materialId)"
+                    >
+                      <ng-container *ngFor="let img of material.purchaseOrderDetailList[0].documentList; let i = index">
+                        <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
+                      </ng-container>
+                    </div>
+
+                    <ng-container *ngIf="!(material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList)">
+                      <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
                     </ng-container>
-                  </div>
-
-                  <ng-container *ngIf="!(material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList)">
-                    <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
-                  </ng-container>
-                </span>
-
-                <span *ngIf="mode === 'edit'" [ngClass]="isMobile ? 'p-l-4 p-r-5' : 'p-l-20'">
-                  <!-- Upload Image Link -->
-                  <a class="cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image" (click)="uploadImage(material, 'po')">
-                    <img class="width-15-px m-rem-t-10" src="assets/images/upload-image-icon.svg" />
-                  </a>
-                </span>
-              </span>
+                  </span>
+                </div>
+                <div class="col-xs-4 p-t-10">
+                  <span *ngIf="mode === 'edit'" [ngClass]="isMobile ? 'p-r-5' : ''">
+                    <!-- Upload Image Link -->
+                    <a class="cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image" (click)="uploadImage(material, 'po')">
+                      <img class="width-15-px m-rem-t-10" src="assets/images/upload-image-icon.svg" />
+                    </a>
+                  </span>
+                </div>
+              </div>
             </span>
           </div>
 

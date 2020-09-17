@@ -1,9 +1,9 @@
+import { CommonService } from './../../../../shared/services/commonService';
+import { Subcategory } from './../../../../shared/models/subcategory-materials';
 
-import { CommonService } from './../../services/commonService';
 import { SimpleChanges } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, FormControl } from '@angular/forms';
 import { BomService } from 'src/app/shared/services/bom.service';
-import { Subcategory } from './../../models/subcategory-materials';
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 
@@ -26,6 +26,7 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
     isMobile: boolean;
     tableHeads: string[] = [];
     getRangeLabel: any;
+    curencyCode: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -39,6 +40,7 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.isMobile = this.commonService.isMobile().matches;
+        this.curencyCode = localStorage.getItem('currencyCode');
         this.dataSource = this.config.data;
         this.matData = this.config.data;
         if (this.config.table) {
