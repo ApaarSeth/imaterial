@@ -218,7 +218,7 @@
             <span *ngIf="imageAvailable" class="mat-cell po-images-list" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'">
               <!-- View image modal link -->
               <!-- material?.purchaseOrderDetailList[0]?.documentList?.length -->
-              <span class="display-flex align-item-baseline">
+              <span class="display-flex align-center">
                 <span [ngClass]="isMobile ? 'p-r-3' : ''">
                   <div
                     *ngIf="material && material.purchaseOrderDetailList[0] && material.purchaseOrderDetailList[0].documentList && material.purchaseOrderDetailList[0].documentList.length"

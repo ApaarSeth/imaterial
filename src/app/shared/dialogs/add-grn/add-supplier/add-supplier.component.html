@@ -1,7 +1,7 @@
 <form *ngIf="this.form" [formGroup]="this.form" (ngSubmit)="onSubmit()" autocomplete="off">
   <div mat-dialog-content class="mobile-device-top-padding">
     <!-- Receipt Number and Receipt Date Fields -->
-    <div class="row">
+    <div class="row p-t-10">
       <div class="col-md-3 col-xs-6 display-flex align-items-center receipt-number">
         <mat-form-field class="border-input">
           <input matInput type="string" formControlName="grnNo" placeholder="Receipts No." class="m-r-5" />
