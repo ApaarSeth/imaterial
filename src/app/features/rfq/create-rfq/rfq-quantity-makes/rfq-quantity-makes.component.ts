@@ -81,6 +81,9 @@ export class RfqQuantityMakesComponent implements OnInit {
   setButtonName(name: string) {
     this.buttonName = name;
   }
+  setValue(val) {
+    console.log(val)
+  }
 
   visible = true;
   selectable = true;
