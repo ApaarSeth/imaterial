@@ -27,6 +27,7 @@ export class PoSupplierComponent implements OnInit {
   poCurrency: rfqCurrency;
   countryist: CountryCode[];
   isMobile: boolean;
+  isRatingFeatureShow: boolean;
 
   constructor(private formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -50,6 +51,7 @@ export class PoSupplierComponent implements OnInit {
     let orgId = Number(localStorage.getItem("orgId"));
     this.commonService.getSuppliers(orgId).then(data => {
       this.allSuppliers = data.data.supplierList;
+      this.isRatingFeatureShow = (data.data.moduleFeatures.featureList[1].featureName === "supplier rating" && data.data.moduleFeatures.featureList[1].isAvailable === 1) ? true : false;
     });
   }
 

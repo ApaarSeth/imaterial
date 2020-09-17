@@ -60,7 +60,7 @@
             </mat-radio-button>
           </mat-radio-group>
           <span class="supplier-name">{{ element.supplierName }}</span>
-          <span class="d-block supplier-rates rfq-supplier-rates">
+          <span class="d-block supplier-rates rfq-supplier-rates" *ngIf="isRatingFeatureShow">
             <view-rating [supplierId]="element.supplierId" [ratings]="element.supplierRating"></view-rating>
           </span>
         </td>
