@@ -39,6 +39,8 @@ export class BomComponent implements OnInit {
     isFormValid: boolean = false;
     tabsFormData: any = {};
     subscriptions: Subscription[] = [];
+    isFilter: boolean;
+
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -271,6 +273,7 @@ export class BomComponent implements OnInit {
             this.getTableData();
         }
         this.selectedIndex = 3;
+        this.isFilter = false;
     }
 
     // creating bom table data configuration as per the requirement. field can be managed which need to show
@@ -328,7 +331,7 @@ export class BomComponent implements OnInit {
         const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
             width: "1400px",
             data,
-            panelClass: 'add-custom-material'
+            panelClass: [ 'common-modal-style', 'add-custom-material' ]
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result !== null) {
@@ -505,6 +508,7 @@ export class BomComponent implements OnInit {
                     }
                 }
                 this.getTableData();
+                this.isFilter = false;
             })
         )
     }
@@ -512,6 +516,5 @@ export class BomComponent implements OnInit {
     ngOnDestroy() {
         this.subscriptions.forEach(item => item.unsubscribe);
     }
-
 
 }

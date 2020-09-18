@@ -177,7 +177,11 @@ export class BomTableComponent implements OnInit {
       }
 
       this.dataSource = new MatTableDataSource(this.subcategoryData);
-      this.isImageFeatureAvaible = this.subcategoryData[ 0 ][ 'moduleFeatures' ].featureList.some(item => (item.featureName.includes('image integration') && item.isAvailable === 1));
+      if (this.subcategoryData[ 0 ][ 'moduleFeatures' ] && this.subcategoryData[ 0 ][ 'moduleFeatures' ].featureList && this.subcategoryData[ 0 ][ 'moduleFeatures' ].featureList.length) {
+        this.isImageFeatureAvaible = this.subcategoryData[ 0 ][ 'moduleFeatures' ].featureList.some(item => (item.featureName.includes('image integration') && item.isAvailable === 1));
+      } else {
+        this.isImageFeatureAvaible = true;
+      }
 
       if (this.isImageFeatureAvaible) {
         this.columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
