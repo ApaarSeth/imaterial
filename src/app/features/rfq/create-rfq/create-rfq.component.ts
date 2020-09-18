@@ -112,7 +112,7 @@ export class CreateRfqComponent implements OnInit {
     Promise.all([ this.commonService.getSuppliers(orgId), this.projectService.getProjects(orgId, userId), this.commonService.getCountry() ]).then(res => {
       if (this.id) { this.loader.hide() }
       this.supplierModuleFeature = res[ 0 ].data.moduleFeatures;
-      this.allSupplier = res[ 0 ].data.supplierList;
+      this.allSupplier = res[ 0 ].data.supplierList ? res[ 0 ].data.supplierList : [];
       this.allProject = res[ 1 ].data
       this.countryList = res[ 2 ].data
     });
