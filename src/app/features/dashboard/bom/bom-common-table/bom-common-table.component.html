@@ -10,7 +10,9 @@
 
     <ng-container *ngIf="selectedMaterialLength > 0">
         <div class="display-inline-block pull-right">
-            <span class="display-block p-r-20 p-l-20 p-t-10 p-b-10 m-t-10 sel-mat-blk">Selected Material:
+            <span class="display-block p-t-10 p-b-10 sel-mat-blk"
+                [ngClass]="isMobile ? 'fontsize-12-px p-r-10 p-l-10 m-t-15' : 'p-r-20 p-l-20 m-t-10' ">Selected
+                Material:
                 {{ selectedMaterialLength }}</span>
         </div>
     </ng-container>
