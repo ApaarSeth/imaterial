@@ -19,7 +19,6 @@ import { RfqMaterialResponse, rfqCurrency, RfqMat } from "../../../../shared/mod
 })
 export class PoQuantityMakesComponent implements OnInit, OnChanges {
   @Input() poData: initiatePoData;
-  @Input() searchVal: any;
   @Output() finalPoData = new EventEmitter<any>();
   initiatePoData: initiatePo = {} as initiatePo;
   suppliers: Suppliers;
@@ -49,10 +48,6 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
         this.formsInit();
       }
     }
-    if (changes.searchVal && changes.searchVal.currentValue) {
-      this.searchText = '';
-    }
-
   }
 
   formsInit() {
