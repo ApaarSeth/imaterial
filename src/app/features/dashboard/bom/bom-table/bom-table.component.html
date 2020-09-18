@@ -120,25 +120,29 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="attachedImages">
-          <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">Attached Images</th>
-          <td class="text-align-center bom-attached-images-col" mat-cell *matCellDef="let element"
-            [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
-            <!-- View image modal link -->
-            <div *ngIf="element?.documentsList?.length" class="images-lists"
-              [ngClass]="element.documentsList.length === 1 ? 'single-image' : element.documentsList.length === 2 ? 'double-images' : 'triple-images'"
-              (click)="viewAllImages(element.projectId, element.materialId)">
-              <ng-container *ngFor="let img of element.documentsList; let i = index">
-                <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image"
-                  *ngIf="i < 3" />
-              </ng-container>
-            </div>
+        <ng-container *ngIf="isImageFeatureAvaible">
 
-            <ng-container *ngIf="element?.documentsList?.length === 0">
-              <img src="assets/images/project-default-image.png" alt="default-material"
-                class="img-fluid default-image" />
-            </ng-container>
-          </td>
+          <ng-container matColumnDef="attachedImages">
+            <th *matHeaderCellDef class="text-align-center justify-center minwidth-110-px">Attached Images</th>
+            <td class="text-align-center bom-attached-images-col" mat-cell *matCellDef="let element"
+              [ngClass]="{'background-color-light-grey': element.materialCustomFlag === 1 ? element.isApproved !== 1 : false}">
+              <!-- View image modal link -->
+              <div *ngIf="element?.documentsList?.length" class="images-lists"
+                [ngClass]="element.documentsList.length === 1 ? 'single-image' : element.documentsList.length === 2 ? 'double-images' : 'triple-images'"
+                (click)="viewAllImages(element.projectId, element.materialId)">
+                <ng-container *ngFor="let img of element.documentsList; let i = index">
+                  <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image"
+                    *ngIf="i < 3" />
+                </ng-container>
+              </div>
+
+              <ng-container *ngIf="element?.documentsList?.length === 0">
+                <img src="assets/images/project-default-image.png" alt="default-material"
+                  class="img-fluid default-image" />
+              </ng-container>
+            </td>
+          </ng-container>
+
         </ng-container>
 
         <ng-container matColumnDef="customColumn">
@@ -149,10 +153,12 @@
               class="p-r-20 p-t-10 display-inline-block color-grey">Pending</span>
 
             <!-- Upload Image Link -->
-            <a class="p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image"
-              (click)="uploadImage(element)">
-              <img class="width-20-px mt-1 mr-2" src="assets/images/upload-image-icon.svg" />
-            </a>
+            <ng-container *ngIf="isImageFeatureAvaible">
+              <a class="p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Add/Edit Image"
+                (click)="uploadImage(element)">
+                <img class="width-20-px mt-1 mr-2" src="assets/images/upload-image-icon.svg" />
+              </a>
+            </ng-container>
 
             <a class="width-15-px p-r-10 cursor-pointer issue-to-indent-icon" matTooltip="Issue to PR">
               <img (click)="openIssueTOIndent(element)" [src]="indentButtonColor(element)" />
