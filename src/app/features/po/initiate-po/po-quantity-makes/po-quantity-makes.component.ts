@@ -41,11 +41,12 @@ export class PoQuantityMakesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.poCurrency = this.poData && this.poData.poCurrency;
-    if (this.poData)
-      this.checkedMaterialsList = [...this.poData.selectedMaterial];
-    if (this.checkedMaterialsList) {
-      this.formsInit();
+    if (changes.poData && changes.poData.currentValue) {
+      this.poCurrency = changes.poData.currentValue.poCurrency;
+      this.checkedMaterialsList = [...changes.poData.currentValue.selectedMaterial];
+      if (this.checkedMaterialsList) {
+        this.formsInit();
+      }
     }
   }
 

@@ -26,36 +26,21 @@
                   <h6 class="mb-0">Create BOM</h6>
                 </div>
 
-                <div
-                  *ngIf="permissionObj.rfqFlag"
-                  class="things-to-do__icons text-center cursor mr-2"
-                  (click)="openBomDialog()"
-                  matTooltip="You can create your Purchase Requisition (PRs)"
-                >
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" (click)="openBomDialog()" matTooltip="You can create your Purchase Requisition (PRs)">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/pr.svg" alt="Purchase Requistion" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create PR</h6>
                 </div>
 
-                <div
-                  *ngIf="permissionObj.rfqFlag"
-                  class="things-to-do__icons text-center cursor mr-2"
-                  [routerLink]="['/rfq/createRfq']"
-                  matTooltip="You can create your Request For Price (RFPs)"
-                >
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/rfq/createRfq']" matTooltip="You can create your Request For Price (RFPs)">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/rfp.svg" alt="" class="img-fluid" />
                   </div>
                   <h6 class="mb-0">Create RFPs</h6>
                 </div>
 
-                <div
-                  *ngIf="permissionObj.rfqFlag"
-                  class="things-to-do__icons text-center cursor mr-2"
-                  [routerLink]="['/po/initiate-po']"
-                  matTooltip="You can create your Purchase Order (P.O.)"
-                >
+                <div *ngIf="permissionObj.rfqFlag" class="things-to-do__icons text-center cursor mr-2" [routerLink]="['/po/initiate-po']" matTooltip="You can create your Purchase Order (P.O.)">
                   <div class="things-to-do__img">
                     <img src="../../../assets/images/po.svg" alt="" class="img-fluid" />
                   </div>
@@ -104,14 +89,7 @@
                                 <mat-label>Select Project</mat-label>
                                 <mat-select formControlName="projectFilter" multiple>
                                   <div class="display-flex">
-                                    <input
-                                      class="p-l-10 p-b-5"
-                                      matInput
-                                      type="search"
-                                      placeholder="Search project Name"
-                                      [(ngModel)]="searchText"
-                                      [ngModelOptions]="{standalone: true}"
-                                    />
+                                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
                                     <button mat-button matSuffix mat-icon-button>
                                       <mat-icon>search</mat-icon>
                                     </button>
@@ -120,11 +98,11 @@
                                 </mat-select>
                               </mat-form-field>
                             </div>
-                            <div class="p-r-0 customDatePicker" [ngClass]="isMobile ? 'p-l-0 w-100 wdpw-100' : 'widthWrapper width-35 p-t-7 '">
+                            <div class="p-r-0" [ngClass]="isMobile ? 'p-l-0 w-100 wdpw-100' : 'widthWrapper width-35 p-t-7'">
                               <ngx-mat-drp
                                 *ngIf="poData"
                                 class="border-input"
-                                [ngClass]="isMobile ? '' : 'input-font-size'"
+                                [ngClass]="isMobile ? 'mobile-placement' : 'input-font-size'"
                                 (selectedDateRangeChanged)="updateRange($event)"
                                 [options]="options"
                                 #dateRangePicker
@@ -188,14 +166,7 @@
                                 <mat-label>Select Project</mat-label>
                                 <mat-select formControlName="projectFilter" multiple>
                                   <div class="display-flex">
-                                    <input
-                                      class="p-l-10 p-b-5"
-                                      matInput
-                                      type="search"
-                                      placeholder="Search project Name"
-                                      [(ngModel)]="searchText"
-                                      [ngModelOptions]="{standalone: true}"
-                                    />
+                                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
                                     <button mat-button matSuffix mat-icon-button>
                                       <mat-icon>search</mat-icon>
                                     </button>
@@ -265,14 +236,7 @@
                                 <mat-label>Select Project</mat-label>
                                 <mat-select formControlName="projectFilter" multiple>
                                   <div class="display-flex">
-                                    <input
-                                      class="p-l-10 p-b-5"
-                                      matInput
-                                      type="search"
-                                      placeholder="Search project Name"
-                                      [(ngModel)]="searchText"
-                                      [ngModelOptions]="{standalone: true}"
-                                    />
+                                    <input class="p-l-10 p-b-5" matInput type="search" placeholder="Search project Name" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" />
                                     <button mat-button matSuffix mat-icon-button>
                                       <mat-icon>search</mat-icon>
                                     </button>

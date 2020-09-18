@@ -15,7 +15,7 @@ export class InitiatePoComponent implements OnInit {
   poDetail: initiatePoData;
   existingPoData: initiatePoData;
   @ViewChildren("poSupplier") poSupplier: PoSupplierComponent;
-  searchText = "";
+  searchText;
   isMobile: boolean;
 
   public POProjectTour: GuidedTour = {
@@ -43,7 +43,7 @@ export class InitiatePoComponent implements OnInit {
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
   }
-  
+
   setLocalStorage() {
     this.userId = Number(localStorage.getItem("userId"));
 
@@ -67,8 +67,9 @@ export class InitiatePoComponent implements OnInit {
   getMaterial(poData: initiatePoData) {
     this.existingPoData = poData;
     this.poDetail = poData;
+    this.searchText = new String('')
   }
-  
+
   selectionChange(event) {
     if (event.selectedIndex == 1) {
       if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {

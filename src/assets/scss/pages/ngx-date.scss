@@ -13,6 +13,12 @@ ngx-mat-drp-picker-overlay .ngx-mat-drp-calendar-item .mat-calendar-header {
   padding: 0px !important;
 }
 
+.mobile-placement {
+  .cdk-overlay-pane.ngx-mat-drp-overlay {
+    top: 0px !important;
+  }
+}
+
 ngx-mat-drp-picker-overlay {
   .ngx-mat-drp-date-input,
   .ngx-mat-drp-presets-list,
@@ -75,5 +81,13 @@ td .mat-calendar-body-selected {
 .input-font-size-large {
   .mat-form-field-infix .ngx-mat-drp-date-input {
     font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .cdk-overlay-container {
+    .cdk-overlay-pane.ngx-mat-drp-overlay {
+      top: 0px !important;
+    }
   }
 }

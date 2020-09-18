@@ -17,7 +17,11 @@ export class UserFeedbackComponent implements OnInit {
     ngOnInit() { }
 
     onSubmit(form: NgForm) {
-        this.userService.postUserFeedback({ questionMap: JSON.stringify(form.value) }).then(res => {
+        let quesAnsList: { question: string, answer: any }[] = []
+        for (let val in form.value) {
+            quesAnsList.push({ question: val, answer: form.value[val] })
+        }
+        this.userService.postUserFeedback(quesAnsList).then(res => {
             if (res.statusCode === 201) {
                 this.notifier.snack(res.message)
                 this.router.navigate(['/dashboard'])
