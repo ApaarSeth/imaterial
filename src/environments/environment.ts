@@ -10,26 +10,26 @@
 //   debug_mode: true
 // };
 
-export const environment = {
-  production: false,
-  ga: "",
-  url: "https://stg-api.buildsupply.io/im",
-  masterUrl: "https://stg-api.buildsupply.io/mm",
-  ssoUrl: "https://stg-api.buildsupply.io/sso",
-  debug_mode: true
-};
-
 // export const environment = {
-//   ga: "",
 //   production: false,
-//   // url: "http://c55f9e572341.ngrok.io",
-//   // materUrl: "http://93b4b9459de6.ngrok.io",
-//   // ssoUrl: "http://95c96fc3e7bd.ngrok.io",
-//   // url: "https://api.buildsupply.com/im",
-//   // masterUrl: "https://api.buildsupply.com/mm",
-//   // ssoUrl: "https://api.buildsupply.com/sso",
+//   ga: "",
+//   url: "https://stg-api.buildsupply.io/im",
+//   masterUrl: "https://stg-api.buildsupply.io/mm",
+//   ssoUrl: "https://stg-api.buildsupply.io/sso",
 //   debug_mode: true
 // };
+
+export const environment = {
+  ga: "",
+  production: false,
+  // url: "http://c55f9e572341.ngrok.io",
+  // materUrl: "http://93b4b9459de6.ngrok.io",
+  // ssoUrl: "http://95c96fc3e7bd.ngrok.io",
+  // url: "https://api.buildsupply.com/im",
+  // masterUrl: "https://api.buildsupply.com/mm",
+  // ssoUrl: "https://api.buildsupply.com/sso",
+  debug_mode: true
+};
 
 /*
  * For easier debugging in development mode, you can import the following file
