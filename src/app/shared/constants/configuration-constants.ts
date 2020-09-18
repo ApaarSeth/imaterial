@@ -175,5 +175,6 @@ export const API = {
   GET_ALL_INDENTS_LIST: (materialId) => `global/indents/${materialId}`,
   GLOBAL_STORE_PROJECT_WISE: (pageNo, pageSize) => `global/projects/${pageNo}/${pageSize}`,
   POSTEDITADDRESS: (addressId) => `address/update/${addressId}`,
-  POSTUSERFEEDBACK: 'mm/rating'
+  POSTUSERFEEDBACK: 'mm/rating',
+  VERIFYREGISTEREDNO: (mobile, countryCode) => `verfy/contact/${mobile}/${countryCode}`
 };

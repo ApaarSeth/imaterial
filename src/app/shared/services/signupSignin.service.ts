@@ -88,5 +88,9 @@ export class SignInSignupService implements OnInit {
     return this.dataService.getRequest(API.EMAILVERFICATION(token))
   }
 
+  verifyRegisteredContact(mobile, countryCode) {
+    return this.dataService.getRequest(API.VERIFYREGISTEREDNO(mobile, countryCode))
+  }
+
 
 }
