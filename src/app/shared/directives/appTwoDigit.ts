@@ -52,36 +52,32 @@ export class TwoDigitDecimaNumberDirective {
 
     let key;
     let current;
-    if (event.data.length > 1) {
+    if (event.data && event.data.length > 1) {
       key = event.data.slice(event.data.length - 1, event.data
         .length)
       current = event.data.slice(0, event.data.length - 1);
     }
-    else {
+    else if (event.data) {
       key = event.data;
       current = this.el.nativeElement.value
     }
-
-    if (!key) {
-      event.preventDefault();
-
+    else {
+      // event.preventDefault();
       return;
     }
 
-    if (this.specialKeys.indexOf(key) !== -1) {
-      return;
-    }
+    // if (this.specialKeys.indexOf(key) !== -1) {
+    //   return;
+    // }
 
     // let current: string = this.el.nativeElement.value;
     const position = this.el.nativeElement.selectionEnd;
     const next: string = [current.slice(0, position), key == 'Decimal' ? '.' : key, current.slice(position)].join('');
     if (next && !String(next).match(this.regex)) {
       event.preventDefault();
-      this.el.nativeElement.value = Number(current);
+      event.stopPropagation();
+      // this.el.nativeElement.value = Number(current);
       return false;
     }
   }
-
-
-
 } 
