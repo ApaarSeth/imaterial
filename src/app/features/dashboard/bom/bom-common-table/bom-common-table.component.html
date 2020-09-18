@@ -53,7 +53,8 @@
 
                                 <ng-container *ngIf="item.value.isNull">
 
-                                    <td [ngClass]="isMobile ? 'fontsize-12-px' : 'fontsize-14-px' ">
+                                    <td class="minwidth-250-px"
+                                        [ngClass]="isMobile ? 'fontsize-12-px' : 'fontsize-14-px' ">
                                         {{ item.value.materialName }}
                                         <div class="limited-character bom" matTooltip=" {{ item.value.materialGroup }}">
                                             <span class="category-name">

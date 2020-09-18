@@ -1,7 +1,8 @@
+import { CommonService } from './../../services/commonService';
 import { InputTextSearchCompoent } from './../input-text-search/input-text-search.component';
 import { BomService } from './../../services/bom.service';
 import { BomFilterConfig } from './../../models/bom.model';
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 
 
 @Component({
@@ -9,16 +10,22 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
     templateUrl: './bom-filter.component.html'
 })
 
-export class BomFilterComponent {
+export class BomFilterComponent implements OnInit {
 
     @Input() config: BomFilterConfig;
     @Output() getBomFilers = new EventEmitter<any>();
 
     constructor(
-        private bomService: BomService
+        private bomService: BomService,
+        private commonService: CommonService
     ) { }
 
     allData = {};
+    isMobile: boolean;
+
+    ngOnInit() {
+        this.isMobile = this.commonService.isMobile().matches;
+    }
 
     getData(obj) {
         this.allData[ obj.type ] = obj.data;

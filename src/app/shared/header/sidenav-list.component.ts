@@ -72,35 +72,18 @@ export class SidenavListComponent implements OnInit {
   }
 
   highlightButton(url: string) {
-    if (url.includes('dashboard') && !url.includes('project-dashboard')) {
-      this.buttonName = 'Dashboard'
-    } else if (url.includes('project-dashboard')) {
-      this.buttonName = 'Project Store';
-    }
-    else if (url.includes('globalStore')) {
-      this.navService.gaEvent({
-        action: 'submit',
-        category: 'global_store',
-        label: null,
-        value: null
-      });
+    if (url) {
+      this.buttonName = url.substring(1);
 
-      this.buttonName = 'Global Store';
-    }
-    else if (url.includes('reports')) {
-      this.buttonName = 'Reports'
-    }
-    else if (url.includes('rfq')) {
-      this.buttonName = 'Request For Quotation';
-    }
-    else if (url.includes('users')) {
-      this.buttonName = 'Users';
-    }
-    else if (url.includes('po')) {
-      this.buttonName = 'Purchase Order';
-    }
-    else if (url.includes('supplier')) {
-      this.buttonName = 'Supplier';
+      if (url.includes('globalStore')) {
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'global_store',
+          label: null,
+          value: null
+        });
+      }
+
     }
   }
 
