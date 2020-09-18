@@ -1,12 +1,12 @@
 import { AppNavigationService } from './../../shared/services/navigation.service';
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { GlobalProject } from "../../shared/models/GlobalStore/materialWise";
 import { MatDialog } from "@angular/material/dialog";
 import { ProjectService } from "../../shared/services/project.service";
 import { CommonService } from "../../shared/services/commonService";
 import { SelectProjectComponent } from "../../shared/dialogs/select-project/select-project.component";
 import { GlobalStoreService } from "../../shared/services/global-store.service";
+import { ProjectwiseObj } from 'src/app/shared/models/GlobalStore/projectWise';
 
 @Component({
   selector: "app-global-store",
@@ -17,7 +17,7 @@ export class GlobalStoreComponent implements OnInit {
 
   buttonName: string = "materialWise";
   globalStoreData: [];
-  projectWiseData: GlobalProject[] = [];
+  projectWiseData: ProjectwiseObj[] = [];
   materialDataLength: number;
   projectDataLength: number;
   userId: number;

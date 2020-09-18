@@ -42,7 +42,9 @@ export class AdvanceSearchService {
 
     getSuppliers(orgId: number) {
         return this.commonService.getSuppliers(orgId, false).then(res => {
-            return res.data.supplierList.map(itm => ({ ...itm, name: itm.supplierName, id: itm.supplierId }));
+            if(res.data?.supplierList?.length > 0){
+                return res.data?.supplierList.map(itm => ({ ...itm, name: itm.supplierName, id: itm.supplierId }));
+            }
         });
     }
 
