@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { MatCheckbox } from "@angular/material/checkbox";
@@ -16,7 +16,10 @@ import { SelectCurrencyComponent } from "../../../../shared/dialogs/select-curre
 })
 export class PoProjectMaterialComponent implements OnInit {
   @Output() selectedMaterial = new EventEmitter<any>();
+  @Output() clearSearch = new EventEmitter<any>();
   @Input() existingPoData: initiatePoData;
+  @Input() searchVal: initiatePoData;
+
   existingPo: initiatePoData;
   counter: number = 0;
   searchText: string = null;
@@ -42,9 +45,14 @@ export class PoProjectMaterialComponent implements OnInit {
     this.formInit();
   }
 
-  ngOnChanges(): void {
-    this.poCurrency = this.existingPoData && this.existingPoData.poCurrency
-    this.checkExistingData();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.existingPoData && changes.existingPoData.currentValue) {
+      this.poCurrency = this.existingPoData && this.existingPoData.poCurrency
+      this.checkExistingData();
+    }
+    if (changes.searchVal && changes.searchVal.currentValue) {
+      this.searchMaterial = '';
+    }
   }
   alreadySelectedId: number[];
   selectedProjects: ProjectDetails[] = [];
@@ -82,8 +90,9 @@ export class PoProjectMaterialComponent implements OnInit {
       }
     });
   }
+
   checkExistingData() {
-    if (this.existingPoData && this.existingPoData.selectedMaterial) {
+    if (this.existingPoData && (this.existingPoData.selectedMaterial && this.existingPoData.selectedMaterial.length)) {
       // this.projectIds = [];
       // this.rfqDetails = [];
       this.selectedProjects = [];
@@ -167,6 +176,7 @@ export class PoProjectMaterialComponent implements OnInit {
       poCurrency: this.poCurrency
     }
     this.selectedMaterial.emit(poData);
+    this.clearSearch.emit('')
   }
 
   materialChecked(checked: MatCheckbox, i: number, element) {

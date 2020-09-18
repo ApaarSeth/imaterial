@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { GlobalProject } from "src/app/shared/models/GlobalStore/projectWise";
+import { ProjectwiseObj } from "src/app/shared/models/GlobalStore/projectWise";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { GlobalStoreService } from 'src/app/shared/services/global-store.service';
 import { IndentObj, ProjectMaterialObj } from 'src/app/shared/models/GlobalStore/materialWise';
@@ -12,7 +12,7 @@ import { PaginatorConfig } from 'src/app/shared/models/common.models';
 
 export class ProjectWiseComponent implements OnInit {
 
-  @Input("projectData") projectData: GlobalProject[];
+  @Input("projectData") projectData: ProjectwiseObj[];
   @Input() pageNumber: number;
   @Input() pageLimit: number;
   @Input() totalPageCount: number;
@@ -22,6 +22,7 @@ export class ProjectWiseComponent implements OnInit {
   isMobile: boolean;
   indentList: IndentObj[];
   paginationConfig: PaginatorConfig;
+  isPaginationShow = true;
 
   constructor(
     private commonService: CommonService,
@@ -56,5 +57,9 @@ export class ProjectWiseComponent implements OnInit {
 
   updatePaginatorOptions(data){
     this.sendProjectPaginationInfo.emit(data);
+  }
+
+  searchInput(value){
+    this.isPaginationShow = this.projectData.some(item => item.projectName.toLowerCase().indexOf(value.toLowerCase()) !== -1);
   }
 }

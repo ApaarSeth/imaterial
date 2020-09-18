@@ -1,31 +1,29 @@
-import { GlobalMaterial, IndentMaterial } from "./materialWise";
-
-export interface GlobalProject {
-  ProjectGlobal: ProjectGlobal;
-  GlobalMaterials: GlobalMaterials[];
+export interface ProjectWise{
+  globalStoreProjectObj: ProjectwiseObj[];
+  offset: number;
+  pageNo: number;
+  totalCount: number;
 }
 
-export interface ProjectGlobal {
-  id: number;
-  status: number;
-  created_by: string;
-  created_at: string;
-  last_updated_by: string;
-  last_updated_at: string;
-  projectId: number;
-  organizationId: number;
-  userID: number;
+export interface ProjectwiseObj{
+  projectMaterialList: projectwiseMaterialObj[]; 
   projectName: string;
-  type: string;
-  area: number;
-  cost: number;
-  startDate: string;
-  endDate: string;
-  imageUrl: null;
-  unit: string;
 }
 
-export interface GlobalMaterials {
-  GlobalMaterial: GlobalMaterial;
-  IndentMaterial: IndentMaterial[];
+export interface projectwiseMaterialObj{
+  deliveredQty: number;
+  directDeliveredQty: number;
+  dueDate: Date;
+  estimatedPrice: number;
+  estimatedQty: number;
+  indentQnt: number;
+  issuedQty: number;
+  materialCode: string;
+  materialGroup: string;
+  materialId: number;
+  materialName: string;
+  materialUnit: string;
+  poAvailableQty: number;
+  projectId: number;
+  projectName: string;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
@@ -19,6 +19,7 @@ export class PoSupplierComponent implements OnInit {
 
   @Output() selectedSupplier = new EventEmitter<any>();
   @Input() poData: initiatePoData;
+  @Input() searchVal: any;
   buttonName: string = "selectSupplier";
   searchText: string = null;
   allSuppliers: Suppliers[];
@@ -41,8 +42,14 @@ export class PoSupplierComponent implements OnInit {
     this.formInit();
   }
 
-  ngOnChanges(): void {
-    this.poCurrency = this.poData && this.poData.poCurrency;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.poData && changes.poData.currentValue) {
+      this.poCurrency = changes.poData.currentValue.poCurrency;
+    }
+    if (changes.searchVal && changes.searchVal.currentValue) {
+      this.searchText = '';
+    }
+
   }
 
   selectProject() { }
