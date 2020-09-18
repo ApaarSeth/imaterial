@@ -1,82 +1,88 @@
 <div class="col-xs-12 col-md-3 border-input" *ngIf="projectData && projectData.length > 0">
   <mat-form-field class="example-form-field border-input">
-    <input matInput placeholder="Search Project" type="search" [(ngModel)]="searchProject" />
+    <input matInput placeholder="Search Project" type="search" [(ngModel)]="searchProject" (input)="searchInput($event.target.value)" />
     <button mat-button matSuffix mat-icon-button>
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
 </div>
 
-<mat-accordion>
-  <div class="material-wise-section">
-    <table class="material-wise-tbl width-100">
-      <tr matSort class="mat-header-row">
-        <th class="mat-header-cell">Material Name</th>
-        <th class="mat-header-cell">Unit</th>
-        <th class="mat-header-cell text-center">Estimated <br />Quantity</th>
-        <th class="mat-header-cell text-center">Indented <br />Quantity</th>
-        <th class="mat-header-cell text-center">Required <br />Date</th>
-        <th class="mat-header-cell text-center">Delivered <br />Quantity</th>
-        <th class="mat-header-cell text-center">Awarded <br />Quantity</th>
-        <th class="mat-header-cell text-center">Available <br />Stock</th>
-      </tr>
+<ng-container *ngIf="isPaginationShow; else noData">
+  <mat-accordion>
+    <div class="material-wise-section">
+      <table class="material-wise-tbl width-100">
+        <tr matSort class="mat-header-row">
+          <th class="mat-header-cell">Material Name</th>
+          <th class="mat-header-cell">Unit</th>
+          <th class="mat-header-cell text-center">Estimated <br />Quantity</th>
+          <th class="mat-header-cell text-center">Indented <br />Quantity</th>
+          <th class="mat-header-cell text-center">Required <br />Date</th>
+          <th class="mat-header-cell text-center">Delivered <br />Quantity</th>
+          <th class="mat-header-cell text-center">Awarded <br />Quantity</th>
+          <th class="mat-header-cell text-center">Available <br />Stock</th>
+        </tr>
 
-      <div *ngFor="let project of projectData | SearchPipe: searchProject:['projectName']">
-        <mat-expansion-panel>
-          <!-- Projects list -->
-          <mat-expansion-panel-header class="material-row-bg">
-            <tr class="mat-row materials-tbl width-100">
-              <td class="mat-cell" matTooltip="{{ project.projectName }}">{{ project.projectName }}</td>
-              <td class="mat-cell"></td>
-              <td class="mat-cell"></td>
-              <td class="mat-cell"></td>
-              <td class="mat-cell"></td>
-              <td class="mat-cell"></td>
-              <td class="mat-cell"></td>
-              <td class="mat-cell"></td>
-            </tr>
-          </mat-expansion-panel-header>
-
-          <mat-expansion-panel class="material-projects-tbl" *ngFor="let material of project.projectMaterialList"
-            #mep="matExpansionPanel">
-            <!-- Material lists existed in specific project -->
-            <mat-expansion-panel-header class="project-row-bg" (click)="getIndentsList(material, mep.expanded)">
-              <tr class="mat-row width-100">
-                <td class="mat-cell" matTooltip="{{ project.projectName }}">{{ material.materialName }}</td>
-                <td class="mat-cell">{{ material.materialUnit }}</td>
-                <td class="mat-cell text-center">{{ material.estimatedQty }}</td>
-                <td class="mat-cell text-center">{{ material.indentQnt }}</td>
-                <td class="mat-cell text-center">{{ material.dueDate | date: "dd MMM yyy" }}</td>
-                <td class="mat-cell text-center">{{ material.deliveredQty + material.directDeliveredQty }}</td>
-                <td class="mat-cell text-center">{{ material.issuedQty }}</td>
-                <td class="mat-cell text-center">{{ (material.deliveredQty + material.directDeliveredQty) - material.issuedQty }}</td>
+        <div *ngFor="let project of projectData | SearchPipe: searchProject:['projectName']">
+          <mat-expansion-panel>
+            <!-- Projects list -->
+            <mat-expansion-panel-header class="material-row-bg">
+              <tr class="mat-row materials-tbl width-100">
+                <td class="mat-cell" matTooltip="{{ project.projectName }}">{{ project.projectName }}</td>
+                <td class="mat-cell"></td>
+                <td class="mat-cell"></td>
+                <td class="mat-cell"></td>
+                <td class="mat-cell"></td>
+                <td class="mat-cell"></td>
+                <td class="mat-cell"></td>
+                <td class="mat-cell"></td>
               </tr>
             </mat-expansion-panel-header>
 
-            <!-- Material Indents list -->
-            <ng-container *ngIf="indentList?.length > 0 && material.isIndent">
-              <div class="material-indent-tbl">
-                <tr class="mat-row" *ngFor="let indent of indentList">
-                  <td class="mat-cell"></td>
-                  <td class="mat-cell"></td>
-                  <td class="mat-cell"></td>
-                  <td class="mat-cell text-center">{{ indent.intendedQnt }}</td>
-                  <td class="mat-cell text-center">{{ indent.dueDate | date: "dd MMM yyy" }}</td>
-                  <td class="mat-cell"></td>
-                  <td class="mat-cell text-center">{{ indent.issuedQnt }}</td>
-                  <td class="mat-cell"></td>
+            <mat-expansion-panel class="material-projects-tbl" *ngFor="let material of project.projectMaterialList"
+              #mep="matExpansionPanel">
+              <!-- Material lists existed in specific project -->
+              <mat-expansion-panel-header class="project-row-bg" (click)="getIndentsList(material, mep.expanded)">
+                <tr class="mat-row width-100">
+                  <td class="mat-cell" matTooltip="{{ project.projectName }}">{{ material.materialName }}</td>
+                  <td class="mat-cell">{{ material.materialUnit }}</td>
+                  <td class="mat-cell text-center">{{ material.estimatedQty }}</td>
+                  <td class="mat-cell text-center">{{ material.indentQnt }}</td>
+                  <td class="mat-cell text-center">{{ material.dueDate | date: "dd MMM yyy" }}</td>
+                  <td class="mat-cell text-center">{{ material.deliveredQty + material.directDeliveredQty }}</td>
+                  <td class="mat-cell text-center">{{ material.issuedQty }}</td>
+                  <td class="mat-cell text-center">{{ (material.deliveredQty + material.directDeliveredQty) - material.issuedQty }}</td>
                 </tr>
-              </div>
-            </ng-container>
+              </mat-expansion-panel-header>
+
+              <!-- Material Indents list -->
+              <ng-container *ngIf="indentList?.length > 0 && material.isIndent">
+                <div class="material-indent-tbl">
+                  <tr class="mat-row" *ngFor="let indent of indentList">
+                    <td class="mat-cell"></td>
+                    <td class="mat-cell"></td>
+                    <td class="mat-cell"></td>
+                    <td class="mat-cell text-center">{{ indent.intendedQnt }}</td>
+                    <td class="mat-cell text-center">{{ indent.dueDate | date: "dd MMM yyy" }}</td>
+                    <td class="mat-cell"></td>
+                    <td class="mat-cell text-center">{{ indent.issuedQnt }}</td>
+                    <td class="mat-cell"></td>
+                  </tr>
+                </div>
+              </ng-container>
+            </mat-expansion-panel>
+
           </mat-expansion-panel>
+        </div>
+      </table>
+    </div>
+  </mat-accordion>
+</ng-container>
 
-        </mat-expansion-panel>
-      </div>
-    </table>
-  </div>
-</mat-accordion>
+<ng-template #noData>
+  <p class="text-align-center m-t-50">No material exists for current search</p>
+</ng-template>
 
-<ng-container *ngIf="paginationConfig">
+<ng-container *ngIf="paginationConfig && isPaginationShow">
   <app-paginator class="pagi-st" [config]="paginationConfig" (updatePaginator)="updatePaginatorOptions($event)">
   </app-paginator>
 </ng-container>

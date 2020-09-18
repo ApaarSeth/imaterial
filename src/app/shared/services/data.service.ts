@@ -39,10 +39,6 @@ export class DataService {
     this.masterUrl = this.baseStartUrl + "mm/";
     this.ssoUrl = this.baseStartUrl + "sso/";
 
-    // this.baseUrl = "http://c55f9e572341.ngrok.io/im/";
-    // this.masterUrl = "http://93b4b9459de6.ngrok.io/mm/";
-    // this.ssoUrl = "http://95c96fc3e7bd.ngrok.io/sso/";
-
     this.role = localStorage.getItem("role");
     this.userId = localStorage.getItem("userId");
     this.orgId = localStorage.getItem("orgId");
