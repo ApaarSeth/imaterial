@@ -125,8 +125,12 @@ export class BomEditMaterialComponent implements OnInit {
         this.cd.detectChanges();
     }
 
-    checkInput(event) {
-        event.target.value = event.target.value;
+    isAlphaNumeric(e) {
+        var x = e.which || e.keycode;
+        if ((x >= 48 && x <= 57) || x == 46)
+            return true;
+        else
+            return false;
     }
 
     getIsDisableSearchUnit(v1, v2, v3) {
