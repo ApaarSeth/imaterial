@@ -638,6 +638,12 @@ div.limited-character.bom {
   }
 }
 
+@media only screen and (max-width: 1024px){
+  .bom-details-table-div-part .mat-checkbox-inner-container-no-side-margin{
+    margin-right: 10px;
+  }
+}
+
 @media only screen and (max-width: 992px) {
   .upload-image-info {
     width: 100%;
@@ -819,6 +825,18 @@ div.limited-character.bom {
     .estimated-rate-column {
       span.display-block {
         display: inherit;
+      }
+    }
+  }
+
+  .bom-material-table{
+    th, td{
+      &:nth-child(3){
+        min-width: 100px;
+      }
+
+      &:nth-child(4){
+        min-width: 200px;
       }
     }
   }
