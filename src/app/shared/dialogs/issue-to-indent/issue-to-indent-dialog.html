@@ -28,10 +28,10 @@
           <div class="col-xs-12">
             <div class="row p-t-10 p-b-10 gray-border indent-header-bg">
               <div class="col-xs-2">PR Id</div>
-              <div class="col-xs-2 text-center">Required Quantity</div>
-              <div class="col-xs-2">Required Date</div>
+              <div class="col-xs-2 text-center" [ngClass]="isMobile?'m-r-10':''">Required Quantity</div>
+              <div class="col-xs-2" [ngClass]="isMobile?'m-r-10':''">Required Date</div>
               <div class="col-xs-2">Issued Quantity</div>
-              <div class="col-xs-3">To be Issued</div>
+              <div class="col-xs-3" [ngClass]="isMobile?'text-center':''">To be Issued</div>
             </div>
 
             <form [formGroup]="materialForms">
@@ -40,17 +40,17 @@
                   <div>{{indent.indentId}}</div>
                 </div>
 
-                <div class="col-xs-2 formGroup p-t-12 text-center">
+                <div class="col-xs-2 formGroup p-t-12 text-center" [ngClass]="isMobile?'m-r-10':''">
                   <div>{{indent.quantity}}</div>
                 </div>
 
-                <div class="col-xs-2 formGroup p-t-12">
+                <div class="col-xs-2 formGroup p-t-12" [ngClass]="isMobile?'m-r-15':''">
                   <div>{{indent.dueDate|date: "dd-MMM-yyy"}}</div>
                 </div>
 
-                <div class="col-xs-2 formGroup p-t-12">
+                <div class="col-xs-2 formGroup p-t-12" [ngClass]="isMobile?'':'text-center'">
                   <div class="supplier-qty-div">
-                    <div class="p-r-50">{{indent.issuedQty}}</div>
+                    <div>{{indent.issuedQty}}</div>
 
                     <div class="show-detail-supplier" *ngIf="indent.IssuedQuantityList">
                       <!-- <img src="../../../../assets/images/i_icon.png" /> -->
@@ -82,8 +82,8 @@
                 </div>
 
                 <div class="col-xs-3 formGroup">
-                  <mat-form-field class="col-xs-12 border-input" [formGroupName]="i">
-                    <input formControlName="issuedQty" (input)="showQuantityInput()" matInput type="text" min="0" appTwoDigitDecimaNumber placeholder="Issue Quantity" />
+                  <mat-form-field class="col-xs-12 border-input" [ngClass]="isMobile?'p-l-0 p-r-0 ':''" [formGroupName]="i">
+                    <input formControlName="issuedQty" (input)="showQuantityInput()" matInput type="text" min="0" appTwoDigitDecimaNumber [placeholder]="isMobile?'Issue Qty':'Issue Quantity'" />
                   </mat-form-field>
                   <span>{{indent.unit}}</span>
                 </div>
@@ -98,9 +98,7 @@
           </div>
           <div class="col-sm-12 save-btn-add-edit-user-modal">
             <button mat-raised-button (click)="onNoClick()" class="main-color main-button pull-left">Cancel</button>
-            <button [disabled]="errorMsg || !materialForms.valid" mat-raised-button (click)="showIndent()" class="main-background-color main-button color-white pull-right">
-              Save
-            </button>
+            <button [disabled]="errorMsg || !materialForms.valid" mat-raised-button (click)="showIndent()" class="main-background-color main-button color-white pull-right">Save</button>
           </div>
         </div>
       </div>

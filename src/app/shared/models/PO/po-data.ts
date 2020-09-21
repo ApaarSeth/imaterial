@@ -214,6 +214,7 @@ export interface CardData {
   sellerPORating?: number;
   poCreatedBy?: number;
   poStatus?: string;
+  rating?: number;
 }
 
 export interface DocumentList {
