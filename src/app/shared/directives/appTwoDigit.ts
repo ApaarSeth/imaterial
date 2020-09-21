@@ -8,12 +8,12 @@ export class TwoDigitDecimaNumberDirective {
   private regex: RegExp = new RegExp(/^\d*\.?\d{0,2}$/g);
   // Allow key codes for special events. Reflect :
   // Backspace, tab, end, home
-  private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight', 'Del', 'Delete'];
+  private specialKeys: Array<string> = [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight', 'Del', 'Delete' ];
   @Output() onValueEvent = new EventEmitter();
   constructor(private renderer: Renderer2, private el: ElementRef) {
   }
   // @HostBinding('value') value: string = '';
-  @HostListener('beforeinput', ['$event'])
+  @HostListener('beforeinput', [ '$event' ])
   onBeforeInput(event: any) {
     // Allow Backspace, tab, end, and home keys
     // let key
@@ -72,7 +72,7 @@ export class TwoDigitDecimaNumberDirective {
 
     // let current: string = this.el.nativeElement.value;
     const position = this.el.nativeElement.selectionEnd;
-    const next: string = [current.slice(0, position), key == 'Decimal' ? '.' : key, current.slice(position)].join('');
+    const next: string = [ current.slice(0, position), key == 'Decimal' ? '.' : key, current.slice(position) ].join('');
     if (next && !String(next).match(this.regex)) {
       event.preventDefault();
       event.stopPropagation();

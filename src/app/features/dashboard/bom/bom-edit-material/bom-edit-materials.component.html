@@ -50,7 +50,7 @@
                   class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10 maxwidth-150-px">
                   <mat-label>Estimated Quantity</mat-label>
                   <input matInput type="text" formControlName="estimatedQty" [value]="item.estimatedQty"
-                    autocomplete="off" (input)="checkInput($event)" appTwoDigitDecimaNumber>
+                    autocomplete="off" (keypress)="isAlphaNumeric($event)" appTwoDigitDecimaNumber>
                 </mat-form-field>
                 <ng-container *ngIf="item.get('estimatedQty').errors !== null">
                   <mat-error class="fontsize-10-px" *ngIf="item.get('estimatedQty').hasError('min')">
@@ -66,7 +66,7 @@
                   class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10 maxwidth-150-px">
                   <mat-label>Estimated Rate</mat-label>
                   <input matInput type="text" formControlName="estimatedRate" [value]="item.estimatedRate"
-                    autocomplete="off" (input)="checkInput($event)" appTwoDigitDecimaNumber>
+                    autocomplete="off" (keypress)="isAlphaNumeric($event)" appTwoDigitDecimaNumber>
                 </mat-form-field>
                 <mat-error class="fontsize-10-px"
                   *ngIf="item.get('estimatedRate').errors !== null && item.get('estimatedRate').hasError('pattern')">
