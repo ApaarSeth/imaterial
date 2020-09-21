@@ -66,6 +66,11 @@
 .display-block {
   display: block !important;
 }
+
+.display-inlineblock {
+  display: inline-block !important;
+}
+
 .align-center {
   align-items: center;
 }
@@ -476,19 +481,31 @@ div.limited-character.universal {
   }
 }
 
-.info-tootip {
-  $this: &;
-  &:hover {
-    #{$this}__content {
-      display: block;
-    }
+// .info-tootip {
+//   $this: &;
+//   &:hover,&:active  {
+//     #{$this}__content {
+//       display: block;
+//     }
+//   &__content {
+//     display: none;
+//     margin-top: 10px;
+//     position: absolute;
+//     // left: 10px;
+//   }
+// }
+
+.info-tootip:hover,
+.info-tootip:active {
+  .info-tootip__content {
+    display: block;
   }
-  &__content {
-    display: none;
-    margin-top: 10px;
-    position: absolute;
-    // left: 10px;
-  }
+}
+.info-tootip__content {
+  display: none;
+  margin-top: 10px;
+  position: absolute;
+  // left: 10px;
 }
 
 .tooltip-info {
