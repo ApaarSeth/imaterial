@@ -1,3 +1,4 @@
+import { orgTrades } from './../../shared/models/trades';
 import { Component, OnInit } from "@angular/core";
 import { UserRoles, UserDetails, TradeList, TurnOverList } from "../../shared/models/user-details";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
@@ -38,7 +39,7 @@ export class ProfileComponent implements OnInit {
     { value: "Karnal", viewValue: "Karnal" }
   ];
   selectedTradesId: number[] = [];
-  usersTrade: number[] = [];
+  usersTrade: TradeList[] = [];
   OthersId: any;
   url: any;
   userId
@@ -122,7 +123,7 @@ export class ProfileComponent implements OnInit {
     this.users = res.data ? res.data : null;
     if (res.data.trade) {
       res.data.trade.forEach(element => {
-        this.usersTrade.push(element.tradeId);
+        this.usersTrade.push(element);
         if (element.tradeId == 13) {
           if (element.tradeDescription)
             this.tradeDescription = element.tradeDescription;
@@ -182,8 +183,10 @@ export class ProfileComponent implements OnInit {
     if (this.tradeList) {
       this.tradeList.forEach(element => {
         for (let i = 0; i < this.usersTrade.length; i++) {
-          if (this.usersTrade[i] == element.tradeId)
+          if (this.usersTrade[i].tradeId == element.tradeId) {
             element.selected = true;
+            this.selectedTrades.push(element)
+          }
         }
       });
     }
@@ -337,7 +340,7 @@ export class ProfileComponent implements OnInit {
         data.profileUrl = fileName;
       }
 
-      data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
+      data.trade = [...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
       data.orgPincode = String(this.userInfoForm.value.orgPincode)
