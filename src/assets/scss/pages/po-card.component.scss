@@ -185,3 +185,11 @@ input:not(:checked) ~ label {
 .mgbn12{
     margin-bottom: -12px;
 }
+
+@media (max-width: 599px){
+    .po-list-detail-custom .myPanel{
+        th, td {
+            min-width: 120px;
+        }
+    }
+}

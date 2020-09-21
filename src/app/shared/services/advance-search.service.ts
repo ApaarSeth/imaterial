@@ -42,7 +42,7 @@ export class AdvanceSearchService {
 
     getSuppliers(orgId: number) {
         return this.commonService.getSuppliers(orgId, false).then(res => {
-            if(res.data?.supplierList?.length > 0){
+            if (res.data?.supplierList?.length > 0) {
                 return res.data?.supplierList.map(itm => ({ ...itm, name: itm.supplierName, id: itm.supplierId }));
             }
         });
@@ -59,7 +59,7 @@ export class AdvanceSearchService {
             let users = [];
             res.data.activatedProjectList.forEach(itm => {
                 if (itm.ProjectUser.firstName !== '' && itm.ProjectUser.lastName !== '') {
-                    users.push({ ...itm, name: itm.ProjectUser.firstName + ' ' + itm.ProjectUser.firstName, id: itm.ProjectUser.userId })
+                    users.push({ ...itm, name: itm.ProjectUser.firstName + ' ' + itm.ProjectUser.lastName, id: itm.ProjectUser.userId })
                 }
             });
             return users;

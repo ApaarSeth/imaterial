@@ -58,7 +58,11 @@ export class PoSupplierComponent implements OnInit {
     let orgId = Number(localStorage.getItem("orgId"));
     this.commonService.getSuppliers(orgId).then(data => {
       this.allSuppliers = data.data.supplierList;
-      this.isRatingFeatureShow = (data.data.moduleFeatures.featureList[1].featureName === "supplier rating" && data.data.moduleFeatures.featureList[1].isAvailable === 1) ? true : false;
+
+      const premiumFeature = data.data.moduleFeatures;
+      if(premiumFeature.featuresList?.length > 0){
+        this.isRatingFeatureShow = (premiumFeature.featureList[1].featureName === "supplier rating" && premiumFeature.featureList[1].isAvailable === 1) ? true : false;
+      }
     });
   }
 
