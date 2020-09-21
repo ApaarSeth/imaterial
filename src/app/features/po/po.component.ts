@@ -160,9 +160,11 @@ export class PoComponent implements OnInit {
         poStatus: this.poData.poStatus,
       };
 
-      for (let item of this.poData.moduleFeatures.featureList) {
-        if (item.featureName === 'image integration') {
-          this.cardData.rating = item.isAvailable;
+      if (this.poData.moduleFeatures.featureList) {
+        for (let item of this.poData.moduleFeatures.featureList) {
+          if (item.featureName === 'image integration') {
+            this.cardData.rating = item.isAvailable;
+          }
         }
       }
       this.documentList = this.poData.DocumentsList;
