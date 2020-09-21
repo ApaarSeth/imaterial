@@ -75,7 +75,6 @@ export class TwoDigitDecimaNumberDirective {
     const next: string = [current.slice(0, position), key == 'Decimal' ? '.' : key, current.slice(position)].join('');
     if (next && !String(next).match(this.regex)) {
       event.preventDefault();
-      event.stopPropagation();
       // this.el.nativeElement.value = Number(current);
       return false;
     }
