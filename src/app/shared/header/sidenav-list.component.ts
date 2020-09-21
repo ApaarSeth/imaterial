@@ -50,6 +50,7 @@ export class SidenavListComponent implements OnInit {
           itm.modulePath = itm.modulePath + this.orgId;
         }
       });
+      this.addMoreNavInMobile();
     }
 
     if (this.role) {
@@ -110,5 +111,28 @@ export class SidenavListComponent implements OnInit {
 
   ngOnDestroy() {
     this.subsriptions.forEach(subs => subs.unsubscribe());
+  }
+
+  addMoreNavInMobile() {
+    const subscriptions = {
+      moduleDisplayName: "My Plan / Upgrade",
+      moduleIcon: "payment.svg",
+      moduleId: this.data.moduleList.length + 1,
+      moduleName: "My Plan / Upgrade",
+      modulePath: "subscriptions",
+      subModuleList: null,
+    }
+    if (this.isPlanAvailable === 1 && this.accountOwner === 1) {
+      this.data.moduleList.push(subscriptions);
+    }
+    const feedback = {
+      moduleDisplayName: "Share Feedback",
+      moduleIcon: "feedback.svg",
+      moduleId: this.data.moduleList.length + 1,
+      moduleName: "Share Feedback",
+      modulePath: "user-feedback",
+      subModuleList: null,
+    }
+    this.data.moduleList.push(feedback);
   }
 }

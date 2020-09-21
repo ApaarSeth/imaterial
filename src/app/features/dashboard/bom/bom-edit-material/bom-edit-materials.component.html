@@ -12,7 +12,7 @@
 
     <ng-container *ngIf="dataSource">
 
-      <div class="bom-details-table-div-part example-container mat-elevation-z8 mt-2 table-responsive">
+      <div class="bom-details-table-div-part example-container mat-elevation-z8 mt-2 table-responsive bg-white">
 
         <form [formGroup]="form">
           <table formArrayName="material" class="table mb-0 bg-white bom-material-table">
@@ -45,7 +45,7 @@
                     }" (getSelectedUnit)="item.value.materialUnit = $event"></app-search-unit>
                 </ng-container>
               </td>
-              <td>
+              <td class="minwidth-200-px">
                 <mat-form-field
                   class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10 maxwidth-150-px">
                   <mat-label>Estimated Quantity</mat-label>
@@ -61,7 +61,7 @@
                   </mat-error>
                 </ng-container>
               </td>
-              <td>
+              <td class="minwidth-200-px">
                 <mat-form-field
                   class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10 maxwidth-150-px">
                   <mat-label>Estimated Rate</mat-label>

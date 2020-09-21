@@ -42,7 +42,9 @@
                                 <span
                                     [ngClass]="isMobile ? 'fontsize-12-px' : 'fontsize-14-px' ">{{ itm.value.groupName }}</span>
                                 <span class="pull-right bom-arrow">
-                                    <mat-icon inline="true">keyboard_arrow_up</mat-icon>
+                                    <mat-icon inline="true" (click)="$event.stopPropagation()">
+                                        keyboard_arrow_up
+                                    </mat-icon>
                                 </span>
                             </td>
                         </tr>
@@ -78,7 +80,7 @@
                                             </app-search-unit>
                                         </ng-container>
                                     </td>
-                                    <td>
+                                    <td class="minwidth-200-px">
                                         <mat-form-field
                                             class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10">
                                             <mat-label>Estimated Quantity</mat-label>
@@ -86,7 +88,7 @@
                                                 [value]="item.estimatedQty" autocomplete="off" appTwoDigitDecimaNumber>
                                         </mat-form-field>
                                     </td>
-                                    <td>
+                                    <td class="minwidth-200-px">
                                         <mat-form-field
                                             class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10">
                                             <mat-label>Estimated Rate</mat-label>
