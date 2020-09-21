@@ -1,6 +1,9 @@
 <mat-sidenav-container>
+
+
   <mat-sidenav class="sidenav" #sidenav [fixedInViewport]="true" [mode]="'over'">
-    <div class="side-navbar-header">
+
+    <!-- <div class="side-navbar-header">
       <img class="img-circle" height="36" width="38" [src]="url || '../../../../assets/images/logo-profile-header.png'"
         alt="Test" />
       <span class="user-name" (click)="goToProfile(sidenav)">
@@ -10,9 +13,42 @@
       <button class="menu-close float-right" (click)="sidenav.close()" mat-icon-button>
         <mat-icon>close</mat-icon>
       </button>
+    </div> -->
+
+
+    <div class="side-navbar-header">
+
+      <div>
+        <span class="my-head" (click)="goToProfile(sidenav)">
+          My Account
+        </span>
+        <button class="menu-close float-right" (click)="sidenav.close()" mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <div class="display-block width-100 m-t-15" (click)="goToProfile(sidenav)">
+        <img class="img-circle" height="36" width="38"
+          [src]="url || '../../../../assets/images/logo-profile-header.png'" alt="Test" />
+        <span class="user-name brand-color">
+          {{ userName }}
+        </span>
+
+        <button class="menu-close float-right brand-color fontsize-20-px" mat-icon-button>
+          <mat-icon inline>edit</mat-icon>
+        </button>
+      </div>
+
     </div>
+
+
+
+
+
     <app-sidenav-list [sidenav]="sidenav" [menuData]="menuData"></app-sidenav-list>
   </mat-sidenav>
+
+
   <mat-sidenav-content>
     <app-header #header [menu]="sidenav" [subscriptionsData]="subscriptionsData"></app-header>
     <sidebar-navigation (collapseMenu)="isSidebarCollapsed($event)" [menuData]="menuData">
