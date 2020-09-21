@@ -1,3 +1,4 @@
+import { CommonService } from './../../services/commonService';
 import { Component, OnInit, Inject } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
@@ -23,17 +24,18 @@ export class IssueToIndentDialogComponent implements OnInit {
   dataSource: IndentVO;
   sum: number = 0;
   errorMsg: boolean = false;
-
+  isMobile: boolean = false;
   constructor(public dialogRef: MatDialogRef<IssueToIndentDialogComponent>, private activatedRoute: ActivatedRoute,
     private bomService: BomService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private navService: AppNavigationService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
     this.getIndentDetails();
-
+    this.isMobile = this.commonService.isMobile().matches;
   }
 
 

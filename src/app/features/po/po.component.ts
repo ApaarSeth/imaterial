@@ -157,8 +157,14 @@ export class PoComponent implements OnInit {
         isInternational: this.poData.isInternational,
         sellerPORating: this.poData.sellerPORating,
         poCreatedBy: this.poData.poCreatedBy,
-        poStatus: this.poData.poStatus
+        poStatus: this.poData.poStatus,
       };
+
+      for (let item of this.poData.moduleFeatures.featureList) {
+        if (item.featureName === 'image integration') {
+          this.cardData.rating = item.isAvailable;
+        }
+      }
       this.documentList = this.poData.DocumentsList;
       this.terms = this.poData.Terms;
       this.terms && this.terms.termsDesc ? this.poTerms.get('textArea').setValue(this.terms.termsDesc) : null

@@ -78,7 +78,7 @@
 
                 <div class="row">
                   <div class="col-xs-6">
-                    <mat-form-field class="border-select address-select-country mat-form-field-flex-mm-padding mt6p width-100">
+                    <mat-form-field class="border-select mat-form-field-flex-mm-padding m-t-6 select-country width-100">
                       <mat-label class="value-currencies-label">Select Country</mat-label>
                       <mat-select formControlName="countryCode" (selectionChange)="blankPincode()">
                         <div class="display-flex">
@@ -97,7 +97,7 @@
                         </div>
 
                         <mat-select-trigger>
-                          <span class="d-flex selected-country" matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}">
+                          <span matTooltip="{{ selectedCountry && selectedCountry.countryCode }} {{ selectedCountry && selectedCountry.callingCode }}">
                             <img class="width-27-px p-r-4" [src]="selectedCountry && selectedCountry.imageUrl" alt="" />
                             <span class="p-r-5 color-brand font-size16">{{ selectedCountry && selectedCountry.name }}</span>
                           </span>
@@ -115,7 +115,7 @@
                   </div>
 
                   <div class="col-xs-6">
-                    <div class="row border-input p-t-0">
+                    <div class="row border-input m-t-7">
                       <mat-form-field class="col-xs-12">
                         <input matInput type="string" placeholder="Pincode" formControlName="pinCode" />
                       </mat-form-field>

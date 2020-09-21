@@ -39,7 +39,7 @@ export class PoCardComponent implements OnInit {
   ngOnInit() {
     this.userId = Number(localStorage.getItem("userId"));
     this.countryCode = localStorage.getItem('countryCode')
-    if (this.cardData.poStatus === '3' && this.cardData.poCreatedBy === this.userId && (this.cardData.sellerPORating === null || this.cardData.sellerPORating === undefined)) {
+    if (this.cardData.poStatus === '3' && this.cardData.rating && this.cardData.poCreatedBy === this.userId && (this.cardData.sellerPORating === null || this.cardData.sellerPORating === undefined)) {
       this.openSupplierRating();
     }
     window.dispatchEvent(new Event('resize'));
