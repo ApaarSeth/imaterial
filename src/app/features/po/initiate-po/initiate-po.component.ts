@@ -81,6 +81,7 @@ export class InitiatePoComponent implements OnInit {
   }
 
   getPoData(data: initiatePoData) {
-    this.existingPoData = data
+    this.existingPoData = data;
+    this.searchText = new String('');
   }
 }

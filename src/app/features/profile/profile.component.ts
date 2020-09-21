@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
   countryCode: string;
   validPincode: boolean = false;
   countryId: Number;
-
+  isMobile: boolean = false;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -62,6 +62,7 @@ export class ProfileComponent implements OnInit {
     private _uploadImageService: DocumentUploadService) { }
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.userId = localStorage.getItem("userId");
     this.role = localStorage.getItem("role");
     this.countryId = Number(localStorage.getItem('countryId'))
@@ -339,7 +340,7 @@ export class ProfileComponent implements OnInit {
       data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
-      data.orgPincode = this.userInfoForm.value.orgPincode
+      data.orgPincode = String(this.userInfoForm.value.orgPincode)
       this._userService.submitUserDetails(data).then(res => {
         if (this.url) {
           this._userService.UpdateProfileImage.next(this.url);

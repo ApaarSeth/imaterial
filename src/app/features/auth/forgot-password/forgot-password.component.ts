@@ -189,9 +189,9 @@ export class ForgotPasswordComponent implements OnInit {
 
   verifyMobile(mobile) {
     let countryCode = this.forgetPassForm.get('countryCode').value.callingCode;
-    this.signInSignupService.VerifyMobile(mobile, countryCode).then(res => {
-      this.verifiedMobile = res.data;
-      if (this.verifiedMobile) {
+    this.signInSignupService.verifyRegisteredContact(mobile, countryCode).then(res => {
+      this.verifiedMobile = !res.data;
+      if (!this.verifiedMobile) {
         this.notifier.snack("User is not registered. Please Sign up");
       }
     });

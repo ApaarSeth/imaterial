@@ -21,7 +21,7 @@ export class UserFeedbackComponent implements OnInit {
         for (let val in form.value) {
             quesAnsList.push({ question: val, answer: form.value[val] })
         }
-        this.userService.postUserFeedback(quesAnsList).then(res => {
+        this.userService.postUserFeedback({ questionMap: JSON.stringify(quesAnsList) }).then(res => {
             if (res.statusCode === 201) {
                 this.notifier.snack(res.message)
                 this.router.navigate(['/dashboard'])
