@@ -36,6 +36,7 @@ export class PoSupplierComponent implements OnInit {
     private commonService: CommonService) { }
 
   ngOnInit() {
+    this.isRatingFeatureShow = this.activatedRoute.snapshot.data.inititatePo[0].data.moduleFeatures.featureList[0].isAvailable;
     this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data.supplierList;
     this.countryist = this.activatedRoute.snapshot.data.countryList;
     this.isMobile = this.commonService.isMobile().matches;
@@ -60,7 +61,7 @@ export class PoSupplierComponent implements OnInit {
       this.allSuppliers = data.data.supplierList;
 
       const premiumFeature = data.data.moduleFeatures;
-      if(premiumFeature.featuresList?.length > 0){
+      if (premiumFeature.featuresList?.length > 0) {
         this.isRatingFeatureShow = (premiumFeature.featureList[1].featureName === "supplier rating" && premiumFeature.featureList[1].isAvailable === 1) ? true : false;
       }
     });
