@@ -32,7 +32,7 @@
 
           <!-- Name Column -->
           <ng-container matColumnDef="estimatedQty">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-align-center">Estimated Quantity</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="isMobile ? 'p-r-5' : ''" class="text-align-center">Estimated Quantity</th>
             <td mat-cell *matCellDef="let element" class="text-align-center">{{ element.estimatedQty }} {{ element.materialUnit }}</td>
           </ng-container>
 

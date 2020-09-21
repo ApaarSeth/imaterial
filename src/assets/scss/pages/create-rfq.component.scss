@@ -27,28 +27,28 @@
   flex: 0 0 75px !important;
 }
 
-.w-15{
+.w-15 {
   width: 15%;
 }
 
-.w-40{
+.w-40 {
   width: 40%;
 }
 
-.display-project-accordion{
-  .mat-expansion-panel-header{
+.display-project-accordion {
+  .mat-expansion-panel-header {
     padding: 0 10px;
   }
 
-  .mat-expansion-indicator::after{
+  .mat-expansion-indicator::after {
     padding: 5px;
   }
 }
 
-@media(max-width: 340px){
-  .xs-scrn-btn{
-    margin-right:5px;
-    button{
+@media (max-width: 340px) {
+  .xs-scrn-btn {
+    margin-right: 5px;
+    button {
       margin-top: 10px;
     }
   }

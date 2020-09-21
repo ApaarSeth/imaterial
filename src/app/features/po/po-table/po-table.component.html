@@ -51,7 +51,7 @@
           >
           <!-- <span class="mat-header-cell" [ngClass]="isMobile && mode !== 'edit' ? 'po-header-unit-width' : 'minwidth-5'">Unit</span> -->
           <span class="mat-header-cell po-unit-width">Unit</span>
-          <span class="mat-header-cell" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'">Fullfillment <br />Date</span>
+          <span class="mat-header-cell" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'">Fulfillment <br />Date</span>
           <span class="mat-header-cell" [ngClass]="mode === 'edit' ? 'international-edit-po' : 'international-view-po'"
             >Supplier Rate
             <span>({{ poCurrency && poCurrency.exchangeCurrencyName ? (ratesBaseCurr ? poCurrency.primaryCurrencyName : poCurrency.exchangeCurrencyName) : poData.currencyCode }})</span>
