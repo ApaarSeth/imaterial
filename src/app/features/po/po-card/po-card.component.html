@@ -87,7 +87,7 @@
             <span> {{ cardData.supplierAddress.contactNo }}</span>
           </mat-list-item>
 
-          <ng-container *ngIf="cardData.poStatus === '3'">
+          <ng-container *ngIf="cardData.poStatus !== '3'">
             <mat-list-item mat-subheader>
               <span class="font-weight-500"> Rating: </span>
 

@@ -1,3 +1,4 @@
+import { CommonService } from './../../shared/services/commonService';
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
@@ -35,7 +36,7 @@ export interface PeriodicElement {
 })
 export class IndentDashboardComponent implements OnInit {
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   dataSource: MatTableDataSource<Subcategory>;
   dueDate = new Date(1990, 0, 1);
   subcategory: Subcategory[] = [];
@@ -44,6 +45,7 @@ export class IndentDashboardComponent implements OnInit {
   projectId: number;
   product: ProjectDetails;
   minDate = new Date();
+  isMobile: boolean = false;
   displayedColumns: string[] = [
     "materialName",
     "estimatedQty",
@@ -64,10 +66,12 @@ export class IndentDashboardComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private navService: AppNavigationService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.orgId = Number(localStorage.getItem("orgId"))
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
@@ -75,15 +79,15 @@ export class IndentDashboardComponent implements OnInit {
     });
     this.subcategory = this.indentService.raiseIndentData;
 
-    if(this.subcategory){
+    if (this.subcategory) {
       this.dataSource = new MatTableDataSource(this.subcategory);
       setTimeout(() => {
         this.dataSource.sort = this.sort;
         this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
-            if (typeof data[sortHeaderId] === 'string') {
+          if (typeof data[sortHeaderId] === 'string') {
             return data[sortHeaderId].toLocaleLowerCase();
-            }  
-            return data[sortHeaderId];
+          }
+          return data[sortHeaderId];
         };
       });
     }
@@ -203,7 +207,7 @@ export class IndentDashboardComponent implements OnInit {
   getStart(i) {
     this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
   }
-  
+
   startDate(event) {
     this.startDateOfProject = event;
   }
