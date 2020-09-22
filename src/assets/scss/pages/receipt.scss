@@ -1,0 +1,109 @@
+.receipt-section {
+    width: 100%;
+    overflow-x: auto;
+
+    .mat-row, .receipt-row, .mat-header-row {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .mat-cell, .mat-header-cell {
+      flex: 1;
+      overflow: hidden;
+      word-wrap: break-word;
+    }
+
+    .mat-header-row {
+        background: #2197bb;
+        padding: 0 2rem 0 16px;
+        span {
+          color: #ffffff !important;
+        }
+
+        .mat-header-cell:first-of-type{
+            padding-left: 0px;
+        }
+    }
+
+    .mat-expansion-panel-body {
+        padding: 0;
+        overflow: auto;
+    }
+  
+    .bg-receipt-details{
+        background-color: #eeeeee !important;
+    }
+
+    .bg-receipt-details, .bg-project-list{
+        border-bottom: 1px solid #bbbbbb;
+        .mat-cell{
+            color: #545454;
+        }
+    }
+
+    .bg-project-list {
+        min-height: 45px;
+        height: auto;
+        padding: 0 2rem 0 16px;
+
+        .mat-cell:last-of-type {
+            padding-right: 0px !important;
+        }
+    }
+
+    .receipt-row {
+        width: 100%;
+
+        .mat-header-cell, .mat-cell{
+            border-bottom: none !important;
+        }
+
+        .mat-cell:first-of-type {
+            padding-left: 0px !important;
+        }
+
+        .mat-cell.grn-name-cell,
+        .mat-cell.po-number-cell {
+            flex: 0 0 152px;
+            min-width: 152px;
+        }
+    
+        .mat-cell.double-mat-cell.added-by-cell {
+            min-width: 306px;
+            flex: 0 0 306px;
+        }
+    }
+
+    .receipt-table{
+        width: 100%;
+        .material-unit, .po-number-cell {
+            min-width: 100px !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 959px){
+    .common-padding-mobile{
+        padding-right: 0px !important;
+    }
+}
+
+@media only screen and (max-width: 767px){
+
+    .receipts-outer-section {
+        padding-top: 15px !important;
+    }
+
+    .receipt-table{
+        .bg-project-list .mat-cell, .mat-header-cell{
+            min-width: 150px;
+        }
+    }
+}
+
+@media only screen and (max-width: 599px){
+    .receipt-project-name{
+        font-size: 13.5px;
+    }
+}

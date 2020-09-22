@@ -7,10 +7,6 @@ export const ConfigurationConstants = {
   LOADING_TIMEOUT: 500,
 }
 
-export class Froala {
-  public static key: string = 'iMFIZJNKLDXIREJI==';
-
-}
 
 export const HeaderConstants = {
   PERMISSIONHEADER: (permissionObj, orgId) => {
@@ -43,9 +39,11 @@ export const API = {
   RAISEINDENT: projectId => `indent/raise/${projectId}`,
   DELETE: (organizationId, projectId) => `deleteProject/${organizationId}/${projectId}`,
   GETMATERIALSWITHSPECS: `material/materialsSpecs`,
-  GETMATERIALSWITHQUANTITY: (organizationId, projectId) => `materials/${organizationId}/${projectId}`,
+  // GETMATERIALSWITHQUANTITY: (organizationId, projectId) => `materials/${organizationId}/${projectId}`,
+  GETMATERIALSWITHQUANTITY: (organizationId, projectId) => `materials/${projectId}`,
   GETINDENTLIST: projectId => `indent/list/${projectId}`,
-  POSTMATERIALSQUANTITY: (userId, projectId) => `materials/${userId}/${projectId}`,
+  // POSTMATERIALSQUANTITY: (userId, projectId) => `materials/${userId}/${projectId}`,
+  POSTMATERIALSQUANTITY: (userId, projectId) => `materials/${projectId}`,
   GETMATERIALWISE: organizationId => `global/materials/${organizationId}`,
   GETPROJECTWISE: organizationId => `global/projects/${organizationId}`,
   RFQMATERIALS: `rfqMaterials`,
@@ -108,7 +106,7 @@ export const API = {
   GETUSERGUIDEFLAG: `userGuide`,
   SENDUSERGUIDEFLAG: `add/userGuide`,
   GETBOMTRADES: `material/get/trades`,
-  GET25BOMTRADES: `topmaterial/get/trades`,
+  GET25BOMTRADES: `material/top/get/trades`,
   ORGANIZATIONTRADES: projectId => `all/org/trades/${projectId}`,
   PROJECTTRADES: `add/projectTrades`,
   TERMS: id => `update/terms/${id}`,
@@ -120,7 +118,7 @@ export const API = {
   MATERIALUNIT: `material/get/unit`,
   MYCUSTOMMATERIAL: (type) => `material/get/custom/${type}`,
   DOWNLOADPO: purchaseOrderId => `po/download/${purchaseOrderId}`,
-  TRADERELATEDCATEGORY: (tradeName) => `trade/get/categories/${tradeName}`,
+  TRADERELATEDCATEGORY: `material/trade/get/categories`,
   MATERIALEXIST: `material/search/materialexist`,
   ADDMYMATERIAL: projectId => `material/add/custom/${projectId}`,
   GETRELEASENOTES: `user/get/releaseNote`,
@@ -128,7 +126,7 @@ export const API = {
   APPROVEMYMATERIAL: `material/update/approve/custom`,
   SENDRELEASENOTE: `user/add/releaseNote`,
   DELETEMYMATERIAL: (id) => `material/delete/custom/${id}`,
-  ALLCATEGORY: `trade/get/all/categories`,
+  ALLCATEGORY: `material/trade/get/all/categories`,
   PAYMENTRECORD: (poId) => `po/add/payment/${poId}`,
   PAYMENTHISTORY: (poId) => `po/get/payment/${poId}`,
   PAYMENTDETAIL: (poId) => `po/get/payment/indetail/${poId}`,
@@ -171,5 +169,12 @@ export const API = {
   GET_ALL_GRN: 'all/grn',
   SUPPLIER_LIABILITY_EXCEL_DOWNLOAD: 'supplier/liabilityReportDownload',
   CTC_REPORT_EXCEL_DOWNLOAD: 'report/ctcDownload',
-  GET_CONTACTSALES: 'subscription/contact/sales'
+  GET_CONTACTSALES: 'subscription/contact/sales',
+  RESENDINVITE: (userid) => `resendemail/unique/${userid}`,
+  GLOBAL_STORE_MATERIAL_WISE: (pageNo, pageSize) => `global/materials/${pageNo}/${pageSize}`,
+  GET_ALL_INDENTS_LIST: (materialId) => `global/indents/${materialId}`,
+  GLOBAL_STORE_PROJECT_WISE: (pageNo, pageSize) => `global/projects/${pageNo}/${pageSize}`,
+  POSTEDITADDRESS: (addressId) => `address/update/${addressId}`,
+  POSTUSERFEEDBACK: 'mm/rating',
+  VERIFYREGISTEREDNO: (mobile, countryCode) => `verfy/contact/${mobile}/${countryCode}`
 };

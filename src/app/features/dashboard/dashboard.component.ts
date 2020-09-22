@@ -1,24 +1,19 @@
+import { AddProjectService } from './../../shared/services/add-project.service';
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
-import { ProjectService } from "../../shared/services/projectDashboard/project.service";
-import { MatDialog } from "@angular/material";
-import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
+import { ProjectService } from "../../shared/services/project.service";
 import { ActivatedRoute } from "@angular/router";
-import {
-  ProjectDetails,
-  ProjetPopupData
-} from "src/app/shared/models/project-details";
-import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { GuidedTourService, OrientationConfiguration, Orientation, GuidedTour } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { PermissionService } from 'src/app/shared/services/permission.service';
-import { CountryCode } from 'src/app/shared/models/currency';
-import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { MatDialog } from "@angular/material/dialog";
+import { ProjectDetails, ProjetPopupData } from "../../shared/models/project-details";
+import { CountryCode } from "../../shared/models/currency";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
+import { UserGuideService } from "../../shared/services/user-guide.service";
+import { CommonService } from "../../shared/services/commonService";
+import { PermissionService } from "../../shared/services/permission.service";
+import { AppNotificationService } from "../../shared/services/app-notification.service";
 
 @Component({
   selector: "dashboard",
-  templateUrl: "./dashboard.component.html",
-  styleUrls: ["../../../assets/scss/main.scss"]
+  templateUrl: "./dashboard.component.html"
 })
 export class DashboardComponent implements OnInit {
   tourId: string;
@@ -36,6 +31,7 @@ export class DashboardComponent implements OnInit {
   countryList: CountryCode[] = [];
 
   isMobile: boolean;
+  openAddProject: string;
 
   public dashboardTour: GuidedTour = {
     tourId: 'purchases-tour',
@@ -103,12 +99,13 @@ export class DashboardComponent implements OnInit {
     private projectService: ProjectService,
     private userGuideService: UserGuideService,
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
     private guidedTourService: GuidedTourService,
     private commonService: CommonService,
     private permissionService: PermissionService,
     private route: ActivatedRoute,
-    private notifier: AppNotificationService
+    private notifier: AppNotificationService,
+    private addProjectService: AddProjectService,
+    private activeRoute: ActivatedRoute
   ) {
   }
 
@@ -120,7 +117,24 @@ export class DashboardComponent implements OnInit {
     this.isMobile = this.commonService.isMobile().matches;
     this.getAllProjects();
     this.countryList = this.route.snapshot.data.countryList;
+    this.addProjectService.onEditOrDelete.subscribe(res => {
+      this.projectDeleteOrEdit(res)
+    })
+    this.openAddProject = this.activeRoute.snapshot.queryParams[ "openAddProject" ];
+    if (this.openAddProject && this.openAddProject === '1') {
+      this.addProject();
+    }
+  }
 
+  projectDeleteOrEdit(event) {
+    if (event) {
+      this.projectService
+        .getProjects(this.orgId, this.userId)
+        .then(data => {
+          this.allProjects = data.data;
+          this.notifier.snack(event)
+        })
+    }
   }
 
   setLocalStorage() {
@@ -141,6 +155,7 @@ export class DashboardComponent implements OnInit {
   getNotifications() {
     this.commonService.getNotification(this.userId);
   }
+
   getAllProjects() {
     this.projectService.getProjects(this.orgId, this.userId).then(data => {
       this.allProjects = data.data;
@@ -152,84 +167,20 @@ export class DashboardComponent implements OnInit {
           }, 1000);
         }
       }
-      this.route.queryParams.subscribe(params => {
-        if (params.projectId) {
-          this.editProject(Number(params.projectId))
-        }
-      })
+      // this.route.queryParams.subscribe(params => {
+      //   if (params.projectId) {
+      //     this.editProject(Number(params.projectId))
+      //   }
+      // })
     });
   }
-
-  editProject(projectId: number) {
-    const data: ProjetPopupData = {
-      isEdit: true,
-      isDelete: false,
-      detail: this.allProjects.find(pro => pro.projectId === projectId),
-      countryList: this.countryList
-    };
-
-    this.openDialog(data);
-  }
-
   addProject() {
-    this.openDialog({
+    this.addProjectService.openDialog({
       isEdit: false,
       isDelete: false,
       countryList: this.countryList
     } as ProjetPopupData);
-    // this.getAllProjects();
   }
 
-  deleteProject(projectId: number) {
-    const data: ProjetPopupData = {
-      isEdit: false,
-      isDelete: true,
-      detail: this.allProjects.find(pro => pro.projectId === projectId)
-    };
 
-    this.openDialog(data);
-  }
-
-  // modal function
-  openDialog(data: ProjetPopupData): void {
-    if (data.isDelete == false) {
-      const dialogRef = this.dialog.open(AddProjectComponent, {
-        width: "1000px",
-        data
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => {
-          if (result && result != null) {
-            this.projectService
-              .getProjects(this.orgId, this.userId)
-              .then(data => {
-                this.allProjects = data.data;
-                this.notifier.snack(result)
-              })
-          };
-        })
-    } else if (data.isDelete == true) {
-      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
-        width: "500px",
-        data
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => {
-          if (result && result != null) {
-            this.projectService
-              .getProjects(this.orgId, this.userId)
-              .then(data => {
-                this.allProjects = data.data;
-              });
-          }
-
-        });
-    }
-  }
 }

@@ -1,16 +1,4 @@
-import { OnInit, Component, Inject, ViewChild, NgZone } from '@angular/core';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList, UserDetailsPopUpData } from 'src/app/shared/models/user-details';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { Router } from '@angular/router';
-import { elementAt, count, take, startWith, map, filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { BomService } from '../../services/bom/bom.service';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { orgTrades, tradeRelatedCategory } from '../../models/trades';
-import { Subject, Observable, merge } from 'rxjs';
+import { Component, OnInit, Inject } from "@angular/core"; import { UserRoles, UserDetails } from "../../models/user-details"; import { FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms"; import { orgTrades, tradeRelatedCategory } from "../../models/trades"; import { UserService } from "../../services/user.service"; import { BomService } from "../../services/bom.service"; import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog"; import { MatSnackBar } from "@angular/material/snack-bar";
 
 export interface City {
   value: string;
@@ -46,10 +34,7 @@ export class AddMyMaterialBomComponent implements OnInit {
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
-    private userService: UserService,
     private bomService: BomService,
-    private _router: Router,
-    private navService: AppNavigationService,
     private dialogRef: MatDialogRef<AddMyMaterialBomComponent>,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data) { }
@@ -73,12 +58,11 @@ export class AddMyMaterialBomComponent implements OnInit {
     else {
       this.firefox = false;
     }
-    console.log(this.firefox)
   }
 
   getCategories() {
     this.bomService.getAllCategories().then(res => {
-      this.filteredOption = res.data;
+      this.filteredOption = res && res.data;
       this.filteredOption.push({ categoriesCode: null, categoriesName: 'Others' })
     })
   }
@@ -108,8 +92,8 @@ export class AddMyMaterialBomComponent implements OnInit {
 
   getUserData(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      if (res.data[0].roleName) {
-        localStorage.setItem("role", res.data[0].roleName);
+      if (res.data.roleName) {
+        localStorage.setItem("role", res.data.roleName);
       }
     });
   }

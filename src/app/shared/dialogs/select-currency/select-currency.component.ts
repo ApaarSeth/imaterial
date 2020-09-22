@@ -1,31 +1,10 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-
-import { Router } from '@angular/router';
-import { RFQService } from '../../services/rfq/rfq.service';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { RFQService } from '../../services/rfq.service';
 import { rfqCurrency, CountryCurrency } from '../../models/RFQ/rfq-details';
 import { CommonService } from '../../services/commonService';
 import { Currency } from '../../models/currency';
-
-
-export interface City {
-  value: string;
-  viewValue: string;
-}
-
-export interface ProjectType {
-  type: string;
-}
-
-export interface Unit {
-  value: string;
-}
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: "select-currency-dialog",
@@ -33,6 +12,7 @@ export interface Unit {
 })
 
 export class SelectCurrencyComponent implements OnInit {
+
   currencies: CountryCurrency[];
   form: FormGroup;
   currencyFields: rfqCurrency = {} as rfqCurrency;
@@ -46,8 +26,6 @@ export class SelectCurrencyComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<SelectCurrencyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: rfqCurrency,
-    private router: Router,
-    private _snackBar: MatSnackBar,
     private rfqservice: RFQService,
     private formBuilder: FormBuilder,
     private commonService: CommonService
@@ -58,20 +36,16 @@ export class SelectCurrencyComponent implements OnInit {
     this.getCurrencyApi();
     this.isMobile = this.commonService.isMobile().matches;
   }
+
   get selectedCountry() {
     if (this.currencies)
       return this.form.get('exchangeCurrency').value;
   }
 
-
   getCurrencyApi() {
-    // this.currencyFields = this.data;
-    // if (this.data! = null) {
-    //   this.exchangeCurrencyName = this.data.exchangeCurrencyName;
-    // }
-    Promise.all([ this.commonService.getBaseCurrency(), this.rfqservice.getCurrency() ]).then(res => {
-      this.primaryCurrencyData = res[ 0 ].data as Currency;
-      this.currencyFields[ 'primaryContryId' ] = String(this.primaryCurrencyData.countryId);
+    Promise.all([this.commonService.getBaseCurrency(), this.rfqservice.getCurrency()]).then(res => {
+      this.primaryCurrencyData = res[0].data as Currency;
+      this.currencyFields['primaryContryId'] = String(this.primaryCurrencyData.countryId);
       this.currencyFields.primaryCurrency = this.primaryCurrencyData.currency;
       this.currencyFields.primaryCurrencyFlag = this.primaryCurrencyData.imageUrl;
       this.currencyFields.primaryCurrencyId = this.primaryCurrencyData.currencyId;
@@ -79,14 +53,14 @@ export class SelectCurrencyComponent implements OnInit {
       this.currencyFields.primaryCurrencySymbol = this.primaryCurrencyData.symbol;
       this.primaryImageUrl = this.primaryCurrencyData.imageUrl;
       this.primaryCurrencyName = this.primaryCurrencyData.currencyCode;
-      this.currencies = res[ 1 ].data.filter(value => {
+      this.currencies = res[1].data.filter(value => {
         return value.countryId !== this.primaryCurrencyData.countryId
       });
       if (this.data != null) {
         let existingCurrency = this.currencies.filter(value => {
           return value.currencyId === this.data.exchangeCurrencyId;
         })
-        this.form.get('exchangeCurrency').setValue(existingCurrency[ 0 ]);
+        this.form.get('exchangeCurrency').setValue(existingCurrency[0]);
       }
     });
   }
@@ -123,6 +97,4 @@ export class SelectCurrencyComponent implements OnInit {
   close() {
     this.dialogRef.close(null);
   }
-
-
 }

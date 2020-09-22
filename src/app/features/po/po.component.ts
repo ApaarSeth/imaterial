@@ -1,6 +1,6 @@
+import { AddProjectService } from './../../shared/services/add-project.service';
+import { ProjectService } from './../../shared/services/project.service';
 import { Component, OnInit, ViewChild, ViewChildren, HostListener, ChangeDetectorRef } from "@angular/core";
-import { POService } from "src/app/shared/services/po/po.service";
-import { AngularEditor } from 'src/app/shared/constants/angular-editor.constant';
 import {
   POData,
   PoMaterial,
@@ -13,42 +13,36 @@ import {
 } from "src/app/shared/models/PO/po-data";
 import { PoTableComponent } from "./po-table/po-table.component";
 import { PoCardComponent } from "./po-card/po-card.component";
-import { MatDialog, MatSnackBar } from "@angular/material";
-import { SelectApproverComponent } from "src/app/shared/dialogs/selectPoApprover/selectPo.component";
 import { PoDocumentsComponent } from "./po-documents/po-documents.component";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Terms } from 'src/app/shared/models/RFQ/rfq-details';
-import { Froala } from 'src/app/shared/constants/configuration-constants';
 import { Subscription, combineLatest } from 'rxjs';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
 import { CommonService } from 'src/app/shared/services/commonService';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { UserGuideService } from 'src/app/shared/services/user-guide.service';
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 import { GSTINMissingComponent } from 'src/app/shared/dialogs/gstin-missing/gstin-missing.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
-import { ShortCloseConfirmationComponent } from 'src/app/shared/dialogs/short-close-confirmation/short-close-confirmation.component';
-import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { OtherCostInfo } from "../../shared/models/tax-cost.model";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { AppNotificationService } from "../../shared/services/app-notification.service";
+import { ShortCloseConfirmationComponent } from "../../shared/dialogs/short-close-confirmation/short-close-confirmation.component";
+import { SelectApproverComponent } from "../../shared/dialogs/selectPoApprover/selectPo.component";
+import { AngularEditor } from "../../shared/constants/angular-editor.constant";
+import { POService } from "../../shared/services/po.service";
+import { ProjetPopupData } from "../../shared/models/project-details";
+import { data } from "jquery";
 
 @Component({
   selector: "app-po",
-  templateUrl: "./po.component.html",
-  styleUrls: [
-    "/../../../assets/scss/main.scss",
-    "/../../../assets/scss/pages/po.component.scss"
-  ]
+  templateUrl: "./po.component.html"
 })
 export class PoComponent implements OnInit {
-  public froala: Object = {
-    placeholder: "Edit Me",
-    imageUpload: false,
-    imageBrowse: false,
-    apiKey: Froala.key
-  }
   jsonDoc = null;
   poData: POData = {} as POData;
-  tableData: PoMaterial[] = [];
+  tableData: PoMaterial[];
+  imageAvailable: number
   cardData: CardData;
   viewMode = false;
   collatePoData = {} as poApproveReject;
@@ -80,6 +74,7 @@ export class PoComponent implements OnInit {
       this.setLocalStorage()
     }
   };
+  orgId: number;
   userId: number;
   ValidPOTemp: boolean;
   showResponsiveDesign: boolean;
@@ -96,23 +91,33 @@ export class PoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private guidedTourService: GuidedTourService,
     private _snackBar: MatSnackBar,
-    private commonService: CommonService,
+    private projectService: ProjectService,
     private userGuideService: UserGuideService,
     private navService: AppNavigationService,
-    private notifier: AppNotificationService
+    private notifier: AppNotificationService,
+    private addProjectService: AddProjectService
   ) {
   }
   poId: number;
   mode: string;
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
+    this.orgId = Number(localStorage.getItem('orgId'))
+    this.userId = Number(localStorage.getItem('userId'))
     this.route.params.subscribe(poParams => {
       this.poId = Number(poParams.id);
       this.mode = poParams.mode;
       this.generatePoApi()
       this.formInit();
-      this.startSubscription();
     });
+
+    this.addProjectService.onEditOrDelete.subscribe(res => {
+      if (res && res != null) {
+        this.poService.getPoGenerateData(this.poId).then(res => {
+          this.cardData.billingAddress = res.data.billingAddress
+        })
+      }
+    })
 
   }
 
@@ -139,6 +144,7 @@ export class PoComponent implements OnInit {
 
       this.poData = res.data;
       this.tableData = this.poData.materialData;
+      // this.imageAvailable = this.poData.moduleFeatures.featureList[1].isAvailable
       this.currency = { isInternational: this.poData.isInternational, purchaseOrderCurrency: this.poData.purchaseOrderCurrency }
       this.additionalOtherCost = { additionalOtherCostAmount: this.poData.additionalOtherCostAmount, additionalOtherCostInfo: this.poData.additionalOtherCostInfo }
       this.cardData = {
@@ -151,8 +157,16 @@ export class PoComponent implements OnInit {
         isInternational: this.poData.isInternational,
         sellerPORating: this.poData.sellerPORating,
         poCreatedBy: this.poData.poCreatedBy,
-        poStatus: this.poData.poStatus
+        poStatus: this.poData.poStatus,
       };
+
+      if (this.poData.moduleFeatures.featureList) {
+        for (let item of this.poData.moduleFeatures.featureList) {
+          if (item.featureName === 'image integration') {
+            this.cardData.rating = item.isAvailable;
+          }
+        }
+      }
       this.documentList = this.poData.DocumentsList;
       this.terms = this.poData.Terms;
       this.terms && this.terms.termsDesc ? this.poTerms.get('textArea').setValue(this.terms.termsDesc) : null
@@ -253,18 +267,16 @@ export class PoComponent implements OnInit {
     let data: POData = this.collateResults();
     this.openDialog(data);
   }
+
   openDialog(data: POData) {
     const dialogRef = this.dialog.open(SelectApproverComponent, {
-      width: "500px",
-      data
+      width: "400px",
+      data,
+      panelClass: ['common-modal-style', 'select-approver-dialog'],
+      disableClose: true
     });
-
-    // dialogRef.backdropClick().subscribe(res => {
-    //   dialogRef.close(null)
-    // })
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result !== null) {
         this.poService.sendPoData(result).then(res => {
           if (res.status === 0 && res.message === "gst field missing from billing address") {
             this.openProjectDialog(data);
@@ -294,10 +306,17 @@ export class PoComponent implements OnInit {
   }
 
   openProjectDialog(data: POData) {
-    const dialogRef = this.dialog.open(GSTINMissingComponent, {
-      width: "400px",
-      data
-    });
+    this.projectService.getProjects(this.orgId, this.userId).then(res => {
+      const projectDetails = res.data.find(res => {
+        return res.projectId === data.projectId
+      })
+      const editData: ProjetPopupData = {
+        isEdit: true,
+        isDelete: false,
+        detail: projectDetails
+      };
+      this.addProjectService.openDialog(editData);
+    })
   }
 
   poApproval(decision) {
@@ -345,25 +364,10 @@ export class PoComponent implements OnInit {
 
   }
 
-  startSubscription() {
-    this.subscriptions.push(
-      combineLatest([this.poService.billingRole$, this.poService.projectRole$, this.poService.billingAddress$, this.poService.supplierAddress$, this.poService.poNumber$]).subscribe(values => {
-        this.isPoValid = true;
-        this.ValidPOTemp = true;
-        this.cdr.detectChanges();
-      })
-    );
-  }
   ngOnDestroy(): void {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
-  QuantityAmountValidation(event) {
-    if (this.ValidPOTemp)
-      this.isPoValid = event;
 
-    if (!this.ValidPOTemp)
-      this.isPoValid = false;
-  }
   downloadPo() {
     this.poService.downloadPo(this.poId).then(res => {
       this.downloadFile(res.data);

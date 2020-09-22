@@ -1,12 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { GlobalLoaderService } from '../../services/global-loader.service';
-import { BomService } from '../../services/bom/bom.service';
 import { Router } from '@angular/router';
-import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { SnackbarComponent } from '../snackbar/snackbar.compnent';
-import { ConfirmRfqBidComponent } from '../confirm-rfq-bid/confirm-frq-bid-component';
-import { GRNService } from '../../services/grn/grn.service';
+import { GRNService } from '../../services/grn.service';
 import { AppNotificationService } from '../../services/app-notification.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'add-grn-viaExcel',
@@ -21,7 +19,6 @@ export class AddGrnViaExcelComponent implements OnInit {
         private dialogRef: MatDialogRef<AddGrnViaExcelComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private notifier: AppNotificationService,
-        private bomService: BomService,
         private router: Router,
         private _snackBar: MatSnackBar,
         private grnService: GRNService
@@ -61,17 +58,14 @@ export class AddGrnViaExcelComponent implements OnInit {
             }
         }).catch(err => {
             this.notifier.snack(err.message)
-        })
-            ;
+        });
     }
 
     downloadExcel() {
-        this.grnService.downloadGrnTempelate(this.data)
-            .then(res => {
-                var win = window.open(res.data.url, "_blank");
-                win.focus();
-            })
-
+        this.grnService.downloadGrnTempelate(this.data).then(res => {
+            var win = window.open(res.data.url, "_blank");
+            win.focus();
+        });
     }
 
     cancel() {

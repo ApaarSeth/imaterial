@@ -7,8 +7,8 @@
 <div class="padding-for-dialog-after-header text-align-center line-height-1-6">
   <div class="row">
     <div class="col-xs-12 display-flex">
-      <div class="font-size12 color-text-card text-left others">
-        <!-- <i class="material-icons font-size12 color-text-card">format_shapes</i> -->
+      <div class="fontsize-12-px color-text-card text-left others">
+        <!-- <i class="material-icons fontsize-12-px color-text-card">format_shapes</i> -->
         <span
           >Project Area:
           <span class="text-semi-bold"> {{ projectDetails.area }} {{ projectDetails.unit }} </span>
@@ -19,8 +19,8 @@
 
   <div class="row">
     <div class="col-xs-12 display-flex">
-      <div class="font-size12 color-text-card text-left others">
-        <!-- <i class="material-icons font-size12 color-text-card">today</i> -->
+      <div class="fontsize-12-px color-text-card text-left others">
+        <!-- <i class="material-icons fontsize-12-px color-text-card">today</i> -->
         Date : <span class="text-semi-bold">{{ projectDetails.startDate | date }} to {{ projectDetails.endDate | date: "dd MMM yyy" }}</span>
       </div>
     </div>
@@ -28,7 +28,7 @@
 
   <div class="row">
     <div class="col-xs-12 display-flex">
-      <div class="font-size12 color-text-card text-left others">
+      <div class="fontsize-12-px color-text-card text-left others">
         <span>
           Construction Cost:
           <span class="text-semi-bold"> ₹ {{ projectDetails.cost | number: "1.2-2" }} Cr </span>
@@ -39,7 +39,7 @@
 
   <div class="row">
     <div class="col-xs-12 display-flex">
-      <div class="font-size12 color-text-card text-left">
+      <div class="fontsize-12-px color-text-card text-left">
         Created On :
         <span class="text-semi-bold">
           {{ projectDetails.createdAt | date: "fullDate" }}
@@ -50,7 +50,7 @@
 
   <div class="row">
     <div class="col-xs-12 display-flex">
-      <div class="font-size12 color-text-card text-left">
+      <div class="fontsize-12-px color-text-card text-left">
         <span>
           Created By :
           <span class="text-semi-bold">

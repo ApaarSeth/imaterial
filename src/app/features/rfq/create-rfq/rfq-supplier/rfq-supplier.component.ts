@@ -1,29 +1,32 @@
-import { AppNotificationService } from './../../../../shared/services/app-notification.service';
+import { featureList } from './../../../../shared/models/menu.model';
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import {
-  RfqMaterialResponse,
-  AddRFQ
-} from "src/app/shared/models/RFQ/rfq-details";
-import { MatDialog, MatCheckbox, MatSnackBar } from "@angular/material";
-import { ActivatedRoute, Router } from "@angular/router";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
+import { AddRFQ } from "src/app/shared/models/RFQ/rfq-details";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
-import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractControl, FormControl } from "@angular/forms";
+import { FormGroup, FormBuilder, FormArray, AbstractControl } from "@angular/forms";
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { CommonService } from 'src/app/shared/services/commonService';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatCheckbox } from "@angular/material/checkbox";
+import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { ActivatedRoute } from '@angular/router';
+import { data } from 'jquery';
 
 @Component({
   selector: "app-rfq-supplier",
   templateUrl: "./rfq-supplier.component.html"
 })
+
 export class RfqSupplierComponent implements OnInit {
+
   @Input() finalRfq: AddRFQ;
   @Input() cntryList: CountryCode[];
   @Input() suppliers: Suppliers[];
+  @Input() supplierModuleFeature: any;
   @Output() updatedRfq = new EventEmitter<AddRFQ>();
   searchText: string = null;
   buttonName: string = "selectSupplier";
@@ -32,7 +35,6 @@ export class RfqSupplierComponent implements OnInit {
     "Email",
     "Phone No."
   ];
-  allSupplier = new Observable<Suppliers[]>();
   allSuppliers: Suppliers[];
   selectedSuppliersList: Suppliers[] = [];
   selectedSupplierFlag: boolean = false;
@@ -44,8 +46,8 @@ export class RfqSupplierComponent implements OnInit {
   supplierCounter: number = 0;
   newAddedId: number;
   countryist: CountryCode[];
-  // countryist: any;
-  searchForm: FormGroup;
+  isRatingAvailable: boolean;
+
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -57,14 +59,23 @@ export class RfqSupplierComponent implements OnInit {
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.isMobile = this.commonService.isMobile().matches;
-    this.countryist = this.activatedRoute.snapshot.data.rfqData[1].data;
+    if (this.supplierModuleFeature.featureList) {
+      this.isRatingAvailable = this.supplierModuleFeature.featureList.some(item => (item.featureName.includes('supplier rating') && item.isAvailable === 1));
+    }
+    if (this.suppliers) {
+      this.allSuppliers = this.suppliers;
+    } else {
+      this.allSuppliers = [];
+    }
+    this.countryist = this.cntryList;
+    this.formInit();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.finalRfq && changes.finalRfq.currentValue) {
       this.rfqData = changes.finalRfq.currentValue;
       if (this.rfqData) {
-        this.allSuppliers = this.activatedRoute.snapshot.data.rfqData[0].data ? this.activatedRoute.snapshot.data.rfqData[0].data : [];
+        this.allSuppliers = this.activatedRoute.snapshot.data.rfqData[0].data ? this.activatedRoute.snapshot.data.rfqData[0].data.supplierList : [];
         this.supplierCounter = 0;
         this.allSuppliers = this.allSuppliers.map((supplier: Suppliers) => {
           supplier.show = true;
@@ -92,28 +103,25 @@ export class RfqSupplierComponent implements OnInit {
     this.supplierForm = this.formBuilder.group({
       forms: new FormArray(frmArr)
     });
+  }
 
-    this.searchForm = this.formBuilder.group({
-      search: ['']
-    })
-
-    this.searchForm.get('search').valueChanges.subscribe(val => {
-      if (val && val != "") {
-        for (let supplier of this.allSuppliers) {
-          if (supplier.supplier_name.includes(val)) {
-            supplier.show = true
-          }
-          else {
-            supplier.show = false
-          }
-        }
+  supplierCheck() {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      let check = control.value.some(supp => {
+        return supp.supplier != null
+      })
+      if (check) {
+        return { 'selectSomeSupplier': true };
       }
       else {
         for (let supplier of this.allSuppliers) {
           supplier.show = true
         }
       }
-    })
+      if (check) {
+        return { 'selectSomeSupplier': true };
+      }
+    }
   }
 
   valueChange(supplier: Suppliers, ch: MatCheckbox, i: number) {
@@ -133,6 +141,10 @@ export class RfqSupplierComponent implements OnInit {
       this.supplierCounter--;
       sGrp.get("supplier").reset();
     }
+  }
+
+  supplierAlert() {
+    this.notifier.snack("Cannot add more than 3 supplier");
   }
 
   reviewRfq() {
@@ -158,7 +170,8 @@ export class RfqSupplierComponent implements OnInit {
 
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "660px",
-      data
+      data,
+      panelClass: 'add-supplier-dialog'
     });
     dialogRef
       .afterClosed()
@@ -168,19 +181,18 @@ export class RfqSupplierComponent implements OnInit {
           let allSuppliersId: number[] = [];
           this.commonService.getSuppliers(this.orgId).then(data => {
             allSuppliersId = this.allSuppliers.map(supp => supp.supplierId);
-            let tempId: number[] = data.data.map(supp => supp.supplierId);
+            let tempId: number[] = data.data.supplierList.map(supp => supp.supplierId);
             let newAddedId: number = null
             tempId.forEach(id => {
               if (!allSuppliersId.includes(id)) {
                 newAddedId = id;
               }
             });
-            let newSupplier = data.data.filter(supp => {
+            let newSupplier = data.data.supplierList.filter(supp => {
               return newAddedId === supp.supplierId
             })
             this.allSuppliers.push(...newSupplier);
-            this.allSuppliers = this.allSuppliers.slice();
-            //  this.allSupplier.next(this.allSuppliers)
+            this.allSuppliers = JSON.parse(JSON.stringify(this.allSuppliers))
             this.formInit();
           });
         }
@@ -190,10 +202,10 @@ export class RfqSupplierComponent implements OnInit {
   openRfqTermsDialog(data: AddRFQ): void {
     const dialogRef = this.dialog.open(SelectRfqTermsComponent, {
       width: "400px",
-      data
+      data,
+      panelClass: ['common-modal-style', 'select-rfq-terms-dialog']
     });
     dialogRef.afterClosed().subscribe(result => {
-      // data.defaultAddress = result[1];
     });
   }
 
@@ -201,7 +213,8 @@ export class RfqSupplierComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "600px",
-      data: this.rfqData ? this.rfqData.rfqCurrency : null
+      data: this.rfqData ? this.rfqData.rfqCurrency : null,
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {

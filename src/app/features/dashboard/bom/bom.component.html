@@ -1,197 +1,119 @@
-<div class="page-start-point mt-5 pt-4">
-  <div class="p-l-20 p-r-20 p-b-20 p-t-20 min-height bom-main-style">
-    <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product" [disableEditDelete]="true"></card-layout>
+<div class="page-start-point p-rem-t-0.25">
+    <div class="p-l-10 p-r-10 p-b-10 min-height bom-main-style">
+        <card-layout *ngIf="product" (onEdit)="editProject()" (onDelete)="deleteProject()" [projectDetails]="product"
+            [disableEditDelete]="true"></card-layout>
 
-    <div class="add-to-bom-style p-t-10">
-      <!-- <div class="parent"> -->
-      <form [formGroup]="form">
-        <div class="row align-items-center row-sm-screen">
-          <!-- Left Side menus -->
-          <div class="col-md-6 text -left border-input col-left-width">
-            <div class="row align-items-center">
-              <!-- Search field -->
-              <mat-form-field class="input-search-padding-zero ptop-15 search-input-bom mr-4">
-                <input #text matInput placeholder="Search Material" type="search" (input)="searchMaterial(text.value)" />
-                <button mat-button matSuffix mat-icon-button>
-                  <mat-icon>search</mat-icon>
-                </button>
-              </mat-form-field>
+        <div class="add-to-bom-style">
 
-              <!-- Select Trades field -->
-              <mat-form-field class="border-select p-t-0 select-trades">
-                <mat-label *ngIf="!formArray.length" class="mat-select-trades">Select Trades</mat-label>
-                <mat-select formControlName="selectedTrades" multiple>
-                  <div class="display-flex">
-                    <input
-                      class="p-l-10 p-b-5"
-                      matInput
-                      type="search"
-                      placeholder="Search Trade"
-                      [(ngModel)]="searchTrade"
-                      [ngModelOptions]="{standalone: true}"
-                      (keydown)="$event.stopPropagation()"
-                    />
-                    <button mat-button matSuffix mat-icon-button>
-                      <mat-icon>search</mat-icon>
+            <div class="row">
+                <div class="col-xs-6 col-md-6">
+
+                    <div class="row m-l-5" [ngClass]="isMobile ? 'm-t-10' : 'm-t-10' ">
+                        <!-- Download BOM Link -->
+                        <div class="download-bom-excel excl-btn">
+                            <ng-container *ngIf="!isMobile; else downloadIconOnly">
+                                <span class="cursor-pointer download-bom-template">
+                                    <img src="assets/images/download-arrow-icon.svg" alt="download"
+                                        class="img-fluid m-r-2" />
+                                    <a (click)="downloadExcel('assets/images/bom_template.xlsx')"> Download BOM
+                                        Excel</a>
+                                </span>
+                            </ng-container>
+
+                            <ng-template #downloadIconOnly>
+                                <span class="cursor-pointer download-bom-template">
+                                    <img src="assets/images/download-arrow-icon.svg" alt="download" class="img-fluid"
+                                        (click)="downloadExcel('assets/images/bom_template.xlsx')" />
+                                </span>
+                            </ng-template>
+                        </div>
+
+                        <!-- Upload BOM Link -->
+                        <div class="m-l-10 cursor-pointer upload-bom-excel excl-btn"
+                            [ngClass]="isMobile ? 'p-t-7' : '' ">
+                            <input type="file" accept=".xlsx" #fileDropRef id="fileDropRef"
+                                class="fileupload cursor-pointer" style="display: none" multiple
+                                (change)="uploadExcel($event.target.files)" />
+
+                            <ng-container *ngIf="!isMobile; else uploadIconOnly">
+                                <label for="fileDropRef" class="cursor-pointer upload-template m-t-8">
+                                    <img src="assets/images/upload-arrow-icon.svg" alt="upload"
+                                        class="img-fluid m-r-5 cursor-pointer" />
+                                    <a>Upload BOM Excel</a>
+                                </label>
+                            </ng-container>
+
+                            <ng-template #uploadIconOnly>
+                                <img src="assets/images/upload-arrow-icon.svg" alt="upload"
+                                    class="img-fluid cursor-pointer" />
+                            </ng-template>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-xs-6 col-md-6 text-right">
+
+                    <div class="m-r-15 m-b-15 d-inline-block" [ngClass]="isMobile ? 'm-t-10' : 'm-t-10' ">
+                        <button mat-raised-button class="main-background-color main-button color-white"
+                            (click)="saveCategory()" [disabled]="!isFormValid">
+                            Add to BOM
+                        </button>
+                    </div>
+
+                    <div class="d-inline-block copy-and-add-materials">
+                        <button mat-button [matMenuTriggerFor]="menu">
+                            <span class="material-icons">menu</span>
+                        </button>
+                        <mat-menu #menu="matMenu" class="copy-and-add-materials-menus">
+                            <button mat-menu-item (click)="openAddMyMaterial()">Add Custom Material</button>
+                            <button mat-menu-item
+                                [routerLink]="['/project-dashboard/bom/' + projectId + '/copy-materials']">Copy
+                                Material</button>
+                        </mat-menu>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <ng-container *ngIf="!isMobile; else mobileSearch">
+                <bom-filter [config]="searchConfig" (getBomFilers)="getFilterBomData($event)"></bom-filter>
+            </ng-container>
+
+            <ng-template #mobileSearch>
+
+                <div class="width-100 p-l-10 p-r-10 p-t-10 p-b-10 m-b-10 background-white-color text-right">
+                    <button mat-button class="background-white-color main-button main-color" (click)="isFilter = true">
+                        <mat-icon>search
+                        </mat-icon> Search In
                     </button>
-                  </div>
-                  <mat-select-trigger>
-                    <mat-label class="mat-select-trades">Select Trades</mat-label>
-                  </mat-select-trigger>
-                  <mat-option *ngFor="let trade of tradesList | SearchPipe: searchTrade:['tradeName']" [value]="trade" selected="trade.isAttatched" (click)="choosenTrade()"
-                    >{{ trade.tradeName }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
+                </div>
+                <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close'">
+                    <div class="sdb" (click)="isFilter = false"></div>
+                    <bom-filter [config]="searchConfig" (getBomFilers)="getFilterBomData($event)"></bom-filter>
+                </div>
+            </ng-template>
 
-          <!-- <div class="col-xs-3 text-right"> -->
-          <!-- <p>Please select categories to add materials in Bill of Materials</p> -->
-          <!-- </div> -->
+            <ng-container *ngIf="tabs && tabs.length">
+                <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="tabClick($event)">
+                    <mat-tab *ngFor="let tab of tabs" [label]="tab.name">
+                        <ng-container *ngIf="tab.data && tab.table; let i = index">
+                            <bom-common-table [config]="{
+                                    data: tab.data,
+                                    table: tab.table,
+                                    label: tab.name,
+                                    paginatorOptions: tab.paginatorOptions,
+                                    storeDataByUser: tab.storeDataByUser
+                                }" [selectedMaterialLength]="tab.selectedMaterialLength"
+                                (updateBomPaginator)="getPaginationRequest($event)"
+                                (updateBomTable)="getBomTableRequest($event)">
+                            </bom-common-table>
+                        </ng-container>
+                    </mat-tab>
+                </mat-tab-group>
+            </ng-container>
 
-          <!-- Right side menus -->
-          <div class="col-md-6 text-right d-flex justify-content-end col-right-width" appDnd>
-            <div class="row align-items-center justify-content-between">
-              <!-- Download BOM Link -->
-              <div class="mr-3 ptop-10 download-bom-excel">
-                <ng-container *ngIf="innerWidth > 575; else downloadIconOnly">
-                  <span class="cursor-pointer download-bom-template">
-                    <img src="assets/images/download-bom.svg" alt="download" class="img-fluid mr-2 w-45" />
-                    <a (click)="downloadExcel('assets/images/bom_template.xlsx')"> Download BOM Excel</a>
-                  </span>
-                </ng-container>
-
-                <ng-template #downloadIconOnly>
-                  <span class="cursor-pointer download-bom-template">
-                    <img src="assets/images/download-bom.svg" alt="download" class="img-fluid mr-2 w-45" (click)="downloadExcel('assets/images/bom_template.xlsx')" />
-                  </span>
-                </ng-template>
-              </div>
-
-              <!-- Upload BOM Link -->
-              <div class="mr-3 cursor-pointer ptop-15 upload-bom-excel">
-                <input
-                  type="file"
-                  accept=".xlsx"
-                  #fileDropRef
-                  id="fileDropRef"
-                  class="fileupload cursor-pointer"
-                  style="display: none"
-                  multiple
-                  (change)="uploadExcel($event.target.files)"
-                />
-
-                <ng-container *ngIf="innerWidth > 575; else uploadIconOnly">
-                  <label for="fileDropRef" class="cursor-pointer upload-template">
-                    <img src="assets/images/upload-bom.svg" alt="upload" class="img-fluid mr-2 w-45 cursor-pointer" />
-                    <a style="color: #222">Upload BOM Excel</a>
-                  </label>
-                </ng-container>
-
-                <ng-template #uploadIconOnly>
-                  <img src="assets/images/upload-bom.svg" alt="upload" class="img-fluid mr-2 w-45 cursor-pointer" />
-                </ng-template>
-              </div>
-
-              <!-- Add to BOM Button -->
-              <div class="add-bom-button">
-                <button
-                  mat-raised-button
-                  class="main-background-color main-button color-white pull-right save-material-button"
-                  (click)="saveCategory()"
-                  [disabled]="
-                    this.currentIndex == 0
-                      ? this.topMaterial && this.topMaterial.quantityForms
-                        ? this.topMaterial.quantityForms.invalid
-                        : true
-                      : this.currentIndex == 1
-                      ? this.allMaterial && this.allMaterial.quantityForms
-                        ? this.allMaterial.quantityForms.invalid
-                        : true
-                      : this.currentIndex == 2
-                      ? this.myMaterial && this.myMaterial.quantityForms
-                        ? this.myMaterial.quantityForms.invalid
-                        : true
-                      : true
-                  "
-                >
-                  Add to BOM
-                </button>
-              </div>
-
-              <!-- Copy and Add Custom Material Dropdown -->
-              <div class="copy-and-add-materials">
-                <button mat-button [matMenuTriggerFor]="menu">
-                  <span class="material-icons">menu</span>
-                </button>
-                <mat-menu #menu="matMenu" class="copy-and-add-materials-menus">
-                  <button mat-menu-item (click)="openAddMyMaterial()">Add Custom Material</button>
-                  <button mat-menu-item [routerLink]="['/project-dashboard/bom/' + projectId + '/copy-materials']">Copy Material</button>
-                </mat-menu>
-              </div>
-            </div>
-          </div>
         </div>
-      </form>
-
-      <div class="row">
-        <div class="col-md-9 display-flex m-t-20 col-left-width-9">
-          <div class="m-b-10 m-r-10" *ngFor="let trades of tradeNames">
-            <mat-card class="p-l-10 p-r-10 p-t-5 p-b-5 font-size14 background-color-skyblue color-white">{{ trades }} </mat-card>
-          </div>
-        </div>
-
-        <!-- <div class="col-md-3 col-right-width-3 p-t-20 d-flex align-items-center justify-content-between"> -->
-        <!-- Copy Materials Link -->
-        <!-- <a href="javascript:void(0)" class="main-color text-semi-bold"
-            [routerLink]="['/project-dashboard/bom/' + projectId + '/copy-materials']">
-            Copy Materials
-          </a> -->
-
-        <!-- Add Custom Material Link -->
-        <!-- <a href="javascript:void(0)" class="main-color text-semi-bold" (click)="openAddMyMaterial()">+ Add Custom
-            Material</a>
-        </div> -->
-      </div>
-
-      <div *ngIf="showTable">
-        <mat-tab-group (selectedTabChange)="tabClick($event)">
-          <mat-tab label="Top Materials">
-            <app-bom-topMaterial
-              *ngIf="showTopMaterial"
-              #preview
-              [category]="topMaterialData"
-              [searchMat]="searchAgain"
-              (searchData)="searchData($event)"
-              (inputEntered)="checkValidations($event)"
-            >
-            </app-bom-topMaterial>
-          </mat-tab>
-          <mat-tab label="All Materials">
-            <app-bom-allMaterial
-              *ngIf="showAllMaterial"
-              #preview1
-              [category]="allMaterialData"
-              [searchMat]="searchAgain"
-              (searchData)="searchData($event)"
-              (inputEntered)="checkValidationsAll($event)"
-            >
-            </app-bom-allMaterial>
-          </mat-tab>
-          <mat-tab label="My Materials">
-            <app-bom-myMaterial
-              *ngIf="showMyMaterial"
-              #preview2
-              [category]="myMaterialData"
-              [searchMat]="searchAgain"
-              (searchData)="searchData($event)"
-              (inputEntered)="checkValidationsAll($event)"
-            ></app-bom-myMaterial>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
-      <!-- </div> -->
     </div>
-  </div>
 </div>

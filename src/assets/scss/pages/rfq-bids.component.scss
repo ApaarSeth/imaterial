@@ -1,44 +1,23 @@
 @import "../base/variables.scss";
 
 .customBid {
-  .mat-expansion-panel-header.mat-expanded:focus,
-  .mat-expansion-panel-header.mat-expanded:hover {
-    // background: $background-color-grey !important;
-    background-color: rgba(169, 174, 188, 0.21) !important;
-  }
-
   .mat-expansion-panel-header {
-    background-color: rgba(169, 174, 188, 0.21) !important;
+    background-color: #ffffff !important;
   }
 
-  .mat-accordion .mat-header-row {
-    padding-right: 2rem;
+  .mat-header-cell, .mat-cell{
     border-bottom: none;
   }
-
-  .mat-expansion-panel-header.mat-row {
-    border-bottom: none;
-  }
-
-  $mat-header-row-height: 56px;
-  $mat-row-height: 52px;
-  $mat-row-horizontal-padding: 24px;
 
   .mat-table {
     display: block;
   }
 
   .mat-header-row {
-    min-height: $mat-header-row-height;
     background: #2297bb;
-
     span {
       color: #ffffff !important;
     }
-  }
-
-  .mat-row {
-    min-height: $mat-row-height;
   }
 
   .mat-row,
@@ -46,15 +25,6 @@
     display: flex;
     align-items: center;
     box-sizing: border-box;
-
-    // Workaround for https://goo.gl/pFmjJD in IE 11. Adds a pseudo
-    // element that will stretch the row the correct height. See:
-    // https://connect.microsoft.com/IE/feedback/details/802625
-    // &::after {
-    //   display: inline-block;
-    //   min-height: inherit;
-    //   content: '';
-    // }
   }
 
   .mat-cell,
@@ -62,16 +32,49 @@
     flex: 1;
     overflow: hidden;
     word-wrap: break-word;
-    color: black;
   }
 
-  input.quantity {
-    width: 3rem !important;
+  .supplier-rates .rfq-rates {
+    margin-left: -4px !important;
+    .rate > label:before {
+      font-size: 1rem;
+    }
+  }
+
+  .mat-header-cell, .mat-cell{
+    &:not(:last-child){
+      padding-right: 8px;
+    }
   }
 
   .mat-expansion-panel-body {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    padding: 0px !important;
+  }
+
+  .material-details-row{
+    background-color: #eeeeee;
+  }
+
+  .supplier-details-row, .material-details-row{
+    border-bottom: 1px solid #bbbbbb;
+  }
+
+  .makes-details-row{
+    .mat-header-cell, .mat-cell{
+      &:first-of-type{
+        padding-left: 0px !important;
+      }
+    }
+
+    .mat-header-cell, .mat-cell{
+      &:last-of-type{
+        padding-right: 0px !important;
+      }
+    }
+  }
+
+  .supplier-details-row{
+    height: 45px !important;
   }
 
   ::-webkit-input-placeholder {
@@ -89,10 +92,6 @@
       color: #5f5f5f;
       font-weight: 500;
     }
-  }
-
-  .mat-expansion-panel:hover {
-    background-color: rgba(169, 174, 188, 0.21);
   }
 
   .supplierLevel:focus,
@@ -117,18 +116,6 @@
     border-top: none;
   }
 
-  .mat-accordion .mat-expansion-panel-header,
-  .rfqbid-header-color {
-    background: rgba(169, 174, 188, 0.21) !important;
-    border: 1px solid #979797;
-    color: #707070;
-    font-weight: 500;
-  }
-
-  .mat-accordion .mat-expansion-panel-header {
-    min-height: 50px;
-  }
-
   .w-12 {
     max-width: 12%;
     flex-basis: 12%;
@@ -143,23 +130,6 @@
   .mat-row .mat-cell {
     min-width: 80px;
   }
-  tr.mat-header-row {
-    height: 45px;
-  }
-  .mat-expansion-panel-header {
-    min-height: 48px;
-  }
-}
-
-// .customBid .mat-expansion-panel-header,
-// .customBid .mat-expansion-panel-header.mat-expanded,
-// .customBid .mat-expansion-panel-header.mat-expanded:focus,
-// .customBid .mat-expansion-panel-header.mat-expanded:hover {
-//   background-color: #ffffff !important;
-// }
-
-.rfqbid-header-color {
-  background-color: (169, 174, 188, 0.21) !important;
 }
 
 .mat-horizontal-stepper-content {
@@ -187,32 +157,30 @@
   white-space: nowrap;
 }
 
-.select-address-tag {
-  float: left;
-  width: auto;
-  padding-left: 28px;
+.select-address-tag, .reset-form-tag{
   font-size: 14px;
   color: #f47721;
-  text-decoration: underline;
   font-weight: 550;
   cursor: pointer;
+  margin-top: 20px;
 }
+
+.select-address-tag {
+  float: left;
+  text-decoration: underline;
+}
+
+.reset-form-tag {
+  float: right;
+}
+
 .select-address-tag-disabled {
   float: left;
-  width: auto;
   padding-left: 28px;
   font-size: 14px;
   color: #d0d0dd;
   text-decoration: underline;
   font-weight: 550;
-}
-.reset-form-tag {
-  float: right;
-  width: 24%;
-  font-size: 14px;
-  color: #f47721;
-  font-weight: 550;
-  cursor: pointer;
 }
 
 .ratings {
@@ -232,28 +200,6 @@
 
 .supplier-company label{
   margin-bottom: 0;
-}
-
-.rfq-final-step, .rfq-view-step{
-  width: 100%;
-  tr.mat-footer-row, tr.mat-row{
-    height: 66px;
-  }
-
-  .images-lists .attached-image:first-child {
-    top: -28px;
-    left: 80px;
-  }
-
-  .images-lists .attached-image:nth-child(2) {
-    left: 86px;
-    top: -23px;
-  }
-
-  .images-lists .attached-image:nth-child(3) {
-    left: 92px;
-    top: -17px;
-  }
 }
 
 .image-heading{
@@ -298,48 +244,6 @@
 
 }
 
-.view-bid-images-preview .images-lists{
-  position: relative;
-  .attached-image {
-    position: relative;
-
-    &:first-child{
-      top: 20px;
-      left: 10px;
-    }
-
-    &:nth-child(2){
-      left: 16px;
-      top: -21px;
-    }
-
-    &:nth-child(3){
-      left: 23px;
-      top: -60px;
-    }
-
-    &:nth-child(4), &:nth-child(5){
-      display: none;
-    }
-  }
-}
-
-.rfq-final-step .float-rfq-img-stack{
-  .attached-image{
-    &:first-child{
-      left: 39px;
-    }
-
-    &:nth-child(2){
-      left: 45px;
-    }
-
-    &:nth-child(3){
-      left: 52px;
-    }
-  }
-}
-
 .po-images-list{
   min-height: 70px;
   max-height: 75px;
@@ -351,7 +255,6 @@
 
 .po-images-list {
   .images-lists{
-    // position: absolute;
     .attached-image{
       position: relative;
       &:first-child{
@@ -444,17 +347,9 @@ tr.tbl-body-cols.mat-row {
   }
 }
 
-.rfq-final-step{
-  .mat-header-cell.mat-column-Material-Name {
-    width: 20%;
-  }
-
-  .mat-header-cell.mat-column-Required-Date {
-    width: 15%;
-  }
-}
-
+/** view bid image css **/
 .view-bid-images-preview{
+  position: relative;
   .images-lists.single-image{
     .attached-image:first-child {
       left: 0;
@@ -466,30 +361,56 @@ tr.tbl-body-cols.mat-row {
   .images-lists.double-images{
     .attached-image:first-child {
       left: 42px;
-      top: 18px;
+      top: 14px;
     }
 
     .attached-image:nth-child(2) {
-      left: 48px;
+      left: 47px;
+      top: -17px;
     }
   }
 
   .images-lists.triple-images{
     .attached-image:first-child {
-      left: 38px;
-      top: 36px;
+      left: 34px;
+      top: 31px;
     }
 
     .attached-image:nth-child(2) {
-      left: 44px;
-      top: -2px;
+      left: 38px;
+      top: 0px;
     }
 
     .attached-image:nth-child(3) {
-      left: 50px;
-      top: -40px;
+      left: 42px;
+      top: -32px;
     }
   }
+
+  .images-lists .attached-image{
+    position: relative;
+    &:nth-child(4), &:nth-child(5){
+      display: none;
+    }
+  }
+}
+
+.tax-dialog{
+  .plus-btn{
+    padding-top: 1em;
+  }
+}
+
+.text-ellipsis {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-name-col{
+  display: flex;
+  align-items: center;
 }
 
 /** view bid page - view rating and supplier rates column distortion css fixes **/
@@ -500,5 +421,124 @@ tr.tbl-body-cols.mat-row {
 
   .supplier-rate-col-bid {
     max-width: 15% !important;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .makes-details-row, .supplier-details-row{
+    border-bottom: 1px solid #bbbbbb;
+  }
+
+  .makes-header-row{
+    background-color: #eeeeee;
+  }
+
+  .supplier-details-row, .makes-body-row{
+    background-color: #ffffff;
+  }
+
+  .supplier-details-row, .material-details-row{
+    td.mat-cell:last-of-type{
+      padding-right: 0px !important;
+    }
+  }
+
+  .view-bids-tbl .mat-header-cell:first-child, .material-details-row > .mat-cell:first-child, .supplier-details-row > .mat-cell:first-child{
+      min-width: 250px;
+  }
+
+  .view-bids-tbl  .mat-header-cell:nth-child(2), .material-details-row > .mat-cell:nth-child(2), .supplier-details-row > .mat-cell:nth-child(2) {
+      min-width: 140px;
+  }
+
+  .view-bids-tbl  .mat-header-cell:nth-child(3), .material-details-row > .mat-cell:nth-child(3), .supplier-details-row > .mat-cell:nth-child(3) {
+    min-width: 120px;
+  }
+
+  .view-bids-tbl .mat-header-cell:last-child, .material-details-row > .mat-cell:last-child, .supplier-details-row > .mat-cell:last-child {
+    min-width: 767px;
+  }
+
+  .mat-expansion-panel-body{
+    overflow-x: auto;
+  }
+
+  .mat-row.makes-body-row{
+    height: 45px !important;
+  }
+
+  .view-bid-images-preview .images-lists.double-images .attached-image {
+    &:first-child{
+      left: 35px;
+    }
+
+    &:nth-child(2) {
+      left: 40px;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 600px){
+  .ref-detail {
+    .project{
+      padding-left: 8px;
+      width: 75% !important;
+    }
+
+    advance-search {
+      margin: 10px 0 10px;
+      display: block;
+    }
+  }
+}
+
+@media only screen and (max-width: 645px){
+  .tax-dialog{
+    .width-mobile{
+      width: 93% !important;
+    }
+
+    .plus-btn{
+      margin-left: 6px;
+    }
+  }
+}
+
+@media only screen and (max-width: 559px){
+
+  .view-bids-tbl .mat-header-cell:nth-child(2), 
+  .material-details-row > .mat-cell:nth-child(2), 
+  .supplier-details-row > .mat-cell:nth-child(2) {
+      min-width: 100px;
+  }
+
+  .material-details-row, .supplier-details-row{
+    width: 200%;
+  }
+
+  .view-bid-images-preview{
+    .images-lists.double-images .attached-image {
+      &:first-child{
+        left: 20px;
+      }
+  
+      &:nth-child(2) {
+        left: 25px;
+      }
+    }
+
+    .images-lists.triple-images .attached-image {
+      &:first-child{
+        left: 16px;
+      }
+  
+      &:nth-child(2) {
+        left: 21px;
+      }
+
+      &:nth-child(3) {
+        left: 26px;
+      }
+    }
   }
 }

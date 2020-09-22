@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { ProjectDetails, AllCTCReportData } from "src/app/shared/models/project-details";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { ReportService } from 'src/app/shared/services/supplierLiabilityReport.service';
@@ -78,7 +78,7 @@ export class CTCReportComponent implements OnInit {
     });
 
     this.form.get('amountDisplay').valueChanges.subscribe(res => {
-      console.log(res)
+      // console.log(res)
     })
   }
 

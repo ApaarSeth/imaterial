@@ -1,0 +1,10 @@
+<div class="text-sarch-item">
+    <form [formGroup]="form">
+        <mat-form-field class="width-100 border-input">
+            <input #text matInput [placeholder]="config.placeholder" type="text" formControlName="searchInput" />
+            <button mat-button matSuffix mat-icon-button>
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+    </form>
+</div>

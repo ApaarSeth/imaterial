@@ -1,11 +1,15 @@
+import { AppNavigationService } from './navigation.service';
 import { Injectable } from '@angular/core';
 import { NotificationInt } from '../models/notification';
 import { API } from '../constants/configuration-constants';
 import { DataService } from './data.service';
-import { Router } from '@angular/router';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { Currency } from '../models/currency';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { ProjetPopupData } from '../models/project-details';
+import { DoubleConfirmationComponent } from '../dialogs/double-confirmation/double-confirmation.component';
+import { MatDialog } from "@angular/material/dialog";
+import { AddProjectComponent } from '../dialogs/add-project/add-project.component';
+
 @Injectable({
   providedIn: "root"
 })
@@ -23,8 +27,9 @@ export class CommonService {
   XSmall: string = '(max-width: 599px)';
   constructor(
     private dataService: DataService,
-    private _router: Router,
-    private mediaMatcher: MediaMatcher
+    public dialog: MatDialog,
+    private mediaMatcher: MediaMatcher,
+    private navService: AppNavigationService
   ) { }
 
   formatDate(oldDate): string {
@@ -140,6 +145,20 @@ export class CommonService {
 
   getMaterials() {
     return this.dataService.getRequest(API.GETDISTINCTMATERIALS);
+  }
+
+  openCallendly(email, phoneNo) {
+    this.navService.gaEvent({
+      action: 'submit',
+      category: 'Book_demo',
+      label: `Email: ${email} PhoneNo.: ${phoneNo}`,
+      value: null
+    });
+    const link = document.createElement('a');
+    link.target = '_blank';
+    link.href = 'https://calendly.com/mm_support/discovery_call';
+    link.setAttribute('visibility', 'hidden');
+    link.click();
   }
 
 }

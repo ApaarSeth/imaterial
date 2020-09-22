@@ -1,0 +1,30 @@
+<div class="subs-srch-pnl">
+  <mat-expansion-panel class="mt-1 border-bottom" [(expanded)]="isOpen" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ config.title }}
+      </mat-panel-title>
+      <mat-panel-description class="fx-gr-0 m-r-0">
+        <mat-icon inline *ngIf="!isOpen">add</mat-icon>
+        <mat-icon inline *ngIf="isOpen">remove</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div *ngIf="config?.list">
+      <form [formGroup]="form">
+        <!-- <h4 class="m-t-3 fontsize-16-px font-weight-normal">{{ config.title }}</h4> -->
+        <mat-form-field class="w-100 border-input">
+          <mat-label>{{ config.list[0].name }}</mat-label>
+          <input matInput type="number" min="0" autocomplete="off" formControlName="min"
+            (input)="checkAmount($event)" />
+        </mat-form-field>
+
+        <mat-form-field class="w-100 border-input">
+          <mat-label>{{ config.list[1].name }}</mat-label>
+          <input matInput type="number" min="0" autocomplete="off" formControlName="max"
+            (input)="checkAmount($event)" />
+        </mat-form-field>
+      </form>
+    </div>
+  </mat-expansion-panel>
+</div>

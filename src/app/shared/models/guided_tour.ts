@@ -1,5 +1,5 @@
 export interface GuideTourModel {
-enableGuide?: string;
-moduleId?: number;
-moduleName?: string;
+    enableGuide?: string;
+    moduleId?: number;
+    moduleName?: string;
 }

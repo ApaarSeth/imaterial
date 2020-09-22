@@ -1,47 +1,51 @@
-<section class="select-project">
+<section class="modal-outer select-project">
+  <!-- if projects are available -->
   <ng-container *ngIf="data && data.length > 0; else noProjects">
-    <div class="select-project__title d-flex justify-content-between align-items-center">
-      <h1 mat-dialog-title class="mb-0">Project List</h1>
+    <div class="modal-header">
+      <h5 mat-dialog-title class="mb-0">Project List</h5>
       <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
-        <!-- <span aria-hidden="true">×</span> -->
-        <mat-icon class="font-size-26px">close</mat-icon>
+        <span aria-hidden="true">×</span>
       </button>
     </div>
+
     <div mat-dialog-content>
-      <div class="select-project__lists">
-        <mat-radio-group aria-label="Select an option">
-          <mat-radio-button [value]="project.projectId" *ngFor="let project of data" (change)="radioChange($event)">
-            <div class="select-project__detail">
-              <!-- <p class="mb-0 select-project__name">{{ project.projectName }}</p> -->
-              <p class="mb-0 select-project__location gray-clr">
-                <!-- <i class="material-icons mr-2">location_on</i> -->
-                <!-- <img src="assets/images/location-icon.png" class="img-fluid mr-2" alt="Location Icon" /> -->
-                <strong class="d-flex font-weight500">{{ project.projectName }}</strong>
-                <span class="font-size14">{{ project.addressLine1 }}
-                  <span *ngIf="project.addressLine2">, {{ project.addressLine2 }}</span>
-                  , {{ project.city }}, {{ project.country }}, {{ project.state }}, {{ project.pinCode }}
-                </span>
-              </p>
-            </div>
-          </mat-radio-button>
-        </mat-radio-group>
+      <div class="modal-body">
+        <div class="select-project__lists">
+          <mat-radio-group aria-label="Select an option">
+            <mat-radio-button [value]="project.projectId" *ngFor="let project of data" (change)="radioChange($event)">
+              <div class="select-project__detail">
+                <p class="mb-0 select-project__location gray-clr">
+                  <strong class="d-flex font-weight500">{{ project.projectName }}</strong>
+                  <span class="fontsize-14-px"
+                    >{{ project.addressLine1 }}
+                    <span *ngIf="project.addressLine2">, {{ project.addressLine2 }}</span>
+                    , {{ project.city }}, {{ project.country }}, {{ project.state }}, {{ project.pinCode }}
+                  </span>
+                </p>
+              </div>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
       </div>
     </div>
   </ng-container>
 
+  <!-- if no projects present -->
   <ng-template #noProjects>
-    <div mat-dialog-content>
-      <div class="select-project__no-projects">
-        <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
+    <div class="modal-header">
+      <h5 mat-dialog-title>No projects selected</h5>
+      <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
 
-        <div class="mx-auto text-center pt-4">
-          <img src="assets/images/project-background.png" alt="No projects available" class="img-fluid" />
-          <h5 class="mt-4">You haven't added any project yet.</h5>
-          <h5 class="mb-3">Please add one to continue.</h5>
-          <button (click)="addProject()" mat-raised-button class="main-background-color main-button color-white">Add
-            First Project</button>
+    <div mat-dialog-content>
+      <div class="modal-body">
+        <div class="mx-auto text-center">
+          <img src="assets/images/project-background.png" alt="No projects available" class="no-projects img-fluid" />
+          <h5 class="m-t-20">You haven't added any project yet.</h5>
+          <h5 class="m-b-10">Please add one to continue.</h5>
+          <button (click)="addProject()" mat-raised-button class="main-background-color main-button color-white m-t-10">Add First Project</button>
         </div>
       </div>
     </div>

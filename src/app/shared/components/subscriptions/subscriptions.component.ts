@@ -1,9 +1,10 @@
+import { AppNavigationService } from './../../services/navigation.service';
 import { CancelSubscriptionDialog } from './subscription-cancel/cancel-subscription-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnDestroy } from "@angular/core";
 import { SubscriptionsList } from '../../models/subscriptions';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/userDashboard/user.service';
+import { UserService } from '../../services/user.service';
 import { UserDetails } from '../../models/user-details';
 import { SubscriptionPaymentsService } from '../../services/subscriptions-payments.service';
 import { API } from '../../constants/configuration-constants';
@@ -28,6 +29,8 @@ export class SubscriptionsComponent implements OnInit {
 
     isFreeTrialSubscription: any;
     isActiveSubscription: any;
+    email: string;
+    phoneNo: string;
 
     constructor(
         private _router: Router,
@@ -35,11 +38,14 @@ export class SubscriptionsComponent implements OnInit {
         private subsPayService: SubscriptionPaymentsService,
         private commonService: CommonService,
         private dialog: MatDialog,
-        private notifier: AppNotificationService
+        private notifier: AppNotificationService,
+        private navService: AppNavigationService
     ) { }
 
     ngOnInit() {
         this.isMobile = this.commonService.isMobile().matches;
+        this.email = localStorage.getItem('email');
+        this.phoneNo = localStorage.getItem('phoneNo');
         this.getUserInformation(localStorage.getItem('userId'));
         this.isFreeTrialSubscription = Number(localStorage.getItem('isFreeTrialSubscription'));
         this.isActiveSubscription = Number(localStorage.getItem('isActiveSubscription'));
@@ -82,9 +88,9 @@ export class SubscriptionsComponent implements OnInit {
 
     getUserInformation(userId) {
         this._userService.getUserInfo(userId).then(res => {
-            this.users = res.data ? res.data[ 0 ] : null;
-            this.isFreeTrialSubscription = res.data[ 0 ].isFreeTrialSubscription;
-            this.isActiveSubscription = res.data[ 0 ].isActiveSubscription;
+            this.users = res.data ? res.data : null;
+            this.isFreeTrialSubscription = res.data.isFreeTrialSubscription;
+            this.isActiveSubscription = res.data.isActiveSubscription;
             localStorage.setItem('isFreeTrialSubscription', this.isFreeTrialSubscription);
             localStorage.setItem('isActiveSubscription', this.isActiveSubscription);
         });
@@ -110,7 +116,23 @@ export class SubscriptionsComponent implements OnInit {
         })
     }
 
-    choosePlan(type, planId, offerId, price, planEncryptId, planPricingEncryptId) {
+    choosePlan(type, planId, offerId, price, planEncryptId, planPricingEncryptId, planName) {
+        if (planName === 'Basic') {
+            this.navService.gaEvent({
+                action: 'submit',
+                category: 'buy_now_basic',
+                label: `Email: ${this.email} PhoneNo.: ${this.phoneNo}`,
+                value: null
+            });
+        }
+        if (planName === 'Premium') {
+            this.navService.gaEvent({
+                action: 'submit',
+                category: 'buy_now_premium',
+                label: `Email: ${this.email} PhoneNo.: ${this.phoneNo}`,
+                value: null
+            });
+        }
         this.subsPayService.chooseSubcriptionPlan(type, planId, offerId, price, planEncryptId, planPricingEncryptId, this.users);
     }
 
@@ -127,6 +149,12 @@ export class SubscriptionsComponent implements OnInit {
         this.subsPayService.getContactSales().then(res => {
             if (res) {
                 this.notifier.snack(res.message);
+                this.navService.gaEvent({
+                    action: 'submit',
+                    category: 'custom_plan',
+                    label: `Email: ${this.email} PhoneNo.: ${this.phoneNo}`,
+                    value: null
+                });
             }
         });
     }

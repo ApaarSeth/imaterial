@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { HeaderConstants } from '../constants/configuration-constants';
 import { FacebookPixelService } from '../services/fb-pixel.service';
-import { MatSidenav } from '@angular/material';
 import { AppNavigationService } from '../services/navigation.service';
 import { TokenService } from '../services/token.service';
 import { MenuList } from '../models/menu.model';
 import { CommonService } from '../services/commonService';
+import { MatSidenav } from "@angular/material/sidenav";
 
 @Component({
   selector: "sidebar-navigation",
@@ -105,39 +105,18 @@ export class SidebarNavigationComponent implements OnInit {
   };
 
   highlightButton(url: string) {
-    if (url.includes('dashboard') && !url.includes('project-dashboard')) {
-      this.buttonName = 'Dashboard'
-    } else if (url.includes('project-dashboard')) {
-      this.buttonName = 'Project Store'
-    }
-    else if (url.includes('globalStore')) {
+    if (url) {
+      this.buttonName = url.substring(1);
 
-      this.navService.gaEvent({
-        action: 'submit',
-        category: 'global_store',
-        label: null,
-        value: null
-      });
+      if (url.includes('globalStore')) {
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'global_store',
+          label: null,
+          value: null
+        });
+      }
 
-      this.buttonName = 'Global Store';
-    }
-    else if (url.includes('reports')) {
-      this.buttonName = 'Reports'
-    }
-    else if (url.includes('rfq')) {
-      this.buttonName = 'Request For Quotation'
-    }
-    else if (url.includes('users')) {
-      this.buttonName = 'Users'
-    }
-    else if (url.includes('po')) {
-      this.buttonName = 'Purchase Order'
-    }
-    else if (url.includes('supplier')) {
-      this.buttonName = 'Supplier'
-    }
-    else if (url.includes('myMaterial')) {
-      this.buttonName = 'My Materials'
     }
   }
 

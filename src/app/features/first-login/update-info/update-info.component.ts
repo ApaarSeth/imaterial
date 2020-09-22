@@ -1,17 +1,16 @@
 import { OnInit, Component } from '@angular/core';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/models/user-details';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
-import { debug } from 'util';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { MatSnackBar } from '@angular/material';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { Currency, CountryCode } from 'src/app/shared/models/currency';
-import { PermissionService } from 'src/app/shared/services/permission.service';
-import { permission } from 'src/app/shared/models/permissionObject';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserRoles, UserDetails, TradeList, TurnOverList } from '../../../shared/models/user-details';
+import { Currency, CountryCode } from '../../../shared/models/currency';
+import { permission } from '../../../shared/models/permissionObject';
+import { UserService } from '../../../shared/services/user.service';
+import { PermissionService } from '../../../shared/services/permission.service';
+import { CommonService } from '../../../shared/services/commonService';
+import { DocumentUploadService } from '../../../shared/services/document-download.service';
+import { AppNavigationService } from '../../../shared/services/navigation.service';
+import { FieldRegExConst } from '../../../shared/constants/field-regex-constants';
 
 export interface City {
   value: string;
@@ -57,9 +56,11 @@ export class UpdateInfoComponent implements OnInit {
   countryId: Number;
   countryCode: string;
   validPincode: boolean = false;
-
   isPlanAvailable: any;
-
+  userId: string;
+  selectedCountry: CountryCode;
+  selectedBaseCurrency: Currency
+  dataAvailable: boolean = false;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private permissionService: PermissionService,
@@ -71,77 +72,91 @@ export class UpdateInfoComponent implements OnInit {
 
   ngOnInit() {
     this.role = localStorage.getItem("role");
+    this.userId = localStorage.getItem("userId");
     this.permissionObj = this.permissionService.checkPermission(this.role);
     this.isMobile = this.commonService.isMobile().matches;
     this.countryCode = localStorage.getItem('countryCode')
     this.countryId = Number(localStorage.getItem('countryId'));
     this.isPlanAvailable = Number(localStorage.getItem('isPlanAvailable'));
     this.formInit();
-    this.getUserRoles();
-    this.getTradesList();
-    this.getCurrency();
-    this.getCountryCode();
+    this.getAllApi()
   }
-
-  getCurrency() {
-    this.commonService.getCurrency().then(res => {
-      this.currencyList = res.data;
+  getAllApi() {
+    let callingCode = localStorage.getItem('callingCode')
+    Promise.all([ this.role !== 'l3' ? this._userService.getRoles() : null
+      , this.role !== 'l3' ? this._userService.getTurnOverList() : null,
+    this.commonService.getCurrency(),
+    this.commonService.getCountry(),
+    this._userService.getUserInfo(this.userId),
+    this._userService.getTrades()
+    ]).then(res => {
+      this.getUserRoles(res[ 0 ]);
+      this.getTurnOverList(res[ 1 ]);
+      this.getCurrency(res[ 2 ])
+      this.getCountry(res[ 3 ])
+      this.getUserInformation(res[ 4 ])
+      this.getTradesList(res[ 5 ])
+      this.dataAvailable = true;
     })
   }
 
-  getCountryCode() {
-    this.commonService.getCountry().then(res => {
-      const userId = localStorage.getItem("userId");
-      this.countryList = res.data;
-      this.getUserInformation(userId);
+  getUserRoles(res) {
+    this.roles = res.data;
+    this.roles.splice(2, 1);
+    const id = this.roles.filter(opt => opt.roleName === this.role);
+    this.roleId = id.length && id[ 0 ].roleId;
+  }
+
+  getTurnOverList(res) {
+    if (res) {
+      let callingCode = localStorage.getItem('callingCode')
+      this.turnOverList = res.data.filter(data => {
+        if (callingCode === '+91' && data.isInternational === 0) {
+          return data
+        }
+        else if (callingCode !== '+91' && data.isInternational === 1) {
+          return data
+        }
+      })
+    }
+  }
+
+  getCurrency(res) {
+    this.currencyList = res.data;
+  }
+
+  getCountry(res) {
+    this.countryList = res.data;
+  }
+
+  getUserInformation(res) {
+    if (!localStorage.getItem('countryId')) {
+      this.countryId = res.data.countryId;
+      localStorage.setItem('countryId', res.data.countryId)
+    }
+    this.users = res.data ? res.data : null;
+    localStorage.setItem('isPlanAvailable', this.users.isPlanAvailable);
+    if (this.users.roleName === 'l1') {
+      this.userInfoForm.controls.turnOverId.setValidators([ Validators.required ]);
+      this.userInfoForm.controls.turnOverId.updateValueAndValidity();
+    }
+    this.setCountryAndCurrency()
+    this.userInfoPatch();
+
+  }
+
+  setCountryAndCurrency() {
+    this.livingCountry = this.countryList.filter(val => {
+      return val.countryId === Number(this.users.countryId);
     })
-  }
-
-  get selectedCountry() {
-    return this.userInfoForm.get('countryCode').value;
-  }
-
-  get selectedBaseCurrency() {
-    return this.userInfoForm.get('baseCurrency').value;
-  }
-
-  getUserRoles() {
-    this._userService.getRoles().then(res => {
-      this.roles = res.data;
-      this.roles.splice(2, 1);
-      const id = this.roles.filter(opt => opt.roleName === this.role);
-      this.roleId = id.length && id[ 0 ].roleId;
+    let newCurrencyList: Currency[] = [];
+    newCurrencyList = this.currencyList.filter(val => {
+      return val.currencyId === Number(this.livingCountry[ 0 ].countryId)
     })
-  }
-
-  getUserInformation(userId) {
-    this._userService.getUserInfo(userId).then(res => {
-      if (!localStorage.getItem('countryId')) {
-        this.countryId = res.data[ 0 ].countryId;
-        localStorage.setItem('countryId', res.data[ 0 ].countryId)
-      }
-      this.users = res.data ? res.data[ 0 ] : null;
-      localStorage.setItem('isPlanAvailable', this.users.isPlanAvailable);
-      if (this.users.roleName === 'l1') {
-        this.userInfoForm.controls.turnOverId.setValidators([ Validators.required ]);
-        this.userInfoForm.controls.turnOverId.updateValueAndValidity();
-      }
-      if (this.countryList) {
-        this.livingCountry = this.countryList.filter(val => {
-          return val.countryId === this.users.countryId
-        })
-      }
-      let newcurrencyList: Currency[] = [];
-      if (this.livingCountry.length) {
-        newcurrencyList = this.currencyList.filter(val => {
-          return val.countryId === Number(this.livingCountry[ 0 ].countryId)
-        })
-      }
-      this.userInfoPatch();
-      this.getTurnOverList();
-
-      this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[ 0 ] : null)
-    });
+    this.userInfoForm.get('baseCurrency').setValue(newCurrencyList[ 0 ])
+    this.userInfoForm.get('countryCode').setValue(this.livingCountry[ 0 ])
+    this.selectedCountry = this.userInfoForm.get('countryCode').value;
+    this.selectedBaseCurrency = this.userInfoForm.get('baseCurrency').value;
   }
 
   userInfoPatch() {
@@ -166,33 +181,16 @@ export class UpdateInfoComponent implements OnInit {
     })
   }
 
-  getTurnOverList() {
-    if (this.users.roleName !== "l3") {
-      this._userService.getTurnOverList().then(res => {
-        let callingCode = localStorage.getItem('callingCode')
-        this.turnOverList = res.data.filter(data => {
-          if (callingCode === '+91' && data.isInternational === 0) {
-            return data
-          }
-          else if (callingCode !== '+91' && data.isInternational === 1) {
-            return data
-          }
-        })
-      })
-    }
-  }
 
-  getTradesList() {
-    this._userService.getTrades().then(res => {
-      this.tradeList = res.data;
-      if (res.data) {
-        res.data.forEach(element => {
-          if (element.tradeName == 'Others') {
-            this.OthersId = element.tradeId;
-          }
-        });
-      }
-    })
+  getTradesList(res) {
+    this.tradeList = res.data;
+    if (res.data) {
+      res.data.forEach(element => {
+        if (element.tradeName == 'Others') {
+          this.OthersId = element.tradeId;
+        }
+      });
+    }
   }
 
   formInit() {
@@ -222,6 +220,10 @@ export class UpdateInfoComponent implements OnInit {
     this.customTrade = this._formBuilder.group({
       trade: []
     })
+    this.userInfoForm.get('baseCurrency').valueChanges.subscribe(currency => {
+      this.selectedBaseCurrency = currency;
+    })
+
     this.userInfoForm.get('countryCode').valueChanges.subscribe(country => {
       let newcurrencyList: Currency[] = [];
       if (country) {
@@ -231,6 +233,8 @@ export class UpdateInfoComponent implements OnInit {
       }
       this.countryId = newcurrencyList.length ? newcurrencyList[ 0 ].countryId : this.countryId;
       this.userInfoForm.get('baseCurrency').setValue(newcurrencyList.length ? newcurrencyList[ 0 ] : null)
+      this.selectedBaseCurrency = this.userInfoForm.get('baseCurrency').value;
+      this.selectedCountry = country;
     })
     this.userInfoForm.get('orgPincode').valueChanges.subscribe(val => {
       this.cityStateFetch(val)
@@ -269,7 +273,7 @@ export class UpdateInfoComponent implements OnInit {
   //   }
   // }
 
-  changeSelected(parameter: string, trade: TradeList) {
+  changeSelected(trade: TradeList) {
     let choosenIndex = -1;
     this.selectedTrades.forEach((trades, index) => {
       if (trades.tradeId === trade.tradeId) {
@@ -345,9 +349,7 @@ export class UpdateInfoComponent implements OnInit {
         }
         return trade;
       })
-      // this.commonService.setBaseCurrency(this.userInfoForm.value.baseCurrency)
       this.userInfoForm.get('trade').setValue([ ...this.selectedTrades ]);
-      // this.userInfoForm.value.tradeId = [...this.selectedTrades];
       let countryCode = null;
       if (this.users.roleName === "l3") {
         countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
@@ -376,7 +378,8 @@ export class UpdateInfoComponent implements OnInit {
         localStorage.setItem('accountOwner', res.data.accountOwner);
         if (this.users.roleName === 'l1') {
           if (res.data.isPlanAvailable === 1) {
-            this._router.navigate([ 'profile/subscriptions' ]);
+            // this._router.navigate(['profile/subscriptions']);
+            this._router.navigate([ 'profile/trial-active' ]);
           } else {
             this._router.navigate([ 'profile/add-user' ]);
           }
@@ -387,5 +390,4 @@ export class UpdateInfoComponent implements OnInit {
       });
     }
   }
-
 }

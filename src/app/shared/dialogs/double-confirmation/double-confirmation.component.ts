@@ -1,15 +1,8 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Component, Inject, OnInit } from "@angular/core";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
-import { ProjectService } from "../../services/projectDashboard/project.service";
+import { ProjectService } from "../../services/project.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 
 @Component({

@@ -1,19 +1,5 @@
-import { Component, OnInit, Inject, Input, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { AngularEditor } from 'src/app/shared/constants/angular-editor.constant';
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
-import { CountryCode } from 'src/app/shared/models/currency';
-import { SuppliersDialogComponent } from '../../add-supplier/suppliers-dialog.component';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { DocumentList } from 'src/app/shared/models/PO/po-data';
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
-import { GrnMaterialList } from 'src/app/shared/models/add-direct-grn';
-import { BomService } from 'src/app/shared/services/bom/bom.service';
-import { Supplier } from 'src/app/shared/models/RFQ/rfq-view';
-import { Observable } from 'rxjs';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { Component, OnInit, SimpleChanges, Input, HostListener } from "@angular/core"; import { CountryCode } from "../../../models/currency"; import { Supplier } from "../../../models/RFQ/rfq-view"; import { GrnMaterialList } from "../../../models/add-direct-grn"; import { Observable } from "rxjs"; import { FormGroup, FormBuilder, Validators } from "@angular/forms"; import { DocumentList } from "../../../models/PO/po-data"; import { AngularEditorConfig } from "@kolkov/angular-editor"; import { AngularEditor } from "../../../constants/angular-editor.constant"; import { AppNotificationService } from "../../../services/app-notification.service"; import { CommonService } from "../../../services/commonService"; import { BomService } from "../../../services/bom.service"; import { MatSnackBar } from "@angular/material/snack-bar"; import { DocumentUploadService } from "../../../services/document-download.service"; import { MatDialogRef } from "@angular/material/dialog"; import { FieldRegExConst } from "../../../constants/field-regex-constants";
+import { AppNavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
     selector: 'app-add-supplier',
@@ -40,6 +26,8 @@ export class GrnAddSupplierComponent implements OnInit {
     supplierList: Supplier[] = []
     isMobile: boolean
     projectId: number
+    isUploadResponsive: boolean;
+
     constructor(
         private notifier: AppNotificationService,
         private commonService: CommonService,
@@ -47,9 +35,9 @@ export class GrnAddSupplierComponent implements OnInit {
         private _snackBar: MatSnackBar,
         private formBuilder: FormBuilder,
         private documentUploadService: DocumentUploadService,
+        private navService: AppNavigationService,
         private dialogRef: MatDialogRef<GrnAddSupplierComponent>
     ) { }
-
 
     ngOnInit() {
         this.todayDate = new Date();
@@ -57,7 +45,6 @@ export class GrnAddSupplierComponent implements OnInit {
         this.isMobile = this.commonService.isMobile().matches;
         this.cntryId = Number(localStorage.getItem('countryId'));
         this.getCountryCode();
-
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -71,6 +58,7 @@ export class GrnAddSupplierComponent implements OnInit {
             this.projectId = changes.prjctId.currentValue
         }
     }
+
     initForm() {
         this.form = this.formBuilder.group({
             grnNo: ['', Validators.maxLength(300)],
@@ -118,7 +106,7 @@ export class GrnAddSupplierComponent implements OnInit {
         if (value === '') {
             return this.supplierList;
         }
-        let filteredValue: Supplier[] = !this.supplierList ? [] : this.supplierList.filter(option => option.supplier_name.toLowerCase().includes(value));
+        let filteredValue: Supplier[] = !this.supplierList ? [] : this.supplierList.filter(option => option.supplierName.toLowerCase().includes(value));
         return filteredValue;
 
     }
@@ -135,7 +123,7 @@ export class GrnAddSupplierComponent implements OnInit {
     }
 
     displayFn(option: Supplier) {
-        return option && option.supplier_name ? option.supplier_name : ''
+        return option && option.supplierName ? option.supplierName : ''
     }
 
     fileUpdate(files: FileList) {
@@ -214,13 +202,19 @@ export class GrnAddSupplierComponent implements OnInit {
         let materialList = this.materialList
         let documentList = this.documentList
         let supplierId = typeof (this.form.value.supplierName) === 'object' ? Number(this.form.value.supplierName.supplierId) : null;
-        supplierName = typeof (this.form.value.supplierName) === 'object' ? this.form.value.supplierName.supplier_name : this.form.value.supplierName;
+        supplierName = typeof (this.form.value.supplierName) === 'object' ? this.form.value.supplierName.supplierName : this.form.value.supplierName;
         if (grnDate) {
             grnDate = this.commonService.getFormatedDate(grnDate)
         }
         let data = { ...this.form.getRawValue(), grnDate, supplierName, supplierId, materialList, documentList, countryCode, projectId: Number(this.projectId) }
         this.bomService.addGrnWithoutPo(data).then(res => {
             if (res.statusCode === 201) {
+                this.navService.gaEvent({
+                    action: 'submit',
+                    category: 'add_grn',
+                    label: null,
+                    value: null
+                });
                 this.notifier.snack("GRN Created Successfully!")
                 this.dialogRef.close("success")
             }
@@ -230,5 +224,10 @@ export class GrnAddSupplierComponent implements OnInit {
         }).catch(err => {
             this.notifier.snack("There is some issue submitting GRN")
         })
+    }
+
+    @HostListener('window:resize', ['$event'])
+    sizeChange(event) {
+        this.isUploadResponsive = (event.currentTarget.innerWidth >= 768) ? false : true;
     }
 }

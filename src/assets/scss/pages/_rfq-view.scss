@@ -1,0 +1,306 @@
+.currency-converter, .base-currency-selector{
+    .info-tootip__content{
+        left: auto;
+        right: 20px;
+    }
+
+    .tooltip-table p {
+        color: #666666;
+        font-size: 14px;
+        margin-bottom: 0px;
+    }
+}
+
+.rfp-supplier {
+    .supplier-rates .rfq-rates {
+        margin-left: 3px !important;
+    }
+}
+
+.rfq-view-step{
+    .rfq-view-image-lists{
+        .triple-images .attached-image{
+            &:first-child {
+                top: -19px;
+                left: 110px;       
+            }
+
+            &:nth-child(2) {
+                top: -16px;
+                left: 114px;
+            }
+
+            &:nth-child(3){
+                top: -13px;
+                left: 118px;
+            }
+        }
+
+        .double-images .attached-image {
+            &:first-child {
+                top: -18px;
+                left: 110px;
+            }
+
+            &:nth-child(2) {
+                top: -14px;
+                left: 114px;
+            }
+        }
+
+        .single-image .attached-image{
+            &:first-child {
+                top: -15px;
+                left: 110px;
+            }
+        }
+    }
+}
+
+.rfq-final-step{
+    .rfq-view-image-lists{
+        .triple-images .attached-image{
+            &:first-child {
+                top: -19px;
+                left: 55px;       
+            }
+
+            &:nth-child(2) {
+                top: -16px;
+                left: 59px;
+            }
+
+            &:nth-child(3){
+                top: -13px;
+                left: 63px;
+            }
+        }
+
+        .double-images .attached-image {
+            &:first-child {
+                top: -18px;
+                left: 55px;
+            }
+
+            &:nth-child(2) {
+                top: -14px;
+                left: 59px;
+            }
+        }
+
+        .single-image .attached-image{
+            &:first-child {
+                top: -15px;
+                left: 55px;
+            }
+        }
+    }
+}
+
+.rfq-view-step, .rfq-final-step{
+
+    .rfq-view-image-lists{
+        .default-image {
+            height: 30px;
+        }
+
+        .images-lists .attached-image{
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    .mat-row{
+        border-bottom: 1px solid #bbbbbb;
+        .mat-cell{
+            white-space: normal;
+        }
+    }
+
+    .mat-header-row .mat-header-cell, .mat-row .mat-cell {
+        &:nth-child(2){
+            min-width: 100px;
+        }
+
+        &:last-child{
+            min-width: 150px;
+        }
+    }
+
+    .mat-header-cell, .mat-row .mat-cell{
+        &:not(:last-child){
+            padding-right: 10px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1199px){
+    .rfq-view-step{
+        .rfq-view-image-lists{
+            .triple-images .attached-image, .double-images .attached-image{
+                &:first-child {
+                    left: 96px;       
+                }
+    
+                &:nth-child(2) {
+                    left: 100px;
+                }
+            }
+
+            .triple-images .attached-image{
+                &:nth-child(3){
+                    left: 104px;
+                }
+            }
+    
+            .single-image .attached-image{
+                &:first-child {
+                    left: 98px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1023px){
+    .supplier-list-row{
+        .col-md-3{
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+    }
+
+    .currency-converter {
+        max-width: 100%;
+        flex-basis: 100%;
+        margin: 10px 0 10px;
+    }
+}
+
+@media only screen and (max-width: 992px){
+    .rfq-view-step, .rfq-final-step{
+        .mat-header-row .mat-header-cell, .mat-row .mat-cell {
+            &:first-child{
+                min-width: 150px;
+            }
+    
+            &:nth-child(2){
+                min-width: 80px;
+            }
+        }
+    }
+
+    .rfq-view-step{
+        .rfq-view-image-lists{
+            .triple-images .attached-image, .double-images .attached-image{
+                &:first-child {
+                    left: 72px;       
+                }
+    
+                &:nth-child(2) {
+                    left: 76px;
+                }
+            }
+
+            .triple-images .attached-image{    
+                &:nth-child(3){
+                    left: 80px;
+                }
+            }
+    
+            .single-image .attached-image{
+                &:first-child {
+                    left: 74px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 959px){
+    .rfp-review-style{
+        padding-left: 0.5rem;
+    }
+}
+
+@media only screen and (max-width: 767px){
+    .base-currency-selector {
+        margin: 20px 0 5px;
+        order: 1;
+    }
+
+    .rfp-name-input{
+        order: 2;
+    }
+
+    .rfp-end-date-input{
+        order: 3;
+    }
+
+    .rfq-view-step{
+        .rfq-view-image-lists{
+            .triple-images .attached-image, .double-images .attached-image{
+                &:first-child {
+                    left: 56px;       
+                }
+    
+                &:nth-child(2) {
+                    left: 60px;
+                }
+            }
+
+            .triple-images .attached-image{    
+                &:nth-child(3){
+                    left: 64px;
+                }
+            }
+    
+            .single-image .attached-image{
+                &:first-child {
+                    left: 58px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 559px){
+    .supplier-list-row{
+        .col-xs-6{
+            max-width: 100%;
+            flex-basis: 100%;
+        }
+    }
+
+    .create-po-dashboard .view-rfp-accordion, .float-rfp-review{
+        .mat-expansion-panel-header-title {
+            font-size: 13.5px !important;
+        }
+    }
+
+    .rfq-view-step{
+        .rfq-view-image-lists{
+            .triple-images .attached-image, .double-images .attached-image{
+                &:first-child {
+                    left: 36px;       
+                }
+    
+                &:nth-child(2) {
+                    left: 40px;
+                }
+            }
+
+            .triple-images .attached-image{    
+                &:nth-child(3){
+                    left: 44px;
+                }
+            }
+    
+            .single-image .attached-image{
+                &:first-child {
+                    left: 38px;
+                }
+            }
+        }
+    }
+}

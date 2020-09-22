@@ -8,7 +8,6 @@ import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { RFQResolver } from "./resolver/rfq.resolver";
 import { RFQRoutingModule } from "./rfq-routing.module";
-import { RefDetailComponent } from "./ref-detail/ref-detail.component";
 import { RfqBidsComponent } from "./rfq-bids/rfq-bids.component";
 import { MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
@@ -16,7 +15,6 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDialogModule } from "@angular/material/dialog";
 import { ReviewComponent } from "./review/review.component";
-import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 import { RFQViewComponent } from "./rfq-view/rfq-view.component";
 import { CreateRfqComponent } from "./create-rfq/create-rfq.component";
 import { RfqQuantityMakesComponent } from "./create-rfq/rfq-quantity-makes/rfq-quantity-makes.component";
@@ -24,6 +22,7 @@ import { RfqProjectMaterialsComponent } from "./create-rfq/rfq-project-materials
 import { RfqSupplierComponent } from "./create-rfq/rfq-supplier/rfq-supplier.component";
 import { CreateRfqResolver } from "./create-rfq/resolver/createRfq.resolver";
 import { SharedComponentsModule } from 'src/app/shared/components/shared-component.modules';
+import { RfqDetailComponent } from "./rfq-detail/rfq-detail.component";
 
 @NgModule({
   imports: [
@@ -41,8 +40,6 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
     MatCheckboxModule,
     MatGridListModule,
     MatDialogModule,
-    FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot(),
     SharedComponentsModule
   ],
   providers: [RFQResolver, CreateRfqResolver],
@@ -50,7 +47,7 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
     RfqQuantityMakesComponent,
     RfqProjectMaterialsComponent,
     RfqSupplierComponent,
-    RefDetailComponent,
+    RfqDetailComponent,
     RfqBidsComponent,
     ReviewComponent,
     RFQViewComponent,

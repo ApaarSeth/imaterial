@@ -1,192 +1,1270 @@
-$mat-header-row-height: 56px;
-$mat-row-height: 48px;
-$material-row-height: 77px;
-$mat-row-horizontal-padding: 12px;
-
-.grnTable {
-  width: 100%;
-  overflow-x: auto;
-
-  table {
-    width: 100%;
-    border: 1px solid #ababab;
+.add-receipts-panel {
+  .mat-expansion-panel-header {
+    padding: 0 12px;
   }
 
-  td.mat-cell,
-  td.mat-footer-cell,
-  th.mat-header-cell {
-    border-bottom: none;
+  .mat-expansion-indicator:after {
+    padding: 6px;
   }
-  .mat-accordion .mat-header-row {
-    padding-left: 0.8rem;
-    padding-right: 2rem;
-    border-bottom: none;
+}
+
+.inactive-receipt-docs {
+  pointer-events: none;
+  img {
+    opacity: 0.5;
+  }
+}
+
+.receipt-unit {
+  width: 80px;
+}
+
+.receipt-brand-name,
+.receipt-awarded-qty,
+.receipt-delivered-qty {
+  width: 100px;
+}
+
+.receipt-delivered-date {
+  width: 150px;
+  .mat-form-field-infix {
+    width: 100px;
+  }
+}
+
+.receipt-received-qty {
+  padding-right: 12px !important;
+  width: 130px;
+  .mat-form-field-infix {
+    width: 130px;
+  }
+}
+
+.receipt-material-name {
+  padding-left: 12px !important;
+}
+
+.report {
+  .mat-form-field-appearance-legacy.select-project .mat-form-field-wrapper {
+    padding-top: 0px !important;
+  }
+}
+
+/** Add Receipt Via System, Add Custom Material Dialog CSS **/
+.common-modal-style {
+  .mat-dialog-container {
+    padding: 0px !important;
+    overflow-x: hidden;
+  }
+}
+
+.common-modal-style,
+.add-supplier-dialog {
+  .mat-dialog-content {
+    padding: 0;
+    overflow-x: hidden;
   }
 
-  .mat-expansion-panel-header.mat-row {
-    border-bottom: none;
+  .mat-dialog-title {
+    font-size: 16px;
+    color: #020202;
+    line-height: 24px;
   }
 
-  .mat-table {
-    display: block;
+  .modal-header {
+    height: 54px;
+    background-color: #e7e7e7;
+    .close {
+      opacity: 1;
+      color: #020202;
+      font-weight: 100;
+      font-size: 32px;
+      line-height: 15px;
+    }
+  }
+}
+
+.create-receipt-excel,
+.add-receipt-via-system,
+.delete-bom,
+.add-supplier-dialog,
+.payment-record-dialog,
+.add-receipts-dialog,
+.show-docs-dialog,
+.select-contact-person-dialog,
+.add-address-dialog,
+.show-supplier-remarks-docs,
+.vendor-rating-dialog,
+.select-projects-dialog,
+.view-video-dialog,
+.release-note-dialog {
+  .modal-body {
+    padding: 1rem 2.5rem;
+  }
+}
+
+.add-custom-material,
+.add-receipt-via-system {
+  .col-unit {
+    flex-basis: 10%;
+    max-width: 10%;
   }
 
-  .mat-header-row {
-    min-height: $mat-header-row-height;
+  .col-material-name {
+    flex-basis: 18.666667%;
+    max-width: 18.666667%;
+  }
+}
+
+.add-receipt-via-system {
+  .col-total-amount {
+    flex-basis: 15.666667%;
+    max-width: 15.666667%;
   }
 
-  .mat-row {
-    min-height: $mat-row-height;
-  }
-  .grn-material-row {
-    min-height: $mat-row-height;
+  .col-add-btn {
+    max-width: 5.66663599%;
+    flex-basis: 5.66663599%;
   }
 
-  .mat-row,
-  .grn-material-row,
-  .mat-header-row {
+  .mat-horizontal-stepper-header-container .mat-step-header {
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  .mat-step-header.cdk-keyboard-focused,
+  .mat-step-header.cdk-program-focused,
+  .mat-step-header:hover {
+    background-color: transparent !important;
+  }
+
+  .receipt-number,
+  .receipt-date {
+    .mat-form-field-wrapper {
+      padding-top: 0px !important;
+    }
+  }
+
+  .supplier-details h5 {
+    font-size: 1.2rem;
+  }
+
+  .show-download {
     display: flex;
     align-items: center;
-    padding: 0 $mat-row-horizontal-padding;
-    box-sizing: border-box;
+    justify-content: flex-end;
+  }
+}
+
+.add-custom-material {
+  .material-seperator {
+    margin-bottom: 0rem;
   }
 
-  .mat-cell,
-  .mat-header-cell {
-    flex: 1;
-    overflow: hidden;
-    word-wrap: break-word;
-    color: black;
-    min-width: 135px;
-    padding: 0 5px;
+  .col-unit-rate {
+    max-width: 14.32226299%;
+    flex-basis: 14.32226299%;
   }
 
-  .widthReduce {
-    flex: none;
-    width: 55px;
+  .col-add-btn {
+    max-width: 7.01107%;
+    flex-basis: 7.01107%;
   }
 
-  .mat-header-row {
-    background: #2197bb;
+  .add-material-btn {
+    padding-right: 0px;
+  }
 
-    span {
-      color: #ffffff !important;
+  .modal-body {
+    padding: 0 2.5rem 1.5rem;
+  }
+}
+
+.issue-to-indent-dialog {
+  .modal-body {
+    width: 99%;
+    margin: auto;
+  }
+}
+
+.upload-image-modal, .edit-my-material-dialog {
+  .modal-body {
+    padding: 1.5rem 3rem;
+  }
+}
+
+.view-image-modal {
+  .modal-body {
+    padding: 0px 1rem;
+  }
+
+  .carousel-caption h4 {
+    word-break: break-word;
+  }
+}
+
+.grn-docs {
+  padding: 2rem 0.5rem 1rem;
+
+  .upload-document-label label {
+    font-size: 16px;
+  }
+
+  .grey-dotted-border {
+    padding: 20px 30px !important;
+  }
+
+  .upload-green-tick {
+    margin: auto auto 20px;
+  }
+
+  .mat-list.mat-list-base {
+    padding: 0 0 0 3rem;
+  }
+
+  .add-receipt-message span.file-limit {
+    font-size: 12px;
+    color: #666;
+  }
+}
+
+.add-receipts-dialog,
+.show-docs-dialog {
+  .upload-image-info {
+    margin-left: 0px;
+    &:last-child {
+      margin-bottom: 0px !important;
+    }
+  }
+}
+
+.show-docs-dialog {
+  .modal-body {
+    padding: 1.5rem 2.5rem 1.5rem 3rem;
+  }
+
+  .image-info {
+    width: 80%;
+  }
+
+  .image-actions {
+    width: 10%;
+    text-align: right;
+  }
+}
+
+.delete-bom,
+.drafted-po-confirm-dialog,
+.add-users-dialog,
+.choose-address-dialog,
+.add-project-dialog,
+.delete-my-material-dialog {
+  .modal-body {
+    padding: 1.5rem 2.5rem;
+  }
+}
+
+.add-supplier-dialog,
+.add-users-dialog {
+  .mat-dialog-container,
+  .add-supplier-name .mat-form-field-wrapper,
+  .add-first-name .mat-form-field-wrapper,
+  .add-last-name .mat-form-field-wrapper {
+    padding: 0px !important;
+  }
+
+  .projects-field .mat-form-field-wrapper,
+  .user-role-field .mat-form-field-wrapper {
+    padding-top: 10px !important;
+  }
+}
+
+.select-rfq-terms-dialog {
+  .other-terms-input {
+    .mat-form-field-wrapper {
+      padding-top: 0px !important;
+    }
+
+    .mat-input-element {
+      color: #020202;
     }
   }
 
-  .mat-cell.double-mat-cell {
-    min-width: 270px !important;
+  .skip-btn {
+    padding: 0px 20px;
+  }
+}
+
+.add-supplier-dialog {
+  .add-supplier-form {
+    overflow-x: hidden;
   }
 
-  .mat-row {
-    min-height: 50px;
+  .mat-dialog-content {
+    padding: 0rem 0rem 2rem !important;
+  }
+}
 
-    .mat-cell {
-      color: #707070;
+.create-receipt-excel {
+  .equal-height {
+    min-height: 85px;
+  }
+}
+
+.payment-record-dialog {
+  .po-details-div {
+    padding: 10px 20px;
+    border-radius: 6px;
+  }
+}
+
+.select-currency-dialog,
+.select-contact-person-dialog,
+.select-rfq-terms-dialog,
+.deactivate-user {
+  .modal-body {
+    padding: 1rem 2.5rem 2rem;
+  }
+}
+
+.add-address-dialog {
+  .single-address-line .mat-radio-group .address-line {
+    &:first-child {
+      border-bottom: 1px solid #b8b8b8;
     }
   }
-  .border-row {
-    border-bottom: 0.5px solid #979797;
-  }
-  .background-supplier {
-    background: #effbff;
-  }
-  .background-project {
-    background: #eaeaea;
-  }
-  .background-project-list {
-    background: #ffffff;
-    padding-right: 32px;
-  }
-  .grn-material-row {
-    min-height: 38px;
-    .mat-cell {
-      color: #707070;
+
+  .mat-radio-group .address-line {
+    &:not(:first-child) {
+      border: 1px solid #b8b8b8;
+      padding: 10px 0px;
+    }
+    &:first-child {
+      border: 1px solid #b8b8b8;
+      border-bottom: none;
+      padding: 10px 0px;
+    }
+
+    .mat-radio-label {
+      margin-bottom: 0px;
     }
   }
-  .footer {
-    background-color: rgba(25, 33, 53, 0.2);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    min-height: 70px;
 
-    .mat-cell {
-      color: #000000;
-      font-weight: 500;
+  .address-select-country {
+    .mat-form-field-infix {
+      padding-bottom: 3px;
+    }
+  }
+}
+
+.select-approver-dialog {
+  .modal-body {
+    padding: 1.5rem 2.5rem;
+  }
+}
+
+.show-supplier-remarks-docs {
+  .upload-image-info {
+    margin: 0px 0 10px 0 !important;
+  }
+
+  .default-remarks-image {
+    width: 20%;
+  }
+
+  .image-info span {
+    font-size: 14px;
+  }
+}
+
+.float-rfq-confirm-dialog {
+  .modal-body {
+    padding: 1rem 2.5rem 1.5rem;
+  }
+}
+
+.tax-dialog {
+  .modal-body {
+    padding: 0.8rem 4rem 2rem;
+  }
+
+  .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    line-height: 24px;
+  }
+}
+
+.width-75px {
+  width: 75px !important;
+}
+
+@media only screen and (max-width: 992px) and (min-width: 768px) {
+  .add-custom-material,
+  .add-receipt-via-system {
+    .col-sm-12 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .add-custom-material {
+    .col-sm-6 {
+      flex-basis: 50%;
+      max-width: 50%;
+    }
+
+    .modal-body {
+      padding-top: 0;
+    }
+  }
+
+  .add-receipt-via-system {
+    .col-sm-4 {
+      flex-basis: 33.33333333%;
+      max-width: 33.33333333%;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .show-docs-dialog {
+    .modal-body {
+      padding: 0.5rem 2.5rem 1rem 3rem;
+    }
+
+    .upload-image-info {
+      margin: 5px 0 5px !important;
+    }
+  }
+
+  .payment-record-dialog {
+    .po-details-div {
+      padding: 10px 10px;
+    }
+
+    .payment-outer {
+      font-size: 14px;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .add-custom-material,
+  .add-receipt-via-system {
+    .col-add-btn {
+      display: none !important;
+    }
+
+    .col-xs-12 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+
+    .col-xs-5 {
+      flex-basis: 41.66666667%;
+      max-width: 41.66666667%;
+    }
+
+    .material-icons.add-material-btn {
+      font-size: 30px;
+      line-height: 1.5;
+    }
+  }
+
+  .add-receipt-via-system {
+    .receipt-number,
+    .receipt-date {
+      & > span {
+        display: none;
+      }
+
+      .mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+
+  .add-custom-material {
+    .mobile-padding,
+    .col-material-name .mat-form-field-wrapper {
+      padding-top: 8px !important;
+    }
+
+    .trade-input {
+      padding-bottom: 8px;
+    }
+  }
+
+  .payment-record-dialog {
+    .payment-grn-col {
+      margin-bottom: 0.25rem !important;
+    }
+  }
+
+  .add-supplier-dialog {
+    .modal-body {
+      padding-bottom: 0;
+    }
+  }
+
+  .add-address-dialog {
+    .modal-body {
+      padding-top: 0px;
+    }
+  }
+
+  .select-rfq-terms-dialog {
+    .mat-radio-label-content {
+      font-size: 14px;
+    }
+  }
+
+  .add-users-dialog {
+    .add-last-name,
+    .projects-field {
+      .mat-form-field-wrapper {
+        padding-top: 15px !important;
+      }
+    }
+
+    .modal-body {
+      padding: 1rem 2.5rem;
+    }
+  }
+
+  .edit-my-material-dialog .modal-body {
+    padding-top: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .receipts-outer-section {
+    padding-top: 0px !important;
+    margin-top: -10px !important;
+  }
+
+  .payment-record-dialog {
+    .col-base-currency {
+      flex: 0 0 100%;
+      max-width: 100%;
+      padding-right: 0.5rem !important;
+    }
+    .add-receipts-panel {
+      .mat-expansion-panel-header {
+        padding: 0 12px;
+      }
+
+      .mat-expansion-indicator:after {
+        padding: 6px;
+      }
+    }
+
+    .inactive-receipt-docs {
+      pointer-events: none;
+      img {
+        opacity: 0.5;
+      }
+    }
+
+    .receipt-unit {
+      width: 80px;
+    }
+
+    .receipt-brand-name,
+    .receipt-awarded-qty,
+    .receipt-delivered-qty {
+      width: 100px;
+    }
+
+    .receipt-delivered-date {
+      width: 150px;
+      .mat-form-field-infix {
+        width: 100px;
+      }
+    }
+
+    .receipt-received-qty {
+      padding-right: 12px !important;
+      width: 130px;
+      .mat-form-field-infix {
+        width: 130px;
+      }
+    }
+
+    .receipt-material-name {
+      padding-left: 12px !important;
+    }
+
+    .report {
+      .mat-form-field-appearance-legacy.select-project .mat-form-field-wrapper {
+        padding-top: 0px !important;
+      }
+    }
+
+    /** Add Receipt Via System, Add Custom Material Dialog CSS **/
+    .common-modal-style {
+      .mat-dialog-container {
+        padding: 0px !important;
+        overflow-x: hidden;
+      }
+    }
+
+    .common-modal-style,
+    .add-supplier-dialog {
+      .mat-dialog-content {
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      .mat-dialog-title {
+        font-size: 16px;
+        color: #020202;
+        line-height: 24px;
+      }
+
+      .modal-header {
+        height: 54px;
+        background-color: #e7e7e7;
+        .close {
+          opacity: 1;
+          color: #020202;
+          font-weight: 100;
+          font-size: 32px;
+          line-height: 15px;
+        }
+      }
+    }
+
+    .create-receipt-excel,
+    .add-receipt-via-system,
+    .delete-bom,
+    .add-supplier-dialog,
+    .payment-record-dialog,
+    .add-receipts-dialog,
+    .show-docs-dialog,
+    .select-contact-person-dialog,
+    .add-address-dialog,
+    .show-supplier-remarks-docs,
+    .vendor-rating-dialog,
+    .select-projects-dialog,
+    .view-video-dialog,
+    .release-note-dialog {
+      .modal-body {
+        padding: 1rem 2.5rem;
+      }
+    }
+
+    .add-custom-material,
+    .add-receipt-via-system {
+      .col-unit {
+        flex-basis: 10%;
+        max-width: 10%;
+      }
+
+      .col-material-name {
+        flex-basis: 18.666667%;
+        max-width: 18.666667%;
+      }
+    }
+
+    .add-receipt-via-system {
+      .col-total-amount {
+        flex-basis: 15.666667%;
+        max-width: 15.666667%;
+      }
+
+      .col-add-btn {
+        max-width: 5.66663599%;
+        flex-basis: 5.66663599%;
+      }
+
+      .mat-horizontal-stepper-header-container .mat-step-header {
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+
+      .mat-step-header.cdk-keyboard-focused,
+      .mat-step-header.cdk-program-focused,
+      .mat-step-header:hover {
+        background-color: transparent !important;
+      }
+
+      .receipt-number,
+      .receipt-date {
+        .mat-form-field-wrapper {
+          padding-top: 0px !important;
+        }
+      }
+
+      .supplier-details h5 {
+        font-size: 1.2rem;
+      }
+
+      .show-download {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+    }
+
+    .add-custom-material {
+      .material-seperator {
+        margin-bottom: 0rem;
+      }
+
+      .col-unit-rate {
+        max-width: 14.32226299%;
+        flex-basis: 14.32226299%;
+      }
+
+      .col-add-btn {
+        max-width: 7.01107%;
+        flex-basis: 7.01107%;
+      }
+
+      .add-material-btn {
+        padding-right: 0px;
+      }
+
+      .modal-body {
+        padding: 0 2.5rem 1.5rem;
+      }
+    }
+
+    .issue-to-indent-dialog {
+      .modal-body {
+        width: 99%;
+        margin: auto;
+      }
+    }
+
+    .upload-image-modal {
+      .modal-body {
+        padding: 1.5rem 3rem;
+      }
+    }
+
+    .view-image-modal {
+      .modal-body {
+        padding: 0px 1rem;
+      }
+
+      .carousel-caption h4 {
+        word-break: break-word;
+      }
+    }
+
+    .grn-docs {
+      padding: 2rem 0.5rem 1rem;
+
+      .upload-document-label label {
+        font-size: 16px;
+      }
+
+      .grey-dotted-border {
+        padding: 20px 30px !important;
+      }
+
+      .upload-green-tick {
+        margin: auto auto 20px;
+      }
+
+      .mat-list.mat-list-base {
+        padding: 0 0 0 3rem;
+      }
+
+      .add-receipt-message span.file-limit {
+        font-size: 12px;
+        color: #666;
+      }
+    }
+
+    .add-receipts-dialog,
+    .show-docs-dialog {
+      .upload-image-info {
+        margin-left: 0px;
+        &:last-child {
+          margin-bottom: 0px !important;
+        }
+      }
+    }
+
+    .show-docs-dialog {
+      .modal-body {
+        padding: 1.5rem 2.5rem 1.5rem 3rem;
+      }
+
+      .image-info {
+        width: 80%;
+      }
+
+      .image-actions {
+        width: 10%;
+        text-align: right;
+      }
+    }
+
+    .delete-bom,
+    .drafted-po-confirm-dialog,
+    .add-users-dialog,
+    .choose-address-dialog,
+    .add-project-dialog {
+      .modal-body {
+        padding: 1.5rem 2.5rem;
+      }
+    }
+
+    .add-supplier-dialog,
+    .add-users-dialog {
+      .mat-dialog-container,
+      .add-supplier-name .mat-form-field-wrapper,
+      .add-first-name .mat-form-field-wrapper,
+      .add-last-name .mat-form-field-wrapper {
+        padding: 0px !important;
+      }
+
+      .projects-field .mat-form-field-wrapper,
+      .user-role-field .mat-form-field-wrapper {
+        padding-top: 10px !important;
+      }
+    }
+
+    .select-rfq-terms-dialog {
+      .other-terms-input {
+        .mat-form-field-wrapper {
+          padding-top: 0px !important;
+        }
+
+        .mat-input-element {
+          color: #020202;
+        }
+      }
+
+      .skip-btn {
+        padding: 0px 20px;
+      }
+    }
+
+    .add-supplier-dialog {
+      .add-supplier-form {
+        overflow-x: hidden;
+      }
+
+      .mat-dialog-content {
+        padding: 0rem 0rem 2rem !important;
+      }
+    }
+
+    .create-receipt-excel {
+      .equal-height {
+        min-height: 85px;
+      }
+    }
+
+    .payment-record-dialog {
+      .po-details-div {
+        padding: 10px 20px;
+        border-radius: 6px;
+      }
+    }
+
+    .select-currency-dialog,
+    .select-contact-person-dialog,
+    .select-rfq-terms-dialog,
+    .deactivate-user {
+      .modal-body {
+        padding: 1rem 2.5rem 2rem;
+      }
+    }
+
+    .add-address-dialog {
+      .mat-radio-group .address-line {
+        border-bottom: 1px solid #b8b8b8;
+        padding: 10px 0px;
+      }
+
+      .mat-radio-group .address-line {
+        .mat-radio-label {
+          margin-bottom: 0px;
+        }
+      }
+
+      .address-select-country {
+        .mat-form-field-infix {
+          padding-bottom: 3px;
+        }
+      }
+    }
+
+    .select-approver-dialog {
+      .modal-body {
+        padding: 1.5rem 2.5rem;
+      }
+    }
+
+    .show-supplier-remarks-docs {
+      .upload-image-info {
+        margin: 0px 0 10px 0 !important;
+      }
+
+      .default-remarks-image {
+        width: 20%;
+      }
+
+      .image-info span {
+        font-size: 14px;
+      }
+    }
+
+    .float-rfq-confirm-dialog {
+      .modal-body {
+        padding: 1rem 2.5rem 1.5rem;
+      }
+    }
+
+    .tax-dialog {
+      .modal-body {
+        padding: 0.8rem 4rem 2rem;
+      }
+
+      .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+        line-height: 24px;
+      }
+    }
+
+    .width-75px {
+      width: 75px !important;
+    }
+
+    @media only screen and (max-width: 992px) and (min-width: 768px) {
+      .add-custom-material,
+      .add-receipt-via-system {
+        .col-sm-12 {
+          flex-basis: 100%;
+          max-width: 100%;
+        }
+      }
+
+      .add-custom-material {
+        .col-sm-6 {
+          flex-basis: 50%;
+          max-width: 50%;
+        }
+
+        .modal-body {
+          padding-top: 0;
+        }
+      }
+
+      .add-receipt-via-system {
+        .col-sm-4 {
+          flex-basis: 33.33333333%;
+          max-width: 33.33333333%;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 992px) {
+      .show-docs-dialog {
+        .modal-body {
+          padding: 0.5rem 2.5rem 1rem 3rem;
+        }
+
+        .upload-image-info {
+          margin: 5px 0 5px !important;
+        }
+      }
+
+      .payment-record-dialog {
+        .po-details-div {
+          padding: 10px 10px;
+        }
+
+        .payment-outer {
+          font-size: 14px;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      .add-custom-material,
+      .add-receipt-via-system {
+        .col-add-btn {
+          display: none !important;
+        }
+
+        .col-xs-12 {
+          flex-basis: 100%;
+          max-width: 100%;
+        }
+
+        .col-xs-5 {
+          flex-basis: 41.66666667%;
+          max-width: 41.66666667%;
+        }
+
+        .material-icons.add-material-btn {
+          font-size: 30px;
+          line-height: 1.5;
+        }
+      }
+
+      .add-receipt-via-system {
+        .receipt-number,
+        .receipt-date {
+          & > span {
+            display: none;
+          }
+
+          .mat-form-field {
+            width: 100%;
+          }
+        }
+      }
+
+      .add-custom-material {
+        .mobile-padding,
+        .col-material-name .mat-form-field-wrapper {
+          padding-top: 8px !important;
+        }
+
+        .trade-input {
+          padding-bottom: 8px;
+        }
+      }
+
+      .payment-record-dialog {
+        .payment-grn-col {
+          margin-bottom: 0.25rem !important;
+        }
+      }
+
+      .add-supplier-dialog {
+        .modal-body {
+          padding-bottom: 0;
+        }
+      }
+
+      .add-address-dialog {
+        .modal-body {
+          padding-top: 0px;
+        }
+      }
+
+      .select-rfq-terms-dialog {
+        .mat-radio-label-content {
+          font-size: 14px;
+        }
+      }
+
+      .add-users-dialog {
+        .add-last-name,
+        .projects-field {
+          .mat-form-field-wrapper {
+            padding-top: 15px !important;
+          }
+        }
+
+        .modal-body {
+          padding: 1rem 2.5rem;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 599px) {
+      .receipts-outer-section {
+        padding-top: 0px !important;
+        margin-top: -10px !important;
+      }
+
+      .payment-record-dialog {
+        .col-base-currency {
+          flex: 0 0 100%;
+          max-width: 100%;
+          padding-right: 0.5rem !important;
+        }
+      }
+
+      .add-supplier-dialog {
+        .supplier-country-code span {
+          font-size: 12px;
+        }
+      }
+
+      .select-contact-person-dialog {
+        .col-xs-7,
+        .col-xs-5 {
+          flex-basis: 100%;
+          max-width: 100%;
+        }
+
+        .person-role {
+          padding-left: 28px;
+        }
+      }
+
+      .add-address-dialog {
+        .address-line {
+          font-size: 14px;
+        }
+
+        .selected-country {
+          img {
+            width: 20px;
+          }
+
+          span {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 576px) {
+      .select-approver-dialog {
+        .mat-radio-group .mat-radio-label-content {
+          font-size: 14px;
+        }
+
+        .individual-approver {
+          padding-bottom: 0.5rem !important;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 560px) {
+      .add-receipt-via-system .mat-dialog-content,
+      .add-custom-material .modal-dialog-content,
+      .create-receipt-excel .modal-dialog-content {
+        padding: 0px !important;
+      }
+    }
+
+    @media only screen and (max-width: 462px) {
+      .grn-dashboard {
+        .po-number-grn {
+          margin: 0 0 10px 0;
+        }
+      }
+
+      .add-edit-receipts .grn-first-row {
+        padding-top: 0px !important;
+      }
+    }
+
+    @media only screen and (max-width: 390px) {
+      .uploaded-documents-details {
+        .col-xs-9,
+        .col-xs-3 {
+          flex-basis: 100%;
+          max-width: 100%;
+        }
+
+        .show-download {
+          height: 12px;
+        }
+
+        .row {
+          margin-top: 20px !important;
+        }
+      }
+    }
+  }
+
+  .add-supplier-dialog {
+    .supplier-country-code span {
       font-size: 12px;
     }
   }
 
-  .radio-btn-group-report-table {
-    padding-right: 10px;
+  .select-contact-person-dialog {
+    .col-xs-7,
+    .col-xs-5 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
 
-    mat-radio-button {
-      padding: 0px 5px;
+    .person-role {
+      padding-left: 28px;
     }
   }
 
-  .mat-row:focus {
-    background-color: white;
-  }
+  .add-address-dialog {
+    .address-line {
+      font-size: 14px;
+    }
 
-  .mat-expansion-panel-header {
-    padding-left: 0px;
-    padding-right: 12px;
-  }
+    .selected-country {
+      img {
+        width: 20px;
+      }
 
-  .mat-expansion-panel-body {
-    padding: 0;
+      span {
+        font-size: 13px;
+      }
+    }
   }
+}
 
-  .backgound-project{
-    background-color: #fff !important;
+@media only screen and (max-width: 576px) {
+  .select-approver-dialog {
+    .mat-radio-group .mat-radio-label-content {
+      font-size: 14px;
+    }
+
+    .individual-approver {
+      padding-bottom: 0.5rem !important;
+    }
   }
+}
 
-  .background-grn{
-    background-color: #e0e3ec !important;
-    .material-row {
-      background-color: #e0e3ec !important;
-      border-bottom: 0.5px solid #979797;
-      border-left: 0.5px solid #d0d0d0;
+@media only screen and (max-width: 560px) {
+  .add-receipt-via-system,.add-custom-material, .create-receipt-excel{
+    .modal-dialog-content {
+      padding: 0px !important;
+    }
+  } 
+
+  .add-receipt-via-system .mobile-device-top-padding.mat-dialog-content{
+    padding-top: 10px !important;
+  }
+}
+
+@media only screen and (max-width: 462px) {
+  .grn-dashboard {
+    .po-number-grn {
+      margin: 0 0 10px 0;
     }
   }
 
-  .mat-expansion-panel-header.background-grn.mat-expanded:focus, 
-  .mat-expansion-panel-header.background-grn.mat-expanded:hover{
-    background-color: #e0e3ec !important;
-  }
-
-  .mat-expansion-indicator:after{
-    padding: 6px;
+  .add-edit-receipts .grn-first-row {
+    padding-top: 0px !important;
   }
 }
 
-/** css to make receipt page grn detail row's column aligned **/
-.grn-material-row{
-  .mat-cell.grn-name-cell,
-  .mat-cell.po-number-cell {
-    flex: 0 0 152px;
-    min-width: 152px;
-  }
+@media only screen and (max-width: 390px) {
+  .uploaded-documents-details {
+    .col-xs-9,
+    .col-xs-3 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
 
-  .mat-cell.double-mat-cell.added-by-cell {
-    min-width: 306px;
-    flex: 0 0 306px;
-  }
-}
+    .show-download {
+      height: 12px;
+    }
 
-.add-receipts-panel{
-  .mat-expansion-panel-header{
-    padding: 0 12px;
-  }
-
-  .mat-expansion-indicator:after{
-    padding: 6px;
-  }
-}
-
-.inactive-receipt-docs{
-  pointer-events: none;
-  img{
-    opacity: 0.5;
+    .row {
+      margin-top: 20px !important;
+    }
   }
 }

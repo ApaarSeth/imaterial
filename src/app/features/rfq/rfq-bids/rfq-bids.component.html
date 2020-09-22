@@ -1,40 +1,35 @@
-<div class="page-start-point mt-5 pt-4">
+<div class="page-start-point mt-5">
   <div class="p-l-20 p-r-20 p-b-20 min-height parent">
     <form *ngIf="rfqProjects.length" (ngSubmit)="allocateQuantity()" [formGroup]="rfqForms">
       <div class="row p-t-10 p-b-10">
         <div class="col-sm-12">
           <span>
-            <button mat-raised-button class="main-background-color main-button color-white pull-right"
-              [disabled]="getFormValidation() ? (getFormQtyValidation() ? true : false) : true">
+            <button mat-raised-button class="main-background-color main-button color-white pull-right" [disabled]="getFormValidation() ? (getFormQtyValidation() ? true : false) : true">
               Create P.O
             </button>
           </span>
-          <div class="pull-right color-main p-r-20 p-t-10 text-semi-bold cursor-pointer" (click)="viewRemarks()">
-            View Remarks
-          </div>
+          <div class="pull-right color-main p-r-20 p-t-10 text-semi-bold cursor-pointer" (click)="viewRemarks()">View Remarks</div>
         </div>
       </div>
 
-      <div class="col-xs-12 p-t-10 p-b-20 text-right"
-        *ngIf="rfqProjects[0].rfqCurrency != null && rfqProjects[0].rfqCurrency.exchangeCurrencyName != null">
+      <div class="col-xs-12 p-t-10 p-b-20 text-right" *ngIf="rfqProjects[0].rfqCurrency != null && rfqProjects[0].rfqCurrency.exchangeCurrencyName != null">
         <span class="slideToggalColor p-r-10">
           <mat-slide-toggle [(ngModel)]="ratesBaseCurr" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
         </span>
         <span class="base-currency p-l-5 p-r-5 p-t-10 p-b-10">
           <span class="font-size-vary-grn color-grey">
-            <img width="25px" *ngIf="rfqProjects[0].rfqCurrency.exchangeCurrencyFlag"
-              [src]="rfqProjects[0].rfqCurrency.exchangeCurrencyFlag" />
+            <img width="25px" *ngIf="rfqProjects[0].rfqCurrency.exchangeCurrencyFlag" [src]="rfqProjects[0].rfqCurrency.exchangeCurrencyFlag" />
             {{ rfqProjects[0].rfqCurrency.exchangeCurrencyName }}
           </span>
           <span class="p-l-5"> = </span>
           <span class="p-l-5 color-6d6a6a color-grey"> {{ rfqProjects[0].rfqCurrency.exchangeValue }} </span>
           <span class="p-l-5 color-grey">
-            <img width="25px" *ngIf="rfqProjects[0].rfqCurrency.primaryCurrencyFlag"
-              [src]="rfqProjects[0].rfqCurrency.primaryCurrencyFlag" />
+            <img width="25px" *ngIf="rfqProjects[0].rfqCurrency.primaryCurrencyFlag" [src]="rfqProjects[0].rfqCurrency.primaryCurrencyFlag" />
             {{ rfqProjects[0].rfqCurrency.primaryCurrencyName }}
           </span>
         </span>
       </div>
+
       <div formArrayName="forms">
         <div class="customBid">
           <div *ngFor="let project of rfqProjects; let p = index" [formGroupName]="p">
@@ -43,119 +38,105 @@
                 <mat-expansion-panel-header class="">
                   <span class="top-header-area">
                     <span class="project-name mr-5">{{ project.projectName }}</span>
-                    <span class="main-color">{{ project.addressLine1 }}
+                    <span class="main-color"
+                      >{{ project.addressLine1 }}
                       <span *ngIf="project.addressLine2">,{{ project.addressLine2 }}</span>
                       ,{{ project.city }},{{ project.country }},{{ project.state }},{{ project.pinCode }}
                     </span>
                   </span>
                 </mat-expansion-panel-header>
 
-                <!--table class="table">
-                  <tr>
-                    <th>Material Name</th>
-                    <th>Quantity</th>
-                    <th>Makes & Rates</th>
+                <table class="view-bids-tbl width-100">
+                  <tr matSort class="mat-header-row">
+                    <th class="mat-header-cell maxwidth-20">Material Name</th>
+                    <th class="mat-header-cell maxwidth-10">Quantity</th>
+                    <th class="mat-header-cell maxwidth-10 text-center">Attached Images</th>
+                    <th class="mat-header-cell maxwidth-60">Makes & Rates</th>
                   </tr>
-
-                  <ng-container formArrayName="materialList">
-                    <ng-container *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
-                      <tr>
-                        <td>{{ material.materialName }}</td>
-                        <td>{{ material.rfqMaterialQty }}</td>
-                        <td>
-                          <ng-container *ngFor="let brand of material.brandNames">
-                            <span class="col-xs-1">
-                              {{ brand }}
-                            </span>
-                            <span class="col-xs-1">
-                              Supplier Rates
-                            </span>
-                          </ng-container>
-                        </td>
-                      </tr>
-                    </ng-container>
-                  </ng-container>
-                  
-                </table-->
-
-                <div>
-                  <section class="mat-header-row">
-                    <span class="mat-cell maxwidth-15 p-l-25 view-bid-tbl">Material Name</span>
-                    <span class="mat-cell maxwidth-10">Quantity</span>
-                    <span class="mat-cell maxwidth-15">Makes & Rates</span>
-                  </section>
-                </div>
+                </table>
 
                 <ng-container formArrayName="materialList">
                   <div class="p-0" *ngFor="let material of project.materialList; let m = index" [formGroupName]="m">
-                    <section class="mat-row rfqbid-header-color">
-                      <span class="mat-cell maxwidth-15 view-bid-tbl p-l-25">
-                        <div class="limited-character" matTooltip=" {{ material.materialName }}">
-                          {{ material.materialName }} <br />
-                          <!-- <span *ngIf="!rfqForms.controls.forms['controls'][p].controls.materialList.controls[m].controls.validQtyBoolean.value" class="error-msg font-size9"> Net Quantity Should be less than {{material.poAvailableQty}} </span> -->
-                        </div>
-                      </span>
-                      <span class="mat-cell maxwidth-10">
+                    <tr class="mat-row material-details-row">
+                      <td class="mat-cell maxwidth-20 mat-name-col" matTooltip=" {{ material.materialName }}">
+                        <span [class.text-ellipsis]="material.materialName.length > 65">{{ material.materialName }}</span>
+
+                        <!-- if text length is too large then three dots menu will appear -->
+                        <ng-container *ngIf="material.materialName.length > 65">
+                          <mat-icon>more_vert</mat-icon>
+                        </ng-container>
+                      </td>
+
+                      <td class="mat-cell maxwidth-10">
                         {{ material.rfqMaterialQty }}
                         <span class="p-l-5">{{ material.materialUnit }}</span>
-                      </span>
+                      </td>
 
-                      <span class="mat-cell maxwidth-75">
-                        <div class="mat-row align-items-center">
+                      <td class="mat-cell maxwidth-10 text-center"></td>
+
+                      <!-- Makes name, quantity and rate column -->
+                      <td class="mat-cell maxwidth-60">
+                        <tr class="mat-row makes-details-row makes-header-row">
                           <ng-container *ngFor="let brand of material.brandNames">
-                            <span class="mat-cell maxwidth-10 text-center">
-                              {{ brand }}
-                            </span>
-                            <span class="mat-cell maxwidth-10 text-center supplier-rate-col-bid">
-                              Supplier Rates
-                              <span *ngIf="this.rfqProjects[0].rfqCurrency" class="p-r-5 p-t-2">({{ currency }})</span>
-                            </span>
-
-                            <!-- <span class="col-sm-1"></span> -->
+                            <td class="mat-cell maxwidth-8 text-center">{{ brand }}</td>
+                            <td class="mat-cell maxwidth-17 text-center supplier-rate-col-bid">
+                              Rate
+                              <span *ngIf="rfqProjects[0].rfqCurrency" class="p-r-5">({{ currency }})</span>
+                            </td>
                           </ng-container>
-                        </div>
-                      </span>
-
-                      <span class="mat-cell maxwidth-10 text-center">
-                        Attached Images
-                      </span>
-                    </section>
+                        </tr>
+                      </td>
+                    </tr>
 
                     <ng-container formArrayName="supplierList">
-                      <div class="mat-row supplierLevel" *ngFor="let supplier of material.supplierList; let s = index"
-                        [formGroupName]="s">
-                        <span class="mat-cell maxwidth-15 p-l-25 limited-character view-bid-tbl"
-                          matTooltip=" {{ supplier.supplierName }}">
+                      <tr class="mat-row supplier-details-row" *ngFor="let supplier of material.supplierList; let s = index" [formGroupName]="s">
+                        <td class="mat-cell maxwidth-20" matTooltip=" {{ supplier.supplierName }}">
                           <span class="supplier-name ml-0">{{ supplier.supplierName }}</span>
 
-                          <span class="d-block supplier-rates ml-0 mgbn12 view-bid-supp-rating">
+                          <span class="d-block supplier-rates ml-0 view-bid-supp-rating">
                             <view-rating [supplierId]="material.materialId" [ratings]="supplier.rating"></view-rating>
                           </span>
-                        </span>
+                        </td>
 
-                        <span class="mat-cell maxwidth-10"></span>
+                        <td class="mat-cell maxwidth-10"></td>
 
-                        <div class="mat-cell maxwidth-75">
-                          <div class="mat-row align-items-center">
+                        <!-- Attached Image Column individual Supplier -->
+                        <td class="mat-cell maxwidth-10 view-bid-images-preview text-center">
+                          <ng-container *ngIf="supplier?.documentList?.length; else defaultImage">
+                            <div
+                              class="images-lists"
+                              [ngClass]="supplier.documentList.length === 1 ? 'single-image' : supplier.documentList.length === 2 ? 'double-images' : 'triple-images'"
+                              (click)="viewAllImages(material.materialId, supplier.supplierId, project.projectId)"
+                            >
+                              <ng-container *ngFor="let img of supplier.documentList; let i = index">
+                                <img [src]="img.documentThumbnailUrl" alt="project{{ i }}" class="img-fluid attached-image" *ngIf="i < 3" />
+                              </ng-container>
+                            </div>
+                          </ng-container>
+
+                          <ng-template #defaultImage>
+                            <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
+                          </ng-template>
+                        </td>
+
+                        <!-- Makes name, quantity and rate column -->
+                        <td class="mat-cell maxwidth-60">
+                          <tr class="mat-row makes-details-row makes-body-row">
                             <ng-container formArrayName="brandGroup">
-                              <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index"
-                                [formGroupName]="i">
-                                <div class="mat-cell maxwidth-10 text-center" style="overflow: initial;">
-                                  <ng-container
-                                    *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
-                                    <mat-form-field class="border-input">
-                                      <input type="text" class="quantity" appTwoDigitDecimaNumber matInput
-                                        formControlName="quantity" placeholder="qty" min="0"
-                                        (input)="getQuanityValidation(p, m)" />
+                              <ng-container *ngFor="let brandInfo of supplier.brandDetailList; let i = index" [formGroupName]="i">
+                                <td class="mat-cell maxwidth-8 text-center" style="overflow: initial">
+                                  <ng-container *ngIf="brandInfo.materialUnitPrice !== null && brandInfo.materialUnitPrice !== 0; else dashedLine">
+                                    <mat-form-field class="border-input width-100">
+                                      <input type="text" class="quantity" appTwoDigitDecimaNumber matInput formControlName="quantity" placeholder="qty" min="0" (input)="getQuanityValidation(p, m)" />
                                     </mat-form-field>
                                   </ng-container>
 
                                   <ng-template #dashedLine>
                                     <span>--</span>
                                   </ng-template>
-                                </div>
+                                </td>
 
-                                <span class="mat-cell maxwidth-10 text-center supplier-rate-col-bid">
+                                <td class="mat-cell maxwidth-17 text-center supplier-rate-col-bid">
                                   {{
                                     brandInfo.materialUnitPrice != null
                                       ? ratesBaseCurr
@@ -163,44 +144,12 @@
                                         : (brandInfo.materialUnitPrice | number: "1.2-2")
                                       : "--"
                                   }}
-                                </span>
-
-                                <!-- <span class="col-sm-1"></span> -->
+                                </td>
                               </ng-container>
                             </ng-container>
-                          </div>
-                        </div>
-
-                        <!-- Attached Image Column individual Supplier -->
-                        <div class="mat-cell maxwidth-10 view-bid-images-preview text-center">
-                          <ng-container *ngIf="supplier?.documentList?.length; else defaultImage">
-                            <div class="images-lists"
-                              [ngClass]="supplier.documentList.length === 1 ? 'single-image' : supplier.documentList.length === 2 ? 'double-images' : 'triple-images'"
-                              (click)="viewAllImages(material.materialId, supplier.supplierId, project.projectId)">
-                              <ng-container *ngFor="let img of supplier.documentList; let i = index">
-                                <img [src]="img.documentThumbnailUrl" alt="project{{ i }}"
-                                  class="img-fluid attached-image" *ngIf="i < 3" />
-                              </ng-container>
-                            </div>
-                          </ng-container>
-
-                          <ng-template #defaultImage>
-                            <img src="assets/images/project-default-image.png" alt="default-material"
-                              class="img-fluid default-image" />
-                          </ng-template>
-
-                          <!-- <div *ngIf="supplier?.documentList?.length" class="images-lists" [ngClass]="supplier.documentList.length === 1 ? 'single-image' : (supplier.documentList.length === 2 ? 'double-images' : 'triple-images')"
-                            (click)="viewAllImages(material.materialId, supplier.supplierId, project.projectId)">
-                            <ng-container *ngFor="let img of supplier.documentList; let i = index">
-                              <img [src]="img.documentThumbnailUrl" alt="project{{i}}" class="img-fluid attached-image" *ngIf="i < 3" />
-                            </ng-container>
-                          </div>
-              
-                          <ng-container *ngIf="!supplier?.documentList">
-                            <img src="assets/images/project-default-image.png" alt="default-material" class="img-fluid default-image" />
-                          </ng-container>  -->
-                        </div>
-                      </div>
+                          </tr>
+                        </td>
+                      </tr>
                     </ng-container>
                   </div>
                 </ng-container>

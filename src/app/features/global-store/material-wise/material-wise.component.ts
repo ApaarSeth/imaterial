@@ -1,73 +1,64 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { getLocaleTimeFormat } from "@angular/common";
-import { GlobalStoreMaterial, GlobalProject } from "src/app/shared/models/GlobalStore/materialWise";
+import { IndentObj, MaterialwiseObj, ProjectMaterialObj } from "src/app/shared/models/GlobalStore/materialWise";
 import { CommonService } from 'src/app/shared/services/commonService';
+import { GlobalStoreService } from 'src/app/shared/services/global-store.service';
+import { PaginatorConfig } from 'src/app/shared/models/common.models';
 
 @Component({
   selector: "app-material-wise",
-  templateUrl: "./material-wise.component.html",
-  styleUrls: [ "./material-wise.component.scss" ]
+  templateUrl: "./material-wise.component.html"
 })
+
 export class MaterialWiseComponent implements OnInit {
-  @Input("materialData") materialData: GlobalStoreMaterial[];
+  
+  @Input("materialData") materialData: MaterialwiseObj[];
+  @Input() pageNumber: number;
+  @Input() pageLimit: number;
+  @Input() totalPageCount: number;
   @Output("materialDataLength") materialDataLength = new EventEmitter();
-  newMaterialData: GlobalStoreMaterial[];
+  @Output() sendMaterialPaginationInfo = new EventEmitter<any>();
   isMobile: boolean;
-  constructor(
-    private commonService: CommonService
-  ) { }
   searchMaterial: string = "";
-  searchProject: string = "";
+  indentList: IndentObj[];
+  paginationConfig: PaginatorConfig;
+  isPaginationShow = true;
+
+  constructor(
+    private commonService: CommonService,
+    private _globalStoreService: GlobalStoreService
+  ) { }
+  
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
-    this.mappingMaterialData();
-  }
-
-  mappingMaterialData() {
-    this.newMaterialData = this.materialData.map((material: GlobalStoreMaterial) => {
-      this.mappingIndentToProject(material);
-      this.mappingProjectToMaterial(material);
-      return material;
-    });
-    this.materialDataLength.emit(this.newMaterialData.length);
-  }
-
-  mappingProjectToMaterial(material: GlobalStoreMaterial) {
-    let recentDateProject: string;
-    let totalSum = 0;
-    for (let proj of material.GlobalProject) {
-      totalSum += proj.Projects.sum;
-      if (!recentDateProject) {
-        recentDateProject = proj.Projects.nearDueDate;
-      } else {
-        if (proj.Projects.nearDueDate && new Date(proj.Projects.nearDueDate) > new Date(recentDateProject)) {
-          recentDateProject = proj.Projects.nearDueDate;
-        }
-      }
+    this.materialDataLength.emit(this.materialData?.length);
+    this.paginationConfig = {
+      limit: this.pageLimit,
+      pageNumber: this.pageNumber,
+      totalCount: this.totalPageCount
     }
-    material.GlobalMaterial.sum = totalSum;
-    material.GlobalMaterial.nearDueDate = recentDateProject;
   }
 
-  mappingIndentToProject(material: GlobalStoreMaterial) {
-    for (let project of material.GlobalProject) {
-      let sum = 0;
-      let nearDueDate: string = null;
-      if (project.IndentMaterial) {
-        for (let indent of project.IndentMaterial) {
-          if (!nearDueDate) {
-            nearDueDate = indent.dueDate;
-          } else {
-            if (new Date(indent.dueDate) > new Date(nearDueDate)) {
-              nearDueDate = indent.dueDate;
-            }
-          }
-          sum += indent.quantity;
+  /**
+   * @description get material's indent list after click on specific project row
+   * @param projectObj 
+   * @param event 
+   */
+  getIndentsList(projectObj: ProjectMaterialObj, event){
+    if(event){
+      this._globalStoreService.getMaterialIndents(projectObj.materialId).then(res => {
+        if(res.data && res.data.length > 0){
+          this.indentList = res.data;
+          projectObj.isIndent = true;
         }
-      }
-      project.Projects.sum = sum;
-      project.Projects.nearDueDate = nearDueDate;
-      project.Projects.indentMaterials = project.IndentMaterial;
+      });
     }
+  }
+
+  updatePaginatorOptions(data){
+    this.sendMaterialPaginationInfo.emit(data);
+  }
+
+  searchInput(value){
+    this.isPaginationShow = this.materialData.some(item => item.materialName.toLowerCase().indexOf(value.toLowerCase()) !== -1);
   }
 }

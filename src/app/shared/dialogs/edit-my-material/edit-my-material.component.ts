@@ -1,24 +1,14 @@
-import { OnInit, Component, Inject, ViewChild, NgZone } from '@angular/core';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList, UserDetailsPopUpData } from 'src/app/shared/models/user-details';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { Router } from '@angular/router';
-import { elementAt, count, take, startWith, map, filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { BomService } from '../../services/bom/bom.service';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { orgTrades, tradeRelatedCategory } from '../../models/trades';
-import { MyMaterialPost } from '../../models/myMaterial';
-import { Subject, Observable, merge } from 'rxjs';
-import { categoryNestedLevel, material } from '../../models/category';
-import { MyMaterialService } from '../../services/myMaterial.service';
-
-export interface City {
-  value: string;
-  viewValue: string;
-}
+import { MyMaterialPost } from './../../models/myMaterial';
+import { MyMaterialService } from './../../services/myMaterial.service';
+import { Component, OnInit, Inject } from "@angular/core";
+import { UserRoles, UserDetails } from "../../models/user-details";
+import { FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms";
+import { tradeRelatedCategory } from "../../models/trades";
+import { UserService } from "../../services/user.service";
+import { BomService } from "../../services/bom.service";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { material } from '../../models/category';
 
 @Component({
   selector: 'app-edit-my-material',
@@ -26,6 +16,7 @@ export interface City {
 })
 
 export class EditMyMaterialComponent implements OnInit {
+
   searchUnit: string = '';
   searchCategory: string = "";
   roles: UserRoles;
@@ -43,7 +34,6 @@ export class EditMyMaterialComponent implements OnInit {
   materialUnit: string[];
   tradesList: { tradeName: string, tradeId: number }[] = [];
   filteredOption: tradeRelatedCategory[] = [];
-  // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
   addOtherFormGroup: FormGroup;
   editMaterialForm: FormGroup;
 
@@ -52,8 +42,6 @@ export class EditMyMaterialComponent implements OnInit {
     private userService: UserService,
     private bomService: BomService,
     private myMaterialService: MyMaterialService,
-    private _router: Router,
-    private navService: AppNavigationService,
     private dialogRef: MatDialogRef<EditMyMaterialComponent>,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: { materialList: material[], type: string }) { }
@@ -64,8 +52,6 @@ export class EditMyMaterialComponent implements OnInit {
     this.getUserData(this.creatorId);
     this.getUserRoles();
     this.getMaterialUnit();
-    // this.getTrades();
-    // this.getCategories()
   }
 
   getTrades() {
@@ -101,8 +87,8 @@ export class EditMyMaterialComponent implements OnInit {
 
   getUserData(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      if (res.data[0].roleName) {
-        localStorage.setItem("role", res.data[0].roleName);
+      if (res.data.roleName) {
+        localStorage.setItem("role", res.data.roleName);
       }
     });
   }
@@ -169,8 +155,6 @@ export class EditMyMaterialComponent implements OnInit {
     return { trade, category, materialName };
   }
 
-
-
   displayFn(option: tradeRelatedCategory) {
     return option && option.categoriesName ? option.categoriesName : '';
   }
@@ -179,11 +163,7 @@ export class EditMyMaterialComponent implements OnInit {
     return trade && trade.tradeName ? trade.tradeName : '';
   }
 
-
-  onDelete(i) {
-
-  }
-
+  onDelete(i) {}
 
   get currentIndex() {
     return this.addMyMaterial.get('myMaterial')['controls'].length - 1;
@@ -242,7 +222,6 @@ export class EditMyMaterialComponent implements OnInit {
     });
   }
 
-
   resetMaterialName(message) {
     this._snackBar.open(message, "", {
       duration: 4000,
@@ -250,7 +229,6 @@ export class EditMyMaterialComponent implements OnInit {
       verticalPosition: "bottom"
     });
     (<FormGroup>(<FormArray>this.editMaterialForm.get("forms")).controls[0]).controls['materialName'].reset()
-
   }
 
   editMaterial(myMaterial: MyMaterialPost) {
@@ -258,7 +236,6 @@ export class EditMyMaterialComponent implements OnInit {
     this.myMaterialService.updateMyMaterial(updateMaterial).then(res => {
       if (res.message = "done") {
         this.dialogRef.close('done');
-        // this.resetMaterialName("My Materials Added")
       }
     });
   }
@@ -279,6 +256,4 @@ export class EditMyMaterialComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close(null);
   }
-
-
 }

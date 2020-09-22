@@ -330,7 +330,7 @@ body,
   margin: auto;
 }
 
-.bnrimgs{
+.bnrimgs {
   border-radius: 10px;
   box-shadow: 0 0 4px #b9b9b9;
   padding: 2px;
@@ -405,13 +405,14 @@ body,
 }
 
 @media only screen and (min-width: 560px) {
-  .project-dashboard {
-    padding-left: 10px;
-    padding-right: 20px;
-  }
+  .project-dashboard,
+  .users-dashboard,
+  .create-po-dashboard,
   .dashboard-unique {
     padding-left: 10px;
-    padding-right: 20px;
+    padding-right: 10px;
+  }
+  .dashboard-unique {
     .example-form-field {
       width: 100% !important;
     }
@@ -421,15 +422,9 @@ body,
     padding-right: 20px;
   }
   .create-po-dashboard {
-    padding-left: 10px;
-    padding-right: 20px;
     .mat-expansion-panel-header-title {
       font-size: 15px !important;
     }
-  }
-  .users-dashboard {
-    padding-left: 10px;
-    padding-right: 20px;
   }
   .back-btn-grn {
     display: block;
@@ -539,6 +534,10 @@ body,
   //         border-left: 5px solid #1896BA;
 
   // }
+
+  .grn-transparent-btn {
+    display: block !important;
+  }
 }
 
 @media only screen and (max-width: 1023px) {
@@ -652,5 +651,13 @@ body,
 @media (max-width: 340px) {
   .things-to-do__icons {
     min-width: 76px !important;
+  }
+}
+
+.po-res-td {
+  span {
+    div {
+      font-weight: normal;
+    }
   }
 }

@@ -1,0 +1,233 @@
+<div class="page-start-point">
+  <div *ngIf="!submittedRfqListTemp && !nonSubmittedRfqListTemp && rfqCount === 0" class="parent min-height">
+    <div class="p-l-20 p-r-20 p-b-20 min-height parent wrapper-btn-center">
+      <div class="add-user-img">
+        <img src="../../../../assets/images/rfq-details.png" alt="Project Logo" />
+        <div>
+          <p>You haven't created any RFP yet. <br />Please create one to continue.</p>
+        </div>
+      </div>
+
+      <button mat-raised-button [routerLink]="['/rfq/createRfq']" class="main-background-color main-button color-white">Create RFP</button>
+    </div>
+  </div>
+
+  <div class="create-po-dashboard ref-detail p-b-20 min-height parent" *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp || rfqCount > 0">
+    <div class="row" [ngClass]="isMobile ? 'ml-0' : ''">
+      <div class="col-xs-6">
+        <mat-form-field class="example-form-field border-input project" [ngClass]="isMobile ? 'w-100' : 'width-30'">
+          <input matInput placeholder="Search RFP" type="search" (keyup)="applyFilter($event.target.value)" />
+          <button mat-button matSuffix mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="text-right col-xs-6 create-po-btn p-r-15 p-t-10" [ngClass]="isMobile ? 'sm-btn1 d-flex justify-content-flex-end' : ''">
+        <ng-container *ngIf="isMobile">
+          <button mat-button class="fltr-btn brand-color" (click)="openFilter()">
+            <mat-icon inline="true">filter_list</mat-icon>
+          </button>
+        </ng-container>
+        <button mat-raised-button class="main-background-color main-button color-white demo-title" (click)="createRfq()">Create RFP</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <ng-container *ngIf="!isMobile; else mobileSearch">
+        <div class="col-md-2 align-top">
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)" [config]="searchConfig"> </advance-search>
+        </div>
+      </ng-container>
+
+      <ng-template #mobileSearch>
+        <div class="mb-srch" [ngClass]="isFilter ? 'mb-srch__open' : 'mb-srch__close'">
+          <div class="sdb" (click)="closeFilter()"></div>
+          <advance-search *ngIf="searchConfig" (submitExport)="applyExport($event)" (submitSearch)="applySearch($event)" [config]="searchConfig" class="mb-cl"></advance-search>
+        </div>
+      </ng-template>
+
+      <div class="col-md-10 align-top">
+        <ng-container *ngIf="submittedRfqListTemp || nonSubmittedRfqListTemp; else emptyReports">
+          <div class="rfq-list-detail-custom">
+            <mat-accordion *ngIf="submittedRfqListTemp">
+              <mat-expansion-panel class="myPanel m-b-10" [expanded]="true">
+                <mat-expansion-panel-header [ngClass]="isMobile ? 'p-t-1-rem p-b-1-rem' : ''">
+                  <mat-panel-title> Quotes Received </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="add-unique-container mat-elevation-z8">
+                  <table mat-table [dataSource]="submittedRfqList" class="rfp-details-tbl">
+                    <ng-container matColumnDef="RFQ Name">
+                      <th mat-header-cell *matHeaderCellDef>RFP Name</th>
+                      <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Raised Date">
+                      <th mat-header-cell *matHeaderCellDef>Raised Date</th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.createdAt | date: "dd MMM yyy" }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="End Date">
+                      <th mat-header-cell *matHeaderCellDef>End Date</th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.rfqDueDate | date: "dd MMM yyy" }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Projects">
+                      <th mat-header-cell *matHeaderCellDef class="text-align-center">Projects</th>
+                      <td mat-cell *matCellDef="let element" class="text-align-center">
+                        {{ element.projectCount }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Total Material">
+                      <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Material</th>
+                      <td mat-cell *matCellDef="let element" class="text-align-center">
+                        {{ element.materialCount }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Total Supplier">
+                      <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
+                      <td mat-cell *matCellDef="let element" class="text-align-center">
+                        <div class="supplier-qty-div">
+                          <span>{{ element.supplierList != null ? element.supplierList.length : "" }}</span>
+                          <div class="info-tootip m-l-10">
+                            <span *ngIf="element.supplierList.length" class="info-icon">
+                              <img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                            </span>
+                            <!-- tootlip containes supplier name -->
+                            <div class="info-tootip__content tooltip-info">
+                              <div class="tooltip-info-header">
+                                <span>Supplier Name</span>
+                              </div>
+                              <div class="tooltip-info-body">
+                                <span *ngFor="let name of element.supplierList">{{ name.supplierName }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action1">
+                      <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
+                      <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
+                        <a [routerLink]="['./rfq-view', element.rfqId]" style="color: #f47721">View RFP</a>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action2">
+                      <th mat-header-cell *matHeaderCellDef></th>
+                      <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center">
+                        <a [routerLink]="['./rfq-bid/', element.rfqId]" class="text-align-center" style="color: #f47721">View Bids</a>
+                      </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                  </table>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+
+            <mat-accordion *ngIf="nonSubmittedRfqListTemp">
+              <mat-expansion-panel class="myPanel" [expanded]="true">
+                <mat-expansion-panel-header [ngClass]="isMobile ? 'p-t-1-rem p-b-1-rem' : ''">
+                  <mat-panel-title> Quotes Not Received </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="add-unique-container mat-elevation-z8">
+                  <table mat-table [dataSource]="nonSubmittedRfqList" class="rfp-details-tbl">
+                    <ng-container matColumnDef="RFQ Name">
+                      <th mat-header-cell *matHeaderCellDef>RFP Name</th>
+                      <td mat-cell *matCellDef="let element">{{ element.rfqName }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Raised Date">
+                      <th mat-header-cell *matHeaderCellDef>Raised Date</th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.createdAt | date: "dd MMM yyy" }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="End Date">
+                      <th mat-header-cell *matHeaderCellDef>End Date</th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.rfqDueDate | date: "dd MMM yyy" }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Projects">
+                      <th mat-header-cell *matHeaderCellDef class="text-align-center">Projects</th>
+                      <td mat-cell *matCellDef="let element" class="text-align-center">
+                        {{ element.projectCount }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Total Material">
+                      <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Material</th>
+                      <td mat-cell *matCellDef="let element" class="text-align-center">
+                        {{ element.materialCount }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Total Supplier">
+                      <th mat-header-cell *matHeaderCellDef class="text-align-center">Total Supplier</th>
+                      <td mat-cell *matCellDef="let element" class="text-align-center">
+                        <div class="supplier-qty-div">
+                          <span>{{ element.supplierList != null ? element.supplierList.length : "" }}</span>
+
+                          <div class="info-tootip m-l-10">
+                            <span *ngIf="element.supplierList?.length" class="info-icon">
+                              <img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+                            </span>
+
+                            <!-- tootlip containes supplier name -->
+                            <div class="info-tootip__content tooltip-info">
+                              <div class="tooltip-info-header">
+                                <span>Supplier Name</span>
+                              </div>
+                              <div class="tooltip-info-body">
+                                <span *ngFor="let name of element.supplierList">{{ name.supplierName }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action1">
+                      <th mat-header-cell *matHeaderCellDef class="text-align-center"></th>
+                      <td mat-cell *matCellDef="let element" class="action1" class="text-align-center">
+                        <a (click)="viewRfq(element)" class="cursor" style="color: #f47721">{{ element.rfqStatus === 0 ? "Complete RFP" : "View RFP" }}</a>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action2">
+                      <th mat-header-cell *matHeaderCellDef></th>
+                      <td mat-cell *matCellDef="let element; let i = index" class="action2" class="text-align-center"></td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                  </table>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </ng-container>
+
+        <ng-template #emptyReports>
+          <div class="d-block text-align-center mt-3">
+            <img src="../../../../assets/images/empty-report.svg" alt="empty report" />
+            <p class="font-weight-light m-0 p-t-1-rem"><strong class="font-weight500">Oops!</strong> You have nothing to see.</p>
+            <p class="font-weight-light m-0 mt-1">Try Again !</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

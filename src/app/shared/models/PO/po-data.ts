@@ -32,7 +32,20 @@ export interface POData {
   poCreatedBy?: number;
   isAmended?: number;
   poStatus?: string;
+  moduleFeatures?: PremiumFeatures;
 }
+
+export interface PremiumFeatures {
+  featureList: FeaturesList[]
+  planId: number
+
+}
+
+export interface FeaturesList {
+  featureName: string;
+  isAvailable: number;
+}
+
 
 
 export interface PurchaseOrderCurrency {
@@ -201,6 +214,7 @@ export interface CardData {
   sellerPORating?: number;
   poCreatedBy?: number;
   poStatus?: string;
+  rating?: number;
 }
 
 export interface DocumentList {
@@ -230,7 +244,10 @@ export interface ApproverData {
   lastName: string;
   profileImageUrl: string;
   accountStatus: number;
+  checked?: any;
+  roleDescription?: string
 }
+
 
 export interface initiatePo {
   projectId: number;

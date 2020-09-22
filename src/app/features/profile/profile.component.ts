@@ -1,13 +1,14 @@
-import { OnInit, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList, TurnOverList } from 'src/app/shared/models/user-details';
-import { Router } from '@angular/router';
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { MatSnackBar } from '@angular/material';
-import { Currency, CountryCode } from 'src/app/shared/models/currency';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
+import { orgTrades } from './../../shared/models/trades';
+import { Component, OnInit } from "@angular/core";
+import { UserRoles, UserDetails, TradeList, TurnOverList } from "../../shared/models/user-details";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Currency, CountryCode } from "../../shared/models/currency";
+import { UserService } from "../../shared/services/user.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
+import { CommonService } from "../../shared/services/commonService";
+import { FieldRegExConst } from "../../shared/constants/field-regex-constants";
+import { DocumentUploadService } from "../../shared/services/document-download.service";
 
 export interface City {
   value: string;
@@ -38,7 +39,7 @@ export class ProfileComponent implements OnInit {
     { value: "Karnal", viewValue: "Karnal" }
   ];
   selectedTradesId: number[] = [];
-  usersTrade: number[] = [];
+  usersTrade: TradeList[] = [];
   OthersId: any;
   url: any;
   userId
@@ -53,6 +54,7 @@ export class ProfileComponent implements OnInit {
   countryCode: string;
   validPincode: boolean = false;
   countryId: Number;
+  isMobile: boolean = false;
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -61,6 +63,7 @@ export class ProfileComponent implements OnInit {
     private _uploadImageService: DocumentUploadService) { }
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.userId = localStorage.getItem("userId");
     this.role = localStorage.getItem("role");
     this.countryId = Number(localStorage.getItem('countryId'))
@@ -117,10 +120,10 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserInformation(res, tradeRes) {
-    this.users = res.data ? res.data[0] : null;
-    if (res.data[0].trade) {
-      res.data[0].trade.forEach(element => {
-        this.usersTrade.push(element.tradeId);
+    this.users = res.data ? res.data : null;
+    if (res.data.trade) {
+      res.data.trade.forEach(element => {
+        this.usersTrade.push(element);
         if (element.tradeId == 13) {
           if (element.tradeDescription)
             this.tradeDescription = element.tradeDescription;
@@ -180,8 +183,10 @@ export class ProfileComponent implements OnInit {
     if (this.tradeList) {
       this.tradeList.forEach(element => {
         for (let i = 0; i < this.usersTrade.length; i++) {
-          if (this.usersTrade[i] == element.tradeId)
+          if (this.usersTrade[i].tradeId == element.tradeId) {
             element.selected = true;
+            this.selectedTrades.push(element)
+          }
         }
       });
     }
@@ -335,7 +340,7 @@ export class ProfileComponent implements OnInit {
         data.profileUrl = fileName;
       }
 
-      data.trade = [...this.userInfoForm.get('trade').value, ...this.selectedTrades];
+      data.trade = [...this.selectedTrades];
       data.countryCode = this.userInfoForm.getRawValue().countryCode.callingCode
       data.countryId = this.userInfoForm.getRawValue().countryCode.countryId
       data.orgPincode = String(this.userInfoForm.value.orgPincode)

@@ -1,33 +1,26 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, HostListener } from "@angular/core";
-import { MatDialog, MatTableDataSource, MatDialogRef, MatSnackBar } from "@angular/material";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { SuppliersDialogComponent } from 'src/app/shared/dialogs/add-supplier/suppliers-dialog.component';
-import { SupplierDetailsPopUpData, SupplierAdd } from 'src/app/shared/models/supplier';
-import { DeactiveSupplierComponent } from 'src/app/shared/dialogs/disable-supplier/disable-supplier.component';
-import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
-import { GuidedTourService, GuidedTour, Orientation } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { ActivatedRoute } from '@angular/router';
-
-// chip static data
-export interface Fruit {
-  name: string;
-}
-
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input } from "@angular/core";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
+import { GlobalLoaderService } from "../../../shared/services/global-loader.service";
+import { CommonService } from "../../../shared/services/commonService";
+import { ActivatedRoute } from "@angular/router";
+import { RFQService } from "../../../shared/services/rfq.service";
+import { UserGuideService } from "../../../shared/services/user-guide.service"
+import { DeactiveSupplierComponent } from "../../../shared/dialogs/disable-supplier/disable-supplier.component";
+import { SupplierAdd, SupplierDetailsPopUpData } from "../../../shared/models/supplier";
+import { SuppliersDialogComponent } from "../../../shared/dialogs/add-supplier/suppliers-dialog.component";
 
 const ELEMENT_DATA: SupplierAdd[] = [];
 
 @Component({
   selector: "supplier-details",
-  templateUrl: "./supplier-details.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./supplier-details.component.html"
 })
 
-
 export class SupplierDetailComponent implements OnInit {
+
   displayedColumns: string[] = ['suppliername', 'email', 'contactNo', 'status'];
   displayedColumnsDeactivate: string[] = ['username', 'email', 'contactNo', 'roleName', 'ProjectList'];
   dataSource = new MatTableDataSource<SupplierAdd>();
@@ -36,16 +29,16 @@ export class SupplierDetailComponent implements OnInit {
   @ViewChild('fileDropRef', { static: false }) myInputVariable: ElementRef;
   deactivateUsers: Array<SupplierAdd> = new Array<SupplierAdd>();
   activateUsers: Array<SupplierAdd> = new Array<SupplierAdd>();
-
-
   suppliersDetailsTemp: SupplierAdd = {};
-
-
   addUserBtn: boolean = false;
   orgId: number;
   countryList: any;
-
   isMobile: boolean;
+  userId: number;
+  showResponsiveDesignIcons: boolean;
+  @ViewChild('searchVal', {static: false}) searchVal: ElementRef<any>;
+  noSearchResults: boolean;
+  isRatingFeatureShow: any;
 
   public SupplierDashboardTour: GuidedTour = {
     tourId: 'supplier-tour',
@@ -66,8 +59,6 @@ export class SupplierDetailComponent implements OnInit {
       this.setLocalStorage()
     }
   };
-  userId: number;
-  showResponsiveDesignIcons: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -78,8 +69,7 @@ export class SupplierDetailComponent implements OnInit {
     private userGuideService: UserGuideService,
     private commonService: CommonService,
     private activatedRoute: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
@@ -89,36 +79,35 @@ export class SupplierDetailComponent implements OnInit {
     window.dispatchEvent(new Event('resize'));
     this.getNotifications();
     this.getAllSupplier();
+    this.noSearchResults = false;
   }
 
   getNotifications() {
     this.commonService.getNotification(this.userId);
   }
+
   getAllSupplier() {
     this.commonService.getSuppliers(this.orgId).then(data => {
-      this.dataSource = new MatTableDataSource(data.data);
 
-      this.dataSourceTemp = data.data;
-
-      if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
-        setTimeout(() => {
-          this.guidedTourService.startTour(this.SupplierDashboardTour);
-        }, 1000);
+      if(data.data){
+        this.dataSource = new MatTableDataSource(data.data.supplierList);
+        this.dataSourceTemp = data.data.supplierList;
+  
+        const premiumFeature = data.data.moduleFeatures;
+        if(premiumFeature.featuresList?.length > 0){
+          this.isRatingFeatureShow = (premiumFeature.featureList[1].featureName === "supplier rating" && premiumFeature.featureList[1].isAvailable === 1) ? true : false;
+        }
+  
+        if ((localStorage.getItem('supplier') == "null") || (localStorage.getItem('supplier') == '0')) {
+          setTimeout(() => {
+            this.guidedTourService.startTour(this.SupplierDashboardTour);
+          }, 1000);
+        }
       }
-
-      // this.dataSource.filterPredicate = (data, filterValue) => {
-      //   const dataStr = data.supplier_name.toString() + data.email.toString() + data.pan.toString() + data.contact_no.toString() + data.status;
+      // this.dataSource.filterPredicate = (data.data.supplierList, filterValue) => {
+      //   const dataStr = data.supplierName.toString().toLowerCase() + data.email.toString().toLowerCase() + data.contactNo.toString();
       //   return dataStr.indexOf(filterValue) != -1;
-      // }
-
-      this.dataSource.filterPredicate = (data, filterValue) => {
-        const dataStr =
-          data.supplier_name.toString().toLowerCase() +
-          data.email.toString().toLowerCase() +
-          data.contact_no.toString();
-        return dataStr.indexOf(filterValue) != -1;
-      };
-
+      // };
     });
   }
 
@@ -131,18 +120,20 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   openDialog(data: SupplierDetailsPopUpData): void {
-    if (AddAddressDialogComponent) {
-      const dialogRef = this.dialog.open(SuppliersDialogComponent, {
-        width: "660px",
-        data
-      });
+    const dialogRef = this.dialog.open(SuppliersDialogComponent, {
+      width: "660px",
+      data,
+      panelClass: 'add-supplier-dialog'
+    });
 
-      dialogRef.afterClosed().toPromise().then((data) => {
-        if (data && data != null) {
-          this.getAllSupplier();
-        }
-      });
-    }
+    dialogRef.afterClosed().toPromise().then((data) => {
+      if (data && data != null) {
+        this.getAllSupplier();
+        // code - after add new supplier, search input should be clear and also all supplier list should appear
+        this.searchVal.nativeElement.value = "";
+        this.noSearchResults = false;
+      }
+    });
   }
 
   deactivateUser(data) {
@@ -153,6 +144,7 @@ export class SupplierDetailComponent implements OnInit {
       detail: this.suppliersDetailsTemp
     } as SupplierDetailsPopUpData);
   }
+
   setLocalStorage() {
     const popovers = {
       "userId": this.userId,
@@ -167,21 +159,25 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   openDialogDeactiveUser(data: SupplierDetailsPopUpData): void {
-    if (AddAddressDialogComponent) {
-      const dialogRef = this.dialog.open(DeactiveSupplierComponent, {
-        width: "500px",
-        data
-      });
-      dialogRef.afterClosed().toPromise().then((data) => {
-        if (data && data != null) {
-          this.getAllSupplier();
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(DeactiveSupplierComponent, {
+      width: "500px",
+      data
+    });
+    dialogRef.afterClosed().toPromise().then((data) => {
+      if (data && data != null) {
+        this.getAllSupplier();
+      }
+    });
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if((this.dataSource.filteredData.length > 0 && filterValue !== "") || filterValue == ""){
+        this.noSearchResults = false;
+    }else {
+        this.noSearchResults = true;
+    }
   }
 
   uploadExcel(files: FileList) {
@@ -223,27 +219,31 @@ export class SupplierDetailComponent implements OnInit {
       }
     }).catch(err => {
       this.myInputVariable.nativeElement.value = "";
-      this._snackBar.open(err.error.message, "", {
+      this._snackBar.open(err.message, "", {
         duration: 5000,
         panelClass: ["success-snackbar"],
         verticalPosition: "bottom"
       });
       this.loading.hide();
     });
+
+    // code - after add new supplier, search input should be clear and also all supplier list should appear
+    this.searchVal.nativeElement.value = "";
+    this.noSearchResults = false;
+    this.dataSource = new MatTableDataSource(this.dataSourceTemp);
   }
 
   downloadExcel(url: string) {
     var win = window.open(url, "_blank");
     win.focus();
   }
-  @HostListener('window:resize', ['$event'])
 
+  @HostListener('window:resize', ['$event'])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 1025) {
       this.showResponsiveDesignIcons = true;
     } else {
       this.showResponsiveDesignIcons = false;
     }
-
   }
 }

@@ -37,13 +37,6 @@
   }
 }
 
-
-.add-user-img.global-store-image{
-    img {
-    margin-top: 0%;
-    height: 400px;
-  }
-}
 .add-edit-user-form-modal {
   width: 90%;
   padding-left: 5%;
@@ -58,8 +51,8 @@
   justify-content: center;
 }
 
-.rfq-bid-address{
-  button{
+.rfq-bid-address {
+  button {
     margin-bottom: 20px !important;
   }
 }
@@ -90,43 +83,39 @@
     border-left: 1px solid #d6d6d6;
   }
 }
-.user-details-table-div-active-inactive-single {
-  overflow-y: auto;
-  max-height: 350px;
-}
 
 .btn-project-user-details {
   background: #f0f0f0;
   margin: 3px 1px;
   cursor: default;
-   font-size: 12px;  
-   div{
-     max-width: 200px;
-      white-space: pre-line;
-       word-break: break-all;
-   }        
-   max-width: 200px;
-   white-space: pre-line;
-}
-.add-user-container {
-  .mat-header-cell{
-    z-index: 9 !important;
+  font-size: 12px;
+  div {
+    max-width: 200px;
+    white-space: pre-line;
+    word-break: break-all;
   }
-  .project-user-details-width {
-   max-width: 400px;
-   min-width: 400px !important;
-}
-    .edit-disable-user-details-width {
-      min-width: 100px;
-      mat-icon {
-        float: right;
-      }
-      i {
-        float: right;
-      }
-    }
+  max-width: 200px;
+  white-space: pre-line;
 }
 
+.add-user-container {
+  .mat-header-cell {
+    z-index: 9 !important;
+  }
+
+  .project-user-details-width {
+    max-width: 400px;
+    min-width: 400px !important;
+  }
+
+  .mat-cell {
+    white-space: normal !important;
+  }
+
+  .mat-row {
+    border-bottom: 1px solid #bbbbbb;
+  }
+}
 
 .add-user-details-button-right {
   padding-bottom: 8px;
@@ -138,7 +127,8 @@
   color: #f44336;
 }
 
-.update-info, .terms-conditions {
+.update-info,
+.terms-conditions {
   background-image: url("/assets/images/background-image-overlay.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -191,17 +181,17 @@
     }
   }
 }
- .buildsupply-logo{
-    width: 200px;
-  }
+.buildsupply-logo {
+  width: 200px;
+}
 
 .update-info-profile {
-  background-image: url("/assets/images/background-image-overlay.jpg");
+  // background-image: url("/assets/images/background-image-overlay.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
- // background: #0E3C55;
-  padding: 130px 0;
+  // background: #0E3C55;
+
   &__popup {
     background-color: #fff;
     border-radius: 6px;
@@ -250,13 +240,13 @@
   }
 }
 
-.invite-users{
+.invite-users {
   max-height: 500px;
   overflow-y: scroll;
 }
 .add-user {
   height: 100%;
-  padding-top:0px;
+  padding-top: 0px;
 }
 
 .width-28 {
@@ -349,14 +339,15 @@
   font-weight: 400;
 }
 
-.next-btn, .hollow-btn{
+.next-btn,
+.hollow-btn {
   border-radius: 40px;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
   padding: 8px 40px;
   border: 1px solid #f47720;
 }
 
-.hollow-btn{
+.hollow-btn {
   background-color: #fff;
   color: #f47720 !important;
 }
@@ -366,8 +357,11 @@
   color: #fff !important;
 }
 
-.next-btn, .hollow-btn{
-  &:hover, &:focus, &:active{
+.next-btn,
+.hollow-btn {
+  &:hover,
+  &:focus,
+  &:active {
     background-color: #f37234;
     border-color: #f37234;
     color: #fff !important;
@@ -453,13 +447,13 @@
   opacity: 0 !important;
 }
 
-.w-40{
+.w-40 {
   width: 40% !important;
 }
 
-.terms-conditions{
-  &__outer-gray{
-    background-color: #F1F1F1;
+.terms-conditions {
+  &__outer-gray {
+    background-color: #f1f1f1;
     border-radius: 6px;
     padding: 2rem !important;
     max-height: 357px;
@@ -471,7 +465,7 @@
     font-size: 14px;
     text-align: justify;
   }
-  &__content-heading{
+  &__content-heading {
     color: #696969;
     font-size: 14px;
     text-align: justify;
@@ -480,37 +474,15 @@
   }
 }
 
-@media only screen and (max-width: 1010px) {
- .terms-margin-set-width {
-   margin-left:0px;
-   margin-right:0px ;
-   width:100%;
-   .user-profile{
-     padding-bottom: 0px !important;
-   }
-   .profile{
-     padding-left : 47px;
-   }
-   .choose-trades{
-     padding-top: 20px;
-   }
-  }
+.background-green {
+  border: 1px solid #81e212;
+  background-color: #81e212 !important;
 }
-
-@media only screen and (max-width: 768px){
-  .float-right-invite-delBtn{
-    float: right;
-  }
-}
-.background-green{
-   border: 1px solid #81e212;
-    background-color: #81e212  !important;
-}
-.buildsupply-material-video{
+.buildsupply-material-video {
   width: 100%;
   height: 337px;
 }
-.form-add-edit-grn-div{
+.form-add-edit-grn-div {
   max-height: 200px;
   overflow-y: auto;
 }
@@ -520,12 +492,16 @@
   min-width: 0px;
   overflow-x: auto;
 
-.mat-table {
-      overflow-x: scroll;
-    }
+  .mat-row .mat-cell {
+    font-weight: 400;
+  }
 
-.mat-cell,
-.mat-header-cell {
+  .mat-table {
+    overflow-x: scroll;
+  }
+
+  .mat-cell,
+  .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
     padding: 0px 10px;
@@ -536,14 +512,14 @@
     overflow: hidden;
     vertical-align: middle;
     font-weight: 500;
-}
-.mat-row,
-.mat-header-row {
+  }
+  .mat-row,
+  .mat-header-row {
     display: table-row;
-}
-.grn-material-name{
-  text-align: left;
-}
+  }
+  .grn-material-name {
+    text-align: left;
+  }
 }
 
 .add-unique-container {
@@ -551,33 +527,102 @@
   min-width: 0px;
   overflow-x: auto;
 
-.mat-table {
-      overflow-x: scroll;
-    }
+  .mat-table {
+    overflow-x: scroll;
+  }
 
-.mat-cell,
-.mat-header-cell {
+  .mat-cell,
+  .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
-    padding: 0px 10px;
     line-break: unset;
     text-align: left;
     width: 2%;
     white-space: nowrap;
     overflow: hidden;
     vertical-align: middle;
-    font-weight: 500;
-}
-.mat-row,
-.mat-header-row {
+  }
+  .mat-row,
+  .mat-header-row {
     display: table-row;
-}
+  }
 }
 
-@media only screen and (max-width : 900px){
-  .raise-indent-table{
-    .mat-table .mat-cell{
-        height: 58px !important;
+.project-listing-menu {
+  min-height: auto !important;
+  .mat-menu-content:not(:empty) {
+    padding: 0px;
+    max-height: 200px;
+  }
+
+  .mat-menu-item {
+    line-height: 34px;
+    height: 34px;
+    border-bottom: 1px solid #bbbbbb;
+    cursor: default;
+  }
+}
+
+.edit-disable-user-details-width {
+  min-width: 200px;
+}
+
+@media only screen and (max-width: 1199px) {
+  .add-user-container {
+    .mat-header-cell,
+    .mat-cell {
+      &:first-child {
+        min-width: 180px;
+      }
+
+      &:nth-child(3) {
+        min-width: 150px;
+      }
+
+      &:nth-child(4) {
+        min-width: 200px;
+      }
+
+      &:nth-child(5) {
+        min-width: 100px;
+      }
     }
+  }
+}
+
+@media only screen and (max-width: 1010px) {
+  .terms-margin-set-width {
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 100%;
+    .user-profile {
+      padding-bottom: 0px !important;
+    }
+    .profile {
+      padding-left: 47px;
+    }
+    .choose-trades {
+      padding-top: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .raise-indent-table {
+    .mat-table .mat-cell {
+      height: 58px !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .float-right-invite-delBtn {
+    float: right;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .more-projects-list .material-icons {
+    font-size: 20px;
   }
 }

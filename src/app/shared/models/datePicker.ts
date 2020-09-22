@@ -1,9 +1,9 @@
 export interface PresetItem {
     presetLabel: string;
-    range: Range;
+    range: DateRange;
 }
 
-export interface Range {
+export interface DateRange {
     fromDate: Date;
     toDate: Date;
 }

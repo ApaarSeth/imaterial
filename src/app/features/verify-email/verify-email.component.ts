@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
+import { SignInSignupService } from '../../shared/services/signupSignin.service';
 
 @Component({
     selector: 'app-verify-email',

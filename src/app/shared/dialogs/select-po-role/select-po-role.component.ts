@@ -1,21 +1,28 @@
-import {Component, OnInit, Inject} from "@angular/core";
-import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
-import {POService} from "../../services/po/po.service";
-import {POData, ApproverData} from "../../models/PO/po-data";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import { Component, OnInit, Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { POService } from "../../services/po.service";
+import { ApproverData } from "../../models/PO/po-data";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "select-supplier-dialog",
-  templateUrl: "selectPoRole.html",
-  // styleUrls: ["../../../../assets/scss/pages/selectPoRole.scss"]
+  templateUrl: "selectPoRole.html"
 })
+
 export class SelectPoRoleComponent implements OnInit {
+
   displayedColumns: string[] = ["User Name", "Role", "Email", "Phone"];
   orgId: number;
-  constructor(private poService: POService, private dialogRef: MatDialogRef<SelectPoRoleComponent>, @Inject(MAT_DIALOG_DATA) public data, private formBuilder: FormBuilder) {}
   approverFrm: FormGroup;
   approverData: ApproverData[] = [];
   selectedApprover: ApproverData;
+
+  constructor(
+    private poService: POService, 
+    private dialogRef: MatDialogRef<SelectPoRoleComponent>, 
+    @Inject(MAT_DIALOG_DATA) public data, 
+    private formBuilder: FormBuilder) { }
+
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.poService.getApproverData(this.orgId, this.data.projectId).then(res => {
@@ -37,10 +44,12 @@ export class SelectPoRoleComponent implements OnInit {
       approver: []
     });
   }
+
   selectRole() {
     this.dialogRef.close([this.data.roleType, this.approverFrm.value]);
   }
-  closeDialog(){
+
+  closeDialog() {
     this.dialogRef.close();
   }
 }

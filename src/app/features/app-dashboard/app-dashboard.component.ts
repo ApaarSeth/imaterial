@@ -1,32 +1,32 @@
 import { GoogleChartService } from './../../shared/services/google-chart.service';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
-import { MatDialog } from "@angular/material";
 import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
-import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { PurchaseOrderData } from 'src/app/shared/models/po-details/po-details-list';
-import { Range } from 'src/app/shared/models/datePicker';
-import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
-import { SelectProjectComponent } from 'src/app/shared/dialogs/select-project/select-project.component';
-import { ProjectDetails } from 'src/app/shared/models/project-details';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { GuideTourModel } from 'src/app/shared/models/guided_tour';
-import { PermissionService } from 'src/app/shared/services/permission.service';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { ViewVideoComponent } from 'src/app/shared/dialogs/video-video/view-video.component';
-import { permission } from 'src/app/shared/models/permissionObject';
-import { ReleaseNoteComponent } from 'src/app/shared/dialogs/release-notes/release-notes.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PurchaseOrderData } from '../../shared/models/po-details/po-details-list';
+import { ProjectDetails } from '../../shared/models/project-details';
+import { permission } from '../../shared/models/permissionObject';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { UserService } from '../../shared/services/user.service';
+import { UserGuideService } from '../../shared/services/user-guide.service';
+import { ProjectService } from '../../shared/services/project.service';
+import { CommonService } from '../../shared/services/commonService';
+import { TokenService } from '../../shared/services/token.service';
+import { PermissionService } from '../../shared/services/permission.service';
+import { AppNotificationService } from '../../shared/services/app-notification.service';
 import { NgxDrpOptions, PresetItem } from 'ngx-mat-daterange-picker';
-import { TokenService } from 'src/app/shared/services/token.service';
-import { GlobalLoaderService } from 'src/app/shared/services/global-loader.service';
-import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
+import { ReleaseNoteComponent } from '../../shared/dialogs/release-notes/release-notes.component';
+import { SelectProjectComponent } from '../../shared/dialogs/select-project/select-project.component';
+import { ViewVideoComponent } from '../../shared/dialogs/video-video/view-video.component';
+import { GuideTourModel } from '../../shared/models/guided_tour';
+import { DateRange } from '../../shared/models/datePicker';
+
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.component.html'
 })
 export class AppDashboardComponent implements OnInit {
-  @ViewChild('dateRangePicker', { static: false }) dateRangePicker;
+  @ViewChild('dateRangePicker') dateRangePicker;
   orgId: number;
   poData: PurchaseOrderData;
   rfqData: PurchaseOrderData;
@@ -63,9 +63,9 @@ export class AppDashboardComponent implements OnInit {
     private tokenService: TokenService,
     private permissionService: PermissionService,
     private notifier: AppNotificationService,
-    private activatedRoute: ActivatedRoute, private loader: GlobalLoaderService) { }
+  ) { }
 
-  range: Range = { fromDate: new Date(), toDate: new Date() };
+  range: DateRange = { fromDate: new Date(), toDate: new Date() };
   options: NgxDrpOptions;
   presets: Array<PresetItem> = [];
   currencyCode: string;
@@ -73,7 +73,6 @@ export class AppDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.isAdDisplay = localStorage.getItem("callingCode");
-    // this.cntryList = this.activatedRoute.snapshot.data.countryList;
     this.formInit()
     this.datePickerConfig();
     this.isMobile = this.commonService.isMobile().matches;
@@ -103,14 +102,14 @@ export class AppDashboardComponent implements OnInit {
     }
 
 
-    Promise.all([ this.userguideservice.getUserGuideFlag(),
+    Promise.all([this.userguideservice.getUserGuideFlag(),
     this._projectService.getProjects(this.orgId, this.userId),
-    this.commonService.getNotification(this.userId) ]).then(res => {
-      this.userGuidedata = res[ 0 ].data;
+    this.commonService.getNotification(this.userId)]).then(res => {
+      this.userGuidedata = res[0].data;
       this.userGuidedata.forEach(element => {
         localStorage.setItem(element.moduleName, element.enableGuide);
       });
-      this.projectData = res[ 1 ];
+      this.projectData = res[1];
       this.getProjectsNumber()
     })
     this.isMobile ? this.prText = 'PR' : this.prText = 'Purchase Requisitions (PR)';
@@ -142,7 +141,7 @@ export class AppDashboardComponent implements OnInit {
     };
   }
 
-  updateRange(range: Range) {
+  updateRange(range: DateRange) {
     this.range = range;
     if (range.toDate < range.fromDate) {
       this.notifier.snack("To date can'nt be earlier than from date")
@@ -237,11 +236,12 @@ export class AppDashboardComponent implements OnInit {
       };
       const dialogRef = this.dialog.open(AddProjectComponent, {
         width: "1000px",
-        data
+        data,
+        panelClass: ['common-modal-style', 'add-project-dialog']
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result != null)
-          this.router.navigate([ '/project-dashboard' ]);
+          this.router.navigate(['/project-dashboard']);
       });
     });
   }
@@ -249,7 +249,8 @@ export class AppDashboardComponent implements OnInit {
   openReleaseNote(data, releaseNoteId) {
     const dialogRef = this.dialog.open(ReleaseNoteComponent, {
       disableClose: true,
-      width: "500px", data
+      width: "500px", data,
+      panelClass: ['common-modal-style', 'release-note-dialog']
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null && result == 'closed') {
@@ -329,18 +330,18 @@ export class AppDashboardComponent implements OnInit {
         if (label == 'po') {
           this.poData = res.data;
           let chartData = data.range === 'Yearly' ? this.sortGraphData(this.poData.graphData ? this.poData.graphData : null) : this.poData.graphData;
-          this.chartService.barChartData.next(chartData ? [ ...chartData ] : null)
+          this.chartService.barChartData.next(chartData ? [...chartData] : null)
         }
         if (label == 'rfq') {
           this.rfqData = res.data;
           let chartData = data.range === 'Yearly' ? this.sortGraphData(this.rfqData.graphData ? this.rfqData.graphData : null) : this.rfqData.graphData;
-          this.chartService.barChartData.next(chartData ? [ ...chartData ] : null)
+          this.chartService.barChartData.next(chartData ? [...chartData] : null)
         }
         if (label == 'indent') {
           this.indentData = res.data;
-          this.chartService.pieChartData.next([ [ 'PRs', 'Vaue' ],
-          [ 'Fullfilled PRs', this.indentData.totalCount ],
-          [ 'Raised PRs', this.indentData.totalValue ],
+          this.chartService.pieChartData.next([['PRs', 'Vaue'],
+          ['Fullfilled PRs', this.indentData.totalCount],
+          ['Raised PRs', this.indentData.totalValue],
           ])
         }
       }).catch(error => console.log(error))
@@ -353,13 +354,13 @@ export class AppDashboardComponent implements OnInit {
   sortGraphData(graphData: Array<any>) {
     if (graphData) {
       let tempGraphData = graphData.slice(1, graphData.length)
-      var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       tempGraphData.sort(function (a, b) {
-        return months.indexOf(a[ 0 ])
-          - months.indexOf(b[ 0 ]);
+        return months.indexOf(a[0])
+          - months.indexOf(b[0]);
       });
-      tempGraphData.splice(0, 0, graphData[ 0 ])
+      tempGraphData.splice(0, 0, graphData[0])
       return tempGraphData;
     } else {
       return null;
@@ -398,7 +399,8 @@ export class AppDashboardComponent implements OnInit {
   openBomDialog() {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
       width: "800px",
-      data: this.projectLists
+      data: this.projectLists,
+      panelClass: ['common-modal-style', 'select-projects-dialog']
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -410,12 +412,13 @@ export class AppDashboardComponent implements OnInit {
   showVideo(): void {
 
     const dialogRef = this.dialog.open(ViewVideoComponent, {
-      width: "660px"
+      width: "660px",
+      panelClass: ['common-modal-style', 'view-video-dialog']
     });
 
   }
 
-  @HostListener('window:resize', [ '$event' ])
+  @HostListener('window:resize', ['$event'])
   sizeChange(event) {
     if (event.currentTarget.innerWidth <= 494) {
       this.tab1 = "P.O.";

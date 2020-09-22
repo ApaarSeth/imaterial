@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
 import { Subscription, interval } from 'rxjs';
-import { RouterLink, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
-import { TokenService } from 'src/app/shared/services/token.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TokenService } from '../../../shared/services/token.service';
+import { SignInSignupService } from '../../../shared/services/signupSignin.service';
 
 @Component({
     selector: 'app-email-verification',

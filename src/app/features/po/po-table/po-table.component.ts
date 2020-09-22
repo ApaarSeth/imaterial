@@ -1,20 +1,20 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild, Output, EventEmitter, HostListener, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, HostListener, ChangeDetectorRef, SimpleChanges } from "@angular/core";
 import { PoMaterial, PurchaseOrder, PurchaseOrderCurrency, POData } from "src/app/shared/models/PO/po-data";
-import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
-import { ignoreElements, debounceTime } from "rxjs/operators";
-import { Subscription, combineLatest } from "rxjs";
+import { FormBuilder, FormGroup, FormArray, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
+import { debounceTime } from "rxjs/operators";
+import { Subscription } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { POService } from "src/app/shared/services/po/po.service";
+import { POService } from "src/app/shared/services/po.service";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { MatSnackBar, MatDialog } from '@angular/material';
-import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { TaxCostComponent } from 'src/app/shared/dialogs/tax-cost/tax-cost.component';
 import { OverallOtherCost } from 'src/app/shared/models/common.models';
 import { OtherCostInfo } from 'src/app/shared/models/tax-cost.model';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-po-table",
@@ -50,6 +50,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
   ratesBaseCurr: boolean = false;
   isMobile: boolean;
   taxCounter: number = 0;
+  imageAvailable: number
+
   ngOnInit() {
     window.dispatchEvent(new Event('resize'));
     this.route.params.subscribe(params => {
@@ -60,10 +62,19 @@ export class PoTableComponent implements OnInit, OnDestroy {
     this.formInit();
   }
 
-  ngOnChanges(): void {
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.isInternational = this.currency.isInternational;
     this.poCurrency = this.currency.purchaseOrderCurrency;
     this.additonalCost = this.additionalOtherCostInfo;
+
+    if (changes.poData && changes.poData.currentValue) {
+      if (this.poData.moduleFeatures.featureList && this.poData.moduleFeatures.featureList.length > 0) {
+        this.imageAvailable = this.poData.moduleFeatures.featureList[1].isAvailable;
+      }
+    }
+
+
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
   }
@@ -94,7 +105,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
           purchaseOrderId: [purchaseorder.purchaseOrderId],
           materialId: [purchaseorder.materialId],
           materialBrand: [purchaseorder.materialBrand],
-          materialQuantity: [purchaseorder.materialQuantity],
+          materialQuantity: [purchaseorder.materialQuantity, this.checkQty(poMaterial.poAvailableQty)],
           materialUnit: [],
           materialUnitPrice: [purchaseorder.materialUnitPrice, Validators.pattern(FieldRegExConst.RATES)],
           materialIgst: [1],
@@ -151,7 +162,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
         issueToProject: [poMaterial.issueToProject],
         availableStock: [poMaterial.availableStock],
         indentDetailList: null,
-        fullfilmentDate: [poMaterial.fullfilmentDate],
+        fullfilmentDate: [poMaterial.fullfilmentDate, Validators.required],
         purchaseOrderDetailList: this.formBuilder.array(purchaseGrp)
       });
     });
@@ -160,6 +171,29 @@ export class PoTableComponent implements OnInit, OnDestroy {
   }
   setRateBaseCurr(value) {
     this.resetRate();
+  }
+
+  checkQty(materialAvailableQty): ValidatorFn {
+    // let tempVal = this.poTableData[m].purchaseOrderDetailList[p].qty;
+    // this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
+    // let totalQty = this.getMaterialQuantity(m);
+    // if (Number(totalQty.toFixed(2)) > materialAvailableQty) {
+    //   this.poTableData[m].validQuantity = false;
+    //   (<FormArray>(<FormArray>this.poForms.get('forms')).controls[m].get('purchaseOrderDetailList')).controls[p].get('materialQuantity').setValue(tempVal)
+    //   this.poTableData[m].purchaseOrderDetailList[p].qty = 0
+    //   this._snackBar.open("Net Quantity must be less than " + materialAvailableQty, "", {
+    //     duration: 2000,
+    //     panelClass: ["success-snackbar"],
+    //     verticalPosition: "bottom"
+    //   });
+    // }
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (Number(control.value) > materialAvailableQty) {
+        return { 'greaterQuantity': true };
+      }
+      return null;
+    }
+
   }
 
   resetRate() {
@@ -284,26 +318,11 @@ export class PoTableComponent implements OnInit, OnDestroy {
     if (this.mode != "edit") {
       return this.poTableData[m].purchaseOrderDetailList.reduce((total: number, purchase: PurchaseOrder) => {
         return (total += Number(purchase.materialQuantity));
-      }, 0);
+      }, 0)
     } else {
-      return this.poTableData[m].purchaseOrderDetailList.reduce((total, purchase: PurchaseOrder) => {
-        total += Number(purchase.qty);
-        if (Number(total.toFixed(2)) > Number(this.poTableData[m].poAvailableQty)) {
-          this.poTableData[m].validQuantity = false;
-        }
-        else {
-          this.poTableData[m].validQuantity = true;
-        }
-        let isValidQty: boolean = true;
-        this.poTableData.forEach(element => {
-          if (!element.validQuantity)
-            isValidQty = false;
-        });
-
-        this.QuantityAmountValidation.emit(isValidQty);
-
-        return total;
-      }, 0);
+      return this.poTableData[m].purchaseOrderDetailList.reduce((total: number, purchase: PurchaseOrder) => {
+        return (total += Number(purchase.qty));
+      }, 0)
     }
   }
 
@@ -345,23 +364,16 @@ export class PoTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkQty(m, p, materialAvailableQty, event) {
-    this.poTableData[m].purchaseOrderDetailList[p].qty = event.target.value;
-    let totalQty = this.getMaterialQuantity(m);
-    if (totalQty.toFixed(2) > materialAvailableQty) {
-      this._snackBar.open("Net Quantity must be less than " + materialAvailableQty, "", {
-        duration: 2000,
-        panelClass: ["success-snackbar"],
-        verticalPosition: "bottom"
-      });
-    }
-  }
+
+
+
 
   selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "500px",
-      data: this.poCurrency
+      data: this.poCurrency,
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {
@@ -497,7 +509,8 @@ export class PoTableComponent implements OnInit, OnDestroy {
         rfqId: null,
         existingData,
         currency: this.poCurrency ? this.poCurrency.exchangeCurrencyName : null
-      }
+      },
+      panelClass: ['common-modal-style', 'tax-dialog']
     });
     dialogRef.afterClosed().subscribe(res => {
       if (type === 'taxesAndCost') {
@@ -536,7 +549,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
       width: "60vw",
-      panelClass: 'upload-image-modal',
+      panelClass: ['common-modal-style', 'upload-image-modal'],
       data: {
         selectedMaterial,
         type,
@@ -565,7 +578,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: 'view-image-modal',
+      panelClass: ['common-modal-style', 'view-image-modal'],
       data: {
         purchaseOrderId: this.poId,
         materialId,
@@ -575,7 +588,7 @@ export class PoTableComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
+        // console.log(result);
       }
     });
   }

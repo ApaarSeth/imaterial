@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectDetails } from 'src/app/shared/models/project-details';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { GRNService } from 'src/app/shared/services/grn/grn.service';
+import { GRNService } from 'src/app/shared/services/grn.service';
 import { AllProjectsGRNData } from 'src/app/shared/models/grn';
 import { ShowDocumentComponent } from 'src/app/shared/dialogs/show-documents/show-documents.component';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'all-grn',
@@ -44,15 +45,15 @@ export class GrnComponent implements OnInit {
 
     getProjectGRNData() {
         this.selectedIds = this.form.value.selectedProject.map(selectedProject => selectedProject);
-        if(this.selectedIds && this.selectedIds.length > 0){
+        if (this.selectedIds && this.selectedIds.length > 0) {
             const projectIds = {
                 "ids": this.selectedIds
             }
             this._grnService.getAllGRNData(projectIds).then(res => {
-                if(res.data !== "No data found"){
+                if (res.data !== "No data found") {
                     this.allProjectsGRNData = res.data;
                     this.noProjectDataFound = false;
-                }else{
+                } else {
                     this.noProjectDataFound = true;
                     this.snackbar.open(res.data, "", {
                         duration: 2000,
@@ -61,7 +62,7 @@ export class GrnComponent implements OnInit {
                     });
                 }
             });
-        }else{
+        } else {
             this.allProjectsGRNData = [];
         }
     }
@@ -69,11 +70,12 @@ export class GrnComponent implements OnInit {
     openDocuments(data) {
         const dialogRef = this._dialog.open(ShowDocumentComponent, {
             width: "500px",
-            data
+            data,
+            panelClass: ['common-modal-style', 'show-docs-dialog']
         });
         dialogRef.afterClosed().toPromise().then(result => {
             if (result) {
-                console.log(result);
+                // console.log(result);
             }
         });
     }

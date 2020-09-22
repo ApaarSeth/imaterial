@@ -1,5 +1,5 @@
-<div class="page-start-point mt-5 pt-4" [ngClass]="isMobile ? 'm-popd' : ''">
-  <div class="p-b-20 min-height parent" [ngClass]="isMobile ? 'pl-2 pr-2' : 'p-l-20 p-r-20'">
+<div class="page-start-point mt-5 p-rem-t-15" [ngClass]="isMobile ? 'm-popd' : ''">
+  <div class="p-b-20 min-height parent" [ngClass]="isMobile ? 'p-rem-r-5 p-rem-r-5' : 'p-l-20 p-r-20'">
     <div class="row">
       <div class="col-xs-12 text-right">
         <!-- <span class="p-r-5">
@@ -45,13 +45,24 @@
         >
         </app-rfq-project-materials>
       </mat-step>
+
       <mat-step stepControl="stepSecond">
         <ng-template matStepLabel>Add Quantity & Makes</ng-template>
         <app-rfq-quantity-makes *ngIf="rfqMaterial && allSupplier" #rfqQtyMakes [generatedRfq]="rfqMaterial" (updatedRfq)="getQuantityAndMakes($event)"> </app-rfq-quantity-makes>
       </mat-step>
+
       <mat-step stepControl="stepThree">
         <ng-template matStepLabel>Select Supplier</ng-template>
-        <app-rfq-supplier #rfqSupplier *ngIf="finalRfq" [finalRfq]="finalRfq" (updatedRfq)="getSupplierData($event)"> </app-rfq-supplier>
+        <app-rfq-supplier
+          #rfqSupplier
+          *ngIf="countryList.length"
+          [cntryList]="this.countryList"
+          [suppliers]="allSupplier"
+          [supplierModuleFeature]="supplierModuleFeature"
+          [finalRfq]="finalRfq"
+          (updatedRfq)="getSupplierData($event)"
+        >
+        </app-rfq-supplier>
       </mat-step>
     </mat-horizontal-stepper>
   </div>

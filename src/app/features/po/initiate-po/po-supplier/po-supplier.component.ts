@@ -1,11 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { RFQService } from 'src/app/shared/services/rfq/rfq.service';
 import { SuppliersDialogComponent } from 'src/app/shared/dialogs/add-supplier/suppliers-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { initiatePo, initiatePoData } from 'src/app/shared/models/PO/po-data';
+import { initiatePoData } from 'src/app/shared/models/PO/po-data';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { rfqCurrency } from 'src/app/shared/models/RFQ/rfq-details';
 import { CountryCode } from 'src/app/shared/models/currency';
@@ -15,9 +14,12 @@ import { CommonService } from 'src/app/shared/services/commonService';
   selector: "app-po-supplier",
   templateUrl: "./po-supplier.component.html"
 })
+
 export class PoSupplierComponent implements OnInit {
+
   @Output() selectedSupplier = new EventEmitter<any>();
   @Input() poData: initiatePoData;
+  @Input() searchVal: any;
   buttonName: string = "selectSupplier";
   searchText: string = null;
   allSuppliers: Suppliers[];
@@ -26,34 +28,42 @@ export class PoSupplierComponent implements OnInit {
   poCurrency: rfqCurrency;
   countryist: CountryCode[];
   isMobile: boolean;
+  isRatingFeatureShow: boolean;
+
   constructor(private formBuilder: FormBuilder,
-    private rfqService: RFQService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private commonService: CommonService) { }
 
   ngOnInit() {
-    this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data;
+    this.isRatingFeatureShow = this.activatedRoute.snapshot.data.inititatePo[0].data.moduleFeatures.featureList[0].isAvailable;
+    this.allSuppliers = this.activatedRoute.snapshot.data.inititatePo[0].data.supplierList;
     this.countryist = this.activatedRoute.snapshot.data.countryList;
-
     this.isMobile = this.commonService.isMobile().matches;
-
     this.formInit();
   }
 
-  ngOnChanges(): void {
-    this.poCurrency = this.poData && this.poData.poCurrency
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.poData && changes.poData.currentValue) {
+      this.poCurrency = changes.poData.currentValue.poCurrency;
+    }
+    if (changes.searchVal && changes.searchVal.currentValue) {
+      this.searchText = '';
+    }
 
   }
 
   selectProject() { }
 
   getSuppliers() {
-    let userId = Number(localStorage.getItem("userId"));
     let orgId = Number(localStorage.getItem("orgId"));
-
     this.commonService.getSuppliers(orgId).then(data => {
-      this.allSuppliers = data.data;
+      this.allSuppliers = data.data.supplierList;
+
+      const premiumFeature = data.data.moduleFeatures;
+      if (premiumFeature.featuresList?.length > 0) {
+        this.isRatingFeatureShow = (premiumFeature.featureList[1].featureName === "supplier rating" && premiumFeature.featureList[1].isAvailable === 1) ? true : false;
+      }
     });
   }
 
@@ -76,28 +86,26 @@ export class PoSupplierComponent implements OnInit {
     return this.selectedSupplier.emit(existingPoData);
   }
 
-
   openSupplierDialog() {
     let data = { countryList: this.countryist }
     const dialogRef = this.dialog.open(SuppliersDialogComponent, {
       width: "660px",
-      data
+      data,
+      panelClass: 'add-supplier-dialog'
     });
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(result => {
-        if (result === 'Supplier Successfully added') {
-          this.getSuppliers();
-        }
-      });
+    dialogRef.afterClosed().toPromise().then(result => {
+      if (result === 'Supplier Successfully added') {
+        this.getSuppliers();
+      }
+    });
   }
 
   selectCurrency() {
     const dialogRef = this.dialog.open(SelectCurrencyComponent, {
       disableClose: true,
       width: "500px",
-      data: this.poCurrency
+      data: this.poCurrency,
+      panelClass: ['common-modal-style', 'select-currency-dialog']
     });
 
     dialogRef.afterClosed().subscribe(data => {

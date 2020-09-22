@@ -1,33 +1,34 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from "@angular/core";
 import { trigger, state, style, transition, animate } from "@angular/animations";
 import { Observable, of } from "rxjs";
 import { DataSource } from "@angular/cdk/table";
 import { MatTableDataSource } from "@angular/material/table";
 import { Data, ActivatedRoute, Router } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import { ProjectDetails, ProjetPopupData } from "src/app/shared/models/project-details";
-import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
-import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { MatDialog, MatSnackBar, MatSort, MatCheckbox } from "@angular/material";
-import { BomService } from "src/app/shared/services/bom/bom.service";
-import { Subcategory, Materials } from "src/app/shared/models/subcategory-materials";
-import { IssueToIndentDialogComponent } from "src/app/shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
-import { Projects } from "src/app/shared/models/GlobalStore/materialWise";
-import { DeleteBomComponent } from "src/app/shared/dialogs/delete-bom/delete-bom.component";
-import { GlobalLoaderService } from "src/app/shared/services/global-loader.service";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { AddRFQ, RfqMat } from "src/app/shared/models/RFQ/rfq-details";
-import { PermissionService } from "src/app/shared/services/permission.service";
-import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { permission } from 'src/app/shared/models/permissionObject';
-import { AddMyMaterialBomComponent } from 'src/app/shared/dialogs/add-my-material-Bom/add-my-material-bom.component';
-import { IndentService } from 'src/app/shared/services/indent/indent.service';
-import { AddGrnComponent } from 'src/app/shared/dialogs/add-grn/add-grn.component';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { AddGrnViaExcelComponent } from 'src/app/shared/dialogs/addGrn-viaExcel/addGrnViaExcel.component';
-import { UploadImageComponent } from 'src/app/shared/dialogs/upload-image/upload-image.component';
-import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { ProjectDetails, ProjetPopupData } from "../../../../shared/models/project-details";
+import { Subcategory, Materials } from "../../../../shared/models/subcategory-materials";
+import { AddRFQ, RfqMat } from "../../../../shared/models/RFQ/rfq-details";
+import { permission } from "../../../../shared/models/permissionObject";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
+import { PermissionService } from "../../../../shared/services/permission.service";
+import { RFQService } from "../../../../shared/services/rfq.service";
+import { ProjectService } from "../../../../shared/services/project.service";
+import { MatDialog } from "@angular/material/dialog";
+import { BomService } from "../../../../shared/services/bom.service";
+import { IndentService } from "../../../../shared/services/indent.service";
+import { GlobalLoaderService } from "../../../../shared/services/global-loader.service";
+import { UserGuideService } from "../../../../shared/services/user-guide.service";
+import { CommonService } from "../../../../shared/services/commonService";
+import { AddMyMaterialBomComponent } from "../../../../shared/dialogs/add-my-material-Bom/add-my-material-bom.component";
+import { AddGrnComponent } from "../../../../shared/dialogs/add-grn/add-grn.component";
+import { AddGrnViaExcelComponent } from "../../../../shared/dialogs/addGrn-viaExcel/addGrnViaExcel.component";
+import { MatCheckbox } from "@angular/material/checkbox";
+import { MatSort } from '@angular/material/sort';
+import { AddProjectComponent } from "../../../../shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "../../../../shared/dialogs/double-confirmation/double-confirmation.component";
+import { IssueToIndentDialogComponent } from "../../../../shared/dialogs/issue-to-indent/issue-to-indent-dialog.component";
+import { DeleteBomComponent } from "../../../../shared/dialogs/delete-bom/delete-bom.component";
+import { ViewImageComponent } from "../../../../shared/dialogs/view-image/view-image.component";
+import { UploadImageComponent } from "../../../../shared/dialogs/upload-image/upload-image.component";
 
 @Component({
   selector: "app-bom-table",
@@ -41,14 +42,15 @@ import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image
   ]
 })
 export class BomTableComponent implements OnInit {
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   projectId: number;
   projectData = {} as ProjectDetails;
   subcategoryData: Subcategory[] = [];
   subcategories: Subcategory[] = [];
   addRfq: AddRFQ;
-  columnsToDisplay = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
-
-  innerDisplayedColumns = ["materialName", 'unit', "estimatedQty", "estimatedRate", "indentedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn"];
+  columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "customColumn" ];
+  innerDisplayedColumns = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "customColumn" ];
   dataSource: MatTableDataSource<Subcategory>;
   sortedData: MatTableDataSource<Subcategory>;
   expandedElement: Subcategory | null;
@@ -56,6 +58,7 @@ export class BomTableComponent implements OnInit {
   checkedSubcategory: Subcategory[] = [];
   permissionObj: permission;
   isMobile: boolean;
+  isImageFeatureAvaible: boolean;
 
   public BomDetailsashboardTour: GuidedTour = {
     tourId: 'bom-details-tour',
@@ -111,7 +114,7 @@ export class BomTableComponent implements OnInit {
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
     this.route.params.subscribe(params => {
-      this.projectId = params["id"];
+      this.projectId = params[ "id" ];
     });
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
@@ -139,7 +142,8 @@ export class BomTableComponent implements OnInit {
     let data = this.projectId
     const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
       width: "1400px",
-      data
+      data,
+      panelClass: [ 'common-modal-style', 'add-custom-material' ]
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -152,7 +156,7 @@ export class BomTableComponent implements OnInit {
   getMaterialWithQuantity() {
     this.loading.show();
     this.bomService.getMaterialWithQuantity(this.orgId, this.projectId).then(res => {
-      this.subcategories = res.data ? [...res.data] : null;
+      this.subcategories = res.data ? [ ...res.data ] : null;
       if (this.subcategories) {
         this.subcategories.forEach(subcategory => {
           if (subcategory.materialSpecs && Array.isArray(subcategory.materialSpecs) && subcategory.materialSpecs.length) {
@@ -172,8 +176,29 @@ export class BomTableComponent implements OnInit {
         this.subcategoryData = null;
       }
 
-      this.getProject(this.projectId);
       this.dataSource = new MatTableDataSource(this.subcategoryData);
+      if (this.subcategoryData[ 0 ][ 'moduleFeatures' ] && this.subcategoryData[ 0 ][ 'moduleFeatures' ].featureList && this.subcategoryData[ 0 ][ 'moduleFeatures' ].featureList.length) {
+        this.isImageFeatureAvaible = this.subcategoryData[ 0 ][ 'moduleFeatures' ].featureList.some(item => (item.featureName.includes('image integration') && item.isAvailable === 1));
+      } else {
+        this.isImageFeatureAvaible = true;
+      }
+
+      if (this.isImageFeatureAvaible) {
+        this.columnsToDisplay = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
+        this.innerDisplayedColumns = [ "materialName", 'materialUnit', "estimatedQty", "estimatedRate", "requestedQuantity", "issueToProject", "availableStock", "attachedImages", "customColumn" ];
+      }
+      this.dataSource.sort = this.sort;
+
+      this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+        if (typeof data[ sortHeaderId ] === 'string') {
+          return data[ sortHeaderId ].toLocaleLowerCase();
+        }
+
+        return data[ sortHeaderId ];
+      };
+
+      // this.dataSource.sortingDataAccessor = (data, header) => data[header];
+      this.getProject(this.projectId);
       this.loading.hide();
     });
   }
@@ -216,18 +241,19 @@ export class BomTableComponent implements OnInit {
   getProject(id: number) {
     this.projectService.getProject(this.orgId, id).then(data => {
       this.projectData = data.data;
-      if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
-        setTimeout(() => {
-          this.guidedTourService.startTour(this.BomDetailsashboardTour);
-        }, 1000);
-      }
+      // if ((localStorage.getItem('bomDashboard') == "null") || (localStorage.getItem('bomDashboard') == '0')) {
+      //   setTimeout(() => {
+      //     this.guidedTourService.startTour(this.BomDetailsashboardTour);
+      //   }, 1000);
+      // }
     });
   }
 
   openGrnDialog() {
     const dialogRef = this.dialog.open(AddGrnComponent, {
       width: "1000px",
-      data: this.projectId
+      data: this.projectId,
+      panelClass: [ 'common-modal-style', 'add-receipt-via-system' ]
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res === 'success') {
@@ -239,7 +265,8 @@ export class BomTableComponent implements OnInit {
   openGrnViaExcelDialog() {
     const dialogRef = this.dialog.open(AddGrnViaExcelComponent, {
       width: "600px",
-      data: this.projectId
+      data: this.projectId,
+      panelClass: [ 'common-modal-style', 'create-receipt-excel' ]
     });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -255,7 +282,7 @@ export class BomTableComponent implements OnInit {
       if (this.checkedSubcategory.length) {
         let checkedList = this.checkedSubcategory;
         this.indentService.raiseIndentData = checkedList;
-        this.router.navigate(["/indent/" + this.projectId]);
+        this.router.navigate([ "/indent/" + this.projectId ]);
       }
     }
   }
@@ -283,12 +310,12 @@ export class BomTableComponent implements OnInit {
         mat.estimatedQty = category.estimatedQty;
         mat.estimatedRate = category.estimatedRate;
         mat.dueDate = category.dueDate;
-        mat.fullfilmentDate = String(category.dueDate) === "" ? null : String(category.dueDate);
+        mat.fullfilmentDate = category.dueDate ? String(category.dueDate) : null;
         mat.materialUnit = category.materialUnit;
         mat.documentList = category.documentsList;
         materialList.push(mat);
       });
-      let projectId = materialList[0].projectId;
+      let projectId = materialList[ 0 ].projectId;
       this.addRfq = {
         id: null,
         status: null,
@@ -297,7 +324,7 @@ export class BomTableComponent implements OnInit {
         lastUpdatedBy: null,
         lastUpdatedAt: null,
         rfqId: null,
-        rfq_status: null,
+        rfqStatus: null,
         rfqName: null,
         dueDate: null,
         supplierId: null,
@@ -331,66 +358,29 @@ export class BomTableComponent implements OnInit {
         documentsList: null,
         terms: null
       };
-      this.addRfq.rfqProjectsList[0].projectMaterialList = materialList;
+      this.addRfq.rfqProjectsList[ 0 ].projectMaterialList = materialList;
       this.rfqService.addRFQ(this.addRfq).then(res => {
-        this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
-          state: { rfqData: res, selectedIndex: 1 }
-        });
+        if (res.data) {
+          this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
+            state: { rfqData: res, selectedIndex: 1 }
+          });
+        }
       });
     }
 
   }
 
   viewIndent() {
-    this.router.navigate(["/indent/" + this.projectId + "/indent-detail"]);
+    this.router.navigate([ "/indent/" + this.projectId + "/indent-detail" ]);
   }
 
-  editProject() {
-    const data: ProjetPopupData = {
-      isEdit: true,
-      isDelete: false,
-      detail: this.projectData
-    };
 
-    this.openDialog(data);
-  }
-
-  deleteProject() {
-    const data: ProjetPopupData = {
-      isEdit: false,
-      isDelete: true,
-      detail: this.projectData
-    };
-
-    this.openDialog(data);
-  }
-
-  openDialog(data: ProjetPopupData): void {
-    if (data.isDelete == false) {
-      const dialogRef = this.dialog.open(AddProjectComponent, {
-        width: "1000px",
-        data
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => { });
-    } else if (data.isDelete == true) {
-      const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
-        width: "500px",
-        data
-      });
-
-      dialogRef
-        .afterClosed()
-        .toPromise()
-        .then(result => { });
-    }
-  }
   addMaterial() {
-    this.router.navigate(["/project-dashboard/bom/" + this.projectId]);
+    this.router.navigate([ "/project-dashboard/bom/" + this.projectId ]);
+  }
 
+  editMaterial() {
+    this.router.navigate([ "/project-dashboard/bom/" + this.projectId + "/edit-materials" ]);
   }
 
   issueToIndent(materialId, projectId): void {
@@ -399,7 +389,7 @@ export class BomTableComponent implements OnInit {
         width: "1200px",
         data: { materialId: materialId, projectId: projectId },
         disableClose: true,
-        panelClass: ["issue-to-indent-dialog"]
+        panelClass: [ 'common-modal-style', "issue-to-indent-dialog" ]
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result !== null) {
@@ -413,7 +403,8 @@ export class BomTableComponent implements OnInit {
     if (IssueToIndentDialogComponent) {
       const dialogRef = this.dialog.open(DeleteBomComponent, {
         width: "800px",
-        data: { materialId: materialId, projectId: projectId }
+        data: { materialId: materialId, projectId: projectId },
+        panelClass: [ 'common-modal-style', 'delete-bom' ]
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result && result.data == "close") {
@@ -438,7 +429,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: 'view-image-modal',
+      panelClass: [ 'common-modal-style', 'view-image-modal' ],
       data: {
         projectId,
         materialId
@@ -456,7 +447,7 @@ export class BomTableComponent implements OnInit {
     const dialogRef = this.dialog.open(UploadImageComponent, {
       disableClose: true,
       width: "60vw",
-      panelClass: 'upload-image-modal',
+      panelClass: [ 'common-modal-style', 'upload-image-modal' ],
       data: selectedMaterial
     });
 

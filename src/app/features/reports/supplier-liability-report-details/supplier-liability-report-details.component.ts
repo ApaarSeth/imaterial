@@ -1,43 +1,16 @@
-import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef, SimpleChanges } from "@angular/core";
-import { MatDialog, MatChipInputEvent, MatTableDataSource, MatMenuTrigger } from "@angular/material";
-import { ActivatedRoute, Router } from "@angular/router";
-import {
-  ProjectDetails,
-  ProjectIds
-} from "src/app/shared/models/project-details";
-import {
-  FormBuilder,
-  FormArray,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import { stringify } from "querystring";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import {
-  RfqMat,
-  RfqMaterialResponse,
-  AddRFQ
-} from "src/app/shared/models/RFQ/rfq-details";
-import { AddAddressDialogComponent } from "src/app/shared/dialogs/add-address/address-dialog.component";
-import { AddEditUserComponent } from 'src/app/shared/dialogs/add-edit-user/add-edit-user.component';
-import { UserDetailsPopUpData, AllUserDetails, UserAdd } from 'src/app/shared/models/user-details';
-import { DeactiveUserComponent } from 'src/app/shared/dialogs/disable-user/disable-user.component';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { forEachChild, idText } from 'typescript';
-import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { ProjectDetails } from "src/app/shared/models/project-details";
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import { RfqMaterialResponse, AddRFQ } from "src/app/shared/models/RFQ/rfq-details";
 import { CommonService } from 'src/app/shared/services/commonService';
 import { SupplierAdd } from 'src/app/shared/models/supplier';
 import { SupplierLiabilityReport } from 'src/app/shared/models/supplierLiabiltityReport.model';
 import { ReportService } from 'src/app/shared/services/supplierLiabilityReport.service';
-
-// chip static data
-export interface Fruit {
-  name: string;
-}
-
+import { MatMenuTrigger } from "@angular/material/menu";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
+import { AllUserDetails, UserAdd } from "../../../shared/models/user-details";
 
 const ELEMENT_DATA: AllUserDetails[] = [];
 
@@ -46,8 +19,8 @@ const ELEMENT_DATA: AllUserDetails[] = [];
   templateUrl: "./supplier-liability-report-details.component.html"
 })
 
-
 export class SupplierLiabilityReportDetailComponent implements OnInit {
+
   @ViewChild(MatMenuTrigger, { static: false }) triggerBtn: MatMenuTrigger;
   displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
   displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
@@ -89,6 +62,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
   projectNumIds: number[];
   allSuppIds: number[];
   countryCode: string;
+  
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -106,7 +80,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     this.amountRange = this.countryCode === 'IN' ? ['Full Figures', 'Lakhs', 'Crores'] : ['Full Figures', 'Thousands', 'Millions', 'Billions']
     this.orgId = Number(localStorage.getItem("orgId"));
     this.userId = Number(localStorage.getItem("userId"));
-    this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data;
+    this.allSuppliers = this.activatedRoute.snapshot.data.resolverData[0].data.supplierList;
     this.allProjects = this.activatedRoute.snapshot.data.resolverData[1].data;
     this.formInit();
     this.getNotifications();
@@ -123,7 +97,7 @@ export class SupplierLiabilityReportDetailComponent implements OnInit {
     });
 
     this.form.get('amountDisplay').valueChanges.subscribe(res => {
-      console.log(res)
+      // console.log(res)
     })
   }
 

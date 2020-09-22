@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { GRNDetails, GRNPopupData } from 'src/app/shared/models/grn';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GRNService } from 'src/app/shared/services/grn/grn.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { GRNService } from 'src/app/shared/services/grn.service';
+import { MatDialog } from '@angular/material/dialog';
 import { AddEditGrnComponent } from 'src/app/shared/dialogs/add-edit-grn/add-edit-grn.component';
 import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { POService } from 'src/app/shared/services/po/po.service';
+import { UserGuideService } from 'src/app/shared/services/user-guide.service';
+import { POService } from 'src/app/shared/services/po.service';
 import { POData } from 'src/app/shared/models/PO/po-data';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { ShowDocumentComponent } from 'src/app/shared/dialogs/show-documents/show-documents.component';
@@ -15,8 +15,7 @@ import { ShowDocumentComponent } from 'src/app/shared/dialogs/show-documents/sho
 
 @Component({
     selector: "view-grn",
-    templateUrl: "./view-grn.component.html",
-    styleUrls: ["/../../../../assets/scss/main.scss"]
+    templateUrl: "./view-grn.component.html"
 })
 
 
@@ -31,6 +30,7 @@ export class ViewGRNComponent implements OnInit {
         "Material Name",
         "Brand Name",
         "Awarded Quantity",
+        "Delivered Date",
         "Delivered Quantity"
     ];
     grnHeaders: any;
@@ -74,9 +74,11 @@ export class ViewGRNComponent implements OnInit {
         })
         this.getNotifications();
     }
+
     getNotifications() {
         this.commonService.getNotification(this.userId);
     }
+
     setLocalStorage() {
         this.userId = Number(localStorage.getItem("userId"));
         const popovers = {
@@ -105,6 +107,7 @@ export class ViewGRNComponent implements OnInit {
     viewBack() {
         this.route.navigate(['po']);
     }
+
     addGRN() {
         const data: GRNPopupData = {
             isEdit: false,
@@ -114,10 +117,12 @@ export class ViewGRNComponent implements OnInit {
         };
         this.openDialog(data);
     }
+
     openDocuments(data) {
         const dialogRef = this.dialog.open(ShowDocumentComponent, {
             width: "500px",
-            data
+            data,
+            panelClass: ['common-modal-style', 'show-docs-dialog']
         });
         dialogRef.afterClosed().toPromise().then(result => {
             if (result) {
@@ -129,7 +134,8 @@ export class ViewGRNComponent implements OnInit {
         if (data.isDelete == false) {
             const dialogRef = this.dialog.open(AddEditGrnComponent, {
                 width: "1000px",
-                data
+                data,
+                panelClass: ['common-modal-style', 'add-receipts-dialog']
             });
             dialogRef.afterClosed().toPromise().then(result => {
                 if (result) {

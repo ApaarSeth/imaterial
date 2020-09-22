@@ -1,133 +1,121 @@
-<div class="header-add-edit-dialog p-r-0">
-  <div class="row width-100">
-    <div class="col-xs-10 col-sm-10">
-      <h1 mat-dialog-title>Add Receipts</h1>
-    </div>
-    <div class="col-xs-2 col-sm-2">
-      <button type="button" class="close pull-right p-t-5" (click)="closeDialog()" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
+<section class="modal-outer">
+  <div class="modal-header">
+    <h5 mat-dialog-title class="mb-0">Add Receipts</h5>
+
+    <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+
+  <div mat-dialog-content>
+    <div class="modal-body">
+      <form *ngIf="materialForms" [formGroup]="materialForms" (ngSubmit)="addGrn()">
+        <!-- Web view of add receipt table -->
+        <div *ngIf="showtable" formArrayName="forms" class="add-grn-container-popup form-add-edit-grn-div">
+          <table mat-table [dataSource]="dataSource" class="add-receipt-tbl">
+            <ng-container matColumnDef="Material Name">
+              <th mat-header-cell *matHeaderCellDef class="receipt-material-name">Material Name</th>
+              <td mat-cell *matCellDef="let element" class="grn-material-name receipt-material-name">
+                <div class="limited-character global">{{ element.materialName }}</div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Brand Name">
+              <th mat-header-cell *matHeaderCellDef class="receipt-brand-name">Brand <br />Name</th>
+              <td mat-cell *matCellDef="let element" class="receipt-brand-name">{{ element.materialBrand }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Unit">
+              <th mat-header-cell *matHeaderCellDef class="text-align-center receipt-unit">Unit</th>
+              <td mat-cell *matCellDef="let element" class="text-align-center receipt-unit">
+                <span *ngIf="element.materialUnit != ''"> {{ element.materialUnit }} </span>
+                <span *ngIf="element.materialUnit == ''"> - </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Awarded Quantity">
+              <th mat-header-cell *matHeaderCellDef class="text-align-center receipt-awarded-qty">Awarded <br />Quantity</th>
+              <td mat-cell *matCellDef="let element" class="text-align-center receipt-awarded-qty">{{ element.materialQuantity }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Delivered Quantity">
+              <th mat-header-cell *matHeaderCellDef class="text-align-center receipt-delivered-qty">Delivered <br />Quantity</th>
+              <td mat-cell *matCellDef="let element" class="text-align-center receipt-delivered-qty">{{ element.deliveredQty }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Delivered Date">
+              <th mat-header-cell *matHeaderCellDef class="text-align-center receipt-delivered-date">Delivered <br />Date</th>
+              <td mat-cell *matCellDef="let element; let i = index" class="text-align-center receipt-delivered-date">
+                <mat-form-field class="border-input width-75" [formGroupName]="i">
+                  <input matInput [matDatepicker]="dueDate" formControlName="deliveredDate" (click)="dueDate.open()" />
+                  <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                  <mat-datepicker #dueDate startView="month" [startAt]="dueDate"></mat-datepicker>
+                  <small
+                    class="warning-color"
+                    *ngIf="materialForms.get('forms')['controls'][i]['controls']['deliveredDate'].errors?.enterDate &&materialForms.get('forms')['controls'][i]['controls']['deliveredDate'].touched"
+                  >
+                    Enter Date</small
+                  >
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Received Quantity">
+              <th mat-header-cell *matHeaderCellDef class="receipt-received-qty">Received <br />Quantity</th>
+              <td mat-cell *matCellDef="let element;let i = index" class="border-input receipt-received-qty">
+                <mat-form-field [formGroupName]="i" class="border-input table-input">
+                  <input matInput formControlName="certifiedQty" type="text" placeholder="Received Quantity" min="0" appTwoDigitDecimaNumber />
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+
+        <!-- Mobile view of add receipt table -->
+        <div *ngIf="!showtable" formArrayName="forms" class="add-grn-responsive-div">
+          <ng-container *ngFor="let data of dataSource; let i=index">
+            <mat-accordion class="add-edit-grn-popup-accordian">
+              <mat-expansion-panel class="myPanel" [expanded]="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="row width-100">
+                      <div class="col-xs-8 col-md-8 p-t-10 p-b-10 font-size-vary-grn">
+                        {{data.materialName}}
+                        <div class="font-size-vary-grn color-brand">{{data.materialBrand}}</div>
+                      </div>
+                      <div class="col-xs-4 col-md-4">
+                        <mat-form-field [formGroupName]="i" class="border-input table-input add-grn-popup">
+                          <input matInput formControlName="certifiedQty" type="text" placeholder="Received Quantity" min="0" appTwoDigitDecimaNumber />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row width-100">
+                  <div class="col-xs-12 font-size-vary-grn p-t-10 p-l-15">Unit : {{data.materialUnit}}</div>
+                </div>
+                <div class="row width-100">
+                  <div class="col-xs-6 font-size-vary-grn p-t-10 p-b-10 p-l-15">Awarded Quantity : {{data.materialQuantity}}</div>
+                  <div class="col-xs-6 font-size-vary-grn text-align-right p-t-10 p-b-10">Delivered Quantity : {{data.deliveredQty}}</div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <div class="p-1"></div>
+          </ng-container>
+        </div>
+
+        <grn-documents #grnDocument [documentData]="documentList"></grn-documents>
+
+        <div mat-dialog-actions>
+          <div class="col-sm-12 save-btn-add-edit-user-modal">
+            <button mat-raised-button type="button" (click)="closeDialog()" class="main-background-color main-button color-white pull-left">Cancel</button>
+            <button mat-raised-button type="submit" class="main-background-color main-button color-white pull-right" [disabled]="!materialForms.valid">Save</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-</div>
-
-<div class="p-t-10">
-  <form *ngIf="materialForms" [formGroup]="materialForms" (ngSubmit)="addGrn()">
-    <div *ngIf="showtable" formArrayName="forms" class="add-grn-container-popup mat-elevation-z8 form-add-edit-grn-div">
-      <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="Material Name">
-          <th mat-header-cell *matHeaderCellDef>Material Name</th>
-          <td mat-cell *matCellDef="let element" class="grn-material-name">
-            <div class="limited-character global">
-              {{ element.materialName }}
-            </div>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="Brand Name">
-          <th mat-header-cell *matHeaderCellDef>Brand Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.materialBrand }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="Unit">
-          <th mat-header-cell *matHeaderCellDef class="text-align-center">Unit</th>
-          <td mat-cell *matCellDef="let element" class="text-align-center">
-            <span *ngIf="element.materialUnit != ''">
-              {{ element.materialUnit }}
-            </span>
-            <span *ngIf="element.materialUnit == ''">
-              -
-            </span>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="Awarded Quantity">
-          <th mat-header-cell *matHeaderCellDef class="text-align-center">Awarded Quantity</th>
-          <td mat-cell *matCellDef="let element" class="text-align-center">
-            {{ element.materialQuantity }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="Delivered Quantity">
-          <th mat-header-cell *matHeaderCellDef class="text-align-center">Delivered Quantity</th>
-          <td mat-cell *matCellDef="let element" class="text-align-center">
-            {{ element.deliveredQty }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="Received Quantity">
-          <th mat-header-cell *matHeaderCellDef>Received Quantity</th>
-          <td mat-cell *matCellDef="let element;let i = index" class="border-input">
-            <!-- <input matInput type="number" placeholder="Quantity"> -->
-
-            <mat-form-field [formGroupName]="i" class="border-input table-input">
-              <input matInput formControlName="certifiedQty" type="text" placeholder="Received Quantity" min="0"
-                appTwoDigitDecimaNumber />
-            </mat-form-field>
-            <!-- {{ element.certifiedQuantity }} -->
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-
-    <div *ngIf="!showtable" formArrayName="forms" class="add-grn-responsive-div">
-      <ng-container *ngFor="let data of dataSource; let i=index">
-        <mat-accordion class="add-edit-grn-popup-accordian">
-          <mat-expansion-panel class="myPanel" [expanded]="true">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <div class="row width100Percent">
-                  <div class="col-xs-8 col-md-8 p-t-10 p-b-10 font-size-vary-grn">
-                    {{data.materialName}}
-                    <div class="font-size-vary-grn color-brand">
-                      {{data.materialBrand}}
-                    </div>
-                  </div>
-                  <div class="col-xs-4 col-md-4">
-                    <mat-form-field [formGroupName]="i" class="border-input table-input add-grn-popup">
-                      <input matInput formControlName="certifiedQty" type="text" placeholder="Received Quantity" min="0"
-                        appTwoDigitDecimaNumber />
-                    </mat-form-field>
-                  </div>
-                </div>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="row width100Percent">
-              <div class="col-xs-12 font-size-vary-grn p-t-10 p-l-15">
-                Unit : {{data.materialUnit}}
-              </div>
-            </div>
-            <div class="row width100Percent">
-              <div class="col-xs-6 font-size-vary-grn p-t-10 p-b-10 p-l-15">
-                Awarded Quantity : {{data.materialQuantity}}
-              </div>
-              <div class="col-xs-6 font-size-vary-grn text-align-right p-t-10 p-b-10">
-                Delivered Quantity : {{data.deliveredQty}}
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-        <div class="p-1"></div>
-      </ng-container>
-    </div>
-
-    <grn-documents #grnDocument [documentData]="documentList"></grn-documents>
-
-    <div mat-dialog-actions>
-      <div class="col-sm-12 save-btn-add-edit-user-modal">
-        <button mat-raised-button type="button" (click)="closeDialog()"
-          class="main-background-color main-button color-white pull-left">
-          Cancel
-        </button>
-
-        <button mat-raised-button type="submit" class="main-background-color main-button color-white pull-right"
-          [disabled]="!valueEntered()">
-          Save
-        </button>
-      </div>
-    </div>
-  </form>
-</div>
+</section>

@@ -1,17 +1,6 @@
 .add-project-component-dialog {
-  .header-add-edit-dialog {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 -22px;
-    padding: 5px 20px;
-    border-bottom: 1px solid #d0d0d0;
-    h1 {
-      margin: 0px;
-    }
-  }
-
   .project-profile {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     img {
       width: 100%;
@@ -23,8 +12,12 @@
     margin: 0 auto;
     padding-top: 10px;
     .myLabel {
-      width: 90%;
-      padding: 2px;
+      width: auto;
+    }
+    .photo-btn span{
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0px;
     }
   }
 
@@ -34,21 +27,6 @@
     }
     .mat-form-field-flex {
       padding-left: 0px;
-    }
-    .col-sm-12 {
-      mat-form-field {
-        width: 97.5%;
-      }
-    }
-    .col-sm-6 {
-      mat-form-field {
-        width: 95%;
-      }
-    }
-    .col-sm-3 {
-      mat-form-field {
-        width: 90%;
-      }
     }
 
     .col-sm-6.date-dialog-add-edit {
@@ -62,6 +40,16 @@
       padding-top: 13px;
     }
   }
+
+  .project-area{
+    .mat-form-field-wrapper{
+      padding-top: 16px !important;
+    }
+  }
+}
+
+.no-projects{
+  width: 30%;
 }
 
 .relnote-head{
@@ -70,13 +58,6 @@
     border-radius: 10px 10px 0px 0px;
     margin: -5px -24px 15px !important;
     padding: 10px 22px !important;
-}
-
-@media only screen and (min-width: 768px) {
-  .add-edit-dialog-button {
-    display: flex;
-    justify-content: flex-end;
-  }
 }
 
 .header-add-edit-dialog {
@@ -92,6 +73,52 @@
 
 .padding-for-dialog-after-header {
   padding-top: 14px !important;
+}
+
+.dialog-length {
+  max-height: 153px;
+  overflow-y: auto;
+  table {
+    width: 100%;
+  }
+}
+
+.common-dg{
+  .mat-form-field-label{
+    padding-left: 0px;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .add-project-component-dialog {
+    .project-profile {
+      text-align: center;
+    }
+
+    .project-profile img{
+      width: 150px;
+    }
+
+    .upload-photo-btn .photo-btn{  
+      width: 150px;
+    }
+  }
+}
+
+@media only screen and (max-width: 599px){
+  .select-country{
+    .mat-form-field-infix{
+      padding-top: 6px !important;
+    }
+
+    .mat-select-value{
+      padding-bottom: 6px;
+    }
+
+    .color-brand{
+      font-size: 13px !important;
+    }
+  }
 }
 
 @media only screen and (max-width: 576px) {
@@ -114,25 +141,18 @@
   .image-project-div {
     margin: auto;
   }
-}
 
-@media only screen and (max-width: 768px) {
-  .add-edit-dialog-button {
-    display: flex;
-    justify-content: space-around;
+  .select-projects-dialog{
+    .modal-body h5 {
+      font-size: 1rem;
+    }
   }
 }
 
-.dialog-length {
-  max-height: 153px;
-  overflow-y: auto;
-  table {
-    width: 100%;
-  }
-}
-
-.common-dg{
-  .mat-form-field-label{
-    padding-left: 0px;
+@media only screen and (max-width: 400px) {
+  .select-projects-dialog{
+    .no-projects {
+      width: 40%;
+    }
   }
 }

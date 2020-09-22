@@ -1,19 +1,20 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
 import {
   FormBuilder,
   FormGroup,
   Validators
 } from "@angular/forms";
 import { ProjectDetails, ProjetPopupData } from "../../models/project-details";
-import { ProjectService } from "../../services/projectDashboard/project.service";
+import { ProjectService } from "../../services/project.service";
 import { FieldRegExConst } from "../../constants/field-regex-constants";
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
 import { Router } from '@angular/router';
 import { AppNavigationService } from '../../services/navigation.service';
 import { FacebookPixelService } from '../../services/fb-pixel.service';
 import { CountryCode } from '../../models/currency';
 import { CommonService } from '../../services/commonService';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { DocumentUploadService } from "../../services/document-download.service";
 
 export interface City {
   value: string;
@@ -30,7 +31,7 @@ export interface Unit {
 
 @Component({
   selector: "add-project-dialog",
-  templateUrl: "add-project-component.html"
+  templateUrl: "./add-project.component.html"
 })
 export class AddProjectComponent implements OnInit {
 
@@ -53,7 +54,7 @@ export class AddProjectComponent implements OnInit {
   pincodeLength: number;
   imageFileSizeError: string = "";
   imageFileSize: boolean = false;
-  fileTypes: string[] = [ 'png', 'jpeg', 'jpg' ];
+  fileTypes: string[] = ['png', 'jpeg', 'jpg'];
 
   ipaddress: string;
   countryList: CountryCode[] = [];
@@ -73,7 +74,6 @@ export class AddProjectComponent implements OnInit {
     private _uploadImageService: DocumentUploadService,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    private _router: Router,
     private navService: AppNavigationService,
     private fbPixel: FacebookPixelService,
     private commonService: CommonService
@@ -84,8 +84,8 @@ export class AddProjectComponent implements OnInit {
     this.countryList = this.data.countryList;
     this.currencyCode = localStorage.getItem('currencyCode');
     this.countryCode = localStorage.getItem('countryCode');
-    let unitArray = this.countryCode === "IN" ? [ { value: "Lakh" }, { value: "Crore" } ] : [ { value: "Thousand" }, { value: "Million" }, { value: "Billion" } ]
-    this.costUnits = [ ...unitArray ];
+    let unitArray = this.countryCode === "IN" ? [{ value: "Lakh" }, { value: "Crore" }] : [{ value: "Thousand" }, { value: "Million" }, { value: "Billion" }]
+    this.costUnits = [...unitArray];
     this.cntryId = Number(localStorage.getItem('countryId'));
     if (localStorage.getItem('countryCode')) {
       this.calingCode = localStorage.getItem('countryCode');
@@ -101,10 +101,19 @@ export class AddProjectComponent implements OnInit {
         this.cityStateFetch(this.data.detail.pinCode);
       }
     }
-
   }
 
   getLocation() {
+    if (this.countryList) {
+      this.countryCodeCondition()
+    }
+    this.commonService.getCountry().then((res) => {
+      this.countryList = res.data
+      this.countryCodeCondition()
+    });
+  }
+
+  countryCodeCondition() {
     if (this.data.isEdit && this.data.detail.countryId) {
       this.getCountryCode({ callingCode: null, countryId: this.data.detail.countryId });
     } else if (this.cntryId) {
@@ -130,7 +139,7 @@ export class AddProjectComponent implements OnInit {
         return val.callingCode === obj.callingCode;
       }
     })
-    this.form.get('countryCode').setValue(this.livingCountry[ 0 ]);
+    this.form.get('countryCode').setValue(this.livingCountry[0]);
   }
 
   get selectedCountry() {
@@ -150,7 +159,7 @@ export class AddProjectComponent implements OnInit {
     { type: "OTHERS" }
   ];
 
-  units: Unit[] = [ { value: "acres" }, { value: "sqm" }, { value: "sqft" }, { value: "km" } ];
+  units: Unit[] = [{ value: "acres" }, { value: "sqm" }, { value: "sqft" }, { value: "km" }];
 
 
   initForm() {
@@ -164,13 +173,13 @@ export class AddProjectComponent implements OnInit {
       ],
       addressLine1: [
         this.data.isEdit ? this.data.detail.addressLine1 : "",
-        [ Validators.required, Validators.maxLength(120) ]
+        [Validators.required, Validators.maxLength(120)]
       ],
-      addressLine2: [ this.data.isEdit ? this.data.detail.addressLine2 : "", Validators.maxLength(120) ],
+      addressLine2: [this.data.isEdit ? this.data.detail.addressLine2 : "", Validators.maxLength(120)],
       pinCode: [
         this.data.isEdit ? this.data.detail.pinCode : "",
         // [Validators.required, Validators.pattern(FieldRegExConst.PINCODE)]
-        [ Validators.required ]
+        [Validators.required]
       ],
       state: [
         { value: this.data.isEdit ? this.data.detail.state : "", disabled: true },
@@ -182,7 +191,7 @@ export class AddProjectComponent implements OnInit {
       ],
       area: [
         this.data.isEdit ? this.data.detail.area : "",
-        [ Validators.required, Validators.pattern(FieldRegExConst.RATES) ]
+        [Validators.required, Validators.pattern(FieldRegExConst.RATES)]
       ],
       startDate: [
         this.data.isEdit ? this.data.detail.startDate : "",
@@ -194,20 +203,20 @@ export class AddProjectComponent implements OnInit {
       ],
       cost: [
         this.data.isEdit ? this.data.detail.cost : "",
-        [ Validators.required, Validators.pattern(FieldRegExConst.RATES) ]
+        [Validators.required, Validators.pattern(FieldRegExConst.RATES)]
       ],
       type: [
         this.data.isEdit ? this.data.detail.type : "",
         Validators.required
       ],
-      unit: [ this.data.isEdit ? this.data.detail.unit : "", Validators.required ],
+      unit: [this.data.isEdit ? this.data.detail.unit : "", Validators.required],
       gstNo: [
         this.data.isEdit ? this.data.detail.gstNo : "",
-        [ Validators.pattern(FieldRegExConst.GSTIN) ]
+        [Validators.pattern(FieldRegExConst.GSTIN)]
       ],
-      costUnit: [ this.data.isEdit ? this.data.detail.costUnit : "", Validators.required ],
-      imageUrl: [ this.data.isEdit ? this.data.detail.imageFileName : "" ],
-      countryId: [ null ],
+      costUnit: [this.data.isEdit ? this.data.detail.costUnit : "", Validators.required],
+      imageUrl: [this.data.isEdit ? this.data.detail.imageFileName : ""],
+      countryId: [null],
       countryCode: []
     });
     this.form.get('startDate').valueChanges.subscribe(res => {
@@ -245,6 +254,7 @@ export class AddProjectComponent implements OnInit {
 
   updateProjects(projectDetails: ProjectDetails) {
     if (projectDetails) {
+      projectDetails.gstNo = projectDetails.gstNo === '' ? null : projectDetails.gstNo
       let projectId = this.data.detail.projectId;
       let organizationId = this.data.detail.organizationId;
       this.projectService
@@ -303,15 +313,15 @@ export class AddProjectComponent implements OnInit {
   cityStateFetch(value) {
     this.commonService.getPincodeInternational(value, this.selectedCountryId).then(res => {
       if (res.data && res.data.length) {
-        this.city = res.data[ 0 ].districtName;
-        this.state = res.data[ 0 ].stateName;
+        this.city = res.data[0].districtName;
+        this.state = res.data[0].stateName;
         if (this.city && this.state)
           this.validPincode = true;
         else
           this.validPincode = false;
 
-        this.form.get('city').setValue(res.data[ 0 ].districtName);
-        this.form.get('state').setValue(res.data[ 0 ].stateName);
+        this.form.get('city').setValue(res.data[0].districtName);
+        this.form.get('state').setValue(res.data[0].stateName);
       }
 
     });
@@ -358,10 +368,10 @@ export class AddProjectComponent implements OnInit {
   onFileSelect(event) {
     if (event.target.files.length > 0) {
       let reader = new FileReader();
-      reader.readAsDataURL(event.target.files[ 0 ]);
-      const file = event.target.files[ 0 ];
-      let fileSize = event.target.files[ 0 ].size; // in bytes
-      let fileType = event.target.files[ 0 ].name.split('.').pop();
+      reader.readAsDataURL(event.target.files[0]);
+      const file = event.target.files[0];
+      let fileSize = event.target.files[0].size; // in bytes
+      let fileType = event.target.files[0].name.split('.').pop();
 
       if (this.fileTypes.some(element => {
         return element === fileType
@@ -385,7 +395,7 @@ export class AddProjectComponent implements OnInit {
 
         this._snackBar.open("We don't support " + fileType + " in Image upload, Please uplaod pdf, doc, docx, jpeg, png", "", {
           duration: 2000,
-          panelClass: [ "success-snackbar" ],
+          panelClass: ["success-snackbar"],
           verticalPosition: "bottom"
         });
       }

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { BomService } from 'src/app/shared/services/bom/bom.service';
 import { categoryNestedLevel } from 'src/app/shared/models/category';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { EditMyMaterialComponent } from 'src/app/shared/dialogs/edit-my-material/edit-my-material.component';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { MyMaterialService } from 'src/app/shared/services/myMaterial.service';
@@ -18,16 +17,17 @@ export class MyMaterialTabComponent implements OnInit {
 	@Input("selectedCategory") selectedCategry: categoryNestedLevel[]
 	selectedCategory: categoryNestedLevel[] = [];
 	isSearching: boolean;
-	search: string = ''
-	constructor(public dialog: MatDialog,
-		private notifier: AppNotificationService, private materialService: MyMaterialService, private commonService: CommonService, private bomService: BomService, private dialogRef: MatDialog) { }
+	search: string = '';
+
+	constructor(
+		public dialog: MatDialog,
+		private notifier: AppNotificationService, 
+		private materialService: MyMaterialService, 
+		private commonService: CommonService,
+		private dialogRef: MatDialog) { }
 
 	ngOnInit() {
-		// this.commonService.materialAdded.subscribe(val => {
-		// 	if (val) {
-		// 		this.getMyMaterial();
-		// 	}
-		// })
+		
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -46,7 +46,8 @@ export class MyMaterialTabComponent implements OnInit {
 
 	openAddMaterial() {
 		const dialogRef = this.dialog.open(AddMyMaterialBomComponent, {
-			width: '720px'
+			width: '720px',
+			panelClass: ['common-modal-style', 'add-custom-material']
 		})
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === 'done') {
@@ -59,7 +60,8 @@ export class MyMaterialTabComponent implements OnInit {
 		let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'edit' }
 		const dialogRef = this.dialogRef.open(EditMyMaterialComponent, {
 			width: "750px",
-			data
+			data,
+			panelClass: ['common-modal-style', 'edit-my-material-dialog']
 		})
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === 'done') {
@@ -72,7 +74,9 @@ export class MyMaterialTabComponent implements OnInit {
 	onDelete(c, sc) {
 		const dialogRef = this.dialogRef.open(DeleteMyMaterialComponent, {
 			width: "750px",
+			panelClass: ['common-modal-style', 'delete-my-material-dialog']
 		})
+
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === 'yes') {
 				this.materialService.deleteApi(this.selectedCategory[c].materialList[sc].customMaterialId).then(res => {

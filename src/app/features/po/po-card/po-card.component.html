@@ -1,32 +1,27 @@
-<form [formGroup]="projectDetails" (ngSubmit)="submit()" *ngIf="!showResponsiveDesign">
+<form [formGroup]="projectDetails" (ngSubmit)="submit()" *ngIf="!showResponsiveDesign && projectDetails">
   <div class="row">
     <span class="col-xs-6">
       <span class="m-r-35 p-l-15">
-        <span class="text-semi-bold"> P.O. No.:</span>
-        <span class="text-semi-bold" *ngIf="mode != 'edit'; else editBlock">{{ cardData.poNumber }}</span>
-        <ng-template #editBlock>
-          <mat-form-field class="border-input">
+        <span>
+          <mat-form-field class="border-input p-r-5">
             <input matInput type="string" formControlName="orderNo" placeholder="P.O. No." class="m-r-5" />
           </mat-form-field>
-        </ng-template>
+          <span *ngIf="projectDetails.controls['orderNo'].hasError('required') && projectDetails.controls['orderNo'].touched" class="form-error-msg">
+            <app-error-message msg="P.O. No. is required"></app-error-message>
+          </span>
+        </span>
       </span>
     </span>
     <span class="col-xs-6 date-dialog-add-edit">
-      <span class="text-semi-bold" *ngIf="mode !== 'edit'; else editDateBlock">
-        P.O. Valid Till: <span class="p-l-5">{{ cardData.poValidUpto | date: "dd-MMM-yyy" }}</span>
+      <span>
+        <mat-form-field class="border-input">
+          <mat-label>Valid Till</mat-label>
+          <!-- <span class="form-placeholder">{{ projectDetails["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
+          <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly [min]="minDate" />
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate startView="month"></mat-datepicker>
+        </mat-form-field>
       </span>
-      <ng-template #editDateBlock>
-        <span class="text-semi-bold">
-          P.O. Valid Till:
-          <mat-form-field class="border-input">
-            <mat-label>Valid Till</mat-label>
-            <!-- <span class="form-placeholder">{{ projectDetails["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
-            <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly [min]="minDate" />
-            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-            <mat-datepicker #endDate startView="month"></mat-datepicker>
-          </mat-form-field>
-        </span>
-      </ng-template>
     </span>
   </div>
   <mat-grid-list cols="2" rowHeight="100px" class="poCard">
@@ -41,40 +36,28 @@
                 <span>{{ cardData.projectAddress.projectName }}</span>
               </mat-list-item>
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  Contact Person:
-                </span>
+                <span class="font-weight-500"> Contact Person: </span>
                 <span>
                   {{ cardData.projectAddress.firstName }}
                   {{ cardData.projectAddress.lastName }}</span
                 >
                 <span *ngIf="mode === 'edit'">
-                  <a href="javascript:void(0)" (click)="openDialog('projectUserId', cardData.projectId)"
-                    ><i class="material-icons main-color">
-                      edit
-                    </i></a
-                  >
+                  <a href="javascript:void(0)" (click)="openDialog('projectUserId', cardData.projectId)"><i class="material-icons main-color"> edit </i></a>
                 </span>
               </mat-list-item>
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  Phone No.:
-                </span>
+                <span class="font-weight-500"> Phone No.: </span>
                 <span>{{ cardData.projectAddress.contactNo }}</span>
               </mat-list-item>
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  Email:
-                </span>
+                <span class="font-weight-500"> Email: </span>
                 <span> {{ cardData.projectAddress.email }}</span>
               </mat-list-item>
             </mat-list>
           </div>
           <div class="col-xs-6">
             <mat-list class="delivery-address-po-card">
-              <mat-list-item mat-subheader>
-                Delivery Address
-              </mat-list-item>
+              <mat-list-item mat-subheader> Delivery Address </mat-list-item>
               <span>{{ cardData.projectAddress.addressLine1 }}</span>
               <br />
               <span *ngIf="cardData.projectAddress.addressLine2">{{ cardData.projectAddress.addressLine2 }} <br /></span>
@@ -92,80 +75,60 @@
         <mat-list>
           <h3 mat-subheader class="header-card-po">Purchase Order Awarded To:</h3>
           <mat-list-item mat-subheader>
-            <span class="font-weight-500">
-              Supplier Name:
-            </span>
+            <span class="font-weight-500"> Supplier Name: </span>
             <span>{{ cardData.supplierAddress.supplierName }}</span>
           </mat-list-item>
           <mat-list-item mat-subheader>
-            <span class="font-weight-500">
-              Contact Person:
-            </span>
+            <span class="font-weight-500"> Contact Person: </span>
             <span>{{ cardData.supplierAddress.supplierName }}</span>
           </mat-list-item>
           <mat-list-item mat-subheader>
-            <span class="font-weight-500">
-              Phone No.:
-            </span>
+            <span class="font-weight-500"> Phone No.: </span>
             <span> {{ cardData.supplierAddress.contactNo }}</span>
           </mat-list-item>
 
-          <ng-container *ngIf="cardData.poStatus === '3'">
+          <ng-container *ngIf="cardData.poStatus === '3' && cardData.rating">
             <mat-list-item mat-subheader>
-              <span class="font-weight-500">
-                Rating:
-              </span>
-  
+              <span class="font-weight-500"> Rating: </span>
+
               <fieldset class="rating">
-                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="5" [checked]="cardData.sellerPORating ? (cardData.sellerPORating === 5) : (rating===5)" />
-                <label title="5" (click)='checkRating(5)'>5</label>
-              
-                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="4" [checked]="cardData.sellerPORating ? (cardData.sellerPORating === 4) : (rating===4)" />
-                <label title="4" (click)='checkRating(4)'>4</label>
-              
-                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="3" [checked]="cardData.sellerPORating ? (cardData.sellerPORating === 3) : (rating===3)" />
-                <label title="3" (click)='checkRating(3)'>3</label>
-              
-                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="2" [checked]="cardData.sellerPORating ? (cardData.sellerPORating === 2) : (rating===2)" />
-                <label title="2" (click)='checkRating(2)'>2</label>
-              
-                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="1" [checked]="cardData.sellerPORating ? (cardData.sellerPORating === 1) : (rating===1)" />
-                <label title="1" (click)='checkRating(1)'>1</label>
-              </fieldset>          
-  
+                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="5" [checked]="cardData.sellerPORating ? cardData.sellerPORating === 5 : rating === 5" />
+                <label title="5" (click)="checkRating(5)">5</label>
+
+                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="4" [checked]="cardData.sellerPORating ? cardData.sellerPORating === 4 : rating === 4" />
+                <label title="4" (click)="checkRating(4)">4</label>
+
+                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="3" [checked]="cardData.sellerPORating ? cardData.sellerPORating === 3 : rating === 3" />
+                <label title="3" (click)="checkRating(3)">3</label>
+
+                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="2" [checked]="cardData.sellerPORating ? cardData.sellerPORating === 2 : rating === 2" />
+                <label title="2" (click)="checkRating(2)">2</label>
+
+                <input type="radio" [name]="cardData.supplierAddress.supplierId" value="1" [checked]="cardData.sellerPORating ? cardData.sellerPORating === 1 : rating === 1" />
+                <label title="1" (click)="checkRating(1)">1</label>
+              </fieldset>
+
               <a href="javascript:void(0)" class="ml-2 orange-text" (click)="checkRating(0)">Clear</a>
             </mat-list-item>
           </ng-container>
 
           <mat-list-item mat-subheader>
-            <span class="font-weight-500">
-              Street Address:
-            </span>
+            <span class="font-weight-500"> Street Address: </span>
             <span>{{ cardData.supplierAddress.addressLine1 }} {{ cardData.supplierAddress.addressLine2 }}</span>
             <span *ngIf="mode === 'edit'">
-              <a href="javascript:void(0)" (click)="openaddressDialog('supplierAddressId', cardData.supplierAddress.supplierId)"
-                ><i class="material-icons main-color">
-                  edit
-                </i></a
-              >
+              <a href="javascript:void(0)" (click)="openaddressDialog('supplierAddressId', cardData.supplierAddress.supplierId)"><i class="material-icons main-color"> edit </i></a>
             </span>
           </mat-list-item>
           <mat-list-item mat-subheader>
-            <span class="font-weight-500">
-              Pin Code:
-            </span>
+            <span class="font-weight-500"> Pin Code: </span>
             <span>{{ cardData.supplierAddress.pinCode }}</span>
           </mat-list-item>
           <mat-list-item mat-subheader>
-            <span class="font-weight-500">
-              City:
-            </span>
+            <span class="font-weight-500"> City: </span>
             <span>{{ cardData.supplierAddress.city }} </span>
           </mat-list-item>
           <mat-list-item mat-subheader>
-            <span class="font-weight-500">
-              GSTIN:
-            </span>
+            <span class="font-weight-500"> {{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }} </span>
             <span>{{ cardData.supplierAddress.gstNo }}</span>
           </mat-list-item>
         </mat-list>
@@ -178,70 +141,46 @@
           <div class="row">
             <div class="col-xs-6">
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  Company Name:
-                </span>
+                <span class="font-weight-500"> Company Name: </span>
                 <span>{{ cardData.billingAddress.companyName }}</span>
               </mat-list-item>
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  Contact Person:
-                </span>
+                <span class="font-weight-500"> Contact Person: </span>
                 <span>{{ cardData.billingAddress.firstName }} {{ cardData.billingAddress.lastName }}</span>
                 <span *ngIf="mode === 'edit'">
-                  <a href="javascript:void(0)" (click)="openDialog('projectBillingUserId', cardData.projectId)"
-                    ><i class="material-icons main-color">
-                      edit
-                    </i></a
-                  >
+                  <a href="javascript:void(0)" (click)="openDialog('projectBillingUserId', cardData.projectId)"><i class="material-icons main-color"> edit </i></a>
                 </span>
               </mat-list-item>
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  Phone No.:
-                </span>
+                <span class="font-weight-500"> Phone No.: </span>
 
                 <span>{{ cardData.billingAddress.contactNo }}</span>
               </mat-list-item>
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  Email.:
-                </span>
+                <span class="font-weight-500"> Email.: </span>
                 <span>{{ cardData.billingAddress.email }}</span></mat-list-item
               >
             </div>
             <div class="col-xs-6">
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  Street Address:
-                </span>
+                <span class="font-weight-500"> Street Address: </span>
                 <span> {{ cardData.billingAddress.addressLine1 }} {{ cardData.billingAddress.addressLine2 }}</span>
                 <span *ngIf="mode === 'edit'">
-                  <a href="javascript:void(0)" (click)="openaddressDialog('projectBillingAddressId', cardData.projectId)"
-                    ><i class="material-icons main-color">
-                      edit
-                    </i></a
-                  ></span
+                  <a href="javascript:void(0)" (click)="openaddressDialog('projectBillingAddressId', cardData.projectId)"><i class="material-icons main-color"> edit </i></a></span
                 >
               </mat-list-item>
 
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  Pin Code:
-                </span>
+                <span class="font-weight-500"> Pin Code: </span>
 
                 <span>{{ cardData.billingAddress.pinCode }}</span>
               </mat-list-item>
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  City:
-                </span>
+                <span class="font-weight-500"> City: </span>
                 <span>{{ cardData.billingAddress.city }}</span>
               </mat-list-item>
               <mat-list-item mat-subheader>
-                <span class="font-weight-500">
-                  GSTIN:
-                </span>
+                <span class="font-weight-500"> {{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }} </span>
                 <span>{{ cardData.billingAddress.gstNo }}</span>
               </mat-list-item>
             </div>
@@ -252,241 +191,174 @@
   </mat-grid-list>
 </form>
 
-  <!-- for responsive design -->
+<!-- for responsive design -->
 
 <form [formGroup]="projectDetails" (ngSubmit)="submit()" class="po-view" *ngIf="showResponsiveDesign">
   <div class="row p-b-10 border-bottom-po-view">
     <div class="col-xs-6 col-sm-6 display-flex">
-        <div class="text-semi-bold font-size12"> P.O. No.:</div>
-        <div class="text-semi-bold font-size12" *ngIf="mode != 'edit'; else editBlock">{{ cardData.poNumber }}</div>
-        <ng-template #editBlock>
-          <mat-form-field class="border-input width60Percent p-t-0">
-            <input matInput type="string" formControlName="orderNo" placeholder="P.O. No." class="width60Percent" />
-          </mat-form-field>
-        </ng-template>
+      <span>
+        <mat-form-field class="border-input width-77 p-t-0">
+          <input matInput type="string" formControlName="orderNo" placeholder="P.O. No." />
+        </mat-form-field>
+        <span *ngIf="projectDetails.controls['orderNo'].hasError('required') && projectDetails.controls['orderNo'].touched" class="form-error-msg">
+          <app-error-message msg="P.O. No. is required"></app-error-message>
+        </span>
+      </span>
     </div>
-      <div class="col-xs-6 col-sm-6  display-flex date-dialog-add-edit">
-      <div class="text-semi-bold font-size12" *ngIf="mode !== 'edit'; else editDateBlock">
-        P.O. Valid Till: <span class="p-l-5 font-size12">{{ cardData.poValidUpto | date: "dd-MMM-yyy" }}</span>
+    <div class="col-xs-6 col-sm-6 display-flex date-dialog-add-edit text-center">
+      <span>
+        <mat-form-field class="border-input width-57">
+          <mat-label>Valid Till</mat-label>
+          <!-- <span class="form-placeholder">{{ projectDetails["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
+          <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly [min]="minDate" />
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate startView="month"></mat-datepicker>
+        </mat-form-field>
+      </span>
+    </div>
+  </div>
+
+  <div class="row p-t-10 p-b-10 border-bottom-po-view">
+    <div class="col-xs-6 col-sm-6 fontsize-12-px">
+      <div class="header-card-po border-none">Contract Detail</div>
+      <div class="width-100">
+        <span class="text-size-light">Project Name:</span>
+        <span class="text-very-light word-break-all">{{ cardData.projectAddress.projectName }}</span>
       </div>
-      <ng-template #editDateBlock>
-        <div class="text-semi-bold  font-size12">
-          P.O. Valid Till:
+
+      <div class="width-100">
+        <span class="text-size-light"> Contact Person: </span>
+        <span class="text-very-light word-break-all">
+          {{ cardData.projectAddress.firstName }}
+          {{ cardData.projectAddress.lastName }}</span
+        >
+        <span *ngIf="mode === 'edit'">
+          <a href="javascript:void(0)" (click)="openDialog('projectUserId', cardData.projectId)"><i class="material-icons main-color fontsize-14-px"> edit </i></a>
+        </span>
+      </div>
+
+      <div class="width-100">
+        <span class="text-size-light"> Phone No.: </span>
+        <span class="text-very-light word-break-all">{{ cardData.projectAddress.contactNo }}</span>
+      </div>
+      <div class="width-100">
+        <span class="text-size-light"> Email: </span>
+        <span class="text-very-light word-break-all"> {{ cardData.projectAddress.email }}</span>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-6 fontsize-12-px">
+      <div class="header-card-po border-none text-align-right">Delivery Address</div>
+
+      <div class="text-align-right">
+        <div class="width-100">
+          <span class="text-very-light word-break-all">{{ cardData.projectAddress.addressLine1 }}</span>
         </div>
-          <mat-form-field class="border-input width60Percent p-t-0">
-            <mat-label>Valid Till</mat-label>
-            <!-- <span class="form-placeholder">{{ projectDetails["controls"]["endDate"].value | date: "dd-MMM-yyy" }}</span> -->
-            <input #dateinput matInput formControlName="endDate" [matDatepicker]="endDate" (click)="endDate.open()" readonly [min]="minDate"  class="width60Percent"/>
-            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-            <mat-datepicker #endDate startView="month"></mat-datepicker>
-          </mat-form-field>
-      </ng-template>
+        <div class="width-100" *ngIf="cardData.projectAddress.addressLine2">
+          <span *ngIf="cardData.projectAddress.addressLine2" class="text-very-light word-break-all">{{ cardData.projectAddress.addressLine2 }}</span>
+        </div>
+
+        <div class="width-100">
+          <span class="text-very-light word-break-all">{{ cardData.projectAddress.city }},{{ cardData.projectAddress.state }}</span>
+        </div>
+
+        <div class="width-100">
+          <span class="text-very-light word-break-all">{{ cardData.projectAddress.pinCode }}</span>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="row p-t-10 p-b-10 border-bottom-po-view">
-     <div class="col-xs-6 col-sm-6 font-size12">
-              <div class="header-card-po border-none">Contract Detail</div>
-                <div class="width100Percent">
-                <span class="text-size-light">Project Name:</span>
-                <span class="text-very-light word-break-all">{{ cardData.projectAddress.projectName }}</span>
-                </div>
+    <div class="col-xs-12 col-sm-12 fontsize-12-px pull-left">
+      <div class="header-card-po border-none">Billing Address</div>
 
-                <div class="width100Percent">
-                   <span class="text-size-light">
-                  Contact Person:
-                </span>
-                <span class="text-very-light word-break-all">
-                  {{ cardData.projectAddress.firstName }}
-                  {{ cardData.projectAddress.lastName }}</span
-                >
-                <span *ngIf="mode === 'edit'">
-                  <a href="javascript:void(0)" (click)="openDialog('projectUserId', cardData.projectId)"
-                    ><i class="material-icons main-color font-size14">
-                      edit
-                    </i></a
-                  >
-                </span>
-                </div>
-               
-             <div class="width100Percent">
-                <span class="text-size-light">
-                  Phone No.:
-                </span>
-                <span class="text-very-light word-break-all">{{ cardData.projectAddress.contactNo }}</span>
-             </div>
-             <div class="width100Percent">
-                <span class="text-size-light">
-                  Email:
-                </span>
-                <span class="text-very-light word-break-all"> {{ cardData.projectAddress.email }}</span>
-             </div>
-             
-          </div>
-          <div class="col-xs-6 col-sm-6 font-size12">
-             <div class="header-card-po border-none text-align-right">Delivery Address</div>
-                
-            <div class="text-align-right">
-              <div class="width100Percent">
-                  <span class="text-very-light word-break-all">{{ cardData.projectAddress.addressLine1 }}</span>
-              </div>
-                <div class="width100Percent" *ngIf="cardData.projectAddress.addressLine2">
-                   <span *ngIf="cardData.projectAddress.addressLine2" class="text-very-light word-break-all">{{ cardData.projectAddress.addressLine2 }}</span>
-                </div>
-             
-              <div class="width100Percent">
-                <span class="text-very-light word-break-all">{{ cardData.projectAddress.city }},{{ cardData.projectAddress.state }}</span>
-              </div>
- 
-              
-               <div class="width100Percent">
-                  <span class="text-very-light word-break-all">{{ cardData.projectAddress.pinCode }}</span>
-               </div>
-            </div>
-             
-          </div>
+      <div class="width-100">
+        <span class="text-size-light"> Company Name: </span>
+        <span class="text-very-light word-break-all">{{ cardData.billingAddress.companyName }}</span>
+      </div>
+
+      <div class="width-100">
+        <span class="text-size-light"> Contact Person: </span>
+        <span class="text-very-light word-break-all">{{ cardData.billingAddress.firstName }} {{ cardData.billingAddress.lastName }}</span>
+        <span *ngIf="mode === 'edit'">
+          <a href="javascript:void(0)" (click)="openDialog('projectBillingUserId', cardData.projectId)"><i class="material-icons main-color fontsize-14-px"> edit </i></a>
+        </span>
+      </div>
+
+      <div class="width-100">
+        <span class="text-size-light"> Phone No.: </span>
+
+        <span class="text-very-light word-break-all">{{ cardData.billingAddress.contactNo }}</span>
+      </div>
+      <div class="width-100">
+        <span class="text-size-light"> Email: </span>
+        <span class="text-very-light word-break-all">{{ cardData.billingAddress.email }}</span>
+      </div>
+      <div class="width-100">
+        <span class="text-size-light"> Street Address: </span>
+        <span class="text-very-light word-break-all"> {{ cardData.billingAddress.addressLine1 }} {{ cardData.billingAddress.addressLine2 }}</span>
+        <span *ngIf="mode === 'edit'">
+          <a href="javascript:void(0)" (click)="openaddressDialog('projectBillingAddressId', cardData.projectId)"><i class="material-icons main-color fontsize-14-px"> edit </i></a></span
+        >
+      </div>
+
+      <div class="width-100">
+        <span class="text-size-light"> Pin Code: </span>
+
+        <span class="text-very-light word-break-all">{{ cardData.billingAddress.pinCode }}</span>
+      </div>
+      <div class="width-100">
+        <span class="text-size-light"> City: </span>
+        <span class="text-very-light word-break-all">{{ cardData.billingAddress.city }}</span>
+      </div>
+      <div class="width-100">
+        <span class="text-size-light"> {{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }} </span>
+        <span class="text-very-light word-break-all">{{ cardData.billingAddress.gstNo }}</span>
+      </div>
+    </div>
   </div>
 
   <div class="row p-t-10 p-b-10 border-bottom-po-view">
-     <div class="col-xs-12 col-sm-12  font-size12 pull-left">
- 
-         <div class="header-card-po border-none">Billing Address</div>
+    <div class="col-xs-12 col-sm-12 fontsize-12-px pull-left">
+      <div class="header-card-po border-none">Purchase Order Awarded To:</div>
 
-                 <div class="width100Percent">
-                    <span class="text-size-light">
-                      Company Name:
-                    </span>
-                    <span  class="text-very-light word-break-all">{{ cardData.billingAddress.companyName }}</span>
-                </div>
+      <div class="width-100">
+        <span class="text-size-light"> Supplier Name: </span>
+        <span class="text-very-light word-break-all">{{ cardData.supplierAddress.supplierName }}</span>
+      </div>
 
-             
-                 <div class="width100Percent">
-                <span class="text-size-light">
-                  Contact Person:
-                </span>
-                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.firstName }} {{ cardData.billingAddress.lastName }}</span>
-                <span *ngIf="mode === 'edit'">
-                  <a href="javascript:void(0)" (click)="openDialog('projectBillingUserId', cardData.projectId)"
-                    ><i class="material-icons main-color font-size14">
-                      edit
-                    </i></a
-                  >
-                </span>
-                </div>
-             
-                 <div class="width100Percent">
-                <span class="text-size-light">
-                  Phone No.:
-                </span>
+      <div class="width-100">
+        <span class="text-size-light"> Contact Person: </span>
+        <span class="text-very-light word-break-all">{{ cardData.supplierAddress.supplierName }}</span>
+      </div>
 
-                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.contactNo }}</span>
-             </div>
-                 <div class="width100Percent">
-                <span class="text-size-light">
-                  Email:
-                </span>
-                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.email }}</span>
-         </div>
-                 <div class="width100Percent">
-                <span class="text-size-light">
-                  Street Address:
-                </span>
-                <span  class="text-very-light word-break-all"> {{ cardData.billingAddress.addressLine1 }} {{ cardData.billingAddress.addressLine2 }}</span>
-                <span *ngIf="mode === 'edit'">
-                  <a href="javascript:void(0)" (click)="openaddressDialog('projectBillingAddressId', cardData.projectId)"
-                    ><i class="material-icons main-color font-size14">
-                      edit
-                    </i></a
-                  ></span
-                >
-                </div>
-             
-                 <div class="width100Percent">
-                <span class="text-size-light">
-                  Pin Code:
-                </span>
+      <div class="width-100">
+        <span class="text-size-light"> Phone No.: </span>
+        <span class="text-very-light word-break-all"> {{ cardData.supplierAddress.contactNo }}</span>
+      </div>
 
-                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.pinCode }}</span>
-             </div>
-                 <div class="width100Percent">
-                <span class="text-size-light">
-                  City:
-                </span>
-                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.city }}</span>
-            </div>
-                 <div class="width100Percent">
-                <span class="text-size-light">
-                  GSTIN:
-                </span>
-                <span  class="text-very-light word-break-all">{{ cardData.billingAddress.gstNo }}</span>
-             </div>
-          </div>
-      
+      <div class="width-100">
+        <span class="text-size-light"> Street Address: </span>
+        <span class="text-very-light word-break-all">{{ cardData.supplierAddress.addressLine1 }} {{ cardData.supplierAddress.addressLine2 }}</span>
+        <span *ngIf="mode === 'edit'">
+          <a href="javascript:void(0)" (click)="openaddressDialog('supplierAddressId', cardData.supplierAddress.supplierId)"><i class="material-icons main-color fontsize-14-px"> edit </i></a>
+        </span>
+      </div>
+
+      <div class="width-100">
+        <span class="text-size-light"> Pin Code: </span>
+        <span class="text-very-light word-break-all">{{ cardData.supplierAddress.pinCode }}</span>
+      </div>
+
+      <div class="width-100">
+        <span class="text-size-light"> City: </span>
+        <span class="text-very-light word-break-all">{{ cardData.supplierAddress.city }} </span>
+      </div>
+
+      <div class="width-100">
+        <span class="text-size-light"> {{ this.countryCode === "IN" ? "GSTIN:" : "Tax Code:" }} </span>
+        <span class="text-very-light word-break-all">{{ cardData.supplierAddress.gstNo }}</span>
+      </div>
+    </div>
   </div>
-  
-
-
-  <div class="row p-t-10 p-b-10 border-bottom-po-view">
-     <div class="col-xs-12 col-sm-12  font-size12 pull-left">
-       <div class="header-card-po border-none">Purchase Order Awarded To:</div>
-
-        <div class="width100Percent">
-        <span class="text-size-light">
-              Supplier Name:
-            </span>
-            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.supplierName }}</span>
-          </div>
-
-            <div class="width100Percent">
-            <span class="text-size-light">
-              Contact Person:
-            </span>
-            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.supplierName }}</span>
-         </div>
-
-            <div class="width100Percent">
-            <span class="text-size-light">
-              Phone No.:
-            </span>
-            <span class="text-very-light word-break-all"> {{ cardData.supplierAddress.contactNo }}</span>
-         </div>
-
-            <div class="width100Percent">
-            <span class="text-size-light">
-              Street Address:
-            </span>
-            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.addressLine1 }} {{ cardData.supplierAddress.addressLine2 }}</span>
-            <span *ngIf="mode === 'edit'">
-              <a href="javascript:void(0)" (click)="openaddressDialog('supplierAddressId', cardData.supplierAddress.supplierId)"
-                ><i class="material-icons main-color font-size14">
-                  edit
-                </i></a
-              >
-            </span>
-         </div>
-
-            <div class="width100Percent">
-            <span class="text-size-light">
-              Pin Code:
-            </span>
-            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.pinCode }}</span>
-         </div>
-
-            <div class="width100Percent">
-            <span class="text-size-light">
-              City:
-            </span>
-            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.city }} </span>
-         </div>
-
-            <div class="width100Percent">
-            <span class="text-size-light">
-              GSTIN:
-            </span>
-            <span class="text-very-light word-break-all">{{ cardData.supplierAddress.gstNo }}</span>
-          </div>
-
-     </div>
-  </div>
-
-  </form>
+</form>

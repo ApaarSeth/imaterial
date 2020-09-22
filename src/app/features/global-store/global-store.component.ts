@@ -1,51 +1,96 @@
+import { AppNavigationService } from './../../shared/services/navigation.service';
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
-import { ActivatedRouteSnapshot, ActivatedRoute, Router } from "@angular/router";
-import { GlobalStoreService } from 'src/app/shared/services/global-store/global-store.service';
-import { GlobalProject } from 'src/app/shared/models/GlobalStore/projectWise';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { MatDialog } from '@angular/material';
-import { SelectProjectComponent } from 'src/app/shared/dialogs/select-project/select-project.component';
-import { ProjectService } from 'src/app/shared/services/projectDashboard/project.service';
+import { ActivatedRoute, Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { ProjectService } from "../../shared/services/project.service";
+import { CommonService } from "../../shared/services/commonService";
+import { SelectProjectComponent } from "../../shared/dialogs/select-project/select-project.component";
+import { GlobalStoreService } from "../../shared/services/global-store.service";
+import { ProjectwiseObj } from 'src/app/shared/models/GlobalStore/projectWise';
 
 @Component({
   selector: "app-global-store",
-  templateUrl: "./global-store.component.html",
-  styleUrls: ["../../../assets/scss/main.scss"]
+  templateUrl: "./global-store.component.html"
 })
+
 export class GlobalStoreComponent implements OnInit {
 
   buttonName: string = "materialWise";
   globalStoreData: [];
-  projectWiseData: GlobalProject[] = [];
+  projectWiseData: ProjectwiseObj[] = [];
   materialDataLength: number;
   projectDataLength: number;
   userId: number;
   sidebarNav: boolean;
   isMobile: boolean;
   orgId: Number;
-  projectList
+  projectList: any;
+  materialPageNumber: number;
+  materialPageLimit: number;
+  materialTotalPageCount: number;
+  projectPageNumber: number;
+  projectPageLimit: number;
+  projectTotalPageCount: number;
+
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
     private projectService: ProjectService,
     private router: Router,
     private globalStoreService: GlobalStoreService,
     private commonService: CommonService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private navService: AppNavigationService
   ) { }
 
   ngOnInit() {
+    this.navService.gaEvent({
+      action: 'submit',
+      category: 'navService',
+      label: null,
+      value: null
+    });
     this.isMobile = this.commonService.isMobile().matches;
     this.userId = Number(localStorage.getItem("userId"));
-    this.orgId = Number(localStorage.getItem("orgId"))
+    this.orgId = Number(localStorage.getItem("orgId"));
+
     this.route.data.subscribe(data => {
-      this.globalStoreData = data.globalData.data;
+      const allData = data.globalData.data;
+      this.materialPageNumber = allData.pageNo;
+      this.materialTotalPageCount = allData.totalCount;
+      this.materialPageLimit = allData.offset;
+      this.globalStoreData = allData.globalStoreMaterialObj;
     });
+
     this.getNotifications();
+
     Promise.all([this.projectService.getProjects(this.orgId, this.userId),
     this.projectService.getProjects(this.orgId, this.userId), this.getNotifications]).then(res => {
       this.projectList = res[0].data
     })
+  }
 
+  getMaterialwiseData() {
+    this.globalStoreService.getMaterialWiseData(this.materialPageNumber, this.materialPageLimit).then(res => {
+      if (res.data) {
+        const allData = res.data;
+        this.materialPageNumber = allData.pageNo;
+        this.materialTotalPageCount = allData.totalCount;
+        this.materialPageLimit = allData.offset;
+        this.globalStoreData = allData.globalStoreMaterialObj;
+      }
+    });
+  }
+
+  getProjectwiseData() {
+    this.globalStoreService.getProjectWiseData(this.projectPageNumber, this.projectPageLimit).then(res => {
+      if (res.data) {
+        const allData = res.data;
+        this.projectPageNumber = allData.pageNo;
+        this.projectTotalPageCount = allData.totalCount;
+        this.projectPageLimit = allData.offset;
+        this.projectWiseData = allData.globalStoreProjectObj;
+      }
+    });
   }
 
   ngOnChanges() {
@@ -55,18 +100,20 @@ export class GlobalStoreComponent implements OnInit {
   getNotifications() {
     this.commonService.getNotification(this.userId);
   }
-  setButtonName(name: string) {
 
+  setButtonName(name: string) {
     this.buttonName = name;
 
     if (this.buttonName === 'projectWise') {
+      this.projectPageNumber = 1;
+      this.projectPageLimit = 25;
+      this.getProjectwiseData();
+    }
 
-      const orgId = Number(localStorage.getItem("orgId"));
-
-      this.globalStoreService.getProjectWiseData(orgId).then(res => {
-        this.projectWiseData = res.data;
-      })
-
+    if (this.buttonName === 'materialWise') {
+      this.materialPageNumber = 1;
+      this.materialPageLimit = 25;
+      this.getMaterialwiseData();
     }
   }
 
@@ -82,6 +129,7 @@ export class GlobalStoreComponent implements OnInit {
     this.materialDataLength = event;
     this.cdr.detectChanges();
   }
+
   projectShowDataLength(event) {
     this.projectDataLength = event;
     this.cdr.detectChanges();
@@ -90,12 +138,22 @@ export class GlobalStoreComponent implements OnInit {
   openBomDialog() {
     const dialogRef = this.dialog.open(SelectProjectComponent, {
       width: "600px",
-      data: this.projectList
+      data: this.projectList,
+      panelClass: ['common-modal-style', 'select-projects-dialog']
     });
+  }
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.getProjectsNumber();
-    //   return;
-    // });
+  getMaterialPaginationInfo(data) {
+    this.materialPageNumber = data.pageNumber;
+    this.materialPageLimit = data.limit;
+    this.materialTotalPageCount = data.totalCount;
+    this.getMaterialwiseData();
+  }
+
+  getProjectPaginationInfo(data) {
+    this.projectPageNumber = data.pageNumber;
+    this.projectPageLimit = data.limit;
+    this.projectTotalPageCount = data.totalCount;
+    this.getProjectwiseData();
   }
 }

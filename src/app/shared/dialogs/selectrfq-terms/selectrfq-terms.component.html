@@ -1,33 +1,36 @@
-<form *ngIf="rfqTerms.length" [formGroup]="termsForm" ((ngSubmit)="submitRfq()">
-  <div class="row text-center">
-    <div class="col-xs-12">
-      <h1 mat-dialog-title>Select Payment Terms</h1>
+<section class="modal-outer">
+  <div class="modal-header">
+    <h5 mat-dialog-title class="mb-0">Select Payment Terms</h5>
+  </div>
+
+  <div mat-dialog-content>
+    <div class="modal-body">
+      <form *ngIf="rfqTerms.length" [formGroup]="termsForm" ((ngSubmit)="submitRfq()">
+        <div class="row">
+          <div class="col-xs-12">
+            <ng-container *ngFor="let term of rfqTerms">
+              <mat-radio-group name="term" aria-labelledby="example-radio-group-label" class="display-block" formControlName="term">
+                <mat-radio-button class="example-radio-button" [value]="term" (change)="change(term.termsDesc)">
+                  {{ term.termsDesc }}
+                </mat-radio-button>
+
+                <form [formGroup]="customTermForm" class="display-inline-block p-rem-l-10">
+                  <mat-form-field *ngIf="term.termsDesc.trim() === 'Others'" class="border-input main-color other-terms-input">
+                    <input matInput formControlName="customTerm" type="text" placeholder="Add Custom Term" />
+                  </mat-form-field>
+                </form>
+              </mat-radio-group>
+            </ng-container>
+          </div>
+        </div>
+
+        <div mat-dialog-actions>
+          <div class="col-xs-12 text-center py-2">
+            <a href="javascript:void(0)" class="main-color skip-btn" (click)="close()">skip</a>
+            <button mat-raised-button class="main-background-color main-button color-white" (click)="submitRfq()">Next</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <ng-container *ngFor="let term of rfqTerms">
-        <mat-radio-group name="term" aria-labelledby="example-radio-group-label" class="display-block" formControlName="term">
-          <mat-radio-button class="example-radio-button" [value]="term" (change)="change(term.termsDesc)">
-            {{ term.termsDesc }}
-          </mat-radio-button>
-          <form [formGroup]="customTermForm" class="display-inline-block p-l-10">
-            <mat-form-field *ngIf="term.termsDesc.trim() === 'Others'" class="border-input main-color p-l-10">
-              <input matInput formControlName="customTerm" type="text" placeholder="Add Custom Term" />
-            </mat-form-field>
-          </form>
-        </mat-radio-group>
-      </ng-container>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 p-t-20 text-center">
-      <a href="javascript:void(0)" class="main-color p-r-5" (click)="close()">
-        skip
-      </a>
-      <button mat-raised-button class="main-background-color main-button color-white" (click)="submitRfq()">
-        Next
-      </button>
-    </div>
-  </div>
-</form>
+</section>

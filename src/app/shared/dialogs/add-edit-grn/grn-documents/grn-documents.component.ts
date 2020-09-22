@@ -9,14 +9,15 @@ import {
 } from "@angular/core";
 import { first } from "rxjs/operators";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocumentList } from 'src/app/shared/models/PO/po-data';
-import { DocumentUploadService } from 'src/app/shared/services/document-download/document-download.service';
+import { DocumentUploadService } from 'src/app/shared/services/document-download.service';
 @Component({
   selector: "grn-documents",
   templateUrl: "./grn-documents.component.html"
 })
 export class GRNDocumentsComponent implements OnInit {
+  
   @Input("documentListLength") public documentListLength: number;
   @Input("documentData") documentData: DocumentList[];
   documentList: DocumentList[] = [];
@@ -26,6 +27,7 @@ export class GRNDocumentsComponent implements OnInit {
   mode: string;
   filesRemoved: boolean;
   showResponsive: boolean;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,

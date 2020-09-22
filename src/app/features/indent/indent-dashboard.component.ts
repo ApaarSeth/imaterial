@@ -1,16 +1,6 @@
-import { Component, OnInit, Inject, ViewChild } from "@angular/core";
+import { CommonService } from './../../shared/services/commonService';
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ProjectService } from "src/app/shared/services/projectDashboard/project.service";
-import {
-  ProjectDetails,
-  ProjetPopupData
-} from "src/app/shared/models/project-details";
-import { DoubleConfirmationComponent } from "src/app/shared/dialogs/double-confirmation/double-confirmation.component";
-import { AddProjectComponent } from "src/app/shared/dialogs/add-project/add-project.component";
-import { MatDialog, MatSnackBar } from "@angular/material";
-import { IndentVO } from "src/app/shared/models/indent";
-import { IndentService } from "src/app/shared/services/indent/indent.service";
-import { Subcategory } from "src/app/shared/models/subcategory-materials";
 import {
   FormBuilder,
   FormArray,
@@ -18,7 +8,17 @@ import {
   Validators,
   FormControl
 } from "@angular/forms";
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Subcategory } from "../../shared/models/subcategory-materials";
+import { ProjectDetails, ProjetPopupData } from "../../shared/models/project-details";
+import { ProjectService } from "../../shared/services/project.service";
+import { AppNavigationService } from "../../shared/services/navigation.service";
+import { AddProjectComponent } from "../../shared/dialogs/add-project/add-project.component";
+import { DoubleConfirmationComponent } from "../../shared/dialogs/double-confirmation/double-confirmation.component";
+import { IndentService } from "../../shared/services/indent.service";
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface PeriodicElement {
   materialName: string;
@@ -32,10 +32,12 @@ export interface PeriodicElement {
 
 @Component({
   selector: "dashboard",
-  templateUrl: "./indent-dashboard.component.html",
-  styleUrls: ["../../../assets/scss/main.scss"]
+  templateUrl: "./indent-dashboard.component.html"
 })
 export class IndentDashboardComponent implements OnInit {
+
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  dataSource: MatTableDataSource<Subcategory>;
   dueDate = new Date(1990, 0, 1);
   subcategory: Subcategory[] = [];
   userId: 1;
@@ -43,10 +45,11 @@ export class IndentDashboardComponent implements OnInit {
   projectId: number;
   product: ProjectDetails;
   minDate = new Date();
+  isMobile: boolean = false;
   displayedColumns: string[] = [
-    "Material Name",
-    "Estimated Quantity",
-    "Requested Quantity",
+    "materialName",
+    "estimatedQty",
+    "requestedQuantity",
     "Required Quantity",
     "Required Date"
   ];
@@ -54,6 +57,7 @@ export class IndentDashboardComponent implements OnInit {
   materialForms: FormGroup;
   orgId: Number;
   startDateOfProject: Date;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -62,18 +66,33 @@ export class IndentDashboardComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private navService: AppNavigationService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    this.isMobile = this.commonService.isMobile().matches;
     this.orgId = Number(localStorage.getItem("orgId"))
     this.route.params.subscribe(params => {
       this.projectId = params["id"];
       this.getProject(this.projectId);
     });
     this.subcategory = this.indentService.raiseIndentData;
-    this.formsInit();
 
+    if (this.subcategory) {
+      this.dataSource = new MatTableDataSource(this.subcategory);
+      setTimeout(() => {
+        this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string): string => {
+          if (typeof data[sortHeaderId] === 'string') {
+            return data[sortHeaderId].toLocaleLowerCase();
+          }
+          return data[sortHeaderId];
+        };
+      });
+    }
+
+    this.formsInit();
   }
 
   formsInit() {
@@ -158,13 +177,14 @@ export class IndentDashboardComponent implements OnInit {
     if (data.isDelete == false) {
       const dialogRef = this.dialog.open(AddProjectComponent, {
         width: "1000px",
-        data
+        data,
+        panelClass: ['common-modal-style', 'add-project-dialog']
       });
 
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => { });
+        .then(() => { });
     } else if (data.isDelete == true) {
       const dialogRef = this.dialog.open(DoubleConfirmationComponent, {
         width: "500px",
@@ -174,28 +194,20 @@ export class IndentDashboardComponent implements OnInit {
       dialogRef
         .afterClosed()
         .toPromise()
-        .then(result => { });
+        .then(() => { });
     }
   }
 
-  // formatDate(d: any, to?: string): string {
-  //   if (!d) {
-  //     return 'DD/MM/YYYY';
-  //   }
-  //   let date: Date = new Date(d);
-  //   if (to) {
-  //     date = new Date(date + to);
-  //   }
-  //   return `${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
-  // }
   formatDate(oldDate): Date {
     let newDate = new Date(oldDate);
     newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
     return newDate;
   }
-  getStart(date, i) {
+
+  getStart(i) {
     this.materialForms.controls.forms.value[i].dueDate = this.formatDate(this.materialForms.controls.forms.value[i].dueDate);
   }
+
   startDate(event) {
     this.startDateOfProject = event;
   }

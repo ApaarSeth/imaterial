@@ -5,7 +5,7 @@ import { PoTableComponent } from 'src/app/features/po/po-table/po-table.componen
 import { GrnAddMaterialComponent } from './add-material/add-material.component';
 import { GrnMaterialList } from '../../models/add-direct-grn';
 import { Supplier } from '../../models/RFQ/rfq-view';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-add-grn',
@@ -13,11 +13,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 
 export class AddGrnComponent implements OnInit {
+    
     @ViewChild("myMaterial", { static: false }) myMaterial: GrnAddMaterialComponent;
     currentIndex: number = 0;
     countryList: CountryCode[] = [];
     materialList: GrnMaterialList[] = [];
-    supplierList: Supplier[]
+    supplierList: Supplier[];
+
     constructor(private commonService: CommonService,
         private dialogRef: MatDialogRef<AddGrnComponent>,
         @Inject(MAT_DIALOG_DATA) public data
@@ -27,7 +29,7 @@ export class AddGrnComponent implements OnInit {
         let orgId = Number(localStorage.getItem('orgId'));
         Promise.all([this.commonService.getSuppliers(orgId), this.commonService.getCountry()])
             .then(res => {
-                this.supplierList = res[0].data;
+                this.supplierList = res[0].data.supplierList;
                 this.countryList = res[1].data;
             })
     }

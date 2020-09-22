@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChildren } from "@angular/core";
 import { PoSupplierComponent } from "./po-supplier/po-supplier.component";
-import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
-import { RfqMaterialResponse } from "src/app/shared/models/RFQ/rfq-details";
-import { GuidedTour, Orientation, GuidedTourService } from 'ngx-guided-tour';
-import { UserGuideService } from 'src/app/shared/services/user-guide/user-guide.service';
-import { initiatePoData, initiatePo } from 'src/app/shared/models/PO/po-data';
-import { CommonService } from 'src/app/shared/services/commonService';
+import { Suppliers } from "../../../shared/models/RFQ/suppliers";
+import { initiatePoData } from "../../../shared/models/PO/po-data";
+import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour";
+import { UserGuideService } from "../../../shared/services/user-guide.service";
+import { CommonService } from "../../../shared/services/commonService";
 
 @Component({
   selector: "app-initiate-po",
@@ -16,7 +15,7 @@ export class InitiatePoComponent implements OnInit {
   poDetail: initiatePoData;
   existingPoData: initiatePoData;
   @ViewChildren("poSupplier") poSupplier: PoSupplierComponent;
-  searchText = "";
+  searchText;
   isMobile: boolean;
 
   public POProjectTour: GuidedTour = {
@@ -44,6 +43,7 @@ export class InitiatePoComponent implements OnInit {
   ngOnInit() {
     this.isMobile = this.commonService.isMobile().matches;
   }
+
   setLocalStorage() {
     this.userId = Number(localStorage.getItem("userId"));
 
@@ -63,10 +63,13 @@ export class InitiatePoComponent implements OnInit {
   getSupplier(poData: initiatePoData) {
     this.existingPoData = poData;
   }
+
   getMaterial(poData: initiatePoData) {
     this.existingPoData = poData;
     this.poDetail = poData;
+    this.searchText = new String('')
   }
+
   selectionChange(event) {
     if (event.selectedIndex == 1) {
       if ((localStorage.getItem('po') == "null") || (localStorage.getItem('po') == '0')) {
@@ -78,6 +81,7 @@ export class InitiatePoComponent implements OnInit {
   }
 
   getPoData(data: initiatePoData) {
-    this.existingPoData = data
+    this.existingPoData = data;
+    this.searchText = new String('');
   }
 }

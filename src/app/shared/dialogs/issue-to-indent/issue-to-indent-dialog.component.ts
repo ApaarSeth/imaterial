@@ -1,8 +1,9 @@
+import { CommonService } from './../../services/commonService';
 import { Component, OnInit, Inject } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { IssueToIndentDetails, IndentVO, sendIssuedQuantityObj } from '../../models/issue-to-indent';
-import { BomService } from '../../services/bom/bom.service';
+import { BomService } from '../../services/bom.service';
 import {
   FormBuilder,
   FormArray,
@@ -13,9 +14,7 @@ import {
 import { AppNavigationService } from '../../services/navigation.service';
 @Component({
   selector: "issue-to-indent",
-  templateUrl: "./issue-to-indent-dialog.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
-
+  templateUrl: "./issue-to-indent-dialog.html"
 })
 
 export class IssueToIndentDialogComponent implements OnInit {
@@ -25,25 +24,26 @@ export class IssueToIndentDialogComponent implements OnInit {
   dataSource: IndentVO;
   sum: number = 0;
   errorMsg: boolean = false;
-
+  isMobile: boolean = false;
   constructor(public dialogRef: MatDialogRef<IssueToIndentDialogComponent>, private activatedRoute: ActivatedRoute,
     private bomService: BomService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private navService: AppNavigationService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit() {
     this.getIndentDetails();
-
+    this.isMobile = this.commonService.isMobile().matches;
   }
 
 
   formsInit(indentDetail) {
     const num = Number(this.issueToIndentDetails.availableStock);
     let frmArr;
-    
-    if(indentDetail && indentDetail.indentDetailList && indentDetail.indentDetailList.length > 0){
+
+    if (indentDetail && indentDetail.indentDetailList && indentDetail.indentDetailList.length > 0) {
       frmArr = indentDetail.indentDetailList.map((indent: IndentVO) => {
         return this.formBuilder.group({
           indentId: [indent.indentId],

@@ -1,9 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
 import { ProjetPopupData, ProjectDetails } from "../../models/project-details";
 import { Router } from '@angular/router';
-import { UserService } from '../../services/userDashboard/user.service';
-import { ProjectService } from '../../services/projectDashboard/project.service';
 import { AddProjectComponent } from '../add-project/add-project.component';
 import { CommonService } from '../../services/commonService';
 
@@ -22,15 +20,12 @@ export class SelectProjectComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: ProjectDetails[] | ProjetPopupData[],
         private _router: Router,
         public _dialog: MatDialog,
-        private _userService: UserService,
-        private _projectService: ProjectService,
         private commonService: CommonService
     ) { }
 
     ngOnInit() {
         this.orgId = Number(localStorage.getItem("orgId"));
         this.userId = Number(localStorage.getItem("userId"));
-        // this.data = this.data;
     }
 
     closeDialog(): void {
@@ -40,10 +35,10 @@ export class SelectProjectComponent implements OnInit {
     radioChange(event) {
         const id = event.value;
         const project = Object.entries(this.data).flat().filter(op => op.projectId === id);
-        if (project[0].matCount === 0 || project[0].matCount === null) {
-            this._router.navigate([`project-dashboard/bom/${project[0].projectId}`]);
+        if (project[ 0 ].matCount === 0 || project[ 0 ].matCount === null) {
+            this._router.navigate([ `project-dashboard/bom/${project[ 0 ].projectId}` ]);
         } else {
-            this._router.navigate([`project-dashboard/bom/${project[0].projectId}/bom-detail`]);
+            this._router.navigate([ `project-dashboard/bom/${project[ 0 ].projectId}/bom-detail` ]);
         }
         this.closeDialog();
     }
@@ -58,11 +53,12 @@ export class SelectProjectComponent implements OnInit {
             };
             const dialogRef = this._dialog.open(AddProjectComponent, {
                 width: "1000px",
-                data
+                data,
+                panelClass: [ 'common-modal-style', 'add-project-dialog' ]
             });
 
             dialogRef.afterClosed().subscribe(result => {
-                this._router.navigate(['/dashboard']);
+                this._router.navigate([ '/dashboard' ]);
             });
         })
     }

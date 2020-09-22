@@ -1,19 +1,14 @@
+import { CountryCode } from './../../../shared/models/currency';
+import { AppNotificationService } from './../../../shared/services/app-notification.service';
 import { Component, OnInit } from "@angular/core";
-import { TokenService } from 'src/app/shared/services/token.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { SignInSignupService } from 'src/app/shared/services/signupSignin/signupSignin.service';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { MatSnackBar } from '@angular/material';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { OrganisationType } from '../signup/signup.component';
-import { auth } from 'src/app/shared/models/auth';
-import { UserDetails } from 'src/app/shared/models/user-details';
-import { SignINDetailLists, ForgetPassDetails } from 'src/app/shared/models/signIn/signIn-detail-list';
-import { CommonService } from 'src/app/shared/services/commonService';
-import { VisitorService } from 'src/app/shared/services/visitor.service';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { CountryCode } from 'src/app/shared/models/currency';
+import { UserDetails } from "../../../shared/models/user-details";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { ForgetPassDetails } from "../../../shared/models/signIn/signIn-detail-list";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SignInSignupService } from "../../../shared/services/signupSignin.service";
+import { UserService } from "../../../shared/services/user.service";
+import { FieldRegExConst } from "../../../shared/constants/field-regex-constants";
+import { OrganisationType } from "../sign-in-sign-up/sign-in-sign-up.component";
 
 @Component({
   selector: "forgot-password",
@@ -48,35 +43,79 @@ export class ForgotPasswordComponent implements OnInit {
   countryCode: string;
   emailSendMessage: boolean = false
   callingCode: string;
+  selectedCountry: CountryCode;
   constructor(
-    private tokenService: TokenService,
+    private _activatedRoute: ActivatedRoute,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private signInSignupService: SignInSignupService,
     private _userService: UserService,
-    private _snackBar: MatSnackBar,
-    private navService: AppNavigationService,
-    private commonService: CommonService,
-    private visitorsService: VisitorService
+    private notifier: AppNotificationService,
   ) { }
 
   ngOnInit() {
     this.countryCode = localStorage.getItem("countryCode")
-
     this.callingCode = localStorage.getItem("callingCode")
-
+    this.countryList = this._activatedRoute.snapshot.data.countryList;
     this.route.params.subscribe(param => {
       this.uniqueCode = param["uniqueCode"];
       this.formInit();
       if (this.uniqueCode) {
         this.getUserInfo(this.uniqueCode);
       }
-      this.getLocation();
+      this.setValidation();
+      this.getCountryCode(this.countryCode)
     });
-    // let urlLength = this.router.url.toString().length;
-    // let lastSlash = this.router.url.toString().lastIndexOf("/");
-    // this.uniqueCode = this.router.url.toString().slice(lastSlash, urlLength);
+  }
+
+  formInit() {
+    this.forgetPassForm = this.formBuilder.group({
+      countryCode: [],
+      phone: [],
+      organisationType: ["Contractor"],
+      password: ["", [Validators.required, Validators.minLength(6)]],
+      otp: [""],
+      email: [''],
+    });
+
+    this.forgetPassForm.get('phone').valueChanges.subscribe(val => {
+      if (val) { this.enterPhone(val.toString()) }
+    })
+  }
+
+  getUserInfo(code) {
+    this._userService.getUserInfoUniqueCode(code).then(res => {
+      this.user = res.data;
+      this.forgetPassForm.patchValue({ phone: this.user ? this.user.contactNo : '' })
+    });
+  }
+  organisationTypes: OrganisationType[] = [
+    { value: "Contractor", viewValue: "Contractor" },
+    { value: "Supplier", viewValue: "Supplier" }
+  ];
+
+
+  setValidation() {
+    let emailValidator = [
+      Validators.required,
+      Validators.pattern(FieldRegExConst.EMAIL)
+    ]
+    if (this.callingCode === '+91') {
+      this.forgetPassForm.get('email').setValidators(emailValidator)
+      this.forgetPassForm.get('phone').setValidators(Validators.required)
+    }
+    else {
+      this.forgetPassForm.get('email').setValidators(emailValidator)
+    }
+  }
+
+  getCountryCode(countryCode) {
+    this.livingCountry = this.countryList.filter(val => {
+      return val.countryCode.toLowerCase() === countryCode.toLowerCase();
+    })
+    this.forgetPassForm.get('countryCode').setValue(this.livingCountry[0])
+    this.selectedCountry = this.livingCountry[0];
   }
 
   verifyEmail(event) {
@@ -91,74 +130,13 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
-  getLocation() {
-    let emailValidator = [
-      Validators.required,
-      Validators.pattern(FieldRegExConst.EMAIL)
-    ]
-    this.getCountryCode(this.countryCode)
-    if (this.callingCode === '+91') {
-      this.forgetPassForm.get('email').setValidators(emailValidator)
-      this.forgetPassForm.get('phone').setValidators(Validators.required)
-    }
-    else {
-      this.forgetPassForm.get('email').setValidators(emailValidator)
-    }
-  }
-
-  getCountryCode(countryCode) {
-    this.commonService.getCountry().then(res => {
-      this.countryList = res.data;
-      this.livingCountry = this.countryList.filter(val => {
-        return val.countryCode.toLowerCase() === countryCode.toLowerCase();
-      })
-      this.forgetPassForm.get('countryCode').setValue(this.livingCountry[0])
-    })
-  }
-
-  get selectedCountry() {
-    return this.forgetPassForm.get('countryCode').value;
-  }
-
-
-  getUserInfo(code) {
-    this._userService.getUserInfoUniqueCode(code).then(res => {
-      this.user = res.data[0];
-      this.forgetPassForm.patchValue({ phone: this.user ? this.user.contactNo : '' })
-    });
-  }
-
-  organisationTypes: OrganisationType[] = [
-    { value: "Contractor", viewValue: "Contractor" },
-    { value: "Supplier", viewValue: "Supplier" }
-  ];
-
-  formInit() {
-    this.forgetPassForm = this.formBuilder.group({
-      countryCode: [],
-      phone: [],
-      organisationType: ["Contractor"],
-      password: ["", [Validators.required, Validators.minLength(6)]],
-      otp: [""],
-      email: [''],
-    });
-
-    if (this.user && this.user.contactNo && this.user.contactNo.length === 10) {
-      this.enterPhone(event, this.user.contactNo)
-    }
-  }
-
   forgetPasswordSubmit() {
     this.forgetPassDetails.password = this.forgetPassForm.value.password;
     this.forgetPassDetails.confirmPassword = this.forgetPassForm.value.password;
 
     this.signInSignupService.forgotPassword(this.forgetPassDetails).then(res => {
       if (res.data.success) {
-        this._snackBar.open("Your password has been reset successfully", "", {
-          duration: 2000,
-          panelClass: ["success-snackbar"],
-          verticalPosition: "bottom"
-        });
+        this.notifier.snack("Your password has been reset successfully");
         this.router.navigate(['auth/login']);
         localStorage.clear();
       }
@@ -172,10 +150,11 @@ export class ForgotPasswordComponent implements OnInit {
       this.showPassWordString = false;
     }
   }
-  enterPhone(event, numberPassed?: string) {
+
+  enterPhone(numberPassed?: string) {
     this.verifiedMobile = true;
     this.showOtp = false;
-    this.value = numberPassed ? numberPassed : event.target.value;
+    this.value = numberPassed
     if (this.value.length == 10) {
       this.phoneNumberChecked = true;
       this.verifyMobile(this.value);
@@ -184,6 +163,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.phoneNumberChecked = false;
     }
   }
+
   sendOtpBtn() {
     if (this.value.length == 10) {
       if (!this.uniqueCode) {
@@ -203,25 +183,16 @@ export class ForgotPasswordComponent implements OnInit {
     this.signInSignupService.sendOTP(value, countryCode).then(res => {
       if (res.data)
         this.showOtp = res.data.success;
-      this._snackBar.open("OTP has been sent on your phone number", "", {
-        duration: 2000,
-        panelClass: ["success-snackbar"],
-        verticalPosition: "bottom"
-      });
-
+      this.notifier.snack("OTP has been sent on your phone number");
     });
   }
 
   verifyMobile(mobile) {
     let countryCode = this.forgetPassForm.get('countryCode').value.callingCode;
-    this.signInSignupService.VerifyMobile(mobile, countryCode).then(res => {
-      this.verifiedMobile = res.data;
-      if (this.verifiedMobile) {
-        this._snackBar.open("User is not registered. Please Sign up", "", {
-          duration: 2000,
-          panelClass: ["success-snackbar"],
-          verticalPosition: "bottom"
-        });
+    this.signInSignupService.verifyRegisteredContact(mobile, countryCode).then(res => {
+      this.verifiedMobile = !res.data;
+      if (!this.verifiedMobile) {
+        this.notifier.snack("User is not registered. Please Sign up");
       }
     });
   }
@@ -248,6 +219,7 @@ export class ForgotPasswordComponent implements OnInit {
       }
     });
   }
+
   submitNumber() {
     if (this.callingCode === '+91' && !this.verifiedMobile) {
       this.OtpscreenShow = true;
@@ -263,27 +235,24 @@ export class ForgotPasswordComponent implements OnInit {
     else {
       this.signInSignupService.verifyResetEmail(this.forgetPassForm.get('email').value, 'fooClientIdPassword').then(res => {
         if (res.data.success) {
-          this._snackBar.open(`Password change email is sent to ${this.forgetPassForm.get('email').value}`, "", {
-            duration: 4000,
-            panelClass: ["success-snackbar"],
-            verticalPosition: "bottom"
-          });
-
+          this.notifier.snack(`Password change email is sent to ${this.forgetPassForm.get('email').value}`);
         }
-        console.log(res)
       })
     }
-
   }
+
   resendOtp() {
     this.sendotp(this.value);
   }
+
   submitOTP() {
     this.verifyOTP(this.otpValue);
   }
+
   submitPass() {
     this.forgetPasswordSubmit();
   }
+
   goBackToNumber() {
     this.OtpscreenShow = false;
     this.phonescreenShow = true;

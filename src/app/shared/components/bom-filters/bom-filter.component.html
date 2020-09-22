@@ -1,0 +1,41 @@
+<div class="bom-filter" [ngClass]="isMobile ? 'width-75 height-100 pull-right' : '' ">
+    <div *ngIf="config && config.options.length" [ngClass]="!isMobile ? 'd-flex' : '' ">
+        <div [ngClass]="isMobile ? 'cstm-bom-filter-header' : 'col-md-1' ">
+            <div [ngClass]="isMobile ? 'm-b-10' : 'd-flex m-t-20' ">
+                <strong [ngClass]="isMobile ? 'font-weight-normal' : '' ">{{ config.title }}</strong>
+                <ng-container *ngIf="isMobile">
+                    <button type="button" class="close" (click)="clearData()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </ng-container>
+            </div>
+        </div>
+        <ng-container *ngFor="let item of config.options">
+            <div *ngIf="item.type === 'MULTI_SELECT_SEARCH'" [ngClass]="isMobile ? 'col-md-12' : 'col-md-2 m-t-2' ">
+                <multi-select-search [config]="{
+                title: item.name,
+                placeholder: 'Search',
+                list: item.data,
+                preSelected: item.preSelected,
+                key: item.key
+            }" (selectionUpdate)="getData({data: $event, id: item.id, type: item.key })">
+                </multi-select-search>
+            </div>
+            <div *ngIf="item.type === 'INPUT_TEXT_SEARCH'" [ngClass]="isMobile ? 'col-md-12' : 'col-md-2' ">
+                <input-text-search [config]="{
+                title: item.name,
+                placeholder: item.name,
+                list: item.data
+            }" (selectionUpdate)="getData({data: $event, id: item.id, type: item.key })">
+                </input-text-search>
+            </div>
+        </ng-container>
+        <div
+            [ngClass]="isMobile ? 'display-flex justify-content-between m-t-20 m-r-15 m-l-15' : 'col-md-5 m-t-10 text-right' ">
+            <button mat-raised-button class="main-background-color bs-button color-white save-material-button"
+                (click)="getAllData()">Apply</button>
+            <button mat-raised-button class="bs-gray-button color-main save-material-button m-l-15"
+                (click)="clearData()">Clear</button>
+        </div>
+    </div>
+</div>

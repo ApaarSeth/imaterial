@@ -1,4 +1,6 @@
 import { ProjectDetails } from './project-details';
+import { SupplierRoutingModule } from 'src/app/features/supplier/supplier-routing.module';
+import { FeaturesList } from './PO/po-data';
 
 export interface AllSupplierDetails {
   id?: number,
@@ -8,11 +10,11 @@ export interface AllSupplierDetails {
   lastUpdatedBy?: string,
   lastUpdatedAt?: string,
   supplierId?: number,
-  supplier_name?: string,
-  contact_no?: number,
+  supplierName?: string,
+  contactNo?: number,
   email?: string,
   pan?: string,
-  supplier_rating?: number,
+  supplierRating?: number,
 }
 
 export interface SupplierDetailsPopUpData {
@@ -26,13 +28,37 @@ export interface SupplierIds {
   userIds?: Array<Number>;
 }
 
+export interface SupplierObj{
+  moduleFeatures: SupplierModule;
+  supplierList: SupplierAdd[];
+}
+
+export interface SupplierModule{
+  featureList: SuppFeaturesList[];
+  planId: number;
+}
+
+export interface SuppFeaturesList{
+  featureName: string;
+  isAvailable: number;
+}
 
 export interface SupplierAdd {
+  contactNo?: string;
+  countryCallingCode?: string;
+  createdAt?: string;
+  createdBy?: string;
+  email?: string,
+  gstNo?: string;
   id?: number,
+  lastUpdatedAt?: string;
+  lastUpdatedBy?: string;
+  pan?: string;
+  phoneNo?: string;
   status?: number,
   supplierId?: number,
-  supplier_name?: string,
-  contact_no?: number,
-  email?: string,
-  pan?: string
+  supplierName?: string,
+  supplierOrganizationId?: number;
+  supplierRating?: number;
+  userId?: number;
 }

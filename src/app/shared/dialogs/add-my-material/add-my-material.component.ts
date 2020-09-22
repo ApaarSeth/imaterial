@@ -1,21 +1,11 @@
-import { OnInit, Component, Inject, ViewChild, NgZone } from '@angular/core';
-import { UserService } from 'src/app/shared/services/userDashboard/user.service';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
-import { UserRoles, UserDetails, TradeList, UserDetailsPopUpData } from 'src/app/shared/models/user-details';
-import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
-import { Router } from '@angular/router';
-import { elementAt, count, take, startWith, map, filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { BomService } from '../../services/bom/bom.service';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { orgTrades, tradeRelatedCategory } from '../../models/trades';
-import { Subject, Observable, merge } from 'rxjs';
-
-export interface City {
-  value: string;
-  viewValue: string;
-}
+import { Component, OnInit, Inject } from "@angular/core"; 
+import { UserRoles, UserDetails } from "../../models/user-details"; 
+import { FormGroup, FormArray, FormBuilder, Validators } from "@angular/forms"; 
+import { orgTrades, tradeRelatedCategory } from "../../models/trades"; 
+import { UserService } from "../../services/user.service"; 
+import { BomService } from "../../services/bom.service"; 
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog"; 
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-my-material',
@@ -23,6 +13,7 @@ export interface City {
 })
 
 export class AddMyMaterialComponent implements OnInit {
+
   searchUnit: string = '';
   roles: UserRoles;
   addMyMaterial: FormGroup;
@@ -40,16 +31,11 @@ export class AddMyMaterialComponent implements OnInit {
   materialUnit: string[]
   tradesList: orgTrades[] = [];
   filteredOption: tradeRelatedCategory[] = [];
-  searchTrade: string = ''
-  // filterOptions: Observable<tradeRelatedCategory[] | [string]>;
-
+  searchTrade: string = '';
 
   constructor(private _userService: UserService,
     private _formBuilder: FormBuilder,
-    private userService: UserService,
     private bomService: BomService,
-    private _router: Router,
-    private navService: AppNavigationService,
     private dialogRef: MatDialogRef<AddMyMaterialComponent>,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data) { }
@@ -77,12 +63,12 @@ export class AddMyMaterialComponent implements OnInit {
     })
   }
 
-
   getMaterialUnit() {
     this.bomService.getMaterialUnit().then(res => {
       this.materialUnit = res.data;
     });
   }
+
   /**
    * @description Get all user roles
    */
@@ -92,12 +78,10 @@ export class AddMyMaterialComponent implements OnInit {
     })
   }
 
-
-
   getUserData(userId) {
     this._userService.getUserInfo(userId).then(res => {
-      if (res.data[0].roleName) {
-        localStorage.setItem("role", res.data[0].roleName);
+      if (res.data.roleName) {
+        localStorage.setItem("role", res.data.roleName);
       }
     });
   }
@@ -108,8 +92,6 @@ export class AddMyMaterialComponent implements OnInit {
     });
     (<FormArray>this.addMyMaterial.get("myMaterial")).push(this.addOtherFormGroup());
   }
-
-
 
   onKey(value) {
     this.searchCategory = value;
@@ -347,12 +329,9 @@ export class AddMyMaterialComponent implements OnInit {
         (<FormGroup>(<FormArray>this.addMyMaterial.get('myMaterial')).controls[this.currentIndex]).controls['materialName'].reset();
       }
     })
-
-
   }
+
   closeDialog() {
     this.dialogRef.close(null);
   }
-
-
 }

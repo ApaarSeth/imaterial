@@ -1,28 +1,26 @@
 import { Component, OnInit } from "@angular/core";
-import { RFQService } from "src/app/shared/services/rfq/rfq.service";
-import {
-  RfqProjects,
-  RfqProject,
-  RfqMaterialList,
-  RfqProjectSubmit,
-  MaterialListSubmit,
-  RfqSupplierList
-} from "src/app/shared/models/RFQ/rfqBids";
+import { RFQService } from "src/app/shared/services/rfq.service";
+import { RfqProject, RfqMaterialList, RfqProjectSubmit, MaterialListSubmit, RfqSupplierList } from "src/app/shared/models/RFQ/rfqBids";
 import { FormBuilder, FormGroup, FormArray } from "@angular/forms";
-import { map } from "rxjs/operators";
-import { Materials } from "src/app/shared/models/subcategory-materials";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppNavigationService } from 'src/app/shared/services/navigation.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShowSupplierRemarksandDocs } from 'src/app/shared/dialogs/show-supplier-remarks-documents/show-supplier-remarks-documents.component';
-import { ProjectItemComponent } from 'src/app/shared/components/project-item/project-item.component';
 import { ViewImageComponent } from 'src/app/shared/dialogs/view-image/view-image.component';
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-rfq-bids",
   templateUrl: "./rfq-bids.component.html"
 })
+
 export class RfqBidsComponent implements OnInit {
+
+  rfqProjects: RfqProject[] = [];
+  rfqForms: FormGroup;
+  rfqId: number;
+  orgId: number;
+  ratesBaseCurr: boolean = false;
 
   constructor(
     private router: Router,
@@ -34,11 +32,6 @@ export class RfqBidsComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) { }
 
-  rfqProjects: RfqProject[] = [];
-  rfqForms: FormGroup;
-  rfqId: number;
-  orgId: number;
-  ratesBaseCurr: boolean = false;
   ngOnInit() {
     this.orgId = Number(localStorage.getItem("orgId"));
     this.route.params.subscribe(rfqId => {
@@ -50,20 +43,21 @@ export class RfqBidsComponent implements OnInit {
       // code to get the documentList of supplier whose materialUnitPrice is not null and concatenate those with material documentList
       this.rfqProjects.forEach(project => {
         project.materialList.forEach(matList => {
-            matList.supplierList.forEach((supp, i) => {
-                if(supp.brandDetailList && supp.brandDetailList.length > 0){
-                  const bidSubmitted = supp.brandDetailList.filter(brand => brand.materialUnitPrice !== null);
-                  if(bidSubmitted.length > 0){
-                      supp.documentList = [...(supp.documentList ? supp.documentList : []), ...(matList.documentList ? matList.documentList : [])];
-                  }
-                }
-            })
+          matList.supplierList.forEach((supp, i) => {
+            if (supp.brandDetailList && supp.brandDetailList.length > 0) {
+              const bidSubmitted = supp.brandDetailList.filter(brand => brand.materialUnitPrice !== null);
+              if (bidSubmitted.length > 0) {
+                supp.documentList = [...(supp.documentList ? supp.documentList : []), ...(matList.documentList ? matList.documentList : [])];
+              }
+            }
+          })
         })
       });
 
       this.formInit();
     });
   }
+
   formInit() {
     const frmArr: FormGroup[] = this.rfqProjects.map(
       (project: RfqProject, m) => {
@@ -227,6 +221,7 @@ export class RfqBidsComponent implements OnInit {
       }
     });
   }
+
   getFormValidation() {
     return this.rfqForms.value.forms.some(value => {
       return value.materialList.some(materials => {
@@ -238,6 +233,7 @@ export class RfqBidsComponent implements OnInit {
       });
     });
   }
+  
   getFormQtyValidation() {
     return this.rfqForms.value.forms.some(value => {
       return value.materialList.some(materials => {
@@ -269,15 +265,12 @@ export class RfqBidsComponent implements OnInit {
   }
 
   viewRemarks() {
-
     const dialogRef = this.dialog.open(ShowSupplierRemarksandDocs, {
       width: "1000px",
-      data: this.rfqProjects[0].supplierRemarkList
+      data: this.rfqProjects[0].supplierRemarkList,
+      panelClass: ['common-modal-style', 'show-supplier-remarks-docs']
     });
-    dialogRef
-      .afterClosed()
-      .toPromise()
-      .then(result => { });
+    dialogRef.afterClosed().toPromise().then(result => { });
   }
 
   /**
@@ -288,7 +281,7 @@ export class RfqBidsComponent implements OnInit {
     const dialogRef = this.dialog.open(ViewImageComponent, {
       disableClose: true,
       width: "500px",
-      panelClass: 'view-image-modal',
+      panelClass: ['common-modal-style', 'view-image-modal'],
       data: {
         rfqId: this.rfqId,
         materialId,
@@ -299,7 +292,7 @@ export class RfqBidsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
+        // console.log(result);
       }
     });
   }

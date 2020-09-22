@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, Input } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { DocumentList, ImageList, ImageDocsLists } from '../../models/PO/po-data';
 
-import { ImageService } from '../../services/image-integration/image.service';
-import { DocumentUploadService } from '../../services/document-download/document-download.service';
+import { ImageService } from '../../services/image.service';
+import { DocumentUploadService } from '../../services/document-download.service';
 import { FieldRegExConst } from 'src/app/shared/constants/field-regex-constants';
 
 @Component({
@@ -40,18 +40,18 @@ export class UploadImageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(this.data.type === 'rfq'){
+    if (this.data.type === 'rfq') {
       this.rfqId = this.data.rfqId;
       this.materialId = this.data.selectedMaterial.materialId;
       this.getPrevUploadedRfqImages();
-    }else if(this.data.type === 'supplier'){
+    } else if (this.data.type === 'supplier') {
       this.rfqId = Number(this.data.rfqId);
       this.materialId = this.data.selectedMaterial.materialId;
       this.prevDocumentList = this.data.prevUploadedImages.documentsList ? this.data.prevUploadedImages.documentsList.filter(elem => elem.supplierId) : [];
       this.getContractorImages();
-    }else if(this.data.type === 'po'){
+    } else if (this.data.type === 'po') {
       this.getAllPOImages();
-    }else{
+    } else {
       this.projectId = this.data.projectId;
       this.materialId = this.data.materialId;
       this.getUploadedImages();
@@ -61,7 +61,7 @@ export class UploadImageComponent implements OnInit {
   /**
    * @description function to get previous uploaded images for BOM, call when upload popup opens
    */
-  getUploadedImages(){
+  getUploadedImages() {
     this._uploadImageService.getSelectedImages(this.projectId, this.materialId).then(res => {
       this.prevDocumentList = res.data;
     })
@@ -70,7 +70,7 @@ export class UploadImageComponent implements OnInit {
   /**
    * @description function to get all contractor(rfq uploaded) images, call when upload popup opens 
    */
-  getContractorImages(){
+  getContractorImages() {
     this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
       this.contractorImagesList = res.data;
     })
@@ -79,61 +79,61 @@ export class UploadImageComponent implements OnInit {
   /**
    * @description function to get all rfq previous uploads, call when upload popup opens 
    */
-  getPrevUploadedRfqImages(){
-      this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
-        if(res.data){
+  getPrevUploadedRfqImages() {
+    this._uploadImageService.getRfqUploadedImages(this.rfqId, this.materialId).then(res => {
+      if (res.data) {
 
-          let rfqPrevImages: ImageDocsLists[] = [];
+        let rfqPrevImages: ImageDocsLists[] = [];
 
-          this.data.selectedMaterial.documentList.forEach(prevImg => res.data.forEach(newImg => {
-            if(prevImg.documentId === newImg.documentId){
-              rfqPrevImages.push(newImg);
-            }
-          }));
+        this.data.selectedMaterial.documentList.forEach(prevImg => res.data.forEach(newImg => {
+          if (prevImg.documentId === newImg.documentId) {
+            rfqPrevImages.push(newImg);
+          }
+        }));
 
-          const newUploadedImageList = (this.data.selectedMaterial && this.data.selectedMaterial.documentList) ? this.data.selectedMaterial.documentList.filter(opt => opt.documentId === 0) : [];
-          this.prevDocumentList = [...rfqPrevImages, ...newUploadedImageList];
-        }else{
-          this.prevDocumentList = this.data.selectedMaterial.documentList;
-        }
-      });
+        const newUploadedImageList = (this.data.selectedMaterial && this.data.selectedMaterial.documentList) ? this.data.selectedMaterial.documentList.filter(opt => opt.documentId === 0) : [];
+        this.prevDocumentList = [...rfqPrevImages, ...newUploadedImageList];
+      } else {
+        this.prevDocumentList = this.data.selectedMaterial.documentList;
+      }
+    });
 
   }
 
   /**
    * @description get all uploaded images of Purchase Order
    */
-  getAllPOImages(){
+  getAllPOImages() {
     this._uploadImageService.getPOImages(this.data.purchaseOrderId, this.data.selectedMaterial.materialId).then(res => {
 
-      if(res.data){
+      if (res.data) {
         this.prevDocumentList = res.data.filter(list => list.supplierId === null);
-        if(this.prevDocumentList && this.prevDocumentList.length > 0){
+        if (this.prevDocumentList && this.prevDocumentList.length > 0) {
           // code to get distinct values of documentList and remove duplicate values
           this.prevDocumentList = this.prevDocumentList.reduce((unique, o) => {
-            if(!unique.some(obj => obj.documentId === o.documentId)) {
+            if (!unique.some(obj => obj.documentId === o.documentId)) {
               unique.push(o);
             }
             return unique;
-          },[]);
+          }, []);
         }
 
         this.contractorImagesList = res.data.filter(list => list.supplierId !== null);
-        if(this.contractorImagesList && this.contractorImagesList.length > 0){
+        if (this.contractorImagesList && this.contractorImagesList.length > 0) {
           // code to get distinct values of documentList and remove duplicate values
           this.contractorImagesList = this.contractorImagesList.reduce((unique, o) => {
-            if(!unique.some(obj => obj.documentId === o.documentId)) {
+            if (!unique.some(obj => obj.documentId === o.documentId)) {
               unique.push(o);
             }
             return unique;
-          },[]);
+          }, []);
         }
       }
 
     });
   }
 
-  getFileSizeErr($event){
+  getFileSizeErr($event) {
     this.errorMessage = $event;
   }
 
@@ -150,30 +150,30 @@ export class UploadImageComponent implements OnInit {
     const acceptedFormatsArr = ["png", "jpg", "jpeg"];
     this.isDisplayErr = true;
 
-    if((this.prevDocumentList && this.prevDocumentList.length > 0) && (this.documentList && this.documentList.length === 0)){
+    if ((this.prevDocumentList && this.prevDocumentList.length > 0) && (this.documentList && this.documentList.length === 0)) {
       this.successfulUploads = 0;
     }
 
-    if((acceptedFormatsArr.indexOf(acceptedFormats) !== -1) && (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false)){
+    if ((acceptedFormatsArr.indexOf(acceptedFormats) !== -1) && (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false)) {
       this.successfulUploads++;
       this.errorMessage = "";
-    }else{
+    } else {
       this.errorMessage = "File format should be .jpg, .jpeg, .png";
     }
 
 
-    if((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false) 
-      && this.docs 
-      && (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0)) <= ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5) 
-      && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')){
-        
-        this.errorMessage = '';
-        this.uploadDocs();
+    if ((FieldRegExConst.SPECIAL_CHARACTERS.test(str) === false)
+      && this.docs
+      && (this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0)) <= ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5)
+      && (acceptedFormats === 'png' || acceptedFormats === 'jpg' || acceptedFormats === 'jpeg')) {
 
-    }else if((this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0)) > ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5)){
+      this.errorMessage = '';
+      this.uploadDocs();
+
+    } else if ((this.successfulUploads + (this.prevDocumentList ? this.prevDocumentList.length : 0)) > ((this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5)) {
       this.errorMessage = `You cannot upload more than ${(this.data.type === 'rfq' || this.data.type === 'supplier' || this.data.type === 'po') ? 10 : 5} images.`
       this.successfulUploads--;
-    }else if(FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true){
+    } else if (FieldRegExConst.SPECIAL_CHARACTERS.test(str) === true) {
       this.errorMessage = "Filename should not include special characters";
     }
   }
@@ -187,7 +187,7 @@ export class UploadImageComponent implements OnInit {
       data.append(`file`, this.docs[0]);
       this.isEmptyImgList = true;
       this._documentUploadService.postDocumentUpload(data).then(res => {
-        
+
         this.thumbnailImg = res.data.url;
         let firstName: number = res.data.fileName.indexOf("_");
         this.subFileName = res.data.fileName.substring(firstName + 1, res.data.fileName.length);
@@ -206,14 +206,14 @@ export class UploadImageComponent implements OnInit {
     }
   }
 
-  
+
   /**
    * @description function will call when click on Add button in upload modal
    */
-  addImage(){
-    
+  addImage() {
+
     // if previous uploaded images exist then create a new object prevDocsObj with all mandatory fields
-    if(this.prevDocumentList && this.prevDocumentList.length){
+    if (this.prevDocumentList && this.prevDocumentList.length) {
       this.prevDocumentList.forEach(img => {
         this.prevDocsObj.push({
           "documentShortUrl": img.documentShortUrl,
@@ -235,45 +235,45 @@ export class UploadImageComponent implements OnInit {
     }
 
     // conditions for rfq, supplier and bom images to upload
-    if(this.data.type === 'rfq'){
+    if (this.data.type === 'rfq') {
       this.dialogRef.close(this.finalImagesList);
-    }else if(this.data.type === 'supplier'){
+    } else if (this.data.type === 'supplier') {
       this.documentList.map(list => {
         list.supplierId = Number(this.data.supplierId)
         list.materialId = this.materialId;
       });
-      this.supplierContractorImages = [...(this.prevDocumentList ? this.prevDocumentList : []), ...this.documentList, ...(this.contractorImagesList ? this.contractorImagesList : [])]      
+      this.supplierContractorImages = [...(this.prevDocumentList ? this.prevDocumentList : []), ...this.documentList, ...(this.contractorImagesList ? this.contractorImagesList : [])]
       this.dialogRef.close(this.supplierContractorImages);
-    }else if(this.data.type === 'po'){
+    } else if (this.data.type === 'po') {
 
       this.finalImagesList.documentsList = [...this.finalImagesList.documentsList, ...this.contractorImagesList];
 
       return this._uploadImageService.uploadPOImage(this.finalImagesList).then(res => {
         this.dialogRef.close(this.finalImagesList);
       });
-    }else{
+    } else {
       return this._uploadImageService.uploadImage(this.finalImagesList).then(res => {
         this.dialogRef.close('addImages');
       });
     }
   }
-  
+
   /**
    * @description function will execute to delete an specific image
    * @param url image url which you wants to remove
    */
-  removeImage(url: string){   
+  removeImage(url: string) {
     // if any image removes, then error message which was displaying previously (error related to filename, file format duplicate file) should also remove
     this.errorMessage = "";
     this.isDisplayErr = false;
     this.isEmptyImgList = true;
 
     //get the length of prrevious uploads after delete a file
-    if(this.prevDocumentList && this.prevDocumentList.length)
+    if (this.prevDocumentList && this.prevDocumentList.length)
       this.prevDocumentList = this.prevDocumentList.filter(opt => opt.documentShortUrl !== url);
 
     //get the length of latest uploads after delete a file
-    if(this.documentList && this.documentList.length)
+    if (this.documentList && this.documentList.length)
       this.documentList = this.documentList.filter(opt => opt.documentShortUrl !== url);
 
     this.successfulUploads = this.documentList.length;
@@ -284,14 +284,14 @@ export class UploadImageComponent implements OnInit {
    * @param fileName image short url
    * @param url image url, which you wants to download
    */
-  downloadImage(fileName, url){
+  downloadImage(fileName, url) {
     const data = { fileName, url }
     this._uploadImageService.downloadImage(data).then(img => {
       var win = window.open(img.data.url, '_blank');
       win.focus();
     });
   }
-  
+
 
   /**
    * @description function will call when click on close button of popup

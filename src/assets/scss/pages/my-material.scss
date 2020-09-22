@@ -1,0 +1,110 @@
+.my-material-section, .my-material-tabs .mat-tab-body-content{
+    overflow-x: hidden;
+}
+
+.my-material-tbl{
+
+    .mat-expansion-panel-header, .mat-row{
+        height: auto !important;
+    }
+
+    .mat-expansion-panel-header{
+        min-height: 45px !important;
+    }
+
+    .mat-row{
+        min-height: 42px !important;
+    }
+
+    .mat-header-row, .mat-row{
+        display: flex;
+        align-items: center;
+    }
+
+    .mat-header-cell, .mat-cell{
+        word-break: break-word;
+        border-bottom: none;
+
+        &:first-child{
+            min-width: 35%;
+        }
+
+        &:nth-child(2) {
+            min-width: 30%;
+        }
+
+        &:nth-child(3) {
+            min-width: 25%;
+        }
+
+        &:last-child{
+            min-width: 10%;
+        }
+    }
+
+    .mat-header-row{
+        background-color: #2197bb;
+    }
+
+    .mat-expansion-panel-header{
+        border-bottom: 1px solid #bbbbbb;
+    }
+
+    td.mat-cell:first-of-type{
+        padding-left: 0px !important;
+    }
+
+    .mat-expansion-panel-body {
+        padding: 0px;
+
+        .mat-row{
+            padding:0 16px;
+            border-bottom: 1px solid #bbbbbb;
+            .mat-cell:first-child{
+                min-width: 34.5%;
+            }
+        }
+
+        td.mat-cell:last-of-type{
+            padding-right: 0px !important;
+        }
+    }
+
+    .bg-material-category{
+        background-color: #eeeeee !important;
+    }
+}
+
+@media only screen and (max-width: 767px){
+    .my-material-section{
+        overflow-x: auto;
+
+        .my-material-tbl{
+
+            .mat-header-cell{
+                &:first-child{
+                    min-width: 270px;
+                    width: 270px;
+                }
+            }
+
+            .mat-cell{
+                &:first-child{
+                    min-width: 255px;
+                    width: 255px;
+                }
+            }
+
+            .mat-header-cell, .mat-cell{                
+                &:nth-child(2){
+                    min-width: 200px;
+                    width: 200px;
+                }
+        
+                &:nth-child(3), &:last-child {
+                    min-width: 120px;
+                }                
+            }
+        }
+    }
+}

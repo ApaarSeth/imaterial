@@ -117,6 +117,7 @@
 /* Order correctly by floating highest to the right */
 .rfq-rates .rate > label {
     float: right;
+    margin: 0px;
 }
 
 input:not(:checked) ~ label {
@@ -126,8 +127,8 @@ input:not(:checked) ~ label {
 /* The star of the show */
 .rfq-rates .rate > label:before {
     display: inline-block;
-    font-size: 1.1rem;
-    padding: .3rem .2rem;
+    font-size: 1rem;
+    padding: .1rem .2rem;
     margin: 0;
     cursor: pointer;
     font-family: FontAwesome;
@@ -151,7 +152,7 @@ input:not(:checked) ~ label {
 .rfq-rates .rate > label:hover ~ input:checked ~ label { color: #f47721;  }
 
 .rating-value{
-    margin: -6px 0 0 10px;
+    margin: 0px 0 0 4px;
     font-size: 14px;
 }
 
@@ -183,4 +184,12 @@ input:not(:checked) ~ label {
 
 .mgbn12{
     margin-bottom: -12px;
+}
+
+@media (max-width: 599px){
+    .po-list-detail-custom .myPanel{
+        th, td {
+            min-width: 120px;
+        }
+    }
 }

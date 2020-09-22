@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BomService } from 'src/app/shared/services/bom/bom.service';
+import { BomService } from 'src/app/shared/services/bom.service';
 import { categoryNestedLevel } from 'src/app/shared/models/category';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { EditMyMaterialComponent } from 'src/app/shared/dialogs/edit-my-material/edit-my-material.component';
 import { CommonService } from 'src/app/shared/services/commonService';
 
@@ -26,7 +26,8 @@ export class UnapprovedMaterialTabComponent implements OnInit {
         let data = { materialList: [this.selectedCategory[c].materialList[sc]], type: 'add' }
         this.dialogRef.open(EditMyMaterialComponent, {
             width: "750px",
-            data
+            data,
+            panelClass: ['common-modal-style', 'edit-my-material-dialog']
         })
     }
 

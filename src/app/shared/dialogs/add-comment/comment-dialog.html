@@ -1,14 +1,14 @@
- <div class="header-add-edit-dialog">
-      <h1 mat-dialog-title>Add Comment</h1>
-      <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
-  </div>
+<div class="header-add-edit-dialog">
+  <h1 mat-dialog-title>Add Comment</h1>
+  <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
 <div mat-dialog-content class="padding-for-dialog-after-header">
   <div class="row">
     <div class="col-xs-12 scroll-box">
-      <mat-form-field class="width100Percent">
-        <textarea matInput type="text" class="p-t-20 h-200">
+      <mat-form-field class="width-100">
+        <textarea matInput type="text" class="p-t-20 height-200-px">
             Terms of Payment:
 
             A.20% as an Advance against Proforma Invoice showing tax break up.
@@ -26,18 +26,9 @@
 </div>
 
 <div mat-dialog-actions class="pull-left">
-  <button mat-button [mat-dialog-close]="" cdkFocusInitial>
-    Skip
-  </button>
+  <button mat-button [mat-dialog-close]="" cdkFocusInitial>Skip</button>
 </div>
 
 <div mat-dialog-actions class="pull-right">
-  <button
-    mat-raised-button
-    class="main-background-color main-button color-white m-b-5"
-    [mat-dialog-close]=""
-    cdkFocusInitial
-  >
-    Add
-  </button>
+  <button mat-raised-button class="main-background-color main-button color-white m-b-5" [mat-dialog-close]="" cdkFocusInitial>Add</button>
 </div>

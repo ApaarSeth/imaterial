@@ -106,9 +106,12 @@ export interface UserDetails {
   TurnOverId?: number;
   baseCurrency: Currency
   orgPincode: string;
-  trade: orgTrades[];
+  trade: TradeList[];
   myAccountUpdate: boolean;
   isPlanAvailable?: any;
+  appTermsAndCondition?: boolean;
+  isFreeTrialSubscription?: number;
+  isActiveSubscription?: number;
 }
 
 export interface TradeList {
@@ -122,6 +125,8 @@ export interface TradeList {
   tradeName: string;
   tradeDescription: string;
   selected?: boolean;
+  isAttatched?: boolean
+  organizationId?: number
 }
 export interface TurnOverList {
   id?: number;

@@ -50,6 +50,7 @@ export class SidenavListComponent implements OnInit {
           itm.modulePath = itm.modulePath + this.orgId;
         }
       });
+      this.addMoreNavInMobile();
     }
 
     if (this.role) {
@@ -72,35 +73,18 @@ export class SidenavListComponent implements OnInit {
   }
 
   highlightButton(url: string) {
-    if (url.includes('dashboard') && !url.includes('project-dashboard')) {
-      this.buttonName = 'Dashboard'
-    } else if (url.includes('project-dashboard')) {
-      this.buttonName = 'Project Store';
-    }
-    else if (url.includes('globalStore')) {
-      this.navService.gaEvent({
-        action: 'submit',
-        category: 'global_store',
-        label: null,
-        value: null
-      });
+    if (url) {
+      this.buttonName = url.substring(1);
 
-      this.buttonName = 'Global Store';
-    }
-    else if (url.includes('reports')) {
-      this.buttonName = 'Reports'
-    }
-    else if (url.includes('rfq')) {
-      this.buttonName = 'Request For Quotation';
-    }
-    else if (url.includes('users')) {
-      this.buttonName = 'Users';
-    }
-    else if (url.includes('po')) {
-      this.buttonName = 'Purchase Order';
-    }
-    else if (url.includes('supplier')) {
-      this.buttonName = 'Supplier';
+      if (url.includes('globalStore')) {
+        this.navService.gaEvent({
+          action: 'submit',
+          category: 'global_store',
+          label: null,
+          value: null
+        });
+      }
+
     }
   }
 
@@ -127,5 +111,28 @@ export class SidenavListComponent implements OnInit {
 
   ngOnDestroy() {
     this.subsriptions.forEach(subs => subs.unsubscribe());
+  }
+
+  addMoreNavInMobile() {
+    const subscriptions = {
+      moduleDisplayName: "My Plan / Upgrade",
+      moduleIcon: "payment.svg",
+      moduleId: this.data.moduleList.length + 1,
+      moduleName: "My Plan / Upgrade",
+      modulePath: "subscriptions",
+      subModuleList: null,
+    }
+    if (this.isPlanAvailable === 1 && this.accountOwner === 1) {
+      this.data.moduleList.push(subscriptions);
+    }
+    const feedback = {
+      moduleDisplayName: "Share Feedback",
+      moduleIcon: "feedback.svg",
+      moduleId: this.data.moduleList.length + 1,
+      moduleName: "Share Feedback",
+      modulePath: "user-feedback",
+      subModuleList: null,
+    }
+    this.data.moduleList.push(feedback);
   }
 }

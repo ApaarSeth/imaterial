@@ -1,5 +1,8 @@
-import { AllUserDetails, UserAdd, UserDetailsPopUpData } from "../../../shared/models/user-details"; import { Component, OnInit, ChangeDetectorRef } from "@angular/core"; import { MatTableDataSource, MatDialog } from "@angular/material"; import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour"; import { ActivatedRoute, Router } from "@angular/router"; import { RFQService } from "../../../shared/services/rfq/rfq.service"; import { FormBuilder } from "@angular/forms"; import { UserService } from "../../../shared/services/userDashboard/user.service"; import { CommonService } from "../../../shared/services/commonService"; import { AddEditUserComponent } from "../../../shared/dialogs/add-edit-user/add-edit-user.component"; import { DeactiveUserComponent } from "../../../shared/dialogs/disable-user/disable-user.component";
-import { UserGuideService } from "../../../shared/services/user-guide/user-guide.service";
+import { AppNotificationService } from './../../../shared/services/app-notification.service';
+import { AllUserDetails, UserAdd, UserDetailsPopUpData } from "../../../shared/models/user-details"; import { Component, OnInit, ChangeDetectorRef } from "@angular/core"; import { GuidedTour, Orientation, GuidedTourService } from "ngx-guided-tour"; import { ActivatedRoute, Router } from "@angular/router"; import { RFQService } from "../../../shared/services/rfq.service"; import { FormBuilder } from "@angular/forms"; import { UserService } from "../../../shared/services/user.service"; import { CommonService } from "../../../shared/services/commonService"; import { AddEditUserComponent } from "../../../shared/dialogs/add-edit-user/add-edit-user.component"; import { DeactiveUserComponent } from "../../../shared/dialogs/disable-user/disable-user.component";
+import { UserGuideService } from "../../../shared/services/user-guide.service";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
 
 
 // chip static data
@@ -12,15 +15,14 @@ const ELEMENT_DATA: AllUserDetails[] = [];
 
 @Component({
   selector: "user-details",
-  templateUrl: "./user-details.component.html",
-  styleUrls: ["../../../../assets/scss/main.scss"]
+  templateUrl: "./user-details.component.html"
 })
 
 
 export class UserDetailComponent implements OnInit {
 
-  displayedColumns: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project', 'star'];
-  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Phone', 'Role', 'Project'];
+  displayedColumns: string[] = ['User Name', 'Email Id', 'Contact No', 'Role', 'Project', 'star'];
+  displayedColumnsDeactivate: string[] = ['User Name', 'Email Id', 'Contact No', 'Role'];
 
   dataSourceActivateTemp = ELEMENT_DATA;
   dataSourceDeactivateTemp = ELEMENT_DATA;
@@ -60,14 +62,11 @@ export class UserDetailComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private rfqService: RFQService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private ref: ChangeDetectorRef,
     private userService: UserService,
     private guidedTourService: GuidedTourService,
     private userGuideService: UserGuideService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private notifier: AppNotificationService
   ) {
   }
 
@@ -141,11 +140,14 @@ export class UserDetailComponent implements OnInit {
 
     } as UserDetailsPopUpData);
   }
+
+
   openDialog(data: UserDetailsPopUpData): void {
 
     const dialogRef = this.dialog.open(AddEditUserComponent, {
       width: "660px",
-      data
+      data,
+      panelClass: ['common-modal-style', 'add-users-dialog']
     });
 
     dialogRef.afterClosed().toPromise().then(data => {
@@ -173,7 +175,8 @@ export class UserDetailComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DeactiveUserComponent, {
       width: "500px",
-      data
+      data,
+      panelClass: ['common-modal-style', 'deactivate-user']
     });
     dialogRef.afterClosed().toPromise().then(data => {
       if (data && data != null) {
@@ -214,5 +217,14 @@ export class UserDetailComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSourceActivate.filter = filterValue.trim().toLowerCase();
     this.dataSourceDeactivate.filter = filterValue.trim().toLowerCase();
+  }
+
+
+  resendInvite(userId) {
+    this.userService.resendInvite(userId).then(res => {
+      if (res.statusCode === 201) {
+        this.notifier.snack(res.data)
+      }
+    })
   }
 }

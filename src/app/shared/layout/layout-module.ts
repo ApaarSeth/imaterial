@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MaterialModule } from "src/app/shared/material-modules";
 import { CommonModule } from "@angular/common";
+import { MaterialModule } from "../material-modules";
 
 @NgModule({
   imports: [MaterialModule, FlexLayoutModule, CommonModule],

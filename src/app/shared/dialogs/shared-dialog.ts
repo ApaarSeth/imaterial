@@ -4,16 +4,12 @@ import { DoubleConfirmationComponent } from "./double-confirmation/double-confir
 import { SuppliersDialogComponent } from "./add-supplier/suppliers-dialog.component";
 import { ViewDocumentsDialogComponent } from "./view-documents/view-documents-dialog.component";
 import { AddCommentDialogComponent } from "./add-comment/comment-dialog.component";
-import { AddAddressDialogComponent } from "./add-address/address-dialog.component";
 import { IssueToIndentDialogComponent } from "./issue-to-indent/issue-to-indent-dialog.component";
 import { AddRFQConfirmationComponent } from "./add-rfq-confirmation/add-rfq-double-confirmation.component";
 import { SelectApproverComponent } from "./selectPoApprover/selectPo.component";
 import { SelectPoRoleComponent } from "./select-po-role/select-po-role.component";
-import { AddAddressPoDialogComponent } from "./add-address-po/add-addressPo.component";
 import { AddEditUserComponent } from "./add-edit-user/add-edit-user.component";
 import { DeactiveUserComponent } from "./disable-user/disable-user.component";
-import { DeactiveSupplierComponent } from "./disable-supplier/disable-supplier.component";
-import { ConfirmRfqBidComponent } from "./confirm-rfq-bid/confirm-frq-bid-component";
 import { DeleteBomComponent } from "./delete-bom/delete-bom.component";
 import { AddEditGrnComponent } from "./add-edit-grn/add-edit-grn.component";
 import { DeleteDraftedPoComponent } from "./delete-drafted-po/delete-drafted-po.component";
@@ -41,6 +37,9 @@ import { GrnAddSupplierComponent } from './add-grn/add-supplier/add-supplier.com
 import { AddGrnViaExcelComponent } from './addGrn-viaExcel/addGrnViaExcel.component';
 import { DeleteMyMaterialComponent } from './delete-my-material-confirmation/delete-myMaterial-confirmation.component';
 import { ShortCloseConfirmationComponent } from './short-close-confirmation/short-close-confirmation.component';
+import { DeactiveSupplierComponent } from './disable-supplier/disable-supplier.component';
+import { ConfirmRfqBidComponent } from './confirm-rfq-bid/confirm-frq-bid-component';
+import { AddAddressDialogComponent } from './add-address/add-address.component';
 
 export const SharedDialogs = [
   AddProjectComponent,
@@ -48,13 +47,12 @@ export const SharedDialogs = [
   SuppliersDialogComponent,
   ViewDocumentsDialogComponent,
   AddCommentDialogComponent,
-  AddAddressDialogComponent,
   AddEditUserComponent,
   IssueToIndentDialogComponent,
   AddRFQConfirmationComponent,
   SelectApproverComponent,
   SelectPoRoleComponent,
-  AddAddressPoDialogComponent,
+  AddAddressDialogComponent,
   DeactiveUserComponent,
   DeactiveSupplierComponent,
   ConfirmRfqBidComponent,

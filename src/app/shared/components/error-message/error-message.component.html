@@ -1,0 +1,14 @@
+<!-- <span class="info-icon info-tootip"
+  ><img src="./../../../../assets/images/i_icon.png" class="img-responsive" />
+  <span class="info-tootip__content">
+    <div class="tooltip-table p-t-0 p-r-0 p-l-0">
+      <div class="width-100 border-radius-tltr-5px background-error-message p-t-5 p-l-5">
+        <p class="fontsize-12-px color-black p-b-5">{{ msg }}</p>
+      </div>
+    </div>
+  </span></span
+> -->
+
+<span #tooltip="matTooltip" matTooltipClass="custom-tooltip" [matTooltipPosition]="position" matTooltip="{{ msg }}"
+  ><img [ngClass]="this.width ? this.width : ''" src="./../../../../assets/images/warning.svg" class="img-responsive"
+/></span>

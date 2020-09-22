@@ -1,35 +1,22 @@
 .customPo {
   td.mat-cell,
   td.mat-footer-cell,
-  th.mat-header-cell {
-    border-bottom: none;
-  }
-  .mat-accordion .mat-header-row {
-    border-bottom: none;
-  }
-
+  th.mat-header-cell,
+  .mat-accordion .mat-header-row,
   .mat-expansion-panel-header.mat-row {
     border-bottom: none;
   }
 
-  $mat-header-row-height: 56px;
-  $mat-row-height: 48px;
-  $material-row-height: 77px;
-  $mat-row-horizontal-padding: 24px;
-
-  .mat-table {
-    display: block;
-  }
-
   .mat-header-row {
-    min-height: $mat-header-row-height;
+    height: 50px;
   }
 
   .mat-row {
-    min-height: $mat-row-height;
+    height: 42px;
   }
-  .material-row {
-    min-height: $mat-row-height;
+
+  .mat-table {
+    display: block;
   }
 
   .mat-row,
@@ -64,7 +51,8 @@
     }
   }
 
-  .po-table {
+  .po-table,
+  .res-table {
     .mat-row {
       border-bottom: 0.5px solid #979797;
       min-height: 50px;
@@ -75,6 +63,7 @@
     }
 
     .material-row {
+      min-height: 55px;
       border-bottom: 0.5px solid #979797;
       width: 100%;
       .mat-cell {
@@ -90,6 +79,28 @@
         color: #000000;
         font-weight: 500;
         font-size: 12px;
+      }
+    }
+  }
+
+  .res-table {
+    overflow-x: auto;
+    // display: flex;
+    section {
+      span {
+        font-size: 10px;
+      }
+    }
+  }
+
+  .res-td {
+    display: grid;
+    width: max-content;
+    span {
+      font-size: 12px;
+      div,
+      .mat-cell {
+        font-weight: normal;
       }
     }
   }
@@ -180,13 +191,13 @@ s .validTill {
   .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
-    padding: 0px 10px;
+    // padding: 0px 10px;
     line-break: unset;
     width: 2%;
     white-space: nowrap;
     overflow: hidden;
     vertical-align: middle;
-    font-weight: 500;
+    // font-weight: 500;
   }
   .brand-name {
     text-align: left;
@@ -207,76 +218,23 @@ s .validTill {
 
   .mat-table {
     overflow-x: scroll;
+    width: 100%;
   }
 
   .mat-cell,
   .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
-    padding: 0px 10px;
+    // padding: 0px 10px;
     line-break: unset;
-    width: 2%;
     white-space: nowrap;
     overflow: hidden;
     vertical-align: middle;
-    font-weight: 500;
+    // font-weight: 500;
   }
   .mat-row,
   .mat-header-row {
     display: table-row;
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .example-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-  }
-  .add-grn-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-    .brand-name {
-      text-align: left;
-    }
-  }
-  .add-user-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-    .project-user-details-width {
-      button {
-        font-size: 12px;
-      }
-    }
-  }
-
-  .add-unique-container {
-    .mat-cell,
-    .mat-header-cell {
-      font-size: 12px;
-    }
-    .project-user-details-width {
-      button {
-        font-size: 12px;
-      }
-    }
-  }
-
-  .po-number-grn {
-    font-size: 14px;
-  }
-  .font-size-vary-grn {
-    font-size: 12px;
-  }
-}
-@media only screen and (min-width: 576) {
-  .font-size-vary-grn {
-    font-size: 14px;
   }
 }
 
@@ -335,24 +293,18 @@ s .validTill {
   overflow-wrap: anywhere !important;
 }
 
-.mpo-table {
-  width: 100%;
-  overflow-x: scroll;
-}
-
 .txt-nwrp {
   white-space: normal !important;
   font-weight: normal !important;
 }
 
-.mpo-mh {
-  height: 30px;
-  padding-top: 10px !important;
-}
+// .mpo-mh {
+//   height: 30px;
+// }
 
-.mpo-mh {
-  height: 30px;
-}
+// .mpo-mh {
+//   height: 30px;
+// }
 
 .str {
   &:before {
@@ -366,17 +318,8 @@ s .validTill {
 }
 
 .add-taxes-col {
-  // min-width: 100px;
-  // max-width: 120px;
   span {
     white-space: normal;
-  }
-}
-
-@media only screen and (max-width: 1300px) {
-  .add-taxes-col {
-    min-width: 60px !important;
-    max-width: 80px;
   }
 }
 
@@ -387,7 +330,32 @@ s .validTill {
 
 .po-date-width,
 .po-material-width {
-  max-width: 10%;
+  max-width: 13%;
+  min-width: 10% !important;
+}
+
+.po-nedit-date-width {
+  max-width: 13%;
+  min-width: 12% !important;
+}
+
+.po-edit-date-width {
+  max-width: 13%;
+  min-width: 11% !important;
+}
+
+.po-nsupplier-rate-width {
+  max-width: 13%;
+  min-width: 8% !important;
+}
+
+.po-supplier-rate-width {
+  max-width: 13%;
+  min-width: 9% !important;
+}
+
+.international-edit-po {
+  max-width: 13%;
   min-width: 10% !important;
 }
 
@@ -396,25 +364,19 @@ s .validTill {
   padding-bottom: 0px !important;
 }
 
-.international-edit-po{
-  max-width: 8.25%;
-  min-width: 8.25% !important;
+.national-edit-po {
+  max-width: 9.9%;
+  min-width: 9.9% !important;
 }
 
-.national-edit-po{
-  max-width: 9.4%;
-  min-width: 9.4% !important;
-}
-
-.international-view-po,
-.national-view-po{
-  max-width: 10%;
+.international-view-po {
+  max-width: 13%;
   min-width: 10% !important;
 }
 
-.po-date-width .date-label{
-  .mat-form-field-label-wrapper{
-    top: -.84375em;
+.po-date-width .date-label {
+  .mat-form-field-label-wrapper {
+    top: -0.84375em;
   }
 
   .form-placeholder {
@@ -422,31 +384,194 @@ s .validTill {
   }
 }
 
-.po-unit-width{
+.po-unit-width {
   max-width: 6%;
-  min-width: 6% !important;
+  min-width: 4% !important;
 }
 
-.po-national-unit-width{
-  max-width: 7%;
-  min-width: 7% !important;
-}
-
-.po-national-image-width{
-  max-width: 3%;
-  min-width: 3% !important;
-}
-
-@media only screen and (max-width: 1199px){
-  .edit-view-purchase-order{
-    .mat-header-cell, .mat-cell, .add-taxes-col span, .small-text{
-      font-size: 13px;
-    }
+.po-for-approval,
+.drafted-po,
+.approved-po {
+  .mat-column-poNumber,
+  .mat-column-totalMaterials {
+    text-align: left;
   }
 
-  .po-date-width .date-label{
+  .mat-column-poStatusChangedOn .mat-sort-header-container,
+  .mat-column-supplierName .mat-sort-header-container {
+    justify-content: center;
+  }
+
+  .mat-column-poAmount .mat-sort-header-container {
+    justify-content: flex-end;
+  }
+
+  .mat-expansion-indicator::after {
+    padding: 6px;
+  }
+}
+
+.po-docs-outer .row {
+  padding: 10px 10px !important;
+}
+
+.view-upload-docs {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 15px 15px;
+
+  .upload-image-info {
+    margin-left: 0px;
+  }
+
+  .view-upload-docs-inner {
+    position: relative;
+    .grey-dotted-border {
+      padding: 15px 20px !important;
+    }
+
+    .upload-green-tick {
+      margin: auto auto 15px;
+    }
+
+    .upload-image-info:last-child {
+      margin-bottom: 0px !important;
+    }
+  }
+}
+
+.select-contact-person-dialog {
+  .person-personal-info {
+    margin-top: -2px;
+  }
+}
+
+.po-list-detail-custom {
+  .mat-row .mat-cell {
+    min-width: 80px;
+  }
+  .mat-row .actions-cell.mat-cell {
+    min-width: 160px;
+  }
+}
+
+.po-list-tbl {
+  .mat-column-totalMaterials {
+    .mat-sort-header-container {
+      justify-content: center;
+    }
+  }
+}
+
+@media only screen and (min-width: 576) {
+  .font-size-vary-grn {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .add-taxes-col {
+    min-width: 60px !important;
+    max-width: 80px;
+  }
+}
+
+@media only screen and (max-width: 1199px) {
+  // .edit-view-purchase-order {
+  //   .mat-header-cell,
+  //   .mat-cell,
+  //   .add-taxes-col span,
+  //   .small-text {
+  //     font-size: 13px;
+  //   }
+  // }
+
+  .po-date-width .date-label {
     .form-placeholder {
       font-size: 12px;
     }
+  }
+
+  .po-list-detail-custom {
+    .mat-row .actions-cell.mat-cell {
+      min-width: 220px;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 600px) {
+  .po-detail-list {
+    advance-search {
+      margin: 10px 0 10px;
+      display: block;
+    }
+  }
+
+  .po-details {
+    .project {
+      padding-left: 8px;
+      width: 75% !important;
+    }
+
+    .create-po-btn {
+      padding-right: 0.9rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .example-container,
+  .add-user-container,
+  .add-grn-container,
+  .add-unique-container {
+    .mat-cell,
+    .mat-header-cell {
+      font-size: 12px !important;
+    }
+  }
+
+  .add-user-container,
+  .add-unique-container {
+    .project-user-details-width button {
+      font-size: 12px;
+    }
+  }
+
+  .add-grn-container {
+    .brand-name {
+      text-align: left;
+    }
+  }
+
+  .font-size-vary-grn {
+    font-size: 12px;
+  }
+
+  .po-number-grn {
+    font-size: 14px;
+  }
+  .font-size-vary-grn {
+    font-size: 12px;
+  }
+}
+
+.input-padding.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-top: 7px !important;
+}
+
+.infix-padding.mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 11px 0px 4px 0px;
+}
+
+.po-border-input input,
+.po-border-input select {
+  border-bottom: 2px solid $icon-color-gray;
+  border-radius: 0px;
+}
+
+.suffix-padding {
+  .mat-form-field-wrapper .mat-form-field-suffix {
+    width: 18% !important;
+    margin-left: -17px !important ;
   }
 }

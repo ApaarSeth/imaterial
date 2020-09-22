@@ -1,0 +1,26 @@
+<div class="subs-srch-pnl">
+  <mat-expansion-panel class="mt-1 border-bottom" [(expanded)]="isOpen" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ config.title }}
+      </mat-panel-title>
+      <mat-panel-description class="fx-gr-0 m-r-0">
+        <mat-icon inline *ngIf="!isOpen">add</mat-icon>
+        <mat-icon inline *ngIf="isOpen">remove</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div *ngIf="config?.list">
+      <form *ngIf="form" [formGroup]="form">
+        <!-- <h4 class="mt-4 mb-2 fontsize-16-px font-weight-normal">{{ config.title }}</h4> -->
+        <section class="example-section" formArrayName="checkBoxes">
+          <div *ngFor="let item of config.list; let i = index">
+            <mat-checkbox class="example-margin d-block color-6d6a6a" [formControlName]="i">
+              {{ item.name }}
+            </mat-checkbox>
+          </div>
+        </section>
+      </form>
+    </div>
+  </mat-expansion-panel>
+</div>
