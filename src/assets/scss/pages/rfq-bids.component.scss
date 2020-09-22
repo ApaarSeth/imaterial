@@ -163,6 +163,7 @@
   font-weight: 550;
   cursor: pointer;
   margin-top: 20px;
+  padding-left: 8px;
 }
 
 .select-address-tag {
@@ -172,15 +173,17 @@
 
 .reset-form-tag {
   float: right;
+  padding-right:8px;
 }
 
 .select-address-tag-disabled {
   float: left;
-  padding-left: 28px;
+  padding-left: 8px;
   font-size: 14px;
   color: #d0d0dd;
   text-decoration: underline;
   font-weight: 550;
+  margin-top: 20px;
 }
 
 .ratings {

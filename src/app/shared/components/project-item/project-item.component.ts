@@ -70,22 +70,23 @@ export class ProjectItemComponent implements OnInit {
 
   navigationToBOM(id: number, projectDetails: ProjectDetails) {
     if (projectDetails.matCount > 0) {
-      this.router.navigate(["/project-dashboard/bom/" + id + "/bom-detail"]);
+      this.router.navigate([ "/project-dashboard/bom/" + id + "/bom-detail" ]);
     } else {
-      this.router.navigate(["/project-dashboard/bom/" + id], { state: { projectDetails } });
+      this.router.navigate([ "/project-dashboard/bom/" + id ], { state: { projectDetails } });
     }
   }
 
   redirectToPurchaseOrder() {
-    this.router.navigate(["po"]);
+    this.router.navigate([ "po" ]);
   }
   redirectToOpenIndentCount(id: number, projectDetails: ProjectDetails) {
-    this.router.navigate(["/indent/" + id + "/indent-detail"]);
+    this.router.navigate([ "/indent/" + id + "/indent-detail" ]);
     // this.router.navigate(['/indent/1/indent-detail']);
   }
 
   showDetails(data): void {
     const dialogRef = this.dialog.open(DisplayProjectDetailsComponent, {
+      maxWidth: '80vw',
       data
     });
 
@@ -118,7 +119,7 @@ export class ProjectItemComponent implements OnInit {
       const dialogRef = this.dialog.open(AddProjectComponent, {
         width: "1200px",
         data,
-        panelClass: ['common-modal-style', 'add-project-dialog']
+        panelClass: [ 'common-modal-style', 'add-project-dialog' ]
       });
       dialogRef
         .afterClosed()
