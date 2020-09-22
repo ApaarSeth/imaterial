@@ -13,7 +13,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 // Component for dialog box
 @Component({
   selector: "suppliers-dialog",
-  templateUrl: "./suppliers-dialog.html"
+  templateUrl: "./suppliers-dialog.component.html"
 })
 
 // Component class
