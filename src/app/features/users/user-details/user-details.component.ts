@@ -143,13 +143,11 @@ export class UserDetailComponent implements OnInit {
 
 
   openDialog(data: UserDetailsPopUpData): void {
-
     const dialogRef = this.dialog.open(AddEditUserComponent, {
       width: "660px",
       data,
       panelClass: ['common-modal-style', 'add-users-dialog']
     });
-
     dialogRef.afterClosed().toPromise().then(data => {
       if (data && data != null) {
         this.getAllUsers();
@@ -172,7 +170,6 @@ export class UserDetailComponent implements OnInit {
   }
 
   openDialogDeactiveUser(data: UserDetailsPopUpData): void {
-
     const dialogRef = this.dialog.open(DeactiveUserComponent, {
       width: "500px",
       data,

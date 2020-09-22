@@ -1,20 +1,16 @@
-import { featureList } from './../../../../shared/models/menu.model';
-import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter, ChangeDetectorRef } from "@angular/core";
 import { Suppliers } from "src/app/shared/models/RFQ/suppliers";
 import { AddRFQ } from "src/app/shared/models/RFQ/rfq-details";
 import { SuppliersDialogComponent } from "src/app/shared/dialogs/add-supplier/suppliers-dialog.component";
 import { FormGroup, FormBuilder, FormArray, AbstractControl } from "@angular/forms";
 import { SelectRfqTermsComponent } from 'src/app/shared/dialogs/selectrfq-terms/selectrfq-terms.component';
-import { Observable } from 'rxjs';
 import { SelectCurrencyComponent } from 'src/app/shared/dialogs/select-currency/select-currency.component';
 import { CountryCode } from 'src/app/shared/models/currency';
 import { CommonService } from 'src/app/shared/services/commonService';
 import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { AppNotificationService } from 'src/app/shared/services/app-notification.service';
 import { ActivatedRoute } from '@angular/router';
-import { data } from 'jquery';
 
 @Component({
   selector: "app-rfq-supplier",
@@ -35,7 +31,7 @@ export class RfqSupplierComponent implements OnInit {
     "Email",
     "Phone No."
   ];
-  allSuppliers: Suppliers[];
+  allSuppliers: Suppliers[] = [];
   selectedSuppliersList: Suppliers[] = [];
   selectedSupplierFlag: boolean = false;
   checkedMaterialsList: AddRFQ;
@@ -53,7 +49,8 @@ export class RfqSupplierComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notifier: AppNotificationService,
     private commonService: CommonService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private changeDetectorRefs: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -191,8 +188,10 @@ export class RfqSupplierComponent implements OnInit {
             let newSupplier = data.data.supplierList.filter(supp => {
               return newAddedId === supp.supplierId
             })
-            this.allSuppliers.push(...newSupplier);
-            this.allSuppliers = JSON.parse(JSON.stringify(this.allSuppliers))
+            newSupplier[0].checked = false;
+            newSupplier[0].show = true;
+            this.allSuppliers.push(newSupplier[0]);
+            this.allSuppliers = this.allSuppliers.slice()
             this.formInit();
           });
         }
