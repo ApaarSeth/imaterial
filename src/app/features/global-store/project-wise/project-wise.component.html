@@ -38,8 +38,7 @@
               </tr>
             </mat-expansion-panel-header>
 
-            <mat-expansion-panel class="material-projects-tbl" *ngFor="let material of project.projectMaterialList"
-              #mep="matExpansionPanel">
+            <mat-expansion-panel class="material-projects-tbl" *ngFor="let material of project.projectMaterialList" #mep="matExpansionPanel">
               <!-- Material lists existed in specific project -->
               <mat-expansion-panel-header class="project-row-bg" (click)="getIndentsList(material, mep.expanded)">
                 <tr class="mat-row width-100">
@@ -50,7 +49,7 @@
                   <td class="mat-cell text-center">{{ material.dueDate | date: "dd MMM yyy" }}</td>
                   <td class="mat-cell text-center">{{ material.deliveredQty + material.directDeliveredQty }}</td>
                   <td class="mat-cell text-center">{{ material.issuedQty }}</td>
-                  <td class="mat-cell text-center">{{ (material.deliveredQty + material.directDeliveredQty) - material.issuedQty }}</td>
+                  <td class="mat-cell text-center">{{ material.deliveredQty + material.directDeliveredQty - material.issuedQty }}</td>
                 </tr>
               </mat-expansion-panel-header>
 
@@ -70,7 +69,6 @@
                 </div>
               </ng-container>
             </mat-expansion-panel>
-
           </mat-expansion-panel>
         </div>
       </table>
@@ -83,6 +81,5 @@
 </ng-template>
 
 <ng-container *ngIf="paginationConfig && isPaginationShow">
-  <app-paginator class="pagi-st" [config]="paginationConfig" (updatePaginator)="updatePaginatorOptions($event)">
-  </app-paginator>
+  <app-paginator class="pagi-st" [config]="paginationConfig" (updatePaginator)="updatePaginatorOptions($event)"> </app-paginator>
 </ng-container>
