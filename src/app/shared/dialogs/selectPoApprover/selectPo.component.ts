@@ -14,7 +14,7 @@ export class SelectApproverComponent implements OnInit {
   orgId: number;
   approverData: ApproverData[] = [];
   selectedApprover: ApproverData;
-  
+
   constructor(
     private poService: POService,
     private dialogRef: MatDialogRef<SelectApproverComponent>,
@@ -35,7 +35,7 @@ export class SelectApproverComponent implements OnInit {
     this.dialogRef.close(this.data);
   }
 
-  closeDialog(){
+  closeDialog() {
     this.dialogRef.close(null);
   }
 }

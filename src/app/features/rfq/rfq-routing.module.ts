@@ -6,6 +6,7 @@ import { ReviewComponent } from "./review/review.component";
 import { RFQViewComponent } from "./rfq-view/rfq-view.component";
 import { CreateRfqComponent } from "./create-rfq/create-rfq.component";
 import { RfqDetailComponent } from "./rfq-detail/rfq-detail.component";
+import { CreateRfqResolver } from './create-rfq/resolver/createRfq.resolver';
 
 const routes: Routes = [
   {
@@ -29,10 +30,12 @@ const routes: Routes = [
   },
   {
     path: "createRfq/:rfqId",
+    resolve: { rfqData: CreateRfqResolver },
     component: CreateRfqComponent
   },
   {
     path: "createRfq",
+    resolve: { rfqData: CreateRfqResolver },
     component: CreateRfqComponent
   }
 ];
