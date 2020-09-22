@@ -35,6 +35,20 @@
     </div>
   </ng-container> -->
 
+  <ng-container *ngIf="mobNavList && mobNavList.length">
+    <ng-container *ngFor="let item of mobNavList">
+      <div class="sidenav-btns display-flex"
+        [ngClass]="(buttonName && (buttonName === item.modulePath)) ? 'active' : '' ">
+        <a href="javascript:void(0)" mat-list-item (click)="redirect(item.modulePath)">
+          <img src="../../../assets/images/sidenav_{{ item.moduleIcon }}" alt="" />
+          <span class="p-l-15">
+            {{item.moduleName}}
+          </span>
+        </a>
+      </div>
+    </ng-container>
+  </ng-container>
+
   <div class="display-flex">
     <a href="javascript:void(0)" mat-list-item (click)="logout()">
       <img src="../../../assets/images/logout-hamburger.svg" alt="" />

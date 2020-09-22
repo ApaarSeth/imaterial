@@ -149,12 +149,12 @@ export class BomCommonTableComponent implements OnInit, OnChanges {
         }
     }
 
-    isAlphaNumeric(e) {
-        var x = e.which || e.keycode;
-        if ((x >= 48 && x <= 57) || x == 46)
-            return true;
-        else
-            return false;
-    }
+    // isAlphaNumeric(e) {
+    //     var x = e.which || e.keycode;
+    //     if ((x >= 48 && x <= 57) || x == 46)
+    //         return true;
+    //     else
+    //         return false;
+    // }
 
 }

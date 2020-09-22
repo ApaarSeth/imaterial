@@ -28,6 +28,8 @@ export class SidenavListComponent implements OnInit {
 
   isPlanAvailable: any;
 
+  mobNavList: any[] = [];
+
   @Input('menuData') data: MenuList;
 
   constructor(
@@ -123,7 +125,7 @@ export class SidenavListComponent implements OnInit {
       subModuleList: null,
     }
     if (this.isPlanAvailable === 1 && this.accountOwner === 1) {
-      this.data.moduleList.push(subscriptions);
+      this.mobNavList.push(subscriptions);
     }
     const feedback = {
       moduleDisplayName: "Share Feedback",
@@ -133,6 +135,6 @@ export class SidenavListComponent implements OnInit {
       modulePath: "user-feedback",
       subModuleList: null,
     }
-    this.data.moduleList.push(feedback);
+    this.mobNavList.push(feedback);
   }
 }

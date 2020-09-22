@@ -50,14 +50,14 @@
                   class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10 maxwidth-150-px">
                   <mat-label>Estimated Quantity</mat-label>
                   <input matInput type="text" formControlName="estimatedQty" [value]="item.estimatedQty"
-                    autocomplete="off" (keypress)="isAlphaNumeric($event)" appTwoDigitDecimaNumber>
+                    autocomplete="off" inputmode="decimal" appTwoDigitDecimaNumber>
                 </mat-form-field>
                 <ng-container *ngIf="item.get('estimatedQty').errors !== null">
                   <mat-error class="fontsize-10-px" *ngIf="item.get('estimatedQty').hasError('min')">
                     It must be more than {{item.get('estimatedQty').errors.min.min}}
                   </mat-error>
                   <mat-error class="fontsize-10-px" *ngIf="item.get('estimatedQty').hasError('pattern')">
-                    Decimal value is invalid
+                    Value is invalid
                   </mat-error>
                 </ng-container>
               </td>
@@ -66,11 +66,11 @@
                   class="border-input widthZero mat-form-field-padding bom-same-width-col p-t-10 maxwidth-150-px">
                   <mat-label>Estimated Rate</mat-label>
                   <input matInput type="text" formControlName="estimatedRate" [value]="item.estimatedRate"
-                    autocomplete="off" (keypress)="isAlphaNumeric($event)" appTwoDigitDecimaNumber>
+                    autocomplete="off" inputmode="decimal" appTwoDigitDecimaNumber>
                 </mat-form-field>
                 <mat-error class="fontsize-10-px"
                   *ngIf="item.get('estimatedRate').errors !== null && item.get('estimatedRate').hasError('pattern')">
-                  Decimal value is invalid
+                  Value is invalid
                 </mat-error>
               </td>
             </tr>
