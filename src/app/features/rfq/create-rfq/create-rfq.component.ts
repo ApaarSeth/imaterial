@@ -86,7 +86,6 @@ export class CreateRfqComponent implements OnInit {
       this.setLocalStorage()
     }
   };
-
   constructor(
     private projectService: ProjectService,
     private router: Router,
@@ -107,14 +106,14 @@ export class CreateRfqComponent implements OnInit {
   ngOnInit() {
     let userId = Number(localStorage.getItem("userId"));
     let orgId = Number(localStorage.getItem("orgId"));
-    this.id = this.route.snapshot.params[ 'rfqId' ];
+    this.id = this.route.snapshot.params['rfqId'];
 
-    Promise.all([ this.commonService.getSuppliers(orgId), this.projectService.getProjects(orgId, userId), this.commonService.getCountry() ]).then(res => {
+    Promise.all([this.commonService.getSuppliers(orgId), this.projectService.getProjects(orgId, userId), this.commonService.getCountry()]).then(res => {
       if (this.id) { this.loader.hide() }
-      this.supplierModuleFeature = res[ 0 ].data.moduleFeatures;
-      this.allSupplier = res[ 0 ].data.supplierList ? res[ 0 ].data.supplierList : [];
-      this.allProject = res[ 1 ].data
-      this.countryList = res[ 2 ].data
+      this.supplierModuleFeature = res[0].data.moduleFeatures;
+      this.allSupplier = res[0].data.supplierList ? res[0].data.supplierList : [];
+      this.allProject = res[1].data
+      this.countryList = res[2].data
     });
 
     this.isMobile = this.commonService.isMobile().matches;
@@ -189,12 +188,12 @@ export class CreateRfqComponent implements OnInit {
 
   getMaterial(materials: AddRFQ) {
     this.route.params.subscribe(param => {
-      let rfqId = param[ 'rfqId' ]
+      let rfqId = param['rfqId']
       if (!rfqId) this.loader.show()
       this.rfqService.addRFQ(materials, !rfqId ? true : false).then(res => {
 
         if (!rfqId) {
-          this.router.navigate([ "/rfq/createRfq", res.data.rfqId ], {
+          this.router.navigate(["/rfq/createRfq", res.data.rfqId], {
             state: { rfqData: res, selectedIndex: 1 }
           });
         }

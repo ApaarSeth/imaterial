@@ -57,7 +57,7 @@
   </div>
 </div>
 
-<form *ngIf="allSuppliers.length" [formGroup]="supplierForm">
+<form *ngIf="allSuppliers && allSuppliers.length" [formGroup]="supplierForm">
   <div class="example-container mat-elevation-z8">
     <table mat-table [dataSource]="allSuppliers | SearchPipe: searchText:['supplierName']" formArrayName="forms" class="mat-elevation-z4 col-sm-12 mt-3">
       <ng-container matColumnDef="Supplier Name">
@@ -93,7 +93,7 @@
     </ng-container> -->
 
       <tr mat-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [hidden]="!row.show"></tr>
     </table>
   </div>
 </form>

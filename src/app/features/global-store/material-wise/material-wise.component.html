@@ -24,7 +24,7 @@
             <th class="mat-header-cell text-center">Awarded <br />Quantity</th>
             <th class="mat-header-cell text-center">Available <br />Stock</th>
           </tr>
-  
+
           <div *ngFor="let material of materialData | SearchPipe: searchMaterial:['materialName']">
             <mat-expansion-panel>
               <!-- Materials list -->
@@ -37,12 +37,11 @@
                   <td class="mat-cell text-center">{{ material.dueDate | date: "dd MMM yyy" }}</td>
                   <td class="mat-cell text-center">{{ material.deliveredQty + material.directDeliveredQty }}</td>
                   <td class="mat-cell text-center">{{ material.issuedQty }}</td>
-                  <td class="mat-cell text-center">{{ (material.deliveredQty + material.directDeliveredQty) - material.issuedQty }}</td>
+                  <td class="mat-cell text-center">{{ material.deliveredQty + material.directDeliveredQty - material.issuedQty }}</td>
                 </tr>
               </mat-expansion-panel-header>
-  
-              <mat-expansion-panel class="material-projects-tbl" *ngFor="let project of material.projectMaterialList"
-                #mep="matExpansionPanel">
+
+              <mat-expansion-panel class="material-projects-tbl" *ngFor="let project of material.projectMaterialList" #mep="matExpansionPanel">
                 <!-- Projects list -->
                 <mat-expansion-panel-header class="project-row-bg" (click)="getIndentsList(project, mep.expanded)">
                   <tr class="mat-row width-100">
@@ -53,10 +52,10 @@
                     <td class="mat-cell text-center">{{ project.dueDate | date: "dd MMM yyy" }}</td>
                     <td class="mat-cell text-center">{{ project.deliveredQty + project.directDeliveredQty }}</td>
                     <td class="mat-cell text-center">{{ project.issuedQty }}</td>
-                    <td class="mat-cell text-center">{{ (project.deliveredQty + project.directDeliveredQty) - project.issuedQty }}</td>
+                    <td class="mat-cell text-center">{{ project.deliveredQty + project.directDeliveredQty - project.issuedQty }}</td>
                   </tr>
                 </mat-expansion-panel-header>
-  
+
                 <!-- Material Indents list -->
                 <ng-container *ngIf="indentList?.length > 0 && project.isIndent">
                   <div class="material-indent-tbl">
@@ -72,25 +71,19 @@
                     </tr>
                   </div>
                 </ng-container>
-  
-  
               </mat-expansion-panel>
-  
             </mat-expansion-panel>
           </div>
         </table>
       </div>
     </mat-accordion>
   </ng-container>
-  
+
   <ng-template #noData>
     <p class="text-align-center m-t-50">No material exists for current search</p>
   </ng-template>
-  
 
   <ng-container *ngIf="paginationConfig && isPaginationShow">
-    <app-paginator class="pagi-st" [config]="paginationConfig" (updatePaginator)="updatePaginatorOptions($event)">
-    </app-paginator>
+    <app-paginator class="pagi-st" [config]="paginationConfig" (updatePaginator)="updatePaginatorOptions($event)"> </app-paginator>
   </ng-container>
-  
 </ng-container>
